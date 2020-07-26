@@ -1625,14 +1625,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new UpdateCardHandler(this);
     }
 
-    private static class UpdateCardHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
+    private static class UpdateCardHandler extends ListenerWithProgressBarCloseOnFalse<Pair<Card, String>> {
         public UpdateCardHandler(CardBrowser browser) {
             super("Card Browser - UpdateCardHandler.actualOnPostExecute(CardBrowser browser)", browser);
         }
 
         @Override
-        public void actualOnProgressUpdate(@NonNull CardBrowser browser, TaskData value) {
-            browser.updateCardInList(value.getCard(), value.getString());
+        public void actualOnProgressUpdate(@NonNull CardBrowser browser, Pair<Card, String> value) {
+            browser.updateCardInList(value.first, value.second);
         }
 
         @Override

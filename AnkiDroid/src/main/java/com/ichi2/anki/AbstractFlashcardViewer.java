@@ -609,7 +609,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private final TaskListener<TaskData, PairWithBoolean<Card[]>> mUpdateCardHandler = new TaskListener<TaskData, PairWithBoolean<Card[]>>() {
+    private final TaskListener<Pair<Card, String>, PairWithBoolean<Card[]>> mUpdateCardHandler = new TaskListener<Pair<Card, String>, PairWithBoolean<Card[]>>() {
         private boolean mNoMoreCards;
 
 
@@ -620,9 +620,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(TaskData value) {
+        public void onProgressUpdate(Pair<Card, String> value) {
             boolean cardChanged = false;
-            if (mCurrentCard != value.getCard()) {
+            if (mCurrentCard != value.first) {
                 /*
                  * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
                  * then we need to display it as a new card, without showing the answer.
@@ -630,7 +630,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 sDisplayAnswer = false;
                 cardChanged = true;  // Keep track of that so we can run a bit of new-card code
             }
-            mCurrentCard = value.getCard();
+            mCurrentCard = value.first;
             getCol().getSched().preloadNextCardTaskInBackground(); // Tasks should always be launched from GUI. So in
             // listener and not in background
             if (mCurrentCard == null) {

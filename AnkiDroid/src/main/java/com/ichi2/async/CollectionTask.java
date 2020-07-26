@@ -21,6 +21,7 @@ package com.ichi2.async;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.util.Pair;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
@@ -310,7 +311,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Pr
 
 
 
-    public static class UpdateNote implements Task<TaskData, PairWithBoolean<Card[]>> {
+    public static class UpdateNote implements Task<Pair<Card, String>, PairWithBoolean<Card[]>> {
         private final Card mEditCard;
         private final boolean mFromReviewer;
 
@@ -322,7 +323,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Pr
 
 
         @Override
-        public PairWithBoolean<Card[]> background(CollectionTask<TaskData, ?> task) {
+        public PairWithBoolean<Card[]> background(CollectionTask<Pair<Card, String>, ?> task) {
             Timber.d("doInBackgroundUpdateNote");
             // Save the note
             Collection col = task.getCol();
@@ -346,9 +347,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Pr
                         } else {
                             newCard = sched.getCard();
                         }
-                        task.doProgress(new TaskData(newCard));
+                        task.doProgress(new Pair(newCard, null));
                     } else {
-                        task.doProgress(new TaskData(mEditCard, editNote.stringTags()));
+                        task.doProgress(new Pair(mEditCard, editNote.stringTags()));
                     }
                     col.getDb().getDatabase().setTransactionSuccessful();
                 } finally {
