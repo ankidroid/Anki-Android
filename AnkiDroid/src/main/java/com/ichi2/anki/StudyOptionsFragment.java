@@ -515,7 +515,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
-    private static class UpdateValuesFromDeck implements Task<TaskData, int[]> {
+    private static class UpdateValuesFromDeck implements Task<Void, int[]> {
         private final boolean mResetSched;
 
 
@@ -524,7 +524,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
 
 
-        public int[] background(CollectionTask<TaskData, ?> collectionTask) {
+        public int[] background(CollectionTask<Void, ?> collectionTask) {
             return updateValuesFromDeck(collectionTask, mResetSched);
         }
     }
@@ -550,8 +550,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
      *                        to reflect the latest values.
      */
-    private TaskListener<TaskData, int[]> getCollectionTaskListener(final boolean refreshDecklist) {
-        return new TaskListener<TaskData, int[]>() {
+    private TaskListener<Void, int[]> getCollectionTaskListener(final boolean refreshDecklist) {
+        return new TaskListener<Void, int[]>() {
             @Override
             public void onPreExecute() {
 

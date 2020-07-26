@@ -504,7 +504,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     private CreateCustomStudySessionListener createCustomStudySessionListener(){
         return new CreateCustomStudySessionListener(getAnkiActivity());
     }
-    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, TaskData, int[]> {
+    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, Void, int[]> {
         public CreateCustomStudySessionListener(AnkiActivity activity) {
             super(activity);
         }

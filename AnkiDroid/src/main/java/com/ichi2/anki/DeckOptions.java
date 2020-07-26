@@ -636,14 +636,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     }
 
-    private static class ConfSetSubdecksTask implements Task<TaskData, Boolean> {
+    private static class ConfSetSubdecksTask implements Task<Void, Boolean> {
         private final Deck mDeck;
         private final DeckConfig mConf;
         public ConfSetSubdecksTask(Deck deck, DeckConfig conf) {
             mDeck = deck;
             mConf = conf;
         }
-        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackgroundConfSetSubdecks");
             Collection col = collectionTask.getCol();
             try {
@@ -665,12 +665,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         }
     }
 
-    private static class RemConfTask implements Task<TaskData, Boolean> {
+    private static class RemConfTask implements Task<Void, Boolean> {
         private final DeckConfig mConf;
         public RemConfTask(DeckConfig mConf) {
             this.mConf = mConf;
         }
-        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackgroundConfRemove");
             Collection col = collectionTask.getCol();
             try {
@@ -693,14 +693,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         }
     }
 
-    private static class ConfResetTask implements Task<TaskData, Boolean> {
+    private static class ConfResetTask implements Task<Void, Boolean> {
         private final DeckConfig mConf;
 
         private ConfResetTask(DeckConfig mConf) {
             this.mConf = mConf;
         }
 
-        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackgroundConfReset");
             Collection col = collectionTask.getCol();
             col.getDecks().restoreToDefault(mConf);
@@ -709,31 +709,31 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         }
     }
 
-    private static class DeckConfTask implements Task<TaskData, Boolean> {
+    private static class DeckConfTask implements Task<Void, Boolean> {
         private final Deck mDeck;
         private final DeckConfig mConf;
         public DeckConfTask(Deck deck, DeckConfig conf) {
             this.mDeck = deck;
             this.mConf = conf;
         }
-        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<Void, ?> collectionTask) {
             return confChange(collectionTask, mDeck, mConf);
         }
     }
 
-    private static class NewOrderTask implements Task<TaskData, Boolean> {
+    private static class NewOrderTask implements Task<Void, Boolean> {
         private final DeckConfig mConf;
         public NewOrderTask(DeckConfig conf) {
             mConf = conf;
         }
-        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackgroundReorder");
             collectionTask.getCol().getSched().resortConf(mConf);
             return true;
         }
     }
 
-    private static class ConfChangeHandler extends TaskListenerWithContext<DeckPreferenceHack, TaskData, Boolean> {
+    private static class ConfChangeHandler extends TaskListenerWithContext<DeckPreferenceHack, Void, Boolean> {
         public ConfChangeHandler(DeckPreferenceHack deckPreferenceHack) {
             super(deckPreferenceHack);
         }

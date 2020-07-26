@@ -703,7 +703,7 @@ public class SchedV2 extends AbstractSched {
      * be a card in review or not. */
     // No need for a static object. The scheduler is not removed from memory
     public void preloadNextCardTaskInBackground() {
-        Task<TaskData, ?> task = (CollectionTask<TaskData, ?> collectionTask) -> {
+        Task<Void, ?> task = (CollectionTask<Void, ?> collectionTask) -> {
             for (CardQueue<? extends Card.Cache> caches: _fillNextCard()) {
                 caches.loadFirstCard();
             }

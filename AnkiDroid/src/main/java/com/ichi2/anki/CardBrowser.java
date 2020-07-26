@@ -798,7 +798,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private static class SearchCards implements Task<TaskData, List<CardCache>> {
+    private static class SearchCards implements Task<Void, List<CardCache>> {
         private final String mQuery;
         private final boolean mOrder;
         private final int mNumCardsToRender;
@@ -814,7 +814,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public List<CardCache> background(CollectionTask<TaskData, ?> collectionTask) {
+        public List<CardCache> background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackgroundSearchCards");
             if (collectionTask.isCancelled()) {
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
@@ -1064,9 +1064,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new FlagCardHandler(this);
     }
 
-    private static class FlagCardHandler extends SuspendCardHandler{public FlagCardHandler(CardBrowser browser) {super(browser);}};
+    private static class FlagCardHandler extends SuspendCardHandler{
+        public FlagCardHandler(CardBrowser browser) {
+            super(browser);
+        }
+    };
 
-    public static class Flag extends CollectionTask.DismissMulti<TaskData> {
+    public static class Flag extends CollectionTask.DismissMulti<Void> {
         public int mData;
         public Flag(long[] cardIds, int data) {
             super(cardIds);
@@ -1074,7 +1078,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        public PairWithBoolean<Card[]> actualBackground(CollectionTask<TaskData, ?> collectionTask, Card[] cards) {
+        public PairWithBoolean<Card[]> actualBackground(CollectionTask<Void, ?> collectionTask, Card[] cards) {
             Collection col = collectionTask.getCol();
             int flag = mData;
             col.setUserFlag(flag, getCardIds());
@@ -1086,8 +1090,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void flagTask (int flag) {
-        CollectionTask.launchCollectionTask(
-                                            flagCardHandler(),
+        CollectionTask.launchCollectionTask(flagCardHandler(),
                                             new Flag(getSelectedCardIds(), flag));
     }
 
@@ -1644,7 +1647,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private ChangeDeckHandler changeDeckHandler() {
         return new ChangeDeckHandler(this);
     }
-    private static class ChangeDeckHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
+    private static class ChangeDeckHandler extends ListenerWithProgressBarCloseOnFalse<Void> {
         public ChangeDeckHandler(CardBrowser browser) {
             super("Card Browser - changeDeckHandler.actualOnPostExecute(CardBrowser browser)", browser);
         }
@@ -1674,7 +1677,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    public static class ChangeDeckMulti extends CollectionTask.DismissMulti<TaskData> {
+    public static class ChangeDeckMulti extends CollectionTask.DismissMulti<Void> {
         private long mNewDid;
         public ChangeDeckMulti(long[] cardIds, long newDid) {
             super(cardIds);
@@ -1682,7 +1685,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        public PairWithBoolean<Card[]> actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
+        public PairWithBoolean<Card[]> actualBackground(CollectionTask<Void, ?> task, Card[] cards) {
             Collection col = task.getCol();
 
             Timber.i("Changing %d cards to deck: '%d'", cards.length, mNewDid);
@@ -1845,7 +1848,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private SuspendCardHandler suspendCardHandler() {
         return new SuspendCardHandler(this);
     }
-    private static class SuspendCardHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
+    private static class SuspendCardHandler extends ListenerWithProgressBarCloseOnFalse<Void> {
         public SuspendCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -1861,12 +1864,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    public static class SuspendCardMulti extends CollectionTask.DismissMulti<TaskData> {
+    public static class SuspendCardMulti extends CollectionTask.DismissMulti<Void> {
         public SuspendCardMulti(long[] cardIds) {
             super(cardIds);
         }
 
-        public PairWithBoolean<Card[]> actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
+        public PairWithBoolean<Card[]> actualBackground(CollectionTask<Void, ?> task, Card[] cards) {
             Collection col = task.getCol();
             AbstractSched sched = col.getSched();
             // collect undo information
@@ -1953,7 +1956,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MarkCardHandler markCardHandler() {
         return new MarkCardHandler(this);
     }
-    private static class MarkCardHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
+    private static class MarkCardHandler extends ListenerWithProgressBarCloseOnFalse<Void> {
         public MarkCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -1996,13 +1999,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
     };
 
 
-    public static class MarkNoteMulti extends CollectionTask.DismissMulti<TaskData> {
+    public static class MarkNoteMulti extends CollectionTask.DismissMulti<Void> {
         public MarkNoteMulti(long[] cardIds) {
             super(cardIds);
         }
 
 
-        public PairWithBoolean<Card[]> actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
+        public PairWithBoolean<Card[]> actualBackground(CollectionTask<Void, ?> task, Card[] cards) {
             Collection col = task.getCol();
             Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
             // collect undo information
@@ -2131,7 +2134,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     };
 
     private final SearchCardsHandler mSearchCardsHandler = new SearchCardsHandler(this);
-    private class SearchCardsHandler extends ListenerWithProgressBar<TaskData, List<CardCache>> {
+    private class SearchCardsHandler extends ListenerWithProgressBar<Void, List<CardCache>> {
         public SearchCardsHandler(CardBrowser browser) {
             super(browser);
         }
@@ -2335,7 +2338,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private static class CheckSelectedCards extends ListenerWithProgressBar<TaskData, Pair<Boolean, Boolean>> implements Task<TaskData, Pair<Boolean, Boolean>> {
+    private static class CheckSelectedCards extends ListenerWithProgressBar<Void, Pair<Boolean, Boolean>> implements Task<Void, Pair<Boolean, Boolean>> {
         private final Set<CardCache> mCheckedCardPositions;
 
         public CheckSelectedCards(CardBrowser browser, Set<CardCache> checkedCardPositions) {
@@ -2343,7 +2346,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCheckedCardPositions = checkedCardPositions;
         }
 
-        public Pair<Boolean, Boolean> background(CollectionTask<TaskData, ?> collectionTask) {
+        public Pair<Boolean, Boolean> background(CollectionTask<Void, ?> collectionTask) {
             Collection col = collectionTask.getCol();
 
             boolean hasUnsuspended = false;
@@ -3002,7 +3005,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) //should only be called from changeDeck()
     void executeChangeCollectionTask(long[] ids, long newDid) {
         mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
-        CollectionTask.launchCollectionTask(new ChangeDeckHandler(this),
+        CollectionTask.launchCollectionTask(
+                new ChangeDeckHandler(this),
                 new ChangeDeckMulti(ids, newDid));
     }
 

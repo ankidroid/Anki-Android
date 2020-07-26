@@ -61,7 +61,7 @@ import timber.log.Timber;
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
  */
-public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Progress, Result> {
+public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progress, Result> {
 
     /**
      * A reference to the application context to use to fetch the current Collection object.
@@ -227,7 +227,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Pr
     }
 
     @Override
-    protected Result doInBackground(TaskData... params) {
+    protected Result doInBackground(Void... params) {
         try {
             return actualDoInBackground();
         } finally {
@@ -430,7 +430,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Pr
     }
 
 
-    public static final Task<TaskData, int[]> sRebuildCram = (collectionTask) -> {
+    public static final Task<Void, int[]> sRebuildCram = (collectionTask) -> {
         Timber.d("doInBackgroundRebuildCram");
         Collection col = collectionTask.getCol();
         col.getSched().rebuildDyn(col.getDecks().selected());
@@ -438,9 +438,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Pr
     };
 
 
-    public static final class EmptyCram implements Task<TaskData, int[]> {
+    public static final class EmptyCram implements Task<Void, int[]> {
         @Override
-        public int[] background(CollectionTask<TaskData, ?> collectionTask) {
+        public int[] background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackgroundEmptyCram");
             Collection col = collectionTask.getCol();
             col.getSched().emptyDyn(col.getDecks().selected());

@@ -167,14 +167,14 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     // CONTEXT MENU DIALOGUES
     // ----------------------------------------------------------------------------
 
-    private static class AddFieldTask implements Task<TaskData, Boolean> {
+    private static class AddFieldTask implements Task<Void, Boolean> {
         private final String mFieldName;
         private final Model mModel;
         public AddFieldTask(Model model, String fieldName) {
             this.mFieldName = fieldName;
             this.mModel = model;
         }
-        public Boolean background(CollectionTask<TaskData, ?> collectionTask)  {
+        public Boolean background(CollectionTask<Void, ?> collectionTask)  {
             Timber.d("doInBackgroundRepositionField");
 
             Collection col = collectionTask.getCol();
@@ -268,7 +268,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         }
     }
 
-    private static class DeleteFieldTask implements Task<TaskData, Boolean> {
+    private static class DeleteFieldTask implements Task<Void, Boolean> {
         private final Model mModel;
         private final JSONObject mField;
         public DeleteFieldTask(Model mModel, JSONObject mField) {
@@ -276,7 +276,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             this.mField = mField;
         }
 
-        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackGroundDeleteField");
 
 
@@ -347,7 +347,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 .show();
     }
 
-    private static class RepositionFieldDialogTask implements Task<TaskData, Boolean> {
+    private static class RepositionFieldDialogTask implements Task<Void, Boolean> {
         private final Model mModel;
         private final JSONObject mField;
         private final int mIndex;
@@ -358,7 +358,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             this.mIndex = mIndex;
         }
 
-        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackgroundRepositionField");
             Collection col = collectionTask.getCol();
             try {
@@ -470,7 +470,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         fullRefreshList();
     }
 
-    private static class SortByFieldTask implements Task<TaskData, Boolean> {
+    private static class SortByFieldTask implements Task<Void, Boolean> {
         private final Model mModel;
         private final int mIdx;
         public SortByFieldTask(Model model, int idx) {
@@ -478,7 +478,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             this.mIdx = idx;
         }
 
-        public Boolean background(CollectionTask<TaskData, ?> collectionTask)  {
+        public Boolean background(CollectionTask<Void, ?> collectionTask)  {
             try {
                 Timber.d("doInBackgroundChangeSortField");
                 Collection col = collectionTask.getCol();
@@ -565,7 +565,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     private changeHandler changeFieldHandler() {
         return new changeHandler(this);
     }
-    private static class changeHandler extends TaskListenerWithContext<ModelFieldEditor, TaskData, Boolean> {
+    private static class changeHandler extends TaskListenerWithContext<ModelFieldEditor, Void, Boolean> {
         public changeHandler(ModelFieldEditor modelFieldEditor) {
             super(modelFieldEditor);
         }

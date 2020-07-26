@@ -148,7 +148,7 @@ public class TemporaryModel {
         addTemplateChange(ChangeType.DELETE, ord);
     }
 
-    private static class SaveToDatabaseTask implements Task<TaskData, Pair<String, Boolean>> {
+    private static class SaveToDatabaseTask implements Task<Void, Pair<String, Boolean>> {
         private final Model model;
         private final ArrayList<Object[]> templateChanges;
 
@@ -157,7 +157,7 @@ public class TemporaryModel {
             this.templateChanges = templateChanges;
         }
 
-        public Pair<String, Boolean> background(CollectionTask<TaskData, ?> collectionTask) {
+        public Pair<String, Boolean> background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackgroundSaveModel");
             Collection col = collectionTask.getCol();
             Model oldModel = col.getModels().get(model.getLong("id"));

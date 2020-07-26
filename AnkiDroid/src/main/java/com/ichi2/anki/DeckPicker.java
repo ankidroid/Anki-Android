@@ -531,7 +531,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private ExportListener exportListener() {
         return new ExportListener(this);
     }
-    private static class ExportListener extends TaskListenerWithContext<DeckPicker, TaskData, Triple<Boolean, String, AnkiPackageExporter>>{
+    private static class ExportListener extends TaskListenerWithContext<DeckPicker, Void, Triple<Boolean, String, AnkiPackageExporter>>{
         public ExportListener(DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -1065,8 +1065,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private static class ResumeTask implements Task<TaskData, TaskData> {
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+    private static class ResumeTask implements Task<Void, TaskData> {
+        public TaskData background(CollectionTask<Void, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             if (col != null) {
                 CollectionHelper.loadCollectionComplete(col);
@@ -1631,12 +1631,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         AnkiDroidApp.sendExceptionReport(new RuntimeException(), "DeckPicker.sendErrorReport");
     }
 
-    public static class RepairCollection extends TaskAndListenerWithContext<DeckPicker, TaskData, Boolean>{
+    public static class RepairCollection extends TaskAndListenerWithContext<DeckPicker, Void, Boolean>{
         public RepairCollection(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
-        public Boolean background(CollectionTask collectionTask) {
+        public Boolean background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackgroundRepairCollection");
             Collection col = collectionTask.getCol();
             if (col != null) {
@@ -1695,12 +1695,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         CollectionTask.launchCollectionTask(new CheckDatabaseListener(), new CheckDatabaseTask());
     }
 
-    private static class MediaCheck extends TaskAndListenerWithContext<DeckPicker, TaskData, Pair<Boolean, List<List<String>>>>{
+    private static class MediaCheck extends TaskAndListenerWithContext<DeckPicker, Void, Pair<Boolean, List<List<String>>>>{
         public MediaCheck(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
-        public Pair<Boolean, List<List<String>>> background(CollectionTask<TaskData, ?> collectionTask)  {
+        public Pair<Boolean, List<List<String>>> background(CollectionTask<Void, ?> collectionTask)  {
             Timber.d("doInBackgroundCheckMedia");
             Collection col = collectionTask.getCol();
             // A media check on AnkiDroid will also update the media db
@@ -2161,7 +2161,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private static class ExportApkgTask implements Task<TaskData, Triple<Boolean, String, AnkiPackageExporter>> {
+    private static class ExportApkgTask implements Task<Void, Triple<Boolean, String, AnkiPackageExporter>> {
         private final boolean mIncludeSched;
         private final boolean mIncludeMedia;
         private final long mDid;
@@ -2450,12 +2450,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private static class UpdateDeckList extends TaskAndListenerWithContext<DeckPicker, TaskData, List<DeckDueTreeNode>>{
+    private static class UpdateDeckList extends TaskAndListenerWithContext<DeckPicker, Void, List<DeckDueTreeNode>>{
         public UpdateDeckList(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
-        public List<DeckDueTreeNode> background(CollectionTask<TaskData, ?> collectionTask) {
+        public List<DeckDueTreeNode> background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackgroundLoadDeckCounts");
             Collection col = collectionTask.getCol();
             try {
@@ -2754,7 +2754,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         return new DeleteDeckListener(did, this);
     }
 
-    private static class DeleteDeckListener extends TaskAndListenerWithContext<DeckPicker, TaskData, Void> {
+    private static class DeleteDeckListener extends TaskAndListenerWithContext<DeckPicker, Void, Void> {
         private final long did;
         // Flag to indicate if the deck being deleted is the current deck.
         private boolean removingCurrent;
@@ -2764,7 +2764,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             this.did = did;
         }
 
-        public Void background(CollectionTask<TaskData, ?> collectionTask) {
+        public Void background(CollectionTask<Void, ?> collectionTask) {
             Timber.d("doInBackgroundDeleteDeck");
             Collection col = collectionTask.getCol();
             col.getDecks().rem(did, true);
@@ -2812,7 +2812,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private final SimpleProgressListener simpleProgressListener() {
         return new SimpleProgressListener(this);
     }
-    private static class SimpleProgressListener extends TaskListenerWithContext<DeckPicker, TaskData, int[]>{
+    private static class SimpleProgressListener extends TaskListenerWithContext<DeckPicker, Void, int[]>{
         public SimpleProgressListener (DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -2881,12 +2881,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         new HandleEmptyCard(this).launch();
     }
 
-    private static class HandleEmptyCard extends TaskAndListenerWithContext<DeckPicker, TaskData, List<Long>> {
+    private static class HandleEmptyCard extends TaskAndListenerWithContext<DeckPicker, Void, List<Long>> {
         public HandleEmptyCard(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
-        public List<Long> background(CollectionTask<TaskData, ?> collectionTask) {
+        public List<Long> background(CollectionTask<Void, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             return  col.emptyCids();
         }
