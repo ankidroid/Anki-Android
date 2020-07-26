@@ -108,7 +108,7 @@ Adds a tag called "Marked" the current note, so it can be easily found in a sear
 ```ankiToggleFlag()```
 ### Info
 Adds a colored marker to the card, or toggles it off. Flags will appear during study, and it can be easily found in a search.
-<br>Pass the arguments ```none```, ```"red"```, ```"orange"```, ```"green"```, ```"blue"``` for flagging respective flag.
+<br>Pass the arguments ```"none"```, ```"red"```, ```"orange"```, ```"green"```, ```"blue"``` for flagging respective flag.
 <br>Numerical value can also be passed. 
 Number from ```0...4``` can be used to flag.
 ```
@@ -150,13 +150,13 @@ In full screen, a button can be added to show side navigation drawer.
 ## Get show / hide status of topbar
 ### Name
 ```AnkiDroidJS.ankiIsTopbarShown()```
+### Type of return value
+```Boolean```
 ### Info
 It can be used to show / hide custom topbar design. See [#6747](https://github.com/ankidroid/Anki-Android/pull/6747) for more.
 ### Usage
 ```javascript
-<script>
 console.log(AnkiDroidJS.ankiIsTopbarShown());
-</script>
 ```
 
 
@@ -327,15 +327,27 @@ console.log(AnkiDroidJS.ankiGetCardQueue());
 
 ## Some tips to improve card / deck development 
 If want to hide card's button / text in current card when reviewing on Anki Desktop / AnkiMobile then adding all code to ```if``` block can hide the things.
+<br>**Note: Using this may give some problem when using AnkiWeb in Android Chrome, so to make available some functionality only to AnkiDroid app then ```wv``` in ```navigator.userAgent``` can be used.**
 ```javascript
- var isMobile = /Android/i.test(navigator.userAgent); 
- if (isMobile) { 
-  
-  // Here all AnkiDroid defined functions call.
+ var UA = navigator.userAgent;
+
+ var isMobile = /Android/i.test(UA);
+ var isAndroidWebview = /wv/i.test(UA);
+
+ if (isMobile) {
+  // Here all AnkiDroid defined functions call. 
   // It will be hidden or not called on AnkiDesktop / AnkiMobile
   
+   if (isAndroidWebview) {
+     // Available only to AnkiDroid app only.
+
+   } else {
+     // Available to Chrome only (AnkiWeb opened in Android Chrome)
+ 
+   }  
  }
 ```
+For more view [Window.navigator](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator) and [Navigator userAgent Property](https://www.w3schools.com/jsref/prop_nav_useragent.asp)
 
 ## Linked issues & PR
 [#6521](https://github.com/ankidroid/Anki-Android/pull/6521)
