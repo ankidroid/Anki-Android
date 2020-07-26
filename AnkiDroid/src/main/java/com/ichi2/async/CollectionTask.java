@@ -300,20 +300,20 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
 
-            case UNDO:
-                return doInBackgroundUndo();
+        case UNDO:
+            return doInBackgroundUndo();
 
-            case SEARCH_CARDS:
-                return doInBackgroundSearchCards(param);
+        case SEARCH_CARDS:
+            return doInBackgroundSearchCards(param);
 
-            case CHECK_DATABASE:
-                return doInBackgroundCheckDatabase();
+        case CHECK_DATABASE:
+            return doInBackgroundCheckDatabase();
 
-            case REPAIR_COLLECTION:
-                return doInBackgroundRepairCollection();
+        case REPAIR_COLLECTION:
+            return doInBackgroundRepairCollection();
 
-            default:
-                return doInBackgroundCode(param);
+        default:
+            return doInBackgroundCode(param);
         }
     }
 
@@ -411,6 +411,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             return new TaskData(true);
         }
     }
+
 
 
     private static class UndoSuspendCard extends Undoable {
@@ -574,219 +575,237 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
-    public static class DismissMulti implements Task {
-        private final long[] mCardIds;
-        private final Collection.DismissType mType;
-        private final Object mData;
-
-        public DismissMulti(long[] cardIds, Collection.DismissType type) {
-            this(cardIds, type, null);
+    public static class SuspendCardMulti extends DismissMulti {
+        public SuspendCardMulti(long[] cardIds) {
+            super(cardIds);
         }
 
-        public DismissMulti(long[] cardIds, Collection.DismissType type, Object data) {
-            mCardIds = cardIds;
+        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+            Collection col = task.getCol();
+            AbstractSched sched = col.getSched();
+            // collect undo information
+            long[] cids = new long[cards.length];
+            boolean[] originalSuspended = new boolean[cards.length];
+            boolean hasUnsuspended = false;
+            for (int i = 0; i < cards.length; i++) {
+                Card card = cards[i];
+                cids[i] = card.getId();
+                if (card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED) {
+                    hasUnsuspended = true;
+                    originalSuspended[i] = false;
+                } else {
+                    originalSuspended[i] = true;
+                }
+            }
+
+            // if at least one card is unsuspended -> suspend all
+            // otherwise unsuspend all
+            if (hasUnsuspended) {
+                sched.suspendCards(cids);
+            } else {
+                sched.unsuspendCards(cids);
+            }
+
+            // mark undo for all at once
+            col.markUndo(new UndoSuspendCardMulti(cards, originalSuspended));
+
+            // reload cards because they'll be passed back to caller
+            for (Card c : cards) {
+                c.load();
+            }
+
+            sched.deferReset();
+            return null;
+        }
+    }
+
+    public static class Flag extends DismissMulti {
+        public int mData;
+        public Flag(long[] cardIds, int data) {
+            super(cardIds);
+            mData = data;
+        }
+
+
+        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+            Collection col = task.getCol();
+            int flag = mData;
+            col.setUserFlag(flag, getCardIds());
+            for (Card c : cards) {
+                c.load();
+            }
+            return null;
+        }
+    }
+
+    public static class MarkNoteMulti extends DismissMulti {
+        public MarkNoteMulti(long[] cardIds) {
+            super(cardIds);
+        }
+
+
+        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+            Collection col = task.getCol();
+            Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
+            // collect undo information
+            List<Note> originalMarked = new ArrayList<>();
+            List<Note> originalUnmarked = new ArrayList<>();
+
+            for (Note n : notes) {
+                if (n.hasTag("marked"))
+                    originalMarked.add(n);
+                else
+                    originalUnmarked.add(n);
+            }
+
+            CardUtils.markAll(new ArrayList<>(notes), !originalUnmarked.isEmpty());
+
+            // mark undo for all at once
+            col.markUndo(new UndoMarkNoteMulti(originalMarked, originalUnmarked));
+
+            // reload cards because they'll be passed back to caller
+            for (Card c : cards) {
+                c.load();
+            }
+            return null;
+        }
+    }
+
+    public static class DeleteNoteMulti extends DismissMulti {
+        public DeleteNoteMulti(long[] cardIds) {
+            super(cardIds);
+        }
+
+
+        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+            Collection col = task.getCol();
+            AbstractSched sched = col.getSched();
+            // list of all ids to pass to remNotes method.
+            // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
+            Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
+            List<Card> allCards = CardUtils.getAllCards(notes);
+            // delete note
+            long[] uniqueNoteIds = new long[notes.size()];
+            Note[] notesArr = notes.toArray(new Note[notes.size()]);
+            int count = 0;
+            for (Note note : notes) {
+                uniqueNoteIds[count] = note.getId();
+                count++;
+            }
+
+            col.markUndo(new UndoDeleteNoteMulti(notesArr, allCards));
+
+            col.remNotes(uniqueNoteIds);
+            sched.deferReset();
+            // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
+            task.doProgress(new TaskData(allCards.toArray(new Card[allCards.size()])));
+            return null;
+        }
+    }
+
+    public static class ChangeDeckMulti extends DismissMulti {
+        private long mNewDid;
+        public ChangeDeckMulti(long[] cardIds, long newDid) {
+            super(cardIds);
+            mNewDid = newDid;
+        }
+
+
+        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+            Collection col = task.getCol();
+
+            Timber.i("Changing %d cards to deck: '%d'", cards.length, mNewDid);
+            Deck deckData = col.getDecks().get(mNewDid);
+
+            if (Decks.isDynamic(deckData)) {
+                //#5932 - can't change to a dynamic deck. Use "Rebuild"
+                Timber.w("Attempted to move to dynamic deck. Cancelling task.");
+                return new TaskData(false);
+            }
+
+            //Confirm that the deck exists (and is not the default)
+            try {
+                long actualId = deckData.getLong("id");
+                if (actualId != mNewDid) {
+                    Timber.w("Attempted to move to deck %d, but got %d", mNewDid, actualId);
+                    return new TaskData(false);
+                }
+            } catch (Exception e) {
+                Timber.e(e, "failed to check deck");
+                return new TaskData(false);
+            }
+
+            long[] changedCardIds = new long[cards.length];
+            for (int i = 0; i < cards.length; i++) {
+                changedCardIds[i] = cards[i].getId();
+            }
+            col.getSched().remFromDyn(changedCardIds);
+
+            long[] originalDids = new long[cards.length];
+
+            for (int i = 0; i < cards.length; i++) {
+                Card card = cards[i];
+                card.load();
+                // save original did for undo
+                originalDids[i] = card.getDid();
+                // then set the card ID to the new deck
+                card.setDid(mNewDid);
+                Note note = card.note();
+                note.flush();
+                // flush card too, in case, did has been changed
+                card.flush();
+            }
+
+            // mark undo for all at once
+            col.markUndo(new UndoChangeDeckMulti(cards, originalDids));
+            return null;
+        }
+    }
+
+    public static class RescheduleRepositionReset extends DismissMulti {
+        private final Collection.DismissType mType;
+        private final int mData;
+
+        public RescheduleRepositionReset(long[] cardDids, Collection.DismissType type) {
+            this(cardDids, type, 0);
+        }
+
+        public RescheduleRepositionReset(long[] cardDids, Collection.DismissType type, int data) {
+            super(cardDids);
             mType = type;
             mData = data;
         }
 
-        public TaskData background(CollectionTask task) {
+        public TaskData actualBackground(CollectionTask task, Card[] cards) {
             Collection col = task.getCol();
             AbstractSched sched = col.getSched();
-            // query cards
-            Card[] cards = new Card[mCardIds.length];
-            for (int i = 0; i < mCardIds.length; i++) {
-                cards[i] = col.getCard(mCardIds[i]);
-            }
-
-            try {
-                col.getDb().getDatabase().beginTransaction();
+            switch(mType) {
+            case RESCHEDULE_CARDS:
+            case REPOSITION_CARDS:
+            case RESET_CARDS: 
+                // collect undo information, sensitive to memory pressure, same for all 3 cases
                 try {
-                    switch (mType) {
-                        case SUSPEND_CARD_MULTI: {
-                            // collect undo information
-                            long[] cids = new long[cards.length];
-                            boolean[] originalSuspended = new boolean[cards.length];
-                            boolean hasUnsuspended = false;
-                            for (int i = 0; i < cards.length; i++) {
-                                Card card = cards[i];
-                                cids[i] = card.getId();
-                                if (card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED) {
-                                    hasUnsuspended = true;
-                                    originalSuspended[i] = false;
-                                } else {
-                                    originalSuspended[i] = true;
-                                }
-                            }
-
-                            // if at least one card is unsuspended -> suspend all
-                            // otherwise unsuspend all
-                            if (hasUnsuspended) {
-                                sched.suspendCards(cids);
-                            } else {
-                                sched.unsuspendCards(cids);
-                            }
-
-                            // mark undo for all at once
-                            col.markUndo(new UndoSuspendCardMulti(cards, originalSuspended));
-
-                            // reload cards because they'll be passed back to caller
-                            for (Card c : cards) {
-                                c.load();
-                            }
-
-                            sched.deferReset();
-                            break;
-                        }
-
-                        case FLAG: {
-                            int flag = (Integer) mData;
-                            col.setUserFlag(flag, mCardIds);
-                            for (Card c : cards) {
-                                c.load();
-                            }
-                            break;
-                        }
-
-                        case MARK_NOTE_MULTI: {
-                            Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
-                            // collect undo information
-                            List<Note> originalMarked = new ArrayList<>();
-                            List<Note> originalUnmarked = new ArrayList<>();
-
-                            for (Note n : notes) {
-                                if (n.hasTag("marked"))
-                                    originalMarked.add(n);
-                                else
-                                    originalUnmarked.add(n);
-                            }
-
-                            CardUtils.markAll(new ArrayList<>(notes), !originalUnmarked.isEmpty());
-
-                            // mark undo for all at once
-                            col.markUndo(new UndoMarkNoteMulti(originalMarked, originalUnmarked));
-
-                            // reload cards because they'll be passed back to caller
-                            for (Card c : cards) {
-                                c.load();
-                            }
-
-                            break;
-                        }
-
-                        case DELETE_NOTE_MULTI: {
-                            // list of all ids to pass to remNotes method.
-                            // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-                            Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
-                            List<Card> allCards = CardUtils.getAllCards(notes);
-                            // delete note
-                            long[] uniqueNoteIds = new long[notes.size()];
-                            Note[] notesArr = notes.toArray(new Note[notes.size()]);
-                            int count = 0;
-                            for (Note note : notes) {
-                                uniqueNoteIds[count] = note.getId();
-                                count++;
-                            }
-
-                            col.markUndo(new UndoDeleteNoteMulti(notesArr, allCards));
-
-                            col.remNotes(uniqueNoteIds);
-                            sched.deferReset();
-                            // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
-                            task.doProgress(new TaskData(allCards.toArray(new Card[allCards.size()])));
-                            break;
-                        }
-
-                        case CHANGE_DECK_MULTI: {
-                            long newDid = (long) mData;
-
-                            Timber.i("Changing %d cards to deck: '%d'", cards.length, newDid);
-                            Deck deckData = col.getDecks().get(newDid);
-
-                            if (Decks.isDynamic(deckData)) {
-                                //#5932 - can't change to a dynamic deck. Use "Rebuild"
-                                Timber.w("Attempted to move to dynamic deck. Cancelling task.");
-                                return new TaskData(false);
-                            }
-
-                            //Confirm that the deck exists (and is not the default)
-                            try {
-                                long actualId = deckData.getLong("id");
-                                if (actualId != newDid) {
-                                    Timber.w("Attempted to move to deck %d, but got %d", newDid, actualId);
-                                    return new TaskData(false);
-                                }
-                            } catch (Exception e) {
-                                Timber.e(e, "failed to check deck");
-                                return new TaskData(false);
-                            }
-
-                            long[] changedCardIds = new long[cards.length];
-                            for (int i = 0; i < cards.length; i++) {
-                                changedCardIds[i] = cards[i].getId();
-                            }
-                            col.getSched().remFromDyn(changedCardIds);
-
-                            long[] originalDids = new long[cards.length];
-
-                            for (int i = 0; i < cards.length; i++) {
-                                Card card = cards[i];
-                                card.load();
-                                // save original did for undo
-                                originalDids[i] = card.getDid();
-                                // then set the card ID to the new deck
-                                card.setDid(newDid);
-                                Note note = card.note();
-                                note.flush();
-                                // flush card too, in case, did has been changed
-                                card.flush();
-                            }
-
-                            // mark undo for all at once
-                            col.markUndo(new UndoChangeDeckMulti(cards, originalDids));
-
-                            break;
-                        }
-
-                        case RESCHEDULE_CARDS:
-                        case REPOSITION_CARDS:
-                        case RESET_CARDS: {
-                            // collect undo information, sensitive to memory pressure, same for all 3 cases
-                            try {
-                                Timber.d("Saving undo information of type %s on %d cards", mType, cards.length);
-                                Card[] cards_copied = deepCopyCardArray(task, cards);
-                                col.markUndo(new UndoRepositionRescheduleResetCards(mType, cards_copied));
-                            } catch (CancellationException ce) {
-                                Timber.i(ce, "Cancelled while handling type %s, skipping undo", mType);
-                            }
-                            switch (mType) {
-                                case RESCHEDULE_CARDS:
-                                    sched.reschedCards(mCardIds, (Integer) mData, (Integer) mData);
-                                    break;
-                                case REPOSITION_CARDS:
-                                    sched.sortCards(mCardIds, (Integer) mData, 1, false, true);
-                                    break;
-                                case RESET_CARDS:
-                                    sched.forgetCards(mCardIds);
-                                    break;
-                            }
-                            // In all cases schedule a new card so Reviewer doesn't sit on the old one
-                            col.reset();
-                            task.doProgress(new TaskData(sched.getCard(), 0));
-                            break;
-                        }
-                    }
-                    col.getDb().getDatabase().setTransactionSuccessful();
-                } finally {
-                    col.getDb().getDatabase().endTransaction();
+                    Timber.d("Saving undo information of type %s on %d cards", mType, cards.length);
+                    col.markUndo(new UndoRepositionRescheduleResetCards(mType, deepCopyCardArray(task, cards)));
+                } catch (CancellationException ce) {
+                    Timber.i(ce, "Cancelled while handling type %s, skipping undo", mType);
                 }
-            } catch (RuntimeException e) {
-                Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
-                return new TaskData(false);
+                switch (mType) {
+                case RESCHEDULE_CARDS:
+                    sched.reschedCards(getCardIds(), mData, mData);
+                    break;
+                case REPOSITION_CARDS:
+                    sched.sortCards(getCardIds(), mData, 1, false, true);
+                    break;
+                case RESET_CARDS:
+                    sched.forgetCards(getCardIds());
+                    break;
+                }
+                // In all cases schedule a new card so Reviewer doesn't sit on the old one
+                col.reset();
+                task.doProgress(new TaskData(sched.getCard(), 0));
             }
-            // pass cards back so more actions can be performed by the caller
-            // (querying the cards again is unnecessarily expensive)
-            return new TaskData(true, cards);
+            return null;
         }
 
         private Card[] deepCopyCardArray(CollectionTask task, Card[] originals) throws CancellationException {
@@ -803,6 +822,51 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 copies[i] = new Card(col, originals[i].getId());
             }
             return copies;
+        }
+    }
+
+    public abstract static class DismissMulti implements Task {
+        private final long[] mCardIds;
+
+        public DismissMulti(long[] cardIds) {
+            mCardIds = cardIds;
+        }
+
+        public long[] getCardIds() {
+            return mCardIds;
+        }
+
+        public abstract TaskData actualBackground(CollectionTask task, Card[] cards);
+
+        public TaskData background(CollectionTask task) {
+            Collection col = task.getCol();
+            AbstractSched sched = col.getSched();
+            // query cards
+            Card[] cards = new Card[mCardIds.length];
+            for (int i = 0; i < mCardIds.length; i++) {
+                cards[i] = col.getCard(mCardIds[i]);
+            }
+
+            try {
+                col.getDb().getDatabase().beginTransaction();
+                try {
+                    TaskData res = actualBackground(task, cards);
+                    if (res != null) {
+                        return res;
+                    }
+                    actualBackground(task, cards);
+                    col.getDb().getDatabase().setTransactionSuccessful();
+                } finally {
+                    col.getDb().getDatabase().endTransaction();
+                }
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
+                return new TaskData(false);
+            }
+            // pass cards back so more actions can be performed by the caller
+            // (querying the cards again is unnecessarily expensive)
+            return new TaskData(true, cards);
         }
     }
 
@@ -826,7 +890,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 } else {
                     // cid is actually a card id.
                     // a review was undone,
-                     /* card review undone, set up to review that card again */
+                    /* card review undone, set up to review that card again */
                     Timber.d("Single card review undo succeeded");
                     newCard = col.getCard(cid);
                     newCard.startTimer();
