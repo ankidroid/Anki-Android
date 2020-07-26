@@ -38,22 +38,15 @@ public abstract class Undoable {
      * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
     public abstract long undo(Collection col);
 
-    public static class UndoableFlushAll extends Undoable {
-        private final List<Card> mCards;
-        private final long mCid;
-        public UndoableFlushAll(DismissType dt, List<Card> cards, long cid) {
-            super(dt);
-            mCards = cards;
-            mCid = cid;
-        }
-
-        public long undo(Collection col) {
-            Timber.i("Undo: Bury Card");
-            for (Card cc : mCards) {
-                cc.flush(false);
+    public static Undoable revertToProvidedState (DismissType dt, List<Card> cards, long cid){
+        return new Undoable(dt) {
+            public long undo(Collection col) {
+                Timber.i("Undo: Bury Card");
+                for (Card cc : cards) {
+                    cc.flush(false);
+                }
+                return cid;
             }
-            return mCid;
-        }
+        };
     }
-
 }
