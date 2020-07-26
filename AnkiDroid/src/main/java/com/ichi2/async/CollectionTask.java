@@ -53,7 +53,6 @@ import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
-import com.ichi2.utils.SyncStatus;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -88,7 +87,6 @@ import static com.ichi2.libanki.Undoable.*;
 public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> {
 
     public enum TASK_TYPE {
-        SAVE_COLLECTION,
         ANSWER_CARD,
         ADD_NOTE,
         UPDATE_NOTE,
@@ -346,10 +344,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         switch (mType) {
             case LOAD_DECK_COUNTS:
                 return doInBackgroundLoadDeckCounts();
-
-            case SAVE_COLLECTION:
-                doInBackgroundSaveCollection(param);
-                break;
 
             case ANSWER_CARD:
                 return doInBackgroundAnswerCard(param);
@@ -609,26 +603,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             return null;
         }
     }
-
-
-    private void doInBackgroundSaveCollection(TaskData param) {
-        Timber.d("doInBackgroundSaveCollection");
-        Collection col = getCol();
-        if (col != null) {
-            try {
-                // param: syncIgnoresDatabaseModification
-                if (param.getBoolean()) {
-                    SyncStatus.ignoreDatabaseModification(() -> col.save());
-                } else {
-                    col.save();
-                }
-            } catch (RuntimeException e) {
-                Timber.e(e, "Error on saving deck in background");
-            }
-        }
-    }
-
-
 
     private static class UndoSuspendCard extends Undoable {
         private final Card suspendedCard;

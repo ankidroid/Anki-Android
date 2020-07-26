@@ -15,11 +15,12 @@ import com.ichi2.async.CollectionTask;
 import java.util.Calendar;
 
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+
+import com.ichi2.async.TaskAndListener;
 import com.ichi2.async.TaskData;
-import com.ichi2.async.TaskListener;
-import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.Collection;
+import com.ichi2.utils.SyncStatus;
 
 public class UIUtils {
 
@@ -119,13 +120,33 @@ public class UIUtils {
     }
 
 
+
+
     public static void saveCollectionInBackground() {
         saveCollectionInBackground(false);
     }
 
     public static void saveCollectionInBackground(boolean syncIgnoresDatabaseModification) {
         if (CollectionHelper.getInstance().colIsOpen()) {
-            TaskListener listener = new TaskListener() {
+            new TaskAndListener() {
+                public TaskData background(CollectionTask collectionTask) {
+                    Timber.d("doInBackgroundSaveCollection");
+                    Collection col = collectionTask.getCol();
+                    if (col != null) {
+                        try {
+                            if (syncIgnoresDatabaseModification) {
+                                SyncStatus.ignoreDatabaseModification(() -> col.save());
+                            } else {
+                                col.save();
+                            }
+                        } catch (RuntimeException e) {
+                            Timber.e(e, "Error on saving deck in background");
+                        }
+                    }
+                    return null;
+
+                }
+
                 @Override
                 public void onPreExecute() {
                     Timber.d("saveCollectionInBackground: start");
@@ -136,8 +157,7 @@ public class UIUtils {
                 public void onPostExecute(TaskData result) {
                     Timber.d("saveCollectionInBackground: finished");
                 }
-            };
-            CollectionTask.launchCollectionTask(SAVE_COLLECTION, listener, new TaskData(syncIgnoresDatabaseModification));
+            }.launch();
         }
     }
 }
