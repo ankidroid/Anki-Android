@@ -27,6 +27,7 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Undoable;
@@ -67,17 +68,6 @@ import static com.ichi2.libanki.Undoable.*;
  */
 public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> {
 
-    public enum TASK_TYPE {
-        DISMISS_MULTI,
-        REPAIR_COLLECTION,
-        LOAD_DECK_COUNTS,
-        REBUILD_CRAM,
-        SEARCH_CARDS,
-        RENDER_BROWSER_QA,
-        COUNT_MODELS,
-        CHECK_CARD_SELECTION,
-    }
-
     /**
      * A reference to the application context to use to fetch the current Collection object.
      */
@@ -104,23 +94,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * @param type of the task to start
      * @return the newly created task
      */
-    public static CollectionTask launchCollectionTask(TASK_TYPE type) {
-        return launchCollectionTask(type, null, null);
-    }
-
-    /**
-     * Starts a new {@link CollectionTask}, with no listener
-     * <p>
-     * Tasks will be executed serially, in the order in which they are started.
-     * <p>
-     * This method must be called on the main thread.
-     *
-     * @param type of the task to start
-     * @param param to pass to the task
-     * @return the newly created task
-     */
-    public static CollectionTask launchCollectionTask(TASK_TYPE type, TaskData param) {
-        return launchCollectionTask(type, null, param);
+    public static CollectionTask launchCollectionTask(Task type) {
+        return launchCollectionTask(null, type);
     }
 
     /**
@@ -134,27 +109,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    public static CollectionTask launchCollectionTask(TASK_TYPE type, @Nullable TaskListener listener) {
-        // Start new task
-        return launchCollectionTask(type, listener, null);
-    }
-
-    /**
-     * Starts a new {@link CollectionTask}, with a listener provided for callbacks during execution
-     * <p>
-     * Tasks will be executed serially, in the order in which they are started.
-     * <p>
-     * This method must be called on the main thread.
-     *
-     * @param type of the task to start
-     * @param listener to the status and result of the task, may be null
-     * @param param to pass to the task
-     * @return the newly created task
-     */
-    public static CollectionTask launchCollectionTask(TASK_TYPE type, @Nullable TaskListener listener, TaskData param) {
+    public static CollectionTask launchCollectionTask(@Nullable TaskListener listener, Task type) {
         // Start new task
         CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
-        newTask.execute(param);
+        newTask.execute();
         return newTask;
     }
 
@@ -226,8 +184,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         return CollectionHelper.getInstance().getCol(mContext);
     }
 
-    /** Cancel all tasks of type taskType*/
-    public static void cancelAllTasks(TASK_TYPE taskType) {
+    /** Cancel all tasks with a specific task code*/
+    public static void cancelAllTasks(Task taskType) {
         int count = 0;
         // safeCancel modifies sTasks, so iterate over a concrete copy
         for (CollectionTask task: new ArrayList<>(sTasks)) {
@@ -242,14 +200,31 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             Timber.i("Cancelled %d instances of task %s", count, taskType);
         }
     }
+    /** Cancel all tasks of type taskType*/
+    public static void cancelAllTasks(Class taskType) {
+        int count = 0;
+        synchronized (sTasks) {
+            for (CollectionTask task: sTasks) {
+                if (task.getClass() != taskType) {
+                    continue;
+                }
+                if (task.safeCancel()) {
+                    count ++;
+                }
+            }
+        }
+        if (count > 0) {
+            Timber.i("Cancelled %d instances of task %s", count, taskType);
+        }
+    }
 
 
-    private final TASK_TYPE mType;
+    private final Task mType;
     private final TaskListener mListener;
     private CollectionTask mPreviousTask;
 
 
-    private CollectionTask(TASK_TYPE type, TaskListener listener, CollectionTask previousTask) {
+    private CollectionTask(Task type, TaskListener listener, CollectionTask previousTask) {
         mType = type;
         mListener = listener;
         mPreviousTask = previousTask;
@@ -291,12 +266,12 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
-        if (mType != TASK_TYPE.REPAIR_COLLECTION && CollectionHelper.getInstance().getColSafe(mContext) == null) {
+        if (!(mType instanceof DeckPicker.RepairCollection) && CollectionHelper.getInstance().getColSafe(mContext) == null) {
             Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", mType);
             return null;
         }
         // Actually execute the task now that we are at the front of the queue.
-        return doInBackgroundCode(param);
+        return mType.background(this);
     }
 
 
@@ -478,10 +453,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     };
 
-
-    public TaskData doInBackgroundCode(TaskData param) {
-        return param.getTask().background(this);
-    }
 
     /**
      * Helper class for allowing inner function to publish progress of an AsyncTask.

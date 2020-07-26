@@ -21,7 +21,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.testutils.CollectionUtils;
 
 import org.junit.Test;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

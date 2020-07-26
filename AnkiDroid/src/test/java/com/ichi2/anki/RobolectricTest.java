@@ -24,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.Task;
 import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
@@ -284,7 +285,7 @@ public class RobolectricTest {
     }
 
 
-    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, TaskData data, int timeoutMs) throws InterruptedException {
+    protected synchronized void waitForTask(Task taskType, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
         TaskListener listener = new TaskListener() {
             @Override
@@ -301,7 +302,7 @@ public class RobolectricTest {
                 }
             }
         };
-        CollectionTask.launchCollectionTask(taskType, listener, data);
+        CollectionTask.launchCollectionTask(listener, taskType);
 
         wait(timeoutMs);
 

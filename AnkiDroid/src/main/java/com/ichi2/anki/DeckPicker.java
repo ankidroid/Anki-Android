@@ -111,6 +111,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.Task;
 import com.ichi2.async.TaskAndListener;
 import com.ichi2.async.TaskAndListenerWithContext;
+import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.AnkiPackageExporter;
@@ -149,8 +150,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import timber.log.Timber;
-
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
 import org.apache.commons.compress.archivers.zip.ZipFile;
@@ -1088,7 +1087,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         /** Complete task and enqueue fetching nonessential data for
          * startup. */
-        CollectionTask.launchCollectionTask(null, new TaskData(new ResumeTask()));
+        CollectionTask.launchCollectionTask(new ResumeTask());
         // Update sync status (if we've come back from a screen)
         supportInvalidateOptionsMenu();
     }
@@ -1114,7 +1113,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.d("onPause()");
         mActivityPaused = true;
         // The deck count will be computed on resume. No need to compute it now
-        CollectionTask.cancelAllTasks(LOAD_DECK_COUNTS);
+        CollectionTask.cancelAllTasks(UpdateDeckList.class);
         super.onPause();
     }
 
@@ -1510,7 +1509,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        CollectionTask.launchCollectionTask(null, undoTaskListener(isReview), new TaskData(new Undoable.Task()));
+        CollectionTask.launchCollectionTask(undoTaskListener(isReview), new Undoable.Task());
     }
 
 
@@ -1629,7 +1628,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private static class RepairCollection extends TaskAndListenerWithContext<DeckPicker>{
+    public static class RepairCollection extends TaskAndListenerWithContext<DeckPicker>{
         public RepairCollection(DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -1665,7 +1664,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback method to handle repairing deck
     public void repairCollection() {
         Timber.i("Repairing the Collection");
-        new RepairCollection(this).launch(REPAIR_COLLECTION);
+        new RepairCollection(this).launch();
     }
 
 
@@ -1691,7 +1690,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void performIntegrityCheck() {
         Timber.i("performIntegrityCheck()");
-        CollectionTask.launchCollectionTask(null, new CheckDatabaseListener(), new TaskData(new CheckDatabaseTask()));
+        CollectionTask.launchCollectionTask(new CheckDatabaseListener(), new CheckDatabaseTask());
     }
 
     private static class MediaCheck extends TaskAndListenerWithContext<DeckPicker>{
@@ -1721,14 +1720,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
-            if (result != null && result.getBoolean()) {
-                @SuppressWarnings("unchecked")
-                List<List<String>> checkList = (List<List<String>>) result.getObjArray()[0];
-                deckPicker.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
-            } else {
-                deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.check_media_failed));
-            }
-        }
+        };
     }
 
     public void mediaCheck() {
@@ -2227,7 +2219,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
             exportPath = new File(exportDir, newFileName);
         }
-        CollectionTask.launchCollectionTask(null, exportListener(), new TaskData(new ExportApkgTask(includeSched, includeMedia, did, exportPath.getPath())));
+        CollectionTask.launchCollectionTask(exportListener(), new ExportApkgTask(includeSched, includeMedia, did, exportPath.getPath()));
     }
 
 
@@ -2512,7 +2504,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
-        new UpdateDeckList(this).launch(LOAD_DECK_COUNTS);
+        new UpdateDeckList(this).launch();
     }
 
     public void __renderPage() {
@@ -2841,12 +2833,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void rebuildFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(REBUILD_CRAM, simpleProgressListener(), new TaskData(CollectionTask.sRebuildCram));
+        CollectionTask.launchCollectionTask(simpleProgressListener(), CollectionTask.sRebuildCram);
     }
 
     public void emptyFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(null, simpleProgressListener(), new TaskData(new CollectionTask.EmptyCram()));
+        CollectionTask.launchCollectionTask(simpleProgressListener(), new CollectionTask.EmptyCram());
     }
 
     @Override

@@ -223,8 +223,7 @@ public class TemporaryModel {
         /**
          * Handles everything for a model change at once - template add / deletes as well as content updates
          */
-        CollectionTask.launchCollectionTask(null, listener,
-                                            new TaskData(new SaveToDatabaseTask(mEditedModel, getAdjustedTemplateChanges())));
+        CollectionTask.launchCollectionTask(listener, new SaveToDatabaseTask(mEditedModel, getAdjustedTemplateChanges()));
     }
 
 

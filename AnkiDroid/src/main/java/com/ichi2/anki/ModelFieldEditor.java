@@ -207,10 +207,10 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                     } else {
                         //Name is valid, now field is added
                         changeHandler listener = changeFieldHandler();
-                        TaskData task = new TaskData(new AddFieldTask(mMod, fieldName));
+                        AddFieldTask task = new AddFieldTask(mMod, fieldName);
                         try {
                             mCol.modSchema();
-                            CollectionTask.launchCollectionTask(null, listener, task);
+                            CollectionTask.launchCollectionTask(listener, task);
                         } catch (ConfirmModSchemaException e) {
 
                             //Create dialogue to for schema change
@@ -220,7 +220,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                                 mCol.modSchemaNoCheck();
                                 String fieldName1 = mFieldNameInput.getText().toString()
                                         .replaceAll("[\\n\\r]", "");
-                                CollectionTask.launchCollectionTask(null, listener, task);
+                                CollectionTask.launchCollectionTask(listener, task);
                                 dismissContextMenu();
                             };
 
@@ -294,7 +294,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
 
     private void deleteField() {
         JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
-        CollectionTask.launchCollectionTask(null, changeFieldHandler(), new TaskData(new DeleteFieldTask(mMod, field)));
+        CollectionTask.launchCollectionTask(changeFieldHandler(), new DeleteFieldTask(mMod, field));
     }
 
 
@@ -403,10 +403,10 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                             /**
                              * Repositions the given field in the given model
                              */
-                            TaskData task = new TaskData(new RepositionFieldDialogTask(mMod, field, pos - 1));
+                            RepositionFieldDialogTask task = new RepositionFieldDialogTask(mMod, field, pos - 1);
                             try {
                                 mCol.modSchema();
-                                CollectionTask.launchCollectionTask(null, listener, task);
+                                CollectionTask.launchCollectionTask(listener, task);
                             } catch (ConfirmModSchemaException e) {
 
                                 // Handle mod schema confirmation
@@ -417,8 +417,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                                         mCol.modSchemaNoCheck();
                                         String newPosition1 = mFieldNameInput.getText().toString();
                                         int pos1 = Integer.parseInt(newPosition1);
-                                        CollectionTask.launchCollectionTask(null,
-                                                listener, task);
+                                        CollectionTask.launchCollectionTask(listener, task);
                                         dismissContextMenu();
                                     } catch (JSONException e1) {
                                         throw new RuntimeException(e1);
@@ -498,17 +497,17 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
      */
     private void sortByField() {
         changeHandler listener = changeFieldHandler();
-        TaskData task = new TaskData(new SortByFieldTask(mMod, mCurrentPos));
+        SortByFieldTask task = new SortByFieldTask(mMod, mCurrentPos);
         try {
             mCol.modSchema();
-            CollectionTask.launchCollectionTask(null, listener, task);
+            CollectionTask.launchCollectionTask(listener, task);
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
             ConfirmationDialog c = new ConfirmationDialog();
             c.setArgs(getResources().getString(R.string.full_sync_confirmation));
             Runnable confirm = () -> {
                 mCol.modSchemaNoCheck();
-            CollectionTask.launchCollectionTask(null, listener, task);
+                CollectionTask.launchCollectionTask(listener, task);
                 dismissContextMenu();
             };
             c.setConfirm(confirm);

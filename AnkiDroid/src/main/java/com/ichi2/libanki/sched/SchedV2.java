@@ -709,7 +709,7 @@ public class SchedV2 extends AbstractSched {
             };
             return null;
         };
-        CollectionTask.launchCollectionTask(null, new TaskData(task));
+        CollectionTask.launchCollectionTask(task);
     }
 
 

@@ -70,7 +70,6 @@ import timber.log.Timber;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
 
@@ -235,7 +234,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         getCol().startTimebox();
-        CollectionTask.launchCollectionTask(null, answerCard, new TaskData(new AnswerCard(false)));
+        new AnswerCard(false).launch();
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -464,8 +463,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days ->
-            CollectionTask.launchCollectionTask(DISMISS_MULTI, mRescheduleCardHandler,
-                    new TaskData(new CardBrowser.RescheduleTask(new long[]{mCurrentCard.getId()}, days))
+            CollectionTask.launchCollectionTask(mRescheduleCardHandler,
+                                                new CardBrowser.RescheduleTask(new long[]{mCurrentCard.getId()}, days)
             );
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
 
@@ -483,8 +482,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         dialog.setArgs(title, message);
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
-            CollectionTask.launchCollectionTask(DISMISS_MULTI, mResetProgressCardHandler,
-                    new TaskData(new CardBrowser.ResetTask(new long[]{mCurrentCard.getId()})));
+            CollectionTask.launchCollectionTask(mResetProgressCardHandler,
+                                                new CardBrowser.ResetTask(new long[]{mCurrentCard.getId()}));
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);

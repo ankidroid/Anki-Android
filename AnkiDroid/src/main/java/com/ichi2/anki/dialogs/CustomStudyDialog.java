@@ -57,7 +57,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
 
@@ -481,7 +480,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
-        CollectionTask.launchCollectionTask(REBUILD_CRAM, createCustomStudySessionListener(), new TaskData(CollectionTask.sRebuildCram));
+        CollectionTask.launchCollectionTask(createCustomStudySessionListener(), CollectionTask.sRebuildCram);
 
         // Hide the dialogs
         activity.dismissAllDialogFragments();

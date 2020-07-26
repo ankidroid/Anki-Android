@@ -56,7 +56,6 @@ import java.util.Comparator;
 import java.util.Random;
 
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
 
@@ -99,8 +98,7 @@ public class ModelBrowser extends AnkiActivity {
      * loading bar is necessary because card count per model is not cached *
      */
     private void loadingModels() {
-        LoadingModels loadingModels = new LoadingModels(this);
-        CollectionTask.launchCollectionTask(COUNT_MODELS, loadingModels, new TaskData(loadingModels));
+        new LoadingModels(this).launch();
     }
 
     private static class LoadingModels extends TaskAndListenerWithContext<ModelBrowser> {
@@ -277,10 +275,9 @@ public class ModelBrowser extends AnkiActivity {
      *
      * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
      */
-
     @Override
     public void onDestroy() {
-        CollectionTask.cancelAllTasks(COUNT_MODELS);
+        CollectionTask.cancelAllTasks(LoadingModels.class);
         super.onDestroy();
     }
 

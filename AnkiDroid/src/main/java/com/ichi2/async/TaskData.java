@@ -22,11 +22,6 @@ public class TaskData {
     private Context mContext;
     private int mType;
     private Object[] mObjects;
-    private Task mTask;
-
-    public TaskData(Task task) {
-        mTask = task;
-    }
 
     public TaskData(Object[] obj) {
         mObjects = obj;
@@ -199,10 +194,6 @@ public class TaskData {
 
     public int getType() {
         return mType;
-    }
-
-    public Task getTask() {
-        return mTask;
     }
 
     public Object[] getObjArray() {
