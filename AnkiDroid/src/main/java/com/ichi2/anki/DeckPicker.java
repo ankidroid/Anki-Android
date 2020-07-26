@@ -2446,18 +2446,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private static class UpdateDeckList extends TaskAndListenerWithContext<DeckPicker, TaskData, TaskData>{
+    private static class UpdateDeckList extends TaskAndListenerWithContext<DeckPicker, TaskData, List<DeckDueTreeNode>>{
         public UpdateDeckList(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public List<DeckDueTreeNode> background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundLoadDeckCounts");
             Collection col = collectionTask.getCol();
             try {
                 // Get due tree
-                Object[] o = new Object[] {col.getSched().deckDueTree(collectionTask)};
-                return new TaskData(o);
+                return col.getSched().deckDueTree(collectionTask);
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundLoadDeckCounts - error");
                 return null;
@@ -2474,19 +2473,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, List<DeckDueTreeNode> dueTree) {
             Timber.i("Updating deck list UI");
             deckPicker.hideProgressBar();
             // Make sure the fragment is visible
             if (deckPicker.mFragmented) {
                 deckPicker.mStudyoptionsFrame.setVisibility(View.VISIBLE);
             }
-            if (result == null) {
+            if (dueTree == null) {
                 Timber.e("null result loading deck counts");
                 deckPicker.showCollectionErrorDialog();
                 return;
             }
-            deckPicker.mDueTree = (List<DeckDueTreeNode>) result.getObjArray()[0];
+            deckPicker.mDueTree = dueTree;
 
             deckPicker.__renderPage();
             // Update the mini statistics bar as well
