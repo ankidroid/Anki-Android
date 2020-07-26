@@ -98,7 +98,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         REBUILD_CRAM,
         EMPTY_CRAM,
         SEARCH_CARDS,
-        REORDER,
         CONF_CHANGE,
         CONF_RESET,
         CONF_REMOVE,
@@ -365,9 +364,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case EMPTY_CRAM:
                 return doInBackgroundEmptyCram();
-
-            case REORDER:
-                return doInBackgroundReorder(param);
 
             case CONF_CHANGE:
                 return doInBackgroundConfChange(param);
@@ -1128,17 +1124,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         col.getSched().emptyDyn(col.getDecks().selected());
         return StudyOptionsFragment.updateValuesFromDeck(this, true);
-    }
-
-
-
-    private TaskData doInBackgroundReorder(TaskData param) {
-        Timber.d("doInBackgroundReorder");
-        Collection col = getCol();
-        Object[] data = param.getObjArray();
-        DeckConfig conf = (DeckConfig) data[0];
-        col.getSched().resortConf(conf);
-        return new TaskData(true);
     }
 
 

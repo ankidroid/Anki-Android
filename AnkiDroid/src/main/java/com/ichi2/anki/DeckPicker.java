@@ -108,6 +108,7 @@ import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.Task;
 import com.ichi2.async.TaskAndListenerWithContext;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;

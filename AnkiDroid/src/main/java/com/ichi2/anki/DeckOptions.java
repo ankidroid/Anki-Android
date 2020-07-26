@@ -45,6 +45,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.Task;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
@@ -213,8 +214,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 int oldValue = mOptions.getJSONObject("new").getInt("order");
                                 if (oldValue != newValue) {
                                     mOptions.getJSONObject("new").put("order", newValue);
-                                    CollectionTask.launchCollectionTask(REORDER, confChangeHandler(),
-                                            new TaskData(new Object[] {mOptions}));
+                                    CollectionTask.launchCollectionTask(null, confChangeHandler(),
+                                            new TaskData(new NewOrderTask(mOptions)));
                                 }
                                 mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
                                 break;
@@ -609,6 +610,17 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             return null;
         }
 
+    }
+    private static class NewOrderTask implements Task {
+        private final DeckConfig mConf;
+        public NewOrderTask(DeckConfig conf) {
+            mConf = conf;
+        }
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundReorder");
+            collectionTask.getCol().getSched().resortConf(mConf);
+            return new TaskData(true);
+        }
     }
 
     private static class ConfChangeHandler extends TaskListenerWithContext<DeckPreferenceHack> {
