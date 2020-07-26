@@ -90,6 +90,33 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private BroadcastReceiver mUnmountReceiver = null;
     private DeckPreferenceHack mPref;
 
+    // Should be called in background. Either to change one task conf, or to change all conf of subdeck of a deck
+    public static TaskData confChange(CollectionTask task, Deck deck, DeckConfig conf) {
+        Timber.d("doInBackgroundConfChange");
+        Collection col = task.getCol();
+        try {
+            long newConfId = conf.getLong("id");
+            // If new config has a different sorting order, reorder the cards
+            int oldOrder = col.getDecks().getConf(deck.getLong("conf")).getJSONObject("new").getInt("order");
+            int newOrder = col.getDecks().getConf(newConfId).getJSONObject("new").getInt("order");
+            if (oldOrder != newOrder) {
+                switch (newOrder) {
+                    case 0:
+                        col.getSched().randomizeCards(deck.getLong("id"));
+                        break;
+                    case 1:
+                        col.getSched().orderCards(deck.getLong("id"));
+                        break;
+                }
+            }
+            col.getDecks().setConf(deck, newConfId);
+            col.save();
+            return new TaskData(true);
+        } catch (JSONException e) {
+            return new TaskData(false);
+        }
+    }
+
     public class DeckPreferenceHack implements SharedPreferences {
 
         private Map<String, String> mValues = new HashMap<>();
@@ -304,8 +331,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "deckConf": {
                                 long newConfId = Long.parseLong((String) value);
                                 mOptions = mCol.getDecks().getConf(newConfId);
-                                CollectionTask.launchCollectionTask(CONF_CHANGE, confChangeHandler(),
-                                        new TaskData(new Object[] {mDeck, mOptions}));
+                                CollectionTask.launchCollectionTask(null, confChangeHandler(),
+                                        new TaskData(new DeckConfTask(mDeck, mOptions)));
                                 break;
                             }
                             case "confRename": {
@@ -611,6 +638,18 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         }
 
     }
+    private static class DeckConfTask implements Task {
+        private final Deck mDeck;
+        private final DeckConfig mConf;
+        public DeckConfTask(Deck deck, DeckConfig conf) {
+            this.mDeck = deck;
+            this.mConf = conf;
+        }
+        public TaskData background(CollectionTask collectionTask) {
+            return confChange(collectionTask, mDeck, mConf);
+        }
+    }
+
     private static class NewOrderTask implements Task {
         private final DeckConfig mConf;
         public NewOrderTask(DeckConfig conf) {

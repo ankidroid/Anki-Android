@@ -28,6 +28,7 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.DeckOptions;
 import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.TemporaryModel;
@@ -98,7 +99,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         REBUILD_CRAM,
         EMPTY_CRAM,
         SEARCH_CARDS,
-        CONF_CHANGE,
         CONF_RESET,
         CONF_REMOVE,
         CONF_SET_SUBDECKS,
@@ -364,9 +364,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case EMPTY_CRAM:
                 return doInBackgroundEmptyCram();
-
-            case CONF_CHANGE:
-                return doInBackgroundConfChange(param);
 
             case CONF_RESET:
                 return doInBackgroundConfReset(param);
@@ -1127,36 +1124,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    private TaskData doInBackgroundConfChange(TaskData param) {
-        Timber.d("doInBackgroundConfChange");
-        Collection col = getCol();
-        Object[] data = param.getObjArray();
-        Deck deck = (Deck) data[0];
-        DeckConfig conf = (DeckConfig) data[1];
-        try {
-            long newConfId = conf.getLong("id");
-            // If new config has a different sorting order, reorder the cards
-            int oldOrder = col.getDecks().getConf(deck.getLong("conf")).getJSONObject("new").getInt("order");
-            int newOrder = col.getDecks().getConf(newConfId).getJSONObject("new").getInt("order");
-            if (oldOrder != newOrder) {
-                switch (newOrder) {
-                    case 0:
-                        col.getSched().randomizeCards(deck.getLong("id"));
-                        break;
-                    case 1:
-                        col.getSched().orderCards(deck.getLong("id"));
-                        break;
-                }
-            }
-            col.getDecks().setConf(deck, newConfId);
-            col.save();
-            return new TaskData(true);
-        } catch (JSONException e) {
-            return new TaskData(false);
-        }
-    }
-
-
     private TaskData doInBackgroundConfReset(TaskData param) {
         Timber.d("doInBackgroundConfReset");
         Collection col = getCol();
@@ -1206,8 +1173,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 if (child.getInt("dyn") == 1) {
                     continue;
                 }
-                TaskData newParam = new TaskData(new Object[] { child, conf });
-                boolean changed = doInBackgroundConfChange(newParam).getBoolean();
+                boolean changed = DeckOptions.confChange(this, child, conf).getBoolean();
                 if (!changed) {
                     return new TaskData(false);
                 }
