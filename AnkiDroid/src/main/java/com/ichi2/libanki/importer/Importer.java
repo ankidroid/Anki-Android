@@ -44,7 +44,7 @@ public abstract class Importer {
     protected Collection mSrc;
 
     protected Context mContext;
-    protected CollectionTask.ProgressCallback<TaskData> mProgress;
+    protected CollectionTask.ProgressCallback<String> mProgress;
 
     public Importer(Collection col, String file) {
         mFile = file;
@@ -80,7 +80,7 @@ public abstract class Importer {
      * ***********************************************************
      */
 
-    public void setProgressCallback(CollectionTask.ProgressCallback<TaskData> progressCallback) {
+    public void setProgressCallback(CollectionTask.ProgressCallback<String> progressCallback) {
         mProgress = progressCallback;
     }
 
