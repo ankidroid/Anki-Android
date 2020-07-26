@@ -495,7 +495,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     // This method should be called in background.
     // Either to empty/delete cram, or to update counts
-    public static TaskData updateValuesFromDeck(CollectionTask<?, ?> task, boolean resetSched) {
+    public static int[] updateValuesFromDeck(CollectionTask<?, ?> task, boolean resetSched) {
         Timber.d("doInBackgroundUpdateValuesFromDeck");
         try {
             Collection col = task.getCol();
@@ -507,15 +507,15 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             int[] counts = sched.counts();
             int totalNewCount = sched.totalNewForCurrentDeck();
             int totalCount = sched.cardCount();
-            return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount,
-                    totalCount, sched.eta(counts)});
+            return new int[]{counts[0], counts[1], counts[2], totalNewCount,
+                                             totalCount, sched.eta(counts)};
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");
             return null;
         }
     }
 
-    private static class UpdateValuesFromDeck implements Task<TaskData, TaskData> {
+    private static class UpdateValuesFromDeck implements Task<TaskData, int[]> {
         private final boolean mResetSched;
 
 
@@ -524,7 +524,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
 
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public int[] background(CollectionTask<TaskData, ?> collectionTask) {
             return updateValuesFromDeck(collectionTask, mResetSched);
         }
     }
@@ -550,19 +550,18 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
      *                        to reflect the latest values.
      */
-    private TaskListener<TaskData, TaskData> getCollectionTaskListener(final boolean refreshDecklist) {
-        return new TaskListener<TaskData, TaskData>() {
+    private TaskListener<TaskData, int[]> getCollectionTaskListener(final boolean refreshDecklist) {
+        return new TaskListener<TaskData, int[]>() {
             @Override
             public void onPreExecute() {
 
             }
 
             @Override
-            public void onPostExecute(TaskData result) {
+            public void onPostExecute(int[] obj) {
                 dismissProgressDialog();
-                if (result != null) {
+                if (obj != null) {
                     // Get the return values back from the AsyncTask
-                    Object[] obj = result.getObjArray();
                     int newCards = (Integer) obj[0];
                     int lrnCards = (Integer) obj[1];
                     int revCards = (Integer) obj[2];

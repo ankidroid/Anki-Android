@@ -504,7 +504,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     private CreateCustomStudySessionListener createCustomStudySessionListener(){
         return new CreateCustomStudySessionListener(getAnkiActivity());
     }
-    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, TaskData, TaskData> {
+    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, TaskData, int[]> {
         public CreateCustomStudySessionListener(AnkiActivity activity) {
             super(activity);
         }
@@ -517,7 +517,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
 
         @Override
-        public void actualOnPostExecute(@NonNull AnkiActivity activity, TaskData result) {
+        public void actualOnPostExecute(@NonNull AnkiActivity activity, int[] result) {
             activity.hideProgressBar();
             ((CustomStudyListener) activity).onCreateCustomStudySession();
         }

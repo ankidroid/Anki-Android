@@ -426,7 +426,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Pr
     }
 
 
-    public static final Task<TaskData, TaskData> sRebuildCram = (collectionTask) -> {
+    public static final Task<TaskData, int[]> sRebuildCram = (collectionTask) -> {
         Timber.d("doInBackgroundRebuildCram");
         Collection col = collectionTask.getCol();
         col.getSched().rebuildDyn(col.getDecks().selected());
@@ -434,9 +434,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<TaskData, Pr
     };
 
 
-    public static final class EmptyCram implements Task<TaskData, TaskData> {
+    public static final class EmptyCram implements Task<TaskData, int[]> {
         @Override
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public int[] background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundEmptyCram");
             Collection col = collectionTask.getCol();
             col.getSched().emptyDyn(col.getDecks().selected());
