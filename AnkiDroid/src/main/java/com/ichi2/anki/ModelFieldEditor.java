@@ -167,20 +167,20 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     // CONTEXT MENU DIALOGUES
     // ----------------------------------------------------------------------------
 
-    private static class AddFieldTask implements Task<TaskData, TaskData> {
+    private static class AddFieldTask implements Task<TaskData, Boolean> {
         private final String mFieldName;
         private final Model mModel;
         public AddFieldTask(Model model, String fieldName) {
             this.mFieldName = fieldName;
             this.mModel = model;
         }
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask)  {
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask)  {
             Timber.d("doInBackgroundRepositionField");
 
             Collection col = collectionTask.getCol();
             col.getModels().addFieldModChanged(mModel, col.getModels().newField(mFieldName));
             col.save();
-            return new TaskData(true);
+            return true;
         }
     }
 
@@ -268,7 +268,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         }
     }
 
-    private static class DeleteFieldTask implements Task<TaskData, TaskData> {
+    private static class DeleteFieldTask implements Task<TaskData, Boolean> {
         private final Model mModel;
         private final JSONObject mField;
         public DeleteFieldTask(Model mModel, JSONObject mField) {
@@ -276,7 +276,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             this.mField = mField;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackGroundDeleteField");
 
 
@@ -286,9 +286,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 col.save();
             } catch (ConfirmModSchemaException e) {
                 //Should never be reached
-                return new TaskData(false);
+                return false;
             }
-            return new TaskData(true);
+            return true;
         }
     }
 
@@ -347,7 +347,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 .show();
     }
 
-    private static class RepositionFieldDialogTask implements Task<TaskData, TaskData> {
+    private static class RepositionFieldDialogTask implements Task<TaskData, Boolean> {
         private final Model mModel;
         private final JSONObject mField;
         private final int mIndex;
@@ -358,7 +358,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             this.mIndex = mIndex;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundRepositionField");
             Collection col = collectionTask.getCol();
             try {
@@ -366,9 +366,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 col.save();
             } catch (ConfirmModSchemaException e) {
                 //Should never be reached
-                return new TaskData(false);
+                return false;
             }
-            return new TaskData(true);
+            return true;
         }
     }
 
@@ -470,14 +470,15 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         fullRefreshList();
     }
 
-    private static class SortByFieldTask implements Task<TaskData, TaskData> {
+    private static class SortByFieldTask implements Task<TaskData, Boolean> {
         private final Model mModel;
         private final int mIdx;
         public SortByFieldTask(Model model, int idx) {
             this.mModel = model;
             this.mIdx = idx;
         }
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask)  {
+
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask)  {
             try {
                 Timber.d("doInBackgroundChangeSortField");
                 Collection col = collectionTask.getCol();
@@ -485,9 +486,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 col.save();
             } catch (Exception e) {
                 Timber.e(e, "Error changing sort field");
-                return new TaskData(false);
+                return false;
             }
-            return new TaskData(true);
+            return true;
         }
     }
 
@@ -564,7 +565,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     private changeHandler changeFieldHandler() {
         return new changeHandler(this);
     }
-    private static class changeHandler extends TaskListenerWithContext<ModelFieldEditor, TaskData, TaskData> {
+    private static class changeHandler extends TaskListenerWithContext<ModelFieldEditor, TaskData, Boolean> {
         public changeHandler(ModelFieldEditor modelFieldEditor) {
             super(modelFieldEditor);
         }
@@ -578,8 +579,8 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull ModelFieldEditor modelFieldEditor, TaskData result) {
-            if (!result.getBoolean()) {
+        public void actualOnPostExecute(@NonNull ModelFieldEditor modelFieldEditor, Boolean result) {
+            if (!result) {
                 modelFieldEditor.closeActivity(DeckPicker.RESULT_DB_ERROR);
             }
 
