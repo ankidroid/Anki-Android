@@ -1350,7 +1350,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void undo() {
         if (isUndoAvailable()) {
             // We only use the listener part of answerCard, not its background part.
-            CollectionTask.launchCollectionTask(UNDO, new AnswerCard(false));
+            CollectionTask.launchCollectionTask(null, new AnswerCard(false), new TaskData(new Undoable.Task()));
         }
     }
 

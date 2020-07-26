@@ -1242,7 +1242,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_undo:
                 if (getCol().undoAvailable()) {
-                    CollectionTask.launchCollectionTask(UNDO, mUndoHandler);
+                    CollectionTask.launchCollectionTask(null, mUndoHandler, new TaskData(new Undoable.Task()));
                 }
                 return true;
             case R.id.action_select_none:
@@ -1677,11 +1677,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
             browser.mUndoSnackbar = UIUtils.showSnackbar(browser, String.format(browser.getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CollectionTask.launchCollectionTask(UNDO, browser.mUndoHandler);
+                    CollectionTask.launchCollectionTask(null, browser.mUndoHandler, new TaskData(new Undoable.Task()));
                 }
             }, browser.mCardsListView, null);
         }
-    };
+    }
 
     public static class ChangeDeckMulti extends CollectionTask.DismissMulti {
         private long mNewDid;
@@ -1999,7 +1999,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             browser.mUndoSnackbar = UIUtils.showSnackbar(browser, browser.getString(R.string.deleted_message), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CollectionTask.launchCollectionTask(UNDO, browser.mUndoHandler);
+                    CollectionTask.launchCollectionTask(null, browser.mUndoHandler, new TaskData(new Undoable.Task()));
                 }
             }, browser.mCardsListView, null);
         }

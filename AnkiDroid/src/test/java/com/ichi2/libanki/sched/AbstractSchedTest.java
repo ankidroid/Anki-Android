@@ -31,6 +31,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONArray;
+import com.ichi2.libanki.Undoable;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +47,7 @@ import timber.log.Timber;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.launchCollectionTask;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -96,7 +98,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
         sched.answerCard(cardBeforeUndo, EASE_3);
 
-        waitForTask(UNDO, 5000);
+        waitForTask(null, new TaskData(new Undoable.Task()), 5000);
 
         int[] countsAfterUndo = sched.counts();
 
@@ -125,7 +127,7 @@ public class AbstractSchedTest extends RobolectricTest {
         sched.answerCard(card, 3);
         sched.getCard();
         final boolean[] executed = {false};
-        CollectionTask.launchCollectionTask(UNDO,
+        launchCollectionTask(null,
                 new TaskListener() {
                     Card card;
                     @Override
@@ -145,7 +147,8 @@ public class AbstractSchedTest extends RobolectricTest {
                         assertThat(sched.counts(card)[0], is(10));
                         executed[0] = true;
                     }
-                });
+                },
+                new TaskData(new Undoable.Task()));
         waitForAsyncTasksToComplete();
         assertTrue(executed[0]);
     }

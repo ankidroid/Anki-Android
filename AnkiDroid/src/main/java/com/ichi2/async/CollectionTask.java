@@ -68,7 +68,6 @@ import static com.ichi2.libanki.Undoable.*;
 public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> {
 
     public enum TASK_TYPE {
-        UNDO,
         DISMISS_MULTI,
         CHECK_DATABASE,
         REPAIR_COLLECTION,
@@ -300,9 +299,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
 
-        case UNDO:
-            return doInBackgroundUndo();
-
         case CHECK_DATABASE:
             return doInBackgroundCheckDatabase();
 
@@ -472,48 +468,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             // (querying the cards again is unnecessarily expensive)
             return new TaskData(true, cards);
         }
-    }
-
-    private TaskData doInBackgroundUndo() {
-        Collection col = getCol();
-        AbstractSched sched = col.getSched();
-        try {
-            col.getDb().getDatabase().beginTransaction();
-            Card newCard = null;
-            try {
-                long cid = col.undo();
-                if (cid == NO_REVIEW) {
-                    // /* card schedule change undone, reset and get
-                    // new card */
-                    Timber.d("Single card non-review change undo succeeded");
-                    col.reset();
-                    newCard = sched.getCard();
-                } else if (cid == MULTI_CARD) {
-                    /* multi-card action undone, no action to take here */
-                    Timber.d("Multi-select undo succeeded");
-                } else {
-                    // cid is actually a card id.
-                    // a review was undone,
-                    /* card review undone, set up to review that card again */
-                    Timber.d("Single card review undo succeeded");
-                    newCard = col.getCard(cid);
-                    newCard.startTimer();
-                    col.reset();
-                    sched.deferReset(newCard);
-                    col.getSched().setCurrentCard(newCard);
-                }
-                // TODO: handle leech undoing properly
-                doProgress(new TaskData(newCard, 0));
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                col.getDb().getDatabase().endTransaction();
-            }
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
-            return new TaskData(false);
-        }
-        return new TaskData(true);
     }
 
 

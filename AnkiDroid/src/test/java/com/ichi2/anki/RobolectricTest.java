@@ -284,7 +284,7 @@ public class RobolectricTest {
     }
 
 
-    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
+    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, TaskData data, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
         TaskListener listener = new TaskListener() {
             @Override
@@ -301,7 +301,7 @@ public class RobolectricTest {
                 }
             }
         };
-        CollectionTask.launchCollectionTask(taskType, listener);
+        CollectionTask.launchCollectionTask(taskType, listener, data);
 
         wait(timeoutMs);
 
