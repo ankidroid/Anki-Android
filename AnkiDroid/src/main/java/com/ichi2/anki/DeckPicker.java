@@ -421,12 +421,26 @@ public class DeckPicker extends NavigationDrawerActivity implements
         dividerDecorator.setDrawable(divider);
         mRecyclerView.addItemDecoration(dividerDecorator);
 
+        //Add background to Deckpicker activity
+        View view = mFragmented ? findViewById(R.id.deckpicker_view) : findViewById(R.id.root_layout);
+        boolean hasDeckPickerBackground = false;
+        try {
+            hasDeckPickerBackground = applyDeckPickerBackground(view);
+        } catch (OutOfMemoryError e) { //6608 - OOM should be catchable here.
+            Timber.w(e, "Failed to apply background - OOM");
+            UIUtils.showThemedToast(this, getString(R.string.background_image_too_large), false);
+        } catch (Exception e) {
+            Timber.w(e, "Failed to apply background");
+            UIUtils.showThemedToast(this, getString(R.string.failed_to_apply_background_image, e.getLocalizedMessage()), false);
+        }
+
         // create and set an adapter for the RecyclerView
         mDeckListAdapter = new DeckAdapter(getLayoutInflater(), this);
         mDeckListAdapter.setDeckClickListener(mDeckClickListener);
         mDeckListAdapter.setCountsClickListener(mCountsClickListener);
         mDeckListAdapter.setDeckExpanderClickListener(mDeckExpanderClickListener);
         mDeckListAdapter.setDeckLongClickListener(mDeckLongClickListener);
+        mDeckListAdapter.enablePartialTransparencyForBackground(hasDeckPickerBackground);
         mRecyclerView.setAdapter(mDeckListAdapter);
 
         mPullToSyncWrapper = findViewById(R.id.pull_to_sync_wrapper);
@@ -445,18 +459,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         configureFloatingActionsMenu();
 
         mReviewSummaryTextView = (TextView) findViewById(R.id.today_stats_text_view);
-
-        //Add background to Deckpicker activity
-        View view = mFragmented ? findViewById(R.id.deckpicker_view) : findViewById(R.id.root_layout);
-        try {
-            applyDeckPickerBackground(view);
-        } catch (OutOfMemoryError e) { //6608 - OOM should be catchable here.
-            Timber.w(e, "Failed to apply background - OOM");
-            UIUtils.showThemedToast(this, getString(R.string.background_image_too_large), false);
-        } catch (Exception e) {
-            Timber.w(e, "Failed to apply background");
-            UIUtils.showThemedToast(this, getString(R.string.failed_to_apply_background_image, e.getLocalizedMessage()), false);
-        }
 
         // Hide the fragment until the counts have been loaded so that the Toolbar fills the whole screen on tablets
         if (mFragmented) {
@@ -487,22 +489,24 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     // throws doesn't seem to be checked by the compiler - consider it to be documentation
-    private void applyDeckPickerBackground(View view) throws OutOfMemoryError {
+    private boolean applyDeckPickerBackground(View view) throws OutOfMemoryError {
         //Allow the user to clear data and get back to a good state if they provide an invalid background.
         if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("deckPickerBackground", false)) {
             Timber.d("No DeckPicker background preference");
             view.setBackgroundResource(0);
-            return;
+            return false;
         }
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
         File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
         if (!imgFile.exists()) {
             Timber.d("No DeckPicker background image");
             view.setBackgroundResource(0);
+            return false;
         } else {
             Timber.i("Applying background");
             Drawable drawable = Drawable.createFromPath(imgFile.getAbsolutePath());
             view.setBackground(drawable);
+            return true;
         }
     }
 
