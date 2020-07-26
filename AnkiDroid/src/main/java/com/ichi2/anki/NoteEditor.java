@@ -183,7 +183,8 @@ public class NoteEditor extends AnkiActivity {
 
     private Note mEditorNote;
     @Nullable
-    public static Card mCurrentEditedCard;
+    /** Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
+    private Card mCurrentEditedCard;
     private ArrayList<String> mSelectedTags;
     private long mCurrentDid;
     private ArrayList<Long> mAllDeckIds;
