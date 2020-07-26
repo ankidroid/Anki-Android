@@ -90,7 +90,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private DeckPreferenceHack mPref;
 
     // Should be called in background. Either to change one task conf, or to change all conf of subdeck of a deck
-    public static TaskData confChange(CollectionTask<?, ?> task, Deck deck, DeckConfig conf) {
+    public static boolean confChange(CollectionTask<?, ?> task, Deck deck, DeckConfig conf) {
         Timber.d("doInBackgroundConfChange");
         Collection col = task.getCol();
         try {
@@ -110,9 +110,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             }
             col.getDecks().setConf(deck, newConfId);
             col.save();
-            return new TaskData(true);
+            return true;
         } catch (JSONException e) {
-            return new TaskData(false);
+            return false;
         }
     }
 
@@ -637,14 +637,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     }
 
-    private static class ConfSetSubdecksTask implements Task<TaskData, TaskData> {
+    private static class ConfSetSubdecksTask implements Task<TaskData, Boolean> {
         private final Deck mDeck;
         private final DeckConfig mConf;
         public ConfSetSubdecksTask(Deck deck, DeckConfig conf) {
             mDeck = deck;
             mConf = conf;
         }
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundConfSetSubdecks");
             Collection col = collectionTask.getCol();
             try {
@@ -654,24 +654,24 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     if (child.getInt("dyn") == 1) {
                         continue;
                     }
-                    boolean changed = DeckOptions.confChange(collectionTask, child, mConf).getBoolean();
+                    boolean changed = DeckOptions.confChange(collectionTask, child, mConf);
                     if (!changed) {
-                        return new TaskData(false);
+                        return false;
                     }
                 }
-                return new TaskData(true);
+                return true;
             } catch (JSONException e) {
-                return new TaskData(false);
+                return false;
             }
         }
     }
 
-    private static class RemConfTask implements Task<TaskData, TaskData> {
+    private static class RemConfTask implements Task<TaskData, Boolean> {
         private final DeckConfig mConf;
         public RemConfTask(DeckConfig mConf) {
             this.mConf = mConf;
         }
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundConfRemove");
             Collection col = collectionTask.getCol();
             try {
@@ -687,54 +687,54 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     col.getSched().resortConf(mConf);
                 }
                 col.save();
-                return new TaskData(true);
+                return true;
             } catch (JSONException e) {
-                return new TaskData(false);
+                return false;
             }
         }
     }
 
-    private static class ConfResetTask implements Task<TaskData, TaskData> {
+    private static class ConfResetTask implements Task<TaskData, Boolean> {
         private final DeckConfig mConf;
 
         private ConfResetTask(DeckConfig mConf) {
             this.mConf = mConf;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundConfReset");
             Collection col = collectionTask.getCol();
             col.getDecks().restoreToDefault(mConf);
             col.save();
-            return new TaskData(true);
+            return true;
         }
     }
 
-    private static class DeckConfTask implements Task<TaskData, TaskData> {
+    private static class DeckConfTask implements Task<TaskData, Boolean> {
         private final Deck mDeck;
         private final DeckConfig mConf;
         public DeckConfTask(Deck deck, DeckConfig conf) {
             this.mDeck = deck;
             this.mConf = conf;
         }
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
             return confChange(collectionTask, mDeck, mConf);
         }
     }
 
-    private static class NewOrderTask implements Task<TaskData, TaskData> {
+    private static class NewOrderTask implements Task<TaskData, Boolean> {
         private final DeckConfig mConf;
         public NewOrderTask(DeckConfig conf) {
             mConf = conf;
         }
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundReorder");
             collectionTask.getCol().getSched().resortConf(mConf);
-            return new TaskData(true);
+            return true;
         }
     }
 
-    private static class ConfChangeHandler extends TaskListenerWithContext<DeckPreferenceHack, TaskData, TaskData> {
+    private static class ConfChangeHandler extends TaskListenerWithContext<DeckPreferenceHack, TaskData, Boolean> {
         public ConfChangeHandler(DeckPreferenceHack deckPreferenceHack) {
             super(deckPreferenceHack);
         }
@@ -748,7 +748,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPreferenceHack deckPreferenceHack, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPreferenceHack deckPreferenceHack, Boolean result) {
             deckPreferenceHack.cacheValues();
             deckPreferenceHack.getDeckOptions().buildLists();
             deckPreferenceHack.getDeckOptions().updateSummaries();

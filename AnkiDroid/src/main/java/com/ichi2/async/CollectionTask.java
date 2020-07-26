@@ -23,8 +23,6 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
@@ -46,10 +44,8 @@ import com.ichi2.utils.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -57,11 +53,6 @@ import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.Nullable;
 import timber.log.Timber;
-
-import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
-import static com.ichi2.libanki.Collection.DismissType.BURY_NOTE;
-import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
-import static com.ichi2.libanki.Undoable.*;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
