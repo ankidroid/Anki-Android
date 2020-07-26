@@ -798,7 +798,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private static class SearchCards implements Task<TaskData, TaskData> {
+    private static class SearchCards implements Task<TaskData, List<CardCache>> {
         private final String mQuery;
         private final boolean mOrder;
         private final int mNumCardsToRender;
@@ -814,7 +814,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public List<CardCache> background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundSearchCards");
             if (collectionTask.isCancelled()) {
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
@@ -842,7 +842,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 Timber.d("doInBackgroundSearchCards was cancelled so return null");
                 return null;
             } else {
-                return new TaskData(searchResult);
+                return searchResult;
             }
         }
     }
@@ -2131,15 +2131,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
     };
 
     private final SearchCardsHandler mSearchCardsHandler = new SearchCardsHandler(this);
-    private class SearchCardsHandler extends ListenerWithProgressBar<TaskData, TaskData> {
+    private class SearchCardsHandler extends ListenerWithProgressBar<TaskData, List<CardCache>> {
         public SearchCardsHandler(CardBrowser browser) {
             super(browser);
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, TaskData result) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, List<CardCache> result) {
             if (result != null) {
-                mCards = result.getCards();
+                mCards = result;
                 updateList();
                 handleSearchResult();
             }
