@@ -2958,8 +2958,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // TODO merge with listener when it becomes static
     @VisibleForTesting
-    public static class CheckDatabaseTask implements Task<TaskData, Pair<Boolean, Collection.CheckDatabaseResult>> {
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+    public static class CheckDatabaseTask implements Task<String, Pair<Boolean, Collection.CheckDatabaseResult>> {
+        public Pair<Boolean, Collection.CheckDatabaseResult> background(CollectionTask<String, ?> collectionTask) {
             Timber.d("doInBackgroundCheckDatabase");
             Collection col = collectionTask.getCol();
             // Don't proceed if collection closed
@@ -2979,7 +2979,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
     }
-    public class CheckDatabaseListener extends TaskListener<TaskData, Pair<Boolean, Collection.CheckDatabaseResult>> {
+    public class CheckDatabaseListener extends TaskListener<String, Pair<Boolean, Collection.CheckDatabaseResult>> {
         @Override
         public void onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(DeckPicker.this, AnkiDroidApp.getAppResources().getString(R.string.app_name),
@@ -3038,8 +3038,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(TaskData value) {
-            mProgressDialog.setContent(value.getString());
+        public void onProgressUpdate(String value) {
+            mProgressDialog.setContent(value);
         }
     }
 }
