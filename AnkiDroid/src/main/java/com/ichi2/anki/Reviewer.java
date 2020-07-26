@@ -55,6 +55,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.TaskListener;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
@@ -101,7 +102,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
-    abstract class ScheduleCollectionTaskListener extends NextCardHandler<TaskData, TaskData> {
+    abstract class ScheduleCollectionTaskListener extends NextCardHandler<AbstractFlashcardViewer.GetCard, TaskData> {
 
         abstract protected int getToastResourceId();
 

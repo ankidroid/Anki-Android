@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 
+import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
