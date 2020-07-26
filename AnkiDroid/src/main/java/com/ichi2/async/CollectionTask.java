@@ -95,7 +95,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         CHECK_DATABASE,
         REPAIR_COLLECTION,
         LOAD_DECK_COUNTS,
-        DELETE_DECK,
         REBUILD_CRAM,
         EMPTY_CRAM,
         IMPORT,
@@ -363,10 +362,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case REPAIR_COLLECTION:
                 return doInBackgroundRepairCollection();
-
-            case DELETE_DECK:
-                doInBackgroundDeleteDeck(param);
-                break;
 
             case REBUILD_CRAM:
                 return doInBackgroundRebuildCram();
@@ -1129,16 +1124,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             col.close(false);
         }
         return new TaskData(BackupManager.repairCollection(col));
-    }
-
-
-    private void doInBackgroundDeleteDeck(TaskData param) {
-        Timber.d("doInBackgroundDeleteDeck");
-        Collection col = getCol();
-        long did = param.getLong();
-        col.getDecks().rem(did, true);
-        // TODO: if we had "undo delete note" like desktop client then we won't need this.
-        getCol().clearUndo();
     }
 
 

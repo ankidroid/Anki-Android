@@ -106,8 +106,10 @@ import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskAndListenerWithContext;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.Task;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
@@ -2536,14 +2538,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void deleteContextMenuDeck() {
         deleteDeck(mContextMenuDid);
     }
+
     public void deleteDeck(final long did) {
-        TaskListener listener = deleteDeckListener(did);
-        CollectionTask.launchCollectionTask(DELETE_DECK, listener, new TaskData(did));
+        deleteDeckListener(did).launch();
     }
+
     private DeleteDeckListener deleteDeckListener(long did) {
         return new DeleteDeckListener(did, this);
     }
-    private static class DeleteDeckListener extends TaskListenerWithContext<DeckPicker>{
+
+    private static class DeleteDeckListener extends TaskAndListenerWithContext<DeckPicker> {
         private final long did;
         // Flag to indicate if the deck being deleted is the current deck.
         private boolean removingCurrent;
@@ -2553,6 +2557,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
             this.did = did;
         }
 
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundDeleteDeck");
+            Collection col = collectionTask.getCol();
+            col.getDecks().rem(did, true);
+            // TODO: if we had "undo delete note" like desktop client then we won't need this.
+            col.clearUndo();
+            return null;
+        }
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
