@@ -2336,7 +2336,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private static class CheckSelectedCards extends ListenerWithProgressBar<TaskData, TaskData> implements Task<TaskData, TaskData> {
+    private static class CheckSelectedCards extends ListenerWithProgressBar<TaskData, Pair<Boolean, Boolean>> implements Task<TaskData, Pair<Boolean, Boolean>> {
         private final Set<CardCache> mCheckedCardPositions;
 
         public CheckSelectedCards(CardBrowser browser, Set<CardCache> checkedCardPositions) {
@@ -2344,7 +2344,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mCheckedCardPositions = checkedCardPositions;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Pair<Boolean, Boolean> background(CollectionTask<TaskData, ?> collectionTask) {
             Collection col = collectionTask.getCol();
 
             boolean hasUnsuspended = false;
@@ -2357,16 +2357,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     break;
             }
 
-            return new TaskData(new Object[] {hasUnsuspended, hasUnmarked});
+            return new Pair(hasUnsuspended, hasUnmarked);
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, TaskData result) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, Pair<Boolean, Boolean> result) {
             browser.hideProgressBar();
 
-            Object[] resultArr = result.getObjArray();
-            boolean hasUnsuspended = (boolean) resultArr[0];
-            boolean hasUnmarked = (boolean) resultArr[1];
+            boolean hasUnsuspended = result.first;
+            boolean hasUnmarked = result.second;
 
             int title;
             int icon;
