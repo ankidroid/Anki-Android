@@ -99,7 +99,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         REBUILD_CRAM,
         EMPTY_CRAM,
         SEARCH_CARDS,
-        CONF_REMOVE,
         CONF_SET_SUBDECKS,
         RENDER_BROWSER_QA,
         CHECK_MEDIA,
@@ -363,9 +362,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case EMPTY_CRAM:
                 return doInBackgroundEmptyCram();
-
-            case CONF_REMOVE:
-                return doInBackgroundConfRemove(param);
 
             case CONF_SET_SUBDECKS:
                 return doInBackgroundConfSetSubdecks(param);
@@ -1117,32 +1113,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         col.getSched().emptyDyn(col.getDecks().selected());
         return StudyOptionsFragment.updateValuesFromDeck(this, true);
-    }
-
-
-
-    private TaskData doInBackgroundConfRemove(TaskData param) {
-        Timber.d("doInBackgroundConfRemove");
-        Collection col = getCol();
-        Object[] data = param.getObjArray();
-        DeckConfig conf = (DeckConfig) data[0];
-        try {
-            // Note: We do the actual removing of the options group in the main thread so that we 
-            // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
-
-            // When a conf is deleted, all decks using it revert to the default conf.
-            // Cards must be reordered according to the default conf.
-            int order = conf.getJSONObject("new").getInt("order");
-            int defaultOrder = col.getDecks().getConf(1).getJSONObject("new").getInt("order");
-            if (order != defaultOrder) {
-                conf.getJSONObject("new").put("order", defaultOrder);
-                col.getSched().resortConf(conf);
-            }
-            col.save();
-            return new TaskData(true);
-        } catch (JSONException e) {
-            return new TaskData(false);
-        }
     }
 
 

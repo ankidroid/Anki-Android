@@ -560,9 +560,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             private void remConf() throws ConfirmModSchemaException {
                 // Remove options group, asking user to confirm full sync if necessary
                 mCol.getDecks().remConf(mOptions.getLong("id"));
+                DeckConfig conf = mOptions;
                 // Run the CPU intensive re-sort operation in a background thread
-                CollectionTask.launchCollectionTask(CONF_REMOVE, confChangeHandler(),
-                                        new TaskData(new Object[] { mOptions }));
+                CollectionTask.launchCollectionTask(null, confChangeHandler(), new TaskData(new RemConfTask(conf)));
                 mDeck.put("conf", 1);
             }
         }
@@ -636,6 +636,34 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             return null;
         }
 
+    }
+
+    private static class RemConfTask implements Task {
+        private final DeckConfig mConf;
+        public RemConfTask(DeckConfig mConf) {
+            this.mConf = mConf;
+        }
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundConfRemove");
+            Collection col = collectionTask.getCol();
+            try {
+                // Note: We do the actual removing of the options group in the main thread so that we
+                // can ask the user to confirm if they're happy to do a full sync, and just do the resorting here
+
+                // When a conf is deleted, all decks using it revert to the default conf.
+                // Cards must be reordered according to the default conf.
+                int order = mConf.getJSONObject("new").getInt("order");
+                int defaultOrder = col.getDecks().getConf(1).getJSONObject("new").getInt("order");
+                if (order != defaultOrder) {
+                    mConf.getJSONObject("new").put("order", defaultOrder);
+                    col.getSched().resortConf(mConf);
+                }
+                col.save();
+                return new TaskData(true);
+            } catch (JSONException e) {
+                return new TaskData(false);
+            }
+        }
     }
 
     private static class ConfResetTask implements Task {
