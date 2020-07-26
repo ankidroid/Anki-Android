@@ -2222,7 +2222,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         RenderQA renderQA = new RenderQA(this, cards, startPos, n, column1Index, column2Index);
         CollectionTask.launchCollectionTask(renderQA, renderQA);
     }
-    private static class RenderQA extends TaskAndListenerWithContext<CardBrowser, TaskData, Pair<List<CardCache>, List<Long>>> {
+    private static class RenderQA extends TaskAndListenerWithContext<CardBrowser, Integer, Pair<List<CardCache>, List<Long>>> {
 
         private final List<CardCache> mCards;
         private final int mStartPos;
@@ -2239,7 +2239,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mColumn2Index = column2Index;
         }
 
-        public Pair<List<CardCache>, List<Long>> background(CollectionTask<TaskData, ?> collectionTask) {
+        public Pair<List<CardCache>, List<Long>> background(CollectionTask<Integer, ?> collectionTask) {
             //TODO: Convert this to accept the following to make thread-safe:
             //(Range<Position>, Function<Position, BrowserCard>)
             Timber.d("doInBackgroundRenderBrowserQA");
@@ -2285,14 +2285,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
                 // Update item
                 card.load(false, mColumn1Index, mColumn2Index);
-                float progress = (float) i / mN * 100;
-                collectionTask.doProgress(new TaskData((int) progress));
+                collectionTask.doProgress((int) ((float) i / mN * 100));
             }
             return new Pair<>(mCards, invalidCardIds);
         }
 
         @Override
-        public void actualOnProgressUpdate(@NonNull CardBrowser browser, TaskData value) {
+        public void actualOnProgressUpdate(@NonNull CardBrowser browser, Integer value) {
             // Note: This is called every time a card is rendered.
             // It blocks the long-click callback while the task is running, so usage of the task should be minimized
             browser.mCardsAdapter.notifyDataSetChanged();
