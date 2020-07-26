@@ -290,5 +290,5 @@
     <string name="js_api_not_implemented">JS API not implemented to current deck. View wiki.</string>
 
     <!-- Error codes for AnkiDroid JS API-->
-    <string name="anki_js_error_code">(Error Code:%d)</string>
+    <string name="anki_js_error_code">(Error Code: %d)</string>
 </resources>

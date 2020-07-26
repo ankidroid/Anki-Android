@@ -42,7 +42,6 @@ import android.os.SystemClock;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
-import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -126,8 +125,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -3491,10 +3488,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Check if value null
     private boolean isAnkiApiNull(String api) {
-        if (mJsApiListMap.get(api) == null) {
-            return true;
-        }
-        return false;
+        return mJsApiListMap.get(api) == null;
     }
 
     /*
