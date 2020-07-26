@@ -161,14 +161,14 @@ public class ModelBrowser extends AnkiActivity {
      * Displays loading bar when deleting a model loading bar is needed
      * because deleting a model also deletes all of the associated cards/notes *
      */
-    private static class DeleteModel extends TaskAndListenerWithContext<ModelBrowser, TaskData, TaskData> {
+    private static class DeleteModel extends TaskAndListenerWithContext<ModelBrowser, TaskData, Boolean> {
         private final long mModID;
         public DeleteModel(ModelBrowser browser, long modID) {
             super(browser);
             mModID = modID;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackGroundDeleteModel");
             Collection col = collectionTask.getCol();
             try {
@@ -176,9 +176,9 @@ public class ModelBrowser extends AnkiActivity {
                 col.save();
             } catch (ConfirmModSchemaException e) {
                 Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
-                return new TaskData(false);
+                return false;
             }
-            return new TaskData(true);
+            return true;
         }
 
         @Override
@@ -187,8 +187,8 @@ public class ModelBrowser extends AnkiActivity {
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull ModelBrowser browser, TaskData result) {
-            if (!result.getBoolean()) {
+        public void actualOnPostExecute(@NonNull ModelBrowser browser, Boolean result) {
+            if (!result) {
                 throw new RuntimeException();
             }
             browser.hideProgressBar();
