@@ -19,6 +19,7 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -147,7 +148,7 @@ public class TemporaryModel {
         addTemplateChange(ChangeType.DELETE, ord);
     }
 
-    private static class SaveToDatabaseTask implements Task<TaskData, TaskData> {
+    private static class SaveToDatabaseTask implements Task<TaskData, Pair<String, Boolean>> {
         private final Model model;
         private final ArrayList<Object[]> templateChanges;
 
@@ -156,7 +157,7 @@ public class TemporaryModel {
             this.templateChanges = templateChanges;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Pair<String, Boolean> background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundSaveModel");
             Collection col = collectionTask.getCol();
             Model oldModel = col.getModels().get(model.getLong("id"));
@@ -178,7 +179,7 @@ public class TemporaryModel {
                             col.getModels().addTemplate(oldModel, newTemplates.getJSONObject((int) change[0]));
                         } catch (Exception e) {
                             Timber.e(e, "Unable to add template %s to model %s", change[0], model.getLong("id"));
-                            return new TaskData(e.getLocalizedMessage(), false);
+                            return new Pair(e.getLocalizedMessage(), false);
                         }
                         break;
                     case DELETE:
@@ -187,7 +188,7 @@ public class TemporaryModel {
                             col.getModels().remTemplate(oldModel, oldTemplates.getJSONObject((int) change[0]));
                         } catch (Exception e) {
                             Timber.e(e, "Unable to delete template %s from model %s", change[0], model.getLong("id"));
-                            return new TaskData(e.getLocalizedMessage(), false);
+                            return new Pair(e.getLocalizedMessage(), false);
                         }
                         break;
                     default:
@@ -212,7 +213,7 @@ public class TemporaryModel {
                     Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot end transaction.");
                 }
             }
-            return new TaskData(true);
+            return new Pair(null, true);
         }
     }
 

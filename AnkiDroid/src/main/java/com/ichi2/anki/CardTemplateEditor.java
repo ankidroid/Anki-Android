@@ -33,6 +33,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -632,7 +633,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         private SaveModelAndExitHandler saveModelAndExitHandler() {
             return new SaveModelAndExitHandler(this);
         }
-        private static class SaveModelAndExitHandler extends TaskListenerWithContext<CardTemplateFragment, TaskData, TaskData> {
+        private static class SaveModelAndExitHandler extends TaskListenerWithContext<CardTemplateFragment, TaskData, Pair<String, Boolean>> {
             public SaveModelAndExitHandler(CardTemplateFragment templateFragment) {
                 super(templateFragment);
             }
@@ -646,7 +647,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             }
 
             @Override
-            public void actualOnPostExecute(@NonNull CardTemplateFragment templateFragment, TaskData result) {
+            public void actualOnPostExecute(@NonNull CardTemplateFragment templateFragment, Pair<String, Boolean> result) {
                 Timber.d("saveModelAndExitHandler::postExecute called");
                 View button = templateFragment.mTemplateEditor.findViewById(R.id.action_confirm);
                 if (button != null) {
@@ -656,11 +657,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                     mProgressDialog.dismiss();
                 }
                 templateFragment.mTemplateEditor.mTempModel = null;
-                if (result.getBoolean()) {
+                if (result.second) {
                     templateFragment.mTemplateEditor.finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                 } else {
-                    Timber.w("CardTemplateFragment:: save model task failed: %s", result.getString());
-                    UIUtils.showThemedToast(templateFragment.mTemplateEditor, templateFragment.getString(R.string.card_template_editor_save_error, result.getString()), false);
+                    Timber.w("CardTemplateFragment:: save model task failed: %s", result.first);
+                    UIUtils.showThemedToast(templateFragment.mTemplateEditor, templateFragment.getString(R.string.card_template_editor_save_error, result.first), false);
                     templateFragment.mTemplateEditor.finishWithoutAnimation();
                 }
             }
