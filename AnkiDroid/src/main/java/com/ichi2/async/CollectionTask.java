@@ -101,7 +101,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         SEARCH_CARDS,
         RENDER_BROWSER_QA,
         COUNT_MODELS,
-        FIND_EMPTY_CARDS,
         CHECK_CARD_SELECTION,
         LOAD_COLLECTION_COMPLETE,
     }
@@ -360,9 +359,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case COUNT_MODELS:
                 return doInBackgroundCountModels();
-
-            case FIND_EMPTY_CARDS:
-                return doInBackGroundFindEmptyCards(param);
 
             case CHECK_CARD_SELECTION:
                 return doInBackgroundCheckCardSelection(param);
@@ -1120,12 +1116,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         data[0] = models;
         data[1] = cardCount;
         return (new TaskData(data, true));
-    }
-
-    public TaskData doInBackGroundFindEmptyCards(TaskData param) {
-        Collection col = getCol();
-        List<Long> cids = col.emptyCids();
-        return new TaskData(new Object[] { cids});
     }
 
     /**

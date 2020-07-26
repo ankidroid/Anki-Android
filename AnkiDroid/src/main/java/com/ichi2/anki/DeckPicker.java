@@ -2860,16 +2860,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        CollectionTask.launchCollectionTask(FIND_EMPTY_CARDS, handlerEmptyCardListener());
+        new HandleEmptyCard(this).launch();
     }
-    private final HandleEmptyCardListener handlerEmptyCardListener() {
-        return new HandleEmptyCardListener(this);
-    }
-    private static class HandleEmptyCardListener extends TaskListenerWithContext<DeckPicker> {
-        public HandleEmptyCardListener(DeckPicker deckPicker) {
+
+    private static class HandleEmptyCard extends TaskAndListenerWithContext<DeckPicker> {
+        public HandleEmptyCard(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
+        public TaskData background(CollectionTask collectionTask) {
+            Collection col = collectionTask.getCol();
+            List<Long> cids = col.emptyCids();
+            return new TaskData(new Object[] {cids});
+        }
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
             deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
