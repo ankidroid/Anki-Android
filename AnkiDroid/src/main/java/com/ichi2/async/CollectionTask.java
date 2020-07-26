@@ -349,9 +349,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             case EMPTY_CRAM:
                 return doInBackgroundEmptyCram();
 
-            case RENDER_BROWSER_QA:
-                return doInBackgroundRenderBrowserQA(param);
-
             default:
                 return doInBackgroundCode(param);
         }
@@ -921,64 +918,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         } else {
             return new TaskData(searchResult);
         }
-    }
-
-
-    private TaskData doInBackgroundRenderBrowserQA(TaskData param) {
-        //TODO: Convert this to accept the following to make thread-safe:
-        //(Range<Position>, Function<Position, BrowserCard>)
-        Timber.d("doInBackgroundRenderBrowserQA");
-        Collection col = getCol();
-        List<CardBrowser.CardCache> cards = (List<CardBrowser.CardCache>) param.getObjArray()[0];
-        Integer startPos = (Integer) param.getObjArray()[1];
-        Integer n = (Integer) param.getObjArray()[2];
-        int column1Index = (Integer) param.getObjArray()[3];
-        int column2Index = (Integer) param.getObjArray()[4];
-
-        List<Long> invalidCardIds = new ArrayList<>();
-        // for each specified card in the browser list
-        for (int i = startPos; i < startPos + n; i++) {
-            // Stop if cancelled
-            if (isCancelled()) {
-                Timber.d("doInBackgroundRenderBrowserQA was aborted");
-                return null;
-            }
-            if (i < 0 || i >= cards.size()) {
-                continue;
-            }
-            CardBrowser.CardCache card;
-            try {
-                card = cards.get(i);
-            }
-            catch (IndexOutOfBoundsException e) {
-                //even though we test against card.size() above, there's still a race condition
-                //We might be able to optimise this to return here. Logically if we're past the end of the collection,
-                //we won't reach any more cards.
-                continue;
-            }
-            if (card.isLoaded()) {
-                //We've already rendered the answer, we don't need to do it again.
-                continue;
-            }
-            // Extract card item
-            try {
-                // Ensure that card still exists.
-                card.getCard();
-            } catch (WrongId e) {
-                //#5891 - card can be inconsistent between the deck browser screen and the collection.
-                //Realistically, we can skip any exception as it's a rendering task which should not kill the
-                //process
-                long cardId = card.getId();
-                Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId);
-                invalidCardIds.add(cardId);
-                continue;
-            }
-            // Update item
-            card.load(false, column1Index, column2Index);
-            float progress = (float) i / n * 100;
-            doProgress(new TaskData((int) progress));
-        }
-        return new TaskData(new Object[] { cards, invalidCardIds });
     }
 
 

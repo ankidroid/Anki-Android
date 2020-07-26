@@ -69,8 +69,8 @@ import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskAndListenerWithContext;
 import com.ichi2.async.TaskListenerWithContext;
-import com.ichi2.async.TaskListener;
 import com.ichi2.async.Task;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
@@ -80,6 +80,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.WrongId;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
@@ -910,8 +911,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void flagTask (int flag) {
         CollectionTask.launchCollectionTask(DISMISS_MULTI,
-                                flagCardHandler(),
-                                new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, new Integer (flag)}));
+                                            flagCardHandler(),
+                                            new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, new Integer (flag)}));
     }
 
     @Override
@@ -1763,10 +1764,77 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private final RenderQAHandler mRenderQAHandler = new RenderQAHandler(this);
-    private static class RenderQAHandler extends TaskListenerWithContext<CardBrowser>{
-        public RenderQAHandler(CardBrowser browser) {
+    private void renderQA(List<CardCache> cards, int startPos, int n, int column1Index, int column2Index) {
+        RenderQA renderQA = new RenderQA(this, cards, startPos, n, column1Index, column2Index);
+        CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, renderQA, new TaskData(renderQA));
+    }
+    private static class RenderQA extends TaskAndListenerWithContext<CardBrowser> {
+
+        private final List<CardCache> mCards;
+        private final int mStartPos;
+        private final int mN;
+        private final int mColumn1Index;
+        private final int mColumn2Index;
+
+        public RenderQA(CardBrowser browser, List<CardCache> cards, int startPos, int n, int column1Index, int column2Index) {
             super(browser);
+            mCards = cards;
+            mStartPos = startPos;
+            mN = n;
+            mColumn1Index = column1Index;
+            mColumn2Index = column2Index;
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            //TODO: Convert this to accept the following to make thread-safe:
+            //(Range<Position>, Function<Position, BrowserCard>)
+            Timber.d("doInBackgroundRenderBrowserQA");
+            Collection col = collectionTask.getCol();
+
+            List<Long> invalidCardIds = new ArrayList<>();
+            // for each specified card in the browser list
+            for (int i = mStartPos; i < mStartPos + mN; i++) {
+                // Stop if cancelled
+                if (collectionTask.isCancelled()) {
+                    Timber.d("doInBackgroundRenderBrowserQA was aborted");
+                    return null;
+                }
+                if (i < 0 || i >= mCards.size()) {
+                    continue;
+                }
+                CardBrowser.CardCache card;
+                try {
+                    card = mCards.get(i);
+                }
+                catch (IndexOutOfBoundsException e) {
+                    //even though we test against card.size() above, there's still a race condition
+                    //We might be able to optimise this to return here. Logically if we're past the end of the collection,
+                    //we won't reach any more cards.
+                    continue;
+                }
+                if (card.isLoaded()) {
+                    //We've already rendered the answer, we don't need to do it again.
+                    continue;
+                }
+                // Extract card item
+                try {
+                    // Ensure that card still exists.
+                    card.getCard();
+                } catch (WrongId e) {
+                    //#5891 - card can be inconsistent between the deck browser screen and the collection.
+                    //Realistically, we can skip any exception as it's a rendering task which should not kill the
+                    //process
+                    long cardId = card.getId();
+                    Timber.e(e, "Could not process card '%d' - skipping and removing from sight", cardId);
+                    invalidCardIds.add(cardId);
+                    continue;
+                }
+                // Update item
+                card.load(false, mColumn1Index, mColumn2Index);
+                float progress = (float) i / mN * 100;
+                collectionTask.doProgress(new TaskData((int) progress));
+            }
+            return new TaskData(new Object[] { mCards, invalidCardIds });
         }
 
         @Override
@@ -1912,8 +1980,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
                         mLastRenderStart = currentTime;
                         CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
-                        CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                                new TaskData(new Object[]{cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index}));
+                        renderQA(getCards(), firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index);
                     }
                 }
             }
@@ -1926,8 +1993,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (scrollState == SCROLL_STATE_IDLE) {
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
-                CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                        new TaskData(new Object[]{getCards(), startIdx - 5, 2 * numVisible + 5, mColumn1Index, mColumn2Index}));
+                renderQA(getCards(), startIdx - 5, 2 * numVisible + 5, mColumn1Index, mColumn2Index);
             }
         }
     }
@@ -2423,10 +2489,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCards.get(position).reload();
     }
 
+
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void rerenderAllCards() {
-        CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                new TaskData(new Object[]{getCards(), 0, mCards.size()-1, mColumn1Index, mColumn2Index}));
+        renderQA(getCards(), 0, mCards.size()-1, mColumn1Index, mColumn2Index);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
