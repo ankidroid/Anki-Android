@@ -99,7 +99,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         REBUILD_CRAM,
         EMPTY_CRAM,
         SEARCH_CARDS,
-        CONF_SET_SUBDECKS,
         RENDER_BROWSER_QA,
         CHECK_MEDIA,
         COUNT_MODELS,
@@ -362,9 +361,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case EMPTY_CRAM:
                 return doInBackgroundEmptyCram();
-
-            case CONF_SET_SUBDECKS:
-                return doInBackgroundConfSetSubdecks(param);
 
             case RENDER_BROWSER_QA:
                 return doInBackgroundRenderBrowserQA(param);
@@ -1113,31 +1109,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         col.getSched().emptyDyn(col.getDecks().selected());
         return StudyOptionsFragment.updateValuesFromDeck(this, true);
-    }
-
-
-    private TaskData doInBackgroundConfSetSubdecks(TaskData param) {
-        Timber.d("doInBackgroundConfSetSubdecks");
-        Collection col = getCol();
-        Object[] data = param.getObjArray();
-        Deck deck = (Deck) data[0];
-        DeckConfig conf = (DeckConfig) data[1];
-        try {
-            TreeMap<String, Long> children = col.getDecks().children(deck.getLong("id"));
-            for (Map.Entry<String, Long> entry : children.entrySet()) {
-                Deck child = col.getDecks().get(entry.getValue());
-                if (child.getInt("dyn") == 1) {
-                    continue;
-                }
-                boolean changed = DeckOptions.confChange(this, child, conf).getBoolean();
-                if (!changed) {
-                    return new TaskData(false);
-                }
-            }
-            return new TaskData(true);
-        } catch (JSONException e) {
-            return new TaskData(false);
-        }
     }
 
 

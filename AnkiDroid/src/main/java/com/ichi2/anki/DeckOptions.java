@@ -74,7 +74,6 @@ import java.util.TreeMap;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 
 import com.ichi2.async.TaskData;
 
@@ -389,8 +388,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "confSetSubdecks":
                                 if ((Boolean) value) {
-                                    CollectionTask.launchCollectionTask(CONF_SET_SUBDECKS, confChangeHandler(),
-                                            new TaskData(new Object[] {mDeck, mOptions}));
+                                    CollectionTask.launchCollectionTask(null, confChangeHandler(),
+                                            new TaskData(new ConfSetSubdecksTask(mDeck, mOptions)));
                                 }
                                 break;
                             case "reminderEnabled": {
@@ -636,6 +635,35 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             return null;
         }
 
+    }
+
+    private static class ConfSetSubdecksTask implements Task {
+        private final Deck mDeck;
+        private final DeckConfig mConf;
+        public ConfSetSubdecksTask(Deck deck, DeckConfig conf) {
+            mDeck = deck;
+            mConf = conf;
+        }
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundConfSetSubdecks");
+            Collection col = collectionTask.getCol();
+            try {
+                TreeMap<String, Long> children = col.getDecks().children(mDeck.getLong("id"));
+                for (Map.Entry<String, Long> entry_ : children.entrySet()) {
+                    Deck child = col.getDecks().get(entry_.getValue());
+                    if (child.getInt("dyn") == 1) {
+                        continue;
+                    }
+                    boolean changed = DeckOptions.confChange(collectionTask, child, mConf).getBoolean();
+                    if (!changed) {
+                        return new TaskData(false);
+                    }
+                }
+                return new TaskData(true);
+            } catch (JSONException e) {
+                return new TaskData(false);
+            }
+        }
     }
 
     private static class RemConfTask implements Task {
