@@ -454,7 +454,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 break;
 
             default:
-                Timber.e("unknown task type: %s", mType);
+                return doInBackgroundCode(param);
         }
         return null;
     }
@@ -1886,6 +1886,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
+    public TaskData doInBackgroundCode(TaskData param) {
+        return param.getTask().background(this);
+    }
 
     /**
      * Helper class for allowing inner function to publish progress of an AsyncTask.
