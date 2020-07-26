@@ -344,8 +344,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             }
                             case "confReset":
                                 if ((Boolean) value) {
-                                    CollectionTask.launchCollectionTask(CONF_RESET, confChangeHandler(),
-                                            new TaskData(new Object[] {mOptions}));
+                                    CollectionTask.launchCollectionTask(null, confChangeHandler(), new TaskData(new ConfResetTask(mOptions)));
                                 }
                                 break;
                             case "confAdd": {
@@ -638,6 +637,23 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         }
 
     }
+
+    private static class ConfResetTask implements Task {
+        private final DeckConfig mConf;
+
+        private ConfResetTask(DeckConfig mConf) {
+            this.mConf = mConf;
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundConfReset");
+            Collection col = collectionTask.getCol();
+            col.getDecks().restoreToDefault(mConf);
+            col.save();
+            return new TaskData(true);
+        }
+    }
+
     private static class DeckConfTask implements Task {
         private final Deck mDeck;
         private final DeckConfig mConf;
