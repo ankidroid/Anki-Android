@@ -342,7 +342,8 @@ If want to hide card's button / text in current card when reviewing on Anki Desk
 <br>[#6377](https://github.com/ankidroid/Anki-Android/pull/6377) 
 <br>[#6307](https://github.com/ankidroid/Anki-Android/pull/6307) 
 <br>[#6388](https://github.com/ankidroid/Anki-Android/pull/6388) 
-<br>[#6393](https://github.com/ankidroid/Anki-Android/pull/6393) 
+<br>[#6393](https://github.com/ankidroid/Anki-Android/pull/6393)
+<br>[#6747](https://github.com/ankidroid/Anki-Android/pull/6747) 
 
 ## Sample Decks 
 The implementation of above functionality can be found in this github repo.
