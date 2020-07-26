@@ -22,58 +22,37 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 
-import com.google.gson.stream.JsonReader;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.DeckOptions;
-import com.ichi2.anki.R;
 import com.ichi2.anki.StudyOptionsFragment;
-import com.ichi2.anki.TemporaryModel;
-import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Undoable;
 import com.ichi2.libanki.Undoable.*;
-import com.ichi2.libanki.WrongId;
+import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.sched.AbstractSched;
-import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Storage;
-import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.importer.AnkiPackageImporter;
 
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.Nullable;
 import timber.log.Timber;
@@ -89,7 +68,6 @@ import static com.ichi2.libanki.Undoable.*;
 public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> {
 
     public enum TASK_TYPE {
-        UPDATE_NOTE,
         UNDO,
         DISMISS_MULTI,
         CHECK_DATABASE,
@@ -321,8 +299,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
-            case UPDATE_NOTE:
-                return doInBackgroundUpdateNote(param);
 
             case UNDO:
                 return doInBackgroundUndo();
@@ -386,46 +362,57 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
 
-    private TaskData doInBackgroundUpdateNote(TaskData param) {
-        Timber.d("doInBackgroundUpdateNote");
-        // Save the note
-        Collection col = getCol();
-        AbstractSched sched = col.getSched();
-        Card editCard = param.getCard();
-        Note editNote = editCard.note();
-        boolean fromReviewer = param.getBoolean();
+    public static class UpdateNote implements Task {
+        private final Card mEditCard;
+        private final boolean mFromReviewer;
 
-        try {
-            col.getDb().getDatabase().beginTransaction();
-            try {
-                // TODO: undo integration
-                editNote.flush();
-                // flush card too, in case, did has been changed
-                editCard.flush();
-                if (fromReviewer) {
-                    Card newCard;
-                    if (col.getDecks().active().contains(editCard.getDid())) {
-                        newCard = editCard;
-                        newCard.load();
-                        // reload qa-cache
-                        newCard.q(true);
-                    } else {
-                        newCard = sched.getCard();
-                    }
-                    doProgress(new TaskData(newCard));
-                } else {
-                    doProgress(new TaskData(editCard, editNote.stringTags()));
-                }
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                col.getDb().getDatabase().endTransaction();
-            }
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
-            return new TaskData(false);
+
+        public UpdateNote(Card editCard, boolean fromReviewer) {
+            mEditCard = editCard;
+            mFromReviewer = fromReviewer;
         }
-        return new TaskData(true);
+
+
+        @Override
+        public TaskData background(CollectionTask task) {
+            Timber.d("doInBackgroundUpdateNote");
+            // Save the note
+            Collection col = task.getCol();
+            AbstractSched sched = col.getSched();
+            Note editNote = mEditCard.note();
+
+            try {
+                col.getDb().getDatabase().beginTransaction();
+                try {
+                    // TODO: undo integration
+                    editNote.flush();
+                    // flush card too, in case, did has been changed
+                    mEditCard.flush();
+                    if (mFromReviewer) {
+                        Card newCard;
+                        if (col.getDecks().active().contains(mEditCard.getDid())) {
+                            newCard = mEditCard;
+                            newCard.load();
+                            // reload qa-cache
+                            newCard.q(true);
+                        } else {
+                            newCard = sched.getCard();
+                        }
+                        task.doProgress(new TaskData(newCard));
+                    } else {
+                        task.doProgress(new TaskData(mEditCard, editNote.stringTags()));
+                    }
+                    col.getDb().getDatabase().setTransactionSuccessful();
+                } finally {
+                    col.getDb().getDatabase().endTransaction();
+                }
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
+                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
+                return new TaskData(false);
+            }
+            return new TaskData(true);
+        }
     }
 
 
