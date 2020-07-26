@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.sched;
 
+import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
@@ -127,7 +128,7 @@ public class AbstractSchedTest extends RobolectricTest {
         sched.answerCard(card, 3);
         sched.getCard();
         final boolean[] executed = {false};
-        launchCollectionTask(new TaskListener<TaskData, PairWithBoolean<Card[]>>() {
+        launchCollectionTask(new TaskListener<AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>>() {
                     Card card;
                     @Override
                     public void onPreExecute() {
@@ -135,7 +136,7 @@ public class AbstractSchedTest extends RobolectricTest {
                     }
 
                     @Override
-                    public void onProgressUpdate(TaskData data) {
+                    public void onProgressUpdate(AbstractFlashcardViewer.GetCard data) {
                         card = data.getCard();
                     }
 

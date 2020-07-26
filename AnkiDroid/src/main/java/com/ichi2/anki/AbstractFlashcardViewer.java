@@ -757,7 +757,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected class AnswerCard extends NextCardHandler<TaskData, PairWithBoolean<Card[]>> implements Task<TaskData, PairWithBoolean<Card[]>> {
+    protected class AnswerCard extends NextCardHandler<AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>> implements Task<AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>> {
         private final Card mOldCard;
         @Consts.BUTTON_TYPE private final int mEase;
         private final boolean mQuick;
@@ -772,7 +772,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mEase = ease;
         }
 
-        public PairWithBoolean<Card[]> background(CollectionTask<TaskData, ?> collectionTask) {
+        public PairWithBoolean<Card[]> background(CollectionTask<AbstractFlashcardViewer.GetCard, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             Card newCard = null;
@@ -790,7 +790,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                         // render cards before locking database
                         newCard._getQA(true);
                     }
-                    collectionTask.doProgress(new TaskData(newCard));
+                    final Card newCard_  = newCard;
+                    collectionTask.doProgress(() -> newCard_);
                     db.getDatabase().setTransactionSuccessful();
                 } finally {
                     db.getDatabase().endTransaction();
@@ -809,7 +810,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             blockControls(mQuick);
         }
 
-        public CollectionTask<TaskData, PairWithBoolean<Card[]>> launch() {
+        public CollectionTask<AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>> launch() {
             return CollectionTask.launchCollectionTask(this, this);
         }
     }

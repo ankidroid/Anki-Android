@@ -2112,7 +2112,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private final UndoHandler mUndoHandler = new UndoHandler(this);
-    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
+    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<AbstractFlashcardViewer.GetCard> {
         public UndoHandler(CardBrowser browser) {
             super(browser);
         }

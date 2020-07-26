@@ -3,6 +3,7 @@ package com.ichi2.libanki;
 import android.content.res.Resources;
 import android.util.Pair;
 
+import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.async.CollectionTask;
@@ -60,9 +61,8 @@ public abstract class Undoable {
     }
 
 
-
-    public static class Task implements com.ichi2.async.Task<TaskData, PairWithBoolean<Card[]>> {
-        public PairWithBoolean<Card[]> background(CollectionTask<TaskData, ?> collectionTask) {
+    public static class Task implements com.ichi2.async.Task<AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>> {
+        public PairWithBoolean<Card[]> background(CollectionTask<AbstractFlashcardViewer.GetCard, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             try {
@@ -91,7 +91,8 @@ public abstract class Undoable {
                         col.getSched().setCurrentCard(newCard);
                     }
                     // TODO: handle leech undoing properly
-                    collectionTask.doProgress(new TaskData(newCard, 0));
+                    final Card newCard_ = newCard;
+                    collectionTask.doProgress(() -> newCard_);
                     col.getDb().getDatabase().setTransactionSuccessful();
                 } finally {
                     col.getDb().getDatabase().endTransaction();
