@@ -112,6 +112,7 @@ import com.ichi2.async.TaskAndListenerWithContext;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
@@ -2145,6 +2146,45 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
+    private static class ExportApkgTask implements Task {
+        private final boolean mIncludeSched;
+        private final boolean mIncludeMedia;
+        private final long mDid;
+        private final String mApkgPath;
+        public ExportApkgTask(boolean mIncludeSched, boolean mIncludeMedia, long mDid, String mApkgPath) {
+            this.mIncludeSched = mIncludeSched;
+            this.mIncludeMedia = mIncludeMedia;
+            this.mDid = mDid;
+            this.mApkgPath = mApkgPath;
+        }
+
+        public TaskData background(CollectionTask collectionTask)  {
+            Timber.d("doInBackgroundExportApkg");
+
+            try {
+                AnkiPackageExporter exporter = new AnkiPackageExporter(collectionTask.getCol());
+                exporter.setIncludeSched(mIncludeSched);
+                exporter.setIncludeMedia(mIncludeMedia);
+                exporter.setDid(mDid);
+                exporter.exportInto(mApkgPath, collectionTask.getContext());
+            } catch (FileNotFoundException e) {
+                Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
+                return new TaskData(false);
+            } catch (IOException e) {
+                Timber.e(e, "IOException in doInBackgroundExportApkg");
+                return new TaskData(false);
+            } catch (JSONException e) {
+                Timber.e(e, "JSOnException in doInBackgroundExportApkg");
+                return new TaskData(false);
+            } catch (ImportExportException e) {
+                Timber.e(e, "ImportExportException in doInBackgroundExportApkg");
+                return new TaskData(e.getMessage(), true);
+            }
+            return new TaskData(mApkgPath);
+        }
+    }
+
+
     @Override
     public void exportApkg(String filename, Long did, boolean includeSched, boolean includeMedia) {
         File exportDir = new File(getExternalCacheDir(), "export");
@@ -2166,14 +2206,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
             exportPath = new File(exportDir, newFileName);
         }
-        // add input arguments to new generic structure
-        Object[] inputArgs = new Object[5];
-        inputArgs[0] = getCol();
-        inputArgs[1] = exportPath.getPath();
-        inputArgs[2] = did;
-        inputArgs[3] = includeSched;
-        inputArgs[4] = includeMedia;
-        CollectionTask.launchCollectionTask(EXPORT_APKG, exportListener(), new TaskData(inputArgs));
+        CollectionTask.launchCollectionTask(null, exportListener(), new TaskData(new ExportApkgTask(includeSched, includeMedia, did, exportPath.getPath())));
     }
 
 

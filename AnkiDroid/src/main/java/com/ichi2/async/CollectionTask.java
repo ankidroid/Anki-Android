@@ -98,7 +98,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         REBUILD_CRAM,
         EMPTY_CRAM,
         SEARCH_CARDS,
-        EXPORT_APKG,
         REORDER,
         CONF_CHANGE,
         CONF_RESET,
@@ -366,9 +365,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case EMPTY_CRAM:
                 return doInBackgroundEmptyCram();
-
-            case EXPORT_APKG:
-                return doInBackgroundExportApkg(param);
 
             case REORDER:
                 return doInBackgroundReorder(param);
@@ -1134,37 +1130,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         return StudyOptionsFragment.updateValuesFromDeck(this, true);
     }
 
-
-    private TaskData doInBackgroundExportApkg(TaskData param) {
-        Timber.d("doInBackgroundExportApkg");
-        Object[] data = param.getObjArray();
-        Collection col = (Collection) data[0];
-        String apkgPath = (String) data[1];
-        Long did = (Long) data[2];
-        boolean includeSched = (Boolean) data[3];
-        boolean includeMedia = (Boolean) data[4];
-        
-        try {
-            AnkiPackageExporter exporter = new AnkiPackageExporter(col);
-            exporter.setIncludeSched(includeSched);
-            exporter.setIncludeMedia(includeMedia);
-            exporter.setDid(did);
-            exporter.exportInto(apkgPath, mContext);
-        } catch (FileNotFoundException e) {
-            Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
-            return new TaskData(false);
-        } catch (IOException e) {
-            Timber.e(e, "IOException in doInBackgroundExportApkg");
-            return new TaskData(false);
-        } catch (JSONException e) {
-            Timber.e(e, "JSOnException in doInBackgroundExportApkg");
-            return new TaskData(false);
-        } catch (ImportExportException e) {
-            Timber.e(e, "ImportExportException in doInBackgroundExportApkg");
-            return new TaskData(e.getMessage(), true);
-        }
-        return new TaskData(apkgPath);
-    }
 
 
     private TaskData doInBackgroundReorder(TaskData param) {
