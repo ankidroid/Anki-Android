@@ -266,6 +266,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         };
     }
 
+    public Context getContext() {
+        return mContext;
+    }
+
     public Collection getCol() {
         return CollectionHelper.getInstance().getCol(mContext);
     }
