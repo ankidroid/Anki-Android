@@ -32,6 +32,7 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.libanki.Undoable;
+import com.ichi2.utils.PairWithBoolean;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -126,7 +127,7 @@ public class AbstractSchedTest extends RobolectricTest {
         sched.answerCard(card, 3);
         sched.getCard();
         final boolean[] executed = {false};
-        launchCollectionTask(new TaskListener<TaskData, TaskData>() {
+        launchCollectionTask(new TaskListener<TaskData, PairWithBoolean<Card[]>>() {
                     Card card;
                     @Override
                     public void onPreExecute() {
@@ -140,7 +141,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
 
                     @Override
-                    public void onPostExecute(TaskData result) {
+                    public void onPostExecute(PairWithBoolean<Card[]> result) {
                         assertThat(sched.newCount(), is(9));
                         assertThat(sched.counts(card)[0], is(10));
                         executed[0] = true;
@@ -305,3 +306,4 @@ mw.col.sched.extendLimits(1, 0)
         new IncreaseToday().test();
     }
 }
+v

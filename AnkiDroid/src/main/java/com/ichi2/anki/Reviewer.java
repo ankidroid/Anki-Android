@@ -61,6 +61,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
@@ -102,16 +103,16 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
-    abstract class ScheduleCollectionTaskListener extends NextCardHandler<AbstractFlashcardViewer.GetCard, TaskData> {
+    abstract class ScheduleCollectionTaskListener extends NextCardHandler<AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>> {
 
         abstract protected int getToastResourceId();
 
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void onPostExecute(PairWithBoolean<Card[]> result) {
             super.onPostExecute(result);
             invalidateOptionsMenu();
-            int cardCount = result.getObjArray().length;
+            int cardCount = result.second.length;
             UIUtils.showThemedToast(Reviewer.this,
                     getResources().getQuantityString(getToastResourceId(), cardCount, cardCount), true);
         }

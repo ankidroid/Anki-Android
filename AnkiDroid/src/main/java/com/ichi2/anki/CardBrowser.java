@@ -88,6 +88,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.LanguageUtil;
+import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
@@ -269,7 +270,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new RepositionCardHandler(this);
     }
 
-    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser, AbstractFlashcardViewer.GetCard, TaskData> {
+    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser, AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>> {
         public RepositionCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -281,10 +282,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, TaskData result) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, PairWithBoolean<Card[]> result) {
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = result.getObjArray().length;
+            int cardCount = result.second.length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true);
         }
@@ -293,7 +294,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private ResetProgressCardHandler resetProgressCardHandler() {
         return new ResetProgressCardHandler(this);
     }
-    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser, AbstractFlashcardViewer.GetCard, TaskData>{
+    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser, AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>>{
         public ResetProgressCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -305,10 +306,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, TaskData result) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, PairWithBoolean<Card[]> result) {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = result.getObjArray().length;
+            int cardCount = result.second.length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true);
         }
@@ -317,7 +318,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private RescheduleCardHandler rescheduleCardHandler() {
         return new RescheduleCardHandler(this);
     }
-    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser, AbstractFlashcardViewer.GetCard, TaskData>{
+    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser, AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>>{
         public RescheduleCardHandler (CardBrowser browser) {
             super(browser);
         }
@@ -329,10 +330,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, TaskData result) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, PairWithBoolean<Card[]> result) {
             Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute");
             browser.mReloadRequired = true;
-            int cardCount = result.getObjArray().length;
+            int cardCount = result.second.length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true);
         }
@@ -377,7 +378,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mType = type;
         }
 
-        public TaskData actualBackground(CollectionTask<AbstractFlashcardViewer.GetCard, ?> collectionTask, Card[] cards) {
+        public PairWithBoolean<Card[]> actualBackground(CollectionTask<AbstractFlashcardViewer.GetCard, ?> collectionTask, Card[] cards) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             // collect undo information, sensitive to memory pressure, same for all 3 cases
@@ -1073,7 +1074,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        public TaskData actualBackground(CollectionTask<TaskData, ?> collectionTask, Card[] cards) {
+        public PairWithBoolean<Card[]> actualBackground(CollectionTask<TaskData, ?> collectionTask, Card[] cards) {
             Collection col = collectionTask.getCol();
             int flag = mData;
             col.setUserFlag(flag, getCardIds());
@@ -1575,7 +1576,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     /** Does not leak Card Browser. */
-    private static abstract class ListenerWithProgressBarCloseOnFalse<Progress> extends ListenerWithProgressBar<Progress, TaskData> {
+    private static abstract class ListenerWithProgressBarCloseOnFalse<Progress> extends ListenerWithProgressBar<Progress, PairWithBoolean<Card[]>> {
         private final String mTimber;
         public ListenerWithProgressBarCloseOnFalse(String timber, CardBrowser browser) {
             super(browser);
@@ -1586,7 +1587,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             this(null, browser);
 		}
 
-        public void actualOnPostExecute(@NonNull CardBrowser browser, TaskData result) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, PairWithBoolean<Card[]> result) {
             if (mTimber != null) {
                 Timber.d(mTimber);
             }
@@ -1597,7 +1598,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
-        protected abstract void actualOnValidPostExecute(CardBrowser browser, TaskData result);
+        protected abstract void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> result);
     }
 
     /**
@@ -1635,7 +1636,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, TaskData result) {
+        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> result) {
             browser.hideProgressBar();
         }
     };
@@ -1649,7 +1650,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, TaskData result) {
+        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> result) {
             browser.hideProgressBar();
 
             browser.searchCards();
@@ -1681,7 +1682,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        public TaskData actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
+        public PairWithBoolean<Card[]> actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
             Collection col = task.getCol();
 
             Timber.i("Changing %d cards to deck: '%d'", cards.length, mNewDid);
@@ -1690,7 +1691,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             if (Decks.isDynamic(deckData)) {
                 //#5932 - can't change to a dynamic deck. Use "Rebuild"
                 Timber.w("Attempted to move to dynamic deck. Cancelling task.");
-                return new TaskData(false);
+                return new PairWithBoolean<>(false);
             }
 
             //Confirm that the deck exists (and is not the default)
@@ -1698,11 +1699,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 long actualId = deckData.getLong("id");
                 if (actualId != mNewDid) {
                     Timber.w("Attempted to move to deck %d, but got %d", mNewDid, actualId);
-                    return new TaskData(false);
+                    return new PairWithBoolean<>(false);
                 }
             } catch (Exception e) {
                 Timber.e(e, "failed to check deck");
-                return new TaskData(false);
+                return new PairWithBoolean<>(false);
             }
 
             long[] changedCardIds = new long[cards.length];
@@ -1851,8 +1852,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, TaskData result) {
-            Card[] cards = (Card[]) result.getObjArray();
+        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> result) {
+            Card[] cards = result.second;
             browser.updateCardsInList(Arrays.asList(cards), null);
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
@@ -1865,7 +1866,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             super(cardIds);
         }
 
-        public TaskData actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
+        public PairWithBoolean<Card[]> actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
             Collection col = task.getCol();
             AbstractSched sched = col.getSched();
             // collect undo information
@@ -1958,8 +1959,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, TaskData result) {
-            Card[] cards = (Card[]) result.getObjArray();
+        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> result) {
+            Card[] cards = result.second;
             browser.updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards))), null);
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
@@ -1980,7 +1981,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        protected void actualOnValidPostExecute(CardBrowser browser, TaskData result) {
+        protected void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> result) {
             browser.hideProgressBar();
             browser.mActionBarTitle.setText(Integer.toString(browser.checkedCardCount()));
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
@@ -2001,7 +2002,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        public TaskData actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
+        public PairWithBoolean<Card[]> actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
             Collection col = task.getCol();
             Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
             // collect undo information
@@ -2054,7 +2055,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        public TaskData actualBackground(CollectionTask<Card[], ?> task, Card[] cards) {
+        public PairWithBoolean<Card[]> actualBackground(CollectionTask<Card[], ?> task, Card[] cards) {
             Collection col = task.getCol();
             AbstractSched sched = col.getSched();
             // list of all ids to pass to remNotes method.
@@ -2117,7 +2118,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         @Override
-        public void actualOnValidPostExecute(CardBrowser browser, TaskData result) {
+        public void actualOnValidPostExecute(CardBrowser browser, PairWithBoolean<Card[]> result) {
             Timber.d("Card Browser - mUndoHandler.actualOnPostExecute(CardBrowser browser)");
             browser.hideProgressBar();
             // reload whole view

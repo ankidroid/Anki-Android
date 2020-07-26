@@ -1,6 +1,7 @@
 package com.ichi2.libanki;
 
 import android.content.res.Resources;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CardUtils;
@@ -8,6 +9,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.sched.AbstractSched;
+import com.ichi2.utils.PairWithBoolean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +61,8 @@ public abstract class Undoable {
 
 
 
-    public static class Task implements com.ichi2.async.Task<TaskData, TaskData> {
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+    public static class Task implements com.ichi2.async.Task<TaskData, PairWithBoolean<Card[]>> {
+        public PairWithBoolean<Card[]> background(CollectionTask<TaskData, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             try {
@@ -97,9 +99,9 @@ public abstract class Undoable {
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
-                return new TaskData(false);
+                return new PairWithBoolean<>(false);
             }
-            return new TaskData(true);
+            return new PairWithBoolean(true);
         }
     }
 }

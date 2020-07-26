@@ -62,6 +62,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.util.JsonReader;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -115,6 +116,7 @@ import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.AnkiPackageExporter;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
@@ -130,6 +132,7 @@ import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.ImportUtils;
+import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.VersionUtils;
@@ -1474,7 +1477,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private UndoTaskListener undoTaskListener(boolean isReview) {
         return new UndoTaskListener(isReview, this);
     }
-    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, TaskData, TaskData> {
+    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, TaskData, PairWithBoolean<Card[]>> {
         private final boolean isReview;
 
         public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {
@@ -1496,7 +1499,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, PairWithBoolean<Card[]> result) {
             deckPicker.hideProgressBar();
             Timber.i("Undo completed");
             if (isReview) {

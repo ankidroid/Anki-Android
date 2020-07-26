@@ -126,6 +126,7 @@ import com.ichi2.utils.FunctionalInterfaces.Function;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.WebViewDebugging;
 
 import java.io.ByteArrayInputStream;
@@ -608,7 +609,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private final TaskListener<TaskData, TaskData> mUpdateCardHandler = new TaskListener<TaskData, TaskData>() {
+    private final TaskListener<TaskData, PairWithBoolean<Card[]>> mUpdateCardHandler = new TaskListener<TaskData, PairWithBoolean<Card[]>>() {
         private boolean mNoMoreCards;
 
 
@@ -660,8 +661,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(TaskData result) {
-            if (!result.getBoolean()) {
+        public void onPostExecute(PairWithBoolean<Card[]> result) {
+            if (!result.first) {
                 // RuntimeException occurred on update cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
                 return;
@@ -756,7 +757,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected class AnswerCard extends NextCardHandler<TaskData, TaskData> implements Task<TaskData, TaskData> {
+    protected class AnswerCard extends NextCardHandler<TaskData, PairWithBoolean<Card[]>> implements Task<TaskData, PairWithBoolean<Card[]>> {
         private final Card mOldCard;
         @Consts.BUTTON_TYPE private final int mEase;
         private final boolean mQuick;
@@ -771,7 +772,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mEase = ease;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public PairWithBoolean<Card[]> background(CollectionTask<TaskData, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             Card newCard = null;
@@ -797,9 +798,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
-                return new TaskData(false);
+                return new PairWithBoolean<>(false);
             }
-            return new TaskData(true);
+            return new PairWithBoolean<>(true);
         }
 
         @Override
@@ -808,7 +809,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             blockControls(mQuick);
         }
 
-        public CollectionTask<TaskData, TaskData> launch() {
+        public CollectionTask<TaskData, PairWithBoolean<Card[]>> launch() {
             return CollectionTask.launchCollectionTask(this, this);
         }
     }
