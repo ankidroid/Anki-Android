@@ -48,6 +48,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.Triple;
 import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
@@ -101,7 +102,7 @@ public class ModelBrowser extends AnkiActivity {
         new LoadingModels(this).launch();
     }
 
-    private static class LoadingModels extends TaskAndListenerWithContext<ModelBrowser, TaskData, TaskData> {
+    private static class LoadingModels extends TaskAndListenerWithContext<ModelBrowser, TaskData, Triple<ArrayList<Model>, ArrayList<Integer>, Boolean>> {
         public LoadingModels(ModelBrowser browser) {
             super(browser);
         }
@@ -117,43 +118,39 @@ public class ModelBrowser extends AnkiActivity {
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull ModelBrowser browser, TaskData result) {
-            if (!result.getBoolean()) {
+        public void actualOnPostExecute(@NonNull ModelBrowser browser, Triple<ArrayList<Model>, ArrayList<Integer>, Boolean> result) {
+            if (!result.third) {
                 throw new RuntimeException();
             }
             browser.hideProgressBar();
-            browser.mModels = (ArrayList<Model>) result.getObjArray()[0];
-            browser.mCardCounts = (ArrayList<Integer>) result.getObjArray()[1];
-
+            browser.mModels = result.first;
+            browser.mCardCounts = result.second;
             browser.fillModelList();
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Triple<ArrayList<Model>, ArrayList<Integer>, Boolean> background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundLoadModels");
             Collection col = collectionTask.getCol();
 
             ArrayList<Model> models = col.getModels().all();
             ArrayList<Integer> cardCount = new ArrayList<>();
             Collections.sort(models, new Comparator<JSONObject>() {
-                @Override
-                public int compare(JSONObject a, JSONObject b) {
-                    return a.getString("name").compareTo(b.getString("name"));
-                }
-            });
+                    @Override
+                    public int compare(JSONObject a, JSONObject b) {
+                        return a.getString("name").compareTo(b.getString("name"));
+                    }
+                });
 
             for (Model n : models) {
                 if (collectionTask.isCancelled()) {
                     Timber.e("doInBackgroundLoadModels :: Cancelled");
                     // onPostExecute not executed if cancelled. Return value not used.
-                    return new TaskData(false);
+                    return new Triple(null, null, false);
                 }
                 cardCount.add(col.getModels().useCount(n));
             }
 
-            Object[] data = new Object[2];
-            data[0] = models;
-            data[1] = cardCount;
-            return (new TaskData(data, true));
+            return (new Triple(models, cardCount, true));
         }
     };
 
