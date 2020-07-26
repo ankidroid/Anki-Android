@@ -1678,13 +1678,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
         CollectionTask.launchCollectionTask(CHECK_DATABASE, new CheckDatabaseListener());
     }
 
-
-    private final MediaCheckListener mediaCheckListener() {
-        return new MediaCheckListener(this);
-    }
-    private static class MediaCheckListener extends TaskListenerWithContext<DeckPicker>{
-        public MediaCheckListener (DeckPicker deckPicker) {
+    private static class MediaCheck extends TaskAndListenerWithContext<DeckPicker>{
+        public MediaCheck(DeckPicker deckPicker) {
             super(deckPicker);
+        }
+
+        public TaskData background(CollectionTask collectionTask)  {
+            Timber.d("doInBackgroundCheckMedia");
+            Collection col = collectionTask.getCol();
+            // A media check on AnkiDroid will also update the media db
+            col.getMedia().findChanges(true);
+            // Then do the actual check
+            List<List<String>> result = col.getMedia().check();
+            return new TaskData(0, new Object[] {result}, true);
         }
 
         @Override
@@ -1708,12 +1714,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
     }
-    @Override
-    public void mediaCheck() {
-        TaskListener listener = mediaCheckListener();
-        CollectionTask.launchCollectionTask(CHECK_MEDIA, listener);
-    }
 
+    public void mediaCheck() {
+        new MediaCheck(this).launch();
+    }
 
     @Override
     public void deleteUnused(List<String> unused) {

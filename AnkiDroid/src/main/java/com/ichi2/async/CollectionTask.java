@@ -100,7 +100,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         EMPTY_CRAM,
         SEARCH_CARDS,
         RENDER_BROWSER_QA,
-        CHECK_MEDIA,
         COUNT_MODELS,
         DELETE_MODEL,
         DELETE_FIELD,
@@ -364,9 +363,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case RENDER_BROWSER_QA:
                 return doInBackgroundRenderBrowserQA(param);
-
-            case CHECK_MEDIA:
-                return doInBackgroundCheckMedia();
 
             case COUNT_MODELS:
                 return doInBackgroundCountModels();
@@ -1112,18 +1108,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    /**
-     * @return The results list from the check, or false if any errors.
-     */
-    private TaskData doInBackgroundCheckMedia() {
-        Timber.d("doInBackgroundCheckMedia");
-        Collection col = getCol();
-        // A media check on AnkiDroid will also update the media db
-        col.getMedia().findChanges(true);
-        // Then do the actual check
-        List<List<String>> result = col.getMedia().check();
-        return new TaskData(0, new Object[]{result}, true);
-    }
 
     /**
      * Handles everything for a model change at once - template add / deletes as well as content updates
