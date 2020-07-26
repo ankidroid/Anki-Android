@@ -46,7 +46,6 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 import java.util.Locale;
 
@@ -472,24 +471,44 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         fullRefreshList();
     }
 
+    private static class SortByFieldTask implements Task {
+        private final Model mModel;
+        private final int mIdx;
+        public SortByFieldTask(Model model, int idx) {
+            this.mModel = model;
+            this.mIdx = idx;
+        }
+        public TaskData background(CollectionTask collectionTask)  {
+            try {
+                Timber.d("doInBackgroundChangeSortField");
+                Collection col = collectionTask.getCol();
+                col.getModels().setSortIdx(mModel, mIdx);
+                col.save();
+            } catch (Exception e) {
+                Timber.e(e, "Error changing sort field");
+                return new TaskData(false);
+            }
+            return new TaskData(true);
+        }
+    }
+
 
     /*
      * Changes the sort field (that displays in card browser) to the current field
      */
     private void sortByField() {
         changeHandler listener = changeFieldHandler();
+        TaskData task = new TaskData(new SortByFieldTask(mMod, mCurrentPos));
         try {
             mCol.modSchema();
-            CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, listener,
-                    new TaskData(new Object[]{mMod, mCurrentPos}));
+            CollectionTask.launchCollectionTask(null, listener, task);
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
             ConfirmationDialog c = new ConfirmationDialog();
             c.setArgs(getResources().getString(R.string.full_sync_confirmation));
             Runnable confirm = () -> {
                 mCol.modSchemaNoCheck();
-                CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, listener,
-                        new TaskData(new Object[]{mMod, mCurrentPos}));
+            CollectionTask.launchCollectionTask(null, listener, task);
                 dismissContextMenu();
             };
             c.setConfirm(confirm);

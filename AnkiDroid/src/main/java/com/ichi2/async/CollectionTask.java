@@ -101,7 +101,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         SEARCH_CARDS,
         RENDER_BROWSER_QA,
         COUNT_MODELS,
-        CHANGE_SORT_FIELD,
         SAVE_MODEL,
         FIND_EMPTY_CARDS,
         CHECK_CARD_SELECTION,
@@ -362,9 +361,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case COUNT_MODELS:
                 return doInBackgroundCountModels();
-
-            case CHANGE_SORT_FIELD:
-                return doInBackgroundChangeSortField(param);
 
             case SAVE_MODEL:
                 return doInBackgroundSaveModel(param);
@@ -1192,27 +1188,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         data[0] = models;
         data[1] = cardCount;
         return (new TaskData(data, true));
-    }
-
-    /**
-     * Adds a field of with name in given model
-     */
-    private TaskData doInBackgroundChangeSortField(TaskData param){
-        try {
-            Timber.d("doInBackgroundChangeSortField");
-            Object[] objects = param.getObjArray();
-
-            Model model = (Model) objects[0];
-            int idx = (int) objects[1];
-
-            Collection col = getCol();
-            col.getModels().setSortIdx(model, idx);
-            col.save();
-        } catch(Exception e){
-            Timber.e(e, "Error changing sort field");
-            return new TaskData(false);
-        }
-        return new TaskData(true);
     }
 
     public TaskData doInBackGroundFindEmptyCards(TaskData param) {
