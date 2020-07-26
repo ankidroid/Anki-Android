@@ -531,7 +531,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private ExportListener exportListener() {
         return new ExportListener(this);
     }
-    private static class ExportListener extends TaskListenerWithContext<DeckPicker, TaskData, TaskData>{
+    private static class ExportListener extends TaskListenerWithContext<DeckPicker, TaskData, Triple<Boolean, String, AnkiPackageExporter>>{
         public ExportListener(DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -544,19 +544,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Triple<Boolean, String, AnkiPackageExporter> result) {
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
 
             // If boolean and string are both set, we are signalling an error message
             // instead of a successful result.
-            if (result.getBoolean() && result.getString() != null) {
-                Timber.w("Export Failed: %s", result.getString());
-                deckPicker.showSimpleMessageDialog(result.getString());
+            if (result.first && result.second != null) {
+                Timber.w("Export Failed: %s", result.second);
+                deckPicker.showSimpleMessageDialog(result.second);
             } else {
                 Timber.i("Export successful");
-                String exportPath = result.getString();
+                String exportPath = result.second;
                 if (exportPath != null) {
                     deckPicker.showAsyncDialogFragment(DeckPickerExportCompleteDialog.newInstance(exportPath));
                 } else {
@@ -2161,7 +2161,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private static class ExportApkgTask implements Task<TaskData, TaskData> {
+    private static class ExportApkgTask implements Task<TaskData, Triple<Boolean, String, AnkiPackageExporter>> {
         private final boolean mIncludeSched;
         private final boolean mIncludeMedia;
         private final long mDid;
@@ -2173,7 +2173,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             this.mApkgPath = mApkgPath;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask)  {
+        public Triple<Boolean, String, AnkiPackageExporter> background(CollectionTask collectionTask)  {
             Timber.d("doInBackgroundExportApkg");
 
             try {
@@ -2184,18 +2184,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 exporter.exportInto(mApkgPath, collectionTask.getContext());
             } catch (FileNotFoundException e) {
                 Timber.e(e, "FileNotFoundException in doInBackgroundExportApkg");
-                return new TaskData(false);
+                return new Triple(false, null, null);
             } catch (IOException e) {
                 Timber.e(e, "IOException in doInBackgroundExportApkg");
-                return new TaskData(false);
+                return new Triple(false, null, null);
             } catch (JSONException e) {
                 Timber.e(e, "JSOnException in doInBackgroundExportApkg");
-                return new TaskData(false);
+                return new Triple(false, null, null);
             } catch (ImportExportException e) {
                 Timber.e(e, "ImportExportException in doInBackgroundExportApkg");
-                return new TaskData(e.getMessage(), true);
+                return new Triple(true, e.getMessage(), null);
             }
-            return new TaskData(mApkgPath);
+            return new Triple(null, null, mApkgPath);
         }
     }
 
