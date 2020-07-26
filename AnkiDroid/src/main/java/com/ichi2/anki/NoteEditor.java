@@ -226,7 +226,7 @@ public class NoteEditor extends AnkiActivity {
         return new SaveNote(this, note);
     }
 
-    private static class SaveNote extends TaskAndListenerWithContext<NoteEditor, TaskData, Boolean> {
+    private static class SaveNote extends TaskAndListenerWithContext<NoteEditor, Integer, Boolean> {
         private boolean mCloseAfter = false;
         private Intent mIntent;
         private final Note mNote;
@@ -236,14 +236,14 @@ public class NoteEditor extends AnkiActivity {
             mNote = note;
         }
 
-        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<Integer, ?> collectionTask) {
             Timber.d("doInBackgroundAddNote");
             Collection col = collectionTask.getCol();
             try {
                 DB db = col.getDb();
                 db.getDatabase().beginTransaction();
                 try {
-                    collectionTask.doProgress(new TaskData(col.addNote(mNote)));
+                    collectionTask.doProgress(col.addNote(mNote));
                     db.getDatabase().setTransactionSuccessful();
                 } finally {
                     db.getDatabase().endTransaction();
@@ -264,8 +264,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
         @Override
-        public void actualOnProgressUpdate(@NonNull NoteEditor noteEditor, TaskData value) {
-            int count = value.getInt();
+        public void actualOnProgressUpdate(@NonNull NoteEditor noteEditor, Integer count) {
             if (count > 0) {
                 noteEditor.mChanged = true;
                 noteEditor.mSourceText = null;
