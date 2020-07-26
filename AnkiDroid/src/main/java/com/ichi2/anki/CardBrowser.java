@@ -1563,7 +1563,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private static abstract class ListenerWithProgressBar extends TaskListenerWithContext<CardBrowser, TaskData, TaskData>{
+    private static abstract class ListenerWithProgressBar<Progress, Result> extends TaskListenerWithContext<CardBrowser, Progress, Result>{
         public ListenerWithProgressBar(CardBrowser browser) {
             super(browser);
         }
@@ -1575,7 +1575,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     /** Does not leak Card Browser. */
-    private static abstract class ListenerWithProgressBarCloseOnFalse extends ListenerWithProgressBar {
+    private static abstract class ListenerWithProgressBarCloseOnFalse<Progress> extends ListenerWithProgressBar<Progress, TaskData> {
         private final String mTimber;
         public ListenerWithProgressBarCloseOnFalse(String timber, CardBrowser browser) {
             super(browser);
@@ -1624,7 +1624,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new UpdateCardHandler(this);
     }
 
-    private static class UpdateCardHandler extends ListenerWithProgressBarCloseOnFalse {
+    private static class UpdateCardHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
         public UpdateCardHandler(CardBrowser browser) {
             super("Card Browser - UpdateCardHandler.actualOnPostExecute(CardBrowser browser)", browser);
         }
@@ -1643,7 +1643,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private ChangeDeckHandler changeDeckHandler() {
         return new ChangeDeckHandler(this);
     }
-    private static class ChangeDeckHandler extends ListenerWithProgressBarCloseOnFalse {
+    private static class ChangeDeckHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
         public ChangeDeckHandler(CardBrowser browser) {
             super("Card Browser - changeDeckHandler.actualOnPostExecute(CardBrowser browser)", browser);
         }
@@ -1844,7 +1844,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private SuspendCardHandler suspendCardHandler() {
         return new SuspendCardHandler(this);
     }
-    private static class SuspendCardHandler extends ListenerWithProgressBarCloseOnFalse {
+    private static class SuspendCardHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
         public SuspendCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -1952,7 +1952,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MarkCardHandler markCardHandler() {
         return new MarkCardHandler(this);
     }
-    private static class MarkCardHandler extends ListenerWithProgressBarCloseOnFalse {
+    private static class MarkCardHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
         public MarkCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -1967,7 +1967,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     };
 
     private DeleteNoteHandler mDeleteNoteHandler = new DeleteNoteHandler(this);
-    private static class DeleteNoteHandler extends ListenerWithProgressBarCloseOnFalse {
+    private static class DeleteNoteHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
         public DeleteNoteHandler(CardBrowser browser) {
             super(browser);
         }
@@ -2112,7 +2112,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private final UndoHandler mUndoHandler = new UndoHandler(this);
-    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse {
+    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
         public UndoHandler(CardBrowser browser) {
             super(browser);
         }
@@ -2131,7 +2131,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     };
 
     private final SearchCardsHandler mSearchCardsHandler = new SearchCardsHandler(this);
-    private class SearchCardsHandler extends ListenerWithProgressBar {
+    private class SearchCardsHandler extends ListenerWithProgressBar<TaskData, TaskData> {
         public SearchCardsHandler(CardBrowser browser) {
             super(browser);
         }
@@ -2336,7 +2336,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private static class CheckSelectedCards extends ListenerWithProgressBar implements Task<TaskData, TaskData> {
+    private static class CheckSelectedCards extends ListenerWithProgressBar<TaskData, TaskData> implements Task<TaskData, TaskData> {
         private final Set<CardCache> mCheckedCardPositions;
 
         public CheckSelectedCards(CardBrowser browser, Set<CardCache> checkedCardPositions) {
