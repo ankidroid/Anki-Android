@@ -226,7 +226,7 @@ public class NoteEditor extends AnkiActivity {
         return new SaveNote(this, note);
     }
 
-    private static class SaveNote extends TaskAndListenerWithContext<NoteEditor, TaskData, TaskData> {
+    private static class SaveNote extends TaskAndListenerWithContext<NoteEditor, TaskData, Boolean> {
         private boolean mCloseAfter = false;
         private Intent mIntent;
         private final Note mNote;
@@ -236,7 +236,7 @@ public class NoteEditor extends AnkiActivity {
             mNote = note;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundAddNote");
             Collection col = collectionTask.getCol();
             try {
@@ -251,9 +251,9 @@ public class NoteEditor extends AnkiActivity {
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote");
-                return new TaskData(false);
+                return false;
             }
-            return new TaskData(true);
+            return true;
         }
 
         @Override
@@ -319,8 +319,8 @@ public class NoteEditor extends AnkiActivity {
 
 
         @Override
-        public void actualOnPostExecute(@NonNull NoteEditor noteEditor, TaskData result) {
-            if (result.getBoolean()) {
+        public void actualOnPostExecute(@NonNull NoteEditor noteEditor, Boolean result) {
+            if (result) {
                 if (noteEditor.mProgressDialog != null && noteEditor.mProgressDialog.isShowing()) {
                     try {
                         noteEditor.mProgressDialog.dismiss();

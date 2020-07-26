@@ -558,7 +558,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
              */
             private void remConf() throws ConfirmModSchemaException {
                 // Remove options group, asking user to confirm full sync if necessary
-                mCol.getDecks().remConf(mOptions.getLong("id"));
                 DeckConfig conf = mOptions;
                 // Run the CPU intensive re-sort operation in a background thread
                 CollectionTask.launchCollectionTask(confChangeHandler(), new RemConfTask(conf));
