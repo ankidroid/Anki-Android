@@ -2751,7 +2751,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         return new DeleteDeckListener(did, this);
     }
 
-    private static class DeleteDeckListener extends TaskAndListenerWithContext<DeckPicker, TaskData, TaskData> {
+    private static class DeleteDeckListener extends TaskAndListenerWithContext<DeckPicker, TaskData, Void> {
         private final long did;
         // Flag to indicate if the deck being deleted is the current deck.
         private boolean removingCurrent;
@@ -2761,7 +2761,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             this.did = did;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Void background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundDeleteDeck");
             Collection col = collectionTask.getCol();
             col.getDecks().rem(did, true);
@@ -2782,7 +2782,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @SuppressWarnings("unchecked")
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, @Nullable TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, @Nullable Void result) {
             // In fragmented mode, if the deleted deck was the current deck, we need to reload
             // the study options fragment with a valid deck and re-center the deck list to the
             // new current deck. Otherwise we just update the list normally.
