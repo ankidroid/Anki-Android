@@ -299,14 +299,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    private static class ImportAdd extends TaskAndListenerWithContext<DeckPicker, TaskData, TaskData> {
+    private static class ImportAdd extends TaskAndListenerWithContext<DeckPicker, String, TaskData> {
         private final String mPath;
         public ImportAdd(DeckPicker deckPicker, String path) {
             super(deckPicker);
             mPath = path;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public TaskData background(CollectionTask<String, ?> collectionTask) {
             Timber.d("doInBackgroundImportAdd");
             Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
             Collection col = collectionTask.getCol();
@@ -314,12 +314,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             imp.setProgressCallback(new CollectionTask.ProgressCallback(collectionTask, res));
             try {
                 imp.run();
-            } catch (
-                    ImportExportException e) {
+            } catch (ImportExportException e) {
                 return new TaskData(e.getMessage(), true);
             }
             return new TaskData(new Object[] {imp});
-        }
+        };
+
 
         @Override
         public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
@@ -350,12 +350,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, TaskData value) {
-            deckPicker.mProgressDialog.setContent(value.getString());
+        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, String value) {
+            deckPicker.mProgressDialog.setContent(value);
         }
     }
 
-    private static class ImportReplace extends TaskAndListenerWithContext<DeckPicker, TaskData, Boolean>{
+    private static class ImportReplace extends TaskAndListenerWithContext<DeckPicker, String, Boolean>{
         private final String mImportPath;
 
         public ImportReplace(DeckPicker deckPicker, String importPath) {
@@ -363,7 +363,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mImportPath = importPath;
         }
 
-        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<String, ?> collectionTask) {
             Timber.d("doInBackgroundImportReplace");
             Collection col = collectionTask.getCol();
             Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
@@ -422,7 +422,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
 
-            collectionTask.doProgress(new TaskData(res.getString(R.string.importing_collection)));
+            collectionTask.doProgress(res.getString(R.string.importing_collection));
             if (col != null) {
                 // unload collection and trigger a backup
                 CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
@@ -471,7 +471,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         Utils.unzipFiles(zip, mediaDir, new String[] {c}, numToName);
                     }
                     ++i;
-                    collectionTask.doProgress(new TaskData(res.getString(R.string.import_media_count, (i + 1) * 100 / total)));
+                    collectionTask.doProgress(res.getString(R.string.import_media_count, (i + 1) * 100 / total));
                 }
                 zip.close();
                 // delete tmp dir
@@ -519,8 +519,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, TaskData value) {
-            deckPicker.mProgressDialog.setContent(value.getString());
+        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, String value) {
+            deckPicker.mProgressDialog.setContent(value);
         }
     }
 
