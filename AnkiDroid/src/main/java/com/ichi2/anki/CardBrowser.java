@@ -1967,14 +1967,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
     };
 
     private DeleteNoteHandler mDeleteNoteHandler = new DeleteNoteHandler(this);
-    private static class DeleteNoteHandler extends ListenerWithProgressBarCloseOnFalse<TaskData> {
+    private static class DeleteNoteHandler extends ListenerWithProgressBarCloseOnFalse<Card[]> {
         public DeleteNoteHandler(CardBrowser browser) {
             super(browser);
         }
 
         @Override
-        public void actualOnProgressUpdate(@NonNull CardBrowser browser, TaskData value) {
-            Card[] cards = (Card[]) value.getObjArray();
+        public void actualOnProgressUpdate(@NonNull CardBrowser browser, Card[] cards) {
             //we don't need to reorder cards here as we've already deselected all notes,
             browser.removeNotesView(cards, false);
         }
@@ -2049,13 +2048,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    public static class DeleteNoteMulti extends CollectionTask.DismissMulti<TaskData> {
+    public static class DeleteNoteMulti extends CollectionTask.DismissMulti<Card[]> {
         public DeleteNoteMulti(long[] cardIds) {
             super(cardIds);
         }
 
 
-        public TaskData actualBackground(CollectionTask<TaskData, ?> task, Card[] cards) {
+        public TaskData actualBackground(CollectionTask<Card[], ?> task, Card[] cards) {
             Collection col = task.getCol();
             AbstractSched sched = col.getSched();
             // list of all ids to pass to remNotes method.
@@ -2076,7 +2075,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             col.remNotes(uniqueNoteIds);
             sched.deferReset();
             // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
-            task.doProgress(new TaskData(allCards.toArray(new Card[allCards.size()])));
+            task.doProgress(allCards.toArray(new Card[allCards.size()]));
             return null;
         }
     }
