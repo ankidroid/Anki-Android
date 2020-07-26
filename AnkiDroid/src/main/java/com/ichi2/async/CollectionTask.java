@@ -29,6 +29,7 @@ import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
+import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
@@ -94,7 +95,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         CHECK_DATABASE,
         REPAIR_COLLECTION,
         LOAD_DECK_COUNTS,
-        UPDATE_VALUES_FROM_DECK,
         DELETE_DECK,
         REBUILD_CRAM,
         EMPTY_CRAM,
@@ -363,9 +363,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case REPAIR_COLLECTION:
                 return doInBackgroundRepairCollection();
-
-            case UPDATE_VALUES_FROM_DECK:
-                return doInBackgroundUpdateValuesFromDeck(param);
 
             case DELETE_DECK:
                 doInBackgroundDeleteDeck(param);
@@ -1135,29 +1132,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    private TaskData doInBackgroundUpdateValuesFromDeck(TaskData param) {
-        Timber.d("doInBackgroundUpdateValuesFromDeck");
-        try {
-            Collection col = getCol();
-            AbstractSched sched = col.getSched();
-            Object[] obj = param.getObjArray();
-            boolean reset = (Boolean) obj[0];
-            if (reset) {
-                // reset actually required because of counts, which is used in getCollectionTaskListener
-                sched.resetCounts();
-            }
-            int[] counts = sched.counts();
-            int totalNewCount = sched.totalNewForCurrentDeck();
-            int totalCount = sched.cardCount();
-            return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount,
-                    totalCount, sched.eta(counts)});
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");
-            return null;
-        }
-    }
-
-
     private void doInBackgroundDeleteDeck(TaskData param) {
         Timber.d("doInBackgroundDeleteDeck");
         Collection col = getCol();
@@ -1172,7 +1146,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Timber.d("doInBackgroundRebuildCram");
         Collection col = getCol();
         col.getSched().rebuildDyn(col.getDecks().selected());
-        return doInBackgroundUpdateValuesFromDeck(new TaskData(new Object[]{true}));
+        return StudyOptionsFragment.updateValuesFromDeck(this, true);
     }
 
 
@@ -1180,7 +1154,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Timber.d("doInBackgroundEmptyCram");
         Collection col = getCol();
         col.getSched().emptyDyn(col.getDecks().selected());
-        return doInBackgroundUpdateValuesFromDeck(new TaskData(new Object[]{true}));
+        return StudyOptionsFragment.updateValuesFromDeck(this, true);
     }
 
 

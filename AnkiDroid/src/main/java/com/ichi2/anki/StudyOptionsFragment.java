@@ -41,12 +41,14 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.Task;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.HtmlUtils;
 
@@ -492,6 +494,42 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         refreshInterface(resetSched, false);
     }
 
+    // This method should be called in background.
+    // Either to empty/delete cram, or to update counts
+    public static TaskData updateValuesFromDeck(CollectionTask task, boolean resetSched) {
+        Timber.d("doInBackgroundUpdateValuesFromDeck");
+        try {
+            Collection col = task.getCol();
+            AbstractSched sched = col.getSched();
+            if (resetSched) {
+                // reset actually required because of counts, which is used in getCollectionTaskListener
+                sched.resetCounts();
+            }
+            int[] counts = sched.counts();
+            int totalNewCount = sched.totalNewForCurrentDeck();
+            int totalCount = sched.cardCount();
+            return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount,
+                    totalCount, sched.eta(counts)});
+        } catch (RuntimeException e) {
+            Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");
+            return null;
+        }
+    }
+
+    private static class UpdateValuesFromDeck implements Task {
+        private final boolean mResetSched;
+
+
+        private UpdateValuesFromDeck(boolean resetSched) {
+            mResetSched = resetSched;
+        }
+
+
+        public TaskData background(CollectionTask collectionTask) {
+            return updateValuesFromDeck(collectionTask, mResetSched);
+        }
+    }
+
     /**
      * Rebuild the fragment's interface to reflect the status of the currently selected deck.
      *
@@ -503,8 +541,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     protected void refreshInterface(boolean resetSched, boolean resetDecklist) {
         Timber.d("Refreshing StudyOptionsFragment");
         // Load the deck counts for the deck from Collection asynchronously
-        CollectionTask.launchCollectionTask(UPDATE_VALUES_FROM_DECK, getCollectionTaskListener(resetDecklist),
-                new TaskData(new Object[]{resetSched}));
+        CollectionTask.launchCollectionTask(null, getCollectionTaskListener(resetDecklist), new TaskData(new UpdateValuesFromDeck(resetSched)));
     }
 
 
