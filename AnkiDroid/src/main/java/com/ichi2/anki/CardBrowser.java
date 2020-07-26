@@ -2222,7 +2222,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         RenderQA renderQA = new RenderQA(this, cards, startPos, n, column1Index, column2Index);
         CollectionTask.launchCollectionTask(renderQA, renderQA);
     }
-    private static class RenderQA extends TaskAndListenerWithContext<CardBrowser, TaskData, TaskData> {
+    private static class RenderQA extends TaskAndListenerWithContext<CardBrowser, TaskData, Pair<List<CardCache>, List<Long>>> {
 
         private final List<CardCache> mCards;
         private final int mStartPos;
@@ -2239,7 +2239,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mColumn2Index = column2Index;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Pair<List<CardCache>, List<Long>> background(CollectionTask<TaskData, ?> collectionTask) {
             //TODO: Convert this to accept the following to make thread-safe:
             //(Range<Position>, Function<Position, BrowserCard>)
             Timber.d("doInBackgroundRenderBrowserQA");
@@ -2288,7 +2288,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 float progress = (float) i / mN * 100;
                 collectionTask.doProgress(new TaskData((int) progress));
             }
-            return new TaskData(new Object[] { mCards, invalidCardIds });
+            return new Pair<>(mCards, invalidCardIds);
         }
 
         @Override
@@ -2306,12 +2306,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull CardBrowser browser, TaskData result) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, Pair<List<CardCache>, List<Long>> result) {
             if (result != null) {
-                if (result.getObjArray() != null && result.getObjArray().length > 1) {
+                if (result != null) {
                     try {
                         @SuppressWarnings("unchecked")
-                        List<Long> cardsIdsToHide = (List<Long>) result.getObjArray()[1];
+                        List<Long> cardsIdsToHide = result.second;
                         if (cardsIdsToHide.size() > 0) {
                             Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size());
                             browser.removeNotesView(cardsIdsToHide, true);
