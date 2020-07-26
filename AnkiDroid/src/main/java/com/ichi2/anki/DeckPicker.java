@@ -1061,6 +1061,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
+    private static class ResumeTask implements Task {
+        public TaskData background(CollectionTask collectionTask) {
+            Collection col = collectionTask.getCol();
+            if (col != null) {
+                CollectionHelper.loadCollectionComplete(col);
+            }
+            return null;
+        }
+    }
+
     @Override
     protected void onResume() {
         Timber.d("onResume()");
@@ -1077,7 +1087,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         /** Complete task and enqueue fetching nonessential data for
          * startup. */
-        CollectionTask.launchCollectionTask(LOAD_COLLECTION_COMPLETE);
+        CollectionTask.launchCollectionTask(null, new TaskData(new ResumeTask()));
         // Update sync status (if we've come back from a screen)
         supportInvalidateOptionsMenu();
     }

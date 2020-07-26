@@ -102,7 +102,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         RENDER_BROWSER_QA,
         COUNT_MODELS,
         CHECK_CARD_SELECTION,
-        LOAD_COLLECTION_COMPLETE,
     }
 
     /**
@@ -360,14 +359,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             case COUNT_MODELS:
                 return doInBackgroundCountModels();
 
-            case LOAD_COLLECTION_COMPLETE:
-                doInBackgroundLoadCollectionComplete();
-                break;
-
             default:
                 return doInBackgroundCode(param);
         }
-        return null;
     }
 
 
@@ -1113,13 +1107,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         data[0] = models;
         data[1] = cardCount;
         return (new TaskData(data, true));
-    }
-
-    public void doInBackgroundLoadCollectionComplete() {
-        Collection col = getCol();
-        if (col != null) {
-            CollectionHelper.loadCollectionComplete(col);
-        }
     }
 
     public TaskData doInBackgroundCode(TaskData param) {
