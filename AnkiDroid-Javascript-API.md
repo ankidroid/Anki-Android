@@ -151,7 +151,7 @@ In full screen, a button can be added to show side navigation drawer.
 ### Name
 ```AnkiDroidJS.ankiIsTopbarShown()```
 ### Info
-It can be used to show / hide custom topbar design. See #6747 for more.
+It can be used to show / hide custom topbar design. See [#6747](https://github.com/ankidroid/Anki-Android/pull/6747) for more.
 ### Usage
 ```javascript
 <script>
