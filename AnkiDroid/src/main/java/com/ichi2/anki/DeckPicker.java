@@ -355,7 +355,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private static class ImportReplace extends TaskAndListenerWithContext<DeckPicker, TaskData, TaskData>{
+    private static class ImportReplace extends TaskAndListenerWithContext<DeckPicker, TaskData, Boolean>{
         private final String mImportPath;
 
         public ImportReplace(DeckPicker deckPicker, String importPath) {
@@ -363,7 +363,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mImportPath = importPath;
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+        public Boolean background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundImportReplace");
             Collection col = collectionTask.getCol();
             Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
@@ -383,7 +383,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             } catch (IOException e) {
                 Timber.e(e, "doInBackgroundImportReplace - Error while unzipping");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0");
-                return new TaskData(false);
+                return false;
             }
             try {
                 // v2 scheduler?
@@ -393,11 +393,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Utils.unzipFiles(zip, dir.getAbsolutePath(), new String[] {colname, "media"}, null);
             } catch (IOException e) {
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - unzip");
-                return new TaskData(false);
+                return false;
             }
             String colFile = new File(dir, colname).getAbsolutePath();
             if (!(new File(colFile)).exists()) {
-                return new TaskData(false);
+                return false;
             }
 
             Collection tmpCol = null;
@@ -405,7 +405,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 tmpCol = Storage.Collection(collectionTask.getContext(), colFile);
                 if (!tmpCol.validCollection()) {
                     tmpCol.close();
-                    return new TaskData(false);
+                    return false;
                 }
             } catch (Exception e) {
                 Timber.e("Error opening new collection file... probably it's invalid");
@@ -415,7 +415,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     // do nothing
                 }
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col");
-                return new TaskData(false);
+                return false;
             } finally {
                 if (tmpCol != null) {
                     tmpCol.close();
@@ -433,7 +433,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             File f = new File(colFile);
             if (!f.renameTo(new File(colPath))) {
                 // Exit early if this didn't work
-                return new TaskData(false);
+                return false;
             }
             int addedCount = -1;
             try {
@@ -476,31 +476,31 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 zip.close();
                 // delete tmp dir
                 BackupManager.removeDir(dir);
-                return new TaskData(true);
+                return true;
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundImportReplace - RuntimeException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1");
-                return new TaskData(false);
+                return false;
             } catch (FileNotFoundException e) {
                 Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace2");
-                return new TaskData(false);
+                return false;
             } catch (IOException e) {
                 Timber.e(e, "doInBackgroundImportReplace - IOException");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
-                return new TaskData(false);
+                return false;
             }
         }
 
         @SuppressWarnings("unchecked")
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Boolean result) {
             Timber.i("Import: Replace Task Completed");
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
             Resources res = deckPicker.getResources();
-            if (result != null && result.getBoolean()) {
+            if (result != null && result) {
                 deckPicker.updateDeckList();
             } else {
                 deckPicker.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
