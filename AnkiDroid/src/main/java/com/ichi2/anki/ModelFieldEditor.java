@@ -168,6 +168,23 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     // CONTEXT MENU DIALOGUES
     // ----------------------------------------------------------------------------
 
+    private static class AddFieldTask implements Task {
+        private final String mFieldName;
+        private final Model mModel;
+        public AddFieldTask(Model model, String fieldName) {
+            this.mFieldName = fieldName;
+            this.mModel = model;
+        }
+        public TaskData background(CollectionTask collectionTask)  {
+            Timber.d("doInBackgroundRepositionField");
+
+            Collection col = collectionTask.getCol();
+            col.getModels().addFieldModChanged(mModel, col.getModels().newField(mFieldName));
+            col.save();
+            return new TaskData(true);
+        }
+    }
+
 
     /*
     * Creates a dialog to create a field
@@ -191,10 +208,10 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                     } else {
                         //Name is valid, now field is added
                         changeHandler listener = changeFieldHandler();
+                        TaskData task = new TaskData(new AddFieldTask(mMod, fieldName));
                         try {
                             mCol.modSchema();
-                            CollectionTask.launchCollectionTask(ADD_FIELD, listener,
-                                    new TaskData(new Object[]{mMod, fieldName}));
+                            CollectionTask.launchCollectionTask(null, listener, task);
                         } catch (ConfirmModSchemaException e) {
 
                             //Create dialogue to for schema change
@@ -204,8 +221,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                                 mCol.modSchemaNoCheck();
                                 String fieldName1 = mFieldNameInput.getText().toString()
                                         .replaceAll("[\\n\\r]", "");
-                                CollectionTask.launchCollectionTask(ADD_FIELD, listener,
-                                        new TaskData(new Object[]{mMod, fieldName1}));
+                                CollectionTask.launchCollectionTask(null, listener, task);
                                 dismissContextMenu();
                             };
 
