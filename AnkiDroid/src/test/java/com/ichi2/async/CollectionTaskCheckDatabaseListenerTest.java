@@ -16,13 +16,19 @@
 
 package com.ichi2.async;
 
+import android.util.Pair;
+
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.libanki.Collection;
 import com.ichi2.testutils.CollectionUtils;
 
 import org.junit.Test;
+
+import androidx.annotation.NonNull;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class CollectionTaskCheckDatabaseListenerTest extends AbstractCollectionTaskTest {
 
@@ -31,19 +37,16 @@ public class CollectionTaskCheckDatabaseListenerTest extends AbstractCollectionT
     public void checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase();
 
-        TaskData result = super.execute(new DeckPicker.CheckDatabaseTask());
+        Pair<Boolean, Collection.CheckDatabaseResult> result = super.execute(new DeckPicker.CheckDatabaseTask());
 
-        assertThat("The result should specify a failure", result.getBoolean(), is(false));
-        Collection.CheckDatabaseResult checkDbResult = assertObjIsDbResult(result);
+        assertThat("The result should specify a failure", result.first, is(false));
+        assertThat(result.second, is(notNullValue()));
+        Collection.CheckDatabaseResult checkDbResult = result.second;
 
         assertThat("The result should specify the database was locked", checkDbResult.getDatabaseLocked());
     }
 
     private void lockDatabase() {
         CollectionUtils.lockDatabase(getCol());
-    }
-
-    protected Collection.CheckDatabaseResult assertObjIsDbResult(TaskData result) {
-        return assertResultArraySingleton(result, Collection.CheckDatabaseResult.class);
     }
 }

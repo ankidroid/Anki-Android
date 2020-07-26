@@ -17,8 +17,10 @@
 package com.ichi2.anki;
 
 import android.content.Intent;
+import android.util.Pair;
 
 import com.ichi2.async.TaskData;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.CheckDatabaseResult;
 
 import org.junit.Test;
@@ -50,7 +52,7 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
     @Test
     public void failedResultWithNoDataWillDisplayFailedDialog() {
-        TaskData result = failedResultNoData();
+        Pair<Boolean, Collection.CheckDatabaseResult> result = failedResultNoData();
 
         execute(result);
 
@@ -59,7 +61,7 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
     @Test
     public void failedResultWithEmptyDataWillDisplayFailedDialog() {
-        TaskData result = failedResultWithData();
+        Pair<Boolean, Collection.CheckDatabaseResult> result = failedResultWithData();
 
         execute(result);
 
@@ -68,7 +70,7 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
     @Test
     public void validResultWithEmptyDataWillDoNothing() {
-        TaskData result = validResultWithData();
+        Pair<Boolean, Collection.CheckDatabaseResult> result = validResultWithData();
 
         execute(result);
 
@@ -77,19 +79,21 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
         assertThat("Nothing should be shown if valid, but no data supplied", !impl.didDisplayMessage());
     }
 
+    /* This became impossible thanks to type system
     @Test
     public void failedResultWithInvalidDataWillDisplayFailedDialog() {
-        TaskData result = failedResultWithData(1);
+        Pair<Boolean, Collection.CheckDatabaseResult> result = failedResultWithData(1);
 
         execute(result);
 
         assertThat("Load Failed dialog should be shown if invalid data is supplied", impl.didDisplayDialogLoadFailed());
     }
+     */
 
     @Test
     public void validResultWithValidDataWillDisplayMessageBox() {
         CheckDatabaseResult validData = validData();
-        TaskData result = validResultWithData(validData);
+        Pair<Boolean, Collection.CheckDatabaseResult> result = validResultWithData(validData);
 
         execute(result);
 
@@ -100,7 +104,7 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
     @Test
     public void validResultWithFailedDatabaseWillShowFailedDialog() {
         CheckDatabaseResult failedDb = failedDatabase();
-        TaskData result = validResultWithData(failedDb);
+        Pair<Boolean, Collection.CheckDatabaseResult> result = validResultWithData(failedDb);
 
         execute(result);
 
@@ -112,7 +116,7 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
     @Test
     public void validResultWithLockedDatabaseWillShowLockedDialog() {
         CheckDatabaseResult lockedDb = lockedDatabase();
-        TaskData result = validResultWithData(lockedDb);
+        Pair<Boolean, Collection.CheckDatabaseResult> result = validResultWithData(lockedDb);
 
         execute(result);
 
@@ -139,24 +143,33 @@ public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
 
 
     @NonNull
-    private TaskData failedResultWithData(Object... obj) {
-        return new TaskData(false, obj);
+    private Pair<Boolean, Collection.CheckDatabaseResult> failedResultWithData() {
+        return failedResultWithData(null);
     }
 
     @NonNull
-    private TaskData validResultWithData(Object... obj) {
-        return new TaskData(true, obj);
+    private Pair<Boolean, Collection.CheckDatabaseResult> failedResultWithData(Collection.CheckDatabaseResult obj) {
+        return new Pair(false, obj);
+    }
+
+    @NonNull
+    private Pair<Boolean, Collection.CheckDatabaseResult> validResultWithData() {
+        return validResultWithData(null);
+    }
+
+    @NonNull
+    private Pair<Boolean, Collection.CheckDatabaseResult> validResultWithData(Collection.CheckDatabaseResult obj) {
+        return new Pair(true, obj);
     }
 
 
     @NonNull
-    private TaskData failedResultNoData() {
-        return new TaskData(false);
+    private Pair<Boolean, Collection.CheckDatabaseResult> failedResultNoData() {
+        return new Pair(false, null);
     }
 
-    private void execute(TaskData result) {
+    private void execute(Pair<Boolean, CheckDatabaseResult> result) {
         DeckPicker.CheckDatabaseListener listener = getInstance(impl);
-
         listener.onPostExecute(result);
     }
 

@@ -2958,28 +2958,28 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // TODO merge with listener when it becomes static
     @VisibleForTesting
-    public static class CheckDatabaseTask implements Task {
+    public static class CheckDatabaseTask implements Task<TaskData, Pair<Boolean, Collection.CheckDatabaseResult>> {
         public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
             Timber.d("doInBackgroundCheckDatabase");
             Collection col = collectionTask.getCol();
             // Don't proceed if collection closed
             if (col == null) {
                 Timber.e("doInBackgroundCheckDatabase :: supplied collection was null");
-                return new TaskData(false);
+                return new Pair(false, null);
             }
 
             Collection.CheckDatabaseResult result = col.fixIntegrity(new CollectionTask.ProgressCallback(collectionTask, AnkiDroidApp.getAppResources()));
             if (result.getFailed()) {
                 //we can fail due to a locked database, which requires knowledge of the failure.
-                return new TaskData(false, new Object[] { result });
+                return new Pair<>(false,  result);
             } else {
                 // Close the collection and we restart the app to reload
                 CollectionHelper.getInstance().closeCollection(true, "Check Database Completed");
-                return new TaskData(true, new Object[] { result });
+                return new Pair<>(true,  result);
             }
         }
     }
-    public class CheckDatabaseListener extends TaskListener<TaskData, TaskData> {
+    public class CheckDatabaseListener extends TaskListener<TaskData, Pair<Boolean, Collection.CheckDatabaseResult>> {
         @Override
         public void onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(DeckPicker.this, AnkiDroidApp.getAppResources().getString(R.string.app_name),
@@ -2988,7 +2988,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void onPostExecute(Pair<Boolean, Collection.CheckDatabaseResult> result) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
@@ -2998,8 +2998,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 return;
             }
 
-            if (!result.objAtIndexIs(0, Collection.CheckDatabaseResult.class)) {
-                if (result.getBoolean()) {
+            if (result.second == null) {
+                if (result.first) {
                     Timber.w("Expected result data, got nothing");
                 } else {
                     handleDbError();
@@ -3007,9 +3007,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 return;
             }
 
-            Collection.CheckDatabaseResult databaseResult = (Collection.CheckDatabaseResult) result.getObjArray()[0];
+            Collection.CheckDatabaseResult databaseResult = result.second;
 
-            if (!result.getBoolean() || databaseResult.getFailed()) {
+            if (!result.first || databaseResult.getFailed()) {
                 if (databaseResult.getDatabaseLocked()) {
                     handleDbLocked();
                 } else {
