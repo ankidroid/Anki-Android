@@ -126,8 +126,8 @@ public class UIUtils {
 
     public static void saveCollectionInBackground(boolean syncIgnoresDatabaseModification) {
         if (CollectionHelper.getInstance().colIsOpen()) {
-            new TaskAndListener<TaskData, TaskData>() {
-                public TaskData background(CollectionTask<TaskData, ?> collectionTask) {
+            new TaskAndListener<Void, TaskData>() {
+                public TaskData background(CollectionTask<Void, ?> collectionTask) {
                     Timber.d("doInBackgroundSaveCollection");
                     Collection col = collectionTask.getCol();
                     if (col != null) {
