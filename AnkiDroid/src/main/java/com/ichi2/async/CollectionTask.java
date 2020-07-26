@@ -234,15 +234,15 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     @Override
     protected TaskData doInBackground(TaskData... params) {
         try {
-            return actualDoInBackground(params[0]);
+            return actualDoInBackground();
         } finally {
             sTasks.remove(this);
         }
     }
 
     // This method and those that are called here are executed in a new thread
-    protected TaskData actualDoInBackground(TaskData param) {
-        super.doInBackground(param);
+    protected TaskData actualDoInBackground() {
+        super.doInBackground();
         // Wait for previous thread (if any) to finish before continuing
         if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
             Timber.d("Waiting for %s to finish before starting %s", mPreviousTask.mType, mType);
