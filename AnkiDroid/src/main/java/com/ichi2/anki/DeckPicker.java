@@ -2826,7 +2826,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void rebuildFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(REBUILD_CRAM, simpleProgressListener());
+        CollectionTask.launchCollectionTask(REBUILD_CRAM, simpleProgressListener(), new TaskData(CollectionTask.sRebuildCram));
     }
 
     public void emptyFiltered() {

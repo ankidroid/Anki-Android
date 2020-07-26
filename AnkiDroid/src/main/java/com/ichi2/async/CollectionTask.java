@@ -342,9 +342,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             case REPAIR_COLLECTION:
                 return doInBackgroundRepairCollection();
 
-            case REBUILD_CRAM:
-                return doInBackgroundRebuildCram();
-
             default:
                 return doInBackgroundCode(param);
         }
@@ -949,12 +946,12 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    private TaskData doInBackgroundRebuildCram() {
+    public static final Task sRebuildCram = (collectionTask) -> {
         Timber.d("doInBackgroundRebuildCram");
-        Collection col = getCol();
+        Collection col = collectionTask.getCol();
         col.getSched().rebuildDyn(col.getDecks().selected());
-        return StudyOptionsFragment.updateValuesFromDeck(this, true);
-    }
+        return StudyOptionsFragment.updateValuesFromDeck(collectionTask, true);
+    };
 
 
     public static final class EmptyCram implements Task {
