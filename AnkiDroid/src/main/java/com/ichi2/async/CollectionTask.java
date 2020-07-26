@@ -101,7 +101,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         SEARCH_CARDS,
         RENDER_BROWSER_QA,
         COUNT_MODELS,
-        DELETE_MODEL,
         DELETE_FIELD,
         REPOSITION_FIELD,
         ADD_FIELD,
@@ -366,9 +365,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case COUNT_MODELS:
                 return doInBackgroundCountModels();
-
-            case DELETE_MODEL:
-                return doInBackGroundDeleteModel(param);
 
             case DELETE_FIELD:
                 return doInBackGroundDeleteField(param);
@@ -1208,25 +1204,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         data[0] = models;
         data[1] = cardCount;
         return (new TaskData(data, true));
-    }
-
-
-    /**
-     * Deletes the given model (stored in the long field of TaskData)
-     * and all notes associated with it
-     */
-    private TaskData doInBackGroundDeleteModel(TaskData param){
-        Timber.d("doInBackGroundDeleteModel");
-        long modID = param.getLong();
-        Collection col = getCol();
-        try {
-            col.getModels().rem(col.getModels().get(modID));
-            col.save();
-        } catch (ConfirmModSchemaException e) {
-            Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
-            return new TaskData(false);
-        }
-        return new TaskData(true);
     }
 
     /**

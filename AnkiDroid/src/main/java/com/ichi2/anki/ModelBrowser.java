@@ -43,7 +43,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskAndListenerWithContext;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
@@ -131,12 +131,24 @@ public class ModelBrowser extends AnkiActivity {
      * Displays loading bar when deleting a model loading bar is needed
      * because deleting a model also deletes all of the associated cards/notes *
      */
-    private DeleteModelHandler deleteModelHandler() {
-        return new DeleteModelHandler(this);
-    }
-    private static class DeleteModelHandler extends TaskListenerWithContext<ModelBrowser>{
-        public DeleteModelHandler(ModelBrowser browser) {
+    private static class DeleteModel extends TaskAndListenerWithContext<ModelBrowser> {
+        private final long mModID;
+        public DeleteModel(ModelBrowser browser, long modID) {
             super(browser);
+            mModID = modID;
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackGroundDeleteModel");
+            Collection col = collectionTask.getCol();
+            try {
+                col.getModels().rem(col.getModels().get(mModID));
+                col.save();
+            } catch (ConfirmModSchemaException e) {
+                Timber.e("doInBackGroundDeleteModel :: ConfirmModSchemaException");
+                return new TaskData(false);
+            }
+            return new TaskData(true);
         }
 
         @Override
@@ -526,8 +538,7 @@ public class ModelBrowser extends AnkiActivity {
      * Deletes the currently selected model
      */
     private void deleteModel() throws ConfirmModSchemaException {
-        CollectionTask.launchCollectionTask(DELETE_MODEL, deleteModelHandler(),
-                new TaskData(mCurrentID));
+        new DeleteModel(this, mCurrentID).launch();
         mModels.remove(mModelListPosition);
         mModelIds.remove(mModelListPosition);
         mModelDisplayList.remove(mModelListPosition);
