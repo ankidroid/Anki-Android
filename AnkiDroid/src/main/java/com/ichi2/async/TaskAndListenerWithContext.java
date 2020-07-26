@@ -8,7 +8,11 @@ public abstract class TaskAndListenerWithContext<CTX> extends TaskListenerWithCo
 
 
     // Launch the task, with itself as task and listener
+    public CollectionTask launch(CollectionTask.TASK_TYPE type) {
+        return CollectionTask.launchCollectionTask(type, this, new TaskData(this));
+    }
+
     public CollectionTask launch() {
-        return CollectionTask.launchCollectionTask(null, this, new TaskData(this));
+        return launch(null);
     }
 }

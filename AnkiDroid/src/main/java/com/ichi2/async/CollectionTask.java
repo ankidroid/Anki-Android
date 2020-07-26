@@ -321,9 +321,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
-            case LOAD_DECK_COUNTS:
-                return doInBackgroundLoadDeckCounts();
-
             case UPDATE_NOTE:
                 return doInBackgroundUpdateNote(param);
 
@@ -431,19 +428,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         return new TaskData(true);
     }
 
-
-    private TaskData doInBackgroundLoadDeckCounts() {
-        Timber.d("doInBackgroundLoadDeckCounts");
-        Collection col = getCol();
-        try {
-            // Get due tree
-            Object[] o = new Object[] {col.getSched().deckDueTree(this)};
-            return new TaskData(o);
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundLoadDeckCounts - error");
-            return null;
-        }
-    }
 
     private static class UndoSuspendCard extends Undoable {
         private final Card suspendedCard;

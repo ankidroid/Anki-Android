@@ -2450,12 +2450,22 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private final UpdateDeckListListener updateDeckListListener() {
-        return new UpdateDeckListListener(this);
-    }
-    private static class UpdateDeckListListener extends TaskListenerWithContext<DeckPicker>{
-        public UpdateDeckListListener(DeckPicker deckPicker) {
+    private static class UpdateDeckList extends TaskAndListenerWithContext<DeckPicker>{
+        public UpdateDeckList(DeckPicker deckPicker) {
             super(deckPicker);
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundLoadDeckCounts");
+            Collection col = collectionTask.getCol();
+            try {
+                // Get due tree
+                Object[] o = new Object[] {col.getSched().deckDueTree(collectionTask)};
+                return new TaskData(o);
+            } catch (RuntimeException e) {
+                Timber.e(e, "doInBackgroundLoadDeckCounts - error");
+                return null;
+            }
         }
 
         @Override
@@ -2496,8 +2506,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
-        TaskListener listener = updateDeckListListener();
-        CollectionTask task = CollectionTask.launchCollectionTask(LOAD_DECK_COUNTS, listener);
+        new UpdateDeckList(this).launch(LOAD_DECK_COUNTS);
     }
 
     public void __renderPage() {
