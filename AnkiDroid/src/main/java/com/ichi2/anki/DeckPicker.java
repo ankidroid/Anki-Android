@@ -1695,19 +1695,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
         CollectionTask.launchCollectionTask(new CheckDatabaseListener(), new CheckDatabaseTask());
     }
 
-    private static class MediaCheck extends TaskAndListenerWithContext<DeckPicker, TaskData, TaskData>{
+    private static class MediaCheck extends TaskAndListenerWithContext<DeckPicker, TaskData, Pair<Boolean, List<List<String>>>>{
         public MediaCheck(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
-        public TaskData background(CollectionTask<TaskData, ?> collectionTask)  {
+        public Pair<Boolean, List<List<String>>> background(CollectionTask<TaskData, ?> collectionTask)  {
             Timber.d("doInBackgroundCheckMedia");
             Collection col = collectionTask.getCol();
             // A media check on AnkiDroid will also update the media db
             col.getMedia().findChanges(true);
             // Then do the actual check
             List<List<String>> result = col.getMedia().check();
-            return new TaskData(0, new Object[] {result}, true);
+            return new Pair(true, result);
         }
 
         @Override
@@ -1718,7 +1718,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Pair<Boolean, List<List<String>>> result) {
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
