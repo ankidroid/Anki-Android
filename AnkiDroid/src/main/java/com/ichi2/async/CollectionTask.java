@@ -90,7 +90,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         ANSWER_CARD,
         UPDATE_NOTE,
         UNDO,
-        DISMISS,
         DISMISS_MULTI,
         CHECK_DATABASE,
         REPAIR_COLLECTION,
@@ -356,9 +355,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             case SEARCH_CARDS:
                 return doInBackgroundSearchCards(param);
 
-            case DISMISS:
-                return doInBackgroundDismissNote(param);
-
             case DISMISS_MULTI:
                 return doInBackgroundDismissNotes(param);
 
@@ -596,114 +592,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             return suspendedCard.getId();
         }
     }
-
-
-    private static class UndoDeleteNote extends Undoable {
-        private final Note note;
-        private final ArrayList<Card> allCs;
-        private final long cid;
-
-
-        public UndoDeleteNote(Note note, ArrayList<Card> allCs, long cid) {
-            super(Collection.DismissType.DELETE_NOTE);
-            this.note = note;
-            this.allCs = allCs;
-            this.cid = cid;
-        }
-
-
-        public long undo(Collection col) {
-            Timber.i("Undo: Delete note");
-            ArrayList<Long> ids = new ArrayList<>();
-            note.flush(note.getMod(), false);
-            ids.add(note.getId());
-            for (Card c : allCs) {
-                c.flush(false);
-                ids.add(c.getId());
-            }
-            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.collection2Array(ids)));
-            return cid;
-        }
-    }
-
-
-    private TaskData doInBackgroundDismissNote(TaskData param) {
-        Collection col = getCol();
-        AbstractSched sched = col.getSched();
-        Object[] data = param.getObjArray();
-        Card card = (Card) data[0];
-        Collection.DismissType type = (Collection.DismissType) data[1];
-        Note note = card.note();
-        try {
-            col.getDb().getDatabase().beginTransaction();
-            try {
-                sched.deferReset();
-                switch (type) {
-                    case BURY_CARD:
-                        // collect undo information
-                        Undoable buryCard = revertToProvidedState(BURY_CARD, card);
-                        col.markUndo(buryCard);
-                        // then bury
-                        sched.buryCards(new long[] { card.getId() });
-                        break;
-                    case BURY_NOTE:
-                        // collect undo information
-                        Undoable buryNote = revertToProvidedState(BURY_NOTE, card);
-                        col.markUndo(buryNote);
-                        // then bury
-                        sched.buryNote(note.getId());
-                        break;
-                    case SUSPEND_CARD:
-                        // collect undo information
-                        Card suspendedCard = card.clone();
-                        Undoable suspendCard = new UndoSuspendCard(suspendedCard);
-                        col.markUndo(suspendCard);
-                        // suspend card
-                        if (card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
-                            sched.unsuspendCards(new long[] { card.getId() });
-                        } else {
-                            sched.suspendCards(new long[] { card.getId() });
-                        }
-                        break;
-                    case SUSPEND_NOTE: {
-                        // collect undo information
-                        ArrayList<Card> cards = note.cards();
-                        long[] cids = new long[cards.size()];
-                        for (int i = 0; i < cards.size(); i++) {
-                            cids[i] = cards.get(i).getId();
-                        }
-                        col.markUndo(revertToProvidedState(SUSPEND_NOTE, card));
-                        // suspend note
-                        sched.suspendCards(cids);
-                        break;
-                    }
-
-                    case DELETE_NOTE: {
-                        // collect undo information
-                        ArrayList<Card> allCs = note.cards();
-                        long cid = card.getId();
-                        Undoable deleteNote = new UndoDeleteNote(note, allCs, cid);
-                        col.markUndo(deleteNote);
-                        // delete note
-                        col.remNotes(new long[] { note.getId() });
-                        break;
-                    }
-                }
-                // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
-                doProgress(new TaskData(col.getSched().getCard(), 0));
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                col.getDb().getDatabase().endTransaction();
-            }
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", type);
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote");
-            return new TaskData(false);
-        }
-        return new TaskData(true);
-    }
-
-
 
     private static class UndoSuspendCardMulti extends Undoable {
         private final Card[] cards;
