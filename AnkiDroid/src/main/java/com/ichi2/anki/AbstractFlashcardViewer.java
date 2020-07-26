@@ -572,11 +572,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mCard = card;
         }
 
+        protected Card getCard() {
+            return mCard;
+        }
+
         @Override
         public TaskData background(CollectionTask collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
-            Note note = mCard.note();
+            Note note = getCard().note();
             try {
                 col.getDb().getDatabase().beginTransaction();
                 try {
@@ -584,29 +588,29 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     switch (mType) {
                         case BURY_CARD:
                             // collect undo information
-                            col.markUndo(revertToProvidedState(BURY_CARD, mCard));
+                            col.markUndo(revertToProvidedState(BURY_CARD, getCard()));
                             // then bury
-                            sched.buryCards(new long[] { mCard.getId() });
+                            sched.buryCards(new long[] { getCard().getId() });
                             break;
                         case BURY_NOTE:
                             // collect undo information
-                            col.markUndo(revertToProvidedState(BURY_NOTE, mCard));
+                            col.markUndo(revertToProvidedState(BURY_NOTE, getCard()));
                             // then bury
                             sched.buryNote(note.getId());
                             break;
                         case SUSPEND_CARD:
                             // collect undo information
-                            col.markUndo(revertToProvidedState(SUSPEND_CARD, mCard));
+                            col.markUndo(revertToProvidedState(SUSPEND_CARD, getCard()));
                             // suspend card
-                            if (mCard.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
-                                sched.unsuspendCards(new long[] { mCard.getId() });
+                            if (getCard().getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
+                                sched.unsuspendCards(new long[] { getCard().getId() });
                             } else {
-                                sched.suspendCards(new long[] { mCard.getId() });
+                                sched.suspendCards(new long[] { getCard().getId() });
                             }
                             break;
                         case SUSPEND_NOTE: {
                             // collect undo information
-                            col.markUndo(revertToProvidedState(SUSPEND_NOTE, mCard));
+                            col.markUndo(revertToProvidedState(SUSPEND_NOTE, getCard()));
                             ArrayList<Card> cards = note.cards();
                             long[] cids = new long[cards.size()];
                             for (int i = 0; i < cards.size(); i++) {
@@ -621,7 +625,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                             // collect undo information
                             // delete note
                             ArrayList<Card> allCs = note.cards();
-                            long cid = mCard.getId();
+                            long cid = getCard().getId();
                             col.markUndo(new UndoDeleteNote(note, allCs, cid));
                             col.remNotes(new long[] { note.getId() });
                             break;
@@ -3241,7 +3245,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             displayCardQuestion();
             } */
     }
-
 
     protected void dismiss(Collection.DismissType type) {
         blockControls(false);
