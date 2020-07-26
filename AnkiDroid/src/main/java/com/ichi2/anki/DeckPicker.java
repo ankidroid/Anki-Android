@@ -1627,19 +1627,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
         AnkiDroidApp.sendExceptionReport(new RuntimeException(), "DeckPicker.sendErrorReport");
     }
 
-    public static class RepairCollection extends TaskAndListenerWithContext<DeckPicker, TaskData, TaskData>{
+    public static class RepairCollection extends TaskAndListenerWithContext<DeckPicker, TaskData, Boolean>{
         public RepairCollection(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
-        public TaskData background(CollectionTask collectionTask) {
+        public Boolean background(CollectionTask collectionTask) {
             Timber.d("doInBackgroundRepairCollection");
             Collection col = collectionTask.getCol();
             if (col != null) {
                 Timber.i("RepairCollection: Closing collection");
                 col.close(false);
             }
-            return new TaskData(BackupManager.repairCollection(col));
+            return BackupManager.repairCollection(col);
         }
 
         @Override
@@ -1650,11 +1650,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Boolean result) {
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
-            if (result == null || !result.getBoolean()) {
+            if (result == null || !result) {
                 UIUtils.showThemedToast(deckPicker, deckPicker.getResources().getString(R.string.deck_repair_error), true);
                 deckPicker.showCollectionErrorDialog();
             }
