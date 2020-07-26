@@ -70,6 +70,8 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.TaskListener;
+import com.ichi2.async.Task;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -883,9 +885,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         if (!mCheckedCards.isEmpty()) {
             CollectionTask.cancelAllTasks(CHECK_CARD_SELECTION);
+
+            CheckSelectedCards checkSelectedCards = new CheckSelectedCards(this, mCheckedCards);
             CollectionTask.launchCollectionTask(CHECK_CARD_SELECTION,
-                    mCheckSelectedCardsHandler,
-                    new TaskData(new Object[]{mCheckedCards, getCards()}));
+                    checkSelectedCards,
+                    new TaskData(checkSelectedCards));
         }
 
         mActionBarMenu.findItem(R.id.action_select_all).setVisible(!hasSelectedAllCards());
@@ -1810,10 +1814,28 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private final CheckSelectedCardsHandler mCheckSelectedCardsHandler = new CheckSelectedCardsHandler(this);
-    private static class CheckSelectedCardsHandler extends ListenerWithProgressBar {
-        public CheckSelectedCardsHandler(CardBrowser browser) {
+    private static class CheckSelectedCards extends ListenerWithProgressBar implements Task {
+        private final Set<CardCache> mCheckedCardPositions;
+
+        public CheckSelectedCards(CardBrowser browser, Set<CardCache> checkedCardPositions) {
             super(browser);
+            mCheckedCardPositions = checkedCardPositions;
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            Collection col = collectionTask.getCol();
+
+            boolean hasUnsuspended = false;
+            boolean hasUnmarked = false;
+            for (CardBrowser.CardCache c: mCheckedCardPositions) {
+                Card card = c.getCard();
+                hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
+                hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
+                if (hasUnsuspended && hasUnmarked)
+                    break;
+            }
+
+            return new TaskData(new Object[] {hasUnsuspended, hasUnmarked});
         }
 
         @Override

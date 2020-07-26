@@ -360,9 +360,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             case COUNT_MODELS:
                 return doInBackgroundCountModels();
 
-            case CHECK_CARD_SELECTION:
-                return doInBackgroundCheckCardSelection(param);
-
             case LOAD_COLLECTION_COMPLETE:
                 doInBackgroundLoadCollectionComplete();
                 break;
@@ -1116,27 +1113,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         data[0] = models;
         data[1] = cardCount;
         return (new TaskData(data, true));
-    }
-
-    /**
-     * Goes through selected cards and checks selected and marked attribute
-     * @return If there are unselected cards, if there are unmarked cards
-     */
-    public TaskData doInBackgroundCheckCardSelection(TaskData param) {
-        Object[] objects = param.getObjArray();
-        Set<CardBrowser.CardCache> checkedCards = (Set<CardBrowser.CardCache>) objects[0];
-
-        boolean hasUnsuspended = false;
-        boolean hasUnmarked = false;
-        for (CardBrowser.CardCache c: checkedCards) {
-            Card card = c.getCard();
-            hasUnsuspended = hasUnsuspended || card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED;
-            hasUnmarked = hasUnmarked || !card.note().hasTag("marked");
-            if (hasUnsuspended && hasUnmarked)
-                break;
-        }
-
-        return new TaskData(new Object[] { hasUnsuspended, hasUnmarked});
     }
 
     public void doInBackgroundLoadCollectionComplete() {
