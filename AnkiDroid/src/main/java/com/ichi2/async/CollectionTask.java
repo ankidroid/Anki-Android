@@ -726,14 +726,14 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 switch (type) {
                     case BURY_CARD:
                         // collect undo information
-                        Undoable buryCard = new UndoableFlushAll(BURY_CARD, note.cards(), card.getId());
+                        Undoable buryCard = revertToProvidedState(BURY_CARD, note.cards(), card.getId());
                         col.markUndo(buryCard);
                         // then bury
                         sched.buryCards(new long[] { card.getId() });
                         break;
                     case BURY_NOTE:
                         // collect undo information
-                        Undoable buryNote = new UndoableFlushAll(BURY_NOTE, note.cards(), card.getId());
+                        Undoable buryNote = revertToProvidedState(BURY_NOTE, note.cards(), card.getId());
                         col.markUndo(buryNote);
                         // then bury
                         sched.buryNote(note.getId());
@@ -757,7 +757,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         for (int i = 0; i < cards.size(); i++) {
                             cids[i] = cards.get(i).getId();
                         }
-                        col.markUndo(new UndoableFlushAll(SUSPEND_NOTE, cards, card.getId()));
+                        col.markUndo(revertToProvidedState(SUSPEND_NOTE, cards, card.getId()));
                         // suspend note
                         sched.suspendCards(cids);
                         break;
