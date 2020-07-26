@@ -303,9 +303,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         case UNDO:
             return doInBackgroundUndo();
 
-        case SEARCH_CARDS:
-            return doInBackgroundSearchCards(param);
-
         case CHECK_DATABASE:
             return doInBackgroundCheckDatabase();
 
@@ -517,45 +514,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             return new TaskData(false);
         }
         return new TaskData(true);
-    }
-
-
-    private TaskData doInBackgroundSearchCards(TaskData param) {
-        Timber.d("doInBackgroundSearchCards");
-        Collection col = getCol();
-        String query = (String) param.getObjArray()[0];
-        Boolean order = (Boolean) param.getObjArray()[1];
-        int numCardsToRender = (int) param.getObjArray()[2];
-        if (isCancelled()) {
-            Timber.d("doInBackgroundSearchCards was cancelled so return null");
-            return null;
-        }
-        int column1Index = (Integer) param.getObjArray()[3];
-        int column2Index = (Integer) param.getObjArray()[4];
-        List<Long> searchResult_ = col.findCards(query, order, this);
-        int resultSize = searchResult_.size();
-        List<CardBrowser.CardCache> searchResult = new ArrayList<>(resultSize);
-        Timber.d("The search found %d cards", resultSize);
-        int position = 0;
-        for (Long cid: searchResult_) {
-            CardBrowser.CardCache card = new CardBrowser.CardCache(cid, col, position++);
-            searchResult.add(card);
-        }
-        // Render the first few items
-        for (int i = 0; i < Math.min(numCardsToRender, searchResult.size()); i++) {
-            if (isCancelled()) {
-                Timber.d("doInBackgroundSearchCards was cancelled so return null");
-                return null;
-            }
-            searchResult.get(i).load(false, column1Index, column2Index);
-        }
-        // Finish off the task
-        if (isCancelled()) {
-            Timber.d("doInBackgroundSearchCards was cancelled so return null");
-            return null;
-        } else {
-            return new TaskData(searchResult);
-        }
     }
 
 
