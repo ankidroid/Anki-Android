@@ -352,9 +352,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             case RENDER_BROWSER_QA:
                 return doInBackgroundRenderBrowserQA(param);
 
-            case COUNT_MODELS:
-                return doInBackgroundCountModels();
-
             default:
                 return doInBackgroundCode(param);
         }
@@ -1032,44 +1029,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         return StudyOptionsFragment.updateValuesFromDeck(this, true);
     }
 
-
-
-
-
-    /*
-     * Async task for the ModelBrowser Class
-     * Returns an ArrayList of all models alphabetically ordered and the number of notes
-     * associated with each model.
-     *
-     * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
-     */
-    private TaskData doInBackgroundCountModels(){
-        Timber.d("doInBackgroundLoadModels");
-        Collection col = getCol();
-
-        ArrayList<Model> models = col.getModels().all();
-        ArrayList<Integer> cardCount = new ArrayList<>();
-        Collections.sort(models, new Comparator<JSONObject>() {
-            @Override
-            public int compare(JSONObject a, JSONObject b) {
-                return a.getString("name").compareTo(b.getString("name"));
-            }
-        });
-
-        for (Model n : models) {
-            if (isCancelled()) {
-                Timber.e("doInBackgroundLoadModels :: Cancelled");
-                // onPostExecute not executed if cancelled. Return value not used.
-                return new TaskData(false);
-            }
-            cardCount.add(col.getModels().useCount(n));
-        }
-
-        Object[] data = new Object[2];
-        data[0] = models;
-        data[1] = cardCount;
-        return (new TaskData(data, true));
-    }
 
     public TaskData doInBackgroundCode(TaskData param) {
         return param.getTask().background(this);

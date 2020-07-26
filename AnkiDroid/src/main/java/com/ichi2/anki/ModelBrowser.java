@@ -44,13 +44,15 @@ import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskAndListenerWithContext;
-import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
+import com.ichi2.utils.JSONObject;
 import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 import timber.log.Timber;
@@ -96,11 +98,13 @@ public class ModelBrowser extends AnkiActivity {
      * Displays the loading bar when loading the mModels and displaying them
      * loading bar is necessary because card count per model is not cached *
      */
-    private LoadingModelsHandler loadingModelsHandler() {
-        return new LoadingModelsHandler(this);
+    private void loadingModels() {
+        LoadingModels loadingModels = new LoadingModels(this);
+        CollectionTask.launchCollectionTask(COUNT_MODELS, loadingModels, new TaskData(loadingModels));
     }
-    private static class LoadingModelsHandler extends TaskListenerWithContext<ModelBrowser> {
-        public LoadingModelsHandler(ModelBrowser browser) {
+
+    private static class LoadingModels extends TaskAndListenerWithContext<ModelBrowser> {
+        public LoadingModels(ModelBrowser browser) {
             super(browser);
         }
 
@@ -124,6 +128,34 @@ public class ModelBrowser extends AnkiActivity {
             browser.mCardCounts = (ArrayList<Integer>) result.getObjArray()[1];
 
             browser.fillModelList();
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundLoadModels");
+            Collection col = collectionTask.getCol();
+
+            ArrayList<Model> models = col.getModels().all();
+            ArrayList<Integer> cardCount = new ArrayList<>();
+            Collections.sort(models, new Comparator<JSONObject>() {
+                @Override
+                public int compare(JSONObject a, JSONObject b) {
+                    return a.getString("name").compareTo(b.getString("name"));
+                }
+            });
+
+            for (Model n : models) {
+                if (collectionTask.isCancelled()) {
+                    Timber.e("doInBackgroundLoadModels :: Cancelled");
+                    // onPostExecute not executed if cancelled. Return value not used.
+                    return new TaskData(false);
+                }
+                cardCount.add(col.getModels().useCount(n));
+            }
+
+            Object[] data = new Object[2];
+            data[0] = models;
+            data[1] = cardCount;
+            return (new TaskData(data, true));
         }
     };
 
@@ -238,6 +270,14 @@ public class ModelBrowser extends AnkiActivity {
         }
     }
 
+    /*
+     * Async task for the ModelBrowser Class
+     * Returns an ArrayList of all models alphabetically ordered and the number of notes
+     * associated with each model.
+     *
+     * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
+     */
+
     @Override
     public void onDestroy() {
         CollectionTask.cancelAllTasks(COUNT_MODELS);
@@ -252,7 +292,7 @@ public class ModelBrowser extends AnkiActivity {
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         this.col = col;
-        CollectionTask.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
+        loadingModels();
     }
 
 
@@ -531,7 +571,7 @@ public class ModelBrowser extends AnkiActivity {
      * Reloads everything
      */
     private void fullRefresh() {
-        CollectionTask.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
+        loadingModels();
     }
 
     /*
@@ -638,7 +678,7 @@ public class ModelBrowser extends AnkiActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TEMPLATE_EDIT) {
-            CollectionTask.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
+            loadingModels();
         }
     }
 }
