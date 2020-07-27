@@ -16,11 +16,10 @@
 
 package com.ichi2.anki.reviewer;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.ichi2.anki.Preferences;
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.testutils.PreferenceUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,10 +27,7 @@ import org.junit.runner.RunWith;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
-import androidx.lifecycle.Lifecycle;
-import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,7 +42,7 @@ public class ActionButtonStatusTest extends RobolectricTest {
     @Test
     public void allCustomButtonsCanBeDisabled() {
         Set<String> reviewerExpectedKeys = getCustomButtonsExpectedKeys();
-        Set<String> actualPreferenceKeys = getAllCustomButtonPreferenceKeys();
+        Set<String> actualPreferenceKeys = PreferenceUtils.getAllCustomButtonKeys(getTargetContext());
 
         assertThat("Each button in the Action Bar must be modifiable in Preferences - Reviewer - App Bar Buttons",
                 reviewerExpectedKeys,
@@ -67,21 +63,5 @@ public class ActionButtonStatusTest extends RobolectricTest {
         status.setup(preferences);
 
         return ret;
-    }
-
-
-    private Set<String> getAllCustomButtonPreferenceKeys() {
-        AtomicReference<Set<String>> ret = new AtomicReference<>();
-        Intent i = Preferences.getPreferenceSubscreenIntent(getTargetContext(), "com.ichi2.anki.prefs.custom_buttons");
-        try (ActivityScenario<Preferences> scenario = ActivityScenario.launch(i)) {
-            scenario.moveToState(Lifecycle.State.STARTED);
-            scenario.onActivity(a -> ret.set(a.getLoadedPreferenceKeys()));
-        }
-        Set<String> preferenceKeys = ret.get();
-        if (preferenceKeys == null) {
-            throw new IllegalStateException("no keys were set");
-        }
-        preferenceKeys.remove("reset_custom_buttons");
-        return preferenceKeys;
     }
 }
