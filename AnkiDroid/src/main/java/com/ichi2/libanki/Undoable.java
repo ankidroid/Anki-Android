@@ -38,7 +38,10 @@ public abstract class Undoable {
      * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
     public abstract long undo(Collection col);
 
-    public static Undoable revertToProvidedState (DismissType dt, List<Card> cards, long cid){
+    public static Undoable revertToProvidedState (DismissType dt, Card card){
+        Note note = card.note();
+        List<Card> cards = note.cards();
+        long cid = card.getId();
         return new Undoable(dt) {
             public long undo(Collection col) {
                 Timber.i("Undo: Bury Card");
