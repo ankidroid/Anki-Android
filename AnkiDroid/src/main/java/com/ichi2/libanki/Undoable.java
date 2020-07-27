@@ -61,8 +61,8 @@ public abstract class Undoable {
     }
 
 
-    public static class Task implements com.ichi2.async.Task<AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>> {
-        public PairWithBoolean<Card[]> background(CollectionTask<AbstractFlashcardViewer.GetCard, ?> collectionTask) {
+    public static class Task implements com.ichi2.async.Task<Card, PairWithBoolean<Card[]>> {
+        public PairWithBoolean<Card[]> background(CollectionTask<Card, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             try {
@@ -91,8 +91,7 @@ public abstract class Undoable {
                         col.getSched().setCurrentCard(newCard);
                     }
                     // TODO: handle leech undoing properly
-                    final Card newCard_ = newCard;
-                    collectionTask.doProgress(() -> newCard_);
+                    collectionTask.doProgress(newCard);
                     col.getDb().getDatabase().setTransactionSuccessful();
                 } finally {
                     col.getDb().getDatabase().endTransaction();

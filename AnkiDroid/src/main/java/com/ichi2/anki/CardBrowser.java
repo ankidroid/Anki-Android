@@ -269,7 +269,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return new RepositionCardHandler(this);
     }
 
-    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser, AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>> {
+    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser, Card, PairWithBoolean<Card[]>> {
         public RepositionCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -293,7 +293,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private ResetProgressCardHandler resetProgressCardHandler() {
         return new ResetProgressCardHandler(this);
     }
-    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser, AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>>{
+    private static class ResetProgressCardHandler extends TaskListenerWithContext<CardBrowser, Card, PairWithBoolean<Card[]>>{
         public ResetProgressCardHandler(CardBrowser browser) {
             super(browser);
         }
@@ -317,7 +317,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private RescheduleCardHandler rescheduleCardHandler() {
         return new RescheduleCardHandler(this);
     }
-    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser, AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>>{
+    private static class RescheduleCardHandler extends TaskListenerWithContext<CardBrowser, Card, PairWithBoolean<Card[]>>{
         public RescheduleCardHandler (CardBrowser browser) {
             super(browser);
         }
@@ -369,7 +369,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    protected abstract static class RescheduleRepositionReset extends CollectionTask.DismissMulti<AbstractFlashcardViewer.GetCard> {
+    protected abstract static class RescheduleRepositionReset extends CollectionTask.DismissMulti<Card> {
         private final Collection.DismissType mType;
 
         public RescheduleRepositionReset(long[] cardDids, Collection.DismissType type) {
@@ -377,7 +377,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mType = type;
         }
 
-        public PairWithBoolean<Card[]> actualBackground(CollectionTask<AbstractFlashcardViewer.GetCard, ?> collectionTask, Card[] cards) {
+        public PairWithBoolean<Card[]> actualBackground(CollectionTask<Card, ?> collectionTask, Card[] cards) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             // collect undo information, sensitive to memory pressure, same for all 3 cases
@@ -390,13 +390,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
             actualActualBackground(sched);
             // In all cases schedule a new card so Reviewer doesn't sit on the old one
             col.reset();
-            collectionTask.doProgress(() -> sched.getCard());
+            collectionTask.doProgress(sched.getCard());
             return null;
         }
 
         protected abstract void actualActualBackground(AbstractSched sched);
 
-        private Card[] deepCopyCardArray(CollectionTask<AbstractFlashcardViewer.GetCard, ?> collectionTask, Card[] originals) throws CancellationException {
+        private Card[] deepCopyCardArray(CollectionTask<Card, ?> collectionTask, Card[] originals) throws CancellationException {
             Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
             Card[] copies = new Card[originals.length];
             for (int i = 0; i < originals.length; i++) {
@@ -2114,7 +2114,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private final UndoHandler mUndoHandler = new UndoHandler(this);
-    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<AbstractFlashcardViewer.GetCard> {
+    private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse<Card> {
         public UndoHandler(CardBrowser browser) {
             super(browser);
         }

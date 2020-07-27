@@ -1477,7 +1477,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private UndoTaskListener undoTaskListener(boolean isReview) {
         return new UndoTaskListener(isReview, this);
     }
-    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>> {
+    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Card, PairWithBoolean<Card[]>> {
         private final boolean isReview;
 
         public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {

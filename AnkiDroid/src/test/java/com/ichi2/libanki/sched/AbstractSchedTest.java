@@ -123,7 +123,7 @@ public class AbstractSchedTest extends RobolectricTest {
         sched.answerCard(card, 3);
         sched.getCard();
         final boolean[] executed = {false};
-        launchCollectionTask(new TaskListener<AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>>() {
+        launchCollectionTask(new TaskListener<Card, PairWithBoolean<Card[]>>() {
                     Card card;
                     @Override
                     public void onPreExecute() {
@@ -131,8 +131,8 @@ public class AbstractSchedTest extends RobolectricTest {
                     }
 
                     @Override
-                    public void onProgressUpdate(AbstractFlashcardViewer.GetCard data) {
-                        card = data.getCard();
+                    public void onProgressUpdate(Card card) {
+                        this.card = card;
                     }
 
 

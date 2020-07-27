@@ -102,7 +102,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
-    abstract class ScheduleCollectionTaskListener extends NextCardHandler<AbstractFlashcardViewer.GetCard, PairWithBoolean<Card[]>> {
+    abstract class ScheduleCollectionTaskListener extends NextCardHandler<PairWithBoolean<Card[]>> {
 
         abstract protected int getToastResourceId();
 
