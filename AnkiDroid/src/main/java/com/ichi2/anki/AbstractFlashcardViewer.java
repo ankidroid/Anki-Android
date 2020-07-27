@@ -562,7 +562,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     // Todo: make static when listener can be static
-    protected abstract class DismissCard extends NextCardHandler<GetBoolean> implements Task<Card, GetBoolean> {
+    protected abstract class DismissCard extends NextCardHandler<Card[]> implements Task<Card, PairWithBoolean<Card[]>> {
         /* superclass is sufficient for listener*/
 
         private final Collection.DismissType mType;
@@ -577,7 +577,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         @Override
-        public GetBoolean background(CollectionTask<Card, ?> collectionTask) {
+        public PairWithBoolean<Card[]> background(CollectionTask<Card, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             Note note = getCard().note();
@@ -595,14 +595,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", mType);
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote");
-                return () -> false;
+                return new PairWithBoolean<>(false);
             }
-            return () -> true;
+            return new PairWithBoolean<>(true);
         }
 
         protected abstract void actualBackground(CollectionTask<Card, ?> task);
 
-        public CollectionTask<Card, GetBoolean> launch() {
+        public CollectionTask<Card, PairWithBoolean<Card[]>> launch() {
             return CollectionTask.launchCollectionTask(this, this);
         }
     }
@@ -672,11 +672,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    public interface GetBoolean {
-        boolean getBoolean();
-    }
-
-    abstract class NextCardHandler<Result extends GetBoolean> extends TaskListener<Card, Result> {
+    abstract class NextCardHandler<Result> extends TaskListener<Card, PairWithBoolean<Result>> {
         private boolean mNoMoreCards;
 
 
@@ -730,8 +726,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(Result result) {
-            postNextCardDisplay(result.getBoolean());
+        public void onPostExecute(PairWithBoolean<Result> result) {
+            postNextCardDisplay(result.first);
         }
 
         protected void postNextCardDisplay(boolean displaySuccess) {
@@ -752,7 +748,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected class AnswerCard extends NextCardHandler<PairWithBoolean<Card[]>> implements Task<Card, PairWithBoolean<Card[]>> {
+    protected class AnswerCard extends NextCardHandler<Card[]> implements Task<Card, PairWithBoolean<Card[]>> {
         private final Card mOldCard;
         @Consts.BUTTON_TYPE private final int mEase;
         private final boolean mQuick;

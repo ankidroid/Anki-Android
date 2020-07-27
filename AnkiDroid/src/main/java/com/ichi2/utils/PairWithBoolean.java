@@ -4,7 +4,7 @@ import android.util.Pair;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
 
-public class PairWithBoolean<Second> extends Pair<Boolean, Second> implements AbstractFlashcardViewer.GetBoolean {
+public class PairWithBoolean<Second> extends Pair<Boolean, Second>  {
     /**
      * Constructor for a Pair.
      *
