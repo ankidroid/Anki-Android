@@ -72,7 +72,6 @@ import timber.log.Timber;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
-import com.ichi2.async.TaskData;
 
 
 public class Reviewer extends AbstractFlashcardViewer {

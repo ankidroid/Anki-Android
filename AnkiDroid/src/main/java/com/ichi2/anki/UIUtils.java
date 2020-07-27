@@ -17,7 +17,6 @@ import java.util.Calendar;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskAndListener;
-import com.ichi2.async.TaskData;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.Collection;
 import com.ichi2.utils.SyncStatus;

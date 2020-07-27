@@ -72,7 +72,6 @@ import java.util.regex.Pattern;
 
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import timber.log.Timber;
-import com.ichi2.async.TaskData;
 
 
 /**

@@ -18,8 +18,6 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.util.Pair;
-
-import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.CheckDatabaseResult;
 

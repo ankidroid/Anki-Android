@@ -57,7 +57,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import com.ichi2.async.TaskData;
 
 
 public class CustomStudyDialog extends AnalyticsDialogFragment {

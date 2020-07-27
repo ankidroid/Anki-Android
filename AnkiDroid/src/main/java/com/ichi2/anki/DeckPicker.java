@@ -154,7 +154,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import timber.log.Timber;
-import com.ichi2.async.TaskData;
 
 import org.apache.commons.compress.archivers.zip.ZipFile;
 

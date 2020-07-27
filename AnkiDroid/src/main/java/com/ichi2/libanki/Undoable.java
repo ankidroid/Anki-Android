@@ -7,7 +7,7 @@ import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CardUtils;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskData;
+import com.ichi2.async.Task;
 import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.utils.PairWithBoolean;

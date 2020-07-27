@@ -75,8 +75,6 @@ import java.util.TreeMap;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
-import com.ichi2.async.TaskData;
-
 /**
  * Preferences for the current deck.
  */

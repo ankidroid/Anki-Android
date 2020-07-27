@@ -77,10 +77,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
-import com.ichi2.async.TaskData;
-
-import static com.ichi2.libanki.Collection.DismissType.REVIEW;
-
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
 // tracked, so unused tags can only be removed from the list with a DB check.
@@ -1339,7 +1335,7 @@ public class Collection<T extends Time> {
     public void markReview(Card card) {
         boolean wasLeech = card.note().hasTag("leech");
         Card clonedCard = card.clone();
-        Undoable undoableReview = new Undoable(REVIEW) {
+        Undoable undoableReview = new Undoable(DismissType.REVIEW) {
             public long undo(Collection col) {
                 col.getSched().undoReview(clonedCard, wasLeech);
                 return clonedCard.getId();

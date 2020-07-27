@@ -157,7 +157,6 @@ import static com.ichi2.libanki.Collection.DismissType.SUSPEND_CARD;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
 import static com.ichi2.libanki.Undoable.revertToProvidedState;
 
-import com.ichi2.async.TaskData;
 import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;

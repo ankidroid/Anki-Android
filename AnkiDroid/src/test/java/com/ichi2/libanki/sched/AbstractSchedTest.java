@@ -19,8 +19,6 @@ package com.ichi2.libanki.sched;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -42,10 +40,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameter;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-
-import timber.log.Timber;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
 import static com.ichi2.async.CollectionTask.launchCollectionTask;
@@ -307,4 +302,3 @@ mw.col.sched.extendLimits(1, 0)
         new IncreaseToday().test();
     }
 }
-v

@@ -53,7 +53,6 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.HtmlUtils;
 
 import timber.log.Timber;
-import com.ichi2.async.TaskData;
 
 public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 

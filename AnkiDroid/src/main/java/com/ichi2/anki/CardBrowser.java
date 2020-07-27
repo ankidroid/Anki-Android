@@ -111,7 +111,6 @@ import java.util.concurrent.CancellationException;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
-import com.ichi2.async.TaskData;
 
 import static com.ichi2.anki.CardBrowser.Column.*;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;

@@ -115,8 +115,6 @@ import timber.log.Timber;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
-import com.ichi2.async.TaskData;
-
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
  * sides: a question and an answer. Any number of fields can appear on each side. When you add a note to Anki, cards

@@ -40,7 +40,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
-import com.ichi2.async.TaskData;
 
 
 public class TemporaryModel {

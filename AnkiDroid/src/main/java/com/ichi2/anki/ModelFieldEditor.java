@@ -46,7 +46,6 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
-import com.ichi2.async.TaskData;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;

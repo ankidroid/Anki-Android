@@ -34,7 +34,6 @@ import android.util.Pair;
 import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.Task;
-import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
