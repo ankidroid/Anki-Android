@@ -552,9 +552,12 @@ public class Reviewer extends AbstractFlashcardViewer {
             if (!mActionButtons.getStatus().clearWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             }
-
-            menu.findItem(R.id.action_save_whiteboard).setVisible(true);
-            menu.findItem(R.id.action_change_whiteboard_pen_color).setVisible(true);
+            if (!mActionButtons.getStatus().saveWhiteboardIsDisabled()) {
+                menu.findItem(R.id.action_save_whiteboard).setVisible(true);
+            }
+            if (!mActionButtons.getStatus().whiteboardPenColorIsDisabled()) {
+                menu.findItem(R.id.action_change_whiteboard_pen_color).setVisible(true);
+            }
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp).mutate();
             Drawable whiteboardColorPaletteIcon = VectorDrawableCompat.create(getResources(), R.drawable.ic_color_lens_white_24dp, null).mutate();

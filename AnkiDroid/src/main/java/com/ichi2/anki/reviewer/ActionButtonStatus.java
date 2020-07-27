@@ -114,4 +114,12 @@ public class ActionButtonStatus {
     public boolean selectTtsIsDisabled() {
         return mCustomButtons.get(R.id.action_select_tts) == MENU_DISABLED;
     }
+
+    public boolean saveWhiteboardIsDisabled() {
+        return mCustomButtons.get(R.id.action_save_whiteboard) == MENU_DISABLED;
+    }
+
+    public boolean whiteboardPenColorIsDisabled() {
+        return mCustomButtons.get(R.id.action_change_whiteboard_pen_color) == MENU_DISABLED;
+    }
 }
