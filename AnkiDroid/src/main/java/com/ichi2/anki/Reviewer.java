@@ -360,18 +360,8 @@ public class Reviewer extends AbstractFlashcardViewer {
                 refreshActionBar();
                 break;
 
-            case R.id.action_enable_whiteboard:
-                // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
-                mPrefWhiteboard = ! mPrefWhiteboard;
-                Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
-                //Even though the visibility is now stored in its own setting, we want it to be dependent
-                //on the enabled status
-                setWhiteboardEnabledState(mPrefWhiteboard);
-                setWhiteboardVisibility(mPrefWhiteboard);
-                if (!mPrefWhiteboard) {
-                    colorPalette.setVisibility(View.GONE);
-                }
-                refreshActionBar();
+            case R.id.action_toggle_whiteboard:
+                toggleWhiteboard();
                 break;
 
             case R.id.action_search_dictionary:
@@ -418,6 +408,21 @@ public class Reviewer extends AbstractFlashcardViewer {
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+
+    protected void toggleWhiteboard() {
+        // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
+        mPrefWhiteboard = ! mPrefWhiteboard;
+        Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
+        //Even though the visibility is now stored in its own setting, we want it to be dependent
+        //on the enabled status
+        setWhiteboardEnabledState(mPrefWhiteboard);
+        setWhiteboardVisibility(mPrefWhiteboard);
+        if (!mPrefWhiteboard) {
+            colorPalette.setVisibility(View.GONE);
+        }
+        refreshActionBar();
     }
 
 
@@ -545,9 +550,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         // White board button
         if (mPrefWhiteboard) {
             // Configure the whiteboard related items in the action bar
-            menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.disable_whiteboard);
-            // Always allow "Disable Whiteboard", even if the preference
-            menu.findItem(R.id.action_enable_whiteboard).setVisible(true);
+            menu.findItem(R.id.action_toggle_whiteboard).setTitle(R.string.disable_whiteboard);
+            // Always allow "Disable Whiteboard", even if "Enable Whiteboard" is disabled
+            menu.findItem(R.id.action_toggle_whiteboard).setVisible(true);
 
             if (!mActionButtons.getStatus().hideWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
@@ -583,7 +588,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 colorPalette.setVisibility(View.GONE);
             }
         } else {
-            menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.enable_whiteboard);
+            menu.findItem(R.id.action_toggle_whiteboard).setTitle(R.string.enable_whiteboard);
         }
         if (colIsOpen() && getCol().getDecks().isDyn(getParentDid())) {
             menu.findItem(R.id.action_open_deck_options).setVisible(false);
