@@ -546,6 +546,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mPrefWhiteboard) {
             // Configure the whiteboard related items in the action bar
             menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.disable_whiteboard);
+            // Always allow "Disable Whiteboard", even if the preference
+            menu.findItem(R.id.action_enable_whiteboard).setVisible(true);
+
             if (!mActionButtons.getStatus().hideWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
             }
