@@ -21,8 +21,8 @@ import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
@@ -85,6 +85,9 @@ public class Anki2Importer extends Importer {
     private int mAdded;
     private int mUpdated;
 
+    /** If importing SchedV1 into SchedV2 we need to reset the learning cards */
+    private boolean mMustResetLearning;
+
     public Anki2Importer(Collection col, String file) {
         super(col, file);
         mNeedMapper = false;
@@ -111,19 +114,17 @@ public class Anki2Importer extends Importer {
     }
 
 
-    private void _prepareFiles() throws ImportExportException {
+    private void _prepareFiles() {
         boolean importingV2 = mFile.endsWith(".anki21");
-        if (importingV2 && mCol.schedVer() == 1) {
-            throw new ImportExportException(mContext.getString(R.string.import_needs_v2));
-        }
+        this.mMustResetLearning = false;
 
         mDst = mCol;
         mSrc = Storage.Collection(mContext, mFile);
 
         if (!importingV2 && mCol.schedVer() != 1) {
+            // any scheduling included?
             if (mSrc.getDb().queryScalar("select 1 from cards where queue != " + Consts.QUEUE_TYPE_NEW + " limit 1") > 0) {
-                mSrc.close(false);
-                throw new ImportExportException(mContext.getString(R.string.import_cannot_with_v2));
+                this.mMustResetLearning = true;
             }
         }
     }
@@ -505,6 +506,13 @@ public class Anki2Importer extends Importer {
      */
 
     private void _importCards() {
+        if (mMustResetLearning) {
+            try {
+                mSrc.changeSchedulerVer(2);
+            } catch (ConfirmModSchemaException e) {
+                throw new RuntimeException("Changing the scheduler of an import should not cause schema modification", e);
+            }
+        }
         // build map of guid -> (ord -> cid) and used id cache
         mCards = new HashMap<>();
         Map<Long, Boolean> existing = new HashMap<>();
