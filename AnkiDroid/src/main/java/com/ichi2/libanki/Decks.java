@@ -1196,6 +1196,10 @@ public class Decks {
         getDeckOrFail(deckId).remove("conf");
     }
 
+    public static boolean isDynamic(Collection col, long deckId) {
+        return Decks.isDynamic(col.getDecks().get(deckId));
+    }
+
     public static boolean isDynamic(Deck deck) {
         return deck.getInt("dyn") != 0;
     }

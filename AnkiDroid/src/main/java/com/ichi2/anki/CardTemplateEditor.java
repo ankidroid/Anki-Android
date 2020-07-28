@@ -26,6 +26,7 @@ import android.os.Bundle;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -45,15 +46,20 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.DeckSelectionDialog;
+import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.themes.StyledProgressDialog;
 
+import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -71,7 +77,7 @@ import com.ichi2.async.TaskData;
  * Allows the user to view the template for the current note type
  */
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
-public class CardTemplateEditor extends AnkiActivity {
+public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDialog.DeckSelectionListener {
     @VisibleForTesting
     protected ViewPager2 mViewPager;
     private TabLayout mSlidingTabLayout;
@@ -209,6 +215,43 @@ public class CardTemplateEditor extends AnkiActivity {
                 .build();
         discardDialog.show();
         return discardDialog;
+    }
+
+    /** When a deck is selected via Deck Override */
+    @Override
+    public void onDeckSelected(@Nullable SelectableDeck deck) {
+        if (Models.isCloze(getTempModel().getModel())) {
+            Timber.w("Attempted to set deck for cloze model");
+            UIUtils.showThemedToast(this, getString(R.string.model_manager_deck_override_cloze_error), true);
+            return;
+        }
+
+
+        int ordinal = mViewPager.getCurrentItem();
+        JSONObject template = getTempModel().getTemplate(ordinal);
+        String templateName = template.getString("name");
+
+        if (deck != null && Decks.isDynamic(getCol(), deck.getDeckId())) {
+            Timber.w("Attempted to set default deck of %s to dynamic deck %s", templateName, deck.getName());
+            UIUtils.showThemedToast(this, getString(R.string.model_manager_deck_override_dynamic_deck_error), true);
+            return;
+        }
+
+        String message;
+        if (deck == null) {
+            Timber.i("Removing default template from template '%s'", templateName);
+            template.put("did", null);
+            message = getString(R.string.model_manager_deck_override_removed_message, templateName);
+        } else {
+            Timber.i("Setting template '%s' to '%s'", templateName, deck.getName());
+            template.put("did", deck.getDeckId());
+            message = getString(R.string.model_manager_deck_override_added_message, templateName, deck.getName());
+        }
+
+        UIUtils.showThemedToast(this, message, true);
+
+        // Deck Override can change from "on" <-> "off"
+        supportInvalidateOptionsMenu();
     }
 
 
@@ -359,8 +402,16 @@ public class CardTemplateEditor extends AnkiActivity {
             inflater.inflate(R.menu.card_template_editor, menu);
 
             if (mTemplateEditor.getTempModel().getModel().getInt("type") == Consts.MODEL_CLOZE) {
-                Timber.d("Editing cloze model, disabling add/delete card template functionality");
+                Timber.d("Editing cloze model, disabling add/delete card template and deck override functionality");
                 menu.findItem(R.id.action_add).setVisible(false);
+                menu.findItem(R.id.action_add_deck_override).setVisible(false);
+            } else {
+                JSONObject template = getCurrentTemplate();
+                @StringRes int overrideStringRes = template.has("did") && !template.isNull("did") ?
+                        R.string.card_template_editor_deck_override_on :
+                        R.string.card_template_editor_deck_override_off;
+
+                menu.findItem(R.id.action_add_deck_override).setTitle(overrideStringRes);
             }
 
             // It is invalid to delete if there is only one card template, remove the option from UI
@@ -407,6 +458,10 @@ public class CardTemplateEditor extends AnkiActivity {
                     confirmDeleteCards(template, tempModel.getModel(), numAffectedCards);
                     return true;
                 }
+                case R.id.action_add_deck_override: {
+                    displayDeckOverrideDialog(col, tempModel);
+                    return true;
+                }
                 case R.id.action_preview: {
                     Timber.i("CardTemplateEditor:: Preview on tab %s", mTemplateEditor.mViewPager.getCurrentItem());
                     // Create intent for the previewer and add some arguments
@@ -451,6 +506,36 @@ public class CardTemplateEditor extends AnkiActivity {
                     launchCardBrowserAppearance(getCurrentTemplate());
                 default:
                     return super.onOptionsItemSelected(item);
+            }
+        }
+
+
+        private void displayDeckOverrideDialog(Collection col, TemporaryModel tempModel) {
+            AnkiActivity activity = (AnkiActivity) requireActivity();
+            if (Models.isCloze(tempModel.getModel())) {
+                UIUtils.showThemedToast(activity, getString(R.string.model_manager_deck_override_cloze_error), true);
+                return;
+            }
+            String name = getCurrentTemplateName(tempModel);
+            String explanation = getString(R.string.deck_override_explanation, name);
+            // Anki Desktop allows Dynamic decks, have reported this as a bug:
+            // https://forums.ankiweb.net/t/minor-bug-deck-override-to-filtered-deck/1493
+            FunctionalInterfaces.Filter<Deck> nonDynamic = (d) -> !Decks.isDynamic(d);
+            List<SelectableDeck> decks = SelectableDeck.fromCollection(col, nonDynamic);
+            String title = getString(R.string.card_template_editor_deck_override);
+            DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(title, explanation, decks);
+            AnkiActivity.showDialogFragment(activity, dialog);
+        }
+
+
+        private String getCurrentTemplateName(TemporaryModel tempModel) {
+            try {
+                int ordinal = mTemplateEditor.mViewPager.getCurrentItem();
+                final JSONObject template = tempModel.getTemplate(ordinal);
+                return template.getString("name");
+            } catch (Exception e) {
+                Timber.w(e, "Failed to get name for template");
+                return "";
             }
         }
 
