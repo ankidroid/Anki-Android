@@ -3564,6 +3564,58 @@ see card.js for available functions
             return mCurrentCard.getIvl();
         }
 
+        /** Returns the ease as an int (percentage * 10). Default: 2500 (250%). Minimum: 1300 (130%) */
+        @JavascriptInterface
+        public int ankiGetCardFactor() {
+            return mCurrentCard.getFactor();
+        }
+
+        /** Returns the last modified time as a Unix timestamp in seconds. Example: 1477384099 */
+        @JavascriptInterface
+        public long ankiGetCardMod() {
+            return mCurrentCard.getMod();
+        }
+
+        /** Returns the ID of the card. Example: 1477380543053 */
+        @JavascriptInterface
+        public long ankiGetCardId() {
+             return mCurrentCard.getId();
+         }
+
+        /** Returns the ID of the note which generated the card. Example: 1590418157630 */
+        @JavascriptInterface
+        public long ankiGetCardNid() {
+            return mCurrentCard.getNid();
+        }
+
+        @JavascriptInterface
+        @Consts.CARD_TYPE
+        public int ankiGetCardType() {
+            return mCurrentCard.getType();
+        }
+
+        /** Returns the ID of the deck which contains the card. Example: 1595967594978 */
+        @JavascriptInterface
+        public long ankiGetCardDid() {
+            return mCurrentCard.getDid();
+        }
+
+        @JavascriptInterface
+        public int ankiGetCardLeft() {
+            return mCurrentCard.getLeft();
+        }
+
+        /** Returns the ID of the home deck for the card if it is filtered, or 0 if not filtered. Example: 1595967594978 */
+        @JavascriptInterface
+        public long ankiGetCardODid() {
+            return mCurrentCard.getODid();
+        }
+
+        @JavascriptInterface
+        public long ankiGetCardODue() {
+            return mCurrentCard.getODue();
+        }
+
         @JavascriptInterface
         @Consts.CARD_QUEUE
         public int ankiGetCardQueue() {
