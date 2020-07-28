@@ -401,10 +401,6 @@ public final class AnkiPackageExporter extends AnkiExporter {
         // export into the anki2 file
         String colfile = path.replace(".apkg", ".anki2");
 
-        if (_v2sched) {
-            throw new ImportExportException(context.getString(R.string.export_v2_forbidden));
-        }
-
         super.exportInto(colfile, context);
         z.write(colfile, CollectionHelper.COLLECTION_FILENAME);
         // and media
