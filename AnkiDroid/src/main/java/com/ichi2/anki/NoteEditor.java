@@ -1853,15 +1853,20 @@ public class NoteEditor extends AnkiActivity {
         // get the current text and selection locations
         int selectionStart = textBox.getSelectionStart();
         int selectionEnd = textBox.getSelectionEnd();
+
+        // #6762 values are reversed if using a keyboard and pressing Ctrl+Shift+LeftArrow
+        int start = Math.min(selectionStart, selectionEnd);
+        int end = Math.max(selectionStart, selectionEnd);
+
         String text = "";
         if (textBox.getText() != null) {
             text = textBox.getText().toString();
         }
 
         // Split the text in the places where the cloze deletion will be inserted
-        String beforeText = text.substring(0, selectionStart);
-        String selectedText = text.substring(selectionStart, selectionEnd);
-        String afterText = text.substring(selectionEnd);
+        String beforeText = text.substring(0, start);
+        String selectedText = text.substring(start, end);
+        String afterText = text.substring(end);
         int nextClozeIndex = getNextClozeIndex();
 
         // Format the cloze deletion open bracket
@@ -1870,7 +1875,7 @@ public class NoteEditor extends AnkiActivity {
         // Update text field with updated text and selection
         textBox.setText(String.format("%s%s%s}}%s", beforeText, clozeOpenBracket, selectedText, afterText));
         int clozeOpenSize = clozeOpenBracket.length();
-        textBox.setSelection(selectionStart+clozeOpenSize, selectionEnd+clozeOpenSize);
+        textBox.setSelection(start + clozeOpenSize, end + clozeOpenSize);
     }
 
 
