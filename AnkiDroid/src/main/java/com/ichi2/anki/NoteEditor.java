@@ -644,12 +644,33 @@ public class NoteEditor extends AnkiActivity {
                     showTagsDialog();
                 }
                 break;
+            case KeyEvent.KEYCODE_C: {
+                if (event.isCtrlPressed() && event.isShiftPressed()) {
+                    insertCloze();
+                    // Anki Desktop warns, but still inserts the cloze
+                    if (!isClozeType()) {
+                        UIUtils.showSimpleSnackbar(this, R.string.note_editor_insert_cloze_no_cloze_note_type, false);
+                    }
+
+                }
+            }
             default:
                 break;
         }
 
         return super.onKeyUp(keyCode, event);
     }
+
+
+    private void insertCloze() {
+        View v = getCurrentFocus();
+        if (!(v instanceof FieldEditText)) {
+            return;
+        }
+        FieldEditText editText = (FieldEditText) v;
+        convertSelectedTextToCloze(editText);
+    }
+
 
     private void fetchIntentInformation(Intent intent) {
         Bundle extras = intent.getExtras();
