@@ -6,6 +6,7 @@ This api allow deck developer to add functionality to cards that can call native
 <br> View this files also for additional information.
 <br>[AbstractFlashcardViewer.java](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/java/com/ichi2/anki/AbstractFlashcardViewer.java#L3404)
 <br>[card.js](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/assets/scripts/card.js#L78)
+<br>**Note: The PR (#6521) is in progress. After merge of this PR, mark card and toggle flag implementation in front/back side of card must be changed or updated to new implementation. So check this wiki page for further updates.**
 <!-- The PR is in progress. (#6521)
 To initialize the JavaScript API usage.
 ## Initialize 
