@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Process;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
@@ -36,7 +37,13 @@ import com.ichi2.anki.FlashCardsContract.CardTemplate;
 import com.ichi2.anki.FlashCardsContract.Deck;
 import com.ichi2.anki.FlashCardsContract.Model;
 import com.ichi2.anki.FlashCardsContract.Note;
+import com.ichi2.anki.FlashCardsContract.AnkiMedia;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -149,6 +156,47 @@ public final class AddContentApi {
             return 0;
         }
         return getCompat().insertNotes(deckId, newNoteValuesList.toArray(new ContentValues[newNoteValuesList.size()]));
+    }
+
+    /**
+     * Add a media file to AnkiDroid's media collection. You would likely supply this uri through a FileProvider, and
+     * then set FLAG_GRANT_READ_URI_PERMISSION using something like:
+     * getContext().grantUriPermission("com.ichi2.anki", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) and then afterward
+     * remove the permission with getContext().revokePermission(uri, Intent.FLAG_GRAN_READ_URI_PERMISSION)
+     * @param fileUri   Uri for the file to be added.
+     * @param preferredName String that will be added to the beginning of the file name in the media collection
+     * @param mimeType  String indicating the mimeType of the media. Accepts "audio" or "image"
+     * @return the correctly formatted String for the media file to be placed in the desired field of a Card.
+     */
+    public String addMediaFromUri(Uri fileUri, String preferredName, String mimeType) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(AnkiMedia.FILE_URI, fileUri.toString());
+        preferredName = preferredName.replace(" ", "_");
+        contentValues.put(AnkiMedia.PREFERRED_NAME, preferredName);
+
+        try {
+            Uri returnUri = mResolver.insert(AnkiMedia.CONTENT_URI, contentValues);
+            // get the filename from Uri, return [sound:%s] % file.getName()
+            String fname = new File(returnUri.getPath()).toString();
+            String formatted_fname = formatMediaName(fname, mimeType);
+            return formatted_fname;
+        } catch (Exception e){
+            return null;
+        }
+
+    }
+
+    public String formatMediaName(String fname, String mimeType) {
+        String formatted_fname;
+        if (mimeType.equals("audio")) {
+            formatted_fname = String.format("[sound:%s]", fname.substring(1)); // first character in the path is "/"
+        } else if (mimeType.equals("image")) {
+            formatted_fname = String.format("<img src=\"%s\" />", fname.substring(1));
+        } else {
+            // something went wrong
+            formatted_fname = null;
+        }
+        return formatted_fname;
     }
 
 
