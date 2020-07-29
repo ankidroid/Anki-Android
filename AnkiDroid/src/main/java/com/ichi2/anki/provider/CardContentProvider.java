@@ -20,6 +20,7 @@
 package com.ichi2.anki.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -40,6 +41,7 @@ import android.os.CancellationSignal;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
+import android.webkit.MimeTypeMap;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BuildConfig;
@@ -51,6 +53,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Media;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -65,8 +68,10 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1049,7 +1054,60 @@ public class CardContentProvider extends ContentProvider {
             case DECKS_ID:
                 // Deck ID is generated automatically by libanki
                 throw new IllegalArgumentException("Not possible to insert deck with specific ID");
+            case MEDIA:
+                // insert a media file
+                // contentvalue should have data and preferredFileName values
+                Uri fileUri = Uri.parse(values.getAsString(FlashCardsContract.AnkiMedia.FILE_URI));
+                String preferredName = values.getAsString(FlashCardsContract.AnkiMedia.PREFERRED_NAME);
+                InputStream inputStream = null;
 
+                try {
+                    ContentResolver cR = mContext.getContentResolver();
+                    Media media = col.getMedia();
+                    // idea, open input stream and save to cache directory, then
+                    // pass this (hopefully temporary) file to the media.addFile function.
+                    inputStream = cR.openInputStream(fileUri);
+                    String fileMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(cR.getType(fileUri)); // return eg "jpeg"
+                    // should we be enforcing strict mimetypes? which types?
+                    File tempFile;
+                    try {
+                        tempFile = File.createTempFile(
+                                preferredName+"_", // the beginning of the filename.
+                                "." + fileMimeType, // this is the extension, if null, '.tmp' is used, need to get the extension from MIME type?
+                                new File(media.dir())
+                        );
+                        tempFile.deleteOnExit();
+                    } catch (Exception e) {
+                        Timber.e(e, "Could not create temporary media file. ");
+                        return null;
+                    }
+
+                    // copy contents into temp file (possibly check file size and warn if large?)
+                    try {
+                        CompatHelper.getCompat().copyFile(inputStream, tempFile.getAbsolutePath());
+                    } catch (FileNotFoundException e) {
+                        Timber.e(e, "File not found when opening stream for supplied media file.");
+                        return null;
+                    } catch (Exception e) {
+                        Timber.e(e, "Unable to copy media file from ContentProvider");
+                        return null;
+                    } finally {
+                        assert inputStream != null;
+                        inputStream.close();
+                    }
+
+                    String fname = media.addFile(tempFile);
+                    Timber.d("insert -> MEDIA: fname = %s", fname);
+                    File f = new File(fname);
+                    Timber.d("insert -> MEDIA: f = %s", f);
+                    Uri uriFromF = Uri.fromFile(f);
+                    Timber.d("insert -> MEDIA: uriFromF = %s", uriFromF);
+                    return Uri.fromFile(new File(fname));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
             default:
                 // Unknown URI type
                 throw new IllegalArgumentException("uri " + uri + " is not supported");
