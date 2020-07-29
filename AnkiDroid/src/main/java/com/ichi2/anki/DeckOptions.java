@@ -99,6 +99,10 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             this.cacheValues();
         }
 
+        public DeckOptions getDeckOptions() {
+            return DeckOptions.this;
+        }
+
 
         private void cacheValues() {
             Timber.i("DeckOptions - CacheValues");
@@ -207,7 +211,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 int oldValue = mOptions.getJSONObject("new").getInt("order");
                                 if (oldValue != newValue) {
                                     mOptions.getJSONObject("new").put("order", newValue);
-                                    CollectionTask.launchCollectionTask(REORDER, mConfChangeHandler,
+                                    CollectionTask.launchCollectionTask(REORDER, new ConfChangeHandler(this),
                                             new TaskData(new Object[] {mOptions}));
                                 }
                                 mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
@@ -297,7 +301,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "deckConf": {
                                 long newConfId = Long.parseLong((String) value);
                                 mOptions = mCol.getDecks().getConf(newConfId);
-                                CollectionTask.launchCollectionTask(CONF_CHANGE, mConfChangeHandler,
+                                CollectionTask.launchCollectionTask(CONF_CHANGE, confChangeHandler(),
                                         new TaskData(new Object[] {mDeck, mOptions}));
                                 break;
                             }
@@ -310,7 +314,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             }
                             case "confReset":
                                 if ((Boolean) value) {
-                                    CollectionTask.launchCollectionTask(CONF_RESET, mConfChangeHandler,
+                                    CollectionTask.launchCollectionTask(CONF_RESET, confChangeHandler(),
                                             new TaskData(new Object[] {mOptions}));
                                 }
                                 break;
@@ -356,7 +360,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "confSetSubdecks":
                                 if ((Boolean) value) {
-                                    CollectionTask.launchCollectionTask(CONF_SET_SUBDECKS, mConfChangeHandler,
+                                    CollectionTask.launchCollectionTask(CONF_SET_SUBDECKS, confChangeHandler(),
                                             new TaskData(new Object[] {mDeck, mOptions}));
                                 }
                                 break;
@@ -521,25 +525,13 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 return null;
             }
 
-            private TaskListener mConfChangeHandler = new TaskListener() {
-                @Override
-                public void onPreExecute() {
-                    Resources res = getResources();
-                    mProgressDialog = StyledProgressDialog.show(DeckOptions.this, "",
-                            res.getString(R.string.reordering_cards), false);
-                }
+            public DeckPreferenceHack getDeckPreferenceHack() {
+                return DeckPreferenceHack.this;
+            }
 
-
-                @Override
-                public void onPostExecute(TaskData result) {
-                    cacheValues();
-                    buildLists();
-                    updateSummaries();
-                    mProgressDialog.dismiss();
-                    // Restart to reflect the new preference values
-                    restartActivity();
-                }
-            };
+            public ConfChangeHandler confChangeHandler() {
+                return new ConfChangeHandler(this);
+            }
 
             /**
              * Remove the currently selected options group
@@ -548,12 +540,11 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 // Remove options group, asking user to confirm full sync if necessary
                 mCol.getDecks().remConf(mOptions.getLong("id"));
                 // Run the CPU intensive re-sort operation in a background thread
-                CollectionTask.launchCollectionTask(CONF_REMOVE, mConfChangeHandler,
+                CollectionTask.launchCollectionTask(CONF_REMOVE, confChangeHandler(),
                                         new TaskData(new Object[] { mOptions }));
                 mDeck.put("conf", 1);
             }
         }
-
 
         @Override
         public boolean contains(String key) {
@@ -626,6 +617,30 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     }
 
+
+    private static class ConfChangeHandler extends TaskListener {
+        private final DeckPreferenceHack.Editor mEditor;
+        public ConfChangeHandler(DeckPreferenceHack.Editor editor) {
+            mEditor = editor;
+        }
+        @Override
+        public void onPreExecute() {
+            Resources res = mEditor.getDeckPreferenceHack().getDeckOptions().getResources();
+            mEditor.getDeckPreferenceHack().mProgressDialog = StyledProgressDialog.show(mEditor.getDeckPreferenceHack().getDeckOptions(), "",
+                    res.getString(R.string.reordering_cards), false);
+        }
+
+
+        @Override
+        public void onPostExecute(TaskData result) {
+            mEditor.getDeckPreferenceHack().cacheValues();
+            mEditor.getDeckPreferenceHack().getDeckOptions().buildLists();
+            mEditor.getDeckPreferenceHack().getDeckOptions().updateSummaries();
+            mEditor.getDeckPreferenceHack().mProgressDialog.dismiss();
+            // Restart to reflect the new preference values
+            mEditor.getDeckPreferenceHack().getDeckOptions().restartActivity();
+        }
+    };
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
