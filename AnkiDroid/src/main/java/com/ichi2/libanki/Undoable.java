@@ -44,7 +44,7 @@ public abstract class Undoable {
         long cid = card.getId();
         return new Undoable(dt) {
             public long undo(Collection col) {
-                Timber.i("Undo: Bury Card");
+                Timber.i("Undo: %s", dt);
                 for (Card cc : cards) {
                     cc.flush(false);
                 }
