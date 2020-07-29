@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">El primer campo está vacío</string>
     <string name="note_editor_no_cloze_delations">Este tipo de nota debe contener huecos</string>
     <string name="note_editor_no_cards_created_all_fields">El tipo de nota actual no produjo ninguna tarjeta.\nPor favor, elije otro tipo de nota o haga clic en \"Tarjetas\" y añade un sustituto de campo</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Guardando nota</string>
     <string name="saving_model">Guardando tipo de nota</string>
     <string name="add">Añadir</string>
@@ -257,7 +258,6 @@
     <string name="import_needs_v2">El programador de V2 debe estar habilitado para importar este archivo.</string>
     <string name="import_cannot_with_v2">El programador de V2 no puede importar mazos V1 con la programación incluida.</string>
     <string name="export_v2_dummy_note">Este archivo requiere una versión más reciente de Anki.</string>
-    <string name="export_v2_forbidden">Por favor, cambie al programador de V1 antes de exportar un solo mazo con información de programación.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Error al cargar \'%s\'.</string>
     <string name="activity_start_failed">El sistema no tiene una aplicación instalada que pueda realizar esta acción.</string>

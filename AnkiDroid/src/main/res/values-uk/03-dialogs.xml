@@ -213,9 +213,9 @@
     <string name="boot_service_too_many_notifications">Забагато нагадувань заплановано. Деякі не з’являться</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="few">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">Автоматична синхронізація може запуститися через %d секунду.</item>
+        <item quantity="few">Автоматична синхронізація може запуститися через %d секунди.</item>
+        <item quantity="many">Автоматична синхронізація може запуститися через %d секунд.</item>
+        <item quantity="other">Автоматична синхронізація може запуститися через %d секунди.</item>
     </plurals>
 </resources>

@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">O primeiro campo está vazio</string>
     <string name="note_editor_no_cloze_delations">Este tipo de nota deve conter uma omissão de lacuna</string>
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota atual não produziu nenhum cartão.\nPor favor, escolha outro tipo de nota, ou clique em \'Cartas\' e adicione uma substituição de campo</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Salvando nota</string>
     <string name="saving_model">Saving note type</string>
     <string name="add">Adicionar</string>
@@ -257,7 +258,6 @@
     <string name="import_needs_v2">O agendador V2 deve ser habilitado para importar este arquivo.</string>
     <string name="import_cannot_with_v2">O agendador V2 não pode importar decks V1 junto com o agendamento.</string>
     <string name="export_v2_dummy_note">Este arquivo requer uma versão mais recente do Anki.</string>
-    <string name="export_v2_forbidden">Por favor, mude para o agendador V1 antes de exportar um único deck com informações de agendamento.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>

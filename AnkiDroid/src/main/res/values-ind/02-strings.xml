@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">Kolom teks pertama kosong</string>
     <string name="note_editor_no_cloze_delations">Tipe catatan ini harus berisi titik-titik</string>
     <string name="note_editor_no_cards_created_all_fields">Tipe catatan sekarang tidak menghasilkan kartu apapun.\nHarap memilih jenis catatan lain, atau pilih \'Kartu\' dan tambahkan teks pengganti</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Menyimpan catatan</string>
     <string name="saving_model">Menyimpan tipe catatan</string>
     <string name="add">Tambah</string>
@@ -247,7 +248,6 @@
     <string name="import_needs_v2">Penjadwal v2 harus diaktifkan untuk mengimpor berkas ini.</string>
     <string name="import_cannot_with_v2">Penjadwal v2 tidak dapat mengimpor dek V1 yang memiliki penjadwalan.</string>
     <string name="export_v2_dummy_note">Berkas ini memerlukan versi terbaru dari Anki.</string>
-    <string name="export_v2_forbidden">Harap beralih ke penjadwal V1 sebelum mengekspor dek tunggal dengan informasi penjadwalan.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Memuat \'%s\' gagal.</string>
     <string name="activity_start_failed">Sistem tidak mempunyai aplikasi terinstal yang dapat melakukan aksi ini.</string>

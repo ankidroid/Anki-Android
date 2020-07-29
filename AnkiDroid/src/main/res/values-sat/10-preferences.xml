@@ -160,8 +160,8 @@
     <string name="show_eta">ETA ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_eta_summ">ᱥᱚᱢᱚᱭ ᱥᱟᱨᱮᱡ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="use_current">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱰᱮᱠ</string>
-    <string name="new_spread">New card position</string>
-    <string name="learn_cutoff">Learn ahead limit</string>
+    <string name="new_spread">ᱱᱟᱣᱟ ᱠᱟᱰ ᱡᱟᱭᱜᱟ</string>
+    <string name="learn_cutoff">ᱢᱟᱲᱟᱝ ᱥᱮᱫ ᱯᱟᱲᱦᱟᱣ ᱪᱮᱫᱚᱜ</string>
     <string name="learn_cutoff_summ">XXX ᱴᱤᱯᱤᱡ</string>
     <string name="time_limit">Timebox time limit</string>
     <string name="time_limit_summ">XXX ᱴᱤᱯᱤᱡ</string>

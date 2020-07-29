@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">The first field is empty</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Poznámka sa ukladá</string>
     <string name="saving_model">Typ poznámky sa ukladá</string>
     <string name="add">Pridať</string>
@@ -277,7 +278,6 @@
     <string name="import_needs_v2">V2 plánovač musí byť povolený pre import tohto súboru.</string>
     <string name="import_cannot_with_v2">V2 plánovač nedokáže importovať V1 balíčky s uvedeným plánovaním.</string>
     <string name="export_v2_dummy_note">Tento súbor vyžaduje novšiu verziu Anki.</string>
-    <string name="export_v2_forbidden">Prosím zmeňte na plánovač V1 pred exportom jedného balíčka s informáciami plánovania.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Načítavanie \'%s\' zlyhalo.</string>
     <string name="activity_start_failed">Systém nemá nainštalovanú aplikáciu, ktorá by mohla uskutočniť túto operáciu.</string>

@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">最初のフィールドが空です</string>
     <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め問題が含まれている必要があります</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">カードの保存</string>
     <string name="saving_model">ノートタイプを保存しています</string>
     <string name="add">追加</string>
@@ -246,7 +247,6 @@
     <string name="import_needs_v2">このファイルをインポートするにはV2スケジューラを有効にする必要があります。</string>
     <string name="import_cannot_with_v2">V2スケジューラは、スケジュール情報付きのV1デッキはインポートできません。</string>
     <string name="export_v2_dummy_note">このファイルはAnkiの新しいバーショーンが必要です。</string>
-    <string name="export_v2_forbidden">スケジュール情報付きの単一デッキをエクスポートする前に、V1スケジューラに切り替えてください。</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' の読み込みに失敗しました。</string>
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>

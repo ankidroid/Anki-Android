@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">Pierwsze pole jest puste</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Zapisywanie notatki</string>
     <string name="saving_model">Zapis typu notatki</string>
     <string name="add">Dodaj</string>
@@ -277,7 +278,6 @@
     <string name="import_needs_v2">Program planujący V2 musi być włączony, żeby zaimportować ten plik.</string>
     <string name="import_cannot_with_v2">Program planujący V2 nie może zaimportować talii V1 z włączonym planowaniem planowaniem.</string>
     <string name="export_v2_dummy_note">Ten plik wymaga nowszej wersji Anki.</string>
-    <string name="export_v2_forbidden">Wybierz program planujący V1 przed eksportowaniem jednej talii z informacjami planowania.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Ładowanie \'%s\' nie powiodło się.</string>
     <string name="activity_start_failed">System nie ma zainstalowanej aplikacji, która może wykonać tę czynność.</string>

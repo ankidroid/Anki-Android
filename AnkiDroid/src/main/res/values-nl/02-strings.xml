@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">Het eerste veld is leeg</string>
     <string name="note_editor_no_cloze_delations">Dit type notitie moet invuloefeningen bevatten.</string>
     <string name="note_editor_no_cards_created_all_fields">Het huidige type memo produceerde geen kaarten.\nKies alstublieft een ander type memo, of klik op \'Kaarten\' en voeg een veld substitutie toe.</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Kaart opslaan</string>
     <string name="saving_model">Memotype opslaan</string>
     <string name="add">Toevoegen</string>
@@ -258,7 +259,6 @@
     <string name="import_needs_v2">V2-planner moet ingeschakeld zijn om dit bestand te importeren.</string>
     <string name="import_cannot_with_v2">V2-planner kan geen V1-sets importeren met inbegrip van planningsinformatie.</string>
     <string name="export_v2_dummy_note">Dit bestand vereist een nieuwere versie van Anki.</string>
-    <string name="export_v2_forbidden">Gelieve over te schakelen naar de V1-planner voordat u een enkel set met planningsinformatie exporteert.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Laden \'%s\' mislukt.</string>
     <string name="activity_start_failed">Het systeem heeft geen app geïnstalleerd die deze actie kan uitvoeren.</string>

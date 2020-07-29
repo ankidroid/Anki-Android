@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">The first field is empty</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">노트 저장 중</string>
     <string name="saving_model">Saving note type</string>
     <string name="add">추가</string>
@@ -249,7 +250,6 @@ Context | Request Context    </string>
     <string name="import_needs_v2">이 파일을 열기 위해서는 V2 스케줄러를 활성화해야 합니다.</string>
     <string name="import_cannot_with_v2">V2 스케줄러는 일정이 포함된 V1 카드 묶음을 열 수 없습니다.</string>
     <string name="export_v2_dummy_note">이 파일을 열기 위해서는 앱을 업데이트 해야 합니다.</string>
-    <string name="export_v2_forbidden">Please switch to the V1 scheduler before exporting a single deck with scheduling information.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>

@@ -58,7 +58,7 @@
     <string name="sdcard_missing_message">एसडी कार्ड उपलब्ध नहीं है क्योंकि यह USB भंडारण के रूप में इस्तेमाल किया जा रहा है। आपके डेक तक पहुँचने के लिए USB डिस्कनेक्ट करें।</string>
     <string name="updated_version">%s संस्करण को अद्यतित किया गया</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">स्लेट सुरक्षित करें </string>
     <string name="enable_whiteboard">स्लेट सक्षम करें</string>
     <string name="disable_whiteboard">स्लेट अक्षम करें</string>
     <string name="show_whiteboard">Whiteboard दिखाएँ</string>
@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">पहला फील्ड खाली है</string>
     <string name="note_editor_no_cloze_delations">इस नोट प्रकार में क्लॉज विलोपन होना चाहिए</string>
     <string name="note_editor_no_cards_created_all_fields">वर्तमान प्रलेख के प्रकार ने किसी भी कार्ड का निर्माण नहीं किया । कृपया एक और प्रलेख का प्रकार चुने , कृपया एक और प्रलेख का प्रकार चुनिये । या आप एक क्षेत्र का प्रतिस्थापन बढ़ाइये ।</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">नोट सहेजने</string>
     <string name="saving_model">नोट प्रकार सहेज रहा है</string>
     <string name="add">जोड़ें</string>
@@ -169,7 +170,7 @@
     <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
     <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
     <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
+    <string name="import_log_insufficient_space">पैकिज खोलने  के लिए पर्याप्त जगह  नहीं  है । जगह  चाहिए %1$d, जगह है %2$d</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_unhandled_request">आयात अनुरोध संसाधित करने में असमर्थ</string>
@@ -257,7 +258,6 @@
     <string name="import_needs_v2">इस फ़ाइल को आयात करने के लिए V2 scheduler सक्षम करें</string>
     <string name="import_cannot_with_v2">V2 scheduler V1 डेक को शेड्यूलिंग के साथ आयात नहीं कर सकता।</string>
     <string name="export_v2_dummy_note">इस फ़ाइल को Anki के नए संस्करण की आवश्यकता है।</string>
-    <string name="export_v2_forbidden">शेड्यूलिंग जानकारी के साथ एकल डेक निर्यात करने से पहले कृपया V1 scheduler पर स्विच करें।</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url"> \'%s\'  लोड करना असफल रहा</string>
     <string name="activity_start_failed">सिस्टम में कोई ऐप इंस्टॉल नहीं है जो इस क्रिया को कर सके।</string>
@@ -278,5 +278,5 @@
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="title_whiteboard_pen_color">व्हाईट बोर्ड के पेन</string>
 </resources>

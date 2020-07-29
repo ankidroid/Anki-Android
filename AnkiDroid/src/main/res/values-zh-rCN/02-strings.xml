@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">第一字段为空</string>
     <string name="note_editor_no_cloze_delations">此笔记类型必须包含创建填空</string>
     <string name="note_editor_no_cards_created_all_fields">当前笔记类型没有生成任何卡片。\n请选择另一个笔记类型，或点击 “卡片” 并添加一个字段替换</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">保存笔记</string>
     <string name="saving_model">保存卡牌记录类型</string>
     <string name="add">添加</string>
@@ -247,7 +248,6 @@
     <string name="import_needs_v2">必须启用 V2 调度器以导入此文件。</string>
     <string name="import_cannot_with_v2">V2 调度器无法导入包含进度的 V1 牌组。</string>
     <string name="export_v2_dummy_note">此文件需要更新版本的 Anki。</string>
-    <string name="export_v2_forbidden">在导出带有进度信息的单个牌组前，请切换到 V1 调度器。</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">加载 “%s” 失败。</string>
     <string name="activity_start_failed">系统中没有安装可以执行此操作的应用程序。</string>

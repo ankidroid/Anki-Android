@@ -38,9 +38,9 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
+    <string name="backup_deck_no_space_left">Záloha nebyla uložena. Na SD kartě není dostatek místa. Snižte počet záloh nebo odstraňte nějaké jiné soubory.</string>
     <string name="sd_space_warning">Na vaší SD kartě je méně místa než %d mb.\nUvolněte trochu místa, aby se zabránilo ztrátě dat.</string>
-    <string name="backup_delete">Mazání záloh.\nProsím čekejte&#8230;</string>
+    <string name="backup_delete">Odstraňování záloh&#8230;</string>
     <string name="backup_restore">Obnovit ze zálohy</string>
     <string name="backup_new_collection">Nová kolekce</string>
     <string name="backup_del_collection">Odstranit kolekci a vytvořit novou</string>
@@ -53,7 +53,7 @@
     <string name="backup_error_menu_repair">Opravit databázi</string>
     <string name="backup_repair_deck">Opravit</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Opravuji databázi.\nPočkejte prosím&#8230;</string>
+    <string name="backup_repair_deck_progress">Opravuje se databáze&#8230;</string>
     <string name="backup_error">Chyba</string>
     <string name="backup_invalid_file_error">Vybraný záložní soubor je neplatný</string>
     <string name="backup_restore_select_title">Vyberte zálohu pro obnovení</string>

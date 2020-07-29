@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">ᱯᱨᱩᱛᱷᱩᱢ ᱡᱟᱭᱜᱟ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="note_editor_no_cloze_delations">ᱱᱚᱝᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮ cloze ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ </string>
     <string name="note_editor_no_cards_created_all_fields">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱮᱟᱭ ᱾ \n ᱫᱚᱭᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱢᱮ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ \'ᱠᱟᱨᱰᱥ\' ᱨᱮ ᱚᱛᱟ ᱡᱟ ᱟᱨ field substitute ᱥᱮᱞᱮᱫ ᱢᱮ</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ </string>
     <string name="saving_model">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
     <string name="add">ᱥᱮᱞᱮᱫ</string>
@@ -253,7 +254,6 @@
     <string name="import_needs_v2">ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱞᱟᱹᱜᱤᱫ V2 scheduler ᱮᱱᱮᱵᱟᱹᱞ ᱢᱮ ᱾</string>
     <string name="import_cannot_with_v2">V2 scheduler V1 ᱰᱮᱠᱥ ᱵᱟᱭ ᱵᱷᱮᱡᱟ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟᱭ ᱥᱮᱰᱭᱩᱞ ᱛᱟᱦᱮᱸ ᱠᱟᱛᱮ ᱦᱚᱸ ᱾</string>
     <string name="export_v2_dummy_note">ᱱᱚᱶᱟ ᱨᱮᱫ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ Anki ᱨᱮᱭᱟᱜ ᱱᱟᱶᱟ ᱵᱷᱚᱨᱥᱚᱱ ᱫᱚᱨᱠᱟᱨ ᱾</string>
-    <string name="export_v2_forbidden">ᱢᱤᱫᱴᱟᱝ ᱰᱮᱠ ᱵᱷᱮᱡᱟ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱫᱚᱭᱟᱟᱛᱮ V1 ᱥᱮᱰᱭᱩᱞᱚᱨ ᱛᱮ ᱦᱩᱭᱩᱜ ᱢᱮ ᱾</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' ᱞᱚᱰ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ ᱾</string>
     <string name="activity_start_failed">ᱱᱚᱶᱟ ᱥᱮᱤᱴᱚᱢ ᱴᱷᱮᱱ ᱠᱟᱹᱢᱤ ᱠᱚᱨᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱮᱯᱯ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾</string>

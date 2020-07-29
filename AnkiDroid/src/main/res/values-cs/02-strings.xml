@@ -52,8 +52,8 @@
     <string name="tag_name">Název štítku</string>
     <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
     <string name="add_tag">Přidat štítek</string>
-    <string name="check_all_tags">Označ/odznač všechny stítky</string>
-    <string name="filter_tags">Filtrovat tagy</string>
+    <string name="check_all_tags">Označit/odznačit všechny štítky</string>
+    <string name="filter_tags">Filtrovat štítky</string>
     <string name="no_tags">Ještě jste nepřidali žádné štítky</string>
     <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Odpojte USB pro přístup ke svým balíkům.</string>
     <string name="updated_version">Aktualizováno na verzi %s</string>
@@ -65,7 +65,7 @@
     <string name="hide_whiteboard">Skrýt tabuli</string>
     <string name="clear_whiteboard">Smazat tabuli</string>
     <string name="replay_audio">Přehrát audio</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="toggle_mic_tool_bar">Zkontrolovat výslovnost</string>
     <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
     <string name="leech_notification">Karta byla označena jako pijavice</string>
     <string name="corrupt_font">Poškozený soubor písma %s</string>
@@ -110,10 +110,11 @@
     <string name="cardeditor_title_add_note">Přidat poznámku</string>
     <string name="cardeditor_title_edit_card">Upravit poznámku</string>
     <string name="discard_unsaved_changes">Zavřít a ztratit stávající vstup?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="note_editor_no_cards_created">Nebyly vytvořeny žádné karty. Vyplňte prosím další pole</string>
+    <string name="note_editor_no_first_field">První pole je prázdné</string>
+    <string name="note_editor_no_cloze_delations">Tento typ poznámky musí obsahovat doplňovačky</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Ukládání poznámky</string>
     <string name="saving_model">Ukládání typu poznámky</string>
     <string name="add">Přidat</string>
@@ -139,8 +140,8 @@
     </plurals>
     <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid karta</string>
-    <string name="note_editor_add_note">Add note</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_add_note">Přidat poznámku</string>
+    <string name="note_editor_copy_note">Kopírovat poznámku</string>
     <string name="card_editor_copy_card">Kopírovat kartu</string>
     <string name="card_editor_reposition_card">Změnit pořadí</string>
     <string name="card_editor_reset_card">Obnovit proces učení</string>
@@ -172,11 +173,11 @@
     <string name="import_message_replace_confirm">Tímto vymažete vaši stávající kolekci a nahradíte jí daty ze souboru %s. Jste si jistý?</string>
     <string name="import_message_add_confirm">Přidat \"%s\" do kolekce? To může trvat dlouhou dobu</string>
     <string name="import_log_no_apkg">Toto není platný Anki balíček</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_failed_unzip">Nepodařilo se rozbalit apkg: %s</string>
+    <string name="import_log_failed_copy_to">Nepodařilo se zkopírovat apkg do %s</string>
     <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
+    <string name="import_log_insufficient_space">Není dostatek místa pro rozbalení balíčku. Potřeba %1$d, k dispozici %2$d</string>
+    <string name="import_log_file_cache_cleared">Chyba při importu souboru, pravděpodobně se během zpracování vyčistila mezipaměť.\nZkuste to prosím znovu</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
     <string name="import_error_exception">Nepodařilo se importovat balíček\n\n%s</string>
@@ -215,7 +216,7 @@
     <string name="steps_error">Kroky musí být číslo větší než 0</string>
     <string name="steps_min_error">Je požadován alespoň jeden krok</string>
     <string name="sched_end">(konec)</string>
-    <string name="sched_unbury_action">Pro jejich zobrazení stiskněte v menu položku \"Zruš přeskočení\"</string>
+    <string name="sched_unbury_action">Pro jejich zobrazení stiskněte v menu položku \"Zrušit přeskočení\"</string>
     <string name="sched_has_buried">Některé související nebo pozastavené karty byly odloženy do pozdější relace.</string>
     <string name="tag_editor_add_feedback">Pro potvrzení přidání “%1$s” stiskni “%2$s”</string>
     <string name="tag_editor_add_feedback_existing">Vybrán štítek “%1$s”</string>
@@ -277,20 +278,19 @@
     <string name="import_needs_v2">Abyste mohli importovat tento soubor, musí být povolen V2 plánovač.</string>
     <string name="import_cannot_with_v2">V2 plánovač nemůže importovat V1 balíčky, které obsahují plánování.</string>
     <string name="export_v2_dummy_note">Tento soubor vyžaduje novější verzi Anki.</string>
-    <string name="export_v2_forbidden">Předtím, než budete exportovat jednotlivý balíček, který obsahuje informace o plánování, přepněte prosím na V1 plánovač.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
+    <string name="activity_start_failed_load_url">Načítání \'%s\' selhalo.</string>
     <string name="activity_start_failed">V systému není nainstalována aplikace, která může provést tuto akci.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="no_browser_notification">Nebyl nalezen žádný prohlížeč, prosím navštivte webovou stránku pomocí pc nebo mobilu: </string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Obnovené karty</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="background_image_title">Pozadí</string>
+    <string name="choose_an_image">Vybrat obrázek</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
+    <string name="restore_default">Obnovit výchozí</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>

@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">Першае поле пустое</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Захаванне нататкі</string>
     <string name="saving_model">Захоўваецца тып нататкі</string>
     <string name="add">Дадаць</string>
@@ -277,7 +278,6 @@
     <string name="import_needs_v2">Для імпарту гэтага файла неабходна ўключыць планіроўшчык другой версіі.</string>
     <string name="import_cannot_with_v2">Планіроўшчык другой версіі не можа імпартаваць калоды з раскладам першай версіі.</string>
     <string name="export_v2_dummy_note">Дадзены файл патрабуе больш новую версію праграмы.</string>
-    <string name="export_v2_forbidden">Пераключыцеся на першую версію планіроўшчыка перад экспартаваннем адзіночнай калоды са звесткамі планавання.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Не атрымалася зпампаваць \'%s\'.</string>
     <string name="activity_start_failed">У сістэме нестае патрэбнай прылады каб гэта выканаць.</string>

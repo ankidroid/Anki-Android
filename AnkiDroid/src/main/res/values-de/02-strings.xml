@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">Das erste Feld ist leer</string>
     <string name="note_editor_no_cloze_delations">Dieser Notiztyp muss Auslassungen enthalten</string>
     <string name="note_editor_no_cards_created_all_fields">Der aktuelle Notiztyp hat keine Karten erzeugt.\nBitte wählen Sie einen anderen Notiztyp oder tippen Sie auf »Karten« und fügen Sie eine Feldersetzung hinzu.</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Notiz speichern</string>
     <string name="saving_model">Notiztyp wird gespeichert</string>
     <string name="add">Hinzufügen</string>
@@ -257,7 +258,6 @@
     <string name="import_needs_v2">Zeitplaner V2 muss aktiviert sein, um diese Datei zu importieren.</string>
     <string name="import_cannot_with_v2">Zeitplaner V2 kann keine V1-Stapel mit enthaltener Zeitplanung importieren.</string>
     <string name="export_v2_dummy_note">Diese Datei benötigt eine neuere Version von Anki.</string>
-    <string name="export_v2_forbidden">Bitte wechseln Sie zum Zeitplaner V1, bevor Sie einen einzelnen Stapel mit Informationen zur Zeitplanung exportieren.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">»%s« konnte nicht geladen werden.</string>
     <string name="activity_start_failed">Auf dem System ist keine App installiert, die diese Aktion ausführen kann.</string>

@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">Le premier champ est vide</string>
     <string name="note_editor_no_cloze_delations">Ce type de note doit contenir des textes à trous</string>
     <string name="note_editor_no_cards_created_all_fields">Le type de note actuel n’a produit aucune carte.\nVeuillez choisir un autre type de carte, ou cliquez sur « Cartes » et ajoutez un champ de substitution</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Enregistrer la note</string>
     <string name="saving_model">Enregistrement du type de note</string>
     <string name="add">Ajouter</string>
@@ -257,7 +258,6 @@
     <string name="import_needs_v2">Le planificateur V2 doit être activé pour importer ce fichier.</string>
     <string name="import_cannot_with_v2">Le planificateur V2 ne peut pas importer les paquets de cartes V1 avec la planification incluse.</string>
     <string name="export_v2_dummy_note">Ce fichier nécessite une version plus récente d\'Anki.</string>
-    <string name="export_v2_forbidden">Veuillez passer au planificateur V1 avant d\'exporter un paquet de cartes avec les informations de planification.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Le chargement de \'%s\' a échoué.</string>
     <string name="activity_start_failed">Le système ne dispose pas d\'une application qui peut effectuer cette action.</string>

@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">Az első mező üres</string>
     <string name="note_editor_no_cloze_delations">Ennek a jegyzet típusnak részleges törléseket kell tartalmaznia</string>
     <string name="note_editor_no_cards_created_all_fields">A jelenlegi jegyzettípus nem hozott létre semmilyen kártyát.\nKérjük válasszon más jegyzettípust, vagy kattintson a \"Kártyákra\" és adjon hozzá egy mezőhelyettesítést</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Jegyzet mentése</string>
     <string name="saving_model">Jegyzettípus mentése</string>
     <string name="add">Hozzáadás</string>
@@ -257,7 +258,6 @@
     <string name="import_needs_v2">A V2 ütemező be kell hogy legyen kapcsolva, hogy importálni tudja ezt a fájlt.</string>
     <string name="import_cannot_with_v2">A V2 ütemező nem tudja importálni a V1-es kártyákat, ha be van kapcsolva az ütemező.</string>
     <string name="export_v2_dummy_note">A fájlhoz egy újabb Anki verzió szükséges.</string>
-    <string name="export_v2_forbidden">Kérjük váltson V1 ütemezőre mielőtt egyetlen kártyát is exportálna ütemezői információval.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' betöltése sikertelen.</string>
     <string name="activity_start_failed">Nincsen letöltve olyan alkalmazás, ami végre tudná hajtani ezt a műveletet.</string>

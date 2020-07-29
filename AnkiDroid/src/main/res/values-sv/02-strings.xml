@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">The first field is empty</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Sparar not</string>
     <string name="saving_model">Saving note type</string>
     <string name="add">Lägg till</string>
@@ -257,7 +258,6 @@
     <string name="import_needs_v2">V2-schemaläggare måste vara aktiverad för att importera denna fil.</string>
     <string name="import_cannot_with_v2">V2-schemaläggare kan inte importera V1-kortlekar med inkluderad schemaläggning.</string>
     <string name="export_v2_dummy_note">Denna fil kräver en nyare version av Anki.</string>
-    <string name="export_v2_forbidden">Växla till V1-schemaläggaren innan du exporterar en enstaka kortlek utan schemaläggningsinformation.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>

@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">Перше поле пусте</string>
     <string name="note_editor_no_cloze_delations">Цей тип примітки повинен містити видалення</string>
     <string name="note_editor_no_cards_created_all_fields">Від поточного типу запису нема жодної картки. \nБудь ласка, оберіть інший тип запису чи натисніть «картки», додати поле підміни</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Зберегти запис</string>
     <string name="saving_model">Збереженя типу записів</string>
     <string name="add">Додати</string>
@@ -277,7 +278,6 @@
     <string name="import_needs_v2">Активуйте планувальник V2 щоб імпортувати цей файл.</string>
     <string name="import_cannot_with_v2">Планувальник V2 не може імпортувати колоди V1 зі збереженням планувань.</string>
     <string name="export_v2_dummy_note">Цей файл потребує новішої версії Anki.</string>
-    <string name="export_v2_forbidden">Будь ласка, переключіться до планувальник V1 перед експортуванням однієї колоди з планувальною інформацією.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Не вдалося завантажити \'%s\'.</string>
     <string name="activity_start_failed">Система не має встановленого додатку, який може це виконати.</string>

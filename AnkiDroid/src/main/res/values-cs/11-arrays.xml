@@ -51,20 +51,20 @@
         <item>Zpět</item>
         <item>Upravit poznámku</item>
         <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
+        <item>Označit poznámku</item>
+        <item>Vyhledat výraz</item>
+        <item>Přeskočit kartu</item>
+        <item>Vyřadit kartu</item>
+        <item>Odstranit poznámku</item>
+        <item>Přehrát multimédia</item>
+        <item>Přerušit učení</item>
+        <item>Přeskočit poznámku</item>
+        <item>Vyřadit poznámku</item>
+        <item>Přepnout červený příznak</item>
+        <item>Přepnout oranžový příznak</item>
+        <item>Přepnout zelený příznak</item>
+        <item>Přepnout modrý příznak</item>
+        <item>Odstranit příznak</item>
         <item>Page Up</item>
         <item>Page Down</item>
     </string-array>

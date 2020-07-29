@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">第一字段為空</string>
     <string name="note_editor_no_cloze_delations">此筆記類型必須包含克漏字測驗</string>
     <string name="note_editor_no_cards_created_all_fields">當前的筆記類型不會產生任何卡片。請選擇其他筆記類型，或點擊‘卡片’並新增取代字段</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">儲存筆記中</string>
     <string name="saving_model">儲存筆記類型中</string>
     <string name="add">新增</string>
@@ -247,7 +248,6 @@
     <string name="import_needs_v2">必須啟用 V2 排程器以匯入此檔案。</string>
     <string name="import_cannot_with_v2">V2 排程器不能匯入包含排程的 V1 牌組。</string>
     <string name="export_v2_dummy_note">此檔案需要更新版本的 Anki。</string>
-    <string name="export_v2_forbidden">匯出單個包含排程資訊的牌組前請切換至 V1 排程器。</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">載入 ‘%s’ 失敗。</string>
     <string name="activity_start_failed">此系統不包含能執行此操作的應用程式。</string>
