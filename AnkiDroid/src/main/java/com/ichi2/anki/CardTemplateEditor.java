@@ -51,6 +51,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
@@ -494,7 +495,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                             }
                             confirmButton.setEnabled(false);
                         }
-                        tempModel.saveToDatabase(mSaveModelAndExitHandler);
+                        tempModel.saveToDatabase(saveModelAndExitHandler());
                     } else {
                         Timber.d("CardTemplateEditor:: model has not changed, exiting");
                         mTemplateEditor.finishWithAnimation(ActivityTransitionAnimation.RIGHT);
@@ -628,35 +629,42 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
         /* Used for updating the collection when a model has been edited */
-        private TaskListener mSaveModelAndExitHandler = new TaskListener() {
+        private SaveModelAndExitHandler saveModelAndExitHandler() {
+            return new SaveModelAndExitHandler(this);
+        }
+        private static class SaveModelAndExitHandler extends TaskListenerWithContext<CardTemplateFragment> {
+            public SaveModelAndExitHandler(CardTemplateFragment templateFragment) {
+                super(templateFragment);
+            }
+
             private MaterialDialog mProgressDialog = null;
             @Override
-            public void onPreExecute() {
-                Timber.d("mSaveModelAndExitHandler::preExecute called");
-                mProgressDialog = StyledProgressDialog.show(mTemplateEditor, AnkiDroidApp.getAppResources().getString(R.string.saving_model),
-                        getResources().getString(R.string.saving_changes), false);
+            public void actualOnPreExecute(@NonNull CardTemplateFragment templateFragment) {
+                Timber.d("saveModelAndExitHandler::preExecute called");
+                mProgressDialog = StyledProgressDialog.show(templateFragment.mTemplateEditor, AnkiDroidApp.getAppResources().getString(R.string.saving_model),
+                        templateFragment.getResources().getString(R.string.saving_changes), false);
             }
 
             @Override
-            public void onPostExecute(TaskData result) {
-                Timber.d("mSaveModelAndExitHandler::postExecute called");
-                View button = mTemplateEditor.findViewById(R.id.action_confirm);
+            public void actualOnPostExecute(@NonNull CardTemplateFragment templateFragment, TaskData result) {
+                Timber.d("saveModelAndExitHandler::postExecute called");
+                View button = templateFragment.mTemplateEditor.findViewById(R.id.action_confirm);
                 if (button != null) {
                     button.setEnabled(true);
                 }
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
-                mTemplateEditor.mTempModel = null;
+                templateFragment.mTemplateEditor.mTempModel = null;
                 if (result.getBoolean()) {
-                    mTemplateEditor.finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+                    templateFragment.mTemplateEditor.finishWithAnimation(ActivityTransitionAnimation.RIGHT);
                 } else {
-                    Timber.w("CardTemplateEditor:: save model task failed: %s", result.getString());
-                    UIUtils.showThemedToast(mTemplateEditor, mTemplateEditor.getString(R.string.card_template_editor_save_error, result.getString()), false);
-                    mTemplateEditor.finishWithoutAnimation();
+                    Timber.w("CardTemplateFragment:: save model task failed: %s", result.getString());
+                    UIUtils.showThemedToast(templateFragment.mTemplateEditor, templateFragment.getString(R.string.card_template_editor_save_error, result.getString()), false);
+                    templateFragment.mTemplateEditor.finishWithoutAnimation();
                 }
             }
-        };
+        }
 
         private boolean modelHasChanged() {
             return mTemplateEditor.modelHasChanged();
