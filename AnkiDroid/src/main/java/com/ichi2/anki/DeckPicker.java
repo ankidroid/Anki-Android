@@ -313,38 +313,45 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    private TaskListener mImportReplaceListener = new TaskListener() {
+    private final ImportReplaceListener importReplaceListener() {
+        return new ImportReplaceListener(this);
+    }
+    private static class ImportReplaceListener extends TaskListenerWithContext<DeckPicker>{
+        public ImportReplaceListener(DeckPicker deckPicker) {
+            super(deckPicker);
+        }
+
         @SuppressWarnings("unchecked")
         @Override
-        public void onPostExecute(TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
             Timber.i("Import: Replace Task Completed");
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
+            if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
+                deckPicker.mProgressDialog.dismiss();
             }
-            Resources res = getResources();
+            Resources res = deckPicker.getResources();
             if (result != null && result.getBoolean()) {
-                updateDeckList();
+                deckPicker.updateDeckList();
             } else {
-                showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
+                deckPicker.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
             }
         }
 
 
         @Override
-        public void onPreExecute() {
-            if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = StyledProgressDialog.show(DeckPicker.this,
-                        getResources().getString(R.string.import_title),
-                        getResources().getString(R.string.import_replacing), false);
+        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            if (deckPicker.mProgressDialog == null || !deckPicker.mProgressDialog.isShowing()) {
+                deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker,
+                        deckPicker.getResources().getString(R.string.import_title),
+                        deckPicker.getResources().getString(R.string.import_replacing), false);
             }
         }
 
 
         @Override
-        public void onProgressUpdate(TaskData value) {
-            mProgressDialog.setContent(value.getString());
+        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, TaskData value) {
+            deckPicker.mProgressDialog.setContent(value.getString());
         }
-    };
+    }
 
     private TaskListener mExportListener = new TaskListener() {
 
@@ -1955,7 +1962,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback to import a file -- replacing the existing collection
     @Override
     public void importReplace(String importPath) {
-        CollectionTask.launchCollectionTask(IMPORT_REPLACE, mImportReplaceListener, new TaskData(importPath));
+        CollectionTask.launchCollectionTask(IMPORT_REPLACE, importReplaceListener(), new TaskData(importPath));
     }
 
 
