@@ -28,6 +28,7 @@ import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -142,7 +143,10 @@ public class Shared {
      * system and can not return a usable path, so copying them to disk is a requirement.
      */
     public static String getTestFilePath(Context context, String name) throws IOException {
-        InputStream is = context.getClassLoader().getResourceAsStream("assets/"+name);
+        InputStream is = context.getClassLoader().getResourceAsStream("assets/" + name);
+        if (is == null) {
+            throw new FileNotFoundException("Could not find test file: assets/" + name);
+        }
         String dst = new File(getTestDir(context, name), name).getAbsolutePath();
         Utils.writeToFile(is, dst);
         return dst;
