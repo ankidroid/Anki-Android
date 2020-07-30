@@ -45,6 +45,7 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 
@@ -480,18 +481,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
-        TaskListener listener = new TaskListener() {
-            @Override
-            public void onPreExecute() {
-                activity.showProgressBar();
-            }
-
-            @Override
-            public void onPostExecute(TaskData result) {
-                activity.hideProgressBar();
-                ((CustomStudyListener) activity).onCreateCustomStudySession();
-            }
-        };
+        TaskListener listener = createCustomStudySessionListener();
         CollectionTask.launchCollectionTask(REBUILD_CRAM, listener);
 
         // Hide the dialogs
@@ -511,5 +501,28 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
     protected AnkiActivity getAnkiActivity() {
         return (AnkiActivity) getActivity();
+    }
+
+
+    private CreateCustomStudySessionListener createCustomStudySessionListener(){
+        return new CreateCustomStudySessionListener(getAnkiActivity());
+    }
+    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity> {
+        public CreateCustomStudySessionListener(AnkiActivity activity) {
+            super(activity);
+        }
+
+
+        @Override
+        public void actualOnPreExecute(@NonNull AnkiActivity activity) {
+            activity.showProgressBar();
+        }
+
+
+        @Override
+        public void actualOnPostExecute(@NonNull AnkiActivity activity, TaskData result) {
+            activity.hideProgressBar();
+            ((CustomStudyListener) activity).onCreateCustomStudySession();
+        }
     }
 }
