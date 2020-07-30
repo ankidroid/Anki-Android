@@ -727,7 +727,7 @@ public class Collection {
                 String flds = cur.getString(2);
                 Model model = getModels().get(mid);
                 ArrayList<Integer> avail = getModels().availOrds(model, Utils.splitFields(flds));
-                long did = dids.get(nid);
+                Long did = dids.get(nid);
                 // use sibling due if there is one, else use a new id
                 long due;
                 if (dues.containsKey(nid)) {
@@ -735,7 +735,7 @@ public class Collection {
                 } else {
                     due = nextID("pos");
                 }
-                if (did == 0) {
+                if (did == null || did == 0L) {
                     did = model.getLong("did");
                 }
                 // add any missing cards
@@ -754,7 +754,7 @@ public class Collection {
                             // do nothing
                         }
                         if (getDecks().isDyn(did)) {
-                            did = 1;
+                            did = 1L;
                         }
                         // if the deck doesn't exist, use default instead
                         did = mDecks.get(did).getLong("id");
