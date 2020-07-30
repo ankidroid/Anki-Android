@@ -1489,30 +1489,38 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
+    private final MediaCheckListener mediaCheckListener() {
+        return new MediaCheckListener(this);
+    }
+    private static class MediaCheckListener extends TaskListenerWithContext<DeckPicker>{
+        public MediaCheckListener (DeckPicker deckPicker) {
+            super(deckPicker);
+        }
+
+        @Override
+        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+                    deckPicker.getResources().getString(R.string.check_media_message), false);
+        }
+
+
+        @Override
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+            if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
+                deckPicker.mProgressDialog.dismiss();
+            }
+            if (result != null && result.getBoolean()) {
+                @SuppressWarnings("unchecked")
+                List<List<String>> checkList = (List<List<String>>) result.getObjArray()[0];
+                deckPicker.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
+            } else {
+                deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.check_media_failed));
+            }
+        }
+    }
     @Override
     public void mediaCheck() {
-        TaskListener listener = new TaskListener() {
-            @Override
-            public void onPreExecute() {
-                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                        getResources().getString(R.string.check_media_message), false);
-            }
-
-
-            @Override
-            public void onPostExecute(TaskData result) {
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                }
-                if (result != null && result.getBoolean()) {
-                    @SuppressWarnings("unchecked")
-                    List<List<String>> checkList = (List<List<String>>) result.getObjArray()[0];
-                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
-                } else {
-                    showSimpleMessageDialog(getResources().getString(R.string.check_media_failed));
-                }
-            }
-        };
+        TaskListener listener = mediaCheckListener();
         CollectionTask.launchCollectionTask(CHECK_MEDIA, listener);
     }
 
