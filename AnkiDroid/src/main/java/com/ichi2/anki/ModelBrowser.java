@@ -131,20 +131,26 @@ public class ModelBrowser extends AnkiActivity {
      * Displays loading bar when deleting a model loading bar is needed
      * because deleting a model also deletes all of the associated cards/notes *
      */
-    private TaskListener mDeleteModelHandler = new TaskListener() {
-
-        @Override
-        public void onPreExecute() {
-            showProgressBar();
+    private DeleteModelHandler deleteModelHandler() {
+        return new DeleteModelHandler(this);
+    }
+    private static class DeleteModelHandler extends TaskListenerWithContext<ModelBrowser>{
+        public DeleteModelHandler(ModelBrowser browser) {
+            super(browser);
         }
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void actualOnPreExecute(@NonNull ModelBrowser browser) {
+            browser.showProgressBar();
+        }
+
+        @Override
+        public void actualOnPostExecute(@NonNull ModelBrowser browser, TaskData result) {
             if (!result.getBoolean()) {
                 throw new RuntimeException();
             }
-            hideProgressBar();
-            refreshList();
+            browser.hideProgressBar();
+            browser.refreshList();
         }
     };
 
@@ -520,7 +526,7 @@ public class ModelBrowser extends AnkiActivity {
      * Deletes the currently selected model
      */
     private void deleteModel() throws ConfirmModSchemaException {
-        CollectionTask.launchCollectionTask(DELETE_MODEL, mDeleteModelHandler,
+        CollectionTask.launchCollectionTask(DELETE_MODEL, deleteModelHandler(),
                 new TaskData(mCurrentID));
         mModels.remove(mModelListPosition);
         mModelIds.remove(mModelListPosition);
