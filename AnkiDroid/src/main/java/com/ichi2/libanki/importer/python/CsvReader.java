@@ -32,11 +32,10 @@ public class CsvReader implements Iterable<List<String>> {
 
     public final CsvDialect dialect;
     public Iterator<String> input_iter;
-    private final List<String> data;
     public CsvReaderIterator iter;
 
 
-    public CsvReader(@NonNull List<String> data, char delimiter, @Nullable CsvDialect dialect) {
+    public CsvReader(@NonNull Iterator<String> data, char delimiter, @Nullable CsvDialect dialect) {
         if (delimiter == '\0' && dialect == null) {
             throw new IllegalStateException("either the dialect or the delimiter must be set");
         }
@@ -51,22 +50,21 @@ public class CsvReader implements Iterable<List<String>> {
         // PORTING: Python does this in the constructor
         dialect.mDoublequote = true;
 
-        this.data = data;
-        this.input_iter = data.iterator();
+        this.input_iter = data;
         this.dialect = dialect;
     }
 
 
     @NonNull
     @CheckResult
-    public static CsvReader fromDelimiter(@NonNull List<String> data, char delimiter) {
+    public static CsvReader fromDelimiter(@NonNull Iterator<String> data, char delimiter) {
         return new CsvReader(data, delimiter, null);
     }
 
 
     @NonNull
     @CheckResult
-    public static CsvReader fromDialect(@NonNull List<String> data, @NonNull CsvDialect dialect) {
+    public static CsvReader fromDialect(@NonNull Iterator<String> data, @NonNull CsvDialect dialect) {
         return new CsvReader(data, '\0', dialect);
     }
 
