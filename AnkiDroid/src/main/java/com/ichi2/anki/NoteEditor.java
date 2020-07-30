@@ -75,6 +75,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -217,65 +218,73 @@ public class NoteEditor extends AnkiActivity {
     // restoring the Activity.
     private Bundle mSavedFields;
 
-    private TaskListener mSaveNoteHandler = new TaskListener() {
+    private SaveNoteHandler saveNoteHandler() {
+        return new SaveNoteHandler(this);
+    }
+    private static class SaveNoteHandler extends TaskListenerWithContext<NoteEditor> {
         private boolean mCloseAfter = false;
         private Intent mIntent;
 
 
+        private SaveNoteHandler(NoteEditor noteEditor) {
+            super(noteEditor);
+        }
+
+
         @Override
-        public void onPreExecute() {
-            Resources res = getResources();
-            mProgressDialog = StyledProgressDialog
-                    .show(NoteEditor.this, "", res.getString(R.string.saving_facts), false);
+        public void actualOnPreExecute(@NonNull NoteEditor noteEditor) {
+            Resources res = noteEditor.getResources();
+            noteEditor.mProgressDialog = StyledProgressDialog
+                    .show(noteEditor, "", res.getString(R.string.saving_facts), false);
         }
 
         @Override
-        public void onProgressUpdate(TaskData value) {
+        public void actualOnProgressUpdate(@NonNull NoteEditor noteEditor, TaskData value) {
             int count = value.getInt();
             if (count > 0) {
-                mChanged = true;
-                mSourceText = null;
-                Note oldNote = mEditorNote.clone();
+                noteEditor.mChanged = true;
+                noteEditor.mSourceText = null;
+                Note oldNote = noteEditor.mEditorNote.clone();
                 // The saved values may have changes (newline -> <br>) use UI values instead.
-                String[] currentStrings = getCurrentFieldStrings();
-                setNote();
+                String[] currentStrings = noteEditor.getCurrentFieldStrings();
+                noteEditor.setNote();
                 // Respect "Remember last input when adding" field option.
                 JSONArray flds;
-                flds = mEditorNote.model().getJSONArray("flds");
+                flds = noteEditor.mEditorNote.model().getJSONArray("flds");
                 if (oldNote != null) {
                     for (int fldIdx = 0; fldIdx < flds.length(); fldIdx++) {
                         if (flds.getJSONObject(fldIdx).getBoolean("sticky")) {
-                            mEditFields.get(fldIdx).setText(currentStrings[fldIdx]);
+                            noteEditor.mEditFields.get(fldIdx).setText(currentStrings[fldIdx]);
                         }
                     }
                 }
-                UIUtils.showThemedToast(NoteEditor.this,
-                        getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
+                UIUtils.showThemedToast(noteEditor,
+                        noteEditor.getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
             } else {
-                displayErrorSavingNote();
+                noteEditor.displayErrorSavingNote();
             }
-            if (!mAddNote || mCaller == CALLER_CARDEDITOR || mAedictIntent) {
-                mChanged = true;
+            if (!noteEditor.mAddNote || noteEditor.mCaller == CALLER_CARDEDITOR || noteEditor.mAedictIntent) {
+                noteEditor.mChanged = true;
                 mCloseAfter = true;
-            } else if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
+            } else if (noteEditor.mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
                 if (count > 0) {
-                    mChanged = true;
+                    noteEditor.mChanged = true;
                 }
                 mCloseAfter = true;
                 mIntent = new Intent();
-                mIntent.putExtra(EXTRA_ID, getIntent().getStringExtra(EXTRA_ID));
-            } else if (!mEditFields.isEmpty()) {
-                FieldEditText firstEditField = mEditFields.getFirst();
+                mIntent.putExtra(EXTRA_ID, noteEditor.getIntent().getStringExtra(EXTRA_ID));
+            } else if (!noteEditor.mEditFields.isEmpty()) {
+                FieldEditText firstEditField = noteEditor.mEditFields.getFirst();
                 // Required on my Android 9 Phone to show keyboard: https://stackoverflow.com/a/7784904
                 firstEditField.postDelayed(() -> {
                     firstEditField.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) noteEditor.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(firstEditField, InputMethodManager.SHOW_IMPLICIT);
                 }, 200);
             }
-            if (!mCloseAfter && (mProgressDialog != null) && mProgressDialog.isShowing()) {
+            if (!mCloseAfter && (noteEditor.mProgressDialog != null) && noteEditor.mProgressDialog.isShowing()) {
                 try {
-                    mProgressDialog.dismiss();
+                    noteEditor.mProgressDialog.dismiss();
                 }
                 catch (IllegalArgumentException e) {
                     Timber.e(e, "Note Editor: Error on dismissing progress dialog");
@@ -285,32 +294,32 @@ public class NoteEditor extends AnkiActivity {
 
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void actualOnPostExecute(@NonNull NoteEditor noteEditor, TaskData result) {
             if (result.getBoolean()) {
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                if (noteEditor.mProgressDialog != null && noteEditor.mProgressDialog.isShowing()) {
                     try {
-                        mProgressDialog.dismiss();
+                        noteEditor.mProgressDialog.dismiss();
                     } catch (IllegalArgumentException e) {
                         Timber.e(e, "Note Editor: Error on dismissing progress dialog");
                     }
                 }
                 if (mCloseAfter) {
                     if (mIntent != null) {
-                        closeNoteEditor(mIntent);
+                        noteEditor.closeNoteEditor(mIntent);
                     } else {
-                        closeNoteEditor();
+                        noteEditor.closeNoteEditor();
                     }
                 } else {
                     // Reset check for changes to fields
-                    mFieldEdited = false;
-                    mTagsEdited = false;
+                    noteEditor.mFieldEdited = false;
+                    noteEditor.mTagsEdited = false;
                 }
             } else {
                 // RuntimeException occurred on adding note
-                closeNoteEditor(DeckPicker.RESULT_DB_ERROR, null);
+                noteEditor.closeNoteEditor(DeckPicker.RESULT_DB_ERROR, null);
             }
         }
-    };
+    }
 
     private void displayErrorSavingNote() {
         int errorMessageId = getAddNoteErrorResource();
@@ -840,8 +849,8 @@ public class NoteEditor extends AnkiActivity {
             }
             getCol().getModels().current().put("tags", ja);
             getCol().getModels().setChanged();
-            CollectionTask.launchCollectionTask(ADD_NOTE, mSaveNoteHandler, new TaskData(mEditorNote));
             mReloadRequired = true;
+            CollectionTask.launchCollectionTask(ADD_NOTE, saveNoteHandler(), new TaskData(mEditorNote));
         } else {
             // Check whether note type has been changed
             final Model newModel = getCurrentlySelectedModel();
