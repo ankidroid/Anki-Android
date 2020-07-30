@@ -17,21 +17,32 @@ package com.ichi2.anki.tests.libanki;
 
 
 import android.Manifest;
+import android.os.Build;
+
+import androidx.test.filters.SdkSuppress;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.anki.tests.Shared;
+import com.ichi2.anki.testutil.TestEnvironment;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.Anki2Importer;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.importer.Importer;
 
+import com.ichi2.libanki.importer.NoteImporter;
+import com.ichi2.libanki.importer.TextImporter;
 import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
+
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +54,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -227,64 +241,136 @@ public class ImportTest {
         assertTrue(testCol.getDb().queryString("select flds from notes").startsWith("goodbye"));
     }
 
-    // Exchange @Suppress for @Test when csv importer is implemented
-//    @Suppress
-//    public void testCsv() throws IOException {
-//        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-2fields.txt");
-//        TextImporter i = new TextImporter(testCol, file);
-//        i.initMapping();
-//        i.run();
-//        // four problems - too many & too few fields, a missing front, and a
-//        // duplicate entry
-//        assertTrue(i.getLog().size() == 5);
-//        assertTrue(i.getTotal() == 5);
-//        // if we run the import again, it should update instead
-//        i.run();
-//        assertTrue(i.getLog().size() == 10);
-//        assertTrue(i.getTotal() == 5);
-//        // but importing should not clobber tags if they're unmapped
-//        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
-//        n.addTag("test");
-//        n.flush();
-//        i.run();
-//        n.load();
-//        assertTrue((n.getTags().size() == 1) && (n.getTags().get(0) == "test"));
-//        // if add-only mode, count will be 0
-//        i.setImportMode(1);
-//        i.run();
-//        assertTrue(i.getTotal() == 0);
-//        // and if dupes mode, will reimport everything
-//        assertTrue(testCol.cardCount() == 5);
-//        i.setImportMode(2);
-//        i.run();
-//        // includes repeated field
-//        assertTrue(i.getTotal() == 6);
-//        assertTrue(testCol.cardCount() == 11);
-//    }
-//
-//    // Exchange @Suppress for @Test when csv importer is implemented
-//    @Suppress
-//    public void testCsv2() throws  IOException, ConfirmModSchemaException {
-//        Models mm = testCol.getModels();
-//        JSONObject m = mm.current();
-//        JSONObject f = mm.newField("Three");
-//        mm.addField(m, f);
-//        mm.save(m);
-//        Note n = deck.newNote();
-//        n.setItem("Front", "1");
-//        n.setItem("Back", "2");
-//        n.setItem("Three", "3");
-//        testCol.addNote(n);
-//        // an update with unmapped fields should not clobber those fields
-//        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-update.txt");
-//        TextImporter i = new TextImporter(testCol, file);
-//        i.initMapping();
-//        i.run();
-//        n.load();
-//        assertTrue("1".equals(n.getItem("Front")));
-//        assertTrue("x".equals(n.getItem("Back")));
-//        assertTrue("3".equals(n.getItem("Three")));
-//    }
+    @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    public void testCsv() throws IOException {
+        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-2fields.txt");
+        TextImporter i = new TextImporter(testCol, file);
+        i.initMapping();
+        i.run();
+        if (TestEnvironment.isDisplayingDefaultEnglishStrings()) {
+            assertThat(i.getLog(), contains(
+                    "‘多すぎる too many fields’ had 3 fields, expected 2",
+                    "‘not, enough, fields’ had 1 fields, expected 2",
+                    "Appeared twice in file: 飲む",
+                    "Empty first field:  to play",
+                    "5 notes added, 0 notes updated, 0 notes unchanged."));
+        } else {
+            assertThat(i.getLog(), hasSize(5));
+        }
+
+        assertEquals(5, i.getTotal());
+        // if we run the import again, it should update instead
+        i.run();
+        if (TestEnvironment.isDisplayingDefaultEnglishStrings()) {
+            assertThat(i.getLog(), contains(
+                    "‘多すぎる too many fields’ had 3 fields, expected 2",
+                    "‘not, enough, fields’ had 1 fields, expected 2",
+                    "Appeared twice in file: 飲む",
+                    "Empty first field:  to play",
+                    "0 notes added, 0 notes updated, 5 notes unchanged.",
+                    "First field matched: 食べる",
+                    "First field matched: 飲む",
+                    "First field matched: テスト",
+                    "First field matched: to eat",
+                    "First field matched: 遊ぶ"));
+        } else {
+            assertThat(i.getLog(), hasSize(10));
+        }
+        assertEquals(5, i.getTotal());
+        // but importing should not clobber tags if they're unmapped
+        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
+        n.addTag("test");
+        n.flush();
+        i.run();
+        n.load();
+        assertThat(n.getTags(), contains("test"));
+        assertThat(n.getTags(), hasSize(1));
+        // if add-only mode, count will be 0
+        i.setImportMode(NoteImporter.ImportMode.IGNORE_MODE);
+        i.run();
+        assertEquals(0, i.getTotal());
+        // and if dupes mode, will reimport everything
+        assertEquals(5, testCol.cardCount());
+        i.setImportMode(NoteImporter.ImportMode.ADD_MODE);
+        i.run();
+        // includes repeated field
+        assertEquals(6, i.getTotal());
+        assertEquals(11, testCol.cardCount());
+    }
+
+    @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    public void testCsv2() throws  IOException, ConfirmModSchemaException {
+        Models mm = testCol.getModels();
+        Model m = mm.current();
+        JSONObject f = mm.newField("Three");
+        mm.addField(m, f);
+        mm.save(m);
+        Note n = testCol.newNote();
+        n.setField(0, "1");
+        n.setField(1, "2");
+        n.setField(2, "3");
+        testCol.addNote(n);
+        // an update with unmapped fields should not clobber those fields
+        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-update.txt");
+        TextImporter i = new TextImporter(testCol, file);
+        i.initMapping();
+        i.run();
+        n.load();
+        List<String> fields = Arrays.asList(n.getFields());
+        assertThat(fields, contains("1", "x", "3"));
+    }
+
+    @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    public void testCsvWithByteOrderMark() throws IOException {
+        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-utf8-bom.txt");
+        TextImporter i = new TextImporter(testCol, file);
+        i.initMapping();
+        i.run();
+        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
+        assertThat(Arrays.asList(n.getFields()), contains("Hello", "world"));
+    }
+
+
+    @Test
+    @Ignore("Not yet handled")
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    public void testUcs2CsvWithByteOrderMark() throws IOException {
+        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-ucs2-be-bom.txt");
+        TextImporter i = new TextImporter(testCol, file);
+        i.initMapping();
+        i.run();
+        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
+        assertThat(Arrays.asList(n.getFields()), contains("Hello", "world"));
+    }
+
+    @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    public void csvManualBasicExample() throws IOException, ConfirmModSchemaException {
+        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-anki-manual-csv-single-line.txt");
+        addFieldToCurrentModel("Third");
+        TextImporter i = new TextImporter(testCol, file);
+        i.setAllowHtml(true);
+        i.initMapping();
+        i.run();
+        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
+        assertThat(Arrays.asList(n.getFields()), contains("foo bar", "bar baz", "baz quux"));
+    }
+
+
+    @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    public void csvManualLineBreakExample() throws IOException {
+        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-anki-manual-csv-multi-line.txt");
+        TextImporter i = new TextImporter(testCol, file);
+        i.setAllowHtml(true);
+        i.initMapping();
+        i.run();
+        Note n = testCol.getNote(testCol.getDb().queryLongScalar("select id from notes"));
+        assertThat(Arrays.asList(n.getFields()), contains("hello", "this is\na two line answer"));
+    }
 
     /**
      * Custom tests for AnkiDroid.
@@ -303,5 +389,14 @@ public class ImportTest {
         assertEquals(1, imp.getDupes());
         assertEquals(0, imp.getAdded());
         assertEquals(0, imp.getUpdated());
+    }
+
+
+    private void addFieldToCurrentModel(String fieldName) throws ConfirmModSchemaException {
+        Models mm = testCol.getModels();
+        Model m = mm.current();
+        JSONObject f = mm.newField(fieldName);
+        mm.addField(m, f);
+        mm.save(m);
     }
 }

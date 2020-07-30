@@ -1,5 +1,8 @@
 package com.ichi2.utils;
 
+import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class HtmlUtils {
@@ -12,5 +15,11 @@ public class HtmlUtils {
         String withoutWindowsLineEndings = html.replace("\r\n", "<br/>");
         //replace unix line endings
         return withoutWindowsLineEndings.replace("\n", "<br/>");
+    }
+
+
+    @NonNull
+    public static String escape(@NonNull String html) {
+        return TextUtils.htmlEncode(html);
     }
 }

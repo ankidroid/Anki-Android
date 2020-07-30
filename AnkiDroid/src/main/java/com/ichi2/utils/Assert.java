@@ -20,6 +20,11 @@ package com.ichi2.utils;
 import org.jetbrains.annotations.Contract;
 
 public class Assert {
+    public static void that(boolean condition) {
+        if (!condition) {
+            throw new AssertionError();
+        }
+    }
     @Contract("false, _, _ -> fail")
     public static void that(boolean condition, String message, Object... args) {
         if (!condition) {
