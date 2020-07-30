@@ -358,37 +358,43 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private TaskListener mExportListener = new TaskListener() {
+    private ExportListener exportListener() {
+        return new ExportListener(this);
+    }
+    private static class ExportListener extends TaskListenerWithContext<DeckPicker>{
+        public ExportListener(DeckPicker deckPicker) {
+            super(deckPicker);
+        }
 
         @Override
-        public void onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                    getResources().getString(R.string.export_in_progress), false);
+        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+                    deckPicker.getResources().getString(R.string.export_in_progress), false);
         }
 
 
         @Override
-        public void onPostExecute(TaskData result) {
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+            if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
+                deckPicker.mProgressDialog.dismiss();
             }
 
             // If boolean and string are both set, we are signalling an error message
             // instead of a successful result.
             if (result.getBoolean() && result.getString() != null) {
                 Timber.w("Export Failed: %s", result.getString());
-                showSimpleMessageDialog(result.getString());
+                deckPicker.showSimpleMessageDialog(result.getString());
             } else {
                 Timber.i("Export successful");
                 String exportPath = result.getString();
                 if (exportPath != null) {
-                    showAsyncDialogFragment(DeckPickerExportCompleteDialog.newInstance(exportPath));
+                    deckPicker.showAsyncDialogFragment(DeckPickerExportCompleteDialog.newInstance(exportPath));
                 } else {
-                    UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.export_unsuccessful), true);
+                    UIUtils.showThemedToast(deckPicker, deckPicker.getResources().getString(R.string.export_unsuccessful), true);
                 }
             }
         }
-    };
+    }
 
 
     // ----------------------------------------------------------------------------
@@ -1999,7 +2005,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         inputArgs[2] = did;
         inputArgs[3] = includeSched;
         inputArgs[4] = includeMedia;
-        CollectionTask.launchCollectionTask(EXPORT_APKG, mExportListener, new TaskData(inputArgs));
+        CollectionTask.launchCollectionTask(EXPORT_APKG, exportListener(), new TaskData(inputArgs));
     }
 
 
