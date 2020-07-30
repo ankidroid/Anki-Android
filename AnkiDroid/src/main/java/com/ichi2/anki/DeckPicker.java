@@ -45,6 +45,7 @@ import android.provider.Settings;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
@@ -102,6 +103,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
@@ -1269,31 +1271,45 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    private UndoTaskListener undoTaskListener(boolean isReview) {
+        return new UndoTaskListener(isReview, this);
+    }
+    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker> {
+        private final boolean isReview;
+
+        public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {
+            super(deckPicker);
+            this.isReview = isReview;
+        }
+
+
+        @Override
+        public void actualOnCancelled(@NonNull DeckPicker deckPicker) {
+            deckPicker.hideProgressBar();
+        }
+
+
+        @Override
+        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            deckPicker.showProgressBar();
+        }
+
+
+        @Override
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+            deckPicker.hideProgressBar();
+            Timber.i("Undo completed");
+            if (isReview) {
+                Timber.i("Review undone - opening reviewer.");
+                deckPicker.openReviewer();
+            }
+        }
+    }
     private void undo() {
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        TaskListener listener = new TaskListener() {
-            @Override
-            public void onCancelled() {
-                hideProgressBar();
-            }
-
-            @Override
-            public void onPreExecute() {
-                showProgressBar();
-            }
-
-            @Override
-            public void onPostExecute(TaskData result) {
-                hideProgressBar();
-                Timber.i("Undo completed");
-                if (isReview) {
-                    Timber.i("Review undone - opening reviewer.");
-                    openReviewer();
-                }
-            }
-        };
+        TaskListener listener = undoTaskListener(isReview);
         CollectionTask.launchCollectionTask(UNDO, listener);
     }
 
