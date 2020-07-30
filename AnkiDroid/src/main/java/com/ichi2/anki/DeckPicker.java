@@ -1429,29 +1429,36 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
+    private RepairCollectionTask repairCollectionTask() {
+        return new RepairCollectionTask(this);
+    }
+    private static class RepairCollectionTask extends TaskListenerWithContext<DeckPicker>{
+        public RepairCollectionTask(DeckPicker deckPicker) {
+            super(deckPicker);
+        }
+
+        @Override
+        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+                    deckPicker.getResources().getString(R.string.backup_repair_deck_progress), false);
+        }
+
+
+        @Override
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+            if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
+                deckPicker.mProgressDialog.dismiss();
+            }
+            if (result == null || !result.getBoolean()) {
+                UIUtils.showThemedToast(deckPicker, deckPicker.getResources().getString(R.string.deck_repair_error), true);
+                deckPicker.showCollectionErrorDialog();
+            }
+        }
+    }
     // Callback method to handle repairing deck
     public void repairCollection() {
         Timber.i("Repairing the Collection");
-        TaskListener listener= new TaskListener() {
-
-            @Override
-            public void onPreExecute() {
-                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                        getResources().getString(R.string.backup_repair_deck_progress), false);
-            }
-
-
-            @Override
-            public void onPostExecute(TaskData result) {
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                }
-                if (result == null || !result.getBoolean()) {
-                    UIUtils.showThemedToast(DeckPicker.this, getResources().getString(R.string.deck_repair_error), true);
-                    showCollectionErrorDialog();
-                }
-            }
-        };
+        TaskListener listener= repairCollectionTask();
         CollectionTask.launchCollectionTask(REPAIR_COLLECTION, listener);
     }
 
