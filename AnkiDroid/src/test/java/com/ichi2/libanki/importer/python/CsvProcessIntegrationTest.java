@@ -62,7 +62,7 @@ public class CsvProcessIntegrationTest {
 
     private List<String> getFields(CsvDialect dialect, String input) {
         List<String> list = Collections.singletonList(input);
-        CsvReader reader = CsvReader.fromDialect(list, dialect);
+        CsvReader reader = CsvReader.fromDialect(list.iterator(), dialect);
         return reader.iterator().next();
     }
 }

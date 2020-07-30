@@ -18,8 +18,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -36,12 +40,13 @@ public class TextImporter extends NoteImporter {
     private char delimiter;
     private String[] tagsToAdd;
 
-    /** The whole content of the file */
-    private List<String> data;
     private CsvDialect dialect;
     private int numFields;
     // appears unused
     private int mIgnored;
+
+
+    private boolean mFirstLineWasTags;
 
 
     public TextImporter(Collection col, String file) {
@@ -63,6 +68,7 @@ public class TextImporter extends NoteImporter {
         int lineNum = 0;
         int ignored = 0;
         // Note: This differs from libAnki as we don't have csv.reader
+        Iterator<String> data = getDataStream().iterator();
         CsvReader reader;
         if (delimiter != '\0') {
             reader = CsvReader.fromDelimiter(data, delimiter);
@@ -130,46 +136,16 @@ public class TextImporter extends NoteImporter {
     }
 
 
-    /*
-    In python:
-    >>> pp(re.sub("^\#.*$", "__comment", "#\r\n"))
-    '__comment\n'
-    In Java:
-    COMMENT_PATTERN.matcher("#\r\n").replaceAll("__comment") -> "__comment\r\n"
-    So we use .DOTALL to ensure we get the \r
-     */
-    private static final Pattern COMMENT_PATTERN = Pattern.compile("^#.*$", Pattern.DOTALL);
-
-    private String sub(String s) {
-
-        return COMMENT_PATTERN.matcher(s).replaceAll("__comment");
-    }
-
     private void openFile() {
         dialect = null;
         fileobj = FileObj.open(mFile);
-        String data;
-        try {
-            data = fileobj.readAsUtf8WithoutBOM();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
-        String[] split = data.split("\n");
-        this.data = new ArrayList<>();
-        for (String s : split) {
-            String sub = sub(s);
-            if ("__comment".equals(sub)) {
-                continue;
-            }
-            this.data.add(s + "\n");
-        }
-
-        if (!this.data.isEmpty()) {
-            if (this.data.get(0).startsWith("tags:")) {
-                String tags = this.data.get(0).substring("tags:".length()).trim();
+        String firstLine = getFirstFileLine().orElse(null);
+        if (firstLine != null) {
+            if (firstLine.startsWith("tags:")) {
+                String tags = firstLine.substring("tags:".length()).trim();
                 tagsToAdd = tags.split(" ");
-                this.data.remove(0);
+                this.mFirstLineWasTags = true;
             }
             updateDelimiter();
         }
@@ -189,17 +165,18 @@ public class TextImporter extends NoteImporter {
         CsvSniffer sniffer = new CsvSniffer();
         if (delimiter == '\0') {
             try {
-                String join = TextUtils.join("\n", this.data.subList(0, Math.min(10, this.data.size())));
+                String join = getLinesFromFile(10);
                 dialect = sniffer.sniff(join, mPatterns.toCharArray());
             } catch (Exception e) {
                 try {
-                    dialect = sniffer.sniff(this.data.get(0), mPatterns.toCharArray());
+                    dialect = sniffer.sniff(getFirstFileLine().orElse(""), mPatterns.toCharArray());
                 } catch (Exception ex) {
                     // pass
                 }
             }
         }
 
+        Iterator<String> data = getDataStream().iterator();
 
         CsvReader reader = null;
         if (dialect != null) {
@@ -209,12 +186,14 @@ public class TextImporter extends NoteImporter {
                 err();
             }
         } else {
+            // PERF: This starts the file read twice - whereas we only need the first line
+            String firstLine = getFirstFileLine().orElse("");
             if (delimiter == '\0') {
-                if (data.get(0).contains("\t")) {
+                if (firstLine.contains("\t")) {
                     delimiter = '\t';
-                } else if(data.get(0).contains(";")) {
+                } else if(firstLine.contains(";")) {
                     delimiter = ';';
-                } else if(data.get(0).contains(",")) {
+                } else if(firstLine.contains(",")) {
                     delimiter = ',';
                 } else {
                     delimiter = ' ';
@@ -237,6 +216,48 @@ public class TextImporter extends NoteImporter {
         }
         initMapping();
     }
+
+
+    /*
+    In python:
+    >>> pp(re.sub("^\#.*$", "__comment", "#\r\n"))
+    '__comment\n'
+    In Java:
+    COMMENT_PATTERN.matcher("#\r\n").replaceAll("__comment") -> "__comment\r\n"
+    So we use .DOTALL to ensure we get the \r
+    */
+    private static final Pattern COMMENT_PATTERN = Pattern.compile("^#.*$", Pattern.DOTALL);
+
+    private String sub(String s) {
+        return COMMENT_PATTERN.matcher(s).replaceAll("__comment");
+    }
+
+
+    private Stream<String> getDataStream() {
+        Stream<String> data;
+        try {
+            data = fileobj.readAsUtf8WithoutBOM();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Stream<String> withoutComments = data.filter(x -> !"__comment".equals(sub(x))).map(s -> s + "\n");
+        if (this.mFirstLineWasTags) {
+            withoutComments = withoutComments.skip(1);
+        }
+        return withoutComments;
+    }
+
+
+    private Optional<String> getFirstFileLine() {
+        return getDataStream().findFirst();
+    }
+
+
+    private String getLinesFromFile(int numberOfLines) {
+        return TextUtils.join("\n", getDataStream().limit(numberOfLines).collect(Collectors.toList()));
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private static class FileObj {
@@ -261,9 +282,8 @@ public class TextImporter extends NoteImporter {
 
 
         @NonNull
-        public String readAsUtf8WithoutBOM() throws IOException {
-            byte[] encoded = Files.readAllBytes(Paths.get(mFile.getAbsolutePath()));
-            return new String(encoded, StandardCharsets.UTF_8);
+        public Stream<String> readAsUtf8WithoutBOM() throws IOException {
+            return Files.lines(Paths.get(mFile.getAbsolutePath()), StandardCharsets.UTF_8);
         }
     }
 }
