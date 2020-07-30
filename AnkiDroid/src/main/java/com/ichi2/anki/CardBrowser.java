@@ -70,6 +70,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -255,22 +256,30 @@ public class CardBrowser extends NavigationDrawerActivity implements
     };
 
 
-    private TaskListener mRepositionCardHandler = new TaskListener() {
+    private RepositionCardHandler repositionCardHandler() {
+        return new RepositionCardHandler(this);
+    }
+
+    private static class RepositionCardHandler extends TaskListenerWithContext<CardBrowser> {
+        public RepositionCardHandler(CardBrowser browser) {
+            super(browser);
+        }
+
         @Override
-        public void onPreExecute() {
+        public void actualOnPreExecute(@NonNull CardBrowser browser) {
             Timber.d("CardBrowser::RepositionCardHandler() onPreExecute");
         }
 
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void actualOnPostExecute(@NonNull CardBrowser browser, TaskData result) {
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute");
-            mReloadRequired = true;
+            browser.mReloadRequired = true;
             int cardCount = result.getObjArray().length;
-            UIUtils.showThemedToast(CardBrowser.this,
-                    getResources().getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true);
+            UIUtils.showThemedToast(browser,
+                    browser.getResources().getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true);
         }
-    };
+    }
 
     private TaskListener mResetProgressCardHandler = new TaskListener() {
         @Override
@@ -1122,7 +1131,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         getString(R.string.reposition_card_dialog_message),
                         5);
                 repositionDialog.setCallbackRunnable(days ->
-                    CollectionTask.launchCollectionTask(DISMISS_MULTI, mRepositionCardHandler,
+                    CollectionTask.launchCollectionTask(DISMISS_MULTI, repositionCardHandler(),
                         new TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, days}))
                 );
                 showDialogFragment(repositionDialog);
