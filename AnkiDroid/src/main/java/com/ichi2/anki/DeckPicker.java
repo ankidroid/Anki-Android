@@ -2541,37 +2541,44 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        TaskListener listener = new TaskListener() {
-            @Override
-            public void onPreExecute() {
-                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                        getResources().getString(R.string.emtpy_cards_finding), false);
+        CollectionTask.launchCollectionTask(FIND_EMPTY_CARDS, handlerEmptyCardListener());
+    }
+    private final HandleEmptyCardListener handlerEmptyCardListener() {
+        return new HandleEmptyCardListener(this);
+    }
+    private static class HandleEmptyCardListener extends TaskListenerWithContext<DeckPicker> {
+        public HandleEmptyCardListener(DeckPicker deckPicker) {
+            super(deckPicker);
+        }
+
+        @Override
+        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+                    deckPicker.getResources().getString(R.string.emtpy_cards_finding), false);
+        }
+
+        @Override
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+            final List<Long> cids = (List<Long>) result.getObjArray()[0];
+            if (cids.size() == 0) {
+                deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.empty_cards_none));
+            } else {
+                String msg = String.format(deckPicker.getResources().getString(R.string.empty_cards_count), cids.size());
+                ConfirmationDialog dialog = new ConfirmationDialog();
+                dialog.setArgs(msg);
+                Runnable confirm = () -> {
+                    deckPicker.getCol().remCards(cids);
+                    UIUtils.showSimpleSnackbar(deckPicker, String.format(
+                            deckPicker.getResources().getString(R.string.empty_cards_deleted), cids.size()), false);
+                };
+                dialog.setConfirm(confirm);
+                deckPicker.showDialogFragment(dialog);
             }
 
-            @Override
-            public void onPostExecute(TaskData result) {
-                final List<Long> cids = (List<Long>) result.getObjArray()[0];
-                if (cids.size() == 0) {
-                    showSimpleMessageDialog(getResources().getString(R.string.empty_cards_none));
-                } else {
-                    String msg = String.format(getResources().getString(R.string.empty_cards_count), cids.size());
-                    ConfirmationDialog dialog = new ConfirmationDialog();
-                    dialog.setArgs(msg);
-                    Runnable confirm = () -> {
-                        getCol().remCards(cids);
-                        UIUtils.showSimpleSnackbar(DeckPicker.this, String.format(
-                                getResources().getString(R.string.empty_cards_deleted), cids.size()), false);
-                    };
-                    dialog.setConfirm(confirm);
-                    showDialogFragment(dialog);
-                }
-
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                }
+            if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
+                deckPicker.mProgressDialog.dismiss();
             }
-        };
-        CollectionTask.launchCollectionTask(FIND_EMPTY_CARDS, listener);
+        }
     }
 
 
