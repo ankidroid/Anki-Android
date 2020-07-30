@@ -2440,43 +2440,54 @@ public class DeckPicker extends NavigationDrawerActivity implements
         deleteDeck(mContextMenuDid);
     }
     public void deleteDeck(final long did) {
-        TaskListener listener = new TaskListener() {
-            // Flag to indicate if the deck being deleted is the current deck.
-            private boolean removingCurrent;
-
-            @Override
-            public void onPreExecute() {
-                mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
-                        getResources().getString(R.string.delete_deck), false);
-                if (did == getCol().getDecks().current().optLong("id")) {
-                    removingCurrent = true;
-                }
-            }
-
-
-            @SuppressWarnings("unchecked")
-            @Override
-            public void onPostExecute(@Nullable TaskData result) {
-                // In fragmented mode, if the deleted deck was the current deck, we need to reload
-                // the study options fragment with a valid deck and re-center the deck list to the
-                // new current deck. Otherwise we just update the list normally.
-                if (mFragmented && removingCurrent) {
-                    updateDeckList();
-                    openStudyOptions(false);
-                } else {
-                    updateDeckList();
-                }
-
-                if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                    try {
-                        mProgressDialog.dismiss();
-                    } catch (Exception e) {
-                        Timber.e(e, "onPostExecute - Exception dismissing dialog");
-                    }
-                }
-            }
-        };
+        TaskListener listener = deleteDeckListener(did);
         CollectionTask.launchCollectionTask(DELETE_DECK, listener, new TaskData(did));
+    }
+    private DeleteDeckListener deleteDeckListener(long did) {
+        return new DeleteDeckListener(did, this);
+    }
+    private static class DeleteDeckListener extends TaskListenerWithContext<DeckPicker>{
+        private final long did;
+        // Flag to indicate if the deck being deleted is the current deck.
+        private boolean removingCurrent;
+
+        public DeleteDeckListener(long did, DeckPicker deckPicker) {
+            super(deckPicker);
+            this.did = did;
+        }
+
+
+        @Override
+        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+                    deckPicker.getResources().getString(R.string.delete_deck), false);
+            if (did == deckPicker.getCol().getDecks().current().optLong("id")) {
+                removingCurrent = true;
+            }
+        }
+
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, @Nullable TaskData result) {
+            // In fragmented mode, if the deleted deck was the current deck, we need to reload
+            // the study options fragment with a valid deck and re-center the deck list to the
+            // new current deck. Otherwise we just update the list normally.
+            if (deckPicker.mFragmented && removingCurrent) {
+                deckPicker.updateDeckList();
+                deckPicker.openStudyOptions(false);
+            } else {
+                deckPicker.updateDeckList();
+            }
+
+            if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
+                try {
+                    deckPicker.mProgressDialog.dismiss();
+                } catch (Exception e) {
+                    Timber.e(e, "onPostExecute - Exception dismissing dialog");
+                }
+            }
+        }
     }
 
     /**
