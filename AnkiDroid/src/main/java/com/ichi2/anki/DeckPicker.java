@@ -2223,6 +2223,44 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
+    private final UpdateDeckListListener updateDeckListListener() {
+        return new UpdateDeckListListener(this);
+    }
+    private static class UpdateDeckListListener extends TaskListenerWithContext<DeckPicker>{
+        public UpdateDeckListListener(DeckPicker deckPicker) {
+            super(deckPicker);
+        }
+
+        @Override
+        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            if (!deckPicker.colIsOpen()) {
+                deckPicker.showProgressBar();
+            }
+            Timber.d("Refreshing deck list");
+        }
+
+
+        @Override
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+            Timber.i("Updating deck list UI");
+            deckPicker.hideProgressBar();
+            // Make sure the fragment is visible
+            if (deckPicker.mFragmented) {
+                deckPicker.mStudyoptionsFrame.setVisibility(View.VISIBLE);
+            }
+            if (result == null) {
+                Timber.e("null result loading deck counts");
+                deckPicker.showCollectionErrorDialog();
+                return;
+            }
+            deckPicker.mDueTree = (List<DeckDueTreeNode>) result.getObjArray()[0];
+
+            deckPicker.__renderPage();
+            // Update the mini statistics bar as well
+            AnkiStatsTaskHandler.createReviewSummaryStatistics(deckPicker.getCol(), deckPicker.mReviewSummaryTextView);
+            Timber.d("Startup - Deck List UI Completed");
+        }
+    }
     /**
      * Launch an asynchronous task to rebuild the deck list and recalculate the deck counts. Use this
      * after any change to a deck (e.g., rename, importing, add/delete) that needs to be reflected
@@ -2231,37 +2269,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
-        TaskListener listener = new TaskListener() {
-
-            @Override
-            public void onPreExecute() {
-                if (!colIsOpen()) {
-                    showProgressBar();
-                }
-                Timber.d("Refreshing deck list");
-            }
-
-            @Override
-            public void onPostExecute(TaskData result) {
-                Timber.i("Updating deck list UI");
-                hideProgressBar();
-                // Make sure the fragment is visible
-                if (mFragmented) {
-                    mStudyoptionsFrame.setVisibility(View.VISIBLE);
-                }
-                if (result == null) {
-                    Timber.e("null result loading deck counts");
-                    showCollectionErrorDialog();
-                    return;
-                }
-                mDueTree = (List<DeckDueTreeNode>) result.getObjArray()[0];
-
-                __renderPage();
-                // Update the mini statistics bar as well
-                AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
-                Timber.d("Startup - Deck List UI Completed");
-            }
-        };
+        TaskListener listener = updateDeckListListener();
         CollectionTask task = CollectionTask.launchCollectionTask(LOAD_DECK_COUNTS, listener);
     }
 
