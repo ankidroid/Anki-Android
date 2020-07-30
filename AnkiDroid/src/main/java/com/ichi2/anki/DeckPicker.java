@@ -278,40 +278,45 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    private TaskListener mImportAddListener = new TaskListener() {
+        private final ImportAddListener mImportAddListener = new ImportAddListener(this);
+    private static class ImportAddListener extends TaskListenerWithContext<DeckPicker> {
+        public ImportAddListener(DeckPicker deckPicker) {
+            super(deckPicker);
+        }
+
         @Override
-        public void onPostExecute(TaskData result) {
-            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                mProgressDialog.dismiss();
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+            if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
+                deckPicker.mProgressDialog.dismiss();
             }
             // If boolean and string are both set, we are signalling an error message
             // instead of a successful result.
             if (result.getBoolean() && result.getString() != null) {
                 Timber.w("Import: Add Failed: %s", result.getString());
-                showSimpleMessageDialog(result.getString());
+                deckPicker.showSimpleMessageDialog(result.getString());
             } else {
                 Timber.i("Import: Add succeeded");
                 AnkiPackageImporter imp = (AnkiPackageImporter) result.getObjArray()[0];
-                showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
-                updateDeckList();
+                deckPicker.showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
+                deckPicker.updateDeckList();
             }
         }
 
 
         @Override
-        public void onPreExecute() {
-            if (mProgressDialog == null || !mProgressDialog.isShowing()) {
-                mProgressDialog = StyledProgressDialog.show(DeckPicker.this,
-                        getResources().getString(R.string.import_title), null, false);
+        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            if (deckPicker.mProgressDialog == null || !deckPicker.mProgressDialog.isShowing()) {
+                deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker,
+                        deckPicker.getResources().getString(R.string.import_title), null, false);
             }
         }
 
 
         @Override
-        public void onProgressUpdate(TaskData value) {
-            mProgressDialog.setContent(value.getString());
+        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, TaskData value) {
+            deckPicker.mProgressDialog.setContent(value.getString());
         }
-    };
+    }
 
     private final ImportReplaceListener importReplaceListener() {
         return new ImportReplaceListener(this);
