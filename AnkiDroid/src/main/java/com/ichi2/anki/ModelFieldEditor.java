@@ -31,7 +31,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.themes.StyledProgressDialog;
@@ -44,6 +44,8 @@ import com.ichi2.utils.JSONObject;
 import java.util.ArrayList;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
+
+import androidx.annotation.NonNull;
 
 public class ModelFieldEditor extends AnkiActivity {
 
@@ -180,9 +182,10 @@ public class ModelFieldEditor extends AnkiActivity {
                         UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
                     } else {
                         //Name is valid, now field is added
+                        changeHandler listener = changeFieldHandler();
                         try {
                             mCol.modSchema();
-                            CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
+                            CollectionTask.launchCollectionTask(ADD_FIELD, listener,
                                     new TaskData(new Object[]{mMod, fieldName}));
                         } catch (ConfirmModSchemaException e) {
 
@@ -193,7 +196,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                 mCol.modSchemaNoCheck();
                                 String fieldName1 = mFieldNameInput.getText().toString()
                                         .replaceAll("[\\n\\r]", "");
-                                CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
+                                CollectionTask.launchCollectionTask(ADD_FIELD, listener,
                                         new TaskData(new Object[]{mMod, fieldName1}));
                                 dismissContextMenu();
                             };
@@ -243,7 +246,7 @@ public class ModelFieldEditor extends AnkiActivity {
     }
 
     private void deleteField() {
-        CollectionTask.launchCollectionTask(DELETE_FIELD, mChangeFieldHandler,
+        CollectionTask.launchCollectionTask(DELETE_FIELD, changeFieldHandler(),
                                 new TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
     }
 
@@ -323,10 +326,11 @@ public class ModelFieldEditor extends AnkiActivity {
                         if (pos < 1 || pos > mFieldLabels.size()) {
                             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
                         } else {
+                            changeHandler listener = changeFieldHandler();
                             // Input is valid, now attempt to modify
                             try {
                                 mCol.modSchema();
-                                CollectionTask.launchCollectionTask(REPOSITION_FIELD, mChangeFieldHandler,
+                                CollectionTask.launchCollectionTask(REPOSITION_FIELD, listener,
                                         new TaskData(new Object[]{mMod,
                                                 mNoteFields.getJSONObject(mCurrentPos), pos - 1}));
                             } catch (ConfirmModSchemaException e) {
@@ -340,7 +344,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                         String newPosition1 = mFieldNameInput.getText().toString();
                                         int pos1 = Integer.parseInt(newPosition1);
                                         CollectionTask.launchCollectionTask(REPOSITION_FIELD,
-                                                mChangeFieldHandler, new TaskData(new Object[]{mMod,
+                                                listener, new TaskData(new Object[]{mMod,
                                                         mNoteFields.getJSONObject(mCurrentPos), pos1 - 1}));
                                         dismissContextMenu();
                                     } catch (JSONException e1) {
@@ -399,9 +403,10 @@ public class ModelFieldEditor extends AnkiActivity {
      * Changes the sort field (that displays in card browser) to the current field
      */
     private void sortByField() {
+        changeHandler listener = changeFieldHandler();
         try {
             mCol.modSchema();
-            CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
+            CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, listener,
                     new TaskData(new Object[]{mMod, mCurrentPos}));
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
@@ -409,7 +414,7 @@ public class ModelFieldEditor extends AnkiActivity {
             c.setArgs(getResources().getString(R.string.full_sync_confirmation));
             Runnable confirm = () -> {
                 mCol.modSchemaNoCheck();
-                CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
+                CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, listener,
                         new TaskData(new Object[]{mMod, mCurrentPos}));
                 dismissContextMenu();
             };
@@ -464,27 +469,32 @@ public class ModelFieldEditor extends AnkiActivity {
     /*
      * Called during the desk task when any field is modified
      */
-    private TaskListener mChangeFieldHandler = new TaskListener() {
+    private changeHandler changeFieldHandler() {
+        return new changeHandler(this);
+    }
+    private static class changeHandler extends TaskListenerWithContext<ModelFieldEditor> {
+        public changeHandler(ModelFieldEditor modelFieldEditor) {
+            super(modelFieldEditor);
+        }
 
         @Override
-        public void onPreExecute() {
-            if (mProgressDialog == null) {
-                mProgressDialog = StyledProgressDialog.show(ModelFieldEditor.this, getIntent().getStringExtra("title"),
-                        getResources().getString(R.string.model_field_editor_changing), false);
+        public void actualOnPreExecute(@NonNull ModelFieldEditor modelFieldEditor) {
+            if (modelFieldEditor != null && modelFieldEditor.mProgressDialog == null) {
+                modelFieldEditor.mProgressDialog = StyledProgressDialog.show(modelFieldEditor, modelFieldEditor.getIntent().getStringExtra("title"),
+                        modelFieldEditor.getResources().getString(R.string.model_field_editor_changing), false);
             }
         }
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void actualOnPostExecute(@NonNull ModelFieldEditor modelFieldEditor, TaskData result) {
             if (!result.getBoolean()) {
-                closeActivity(DeckPicker.RESULT_DB_ERROR);
+                modelFieldEditor.closeActivity(DeckPicker.RESULT_DB_ERROR);
             }
 
-            dismissProgressBar();
-            fullRefreshList();
+            modelFieldEditor.dismissProgressBar();
+            modelFieldEditor.fullRefreshList();
         }
-    };
-
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
