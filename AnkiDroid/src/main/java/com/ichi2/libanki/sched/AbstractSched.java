@@ -985,7 +985,8 @@ public abstract class AbstractSched {
         _resetRevCount();
         return new int[] { mNewCount, mLrnCount, mRevCount };
     }
-    
+
+    // In V1, counting repetition. In V2 counting cards.
     protected abstract void _resetLrnCount();
 
     public void setReportLimit(int reportLimit) {
