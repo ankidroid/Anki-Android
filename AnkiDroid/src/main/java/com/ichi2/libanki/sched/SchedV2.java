@@ -995,25 +995,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public Pair<Integer, Integer> _fuzzIvlRange(int ivl) {
-        int fuzz;
-        if (ivl < 2) {
-            return new Pair<>(1, 1);
-        } else if (ivl == 2) {
-            return new Pair<>(2, 3);
-        } else if (ivl < 7) {
-            fuzz = (int)(ivl * 0.25);
-        } else if (ivl < 30) {
-            fuzz = Math.max(2, (int)(ivl * 0.15));
-        } else {
-            fuzz = Math.max(4, (int)(ivl * 0.05));
-        }
-        // fuzz at least a day
-        fuzz = Math.max(fuzz, 1);
-        return new Pair<>(ivl - fuzz, ivl + fuzz);
-    }
-
-
     protected int _constrainedIvl(double ivl, JSONObject conf, double prev, boolean fuzz) {
         int newIvl = (int) (ivl * conf.optDouble("ivlFct", 1));
         if (fuzz) {
