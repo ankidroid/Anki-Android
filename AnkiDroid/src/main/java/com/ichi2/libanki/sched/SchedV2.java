@@ -1983,10 +1983,4 @@ public class SchedV2 extends AbstractSched {
         }
         mLrnQueue.add(idx, new LrnCard(due, id));
     }
-
-    /** End #5666 */
-    public void discardCurrentCard() {
-        mCurrentCard = null;
-        mCurrentCardParentsDid = null;
-    }
 }

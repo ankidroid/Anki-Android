@@ -1242,7 +1242,13 @@ public abstract class AbstractSched {
         mRevQueue.remove(card.getId());
         mNewQueue.remove(card.getId());
     }
-    public abstract void discardCurrentCard();
+
+
+    /** End #5666 */
+    public void discardCurrentCard() {
+        mCurrentCard = null;
+        mCurrentCardParentsDid = null;
+    }
 
 
     private void _resetNew() {
