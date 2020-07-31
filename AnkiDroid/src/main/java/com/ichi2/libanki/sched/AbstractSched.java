@@ -702,4 +702,12 @@ public abstract class AbstractSched {
      */
     public abstract void setCurrentCard(@NonNull Card card);
     public abstract void discardCurrentCard();
+
+
+    protected void _resetNew() {
+        _resetNewCount();
+        mNewDids = new LinkedList<>(mCol.getDecks().active());
+        mNewQueue.clear();
+        _updateNewCardRatio();
+    }
 }
