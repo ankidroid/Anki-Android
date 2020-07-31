@@ -2233,11 +2233,4 @@ public class SchedV2 extends AbstractSched {
         mRevQueue.remove(card.getId());
         mNewQueue.remove(card.getId());
     }
-
-    protected boolean currentCardIsInQueueWithDeck(int queue, long did) {
-        // mCurrentCard may be set to null when the reviewer gets closed. So we copy it to be sure to avoid NullPointerException
-        Card currentCard = mCurrentCard;
-        List<Long> currentCardParentsDid = mCurrentCardParentsDid;
-        return currentCard != null && currentCard.getQueue() == queue && currentCardParentsDid != null && currentCardParentsDid.contains(did);
-    }
 }
