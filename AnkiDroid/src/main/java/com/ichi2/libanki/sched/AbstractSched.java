@@ -92,8 +92,15 @@ public abstract class AbstractSched {
     /**
      * Return counts over next DAYS. Includes today.
      */
-    public abstract int dueForecast();
-    public abstract int dueForecast(int days);
+    public int dueForecast() {
+        return dueForecast(7);
+    }
+
+    public int dueForecast(int days) {
+        // TODO:...
+        return 0;
+    }
+
     @Consts.CARD_QUEUE
     public abstract int countIdx(Card card);
     public abstract int answerButtons(Card card);
