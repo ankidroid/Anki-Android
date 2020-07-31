@@ -368,9 +368,9 @@ public class SchedV2 extends AbstractSched {
 
     // sub-day learning
     protected boolean _fillLrn() {
-        return _fillLrn(mTime.intTime() + mCol.getConf().getLong("collapseTime"));
+        return _fillLrn(mTime.intTime() + mCol.getConf().getLong("collapseTime"), "queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW);
     }
-    protected boolean _fillLrn(long cutoff) {
+    protected boolean _fillLrn(long cutoff, String queueQuery) {
         if (mLrnCount == 0) {
             return false;
         }
@@ -388,7 +388,7 @@ public class SchedV2 extends AbstractSched {
              * required when the card is reviewed.
              */
             cur = mCol.getDb().getDatabase().query(
-                    "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ? AND id != ? LIMIT ?",
+                    "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND " + queueQuery + " AND due < ? AND id != ? LIMIT ?",
                     new Object[] { cutoff, currentCardId(), mReportLimit});
             while (cur.moveToNext()) {
                 mLrnQueue.add(new LrnCard(cur.getLong(0), cur.getLong(1)));
