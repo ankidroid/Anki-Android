@@ -89,6 +89,7 @@ public abstract class AbstractSched {
 
     /** Maximal number of cards to show in card counts. Need to be changed to 1000 when doing sanity check with ankiweb.*/
     protected int mReportLimit;
+    protected int mQueueLimit;
 
 
 
