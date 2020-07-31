@@ -254,10 +254,7 @@ public abstract class AbstractSched {
         return tot;
     }
 
-
-    /**
-     * @param undoneCard a card undone, send back to the reviewer.*/
-    public abstract void deferReset(Card undoneCard);
+    protected abstract boolean _fillRev(boolean allowSibling);
     public abstract void answerCard(Card card, int ease);
     public abstract int[] counts();
     public abstract int[] counts(Card card);
