@@ -435,7 +435,23 @@ public abstract class AbstractSched {
 
     protected abstract boolean _fillRev(boolean allowSibling);
     public abstract void answerCard(Card card, @Consts.BUTTON_TYPE int ease);
-    public abstract int[] counts();
+
+
+    /**
+     * Number of new cards, review cards and cards in learning, ignoring `card`
+     */
+    public int[] counts() {
+        if (!mHaveQueues) {
+            reset();
+        }
+        return new int[] {mNewCount, mLrnCount, mRevCount};
+    }
+
+
+    /**
+     * Number of new cards, review cards and cards in learning, ignoring `card`
+     *
+     * If card is in learning, counts change differently in V1 and V2. It counts steps or number of cards. */
     public abstract int[] counts(Card card);
     /**
      * Return counts over next DAYS. Includes today.
@@ -449,6 +465,7 @@ public abstract class AbstractSched {
         return 0;
     }
 
+    /** In which element of the array counts() this card should be sorted. In V2, there are two kinds of queue going to lrn count */
     @Consts.CARD_QUEUE
     public abstract int countIdx(Card card);
     public abstract int answerButtons(Card card);

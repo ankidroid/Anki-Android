@@ -200,14 +200,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public int[] counts() {
-        if (!mHaveQueues) {
-            reset();
-        }
-        return new int[] {mNewCount, mLrnCount, mRevCount};
-    }
-
-
     public int[] counts(@NonNull Card card) {
         int[] counts = counts();
         int idx = countIdx(card);
