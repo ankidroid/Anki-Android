@@ -124,6 +124,8 @@ public abstract class AbstractSched {
     public long mDayCutoff;
 
 
+    protected boolean mHaveCustomStudy = true;
+
     // Not in libanki
     protected WeakReference<Activity> mContextReference;
 
