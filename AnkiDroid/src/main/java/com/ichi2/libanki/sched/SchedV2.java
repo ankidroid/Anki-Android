@@ -477,7 +477,7 @@ public class SchedV2 extends AbstractSched {
             int rlim = _deckRevLimitSingle(deck, plim);
             int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
             // save to list
-            data.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            data.add(new DeckDueTreeNode(mCol, deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
             // add deck as a parent
             lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
         }

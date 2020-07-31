@@ -34,9 +34,9 @@ import android.widget.TextView;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.sched.AbstractSched;
 
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.sched.DeckDueTreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     public static final double SELECTED_DECK_ALPHA_AGAINST_BACKGROUND = 0.45;
 
     private LayoutInflater mLayoutInflater;
-    private List<AbstractSched.DeckDueTreeNode> mDeckList;
+    private List<DeckDueTreeNode> mDeckList;
     private int mZeroCountColor;
     private int mNewCountColor;
     private int mLearnCountColor;
@@ -150,9 +150,9 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
 
     /**
-     * Consume a list of {@link AbstractSched.DeckDueTreeNode}s to render a new deck list.
+     * Consume a list of {@link DeckDueTreeNode}s to render a new deck list.
      */
-    public void buildDeckList(List<AbstractSched.DeckDueTreeNode> nodes, Collection col) {
+    public void buildDeckList(List<DeckDueTreeNode> nodes, Collection col) {
         mCol = col;
         mDeckList.clear();
         mNew = mLrn = mRev = 0;
@@ -172,7 +172,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Update views for this node
-        AbstractSched.DeckDueTreeNode node = mDeckList.get(position);
+        DeckDueTreeNode node = mDeckList.get(position);
         // Set the expander icon and padding according to whether or not there are any subdecks
         RelativeLayout deckLayout = holder.deckLayout;
         int rightPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_right_padding);
@@ -238,7 +238,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     }
 
 
-    private boolean isCurrentlySelectedDeck(AbstractSched.DeckDueTreeNode node) {
+    private boolean isCurrentlySelectedDeck(DeckDueTreeNode node) {
         return node.getDid() == mCol.getDecks().current().optLong("id");
     }
 
@@ -249,7 +249,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     }
 
 
-    private void setDeckExpander(ImageButton expander, ImageButton indent, AbstractSched.DeckDueTreeNode node){
+    private void setDeckExpander(ImageButton expander, ImageButton indent, DeckDueTreeNode node){
         boolean collapsed = mCol.getDecks().get(node.getDid()).optBoolean("collapsed", false);
         // Apply the correct expand/collapse drawable
         if (collapsed) {
@@ -267,8 +267,8 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     }
 
 
-    private void processNodes(List<AbstractSched.DeckDueTreeNode> nodes) {
-        for (AbstractSched.DeckDueTreeNode node : nodes) {
+    private void processNodes(List<DeckDueTreeNode> nodes) {
+        for (DeckDueTreeNode node : nodes) {
             // If the default deck is empty, hide it by not adding it to the deck list.
             // We don't hide it if it's the only deck or if it has sub-decks.
             if (node.getDid() == 1 && nodes.size() > 1 && !node.hasChildren()) {
@@ -327,7 +327,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         return mNew + mLrn + mRev;
     }
 
-    public List<AbstractSched.DeckDueTreeNode> getDeckList() {
+    public List<DeckDueTreeNode> getDeckList() {
         return mDeckList;
     }
 }

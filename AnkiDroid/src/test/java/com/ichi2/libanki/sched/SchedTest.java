@@ -31,10 +31,11 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.sched.AbstractSched.DeckDueTreeNode;
+import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -169,8 +170,8 @@ public class SchedTest extends RobolectricTest {
         }
         getCol().getSched().deckDueTree();
         AbstractSched sched = getCol().getSched();
-        List<AbstractSched.DeckDueTreeNode> tree = sched.deckDueTree();
-        assertEquals("Tree has not the expected structure", SchedV2Test.expectedTree(sched, false), tree);
+        List<DeckDueTreeNode> tree = sched.deckDueTree();
+        Assert.assertEquals("Tree has not the expected structure", SchedV2Test.expectedTree(getCol(), false), tree);
 
     }
 
@@ -1226,14 +1227,14 @@ public class SchedTest extends RobolectricTest {
         col.addNote(note);
         col.reset();
         assertEquals(5, col.getDecks().allSortedNames().size());
-        AbstractSched.DeckDueTreeNode tree = col.getSched().deckDueTree().get(0);
+        DeckDueTreeNode tree = col.getSched().deckDueTree().get(0);
         assertEquals("Default", tree.getLastDeckNameComponent());
         // sum of child and parent
         assertEquals(1, tree.getDid());
         assertEquals(1, tree.getRevCount());
         assertEquals(1, tree.getNewCount());
         // child count is just review
-        AbstractSched.DeckDueTreeNode child = tree.getChildren().get(0);
+        DeckDueTreeNode child = tree.getChildren().get(0);
         assertEquals("1", child.getLastDeckNameComponent());
         assertEquals(default1, child.getDid());
         assertEquals(1, child.getRevCount());
