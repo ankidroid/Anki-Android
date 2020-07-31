@@ -1998,13 +1998,6 @@ public class SchedV2 extends AbstractSched {
         mLrnQueue.add(idx, new LrnCard(due, id));
     }
 
-
-    public boolean leechActionSuspend(Card card) {
-        JSONObject conf;
-        conf = _cardConf(card).getJSONObject("lapse");
-        return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
-    }
-
     /** End #5666 */
     public void discardCurrentCard() {
         mCurrentCard = null;

@@ -1580,12 +1580,4 @@ public class Sched extends SchedV2 {
         }
         mLrnQueue.add(idx, new LrnCard(due, id));
     }
-
-
-    @Override
-    public boolean leechActionSuspend(Card card) {
-        JSONObject conf;
-        conf = _cardConf(card).getJSONObject("lapse");
-        return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
-    }
 }

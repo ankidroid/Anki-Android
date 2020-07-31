@@ -968,7 +968,13 @@ public abstract class AbstractSched {
      * The difference between both scheduler appears for cards in learning. In sched v1, the number of steps is counted.
      * In v2, the number of cards is counted*/
     public abstract void decrementCounts(Card card);
-    public abstract boolean leechActionSuspend(Card card);
+
+
+    public boolean leechActionSuspend(Card card) {
+        JSONObject conf;
+        conf = _cardConf(card).getJSONObject("lapse");
+        return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
+    }
 
 
     public void setContext(WeakReference<Activity> contextReference) {
