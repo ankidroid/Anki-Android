@@ -1255,7 +1255,29 @@ public abstract class AbstractSched {
         return mCol.getDecks().confForDid(card.getODid()).getJSONObject("rev");
     }
 
-    protected abstract JSONObject _newConf(Card card);
+
+    /** A conf object for this card. If in filtered deck, assume this delay.*/
+    protected JSONObject _newConf(Card card) {
+        DeckConfig conf = _cardConf(card);
+        // normal deck
+        if (card.getODid() == 0) {
+            return conf.getJSONObject("new");
+        }
+        // dynamic deck; override some attributes, use original deck for others
+        DeckConfig oconf = mCol.getDecks().confForDid(card.getODid());
+        JSONObject dict = new JSONObject();
+        // original deck
+        dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
+        dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
+        dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true));
+        dict.put("delays", _newConfDelay(card));
+        // overrides
+        dict.put("separate", conf.getBoolean("separate"));
+        dict.put("order", Consts.NEW_CARDS_DUE);
+        dict.put("perDay", mReportLimit);
+        return dict;
+    }
+
 
     /**
      * Sibling spacing
@@ -1349,4 +1371,7 @@ public abstract class AbstractSched {
         List<Long> currentCardParentsDid = mCurrentCardParentsDid;
         return currentCard != null && currentCard.getQueue() == queue && currentCardParentsDid != null && currentCardParentsDid.contains(did);
     }
+
+    /** A conf object for this card. The delay for cards in filtered deck is the only difference between V1 and V2 */
+    protected abstract JSONArray _newConfDelay(Card card);
 }

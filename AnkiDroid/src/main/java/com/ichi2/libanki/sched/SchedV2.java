@@ -1237,25 +1237,10 @@ public class SchedV2 extends AbstractSched {
      */
 
 
-    protected JSONObject _newConf(Card card) {
-        DeckConfig conf = _cardConf(card);
-        // normal deck
-        if (card.getODid() == 0) {
-            return conf.getJSONObject("new");
-        }
-        // dynamic deck; override some attributes, use original deck for others
-        DeckConfig oconf = mCol.getDecks().confForDid(card.getODid());
-        JSONObject dict = new JSONObject();
-        // original deck
-        dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
-        dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
-        dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true));
-        dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"));
-        // overrides
-        dict.put("separate", conf.getBoolean("separate"));
-        dict.put("order", Consts.NEW_CARDS_DUE);
-        dict.put("perDay", mReportLimit);
-        return dict;
+
+    @Override
+    protected JSONArray _newConfDelay(Card card) {
+        return  mCol.getDecks().confForDid(card.getODid()).getJSONObject("new").getJSONArray("delays");
     }
 
 
