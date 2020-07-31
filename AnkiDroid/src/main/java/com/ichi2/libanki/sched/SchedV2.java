@@ -95,8 +95,6 @@ public class SchedV2 extends AbstractSched {
     protected int mRevCount;
 
     private int mNewCardModulus;
-    // When an action is undone, reset counts need to take the card into account
-    private Card mUndidCard = null;
 
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
