@@ -2003,28 +2003,4 @@ public class SchedV2 extends AbstractSched {
         mCurrentCard = null;
         mCurrentCardParentsDid = null;
     }
-
-    /**
-     * This imitate the action of the method answerCard, except that it does not change the state of any card.
-     *
-     * It means in particular that: + it removes the siblings of card from all queues + change the next card if required
-     * it also set variables, so that when querying the next card, the current card can be taken into account.
-     */
-    public void setCurrentCard(@NonNull Card card) {
-        mCurrentCard = card;
-        long did = card.getDid();
-        List<Deck> parents = mCol.getDecks().parents(did);
-        List<Long> currentCardParentsDid = new ArrayList<>(parents.size() + 1);
-        for (JSONObject parent : parents) {
-            currentCardParentsDid.add(parent.getLong("id"));
-        }
-        currentCardParentsDid.add(did);
-        // We set the member only once it is filled, to ensure we avoid null pointer exception if `discardCurrentCard`
-        // were called during `setCurrentCard`.
-        mCurrentCardParentsDid = currentCardParentsDid;
-        _burySiblings(card);
-        // if current card is next card or in the queue
-        mRevQueue.remove(card.getId());
-        mNewQueue.remove(card.getId());
-    }
 }
