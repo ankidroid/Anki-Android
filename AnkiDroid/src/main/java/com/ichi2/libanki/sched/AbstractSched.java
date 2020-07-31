@@ -860,7 +860,12 @@ public abstract class AbstractSched {
 
 
     public abstract void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift);
-    public abstract void randomizeCards(long did);
+
+
+    public void randomizeCards(long did) {
+        List<Long> cids = mCol.getDb().queryLongList("select id from cards where did = ?", did);
+        sortCards(Utils.toPrimitive(cids), 1, 1, true, false);
+    }
 
 
     public void orderCards(long did) {
