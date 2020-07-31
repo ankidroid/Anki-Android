@@ -1811,30 +1811,6 @@ public class SchedV2 extends AbstractSched {
      * ***************************************
      */
 
-    /**
-     * Return the next interval for a card and ease as a string.
-     *
-     * For a given card and ease, this returns a string that shows when the card will be shown again when the
-     * specific ease button (AGAIN, GOOD etc.) is touched. This uses unit symbols like “s” rather than names
-     * (“second”), like Anki desktop.
-     *
-     * @param context The app context, used for localization
-     * @param card The card being reviewed
-     * @param ease The button number (easy, good etc.)
-     * @return A string like “1 min” or “1.7 mo”
-     */
-    public String nextIvlStr(Context context, Card card, @Consts.BUTTON_TYPE int ease) {
-        long ivl = nextIvl(card, ease);
-        if (ivl == 0) {
-            return context.getString(R.string.sched_end);
-        }
-        String s = Utils.timeQuantityNextIvl(context, ivl);
-        if (ivl < mCol.getConf().getInt("collapseTime")) {
-            s = context.getString(R.string.less_than_time, s);
-        }
-        return s;
-    }
-
 
     /**
      * Return the next interval for CARD, in seconds.
