@@ -197,6 +197,11 @@ public abstract class AbstractSched {
     }
 
 
+    protected int _deckNewLimit(long did) {
+        return _deckNewLimit(did, null);
+    }
+
+
     protected int _deckNewLimit(long did, LimitMethod fn) {
         if (fn == null) {
             fn = (g -> _deckNewLimitSingle(g));
