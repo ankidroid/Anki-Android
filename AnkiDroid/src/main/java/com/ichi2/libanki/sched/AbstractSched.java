@@ -148,6 +148,8 @@ public abstract class AbstractSched {
 
     // In sched V2 only, the lrn cutoff is updated
     protected abstract void _resetLrn();
+    protected abstract void _updateCutoff();
+
 
     protected void _resetNewCount() {
         mNewCount = _walkingCount((Deck g) -> _deckNewLimitSingle(g),
