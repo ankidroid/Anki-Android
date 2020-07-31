@@ -858,6 +858,9 @@ public class SchedV2 extends AbstractSched {
         mLrnDids = mCol.getDecks().active();
     }
 
+    protected long cutoff() {
+        return mTime.intTime() + mCol.getConf().getLong("collapseTime");
+    }
 
     // sub-day learning
     protected boolean _fillLrn() {
@@ -867,7 +870,7 @@ public class SchedV2 extends AbstractSched {
         if (!mLrnQueue.isEmpty()) {
             return true;
         }
-        long cutoff = mTime.intTime() + mCol.getConf().getLong("collapseTime");
+        long cutoff = cutoff();
         Cursor cur = null;
         mLrnQueue.clear();
         try {

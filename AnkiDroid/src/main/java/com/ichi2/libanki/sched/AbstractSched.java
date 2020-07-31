@@ -195,6 +195,8 @@ public abstract class AbstractSched {
     public abstract String getName();
     public abstract int getToday();
     public abstract void setToday(int today);
+    /** Day cutoff using mTime in sched v2.*/
+    protected abstract long cutoff();
     public abstract long getDayCutoff();
     public abstract int getReps();
     public abstract void setReps(int reps);

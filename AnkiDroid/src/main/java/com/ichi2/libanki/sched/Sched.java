@@ -356,6 +356,9 @@ public class Sched extends SchedV2 {
         mLrnDids = mCol.getDecks().active();
     }
 
+    protected long cutoff() {
+        return mDayCutoff;
+    }
 
     // sub-day learning
     @Override
@@ -366,6 +369,7 @@ public class Sched extends SchedV2 {
         if (!mLrnQueue.isEmpty()) {
             return true;
         }
+        long cutoff = cutoff();
         Cursor cur = null;
         mLrnQueue.clear();
         SupportSQLiteDatabase db = mCol.getDb().getDatabase();
@@ -380,7 +384,7 @@ public class Sched extends SchedV2 {
              */
             cur = db.query(
                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
-                           new Object[]{mDayCutoff, currentCardId(), mReportLimit});
+                           new Object[]{cutoff, currentCardId(), mReportLimit});
             while (cur.moveToNext()) {
                 mLrnQueue.add(new LrnCard(cur.getLong(0), cur.getLong(1) ));
             }
