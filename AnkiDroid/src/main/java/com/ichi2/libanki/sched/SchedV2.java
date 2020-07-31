@@ -515,15 +515,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected Card _getLrnDayCard() {
-        if (_fillLrnDay()) {
-            // mLrnCount -= 1; see decrementCounts()
-            return mCol.getCard(mLrnDayQueue.remove());
-        }
-        return null;
-    }
-
-
     protected void _answerLrnCard(Card card, int ease) {
         JSONObject conf = _lrnConf(card);
         int type;
