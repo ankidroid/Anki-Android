@@ -889,13 +889,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public int totalRevForCurrentDeck() {
-        return mCol.getDb().queryScalar(
-                "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
-                mToday, mReportLimit);
-    }
-
-
     /**
      * Answering a review card **************************************************
      * *********************************************

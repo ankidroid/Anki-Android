@@ -628,7 +628,13 @@ public abstract class AbstractSched {
                 mReportLimit);
     }
 
-    public abstract int totalRevForCurrentDeck();
+
+    public int totalRevForCurrentDeck() {
+        return mCol.getDb().queryScalar(
+                "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
+                mToday, mReportLimit);
+    }
+
     public abstract Pair<Integer, Integer> _fuzzIvlRange(int ivl);
     /** Rebuild a dynamic deck. */
     public abstract void rebuildDyn();
