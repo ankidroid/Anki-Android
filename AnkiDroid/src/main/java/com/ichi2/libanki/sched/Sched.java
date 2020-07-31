@@ -947,12 +947,6 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    public void emptyDyn(long did) {
-        emptyDyn(did, null);
-    }
-
-
-    @Override
     public void emptyDyn(long did, String lim) {
         if (lim == null) {
             lim = "did = " + did;

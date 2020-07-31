@@ -1127,11 +1127,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void emptyDyn(long did) {
-        emptyDyn(did, null);
-    }
-
-
     public void emptyDyn(long did, String lim) {
         if (lim == null) {
             lim = "did = " + did;
