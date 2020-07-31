@@ -1320,11 +1320,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public String _deckLimit() {
-        return Utils.ids2str(mCol.getDecks().active());
-    }
-
-
     private boolean _previewingCard(Card card) {
         DeckConfig conf = _cardConf(card);
 

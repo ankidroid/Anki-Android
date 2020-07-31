@@ -679,7 +679,11 @@ public abstract class AbstractSched {
     }
 
 
-    public abstract String _deckLimit();
+    public String _deckLimit() {
+        return Utils.ids2str(mCol.getDecks().active());
+    }
+
+
     public abstract void _checkDay();
     public abstract CharSequence finishedMsg(Context context);
     public abstract String _nextDueMsg(Context context);
