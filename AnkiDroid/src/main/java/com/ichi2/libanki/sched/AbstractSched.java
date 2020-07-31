@@ -85,6 +85,10 @@ public abstract class AbstractSched {
     protected Collection mCol;
 
 
+    // Not in libanki
+    protected WeakReference<Activity> mContextReference;
+
+
     protected static class LrnCard implements Comparable<LrnCard> {
         private final long mCid;
         private final long mDue;
@@ -491,7 +495,13 @@ public abstract class AbstractSched {
      * In v2, the number of cards is counted*/
     public abstract void decrementCounts(Card card);
     public abstract boolean leechActionSuspend(Card card);
-    public abstract void setContext(WeakReference<Activity> contextReference);
+
+
+    public void setContext(WeakReference<Activity> contextReference) {
+        mContextReference = contextReference;
+    }
+
+
     public abstract int[] recalculateCounts();
     public abstract void setReportLimit(int reportLimit);
 

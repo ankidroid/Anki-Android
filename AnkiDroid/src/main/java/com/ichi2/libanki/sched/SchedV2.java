@@ -93,8 +93,6 @@ public class SchedV2 extends AbstractSched {
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
 
-    // Not in libanki
-    protected WeakReference<Activity> mContextReference;
 
     /**
      * The card currently being reviewed.
@@ -2542,11 +2540,6 @@ public class SchedV2 extends AbstractSched {
         JSONObject conf;
         conf = _cardConf(card).getJSONObject("lapse");
         return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
-    }
-
-
-    public void setContext(WeakReference<Activity> contextReference) {
-        mContextReference = contextReference;
     }
 
     /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
