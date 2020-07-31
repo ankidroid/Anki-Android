@@ -1089,11 +1089,6 @@ public class Sched extends SchedV2 {
      * Tools ******************************************************************** ***************************
      */
 
-    @Override
-    public DeckConfig _cardConf(Card card) {
-        return mCol.getDecks().confForDid(card.getDid());
-    }
-
 
     @Override
     protected JSONObject _newConf(Card card) {
