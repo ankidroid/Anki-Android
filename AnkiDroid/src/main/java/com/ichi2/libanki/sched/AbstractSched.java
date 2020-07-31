@@ -193,7 +193,11 @@ public abstract class AbstractSched {
     protected abstract void _updateCutoff();
 
 
-    protected boolean _fillNew(boolean allowSibling) {
+    protected boolean _fillNew() {
+        return _fillNew(false);
+    }
+
+    private boolean _fillNew(boolean allowSibling) {
         if (!mNewQueue.isEmpty()) {
             return true;
         }
