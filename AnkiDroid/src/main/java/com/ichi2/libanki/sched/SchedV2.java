@@ -2027,54 +2027,6 @@ public class SchedV2 extends AbstractSched {
         buryCards(cids);
     }
 
-    /**
-     * Sibling spacing
-     * ********************
-     */
-
-    protected void _burySiblings(Card card) {
-        ArrayList<Long> toBury = new ArrayList<>();
-        JSONObject nconf = _newConf(card);
-        boolean buryNew = nconf.optBoolean("bury", true);
-        JSONObject rconf = _revConf(card);
-        boolean buryRev = rconf.optBoolean("bury", true);
-        // loop through and remove from queues
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase().query(
-                    "select id, queue from cards where nid=? and id!=? "+
-                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=" + Consts.QUEUE_TYPE_REV + " and due<=?))",
-                    new Object[] {card.getNid(), card.getId(), mToday});
-            while (cur.moveToNext()) {
-                long cid = cur.getLong(0);
-                int queue = cur.getInt(1);
-                List<Long> queue_object;
-                if (queue == Consts.QUEUE_TYPE_REV) {
-                    queue_object = mRevQueue;
-                    if (buryRev) {
-                        toBury.add(cid);
-                    }
-                } else {
-                    queue_object = mNewQueue;
-                    if (buryNew) {
-                        toBury.add(cid);
-                    }
-                }
-                // even if burying disabled, we still discard to give
-                // same-day spacing
-                queue_object.remove(cid);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
-        }
-        // then bury
-        if (!toBury.isEmpty()) {
-            buryCards(Utils.collection2Array(toBury),false);
-        }
-    }
-
 
     /**
      * Resetting **************************************************************** *******************************
