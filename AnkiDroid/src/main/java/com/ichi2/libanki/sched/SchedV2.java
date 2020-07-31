@@ -148,22 +148,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void reset() {
-        _updateCutoff();
-        _resetLrn();
-        _resetRev();
-        _resetNew();
-        mHaveQueues = true;
-        decrementCounts(mUndidCard);
-        if (mUndidCard == null) {
-            discardCurrentCard();
-        } else {
-            setCurrentCard(mUndidCard);
-        }
-        mUndidCard = null;
-    }
-
-
     public void answerCard(Card card, @Consts.BUTTON_TYPE int ease) {
         mCol.log();
         discardCurrentCard();
