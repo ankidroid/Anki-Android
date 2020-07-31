@@ -1738,12 +1738,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void orderCards(long did) {
-        List<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? ORDER BY nid", did);
-        sortCards(Utils.toPrimitive(cids), 1, 1, false, false);
-    }
-
-
     public void resortConf(DeckConfig conf) {
         List<Long> dids = mCol.getDecks().didsForConf(conf);
         for (long did : dids) {
