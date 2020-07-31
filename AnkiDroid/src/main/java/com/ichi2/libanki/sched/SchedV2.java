@@ -493,11 +493,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected Card _getLrnCard() {
-        return _getLrnCard(false);
-    }
-
-
     @Override
     protected Card _getLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
