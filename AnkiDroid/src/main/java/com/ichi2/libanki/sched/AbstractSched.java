@@ -488,6 +488,11 @@ public abstract class AbstractSched {
      * @param reload Force rebuild of estimator rates using the revlog.
      */
     public abstract int eta(int[] counts, boolean reload);
+
+    /**
+     * This is used when card is currently in the reviewer, to adapt the counts by removing this card from it.
+     * The difference between both scheduler appears for cards in learning. In sched v1, the number of steps is counted.
+     * In v2, the number of cards is counted*/
     public abstract void decrementCounts(Card card);
     public abstract boolean leechActionSuspend(Card card);
     public abstract void setContext(WeakReference<Activity> contextReference);

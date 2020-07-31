@@ -2509,7 +2509,8 @@ public class SchedV2 extends AbstractSched {
         if (discardCard == null) {
             return;
         }
-        switch (discardCard.getQueue()) {
+        @Consts.CARD_QUEUE int type = discardCard.getQueue();
+        switch (type) {
         case Consts.QUEUE_TYPE_NEW:
             mNewCount--;
             break;
