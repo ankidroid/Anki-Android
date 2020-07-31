@@ -368,13 +368,15 @@ public class SchedV2 extends AbstractSched {
 
     // sub-day learning
     protected boolean _fillLrn() {
+        return _fillLrn(mTime.intTime() + mCol.getConf().getLong("collapseTime"));
+    }
+    protected boolean _fillLrn(long cutoff) {
         if (mLrnCount == 0) {
             return false;
         }
         if (!mLrnQueue.isEmpty()) {
             return true;
         }
-        long cutoff = mTime.intTime() + mCol.getConf().getLong("collapseTime");
         Cursor cur = null;
         mLrnQueue.clear();
         try {

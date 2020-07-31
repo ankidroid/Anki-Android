@@ -313,6 +313,9 @@ public class Sched extends SchedV2 {
     // sub-day learning
     @Override
     protected boolean _fillLrn() {
+        return _fillLrn(mDayCutoff);
+    }
+    protected boolean _fillLrn(long cutoff) {
         if (mLrnCount == 0) {
             return false;
         }
@@ -333,7 +336,7 @@ public class Sched extends SchedV2 {
              */
             cur = db.query(
                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
-                           new Object[]{mDayCutoff, currentCardId(), mReportLimit});
+                           new Object[]{cutoff, currentCardId(), mReportLimit});
             while (cur.moveToNext()) {
                 mLrnQueue.add(new LrnCard(cur.getLong(0), cur.getLong(1) ));
             }
