@@ -132,7 +132,13 @@ public abstract class AbstractSched {
 
     public abstract void reset();
 
+    protected void _resetNewCount() {
+        mNewCount = _walkingCount((Deck g) -> _deckNewLimitSingle(g),
+                (long did, int lim) -> _cntFnNew(did, lim));
+    }
+
     protected abstract int _cntFnNew(long did, int lim);
+
     /** Ensures that reset is executed before the next card is selected
      *  @param undidCard a card undone, send back to the reviewer.*/
     public void deferReset(Card undidCard){

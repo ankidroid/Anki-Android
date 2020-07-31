@@ -404,11 +404,6 @@ public class SchedV2 extends AbstractSched {
         }
     }
 
-    protected void _resetNewCount() {
-        mNewCount = _walkingCount((Deck g) -> _deckNewLimitSingle(g),
-                                  (long did, int lim) -> _cntFnNew(did, lim));
-    }
-
 
     // Used as an argument for _walkingCount() in _resetNewCount() above
     @SuppressWarnings("unused")
