@@ -255,6 +255,40 @@ public abstract class AbstractSched {
     protected abstract void _resetRevCount();
 
 
+    //In v2, two kinds of queue for learning, and cutoff uses mTime
+    protected abstract boolean _fillLrn();
+    protected boolean _fillLrn(long cutoff, String queueQuery) {
+        if (mLrnCount == 0) {
+            return false;
+        }
+        if (!mLrnQueue.isEmpty()) {
+            return true;
+        }
+        Cursor cur = null;
+        mLrnQueue.clear();
+        try {
+            /* Difference with upstream: Current card can't come in the queue.
+             *
+             * In standard usage, a card is not requested before the previous card is marked as reviewed. However, if we
+             * decide to query a second card sooner, we don't want to get the same card a second time. This simulate
+             * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
+             * required when the card is reviewed.
+             */
+            cur = mCol.getDb().getDatabase().query(
+                    "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND " + queueQuery + " AND due < ? AND id != ? LIMIT ?",
+                    new Object[] { cutoff, currentCardId(), mReportLimit});
+            while (cur.moveToNext()) {
+                mLrnQueue.add(new LrnCard(cur.getLong(0), cur.getLong(1)));
+            }
+            // as it arrives sorted by did first, we need to sort it
+            Collections.sort(mLrnQueue);
+            return !mLrnQueue.isEmpty();
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+    }
     // In sched V2 only, the lrn cutoff is updated
     protected abstract void _resetLrn();
     protected abstract void _updateCutoff();
