@@ -445,27 +445,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected int _deckNewLimit(long did, LimitMethod fn) {
-        if (fn == null) {
-            fn = (g -> _deckNewLimitSingle(g));
-        }
-        List<Deck> decks = mCol.getDecks().parents(did);
-        decks.add(mCol.getDecks().get(did));
-        int lim = -1;
-        // for the deck and each of its parents
-        int rem = 0;
-        for (Deck g : decks) {
-            rem = fn.operation(g);
-            if (lim == -1) {
-                lim = rem;
-            } else {
-                lim = Math.min(rem, lim);
-            }
-        }
-        return lim;
-    }
-
-
     /** New count for a single deck. */
     public int _newForDeck(long did, int lim) {
         if (lim == 0) {
