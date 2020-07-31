@@ -1418,12 +1418,6 @@ public class Sched extends SchedV2 {
      */
 
 
-    @Override
-    public int eta(int[] counts) {
-        return eta(counts, true);
-    }
-
-
     /**
      * Return an estimate, in minutes, for how long it will take to complete all the reps in {@code counts}.
      *
