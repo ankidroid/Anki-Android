@@ -374,8 +374,7 @@ public class SchedV2 extends AbstractSched {
         if (!mLrnQueue.isEmpty()) {
             return true;
         }
-        long cutoff = 0;
-        cutoff = mTime.intTime() + mCol.getConf().getLong("collapseTime");
+        long cutoff = mTime.intTime() + mCol.getConf().getLong("collapseTime");
         Cursor cur = null;
         mLrnQueue.clear();
         try {
