@@ -106,6 +106,8 @@ public abstract class AbstractSched {
      * Return the next interval for CARD, in seconds.
      */
     public abstract long nextIvl(Card card, int ease);
+
+    protected abstract String _restoreQueueSnippet();
     /**
      * Suspend cards.
      */
