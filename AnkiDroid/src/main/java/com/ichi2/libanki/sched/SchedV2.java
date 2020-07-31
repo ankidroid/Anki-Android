@@ -377,60 +377,6 @@ public class SchedV2 extends AbstractSched {
         return _fillNew(false);
     }
 
-    private boolean _fillNew(boolean allowSibling) {
-        if (!mNewQueue.isEmpty()) {
-            return true;
-        }
-        if (mNewCount == 0) {
-            return false;
-        }
-        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
-        while (!mNewDids.isEmpty()) {
-            long did = mNewDids.getFirst();
-            int lim = Math.min(mQueueLimit, _deckNewLimit(did));
-            Cursor cur = null;
-            if (lim != 0) {
-                mNewQueue.clear();
-                try {
-                    /* Difference with upstream: we take current card into account.
-                     *
-                     * When current card is answered, the card is not due anymore, so does not belong to the queue.
-                     * Furthermore, _burySiblings ensure that the siblings of the current cards are removed from the
-                     * queue to ensure same day spacing. We simulate this action by ensuring that those siblings are not
-                     * filled, except if we know there are cards and we didn't find any non-sibling card. This way, the
-                     * queue is not empty if it should not be empty (important for the conditional belows), but the
-                     * front of the queue contains distinct card.
-                 */
-                    // fill the queue with the current did
-                    String idName = (allowSibling) ? "id": "nid";
-                    long id = (allowSibling) ? currentCardId(): currentCardNid();
-                    cur = db.query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?",
-                                   new Object[]{did, id, lim});
-                    while (cur.moveToNext()) {
-                        mNewQueue.add(cur.getLong(0));
-                    }
-                } finally {
-                    if (cur != null && !cur.isClosed()) {
-                        cur.close();
-                    }
-                }
-                if (!mNewQueue.isEmpty()) {
-                    // Note: libanki reverses mNewQueue and returns the last element in _getNewCard().
-                    // AnkiDroid differs by leaving the queue intact and returning the *first* element
-                    // in _getNewCard().
-                    return true;
-                }
-            }
-            // nothing left in the deck; move to next
-            mNewDids.remove();
-        }
-        // if we didn't get a card, since the count is non-zero, we
-        // need to check again for any cards that were removed
-        // from the queue but not buried
-        _resetNew(mCurrentCard);
-        return _fillNew(true);
-    }
-
 
     protected Card _getNewCard() {
         if (_fillNew()) {
