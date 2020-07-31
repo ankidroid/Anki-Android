@@ -1837,11 +1837,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public long getDayCutoff() {
-        return mDayCutoff;
-    }
-
-
     public int getReps(){
         return mReps;
     }
