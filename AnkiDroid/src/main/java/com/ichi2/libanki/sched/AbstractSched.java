@@ -845,7 +845,15 @@ public abstract class AbstractSched {
     /**
      * Completely reset cards for export.
      */
-    public abstract void resetCards(Long[] ids);
+    public void resetCards(Long[] ids) {
+        long[] nonNew = Utils.collection2Array(mCol.getDb().queryLongList(
+                "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")"));
+        mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
+        forgetCards(nonNew);
+        mCol.log((Object[]) ids);
+    }
+
+
     public abstract void sortCards(long[] cids, int start);
     public abstract void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift);
     public abstract void randomizeCards(long did);
