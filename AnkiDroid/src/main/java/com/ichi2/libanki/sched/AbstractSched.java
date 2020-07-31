@@ -433,7 +433,9 @@ public abstract class AbstractSched {
     }
 
 
+    // In V2 we consider two different kind of buried
     public abstract boolean haveBuried();
+
     /**
      * Return the next interval for a card and ease as a string.
      *
