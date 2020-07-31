@@ -1428,34 +1428,6 @@ public class SchedV2 extends AbstractSched {
      */
 
 
-    public String _nextDueMsg(Context context) {
-        StringBuilder sb = new StringBuilder();
-        if (revDue()) {
-            sb.append("\n\n");
-            sb.append(context.getString(R.string.studyoptions_congrats_more_rev));
-        }
-        if (newDue()) {
-            sb.append("\n\n");
-            sb.append(context.getString(R.string.studyoptions_congrats_more_new));
-        }
-        if (haveBuried()) {
-            String now;
-            if (mHaveCustomStudy) {
-                now = " " + context.getString(R.string.sched_unbury_action);
-            } else {
-                now = "";
-            }
-            sb.append("\n\n");
-            sb.append("" + context.getString(R.string.sched_has_buried) + now);
-        }
-        if (mHaveCustomStudy && mCol.getDecks().current().getInt("dyn") == 0) {
-            sb.append("\n\n");
-            sb.append(context.getString(R.string.studyoptions_congrats_custom));
-        }
-        return sb.toString();
-    }
-
-
 
 
     public boolean haveBuriedSiblings() {
