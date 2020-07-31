@@ -1412,13 +1412,6 @@ public class Sched extends SchedV2 {
         return mName;
     }
 
-
-    @Override
-    public int getToday() {
-        return mToday;
-    }
-
-
     @Override
     public void setToday(int today) {
         mToday = today;
