@@ -324,7 +324,6 @@ public class Sched extends SchedV2 {
         }
         Cursor cur = null;
         mLrnQueue.clear();
-        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         try {
             /* Difference with upstream:
              * Current card can't come in the queue.
@@ -334,9 +333,9 @@ public class Sched extends SchedV2 {
              * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
              * required when the card is reviewed.
              */
-            cur = db.query(
-                           "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
-                           new Object[]{cutoff, currentCardId(), mReportLimit});
+            cur = mCol.getDb().getDatabase().query(
+                    "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
+                     new Object[]{cutoff, currentCardId(), mReportLimit});
             while (cur.moveToNext()) {
                 mLrnQueue.add(new LrnCard(cur.getLong(0), cur.getLong(1) ));
             }
