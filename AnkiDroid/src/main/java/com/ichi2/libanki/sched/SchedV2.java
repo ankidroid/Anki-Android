@@ -84,7 +84,6 @@ public class SchedV2 extends AbstractSched {
     private boolean mHaveCustomStudy = true;
 
     protected int mQueueLimit;
-    protected int mReportLimit;
     private int mDynReportLimit;
     protected Integer mToday;
     public long mDayCutoff;
@@ -2550,11 +2549,6 @@ public class SchedV2 extends AbstractSched {
         _resetNewCount();
         _resetRevCount();
         return new int[] { mNewCount, mLrnCount, mRevCount };
-    }
-
-    @Override
-    public void setReportLimit(int reportLimit) {
-        this.mReportLimit = reportLimit;
     }
 
     /** End #5666 */
