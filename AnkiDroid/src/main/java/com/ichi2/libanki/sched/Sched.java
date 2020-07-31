@@ -901,13 +901,6 @@ public class Sched extends SchedV2 {
      * *****************************
      */
 
-    /* Rebuild a dynamic deck. */
-    @Override
-    public void rebuildDyn() {
-        rebuildDyn(0);
-    }
-
-
     @Override
     public List<Long> rebuildDyn(long did) {
         if (did == 0) {

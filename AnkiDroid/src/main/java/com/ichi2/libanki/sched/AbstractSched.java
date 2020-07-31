@@ -655,7 +655,9 @@ public abstract class AbstractSched {
         return new Pair<>(ivl - fuzz, ivl + fuzz);
     }
     /** Rebuild a dynamic deck. */
-    public abstract void rebuildDyn();
+    public void rebuildDyn() {
+        rebuildDyn(0);
+    }
     public abstract List<Long> rebuildDyn(long did);
     public abstract void emptyDyn(long did);
     public abstract void emptyDyn(long did, String lim);
