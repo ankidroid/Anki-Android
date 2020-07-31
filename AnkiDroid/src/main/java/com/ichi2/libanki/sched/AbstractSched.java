@@ -525,4 +525,25 @@ public abstract class AbstractSched {
         mNewQueue.clear();
         _updateNewCardRatio();
     }
+
+
+    /**
+     * @return True if it's time to display a new card when distributing.
+     */
+    protected boolean _timeForNewCard() {
+        if (mNewCount == 0) {
+            return false;
+        }
+        @Consts.NEW_CARD_ORDER int spread;
+        spread = mCol.getConf().getInt("newSpread");
+        if (spread == Consts.NEW_CARDS_LAST) {
+            return false;
+        } else if (spread == Consts.NEW_CARDS_FIRST) {
+            return true;
+        } else if (mNewCardModulus != 0) {
+            return (mReps != 0 && (mReps % mNewCardModulus == 0));
+        } else {
+            return false;
+        }
+    }
 }
