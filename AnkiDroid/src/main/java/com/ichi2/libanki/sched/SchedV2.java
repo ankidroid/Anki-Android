@@ -279,20 +279,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /**
-     * Return counts over next DAYS. Includes today.
-     */
-    public int dueForecast() {
-        return dueForecast(7);
-    }
-
-
-    public int dueForecast(int days) {
-        // TODO:...
-        return 0;
-    }
-
-
     public int countIdx(Card card) {
         if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.getQueue() == Consts.QUEUE_TYPE_PREVIEW) {
             return Consts.QUEUE_TYPE_LRN;
