@@ -401,8 +401,18 @@ public abstract class AbstractSched {
     public abstract void _checkDay();
     public abstract CharSequence finishedMsg(Context context);
     public abstract String _nextDueMsg(Context context);
+
+
     /** true if there are any rev cards due. */
-    public abstract boolean revDue();
+    public boolean revDue() {
+        return mCol.getDb()
+                .queryScalar(
+                        "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
+                                + " LIMIT 1",
+                        mToday) != 0;
+    }
+
+
     /** true if there are any new cards due. */
     public abstract boolean newDue();
     /** true if there are cards in learning, with review due the same
