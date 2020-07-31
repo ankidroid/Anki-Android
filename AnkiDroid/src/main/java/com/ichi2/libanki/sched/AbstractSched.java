@@ -32,6 +32,8 @@ import timber.log.Timber;
 
 
 public abstract class AbstractSched {
+    /** Current day. Encoded as number of day since collection creation time.*/
+    protected Integer mToday;
 
     /** Whether the queues has been computed since last reset/change of selected deck */
     protected boolean mHaveQueues;
