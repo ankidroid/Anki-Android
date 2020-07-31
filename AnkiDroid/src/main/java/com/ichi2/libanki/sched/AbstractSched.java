@@ -468,6 +468,7 @@ public abstract class AbstractSched {
     /** In which element of the array counts() this card should be sorted. In V2, there are two kinds of queue going to lrn count */
     @Consts.CARD_QUEUE
     public abstract int countIdx(Card card);
+    /** Number of buttons to show the user for this card. The number depends of the queue and the scheduler version*/
     public abstract int answerButtons(Card card);
     /**
      * Unbury all buried cards in all decks
