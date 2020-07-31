@@ -412,6 +412,7 @@ public class SchedV2 extends AbstractSched {
 
     // Used as an argument for _walkingCount() in _resetNewCount() above
     @SuppressWarnings("unused")
+    @Override
     protected int _cntFnNew(long did, int lim) {
         return mCol.getDb().queryScalar(
                 "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
