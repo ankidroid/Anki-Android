@@ -1785,11 +1785,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /** true if there are any new cards due. */
-    public boolean newDue() {
-        return mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0;
-    }
-
 
     public boolean haveBuriedSiblings() {
         return haveBuriedSiblings(mCol.getDecks().active());

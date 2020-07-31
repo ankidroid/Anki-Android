@@ -413,7 +413,11 @@ public abstract class AbstractSched {
 
 
     /** true if there are any new cards due. */
-    public abstract boolean newDue();
+    public boolean newDue() {
+        return mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0;
+    }
+
+
     /** true if there are cards in learning, with review due the same
      * day, in the selected decks. */
     public abstract boolean hasCardsTodayAfterStudyAheadLimit();
