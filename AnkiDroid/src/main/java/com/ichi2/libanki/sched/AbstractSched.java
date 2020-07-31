@@ -89,6 +89,17 @@ public abstract class AbstractSched {
 
     /** Maximal number of cards to show in card counts. Need to be changed to 1000 when doing sanity check with ankiweb.*/
     protected int mReportLimit;
+
+
+
+
+    /**
+     * The card currently being reviewed.
+     *
+     * Must not be returned during prefetching (as it is currently shown)
+     */
+    protected Card mCurrentCard;
+
     /**
      * Pop the next card from the queue. null if finished.
      */
