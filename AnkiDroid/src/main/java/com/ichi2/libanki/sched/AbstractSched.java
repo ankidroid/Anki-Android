@@ -15,6 +15,7 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Collection;
+import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -112,7 +113,21 @@ public abstract class AbstractSched {
      */
     public abstract void unburyCards();
     public abstract void unburyCardsForDeck();
-    public abstract void _updateStats(Card card, String type, long cnt);
+
+
+    public void _updateStats(Card card, String type, long cnt) {
+        String key = type + "Today";
+        long did = card.getDid();
+        List<Deck> list = mCol.getDecks().parents(did);
+        list.add(mCol.getDecks().get(did));
+        for (Deck g : list) {
+            JSONArray a = g.getJSONArray(key);
+            // add
+            a.put(1, a.getLong(1) + cnt);
+            mCol.getDecks().save(g);
+        }
+    }
+
     public abstract void extendLimits(int newc, int rev);
     /**
      * Returns [deckname, did, rev, lrn, new]

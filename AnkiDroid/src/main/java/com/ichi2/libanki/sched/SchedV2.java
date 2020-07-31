@@ -306,18 +306,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void _updateStats(Card card, String type, long cnt) {
-        String key = type + "Today";
-        long did = card.getDid();
-        List<Deck> list = mCol.getDecks().parents(did);
-        list.add(mCol.getDecks().get(did));
-        for (Deck g : list) {
-            JSONArray a = g.getJSONArray(key);
-            // add
-            a.put(1, a.getLong(1) + cnt);
-            mCol.getDecks().save(g);
-        }
-    }
+
 
 
     public void extendLimits(int newc, int rev) {
