@@ -1628,17 +1628,6 @@ public class SchedV2 extends AbstractSched {
      * Resetting **************************************************************** *******************************
      */
 
-    /** Put cards at the end of the new queue. */
-    public void forgetCards(long[] ids) {
-        remFromDyn(ids);
-        mCol.getDb().execute("update cards set type=" + Consts.CARD_TYPE_NEW + ",queue=" + Consts.QUEUE_TYPE_NEW + ",ivl=0,due=0,odue=0,factor="+Consts.STARTING_FACTOR +
-                " where id in " + Utils.ids2str(ids));
-        int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=" + Consts.CARD_TYPE_NEW + "");
-        // takes care of mod + usn
-        sortCards(ids, pmax + 1);
-        mCol.log(ids);
-    }
-
 
     /**
      * Put cards in review queue with a new interval in days (min, max).

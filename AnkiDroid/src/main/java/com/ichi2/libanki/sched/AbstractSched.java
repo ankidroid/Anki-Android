@@ -812,9 +812,24 @@ public abstract class AbstractSched {
      * Bury all cards for note until next session.
      * @param nid The id of the targeted note.
      */
-    public abstract void buryNote(long nid);
+    public void buryNote(long nid) {
+        long[] cids = Utils.collection2Array(mCol.getDb().queryLongList(
+                "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW, nid));
+        buryCards(cids);
+    }
+
     /** Put cards at the end of the new queue. */
-    public abstract void forgetCards(long[] ids);
+    public void forgetCards(long[] ids) {
+        remFromDyn(ids);
+        mCol.getDb().execute("update cards set type=" + Consts.CARD_TYPE_NEW + ",queue=" + Consts.QUEUE_TYPE_NEW + ",ivl=0,due=0,odue=0,factor="+Consts.STARTING_FACTOR +
+                " where id in " + Utils.ids2str(ids));
+        int pmax = mCol.getDb().queryScalar("SELECT max(due) FROM cards WHERE type=" + Consts.CARD_TYPE_NEW + "");
+        // takes care of mod + usn
+        sortCards(ids, pmax + 1);
+        mCol.log(ids);
+    }
+
+
     /**
      * Put cards in review queue with a new interval in days (min, max).
      *
