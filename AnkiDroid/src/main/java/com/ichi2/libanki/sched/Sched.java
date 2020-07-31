@@ -1408,12 +1408,6 @@ public class Sched extends SchedV2 {
      * Counts
      */
 
-    @Override
-    public int cardCount() {
-        String dids = _deckLimit();
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids);
-    }
-
 
     @Override
     public int eta(int[] counts) {

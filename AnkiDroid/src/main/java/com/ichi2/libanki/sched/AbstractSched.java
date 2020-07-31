@@ -929,7 +929,12 @@ public abstract class AbstractSched {
     }
 
 
-    public abstract int cardCount();
+    public int cardCount() {
+        String dids = _deckLimit();
+        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids);
+    }
+
+
     public abstract int eta(int[] counts);
     /**
      * Return an estimate, in minutes, for how long it will take to complete all the reps in {@code counts}.
