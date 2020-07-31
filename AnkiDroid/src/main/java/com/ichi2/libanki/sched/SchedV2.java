@@ -357,11 +357,6 @@ public class SchedV2 extends AbstractSched {
                 did, lim);
     }
 
-    public int totalNewForCurrentDeck() {
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
-                                        mReportLimit);
-    }
-
     /**
      * Learning queues *********************************************************** ************************************
      */
