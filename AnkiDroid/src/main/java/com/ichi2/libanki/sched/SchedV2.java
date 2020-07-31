@@ -1841,11 +1841,6 @@ public class SchedV2 extends AbstractSched {
      * Counts
      */
 
-    public int cardCount() {
-        String dids = _deckLimit();
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids);
-    }
-
 
     public int eta(int[] counts) {
         return eta(counts, true);
