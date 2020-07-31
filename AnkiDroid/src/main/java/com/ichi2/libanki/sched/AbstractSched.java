@@ -192,7 +192,16 @@ public abstract class AbstractSched {
     protected abstract void _updateCutoff();
 
 
-    protected boolean _fillNew() {
+    protected Card _getNewCard() {
+        if (_fillNew()) {
+            // mNewCount -= 1; see decrementCounts()
+            return mCol.getCard(mNewQueue.remove());
+        }
+        return null;
+    }
+
+
+    private boolean _fillNew() {
         return _fillNew(false);
     }
 

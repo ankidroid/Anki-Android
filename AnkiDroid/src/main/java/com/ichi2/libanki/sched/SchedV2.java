@@ -374,15 +374,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected Card _getNewCard() {
-        if (_fillNew()) {
-            // mNewCount -= 1; see decrementCounts()
-            return mCol.getCard(mNewQueue.remove());
-        }
-        return null;
-    }
-
-
     /** New count for a single deck. */
     public int _newForDeck(long did, int lim) {
         if (lim == 0) {
