@@ -26,13 +26,14 @@ import androidx.test.internal.runner.TestRequestBuilder;
 
 /**
  * A class which allows loading MultiDex tests on Android < 21
- *
+ * <p>
  * This is in androidx to override package-level functions
  */
 @SuppressWarnings("unused") //referenced by build.gradle
 public class MultiDexJUnitRunner extends AndroidJUnitRunner {
     // TODO: See if we can check the number of executed tests on a full run, and ensure this exceeds a threshold.
     // as instrumentation runs on my local machine occasionally fail to load com.ichi2.anki
+
 
     @Override
     public void onCreate(Bundle arguments) {

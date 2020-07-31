@@ -21,10 +21,9 @@ import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
-import com.ichi2.utils.VersionUtils;
-
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.VersionUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,7 +31,7 @@ import java.util.Locale;
 
 import okhttp3.Response;
 
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes", "PMD.MethodNamingConventions"})
 public class RemoteServer extends HttpSyncer {
 
     public RemoteServer(Connection con, String hkey, HostNum hostNum) {
@@ -40,7 +39,9 @@ public class RemoteServer extends HttpSyncer {
     }
 
 
-    /** Returns hkey or null if user/pw incorrect. */
+    /**
+     * Returns hkey or null if user/pw incorrect.
+     */
     @Override
     public Response hostKey(String user, String pw) throws UnknownHttpResponseException {
         try {
@@ -98,17 +99,22 @@ public class RemoteServer extends HttpSyncer {
         return parseDict(_run("sanityCheck2", client));
     }
 
+
     @Override
     public long finish() throws UnknownHttpResponseException {
         return parseLong(_run("finish", new JSONObject()));
     }
+
 
     @Override
     public void abort() throws UnknownHttpResponseException {
         _run("abort", new JSONObject());
     }
 
-    /** Python has dynamic type deduction, but we don't, so return String **/
+
+    /**
+     * Python has dynamic type deduction, but we don't, so return String
+     **/
     private String _run(String cmd, JSONObject data) throws UnknownHttpResponseException {
         Response ret = super.req(cmd, HttpSyncer.getInputStream(Utils.jsonToString(data)));
         try {
@@ -118,7 +124,10 @@ public class RemoteServer extends HttpSyncer {
         }
     }
 
-    /** Note: these conversion helpers aren't needed in libanki as type deduction occurs automatically there **/
+
+    /**
+     * Note: these conversion helpers aren't needed in libanki as type deduction occurs automatically there
+     **/
     private JSONObject parseDict(String s) {
         if (!"null".equalsIgnoreCase(s) && s.length() != 0) {
             return new JSONObject(s);
@@ -126,6 +135,7 @@ public class RemoteServer extends HttpSyncer {
             return new JSONObject();
         }
     }
+
 
     private long parseLong(String s) {
         try {

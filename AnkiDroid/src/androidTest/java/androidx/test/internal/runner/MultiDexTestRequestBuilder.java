@@ -27,11 +27,12 @@ import androidx.annotation.VisibleForTesting;
 
 /**
  * A class which allows building test requests in a multidex environment on Android < 21
- *
+ * <p>
  * This is in androidx to override package-level functions
- * */
+ */
 public class MultiDexTestRequestBuilder extends TestRequestBuilder {
     private Context mContext;
+
 
     public MultiDexTestRequestBuilder(Instrumentation instr, Bundle arguments) {
         super(instr, arguments);

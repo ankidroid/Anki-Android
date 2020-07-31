@@ -18,6 +18,7 @@ public class AnkiDroidAppTest {
         AnkiAssert.assertDoesNotThrow(() -> sendExceptionReport("Test", "AnkiDroidAppTest"));
     }
 
+
     @Test
     public void reportingWithNullMessageDoesNotFail() {
         String message = null;

@@ -71,6 +71,7 @@ public class NumberRangePreference extends EditTextPreference {
      * their Integer equivalents.
      */
 
+
     @Override
     protected String getPersistedString(String defaultReturnValue) {
         return String.valueOf(getPersistedInt(mMin));
@@ -86,7 +87,7 @@ public class NumberRangePreference extends EditTextPreference {
     /**
      * Return the string as an int with the number rounded to the nearest bound if it is outside of the acceptable
      * range.
-     * 
+     *
      * @param input User input in text editor.
      * @return The input value within acceptable range.
      */
@@ -105,7 +106,7 @@ public class NumberRangePreference extends EditTextPreference {
 
     /**
      * Return the integer rounded to the nearest bound if it is outside of the acceptable range.
-     * 
+     *
      * @param input Integer to validate.
      * @return The input value within acceptable range.
      */
@@ -163,7 +164,7 @@ public class NumberRangePreference extends EditTextPreference {
 
     /**
      * Get the persisted value held by this preference.
-     * 
+     *
      * @return the persisted value.
      */
     public int getValue() {
@@ -173,7 +174,7 @@ public class NumberRangePreference extends EditTextPreference {
 
     /**
      * Set this preference's value. The value is validated and persisted as an Integer.
-     * 
+     *
      * @param value to set.
      */
     public void setValue(int value) {

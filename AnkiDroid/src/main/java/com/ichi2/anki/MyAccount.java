@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -36,10 +35,11 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.AdaptionUtil;
 
+import androidx.appcompat.widget.Toolbar;
 import timber.log.Timber;
 
 public class MyAccount extends AnkiActivity {
-    private final static int STATE_LOG_IN  = 1;
+    private final static int STATE_LOG_IN = 1;
     private final static int STATE_LOGGED_IN = 2;
 
     private View mLoginToMyAccountView;
@@ -60,7 +60,7 @@ public class MyAccount extends AnkiActivity {
                 String username = AnkiDroidApp.getSharedPrefs(getBaseContext()).getString("username", "");
                 mUsernameLoggedIn.setText(username);
                 mToolbar = mLoggedIntoMyAccountView.findViewById(R.id.toolbar);
-                if (mToolbar!= null) {
+                if (mToolbar != null) {
                     mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
                     setSupportActionBar(mToolbar);
                 }
@@ -69,7 +69,7 @@ public class MyAccount extends AnkiActivity {
 
             case STATE_LOG_IN:
                 mToolbar = mLoginToMyAccountView.findViewById(R.id.toolbar);
-                if (mToolbar!= null) {
+                if (mToolbar != null) {
                     mToolbar.setTitle(getString(R.string.sync_account));  // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
                     setSupportActionBar(mToolbar);
                 }
@@ -80,6 +80,7 @@ public class MyAccount extends AnkiActivity {
 
         supportInvalidateOptionsMenu();  // Needed?
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +96,7 @@ public class MyAccount extends AnkiActivity {
             switchToState(STATE_LOG_IN);
         }
     }
+
 
     private void saveUserInformation(String username, String hkey) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
@@ -114,8 +116,8 @@ public class MyAccount extends AnkiActivity {
         String password = mPassword.getText().toString();
 
         if (!"".equalsIgnoreCase(username) && !"".equalsIgnoreCase(password)) {
-            Connection.login(loginListener, new Connection.Payload(new Object[]{username, password,
-                    HostNumFactory.getInstance(this) }));
+            Connection.login(loginListener, new Connection.Payload(new Object[] {username, password,
+                    HostNumFactory.getInstance(this)}));
         } else {
             UIUtils.showSimpleSnackbar(this, R.string.invalid_username_password, true);
         }
@@ -229,9 +231,9 @@ public class MyAccount extends AnkiActivity {
                     UIUtils.showSimpleSnackbar(MyAccount.this, R.string.invalid_username_password, true);
                 } else {
                     String message = getResources().getString(R.string.connection_error_message);
-                    Object[] result = (Object [])data.result;
+                    Object[] result = (Object[]) data.result;
                     if (result.length > 1 && result[1] instanceof Exception) {
-                        showSimpleMessageDialog(message, ((Exception)result[1]).getLocalizedMessage(), false);
+                        showSimpleMessageDialog(message, ((Exception) result[1]).getLocalizedMessage(), false);
                     } else {
                         UIUtils.showSimpleSnackbar(MyAccount.this, message, false);
                     }

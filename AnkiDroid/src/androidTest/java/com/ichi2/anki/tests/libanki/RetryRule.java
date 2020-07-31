@@ -45,6 +45,7 @@ public final class RetryRule implements TestRule {
         return statement(base, description);
     }
 
+
     private Statement statement(final Statement base, final Description description) {
         return new Statement() {
             @Override
@@ -58,7 +59,7 @@ public final class RetryRule implements TestRule {
                         return;
                     } catch (Throwable t) {
                         caughtThrowable = t;
-                        System.err.println(description.getDisplayName() + ": run " + (i+1) + " failed");
+                        System.err.println(description.getDisplayName() + ": run " + (i + 1) + " failed");
                         t.printStackTrace(System.err);
                     }
                 }

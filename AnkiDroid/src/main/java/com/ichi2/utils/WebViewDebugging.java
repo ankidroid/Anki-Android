@@ -12,6 +12,7 @@ public class WebViewDebugging {
 
     private static boolean sHasSetDataDirectory = false;
 
+
     @UiThread
     public static void initializeDebugging(SharedPreferences sharedPrefs) {
         // DEFECT: We might be able to cache this value: check what happens on WebView Renderer crash
@@ -28,12 +29,16 @@ public class WebViewDebugging {
         }
     }
 
-    /** Throws IllegalStateException if a WebView has been initialized */
+
+    /**
+     * Throws IllegalStateException if a WebView has been initialized
+     */
     @RequiresApi(api = Build.VERSION_CODES.P)
     public static void setDataDirectorySuffix(@NonNull String suffix) {
         WebView.setDataDirectorySuffix(suffix);
         sHasSetDataDirectory = true;
     }
+
 
     public static boolean hasSetDataDirectory() {
         // Implicitly truth requires API >= P

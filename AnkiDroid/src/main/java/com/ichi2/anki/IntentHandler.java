@@ -19,9 +19,8 @@ import timber.log.Timber;
 /**
  * Class which handles how the application responds to different intents, forcing it to always be single task,
  * but allowing custom behavior depending on the intent
- * 
- * @author Tim
  *
+ * @author Tim
  */
 
 public class IntentHandler extends Activity {
@@ -60,11 +59,13 @@ public class IntentHandler extends Activity {
         }
     }
 
+
     private static boolean isValidViewIntent(@NonNull Intent intent) {
         // Negating a negative because we want to call specific attention to the fact that it's invalid
         // #6312 - Smart Launcher provided an empty ACTION_VIEW, no point in importing here.
         return !ImportUtils.isInvalidViewIntent(intent);
     }
+
 
     @VisibleForTesting
     @CheckResult
@@ -158,6 +159,7 @@ public class IntentHandler extends Activity {
         // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
         DialogHandler.storeMessage(handlerMessage);
     }
+
 
     //COULD_BE_BETTER: Also extract the parameters into here to reduce coupling
     @VisibleForTesting

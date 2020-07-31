@@ -34,7 +34,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
-/** Allows specification of the Question and Answer format of a card template in the Card Browser
+/**
+ * Allows specification of the Question and Answer format of a card template in the Card Browser
  * This is known as "Browser Appearance" in Anki
  * We do not allow the user to change fonts as Android only has a handful
  * We do not allow the user to change the font size as this can be done in the Appearance settings.
@@ -44,11 +45,14 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
     public static final String INTENT_QUESTION_FORMAT = "bqfmt";
     public static final String INTENT_ANSWER_FORMAT = "bafmt";
 
-    /** Specified the card browser should use the default template formatter */
+    /**
+     * Specified the card browser should use the default template formatter
+     */
     public static final String VALUE_USE_DEFAULT = "";
 
     private EditText mQuestionEditText;
     private EditText mAnswerEditText;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,11 +69,13 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
         initializeUiFromBundle(bundle);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.card_template_browser_appearance_editor, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -132,6 +138,7 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
         super.onSaveInstanceState(outState);
     }
 
+
     private void initializeUiFromBundle(@NonNull Bundle bundle) {
         setContentView(R.layout.card_browser_appearance);
 
@@ -144,25 +151,31 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
         enableToolbar();
     }
 
+
     private boolean answerHasChanged(Intent intent) {
         return !intent.getStringExtra(INTENT_ANSWER_FORMAT).equals(getAnswerFormat());
     }
+
 
     private boolean questionHasChanged(Intent intent) {
         return !intent.getStringExtra(INTENT_QUESTION_FORMAT).equals(getQuestionFormat());
     }
 
+
     private String getQuestionFormat() {
         return getTextValue(mQuestionEditText);
     }
+
 
     private String getAnswerFormat() {
         return getTextValue(mAnswerEditText);
     }
 
+
     private String getTextValue(EditText editText) {
         return editText.getText().toString();
     }
+
 
     private void restoreDefaultAndClose() {
         Timber.i("Restoring Default and Closing");
@@ -171,11 +184,13 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
         saveAndExit();
     }
 
+
     private void discardChangesAndClose() {
         Timber.i("Closing and discarding changes");
         setResult(RESULT_CANCELED);
         finishActivityWithFade(this);
     }
+
 
     private void saveAndExit() {
         Timber.i("Save and Exit");
@@ -185,6 +200,7 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
         setResult(RESULT_OK, data);
         finishActivityWithFade(this);
     }
+
 
     public boolean hasChanges() {
         try {
@@ -196,14 +212,18 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
         }
     }
 
-    @NonNull @CheckResult
+
+    @NonNull
+    @CheckResult
     public static Intent getIntentFromTemplate(@NonNull Context context, @NonNull JSONObject template) {
         String browserQuestionTemplate = template.getString("bqfmt");
         String browserAnswerTemplate = template.getString("bafmt");
         return CardTemplateBrowserAppearanceEditor.getIntent(context, browserQuestionTemplate, browserAnswerTemplate);
     }
 
-    @NonNull @CheckResult
+
+    @NonNull
+    @CheckResult
     public static Intent getIntent(@NonNull Context context, @NonNull String questionFormat, @NonNull String answerFormat) {
         Intent intent = new Intent(context, CardTemplateBrowserAppearanceEditor.class);
         intent.putExtra(INTENT_QUESTION_FORMAT, questionFormat);
@@ -211,11 +231,13 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
         return intent;
     }
 
+
     public static class Result {
         @NonNull
         private final String mQuestion;
         @NonNull
         private final String mAnswer;
+
 
         private Result(String question, String answer) {
             this.mQuestion = question == null ? VALUE_USE_DEFAULT : question;
@@ -240,10 +262,12 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
             }
         }
 
+
         @NonNull
         public String getQuestion() {
             return mQuestion;
         }
+
 
         @NonNull
         public String getAnswer() {

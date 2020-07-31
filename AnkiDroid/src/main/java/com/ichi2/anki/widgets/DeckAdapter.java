@@ -21,8 +21,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +32,14 @@ import android.widget.TextView;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.sched.AbstractSched;
-
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.sched.AbstractSched;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
@@ -78,6 +78,8 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     // Whether we have a background (so some items should be partially transparent).
     private boolean mPartiallyTransparentForBackground;
 
+
+
     // ViewHolder class to save inflated views for recycling
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public RelativeLayout deckLayout;
@@ -86,6 +88,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         public ImageButton indentView;
         public TextView deckName;
         public TextView deckNew, deckLearn, deckRev;
+
 
         public ViewHolder(View v) {
             super(v);
@@ -100,6 +103,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
     }
 
+
     public DeckAdapter(LayoutInflater layoutInflater, Context context) {
         mLayoutInflater = layoutInflater;
         mDeckList = new ArrayList<>();
@@ -113,7 +117,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 android.R.attr.textColor,
                 R.attr.dynDeckColor,
                 R.attr.expandRef,
-                R.attr.collapseRef };
+                R.attr.collapseRef};
         TypedArray ta = context.obtainStyledAttributes(attrs);
         mZeroCountColor = ta.getColor(0, ContextCompat.getColor(context, R.color.black));
         mNewCountColor = ta.getColor(1, ContextCompat.getColor(context, R.color.black));
@@ -127,23 +131,30 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         ta.recycle();
     }
 
+
     public void setDeckClickListener(View.OnClickListener listener) {
         mDeckClickListener = listener;
     }
+
 
     public void setCountsClickListener(View.OnClickListener listener) {
         mCountsClickListener = listener;
     }
 
+
     public void setDeckExpanderClickListener(View.OnClickListener listener) {
         mDeckExpanderClickListener = listener;
     }
+
 
     public void setDeckLongClickListener(View.OnLongClickListener listener) {
         mDeckLongClickListener = listener;
     }
 
-    /** Sets whether the control should have partial transparency to allow a background to be seen */
+
+    /**
+     * Sets whether the control should have partial transparency to allow a background to be seen
+     */
     public void enablePartialTransparencyForBackground(boolean isTransparent) {
         mPartiallyTransparentForBackground = isTransparent;
     }
@@ -249,7 +260,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     }
 
 
-    private void setDeckExpander(ImageButton expander, ImageButton indent, AbstractSched.DeckDueTreeNode node){
+    private void setDeckExpander(ImageButton expander, ImageButton indent, AbstractSched.DeckDueTreeNode node) {
         boolean collapsed = mCol.getDecks().get(node.getDid()).optBoolean("collapsed", false);
         // Apply the correct expand/collapse drawable
         if (collapsed) {
@@ -300,7 +311,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     /**
      * Return the position of the deck in the deck list. If the deck is a child of a collapsed deck
      * (i.e., not visible in the deck list), then the position of the parent deck is returned instead.
-     *
+     * <p>
      * An invalid deck ID will return position 0.
      */
     public int findDeckPosition(long did) {
@@ -320,12 +331,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
 
     public int getEta() {
-        return mCol.getSched().eta(new int[]{mNew, mLrn, mRev});
+        return mCol.getSched().eta(new int[] {mNew, mLrn, mRev});
     }
+
 
     public int getDue() {
         return mNew + mLrn + mRev;
     }
+
 
     public List<AbstractSched.DeckDueTreeNode> getDeckList() {
         return mDeckList;

@@ -12,25 +12,30 @@ public class AudioClipField extends AudioField {
         return EFieldType.AUDIO_CLIP;
     }
 
+
     @Override
     public boolean isModified() {
         return false;
     }
+
 
     @Override
     public void setHasTemporaryMedia(boolean hasTemporaryMedia) {
         mHasTemporaryMedia = hasTemporaryMedia;
     }
 
+
     @Override
     public boolean hasTemporaryMedia() {
         return false;
     }
 
+
     @Override
     public String getName() {
         return null;
     }
+
 
     @Override
     public void setName(String name) {

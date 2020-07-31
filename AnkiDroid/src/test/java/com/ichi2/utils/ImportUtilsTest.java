@@ -58,6 +58,7 @@ public class ImportUtilsTest extends RobolectricTest {
         assertThat("Unicode character should be urlencoded", actualFilePath, endsWith("%E5%A5%BD.apkg"));
     }
 
+
     @Test
     public void fileNamesAreLimitedTo100Chars() {
         //#6137 - We URLEncode due to the above. Therefore: 好 -> %E5%A5%BD
@@ -73,6 +74,7 @@ public class ImportUtilsTest extends RobolectricTest {
         String fileName = actualFilePath.substring(actualFilePath.indexOf("%E5%A5%BD"));
         assertThat(fileName.length(), lessThanOrEqualTo(100));
     }
+
 
     private String importValidFile(String fileName) {
         TestFileImporter testFileImporter = new TestFileImporter(fileName);
@@ -90,30 +92,36 @@ public class ImportUtilsTest extends RobolectricTest {
         return cacheFileName;
     }
 
+
     @Test
     public void collectionApkgIsValid() {
         assertTrue(ImportUtils.isValidPackageName("collection.apkg"));
     }
+
 
     @Test
     public void collectionColPkgIsValid() {
         assertTrue(ImportUtils.isValidPackageName("collection.colpkg"));
     }
 
+
     @Test
     public void deckApkgIsValid() {
         assertTrue(ImportUtils.isValidPackageName("deckName.apkg"));
     }
+
 
     @Test
     public void deckColPkgIsValid() {
         assertTrue(ImportUtils.isValidPackageName("deckName.colpkg"));
     }
 
+
     @Test
     public void nullIsNotValidPackage() {
         assertFalse(ImportUtils.isValidPackageName(null));
     }
+
 
     @Test
     public void docxIsNotValidForImport() {
@@ -142,9 +150,11 @@ public class ImportUtilsTest extends RobolectricTest {
         private String mCacheFileName;
         private final String mFileName;
 
+
         public TestFileImporter(String fileName) {
             this.mFileName = fileName;
         }
+
 
         @Override
         protected boolean copyFileToCache(Context context, Uri data, String tempPath) {

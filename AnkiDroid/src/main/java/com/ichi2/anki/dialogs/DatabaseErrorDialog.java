@@ -1,4 +1,3 @@
-
 package com.ichi2.anki.dialogs;
 
 import android.content.res.Resources;
@@ -7,7 +6,6 @@ import android.os.Message;
 import android.view.KeyEvent;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
@@ -33,7 +31,9 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_CONFIRM_DATABASE_CHECK = 6;
     public static final int DIALOG_CONFIRM_RESTORE_BACKUP = 7;
     public static final int DIALOG_FULL_SYNC_FROM_SERVER = 8;
-    /** If the database is locked, all we can do is reset the app */
+    /**
+     * If the database is locked, all we can do is reset the app
+     */
     public static final int DIALOG_DB_LOCKED = 9;
 
     // public flag which lets us distinguish between inaccessible and corrupt database
@@ -42,7 +42,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
 
     /**
      * A set of dialogs which deal with problems with the database when it can't load
-     * 
+     *
      * @param dialogType An integer which specifies which of the sub-dialogs to show
      */
     public static DatabaseErrorDialog newInstance(int dialogType) {
@@ -336,6 +336,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         }
     }
 
+
     private String getTitle() {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_LOAD_FAILED:
@@ -360,7 +361,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.database_locked_title);
             default:
                 return res().getString(R.string.answering_error_title);
-        }        
+        }
     }
 
 
@@ -391,8 +392,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         msg.setData(b);
         return msg;
     }
-    
-    
+
+
     public void dismissAllDialogFragments() {
         ((DeckPicker) getActivity()).dismissAllDialogFragments();
     }

@@ -21,10 +21,11 @@ package com.ichi2.themes;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
-import androidx.core.content.ContextCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+
+import androidx.core.content.ContextCompat;
 
 public class Themes {
     public final static int ALPHA_ICON_ENABLED_LIGHT = 255; // 100%
@@ -64,6 +65,7 @@ public class Themes {
         }
     }
 
+
     public static void setThemeLegacy(Context context) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
         if (prefs.getBoolean("invertedColors", false)) {
@@ -95,6 +97,7 @@ public class Themes {
         return getResFromAttr(context, attrs)[0];
     }
 
+
     public static int[] getResFromAttr(Context context, int[] attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs);
         for (int i = 0; i < attrs.length; i++) {
@@ -103,6 +106,7 @@ public class Themes {
         ta.recycle();
         return attrs;
     }
+
 
     public static int getColorFromAttr(Context context, int colorAttr) {
         int[] attrs = new int[] {colorAttr};
@@ -118,6 +122,7 @@ public class Themes {
         ta.recycle();
         return attrs;
     }
+
 
     /**
      * Return the current integer code of the theme being used, taking into account

@@ -26,7 +26,23 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static com.ichi2.anki.cardviewer.ViewerCommand.*;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_FIRST_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_FOURTH_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_RECOMMENDED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_SECOND_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_THIRD_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_BURY_CARD;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_BURY_NOTE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_EDIT;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE3;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE4;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_MARK;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_PLAY_MEDIA;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SUSPEND_CARD;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SUSPEND_NOTE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_UNDO;
 
 public class PeripheralCommand {
     @Nullable
@@ -38,7 +54,9 @@ public class PeripheralCommand {
     @NonNull
     private final CardSide mCardSide;
 
-    private final @ViewerCommandDef int mCommand;
+    private final @ViewerCommandDef
+    int mCommand;
+
 
     private PeripheralCommand(int keyCode, @ViewerCommandDef int command, @NonNull CardSide side) {
         this.mKeyCode = keyCode;
@@ -47,6 +65,7 @@ public class PeripheralCommand {
         this.mCardSide = side;
     }
 
+
     private PeripheralCommand(@Nullable Character unicodeCharacter, @ViewerCommandDef int command, @NonNull CardSide side) {
         this.mKeyCode = null;
         this.mUnicodeCharacter = unicodeCharacter;
@@ -54,25 +73,31 @@ public class PeripheralCommand {
         this.mCardSide = side;
     }
 
+
     public int getCommand() {
         return mCommand;
     }
+
 
     public Character getUnicodeCharacter() {
         return mUnicodeCharacter;
     }
 
+
     public Integer getKeycode() {
         return mKeyCode;
     }
+
 
     public boolean isQuestion() {
         return mCardSide == CardSide.QUESTION || mCardSide == CardSide.BOTH;
     }
 
+
     public boolean isAnswer() {
         return mCardSide == CardSide.ANSWER || mCardSide == CardSide.BOTH;
     }
+
 
     public static PeripheralCommand unicode(char unicodeChar, @ViewerCommandDef int command, CardSide side) {
         return new PeripheralCommand((Character) unicodeChar, command, side);
@@ -82,6 +107,7 @@ public class PeripheralCommand {
     public static PeripheralCommand keyCode(int keyCode, @ViewerCommandDef int command, CardSide side) {
         return new PeripheralCommand(keyCode, command, side);
     }
+
 
     public static List<PeripheralCommand> getDefaultCommands() {
         List<PeripheralCommand> ret = new ArrayList<>();
@@ -112,6 +138,7 @@ public class PeripheralCommand {
 
         return ret;
     }
+
 
     private enum CardSide {
         NONE,

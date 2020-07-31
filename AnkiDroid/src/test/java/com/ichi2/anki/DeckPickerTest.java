@@ -1,9 +1,6 @@
 package com.ichi2.anki;
 
 import android.content.Context;
-
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
@@ -13,6 +10,9 @@ import org.robolectric.annotation.LooperMode;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.DeckPicker.UPGRADE_VERSION_KEY;
 import static org.junit.Assert.assertEquals;
@@ -50,6 +50,7 @@ public class DeckPickerTest extends RobolectricTest {
         }
     }
 
+
     @Test
     public void verifyBadCodesNoMessage() {
         try (ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class)) {
@@ -62,6 +63,7 @@ public class DeckPickerTest extends RobolectricTest {
             });
         }
     }
+
 
     @Test
     public void getPreviousVersionUpgradeFrom201to292() {
@@ -87,6 +89,7 @@ public class DeckPickerTest extends RobolectricTest {
         verify(updated, times(1)).apply();
     }
 
+
     @Test
     public void getPreviousVersionUpgradeFrom202to292() {
         long newVersion = 20900302; // 2.9.2
@@ -111,6 +114,7 @@ public class DeckPickerTest extends RobolectricTest {
         verify(updated, times(1)).apply();
     }
 
+
     @Test
     public void getPreviousVersionUpgradeFrom281to291() {
         int prevVersion = 20800301; // 2.8.1
@@ -134,6 +138,7 @@ public class DeckPickerTest extends RobolectricTest {
         verify(editor, times(1)).remove(UPGRADE_VERSION_KEY);
         verify(updated, times(1)).apply();
     }
+
 
     @Test
     public void getPreviousVersionUpgradeFrom291to292() {

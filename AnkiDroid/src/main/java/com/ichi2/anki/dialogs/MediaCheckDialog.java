@@ -1,4 +1,3 @@
-
 package com.ichi2.anki.dialogs;
 
 import android.os.Bundle;
@@ -14,11 +13,17 @@ public class MediaCheckDialog extends AsyncDialogFragment {
     public static final int DIALOG_CONFIRM_MEDIA_CHECK = 0;
     public static final int DIALOG_MEDIA_CHECK_RESULTS = 1;
 
+
+
     public interface MediaCheckDialogListener {
         void showMediaCheckDialog(int dialogType);
+
         void showMediaCheckDialog(int dialogType, List<List<String>> checkList);
+
         void mediaCheck();
+
         void deleteUnused(List<String> unused);
+
         void dismissAllDialogFragments();
     }
 

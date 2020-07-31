@@ -33,15 +33,17 @@ import timber.log.Timber;
  */
 public class LanguageUtil {
 
-    /** A list of all languages supported by AnkiDroid
+    /**
+     * A list of all languages supported by AnkiDroid
      * Please modify LanguageUtilsTest if changing
-     * Please note 'yue' is special, it is 'yu' on crowdin, and mapped in import specially to 'yue' */
+     * Please note 'yue' is special, it is 'yu' on crowdin, and mapped in import specially to 'yue'
+     */
     public static final String[] APP_LANGUAGES = {"af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
             "de", "el", "en", "eo", "es-AR", "es-ES", "et", "eu", "fa", "fi", "fil", "fr", "fy-NL", "ga-IE", "gl", "got",
             "gu-IN", "heb", "hi", "hr", "hu", "hy-AM", "ind", "is", "it", "ja", "jv", "ka", "kk", "km", "ko", "ku",
             "ky", "lt", "lv", "mk", "mn", "mr", "ms", "my", "nl", "nn-NO", "no", "pa-IN", "pl", "pt-BR", "pt-PT",
             "ro", "ru", "sat", "sk", "sl", "sq", "sr", "ss", "sv-SE", "sw", "ta", "te", "tg", "tgl", "th", "ti", "tn", "tr",
-            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yue", "zh-CN", "zh-TW", "zu" };
+            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yue", "zh-CN", "zh-TW", "zu"};
 
 
     /**
@@ -54,6 +56,7 @@ public class LanguageUtil {
         return getLocale("");
     }
 
+
     /**
      * Returns the {@link Locale} for the given code or the default locale, if no preferences are given.
      *
@@ -64,6 +67,7 @@ public class LanguageUtil {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
         return getLocale(localeCode, prefs);
     }
+
 
     /**
      * Returns the {@link Locale} for the given code or the default locale, if no code is given.

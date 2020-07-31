@@ -37,6 +37,7 @@ public class AutoSizeCheckBoxPreference extends CheckBoxPreference {
         super(context);
     }
 
+
     @SuppressWarnings("unused")
     public AutoSizeCheckBoxPreference(Context context, AttributeSet attrs) {
         super(context, attrs);

@@ -16,6 +16,7 @@ public class DeckPickerAnalyticsOptInDialog extends AnalyticsDialogFragment {
         return f;
     }
 
+
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -7,6 +7,7 @@ import java.util.Comparator;
 public class DeckNameComparator implements Comparator<String> {
     public static final DeckNameComparator instance = new DeckNameComparator();
 
+
     @Override
     public int compare(String lhs, String rhs) {
         String[] o1 = Decks.path(lhs);

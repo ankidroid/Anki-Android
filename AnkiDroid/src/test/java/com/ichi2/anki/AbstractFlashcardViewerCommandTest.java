@@ -47,6 +47,7 @@ public class AbstractFlashcardViewerCommandTest {
         assertThat(viewer.getLastFlag(), is(FLAG_NONE));
     }
 
+
     @Test
     public void noneDoesNothing() {
         CommandTestCardViewer viewer = getViewer();
@@ -55,6 +56,7 @@ public class AbstractFlashcardViewerCommandTest {
 
         assertThat(viewer.getLastFlag(), is(FLAG_NONE));
     }
+
 
     @Test
     public void doubleNoneDoesNothing() {
@@ -66,6 +68,7 @@ public class AbstractFlashcardViewerCommandTest {
         assertThat(viewer.getLastFlag(), is(FLAG_NONE));
     }
 
+
     @Test
     public void flagCanBeChanged() {
         CommandTestCardViewer viewer = getViewer();
@@ -75,6 +78,7 @@ public class AbstractFlashcardViewerCommandTest {
 
         assertThat(viewer.getLastFlag(), is(FLAG_BLUE));
     }
+
 
     @Test
     public void unsetUnsets() {
@@ -86,6 +90,7 @@ public class AbstractFlashcardViewerCommandTest {
         assertThat(viewer.getLastFlag(), is(FLAG_NONE));
     }
 
+
     @Test
     public void tapRedFlagSetsRed() {
         CommandTestCardViewer viewer = getViewer();
@@ -94,6 +99,7 @@ public class AbstractFlashcardViewerCommandTest {
 
         assertThat(viewer.getLastFlag(), is(FLAG_RED));
     }
+
 
     @Test
     public void tapOrangeFlagSetsOrange() {
@@ -104,6 +110,7 @@ public class AbstractFlashcardViewerCommandTest {
         assertThat(viewer.getLastFlag(), is(FLAG_ORANGE));
     }
 
+
     @Test
     public void tapGreenFlagSesGreen() {
         CommandTestCardViewer viewer = getViewer();
@@ -112,6 +119,7 @@ public class AbstractFlashcardViewerCommandTest {
 
         assertThat(viewer.getLastFlag(), is(FLAG_GREEN));
     }
+
 
     @Test
     public void tapBlueFlagSetsBlue() {
@@ -122,25 +130,30 @@ public class AbstractFlashcardViewerCommandTest {
         assertThat(viewer.getLastFlag(), is(FLAG_BLUE));
     }
 
+
     @Test
     public void doubleTapRedUnsets() {
         testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_RED);
     }
+
 
     @Test
     public void doubleTapOrangeUnsets() {
         testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE);
     }
 
+
     @Test
     public void doubleTapGreenUnsets() {
         testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN);
     }
 
+
     @Test
     public void doubleTapBlueUnsets() {
         testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE);
     }
+
 
     private void testDoubleTapUnsets(int command) {
         CommandTestCardViewer viewer = getViewer();
@@ -159,7 +172,7 @@ public class AbstractFlashcardViewerCommandTest {
 
     private Card cardWith(@FlagDef int flag) {
         Card c = mock(Card.class);
-        int[] flags = new int[] { flag };
+        int[] flags = new int[] {flag};
         when(c.userFlag()).then((invocation) -> flags[0]);
         doAnswer(invocation -> {
             flags[0] = invocation.getArgument(0);
@@ -167,6 +180,7 @@ public class AbstractFlashcardViewerCommandTest {
         }).when(c).setUserFlag(anyInt());
         return c;
     }
+
 
     private static class CommandTestCardViewer extends AbstractFlashcardViewer {
 
@@ -176,6 +190,8 @@ public class AbstractFlashcardViewerCommandTest {
         public CommandTestCardViewer(Card currentCard) {
             mCurrentCard = currentCard;
         }
+
+
         @Override
         protected void setTitle() {
             //Intentionally blank
@@ -187,16 +203,19 @@ public class AbstractFlashcardViewerCommandTest {
             return ControlBlock.UNBLOCKED;
         }
 
+
         @Override
         public boolean isControlBlocked() {
             return getControlBlocked() != ControlBlock.UNBLOCKED;
         }
+
 
         @Override
         protected void onFlag(Card card, @FlagDef int flag) {
             this.mFlag = flag;
             mCurrentCard.setUserFlag(flag);
         }
+
 
         public int getLastFlag() {
             return mFlag;

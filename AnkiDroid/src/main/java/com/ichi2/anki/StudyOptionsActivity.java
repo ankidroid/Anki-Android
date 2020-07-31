@@ -47,6 +47,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         }
     }
 
+
     private void loadStudyOptionsFragment() {
         boolean withDeckOptions = false;
         if (getIntent().getExtras() != null) {
@@ -131,6 +132,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         getCurrentFragment().refreshInterface();
     }
 
+
     /**
      * Callback methods from CustomStudyDialog
      */
@@ -139,6 +141,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         // Sched already reset by CollectionTask in CustomStudyDialog
         getCurrentFragment().refreshInterface();
     }
+
 
     @Override
     public void onExtendStudyLimits() {

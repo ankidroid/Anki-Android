@@ -1,4 +1,3 @@
-
 package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;

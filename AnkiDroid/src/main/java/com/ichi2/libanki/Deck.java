@@ -1,6 +1,5 @@
 package com.ichi2.libanki;
 
-import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 public class Deck extends JSONObject {
@@ -8,13 +7,16 @@ public class Deck extends JSONObject {
         super(json);
     }
 
+
     public Deck(String json) {
         super(json);
     }
 
+
     public Deck() {
         super();
     }
+
 
     @Override
     public Deck deepClone() {

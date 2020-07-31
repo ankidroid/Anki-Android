@@ -57,12 +57,13 @@ public class PieChartParameterizedTest {
 
     private MockedStatic<Color> colorMockedStatic;
 
+
     @Before
     public void setUp() {
         colorMockedStatic = Mockito.mockStatic(Color.class);
         MockitoAnnotations.openMocks(this);
         when(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0);
-        when(plot.getFrameThickness()).thenReturn(new float[]{0, 0, 0, 0});
+        when(plot.getFrameThickness()).thenReturn(new float[] {0, 0, 0, 0});
 
         FontMetricsWrap fm = mock(FontMetricsWrap.class);
         when(fm.getHeight()).thenReturn(10f);
@@ -74,10 +75,12 @@ public class PieChartParameterizedTest {
         pieChart = new PieChart(plot, values, colors);
     }
 
+
     @After
     public void tearDown() {
         colorMockedStatic.close();
     }
+
 
     @Test
     public void testPaintDrawsAllArcs() {
@@ -85,7 +88,9 @@ public class PieChartParameterizedTest {
         // ordered verification is used to prevent failures when there are tiny adjacent sectors
         InOrder inOrder = inOrder(graphics);
         for (int i = 0; i < values.length; i++) {
-            if (arcLengths[i] == 0) continue;
+            if (arcLengths[i] == 0) {
+                continue;
+            }
             inOrder.verify(graphics).setColor(colors[i]);
             inOrder.verify(graphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
                     floatThat(closeTo(startAngles[i])),
@@ -93,9 +98,11 @@ public class PieChartParameterizedTest {
         }
     }
 
+
     private static FloatMatcher closeTo(double v) {
         return FloatMatcher.closeTo(v, PRECISION);
     }
+
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
@@ -128,6 +135,7 @@ public class PieChartParameterizedTest {
         ));
     }
 
+
     private static Collection<Object[]> createParametersCollection(Collection<double[]> values) {
         Collection<Object[]> parameters = new ArrayList<>(values.size());
         for (double[] v : values) {
@@ -135,6 +143,7 @@ public class PieChartParameterizedTest {
         }
         return parameters;
     }
+
 
     private static Object[] createParameters(double[] values) {
         PieChartTestParametersBuilder builder = new PieChartTestParametersBuilder(values, -90);
@@ -146,9 +155,11 @@ public class PieChartParameterizedTest {
         };
     }
 
+
     private static double[] values(double... d) {
         return d;
     }
+
 
     private static double[] equalValues(int numberOfValues) {
         double[] v = new double[numberOfValues];

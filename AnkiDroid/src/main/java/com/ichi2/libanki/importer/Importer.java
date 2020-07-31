@@ -28,7 +28,7 @@ import com.ichi2.libanki.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"PMD.MethodNamingConventions"})
+@SuppressWarnings( {"PMD.MethodNamingConventions"})
 public abstract class Importer {
 
     protected boolean mNeedMapper = false;
@@ -45,6 +45,7 @@ public abstract class Importer {
     protected Context mContext;
     protected CollectionTask.ProgressCallback mProgress;
 
+
     public Importer(Collection col, String file) {
         mFile = file;
         mLog = new ArrayList<>();
@@ -53,7 +54,9 @@ public abstract class Importer {
         mContext = col.getContext();
     }
 
+
     abstract public void run() throws ImportExportException;
+
 
     /**
      * Timestamps
@@ -87,6 +90,7 @@ public abstract class Importer {
     protected Resources getRes() {
         return mContext.getResources();
     }
+
 
     public List<String> getLog() {
         return mLog;

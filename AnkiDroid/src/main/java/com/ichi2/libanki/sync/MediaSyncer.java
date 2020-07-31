@@ -28,7 +28,6 @@ import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -45,34 +44,35 @@ import timber.log.Timber;
 /**
  * About conflicts:
  * - to minimize data loss, if both sides are marked for sending and one
- *   side has been deleted, favour the add
+ * side has been deleted, favour the add
  * - if added/changed on both sides, favour the server version on the
- *   assumption other syncers are in sync with the server
- * 
+ * assumption other syncers are in sync with the server
+ * <p>
  * A note about differences to the original python version of this class. We found that:
- *  1 - There is no reliable way to detect changes to the media directory on Android due to the
- *      file systems used (mainly FAT32 for sdcards) and the utilities available to probe them.
- *  2 - Scanning for media changes can take a very long time with thousands of files.
- * 
+ * 1 - There is no reliable way to detect changes to the media directory on Android due to the
+ * file systems used (mainly FAT32 for sdcards) and the utilities available to probe them.
+ * 2 - Scanning for media changes can take a very long time with thousands of files.
+ * <p>
  * Given these two points, we have decided to avoid the call to findChanges() on every sync and
  * only do it on the first sync to build the initial database. Changes to the media collection
  * made through AnkiDroid (e.g., multimedia note editor, media check) are recorded directly in
  * the media database as they are made. This allows us to skip finding media changes entirely
  * as the database already contains the changes.
- * 
+ * <p>
  * The downside to this approach is that changes made to the media directory externally (e.g.,
  * through a file manager) will not be recorded and will not be synced. In this case, the user
  * must issue a media check command through the UI to bring the database up-to-date.
  */
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
-        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
-        "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes", "PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity", "PMD.MethodNamingConventions", "PMD.ExcessiveMethodLength", "PMD.OneDeclarationPerLine",
+        "PMD.SwitchStmtsShouldHaveDefault", "PMD.EmptyIfStmt", "PMD.SimplifyBooleanReturns", "PMD.CollapsibleIfStatements"})
 public class MediaSyncer {
     private Collection mCol;
     private RemoteMediaServer mServer;
     private int mDownloadCount;
     // Needed to update progress to UI
     private Connection mCon;
+
 
     public MediaSyncer(Collection col, RemoteMediaServer server, Connection con) {
         mCol = col;
@@ -82,153 +82,153 @@ public class MediaSyncer {
 
 
     public String sync() throws UnknownHttpResponseException, MediaSyncException {
-            // check if there have been any changes
-            // If we haven't built the media db yet, do so on this sync. See note at the top
-            // of this class about this difference to the original.
-            if (mCol.getMedia().needScan()) {
-                mCon.publishProgress(R.string.sync_media_find);
-                mCol.log("findChanges");
-                try {
-                    mCol.getMedia().findChanges();
-                } catch (SQLException ignored) {
-                    return "corruptMediaDB";
-                }
+        // check if there have been any changes
+        // If we haven't built the media db yet, do so on this sync. See note at the top
+        // of this class about this difference to the original.
+        if (mCol.getMedia().needScan()) {
+            mCon.publishProgress(R.string.sync_media_find);
+            mCol.log("findChanges");
+            try {
+                mCol.getMedia().findChanges();
+            } catch (SQLException ignored) {
+                return "corruptMediaDB";
+            }
+        }
+
+        // begin session and check if in sync
+        int lastUsn = mCol.getMedia().lastUsn();
+        JSONObject ret = mServer.begin();
+        int srvUsn = ret.getInt("usn");
+        if ((lastUsn == srvUsn) && !(mCol.getMedia().haveDirty())) {
+            return "noChanges";
+        }
+        // loop through and process changes from server
+        mCol.log("last local usn is " + lastUsn);
+        mDownloadCount = 0;
+        while (true) {
+            // Allow cancellation (note: media sync has no finish command, so just throw)
+            if (Connection.getIsCancelled()) {
+                Timber.i("Sync was cancelled");
+                throw new RuntimeException("UserAbortedSync");
+            }
+            JSONArray data = mServer.mediaChanges(lastUsn);
+            mCol.log("mediaChanges resp count: ", data.length());
+            if (data.length() == 0) {
+                break;
             }
 
-            // begin session and check if in sync
-            int lastUsn = mCol.getMedia().lastUsn();
-            JSONObject ret = mServer.begin();
-            int srvUsn = ret.getInt("usn");
-            if ((lastUsn == srvUsn) && !(mCol.getMedia().haveDirty())) {
-                return "noChanges";
-            }
-            // loop through and process changes from server
-            mCol.log("last local usn is " + lastUsn);
-            mDownloadCount = 0;
-            while (true) {
+            List<String> need = new ArrayList<>();
+            lastUsn = data.getJSONArray(data.length() - 1).getInt(1);
+            for (int i = 0; i < data.length(); i++) {
                 // Allow cancellation (note: media sync has no finish command, so just throw)
                 if (Connection.getIsCancelled()) {
                     Timber.i("Sync was cancelled");
                     throw new RuntimeException("UserAbortedSync");
                 }
-                JSONArray data = mServer.mediaChanges(lastUsn);
-                mCol.log("mediaChanges resp count: ", data.length());
-                if (data.length() == 0) {
+                String fname = data.getJSONArray(i).getString(0);
+                int rusn = data.getJSONArray(i).getInt(1);
+                String rsum = null;
+                if (!data.getJSONArray(i).isNull(2)) {
+                    // If `rsum` is a JSON `null` value, `.optString(2)` will
+                    // return `"null"` as a string
+                    rsum = data.getJSONArray(i).optString(2);
+                }
+                Pair<String, Integer> info = mCol.getMedia().syncInfo(fname);
+                String lsum = info.first;
+                int ldirty = info.second;
+                mCol.log(String.format(Locale.US,
+                        "check: lsum=%s rsum=%s ldirty=%d rusn=%d fname=%s",
+                        TextUtils.isEmpty(lsum) ? "" : lsum.subSequence(0, 4),
+                        TextUtils.isEmpty(rsum) ? "" : rsum.subSequence(0, 4),
+                        ldirty,
+                        rusn,
+                        fname));
+
+                if (!TextUtils.isEmpty(rsum)) {
+                    // added/changed remotely
+                    if (TextUtils.isEmpty(lsum) || !lsum.equals(rsum)) {
+                        mCol.log("will fetch");
+                        need.add(fname);
+                    } else {
+                        mCol.log("have same already");
+                    }
+                    mCol.getMedia().markClean(Collections.singletonList(fname));
+
+                } else if (!TextUtils.isEmpty(lsum)) {
+                    // deleted remotely
+                    if (ldirty == 0) {
+                        mCol.log("delete local");
+                        mCol.getMedia().syncDelete(fname);
+                    } else {
+                        // conflict: local add overrides remote delete
+                        mCol.log("conflict; will send");
+                    }
+                } else {
+                    // deleted both sides
+                    mCol.log("both sides deleted");
+                    mCol.getMedia().markClean(Collections.singletonList(fname));
+                }
+            }
+            _downloadFiles(need);
+
+            mCol.log("update last usn to " + lastUsn);
+            mCol.getMedia().setLastUsn(lastUsn); // commits
+        }
+
+        // at this point, we're all up to date with the server's changes,
+        // and we need to send our own
+
+        boolean updateConflict = false;
+        int toSend = mCol.getMedia().dirtyCount();
+        while (true) {
+            Pair<File, List<String>> changesZip = mCol.getMedia().mediaChangesZip();
+            File zip = changesZip.first;
+            try {
+                List<String> fnames = changesZip.second;
+                if (fnames.size() == 0) {
                     break;
                 }
 
-                List<String> need = new ArrayList<>();
-                lastUsn = data.getJSONArray(data.length()-1).getInt(1);
-                for (int i = 0; i < data.length(); i++) {
-                    // Allow cancellation (note: media sync has no finish command, so just throw)
-                    if (Connection.getIsCancelled()) {
-                        Timber.i("Sync was cancelled");
-                        throw new RuntimeException("UserAbortedSync");
-                    }
-                    String fname = data.getJSONArray(i).getString(0);
-                    int rusn = data.getJSONArray(i).getInt(1);
-                    String rsum = null;
-                    if (!data.getJSONArray(i).isNull(2)) {
-                        // If `rsum` is a JSON `null` value, `.optString(2)` will
-                        // return `"null"` as a string
-                        rsum = data.getJSONArray(i).optString(2);
-                    }
-                    Pair<String, Integer> info = mCol.getMedia().syncInfo(fname);
-                    String lsum = info.first;
-                    int ldirty = info.second;
-                    mCol.log(String.format(Locale.US,
-                            "check: lsum=%s rsum=%s ldirty=%d rusn=%d fname=%s",
-                            TextUtils.isEmpty(lsum) ? "" : lsum.subSequence(0, 4),
-                            TextUtils.isEmpty(rsum) ? "" : rsum.subSequence(0, 4),
-                            ldirty,
-                            rusn,
-                            fname));
+                mCon.publishProgress(String.format(
+                        AnkiDroidApp.getAppResources().getString(R.string.sync_media_changes_count), toSend));
 
-                    if (!TextUtils.isEmpty(rsum)) {
-                        // added/changed remotely
-                        if (TextUtils.isEmpty(lsum) || !lsum.equals(rsum)) {
-                            mCol.log("will fetch");
-                            need.add(fname);
-                        } else {
-                            mCol.log("have same already");
-                        }
-                        mCol.getMedia().markClean(Collections.singletonList(fname));
-                        
-                    } else if (!TextUtils.isEmpty(lsum)) {
-                        // deleted remotely
-                        if (ldirty == 0) {
-                            mCol.log("delete local");
-                            mCol.getMedia().syncDelete(fname);
-                        } else {
-                            // conflict: local add overrides remote delete
-                            mCol.log("conflict; will send");
-                        }
-                    } else {
-                        // deleted both sides
-                        mCol.log("both sides deleted");
-                        mCol.getMedia().markClean(Collections.singletonList(fname));
-                    }
+                JSONArray changes = mServer.uploadChanges(zip);
+                int processedCnt = changes.getInt(0);
+                int serverLastUsn = changes.getInt(1);
+                mCol.getMedia().markClean(fnames.subList(0, processedCnt));
+
+                mCol.log(String.format(Locale.US,
+                        "processed %d, serverUsn %d, clientUsn %d",
+                        processedCnt, serverLastUsn, lastUsn));
+
+                if (serverLastUsn - processedCnt == lastUsn) {
+                    mCol.log("lastUsn in sync, updating local");
+                    lastUsn = serverLastUsn;
+                    mCol.getMedia().setLastUsn(serverLastUsn); // commits
+                } else {
+                    mCol.log("concurrent update, skipping usn update");
+                    // commit for markClean
+                    mCol.getMedia().getDb().commit();
+                    updateConflict = true;
                 }
-                _downloadFiles(need);
 
-                mCol.log("update last usn to " + lastUsn);
-                mCol.getMedia().setLastUsn(lastUsn); // commits
+                toSend -= processedCnt;
+            } finally {
+                zip.delete();
             }
+        }
+        if (updateConflict) {
+            mCol.log("restart sync due to concurrent update");
+            return sync();
+        }
 
-            // at this point, we're all up to date with the server's changes,
-            // and we need to send our own
-
-            boolean updateConflict = false;
-            int toSend = mCol.getMedia().dirtyCount();
-            while (true) {
-                Pair<File, List<String>> changesZip = mCol.getMedia().mediaChangesZip();
-                File zip = changesZip.first;
-                try {
-                    List<String> fnames = changesZip.second;
-                    if (fnames.size() == 0) {
-                        break;
-                    }
-
-                    mCon.publishProgress(String.format(
-                                                       AnkiDroidApp.getAppResources().getString(R.string.sync_media_changes_count), toSend));
-
-                    JSONArray changes = mServer.uploadChanges(zip);
-                    int processedCnt = changes.getInt(0);
-                    int serverLastUsn = changes.getInt(1);
-                    mCol.getMedia().markClean(fnames.subList(0, processedCnt));
-
-                    mCol.log(String.format(Locale.US,
-                                           "processed %d, serverUsn %d, clientUsn %d",
-                                           processedCnt, serverLastUsn, lastUsn));
-
-                    if (serverLastUsn - processedCnt == lastUsn) {
-                        mCol.log("lastUsn in sync, updating local");
-                        lastUsn = serverLastUsn;
-                        mCol.getMedia().setLastUsn(serverLastUsn); // commits
-                    } else {
-                        mCol.log("concurrent update, skipping usn update");
-                        // commit for markClean
-                        mCol.getMedia().getDb().commit();
-                        updateConflict = true;
-                    }
-
-                    toSend -= processedCnt;
-                } finally {
-                    zip.delete();
-                }
-            }
-            if (updateConflict) {
-                mCol.log("restart sync due to concurrent update");
-                return sync();
-            }
-
-            int lcnt = mCol.getMedia().mediacount();
-            String sRet = mServer.mediaSanity(lcnt);
-            if ("OK".equals(sRet)) {
-                return "OK";
-            } else {
-                mCol.getMedia().forceResync();
-                return sRet;
+        int lcnt = mCol.getMedia().mediacount();
+        String sRet = mServer.mediaSanity(lcnt);
+        if ("OK".equals(sRet)) {
+            return "OK";
+        } else {
+            mCol.getMedia().forceResync();
+            return sRet;
         }
     }
 

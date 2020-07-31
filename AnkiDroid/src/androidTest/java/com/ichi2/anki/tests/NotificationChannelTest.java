@@ -21,10 +21,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 
-import androidx.test.annotation.UiThreadTest;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.GrantPermissionRule;
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.compat.CompatHelper;
@@ -36,6 +32,9 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import androidx.test.annotation.UiThreadTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
 import timber.log.Timber;
 
 import static org.junit.Assert.assertEquals;
@@ -52,23 +51,28 @@ public class NotificationChannelTest {
     private int mTargetAPI = -1;
     private NotificationManager mManager = null;
 
+
     @Before
     @UiThreadTest
     public void setUp() {
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        ((AnkiDroidApp)targetContext.getApplicationContext()).onCreate();
+        ((AnkiDroidApp) targetContext.getApplicationContext()).onCreate();
         mCurrentAPI = CompatHelper.getSdkVersion();
         mTargetAPI = targetContext.getApplicationInfo().targetSdkVersion;
-        mManager = (NotificationManager)targetContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        mManager = (NotificationManager) targetContext.getSystemService(Context.NOTIFICATION_SERVICE);
     }
+
 
     private boolean channelsInAPI() {
         return mCurrentAPI >= 26;
     }
 
+
     @Test
     public void testChannelCreation() {
-        if (!channelsInAPI()) return;
+        if (!channelsInAPI()) {
+            return;
+        }
 
         // onCreate was called in setUp(), so we should have channels now
         List<NotificationChannel> channels = mManager.getNotificationChannels();

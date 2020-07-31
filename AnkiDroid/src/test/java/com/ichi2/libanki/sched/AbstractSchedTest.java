@@ -18,10 +18,7 @@ package com.ichi2.libanki.sched;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Consts;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,10 +30,9 @@ import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 import java.util.Arrays;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.UNDO;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 
 // Note: These tests can't be run individually but can from the class-level
 // gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.sched.AbstractSchedTest.*"
@@ -46,11 +42,13 @@ public class AbstractSchedTest extends RobolectricTest {
     @Parameter
     public int schedVersion;
 
+
     @Parameters(name = "SchedV{0}")
     public static java.util.Collection<Object[]> initParameters() {
         // This does one run with schedVersion injected as 1, and one run as 2
-        return Arrays.asList(new Object[][] { { 1 }, { 2 } });
+        return Arrays.asList(new Object[][] {{1}, {2}});
     }
+
 
     @Before
     @Override
@@ -62,6 +60,7 @@ public class AbstractSchedTest extends RobolectricTest {
             throw new RuntimeException("Could not change schedVer", e);
         }
     }
+
 
     @Test
     public void testUndoResetsCardCountsToCorrectValue() throws InterruptedException {
@@ -75,7 +74,7 @@ public class AbstractSchedTest extends RobolectricTest {
         int[] countsBeforeUndo = sched.counts();
         // Not shown in the UI, but there is a state where the card has been removed from the queue, but not answered
         // where the counts are decremented.
-        assertThat(countsBeforeUndo, is(new int[] { 0, 0, 0 }));
+        assertThat(countsBeforeUndo, is(new int[] {0, 0, 0}));
 
         sched.answerCard(cardBeforeUndo, EASE_3);
 

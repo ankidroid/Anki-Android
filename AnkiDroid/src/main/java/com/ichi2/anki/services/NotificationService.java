@@ -21,8 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
@@ -31,19 +29,24 @@ import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.widget.WidgetStatus;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 public class NotificationService extends BroadcastReceiver {
 
-    /** The id of the notification for due cards. */
+    /**
+     * The id of the notification for due cards.
+     */
     private static final int WIDGET_NOTIFY_ID = 1;
 
     public static final String INTENT_ACTION = "com.ichi2.anki.intent.action.SHOW_NOTIFICATION";
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Timber.i("NotificationService: OnStartCommand");
-        NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         int minCardsDue = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY)));
@@ -58,14 +61,14 @@ public class NotificationService extends BroadcastReceiver {
             NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(context,
                             NotificationChannels.getId(NotificationChannels.Channel.GENERAL))
-                    .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                    .setSmallIcon(R.drawable.ic_stat_notify)
-                    .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
-                    .setContentTitle(cardsDueText)
-                    .setTicker(cardsDueText);
+                            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                            .setSmallIcon(R.drawable.ic_stat_notify)
+                            .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
+                            .setContentTitle(cardsDueText)
+                            .setTicker(cardsDueText);
             // Enable vibrate and blink if set in preferences
             if (preferences.getBoolean("widgetVibrate", false)) {
-                builder.setVibrate(new long[] { 1000, 1000, 1000});
+                builder.setVibrate(new long[] {1000, 1000, 1000});
             }
             if (preferences.getBoolean("widgetBlink", false)) {
                 builder.setLights(Color.BLUE, 1000, 1000);

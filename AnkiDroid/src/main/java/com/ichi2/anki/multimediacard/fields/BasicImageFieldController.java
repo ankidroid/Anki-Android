@@ -32,17 +32,10 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.content.ContentResolverCompat;
-import androidx.core.content.FileProvider;
-
 import android.text.TextUtils;
 import android.text.format.Formatter;
-import android.provider.DocumentsContract;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -54,6 +47,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
@@ -64,8 +58,6 @@ import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
 import com.ichi2.utils.Permissions;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -73,6 +65,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.content.ContentResolverCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.util.Pair;
 import timber.log.Timber;
 
@@ -88,16 +85,22 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private TextView mImageFileSize;
     private TextView mImageFileSizeWarning;
 
-    private @Nullable String mImagePath;
-    private @Nullable Uri mImageUri;
-    private @Nullable String mPreviousImagePath; // save the latest path to prevent from cropping or taking photo action canceled
-    private @Nullable Uri mPreviousImageUri;
-    private @Nullable String mAnkiCacheDirectory; // system provided 'External Cache Dir' with "temp-photos" on it
-                                                  // e.g.  '/self/primary/Android/data/com.ichi2.anki.AnkiDroid/cache/temp-photos'
+    private @Nullable
+    String mImagePath;
+    private @Nullable
+    Uri mImageUri;
+    private @Nullable
+    String mPreviousImagePath; // save the latest path to prevent from cropping or taking photo action canceled
+    private @Nullable
+    Uri mPreviousImageUri;
+    private @Nullable
+    String mAnkiCacheDirectory; // system provided 'External Cache Dir' with "temp-photos" on it
+    // e.g.  '/self/primary/Android/data/com.ichi2.anki.AnkiDroid/cache/temp-photos'
     private DisplayMetrics mMetrics = null;
     private SystemTime mTime = new SystemTime();
 
     private Button mCropButton = null;
+
 
     private int getMaxImageSize() {
         DisplayMetrics metrics = getDisplayMetrics();
@@ -107,6 +110,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         return (int) Math.min(height * 0.4, width * 0.6);
     }
+
 
     public void loadInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
@@ -121,6 +125,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mPreviousImageUri = savedInstanceState.getParcelable("mPreviousImageUri");
     }
 
+
     public Bundle saveInstanceState() {
         Timber.d("saveInstanceState");
         Bundle savedInstanceState = new Bundle();
@@ -130,6 +135,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         savedInstanceState.putParcelable("mPreviousImageUri", mPreviousImageUri);
         return savedInstanceState;
     }
+
 
     @Override
     public void createUI(Context context, LinearLayout layout) {
@@ -255,6 +261,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         return createNewCacheFile("jpg");
     }
 
+
     private File createNewCacheFile(@NonNull String extension) throws IOException {
         String timeStamp = TimeUtils.getTimestamp(mTime);
         File storageDir = new File(mAnkiCacheDirectory);
@@ -376,6 +383,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         UIUtils.showThemedToast(mActivity, mActivity.getResources().getString(R.string.multimedia_editor_something_wrong), false);
     }
 
+
     private void handleSelectImageIntent(Intent data) {
         if (data == null) {
             Timber.e("handleSelectImageIntent() no intent provided");
@@ -407,7 +415,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mField.setImagePath(mImagePath);
     }
 
-    private @Nullable File internalizeUri(Uri uri) {
+
+    private @Nullable
+    File internalizeUri(Uri uri) {
         File internalFile;
         Pair<String, String> uriFileInfo = getImageInfoFromUri(mActivity, uri);
 
@@ -529,6 +539,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
     }
 
+
     @VisibleForTesting
     void setImagePreview(File f, int maxsize) {
         Bitmap b = BitmapUtil.decodeFile(f, maxsize);
@@ -560,7 +571,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             revertToPreviousImage();
             showSomethingWentWrong();
             return;
-        };
+        }
+        ;
         mField.setHasTemporaryMedia(true);
         showCropDialog(mActivity.getString(R.string.crop_image), null);
     }
@@ -673,7 +685,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      *
      * @return image uri
      */
-    private @Nullable Uri getImageUri(Context context, Intent data) {
+    private @Nullable
+    Uri getImageUri(Context context, Intent data) {
         Timber.d("getImageUri for data %s", data);
         Uri uri = data.getData();
         if (uri == null) {
@@ -693,7 +706,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      *
      * @return Pair<String, String>: first file path (null if does not exist), second display name (null if does not exist)
      */
-    private @NonNull Pair<String, String> getImageInfoFromUri(Context context, Uri uri) {
+    private @NonNull
+    Pair<String, String> getImageInfoFromUri(Context context, Uri uri) {
         Timber.d("getImagePathFromUri() URI: %s", uri);
         Pair<String, String> imageInfo = new Pair<>(null, null);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
@@ -721,12 +735,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         return imageInfo;
     }
 
+
     /**
      * Get image information based on uri and selection args
      *
      * @return string[] 0: file path (null if does not exist), 1: display name (null if does not exist)
      */
-    private @NonNull Pair<String, String> getImageInfoFromContentResolver(Context context, Uri uri, String selection) {
+    private @NonNull
+    Pair<String, String> getImageInfoFromContentResolver(Context context, Uri uri, String selection) {
         Timber.d("getImagePathFromContentResolver() %s", uri);
         String[] filePathColumns = {
                 MediaStore.MediaColumns.DATA,

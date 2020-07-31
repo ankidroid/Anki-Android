@@ -25,7 +25,6 @@ import com.ichi2.anki.CardTemplateBrowserAppearanceEditor;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.dialogs.CustomStudyDialog.CustomStudyListener;
 import com.ichi2.libanki.Deck;
-import com.ichi2.utils.JSONObject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -81,6 +80,7 @@ public class CustomStudyDialogTest extends RobolectricTest {
         return scenario;
     }
 
+
     private static class CustomStudyActivity extends CardTemplateBrowserAppearanceEditor implements CustomStudyListener {
 
         @Override
@@ -96,8 +96,10 @@ public class CustomStudyDialogTest extends RobolectricTest {
     }
 
 
+
     public static class CustomStudyDialogForTesting extends CustomStudyDialog {
         private AnkiActivity mAnkiActivity;
+
 
         @SuppressWarnings("WeakerAccess")
         public <T extends AnkiActivity & CustomStudyListener> void setActivity(T ankiActivity) {

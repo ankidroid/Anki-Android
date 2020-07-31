@@ -23,8 +23,8 @@ import android.webkit.WebView;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.stats.Stats;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.stats.Stats;
 import com.ichi2.themes.Themes;
 
 import java.util.ArrayList;
@@ -46,6 +46,7 @@ public class OverviewStatsBuilder {
     private final Collection mCol;
     private final long mDeckId;
     private final Stats.AxisType mType;
+
 
 
     public static class OverviewStats {
@@ -74,9 +75,12 @@ public class OverviewStatsBuilder {
         public double averageEase;
         public double highestEase;
 
+
+
         public static class AnswerButtonsOverview {
             public int total;
             public int correct;
+
 
             public double getPercentage() {
                 if (correct == 0) {
@@ -87,12 +91,14 @@ public class OverviewStatsBuilder {
         }
     }
 
+
     public OverviewStatsBuilder(WebView chartView, Collection collectionData, long deckId, Stats.AxisType mStatType) {
         mWebView = chartView;
         mCol = collectionData;
         mDeckId = deckId;
         mType = mStatType;
     }
+
 
     public String createInfoHtmlString() {
         int textColorInt = Themes.getColorFromAttr(mWebView.getContext(), android.R.attr.textColor);
@@ -114,6 +120,7 @@ public class OverviewStatsBuilder {
         stringBuilder.append("</center>");
         return stringBuilder.toString();
     }
+
 
     private void appendOverViewStats(StringBuilder stringBuilder) {
         Stats stats = new Stats(mCol, mDeckId);
@@ -171,8 +178,8 @@ public class OverviewStatsBuilder {
             stringBuilder.append("<br>");
             stringBuilder.append(res.getString(R.string.stats_overview_time_per_day_all, oStats.timePerDayOnAll));
         }
-        double cardsPerMinute = oStats.totalTime == 0 ? 0 : ((double)oStats.totalReviews) / oStats.totalTime;
-        double averageAnswerTime = oStats.totalReviews == 0 ? 0 : (oStats.totalTime * 60) / ((double)oStats.totalReviews);
+        double cardsPerMinute = oStats.totalTime == 0 ? 0 : ((double) oStats.totalReviews) / oStats.totalTime;
+        double averageAnswerTime = oStats.totalReviews == 0 ? 0 : (oStats.totalTime * 60) / ((double) oStats.totalReviews);
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_average_answer_time, averageAnswerTime, cardsPerMinute));
 
@@ -200,7 +207,7 @@ public class OverviewStatsBuilder {
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_young, oStats.youngCardsOverview.getPercentage(), oStats.youngCardsOverview.correct, oStats.youngCardsOverview.total));
         stringBuilder.append("<br>");
-        stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_mature,  oStats.matureCardsOverview.getPercentage(), oStats.matureCardsOverview.correct, oStats.matureCardsOverview.total));
+        stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_mature, oStats.matureCardsOverview.getPercentage(), oStats.matureCardsOverview.correct, oStats.matureCardsOverview.total));
 
         //CARD TYPES
         stringBuilder.append(_subtitle(res.getString(R.string.stats_cards_types).toUpperCase()));
@@ -215,6 +222,7 @@ public class OverviewStatsBuilder {
         stringBuilder.append(res.getString(R.string.stats_overview_card_types_highest_ease, oStats.highestEase));
 
     }
+
 
     private void appendTodaysStats(StringBuilder stringBuilder) {
         Stats stats = new Stats(mCol, mDeckId);
@@ -251,6 +259,7 @@ public class OverviewStatsBuilder {
         return "<h3>" + title + "</h3>";
     }
 
+
     // This is a copy of Stats#calculateDue that is more similar to the original desktop version which
     // allows us to easily fetch the values required for the summary. In the future, this version
     // should replace the one in Stats.java.
@@ -260,13 +269,19 @@ public class OverviewStatsBuilder {
         int chunk = 0;
         switch (type) {
             case TYPE_MONTH:
-                start = 0; end = 31; chunk = 1;
+                start = 0;
+                end = 31;
+                chunk = 1;
                 break;
             case TYPE_YEAR:
-                start = 0; end = 52; chunk = 7;
+                start = 0;
+                end = 52;
+                chunk = 7;
                 break;
             case TYPE_LIFE:
-                start = 0; end = null; chunk = 30;
+                start = 0;
+                end = null;
+                chunk = 30;
                 break;
         }
         List<int[]> d = _due(start, end, chunk);
@@ -277,7 +292,7 @@ public class OverviewStatsBuilder {
         for (int[] day : d) {
             yng.add(new int[] {day[0], day[1]});
             mtr.add(new int[] {day[0], day[2]});
-            tot += day[1]+day[2];
+            tot += day[1] + day[2];
             totd.add(new int[] {day[0], tot});
         }
 
@@ -288,6 +303,7 @@ public class OverviewStatsBuilder {
                 "select count() from cards where did in " + _limit() + " and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " +
                         "and due = ?", mCol.getSched().getToday() + 1);
     }
+
 
     private List<int[]> _due(Integer start, Integer end, int chunk) {
         String lim = "";
@@ -304,16 +320,16 @@ public class OverviewStatsBuilder {
             String query;
             query = String.format(Locale.US,
                     "select (due-%d)/%d as day,\n" +
-                    "sum(case when ivl < 21 then 1 else 0 end), -- yng\n" +
-                    "sum(case when ivl >= 21 then 1 else 0 end) -- mtr\n" +
-                    "from cards\n" +
-                    "where did in %s and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")\n" +
-                    "%s\n" +
-                    "group by day order by day",
+                            "sum(case when ivl < 21 then 1 else 0 end), -- yng\n" +
+                            "sum(case when ivl >= 21 then 1 else 0 end) -- mtr\n" +
+                            "from cards\n" +
+                            "where did in %s and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")\n" +
+                            "%s\n" +
+                            "group by day order by day",
                     mCol.getSched().getToday(), chunk, _limit(), lim);
             cur = mCol.getDb().getDatabase().query(query, null);
             while (cur.moveToNext()) {
-                d.add(new int[]{cur.getInt(0), cur.getInt(1), cur.getInt(2)});
+                d.add(new int[] {cur.getInt(0), cur.getInt(1), cur.getInt(2)});
             }
         } finally {
             if (cur != null && !cur.isClosed()) {

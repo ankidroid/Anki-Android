@@ -23,15 +23,16 @@ import android.text.TextUtils;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
+import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Deck;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -50,11 +51,9 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-import com.ichi2.async.TaskData;
-
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
-        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
-        "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes", "PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity", "PMD.MethodNamingConventions", "PMD.ExcessiveMethodLength",
+        "PMD.SwitchStmtsShouldHaveDefault", "PMD.CollapsibleIfStatements", "PMD.EmptyIfStmt"})
 public class Anki2Importer extends Importer {
 
     private static final int GUID = 1;
@@ -85,8 +84,11 @@ public class Anki2Importer extends Importer {
     private int mAdded;
     private int mUpdated;
 
-    /** If importing SchedV1 into SchedV2 we need to reset the learning cards */
+    /**
+     * If importing SchedV1 into SchedV2 we need to reset the learning cards
+     */
     private boolean mMustResetLearning;
+
 
     public Anki2Importer(Collection col, String file) {
         super(col, file);
@@ -162,10 +164,18 @@ public class Anki2Importer extends Importer {
         } finally {
             // endTransaction throws about invalid transaction even when you check first!
             if (mDst.getDb().getDatabase().inTransaction()) {
-                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
+                try {
+                    mDst.getDb().getDatabase().endTransaction();
+                } catch (Exception e) {
+                    Timber.w(e);
+                }
             }
             if (mDst.getMedia().getDb().getDatabase().inTransaction()) {
-                try { mDst.getMedia().getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
+                try {
+                    mDst.getMedia().getDb().getDatabase().endTransaction();
+                } catch (Exception e) {
+                    Timber.w(e);
+                }
             }
         }
         Timber.i("Performing vacuum/analyze");
@@ -205,7 +215,7 @@ public class Anki2Importer extends Importer {
                 String guid = cur.getString(1);
                 long mod = cur.getLong(2);
                 long mid = cur.getLong(3);
-                mNotes.put(guid, new Object[] { id, mod, mid });
+                mNotes.put(guid, new Object[] {id, mod, mid});
                 existing.put(id, true);
             }
         } finally {
@@ -239,12 +249,12 @@ public class Anki2Importer extends Importer {
             // Counters for progress updates
             int total = cur.getCount();
             boolean largeCollection = total > 200;
-            int onePercent = total/100;
+            int onePercent = total / 100;
             int i = 0;
 
             while (cur.moveToNext()) {
                 // turn the db result into a mutable list
-                Object[] note = new Object[]{cur.getLong(0), cur.getString(1), cur.getLong(2),
+                Object[] note = new Object[] {cur.getLong(0), cur.getString(1), cur.getLong(2),
                         cur.getLong(3), cur.getInt(4), cur.getString(5), cur.getString(6),
                         cur.getString(7), cur.getLong(8), cur.getInt(9), cur.getString(10)};
                 boolean shouldAdd = _uniquifyNote(note);
@@ -261,7 +271,7 @@ public class Anki2Importer extends Importer {
                     add.add(note);
                     dirty.add((Long) note[0]);
                     // note we have the added guid
-                    mNotes.put((String) note[GUID], new Object[]{note[0], note[3], note[MID]});
+                    mNotes.put((String) note[GUID], new Object[] {note[0], note[3], note[MID]});
                 } else {
                     // a duplicate or changed schema - safe to update?
                     dupes += 1;
@@ -293,21 +303,21 @@ public class Anki2Importer extends Importer {
 
                 // add to col partially, so as to avoid OOM
                 if (add.size() >= thresExecAdd) {
-                    totalAddCount  += add.size();
+                    totalAddCount += add.size();
                     addNotes(add);
                     add.clear();
                     Timber.d("add notes: %d", totalAddCount);
                 }
                 // add to col partially, so as to avoid OOM
-                if (update.size() >= thresExecUpdate){
-                    totalUpdateCount  += update.size();
+                if (update.size() >= thresExecUpdate) {
+                    totalUpdateCount += update.size();
                     updateNotes(update);
                     update.clear();
                     Timber.d("update notes: %d", totalUpdateCount);
                 }
                 // add to col partially, so as to avoid OOM
                 if (dirty.size() >= thresExecDirty) {
-                    totalDirtyCount  += dirty.size();
+                    totalDirtyCount += dirty.size();
                     long[] das = Utils.collection2Array(dirty);
                     mDst.updateFieldCache(das);
                     mDst.getTags().registerNotes(das);
@@ -352,7 +362,11 @@ public class Anki2Importer extends Importer {
                 cur.close();
             }
             if (mDst.getDb().getDatabase().inTransaction()) {
-                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
+                try {
+                    mDst.getDb().getDatabase().endTransaction();
+                } catch (Exception e) {
+                    Timber.w(e);
+                }
             }
         }
 
@@ -361,13 +375,16 @@ public class Anki2Importer extends Importer {
         mDst.getTags().registerNotes(das);
     }
 
+
     private void addNotes(List<Object[]> add) {
         mDst.getDb().executeManyNoTransaction("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", add);
     }
 
+
     private void updateNotes(List<Object[]> update) {
         mDst.getDb().executeManyNoTransaction("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)", update);
     }
+
 
     // determine if note is a duplicate, and adjust mid and/or guid as required
     // returns true if note should be added
@@ -384,9 +401,9 @@ public class Anki2Importer extends Importer {
         if (!mNotes.containsKey(origGuid)) {
             return true;
         }
-		// schema changed; don't import
-		mIgnoredGuids.put(origGuid, true);
-		return false;
+        // schema changed; don't import
+        mIgnoredGuids.put(origGuid, true);
+        return false;
     }
 
     /**
@@ -398,13 +415,17 @@ public class Anki2Importer extends Importer {
      * new model if necessary.
      */
 
-    /** Prepare index of schema hashes. */
+    /**
+     * Prepare index of schema hashes.
+     */
     private void _prepareModels() {
         mModelMap = new HashMap<>();
     }
 
 
-    /** Return local id for remote MID. */
+    /**
+     * Return local id for remote MID.
+     */
     private long _mid(long srcMid) {
         // already processed this mid?
         if (mModelMap.containsKey(srcMid)) {
@@ -450,7 +471,9 @@ public class Anki2Importer extends Importer {
      * ***********************************************************
      */
 
-    /** Given did in src col, return local id. */
+    /**
+     * Given did in src col, return local id.
+     */
     private long _did(long did) {
         // already converted?
         if (mDecks.containsKey(did)) {
@@ -471,7 +494,7 @@ public class Anki2Importer extends Importer {
         // Manually create any parents so we can pull in descriptions
         String head = "";
         List<String> parents = Arrays.asList(Decks.path(name));
-        for (String parent : parents.subList(0, parents.size() -1)) {
+        for (String parent : parents.subList(0, parents.size() - 1)) {
             if (!TextUtils.isEmpty(head)) {
                 head += "::";
             }
@@ -520,7 +543,7 @@ public class Anki2Importer extends Importer {
         try {
             cur = mDst.getDb().getDatabase().query(
                     "select f.guid, c.ord, c.id from cards c, notes f " +
-                    "where c.nid = f.id", null);
+                            "where c.nid = f.id", null);
             while (cur.moveToNext()) {
                 String guid = cur.getString(0);
                 int ord = cur.getInt(1);
@@ -552,20 +575,20 @@ public class Anki2Importer extends Importer {
             mDst.getDb().getDatabase().beginTransaction();
             cur = mSrc.getDb().getDatabase().query(
                     "select f.guid, f.mid, c.* from cards c, notes f " +
-                    "where c.nid = f.id", null);
+                            "where c.nid = f.id", null);
 
             // Counters for progress updates
             int total = cur.getCount();
             boolean largeCollection = total > 200;
-            int onePercent = total/100;
+            int onePercent = total / 100;
             int i = 0;
 
             while (cur.moveToNext()) {
-                Object[] card = new Object[] { cur.getString(0), cur.getLong(1), cur.getLong(2),
+                Object[] card = new Object[] {cur.getString(0), cur.getLong(1), cur.getLong(2),
                         cur.getLong(3), cur.getLong(4), cur.getInt(5), cur.getLong(6), cur.getInt(7),
                         cur.getInt(8), cur.getInt(9), cur.getLong(10), cur.getLong(11), cur.getLong(12),
                         cur.getInt(13), cur.getInt(14), cur.getInt(15), cur.getLong(16),
-                        cur.getLong(17), cur.getInt(18), cur.getString(19) };
+                        cur.getLong(17), cur.getInt(18), cur.getString(19)};
                 String guid = (String) card[0];
                 if (mChangedGuids.containsKey(guid)) {
                     guid = mChangedGuids.get(guid);
@@ -629,8 +652,8 @@ public class Anki2Importer extends Importer {
                 // we need to import revlog, rewriting card ids and bumping usn
                 try (Cursor cur2 = mSrc.getDb().getDatabase().query("select * from revlog where cid = " + scid, null)) {
                     while (cur2.moveToNext()) {
-                        Object[] rev = new Object[] { cur2.getLong(0), cur2.getLong(1), cur2.getInt(2), cur2.getInt(3),
-                                cur2.getLong(4), cur2.getLong(5), cur2.getLong(6), cur2.getLong(7), cur2.getInt(8) };
+                        Object[] rev = new Object[] {cur2.getLong(0), cur2.getLong(1), cur2.getInt(2), cur2.getInt(3),
+                                cur2.getLong(4), cur2.getLong(5), cur2.getLong(6), cur2.getLong(7), cur2.getInt(8)};
                         rev[1] = card[0];
                         rev[2] = mDst.usn();
                         revlog.add(rev);
@@ -675,14 +698,20 @@ public class Anki2Importer extends Importer {
                 cur.close();
             }
             if (mDst.getDb().getDatabase().inTransaction()) {
-                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
+                try {
+                    mDst.getDb().getDatabase().endTransaction();
+                } catch (Exception e) {
+                    Timber.w(e);
+                }
             }
         }
     }
 
+
     private void insertCards(List<Object[]> cards) {
         mDst.getDb().executeManyNoTransaction("insert or ignore into cards values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", cards);
     }
+
 
     private void insertRevlog(List<Object[]> revlog) {
         mDst.getDb().executeManyNoTransaction("insert or ignore into revlog values (?,?,?,?,?,?,?,?,?)", revlog);
@@ -705,7 +734,7 @@ public class Anki2Importer extends Importer {
         }
         for (File f : new File(dir).listFiles()) {
             String fname = f.getName();
-            if (fname.startsWith("_") && ! mDst.getMedia().have(fname)) {
+            if (fname.startsWith("_") && !mDst.getMedia().have(fname)) {
                 try (BufferedInputStream data = _srcMediaData(fname)) {
                     _writeDstMedia(fname, data);
                 } catch (IOException e) {
@@ -876,8 +905,8 @@ public class Anki2Importer extends Importer {
 
 
     /**
-     * @param notesDone Percentage of notes complete.
-     * @param cardsDone Percentage of cards complete.
+     * @param notesDone   Percentage of notes complete.
+     * @param cardsDone   Percentage of cards complete.
      * @param postProcess Percentage of remaining tasks complete.
      */
     protected void publishProgress(int notesDone, int cardsDone, int postProcess) {
@@ -889,6 +918,7 @@ public class Anki2Importer extends Importer {
 
 
     /* The methods below are only used for testing. */
+
 
     public void setDupeOnSchemaChange(boolean b) {
         mDupeOnSchemaChange = b;

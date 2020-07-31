@@ -18,7 +18,6 @@ package com.ichi2.anki;
 
 import android.content.SharedPreferences;
 
-
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
@@ -51,7 +50,9 @@ public class BackupManager {
     public final static String BROKEN_DECKS_SUFFIX = "broken";
 
 
-    /** Number of hours after which a backup new backup is created */
+    /**
+     * Number of hours after which a backup new backup is created
+     */
     private static final int BACKUP_INTERVAL = 5;
 
 
@@ -198,6 +199,7 @@ public class BackupManager {
         return getFreeDiscSpace(path) >= (MIN_FREE_SPACE * 1024 * 1024);
     }
 
+
     /**
      * Get free disc space in bytes from path to Collection
      */
@@ -228,7 +230,7 @@ public class BackupManager {
         String execString = "sqlite3 " + deckPath + " .dump | sqlite3 " + deckPath + ".tmp";
         Timber.i("repairCollection - Execute: %s", execString);
         try {
-            String[] cmd = { "/system/bin/sh", "-c", execString };
+            String[] cmd = {"/system/bin/sh", "-c", execString};
             Process process = Runtime.getRuntime().exec(cmd);
             process.waitFor();
 
@@ -293,7 +295,7 @@ public class BackupManager {
         ArrayList<File> deckBackups = new ArrayList<>();
         for (File aktFile : files) {
             if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.(apkg|colpkg)$", "$1")
-                    .equals(colFile.getName().replace(".anki2",""))) {
+                    .equals(colFile.getName().replace(".anki2", ""))) {
                 deckBackups.add(aktFile);
             }
         }

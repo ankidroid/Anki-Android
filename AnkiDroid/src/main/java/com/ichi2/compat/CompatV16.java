@@ -1,15 +1,9 @@
-
 package com.ichi2.compat;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.res.TypedArray;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
 import android.os.StatFs;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
@@ -35,9 +29,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
-/** Implementation of {@link Compat} for SDK level 16 */
+/**
+ * Implementation of {@link Compat} for SDK level 16
+ */
 @TargetApi(16)
 public class CompatV16 implements Compat {
     // CookieSyncManager needs to be initialized before use.
@@ -48,6 +47,7 @@ public class CompatV16 implements Compat {
         android.webkit.CookieSyncManager.createInstance(context);
     }
 
+
     // Cookie data may be lost when an application exists just after it was written.
     // Below API level 21, this problem can be solved by using CookieSyncManager.sync().
     // Note: CookieSyncManager.sync() is deprecated since API level 21, but still needed here
@@ -57,13 +57,17 @@ public class CompatV16 implements Compat {
         android.webkit.CookieSyncManager.getInstance().sync();
     }
 
+
     // Below API level 17, there is no simple way to enable the auto play feature of HTML media elements.
     @Override
     public void setHTML5MediaAutoPlay(WebSettings webSettings, Boolean allow) { /* do nothing */ }
 
+
     // Immersive full screen isn't ready until API 19
     @SuppressWarnings("PMD.FieldDeclarationsShouldBeAtStartOfClass")
     protected static final int FULLSCREEN_ALL_GONE = 2;
+
+
     @Override
     public void setFullScreen(AbstractFlashcardViewer a) {
         a.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -73,6 +77,7 @@ public class CompatV16 implements Compat {
             answerButtons.setVisibility(View.GONE);
         }
     }
+
 
     // NOTE: we can't use android.R.attr.selectableItemBackground until API 21
     @Override
@@ -84,16 +89,22 @@ public class CompatV16 implements Compat {
         ta.recycle();
     }
 
+
     // Not settable before API 21 so do nothing
     @Override
     public void setStatusBarColor(Window window, int color) { /* do nothing */ }
 
+
     // Immersive mode introduced in API 19
     @Override
-    public boolean isImmersiveSystemUiVisible(AnkiActivity activity) { return false; }
+    public boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
+        return false;
+    }
+
 
     @Override
     public void setupNotificationChannel(Context context, String id, String name) { /* pre-API26, do nothing */ }
+
 
     // Until API 24 we ignore flags
     @Override
@@ -101,6 +112,7 @@ public class CompatV16 implements Compat {
     public Spanned fromHtml(String htmlString) {
         return Html.fromHtml(htmlString);
     }
+
 
     // Until API 18 it's not a long it's an int
     @Override
@@ -112,6 +124,7 @@ public class CompatV16 implements Compat {
         return availableBlocks * blockSize;
     }
 
+
     // Until API 23 the methods have "current" in the name
     @Override
     @SuppressWarnings("deprecation")
@@ -119,27 +132,40 @@ public class CompatV16 implements Compat {
         picker.setCurrentHour(hour);
         picker.setCurrentMinute(minute);
     }
+
+
     @Override
     @SuppressWarnings("deprecation")
-    public int getHour(TimePicker picker) { return picker.getCurrentHour(); }
+    public int getHour(TimePicker picker) {
+        return picker.getCurrentHour();
+    }
+
+
     @Override
     @SuppressWarnings("deprecation")
-    public int getMinute(TimePicker picker) { return picker.getCurrentMinute(); }
+    public int getMinute(TimePicker picker) {
+        return picker.getCurrentMinute();
+    }
+
 
     // Until API 21 it's Camera v1
     @Override
     @SuppressWarnings("deprecation")
-    public int getCameraCount() { return android.hardware.Camera.getNumberOfCameras(); }
+    public int getCameraCount() {
+        return android.hardware.Camera.getNumberOfCameras();
+    }
+
 
     // Until API 26 just specify time, after that specify effect also
     @Override
     @SuppressWarnings("deprecation")
     public void vibrate(Context context, long durationMillis) {
-        Vibrator vibratorManager = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        Vibrator vibratorManager = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         if (vibratorManager != null) {
             vibratorManager.vibrate(durationMillis);
         }
     }
+
 
     // Until API 26 do the copy using streams
     public void copyFile(@NonNull String source, @NonNull String target) throws IOException {
@@ -150,6 +176,7 @@ public class CompatV16 implements Compat {
             throw e;
         }
     }
+
 
     // Until API 26 do the copy using streams
     public long copyFile(@NonNull String source, @NonNull OutputStream target) throws IOException {
@@ -165,6 +192,7 @@ public class CompatV16 implements Compat {
         return count;
     }
 
+
     // Until API 26 do the copy using streams
     public long copyFile(@NonNull InputStream source, @NonNull String target) throws IOException {
         long bytesCopied;
@@ -177,6 +205,7 @@ public class CompatV16 implements Compat {
         }
         return bytesCopied;
     }
+
 
     private long copyFile(@NonNull InputStream source, @NonNull OutputStream target) throws IOException {
         // balance memory and performance, it appears 32k is the best trade-off
@@ -192,10 +221,12 @@ public class CompatV16 implements Compat {
         return count;
     }
 
+
     @Override
     public Object initTtsParams() {
         return new HashMap<String, String>();
     }
+
 
     @Override
     @SuppressWarnings("deprecation")
@@ -204,6 +235,7 @@ public class CompatV16 implements Compat {
         params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
         return tts.speak(text, queueMode, params);
     }
+
 
     @Override
     @SuppressWarnings("deprecation")

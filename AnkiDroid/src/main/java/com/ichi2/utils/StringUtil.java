@@ -23,7 +23,9 @@ import androidx.annotation.Nullable;
 
 public class StringUtil {
 
-    /** Trims from the right hand side of a string */
+    /**
+     * Trims from the right hand side of a string
+     */
     @Nullable
     @Contract("null -> null; !null -> !null")
     public static String trimRight(@Nullable String s) {

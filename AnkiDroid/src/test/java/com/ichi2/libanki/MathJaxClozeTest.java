@@ -18,8 +18,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class MathJaxClozeTest extends RobolectricTest {
@@ -41,6 +41,7 @@ public class MathJaxClozeTest extends RobolectricTest {
         assertEquals(escaped_s2, Template.removeFormattingFromMathjax(original_s2, "1"));
     }
 
+
     @Test
     public void verifyMathJaxClozeCards() {
         final Context context = ApplicationProvider.getApplicationContext();
@@ -61,12 +62,13 @@ public class MathJaxClozeTest extends RobolectricTest {
         assertThat(cards.get(4).q(), containsString("class=cloze"));
     }
 
+
     @Test
     public void verifyMathJaxInCloze() {
         final Context context = ApplicationProvider.getApplicationContext();
 
         Collection c = getCol();
-	{
+        {
             Note f = c.newNote(c.getModels().byName("Cloze"));
             f.setItem("Text", "\\(1 \\div 2 =\\){{c1::\\(\\frac{1}{2}\\)}}");
             c.addNote(f);
@@ -78,9 +80,9 @@ public class MathJaxClozeTest extends RobolectricTest {
             assertThat(q, containsString("\\(1 \\div 2 =\\)"));
             assertThat(a, containsString("\\(1 \\div 2 =\\)"));
             assertThat(a, containsString("<span class=cloze>\\(\\frac{1}{2}\\)</span>"));
-	}
+        }
 
-	{
+        {
             Note f = c.newNote(c.getModels().byName("Cloze"));
             f.setItem("Text", "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]");
             c.addNote(f);
@@ -88,8 +90,9 @@ public class MathJaxClozeTest extends RobolectricTest {
             Card c2 = cards.get(0);
             String q = c2.q();
             assertThat(q, containsString("\\(a\\) <span class=cloze>[...]</span> \\[ [...] \\]"));
-	}
+        }
     }
+
 
     @Test
     public void verifyComplicatedMathJaxCloze() {
@@ -109,9 +112,9 @@ public class MathJaxClozeTest extends RobolectricTest {
         assertThat(a, endsWith("</style>the \\((\\)<span class=cloze>\\(x\\)</span>\\()\\) is \\(y\\) but not <span class=cloze>\\(z\\)</span> or \\(\\lambda\\)<br>\n"));
     }
 
+
     @Test
-    public void textContainsMathjax()
-    {
+    public void textContainsMathjax() {
         assertFalse(Template.textContainsMathjax("Hello world."));
         assertFalse(Template.textContainsMathjax(""));
         assertTrue(Template.textContainsMathjax("This is an inline! \\(1 \\div 2 =\\){{c1::\\(\\frac{1}{2}\\)}}"));

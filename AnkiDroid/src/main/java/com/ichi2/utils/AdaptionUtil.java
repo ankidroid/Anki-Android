@@ -34,6 +34,7 @@ public class AdaptionUtil {
     private static boolean sHasRunWebBrowserCheck = false;
     private static boolean sHasWebBrowser = true;
 
+
     public static boolean hasWebBrowser(Context context) {
         if (sHasRunWebBrowserCheck) {
             return sHasWebBrowser;
@@ -81,6 +82,7 @@ public class AdaptionUtil {
             return false;
         }
     }
+
 
     public static boolean isRestrictedLearningDevice() {
         if (!sHasRunRestrictedLearningDeviceCheck) {

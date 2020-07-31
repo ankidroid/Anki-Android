@@ -30,13 +30,12 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
-
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,9 +58,11 @@ public class RobolectricTest {
 
     private ArrayList<ActivityController> controllersForCleanup = new ArrayList<>();
 
+
     protected void saveControllerForCleanup(ActivityController controller) {
         controllersForCleanup.add(controller);
     }
+
 
     @Before
     public void setUp() {
@@ -77,6 +78,7 @@ public class RobolectricTest {
         //See: #6140 - This global ideally shouldn't exist, but it will cause crashes if set.
         DialogHandler.discardMessage();
     }
+
 
     @After
     public void tearDown() {
@@ -109,12 +111,13 @@ public class RobolectricTest {
 
 
     protected void clickDialogButton(DialogAction button, boolean checkDismissed) {
-        MaterialDialog dialog = (MaterialDialog)ShadowDialog.getLatestDialog();
+        MaterialDialog dialog = (MaterialDialog) ShadowDialog.getLatestDialog();
         dialog.getActionButton(button).performClick();
         if (checkDismissed) {
             Assert.assertTrue("Dialog not dismissed?", shadowOf(dialog).hasBeenDismissed());
         }
     }
+
 
     /**
      * Get the current dialog text. Will return null if no dialog visible *or* if you check for dismissed and it has been dismissed
@@ -122,7 +125,7 @@ public class RobolectricTest {
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      */
     protected String getDialogText(boolean checkDismissed) {
-        MaterialDialog dialog = (MaterialDialog)ShadowDialog.getLatestDialog();
+        MaterialDialog dialog = (MaterialDialog) ShadowDialog.getLatestDialog();
         if (dialog == null || dialog.getContentView() == null) {
             return null;
         }
@@ -135,14 +138,22 @@ public class RobolectricTest {
         return dialog.getContentView().getText().toString();
     }
 
+
     // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
     protected void advanceRobolectricLooper() {
         shadowOf(getMainLooper()).idle();
-        try { Thread.sleep(500); } catch (Exception e) { Timber.e(e); }
+        try {
+            Thread.sleep(500);
+        } catch (Exception e) {
+            Timber.e(e);
+        }
 
     }
 
-    /** This can probably be implemented in a better manner */
+
+    /**
+     * This can probably be implemented in a better manner
+     */
     protected void waitForAsyncTasksToComplete() {
         advanceRobolectricLooper();
     }
@@ -157,6 +168,7 @@ public class RobolectricTest {
         return getTargetContext().getString(res);
     }
 
+
     protected String getQuantityString(int res, int quantity, Object... formatArgs) {
         return getTargetContext().getResources().getQuantityString(res, quantity, formatArgs);
     }
@@ -166,7 +178,10 @@ public class RobolectricTest {
         return CollectionHelper.getInstance().getCol(getTargetContext());
     }
 
-    /** Call this method in your test if you to test behavior with a null collection */
+
+    /**
+     * Call this method in your test if you to test behavior with a null collection
+     */
     protected void enableNullCollection() {
         CollectionHelper.LazyHolder.INSTANCE = new CollectionHelper() {
             @Override
@@ -176,15 +191,20 @@ public class RobolectricTest {
         };
     }
 
-    /** Restore regular collection behavior */
+
+    /**
+     * Restore regular collection behavior
+     */
     protected void disableNullCollection() {
         CollectionHelper.LazyHolder.INSTANCE = new CollectionHelper();
     }
+
 
     protected Model getCurrentDatabaseModelCopy(String modelName) throws JSONException {
         Models collectionModels = getCol().getModels();
         return new Model(collectionModels.byName(modelName).toString().trim());
     }
+
 
     protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
         ActivityController<T> controller = Robolectric.buildActivity(clazz, i)
@@ -193,9 +213,11 @@ public class RobolectricTest {
         return controller.get();
     }
 
+
     protected Note addNoteUsingBasicModel(String front, String back) {
         return addNoteUsingModelName("Basic", front, back);
     }
+
 
     protected Note addNoteUsingModelName(String name, String... fields) {
         Model model = getCol().getModels().byName(name);
@@ -205,7 +227,7 @@ public class RobolectricTest {
             throw new IllegalArgumentException(String.format("Could not find model '%s'", name));
         }
         Note n = getCol().newNote(model);
-        for(int i = 0; i < fields.length; i++) {
+        for (int i = 0; i < fields.length; i++) {
             n.setField(i, fields[i]);
         }
         if (getCol().addNote(n) == 0) {
@@ -238,13 +260,16 @@ public class RobolectricTest {
         }
     }
 
+
     protected long addDeck(String deckName) {
         return getCol().getDecks().id(deckName, true);
     }
 
+
     protected long addDynamicDeck(String name) {
         return getCol().getDecks().newDyn(name);
     }
+
 
     protected void ensureCollectionLoadIsSynchronous() {
         //HACK: We perform this to ensure that onCollectionLoaded is performed synchronously when startLoadingCollection
@@ -267,7 +292,7 @@ public class RobolectricTest {
 
 
     protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
-        boolean[] completed = new boolean[] { false };
+        boolean[] completed = new boolean[] {false};
         CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {

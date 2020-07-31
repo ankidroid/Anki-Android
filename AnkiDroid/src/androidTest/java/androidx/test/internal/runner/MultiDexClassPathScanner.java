@@ -50,6 +50,7 @@ class MultiDexClassPathScanner extends ClassPathScanner {
     private final List<String> classPathEntries;
     private final Context targetContext;
 
+
     public MultiDexClassPathScanner(List<String> classPath, Context targetContext) {
         super(classPath);
         //There's no accessor in the base class.
@@ -58,15 +59,16 @@ class MultiDexClassPathScanner extends ClassPathScanner {
         this.targetContext = targetContext;
     }
 
+
     @Override
     public Set<String> getClassPathEntries(ClassNameFilter filter) {
         Set<String> ret = new LinkedHashSet<>();
         String absolutePath = targetContext.getCacheDir().getAbsolutePath();
 
         for (String classPath : classPathEntries) {
-            for (String dexPath: extractDexFilesFromApk(classPath, absolutePath)) {
+            for (String dexPath : extractDexFilesFromApk(classPath, absolutePath)) {
                 List<String> classes = extractClassesFromDexPath(dexPath);
-                for (String name: classes) {
+                for (String name : classes) {
                     if (filter.accept(name)) {
                         ret.add(name);
                     }
@@ -77,11 +79,12 @@ class MultiDexClassPathScanner extends ClassPathScanner {
         return ret;
     }
 
+
     private List<String> extractClassesFromDexPath(String dexPath) {
         List<String> ret = new ArrayList<>();
         try {
             DexBackedDexFile dex = DexFileFactory.loadDexFile(new File(dexPath), Opcodes.forApi(Build.VERSION.SDK_INT));
-            for (ClassDef classDef: dex.getClasses()) {
+            for (ClassDef classDef : dex.getClasses()) {
                 String typeName = extractTypeNameFromDef(classDef);
                 ret.add(typeName);
             }

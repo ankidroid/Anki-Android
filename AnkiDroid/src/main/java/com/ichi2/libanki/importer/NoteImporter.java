@@ -10,10 +10,12 @@ public class NoteImporter extends Importer {
         super(col, file);
     }
 
+
     @Override
     public void run() {
         // do nothing
     }
+
 
     public int getTotal() {
         return mTotal;

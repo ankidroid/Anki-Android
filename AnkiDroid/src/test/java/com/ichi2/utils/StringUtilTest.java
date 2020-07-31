@@ -31,15 +31,18 @@ public class StringUtilTest {
         assertThat(trimRight(null), is(nullValue()));
     }
 
+
     @Test
     public void trimRightWhiteSpaceIsBlankString() {
         assertThat(trimRight(" "), is(""));
     }
 
+
     @Test
     public void trimRightOnlyTrimsRight() {
         assertThat(trimRight(" a "), is(" a"));
     }
+
 
     @Test
     public void trimRightDoesNothingOnTrimmedString() {

@@ -7,7 +7,9 @@ import com.ichi2.utils.FunctionalInterfaces.Supplier;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 
-/** Extension methods over the SharedPreferences class */
+/**
+ * Extension methods over the SharedPreferences class
+ */
 public class PreferenceExtensions {
 
     /**

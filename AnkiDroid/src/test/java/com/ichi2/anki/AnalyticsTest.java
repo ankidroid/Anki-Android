@@ -57,6 +57,7 @@ public class AnalyticsTest {
     @Mock
     private SharedPreferences.Editor mMockSharedPreferencesEditor;
 
+
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);

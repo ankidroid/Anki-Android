@@ -27,7 +27,6 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
-import com.ichi2.utils.JSONObject;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -58,6 +57,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat("Cards list is correct", ((TextView) n.findViewById(R.id.CardEditorCardsText)).getText().toString(), is("Cards: Card 1"));
     }
 
+
     @Test
     public void verifyPreviewAddingNote() {
         NoteEditor n = getNoteEditorAdding(NoteType.BASIC).withFirstField("Preview Test").build();
@@ -73,6 +73,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat("Bundle has ordinal 0 for ephemeral preview", intent.intent.getIntExtra("ordinal", -1), is(0));
         assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), is(true));
     }
+
 
     @Test
     public void whenEditingMultimediaEditUsesCurrentValueOfFields() {
@@ -90,6 +91,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat("Provided value should be the updated value", actualField.getFormattedValue(), is("Good Afternoon"));
     }
 
+
     @Test
     public void errorSavingNoteWithNoFirstFieldDisplaysNoFirstField() {
         NoteEditor noteEditor = getNoteEditorAdding(NoteType.BASIC)
@@ -100,6 +102,7 @@ public class NoteEditorTest extends RobolectricTest {
 
         assertThat(actualResourceId, is(R.string.note_editor_no_first_field));
     }
+
 
     @Test
     public void errorSavingInvalidNoteWithAllFieldsDisplaysInvalidTemplate() {
@@ -114,6 +117,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(actualResourceId, is(R.string.note_editor_no_cards_created_all_fields));
     }
 
+
     @Test
     public void errorSavingInvalidNoteWitSomeFieldsDisplaysEnterMore() {
         NoteEditor noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
@@ -126,6 +130,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(actualResourceId, is(R.string.note_editor_no_cards_created));
     }
 
+
     @Test
     public void errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() {
         NoteEditor noteEditor = getNoteEditorAdding(NoteType.CLOZE)
@@ -136,6 +141,7 @@ public class NoteEditorTest extends RobolectricTest {
 
         assertThat(actualResourceId, is(R.string.note_editor_no_cloze_delations));
     }
+
 
     @Test
     public void errorSavingClozeNoteWithNoClozeDeletionsDisplaysClozeError() {
@@ -148,6 +154,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(actualResourceId, is(R.string.note_editor_no_cloze_delations));
     }
 
+
     @Test
     public void errorSavingNoteWithNoTemplatesShowsNoCardsCreated() {
         NoteEditor noteEditor = getNoteEditorAdding(NoteType.BACKTOFRONT)
@@ -158,6 +165,7 @@ public class NoteEditorTest extends RobolectricTest {
 
         assertThat(actualResourceId, is(R.string.note_editor_no_cards_created));
     }
+
 
     @Test
     public void clozeNoteWithNoClozeDeletionsDoesNotSave() {
@@ -171,6 +179,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(getCardCount(), is(initialCards));
     }
 
+
     @Test
     public void clozeNoteWithClozeDeletionsDoesSave() {
         int initialCards = getCardCount();
@@ -182,6 +191,7 @@ public class NoteEditorTest extends RobolectricTest {
 
         assertThat(getCardCount(), is(initialCards + 1));
     }
+
 
     @Test
     @Ignore("Not yet implemented")
@@ -197,6 +207,7 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(getCardCount(), is(initialCards));
     }
 
+
     @Test
     public void verifyStartupAndCloseWithNoCollectionDoesNotCrash() {
         enableNullCollection();
@@ -210,6 +221,7 @@ public class NoteEditorTest extends RobolectricTest {
             assertThat("Activity should be cancelled as no changes were made", result.getResultCode(), is(Activity.RESULT_CANCELED));
         }
     }
+
 
     @Test
     public void copyNoteCopiesDeckId() {
@@ -242,6 +254,7 @@ public class NoteEditorTest extends RobolectricTest {
         return getCol().cardCount();
     }
 
+
     private NoteEditorTestBuilder getNoteEditorAdding(NoteType noteType) {
         Model n = makeNoteForType(noteType);
         return new NoteEditorTestBuilder(n);
@@ -250,8 +263,10 @@ public class NoteEditorTest extends RobolectricTest {
 
     private Model makeNoteForType(NoteType noteType) {
         switch (noteType) {
-            case BASIC: return getCol().getModels().byName("Basic");
-            case CLOZE: return getCol().getModels().byName("Cloze");
+            case BASIC:
+                return getCol().getModels().byName("Basic");
+            case CLOZE:
+                return getCol().getModels().byName("Cloze");
             case BACKTOFRONT: {
                 String name = super.addNonClozeModel("Reversed", new String[] {"Front", "Back"}, "{{Back}}", "{{Front}}");
                 return getCol().getModels().byName(name);
@@ -260,7 +275,8 @@ public class NoteEditorTest extends RobolectricTest {
                 String name = super.addNonClozeModel("Invalid", new String[] {"Front", "Back", "Side"}, "", "");
                 return getCol().getModels().byName(name);
             }
-            default: throw new IllegalStateException(String.format("unexpected value: %s", noteType));
+            default:
+                throw new IllegalStateException(String.format("unexpected value: %s", noteType));
         }
     }
 
@@ -273,6 +289,7 @@ public class NoteEditorTest extends RobolectricTest {
     private void enterTextIntoField(NoteEditor n, int i, String newText) {
         n.setFieldValueFromUi(i, newText);
     }
+
 
     private <T extends NoteEditor> T getNoteEditorAddingNote(FromScreen from, Class<T> clazz) {
         Intent i = new Intent();
@@ -290,10 +307,12 @@ public class NoteEditorTest extends RobolectricTest {
         return super.startActivityNormallyOpenCollectionWithIntent(clazz, i);
     }
 
+
     private NoteEditor getNoteEditorEditingExistingBasicNote(String front, String back, FromScreen from) {
         Note n = super.addNoteUsingBasicModel(front, back);
         return getNoteEditorEditingExistingBasicNote(n, from, NoteEditor.class);
     }
+
 
     private <T extends NoteEditor> T getNoteEditorEditingExistingBasicNote(Note n, FromScreen from, Class<T> clazz) {
 
@@ -313,19 +332,28 @@ public class NoteEditorTest extends RobolectricTest {
         return super.startActivityNormallyOpenCollectionWithIntent(clazz, i);
     }
 
+
     private enum FromScreen {
         DECK_LIST,
         REVIEWER
     }
 
-    /** We don't use constants here to allow for additional note types to be defined */
+
+
+    /**
+     * We don't use constants here to allow for additional note types to be defined
+     */
     private enum NoteType {
         BASIC,
         CLOZE,
-        /**Basic, but Back is on the front */
+        /**
+         * Basic, but Back is on the front
+         */
         BACKTOFRONT,
         THREE_FIELD_INVALID_TEMPLATE
     }
+
+
 
     @SuppressWarnings("WeakerAccess")
     public class NoteEditorTestBuilder {
@@ -343,9 +371,11 @@ public class NoteEditorTest extends RobolectricTest {
             this.mModel = model;
         }
 
+
         public NoteEditor build() {
             return build(NoteEditor.class);
         }
+
 
         public <T extends NoteEditor> T build(Class<T> clazz) {
             getCol().getModels().setCurrent(mModel);
@@ -359,6 +389,7 @@ public class NoteEditorTest extends RobolectricTest {
             }
             return noteEditor;
         }
+
 
         public NoteEditorTestBuilder withNoFirstField() {
             return this;

@@ -22,6 +22,7 @@ public class NoteTest {
         assertThat("No data should return a cloze index of 1 the next.", expected, is(1));
     }
 
+
     @Test
     public void negativeFieldIsIgnored() {
         String fieldValue = "{{c-1::foo}}";
@@ -29,6 +30,7 @@ public class NoteTest {
 
         assertThat("The next consecutive value should be returned.", actual, is(1));
     }
+
 
     @Test
     public void singleFieldReturnsNextValue() {
@@ -38,6 +40,7 @@ public class NoteTest {
         assertThat("The next consecutive value should be returned.", actual, is(3));
     }
 
+
     @Test
     public void multiFieldIsHandled() {
         List<String> fields = Arrays.asList("{{c1::foo}}", "{{c2::bar}}");
@@ -45,6 +48,7 @@ public class NoteTest {
 
         assertThat("The highest of all fields should be used.", actual, is(3));
     }
+
 
     @Test
     public void missingFieldIsSkipped() {

@@ -51,7 +51,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
     }
 
 
-
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
@@ -71,6 +70,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         UsageAnalytics.sendAnalyticsEvent(this.getClass().getSimpleName(), "disabled");
     }
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().contentEquals("com.sec.android.widgetapp.APPWIDGET_RESIZE")) {
@@ -78,6 +78,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         }
         super.onReceive(context, intent);
     }
+
 
     private static void updateWidgetDimensions(Context context, RemoteViews updateViews, Class<?> cls) {
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
@@ -96,13 +97,13 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
             int horizontal, vertical;
             float text;
             if ((width / height) > 0.8) {
-                horizontal = (int) (((width - (height * 0.8))/2 + 4) * scale + 0.5f);
+                horizontal = (int) (((width - (height * 0.8)) / 2 + 4) * scale + 0.5f);
                 vertical = (int) (4 * scale + 0.5f);
-                text = (float)(Math.sqrt(height * 0.8 / width) * 18);
+                text = (float) (Math.sqrt(height * 0.8 / width) * 18);
             } else {
-                vertical = (int) (((height - (width * 1.25))/2 + 4) * scale + 0.5f);
+                vertical = (int) (((height - (width * 1.25)) / 2 + 4) * scale + 0.5f);
                 horizontal = (int) (4 * scale + 0.5f);
-                text = (float)(Math.sqrt(width * 1.25 / height) * 18);
+                text = (float) (Math.sqrt(width * 1.25 / height) * 18);
             }
 
             updateViews.setTextViewTextSize(R.id.widget_due, TypedValue.COMPLEX_UNIT_SP, text);
@@ -114,17 +115,23 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
     public static class UpdateService extends Service {
 
-        /** The cached number of total due cards. */
+        /**
+         * The cached number of total due cards.
+         */
         private int dueCardsCount;
 
 
-        /** The cached estimated reviewing time. */
+        /**
+         * The cached estimated reviewing time.
+         */
         private int eta;
+
 
         public void doUpdate(Context context) {
             AppWidgetManager.getInstance(context)
                     .updateAppWidget(new ComponentName(context, AnkiDroidWidgetSmall.class), buildUpdate(context, true));
         }
+
 
         @Override
         @Deprecated
@@ -217,6 +224,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
 
             return updateViews;
         }
+
 
         @Override
         public IBinder onBind(Intent arg0) {

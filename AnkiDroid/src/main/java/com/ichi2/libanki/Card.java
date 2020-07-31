@@ -22,11 +22,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
-import com.ichi2.utils.Assert;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
-import com.ichi2.utils.LanguageUtil;
+import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.LanguageUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -38,33 +38,33 @@ import java.util.Locale;
 import java.util.Set;
 
 /**
- A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
- the next interval), the note it is derived from (from which field data is retrieved), its own ownership (which deck it
- currently belongs to), and the retrieval of presentation elements (filled-in templates).
- 
- Card presentation has two components: the question (front) side and the answer (back) side. The presentation of the
- card is derived from the template of the card's Card Type. The Card Type is a component of the Note Type (see Models)
- that this card is derived from.
- 
- This class is responsible for:
- - Storing and retrieving database entries that map to Cards in the Collection
- - Providing the HTML representation of the Card's question and answer
- - Recording the results of review (answer chosen, time taken, etc)
-
- It does not:
- - Generate new cards (see Collection)
- - Store the templates or the style sheet (see Models)
- 
- Type: 0=new, 1=learning, 2=due
- Queue: same as above, and:
-        -1=suspended, -2=user buried, -3=sched buried
- Due is used differently for different queues.
- - new queue: note id or random int
- - rev queue: integer day
- - lrn queue: integer timestamp
+ * A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
+ * the next interval), the note it is derived from (from which field data is retrieved), its own ownership (which deck it
+ * currently belongs to), and the retrieval of presentation elements (filled-in templates).
+ * <p>
+ * Card presentation has two components: the question (front) side and the answer (back) side. The presentation of the
+ * card is derived from the template of the card's Card Type. The Card Type is a component of the Note Type (see Models)
+ * that this card is derived from.
+ * <p>
+ * This class is responsible for:
+ * - Storing and retrieving database entries that map to Cards in the Collection
+ * - Providing the HTML representation of the Card's question and answer
+ * - Recording the results of review (answer chosen, time taken, etc)
+ * <p>
+ * It does not:
+ * - Generate new cards (see Collection)
+ * - Store the templates or the style sheet (see Models)
+ * <p>
+ * Type: 0=new, 1=learning, 2=due
+ * Queue: same as above, and:
+ * -1=suspended, -2=user buried, -3=sched buried
+ * Due is used differently for different queues.
+ * - new queue: note id or random int
+ * - rev queue: integer day
+ * - lrn queue: integer timestamp
  */
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.ExcessiveMethodLength","PMD.FieldDeclarationsShouldBeAtStartOfClass",
-                    "PMD.MethodNamingConventions"})
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes", "PMD.ExcessiveMethodLength", "PMD.FieldDeclarationsShouldBeAtStartOfClass",
+        "PMD.MethodNamingConventions"})
 public class Card implements Cloneable {
 
     public static final int TYPE_REV = 2;
@@ -169,10 +169,10 @@ public class Card implements Cloneable {
     }
 
 
-
     public void flush() {
         flush(true);
     }
+
 
     public void flush(boolean changeModUsn) {
         if (changeModUsn) {
@@ -181,12 +181,12 @@ public class Card implements Cloneable {
         }
         // bug check
         //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
-            // TODO: runHook("odueInvalid");
+        // TODO: runHook("odueInvalid");
         //}
         assert (mDue < Long.valueOf("4294967296"));
         mCol.getDb().execute(
                 "insert or replace into cards values " +
-                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 mId,
                 mNid,
                 mDid,
@@ -215,7 +215,7 @@ public class Card implements Cloneable {
         mUsn = mCol.usn();
         // bug check
         //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
-            // TODO: runHook("odueInvalid");
+        // TODO: runHook("odueInvalid");
         //}
         assert (mDue < Long.valueOf("4294967296"));
 
@@ -375,9 +375,10 @@ public class Card implements Cloneable {
         return s.substring(pos + target.length()).trim();
     }
 
+
     /**
      * Save the currently elapsed reviewing time so it can be restored on resume.
-     *
+     * <p>
      * Use this method whenever a review session (activity) has been paused. Use the resumeTimer()
      * method when the session resumes to start counting review time again.
      */
@@ -388,7 +389,7 @@ public class Card implements Cloneable {
 
     /**
      * Resume the timer that counts the time spent reviewing this card.
-     *
+     * <p>
      * Unlike the desktop client, AnkiDroid must pause and resume the process in the middle of
      * reviewing. This method is required to keep track of the actual amount of time spent in
      * the reviewer and *must* be called on resume before any calls to timeTaken() take place
@@ -398,7 +399,11 @@ public class Card implements Cloneable {
         mTimerStarted = Utils.now() - mElapsedTime;
     }
 
-    public void setTimerStarted(double timeStarted){ mTimerStarted = timeStarted; }
+
+    public void setTimerStarted(double timeStarted) {
+        mTimerStarted = timeStarted;
+    }
+
 
     public long getId() {
         return mId;
@@ -409,8 +414,9 @@ public class Card implements Cloneable {
         mMod = mod;
     }
 
+
     public long getMod() {
-        return mMod ;
+        return mMod;
     }
 
 
@@ -443,6 +449,7 @@ public class Card implements Cloneable {
     public int getLeft() {
         return mLeft;
     }
+
 
     @Consts.CARD_QUEUE
     public int getQueue() {
@@ -590,7 +597,7 @@ public class Card implements Cloneable {
 
     public Card clone() {
         try {
-            return (Card)super.clone();
+            return (Card) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
@@ -600,6 +607,7 @@ public class Card implements Cloneable {
     // A list of class members to skip in the toString() representation
     public static final Set<String> SKIP_PRINT = new HashSet<>(Arrays.asList("SKIP_PRINT", "$assertionsDisabled", "TYPE_LRN",
             "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"));
+
 
     public String toString() {
         List<String> members = new ArrayList<>();
@@ -617,19 +625,22 @@ public class Card implements Cloneable {
         return TextUtils.join(",  ", members);
     }
 
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Card) {
-            return this.getId() == ((Card)obj).getId();
+            return this.getId() == ((Card) obj).getId();
         }
         return super.equals(obj);
     }
 
+
     @Override
     public int hashCode() {
         // Map a long to an int. For API>=24 you would just do `Long.hashCode(this.getId())`
-        return (int)(this.getId()^(this.getId()>>>32));
+        return (int) (this.getId() ^ (this.getId() >>> 32));
     }
+
 
     public static int intToFlag(int flags) {
         // setting all bits to 0, except the three first one.
@@ -637,9 +648,11 @@ public class Card implements Cloneable {
         return flags & 0b111;
     }
 
+
     public int userFlag() {
         return Card.intToFlag(mFlags);
     }
+
 
     public static int setFlagInInt(int mFlags, int flag) {
         Assert.that(0 <= flag, "flag to set is negative");
@@ -650,9 +663,11 @@ public class Card implements Cloneable {
         return extraData | flag;
     }
 
+
     public void setUserFlag(int flag) {
         mFlags = setFlagInInt(mFlags, flag);
     }
+
 
     // not in Anki.
     public String getDueString() {
@@ -662,6 +677,7 @@ public class Card implements Cloneable {
         }
         return t;
     }
+
 
     // as in Anki aqt/browser.py
     private String nextDue() {
@@ -683,12 +699,16 @@ public class Card implements Cloneable {
         return LanguageUtil.getShortDateFormatFromS(date);
     }
 
-    /** Non libAnki */
+
+    /**
+     * Non libAnki
+     */
     public boolean isDynamic() {
         //I have cards in my collection with oDue <> 0 and oDid = 0.
         //These are not marked as dynamic.
         return this.getODid() != 0;
     }
+
 
     public boolean isReview() {
         return this.getType() == Consts.CARD_TYPE_REV && this.getQueue() == Consts.QUEUE_TYPE_REV;

@@ -22,10 +22,10 @@ package com.ichi2.utils;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
+import java.io.File;
+
 import androidx.annotation.NonNull;
 import androidx.exifinterface.media.ExifInterface;
-
-import java.io.File;
 
 public class ExifUtil {
     @NonNull

@@ -13,6 +13,7 @@ import org.robolectric.annotation.LooperMode;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static android.os.Looper.getMainLooper;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_2;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_3;
@@ -22,8 +23,6 @@ import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SH
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SIGNAL_NOOP;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl;
-
-import static android.os.Looper.getMainLooper;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
@@ -38,15 +37,18 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         protected void setTitle() {
         }
 
+
         public String getTypedInput() {
             return super.getTypedInputText();
         }
     }
 
+
     public String typeAnsAnswerFilter(String buf, String userAnswer, String correctAnswer) {
         NonAbstractFlashcardViewer nafv = new NonAbstractFlashcardViewer();
         return nafv.typeAnsAnswerFilter(buf, userAnswer, correctAnswer);
     }
+
 
     @Test
     public void testTypeAnsAnswerFilterNormalCorrect() {
@@ -81,8 +83,9 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertEquals(expectedOutput, typeAnsAnswerFilter(buf, "hello", "hello"));
     }
 
+
     @Test
-    public void testTypeAnsAnswerFilterNormalIncorrect()  {
+    public void testTypeAnsAnswerFilterNormalIncorrect() {
         String buf = "<style>.card {\n" +
                 " font-family: arial;\n" +
                 " font-size: 20px;\n" +
@@ -113,6 +116,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         // Make sure $! as typed shows up as $!
         assertEquals(expectedOutput, typeAnsAnswerFilter(buf, "hello", "xyzzy$$$22"));
     }
+
 
     @Test
     public void testTypeAnsAnswerFilterNormalEmpty() {
@@ -147,6 +151,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertEquals(expectedOutput, typeAnsAnswerFilter(buf, "", "hello"));
     }
 
+
     @Test
     public void testTypeAnsAnswerFilterDollarSignsCorrect() {
         String buf = "<style>.card {\n" +
@@ -179,6 +184,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         // Make sure $! as typed shows up as $!
         assertEquals(expectedOutput, typeAnsAnswerFilter(buf, "$!", "$!"));
     }
+
 
     @Test
     public void testTypeAnsAnswerFilterDollarSignsIncorrect() {
@@ -213,6 +219,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertEquals(expectedOutput, typeAnsAnswerFilter(buf, "$!", "hello"));
     }
 
+
     @Test
     public void testTypeAnsAnswerFilterDollarSignsEmpty() {
         String buf = "<style>.card {\n" +
@@ -246,11 +253,13 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertEquals(expectedOutput, typeAnsAnswerFilter(buf, "", "$!"));
     }
 
+
     @Test
     public void relinquishFocusIsParsedFromSignal() {
         String url = "signal:relinquishFocus"; //confirmed data from JS transition via debugger.
         assertEquals(RELINQUISH_FOCUS, getSignalFromUrl(url));
     }
+
 
     @Test
     public void typeFocusIsParsedFromSignal() {
@@ -258,11 +267,13 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertEquals(TYPE_FOCUS, getSignalFromUrl(url));
     }
 
+
     @Test
     public void showAnswerIsParsedFromSignal() {
         String url = "signal:show_answer";
         assertEquals(SHOW_ANSWER, getSignalFromUrl(url));
     }
+
 
     //I'd love to turn these int parameterised tests, but it feels like more overhead for just 4 tests.
     @Test
@@ -270,27 +281,35 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         String url = "signal:answer_ease1";
         assertEquals(ANSWER_ORDINAL_1, getSignalFromUrl(url));
     }
+
+
     @Test
     public void ease2IsParsedFromSignal() {
         String url = "signal:answer_ease2";
         assertEquals(ANSWER_ORDINAL_2, getSignalFromUrl(url));
     }
+
+
     @Test
     public void ease3IsParsedFromSignal() {
         String url = "signal:answer_ease3";
         assertEquals(ANSWER_ORDINAL_3, getSignalFromUrl(url));
     }
+
+
     @Test
     public void ease4IsParsedFromSignal() {
         String url = "signal:answer_ease4";
         assertEquals(ANSWER_ORDINAL_4, getSignalFromUrl(url));
     }
 
+
     @Test
     public void invalidEaseIsParsedFromSignal() {
         String url = "signal:answer_ease0";
         assertEquals(SIGNAL_NOOP, getSignalFromUrl(url));
     }
+
 
     @Test
     public void invalidEncodingDoesNotCrash() {
@@ -301,6 +320,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         NonAbstractFlashcardViewer nafv = getViewer();
         AnkiAssert.assertDoesNotThrow(() -> nafv.handleUrlFromJavascript(url));
     }
+
 
     @Test
     public void validEncodingSetsAnswerCorrectly() {
@@ -328,7 +348,9 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         viewer.loadInitialCard();
         // Without this, AbstractFlashcardViewer.mCard is still null, and RobolectricTest.tearDown executes before
         // AsyncTasks spawned by by loading the viewer finish. Is there a way to synchronize these things while under test?
-        try { Thread.sleep(2000); } catch (Throwable t) { /* nothing */ }
+        try {
+            Thread.sleep(2000);
+        } catch (Throwable t) { /* nothing */ }
         shadowOf(getMainLooper()).idle();
         return viewer;
     }

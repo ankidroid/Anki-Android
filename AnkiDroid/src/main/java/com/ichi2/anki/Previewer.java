@@ -36,6 +36,7 @@ public class Previewer extends AbstractFlashcardViewer {
     private int mIndex;
     private boolean mShowingAnswer;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
@@ -44,7 +45,7 @@ public class Previewer extends AbstractFlashcardViewer {
         mCardList = getIntent().getLongArrayExtra("cardList");
         mIndex = getIntent().getIntExtra("index", -1);
 
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             mIndex = savedInstanceState.getInt("index", mIndex);
             mShowingAnswer = savedInstanceState.getBoolean("showingAnswer", mShowingAnswer);
         }
@@ -60,11 +61,12 @@ public class Previewer extends AbstractFlashcardViewer {
         startLoadingCollection();
     }
 
+
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         mCurrentCard = col.getCard(mCardList[mIndex]);
-        if (mShowingAnswer){
+        if (mShowingAnswer) {
             displayCardQuestion();
             displayCardAnswer();
         } else {
@@ -124,6 +126,7 @@ public class Previewer extends AbstractFlashcardViewer {
         return false;
     }
 
+
     private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -147,6 +150,7 @@ public class Previewer extends AbstractFlashcardViewer {
         }
     };
 
+
     private void updateButtonState() {
         // If we are in single-card mode, we show the "Show Answer" button on the question side
         // and hide all the buttons on the answer side.
@@ -167,8 +171,8 @@ public class Previewer extends AbstractFlashcardViewer {
         mEase3Layout.setVisibility(View.GONE);
         mEase4Layout.setVisibility(View.GONE);
 
-        final int[] background = Themes.getResFromAttr(this, new int[]{R.attr.hardButtonRef});
-        final int[] textColor = Themes.getColorFromAttr(this, new int[]{R.attr.hardButtonTextColor});
+        final int[] background = Themes.getResFromAttr(this, new int[] {R.attr.hardButtonRef});
+        final int[] textColor = Themes.getColorFromAttr(this, new int[] {R.attr.hardButtonTextColor});
 
         mNext1.setTextSize(30);
         mEase1.setVisibility(View.GONE);

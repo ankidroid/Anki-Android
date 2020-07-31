@@ -18,6 +18,7 @@ public class BeolingusParserTest {
         assertEquals("https://dict.tu-chemnitz.de/dings.cgi?speak=de/0/7/52qA5FttGIU;text=Wasser", pronunciationUrl);
     }
 
+
     @Test
     public void testHaystackCaseInsensitivity() {
         //#5810 - a search for "hello" did not match "Hello".
@@ -30,6 +31,7 @@ public class BeolingusParserTest {
         String pronunciationUrl = BeolingusParser.getPronunciationAddressFromTranslation(html, "hello");
         assertEquals("https://dict.tu-chemnitz.de/dings.cgi?speak=en/2/0/zQbP7qZh_u2;text=Hello", pronunciationUrl);
     }
+
 
     @Test
     public void testNeedleCaseInsensitivity() {
@@ -58,6 +60,7 @@ public class BeolingusParserTest {
         String pronunciationUrl = BeolingusParser.getPronunciationAddressFromTranslation(html, "straße");
         assertEquals("https://dict.tu-chemnitz.de/dings.cgi?speak=de/8/9/5wbPa4jy41_;text=Straße", pronunciationUrl);
     }
+
 
     @Test
     public void testMp3() {

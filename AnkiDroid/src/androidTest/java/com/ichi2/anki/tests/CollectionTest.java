@@ -1,14 +1,15 @@
 package com.ichi2.anki.tests;
 
 import android.Manifest;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.GrantPermissionRule;
 
 import com.ichi2.anki.CollectionHelper;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -21,6 +22,7 @@ public class CollectionTest {
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
             GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
 
     @Test
     public void testOpenCollection() {

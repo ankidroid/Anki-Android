@@ -22,7 +22,9 @@ import java.security.MessageDigest;
 
 public class TestUtils {
 
-    /** get the MD5 checksum (in hex) for the given filename */
+    /**
+     * get the MD5 checksum (in hex) for the given filename
+     */
     public static String getMD5(String filename) throws Exception {
 
         MessageDigest md = MessageDigest.getInstance("MD5");

@@ -39,23 +39,25 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
-@Config(sdk = { Build.VERSION_CODES.JELLY_BEAN,
-                Build.VERSION_CODES.JELLY_BEAN_MR1,
-                Build.VERSION_CODES.N })
+@Config(sdk = {Build.VERSION_CODES.JELLY_BEAN,
+        Build.VERSION_CODES.JELLY_BEAN_MR1,
+        Build.VERSION_CODES.N})
 public class LanguageUtilsTest extends RobolectricTest {
 
-    private static final String[] PREVIOUS_LANGUAGES = { "ar", "bg", "ca", "cs", "de", "el", "en", "eo", "es-AR", "es-ES", "et", "fa",
+    private static final String[] PREVIOUS_LANGUAGES = {"ar", "bg", "ca", "cs", "de", "el", "en", "eo", "es-AR", "es-ES", "et", "fa",
             "fi", "fr", "got", "gl", "hi", "hu", "ind", "it", "ja", "ko", "lt", "nl", "nn-NO", "no", "pl", "pt_PT", "pt_BR", "ro", "ru",
-            "sk", "sl", "sr", "sv", "th", "tr", "tt-RU", "uk", "vi", "zh_CN", "zh_TW" };
+            "sk", "sl", "sr", "sv", "th", "tr", "tt-RU", "uk", "vi", "zh_CN", "zh_TW"};
 
     private static final String[] CURRENT_LANGUAGES = {"af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
             "de", "el", "en", "eo", "es-AR", "es-ES", "et", "eu", "fa", "fi", "fil", "fr", "fy-NL", "ga-IE", "gl", "got",
             "gu-IN", "heb", "hi", "hr", "hu", "hy-AM", "ind", "is", "it", "ja", "jv", "ka", "kk", "km", "ko", "ku",
             "ky", "lt", "lv", "mk", "mn", "mr", "ms", "my", "nl", "nn-NO", "no", "pa-IN", "pl", "pt-BR", "pt-PT",
             "ro", "ru", "sat", "sk", "sl", "sq", "sr", "ss", "sv-SE", "sw", "ta", "te", "tg", "tgl", "th", "ti", "tn", "tr",
-            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yue", "zh-CN", "zh-TW", "zu" };
+            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yue", "zh-CN", "zh-TW", "zu"};
 
-    /** Languages which were removed for good reason */
+    /**
+     * Languages which were removed for good reason
+     */
     private static final HashSet<String> previousLanguageExclusions = Sets.newHashSet(
             "pt_PT", //pt-PT
             "pt_BR", //pt-BR
@@ -63,6 +65,7 @@ public class LanguageUtilsTest extends RobolectricTest {
             "zh_CN", //zh-CN
             "zh_TW"  //zh-TW
     );
+
 
     @Test
     public void testNoLanguageIsRemoved() {
@@ -72,10 +75,11 @@ public class LanguageUtilsTest extends RobolectricTest {
         List<String> previousLanguages = new ArrayList<>(asList(PREVIOUS_LANGUAGES));
         previousLanguages.removeAll(previousLanguageExclusions);
 
-        for (String language: previousLanguages) {
+        for (String language : previousLanguages) {
             assertThat(languages, hasItem(language));
         }
     }
+
 
     @Test
     public void testCurrentLanguagesHaveNotChanged() {
@@ -83,6 +87,7 @@ public class LanguageUtilsTest extends RobolectricTest {
         assertThat("Languages have been updated, please modify test variables: " +
                 "PREVIOUS_LANGUAGES and CURRENT_LANGUAGES", actual, contains(CURRENT_LANGUAGES));
     }
+
 
     @Test
     @Config(qualifiers = "en")
@@ -92,6 +97,7 @@ public class LanguageUtilsTest extends RobolectricTest {
                 is(LanguageUtil.getLocale("af").getDisplayLanguage()));
     }
 
+
     @Test
     @Config(qualifiers = "en")
     public void localeThreeLetterCodeResolves() {
@@ -99,6 +105,7 @@ public class LanguageUtilsTest extends RobolectricTest {
                 "Filipino",
                 is(LanguageUtil.getLocale("fil").getDisplayLanguage()));
     }
+
 
     @Test
     @Config(qualifiers = "en")
@@ -110,6 +117,7 @@ public class LanguageUtilsTest extends RobolectricTest {
                 "Portuguese (Brazil)",
                 is(LanguageUtil.getLocale("pt_BR").getDisplayName()));
     }
+
 
     @Test
     @Config(qualifiers = "en")

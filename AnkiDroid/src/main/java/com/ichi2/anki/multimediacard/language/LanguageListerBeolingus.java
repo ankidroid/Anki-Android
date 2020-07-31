@@ -31,7 +31,7 @@ public class LanguageListerBeolingus extends LanguageListerBase {
     public LanguageListerBeolingus() {
         super();
 
-        addLanguage((new Locale("eng")).getDisplayLanguage() , "en-de");
+        addLanguage((new Locale("eng")).getDisplayLanguage(), "en-de");
         addLanguage((new Locale("deu")).getDisplayLanguage(), "deen");
         addLanguage((new Locale("spa")).getDisplayLanguage(), "es-de");
         addLanguage((new Locale("por")).getDisplayLanguage(), "pt-de");

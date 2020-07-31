@@ -24,9 +24,11 @@ public class MockTime implements Time {
 
     private final long mTime;
 
+
     public MockTime(long time) {
         mTime = time;
     }
+
 
     @Override
     public long time() {
@@ -39,7 +41,10 @@ public class MockTime implements Time {
         return new Date(mTime);
     }
 
-    /**These need confirmation */
+
+    /**
+     * These need confirmation
+     */
 
     @Override
     public long intTime() {
@@ -49,6 +54,6 @@ public class MockTime implements Time {
 
     @Override
     public double now() {
-        return (double)mTime / 1000.0d;
+        return (double) mTime / 1000.0d;
     }
 }

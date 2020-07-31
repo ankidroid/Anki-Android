@@ -15,6 +15,7 @@ public class ModelBrowserContextMenu extends AnalyticsDialogFragment {
 
     private static MaterialDialog.ListCallback mContextMenuListener;
 
+
     public static ModelBrowserContextMenu newInstance(String label, MaterialDialog.ListCallback contextMenuListener) {
         mContextMenuListener = contextMenuListener;
         ModelBrowserContextMenu n = new ModelBrowserContextMenu();
@@ -23,6 +24,7 @@ public class ModelBrowserContextMenu extends AnalyticsDialogFragment {
         n.setArguments(b);
         return n;
     }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

@@ -1,19 +1,16 @@
-
 package com.ichi2.anki.dialogs;
 
 import android.os.Bundle;
 import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
-import com.ichi2.compat.CompatHelper;
 
 import java.io.File;
 
 public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
-    
+
     public static DeckPickerExportCompleteDialog newInstance(String exportPath) {
         DeckPickerExportCompleteDialog f = new DeckPickerExportCompleteDialog();
         Bundle args = new Bundle();
@@ -45,7 +42,8 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
                 .onNeutral((dialog, which) -> ((DeckPicker) getActivity()).dismissAllDialogFragments());
         return dialogBuilder.show();
     }
-    
+
+
     public String getNotificationTitle() {
         return res().getString(R.string.export_successful_title);
     }
@@ -65,5 +63,5 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
         b.putString("exportPath", getArguments().getString("exportPath"));
         msg.setData(b);
         return msg;
-    } 
+    }
 }

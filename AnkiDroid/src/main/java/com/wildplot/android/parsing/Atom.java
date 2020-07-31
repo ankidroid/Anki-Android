@@ -15,7 +15,13 @@
  ****************************************************************************************/
 package com.wildplot.android.parsing;
 
-import com.wildplot.android.parsing.AtomTypes.*;
+import com.wildplot.android.parsing.AtomTypes.FunctionXAtom;
+import com.wildplot.android.parsing.AtomTypes.FunctionXYAtom;
+import com.wildplot.android.parsing.AtomTypes.MathFunctionAtom;
+import com.wildplot.android.parsing.AtomTypes.NumberAtom;
+import com.wildplot.android.parsing.AtomTypes.VariableAtom;
+import com.wildplot.android.parsing.AtomTypes.XVariableAtom;
+import com.wildplot.android.parsing.AtomTypes.YVariableAtom;
 
 public class Atom implements TreeElement {
     private TopLevelParser parser;

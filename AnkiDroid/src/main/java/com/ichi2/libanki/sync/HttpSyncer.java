@@ -29,10 +29,10 @@ import com.ichi2.anki.web.CustomSyncServer;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.VersionUtils;
 
 import org.apache.http.entity.AbstractHttpEntity;
-import com.ichi2.utils.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -95,6 +95,7 @@ public class HttpSyncer {
     private volatile OkHttpClient mHttpClient;
     private final HostNum mHostNum;
 
+
     public HttpSyncer(String hkey, Connection con, HostNum hostNum) {
         mHKey = hkey;
         mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
@@ -102,6 +103,7 @@ public class HttpSyncer {
         mPostVars = new HashMap<>();
         mHostNum = hostNum;
     }
+
 
     private OkHttpClient.Builder getHttpClientBuilder() {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
@@ -122,12 +124,14 @@ public class HttpSyncer {
         return clientBuilder;
     }
 
+
     private OkHttpClient getHttpClient() {
         if (this.mHttpClient != null) {
             return mHttpClient;
         }
         return setupHttpClient();
     }
+
 
     //PERF: Thread safety isn't required for the current implementation
     private synchronized OkHttpClient setupHttpClient() {
@@ -151,27 +155,42 @@ public class HttpSyncer {
         }
     }
 
-    /** Note: Return value must be closed */
+
+    /**
+     * Note: Return value must be closed
+     */
     public Response req(String method) throws UnknownHttpResponseException {
         return req(method, null);
     }
 
-    /** Note: Return value must be closed */
+
+    /**
+     * Note: Return value must be closed
+     */
     public Response req(String method, InputStream fobj) throws UnknownHttpResponseException {
         return req(method, fobj, 6);
     }
 
-    /** Note: Return value must be closed */
+
+    /**
+     * Note: Return value must be closed
+     */
     public Response req(String method, int comp, InputStream fobj) throws UnknownHttpResponseException {
         return req(method, fobj, comp);
     }
 
-    /** Note: Return value must be closed */
+
+    /**
+     * Note: Return value must be closed
+     */
     public Response req(String method, InputStream fobj, int comp) throws UnknownHttpResponseException {
         return req(method, fobj, comp, null);
     }
 
-    /** Note: Return value must be closed */
+
+    /**
+     * Note: Return value must be closed
+     */
     private Response req(String method, InputStream fobj, int comp, JSONObject registerData) throws UnknownHttpResponseException {
         File tmpFileBuffer = null;
         try {
@@ -461,17 +480,21 @@ public class HttpSyncer {
         return getDefaultAnkiWebUrl();
     }
 
+
     protected String getUrlPrefix() {
         return "sync";
     }
+
 
     protected Integer getHostNum() {
         return mHostNum.getHostNum();
     }
 
+
     protected boolean isUsingCustomSyncServer(@Nullable SharedPreferences userPreferences) {
         return userPreferences != null && CustomSyncServer.isEnabled(userPreferences);
     }
+
 
     protected String getDefaultAnkiWebUrl() {
         String hostNumAsStringFormat = "";

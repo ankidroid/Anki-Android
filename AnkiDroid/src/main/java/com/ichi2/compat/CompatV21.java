@@ -1,4 +1,3 @@
-
 package com.ichi2.compat;
 
 import android.annotation.SuppressLint;
@@ -17,7 +16,9 @@ import com.ichi2.anki.AnkiDroidApp;
 
 import timber.log.Timber;
 
-/** Implementation of {@link Compat} for SDK level 21 */
+/**
+ * Implementation of {@link Compat} for SDK level 21
+ */
 @TargetApi(21)
 public class CompatV21 extends CompatV19 implements Compat {
 
@@ -30,9 +31,12 @@ public class CompatV21 extends CompatV19 implements Compat {
         ta.recycle();
     }
 
+
     // On API level 21 and higher, CookieManager will be set automatically, so there is nothing to do here.
     @Override
-    public void prepareWebViewCookies(Context context) {}
+    public void prepareWebViewCookies(Context context) {
+    }
+
 
     // A data of cookies may be lost when an application exists just after it was written.
     // On API level 21 and higher, this problem can be solved by using CookieManager.flush().
@@ -41,15 +45,17 @@ public class CompatV21 extends CompatV19 implements Compat {
         CookieManager.getInstance().flush();
     }
 
+
     @Override
     public void setStatusBarColor(Window window, int color) {
         window.setStatusBarColor(color);
     }
 
+
     @Override
     @SuppressLint("NewApi")
     public int getCameraCount() {
-        CameraManager cameraManager = (CameraManager)AnkiDroidApp.getInstance().getApplicationContext()
+        CameraManager cameraManager = (CameraManager) AnkiDroidApp.getInstance().getApplicationContext()
                 .getSystemService(Context.CAMERA_SERVICE);
         try {
             if (cameraManager != null) {
@@ -61,10 +67,12 @@ public class CompatV21 extends CompatV19 implements Compat {
         return 0;
     }
 
+
     @Override
     public Object initTtsParams() {
         return new Bundle();
     }
+
 
     @Override
     public int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId) {

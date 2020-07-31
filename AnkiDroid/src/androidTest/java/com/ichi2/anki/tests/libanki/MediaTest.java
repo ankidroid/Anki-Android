@@ -16,8 +16,6 @@
 package com.ichi2.anki.tests.libanki;
 
 import android.Manifest;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.GrantPermissionRule;
 
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.tests.Shared;
@@ -38,6 +36,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -57,15 +58,18 @@ public class MediaTest {
     public GrantPermissionRule mRuntimePermissionRule =
             GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
+
     @Before
     public void setUp() throws IOException {
         testCol = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
     }
 
+
     @After
     public void tearDown() {
         testCol.close();
     }
+
 
     @Test
     public void testAdd() throws IOException {
@@ -145,6 +149,7 @@ public class MediaTest {
         assertEquals("<img src=\"foo%20bar.jpg\">", testCol.getMedia().escapeImages("<img src=\"foo bar.jpg\">"));
     }
 
+
     @Test
     public void testDeckIntegration() throws IOException {
         // create a media dir
@@ -182,13 +187,16 @@ public class MediaTest {
         assertEquals(expected.size(), actual.size());
     }
 
+
     private List<String> added(Collection d) {
         return d.getMedia().getDb().queryStringList("select fname from media where csum is not null");
     }
 
+
     private List<String> removed(Collection d) {
         return d.getMedia().getDb().queryStringList("select fname from media where csum is null");
     }
+
 
     @Test
     public void testChanges() throws IOException {
@@ -214,7 +222,7 @@ public class MediaTest {
         assertEquals(1, added(testCol).size());
         assertEquals(0, removed(testCol).size());
         // but if we add another file, it will
-        path = new File(path.getAbsolutePath()+"2");
+        path = new File(path.getAbsolutePath() + "2");
         os = new FileOutputStream(path, true);
         os.write("yo".getBytes());
         os.close();

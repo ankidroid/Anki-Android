@@ -23,7 +23,9 @@ import com.ichi2.libanki.Collection;
 
 import timber.log.Timber;
 
-/** Debug only class which will lock the database */
+/**
+ * Debug only class which will lock the database
+ */
 public class DatabaseLock {
 
     public static void engage(Context ctx) {

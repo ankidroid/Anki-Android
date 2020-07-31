@@ -25,8 +25,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.GrantPermissionRule;
 import android.util.Log;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
@@ -42,15 +40,14 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.libanki.Utils;
-
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
+
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,6 +57,9 @@ import org.junit.runners.Parameterized;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
@@ -81,17 +81,18 @@ public class ContentProviderTest extends InstrumentedTest {
     @Parameterized.Parameter()
     public int schedVersion;
 
+
     @Parameterized.Parameters
     public static java.util.Collection<Object[]> initParameters() {
         // This does one run with schedVersion injected as 1, and one run as 2
-        return Arrays.asList(new Object[][] { { 1 }, { 2 } });
+        return Arrays.asList(new Object[][] {{1}, {2}});
     }
+
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
             GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     FlashCardsContract.READ_WRITE_PERMISSION);
-
 
 
     private static final String BASIC_MODEL_NAME = "com.ichi2.anki.provider.test.basic.x94oa3F";
@@ -108,7 +109,7 @@ public class ContentProviderTest extends InstrumentedTest {
             "cmxieunwoogyxsctnjmv::INSBGDS",
     };
     private static final String TEST_MODEL_NAME = "com.ichi2.anki.provider.test.a1x6h9l";
-    private static final String[] TEST_MODEL_FIELDS = {"FRONTS","BACK"};
+    private static final String[] TEST_MODEL_FIELDS = {"FRONTS", "BACK"};
     private static final String[] TEST_MODEL_CARDS = {"cArD1", "caRD2"};
     private static final String[] TEST_MODEL_QFMT = {"{{FRONTS}}", "{{BACK}}"};
     private static final String[] TEST_MODEL_AFMT = {"{{BACK}}", "{{FRONTS}}"};
@@ -126,9 +127,12 @@ public class ContentProviderTest extends InstrumentedTest {
     private long mModelId = 0;
     private String[] mDummyFields = new String[1];
 
+
     private Collection getCol() {
         return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
     }
+
+
     /**
      * Initially create one note for each model.
      */
@@ -186,6 +190,7 @@ public class ContentProviderTest extends InstrumentedTest {
         mCreatedNotes.add(setupNewNote(col, mModelId, 1, mDummyFields, TEST_TAG));
     }
 
+
     private static Uri setupNewNote(Collection col, long mid, long did, String[] fields, @SuppressWarnings("SameParameterValue") String tag) {
         Note newNote = new Note(col, col.getModels().get(mid));
         for (int idx = 0; idx < fields.length; idx++) {
@@ -193,12 +198,13 @@ public class ContentProviderTest extends InstrumentedTest {
         }
         newNote.addTag(tag);
         assertTrue("At least one card added for note", col.addNote(newNote) >= 1);
-        for (Card c: newNote.cards()) {
+        for (Card c : newNote.cards()) {
             c.setDid(did);
             c.flush();
         }
         return Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(newNote.getId()));
     }
+
 
     /**
      * Remove the notes and decks created in setUp().
@@ -219,7 +225,7 @@ public class ContentProviderTest extends InstrumentedTest {
             assertEquals("Check that remnant notes have been deleted", 0, col.findNotes("tag:" + TEST_TAG).size());
         }
         // delete test decks
-        for(long did : mTestDeckIds) {
+        for (long did : mTestDeckIds) {
             col.getDecks().rem(did, true, true);
         }
         col.getDecks().flush();
@@ -276,6 +282,7 @@ public class ContentProviderTest extends InstrumentedTest {
         }
     }
 
+
     /**
      * Check that inserting and removing a note into default deck works as expected
      */
@@ -314,6 +321,7 @@ public class ContentProviderTest extends InstrumentedTest {
         col.getModels().rem(model);
     }
 
+
     /**
      * Check that inserting and removing a note into default deck works as expected
      */
@@ -344,6 +352,7 @@ public class ContentProviderTest extends InstrumentedTest {
         col.getModels().rem(model);
     }
 
+
     /**
      * Test queries to notes table using direct SQL URI
      */
@@ -367,9 +376,10 @@ public class ContentProviderTest extends InstrumentedTest {
             cursor.close();
         }
         // check usage of selection args
-        cursor = cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, "mid=?", new String[]{"0"}, null);
+        cursor = cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, "mid=?", new String[] {"0"}, null);
         assertNotNull(cursor);
     }
+
 
     /**
      * Test that a query for all the notes added in setup() looks correct
@@ -408,6 +418,7 @@ public class ContentProviderTest extends InstrumentedTest {
         }
     }
 
+
     /**
      * Check that a valid Cursor is returned when querying notes table with non-default projections
      */
@@ -432,6 +443,7 @@ public class ContentProviderTest extends InstrumentedTest {
         }
     }
 
+
     private String[] removeFromProjection(@SuppressWarnings("SameParameterValue") String[] inputProjection, int idx) {
         String[] outputProjection = new String[inputProjection.length - 1];
         if (idx >= 0) {
@@ -455,7 +467,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // Change the fields so that the first field is now "newTestValue"
         String[] dummyFields2 = mDummyFields.clone();
         dummyFields2[0] = TEST_FIELD_VALUE;
-        for (Uri uri: mCreatedNotes) {
+        for (Uri uri : mCreatedNotes) {
             // Update the flds
             cv.put(FlashCardsContract.Note.FLDS, Utils.joinFields(dummyFields2));
             cr.update(uri, cv, null, null);
@@ -539,6 +551,7 @@ public class ContentProviderTest extends InstrumentedTest {
         }
     }
 
+
     /**
      * Query .../models URI
      */
@@ -573,6 +586,7 @@ public class ContentProviderTest extends InstrumentedTest {
             allModels.close();
         }
     }
+
 
     /**
      * Move all the cards from their old decks to the first deck that was added in setup()
@@ -617,6 +631,7 @@ public class ContentProviderTest extends InstrumentedTest {
         }
     }
 
+
     /**
      * Check that querying the current model gives a valid result
      */
@@ -637,6 +652,7 @@ public class ContentProviderTest extends InstrumentedTest {
             modelCursor.close();
         }
     }
+
 
     /**
      * Check that an Exception is thrown when unsupported operations are performed
@@ -720,6 +736,7 @@ public class ContentProviderTest extends InstrumentedTest {
         }
     }
 
+
     /**
      * Test query to decks table
      */
@@ -747,6 +764,7 @@ public class ContentProviderTest extends InstrumentedTest {
         }
     }
 
+
     /**
      * Test query to specific deck ID
      */
@@ -770,6 +788,7 @@ public class ContentProviderTest extends InstrumentedTest {
         }
     }
 
+
     /**
      * Test that query for the next card in the schedule returns a valid result without any deck selector
      */
@@ -789,10 +808,12 @@ public class ContentProviderTest extends InstrumentedTest {
 
 
         Card nextCard = null;
-        for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
+        for (int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
             sched.reset();
             nextCard = sched.getCard();
-            if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+            if (nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd) {
+                break;
+            }
         }
         assertNotNull("Check that there actually is a next scheduled card", nextCard);
         assertEquals("Check that received card and actual card have same note id", nextCard.note().getId(), noteID);
@@ -800,11 +821,12 @@ public class ContentProviderTest extends InstrumentedTest {
 
     }
 
+
     /**
      * Test that query for the next card in the schedule returns a valid result WITH a deck selector
      */
     @Test
-    public void testQueryCardFromCertainDeck(){
+    public void testQueryCardFromCertainDeck() {
         long deckToTest = mTestDeckIds.get(0);
         String deckSelector = "deckID=?";
         String[] deckArguments = {Long.toString(deckToTest)};
@@ -825,26 +847,29 @@ public class ContentProviderTest extends InstrumentedTest {
 
             col.getDecks().select(deckToTest);
             Card nextCard = null;
-            for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
+            for (int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
                 sched.reset();
                 nextCard = sched.getCard();
-                if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
+                if (nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd) {
+                    break;
+                }
             }
             assertNotNull("Check that there actually is a next scheduled card", nextCard);
             assertEquals("Check that received card and actual card have same note id", nextCard.note().getId(), noteID);
             assertEquals("Check that received card and actual card have same card ord", nextCard.getOrd(), cardOrd);
-        }finally {
+        } finally {
             reviewInfoCursor.close();
         }
 
         col.getDecks().select(selectedDeckBeforeTest);
     }
 
+
     /**
      * Test changing the selected deck
      */
     @Test
-    public void testSetSelectedDeck(){
+    public void testSetSelectedDeck() {
         long deckId = mTestDeckIds.get(0);
         ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Uri selectDeckUri = FlashCardsContract.Deck.CONTENT_SELECTED_URI;
@@ -855,17 +880,20 @@ public class ContentProviderTest extends InstrumentedTest {
         assertEquals("Check that the selected deck has been correctly set", deckId, col.getDecks().selected());
     }
 
+
     private Card getFirstCardFromScheduler(Collection col) {
         long deckId = mTestDeckIds.get(0);
         col.getDecks().select(deckId);
         col.getSched().reset();
         return col.getSched().getCard();
     }
+
+
     /**
      * Test giving the answer for a reviewed card
      */
     @Test
-    public void testAnswerCard(){
+    public void testAnswerCard() {
         Collection col = getCol();
         Card card = getFirstCardFromScheduler(col);
         long cardId = card.getId();
@@ -887,11 +915,13 @@ public class ContentProviderTest extends InstrumentedTest {
         values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
         int updateCount = cr.update(reviewInfoUri, values, null, null);
         assertEquals("Check if update returns 1", 1, updateCount);
-        try { Thread.currentThread().wait(500); } catch (Exception e) {/* do nothing */}
+        try {
+            Thread.currentThread().wait(500);
+        } catch (Exception e) {/* do nothing */}
         col.getSched().reset();
         Card newCard = col.getSched().getCard();
-        if(newCard != null){
-            if(newCard.note().getId() == card.note().getId() && newCard.getOrd() == card.getOrd()){
+        if (newCard != null) {
+            if (newCard.note().getId() == card.note().getId() && newCard.getOrd() == card.getOrd()) {
                 fail("Next scheduled card has not changed");
             }
         }
@@ -907,7 +937,7 @@ public class ContentProviderTest extends InstrumentedTest {
      * Test burying a card through the ReviewInfo endpoint
      */
     @Test
-    public void testBuryCard(){
+    public void testBuryCard() {
         // get the first card due
         // ----------------------
         Collection col = getCol();
@@ -948,11 +978,12 @@ public class ContentProviderTest extends InstrumentedTest {
         col.getSched().unburyCards();
     }
 
+
     /**
      * Test suspending a card through the ReviewInfo endpoint
      */
     @Test
-    public void testSuspendCard(){
+    public void testSuspendCard() {
 
         // get the first card due
         // ----------------------
@@ -990,7 +1021,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // cleanup, unsuspend card and reschedule
         // --------------------------------------
 
-        col.getSched().unsuspendCards(new long[]{cardId});
+        col.getSched().unsuspendCards(new long[] {cardId});
         col.getSched().reset();
     }
 
@@ -1038,22 +1069,25 @@ public class ContentProviderTest extends InstrumentedTest {
     }
 
 
-    /** Test that a null did will not crash the provider (#6378) */
-     @Test
-     public void testProviderProvidesDefaultForEmptyModelDeck() {
-         assumeTrue("This causes mild data corruption - should not be run on a collection you care about", isEmulator());
-         Collection col = getCol();
-         col.getModels().all().get(0).put("did", JSONObject.NULL);
-         col.save();
+    /**
+     * Test that a null did will not crash the provider (#6378)
+     */
+    @Test
+    public void testProviderProvidesDefaultForEmptyModelDeck() {
+        assumeTrue("This causes mild data corruption - should not be run on a collection you care about", isEmulator());
+        Collection col = getCol();
+        col.getModels().all().get(0).put("did", JSONObject.NULL);
+        col.save();
 
-         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
-         // Query all available models
-         final Cursor allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
-         assertNotNull(allModels);
-     }
+        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        // Query all available models
+        final Cursor allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
+        assertNotNull(allModels);
+    }
 
-     private Collection reopenCol() {
-         CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
-         return getCol();
-     }
+
+    private Collection reopenCol() {
+        CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
+        return getCol();
+    }
 }

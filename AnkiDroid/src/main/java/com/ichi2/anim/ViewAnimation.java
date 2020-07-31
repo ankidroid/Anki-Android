@@ -1,4 +1,3 @@
-
 package com.ichi2.anim;
 
 import android.view.animation.AccelerateInterpolator;

@@ -25,7 +25,11 @@ public class MathFunctionAtom implements TreeElement {
 
     private TopLevelParser parser;
 
+
+
     public enum MathType {SIN, COS, TAN, SQRT, ACOS, ASIN, ATAN, SINH, COSH, LOG, LN, INVALID}
+
+
 
     private MathType mathType = MathType.INVALID;
     private Expression expression;

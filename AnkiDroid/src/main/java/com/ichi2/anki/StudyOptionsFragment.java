@@ -19,13 +19,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -40,20 +33,26 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.HtmlUtils;
 
-import com.ichi2.utils.JSONObject;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
+
+import static com.ichi2.async.CollectionTask.TASK_TYPE.EMPTY_CRAM;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.REBUILD_CRAM;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.UPDATE_VALUES_FROM_DECK;
 
 public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
@@ -80,7 +79,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      */
     private int mCurrentContentView = CONTENT_STUDY_OPTIONS;
 
-    /** Alerts to inform the user about different situations */
+    /**
+     * Alerts to inform the user about different situations
+     */
     private MaterialDialog mProgressDialog;
 
     /**
@@ -123,10 +124,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             }
         }
     };
-    
+
+
+
     public interface StudyOptionsListener {
         void onRequireDeckListUpdate();
     }
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -138,13 +142,16 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
+
     private void openFilteredDeckOptions() {
         openFilteredDeckOptions(false);
     }
 
+
     /**
      * Open the FilteredDeckOptions activity to allow the user to modify the parameters of the
      * filtered deck.
+     *
      * @param defaultConfig If true, signals to the FilteredDeckOptions activity that the filtered
      *                      deck has no options associated with it yet and should use a default
      *                      set of values.
@@ -159,6 +166,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     /**
      * Get a new instance of the fragment.
+     *
      * @param withDeckOptions If true, the fragment will load a new activity on top of itself
      *                        which shows the current deck's options. Set to true when programmatically
      *                        opening a new filtered deck for the first time.
@@ -171,6 +179,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         return f;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -179,6 +188,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             mLoadWithDeckOptions = getArguments().getBoolean("withDeckOptions");
         }
     }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -280,7 +290,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     private void showCustomStudyContextMenu() {
         CustomStudyDialog d = CustomStudyDialog.newInstance(CustomStudyDialog.CONTEXT_MENU_STANDARD,
                 getCol().getDecks().selected());
-        ((AnkiActivity)getActivity()).showDialogFragment(d);
+        ((AnkiActivity) getActivity()).showDialogFragment(d);
     }
 
 
@@ -345,9 +355,11 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
+
     public void configureToolbar() {
         configureToolbarInternal(true);
     }
+
 
     // This will allow a maximum of one recur in order to workaround database closes
     // caused by sync on startup where this might be running then have the collection close
@@ -447,9 +459,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 if (deck.getInt("dyn") != 0 && deck.has("empty")) {
                     deck.remove("empty");
                 }
-                    mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                            getResources().getString(R.string.rebuild_cram_deck), true);
-                    CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
+                mProgressDialog = StyledProgressDialog.show(getActivity(), "",
+                        getResources().getString(R.string.rebuild_cram_deck), true);
+                CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
             } else {
                 CollectionTask.waitToFinish();
                 refreshInterface(true);
@@ -458,7 +470,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
                 // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
                 int[] counts = getCol().getSched().counts();
-                if ((counts[0]+counts[1]+counts[2])>0 && mStudyOptionsView != null) {
+                if ((counts[0] + counts[1] + counts[2]) > 0 && mStudyOptionsView != null) {
                     View rootLayout = mStudyOptionsView.findViewById(R.id.studyoptions_main);
                     UIUtils.showSnackbar(getActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout);
                 }
@@ -468,6 +480,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             setFragmentContentView(mStudyOptionsView);
         }
     }
+
 
     private void dismissProgressDialog() {
         if (mStudyOptionsView != null && mStudyOptionsView.findViewById(R.id.progress_bar) != null) {
@@ -483,17 +496,21 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
+
     private void refreshInterfaceAndDecklist(boolean resetSched) {
         refreshInterface(resetSched, true);
     }
+
 
     protected void refreshInterface() {
         refreshInterface(false, false);
     }
 
+
     protected void refreshInterface(boolean resetSched) {
         refreshInterface(resetSched, false);
     }
+
 
     /**
      * Rebuild the fragment's interface to reflect the status of the currently selected deck.
@@ -507,7 +524,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         Timber.d("Refreshing StudyOptionsFragment");
         // Load the deck counts for the deck from Collection asynchronously
         CollectionTask.launchCollectionTask(UPDATE_VALUES_FROM_DECK, getCollectionTaskListener(resetDecklist),
-                new TaskData(new Object[]{resetSched}));
+                new TaskData(new Object[] {resetSched}));
     }
 
 
@@ -523,6 +540,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             public void onPreExecute() {
 
             }
+
 
             @Override
             public void onPostExecute(TaskData result) {
@@ -679,8 +697,12 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         };
     }
 
-    /** Open cram deck option if deck is opened for the first time
-     * @return Whether we opened the deck options */
+
+    /**
+     * Open cram deck option if deck is opened for the first time
+     *
+     * @return Whether we opened the deck options
+     */
     private boolean tryOpenCramDeckOptions() {
         if (!mLoadWithDeckOptions) {
             return false;
@@ -691,6 +713,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         return true;
     }
 
+
     @VisibleForTesting()
     static Spanned formatDescription(String desc) {
         //#5715: In deck description, ignore what is in style and script tag
@@ -700,6 +723,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         String withFixedNewlines = HtmlUtils.convertNewlinesToHtml(withStrippedTags);
         return CompatHelper.getCompat().fromHtml(withFixedNewlines);
     }
+
 
     private Collection getCol() {
         return CollectionHelper.getInstance().getCol(getContext());

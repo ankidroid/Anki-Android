@@ -36,7 +36,7 @@ import java.util.Objects;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 @RunWith(AndroidJUnit4.class)
-@Config(sdk = { 16, 26 })
+@Config(sdk = {16, 26})
 public class CompatCopyFileTest {
 
     @Test

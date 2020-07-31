@@ -20,12 +20,13 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import androidx.browser.customtabs.CustomTabsService;
 import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.browser.customtabs.CustomTabsService;
 
 /**
  * Helper class for Custom Tabs.
@@ -41,7 +42,10 @@ public class CustomTabsHelper {
 
     private static String sPackageNameToUse;
 
-    private CustomTabsHelper() {}
+
+    private CustomTabsHelper() {
+    }
+
 
     public static void addKeepAliveExtra(Context context, Intent intent) {
         Intent keepAliveIntent = new Intent().setClassName(
@@ -49,18 +53,21 @@ public class CustomTabsHelper {
         intent.putExtra(EXTRA_CUSTOM_TABS_KEEP_ALIVE, keepAliveIntent);
     }
 
+
     /**
      * Goes through all apps that handle VIEW intents and have a warmup service. Picks
      * the one chosen by the user if there is one, otherwise makes a best effort to return a
      * valid package name.
-     *
+     * <p>
      * This is <strong>not</strong> threadsafe.
      *
      * @param context {@link Context} to use for accessing {@link PackageManager}.
      * @return The package name recommended to use for connecting to custom tabs related components.
      */
     public static String getPackageNameToUse(Context context) {
-        if (sPackageNameToUse != null) return sPackageNameToUse;
+        if (sPackageNameToUse != null) {
+            return sPackageNameToUse;
+        }
 
         PackageManager pm = context.getPackageManager();
         // Get default VIEW intent handler.
@@ -105,8 +112,10 @@ public class CustomTabsHelper {
         return sPackageNameToUse;
     }
 
+
     /**
      * Used to check whether there is a specialized handler for a given intent.
+     *
      * @param intent The intent to check with.
      * @return Whether there is a specialized handler for the given intent.
      */
@@ -121,9 +130,15 @@ public class CustomTabsHelper {
             }
             for (ResolveInfo resolveInfo : handlers) {
                 IntentFilter filter = resolveInfo.filter;
-                if (filter == null) continue;
-                if (filter.countDataAuthorities() == 0 || filter.countDataPaths() == 0) continue;
-                if (resolveInfo.activityInfo == null) continue;
+                if (filter == null) {
+                    continue;
+                }
+                if (filter.countDataAuthorities() == 0 || filter.countDataPaths() == 0) {
+                    continue;
+                }
+                if (resolveInfo.activityInfo == null) {
+                    continue;
+                }
                 return true;
             }
         } catch (RuntimeException e) {
@@ -132,11 +147,12 @@ public class CustomTabsHelper {
         return false;
     }
 
+
     /**
      * @return All possible chrome package names that provide custom tabs feature.
      */
     public static String[] getPackages() {
-        return new String[]{"", STABLE_PACKAGE, BETA_PACKAGE, DEV_PACKAGE, LOCAL_PACKAGE};
+        return new String[] {"", STABLE_PACKAGE, BETA_PACKAGE, DEV_PACKAGE, LOCAL_PACKAGE};
     }
 
 

@@ -11,14 +11,17 @@ public class TextImporter extends NoteImporter {
         super(col, file);
     }
 
+
     @Override
     public void run() {
         // do nothing
     }
 
+
     public void initMapping() {
         // do nothing
     }
+
 
     public void setImportMode(int mode) {
         // do nothing

@@ -33,6 +33,7 @@ public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTe
         assertThat(controller, instanceOf(BasicImageFieldController.class));
     }
 
+
     @Test
     public void constructionWithDataSucceeds() {
         grantCameraPermission();
@@ -42,12 +43,13 @@ public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTe
         assertThat(controller, instanceOf(BasicImageFieldController.class));
     }
 
+
     @Test
     public void nonExistingFileDoesNotDisplayPreview() {
         BasicImageFieldController controller = getValidControllerNoImage();
         assertThat(controller.isShowingPreview(), is(false));
 
-        File f =  Mockito.mock(File.class);
+        File f = Mockito.mock(File.class);
         when(f.exists()).thenReturn(false);
 
         controller.setImagePreview(f, 100);
@@ -57,12 +59,13 @@ public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTe
                 is(false));
     }
 
+
     @Test
     public void erroringFileDoesNotDisplayPreview() {
         BasicImageFieldController controller = getValidControllerNoImage();
         assertThat(controller.isShowingPreview(), is(false));
 
-        File f =  Mockito.mock(File.class);
+        File f = Mockito.mock(File.class);
         when(f.exists()).thenReturn(true); //true, but it'll throw due to being a mock.
 
         controller.setImagePreview(f, 100);
@@ -90,6 +93,7 @@ public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTe
         controller.onActivityResult(BasicImageFieldController.ACTIVITY_SELECT_IMAGE, Activity.RESULT_OK, intent);
     }
 
+
     @CheckResult
     protected BasicImageFieldController getValidControllerNoImage() {
         grantCameraPermission();
@@ -101,6 +105,7 @@ public class BasicImageFieldControllerTest extends MultimediaEditFieldActivityTe
     private static IField emptyImageField() {
         return new ImageField();
     }
+
 
     private IField imageFieldWithData() {
         IField field = emptyImageField();

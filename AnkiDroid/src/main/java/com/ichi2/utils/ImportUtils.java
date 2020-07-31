@@ -46,26 +46,32 @@ public class ImportUtils {
      * This code is used in multiple places to handle package imports
      *
      * @param context for use in resource resolution and path finding
-     * @param intent contains the file to import
+     * @param intent  contains the file to import
      * @return null if successful, otherwise error message
      */
     public static String handleFileImport(Context context, Intent intent) {
         return new FileImporter().handleFileImport(context, intent);
     }
 
+
     public static void showImportUnsuccessfulDialog(Activity activity, String errorMessage, boolean exitActivity) {
         new FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity);
     }
+
 
     public static boolean isCollectionPackage(String filename) {
         return filename != null && (filename.toLowerCase().endsWith(".colpkg") || "collection.apkg".equals(filename));
     }
 
-    /** @return Whether the file is either a deck, or a collection package */
+
+    /**
+     * @return Whether the file is either a deck, or a collection package
+     */
     @Contract("null -> false")
     public static boolean isValidPackageName(@Nullable String filename) {
         return FileImporter.isDeckPackage(filename) || isCollectionPackage(filename);
     }
+
 
     /**
      * Whether importUtils can handle the given intent
@@ -82,7 +88,7 @@ public class ImportUtils {
          * This code is used in multiple places to handle package imports
          *
          * @param context for use in resource resolution and path finding
-         * @param intent contains the file to import
+         * @param intent  contains the file to import
          * @return null if successful, otherwise error message
          */
         public String handleFileImport(Context context, Intent intent) {
@@ -100,6 +106,7 @@ public class ImportUtils {
                 return context.getString(R.string.import_error_exception, e.getLocalizedMessage());
             }
         }
+
 
         //Added to remove exception handlers
         private String handleFileImportInternal(Context context, Intent intent) {
@@ -237,6 +244,7 @@ public class ImportUtils {
             }
         }
 
+
         @CheckResult
         private String getExtension(String fileName) {
             Uri file = Uri.fromFile(new File(fileName));
@@ -275,6 +283,7 @@ public class ImportUtils {
 
         /**
          * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
+         *
          * @param path path to apkg file which will be imported
          */
         private static void sendShowImportFileDialogMsg(String path) {
@@ -298,6 +307,7 @@ public class ImportUtils {
             DialogHandler.storeMessage(handlerMessage);
         }
 
+
         private static boolean isDeckPackage(String filename) {
             return filename != null && filename.toLowerCase().endsWith(".apkg") && !"collection.apkg".equals(filename);
         }
@@ -317,6 +327,7 @@ public class ImportUtils {
 
         /**
          * Check if the InputStream is to a valid non-empty zip file
+         *
          * @param data uri from which to get input stream
          * @return whether or not valid zip file
          */
@@ -362,7 +373,8 @@ public class ImportUtils {
 
         /**
          * Copy the data from the intent to a temporary file
-         * @param data intent from which to get input stream
+         *
+         * @param data     intent from which to get input stream
          * @param tempPath temporary path to store the cached file
          * @return whether or not copy was successful
          */

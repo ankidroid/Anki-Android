@@ -19,10 +19,6 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,19 +39,22 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.widget.WidgetStatus;
 
-import com.ichi2.utils.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Random;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
+
+import static com.ichi2.async.CollectionTask.TASK_TYPE.COUNT_MODELS;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.DELETE_MODEL;
 
 
 public class ModelBrowser extends AnkiActivity {
@@ -102,10 +101,12 @@ public class ModelBrowser extends AnkiActivity {
             hideProgressBar();
         }
 
+
         @Override
         public void onPreExecute() {
             showProgressBar();
         }
+
 
         @Override
         public void onPostExecute(TaskData result) {
@@ -131,6 +132,7 @@ public class ModelBrowser extends AnkiActivity {
         public void onPreExecute() {
             showProgressBar();
         }
+
 
         @Override
         public void onPostExecute(TaskData result) {
@@ -191,6 +193,7 @@ public class ModelBrowser extends AnkiActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -205,6 +208,7 @@ public class ModelBrowser extends AnkiActivity {
         }
     }
 
+
     @Override
     public void onStop() {
         super.onStop();
@@ -213,6 +217,7 @@ public class ModelBrowser extends AnkiActivity {
             UIUtils.saveCollectionInBackground();
         }
     }
+
 
     @Override
     public void onDestroy() {
@@ -232,10 +237,10 @@ public class ModelBrowser extends AnkiActivity {
     }
 
 
-
     // ----------------------------------------------------------------------------
     // HELPER METHODS
     // ----------------------------------------------------------------------------
+
 
     /*
      * Fills the main list view with model names.
@@ -280,6 +285,7 @@ public class ModelBrowser extends AnkiActivity {
         updateSubtitleText();
     }
 
+
     /*
      * Updates the subtitle showing the amount of mModels available
      * ONLY CALL THIS AFTER initializing the main list
@@ -304,7 +310,7 @@ public class ModelBrowser extends AnkiActivity {
 
         //Used to fetch model names
         mNewModelNames = new ArrayList<>();
-        for (StdModels StdModels: StdModels.stdModels) {
+        for (StdModels StdModels : StdModels.stdModels) {
             String defaultName = StdModels.getDefaultName();
             mNewModelLabels.add(String.format(add, defaultName));
             mNewModelNames.add(defaultName);
@@ -331,43 +337,45 @@ public class ModelBrowser extends AnkiActivity {
                 .positiveText(R.string.dialog_ok)
                 .customView(addSelectionSpinner, true)
                 .onPositive((dialog, which) -> {
-                        mModelNameInput = new EditText(ModelBrowser.this);
-                        mModelNameInput.setSingleLine();
-                        final boolean isStdModel = addSelectionSpinner.getSelectedItemPosition() < numStdModels;
-                        // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
-                        String suggestedName = mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition());
-                        if (!isStdModel) {
-                            suggestedName += " " + getResources().getString(R.string.model_clone_suffix);
-                        }
+                            mModelNameInput = new EditText(ModelBrowser.this);
+                            mModelNameInput.setSingleLine();
+                            final boolean isStdModel = addSelectionSpinner.getSelectedItemPosition() < numStdModels;
+                            // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
+                            String suggestedName = mNewModelNames.get(addSelectionSpinner.getSelectedItemPosition());
+                            if (!isStdModel) {
+                                suggestedName += " " + getResources().getString(R.string.model_clone_suffix);
+                            }
 
-                        if (existingModelsNames.contains(suggestedName)) {
-                            suggestedName = randomizeName(suggestedName);
-                        }
-                        mModelNameInput.setText(suggestedName);
-                        mModelNameInput.setSelection(mModelNameInput.getText().length());
+                            if (existingModelsNames.contains(suggestedName)) {
+                                suggestedName = randomizeName(suggestedName);
+                            }
+                            mModelNameInput.setText(suggestedName);
+                            mModelNameInput.setSelection(mModelNameInput.getText().length());
 
-                        //Create textbox to name new model
-                        new MaterialDialog.Builder(ModelBrowser.this)
-                                .title(R.string.model_browser_add)
-                                .positiveText(R.string.dialog_ok)
-                                .customView(mModelNameInput, true)
-                                .onPositive((innerDialog, innerWhich) -> {
-                                        String modelName = mModelNameInput.getText().toString();
-                                        addNewNoteType(modelName, addSelectionSpinner.getSelectedItemPosition());
-                                    }
-                                )
-                                .negativeText(R.string.dialog_cancel)
-                                .show();
-                    }
+                            //Create textbox to name new model
+                            new MaterialDialog.Builder(ModelBrowser.this)
+                                    .title(R.string.model_browser_add)
+                                    .positiveText(R.string.dialog_ok)
+                                    .customView(mModelNameInput, true)
+                                    .onPositive((innerDialog, innerWhich) -> {
+                                                String modelName = mModelNameInput.getText().toString();
+                                                addNewNoteType(modelName, addSelectionSpinner.getSelectedItemPosition());
+                                            }
+                                    )
+                                    .negativeText(R.string.dialog_cancel)
+                                    .show();
+                        }
                 )
                 .negativeText(R.string.dialog_cancel)
                 .show();
     }
 
+
     /**
      * Add a new note type
+     *
      * @param modelName name of the new model
-     * @param position position in dialog the user selected to add / clone the model type from
+     * @param position  position in dialog the user selected to add / clone the model type from
      */
     private void addNewNoteType(String modelName, int position) {
         Model model;
@@ -438,6 +446,7 @@ public class ModelBrowser extends AnkiActivity {
         }
     }
 
+
     /*
      * Displays a confirmation box asking if you want to rename the note type and then renames it if confirmed
      */
@@ -447,30 +456,31 @@ public class ModelBrowser extends AnkiActivity {
         mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
         mModelNameInput.setSelection(mModelNameInput.getText().length());
         new MaterialDialog.Builder(this)
-                            .title(R.string.rename_model)
-                            .positiveText(R.string.rename)
-                            .negativeText(R.string.dialog_cancel)
-                            .customView(mModelNameInput, true)
-                            .onPositive((dialog, which) -> {
-                                    Model model = mModels.get(mModelListPosition);
-                                    String deckName = mModelNameInput.getText().toString()
-                                            // Anki desktop doesn't allow double quote characters in deck names
-                                            .replaceAll("[\"\\n\\r]", "");
-                                    getCol().getDecks().id(deckName, false);
-                                    if (deckName.length() > 0) {
-                                        model.put("name", deckName);
-                                        col.getModels().update(model);
-                                        mModels.get(mModelListPosition).put("name", deckName);
-                                        mModelDisplayList.set(mModelListPosition,
-                                                new DisplayPair(mModels.get(mModelListPosition).getString("name"),
-                                                        mCardCounts.get(mModelListPosition)));
-                                        refreshList();
-                                    } else {
-                                        showToast(getResources().getString(R.string.toast_empty_name));
-                                    }
-                                })
-                            .show();
+                .title(R.string.rename_model)
+                .positiveText(R.string.rename)
+                .negativeText(R.string.dialog_cancel)
+                .customView(mModelNameInput, true)
+                .onPositive((dialog, which) -> {
+                    Model model = mModels.get(mModelListPosition);
+                    String deckName = mModelNameInput.getText().toString()
+                            // Anki desktop doesn't allow double quote characters in deck names
+                            .replaceAll("[\"\\n\\r]", "");
+                    getCol().getDecks().id(deckName, false);
+                    if (deckName.length() > 0) {
+                        model.put("name", deckName);
+                        col.getModels().update(model);
+                        mModels.get(mModelListPosition).put("name", deckName);
+                        mModelDisplayList.set(mModelListPosition,
+                                new DisplayPair(mModels.get(mModelListPosition).getString("name"),
+                                        mCardCounts.get(mModelListPosition)));
+                        refreshList();
+                    } else {
+                        showToast(getResources().getString(R.string.toast_empty_name));
+                    }
+                })
+                .show();
     }
+
 
     private void dismissContextMenu() {
         if (mContextMenu != null) {
@@ -494,6 +504,7 @@ public class ModelBrowser extends AnkiActivity {
     // HANDLERS
     // ----------------------------------------------------------------------------
 
+
     /*
      * Updates the ArrayAdapters for the main ListView.
      * ArrayLists must be manually updated.
@@ -503,12 +514,14 @@ public class ModelBrowser extends AnkiActivity {
         updateSubtitleText();
     }
 
+
     /*
      * Reloads everything
      */
     private void fullRefresh() {
         CollectionTask.launchCollectionTask(COUNT_MODELS, mLoadingModelsHandler);
     }
+
 
     /*
      * Deletes the currently selected model
@@ -555,6 +568,7 @@ public class ModelBrowser extends AnkiActivity {
     // ----------------------------------------------------------------------------
 
 
+
     /*
      * Used so that the main ListView is able to display the number of notes using the model
      * along with the name.
@@ -563,24 +577,29 @@ public class ModelBrowser extends AnkiActivity {
         private String name;
         private int count;
 
+
         public DisplayPair(String name, int count) {
             this.name = name;
             this.count = count;
         }
 
+
         public String getName() {
             return name;
         }
 
+
         public int getCount() {
             return count;
         }
+
 
         @Override
         public String toString() {
             return getName();
         }
     }
+
 
 
     /*
@@ -590,6 +609,7 @@ public class ModelBrowser extends AnkiActivity {
         public DisplayPairAdapter(Context context, ArrayList<DisplayPair> items) {
             super(context, R.layout.model_browser_list_item, R.id.model_list_item_1, items);
         }
+
 
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -610,6 +630,7 @@ public class ModelBrowser extends AnkiActivity {
             return convertView;
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

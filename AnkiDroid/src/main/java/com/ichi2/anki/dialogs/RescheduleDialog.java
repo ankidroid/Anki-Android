@@ -16,6 +16,7 @@ public class RescheduleDialog extends IntegerDialog {
         super();
     }
 
+
     @NotNull
     @CheckResult
     public static RescheduleDialog rescheduleSingleCard(Resources resources, Card currentCard,
@@ -36,6 +37,7 @@ public class RescheduleDialog extends IntegerDialog {
 
         return rescheduleDialog;
     }
+
 
     @NotNull
     @CheckResult

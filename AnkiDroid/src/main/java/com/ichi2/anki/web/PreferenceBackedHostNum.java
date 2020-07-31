@@ -28,26 +28,33 @@ public class PreferenceBackedHostNum extends HostNum {
 
     private final SharedPreferences mPreferences;
 
+
     public PreferenceBackedHostNum(Integer hostNum, SharedPreferences preferences) {
         super(hostNum);
         this.mPreferences = preferences;
     }
+
 
     public static PreferenceBackedHostNum fromPreferences(SharedPreferences preferences) {
         Integer hostNum = getHostNum(preferences);
         return new PreferenceBackedHostNum(hostNum, preferences);
     }
 
-    /** Clearing hostNum whenever on log out/changes the server URL should avoid any problems with malicious servers*/
+
+    /**
+     * Clearing hostNum whenever on log out/changes the server URL should avoid any problems with malicious servers
+     */
     @Override
     public void reset() {
         setHostNum(getDefaultHostNum());
     }
 
+
     @Override
     public Integer getHostNum() {
         return getHostNum(this.mPreferences);
     }
+
 
     @Override
     public void setHostNum(@Nullable Integer newHostNum) {
@@ -56,6 +63,7 @@ public class PreferenceBackedHostNum extends HostNum {
         mPreferences.edit().putString("hostNum", prefValue).apply();
         super.setHostNum(newHostNum);
     }
+
 
     private static Integer getHostNum(SharedPreferences mPreferences) {
         try {
@@ -67,6 +75,7 @@ public class PreferenceBackedHostNum extends HostNum {
             return getDefaultHostNum();
         }
     }
+
 
     private static Integer convertFromPreferenceValue(String hostNum) {
         if (hostNum == null) {

@@ -20,10 +20,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -44,9 +40,9 @@ import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-
 import com.ichi2.libanki.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -55,8 +51,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import timber.log.Timber;
+
+import static com.ichi2.async.CollectionTask.TASK_TYPE.REBUILD_CRAM;
 
 
 public class CustomStudyDialog extends AnalyticsDialogFragment {
@@ -77,10 +77,14 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     private static final int DECK_OPTIONS = 107;
     private static final int MORE_OPTIONS = 108;
 
+
+
     public interface CustomStudyListener {
         void onCreateCustomStudySession();
+
         void onExtendStudyLimits();
     }
+
 
     /**
      * Instance factories
@@ -88,6 +92,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     public static CustomStudyDialog newInstance(int id, long did) {
         return newInstance(id, did, false);
     }
+
 
     public static CustomStudyDialog newInstance(int id, long did, boolean jumpToReviewer) {
         CustomStudyDialog f = new CustomStudyDialog();
@@ -98,6 +103,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         f.setArguments(args);
         return f;
     }
+
 
     @NonNull
     @Override
@@ -113,14 +119,16 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         }
     }
 
+
     /**
      * Build a context menu for custom study
+     *
      * @param id
      * @return
      */
     private MaterialDialog buildContextMenu(int id) {
         int[] listIds = getListIds(id);
-        final boolean jumpToReviewer = getArguments ().getBoolean("jumpToReviewer");
+        final boolean jumpToReviewer = getArguments().getBoolean("jumpToReviewer");
         return new MaterialDialog.Builder(this.getActivity())
                 .title(R.string.custom_study)
                 .cancelable(true)
@@ -171,8 +179,10 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 }).build();
     }
 
+
     /**
      * Build an input dialog that is used to get a parameter related to custom study from the user
+     *
      * @param dialogId
      * @return
      */
@@ -201,7 +211,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         // deck id
         final long did = getArguments().getLong("did");
         // Whether or not to jump straight to the reviewer
-        final boolean jumpToReviewer = getArguments ().getBoolean("jumpToReviewer");
+        final boolean jumpToReviewer = getArguments().getBoolean("jumpToReviewer");
         // Set builder parameters
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
                 .customView(v, true)
@@ -242,7 +252,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                             JSONArray ar = new JSONArray();
                             ar.put(0, 1);
                             createCustomStudySession(ar, new Object[] {String.format(Locale.US,
-                                                                                     "rated:%d:1", n), Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, false);
+                                    "rated:%d:1", n), Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, false);
                             break;
                         }
                         case CUSTOM_STUDY_AHEAD: {
@@ -272,10 +282,12 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
             }
 
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -293,6 +305,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         return dialog;
     }
 
+
     private HashMap<Integer, String> getKeyValueMap() {
         Resources res = getResources();
         HashMap<Integer, String> keyValueMap = new HashMap<>();
@@ -308,6 +321,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         keyValueMap.put(MORE_OPTIONS, res.getString(R.string.more_options));
         return keyValueMap;
     }
+
 
     private void customStudyFromTags(List<String> selectedTags, int option) {
         StringBuilder sb = new StringBuilder();
@@ -333,8 +347,10 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 Consts.DYN_MAX_SIZE, Consts.DYN_RANDOM}, true);
     }
 
+
     /**
      * Retrieve the list of ids to put in the context menu list
+     *
      * @param dialogId option to specify which tasks are shown in the list
      * @return the ids of which values to show
      */
@@ -351,9 +367,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                     return new int[] {CUSTOM_STUDY_NEW, CUSTOM_STUDY_REV, DECK_OPTIONS, MORE_OPTIONS};
                 } else {
                     if (col.getSched().newDue()) {
-                        return new int[]{CUSTOM_STUDY_NEW, DECK_OPTIONS, MORE_OPTIONS};
+                        return new int[] {CUSTOM_STUDY_NEW, DECK_OPTIONS, MORE_OPTIONS};
                     } else {
-                        return new int[]{CUSTOM_STUDY_REV, DECK_OPTIONS, MORE_OPTIONS};
+                        return new int[] {CUSTOM_STUDY_REV, DECK_OPTIONS, MORE_OPTIONS};
                     }
                 }
             case CONTEXT_MENU_EMPTY_SCHEDULE:
@@ -380,6 +396,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         }
     }
 
+
     private String getText2() {
         Resources res = AnkiDroidApp.getAppResources();
         switch (getArguments().getInt("id")) {
@@ -399,6 +416,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 return "";
         }
     }
+
 
     private String getDefaultValue() {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(getActivity());
@@ -420,10 +438,12 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         }
     }
 
+
     /**
      * Create a custom study session
-     * @param delays delay options for scheduling algorithm
-     * @param terms search terms
+     *
+     * @param delays  delay options for scheduling algorithm
+     * @param terms   search terms
      * @param resched whether to reschedule the cards based on the answers given (or ignore them if false)
      */
     private void createCustomStudySession(JSONArray delays, Object[] terms, Boolean resched) {
@@ -439,9 +459,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
             if (cur.getInt("dyn") != 1) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck);
                 new MaterialDialog.Builder(getActivity())
-                    .content(R.string.custom_study_deck_exists)
-                    .negativeText(R.string.dialog_cancel)
-                    .build().show();
+                        .content(R.string.custom_study_deck_exists)
+                        .negativeText(R.string.dialog_cancel)
+                        .build().show();
                 return;
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck);
@@ -484,6 +504,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 activity.showProgressBar();
             }
 
+
             @Override
             public void onPostExecute(TaskData result) {
                 activity.hideProgressBar();
@@ -496,6 +517,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         activity.dismissAllDialogFragments();
     }
 
+
     private void onLimitsExtended(boolean jumpToReviewer) {
         AnkiActivity activity = getAnkiActivity();
         if (jumpToReviewer) {
@@ -506,6 +528,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         }
         activity.dismissAllDialogFragments();
     }
+
 
     protected AnkiActivity getAnkiActivity() {
         return (AnkiActivity) getActivity();

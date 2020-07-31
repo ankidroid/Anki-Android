@@ -48,19 +48,30 @@ public class CompatHelper {
         }
     }
 
-    /** Get the current Android API level. */
+
+    /**
+     * Get the current Android API level.
+     */
     public static int getSdkVersion() {
         return Build.VERSION.SDK_INT;
     }
 
-    /** Determine if the device is running API level 21 or higher. */
+
+    /**
+     * Determine if the device is running API level 21 or higher.
+     */
     public static boolean isLollipop() {
         return getSdkVersion() >= Build.VERSION_CODES.LOLLIPOP;
     }
-    /** Determine if the device is running API level 23 or higher. */
+
+
+    /**
+     * Determine if the device is running API level 23 or higher.
+     */
     public static boolean isMarshmallow() {
         return getSdkVersion() >= Build.VERSION_CODES.M;
     }
+
 
     /**
      * Main public method to get the compatibility class
@@ -69,6 +80,7 @@ public class CompatHelper {
         return getInstance().mCompat;
     }
 
+
     public static synchronized CompatHelper getInstance() {
         if (sInstance == null) {
             sInstance = new CompatHelper();
@@ -76,18 +88,22 @@ public class CompatHelper {
         return sInstance;
     }
 
+
     public static boolean isChromebook() {
         return "chromium".equalsIgnoreCase(Build.BRAND) || "chromium".equalsIgnoreCase(Build.MANUFACTURER)
                 || "novato_cheets".equalsIgnoreCase(Build.DEVICE);
     }
 
+
     public static boolean isKindle() {
         return "amazon".equalsIgnoreCase(Build.BRAND) || "amazon".equalsIgnoreCase(Build.MANUFACTURER);
     }
 
+
     public static boolean hasKanaAndEmojiKeys() {
         return KeyCharacterMap.deviceHasKey(94) && KeyCharacterMap.deviceHasKey(95);
     }
+
 
     public static boolean hasScrollKeys() {
         return KeyCharacterMap.deviceHasKey(92) || KeyCharacterMap.deviceHasKey(93);

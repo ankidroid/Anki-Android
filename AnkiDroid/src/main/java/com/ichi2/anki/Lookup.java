@@ -1,4 +1,3 @@
-
 package com.ichi2.anki;
 
 import android.content.ComponentName;
@@ -9,7 +8,6 @@ import android.net.Uri;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-
 import com.ichi2.libanki.Utils;
 
 import timber.log.Timber;
@@ -23,9 +21,9 @@ public class Lookup {
     private static final int DICTIONARY_AEDICT = 1;  // Japanese dictionary
     private static final int DICTIONARY_EIJIRO_WEB = 2; // japanese web dictionary
     private static final int DICTIONARY_LEO_WEB = 3; // German web dictionary for English, French, Spanish, Italian,
-                                                     // Chinese, Russian
+    // Chinese, Russian
     private static final int DICTIONARY_LEO_APP = 4; // German web dictionary for English, French, Spanish, Italian,
-                                                     // Chinese, Russian
+    // Chinese, Russian
     private static final int DICTIONARY_COLORDICT = 5;
     private static final int DICTIONARY_FORA = 6;
     private static final int DICTIONARY_NCIKU_WEB = 7; // chinese web dictionary
@@ -95,7 +93,7 @@ public class Lookup {
             case DICTIONARY_LEO_APP:
                 mLookupText = text;
                 // localisation is needless here since leo.org translates only into or out of German
-                final CharSequence[] itemValues = { "en", "fr", "es", "it", "ch", "ru" };
+                final CharSequence[] itemValues = {"en", "fr", "es", "it", "ch", "ru"};
                 String language = getLanguage(MetaDB.LANGUAGES_QA_UNDEFINED);
                 if (language.length() > 0) {
                     for (CharSequence itemValue : itemValues) {
@@ -106,14 +104,14 @@ public class Lookup {
                         }
                     }
                 }
-                final String[] items = { "Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch" };
+                final String[] items = {"Englisch", "Französisch", "Spanisch", "Italienisch", "Chinesisch", "Russisch"};
                 new MaterialDialog.Builder(mContext)
                         .title("\"" + mLookupText + "\" nachschlagen")
                         .items(items)
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog materialDialog, View view,
-                                    int item, CharSequence charSequence) {
+                                                    int item, CharSequence charSequence) {
                                 String language = itemValues[item].toString();
                                 storeLanguage(language, MetaDB.LANGUAGES_QA_UNDEFINED);
                                 lookupLeo(language, mLookupText);

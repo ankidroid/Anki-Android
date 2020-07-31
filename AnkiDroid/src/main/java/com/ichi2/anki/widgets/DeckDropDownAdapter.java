@@ -8,12 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.ichi2.anki.R;
-
 import com.ichi2.libanki.Deck;
-import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
-
 
 
 public final class DeckDropDownAdapter extends BaseAdapter {
@@ -22,13 +19,17 @@ public final class DeckDropDownAdapter extends BaseAdapter {
         public String getSubtitleText();
     }
 
+
+
     private Context context;
     private ArrayList<Deck> decks;
+
 
     public DeckDropDownAdapter(Context context, ArrayList<Deck> decks) {
         this.context = context;
         this.decks = decks;
     }
+
 
     static class DeckDropDownViewHolder {
         public TextView deckNameView;

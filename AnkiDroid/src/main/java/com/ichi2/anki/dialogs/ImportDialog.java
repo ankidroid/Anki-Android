@@ -1,4 +1,3 @@
-
 package com.ichi2.anki.dialogs;
 
 import android.content.res.Resources;
@@ -8,7 +7,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.ImportUtils;
 
@@ -25,21 +23,27 @@ public class ImportDialog extends AsyncDialogFragment {
     public static final int DIALOG_IMPORT_ADD_CONFIRM = 2;
     public static final int DIALOG_IMPORT_REPLACE_CONFIRM = 3;
 
+
+
     public interface ImportDialogListener {
         void showImportDialog(int id, String message);
+
         void showImportDialog(int id);
+
         void importAdd(String importPath);
+
         void importReplace(String importPath);
+
         void dismissAllDialogFragments();
     }
 
 
     /**
      * A set of dialogs which deal with importing a file
-     * 
-     * @param dialogType An integer which specifies which of the sub-dialogs to show
+     *
+     * @param dialogType    An integer which specifies which of the sub-dialogs to show
      * @param dialogMessage An optional string which can be used to show a custom message
-     * or specify import path
+     *                      or specify import path
      */
     public static ImportDialog newInstance(int dialogType, String dialogMessage) {
         ImportDialog f = new ImportDialog();
@@ -146,16 +150,19 @@ public class ImportDialog extends AsyncDialogFragment {
         return res().getString(R.string.import_interrupted);
     }
 
+
     @Override
     public String getNotificationTitle() {
         return res().getString(R.string.import_title);
     }
-    
+
+
     public void dismissAllDialogFragments() {
-        ((ImportDialogListener) getActivity()).dismissAllDialogFragments();        
+        ((ImportDialogListener) getActivity()).dismissAllDialogFragments();
     }
 
-    private static String filenameFromPath (String path) {
+
+    private static String filenameFromPath(String path) {
         return path.split("/")[path.split("/").length - 1];
     }
 }

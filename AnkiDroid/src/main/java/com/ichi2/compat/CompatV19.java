@@ -1,13 +1,9 @@
-
 package com.ichi2.compat;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
-import androidx.appcompat.widget.Toolbar;
-import timber.log.Timber;
-
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,17 +14,23 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.themes.Themes;
 
-/** Implementation of {@link Compat} for SDK level 19 */
+import androidx.appcompat.widget.Toolbar;
+import timber.log.Timber;
+
+/**
+ * Implementation of {@link Compat} for SDK level 19
+ */
 @TargetApi(19)
 public class CompatV19 extends CompatV18 implements Compat {
     private static final int ANIMATION_DURATION = 200;
     private static final float TRANSPARENCY = 0.90f;
 
+
     @Override
     public void setFullScreen(final AbstractFlashcardViewer a) {
         // Set appropriate flags to enable Sticky Immersive mode.
         a.getWindow().getDecorView().setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // temporarily disabled due to #5245
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -72,11 +74,13 @@ public class CompatV19 extends CompatV18 implements Compat {
                 });
     }
 
+
     private void showViewWithAnimation(final View view) {
         view.setAlpha(0.0f);
         view.setVisibility(View.VISIBLE);
         view.animate().alpha(TRANSPARENCY).setDuration(ANIMATION_DURATION).setListener(null);
     }
+
 
     private void hideViewWithAnimation(final View view) {
         view.animate()
@@ -89,6 +93,7 @@ public class CompatV19 extends CompatV18 implements Compat {
                     }
                 });
     }
+
 
     @Override
     public boolean isImmersiveSystemUiVisible(AnkiActivity activity) {

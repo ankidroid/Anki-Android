@@ -27,7 +27,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
-import static android.content.pm.PackageManager.*;
+import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+import static android.content.pm.PackageManager.DONT_KILL_APP;
 
 public class CardBrowserContextMenu {
 
@@ -35,17 +37,22 @@ public class CardBrowserContextMenu {
     private final Context mContext;
     private static final boolean DEFAULT_ENABLED_STATUS = true;
     public static final String CARD_BROWSER_CONTEXT_MENU_PREF_KEY = "card_browser_enable_external_context_menu";
-    /** We define an activity alias so we can disable the context menu without disabling the activity */
+    /**
+     * We define an activity alias so we can disable the context menu without disabling the activity
+     */
     private static final String ACTIVITY_ALIAS_NAME = "com.ichi2.anki.CardBrowserContextMenuAction";
+
 
     @SuppressWarnings("WeakerAccess")
     public CardBrowserContextMenu(@NonNull Context context) {
         this.mContext = context;
     }
 
+
     public static void ensureConsistentStateWithSharedPreferences(@NonNull Context context) {
         new CardBrowserContextMenu(context).ensureConsistentStateWithSharedPreferences();
     }
+
 
     @CheckResult
     @Nullable
@@ -57,6 +64,7 @@ public class CardBrowserContextMenu {
             return null;
         }
     }
+
 
     @SuppressWarnings("WeakerAccess")
     public void setSystemMenuEnabled(boolean enabled) {
@@ -84,6 +92,7 @@ public class CardBrowserContextMenu {
     private boolean getPreferenceStatus() {
         return AnkiDroidApp.getSharedPrefs(mContext).getBoolean(CARD_BROWSER_CONTEXT_MENU_PREF_KEY, DEFAULT_ENABLED_STATUS);
     }
+
 
     @SuppressWarnings("WeakerAccess")
     public void ensureConsistentStateWithSharedPreferences() {

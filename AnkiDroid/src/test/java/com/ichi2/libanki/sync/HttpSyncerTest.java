@@ -33,9 +33,9 @@ import static org.hamcrest.Matchers.is;
 @RunWith(AndroidJUnit4.class)
 public class HttpSyncerTest {
     private static String sCustomServerWithNoFormatting = "https://sync.example.com/";
-    private static String sCustomServerWithFormatting   = "https://sync%s.example.com/";
-    private static final String sDefaultUrlNoHostNum    = "https://sync.ankiweb.net/sync/";
-    private static final String sDefaultUrlWithHostNum  = "https://sync1.ankiweb.net/sync/";
+    private static String sCustomServerWithFormatting = "https://sync%s.example.com/";
+    private static final String sDefaultUrlNoHostNum = "https://sync.ankiweb.net/sync/";
+    private static final String sDefaultUrlWithHostNum = "https://sync1.ankiweb.net/sync/";
 
 
     @Test
@@ -81,6 +81,7 @@ public class HttpSyncerTest {
         assertThat(syncUrl, is("https://sync1.example.com/sync/"));
     }
 
+
     @Test
     public void getUnformattedCustomMediaUrlWithHostNum() {
         HttpSyncer underTest = getServerWithHostNum(null);
@@ -90,6 +91,7 @@ public class HttpSyncerTest {
 
         assertThat(syncUrl, is("https://sync.example.com/sync/"));
     }
+
 
     @Test
     public void getUnformattedCustomMediaUrlWithNoHostNum() {
@@ -101,6 +103,7 @@ public class HttpSyncerTest {
         assertThat(syncUrl, is("https://sync.example.com/sync/"));
     }
 
+
     @Test
     public void invalidSettingReturnsCorrectResultWithNoHostNum() {
         HttpSyncer underTest = getServerWithHostNum(null);
@@ -110,6 +113,7 @@ public class HttpSyncerTest {
 
         assertThat(syncUrl, is(sDefaultUrlNoHostNum));
     }
+
 
     @Test
     public void invalidSettingReturnsCorrectResultWithHostNum() {
@@ -121,10 +125,12 @@ public class HttpSyncerTest {
         assertThat(syncUrl, is(sDefaultUrlWithHostNum));
     }
 
+
     private void setCustomServerWithNoUrl() {
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
         userPreferences.edit().putBoolean("useCustomSyncServer", true).apply();
     }
+
 
     private void setCustomServer(String s) {
 
@@ -134,6 +140,7 @@ public class HttpSyncerTest {
         e.putString("syncBaseUrl", s);
         e.apply();
     }
+
 
     @NonNull
     private HttpSyncer getServerWithHostNum(Integer hostNum) {

@@ -46,6 +46,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private long[] mCardList;
     private Bundle mNoteEditorBundle = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
@@ -87,6 +88,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         startLoadingCollection();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -126,11 +128,13 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
     }
 
+
     @Override
     protected void initLayout() {
         super.initLayout();
         mTopBarLayout.setVisibility(View.GONE);
     }
+
 
     @Override
     protected void displayCardQuestion() {
@@ -147,6 +151,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         mFlipCardLayout.setVisibility(View.GONE);
         hideEaseButtons();
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -197,12 +202,17 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         showBackIcon();
     }
 
+
     protected Card getCard(Collection col, long cardListIndex) {
         return new PreviewerCard(col, cardListIndex);
     }
 
-    /** Get a dummy card */
-    protected @Nullable Card getDummyCard(Model model, int ordinal) {
+
+    /**
+     * Get a dummy card
+     */
+    protected @Nullable
+    Card getDummyCard(Model model, int ordinal) {
         Timber.d("getDummyCard() Creating dummy note for ordinal %s", ordinal);
         if (model == null) {
             return null;
@@ -213,8 +223,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             n.setField(i, fieldNames.get(i));
         }
         try {
-            JSONObject template = (JSONObject)model.getJSONArray("tmpls").get(ordinal);
-            PreviewerCard card = (PreviewerCard)getCol().getNewLinkedCard(new PreviewerCard(getCol()), n, template, 1, 0, false);
+            JSONObject template = (JSONObject) model.getJSONArray("tmpls").get(ordinal);
+            PreviewerCard card = (PreviewerCard) getCol().getNewLinkedCard(new PreviewerCard(getCol()), n, template, 1, 0, false);
             card.setNote(n);
             return card;
         } catch (Exception e) {
@@ -224,7 +234,9 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     }
 
 
-    /** Override certain aspects of Card behavior so we may display unsaved data */
+    /**
+     * Override certain aspects of Card behavior so we may display unsaved data
+     */
     public class PreviewerCard extends Card {
 
         private Note mNote;
@@ -260,7 +272,9 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
 
-        /** set an unsaved note to use for rendering */
+        /**
+         * set an unsaved note to use for rendering
+         */
         public void setNote(Note note) {
             mNote = note;
         }

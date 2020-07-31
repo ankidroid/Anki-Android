@@ -1,32 +1,37 @@
 package com.ichi2.async;
 
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
 import android.os.AsyncTask;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.libanki.Collection;
 
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 import timber.log.Timber;
 
 public final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
     private LifecycleOwner mLifecycleOwner;
     private Callback mCallback;
 
+
+
     public interface Callback {
         void execute(Collection col);
     }
+
 
     public static void load(LifecycleOwner lifecycleOwner, Callback callback) {
         CollectionLoader loader = new CollectionLoader(lifecycleOwner, callback);
         loader.execute();
     }
 
+
     private CollectionLoader(LifecycleOwner lifecycleOwner, Callback callback) {
         mLifecycleOwner = lifecycleOwner;
         mCallback = callback;
     }
+
 
     @Override
     protected Collection doInBackground(Void... params) {
@@ -45,6 +50,7 @@ public final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
             return null;
         }
     }
+
 
     @Override
     protected void onPostExecute(Collection col) {

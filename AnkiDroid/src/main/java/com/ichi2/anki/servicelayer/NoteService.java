@@ -28,7 +28,6 @@ import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -39,7 +38,7 @@ import java.io.IOException;
 public class NoteService {
     /**
      * Creates an empty Note from given Model
-     * 
+     *
      * @param model the model in JSOBObject format
      * @return a new note instance
      */
@@ -100,7 +99,7 @@ public class NoteService {
     /**
      * Updates the JsonNote field values from MultimediaEditableNote When both notes are using the same Model, it updaes
      * the destination field values with source values. If models are different it throws an Exception
-     * 
+     *
      * @param noteSrc
      * @param editorNoteDst
      */
@@ -124,7 +123,7 @@ public class NoteService {
      * the note it checks for the following condition a. The field content should have changed b. The field content does
      * not already point to a media inside anki media path If both condition satisfies then it copies the file inside
      * the media path and deletes the file referenced by the note
-     * 
+     *
      * @param noteNew
      */
     public static void saveMedia(Collection col, final MultimediaEditableNote noteNew) {
@@ -156,7 +155,7 @@ public class NoteService {
 
     /**
      * Considering the field is new, if it has media handle it
-     * 
+     *
      * @param field
      */
     private static void importMediaToDirectory(Collection col, IField field) {

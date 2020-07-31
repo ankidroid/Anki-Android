@@ -68,7 +68,7 @@ public interface IField extends Serializable {
 
     /**
      * Mark if the current media path is temporary and if it should be deleted once the media has been processed.
-     * 
+     *
      * @param hasTemporaryMedia True if the media is temporary, False if it is existing media.
      * @return
      */
@@ -87,14 +87,14 @@ public interface IField extends Serializable {
     /**
      * Returns the formatted value for this field. Each implementation of IField should return in a format which will be
      * used to store in the database
-     * 
+     *
      * @return
      */
     public String getFormattedValue();
 
 
     /**
-     * @param col Collection - bad abstraction, used to obtain media directory only.
+     * @param col   Collection - bad abstraction, used to obtain media directory only.
      * @param value The HTML to send to the field.
      */
     void setFormattedString(Collection col, String value);

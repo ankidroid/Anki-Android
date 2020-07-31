@@ -20,16 +20,19 @@ import com.ichi2.utils.JSONObject;
 
 import androidx.annotation.Nullable;
 
-public class DeckConfig extends JSONObject{
+public class DeckConfig extends JSONObject {
     public DeckConfig(JSONObject json) {
         super(json);
     }
+
 
     public DeckConfig(String json) {
         super(json);
     }
 
-    public static @Nullable Boolean parseTimer(JSONObject config) {
+
+    public static @Nullable
+    Boolean parseTimer(JSONObject config) {
         //Note: Card.py used != 0, DeckOptions used == 1
         try {
             //#6089 - Anki 2.1.24 changed this to a bool, reverted in 2.1.25.
@@ -42,6 +45,7 @@ public class DeckConfig extends JSONObject{
             }
         }
     }
+
 
     public static boolean parseTimerOpt(JSONObject config, boolean defaultValue) {
         Boolean ret = parseTimer(config);

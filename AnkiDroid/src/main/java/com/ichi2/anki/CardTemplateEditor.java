@@ -22,14 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager2.widget.ViewPager2;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -48,12 +40,12 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.themes.StyledProgressDialog;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -62,15 +54,21 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 import timber.log.Timber;
-import com.ichi2.async.TaskData;
 
 
 /**
  * Allows the user to view the template for the current note type
  */
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes"})
 public class CardTemplateEditor extends AnkiActivity {
     @VisibleForTesting
     protected ViewPager2 mViewPager;
@@ -88,10 +86,10 @@ public class CardTemplateEditor extends AnkiActivity {
     // ----------------------------------------------------------------------------
 
 
-
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +131,7 @@ public class CardTemplateEditor extends AnkiActivity {
         super.onSaveInstanceState(outState);
     }
 
+
     @Override
     public void onBackPressed() {
         if (modelHasChanged()) {
@@ -141,6 +140,7 @@ public class CardTemplateEditor extends AnkiActivity {
             super.onBackPressed();
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -154,8 +154,10 @@ public class CardTemplateEditor extends AnkiActivity {
         }
     }
 
+
     /**
      * Callback used to finish initializing the activity after the collection has been correctly loaded
+     *
      * @param col Collection which has been loaded
      */
     @Override
@@ -186,6 +188,7 @@ public class CardTemplateEditor extends AnkiActivity {
         }
     }
 
+
     public boolean modelHasChanged() {
         JSONObject oldModel = getCol().getModels().get(mModelId);
         return getTempModel() != null && !getTempModel().getModel().toString().equals(oldModel.toString());
@@ -195,6 +198,7 @@ public class CardTemplateEditor extends AnkiActivity {
     public TemporaryModel getTempModel() {
         return mTempModel;
     }
+
 
     @VisibleForTesting
     public MaterialDialog showDiscardChangesDialog() {
@@ -217,6 +221,7 @@ public class CardTemplateEditor extends AnkiActivity {
     // ----------------------------------------------------------------------------
 
 
+
     /**
      * A {@link androidx.viewpager2.adapter.FragmentStateAdapter} that returns a fragment corresponding to
      * one of the tabs.
@@ -224,6 +229,7 @@ public class CardTemplateEditor extends AnkiActivity {
     public class TemplatePagerAdapter extends FragmentStateAdapter {
 
         private long baseId = 0;
+
 
         public TemplatePagerAdapter(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
@@ -257,11 +263,15 @@ public class CardTemplateEditor extends AnkiActivity {
             return (id - baseId < getItemCount() && id - baseId >= 0);
         }
 
-        /** Force fragments to reinitialize contents by invalidating previous set of ordinal-based ids */
+
+        /**
+         * Force fragments to reinitialize contents by invalidating previous set of ordinal-based ids
+         */
         public void ordinalShift() {
             baseId += getItemCount() + 1;
         }
     }
+
 
 
     public static class CardTemplateFragment extends Fragment {
@@ -271,19 +281,21 @@ public class CardTemplateEditor extends AnkiActivity {
         private CardTemplateEditor mTemplateEditor;
         private TabLayoutMediator mTabLayoutMediator;
 
+
         public static CardTemplateFragment newInstance(int position, long noteId) {
             CardTemplateFragment f = new CardTemplateFragment();
             Bundle args = new Bundle();
             args.putInt("position", position);
-            args.putLong("noteId",noteId);
+            args.putLong("noteId", noteId);
             f.setArguments(args);
             return f;
         }
 
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             // Storing a reference to the templateEditor allows us to use member variables
-            mTemplateEditor = (CardTemplateEditor)getActivity();
+            mTemplateEditor = (CardTemplateEditor) getActivity();
             View mainView = inflater.inflate(R.layout.card_template_editor_item, container, false);
             final int position = getArguments().getInt("position");
             TemporaryModel tempModel = mTemplateEditor.getTempModel();
@@ -335,6 +347,7 @@ public class CardTemplateEditor extends AnkiActivity {
             initTabLayoutMediator();
         }
 
+
         private void initTabLayoutMediator() {
             if (mTabLayoutMediator != null) {
                 mTabLayoutMediator.detach();
@@ -342,7 +355,7 @@ public class CardTemplateEditor extends AnkiActivity {
             mTabLayoutMediator = new TabLayoutMediator(mTemplateEditor.mSlidingTabLayout, mTemplateEditor.mViewPager,
                     (tab, position) -> tab.setText(mTemplateEditor.getTempModel().getTemplate(position).getString("name"))
             );
-             mTabLayoutMediator.attach();
+            mTabLayoutMediator.attach();
         }
 
 
@@ -419,7 +432,7 @@ public class CardTemplateEditor extends AnkiActivity {
                     if (noteId != -1L) {
                         List<Long> cids = col.getNote(noteId).cids();
                         if (ordinal < cids.size()) {
-                            i.putExtra("cardList", new long[] { cids.get(ordinal) });
+                            i.putExtra("cardList", new long[] {cids.get(ordinal)});
                         }
                     }
                     // Save the model and pass the filename if updated
@@ -467,7 +480,8 @@ public class CardTemplateEditor extends AnkiActivity {
         }
 
 
-        @CheckResult @NonNull
+        @CheckResult
+        @NonNull
         private JSONObject getCurrentTemplate() {
             int currentCardTemplateIndex = getCurrentCardTemplateIndex();
             return (JSONObject) mTemplateEditor.getTempModel().getModel().getJSONArray("tmpls").get(currentCardTemplateIndex);
@@ -518,7 +532,7 @@ public class CardTemplateEditor extends AnkiActivity {
             if (requestCode == REQUEST_PREVIEWER) {
                 TemporaryModel.clearTempModelFiles();
                 // Make sure the fragments reinitialize, otherwise there is staleness on return
-                ((TemplatePagerAdapter)mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
+                ((TemplatePagerAdapter) mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
                 mTemplateEditor.mViewPager.getAdapter().notifyDataSetChanged();
             }
         }
@@ -542,15 +556,19 @@ public class CardTemplateEditor extends AnkiActivity {
             result.applyTo(currentTemplate);
         }
 
+
         /* Used for updating the collection when a model has been edited */
         private CollectionTask.TaskListener mSaveModelAndExitHandler = new CollectionTask.TaskListener() {
             private MaterialDialog mProgressDialog = null;
+
+
             @Override
             public void onPreExecute() {
                 Timber.d("mSaveModelAndExitHandler::preExecute called");
                 mProgressDialog = StyledProgressDialog.show(mTemplateEditor, AnkiDroidApp.getAppResources().getString(R.string.saving_model),
                         getResources().getString(R.string.saving_changes), false);
             }
+
 
             @Override
             public void onPostExecute(TaskData result) {
@@ -573,22 +591,24 @@ public class CardTemplateEditor extends AnkiActivity {
             }
         };
 
+
         private boolean modelHasChanged() {
             return mTemplateEditor.modelHasChanged();
         }
 
+
         /**
          * Confirm if the user wants to delete all the cards associated with current template
          *
-         * @param tmpl template to remove
-         * @param model model to remove template from, modified in place by reference
+         * @param tmpl             template to remove
+         * @param model            model to remove template from, modified in place by reference
          * @param numAffectedCards number of cards which will be affected
          */
-        private void confirmDeleteCards(final JSONObject tmpl, final Model model,  int numAffectedCards) {
+        private void confirmDeleteCards(final JSONObject tmpl, final Model model, int numAffectedCards) {
             ConfirmationDialog d = new ConfirmationDialog();
             Resources res = getResources();
             String msg = String.format(res.getQuantityString(R.plurals.card_template_editor_confirm_delete,
-                            numAffectedCards), numAffectedCards, tmpl.optString("name"));
+                    numAffectedCards), numAffectedCards, tmpl.optString("name"));
             d.setArgs(msg);
             Runnable confirm = new Runnable() {
                 @Override
@@ -600,10 +620,11 @@ public class CardTemplateEditor extends AnkiActivity {
             mTemplateEditor.showDialogFragment(d);
         }
 
+
         /**
          * Delete tmpl from model, asking user to confirm again if it's going to require a full sync
          *
-         * @param tmpl template to remove
+         * @param tmpl  template to remove
          * @param model model to remove template from, modified in place by reference
          */
         private void deleteTemplateWithCheck(final JSONObject tmpl, final Model model) {
@@ -624,8 +645,9 @@ public class CardTemplateEditor extends AnkiActivity {
             }
         }
 
+
         /**
-         * @param tmpl template to remove
+         * @param tmpl  template to remove
          * @param model model to remove from, updated in place by reference
          */
         private void deleteTemplate(JSONObject tmpl, Model model) {
@@ -643,7 +665,7 @@ public class CardTemplateEditor extends AnkiActivity {
             model.put("tmpls", newTemplates);
             Models._updateTemplOrds(model);
             // Make sure the fragments reinitialize, otherwise the reused ordinal causes staleness
-            ((TemplatePagerAdapter)mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
+            ((TemplatePagerAdapter) mTemplateEditor.mViewPager.getAdapter()).ordinalShift();
             mTemplateEditor.mViewPager.getAdapter().notifyDataSetChanged();
             mTemplateEditor.mViewPager.setCurrentItem(newTemplates.length() - 1, mTemplateEditor.animationDisabled());
 
@@ -651,6 +673,7 @@ public class CardTemplateEditor extends AnkiActivity {
                 ((CardTemplateEditor) getActivity()).dismissAllDialogFragments();
             }
         }
+
 
         /**
          * Add new template to model, asking user to confirm if it's going to require a full sync
@@ -677,6 +700,7 @@ public class CardTemplateEditor extends AnkiActivity {
 
         /**
          * Add new template to a given model
+         *
          * @param model model to add new template to
          */
         private void addNewTemplate(JSONObject model) {
@@ -703,24 +727,28 @@ public class CardTemplateEditor extends AnkiActivity {
             mTemplateEditor.mViewPager.setCurrentItem(templates.length() - 1, mTemplateEditor.animationDisabled());
         }
 
+
         /**
          * Flip the question and answer side of the template
+         *
          * @param template template to flip
          */
-        private void flipQA (JSONObject template) {
+        private void flipQA(JSONObject template) {
             String qfmt = template.getString("qfmt");
             String afmt = template.getString("afmt");
             Matcher m = Pattern.compile("(?s)(.+)<hr id=answer>(.+)").matcher(afmt);
             if (!m.find()) {
-                template.put("qfmt", afmt.replace("{{FrontSide}}",""));
+                template.put("qfmt", afmt.replace("{{FrontSide}}", ""));
             } else {
-                template.put("qfmt",m.group(2).trim());
+                template.put("qfmt", m.group(2).trim());
             }
-            template.put("afmt","{{FrontSide}}\n\n<hr id=answer>\n\n" + qfmt);
+            template.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n" + qfmt);
         }
+
 
         /**
          * Get name for new template
+         *
          * @param templates array of templates which is being added to
          * @return name for new template
          */
@@ -740,7 +768,7 @@ public class CardTemplateEditor extends AnkiActivity {
                 if (!exists) {
                     break;
                 }
-                n+=1;
+                n += 1;
             }
             return name;
         }

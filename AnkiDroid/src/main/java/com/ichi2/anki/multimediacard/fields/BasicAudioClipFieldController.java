@@ -18,14 +18,13 @@ package com.ichi2.anki.multimediacard.fields;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -36,7 +35,6 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import timber.log.Timber;
@@ -89,12 +87,12 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
             Uri selectedClip = data.getData();
 
             // Get information about the selected document
-            String[] queryColumns = { MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.MIME_TYPE };
+            String[] queryColumns = {MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.MIME_TYPE};
             Cursor cursor = mActivity.getContentResolver().query(selectedClip, queryColumns, null, null, null);
 
             if (cursor == null) {
-                 UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
-                         AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
+                UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
+                        AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
                 return;
             }
 
@@ -148,11 +146,14 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
         }
     }
 
+
     @Override
     public void onDone() { /* nothing */ }
 
+
     @Override
     public void onFocusLost() { /* nothing */ }
+
 
     @Override
     public void onDestroy() { /* nothing */ }

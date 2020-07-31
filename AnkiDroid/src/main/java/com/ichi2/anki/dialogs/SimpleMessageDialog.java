@@ -1,4 +1,3 @@
-
 package com.ichi2.anki.dialogs;
 
 import android.os.Bundle;
@@ -15,7 +14,7 @@ public class SimpleMessageDialog extends AsyncDialogFragment {
 
 
     public static SimpleMessageDialog newInstance(String message, boolean reload) {
-        return newInstance("" , message, reload);
+        return newInstance("", message, reload);
     }
 
 

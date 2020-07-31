@@ -9,10 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
-import com.ichi2.utils.JSONObject;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -53,17 +52,20 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat(browser.isInMultiSelectMode(), is(false));
     }
 
+
     @Test
     public void browserIsNotInitiallyInMultiSelectModeWithCards() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         assertThat(browser.isInMultiSelectMode(), is(false));
     }
 
+
     @Test
     public void selectAllIsNotVisibleWhenNoCardsInDeck() {
         CardBrowser browser = getBrowserWithNoNewCards();
         assertThat(browser.isShowingSelectAll(), is(false));
     }
+
 
     @Test
     public void selectAllIsVisibleWhenCardsInDeck() {
@@ -72,12 +74,14 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat(browser.isShowingSelectAll(), is(true));
     }
 
+
     @Test
     public void selectAllIsNotVisibleOnceCalled() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         selectMenuItem(browser, R.id.action_select_all);
         assertThat(browser.isShowingSelectAll(), is(false));
     }
+
 
     @Test
     public void selectNoneIsVisibleOnceSelectAllCalled() {
@@ -86,12 +90,14 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat(browser.isShowingSelectNone(), is(true));
     }
 
+
     @Test
     public void selectNoneIsVisibleWhenSelectingOne() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         selectOneOfManyCards(browser);
         assertThat(browser.isShowingSelectNone(), is(true));
     }
+
 
     @Test
     public void selectAllIsVisibleWhenSelectingOne() {
@@ -100,12 +106,14 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat(browser.isShowingSelectAll(), is(true));
     }
 
+
     @Test
     public void browserIsInMultiSelectModeWhenSelectingOne() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         selectOneOfManyCards(browser);
         assertThat(browser.isInMultiSelectMode(), is(true));
     }
+
 
     @Test
     public void browserIsInMultiSelectModeWhenSelectingAll() {
@@ -114,6 +122,7 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat(browser.isInMultiSelectMode(), is(true));
     }
 
+
     @Test
     public void browserIsNotInMultiSelectModeWhenSelectingNone() {
         CardBrowser browser = getBrowserWithMultipleNotes();
@@ -121,6 +130,7 @@ public class CardBrowserTest extends RobolectricTest {
         selectMenuItem(browser, R.id.action_select_none);
         assertThat(browser.isInMultiSelectMode(), is(false));
     }
+
 
     @Test
     public void browserDoesNotFailWhenSelectingANonExistingCard() {
@@ -151,6 +161,7 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("Checked card after should have changed by 2 places", browser.hasCheckedCardAtPosition(4), is(true));
     }
 
+
     @Test
     public void canChangeDeckToRegularDeck() {
         addDeck("Hello");
@@ -165,6 +176,7 @@ public class CardBrowserTest extends RobolectricTest {
         }
         Assert.fail("Added deck was not found in the Card Browser");
     }
+
 
     @Test
     public void cannotChangeDeckToDynamicDeck() {
@@ -181,6 +193,7 @@ public class CardBrowserTest extends RobolectricTest {
         }
 
     }
+
 
     @Test
     public void changeDeckIntegrationTestDynamicAndNon() {
@@ -199,6 +212,7 @@ public class CardBrowserTest extends RobolectricTest {
         }
         assertThat("Additional unexpected decks were present", decks.size(), is(2));
     }
+
 
     @Test
     public void moveToNonDynamicDeckWorks() {
@@ -227,6 +241,7 @@ public class CardBrowserTest extends RobolectricTest {
         }
     }
 
+
     @Test
     public void changeDeckViaTaskIsHandledCorrectly() {
         long dynId = addDynamicDeck("World");
@@ -238,10 +253,11 @@ public class CardBrowserTest extends RobolectricTest {
 
         b.executeChangeCollectionTask(toLongArray(cardIds), dynId);
 
-        for (Long cardId: cardIds) {
+        for (Long cardId : cardIds) {
             assertThat("Deck should not be changed", getCol().getCard(cardId).getDid(), not(dynId));
         }
     }
+
 
     @Test
     public void flagValueIsShownOnCard() {
@@ -257,6 +273,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         assertThat("The card flag value should be reflected in the UI", actualFlag, is(1));
     }
+
 
     @Test
     public void startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
@@ -294,10 +311,12 @@ public class CardBrowserTest extends RobolectricTest {
         getCol().getDecks().select(1);
     }
 
+
     private void deleteCardAtPosition(CardBrowser browser, int positionToCorrupt) {
         removeCardFromCollection(browser.getCardIds()[positionToCorrupt]);
         browser.clearCardData(positionToCorrupt);
     }
+
 
     private void selectOneOfManyCards(CardBrowser browser) {
         Timber.d("Selecting single card");
@@ -307,8 +326,9 @@ public class CardBrowserTest extends RobolectricTest {
 
         //roboelectric doesn't easily seem to allow us to fire an onItemLongClick
         AdapterView.OnItemLongClickListener listener = toSelect.getOnItemLongClickListener();
-        if (listener == null)
+        if (listener == null) {
             throw new IllegalStateException("no listener found");
+        }
         listener.onItemLongClick(null, toSelect.getChildAt(position),
                 position, toSelect.getItemIdAtPosition(position));
     }
@@ -321,10 +341,11 @@ public class CardBrowserTest extends RobolectricTest {
         shadowActivity.clickMenuItem(action_select_all);
     }
 
+
     //There has to be a better way :(
-    private long[] toLongArray(List<Long> list){
+    private long[] toLongArray(List<Long> list) {
         long[] ret = new long[list.size()];
-        for(int i = 0; i < ret.length; i++) {
+        for (int i = 0; i < ret.length; i++) {
             ret[i] = list.get(i);
         }
         return ret;
@@ -337,7 +358,7 @@ public class CardBrowserTest extends RobolectricTest {
 
 
     private CardBrowser getBrowserWithNotes(int count) {
-        for(int i = 0; i < count; i ++) {
+        for (int i = 0; i < count; i++) {
             addNoteUsingBasicModel(Integer.toString(i), "back");
         }
         ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
@@ -346,9 +367,11 @@ public class CardBrowserTest extends RobolectricTest {
         return (CardBrowser) multimediaController.get();
     }
 
+
     private void removeCardFromCollection(Long cardId) {
         getCol().remCards(Arrays.asList(new Long[] {cardId}));
     }
+
 
     @CheckReturnValue
     private CardBrowser getBrowserWithNoNewCards() {

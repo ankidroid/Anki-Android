@@ -32,7 +32,7 @@ public class DiffEngine {
     /**
      * Return two strings to display as typed and correct text.
      *
-     * @param typed (cleaned-up) text the user typed in,
+     * @param typed   (cleaned-up) text the user typed in,
      * @param correct (cleaned-up) correct text
      * @return Two-element String array with HTML representation of the diffs between the inputs.
      */

@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * @author zaur This is one of the classes, automatically generated to transform json replies from glosbe.com This is
- *         the root class, from which response starts.
+ * the root class, from which response starts.
  */
 public class Response {
     private String dest;

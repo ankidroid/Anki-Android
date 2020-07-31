@@ -8,13 +8,16 @@ public class Model extends JSONObject {
         super();
     }
 
+
     public Model(JSONObject json) {
         super(json);
     }
 
+
     public Model(String json) {
         super(json);
     }
+
 
     @Override
     public Model deepClone() {

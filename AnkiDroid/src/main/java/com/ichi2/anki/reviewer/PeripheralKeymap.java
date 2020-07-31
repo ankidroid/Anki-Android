@@ -24,8 +24,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/** Accepts peripheral input, mapping via various keybinding strategies,
- * and converting them to commands for the Reviewer. */
+/**
+ * Accepts peripheral input, mapping via various keybinding strategies,
+ * and converting them to commands for the Reviewer.
+ */
 public class PeripheralKeymap {
 
     private final ReviewerUi mReviewerUI;
@@ -34,11 +36,13 @@ public class PeripheralKeymap {
 
     private boolean mHasSetup = false;
 
+
     public PeripheralKeymap(ReviewerUi reviewerUi, CommandProcessor commandProcessor) {
         this.mReviewerUI = reviewerUi;
         this.mQuestionKeyMap = new KeyMap(commandProcessor);
         this.mAnswerKeyMap = new KeyMap(commandProcessor);
     }
+
 
     public void setup() {
         List<PeripheralCommand> commands = PeripheralCommand.getDefaultCommands();
@@ -51,7 +55,7 @@ public class PeripheralKeymap {
             if (command.isAnswer()) {
                 mAnswerKeyMap.addCommand(command);
             }
-         }
+        }
 
         mHasSetup = true;
     }
@@ -61,6 +65,7 @@ public class PeripheralKeymap {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return false;
     }
+
 
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (!mHasSetup) {
@@ -73,14 +78,17 @@ public class PeripheralKeymap {
         }
     }
 
+
     private static class KeyMap {
         public HashMap<Integer, List<Integer>> mKeyCodeToCommand = new HashMap<>();
         public HashMap<Integer, List<Integer>> mUnicodeToCommand = new HashMap<>();
         private final CommandProcessor mProcessor;
 
+
         private KeyMap(CommandProcessor commandProcessor) {
             this.mProcessor = commandProcessor;
         }
+
 
         public boolean onKeyUp(int keyCode, KeyEvent event) {
             boolean ret = false;

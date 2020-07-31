@@ -58,6 +58,7 @@ public class SchedTest extends RobolectricTest {
         assertThat("Card should no longer be buried", getCardInDefaultDeck(sched), notNullValue());
     }
 
+
     @Test
     public void learnCardsAreNotFiltered() {
         //Replicates Anki commit: 13c54e02d8fd2b35f6c2f4b796fc44dec65043b8
@@ -92,9 +93,9 @@ public class SchedTest extends RobolectricTest {
 
     @NonNull
     private DeckDueTreeNode getCountsForDid(double didToFind) {
-        List<DeckDueTreeNode> tree =  getCol().getSched().deckDueTree();
+        List<DeckDueTreeNode> tree = getCol().getSched().deckDueTree();
 
-        for (DeckDueTreeNode node: tree) {
+        for (DeckDueTreeNode node : tree) {
             if (node.getDid() == didToFind) {
                 return node;
             }
@@ -126,9 +127,10 @@ public class SchedTest extends RobolectricTest {
         getCol().getDecks().select(did);
     }
 
+
     @Test
     public void ensureDeckTree() {
-        for (String deckName: TEST_DECKS) {
+        for (String deckName : TEST_DECKS) {
             addDeck(deckName);
         }
         getCol().getSched().deckDueTree();

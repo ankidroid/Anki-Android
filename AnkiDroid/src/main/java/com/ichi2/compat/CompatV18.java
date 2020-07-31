@@ -10,5 +10,7 @@ public class CompatV18 extends CompatV17 implements Compat {
 
     @Override
     @CheckResult
-    public long getAvailableBytes(StatFs stat) { return stat.getAvailableBytes(); }
+    public long getAvailableBytes(StatFs stat) {
+        return stat.getAvailableBytes();
+    }
 }

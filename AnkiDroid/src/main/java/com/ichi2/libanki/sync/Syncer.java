@@ -20,19 +20,17 @@ package com.ichi2.libanki.sync;
 import android.database.Cursor;
 import android.database.SQLException;
 
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Utils;
-
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -49,10 +47,10 @@ import java.util.Map;
 import okhttp3.Response;
 import timber.log.Timber;
 
-@SuppressWarnings({"deprecation", // tracking HTTP transport change in github already
-                    "PMD.ExcessiveClassLength","PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
-                    "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
-                    "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SingularField"})
+@SuppressWarnings( {"deprecation", // tracking HTTP transport change in github already
+        "PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes", "PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity", "PMD.MethodNamingConventions", "PMD.ExcessiveMethodLength",
+        "PMD.SwitchStmtsShouldHaveDefault", "PMD.EmptyIfStmt", "PMD.SingularField"})
 public class Syncer {
     // Mapping of column type names to Cursor types for API < 11
     public static final int TYPE_NULL = 0;
@@ -61,7 +59,9 @@ public class Syncer {
     public static final int TYPE_STRING = 3;
     public static final int TYPE_BLOB = 4;
 
-    /** The libAnki value of `sched.mReportLimit` */
+    /**
+     * The libAnki value of `sched.mReportLimit`
+     */
     private static final int SYNC_SCHEDULER_REPORT_LIMIT = 1000;
 
     private Collection mCol;
@@ -89,7 +89,9 @@ public class Syncer {
     }
 
 
-    /** Returns 'noChanges', 'fullSync', 'success', etc */
+    /**
+     * Returns 'noChanges', 'fullSync', 'success', etc
+     */
     public Object[] sync() throws UnknownHttpResponseException {
         return sync(null);
     }
@@ -106,7 +108,7 @@ public class Syncer {
         }
         int returntype = ret.code();
         if (returntype == 403) {
-            return new Object[] { "badAuth" };
+            return new Object[] {"badAuth"};
         }
         try {
             mCol.getDb().getDatabase().beginTransaction();
@@ -117,7 +119,7 @@ public class Syncer {
                 mSyncMsg = rMeta.getString("msg");
                 if (!rMeta.getBoolean("cont")) {
                     // Don't add syncMsg; it can be fetched by UI code using the accessor
-                    return new Object[] { "serverAbort" };
+                    return new Object[] {"serverAbort"};
                 } else {
                     // don't abort, but ui should show messages after sync finishes
                     // and require confirmation if it's non-empty
@@ -140,22 +142,22 @@ public class Syncer {
                 long diff = Math.abs(rts - lts);
                 if (diff > 300) {
                     mCol.log("clock off");
-                    return new Object[] { "clockOff", diff };
+                    return new Object[] {"clockOff", diff};
                 }
                 if (mLMod == mRMod) {
                     Timber.i("Sync: no changes - returning");
                     mCol.log("no changes");
-                    return new Object[] { "noChanges" };
+                    return new Object[] {"noChanges"};
                 } else if (lscm != rscm) {
                     Timber.i("Sync: full sync necessary - returning");
                     mCol.log("schema diff");
-                    return new Object[] { "fullSync" };
+                    return new Object[] {"fullSync"};
                 }
                 mLNewer = mLMod > mRMod;
                 // step 1.5: check collection is valid
                 if (!mCol.basicCheck()) {
                     mCol.log("basic check");
-                    return new Object[] { "basicCheckFailed" };
+                    return new Object[] {"basicCheckFailed"};
                 }
                 throwExceptionIfCancelled(con);
                 // step 2: deletions
@@ -231,7 +233,7 @@ public class Syncer {
                 Timber.i("Sync: sending finish command");
                 long mod = mServer.finish();
                 if (mod == 0) {
-                    return new Object[] { "finishError" };
+                    return new Object[] {"finishError"};
                 }
                 Timber.i("Sync: finishing");
                 finish(mod);
@@ -245,12 +247,12 @@ public class Syncer {
             throw new RuntimeException(e);
         } catch (OutOfMemoryError e) {
             AnkiDroidApp.sendExceptionReport(e, "Syncer-sync");
-            return new Object[] { "OutOfMemoryError" };
+            return new Object[] {"OutOfMemoryError"};
         } catch (IOException e) {
             AnkiDroidApp.sendExceptionReport(e, "Syncer-sync");
-            return new Object[] { "IOException" };
+            return new Object[] {"IOException"};
         }
-        return new Object[] { "success" };
+        return new Object[] {"success"};
     }
 
 
@@ -271,8 +273,9 @@ public class Syncer {
         // roll back and force full sync
         mCol.modSchemaNoCheck();
         mCol.save();
-        return new Object[] { "sanityCheckError", null };
+        return new Object[] {"sanityCheckError", null};
     }
+
 
     private void publishProgress(Connection con, int id) {
         if (con != null) {
@@ -294,7 +297,9 @@ public class Syncer {
     }
 
 
-    /** Bundle up small objects. */
+    /**
+     * Bundle up small objects.
+     */
     public JSONObject changes() {
         JSONObject o = new JSONObject();
         o.put("models", getModels());
@@ -441,6 +446,7 @@ public class Syncer {
     // return result;
     // }
 
+
     private String usnLim() {
         if (mCol.getServer()) {
             return "usn >= " + mMinUsn;
@@ -547,15 +553,15 @@ public class Syncer {
                 JSONArray r = new JSONArray();
                 for (int i = 0; i < count; i++) {
                     switch (colTypes.get(i)) {
-                    case TYPE_STRING:
-                        r.put(mCursor.getString(i));
-                        break;
-                    case TYPE_FLOAT:
-                        r.put(mCursor.getDouble(i));
-                        break;
-                    case TYPE_INTEGER:
-                        r.put(mCursor.getLong(i));
-                        break;
+                        case TYPE_STRING:
+                            r.put(mCursor.getString(i));
+                            break;
+                        case TYPE_FLOAT:
+                            r.put(mCursor.getDouble(i));
+                            break;
+                        case TYPE_INTEGER:
+                            r.put(mCursor.getLong(i));
+                            break;
                     }
                 }
                 rows.put(r);
@@ -879,7 +885,7 @@ public class Syncer {
     private void mergeNotes(JSONArray notes) {
         for (Object[] n : newerRows(notes, "notes", 4)) {
             mCol.getDb().execute("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?,?)", n);
-            mCol.updateFieldCache(new long[]{Long.valueOf(((Number) n[0]).longValue())});
+            mCol.updateFieldCache(new long[] {Long.valueOf(((Number) n[0]).longValue())});
         }
     }
 
@@ -902,8 +908,10 @@ public class Syncer {
         mCol.setConf(conf);
     }
 
+
     /**
      * If the user asked to cancel the sync then we just throw a Runtime exception which should be gracefully handled
+     *
      * @param con
      */
     private void throwExceptionIfCancelled(Connection con) {
@@ -917,6 +925,7 @@ public class Syncer {
             throw new RuntimeException("UserAbortedSync");
         }
     }
+
 
     private static class UnexpectedSchemaChange extends Exception {
     }

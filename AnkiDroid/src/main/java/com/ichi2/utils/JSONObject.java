@@ -1,34 +1,34 @@
-/*  
+/*
  *  Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>
- *  
- *  This file is free software: you may copy, redistribute and/or modify it  
- *  under the terms of the GNU General Public License as published by the  
- *  Free Software Foundation, either version 3 of the License, or (at your  
- *  option) any later version.  
- *  
- *  This file is distributed in the hope that it will be useful, but  
- *  WITHOUT ANY WARRANTY; without even the implied warranty of  
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
- *  General Public License for more details.  
- *  
- *  You should have received a copy of the GNU General Public License  
+ *
+ *  This file is free software: you may copy, redistribute and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
+ *
+ *  This file is distributed in the hope that it will be useful, but
+ *  WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *  
- *  This file incorporates work covered by the following copyright and  
- *  permission notice:  
- *  
+ *
+ *  This file incorporates work covered by the following copyright and
+ *  permission notice:
+ *
  *    Copyright (c) 2002 JSON.org
- *    
+ *
  *    Permission is hereby granted, free of charge, to any person obtaining a copy
  *    of this software and associated documentation files (the "Software"), to deal
  *    in the Software without restriction, including without limitation the rights
  *    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  *    copies of the Software, and to permit persons to whom the Software is
  *    furnished to do so, subject to the following conditions:
- *   
+ *
  *    The above copyright notice and this permission notice shall be included in all
  *    copies or substantial portions of the Software.
- *   
+ *
  *    The Software shall be used for Good, not Evil.
  *
  *    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -37,7 +37,7 @@
  *    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  *    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- *    SOFTWARE. 
+ *    SOFTWARE.
  */
 
 package com.ichi2.utils;
@@ -46,7 +46,6 @@ package com.ichi2.utils;
  * Each method similar to the methods in JSONObjects. Name changed to add a ,
  * and it throws JSONException instead of JSONException.
  * Furthermore, it returns JSONObject and JSONArray
- *
  */
 
 import java.util.Iterator;
@@ -56,13 +55,16 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
 
     public static final Object NULL = org.json.JSONObject.NULL;
 
+
     public JSONObject() {
         super();
     }
 
+
     public JSONObject(Map copyFrom) {
         super(copyFrom);
     }
+
 
     // original code from https://github.com/stleary/JSON-java/blob/master/JSONObject.java
     // super() must be first instruction, thus it can't be in a try, and the exception can't be catched
@@ -130,24 +132,28 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+
     public JSONObject(String source) {
         this(new JSONTokener(source));
     }
 
+
     public JSONObject(JSONObject copyFrom) {
         this();
-        for (String key: copyFrom) {
+        for (String key : copyFrom) {
             put(key, copyFrom.get(key));
         }
     }
 
+
     /**
-        Iters on the keys. (Similar to iteration in Python's
-        dictionnary.
-    */
+     Iters on the keys. (Similar to iteration in Python's
+     dictionnary.
+     */
     public Iterator<String> iterator() {
         return keys();
     }
+
 
     /**
      * Change type from JSONObject to JSONObject.
@@ -161,10 +167,11 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
      * @param obj A json object
      * @return Exactly the same object, with a different type.
      */
-    public static JSONObject objectToObject(org.json.JSONObject obj){
+    public static JSONObject objectToObject(org.json.JSONObject obj) {
         Assert.that(obj == null || (obj instanceof JSONObject), "Object %s should have been an instance of our JSONObject.", obj);
         return (JSONObject) obj;
     }
+
 
     public JSONObject put(String name, boolean value) {
         try {
@@ -175,6 +182,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+
     public JSONObject put(String name, double value) {
         try {
             super.put(name, value);
@@ -183,6 +191,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
             throw new JSONException(e);
         }
     }
+
 
     public JSONObject put(String name, int value) {
         try {
@@ -193,6 +202,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+
     public JSONObject put(String name, long value) {
         try {
             super.put(name, value);
@@ -201,6 +211,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
             throw new JSONException(e);
         }
     }
+
 
     public JSONObject put(String name, Object value) {
         try {
@@ -211,6 +222,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+
     public JSONObject putOpt(String name, Object value) {
         try {
             super.putOpt(name, value);
@@ -219,6 +231,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
             throw new JSONException(e);
         }
     }
+
 
     public JSONObject accumulate(String name, Object value) {
         try {
@@ -229,6 +242,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+
     public Object get(String name) {
         try {
             return super.get(name);
@@ -236,6 +250,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
             throw new JSONException(e);
         }
     }
+
 
     public boolean getBoolean(String name) {
         try {
@@ -245,6 +260,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+
     public double getDouble(String name) {
         try {
             return super.getDouble(name);
@@ -252,6 +268,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
             throw new JSONException(e);
         }
     }
+
 
     public int getInt(String name) {
         try {
@@ -261,6 +278,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+
     public long getLong(String name) {
         try {
             return super.getLong(name);
@@ -268,6 +286,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
             throw new JSONException(e);
         }
     }
+
 
     public String getString(String name) {
         try {
@@ -277,21 +296,24 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+
     public JSONArray getJSONArray(String name) {
         try {
             return JSONArray.arrayToArray(super.getJSONArray(name));
         } catch (org.json.JSONException e) {
-            throw new RuntimeException (e);
+            throw new RuntimeException(e);
         }
     }
+
 
     public JSONObject getJSONObject(String name) {
         try {
             return objectToObject(super.getJSONObject(name));
         } catch (org.json.JSONException e) {
-            throw new RuntimeException (e);
+            throw new RuntimeException(e);
         }
     }
+
 
     public JSONArray toJSONArray(JSONArray names) {
         try {
@@ -301,13 +323,15 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+
     public static String numberToString(Number number) {
         try {
             return org.json.JSONObject.numberToString(number);
         } catch (org.json.JSONException e) {
-            throw new RuntimeException (e);
+            throw new RuntimeException(e);
         }
     }
+
 
     public JSONArray names() {
         org.json.JSONArray ar = super.names();
@@ -318,13 +342,16 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+
     public JSONArray optJSONArray(String name) {
         return JSONArray.arrayToArray(super.optJSONArray(name));
     }
 
+
     public JSONObject optJSONObject(String name) {
         return JSONObject.objectToObject(super.optJSONObject(name));
     }
+
 
     public JSONObject deepClone() {
         JSONObject clone = new JSONObject();
@@ -332,20 +359,20 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         return clone;
     }
 
+
     /** deep clone this into clone.
 
-        Given a subtype `T` of JSONObject, and a JSONObject `j`, we could do
-        ```
-        T t = new T();
-        j.deepClonedInto(t);
-        ```
-        in order to obtain a deep clone of `j` of type ```T```. */
+     Given a subtype `T` of JSONObject, and a JSONObject `j`, we could do
+     ```
+     T t = new T();
+     j.deepClonedInto(t);
+     ```
+     in order to obtain a deep clone of `j` of type ```T```. */
     protected <T extends JSONObject> T deepClonedInto(T clone) {
-        for (String key: this) {
+        for (String key : this) {
             if (get(key) instanceof JSONObject) {
                 clone.put(key, getJSONObject(key).deepClone());
-            }
-            else if (get(key) instanceof JSONArray) {
+            } else if (get(key) instanceof JSONArray) {
                 clone.put(key, getJSONArray(key).deepClone());
             } else {
                 clone.put(key, get(key));

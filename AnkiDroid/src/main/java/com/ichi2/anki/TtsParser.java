@@ -35,6 +35,7 @@ public final class TtsParser {
         return textsToRead;
     }
 
+
     private static void parseTtsElements(Element element, List<LocalisedText> textsToRead) {
         if ("tts".equalsIgnoreCase(element.tagName()) &&
                 "android".equalsIgnoreCase(element.attr("service"))) {
@@ -51,12 +52,15 @@ public final class TtsParser {
     // INNER CLASSES
     // ----------------------------------------------------------------------------
 
+
+
     /**
      * Snippet of text accompanied by its locale code (if known).
      */
     public static final class LocalisedText {
         private String mText;
         private String mLocaleCode;
+
 
         /**
          * Construct an object representing a snippet of text in an unknown locale.
@@ -65,6 +69,7 @@ public final class TtsParser {
             mText = text;
             mLocaleCode = "";
         }
+
 
         /**
          * Construct an object representing a snippet of text in a particular locale.
@@ -77,9 +82,11 @@ public final class TtsParser {
             mLocaleCode = localeCode;
         }
 
+
         public String getText() {
             return mText;
         }
+
 
         public String getLocaleCode() {
             return mLocaleCode;

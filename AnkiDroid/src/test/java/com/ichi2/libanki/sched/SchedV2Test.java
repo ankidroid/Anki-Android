@@ -19,8 +19,8 @@ package com.ichi2.libanki.sched;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Note;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Note;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -30,8 +30,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -61,7 +61,10 @@ public class SchedV2Test extends RobolectricTest {
         return expected;
     }
 
-    /** Reported by /u/CarelessSecretary9 on reddit: */
+
+    /**
+     * Reported by /u/CarelessSecretary9 on reddit:
+     */
     @Test
     public void filteredDeckSchedulingOptionsRegressionTest() {
         getCol().setCrt(1587852900L);
@@ -146,9 +149,10 @@ public class SchedV2Test extends RobolectricTest {
 
     }
 
+
     @Test
     public void ensureDeckTree() {
-        for (String deckName: TEST_DECKS) {
+        for (String deckName : TEST_DECKS) {
             addDeck(deckName);
         }
         AbstractSched sched = getCol().getSched();

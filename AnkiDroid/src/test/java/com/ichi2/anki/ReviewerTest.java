@@ -50,12 +50,14 @@ public class ReviewerTest extends RobolectricTest {
         }
     }
 
+
     @Test
     public void verifyNormalStartup() {
         try (ActivityScenario<Reviewer> scenario = ActivityScenario.launch(Reviewer.class)) {
             scenario.onActivity(reviewer -> assertNotNull("Collection should be non-null", reviewer.getCol()));
         }
     }
+
 
     @Test
     public void exitCommandWorksAfterControlsAreBlocked() {
@@ -68,6 +70,7 @@ public class ReviewerTest extends RobolectricTest {
             assertThat(scenario.getResult().getResultCode(), is(RESULT_DEFAULT));
         }
     }
+
 
     @Test
     public void jsTime4ShouldBeBlankIfButtonUnavailable() {
@@ -99,6 +102,7 @@ public class ReviewerTest extends RobolectricTest {
         assertThat("If the 4th button is not visible, there should be no time4 in JS", learnTime, isEmptyString());
     }
 
+
     @Test
     public void nothingAppearsInAppBarIfAllAppBarButtonsAreDisabled() {
         disableAllReviewerAppBarButtons();
@@ -109,6 +113,7 @@ public class ReviewerTest extends RobolectricTest {
 
         assertThat("No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons", visibleButtons, empty());
     }
+
 
     @Test
     public void onlyDisableWhiteboardAppearsInAppBarIfAllAppBarButtonsAreDisabledWithWhiteboard() {
@@ -138,7 +143,7 @@ public class ReviewerTest extends RobolectricTest {
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getTargetContext());
 
-        SharedPreferences.Editor e =  preferences.edit();
+        SharedPreferences.Editor e = preferences.edit();
         for (String k : keys) {
             e.putString(k, Integer.toString(ActionButtonStatus.MENU_DISABLED));
         }
@@ -152,9 +157,11 @@ public class ReviewerTest extends RobolectricTest {
         waitForAsyncTasksToComplete();
     }
 
+
     private Reviewer startReviewer() {
         return startReviewer(Reviewer.class);
     }
+
 
     private <T extends Reviewer> T startReviewer(Class<T> clazz) {
         T reviewer = super.startActivityNormallyOpenCollectionWithIntent(clazz, new Intent());
@@ -169,6 +176,7 @@ public class ReviewerTest extends RobolectricTest {
         reviewCard.setDue(0);
         reviewCard.flush();
     }
+
 
     private static class ReviewerForMenuItems extends Reviewer {
         private Menu mMenu;
@@ -185,6 +193,7 @@ public class ReviewerTest extends RobolectricTest {
             return mMenu;
         }
 
+
         @NonNull
         private List<String> getVisibleButtonNames() {
             return getVisibleButtonNamesExcept();
@@ -197,8 +206,8 @@ public class ReviewerTest extends RobolectricTest {
             HashSet<Integer> toSkip = new HashSet<>(Arrays.asList(doNotReturn));
 
             Menu menu = getMenu();
-            for(int i = 0; i < menu.size(); i++ ){
-                MenuItem item =  menu.getItem(i);
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem item = menu.getItem(i);
                 if (toSkip.contains(item.getItemId())) {
                     continue;
                 }

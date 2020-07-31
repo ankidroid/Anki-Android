@@ -1,22 +1,25 @@
-
 package com.ichi2.anki.dialogs;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
+import androidx.annotation.NonNull;
+
 public class ExportDialog extends AnalyticsDialogFragment {
 
     public interface ExportDialogListener {
 
         void exportApkg(String path, Long did, boolean includeSched, boolean includeMedia);
+
         void dismissAllDialogFragments();
     }
+
+
 
     private final int INCLUDE_SCHED = 0;
     private final int INCLUDE_MEDIA = 1;
@@ -26,8 +29,8 @@ public class ExportDialog extends AnalyticsDialogFragment {
 
     /**
      * A set of dialogs which deal with importing a file
-     * 
-     * @param did An integer which specifies which of the sub-dialogs to show
+     *
+     * @param did           An integer which specifies which of the sub-dialogs to show
      * @param dialogMessage An optional string which can be used to show a custom message or specify import path
      */
     public static ExportDialog newInstance(@NonNull String dialogMessage, Long did) {
@@ -57,13 +60,13 @@ public class ExportDialog extends AnalyticsDialogFragment {
         Integer[] checked;
         if (did != -1L) {
             mIncludeSched = false;
-            checked = new Integer[]{};
+            checked = new Integer[] {};
         } else {
             mIncludeSched = true;
-            checked = new Integer[]{ INCLUDE_SCHED };
+            checked = new Integer[] {INCLUDE_SCHED};
         }
-        final String[] items = { res.getString(R.string.export_include_schedule),
-                res.getString(R.string.export_include_media) };
+        final String[] items = {res.getString(R.string.export_include_schedule),
+                res.getString(R.string.export_include_media)};
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
                 .title(R.string.export)

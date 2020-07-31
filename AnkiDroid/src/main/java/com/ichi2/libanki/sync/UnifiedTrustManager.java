@@ -37,6 +37,7 @@ class UnifiedTrustManager implements X509TrustManager {
     private X509TrustManager localTrustManager;
     private X509Certificate[] mAcceptedIssuers;
 
+
     public UnifiedTrustManager(KeyStore localKeyStore) throws KeyStoreException, NoSuchAlgorithmException {
         this.defaultTrustManager = createTrustManager(null);
         this.localTrustManager = createTrustManager(localKeyStore);
@@ -46,6 +47,7 @@ class UnifiedTrustManager implements X509TrustManager {
         System.arraycopy(second, 0, mAcceptedIssuers, first.length, second.length);
     }
 
+
     private X509TrustManager createTrustManager(KeyStore store) throws NoSuchAlgorithmException, KeyStoreException {
         String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
         TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
@@ -54,6 +56,7 @@ class UnifiedTrustManager implements X509TrustManager {
         return (X509TrustManager) trustManagers[0];
     }
 
+
     public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
         try {
             localTrustManager.checkServerTrusted(chain, authType);
@@ -61,6 +64,8 @@ class UnifiedTrustManager implements X509TrustManager {
             defaultTrustManager.checkServerTrusted(chain, authType);
         }
     }
+
+
     @Override
     public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
         try {
@@ -69,6 +74,8 @@ class UnifiedTrustManager implements X509TrustManager {
             defaultTrustManager.checkClientTrusted(chain, authType);
         }
     }
+
+
     @Override
     public X509Certificate[] getAcceptedIssuers() {
         return mAcceptedIssuers;

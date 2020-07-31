@@ -17,7 +17,6 @@
 package com.ichi2.anki;
 
 import android.os.Bundle;
-
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,18 +30,21 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.widget.WidgetStatus;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
+
+import static com.ichi2.async.CollectionTask.TASK_TYPE.ADD_FIELD;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CHANGE_SORT_FIELD;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.DELETE_FIELD;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.REPOSITION_FIELD;
 
 public class ModelFieldEditor extends AnkiActivity {
 
@@ -138,8 +140,8 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
     /*
-      * Sets up the ArrayList containing the text for the main ListView
-      */
+     * Sets up the ArrayList containing the text for the main ListView
+     */
     private void setupLabels() {
         long noteTypeID = getIntent().getLongExtra("noteTypeID", 0);
         mMod = mCol.getModels().get(noteTypeID);
@@ -159,8 +161,8 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
     /*
-    * Creates a dialog to create a field
-    */
+     * Creates a dialog to create a field
+     */
     private void addFieldDialog() {
         mFieldNameInput = new EditText(this);
         mFieldNameInput.setSingleLine(true);
@@ -182,7 +184,7 @@ public class ModelFieldEditor extends AnkiActivity {
                         try {
                             mCol.modSchema();
                             CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
-                                    new TaskData(new Object[]{mMod, fieldName}));
+                                    new TaskData(new Object[] {mMod, fieldName}));
                         } catch (ConfirmModSchemaException e) {
 
                             //Create dialogue to for schema change
@@ -193,7 +195,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                 String fieldName1 = mFieldNameInput.getText().toString()
                                         .replaceAll("[\\n\\r]", "");
                                 CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
-                                        new TaskData(new Object[]{mMod, fieldName1}));
+                                        new TaskData(new Object[] {mMod, fieldName1}));
                                 dismissContextMenu();
                             };
 
@@ -241,9 +243,10 @@ public class ModelFieldEditor extends AnkiActivity {
         }
     }
 
+
     private void deleteField() {
         CollectionTask.launchCollectionTask(DELETE_FIELD, mChangeFieldHandler,
-                                new TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
+                new TaskData(new Object[] {mMod, mNoteFields.getJSONObject(mCurrentPos)}));
     }
 
 
@@ -262,36 +265,36 @@ public class ModelFieldEditor extends AnkiActivity {
                 .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
 
-                        String fieldLabel = mFieldNameInput.getText().toString()
-                                .replaceAll("[\\n\\r]", "");
-                        if (fieldLabel.length() == 0) {
-                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
-                        } else if (containsField(fieldLabel)) {
-                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
-                        } else {
-                            //Field is valid, now rename
-                            try {
-                                renameField();
-                            } catch (ConfirmModSchemaException e) {
+                    String fieldLabel = mFieldNameInput.getText().toString()
+                            .replaceAll("[\\n\\r]", "");
+                    if (fieldLabel.length() == 0) {
+                        UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
+                    } else if (containsField(fieldLabel)) {
+                        UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
+                    } else {
+                        //Field is valid, now rename
+                        try {
+                            renameField();
+                        } catch (ConfirmModSchemaException e) {
 
-                                // Handler mod schema confirmation
-                                ConfirmationDialog c = new ConfirmationDialog();
-                                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                                Runnable confirm = () -> {
-                                    mCol.modSchemaNoCheck();
-                                    try {
-                                        renameField();
-                                    } catch (ConfirmModSchemaException e1) {
-                                        //This should never be thrown
-                                    }
-                                    dismissContextMenu();
-                                };
-                                c.setConfirm(confirm);
-                                c.setCancel(mConfirmDialogCancel);
-                                ModelFieldEditor.this.showDialogFragment(c);
-                            }
+                            // Handler mod schema confirmation
+                            ConfirmationDialog c = new ConfirmationDialog();
+                            c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                            Runnable confirm = () -> {
+                                mCol.modSchemaNoCheck();
+                                try {
+                                    renameField();
+                                } catch (ConfirmModSchemaException e1) {
+                                    //This should never be thrown
+                                }
+                                dismissContextMenu();
+                            };
+                            c.setConfirm(confirm);
+                            c.setCancel(mConfirmDialogCancel);
+                            ModelFieldEditor.this.showDialogFragment(c);
                         }
-                    })
+                    }
+                })
                 .negativeText(R.string.dialog_cancel)
                 .show();
     }
@@ -310,48 +313,48 @@ public class ModelFieldEditor extends AnkiActivity {
                 .positiveText(R.string.dialog_ok)
                 .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
-                        String newPosition = mFieldNameInput.getText().toString();
-                        int pos;
+                    String newPosition = mFieldNameInput.getText().toString();
+                    int pos;
+                    try {
+                        pos = Integer.parseInt(newPosition);
+                    } catch (NumberFormatException n) {
+                        UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
+                        return;
+                    }
+
+                    if (pos < 1 || pos > mFieldLabels.size()) {
+                        UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
+                    } else {
+                        // Input is valid, now attempt to modify
                         try {
-                            pos = Integer.parseInt(newPosition);
-                        } catch (NumberFormatException n) {
-                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
-                            return;
-                        }
+                            mCol.modSchema();
+                            CollectionTask.launchCollectionTask(REPOSITION_FIELD, mChangeFieldHandler,
+                                    new TaskData(new Object[] {mMod,
+                                            mNoteFields.getJSONObject(mCurrentPos), pos - 1}));
+                        } catch (ConfirmModSchemaException e) {
 
-                        if (pos < 1 || pos > mFieldLabels.size()) {
-                            UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
-                        } else {
-                            // Input is valid, now attempt to modify
-                            try {
-                                mCol.modSchema();
-                                CollectionTask.launchCollectionTask(REPOSITION_FIELD, mChangeFieldHandler,
-                                        new TaskData(new Object[]{mMod,
-                                                mNoteFields.getJSONObject(mCurrentPos), pos - 1}));
-                            } catch (ConfirmModSchemaException e) {
-
-                                // Handle mod schema confirmation
-                                ConfirmationDialog c = new ConfirmationDialog();
-                                c.setArgs(getResources().getString(R.string.full_sync_confirmation));
-                                Runnable confirm = () -> {
-                                    try {
-                                        mCol.modSchemaNoCheck();
-                                        String newPosition1 = mFieldNameInput.getText().toString();
-                                        int pos1 = Integer.parseInt(newPosition1);
-                                        CollectionTask.launchCollectionTask(REPOSITION_FIELD,
-                                                mChangeFieldHandler, new TaskData(new Object[]{mMod,
-                                                        mNoteFields.getJSONObject(mCurrentPos), pos1 - 1}));
-                                        dismissContextMenu();
-                                    } catch (JSONException e1) {
-                                        throw new RuntimeException(e1);
-                                    }
-                                };
-                                c.setConfirm(confirm);
-                                c.setCancel(mConfirmDialogCancel);
-                                ModelFieldEditor.this.showDialogFragment(c);
-                            }
+                            // Handle mod schema confirmation
+                            ConfirmationDialog c = new ConfirmationDialog();
+                            c.setArgs(getResources().getString(R.string.full_sync_confirmation));
+                            Runnable confirm = () -> {
+                                try {
+                                    mCol.modSchemaNoCheck();
+                                    String newPosition1 = mFieldNameInput.getText().toString();
+                                    int pos1 = Integer.parseInt(newPosition1);
+                                    CollectionTask.launchCollectionTask(REPOSITION_FIELD,
+                                            mChangeFieldHandler, new TaskData(new Object[] {mMod,
+                                                    mNoteFields.getJSONObject(mCurrentPos), pos1 - 1}));
+                                    dismissContextMenu();
+                                } catch (JSONException e1) {
+                                    throw new RuntimeException(e1);
+                                }
+                            };
+                            c.setConfirm(confirm);
+                            c.setCancel(mConfirmDialogCancel);
+                            ModelFieldEditor.this.showDialogFragment(c);
                         }
-                    })
+                    }
+                })
                 .negativeText(R.string.dialog_cancel)
                 .show();
     }
@@ -401,7 +404,7 @@ public class ModelFieldEditor extends AnkiActivity {
         try {
             mCol.modSchema();
             CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
-                    new TaskData(new Object[]{mMod, mCurrentPos}));
+                    new TaskData(new Object[] {mMod, mCurrentPos}));
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
             ConfirmationDialog c = new ConfirmationDialog();
@@ -409,7 +412,7 @@ public class ModelFieldEditor extends AnkiActivity {
             Runnable confirm = () -> {
                 mCol.modSchemaNoCheck();
                 CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
-                        new TaskData(new Object[]{mMod, mCurrentPos}));
+                        new TaskData(new Object[] {mMod, mCurrentPos}));
                 dismissContextMenu();
             };
             c.setConfirm(confirm);
@@ -417,6 +420,7 @@ public class ModelFieldEditor extends AnkiActivity {
             ModelFieldEditor.this.showDialogFragment(c);
         }
     }
+
 
     /*
      * Toggle the "Remember last input" setting AKA the "Sticky" setting
@@ -472,6 +476,7 @@ public class ModelFieldEditor extends AnkiActivity {
                         getResources().getString(R.string.model_field_editor_changing), false);
             }
         }
+
 
         @Override
         public void onPostExecute(TaskData result) {

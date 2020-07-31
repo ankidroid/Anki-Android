@@ -8,11 +8,15 @@ package com.ichi2.libanki.exception;
 public class NoSuchDeckException extends Exception {
     private final long mDeckId;
 
+
     public NoSuchDeckException(long deckId) {
         this.mDeckId = deckId;
     }
 
-    /** The ID of the accessed deck */
+
+    /**
+     * The ID of the accessed deck
+     */
     public long getDeckId() {
         return mDeckId;
     }

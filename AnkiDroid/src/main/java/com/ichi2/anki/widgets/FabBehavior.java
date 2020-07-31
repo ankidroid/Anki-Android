@@ -16,15 +16,16 @@
 package com.ichi2.anki.widgets;
 
 import android.content.Context;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.ViewCompat;
 
 /**
  * Originally created by Paul Woitaschek (http://www.paul-woitaschek.de, woitaschek@posteo.de)
@@ -35,13 +36,16 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu>
 
     private float mTranslationY;
 
+
     public FabBehavior() {
         super();
     }
 
+
     public FabBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
 
     private static float getFabTranslationYForSnackbar(CoordinatorLayout parent, FloatingActionsMenu fab) {
         float minOffset = 0.0F;
@@ -58,10 +62,12 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu>
         return minOffset;
     }
 
+
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, FloatingActionsMenu child, View dependency) {
         return dependency instanceof Snackbar.SnackbarLayout;
     }
+
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionsMenu fab, View dependency) {

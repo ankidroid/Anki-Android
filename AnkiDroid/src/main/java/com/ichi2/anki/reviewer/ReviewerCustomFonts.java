@@ -36,10 +36,12 @@ public class ReviewerCustomFonts {
     private String mThemeFontStyle;
     private String mDominantFontStyle;
 
+
     public ReviewerCustomFonts(Context context) {
         Map<String, AnkiFont> customFontsMap = getCustomFontsMap(context);
         mCustomStyle = getCustomFontsStyle(customFontsMap) + getDominantFontStyle(context, customFontsMap);
     }
+
 
     public void updateCssStyle(StringBuilder cssStyle) {
         cssStyle.append(mCustomStyle);
@@ -65,7 +67,7 @@ public class ReviewerCustomFonts {
 
     /**
      * Returns the CSS used to set the theme font.
-     * 
+     *
      * @return the font style, or the empty string if no font is set
      */
     private String getThemeFontStyle() {
@@ -76,11 +78,11 @@ public class ReviewerCustomFonts {
             } else {
                 mThemeFontStyle = String.format(
                         "BODY {"
-                        + "font-family: '%s';"
-                        + "font-weight: normal;"
-                        + "font-style: normal;"
-                        + "font-stretch: normal;"
-                        + "}\n", themeFontName);
+                                + "font-family: '%s';"
+                                + "font-weight: normal;"
+                                + "font-style: normal;"
+                                + "font-stretch: normal;"
+                                + "}\n", themeFontName);
             }
         }
         return mThemeFontStyle;
@@ -89,7 +91,7 @@ public class ReviewerCustomFonts {
 
     /**
      * Returns the CSS used to set the default font.
-     * 
+     *
      * @return the default font style, or the empty string if no default font is set
      */
     private String getDefaultFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
@@ -108,7 +110,7 @@ public class ReviewerCustomFonts {
 
     /**
      * Returns the CSS used to set the override font.
-     * 
+     *
      * @return the override font style, or the empty string if no override font is set
      */
     private String getOverrideFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {
@@ -128,7 +130,7 @@ public class ReviewerCustomFonts {
 
     /**
      * Returns the CSS that determines font choice in a global fashion.
-     * 
+     *
      * @return the font style, or the empty string if none applies
      */
     private String getDominantFontStyle(Context context, Map<String, AnkiFont> customFontsMap) {

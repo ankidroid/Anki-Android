@@ -38,10 +38,9 @@ import com.ichi2.libanki.sync.MediaSyncer;
 import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
-import com.ichi2.utils.Permissions;
-
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.Permissions;
 
 import java.io.IOException;
 
@@ -69,9 +68,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
      */
     private final PowerManager.WakeLock mWakeLock;
 
+
     public static synchronized boolean getIsCancelled() {
         return sIsCancelled;
     }
+
 
     public Connection() {
         sIsCancelled = false;
@@ -81,6 +82,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
                 AnkiDroidApp.getAppResources().getString(R.string.app_name) + ":Connection");
     }
+
 
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
 
@@ -222,7 +224,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             ret = server.hostKey(username, password);
         } catch (UnknownHttpResponseException e) {
             data.success = false;
-            data.result = new Object[] { "error", e.getResponseCode(), e.getMessage() };
+            data.result = new Object[] {"error", e.getResponseCode(), e.getMessage()};
             return data;
         } catch (Exception e2) {
             // Ask user to report all bugs which aren't timeout errors
@@ -254,7 +256,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
         if (valid) {
             data.success = true;
-            data.data = new String[] { username, hostkey };
+            data.data = new String[] {username, hostkey};
         } else {
             data.success = false;
         }
@@ -302,7 +304,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 colCorruptFullSync = true;
             } else {
                 data.success = false;
-                data.result = new Object[] { "genericError" };
+                data.result = new Object[] {"genericError"};
                 return data;
             }
         }
@@ -320,7 +322,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 data.message = client.getSyncMsg();
                 if (ret == null) {
                     data.success = false;
-                    data.result = new Object[] { "genericError" };
+                    data.result = new Object[] {"genericError"};
                     return data;
                 }
                 String retCode = (String) ret[0];
@@ -352,7 +354,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         col.reopen();
                         if (ret == null) {
                             data.success = false;
-                            data.result = new Object[] { "genericError" };
+                            data.result = new Object[] {"genericError"};
                             return data;
                         }
                         if (!ret[0].equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
@@ -367,7 +369,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         if (ret == null) {
                             Timber.w("Sync - fullsync - unknown error");
                             data.success = false;
-                            data.result = new Object[] { "genericError" };
+                            data.result = new Object[] {"genericError"};
                             return data;
                         }
                         if ("success".equals(ret[0])) {
@@ -387,7 +389,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 } catch (OutOfMemoryError e) {
                     AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
-                    data.result = new Object[] { "OutOfMemoryError" };
+                    data.result = new Object[] {"OutOfMemoryError"};
                     return data;
                 } catch (RuntimeException e) {
                     if (timeoutOccurred(e)) {
@@ -446,11 +448,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             }
             if (noChanges && (!media || noMediaChanges)) {
                 data.success = false;
-                data.result = new Object[] { "noChanges" };
+                data.result = new Object[] {"noChanges"};
                 return data;
             } else {
                 data.success = true;
-                data.data = new Object[] { conflictResolution, col, mediaError };
+                data.data = new Object[] {conflictResolution, col, mediaError};
                 return data;
             }
         } catch (MediaSyncException e) {
@@ -464,7 +466,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             data.success = false;
             int code = e.getResponseCode();
             String msg = e.getLocalizedMessage();
-            data.result = new Object[] { "error", code , msg };
+            data.result = new Object[] {"error", code, msg};
             return data;
         } catch (Exception e) {
             // Global error catcher.
@@ -472,7 +474,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Timber.e(e, "doInBackgroundSync error");
             data.success = false;
             if (timeoutOccurred(e)) {
-                data.result = new Object[]{"connectionError", e};
+                data.result = new Object[] {"connectionError", e};
             } else if ("UserAbortedSync".equals(e.getMessage())) {
                 data.result = new Object[] {"UserAbortedSync", e};
             } else {
@@ -505,6 +507,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         super.publishProgress(id, up, down);
     }
 
+
     public static boolean isOnline() {
         if (sAllowSyncOnNoConnection) {
             return true;
@@ -532,9 +535,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         void onDisconnected();
     }
 
+
+
     public interface CancellableTaskListener extends TaskListener {
         void onCancelled();
     }
+
+
 
     public static class Payload {
         private int taskType;
@@ -553,11 +560,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
     }
 
+
     public synchronized static void cancel() {
         Timber.d("Cancelled Connection task");
         sInstance.cancel(true);
         sIsCancelled = true;
     }
+
 
     public synchronized static boolean isCancellable() {
         return sIsCancellable;

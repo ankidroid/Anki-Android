@@ -1,4 +1,3 @@
-
 package com.ichi2.anki;
 
 import android.content.Context;
@@ -9,13 +8,13 @@ import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatEditText;
-import timber.log.Timber;
-
 import com.ichi2.themes.Themes;
 
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatEditText;
+import timber.log.Timber;
 
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 
@@ -52,6 +51,7 @@ public class FieldEditText extends AppCompatEditText {
         return null;
     }
 
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -60,6 +60,7 @@ public class FieldEditText extends AppCompatEditText {
             this.setImeOptions(this.getImeOptions() | IME_FLAG_NO_EXTRACT_UI);
         }
     }
+
 
     private boolean shouldDisableExtendedTextUi() {
         try {
@@ -106,6 +107,7 @@ public class FieldEditText extends AppCompatEditText {
         // from some reuse mechanic in Android.
         setDefaultStyle();
     }
+
 
     /**
      * Modify the style of this view to represent a duplicate field.

@@ -18,6 +18,8 @@ package com.ichi2.libanki;
 
 import com.ichi2.anki.TestUtils;
 
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,8 +29,6 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.Objects;
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 
 public class UtilsTest {
 
@@ -43,14 +43,14 @@ public class UtilsTest {
             Enumeration zipEntries = zipFile.getEntries();
             while (zipEntries.hasMoreElements()) {
                 ZipArchiveEntry ze2 = (ZipArchiveEntry) zipEntries.nextElement();
-                Utils.unzipFiles(zipFile, "/tmp", new String[]{ze2.getName()}, null);
+                Utils.unzipFiles(zipFile, "/tmp", new String[] {ze2.getName()}, null);
             }
             Assert.fail("Expected an IOException");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Assert.assertEquals("File is outside extraction target directory.", e.getMessage());
         }
     }
+
 
     @Test
     public void testInvalidPaths() {
@@ -63,6 +63,7 @@ public class UtilsTest {
         }
     }
 
+
     @Test
     public void testValidPaths() {
         try {
@@ -74,6 +75,7 @@ public class UtilsTest {
             Assert.fail("Unexpected exception: " + ioe);
         }
     }
+
 
     @Test
     public void testCopyFile() throws Exception {

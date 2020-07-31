@@ -34,6 +34,7 @@ public class BeolingusParser {
             "<img src=\"/pics/s1[.]png\"[^>]*title=\"([^\"]+)\"[^>]*>");
     private static final Pattern MP3_PATTERN = Pattern.compile("href=\"([^\"]+\\.mp3)\">");
 
+
     /**
      * @param html HTML page from beolingus, with translation of the word we search
      * @return {@code "no"} or the pronunciation URL

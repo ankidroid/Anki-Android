@@ -3,10 +3,8 @@ package com.ichi2.anki.tests.libanki;
 import android.Manifest;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
-import android.os.Build;
 
 import com.ichi2.anki.CollectionHelper;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.DB;
 
 import org.junit.Assert;
@@ -28,6 +26,7 @@ public class DBTest {
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
             GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
 
     @Test
     public void testDBCorruption() throws Exception {
@@ -54,8 +53,7 @@ public class DBTest {
         try {
             illFatedDB.execute("CREATE TABLE test_table (test_column INTEGER NOT NULL);");
             Assert.fail("There should have been a corruption exception");
-        }
-        catch (SQLiteDatabaseCorruptException e) {
+        } catch (SQLiteDatabaseCorruptException e) {
             // do nothing, it is expected
         }
 
@@ -69,25 +67,28 @@ public class DBTest {
     }
 
 
-
     // Test fixture that lets us inspect corruption handler status
     public static class TestDB extends DB {
 
         private boolean databaseIsCorrupt = false;
 
+
         private TestDB(String ankiFilename) {
             super(ankiFilename);
         }
+
 
         @Override
         protected SupportSQLiteOpenHelperCallback getDBCallback() {
             return new TestSupportSQLiteOpenHelperCallback(1);
         }
 
+
         public class TestSupportSQLiteOpenHelperCallback extends SupportSQLiteOpenHelperCallback {
             private TestSupportSQLiteOpenHelperCallback(int version) {
                 super(version);
             }
+
 
             @Override
             public void onCorruption(SupportSQLiteDatabase db) {

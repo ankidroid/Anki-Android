@@ -27,6 +27,7 @@ public class ActionBarOverflowTest {
                 ActionBarOverflow.hasUsableMethod(), is(true));
     }
 
+
     @Test
     public void errorsAreBeingThrownCanary() {
         try {
@@ -38,6 +39,7 @@ public class ActionBarOverflowTest {
         }
     }
 
+
     @Test
     public void testAndroidXMenuItem() {
         Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -48,6 +50,7 @@ public class ActionBarOverflowTest {
 
         assertThat(value, notNullValue());
     }
+
 
     @Test
     public void testAndroidMenuItem() throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {

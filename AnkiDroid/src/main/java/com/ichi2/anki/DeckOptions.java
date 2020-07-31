@@ -1,4 +1,3 @@
-
 package com.ichi2.anki;
 
 /****************************************************************************************
@@ -34,7 +33,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
-
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
@@ -44,16 +42,16 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -71,8 +69,12 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
+
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CONF_CHANGE;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CONF_REMOVE;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CONF_RESET;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CONF_SET_SUBDECKS;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.REORDER;
 
 /**
  * Preferences for the current deck.
@@ -85,6 +87,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private boolean mPreferenceChanged = false;
     private BroadcastReceiver mUnmountReceiver = null;
     private DeckPreferenceHack mPref;
+
+
 
     public class DeckPreferenceHack implements SharedPreferences {
 
@@ -520,6 +524,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 return null;
             }
 
+
             private CollectionTask.TaskListener mConfChangeHandler = new CollectionTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
@@ -540,6 +545,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 }
             };
 
+
             /**
              * Remove the currently selected options group
              */
@@ -548,7 +554,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mCol.getDecks().remConf(mOptions.getLong("id"));
                 // Run the CPU intensive re-sort operation in a background thread
                 CollectionTask.launchCollectionTask(CONF_REMOVE, mConfChangeHandler,
-                                        new TaskData(new Object[] { mOptions }));
+                        new TaskData(new Object[] {mOptions}));
                 mDeck.put("conf", 1);
             }
         }
@@ -604,6 +610,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             }
             return mValues.get(key);
         }
+
 
         @Override
         public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
@@ -684,6 +691,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -701,16 +709,16 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         this.updateSummaries();
     }
 
+
     // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
     @SuppressWarnings("deprecation")
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference)
-    {
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         super.onPreferenceTreeClick(preferenceScreen, preference);
         if (preference instanceof PreferenceScreen &&
                 ((PreferenceScreen) preference).getDialog() != null) {
-                    ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(
-                            this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
+            ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(
+                    this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
         }
 
         return false;
@@ -726,6 +734,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
     private void closeWithResult() {
         if (mPreferenceChanged) {

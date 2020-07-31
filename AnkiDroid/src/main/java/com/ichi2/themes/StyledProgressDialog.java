@@ -56,13 +56,13 @@ public class StyledProgressDialog extends Dialog {
 
 
     public static MaterialDialog show(Context context, CharSequence title, CharSequence message,
-            boolean cancelable) {
+                                      boolean cancelable) {
         return show(context, title, message, cancelable, null);
     }
 
 
     public static MaterialDialog show(Context context, CharSequence title, CharSequence message,
-            boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
+                                      boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
         return new MaterialDialog.Builder(context)
                 .title(title)
                 .content(message)
@@ -80,6 +80,7 @@ public class StyledProgressDialog extends Dialog {
             return true;
         }
     }
+
 
     public void setMax(int max) {
         // TODO

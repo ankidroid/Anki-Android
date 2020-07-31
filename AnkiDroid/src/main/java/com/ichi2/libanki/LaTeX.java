@@ -26,17 +26,17 @@ import java.util.regex.Pattern;
 /**
  * This class is used to detect LaTeX tags in HTML and convert them to their corresponding image
  * file names.
- *
+ * <p>
  * Anki provides shortcut forms for certain expressions. These three forms are considered valid
  * LaTeX tags in Anki:
  * 1 - [latex]...[/latex]
  * 2 - [$]...[$]
  * 3 - [$$]...[$$]
- *
+ * <p>
  * Unlike the original python implementation of this class, the AnkiDroid version does not support
  * the generation of LaTeX images.
  */
-@SuppressWarnings({"PMD.MethodNamingConventions","PMD.AvoidReassigningParameters"})
+@SuppressWarnings( {"PMD.MethodNamingConventions", "PMD.AvoidReassigningParameters"})
 public class LaTeX {
 
     /**

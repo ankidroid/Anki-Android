@@ -11,8 +11,7 @@ import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
-public class ActionButtons
-{
+public class ActionButtons {
     private ActionButtonStatus mActionButtonStatus;
 
     @IdRes
@@ -22,21 +21,28 @@ public class ActionButtons
 
     private Menu mMenu;
 
+
     public ActionButtons(ReviewerUi reviewerUi) {
         this.mActionButtonStatus = new ActionButtonStatus(reviewerUi);
     }
+
 
     public void setup(SharedPreferences preferences) {
         this.mActionButtonStatus.setup(preferences);
     }
 
-    /** Sets the order of the Action Buttons in the action bar */
+
+    /**
+     * Sets the order of the Action Buttons in the action bar
+     */
     public void setCustomButtonsStatus(Menu menu) {
         this.mActionButtonStatus.setCustomButtons(menu);
         this.mMenu = menu;
     }
 
-    public @Nullable Boolean isShownInActionBar(@IdRes int resId) {
+
+    public @Nullable
+    Boolean isShownInActionBar(@IdRes int resId) {
         MenuItem menuItem = findMenuItem(resId);
         if (menuItem == null) {
             return null;
@@ -51,7 +57,8 @@ public class ActionButtons
     }
 
 
-    private @Nullable MenuItem findMenuItem(@IdRes int resId) {
+    private @Nullable
+    MenuItem findMenuItem(@IdRes int resId) {
         if (mMenu == null) {
             return null;
         }
@@ -83,6 +90,7 @@ public class ActionButtons
         }
         return status == ActionButtonStatus.SHOW_AS_ACTION_ALWAYS;
     }
+
 
     public ActionButtonStatus getStatus() {
         //DEFECT: This should be private - it breaks the law of demeter, but it'll be a large refactoring to get

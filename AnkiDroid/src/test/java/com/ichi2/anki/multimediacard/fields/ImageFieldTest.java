@@ -20,7 +20,9 @@ import static org.mockito.Mockito.when;
 @RunWith(AndroidJUnit4.class)
 public class ImageFieldTest {
 
-    /** #5237 - quotation marks on Android differed from Windows */
+    /**
+     * #5237 - quotation marks on Android differed from Windows
+     */
     @Test
     public void imageValueIsConsistentWithAnkiDesktop() {
         //Arrange
@@ -39,12 +41,14 @@ public class ImageFieldTest {
         assertThat(actual, equalTo(expected));
     }
 
+
     @Test
     public void validImageParses() {
         String goodImage = "<img src='img_202003291657428441724378214970132.png'/>";
         String imageSrc = ImageField.parseImageSrcFromHtml(goodImage);
         assertThat(imageSrc, equalTo("img_202003291657428441724378214970132.png"));
     }
+
 
     @Test
     public void testImageSubstringParsing() {
@@ -54,12 +58,14 @@ public class ImageFieldTest {
         assertThat(imageSrc, equalTo("img_202003291657428441724378214970132.png"));
     }
 
+
     @Test
     public void firstImageIsSelected() {
         String goodImage = "<img src='1.png'/>aa<img src='2.png'/>";
         String imageSrc = ImageField.parseImageSrcFromHtml(goodImage);
         assertThat(imageSrc, equalTo("1.png"));
     }
+
 
     @Test
     public void testNoImage() {
@@ -68,12 +74,14 @@ public class ImageFieldTest {
         assertThat(imageSrc, equalTo(""));
     }
 
+
     @Test
     public void testEmptyImage() {
         String knownBadImage = "<img />";
         String imageSrc = ImageField.parseImageSrcFromHtml(knownBadImage);
         assertThat(imageSrc, equalTo(""));
     }
+
 
     @Test
     public void testNoImagePathIsNothing() {
@@ -85,6 +93,7 @@ public class ImageFieldTest {
         assertThat("no media should return no paths", imageSrc, equalTo(""));
     }
 
+
     @Test
     public void testNoImagePathConcat() {
         String goodImage = "<img src='1.png'/>";
@@ -94,6 +103,7 @@ public class ImageFieldTest {
 
         assertThat("Valid media should have path", imageSrc, equalTo("media/1.png"));
     }
+
 
     @CheckResult
     protected Collection collectionWithMediaFolder(String dir) {

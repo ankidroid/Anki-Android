@@ -1,14 +1,13 @@
-
 package com.ichi2.anki.dialogs;
+
+import android.app.Dialog;
+import android.content.res.Resources;
+import android.os.Bundle;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-
-import android.app.Dialog;
-import android.content.res.Resources;
-import android.os.Bundle;
 
 public class CardBrowserOrderDialog extends AnalyticsDialogFragment {
 
@@ -16,7 +15,7 @@ public class CardBrowserOrderDialog extends AnalyticsDialogFragment {
 
 
     public static CardBrowserOrderDialog newInstance(int order, boolean isOrderAsc,
-            MaterialDialog.ListCallbackSingleChoice orderDialogListener) {
+                                                     MaterialDialog.ListCallbackSingleChoice orderDialogListener) {
         CardBrowserOrderDialog f = new CardBrowserOrderDialog();
         Bundle args = new Bundle();
         args.putInt("order", order);

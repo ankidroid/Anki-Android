@@ -24,8 +24,6 @@
 
 package com.ichi2.ui;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +35,9 @@ import com.ichi2.anki.R;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * RecyclerView.Adapter class copied almost completely from the Material Dialogs library example
  * {@see <a href="https://github.com/afollestad/material-dialogs/blob/0.9.6.0/sample/src/main/java/com/afollestad/materialdialogssample/ButtonItemAdapter.java>ButtonItemAdapter.java</a>
@@ -47,26 +48,32 @@ public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.Bu
     private ItemCallback itemCallback;
     private ButtonCallback buttonCallback;
 
+
     public ButtonItemAdapter(ArrayList<String> items) {
         this.items = items;
     }
 
+
     public void remove(String searchName) {
         items.remove(searchName);
     }
+
 
     public void setCallbacks(ItemCallback itemCallback, ButtonCallback buttonCallback) {
         this.itemCallback = itemCallback;
         this.buttonCallback = buttonCallback;
     }
 
+
     @Override
-    public @NonNull ButtonVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public @NonNull
+    ButtonVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view =
                 LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.card_browser_item_my_searches_dialog, parent, false);
+                        .inflate(R.layout.card_browser_item_my_searches_dialog, parent, false);
         return new ButtonVH(view, this);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull ButtonVH holder, int position) {
@@ -74,24 +81,31 @@ public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.Bu
         holder.button.setTag(items.get(position));
     }
 
+
     @Override
     public int getItemCount() {
         return items.size();
     }
 
+
     public interface ItemCallback {
         void onItemClicked(String searchName);
     }
 
+
+
     public interface ButtonCallback {
         void onButtonClicked(String searchName);
     }
+
+
 
     class ButtonVH extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView title;
         private final ImageButton button;
         private final ButtonItemAdapter adapter;
+
 
         ButtonVH(View itemView, ButtonItemAdapter adapter) {
             super(itemView);
@@ -103,6 +117,7 @@ public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.Bu
             button.setOnClickListener(this);
         }
 
+
         @Override
         public void onClick(View view) {
             if (adapter.itemCallback == null) {
@@ -110,8 +125,7 @@ public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.Bu
             }
             if (view instanceof ImageButton) {
                 adapter.buttonCallback.onButtonClicked(items.get(getAdapterPosition()));
-            }
-            else {
+            } else {
                 adapter.itemCallback.onItemClicked(items.get(getAdapterPosition()));
             }
         }

@@ -28,14 +28,15 @@ import org.junit.runner.RunWith;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 
 @RunWith(AndroidJUnit4.class)
 public class IntentHandlerTest {
     // COULD_BE_BETTER: We're testing class internals here, would like to see these tests be replaced with
     // higher-level tests at a later date when we better extract dependencies
+
 
     @Test
     public void viewIntentReturnsView() {
@@ -46,6 +47,7 @@ public class IntentHandlerTest {
         assertThat(expected, is(LaunchType.FILE_IMPORT));
     }
 
+
     @Test
     public void syncIntentReturnsSync() {
         Intent intent = new Intent("com.ichi2.anki.DO_SYNC");
@@ -54,6 +56,7 @@ public class IntentHandlerTest {
 
         assertThat(expected, is(LaunchType.SYNC));
     }
+
 
     @Test
     public void reviewIntentReturnsReview() {
@@ -64,6 +67,7 @@ public class IntentHandlerTest {
         assertThat(expected, is(LaunchType.REVIEW));
     }
 
+
     @Test
     public void mainIntentStartsApp() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -72,6 +76,7 @@ public class IntentHandlerTest {
 
         assertThat(expected, is(LaunchType.DEFAULT_START_APP_IF_NEW));
     }
+
 
     @Test
     public void viewWithNoDataPerformsDefaultAction() {

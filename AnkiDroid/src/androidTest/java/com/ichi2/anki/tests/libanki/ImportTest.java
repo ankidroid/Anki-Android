@@ -17,19 +17,16 @@ package com.ichi2.anki.tests.libanki;
 
 
 import android.Manifest;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.GrantPermissionRule;
 
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.anki.tests.Shared;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.Anki2Importer;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.importer.Importer;
-
 import com.ichi2.utils.JSONException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -42,6 +39,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -70,15 +70,18 @@ public class ImportTest {
     @Rule
     public RetryRule retry = new RetryRule(10);
 
+
     @Before
     public void setUp() throws IOException {
         testCol = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
     }
 
+
     @After
     public void tearDown() {
         testCol.close();
     }
+
 
     @Test
     public void testAnki2Mediadupes() throws IOException, JSONException, ImportExportException {
@@ -134,7 +137,7 @@ public class ImportTest {
         os.close();
         imp = new Anki2Importer(empty, testCol.getPath());
         imp.run();
-        expected =  Arrays.asList("foo.mp3", String.format("foo_%s.mp3", mid));
+        expected = Arrays.asList("foo.mp3", String.format("foo_%s.mp3", mid));
         actual = Arrays.asList(new File(empty.getMedia().dir()).list());
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
@@ -142,6 +145,7 @@ public class ImportTest {
         assertTrue(n.getFields()[0].contains("_"));
         empty.close();
     }
+
 
     @Test
     public void testApkg() throws IOException, ImportExportException {
@@ -178,7 +182,8 @@ public class ImportTest {
         assertEquals(2, new File(testCol.getMedia().dir()).list().length);
     }
 
-    @Test		
+
+    @Test
     public void testAnki2DiffmodelTemplates() throws IOException, JSONException, ImportExportException {
         // different from the above as this one tests only the template text being
         // changed, not the number of cards/fields
@@ -199,6 +204,7 @@ public class ImportTest {
         Note tnote = testCol.getCard(tcid).note();
         assertTrue(testCol.findTemplates(tnote).get(0).getString("qfmt").contains("Changed Front Template"));
     }
+
 
     @Test
     public void testAnki2Updates() throws IOException, ImportExportException {
@@ -285,6 +291,7 @@ public class ImportTest {
 //        assertTrue("x".equals(n.getItem("Back")));
 //        assertTrue("3".equals(n.getItem("Three")));
 //    }
+
 
     /**
      * Custom tests for AnkiDroid.

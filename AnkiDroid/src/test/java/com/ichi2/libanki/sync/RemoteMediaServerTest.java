@@ -35,9 +35,10 @@ import static org.hamcrest.Matchers.is;
 public class RemoteMediaServerTest {
     //COULD_BE_BETTER: We currently fail on a trailing flash in these variables.
     private static String sCustomServerWithNoFormatting = "https://sync.example.com/msync";
-    private static String sCustomServerWithFormatting   = "https://sync%s.example.com/msync";
-    private static final String sDefaultUrlNoHostNum    = "https://sync.ankiweb.net/msync/";
-    private static final String sDefaultUrlWithHostNum  = "https://sync1.ankiweb.net/msync/";
+    private static String sCustomServerWithFormatting = "https://sync%s.example.com/msync";
+    private static final String sDefaultUrlNoHostNum = "https://sync.ankiweb.net/msync/";
+    private static final String sDefaultUrlWithHostNum = "https://sync1.ankiweb.net/msync/";
+
 
     @Test
     public void getDefaultMediaUrlWithNoHostNum() {
@@ -82,6 +83,7 @@ public class RemoteMediaServerTest {
         assertThat(syncUrl, is("https://sync1.example.com/msync"));
     }
 
+
     @Test
     public void getUnformattedCustomMediaUrlWithHostNum() {
         RemoteMediaServer underTest = getServerWithHostNum(null);
@@ -91,6 +93,7 @@ public class RemoteMediaServerTest {
 
         assertThat(syncUrl, is("https://sync.example.com/msync"));
     }
+
 
     @Test
     public void getUnformattedCustomMediaUrlWithNoHostNum() {
@@ -102,6 +105,7 @@ public class RemoteMediaServerTest {
         assertThat(syncUrl, is("https://sync.example.com/msync"));
     }
 
+
     @Test
     public void invalidSettingReturnsCorrectResultWithNoHostNum() {
         RemoteMediaServer underTest = getServerWithHostNum(null);
@@ -111,6 +115,7 @@ public class RemoteMediaServerTest {
 
         assertThat(syncUrl, is(sDefaultUrlNoHostNum));
     }
+
 
     @Test
     public void invalidSettingReturnsCorrectResultWithHostNum() {
@@ -122,10 +127,12 @@ public class RemoteMediaServerTest {
         assertThat(syncUrl, is(sDefaultUrlWithHostNum));
     }
 
+
     private void setCustomServerWithNoUrl() {
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
         userPreferences.edit().putBoolean("useCustomSyncServer", true).apply();
     }
+
 
     private void setCustomMediaServer(String s) {
 
@@ -135,6 +142,7 @@ public class RemoteMediaServerTest {
         e.putString("syncMediaUrl", s);
         e.apply();
     }
+
 
     @NonNull
     private RemoteMediaServer getServerWithHostNum(Integer hostNum) {

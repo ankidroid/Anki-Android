@@ -54,6 +54,7 @@ public class Info extends AnkiActivity {
 
     private int mType;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
@@ -174,6 +175,7 @@ public class Info extends AnkiActivity {
 
     /**
      * Copy debug information about the device to the clipboard
+     *
      * @return debugInfo
      */
     public String copyDebugInfo() {
@@ -181,7 +183,7 @@ public class Info extends AnkiActivity {
                 "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
                 "ACRA UUID = " + Installation.id(this) + "\n";
 
-        android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+        android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboardManager != null) {
             clipboardManager.setPrimaryClip(ClipData.newPlainText(this.getTitle(), debugInfo));
         }

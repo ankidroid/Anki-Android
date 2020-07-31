@@ -39,6 +39,7 @@ public abstract class AbstractCollectionTaskTest extends RobolectricTest {
         }
     }
 
+
     protected <T> T assertResultArraySingleton(TaskData result, Class<T> clazz) {
         assertThat("The result object should be non-null", result.getObjArray(), notNullValue());
         assertThat("There should only be one result object", result.getObjArray(), arrayWithSize(1));

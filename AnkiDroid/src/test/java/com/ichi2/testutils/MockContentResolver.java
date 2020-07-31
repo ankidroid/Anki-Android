@@ -16,6 +16,7 @@ public class MockContentResolver {
         return resolver;
     }
 
+
     public static ContentResolver returningEmptyCursor() {
         return returningCursor(MockCursor.getEmpty());
     }

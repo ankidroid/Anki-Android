@@ -18,7 +18,6 @@ package com.ichi2.utils;
 
 import android.text.TextUtils;
 
-
 import timber.log.Timber;
 
 /**
@@ -27,10 +26,10 @@ import timber.log.Timber;
  * Use with moderation as it spans the logcat and reduces performances.
  * <p>
  * Consider guarding calls to this method with an if statement on a static final constant, as in:
- * 
+ *
  * <pre>
  *   public static final boolean DEBUG = false;  // Enable for debugging this class.
- * 
+ *
  *   public void methodName(int value, String name) {
  *     if (DEBUG) {
  *       MethodLogger.log(value, name);
@@ -47,7 +46,7 @@ public class MethodLogger {
 
     /**
      * Logs the method being called.
-     * 
+     *
      * @param message to add to the logged statement
      */
     public static void log(String message) {
@@ -67,7 +66,7 @@ public class MethodLogger {
      * Logs the method that made the call.
      * <p>
      * A helper method is needed to make sure the number of stack frames is the same on every path.
-     * 
+     *
      * @param message to be added to the logged message
      */
     private static void logInternal(String message) {

@@ -4,10 +4,6 @@ import android.Manifest;
 import android.app.Instrumentation;
 import android.content.SharedPreferences;
 
-import androidx.test.annotation.UiThreadTest;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.GrantPermissionRule;
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
@@ -27,6 +23,9 @@ import org.junit.runner.RunWith;
 
 import java.lang.reflect.Method;
 
+import androidx.test.annotation.UiThreadTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
 import timber.log.Timber;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -37,12 +36,13 @@ import static org.junit.Assert.assertTrue;
 @RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
 public class ACRATest {
 
-    @Rule public GrantPermissionRule mRuntimePermissionRule =
+    @Rule
+    public GrantPermissionRule mRuntimePermissionRule =
             GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
     private AnkiDroidApp app = null;
 
-    private String[] debugLogcatArguments = { "-t", "300", "-v", "long", "ACRA:S"};
+    private String[] debugLogcatArguments = {"-t", "300", "-v", "long", "ACRA:S"};
     //private String[] prodLogcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" };
 
 
@@ -54,18 +54,20 @@ public class ACRATest {
         app.onCreate();
     }
 
+
     /**
      * helper method to invoke private method to set acra config builder
      *
-     * @param mode either Debug or Production, used to construct method name to invoke
+     * @param mode  either Debug or Production, used to construct method name to invoke
      * @param prefs the preferences to use during method invocation
-     * @exception NoSuchFieldException if the method isn't found, possibly IllegalAccess or InvocationAccess as well
+     * @throws NoSuchFieldException if the method isn't found, possibly IllegalAccess or InvocationAccess as well
      */
     private void setAcraConfig(String mode, SharedPreferences prefs) throws Exception {
         Method method = app.getClass().getDeclaredMethod("set" + mode + "ACRAConfig", SharedPreferences.class);
         method.setAccessible(true);
         method.invoke(app, prefs);
     }
+
 
     @Test
     public void testDebugConfiguration() throws Exception {
@@ -78,6 +80,7 @@ public class ACRATest {
         verifyDebugACRAPreferences();
     }
 
+
     private void verifyDebugACRAPreferences() {
         assertTrue("ACRA was not disabled correctly",
                 AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext())
@@ -87,6 +90,7 @@ public class ACRATest {
                 AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext())
                         .getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "undefined"));
     }
+
 
     @Test
     public void testProductionConfigurationUserDisabled() throws Exception {
@@ -100,6 +104,7 @@ public class ACRATest {
         setAcraConfig("Production", AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()));
         verifyDebugACRAPreferences();
     }
+
 
     @Test
     public void testProductionConfigurationUserAsk() throws Exception {
@@ -118,7 +123,7 @@ public class ACRATest {
             // Make sure the toast is configured correctly
             if (configuration.getClass().toString().contains("Toast")) {
                 assertEquals(app.getResources().getString(R.string.feedback_manual_toast_text),
-                        ((ToastConfiguration)configuration).text());
+                        ((ToastConfiguration) configuration).text());
                 assertTrue("Toast is not enabled", configuration.enabled());
             }
 
@@ -128,6 +133,7 @@ public class ACRATest {
             }
         }
     }
+
 
     @Test
     public void testCrashReportLimit() throws Exception {
@@ -145,7 +151,7 @@ public class ACRATest {
         // The same class/method combo is only sent once, so we face a new method each time (should test that system later)
         Exception crash = new Exception("testCrashReportSend at " + System.currentTimeMillis());
         StackTraceElement[] trace = new StackTraceElement[] {
-                new StackTraceElement("Class", "Method" + (int)System.currentTimeMillis(), "File", (int)System.currentTimeMillis())
+                new StackTraceElement("Class", "Method" + (int) System.currentTimeMillis(), "File", (int) System.currentTimeMillis())
         };
         crash.setStackTrace(trace);
 
@@ -200,7 +206,7 @@ public class ACRATest {
             // Make sure the toast is configured correctly
             if (configuration.getClass().toString().contains("Toast")) {
                 assertEquals(app.getResources().getString(R.string.feedback_auto_toast_text),
-                        ((ToastConfiguration)configuration).text());
+                        ((ToastConfiguration) configuration).text());
                 assertTrue("Toast is not enabled", configuration.enabled());
             }
 

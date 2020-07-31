@@ -18,7 +18,6 @@
 package com.ichi2.libanki;
 
 import android.database.Cursor;
-
 import android.util.Pair;
 
 import com.ichi2.utils.JSONObject;
@@ -34,7 +33,7 @@ import java.util.regex.Pattern;
 import timber.log.Timber;
 
 
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes", "PMD.MethodNamingConventions"})
 public class Note implements Cloneable {
 
     private Collection mCol;
@@ -53,7 +52,7 @@ public class Note implements Cloneable {
     private long mMod;
     private boolean mNewlyAdded;
 
-    
+
     public Note(Collection col, Long id) {
         this(col, null, id);
     }
@@ -107,6 +106,7 @@ public class Note implements Cloneable {
         }
     }
 
+
     public void reloadModel() {
         mModel = mCol.getModels().get(mMid);
     }
@@ -116,12 +116,14 @@ public class Note implements Cloneable {
      * If fields or tags have changed, write changes to disk.
      */
     public void flush() {
-    	flush(null);
+        flush(null);
     }
+
 
     public void flush(Long mod) {
         flush(mod, true);
     }
+
 
     public void flush(Long mod, boolean changeUsn) {
         assert mScm == mCol.getScm();
@@ -152,13 +154,15 @@ public class Note implements Cloneable {
 
 
     public int numberOfCards() {
-        return (int) mCol.getDb().queryLongScalar("SELECT count() FROM cards WHERE nid = ?", new Object[]{mId});
+        return (int) mCol.getDb().queryLongScalar("SELECT count() FROM cards WHERE nid = ?", new Object[] {mId});
     }
+
 
     public List<Long> cids() {
         return mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid = ? ORDER BY ord",
-                new Object[]{mId});
+                new Object[] {mId});
     }
+
 
     public ArrayList<Card> cards() {
         ArrayList<Card> cards = new ArrayList<>();
@@ -171,7 +175,10 @@ public class Note implements Cloneable {
         return cards;
     }
 
-    /** The first card, assuming it exists.*/
+
+    /**
+     * The first card, assuming it exists.
+     */
     public Card firstCard() {
         return mCol.getCard(mCol.getDb().queryLongScalar("SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1",
                 new Object[] {mId}));
@@ -189,7 +196,7 @@ public class Note implements Cloneable {
      */
 
     public String[] keys() {
-        return (String[])mFMap.keySet().toArray();
+        return (String[]) mFMap.keySet().toArray();
     }
 
 
@@ -228,9 +235,10 @@ public class Note implements Cloneable {
     public void setItem(String key, String value) {
         mFields[_fieldOrd(key)] = value;
     }
-    
+
+
     public boolean contains(String key) {
-    	return mFMap.containsKey(key);
+        return mFMap.containsKey(key);
     }
 
 
@@ -285,8 +293,9 @@ public class Note implements Cloneable {
         EMPTY,
         DUPE,
     }
+
+
     /**
-     * 
      * @return whether it has no content, dupe first field, or nothing remarkable.
      */
     public DupeOrEmpty dupeOrEmpty() {
@@ -326,7 +335,7 @@ public class Note implements Cloneable {
      */
     private void _postFlush() {
         if (!mNewlyAdded) {
-            mCol.genCards(new long[] { mId });
+            mCol.genCards(new long[] {mId});
         }
     }
 
@@ -335,6 +344,7 @@ public class Note implements Cloneable {
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
+
 
     public long getMid() {
         return mMid;
@@ -377,7 +387,7 @@ public class Note implements Cloneable {
 
     public Note clone() {
         try {
-            return (Note)super.clone();
+            return (Note) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
@@ -388,15 +398,21 @@ public class Note implements Cloneable {
         return mTags;
     }
 
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Note note = (Note) o;
 
         return mId == note.mId;
     }
+
 
     @Override
     public int hashCode() {
@@ -406,6 +422,7 @@ public class Note implements Cloneable {
 
     public static class ClozeUtils {
         private static final Pattern mClozeRegexPattern = Pattern.compile("\\{\\{c(\\d+)::");
+
 
         /**
          * Calculate the next number that should be used if inserting a new cloze deletion.

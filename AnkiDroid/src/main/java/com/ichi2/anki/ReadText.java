@@ -23,7 +23,6 @@ import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
-
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -54,9 +53,11 @@ public class ReadText {
     private static Compat compat = CompatHelper.getCompat();
     private static Object mTtsParams = compat.initTtsParams();
 
+
     public static int getmQuestionAnswer() {
         return mQuestionAnswer;
     }
+
 
     public static void speak(String text, String loc, int queueMode) {
         int result = mTts.setLanguage(localeFromStringIgnoringScriptAndExtensions(loc));
@@ -155,6 +156,7 @@ public class ReadText {
         }, delay);
     }
 
+
     /**
      * Read a card side using a TTS service.
      *
@@ -176,6 +178,7 @@ public class ReadText {
             }
         }
     }
+
 
     /**
      * Read the given text using an appropriate TTS voice.
@@ -234,6 +237,7 @@ public class ReadText {
         selectTts(mTextToSpeak, mDid, mOrd, mQuestionAnswer);
     }
 
+
     /**
      * Convert a string representation of a locale, in the format returned by Locale.toString(),
      * into a Locale object, disregarding any script and extensions fields (i.e. using solely the
@@ -262,6 +266,7 @@ public class ReadText {
         }
     }
 
+
     private static String stripScriptAndExtensions(String localeCode) {
         int hashPos = localeCode.indexOf('#');
         if (hashPos >= 0) {
@@ -269,6 +274,7 @@ public class ReadText {
         }
         return localeCode;
     }
+
 
     /**
      * Returns true if the TTS engine supports the language of the locale represented by localeCode
@@ -278,6 +284,7 @@ public class ReadText {
         return mTts.isLanguageAvailable(localeFromStringIgnoringScriptAndExtensions(localeCode)) >=
                 TextToSpeech.LANG_AVAILABLE;
     }
+
 
     public static void initializeTts(Context context, @NonNull ReadTextListener listener) {
         // Store weak reference to Activity to prevent memory leak
@@ -306,6 +313,8 @@ public class ReadText {
                             }
                             listener.onDone();
                         }
+
+
                         @Override
                         @Deprecated
                         public void onError(String utteranceId) {
@@ -318,6 +327,8 @@ public class ReadText {
                                     v -> openTtsHelpUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
                                     new Snackbar.Callback());
                         }
+
+
                         @Override
                         public void onStart(String arg0) {
                             // no nothing
@@ -335,7 +346,7 @@ public class ReadText {
 
 
     private static void openTtsHelpUrl(Uri helpUrl) {
-        AnkiActivity activity =  (AnkiActivity) mReviewer.get();
+        AnkiActivity activity = (AnkiActivity) mReviewer.get();
         activity.openUrl(helpUrl);
     }
 
@@ -375,9 +386,11 @@ public class ReadText {
         }
     }
 
-    interface ReadTextListener{
+
+    interface ReadTextListener {
         public void onDone();
     }
+
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     @Nullable

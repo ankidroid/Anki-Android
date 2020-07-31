@@ -16,20 +16,20 @@
 
 package com.ichi2.anki;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.os.Bundle;
+
+import com.ichi2.libanki.Model;
+import com.ichi2.utils.JSONObject;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.ichi2.libanki.Model;
-import com.ichi2.utils.JSONObject;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
 import static com.ichi2.anki.TemporaryModel.ChangeType.ADD;
@@ -76,7 +76,7 @@ public class TemporaryModelTest extends RobolectricTest {
         // 3 templates and one change now
         assertTemplateChangesEqual(expected1, tempModel.getTemplateChanges());
         assertTemplateChangesEqual(expected1, tempModel.getAdjustedTemplateChanges());
-        Assert.assertArrayEquals(new int[]{3}, tempModel.getDeleteDbOrds(3));
+        Assert.assertArrayEquals(new int[] {3}, tempModel.getDeleteDbOrds(3));
 
         tempModel.addTemplateChange(DELETE, 2);
         // 2 templates and two changes now
@@ -84,11 +84,11 @@ public class TemporaryModelTest extends RobolectricTest {
         Object[][] adjExpected2 = {{2, ADD}, {2, DELETE}};
         assertTemplateChangesEqual(expected2, tempModel.getTemplateChanges());
         assertTemplateChangesEqual(adjExpected2, tempModel.getAdjustedTemplateChanges());
-        Assert.assertArrayEquals(new int[]{2, 4}, tempModel.getDeleteDbOrds(3));
+        Assert.assertArrayEquals(new int[] {2, 4}, tempModel.getDeleteDbOrds(3));
 
         tempModel.addTemplateChange(DELETE, 1);
         // 1 template and three changes now
-        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Assert.assertArrayEquals(new int[] {2, 1, 5}, tempModel.getDeleteDbOrds(3));
         Object[][] expected3 = {{3, ADD}, {2, DELETE}, {1, DELETE}};
         Object[][] adjExpected3 = {{1, ADD}, {2, DELETE}, {1, DELETE}};
         assertTemplateChangesEqual(expected3, tempModel.getTemplateChanges());
@@ -96,7 +96,7 @@ public class TemporaryModelTest extends RobolectricTest {
 
         tempModel.addTemplateChange(ADD, 2);
         // 2 templates and 4 changes now
-        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Assert.assertArrayEquals(new int[] {2, 1, 5}, tempModel.getDeleteDbOrds(3));
         Object[][] expected4 = {{3, ADD}, {2, DELETE}, {1, DELETE}, {2, ADD}};
         Object[][] adjExpected4 = {{1, ADD}, {2, DELETE}, {1, DELETE}, {2, ADD}};
         assertTemplateChangesEqual(expected4, tempModel.getTemplateChanges());
@@ -111,7 +111,7 @@ public class TemporaryModelTest extends RobolectricTest {
         // So the first template add should be negated by this delete, and the second template add should slide down to 1
         tempModel.addTemplateChange(DELETE, 1);
         // 1 template and 3 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Assert.assertArrayEquals(new int[] {2, 1, 5}, tempModel.getDeleteDbOrds(3));
         Object[][] expected5 = {{2, DELETE}, {1, DELETE}, {1, ADD}};
         Object[][] adjExpected5 = {{2, DELETE}, {1, DELETE}, {1, ADD}};
         assertTemplateChangesEqual(expected5, tempModel.getTemplateChanges());
@@ -119,7 +119,7 @@ public class TemporaryModelTest extends RobolectricTest {
 
         tempModel.addTemplateChange(ADD, 2);
         // 2 template and 4 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Assert.assertArrayEquals(new int[] {2, 1, 5}, tempModel.getDeleteDbOrds(3));
         Object[][] expected6 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}};
         Object[][] adjExpected6 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}};
         assertTemplateChangesEqual(expected6, tempModel.getTemplateChanges());
@@ -127,7 +127,7 @@ public class TemporaryModelTest extends RobolectricTest {
 
         tempModel.addTemplateChange(ADD, 3);
         // 2 template and 4 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Assert.assertArrayEquals(new int[] {2, 1, 5}, tempModel.getDeleteDbOrds(3));
         Object[][] expected7 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}, {3, ADD}};
         Object[][] adjExpected7 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}, {3, ADD}};
         assertTemplateChangesEqual(expected7, tempModel.getTemplateChanges());
@@ -135,7 +135,7 @@ public class TemporaryModelTest extends RobolectricTest {
 
         tempModel.addTemplateChange(DELETE, 3);
         // 1 template and 3 changes now (two deletes cancelled out adds)
-        Assert.assertArrayEquals(new int[]{2, 1, 5}, tempModel.getDeleteDbOrds(3));
+        Assert.assertArrayEquals(new int[] {2, 1, 5}, tempModel.getDeleteDbOrds(3));
         Object[][] expected8 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}};
         Object[][] adjExpected8 = {{2, DELETE}, {1, DELETE}, {1, ADD}, {2, ADD}};
         assertTemplateChangesEqual(expected8, tempModel.getTemplateChanges());

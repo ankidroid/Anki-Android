@@ -29,16 +29,9 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.widget.PopupMenu;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-
 import android.util.Pair;
 import android.view.ActionMode;
 import android.view.KeyEvent;
@@ -72,27 +65,27 @@ import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
+import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Note.ClozeUtils;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
-import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
-import com.ichi2.utils.NamedJSONComparator;
-import com.ichi2.widget.WidgetStatus;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.NamedJSONComparator;
+import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,9 +96,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.PopupMenu;
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
+
+import static com.ichi2.async.CollectionTask.TASK_TYPE.ADD_NOTE;
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -126,7 +124,7 @@ public class NoteEditor extends AnkiActivity {
     // kill sCardBrowserCard and AbstractFlashcardViewer.getEditorCard()
 
 
-//    public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
+    //    public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
 //    public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
     public static final String SOURCE_TEXT = "SOURCE_TEXT";
     public static final String TARGET_TEXT = "TARGET_TEXT";
@@ -223,6 +221,7 @@ public class NoteEditor extends AnkiActivity {
                     .show(NoteEditor.this, "", res.getString(R.string.saving_facts), false);
         }
 
+
         @Override
         public void onProgressUpdate(TaskData value) {
             int count = value.getInt();
@@ -262,8 +261,7 @@ public class NoteEditor extends AnkiActivity {
             if (!mCloseAfter && (mProgressDialog != null) && mProgressDialog.isShowing()) {
                 try {
                     mProgressDialog.dismiss();
-                }
-                catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e) {
                     Timber.e(e, "Note Editor: Error on dismissing progress dialog");
                 }
             }
@@ -298,13 +296,15 @@ public class NoteEditor extends AnkiActivity {
         }
     };
 
+
     private void displayErrorSavingNote() {
         int errorMessageId = getAddNoteErrorResource();
         UIUtils.showThemedToast(this, getResources().getString(errorMessageId), false);
     }
 
 
-    protected @StringRes int getAddNoteErrorResource() {
+    protected @StringRes
+    int getAddNoteErrorResource() {
         //COULD_BE_BETTER: We currently don't perform edits inside this class (wat), so we only handle adds.
         if (this.isClozeType()) {
             return R.string.note_editor_no_cloze_delations;
@@ -337,6 +337,7 @@ public class NoteEditor extends AnkiActivity {
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
@@ -363,6 +364,7 @@ public class NoteEditor extends AnkiActivity {
 
         startLoadingCollection();
     }
+
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
@@ -496,7 +498,7 @@ public class NoteEditor extends AnkiActivity {
         // Deck Selector
         TextView deckTextView = findViewById(R.id.CardEditorDeckText);
         // If edit mode and more than one card template distinguish between "Deck" and "Card deck"
-        if (!mAddNote && mEditorNote.model().getJSONArray("tmpls").length()>1) {
+        if (!mAddNote && mEditorNote.model().getJSONArray("tmpls").length() > 1) {
             deckTextView.setText(R.string.CardEditorCardDeck);
         }
         mNoteDeckSpinner = findViewById(R.id.note_deck_spinner);
@@ -523,6 +525,7 @@ public class NoteEditor extends AnkiActivity {
                 // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos));
                 mCurrentDid = mAllDeckIds.get(pos);
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -607,9 +610,10 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 
+
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch(keyCode) {
+        switch (keyCode) {
 
             //some hardware keyboards swap between mobile/desktop mode...
             //when in mobile mode KEYCODE_NUMPAD_ENTER & KEYCODE_ENTER are equiv. but
@@ -624,7 +628,7 @@ public class NoteEditor extends AnkiActivity {
             case KeyEvent.KEYCODE_D:
                 //null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed() && (mNoteDeckSpinner != null)) {
-                        mNoteDeckSpinner.performClick();
+                    mNoteDeckSpinner.performClick();
                 }
                 break;
 
@@ -636,7 +640,7 @@ public class NoteEditor extends AnkiActivity {
 
             case KeyEvent.KEYCODE_N:
                 if (event.isCtrlPressed() && (mNoteTypeSpinner != null)) {
-                        mNoteTypeSpinner.performClick();
+                    mNoteTypeSpinner.performClick();
                 }
                 break;
 
@@ -765,7 +769,7 @@ public class NoteEditor extends AnkiActivity {
             }
         }
         // changed deck?
-        if (!mAddNote && mCurrentEditedCard!= null && mCurrentEditedCard.getDid() != mCurrentDid) {
+        if (!mAddNote && mCurrentEditedCard != null && mCurrentEditedCard.getDid() != mCurrentDid) {
             return true;
         }
         // changed fields?
@@ -820,7 +824,7 @@ public class NoteEditor extends AnkiActivity {
                 mReloadRequired = true;
                 if (mModelChangeCardMap.size() < mEditorNote.numberOfCards() || mModelChangeCardMap.containsKey(null)) {
                     // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
-                    ConfirmationDialog dialog = new ConfirmationDialog ();
+                    ConfirmationDialog dialog = new ConfirmationDialog();
                     dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing));
                     Runnable confirm = () -> {
                         // Bypass the check once the user confirms
@@ -840,7 +844,7 @@ public class NoteEditor extends AnkiActivity {
             if (mCurrentEditedCard != null && mCurrentEditedCard.getDid() != mCurrentDid) {
                 mReloadRequired = true;
                 // remove card from filtered deck first (if relevant)
-                getCol().getSched().remFromDyn(new long[] { mCurrentEditedCard.getId() });
+                getCol().getSched().remFromDyn(new long[] {mCurrentEditedCard.getId()});
                 // refresh the card object to reflect the database changes in remFromDyn()
                 mCurrentEditedCard.load();
                 // also reload the note object
@@ -866,6 +870,7 @@ public class NoteEditor extends AnkiActivity {
             closeNoteEditor();
         }
     }
+
 
     /**
      * Change the note type from oldModel to newModel, handling the case where a full sync will be required
@@ -893,12 +898,14 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 
+
     /**
      * Change the note type from oldModel to newModel
+     *
      * @throws ConfirmModSchemaException If a full sync will be required
      */
     private void changeNoteType(Model oldModel, Model newModel) throws ConfirmModSchemaException {
-        final long [] noteIds = {mEditorNote.getId()};
+        final long[] noteIds = {mEditorNote.getId()};
         getCol().getModels().change(oldModel, noteIds, newModel, mModelChangeFieldMap, mModelChangeCardMap);
         // refresh the note object to reflect the database changes
         mEditorNote.load();
@@ -912,6 +919,7 @@ public class NoteEditor extends AnkiActivity {
         Timber.i("NoteEditor:: onBackPressed()");
         closeCardEditorWithCheck();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -989,7 +997,8 @@ public class NoteEditor extends AnkiActivity {
 
 
     public void addNewNote() {
-        openNewNoteEditor(intent -> { });
+        openNewNoteEditor(intent -> {
+        });
     }
 
 
@@ -1001,6 +1010,7 @@ public class NoteEditor extends AnkiActivity {
             }
         });
     }
+
 
     private void openNewNoteEditor(Consumer<Intent> intentEnricher) {
         Intent intent = new Intent(NoteEditor.this, NoteEditor.class);
@@ -1015,6 +1025,7 @@ public class NoteEditor extends AnkiActivity {
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
+
 
     /**
      * finish when sd card is ejected
@@ -1044,7 +1055,7 @@ public class NoteEditor extends AnkiActivity {
 
     private void closeCardEditorWithCheck() {
         if (hasUnsavedChanges()) {
-           showDiscardChangesDialog();
+            showDiscardChangesDialog();
         } else {
             closeNoteEditor();
         }
@@ -1102,6 +1113,7 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 
+
     private void showTagsDialog() {
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<>();
@@ -1119,6 +1131,7 @@ public class NoteEditor extends AnkiActivity {
         dialog.setTagsDialogListener(tagsDialogListener);
         showDialogFragment(dialog);
     }
+
 
     private void showCardTemplateEditor() {
         Intent intent = new Intent(this, CardTemplateEditor.class);
@@ -1190,33 +1203,36 @@ public class NoteEditor extends AnkiActivity {
                 break;
             }
             case REQUEST_TEMPLATE_EDIT: {
-                    // Model can change regardless of exit type - update ourselves and CardBrowser
-                    mReloadRequired = true;
-                    mEditorNote.reloadModel();
-                    if (mCurrentEditedCard == null || !mEditorNote.cids().contains(mCurrentEditedCard.getId())) {
-                        if (!mAddNote) {
-                            /* This can occur, for example, if the
-                             * card type was deleted or if the note
-                             * type was changed without moving this
-                             * card to another type. */
-                            Timber.d("onActivityResult() template edit return - current card is gone, close note editor");
-                            UIUtils.showSimpleSnackbar(this, R.string.template_for_current_card_deleted, false);
-                            closeNoteEditor();
-                        } else {
-                            Timber.d("onActivityResult() template edit return, in add mode, just re-display");
-                        }
+                // Model can change regardless of exit type - update ourselves and CardBrowser
+                mReloadRequired = true;
+                mEditorNote.reloadModel();
+                if (mCurrentEditedCard == null || !mEditorNote.cids().contains(mCurrentEditedCard.getId())) {
+                    if (!mAddNote) {
+                        /* This can occur, for example, if the
+                         * card type was deleted or if the note
+                         * type was changed without moving this
+                         * card to another type. */
+                        Timber.d("onActivityResult() template edit return - current card is gone, close note editor");
+                        UIUtils.showSimpleSnackbar(this, R.string.template_for_current_card_deleted, false);
+                        closeNoteEditor();
                     } else {
-                        Timber.d("onActivityResult() template edit return - current card exists");
-                        // reload current card - the template ordinals are possibly different post-edit
-                        mCurrentEditedCard = getCol().getCard(mCurrentEditedCard.getId());
-                        updateCards(mEditorNote.model());
+                        Timber.d("onActivityResult() template edit return, in add mode, just re-display");
                     }
+                } else {
+                    Timber.d("onActivityResult() template edit return - current card exists");
+                    // reload current card - the template ordinals are possibly different post-edit
+                    mCurrentEditedCard = getCol().getCard(mCurrentEditedCard.getId());
+                    updateCards(mEditorNote.model());
+                }
                 break;
             }
         }
     }
 
-    /** @param col Readonly variable to get cache dir */
+
+    /**
+     * @param col Readonly variable to get cache dir
+     */
     private MultimediaEditableNote getCurrentMultimediaEditableNote(Collection col) {
         MultimediaEditableNote mNote = NoteService.createEmptyNote(mEditorNote.model());
 
@@ -1257,6 +1273,7 @@ public class NoteEditor extends AnkiActivity {
         populateEditFields(fields, false);
     }
 
+
     private void populateEditFields(String[][] fields, boolean editModelMode) {
         mFieldsLayoutContainer.removeAllViews();
         mEditFields = new LinkedList<>();
@@ -1288,7 +1305,7 @@ public class NoteEditor extends AnkiActivity {
 
             ImageButton mediaButton = edit_line_view.findViewById(R.id.id_media_button);
             // Load icons from attributes
-            int[] icons = Themes.getResFromAttr(this, new int[] { R.attr.attachFileImage, R.attr.upDownImage});
+            int[] icons = Themes.getResFromAttr(this, new int[] {R.attr.attachFileImage, R.attr.upDownImage});
             // Make the icon change between media icon and switch field icon depending on whether editing note type
             if (editModelMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
@@ -1509,7 +1526,10 @@ public class NoteEditor extends AnkiActivity {
         return Utils.joinFields(fields);
     }
 
-    /** Returns the value of the field at the given index */
+
+    /**
+     * Returns the value of the field at the given index
+     */
     private String getCurrentFieldText(int index) {
         Editable fieldText = mEditFields.get(index).getText();
         if (fieldText == null) {
@@ -1548,7 +1568,9 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    /** Make NOTE the current note. */
+    /**
+     * Make NOTE the current note.
+     */
     private void setNote() {
         setNote(null);
     }
@@ -1590,7 +1612,9 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    /** Update the list of card templates for current note type */
+    /**
+     * Update the list of card templates for current note type
+     */
     private void updateCards(JSONObject model) {
         Timber.d("updateCards()");
         JSONArray tmpls = model.getJSONArray("tmpls");
@@ -1602,11 +1626,11 @@ public class NoteEditor extends AnkiActivity {
             String name = tmpls.getJSONObject(i).optString("name");
             // If more than one card, and we have an existing card, underline existing card
             if (!mAddNote && tmpls.length() > 1 && model == mEditorNote.model() && mCurrentEditedCard != null &&
-                mCurrentEditedCard.template().optString("name").equals(name)) {
+                    mCurrentEditedCard.template().optString("name").equals(name)) {
                 name = "<u>" + name + "</u>";
             }
             cardsList.append(name);
-            if (i < tmpls.length()-1) {
+            if (i < tmpls.length() - 1) {
                 cardsList.append(", ");
             }
         }
@@ -1637,13 +1661,16 @@ public class NoteEditor extends AnkiActivity {
         return TextUtils.join(" ", tags);
     }
 
+
     private Model getCurrentlySelectedModel() {
         return getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition()));
     }
 
+
     /**
      * Convenience method for getting the corresponding key given the value in a 1-to-1 map
-     * @param map map containing 1-to-1 key/value pairs
+     *
+     * @param map   map containing 1-to-1 key/value pairs
      * @param value value to get key for
      * @return key corresponding to the given value
      */
@@ -1657,12 +1684,13 @@ public class NoteEditor extends AnkiActivity {
         return null;
     }
 
+
     /**
      * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
      */
     private void updateFieldsFromMap(JSONObject newModel) {
         // Get the field map for new model and old fields list
-        String [][] oldFields = mEditorNote.items();
+        String[][] oldFields = mEditorNote.items();
         Map<String, Pair<Integer, JSONObject>> fMapNew = getCol().getModels().fieldMap(newModel);
         // Build array of label/values to provide to field EditText views
         String[][] fields = new String[fMapNew.size()][2];
@@ -1700,8 +1728,8 @@ public class NoteEditor extends AnkiActivity {
         updateCards(newModel);
     }
 
+
     /**
-     *
      * @return whether or not to allow remapping of fields for current model
      */
     private boolean allowFieldRemapping() {
@@ -1751,11 +1779,13 @@ public class NoteEditor extends AnkiActivity {
             }
         }
 
+
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
             // Do Nothing
         }
     }
+
 
 
     /* Uses only if mCurrentEditedCard is set, so from reviewer or card browser.*/
@@ -1775,12 +1805,12 @@ public class NoteEditor extends AnkiActivity {
             if (mAllModelIds.get(pos) != noteModelId) {
                 // Initialize mapping between fields of old model -> new model
                 mModelChangeFieldMap = new HashMap<>();
-                for (int i=0; i < mEditorNote.items().length; i++) {
+                for (int i = 0; i < mEditorNote.items().length; i++) {
                     mModelChangeFieldMap.put(i, i);
                 }
                 // Initialize mapping between cards new model -> old model
                 mModelChangeCardMap = new HashMap<>();
-                for (int i = 0; i < newModel.getJSONArray("tmpls").length() ; i++) {
+                for (int i = 0; i < newModel.getJSONArray("tmpls").length(); i++) {
                     if (i < mEditorNote.numberOfCards()) {
                         mModelChangeCardMap.put(i, i);
                     } else {
@@ -1808,11 +1838,14 @@ public class NoteEditor extends AnkiActivity {
             }
         }
 
+
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
             // Do Nothing
         }
     }
+
+
 
     /**
      * Custom ActionMode.Callback implementation for adding and handling cloze deletion action
@@ -1823,15 +1856,18 @@ public class NoteEditor extends AnkiActivity {
         private FieldEditText mTextBox;
         private int mMenuId = View.generateViewId();
 
+
         private ActionModeCallback(FieldEditText textBox) {
             super();
             mTextBox = textBox;
         }
 
+
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             return true;
         }
+
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -1844,6 +1880,7 @@ public class NoteEditor extends AnkiActivity {
                 return false;
             }
         }
+
 
         @SuppressLint("SetTextI18n")
         @Override
@@ -1864,12 +1901,14 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 
+
     private void convertSelectedTextToCloze(int fieldIndex) {
         if (fieldIndex < 0 || fieldIndex > mEditFields.size()) {
             Timber.w("Invalid field index %d requested for cloze insertion.", fieldIndex);
         }
         convertSelectedTextToCloze(mEditFields.get(fieldIndex));
     }
+
 
     private void convertSelectedTextToCloze(FieldEditText textBox) {
         // get the current text and selection locations
@@ -1905,6 +1944,7 @@ public class NoteEditor extends AnkiActivity {
         return getNextClozeIndex() > 1;
     }
 
+
     private int getNextClozeIndex() {
         // BUG: This assumes all fields are inserted as: {{cloze:Text}}
         List<String> fieldValues = new ArrayList<>(mEditFields.size());
@@ -1915,6 +1955,7 @@ public class NoteEditor extends AnkiActivity {
         }
         return ClozeUtils.getNextClozeIndex(fieldValues);
     }
+
 
     private boolean isClozeType() {
         return getCurrentlySelectedModel().getInt("type") == Consts.MODEL_CLOZE;
@@ -1928,11 +1969,11 @@ public class NoteEditor extends AnkiActivity {
         startMultimediaFieldEditorForField(index, field);
     }
 
+
     @VisibleForTesting
     void setFieldValueFromUi(int i, String newText) {
         mEditFields.get(i).setText(newText);
     }
-
 
 
     @VisibleForTesting

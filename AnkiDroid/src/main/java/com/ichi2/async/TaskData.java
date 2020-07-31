@@ -33,6 +33,7 @@ public class TaskData {
         mBool = bool;
     }
 
+
     public TaskData(Object[] obj, boolean bool) {
         mObjects = obj;
         mBool = bool;
@@ -85,10 +86,12 @@ public class TaskData {
         mBool = bool;
     }
 
+
     public TaskData(boolean bool, Object[] obj) {
         mBool = bool;
         mObjects = obj;
     }
+
 
     public TaskData(String string, boolean bool) {
         mMsg = string;

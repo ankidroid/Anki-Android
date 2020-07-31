@@ -1,4 +1,3 @@
-
 package com.ichi2.anki;
 
 import android.app.Activity;
@@ -15,17 +14,6 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -39,7 +27,6 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
@@ -47,13 +34,25 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import timber.log.Timber;
 
 public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener {
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
     public static final int REQUEST_REVIEW = 901;
-    /** The name of the parent class (Reviewer) */
+    /**
+     * The name of the parent class (Reviewer)
+     */
     private final String mActivityName;
 
     private DialogHandler mHandler = new DialogHandler(this);
@@ -63,10 +62,12 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     private boolean mIsDestroyed = false;
 
+
     public AnkiActivity() {
         super();
         this.mActivityName = getClass().getSimpleName();
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +84,12 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         mCustomTabActivityHelper = new CustomTabActivityHelper();
     }
 
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(AnkiDroidApp.updateContextWithLanguage(base));
     }
+
 
     @Override
     protected void onStart() {
@@ -94,6 +97,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         super.onStart();
         mCustomTabActivityHelper.bindCustomTabsService(this);
     }
+
 
     @Override
     protected void onStop() {
@@ -110,7 +114,6 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-
     @Override
     protected void onResume() {
         Timber.i("AnkiActivity::onResume - %s", mActivityName);
@@ -121,13 +124,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         mHandler.readMessage();
     }
 
+
     @Override
     protected void onDestroy() {
         this.mIsDestroyed = true;
         Timber.i("AnkiActivity::onDestroy - %s", mActivityName);
         super.onDestroy();
     }
-
 
 
     @Override
@@ -152,6 +155,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     public Collection getCol() {
         return CollectionHelper.getInstance().getCol(this);
     }
+
 
     public boolean colIsOpen() {
         return CollectionHelper.getInstance().colIsOpen();
@@ -223,7 +227,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         try {
             super.startActivityForResult(intent, requestCode);
         } catch (ActivityNotFoundException e) {
-            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed,true);
+            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed, true);
         }
     }
 
@@ -267,7 +271,10 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         view.clearAnimation();
     }
 
-    /** Compat shim for API 16 */
+
+    /**
+     * Compat shim for API 16
+     */
     public boolean wasDestroyed() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
             return super.isDestroyed();
@@ -284,7 +291,10 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
     }
 
-    /** Finish Activity using FADE animation **/
+
+    /**
+     * Finish Activity using FADE animation
+     **/
     public static void finishActivityWithFade(Activity activity) {
         activity.finish();
         ActivityTransitionAnimation.slide(activity, ActivityTransitionAnimation.UP);
@@ -340,6 +350,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         });
     }
 
+
     public void showProgressBar() {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         if (progressBar != null) {
@@ -363,6 +374,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
     }
 
+
     protected void openUrl(Uri url) {
         //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
         //display the toast
@@ -382,6 +394,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         CustomTabActivityHelper.openCustomTab(this, customTabsIntent, url, new CustomTabsFallback());
     }
 
+
     public CustomTabActivityHelper getCustomTabActivityHelper() {
         return mCustomTabActivityHelper;
     }
@@ -391,7 +404,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      * Global method to show dialog fragment including adding it to back stack Note: DO NOT call this from an async
      * task! If you need to show a dialog from an async task, use showAsyncDialogFragment()
      *
-     * @param newFragment  the DialogFragment you want to show
+     * @param newFragment the DialogFragment you want to show
      */
     public void showDialogFragment(DialogFragment newFragment) {
         // DialogFragment.show() will take care of adding the fragment
@@ -413,7 +426,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      * Calls {@link #showAsyncDialogFragment(AsyncDialogFragment, NotificationChannels.Channel)} internally, using the channel
      * {@link NotificationChannels.Channel#GENERAL}
      *
-     * @param newFragment  the AsyncDialogFragment you want to show
+     * @param newFragment the AsyncDialogFragment you want to show
      */
     public void showAsyncDialogFragment(AsyncDialogFragment newFragment) {
         showAsyncDialogFragment(newFragment, NotificationChannels.Channel.GENERAL);
@@ -425,8 +438,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      * is shown from an async task, by showing the message in the notification bar if the activity was stopped before the
      * AsyncTask completed
      *
-     * @param newFragment  the AsyncDialogFragment you want to show
-     * @param channel the NotificationChannels.Channel to use for the notification
+     * @param newFragment the AsyncDialogFragment you want to show
+     * @param channel     the NotificationChannels.Channel to use for the notification
      */
     public void showAsyncDialogFragment(AsyncDialogFragment newFragment, NotificationChannels.Channel channel) {
         try {
@@ -453,10 +466,10 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         showSimpleMessageDialog(message, false);
     }
 
-    protected void showSimpleMessageDialog(String title, String message){
+
+    protected void showSimpleMessageDialog(String title, String message) {
         showSimpleMessageDialog(title, message, false);
     }
-
 
 
     /**
@@ -465,12 +478,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      * notification bar instead.
      *
      * @param message
-     * @param reload flag which forces app to be restarted when true
+     * @param reload  flag which forces app to be restarted when true
      */
     protected void showSimpleMessageDialog(String message, boolean reload) {
         AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(message, reload);
         showAsyncDialogFragment(newFragment);
     }
+
 
     protected void showSimpleMessageDialog(String title, String message, boolean reload) {
         AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(title, message, reload);
@@ -499,7 +513,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
                     .setTicker(ticker);
             // Enable vibrate and blink if set in preferences
             if (prefs.getBoolean("widgetVibrate", false)) {
-                builder.setVibrate(new long[] { 1000, 1000, 1000});
+                builder.setVibrate(new long[] {1000, 1000, 1000});
             }
             if (prefs.getBoolean("widgetBlink", false)) {
                 builder.setLights(Color.BLUE, 1000, 1000);
@@ -516,9 +530,11 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     }
 
+
     public DialogHandler getDialogHandler() {
         return mHandler;
     }
+
 
     // Handle closing simple message dialog
     @Override
@@ -548,12 +564,14 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         this.finishWithoutAnimation();
     }
 
+
     protected void enableToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
     }
+
 
     protected void enableToolbar(@Nullable View view) {
         if (view == null) {

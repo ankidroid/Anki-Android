@@ -37,17 +37,17 @@ import java.util.regex.Pattern;
 
 
 /**
-Anki maintains a cache of used tags so it can quickly present a list of tags
-for autocomplete and in the browser. For efficiency, deletions are not
-tracked, so unused tags can only be removed from the list with a DB check.
-
-This module manages the tag cache and tags for notes.
-
-This class differs from the python version by keeping the in-memory tag cache as a TreeMap
-instead of a JSONObject. It is much more convenient to work with a TreeMap in Java, but there
-may be a performance penalty in doing so (on startup and shutdown).
+ * Anki maintains a cache of used tags so it can quickly present a list of tags
+ * for autocomplete and in the browser. For efficiency, deletions are not
+ * tracked, so unused tags can only be removed from the list with a DB check.
+ * <p>
+ * This module manages the tag cache and tags for notes.
+ * <p>
+ * This class differs from the python version by keeping the in-memory tag cache as a TreeMap
+ * instead of a JSONObject. It is much more convenient to work with a TreeMap in Java, but there
+ * may be a performance penalty in doing so (on startup and shutdown).
  */
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes"})
 public class Tags {
 
     private static final Pattern sCanonify = Pattern.compile("[\"']");
@@ -98,7 +98,9 @@ public class Tags {
      * ***********************************************************
      */
 
-    /** Given a list of tags, add any missing ones to tag registry. */
+    /**
+     * Given a list of tags, add any missing ones to tag registry.
+     */
     public void register(Iterable<String> tags) {
         register(tags, null);
     }
@@ -130,7 +132,9 @@ public class Tags {
     }
 
 
-    /** Add any missing tags from notes to the tags list. */
+    /**
+     * Add any missing tags from notes to the tags list.
+     */
     public void registerNotes(long[] nids) {
         // when called with a null argument, the old list is cleared first.
         String lim;
@@ -166,11 +170,12 @@ public class Tags {
 
 
     /**
-    * byDeck returns the tags of the cards in the deck
-    * @param did the deck id
-    * @param children whether to include the deck's children
-    * @return a list of the tags
-    */
+     * byDeck returns the tags of the cards in the deck
+     *
+     * @param did      the deck id
+     * @param children whether to include the deck's children
+     * @return a list of the tags
+     */
     public ArrayList<String> byDeck(long did, boolean children) {
         List<String> tags;
         if (children) {
@@ -198,7 +203,7 @@ public class Tags {
      * FIXME: This method must be fixed before it is used. See note below.
      * Add/remove tags in bulk. TAGS is space-separated.
      *
-     * @param ids The cards to tag.
+     * @param ids  The cards to tag.
      * @param tags List of tags to add/remove. They are space-separated.
      */
     public void bulkAdd(List<Long> ids, String tags) {
@@ -210,9 +215,9 @@ public class Tags {
      * FIXME: This method must be fixed before it is used. Its behaviour is currently incorrect.
      * This method is currently unused in AnkiDroid so it will not cause any errors in its current state.
      *
-     * @param ids The cards to tag.
+     * @param ids  The cards to tag.
      * @param tags List of tags to add/remove. They are space-separated.
-     * @param add True/False to add/remove.
+     * @param add  True/False to add/remove.
      */
     public void bulkAdd(List<Long> ids, String tags, boolean add) {
         List<String> newTags = split(tags);
@@ -248,13 +253,13 @@ public class Tags {
             if (add) {
                 while (cur.moveToNext()) {
                     nids.add(cur.getLong(0));
-                    res.add(new Object[] { addToStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(), cur.getLong(0) });
+                    res.add(new Object[] {addToStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(), cur.getLong(0)});
                 }
             } else {
                 while (cur.moveToNext()) {
                     nids.add(cur.getLong(0));
-                    res.add(new Object[] { remFromStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(),
-                            cur.getLong(0) });
+                    res.add(new Object[] {remFromStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(),
+                            cur.getLong(0)});
                 }
             }
         }
@@ -273,7 +278,9 @@ public class Tags {
      * ***********************************************************
      */
 
-    /** Parse a string and return a list of tags. */
+    /**
+     * Parse a string and return a list of tags.
+     */
     public ArrayList<String> split(String tags) {
         ArrayList<String> list = new ArrayList<>();
         for (String s : tags.replace('\u3000', ' ').split("\\s")) {
@@ -285,7 +292,9 @@ public class Tags {
     }
 
 
-    /** Join tags into a single string, with leading and trailing spaces. */
+    /**
+     * Join tags into a single string, with leading and trailing spaces.
+     */
     public String join(java.util.Collection<String> tags) {
         if (tags == null || tags.size() == 0) {
             return "";
@@ -296,7 +305,9 @@ public class Tags {
     }
 
 
-    /** Add tags if they don't exist, and canonify */
+    /**
+     * Add tags if they don't exist, and canonify
+     */
     public String addToStr(String addtags, String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(addtags)) {
@@ -307,18 +318,22 @@ public class Tags {
         return join(canonify(currentTags));
     }
 
+
     // submethod of remFromStr in anki
     public boolean wildcard(String pat, String str) {
         String pat_replaced = Pattern.quote(pat).replace("\\*", ".*");
-        return Pattern.compile(pat_replaced, Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CASE).matcher(str).matches();
+        return Pattern.compile(pat_replaced, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(str).matches();
     }
 
-    /** Delete tags if they exist. */
+
+    /**
+     * Delete tags if they exist.
+     */
     public String remFromStr(String deltags, String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(deltags)) {
             List<String> remove = new ArrayList<>();
-            for (String tx: currentTags) {
+            for (String tx : currentTags) {
                 if (tag.equalsIgnoreCase(tx) || wildcard(tag, tx)) {
                     remove.add(tx);
                 }
@@ -337,7 +352,9 @@ public class Tags {
      * ***********************************************************
      */
 
-    /** Strip duplicates, adjust case to match existing tags, and sort. */
+    /**
+     * Strip duplicates, adjust case to match existing tags, and sort.
+     */
     public TreeSet<String> canonify(List<String> tagList) {
         // NOTE: The python version creates a list of tags, puts them into a set, then sorts them. The TreeSet
         // used here already guarantees uniqueness and sort order, so we return it as-is without those steps.
@@ -355,7 +372,9 @@ public class Tags {
     }
 
 
-    /** True if TAG is in TAGS. Ignore case. */
+    /**
+     * True if TAG is in TAGS. Ignore case.
+     */
     public boolean inList(String tag, Iterable<String> tags) {
         for (String t : tags) {
             if (t.equalsIgnoreCase(tag)) {
@@ -391,7 +410,9 @@ public class Tags {
      */
 
 
-    /** Add a tag to the collection. We use this method instead of exposing mTags publicly.*/
+    /**
+     * Add a tag to the collection. We use this method instead of exposing mTags publicly.
+     */
     public void add(String key, Integer value) {
         mTags.put(key, value);
     }

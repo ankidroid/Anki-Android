@@ -21,13 +21,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.MediaMetadataRetriever;
+import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.MediaStore;
-
 import android.view.Display;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
@@ -50,10 +49,13 @@ import timber.log.Timber;
 
 
 //NICE_TO_HAVE: Abstract, then add tests fir #6111
+
+
+
 /**
  * Class used to parse, load and play sound files on AnkiDroid.
  */
-@SuppressWarnings({"PMD.NPathComplexity","PMD.CollapsibleIfStatements"})
+@SuppressWarnings( {"PMD.NPathComplexity", "PMD.CollapsibleIfStatements"})
 public class Sound {
 
     /**
@@ -89,9 +91,9 @@ public class Sound {
     /**
      * Subset Flags: Flags that indicate the subset of sounds to involve
      */
-    public static final int  SOUNDS_QUESTION = 0;
-    public static final int  SOUNDS_ANSWER = 1;
-    public static final int  SOUNDS_QUESTION_AND_ANSWER = 2;
+    public static final int SOUNDS_QUESTION = 0;
+    public static final int SOUNDS_ANSWER = 1;
+    public static final int SOUNDS_QUESTION_AND_ANSWER = 2;
 
     /**
      * Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true.
@@ -122,9 +124,10 @@ public class Sound {
      * categorized as belonging to the front (question) or back (answer) of cards. Note that all sounds embedded in
      * the content will be given the same base categorization of question or answer. Additionally, the result is to be
      * sorted by the order of appearance on the card.
+     *
      * @param soundDir -- base path to the media files
-     * @param content -- parsed for sound entries, the entries expected in display order
-     * @param qa -- the base categorization of the sounds in the content, Sound.SOUNDS_QUESTION or Sound.SOUNDS_ANSWER
+     * @param content  -- parsed for sound entries, the entries expected in display order
+     * @param qa       -- the base categorization of the sounds in the content, Sound.SOUNDS_QUESTION or Sound.SOUNDS_ANSWER
      */
     public void addSounds(String soundDir, String content, int qa) {
         Matcher matcher = sSoundPattern.matcher(content);
@@ -144,10 +147,12 @@ public class Sound {
         }
     }
 
+
     /**
      * makeQuestionAnswerSoundList creates a single list of both the question and answer audio only if it does not
      * already exist. It's intended for lazy evaluation, only in the rare cases when both sides are fully played
      * together, which even when configured as supported may not be instigated
+     *
      * @return True if a non-null list was created, or false otherwise
      */
     private Boolean makeQuestionAnswerList() {
@@ -176,12 +181,13 @@ public class Sound {
         return true;
     }
 
+
     /**
      * expandSounds takes content with embedded sound file placeholders and expands them to reference the actual media
      * file
      *
      * @param soundDir -- the base path of the media files
-     * @param content -- card content to be rendered that may contain embedded audio
+     * @param content  -- card content to be rendered that may contain embedded audio
      * @return -- the same content but in a format that will render working play buttons when audio was embedded
      */
     public static String expandSounds(String soundDir, String content) {
@@ -225,6 +231,7 @@ public class Sound {
 
     /**
      * Plays the sounds for the indicated sides
+     *
      * @param qa -- One of Sound.SOUNDS_QUESTION, Sound.SOUNDS_ANSWER, or Sound.SOUNDS_QUESTION_AND_ANSWER
      */
     public void playSounds(int qa) {
@@ -242,8 +249,10 @@ public class Sound {
         }
     }
 
+
     /**
      * Returns length in milliseconds.
+     *
      * @param qa -- One of Sound.SOUNDS_QUESTION, Sound.SOUNDS_ANSWER, or Sound.SOUNDS_QUESTION_AND_ANSWER
      */
     public long getSoundsLength(int qa) {
@@ -263,12 +272,14 @@ public class Sound {
         return length;
     }
 
+
     /**
      * Plays the given sound or video and sets playAllListener if available on media player to start next media
      */
     public void playSound(String soundPath, OnCompletionListener playAllListener) {
         playSound(soundPath, playAllListener, null);
     }
+
 
     /**
      * Plays the given sound or video and sets playAllListener if available on media player to start next media.
@@ -280,8 +291,12 @@ public class Sound {
         playSoundInternal(soundPath, completionListener, videoView);
     }
 
-    /** Plays a sound without ensuring that the playAllListener will release the audio */
-    @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements","deprecation"}) // audio API deprecation tracked on github as #5022
+
+    /**
+     * Plays a sound without ensuring that the playAllListener will release the audio
+     */
+    @SuppressWarnings( {"PMD.EmptyIfStmt", "PMD.CollapsibleIfStatements", "deprecation"})
+    // audio API deprecation tracked on github as #5022
     private void playSoundInternal(String soundPath, OnCompletionListener playAllListener, VideoView videoView) {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
         Uri soundUri = Uri.parse(soundPath);
@@ -300,7 +315,7 @@ public class Sound {
             }
             // Also check that there is a video thumbnail, as some formats like mp4 can be audio only
             isVideo = isVideo &&
-                ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
+                    ThumbnailUtils.createVideoThumbnail(soundUri.getPath(), MediaStore.Images.Thumbnails.MINI_KIND) != null;
             // No thumbnail: no video after all. (Or maybe not a video we can handle on the specific device.)
             // If video file but no SurfaceHolder provided then ask AbstractFlashcardViewer to provide a VideoView
             // holder
@@ -353,6 +368,7 @@ public class Sound {
         }
     }
 
+
     private static void configureVideo(VideoView videoView, int videoWidth, int videoHeight) {
         // get the display
         Context context = AnkiDroidApp.getInstance().getApplicationContext();
@@ -377,20 +393,26 @@ public class Sound {
         videoView.setLayoutParams(lp);
     }
 
+
     public void notifyConfigurationChanged(VideoView videoView) {
         if (mMediaPlayer != null) {
             configureVideo(videoView, mMediaPlayer.getVideoWidth(), mMediaPlayer.getVideoHeight());
         }
     }
 
-    /** #5414 - Ensures playing a single sound performs cleanup */
+
+    /**
+     * #5414 - Ensures playing a single sound performs cleanup
+     */
     private final class SingleSoundCompletionListener implements OnCompletionListener {
         @Nullable
         private final OnCompletionListener userCallback;
 
+
         public SingleSoundCompletionListener(@Nullable OnCompletionListener userCallback) {
             this.userCallback = userCallback;
         }
+
 
         @Override
         public void onCompletion(MediaPlayer mp) {
@@ -402,6 +424,8 @@ public class Sound {
             }
         }
     }
+
+
 
     /**
      * Class used to play all sounds for a given card side
@@ -437,6 +461,7 @@ public class Sound {
         }
     }
 
+
     /**
      * Releases the sound.
      */
@@ -456,6 +481,7 @@ public class Sound {
         }
     }
 
+
     /**
      * Stops the playing sounds.
      */
@@ -467,9 +493,10 @@ public class Sound {
         ReadText.stopTts();
     }
 
+
     /**
      * @param soundDir -- base path to the media files.
-     * @param sound -- path to the sound file from the card content.
+     * @param sound    -- path to the sound file from the card content.
      * @return absolute URI to the sound file.
      */
     private static String getSoundPath(String soundDir, String sound) {
@@ -481,6 +508,7 @@ public class Sound {
         return soundDir + Uri.encode(StringUtil.trimRight(sound));
     }
 
+
     /**
      * @param path -- path to the sound file from the card content.
      * @return true if path is well-formed URI and contains URI scheme.
@@ -490,6 +518,7 @@ public class Sound {
         return uriMatcher.matches() && uriMatcher.group(2) != null;
     }
 
+
     /**
      * Set the context for the calling activity (necessary for playing videos)
      */
@@ -497,13 +526,17 @@ public class Sound {
         mCallingActivity = activityRef;
     }
 
+
     public OnCompletionListener getMediaCompletionListener() {
         return mPlayAllListener;
     }
 
+
     public boolean hasQuestion() {
         return mSoundPaths.containsKey(Sound.SOUNDS_QUESTION);
     }
+
+
     public boolean hasAnswer() {
         return mSoundPaths.containsKey(Sound.SOUNDS_ANSWER);
     }

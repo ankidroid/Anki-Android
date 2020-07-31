@@ -26,20 +26,20 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.text.Spanned;
-
-import androidx.annotation.NonNull;
 import android.os.StatFs;
+import android.text.Spanned;
 
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.ImportUtils;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -62,7 +62,6 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -70,13 +69,12 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
-        "PMD.MethodNamingConventions","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes", "PMD.AvoidReassigningParameters",
+        "PMD.MethodNamingConventions", "PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public class Utils {
     // Used to format doubles with English's decimal separator system
     public static final Locale ENGLISH_LOCALE = new Locale("en_US");
@@ -98,10 +96,13 @@ public class Utils {
 
 
     // List of all extensions we accept as font files.
-    private static final String[] FONT_FILE_EXTENSIONS = new String[] {".ttf",".ttc",".otf"};
+    private static final String[] FONT_FILE_EXTENSIONS = new String[] {".ttf", ".ttc", ".otf"};
+
 
     /* Prevent class from being instantiated */
-    private Utils() { }
+    private Utils() {
+    }
+
 
     // Regex pattern used in removing tags from text before diff
     private static final Pattern stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>");
@@ -116,28 +117,36 @@ public class Utils {
 
     private static final int FILE_COPY_BUFFER_SIZE = 1024 * 32;
 
-    /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
+
+    /**
+     * The time in integer seconds. Pass scale=1000 to get milliseconds.
+     */
     public static double now() {
         return (System.currentTimeMillis() / 1000.0);
     }
 
 
-    /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
+    /**
+     * The time in integer seconds. Pass scale=1000 to get milliseconds.
+     */
     public static long intTime() {
         return intTime(1);
     }
+
+
     public static long intTime(int scale) {
         return (long) (now() * scale);
     }
 
+
     /**
      * Return a string representing a time quantity
-     *
+     * <p>
      * Equivalent to Anki's anki/utils.py's shortTimeFmt, applied to a number.
      * I.e. equivalent to Anki's anki/utils.py's fmtTimeSpan, with the parameter short=True.
      *
      * @param context The application's environment.
-     * @param time_s The time to format, in seconds
+     * @param time_s  The time to format, in seconds
      * @return The time quantity string. Something like "3 s" or "1.7
      * yr". Only months and year have a number after the decimal.
      */
@@ -145,30 +154,30 @@ public class Utils {
         Resources res = context.getResources();
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
         // hard-coded. See also 01-core.xml
-        if (Math.abs(time_s) < TIME_MINUTE ) {
+        if (Math.abs(time_s) < TIME_MINUTE) {
             return res.getString(R.string.time_quantity_seconds, time_s);
         } else if (Math.abs(time_s) < TIME_HOUR) {
-            return res.getString(R.string.time_quantity_minutes, (int) Math.round(time_s/TIME_MINUTE));
+            return res.getString(R.string.time_quantity_minutes, (int) Math.round(time_s / TIME_MINUTE));
         } else if (Math.abs(time_s) < TIME_DAY) {
-            return res.getString(R.string.time_quantity_hours_minutes, (int) Math.round(time_s/TIME_HOUR), (int) Math.round((time_s % TIME_HOUR) / TIME_MINUTE));
+            return res.getString(R.string.time_quantity_hours_minutes, (int) Math.round(time_s / TIME_HOUR), (int) Math.round((time_s % TIME_HOUR) / TIME_MINUTE));
         } else if (Math.abs(time_s) < TIME_MONTH) {
-            return res.getString(R.string.time_quantity_days_hours, (int) Math.round(time_s/TIME_DAY), (int) Math.round((time_s % TIME_DAY) / TIME_HOUR));
+            return res.getString(R.string.time_quantity_days_hours, (int) Math.round(time_s / TIME_DAY), (int) Math.round((time_s % TIME_DAY) / TIME_HOUR));
         } else if (Math.abs(time_s) < TIME_YEAR) {
-            return res.getString(R.string.time_quantity_months, time_s/TIME_MONTH);
+            return res.getString(R.string.time_quantity_months, time_s / TIME_MONTH);
         } else {
-            return res.getString(R.string.time_quantity_years, time_s/TIME_YEAR);
+            return res.getString(R.string.time_quantity_years, time_s / TIME_YEAR);
         }
     }
 
 
     /**
      * Return a string representing a time quantity
-     *
+     * <p>
      * Equivalent to Anki's anki/utils.py's shortTimeFmt, applied to a number.
      * I.e. equivalent to Anki's anki/utils.py's fmtTimeSpan, with the parameter short=True.
      *
      * @param context The application's environment.
-     * @param time_s The time to format, in seconds
+     * @param time_s  The time to format, in seconds
      * @return The time quantity string. Something like "3 s" or "1.7
      * yr". Only months and year have a number after the decimal.
      */
@@ -176,26 +185,27 @@ public class Utils {
         Resources res = context.getResources();
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
         // hard-coded. See also 01-core.xml
-        if (Math.abs(time_s) < TIME_MINUTE ) {
+        if (Math.abs(time_s) < TIME_MINUTE) {
             return res.getString(R.string.time_quantity_seconds, time_s);
         } else if (Math.abs(time_s) < TIME_HOUR) {
-            return res.getString(R.string.time_quantity_minutes, (int) Math.round(time_s/TIME_MINUTE));
+            return res.getString(R.string.time_quantity_minutes, (int) Math.round(time_s / TIME_MINUTE));
         } else if (Math.abs(time_s) < TIME_DAY) {
-            return res.getString(R.string.time_quantity_hours, (int) Math.round(time_s/TIME_HOUR));
+            return res.getString(R.string.time_quantity_hours, (int) Math.round(time_s / TIME_HOUR));
         } else if (Math.abs(time_s) < TIME_MONTH) {
-            return res.getString(R.string.time_quantity_days, (int) Math.round(time_s/TIME_DAY));
+            return res.getString(R.string.time_quantity_days, (int) Math.round(time_s / TIME_DAY));
         } else if (Math.abs(time_s) < TIME_YEAR) {
-            return res.getString(R.string.time_quantity_months, time_s/TIME_MONTH);
+            return res.getString(R.string.time_quantity_months, time_s / TIME_MONTH);
         } else {
-            return res.getString(R.string.time_quantity_years, time_s/TIME_YEAR);
+            return res.getString(R.string.time_quantity_years, time_s / TIME_YEAR);
         }
     }
+
 
     /**
      * Return a string representing how much time remains
      *
      * @param context The application's environment.
-     * @param time_s The time to format, in seconds
+     * @param time_s  The time to format, in seconds
      * @return The time quantity string. Something like "3 minutes left" or "2 hours left".
      */
     public static String remainingTime(Context context, long time_s) {
@@ -222,46 +232,48 @@ public class Utils {
         }
     }
 
+
     /**
      * Return a string representing a time
      * (If you want a certain unit, use the strings directly)
      *
      * @param context The application's environment.
-     * @param time_s The time to format, in seconds
+     * @param time_s  The time to format, in seconds
      * @return The formatted, localized time string. The time is always an integer.
-     *  e.g. something like "3 seconds" or "1 year".
+     * e.g. something like "3 seconds" or "1 year".
      */
     public static String timeSpan(Context context, long time_s) {
         int time_x;  // Time in unit x
         Resources res = context.getResources();
-        if (Math.abs(time_s) < TIME_MINUTE ) {
+        if (Math.abs(time_s) < TIME_MINUTE) {
             time_x = (int) time_s;
             return res.getQuantityString(R.plurals.time_span_seconds, time_x, time_x);
         } else if (Math.abs(time_s) < TIME_HOUR) {
-            time_x = (int) Math.round(time_s/TIME_MINUTE);
+            time_x = (int) Math.round(time_s / TIME_MINUTE);
             return res.getQuantityString(R.plurals.time_span_minutes, time_x, time_x);
         } else if (Math.abs(time_s) < TIME_DAY) {
-            time_x = (int) Math.round(time_s/TIME_HOUR);
+            time_x = (int) Math.round(time_s / TIME_HOUR);
             return res.getQuantityString(R.plurals.time_span_hours, time_x, time_x);
         } else if (Math.abs(time_s) < TIME_MONTH) {
-            time_x = (int) Math.round(time_s/TIME_DAY);
+            time_x = (int) Math.round(time_s / TIME_DAY);
             return res.getQuantityString(R.plurals.time_span_days, time_x, time_x);
         } else if (Math.abs(time_s) < TIME_YEAR) {
-            time_x = (int) Math.round(time_s/TIME_MONTH);
+            time_x = (int) Math.round(time_s / TIME_MONTH);
             return res.getQuantityString(R.plurals.time_span_months, time_x, time_x);
         } else {
-            time_x = (int) Math.round(time_s/TIME_YEAR);
+            time_x = (int) Math.round(time_s / TIME_YEAR);
             return res.getQuantityString(R.plurals.time_span_years, time_x, time_x);
         }
     }
 
+
     /**
      * Return a proper string for a time value in seconds
-     *
+     * <p>
      * Similar to Anki anki/utils.py's fmtTimeSpan.
      *
      * @param context The application's environment.
-     * @param time_s The time to format, in seconds
+     * @param time_s  The time to format, in seconds
      * @return The formatted, localized time string. The time is always a float. E.g. "27.0 days"
      */
     public static String roundedTimeSpanUnformatted(Context context, long time_s) {
@@ -269,24 +281,25 @@ public class Utils {
         return roundedTimeSpan(context, time_s).replace("<b>", "").replace("</b>", "");
     }
 
+
     /**
      * Return a proper string for a time value in seconds
-     *
+     * <p>
      * Similar to Anki anki/utils.py's fmtTimeSpan.
      *
      * @param context The application's environment.
-     * @param time_s The time to format, in seconds
+     * @param time_s  The time to format, in seconds
      * @return The formatted, localized time string. The time is always a float. E.g. "<b>27.0</b> days"
      */
     public static String roundedTimeSpan(Context context, long time_s) {
         if (Math.abs(time_s) < TIME_DAY) {
-            return context.getResources().getString(R.string.stats_overview_hours, time_s/TIME_HOUR);
+            return context.getResources().getString(R.string.stats_overview_hours, time_s / TIME_HOUR);
         } else if (Math.abs(time_s) < TIME_MONTH) {
-            return context.getResources().getString(R.string.stats_overview_days, time_s/TIME_DAY);
+            return context.getResources().getString(R.string.stats_overview_days, time_s / TIME_DAY);
         } else if (Math.abs(time_s) < TIME_YEAR) {
-            return context.getResources().getString(R.string.stats_overview_months,time_s/TIME_MONTH);
+            return context.getResources().getString(R.string.stats_overview_months, time_s / TIME_MONTH);
         } else {
-            return context.getResources().getString(R.string.stats_overview_years, time_s/TIME_YEAR);
+            return context.getResources().getString(R.string.stats_overview_years, time_s / TIME_YEAR);
         }
     }
 
@@ -303,6 +316,7 @@ public class Utils {
 
     /**
      * Strips a text from <style>...</style>, <script>...</script> and <_any_tag_> HTML tags.
+     *
      * @param s The HTML text to be cleaned.
      * @return The text without the aforementioned tags.
      */
@@ -313,8 +327,10 @@ public class Utils {
         return entsToTxt(s);
     }
 
+
     /**
      * Strips <style>...</style> and <script>...</script> HTML tags and content from a string.
+     *
      * @param s The HTML text to be cleaned.
      * @return The text without the aforementioned tags.
      */
@@ -359,6 +375,7 @@ public class Utils {
      * This should only affect substrings of the form &something; and not tags.
      * Internet rumour says that Html.fromHtml() doesn't cover all cases, but it doesn't get less
      * vague than that.
+     *
      * @param html The HTML escaped text
      * @return The text with its HTML entities unescaped.
      */
@@ -382,7 +399,9 @@ public class Utils {
      * ***********************************************************************************************
      */
 
-    /** Given a list of integers, return a string '(int1,int2,...)'. */
+    /**
+     * Given a list of integers, return a string '(int1,int2,...)'.
+     */
     public static String ids2str(int[] ids) {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
@@ -395,7 +414,9 @@ public class Utils {
     }
 
 
-    /** Given a list of integers, return a string '(int1,int2,...)'. */
+    /**
+     * Given a list of integers, return a string '(int1,int2,...)'.
+     */
     public static String ids2str(long[] ids) {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
@@ -407,7 +428,10 @@ public class Utils {
         return sb.toString();
     }
 
-    /** Given a list of integers, return a string '(int1,int2,...)'. */
+
+    /**
+     * Given a list of integers, return a string '(int1,int2,...)'.
+     */
     public static String ids2str(Long[] ids) {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
@@ -419,7 +443,10 @@ public class Utils {
         return sb.toString();
     }
 
-    /** Given a list of integers, return a string '(int1,int2,...)', in order given by the iterator. */
+
+    /**
+     * Given a list of integers, return a string '(int1,int2,...)', in order given by the iterator.
+     */
     public static <T> String ids2str(Iterable<T> ids) {
         StringBuilder sb = new StringBuilder(512);
         sb.append("(");
@@ -437,7 +464,9 @@ public class Utils {
     }
 
 
-    /** Given a list of integers, return a string '(int1,int2,...)'. */
+    /**
+     * Given a list of integers, return a string '(int1,int2,...)'.
+     */
     public static String ids2str(JSONArray ids) {
         StringBuilder str = new StringBuilder(512);
         str.append("(");
@@ -461,7 +490,9 @@ public class Utils {
 
 
     /** LIBANKI: not in libanki */
-    /** Transform a collection of Long into an array of Long */
+    /**
+     * Transform a collection of Long into an array of Long
+     */
     public static long[] collection2Array(java.util.Collection<Long> list) {
         long[] ar = new long[list.size()];
         int i = 0;
@@ -471,11 +502,15 @@ public class Utils {
         return ar;
     }
 
+
     public static Long[] list2ObjectArray(List<Long> list) {
         return list.toArray(new Long[0]);
     }
 
-    /** Return a non-conflicting timestamp for table. */
+
+    /**
+     * Return a non-conflicting timestamp for table.
+     */
     public static long timestampID(DB db, String table) {
         // be careful not to create multiple objects without flushing them, or they
         // may share an ID.
@@ -487,7 +522,9 @@ public class Utils {
     }
 
 
-    /** Return the first safe ID to use. */
+    /**
+     * Return the first safe ID to use.
+     */
     public static long maxID(DB db) {
         long now = intTime(1000);
         now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
@@ -510,22 +547,27 @@ public class Utils {
         return buf;
     }
 
+
     // all printable characters minus quotes, backslash and separators
     private static String base91(int num) {
         return base62(num, BASE91_EXTRA_CHARS);
     }
 
 
-    /** return a base91-encoded 64bit random number */
+    /**
+     * return a base91-encoded 64bit random number
+     */
     public static String guid64() {
         return base91((new Random()).nextInt((int) (Math.pow(2, 61) - 1)));
     }
 
+
     // increment a guid by one, for note type conflicts
-    @SuppressWarnings({"unused"}) //used in Anki
+    @SuppressWarnings( {"unused"}) //used in Anki
     public static String incGuid(String guid) {
         return new StringBuffer(_incGuid(new StringBuffer(guid).reverse().toString())).reverse().toString();
     }
+
 
     private static String _incGuid(String guid) {
         String table = ALL_CHARACTERS + BASE91_EXTRA_CHARS;
@@ -548,6 +590,7 @@ public class Utils {
         return ar;
     }
 
+
     public static List<Long> jsonArrayToLongList(JSONArray jsonArray) throws JSONException {
         List<Long> ar = new ArrayList<>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -564,6 +607,7 @@ public class Utils {
         }
         return o;
     }
+
 
     /**
      * Fields
@@ -638,8 +682,10 @@ public class Utils {
         return Long.valueOf(checksum(stripHTMLMedia(data)).substring(0, 8), 16);
     }
 
+
     /**
      * Generate the SHA1 checksum of a file.
+     *
      * @param file The file to be checked
      * @return A string of length 32 containing the hexadecimal representation of the SHA1 checksum of the file's contents.
      */
@@ -688,6 +734,7 @@ public class Utils {
 
     /**
      * Converts an InputStream to a String.
+     *
      * @param is InputStream to convert
      * @return String version of the InputStream
      */
@@ -742,17 +789,20 @@ public class Utils {
         }
     }
 
+
     /**
      * Checks to see if a given file path resides inside a given directory.
      * Useful for protection against path traversal attacks prior to creating the file
+     *
      * @param file the file with an uncertain filesystem location
-     * @param dir the directory that should contain the file
+     * @param dir  the directory that should contain the file
      * @return true if the file path is inside the directory
-     * @exception IOException if there are security or filesystem issues determining the paths
+     * @throws IOException if there are security or filesystem issues determining the paths
      */
     public static boolean isInside(@NonNull File file, @NonNull File dir) throws IOException {
         return file.getCanonicalPath().startsWith(dir.getCanonicalPath());
     }
+
 
     /**
      * Given a ZipFile, iterate through the ZipEntries to determine the total uncompressed size
@@ -788,6 +838,7 @@ public class Utils {
     /**
      * Calls {@link #writeToFileImpl(InputStream, String)} and handles IOExceptions
      * Does not close the provided stream
+     *
      * @throws IOException Rethrows exception after a set number of retries
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
@@ -814,6 +865,7 @@ public class Utils {
             }
         }
     }
+
 
     /**
      * Utility method to write to a file.
@@ -844,10 +896,10 @@ public class Utils {
 
 
     /**
-     *  Returns the effective date of the present moment.
-     *  If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
-     *  otherwise today
-     *  Note that the Date class is java.sql.Date whose constructor sets hours, minutes etc to zero
+     * Returns the effective date of the present moment.
+     * If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
+     * otherwise today
+     * Note that the Date class is java.sql.Date whose constructor sets hours, minutes etc to zero
      *
      * @param utcOffset The UTC offset in seconds we are going to use to determine today or yesterday.
      * @return The date (with time set to 00:00:00) that corresponds to today in Anki terms
@@ -867,8 +919,9 @@ public class Utils {
      * Indicates whether the specified action can be used as an intent. This method queries the package manager for
      * installed packages that can respond to an intent with the specified action. If no suitable package is found, this
      * method returns false.
+     *
      * @param context The application's environment.
-     * @param action The Intent action to check for availability.
+     * @param action  The Intent action to check for availability.
      * @return True if an Intent with the specified action can be sent and responded to, false otherwise.
      */
     public static boolean isIntentAvailable(Context context, String action) {
@@ -884,6 +937,7 @@ public class Utils {
         return list.size() > 0;
     }
 
+
     /**
      * @param mediaDir media directory path on SD card
      * @return path converted to file URL, properly UTF-8 URL encoded
@@ -894,7 +948,7 @@ public class Utils {
         // with existing slashes
         if (mediaDir.length() != 0 && !"null".equalsIgnoreCase(mediaDir)) {
             Uri mediaDirUri = Uri.fromFile(new File(mediaDir));
-            return mediaDirUri.toString() +"/";
+            return mediaDirUri.toString() + "/";
         }
         return "";
     }
@@ -928,6 +982,7 @@ public class Utils {
         return 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
     }
 
+
     /**
      * Returns a String array with two elements:
      * 0 - file name
@@ -945,7 +1000,9 @@ public class Utils {
     }
 
 
-    /** Returns a list of files for the installed custom fonts. */
+    /**
+     * Returns a list of files for the installed custom fonts.
+     */
     public static List<AnkiFont> getCustomFonts(Context context) {
         String deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context);
         String fontsPath = deckPath + "/fonts/";
@@ -992,7 +1049,9 @@ public class Utils {
     }
 
 
-    /** Returns a list of apkg-files. */
+    /**
+     * Returns a list of apkg-files.
+     */
     public static List<File> getImportableDecks(Context context) {
         String deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context);
         File dir = new File(deckPath);
@@ -1007,14 +1066,16 @@ public class Utils {
 
     /**
      * Simply copy a file to another location
+     *
      * @param sourceFile The source file
-     * @param destFile The destination file, doesn't need to exist yet.
+     * @param destFile   The destination file, doesn't need to exist yet.
      */
     public static void copyFile(File sourceFile, File destFile) throws IOException {
         try (FileInputStream source = new FileInputStream(sourceFile)) {
             writeToFile(source, destFile.getAbsolutePath());
         }
     }
+
 
     /**
      * Like org.json.JSONObject except that it doesn't escape forward slashes
@@ -1030,6 +1091,7 @@ public class Utils {
         return json.toString().replaceAll("\\\\/", "/");
     }
 
+
     /**
      * Like org.json.JSONArray except that it doesn't escape forward slashes
      * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape character '/'.
@@ -1043,6 +1105,7 @@ public class Utils {
     public static String jsonToString(JSONArray json) {
         return json.toString().replaceAll("\\\\/", "/");
     }
+
 
     /**
      * @return A description of the device, including the model and android version. No commas are present in the
@@ -1062,7 +1125,7 @@ public class Utils {
      *
      * @param txt Text to be normalized
      * @return The input text in its NFC normalized form form.
-    */
+     */
     public static String nfcNormalized(String txt) {
         if (!Normalizer.isNormalized(txt, Normalizer.Form.NFC)) {
             return Normalizer.normalize(txt, Normalizer.Form.NFC);
@@ -1092,20 +1155,21 @@ public class Utils {
         return rand.nextFloat() * (max - min) + min;
     }
 
+
     /**
-       Set usn to 0 in every object.
-
-       This method is called during full sync, before uploading, so
-       during an instant, the value will be zero while the object is
-       not actually online. This is not a problem because if the sync
-       fails, a full sync will occur again next time.
-
-       @return whether there was a non-zero usn; in this case the list
-       should be saved before the upload.
+     * Set usn to 0 in every object.
+     * <p>
+     * This method is called during full sync, before uploading, so
+     * during an instant, the value will be zero while the object is
+     * not actually online. This is not a problem because if the sync
+     * fails, a full sync will occur again next time.
+     *
+     * @return whether there was a non-zero usn; in this case the list
+     * should be saved before the upload.
      */
     public static boolean markAsUploaded(ArrayList<? extends JSONObject> ar) {
         boolean changed = false;
-        for (JSONObject obj: ar) {
+        for (JSONObject obj : ar) {
             if (obj.optInt("usn", 1) != 0) {
                 obj.put("usn", 0);
                 changed = true;

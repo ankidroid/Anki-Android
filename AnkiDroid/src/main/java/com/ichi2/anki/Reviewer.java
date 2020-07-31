@@ -35,24 +35,16 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ActionProvider;
-import androidx.core.view.MenuItemCompat;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
-
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
-import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
+import com.ichi2.anki.multimediacard.AudioView;
+import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.anki.reviewer.PeripheralKeymap;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.anki.reviewer.ActionButtons;
+import com.ichi2.async.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
@@ -65,13 +57,24 @@ import com.ichi2.widget.WidgetStatus;
 
 import java.lang.ref.WeakReference;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ActionProvider;
+import androidx.core.view.MenuItemCompat;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import timber.log.Timber;
 
-import static com.ichi2.anki.reviewer.CardMarker.*;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_BLUE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_GREEN;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_ORANGE;
+import static com.ichi2.anki.reviewer.CardMarker.FLAG_RED;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.ANSWER_CARD;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.DISMISS_MULTI;
 
 
 public class Reviewer extends AbstractFlashcardViewer {
@@ -101,7 +104,11 @@ public class Reviewer extends AbstractFlashcardViewer {
     @VisibleForTesting
     protected PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
-    /** We need to listen for and handle reschedules / resets very similarly */
+
+
+    /**
+     * We need to listen for and handle reschedules / resets very similarly
+     */
     abstract class ScheduleCollectionTaskListener extends NextCardHandler {
 
         abstract protected int getToastResourceId();
@@ -116,6 +123,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                     getResources().getQuantityString(getToastResourceId(), cardCount, cardCount), true);
         }
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +173,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         return isShownInActionBar == null || !isShownInActionBar;
     }
 
+
     private void selectDeckFromExtra() {
         Bundle extras = getIntent().getExtras();
         long did = Long.MIN_VALUE;
@@ -172,7 +181,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             did = extras.getLong("deckId", Long.MIN_VALUE);
         }
 
-        if(did == Long.MIN_VALUE) {
+        if (did == Long.MIN_VALUE) {
             // deckId is not set, load default
             return;
         }
@@ -189,6 +198,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         getCol().getSched().deferReset();
     }
 
+
     @Override
     protected void setTitle() {
         String title;
@@ -202,6 +212,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         super.setTitle(title);
         getSupportActionBar().setSubtitle("");
     }
+
 
     @Override
     protected int getContentViewAttr(int fullscreenMode) {
@@ -217,6 +228,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 return R.layout.reviewer;
         }
     }
+
 
     @Override
     protected void onCollectionLoaded(Collection col) {
@@ -288,7 +300,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 Timber.i("Reviewer:: Record mic");
                 // Check permission to record and request if not granted
                 if (!Permissions.canRecordAudio(this)) {
-                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.RECORD_AUDIO},
+                    ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.RECORD_AUDIO},
                             REQUEST_AUDIO_PERMISSION);
                 } else {
                     toggleMicToolBar();
@@ -413,7 +425,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     protected void toggleWhiteboard() {
         // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
-        mPrefWhiteboard = ! mPrefWhiteboard;
+        mPrefWhiteboard = !mPrefWhiteboard;
         Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
         //Even though the visibility is now stored in its own setting, we want it to be dependent
         //on the enabled status
@@ -441,7 +453,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 return;
             }
             mMicToolBar = AudioView.createRecorderInstance(this, R.drawable.av_play, R.drawable.av_pause,
-                        R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, mTempAudioPath);
+                    R.drawable.av_stop, R.drawable.av_rec, R.drawable.av_rec_stop, mTempAudioPath);
             if (mMicToolBar == null) {
                 mTempAudioPath = null;
                 return;
@@ -454,20 +466,22 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
-    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if ( (requestCode == REQUEST_AUDIO_PERMISSION) &&
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if ((requestCode == REQUEST_AUDIO_PERMISSION) &&
                 (permissions.length >= 1) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
             // Get get audio record permission, so we can create the record tool bar
             toggleMicToolBar();
         }
     }
 
+
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days ->
-            CollectionTask.launchCollectionTask(DISMISS_MULTI, mRescheduleCardHandler,
-                    new TaskData(new Object[]{new long[]{mCurrentCard.getId()},
-                    Collection.DismissType.RESCHEDULE_CARDS, days})
-            );
+                CollectionTask.launchCollectionTask(DISMISS_MULTI, mRescheduleCardHandler,
+                        new TaskData(new Object[] {new long[] {mCurrentCard.getId()},
+                                Collection.DismissType.RESCHEDULE_CARDS, days})
+                );
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
 
         showDialogFragment(dialog);
@@ -485,7 +499,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
             CollectionTask.launchCollectionTask(DISMISS_MULTI, mResetProgressCardHandler,
-                    new TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS}));
+                    new TaskData(new Object[] {new long[] {mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS}));
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);
@@ -512,21 +526,21 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         if (mCurrentCard != null) {
             switch (mCurrentCard.userFlag()) {
-            case 1:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_red);
-                break;
-            case 2:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_orange);
-                break;
-            case 3:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_green);
-                break;
-            case 4:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_blue);
-                break;
-            default:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_transparent);
-                break;
+                case 1:
+                    menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_red);
+                    break;
+                case 2:
+                    menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_orange);
+                    break;
+                case 3:
+                    menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_green);
+                    break;
+                case 4:
+                    menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_blue);
+                    break;
+                default:
+                    menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_transparent);
+                    break;
             }
         }
 
@@ -543,7 +557,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             undoIcon = R.drawable.ic_undo_white_24dp;
             undoEnabled = (colIsOpen() && getCol().undoAvailable());
         }
-        int alpha = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
+        int alpha = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT;
         menu.findItem(R.id.action_undo).setIcon(undoIcon);
         menu.findItem(R.id.action_undo).setEnabled(undoEnabled).getIcon().mutate().setAlpha(alpha);
 
@@ -623,6 +637,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         return mProcessor.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
     }
 
+
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (answerFieldIsFocused()) {
@@ -633,6 +648,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         return super.onKeyUp(keyCode, event);
     }
+
 
     @Override
     protected void displayAnswerBottomBar() {
@@ -649,12 +665,12 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Set correct label and background resource for each button
         // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
-        final int[] background = Themes.getResFromAttr(this, new int [] {
+        final int[] background = Themes.getResFromAttr(this, new int[] {
                 R.attr.againButtonRef,
                 R.attr.hardButtonRef,
                 R.attr.goodButtonRef,
                 R.attr.easyButtonRef});
-        final int[] textColor = Themes.getColorFromAttr(this, new int [] {
+        final int[] textColor = Themes.getColorFromAttr(this, new int[] {
                 R.attr.againButtonTextColor,
                 R.attr.hardButtonTextColor,
                 R.attr.goodButtonTextColor,
@@ -720,6 +736,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
+
     @Override
     protected SharedPreferences restorePreferences() {
         super.restorePreferences();
@@ -731,6 +748,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         mActionButtons.setup(preferences);
         return preferences;
     }
+
 
     @Override
     public void fillFlashcard() {
@@ -747,6 +765,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         initTimer();
         super.displayCardQuestion();
     }
+
 
     @Override
     protected void onStop() {
@@ -776,6 +795,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
+
     // Create the whiteboard
     private void createWhiteboard() {
         mWhiteboard = new Whiteboard(this, isInNightMode(), mBlackWhiteboard);
@@ -797,6 +817,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         });
         mWhiteboard.setEnabled(true);
     }
+
 
     // Show or hide the whiteboard
     private void setWhiteboardVisibility(boolean state) {
@@ -851,6 +872,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     /**
      * Whether or not dismiss note is available for current card and specified DismissType
+     *
      * @return true if there is another card of same note that could be dismissed
      */
     private boolean suspendNoteAvailable() {
@@ -862,6 +884,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 mCurrentCard.getNid(), mCurrentCard.getId()) == 1;
     }
 
+
     private boolean buryNoteAvailable() {
         if (mCurrentCard == null || isControlBlocked()) {
             return false;
@@ -872,6 +895,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         return bury;
     }
 
+
     /**
      * Inner class which implements the submenu for the Suspend button
      */
@@ -880,15 +904,18 @@ public class Reviewer extends AbstractFlashcardViewer {
             super(context);
         }
 
+
         @Override
         public View onCreateActionView() {
             return null;  // Just return null for a simple dropdown menu
         }
 
+
         @Override
         public boolean hasSubMenu() {
             return suspendNoteAvailable();
         }
+
 
         @Override
         public void onPrepareSubMenu(SubMenu subMenu) {
@@ -898,6 +925,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 subMenu.getItem(i).setOnMenuItemClickListener(this);
             }
         }
+
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
@@ -914,6 +942,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
     }
 
+
+
     /**
      * Inner class which implements the submenu for the Bury button
      */
@@ -922,15 +952,18 @@ public class Reviewer extends AbstractFlashcardViewer {
             super(context);
         }
 
+
         @Override
         public View onCreateActionView() {
             return null;    // Just return null for a simple dropdown menu
         }
 
+
         @Override
         public boolean hasSubMenu() {
             return buryNoteAvailable();
         }
+
 
         @Override
         public void onPrepareSubMenu(SubMenu subMenu) {
@@ -940,6 +973,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 subMenu.getItem(i).setOnMenuItemClickListener(this);
             }
         }
+
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
@@ -957,6 +991,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
+
     /**
      * Inner class which implements the submenu for the Schedule button
      */
@@ -965,15 +1000,18 @@ public class Reviewer extends AbstractFlashcardViewer {
             super(context);
         }
 
+
         @Override
         public View onCreateActionView() {
             return null;    // Just return null for a simple dropdown menu
         }
 
+
         @Override
         public boolean hasSubMenu() {
             return true;
         }
+
 
         @Override
         public void onPrepareSubMenu(SubMenu subMenu) {
@@ -983,6 +1021,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 subMenu.getItem(i).setOnMenuItemClickListener(this);
             }
         }
+
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {

@@ -20,7 +20,6 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -31,9 +30,9 @@ import java.util.Arrays;
 
 import timber.log.Timber;
 
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
-        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
-        "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes", "PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity", "PMD.MethodNamingConventions", "PMD.ExcessiveMethodLength", "PMD.OneDeclarationPerLine",
+        "PMD.SwitchStmtsShouldHaveDefault", "PMD.EmptyIfStmt", "PMD.SimplifyBooleanReturns", "PMD.CollapsibleIfStatements"})
 public class Storage {
 
     /* Open a new or existing collection. Path must be unicode */
@@ -65,7 +64,7 @@ public class Storage {
                 throw new RuntimeException("This file requires a newer version of Anki.");
             } else if (create) {
                 // add in reverse order so basic is default
-                for (int i = StdModels.stdModels.length-1; i>=0; i--) {
+                for (int i = StdModels.stdModels.length - 1; i >= 0; i--) {
                     StdModels.stdModels[i].add(col);
                 }
                 col.save();
@@ -185,8 +184,8 @@ public class Storage {
                         if (order >= 5) {
                             order -= 1;
                         }
-                        JSONArray ja = new JSONArray(Arrays.asList(new Object[] { d.getString("search"),
-                                d.getInt("limit"), order }));
+                        JSONArray ja = new JSONArray(Arrays.asList(new Object[] {d.getString("search"),
+                                d.getInt("limit"), order}));
                         d.put("terms", new JSONArray());
                         d.getJSONArray("terms").put(0, ja);
                         d.remove("search");
@@ -232,7 +231,7 @@ public class Storage {
         m.put("type", Consts.MODEL_CLOZE);
         // convert first template
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
-        for (String type : new String[] { "qfmt", "afmt" }) {
+        for (String type : new String[] {"qfmt", "afmt"}) {
             t.put(type, t.getString(type).replaceAll("\\{\\{cloze:1:(.+?)\\}\\}", "{{cloze:$1}}"));
         }
         t.put("name", "Cloze");

@@ -49,9 +49,10 @@ public class CustomTabActivityHelperTest {
         CustomTabActivityHelper.resetFailed();
     }
 
+
     @Test
     public void ensureInvalidClientWithSecurityExceptionDoesNotCrash() {
-        CustomTabsClient badClient  = getClientThrowingSecurityException();
+        CustomTabsClient badClient = getClientThrowingSecurityException();
         CustomTabActivityHelper customTabActivityHelper = getValidTabHandler();
 
         customTabActivityHelper.onServiceConnected(badClient);
@@ -62,7 +63,7 @@ public class CustomTabActivityHelperTest {
 
     @Test
     public void invalidClientMeansFallbackIsCalled() {
-        CustomTabsClient badClient  = getClientThrowingSecurityException();
+        CustomTabsClient badClient = getClientThrowingSecurityException();
         CustomTabActivityHelper customTabActivityHelper = getValidTabHandler();
 
         customTabActivityHelper.onServiceConnected(badClient);
@@ -79,14 +80,18 @@ public class CustomTabActivityHelperTest {
         verify(fallback, times(1)).openUri(any(), any());
     }
 
-    @NonNull @CheckResult
+
+    @NonNull
+    @CheckResult
     private CustomTabActivityHelper getValidTabHandler() {
         CustomTabActivityHelper customTabActivityHelper = new CustomTabActivityHelper();
         assertThat("Should not be failed before call", !customTabActivityHelper.isFailed());
         return customTabActivityHelper;
     }
 
-    @NonNull @CheckResult
+
+    @NonNull
+    @CheckResult
     private CustomTabsClient getClientThrowingSecurityException() {
         SecurityException exceptionToThrow = new SecurityException("Binder invocation to an incorrect interface");
 

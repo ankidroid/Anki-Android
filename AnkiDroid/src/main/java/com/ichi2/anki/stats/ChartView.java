@@ -35,16 +35,19 @@ public class ChartView extends View {
     private PlotSheet mPlotSheet;
     private boolean mDataIsSet;
 
+
     //The following constructors are needed for the layout inflater
     public ChartView(Context context) {
         super(context);
         setWillNotDraw(false);
     }
 
+
     public ChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setWillNotDraw(false);
     }
+
 
     public ChartView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);

@@ -26,9 +26,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Point;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
 import android.os.Environment;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -45,6 +42,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.Stack;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
@@ -78,6 +78,7 @@ public class Whiteboard extends View {
     private final int foregroundColor;
     private final LinearLayout mColorPalette;
     private SystemTime mTime = new SystemTime();
+
 
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
@@ -134,7 +135,8 @@ public class Whiteboard extends View {
     }
 
 
-    /** Handle motion events to draw using the touch screen or to interact with the flashcard behind
+    /**
+     * Handle motion events to draw using the touch screen or to interact with the flashcard behind
      * the whiteboard by using a second finger.
      *
      * @param event The motion event.
@@ -151,7 +153,7 @@ public class Whiteboard extends View {
      *
      * @param event The motion event.
      * @return True if the event was handled, false otherwise or when drawing was aborted due to
-     *              detection of a multitouch event.
+     * detection of a multitouch event.
      */
     private boolean handleDrawEvent(MotionEvent event) {
         float x = event.getX();
@@ -188,6 +190,7 @@ public class Whiteboard extends View {
                 return false;
         }
     }
+
 
     // Parse multitouch input to scroll the card behind the whiteboard or click on elements
     private boolean handleMultiTouchEvent(MotionEvent event) {
@@ -233,6 +236,7 @@ public class Whiteboard extends View {
         }
     }
 
+
     /**
      * @return the number of strokes currently on the undo queue
      */
@@ -240,10 +244,14 @@ public class Whiteboard extends View {
         return mUndo.size();
     }
 
-    /** @return Whether there are strokes to undo */
+
+    /**
+     * @return Whether there are strokes to undo
+     */
     public boolean undoEmpty() {
         return mUndo.empty();
     }
+
 
     /**
      * @return true if the undo queue has had any strokes added to it since the last clear
@@ -251,6 +259,7 @@ public class Whiteboard extends View {
     public boolean isUndoModeActive() {
         return mUndoModeActive;
     }
+
 
     private void createBitmap(int w, int h, Bitmap.Config conf) {
         mBitmap = Bitmap.createBitmap(w, h, conf);
@@ -265,6 +274,7 @@ public class Whiteboard extends View {
         int bitmapSize = Math.max(p.x, p.y);
         createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_4444);
     }
+
 
     private void drawStart(float x, float y) {
         mCurrentlyDrawing = true;
@@ -318,6 +328,7 @@ public class Whiteboard extends View {
         mSecondFingerY0 = event.getY(event.findPointerIndex(mSecondFingerPointerId));
     }
 
+
     private boolean updateSecondFinger(MotionEvent event) {
         int pointerIndex = event.findPointerIndex(mSecondFingerPointerId);
         if (pointerIndex > -1) {
@@ -333,6 +344,7 @@ public class Whiteboard extends View {
         return false;
     }
 
+
     // call this with an ACTION_POINTER_UP event to check whether it matches a tap of the second finger
     // if so, forward a click action and return true
     private boolean trySecondFingerClick(MotionEvent event) {
@@ -346,6 +358,7 @@ public class Whiteboard extends View {
         }
         return false;
     }
+
 
     // call this with an ACTION_MOVE event to check whether it is within the threshold for a tap of the second finger
     // in this case perform a scroll action
@@ -362,6 +375,7 @@ public class Whiteboard extends View {
         }
         return false;
     }
+
 
     private static Point getDisplayDimenions() {
         Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
@@ -408,6 +422,7 @@ public class Whiteboard extends View {
         }
     }
 
+
     /**
      * Keep a stack of all points and paths so that the last stroke can be undone
      * pop() removes the last stroke from the stack, and apply() redraws it to whiteboard.
@@ -415,21 +430,26 @@ public class Whiteboard extends View {
     private class UndoStack {
         private final Stack<WhiteboardAction> mStack = new Stack<>();
 
+
         public void add(WhiteboardAction action) {
             mStack.add(action);
         }
+
 
         public void clear() {
             mStack.clear();
         }
 
+
         public int size() {
             return mStack.size();
         }
 
+
         public void pop() {
             mStack.pop();
         }
+
 
         public void apply() {
             mBitmap.eraseColor(0);
@@ -440,14 +460,19 @@ public class Whiteboard extends View {
             invalidate();
         }
 
+
         public boolean empty() {
             return mStack.empty();
         }
     }
 
+
+
     private interface WhiteboardAction {
         void apply(@NonNull Canvas canvas);
     }
+
+
 
     private static class DrawPoint implements WhiteboardAction {
 
@@ -469,9 +494,12 @@ public class Whiteboard extends View {
         }
     }
 
+
+
     private static class DrawPath implements WhiteboardAction {
         private final Path mPath;
         private final Paint mPaint;
+
 
         public DrawPath(Path path, Paint paint) {
             mPath = path;
@@ -485,9 +513,11 @@ public class Whiteboard extends View {
         }
     }
 
+
     public boolean isCurrentlyDrawing() {
         return mCurrentlyDrawing;
     }
+
 
     protected String saveWhiteboard() throws FileNotFoundException {
 

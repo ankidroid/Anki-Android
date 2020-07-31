@@ -1,5 +1,4 @@
 package com.ichi2.anki;
-import com.ichi2.libanki.Sound;
 
 import android.app.Activity;
 import android.content.res.Configuration;
@@ -8,6 +7,8 @@ import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 import android.widget.VideoView;
+
+import com.ichi2.libanki.Sound;
 
 import timber.log.Timber;
 
@@ -33,7 +34,10 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
     String mPath;
     Sound mSoundPlayer;
 
-    /** Called when the activity is first created. */
+
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.i("onCreate");
@@ -42,12 +46,14 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
         mPath = getIntent().getStringExtra("path");
         Timber.i("Video Player intent had path: %s", mPath);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);        
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mVideoView = findViewById(R.id.video_surface);
         mVideoView.getHolder().addCallback(this);
         mSoundPlayer = new Sound();
     }
+
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Timber.i("surfaceCreated");
@@ -69,22 +75,30 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
             }
         }, mVideoView);
     }
+
+
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
-            int height) {
+                               int height) {
         // TODO Auto-generated method stub
-        
+
     }
+
+
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         mSoundPlayer.stopSounds();
         finish();
     }
+
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mSoundPlayer.notifyConfigurationChanged(mVideoView);
     }
+
+
     @Override
     public void onStop() {
         super.onStop();

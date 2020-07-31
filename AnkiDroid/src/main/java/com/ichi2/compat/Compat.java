@@ -63,30 +63,52 @@ public interface Compat {
     String EXTRA_PROCESS_TEXT = "android.intent.extra.PROCESS_TEXT";
 
     void setFullScreen(AbstractFlashcardViewer activity);
+
     void setSelectableBackground(View view);
+
     void prepareWebViewCookies(Context context);
+
     void flushWebViewCookies();
+
     void setHTML5MediaAutoPlay(WebSettings settings, Boolean allow);
+
     void setStatusBarColor(Window window, int color);
 
-    /** Returns true if the system UI currently visible during immersive mode */
+    /**
+     * Returns true if the system UI currently visible during immersive mode
+     */
     boolean isImmersiveSystemUiVisible(AnkiActivity activity);
+
     void setupNotificationChannel(Context context, String id, String name);
+
     Spanned fromHtml(String html);
+
     @CheckResult
     long getAvailableBytes(StatFs stat);
+
     void setTime(TimePicker picker, int hour, int minute);
+
     int getHour(TimePicker picker);
+
     int getMinute(TimePicker picker);
+
     int getCameraCount();
+
     void vibrate(Context context, long durationMillis);
+
     void copyFile(String source, String target) throws IOException;
+
     long copyFile(String source, OutputStream target) throws IOException;
+
     long copyFile(InputStream source, String target) throws IOException;
 
-    /** TextToSpeech API. {@link Compat#initTtsParams} should be called before calling {@link Compat#speak*/
+    /**
+     * TextToSpeech API. {@link Compat#initTtsParams} should be called before calling {@link Compat#speak
+     */
     Object initTtsParams();
+
     int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId);
+
     long getVersionCode(PackageInfo pInfo);
 }
 

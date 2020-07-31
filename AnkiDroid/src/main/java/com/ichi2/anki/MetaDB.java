@@ -1,4 +1,3 @@
-
 package com.ichi2.anki;
 
 import android.content.Context;
@@ -23,28 +22,44 @@ import timber.log.Timber;
  * </ul>
  */
 public class MetaDB {
-    /** The name of the file storing the meta-db. */
+    /**
+     * The name of the file storing the meta-db.
+     */
     private static final String DATABASE_NAME = "ankidroid.db";
 
-    /** The Database Version, increase if you want updates to happen on next upgrade. */
+    /**
+     * The Database Version, increase if you want updates to happen on next upgrade.
+     */
     private static final int DATABASE_VERSION = 5;
 
     // Possible values for the qa column of the languages table.
-    /** The language refers to the question. */
+    /**
+     * The language refers to the question.
+     */
     public static final int LANGUAGES_QA_QUESTION = 0;
-    /** The language refers to the answer. */
+    /**
+     * The language refers to the answer.
+     */
     public static final int LANGUAGES_QA_ANSWER = 1;
-    /** The language does not refer to either the question or answer. */
+    /**
+     * The language does not refer to either the question or answer.
+     */
     public static final int LANGUAGES_QA_UNDEFINED = 2;
 
-    /** The pattern used to remove quotes from file names. */
+    /**
+     * The pattern used to remove quotes from file names.
+     */
     private static final Pattern quotePattern = Pattern.compile("[\"']");
 
-    /** The database object used by the meta-db. */
+    /**
+     * The database object used by the meta-db.
+     */
     private static SQLiteDatabase mMetaDb = null;
 
 
-    /** Remove any pairs of quotes from the given text. */
+    /**
+     * Remove any pairs of quotes from the given text.
+     */
     private static String stripQuotes(String text) {
         Matcher matcher = quotePattern.matcher(text);
         text = matcher.replaceAll("");
@@ -52,7 +67,9 @@ public class MetaDB {
     }
 
 
-    /** Open the meta-db */
+    /**
+     * Open the meta-db
+     */
     private static void openDB(Context context) {
         try {
             mMetaDb = context.openOrCreateDatabase(DATABASE_NAME, 0, null);
@@ -66,7 +83,9 @@ public class MetaDB {
     }
 
 
-    /** Creating any table that missing and upgrading necessary tables. */
+    /**
+     * Creating any table that missing and upgrading necessary tables.
+     */
     private static SQLiteDatabase upgradeDB(SQLiteDatabase mMetaDb, int databaseVersion) {
         Timber.i("MetaDB:: Upgrading Internal Database..");
         // if (mMetaDb.getVersion() == 0) {
@@ -94,7 +113,7 @@ public class MetaDB {
 
 
     private static void updateWhiteboardState(SQLiteDatabase mMetaDb) {
-        int columnCount  = DatabaseUtil.getTableColumnCount(mMetaDb, "whiteboardState");
+        int columnCount = DatabaseUtil.getTableColumnCount(mMetaDb, "whiteboardState");
 
         if (columnCount <= 0) {
             mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS whiteboardState (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -125,7 +144,9 @@ public class MetaDB {
     }
 
 
-    /** Open the meta-db but only if it currently closed. */
+    /**
+     * Open the meta-db but only if it currently closed.
+     */
     private static void openDBIfClosed(Context context) {
         if (mMetaDb == null || !mMetaDb.isOpen()) {
             openDB(context);
@@ -133,7 +154,9 @@ public class MetaDB {
     }
 
 
-    /** Close the meta-db. */
+    /**
+     * Close the meta-db.
+     */
     public static void closeDB() {
         if (mMetaDb != null && mMetaDb.isOpen()) {
             mMetaDb.close();
@@ -143,7 +166,9 @@ public class MetaDB {
     }
 
 
-    /** Reset the content of the meta-db, erasing all its content. */
+    /**
+     * Reset the content of the meta-db, erasing all its content.
+     */
     public static boolean resetDB(Context context) {
         openDBIfClosed(context);
         try {
@@ -168,7 +193,9 @@ public class MetaDB {
     }
 
 
-    /** Reset the language associations for all the decks and card models. */
+    /**
+     * Reset the language associations for all the decks and card models.
+     */
     public static boolean resetLanguages(Context context) {
         if (mMetaDb == null || !mMetaDb.isOpen()) {
             openDB(context);
@@ -185,7 +212,9 @@ public class MetaDB {
     }
 
 
-    /** Reset the widget status. */
+    /**
+     * Reset the widget status.
+     */
     public static boolean resetWidget(Context context) {
         if (mMetaDb == null || !mMetaDb.isOpen()) {
             openDB(context);
@@ -205,27 +234,28 @@ public class MetaDB {
 
     /**
      * Associates a language to a deck, model, and card model for a given type.
-     * 
-     * @param qa the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
-     *            {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED}
+     *
+     * @param qa       the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
+     *                 {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED}
      * @param language the language to associate, as a two-characters, lowercase string
      */
     public static void storeLanguage(Context context, long did, int ord, int qa, String language) {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL("INSERT INTO languages (did, ord, qa, language) " + " VALUES (?, ?, ?, ?);", new Object[] {
-                    did, ord, qa, language });
+                    did, ord, qa, language});
             Timber.v("Store language for deck %d", did);
         } catch (Exception e) {
-            Timber.e(e,"Error storing language in MetaDB ");
+            Timber.e(e, "Error storing language in MetaDB ");
         }
     }
+
 
     /**
      * Associates a language to a deck, model, and card model for a given type.
      *
-     * @param qa the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
-     *            {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED}
+     * @param qa       the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
+     *                 {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED}
      * @param language the language to associate, as a two-characters, lowercase string
      */
     public static void updateLanguage(Context context, long did, int ord, int qa, String language) {
@@ -235,17 +265,17 @@ public class MetaDB {
                     language, did, ord, qa});
             Timber.v("Update language for deck %d", did);
         } catch (Exception e) {
-            Timber.e(e,"Error updating language in MetaDB ");
+            Timber.e(e, "Error updating language in MetaDB ");
         }
     }
 
 
     /**
      * Returns the language associated with the given deck, model and card model, for the given type.
-     * 
+     *
      * @param qa the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
-     *            {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED} return the language associate with
-     *            the type, as a two-characters, lowercase string, or the empty string if no association is defined
+     *           {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED} return the language associate with
+     *           the type, as a two-characters, lowercase string, or the empty string if no association is defined
      */
     public static String getLanguage(Context context, long did, int ord, int qa) {
         openDBIfClosed(context);
@@ -272,7 +302,7 @@ public class MetaDB {
 
     /**
      * Resets all the language associates for a given deck.
-     * 
+     *
      * @return whether an error occurred while resetting the language for the deck
      */
     public static boolean resetDeckLanguages(Context context, long did) {
@@ -290,7 +320,7 @@ public class MetaDB {
 
     /**
      * Returns the state of the whiteboard for the given deck.
-     * 
+     *
      * @return 1 if the whiteboard should be shown, 0 otherwise
      */
     public static boolean getWhiteboardState(Context context, long did) {
@@ -313,7 +343,7 @@ public class MetaDB {
     /**
      * Stores the state of the whiteboard for a given deck.
      *
-     * @param did deck id to store whiteboard state for
+     * @param did             deck id to store whiteboard state for
      * @param whiteboardState 1 if the whiteboard should be shown, 0 otherwise
      */
     public static void storeWhiteboardState(Context context, long did, boolean whiteboardState) {
@@ -327,17 +357,18 @@ public class MetaDB {
                         + Integer.toString(state) + " " + "WHERE _id=" + cur.getString(0) + ";");
                 Timber.d("Store whiteboard state (%d) for deck %d", state, did);
             } else {
-                mMetaDb.execSQL("INSERT INTO whiteboardState (did, state) VALUES (?, ?)", new Object[] { did, state });
+                mMetaDb.execSQL("INSERT INTO whiteboardState (did, state) VALUES (?, ?)", new Object[] {did, state});
                 Timber.d("Store whiteboard state (%d) for deck %d", state, did);
             }
         } catch (Exception e) {
-            Timber.e(e,"Error storing whiteboard state in MetaDB ");
+            Timber.e(e, "Error storing whiteboard state in MetaDB ");
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
             }
         }
     }
+
 
     /**
      * Returns the state of the whiteboard for the given deck.
@@ -360,10 +391,11 @@ public class MetaDB {
         }
     }
 
+
     /**
      * Stores the state of the whiteboard for a given deck.
      *
-     * @param did deck id to store whiteboard state for
+     * @param did       deck id to store whiteboard state for
      * @param isVisible 1 if the whiteboard should be shown, 0 otherwise
      */
     public static void storeWhiteboardVisibility(Context context, long did, boolean isVisible) {
@@ -377,11 +409,11 @@ public class MetaDB {
                         + Integer.toString(isVisibleState) + " " + "WHERE _id=" + cur.getString(0) + ";");
                 Timber.d("Store whiteboard visibility (%d) for deck %d", isVisibleState, did);
             } else {
-                mMetaDb.execSQL("INSERT INTO whiteboardState (did, visible) VALUES (?, ?)", new Object[] { did, isVisibleState });
+                mMetaDb.execSQL("INSERT INTO whiteboardState (did, visible) VALUES (?, ?)", new Object[] {did, isVisibleState});
                 Timber.d("Store whiteboard visibility (%d) for deck %d", isVisibleState, did);
             }
         } catch (Exception e) {
-            Timber.e(e,"Error storing whiteboard visibility in MetaDB ");
+            Timber.e(e, "Error storing whiteboard visibility in MetaDB ");
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -389,9 +421,10 @@ public class MetaDB {
         }
     }
 
+
     /**
      * Returns a custom dictionary associated to a deck
-     * 
+     *
      * @return integer number of dictionary, -1 if not set (standard dictionary will be used)
      */
     public static int getLookupDictionary(Context context, long did) {
@@ -417,7 +450,7 @@ public class MetaDB {
 
     /**
      * Stores a custom dictionary for a given deck.
-     * 
+     *
      * @param dictionary integer number of dictionary, -1 if not set (standard dictionary will be used)
      */
     public static void storeLookupDictionary(Context context, long did, int dictionary) {
@@ -430,8 +463,8 @@ public class MetaDB {
                         + Integer.toString(dictionary) + " " + "WHERE _id=" + cur.getString(0) + ";");
                 Timber.i("MetaDB:: Store custom dictionary (%d) for deck %d", dictionary, did);
             } else {
-                mMetaDb.execSQL("INSERT INTO customDictionary (did, dictionary) VALUES (?, ?)", new Object[] { did,
-                        dictionary });
+                mMetaDb.execSQL("INSERT INTO customDictionary (did, dictionary) VALUES (?, ?)", new Object[] {did,
+                        dictionary});
                 Timber.i("MetaDB:: Store custom dictionary (%d) for deck %d", dictionary, did);
             }
         } catch (Exception e) {
@@ -446,17 +479,17 @@ public class MetaDB {
 
     /**
      * Return the current status of the widget.
-     * 
+     *
      * @return [due, eta]
      */
     public static int[] getWidgetSmallStatus(Context context) {
         openDBIfClosed(context);
         Cursor cursor = null;
         try {
-            cursor = mMetaDb.query("smallWidgetStatus", new String[] { "due", "eta" },
+            cursor = mMetaDb.query("smallWidgetStatus", new String[] {"due", "eta"},
                     null, null, null, null, null);
             while (cursor.moveToNext()) {
-                return new int[]{cursor.getInt(0), cursor.getInt(1)};
+                return new int[] {cursor.getInt(0), cursor.getInt(1)};
             }
         } catch (SQLiteException e) {
             Timber.e(e, "Error while querying widgetStatus");
@@ -465,7 +498,7 @@ public class MetaDB {
                 cursor.close();
             }
         }
-        return new int[]{0, 0};
+        return new int[] {0, 0};
     }
 
 
@@ -474,7 +507,7 @@ public class MetaDB {
         Cursor cursor = null;
         int due = 0;
         try {
-            cursor = mMetaDb.query("smallWidgetStatus", new String[] { "due" }, null, null, null, null, null);
+            cursor = mMetaDb.query("smallWidgetStatus", new String[] {"due"}, null, null, null, null, null);
             if (cursor.moveToFirst()) {
                 return cursor.getInt(0);
             }
@@ -497,7 +530,7 @@ public class MetaDB {
                 // First clear all the existing content.
                 mMetaDb.execSQL("DELETE FROM smallWidgetStatus");
                 mMetaDb.execSQL("INSERT INTO smallWidgetStatus(due, eta) VALUES (?, ?)",
-                        new Object[]{status.first, status.second});
+                        new Object[] {status.first, status.second});
                 mMetaDb.setTransactionSuccessful();
             } finally {
                 mMetaDb.endTransaction();
@@ -511,6 +544,7 @@ public class MetaDB {
         }
     }
 
+
     private static class DatabaseUtil {
         private static boolean getScalarBoolean(Cursor cur) {
             if (cur.moveToNext()) {
@@ -519,6 +553,7 @@ public class MetaDB {
                 return false;
             }
         }
+
 
         @SuppressWarnings("TryFinallyCanBeTryWithResources") //API LEVEL
         private static int getTableColumnCount(SQLiteDatabase mMetaDb, String tableName) {

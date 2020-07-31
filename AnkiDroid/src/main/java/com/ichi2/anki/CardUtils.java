@@ -27,6 +27,7 @@ public class CardUtils {
         return notes;
     }
 
+
     /**
      * @return All cards of all notes
      */
@@ -37,6 +38,7 @@ public class CardUtils {
         }
         return allCards;
     }
+
 
     public static void markAll(List<Note> notes, boolean mark) {
         for (Note note : notes) {
@@ -51,6 +53,7 @@ public class CardUtils {
             }
         }
     }
+
 
     public static boolean isIn(long[] array, long val) {
         for (long v : array) {

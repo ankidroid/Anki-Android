@@ -17,8 +17,12 @@ import static org.mockito.ArgumentMatchers.eq;
 //Unknown issue: @CheckResult should provide warnings on this class when return value is unused, but doesn't.
 public class PreferenceExtensionsTest {
 
-    private static Supplier<String> UNUSED_SUPPLIER = () -> { throw new UnexpectedException();};
-    private static Supplier<String> EXCEPTION_SUPPLIER = () -> { throw new ExpectedException();};
+    private static Supplier<String> UNUSED_SUPPLIER = () -> {
+        throw new UnexpectedException();
+    };
+    private static Supplier<String> EXCEPTION_SUPPLIER = () -> {
+        throw new ExpectedException();
+    };
 
     private static final String VALID_KEY = "VALID";
     private static final String VALID_RESULT = "WAS VALID KEY";
@@ -31,9 +35,11 @@ public class PreferenceExtensionsTest {
     @Mock
     private SharedPreferences.Editor mockEditor;
 
+
     private String getOrSetString(String key, Supplier<String> supplier) {
         return PreferenceExtensions.getOrSetString(mMockReferences, key, supplier);
     }
+
 
     @Before
     public void setUp() {
@@ -44,9 +50,11 @@ public class PreferenceExtensionsTest {
         Mockito.when(mockEditor.putString(anyString(), anyString())).thenReturn(mockEditor);
     }
 
+
     private String getForMissingKey() {
         return getOrSetString(MISSING_KEY, () -> LAMBDA_RETURN);
     }
+
 
     @Test
     public void existingKeyReturnsMappedValue() {
@@ -54,11 +62,13 @@ public class PreferenceExtensionsTest {
         assertEquals(ret, VALID_RESULT);
     }
 
+
     @Test
     public void missingKeyReturnsLambdaValue() {
         String ret = getForMissingKey();
         assertEquals(ret, LAMBDA_RETURN);
     }
+
 
     @SuppressWarnings("unused")
     @Test
@@ -68,10 +78,12 @@ public class PreferenceExtensionsTest {
         Mockito.verify(mockEditor).apply();
     }
 
+
     @SuppressWarnings("unused")
     public void noLambdaExceptionIfKeyExists() {
-         assertDoesNotThrow(() -> getOrSetString(VALID_KEY, EXCEPTION_SUPPLIER));
+        assertDoesNotThrow(() -> getOrSetString(VALID_KEY, EXCEPTION_SUPPLIER));
     }
+
 
     @SuppressWarnings("unused")
     @Test(expected = ExpectedException.class)
@@ -79,8 +91,12 @@ public class PreferenceExtensionsTest {
         getOrSetString(MISSING_KEY, EXCEPTION_SUPPLIER);
     }
 
+
     private static class ExpectedException extends RuntimeException {
     }
+
+
+
     private static class UnexpectedException extends RuntimeException {
     }
 }

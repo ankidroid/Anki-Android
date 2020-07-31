@@ -45,6 +45,7 @@ public class TemplateTest extends RobolectricTest {
         assertThat(rendered, is("AA[[type:Back]]"));
     }
 
+
     @Test
     public void testNotFoundWillRender() {
         String maybeBad = "{{#NotFound}}{{NotFound}}{{/NotFound}}";
@@ -56,6 +57,7 @@ public class TemplateTest extends RobolectricTest {
 
         assertThat(result, Matchers.isEmptyString());
     }
+
 
     @Test
     public void nestedTemplatesRenderWell() {
@@ -81,6 +83,7 @@ public class TemplateTest extends RobolectricTest {
         //Actual value (may be subject to change).
         assertThat(result, is("\n    \n        Card1 - One<br>\n    \n    \n        Card1 - Two\n    \n"));
     }
+
 
     @Test
     @Ignore("GitHub: 6284")

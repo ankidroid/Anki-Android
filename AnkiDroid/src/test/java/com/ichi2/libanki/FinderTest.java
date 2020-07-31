@@ -77,7 +77,7 @@ public class FinderTest extends RobolectricTest {
 
     @NonNull
     private Card buryManually(SchedV2 sched, long id) {
-        sched.buryCards(new long[] { id }, true);
+        sched.buryCards(new long[] {id}, true);
         Card manuallyBuriedCard = new Card(getCol(), id);
         assertThat(manuallyBuriedCard.getQueue(), is(Consts.QUEUE_TYPE_MANUALLY_BURIED));
         return manuallyBuriedCard;

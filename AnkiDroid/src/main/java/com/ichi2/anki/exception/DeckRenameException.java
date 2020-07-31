@@ -1,4 +1,3 @@
-
 package com.ichi2.anki.exception;
 
 import android.content.res.Resources;
@@ -12,10 +11,12 @@ public class DeckRenameException extends Exception {
 
     private int mErrorCode;
 
+
     public DeckRenameException(int errorCode) {
         super();
         mErrorCode = errorCode;
     }
+
 
     public String getLocalizedMessage(Resources res) {
         switch (mErrorCode) {

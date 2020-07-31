@@ -76,8 +76,9 @@ public class GraphicsWrap {
     public RectangleWrap getClipBounds() {
         return new RectangleWrap(canvas.getClipBounds());
     }
-    
-    public ColorWrap getColor(){
+
+
+    public ColorWrap getColor() {
         return new ColorWrap(paint.getColor());
     }
 
@@ -118,6 +119,7 @@ public class GraphicsWrap {
         paint.setStyle(oldStyle);
 
     }
+
 
     public Paint getPaint() {
         return paint;

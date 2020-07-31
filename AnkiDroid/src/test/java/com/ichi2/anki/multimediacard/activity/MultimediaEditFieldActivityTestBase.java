@@ -27,7 +27,8 @@ public abstract class MultimediaEditFieldActivityTestBase extends RobolectricTes
         ShadowApplication app = Shadows.shadowOf(application);
         app.grantPermissions(Manifest.permission.CAMERA);
     }
-    
+
+
     protected IFieldController getControllerForField(IField field, IMultimediaEditableNote note, int fieldIndex) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra(MultimediaEditFieldActivity.EXTRA_FIELD_INDEX, fieldIndex);
@@ -36,11 +37,13 @@ public abstract class MultimediaEditFieldActivityTestBase extends RobolectricTes
         return getControllerForIntent(intent);
     }
 
+
     protected IMultimediaEditableNote getEmptyNote() {
         MultimediaEditableNote note = new MultimediaEditableNote();
         note.setNumFields(1);
         return note;
     }
+
 
     protected IFieldController getControllerForIntent(Intent intent) {
         ActivityController multimediaController = Robolectric.buildActivity(MultimediaEditFieldActivity.class, intent)
@@ -49,6 +52,7 @@ public abstract class MultimediaEditFieldActivityTestBase extends RobolectricTes
         MultimediaEditFieldActivity testCardTemplatePreviewer = (MultimediaEditFieldActivity) multimediaController.get();
         return testCardTemplatePreviewer.getFieldController();
     }
+
 
     protected MultimediaEditFieldActivity setupActivityMock(IFieldController controller, MultimediaEditFieldActivity mActivity) {
         MultimediaEditFieldActivity activity = Mockito.mock(MultimediaEditFieldActivity.class);

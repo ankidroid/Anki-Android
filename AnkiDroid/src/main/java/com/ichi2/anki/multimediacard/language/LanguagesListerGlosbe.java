@@ -34,9 +34,10 @@ public class LanguagesListerGlosbe extends LanguageListerBase {
 
     private static HashMap<String, Locale> locale_map = null;
 
+
     public LanguagesListerGlosbe() {
-        final String [] languages ={"eng", "deu", "jpn", "fra", "spa", "pol", "ita", "rus",
-            "ces", "zho", "nld", "por", "swe", "hrv", "hin", "hun", "vie", "ara", "tur"};
+        final String[] languages = {"eng", "deu", "jpn", "fra", "spa", "pol", "ita", "rus",
+                "ces", "zho", "nld", "por", "swe", "hrv", "hin", "hun", "vie", "ara", "tur"};
         // Java Locale uses ISO 639-2 rather than 639-3 so we currently only support the subset of
         // the languages on Glosbe which are in ISO 639-2. "Chinese Mandarin" ("cmn") for example
         // is not supported, but "Chinese" ("zho") is.
@@ -46,8 +47,10 @@ public class LanguagesListerGlosbe extends LanguageListerBase {
         }
     }
 
+
     /**
      * Convert from 3 letter ISO 639-2 language code to ISO 639-1
+     *
      * @param req 3 letter language code
      * @return 2 letter language code
      */

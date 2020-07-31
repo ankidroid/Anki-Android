@@ -49,6 +49,7 @@ public class ReviewerKeyboardInputTest {
         assertThat("Answer should not be performed", !underTest.hasBeenAnswered());
     }
 
+
     @Test
     public void whenDisplayingAnswerTyping1AnswersFarLeftButton() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
@@ -57,6 +58,7 @@ public class ReviewerKeyboardInputTest {
 
         assertThat(underTest.processedAnswer(), equalTo(EASE_1));
     }
+
 
     @Test
     public void whenDisplayingAnswerTyping2AnswersSecondButton() {
@@ -67,6 +69,7 @@ public class ReviewerKeyboardInputTest {
         assertThat(underTest.processedAnswer(), equalTo(EASE_2));
     }
 
+
     @Test
     public void whenDisplayingAnswerTyping3AnswersThirdButton() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
@@ -75,6 +78,7 @@ public class ReviewerKeyboardInputTest {
 
         assertThat(underTest.processedAnswer(), equalTo(EASE_3));
     }
+
 
     @Test
     public void whenDisplayingAnswerTyping4AnswersFarRightButton() {
@@ -85,7 +89,10 @@ public class ReviewerKeyboardInputTest {
         assertThat(underTest.processedAnswer(), equalTo(EASE_4));
     }
 
-    /** START: DEFAULT IS "GOOD" */
+
+    /**
+     * START: DEFAULT IS "GOOD"
+     */
     @Test
     public void spaceAnswersThirdButtonWhenFourButtonsShowing() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(4);
@@ -94,6 +101,7 @@ public class ReviewerKeyboardInputTest {
 
         assertThat(underTest.processedAnswer(), equalTo(EASE_3));
     }
+
 
     @Test
     public void spaceAnswersSecondButtonWhenThreeButtonsShowing() {
@@ -105,6 +113,7 @@ public class ReviewerKeyboardInputTest {
 
     }
 
+
     @Test
     public void spaceAnswersSecondButtonWhenTwoButtonsShowing() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(2);
@@ -114,17 +123,22 @@ public class ReviewerKeyboardInputTest {
         assertThat(underTest.processedAnswer(), equalTo(EASE_2));
     }
 
-    /** END: DEFAULT IS "GOOD" */
+
+    /**
+     * END: DEFAULT IS "GOOD"
+     */
 
     @Test
     public void gamepadAAnswerFourthButtonOrShowsAnswer() {
         assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_A, EASE_4);
     }
 
+
     @Test
     public void gamepadBAnswersThirdButtonOrShowsAnswer() {
         assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_B, EASE_3);
     }
+
 
     @Test
     public void gamepadXAnswersSecondButtonOrShowsAnswer() {
@@ -137,6 +151,7 @@ public class ReviewerKeyboardInputTest {
         assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_Y, EASE_1);
     }
 
+
     @Test
     public void pressingEWillEditCard() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
@@ -145,6 +160,7 @@ public class ReviewerKeyboardInputTest {
 
         assertThat("Edit Card was called", underTest.getEditCardCalled());
     }
+
 
     @Test
     public void pressingStarWillMarkCard() {
@@ -155,6 +171,7 @@ public class ReviewerKeyboardInputTest {
         assertThat("Mark Card was called", underTest.getMarkCardCalled());
     }
 
+
     @Test
     public void pressingEqualsWillBuryNote() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
@@ -163,6 +180,7 @@ public class ReviewerKeyboardInputTest {
 
         assertThat("Bury Note should be calledd", underTest.getBuryNoteCalled());
     }
+
 
     @Test
     public void pressingAtWillSuspendCard() {
@@ -173,6 +191,7 @@ public class ReviewerKeyboardInputTest {
         assertThat("Suspend Card should be called", underTest.getSuspendCardCalled());
     }
 
+
     @Test
     public void pressingExclamationWillSuspendNote() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
@@ -181,6 +200,7 @@ public class ReviewerKeyboardInputTest {
 
         assertThat("Suspend Note should be called", underTest.getSuspendNoteCalled());
     }
+
 
     @Test
     public void pressingRShouldReplayAudio() {
@@ -191,6 +211,7 @@ public class ReviewerKeyboardInputTest {
         assertThat("Replay Audio should be called", underTest.getReplayAudioCalled());
     }
 
+
     @Test
     public void pressingF5ShouldReplayAudio() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer();
@@ -199,6 +220,7 @@ public class ReviewerKeyboardInputTest {
 
         assertThat("Replay Audio should be called", underTest.getReplayAudioCalled());
     }
+
 
     @Test
     public void pressingZShouldUndoIfAvailable() {
@@ -209,6 +231,7 @@ public class ReviewerKeyboardInputTest {
         assertThat("Undo should be called", underTest.getUndoCalled());
     }
 
+
     @Test
     public void pressingZShouldNotUndoIfNotAvailable() {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(false);
@@ -217,6 +240,7 @@ public class ReviewerKeyboardInputTest {
 
         assertThat("Undo is not available so should not be called", !underTest.getUndoCalled());
     }
+
 
     @Test
     public void pressingSpaceShouldDoNothingIfFocused() {
@@ -227,6 +251,7 @@ public class ReviewerKeyboardInputTest {
         assertThat("When text field is focused, space should not display answer",
                 !underTest.didDisplayAnswer());
     }
+
 
     @Test
     public void pressingUndoDoesNothingIfControlsAreBlocked() {
@@ -277,6 +302,7 @@ public class ReviewerKeyboardInputTest {
             return mControlsAreBlocked;
         }
 
+
         @CheckResult
         public static KeyboardInputTestReviewer displayingAnswer() {
             KeyboardInputTestReviewer keyboardInputTestReviewer = new KeyboardInputTestReviewer();
@@ -284,6 +310,7 @@ public class ReviewerKeyboardInputTest {
             keyboardInputTestReviewer.mProcessor.setup();
             return keyboardInputTestReviewer;
         }
+
 
         @CheckResult
         public static KeyboardInputTestReviewer displayingQuestion() {
@@ -293,10 +320,12 @@ public class ReviewerKeyboardInputTest {
             return keyboardInputTestReviewer;
         }
 
+
         public KeyboardInputTestReviewer withControlsBlocked(ControlBlock value) {
             mControlsAreBlocked = value;
             return this;
         }
+
 
         public void displayAnswerForTest() {
             KeyboardInputTestReviewer.sDisplayAnswer = true;
@@ -308,16 +337,21 @@ public class ReviewerKeyboardInputTest {
             return mFocusTextField;
         }
 
+
         @Override
         protected void displayCardAnswer() {
             mDisplayAnswer = true;
         }
 
-        public boolean didDisplayAnswer() { return mDisplayAnswer; }
+
+        public boolean didDisplayAnswer() {
+            return mDisplayAnswer;
+        }
+
 
         public void handleUnicodeKeyPress(char unicodeChar) {
             KeyEvent key = mock(KeyEvent.class);
-            when(key.getUnicodeChar()).thenReturn((int)unicodeChar);
+            when(key.getUnicodeChar()).thenReturn((int) unicodeChar);
 
             try {
                 when(key.getAction()).thenReturn(KeyEvent.ACTION_DOWN);
@@ -332,11 +366,13 @@ public class ReviewerKeyboardInputTest {
                 Timber.e(e);
             }
         }
+
+
         public void handleKeyPress(int keycode, char unicodeChar) {
             //COULD_BE_BETTER: Saves 20 seconds on tests to remove AndroidJUnit4,
             // but may let something slip through the cracks.
             KeyEvent e = mock(KeyEvent.class);
-            when(e.getUnicodeChar()).thenReturn((int)unicodeChar);
+            when(e.getUnicodeChar()).thenReturn((int) unicodeChar);
             when(e.getAction()).thenReturn(KeyEvent.ACTION_DOWN);
             when(e.getKeyCode()).thenReturn(keycode);
 
@@ -354,7 +390,7 @@ public class ReviewerKeyboardInputTest {
         }
 
 
-        @SuppressWarnings({"unused"}) //useful to obtain unicode for kecode if run under AndroidJUnit4.
+        @SuppressWarnings( {"unused"}) //useful to obtain unicode for kecode if run under AndroidJUnit4.
         public void handleAndroidKeyPress(int keycode) {
             try {
                 this.onKeyDown(keycode, new KeyEvent(KeyEvent.ACTION_DOWN, keycode));
@@ -367,7 +403,10 @@ public class ReviewerKeyboardInputTest {
                 Timber.e(ex);
             }
         }
-        @Override protected void setTitle() {
+
+
+        @Override
+        protected void setTitle() {
             //required for interface. Intentionally left blank
         }
 
@@ -391,7 +430,7 @@ public class ReviewerKeyboardInputTest {
 
 
         public int processedAnswer() {
-            if(mAnswered == null) {
+            if (mAnswered == null) {
                 fail("No card was answered");
             }
             return mAnswered;
@@ -414,13 +453,17 @@ public class ReviewerKeyboardInputTest {
             handleKeyPress(buttonCode, '\0');
         }
 
+
         @Override
         protected void undo() {
             mUndoCalled = true;
         }
+
+
         public boolean getUndoCalled() {
             return mUndoCalled;
         }
+
 
         public boolean getSuspendNoteCalled() {
             return mDismissType == Collection.DismissType.SUSPEND_NOTE;
@@ -441,16 +484,19 @@ public class ReviewerKeyboardInputTest {
             return mEditedCard;
         }
 
+
         @Override
         protected void dismiss(Collection.DismissType type) {
             this.mDismissType = type;
         }
+
 
         @Override
         protected boolean editCard() {
             mEditedCard = true;
             return true;
         }
+
 
         @Override
         protected void onMark(Card card) {
@@ -468,14 +514,17 @@ public class ReviewerKeyboardInputTest {
             mReplayAudioCalled = true;
         }
 
+
         public boolean getReplayAudioCalled() {
             return mReplayAudioCalled;
         }
+
 
         @Override
         protected boolean isUndoAvailable() {
             return mUndoAvailable;
         }
+
 
         public KeyboardInputTestReviewer withUndoAvailable(boolean value) {
             this.mUndoAvailable = value;

@@ -19,7 +19,6 @@
 package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -30,15 +29,12 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.LocaleList;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.util.Log;
 import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.exception.ManuallyReportedException;
 import com.ichi2.anki.exception.StorageAccessException;
@@ -46,7 +42,6 @@ import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
-import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.WebViewDebugging;
 
@@ -67,8 +62,12 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.multidex.MultiDexApplication;
 import timber.log.Timber;
+
 import static timber.log.Timber.DebugTree;
 
 /**
@@ -76,56 +75,56 @@ import static timber.log.Timber.DebugTree;
  */
 @AcraCore(
         buildConfigClass = org.acra.dialog.BuildConfig.class,
-        excludeMatchingSharedPreferencesKeys = {"username","hkey"},
+        excludeMatchingSharedPreferencesKeys = {"username", "hkey"},
         reportContent = {
-            ReportField.REPORT_ID,
-            ReportField.APP_VERSION_CODE,
-            ReportField.APP_VERSION_NAME,
-            ReportField.PACKAGE_NAME,
-            ReportField.FILE_PATH,
-            ReportField.PHONE_MODEL,
-            ReportField.ANDROID_VERSION,
-            ReportField.BUILD,
-            ReportField.BRAND,
-            ReportField.PRODUCT,
-            ReportField.TOTAL_MEM_SIZE,
-            ReportField.AVAILABLE_MEM_SIZE,
-            ReportField.BUILD_CONFIG,
-            ReportField.CUSTOM_DATA,
-            ReportField.STACK_TRACE,
-            ReportField.STACK_TRACE_HASH,
-            //ReportField.INITIAL_CONFIGURATION,
-            ReportField.CRASH_CONFIGURATION,
-            //ReportField.DISPLAY,
-            ReportField.USER_COMMENT,
-            ReportField.USER_APP_START_DATE,
-            ReportField.USER_CRASH_DATE,
-            //ReportField.DUMPSYS_MEMINFO,
-            //ReportField.DROPBOX,
-            ReportField.LOGCAT,
-            //ReportField.EVENTSLOG,
-            //ReportField.RADIOLOG,
-            //ReportField.IS_SILENT,
-            ReportField.INSTALLATION_ID,
-            //ReportField.USER_EMAIL,
-            //ReportField.DEVICE_FEATURES,
-            ReportField.ENVIRONMENT,
-            //ReportField.SETTINGS_SYSTEM,
-            //ReportField.SETTINGS_SECURE,
-            //ReportField.SETTINGS_GLOBAL,
-            ReportField.SHARED_PREFERENCES,
-            //ReportField.APPLICATION_LOG,
-            ReportField.MEDIA_CODEC_LIST,
-            ReportField.THREAD_DETAILS
-            //ReportField.USER_IP
+                ReportField.REPORT_ID,
+                ReportField.APP_VERSION_CODE,
+                ReportField.APP_VERSION_NAME,
+                ReportField.PACKAGE_NAME,
+                ReportField.FILE_PATH,
+                ReportField.PHONE_MODEL,
+                ReportField.ANDROID_VERSION,
+                ReportField.BUILD,
+                ReportField.BRAND,
+                ReportField.PRODUCT,
+                ReportField.TOTAL_MEM_SIZE,
+                ReportField.AVAILABLE_MEM_SIZE,
+                ReportField.BUILD_CONFIG,
+                ReportField.CUSTOM_DATA,
+                ReportField.STACK_TRACE,
+                ReportField.STACK_TRACE_HASH,
+                //ReportField.INITIAL_CONFIGURATION,
+                ReportField.CRASH_CONFIGURATION,
+                //ReportField.DISPLAY,
+                ReportField.USER_COMMENT,
+                ReportField.USER_APP_START_DATE,
+                ReportField.USER_CRASH_DATE,
+                //ReportField.DUMPSYS_MEMINFO,
+                //ReportField.DROPBOX,
+                ReportField.LOGCAT,
+                //ReportField.EVENTSLOG,
+                //ReportField.RADIOLOG,
+                //ReportField.IS_SILENT,
+                ReportField.INSTALLATION_ID,
+                //ReportField.USER_EMAIL,
+                //ReportField.DEVICE_FEATURES,
+                ReportField.ENVIRONMENT,
+                //ReportField.SETTINGS_SYSTEM,
+                //ReportField.SETTINGS_SECURE,
+                //ReportField.SETTINGS_GLOBAL,
+                ReportField.SHARED_PREFERENCES,
+                //ReportField.APPLICATION_LOG,
+                ReportField.MEDIA_CODEC_LIST,
+                ReportField.THREAD_DETAILS
+                //ReportField.USER_IP
         },
-        logcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" }
+        logcatArguments = {"-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S"}
 )
 @AcraDialog(
         reportDialogClass = AnkiDroidCrashReportDialog.class,
-        resCommentPrompt =  R.string.empty_string,
-        resTitle =  R.string.feedback_title,
-        resText =  R.string.feedback_default_text,
+        resCommentPrompt = R.string.empty_string,
+        resTitle = R.string.feedback_title,
+        resText = R.string.feedback_default_text,
         resPositiveButtonText = R.string.feedback_report,
         resIcon = R.drawable.logo_star_144dp
 )
@@ -173,7 +172,9 @@ public class AnkiDroidApp extends MultiDexApplication {
      */
     public static final int CHECK_PREFERENCES_AT_VERSION = 20500225;
 
-    /** Our ACRA configurations, initialized during onCreate() */
+    /**
+     * Our ACRA configurations, initialized during onCreate()
+     */
     private CoreConfigurationBuilder acraCoreConfigBuilder;
 
 
@@ -185,6 +186,7 @@ public class AnkiDroidApp extends MultiDexApplication {
 
     /**
      * Get the ACRA ConfigurationBuilder - use this followed by setting it to modify the config
+     *
      * @return ConfigurationBuilder for the current ACRA config
      */
     public CoreConfigurationBuilder getAcraCoreConfigBuilder() {
@@ -194,12 +196,14 @@ public class AnkiDroidApp extends MultiDexApplication {
 
     /**
      * Set the ACRA ConfigurationBuilder and <b>re-initialize the ACRA system</b> with the contents
+     *
      * @param acraCoreConfigBuilder the full ACRA config to initialize ACRA with
      */
     private void setAcraConfigBuilder(CoreConfigurationBuilder acraCoreConfigBuilder) {
         this.acraCoreConfigBuilder = acraCoreConfigBuilder;
         ACRA.init(this, acraCoreConfigBuilder);
     }
+
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -208,6 +212,7 @@ public class AnkiDroidApp extends MultiDexApplication {
         //for API < 17 we update the configuration directly
         super.attachBaseContext(updateContextWithLanguage(base));
     }
+
 
     /**
      * On application creation.
@@ -326,6 +331,7 @@ public class AnkiDroidApp extends MultiDexApplication {
         return sInstance.getCacheDir().getAbsolutePath();
     }
 
+
     public static Resources getAppResources() {
         return sInstance.getResources();
     }
@@ -335,10 +341,14 @@ public class AnkiDroidApp extends MultiDexApplication {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
-    /** Used when we don't have an exception to throw, but we know something is wrong and want to diagnose it */
+
+    /**
+     * Used when we don't have an exception to throw, but we know something is wrong and want to diagnose it
+     */
     public static void sendExceptionReport(@NonNull String message, String origin) {
         sendExceptionReport(new ManuallyReportedException(message), origin, null);
     }
+
 
     public static void sendExceptionReport(Throwable e, String origin) {
         sendExceptionReport(e, origin, null);
@@ -366,19 +376,22 @@ public class AnkiDroidApp extends MultiDexApplication {
         ACRA.getErrorReporter().handleException(e);
     }
 
+
     /**
      * If you want to make sure that the next exception of any time is posted, you need to clear limiter data
-     *
+     * <p>
      * ACRA 5.3.x does this automatically on version upgrade (https://github.com/ACRA/acra/pull/696), until then they blessed deleting file
+     *
      * @param context the context leading to the directory with ACRA limiter data
      */
     public static void deleteACRALimiterData(Context context) {
         context.getFileStreamPath("ACRA-limiter.json").delete();
     }
 
+
     /**
-     *  Returns a Context with the correct, saved language, to be attached using attachBase().
-     *  For old APIs directly sets language using deprecated functions
+     * Returns a Context with the correct, saved language, to be attached using attachBase().
+     * For old APIs directly sets language using deprecated functions
      *
      * @param remoteContext The base context offered by attachBase() to be passed to super.attachBase().
      *                      Can be modified here to set correct GUI language.
@@ -408,13 +421,14 @@ public class AnkiDroidApp extends MultiDexApplication {
         } catch (Exception e) {
             Timber.e(e, "failed to update context with new language");
             //during AnkiDroidApp.attachBaseContext() ACRA is not initialized, so the exception report will not be sent
-            sendExceptionReport(e,"AnkiDroidApp.updateContextWithLanguage");
+            sendExceptionReport(e, "AnkiDroidApp.updateContextWithLanguage");
             return remoteContext;
         }
     }
 
+
     /**
-     *  Creates and returns a new configuration with the chosen GUI language that is saved in the preferences
+     * Creates and returns a new configuration with the chosen GUI language that is saved in the preferences
      *
      * @param remoteConfig The configuration of the remote context to set the language for
      * @param prefs
@@ -457,9 +471,9 @@ public class AnkiDroidApp extends MultiDexApplication {
         if (enabled) {
             int sensitivity = preferences.getInt("swipeSensitivity", 100);
             if (sensitivity != 100) {
-                float sens = 100.0f/sensitivity;
+                float sens = 100.0f / sensitivity;
                 sSwipeMinDistance = (int) (DEFAULT_SWIPE_MIN_DISTANCE * sens + 0.5f);
-                sSwipeThresholdVelocity = (int) (DEFAULT_SWIPE_THRESHOLD_VELOCITY * sens  + 0.5f);
+                sSwipeThresholdVelocity = (int) (DEFAULT_SWIPE_THRESHOLD_VELOCITY * sens + 0.5f);
             } else {
                 sSwipeMinDistance = DEFAULT_SWIPE_MIN_DISTANCE;
                 sSwipeThresholdVelocity = DEFAULT_SWIPE_THRESHOLD_VELOCITY;
@@ -480,7 +494,7 @@ public class AnkiDroidApp extends MultiDexApplication {
         setAcraReportingMode(FEEDBACK_REPORT_NEVER);
         prefs.edit().putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_NEVER).apply();
         // Use a wider logcat filter in case crash reporting manually re-enabled
-        String [] logcatArgs = { "-t", "300", "-v", "long", "ACRA:S"};
+        String[] logcatArgs = {"-t", "300", "-v", "long", "ACRA:S"};
         setAcraConfigBuilder(getAcraCoreConfigBuilder().setLogcatArguments(logcatArgs));
     }
 
@@ -498,6 +512,7 @@ public class AnkiDroidApp extends MultiDexApplication {
 
     /**
      * Set the reporting mode for ACRA based on the value of the FEEDBACK_REPORT_KEY preference
+     *
      * @param value value of FEEDBACK_REPORT_KEY preference
      */
     public void setAcraReportingMode(String value) {
@@ -523,8 +538,10 @@ public class AnkiDroidApp extends MultiDexApplication {
         editor.apply();
     }
 
+
     /**
      * Get the url for the feedback page
+     *
      * @return
      */
     public static String getFeedbackUrl() {
@@ -539,8 +556,10 @@ public class AnkiDroidApp extends MultiDexApplication {
         }
     }
 
+
     /**
      * Get the url for the manual
+     *
      * @return
      */
     public static String getManualUrl() {
@@ -555,8 +574,10 @@ public class AnkiDroidApp extends MultiDexApplication {
         }
     }
 
+
     /**
      * Check whether l is the currently set language code
+     *
      * @param l ISO2 language code
      * @return
      */
@@ -565,9 +586,10 @@ public class AnkiDroidApp extends MultiDexApplication {
         return pref.equals(l) || "".equals(pref) && Locale.getDefault().getLanguage().equals(l);
     }
 
+
     /**
      * A tree which logs necessary data for crash reporting.
-     *
+     * <p>
      * Requirements:
      * 1) ignore verbose and debug log levels
      * 2) use the fixed AnkiDroidApp.TAG log tag (ACRA filters logcat for it when reporting errors)
@@ -617,7 +639,6 @@ public class AnkiDroidApp extends MultiDexApplication {
             return createStackElementTag(stackTrace[CALL_STACK_INDEX]);
         }
         // ----  END copied from Timber.DebugTree because DebugTree.getTag() is package private ----
-
 
 
         @Override

@@ -18,12 +18,21 @@ package com.ichi2.libanki.utils;
 
 import java.util.Date;
 
-/** Allows injection of time dependencies */
+/**
+ * Allows injection of time dependencies
+ */
 public interface Time {
     long time();
+
     Date getCurrentDate();
-    /**The time in integer seconds. */
+
+    /**
+     * The time in integer seconds.
+     */
     long intTime();
-    /**The time in integer seconds. */
+
+    /**
+     * The time in integer seconds.
+     */
     double now();
 }

@@ -15,8 +15,8 @@
  ****************************************************************************************/
 
 package com.ichi2.libanki;
+
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy.*;
 
 import androidx.annotation.IntDef;
 
@@ -42,27 +42,39 @@ public class Consts {
     public static final int QUEUE_TYPE_REV = 2;
     public static final int QUEUE_TYPE_DAY_LEARN_RELEARN = 3;
     public static final int QUEUE_TYPE_PREVIEW = 4;
+
+
+
     @Retention(SOURCE)
-    @IntDef({
+    @IntDef( {
             QUEUE_TYPE_MANUALLY_BURIED,
-                QUEUE_TYPE_SIBLING_BURIED,
-                QUEUE_TYPE_SUSPENDED,
-                QUEUE_TYPE_NEW,
-                QUEUE_TYPE_LRN,
-                QUEUE_TYPE_REV,
-                QUEUE_TYPE_DAY_LEARN_RELEARN,
-                QUEUE_TYPE_PREVIEW
-                })
-    public @interface CARD_QUEUE {}
+            QUEUE_TYPE_SIBLING_BURIED,
+            QUEUE_TYPE_SUSPENDED,
+            QUEUE_TYPE_NEW,
+            QUEUE_TYPE_LRN,
+            QUEUE_TYPE_REV,
+            QUEUE_TYPE_DAY_LEARN_RELEARN,
+            QUEUE_TYPE_PREVIEW
+    })
+    public @interface CARD_QUEUE {
+    }
+
+
 
     // Card types
     public static final int CARD_TYPE_NEW = 0;
     public static final int CARD_TYPE_LRN = 1;
     public static final int CARD_TYPE_REV = 2;
     public static final int CARD_TYPE_RELEARNING = 3;
+
+
+
     @Retention(SOURCE)
-    @IntDef({CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING})
-    public @interface CARD_TYPE {}
+    @IntDef( {CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING})
+    public @interface CARD_TYPE {
+    }
+
+
 
     // removal types
     public static final int REM_CARD = 0;
@@ -98,7 +110,7 @@ public class Consts {
 
     // deck schema & syncing vars
     public static final int SCHEMA_VERSION = 11;
-    public static final int SYNC_ZIP_SIZE = (int)(2.5*1024*1024);
+    public static final int SYNC_ZIP_SIZE = (int) (2.5 * 1024 * 1024);
     public static final int SYNC_ZIP_COUNT = 25;
     public static final String SYNC_BASE = "https://sync%s.ankiweb.net/";
     public static final Integer DEFAULT_HOST_NUM = null;
@@ -125,6 +137,8 @@ public class Consts {
     // The labels defined in consts.py are in AnkiDroid's resources files.
 
     public static final long DEFAULT_DECK_ID = 1;
-    /** Default dconf - can't be removed */
+    /**
+     * Default dconf - can't be removed
+     */
     public static final long DEFAULT_DECK_CONFIG_ID = 1;
 }

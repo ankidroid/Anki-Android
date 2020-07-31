@@ -26,14 +26,15 @@ import com.ichi2.anki.UIUtils;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
-/** #5374
- *
+/**
+ * #5374
+ * <p>
  * If a user attempts to open an apkg from the Firefox Snackbar, we just get a ACTION_VIEW on Reviewer...
  * It works if they click the download notification, but if they click "Open", then that disappears.
- *
+ * <p>
  * So... tell them to go to about:downloads, or select the file from their file manager.
  * It sucks, but not much we can do.
- *
+ * <p>
  * Reported as fixed in Firefox Preview
  */
 public class FirefoxSnackbarWorkaround {

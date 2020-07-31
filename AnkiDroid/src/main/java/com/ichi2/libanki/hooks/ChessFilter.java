@@ -17,7 +17,6 @@
 package com.ichi2.libanki.hooks;
 
 
-
 import android.content.Context;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -32,35 +31,36 @@ public class ChessFilter {
     private static final Pattern fFenPattern = Pattern.compile("\\[fen ?([^\\]]*)\\]([^\\[]+)\\[/fen\\]");
     private static final Pattern fFenOrientationPattern = Pattern.compile("orientation *= *\"?(black|white)\"?");
     private static final String fRenderFen =
-    		"(function (fentxt, showBlack) {" +
-    		"    fentxt=fentxt.replace(/ .*/g,'');" +
-    		"    if (showBlack) {" +
-    		"        fentxt = fentxt.split(\"\").reverse().join(\"\");" +
-    		"    }" +
-    		"    fentxt=fentxt.replace(/r/g,'x');" +
-    		"    fentxt=fentxt.replace(/\\\\//g,'</tr><tr>');" +
-    		"    fentxt=fentxt.replace(/1/g,'<td></td>');" +
-    		"    fentxt=fentxt.replace(/2/g,'<td></td><td></td>');" +
-    		"    fentxt=fentxt.replace(/3/g,'<td></td><td></td><td></td>');" +
-    		"    fentxt=fentxt.replace(/4/g,'<td></td><td></td><td></td><td></td>');" +
-    		"    fentxt=fentxt.replace(/5/g,'<td></td><td></td><td></td><td></td><td></td>');" +
-    		"    fentxt=fentxt.replace(/6/g,'<td></td><td></td><td></td><td></td><td></td><td></td>');" +
-    		"    fentxt=fentxt.replace(/7/g,'<td></td><td></td><td></td><td></td><td></td><td></td><td></td>');" +
-    		"    fentxt=fentxt.replace(/8/g,'<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>');" +
-    		"    fentxt=fentxt.replace(/K/g,'<td>&#9812;</td>');" +
-    		"    fentxt=fentxt.replace(/Q/g,'<td>&#9813;</td>');" +
-    		"    fentxt=fentxt.replace(/R/g,'<td>&#9814;</td>');" +
-    		"    fentxt=fentxt.replace(/B/g,'<td>&#9815;</td>');" +
-    		"    fentxt=fentxt.replace(/N/g,'<td>&#9816;</td>');" +
-    		"    fentxt=fentxt.replace(/P/g,'<td>&#9817;</td>');" +
-    		"    fentxt=fentxt.replace(/k/g,'<td>&#9818;</td>');" +
-    		"    fentxt=fentxt.replace(/q/g,'<td>&#9819;</td>');" +
-    		"    fentxt=fentxt.replace(/x/g,'<td>&#9820;</td>');" +
-    		"    fentxt=fentxt.replace(/b/g,'<td>&#9821;</td>');" +
-    		"    fentxt=fentxt.replace(/n/g,'<td>&#9822;</td>');" +
-    		"    fentxt=fentxt.replace(/p/g,'<td>&#9823;</td>');" +
-    		"    return '<div align=\"center\" width=\"100%%\"><table class=\"chess_board\" cellspacing=\"0\" cellpadding=\"0\"><tr>'+fentxt+'</tr></table></div>';" +
-    		"})('%s', %b)";
+            "(function (fentxt, showBlack) {" +
+                    "    fentxt=fentxt.replace(/ .*/g,'');" +
+                    "    if (showBlack) {" +
+                    "        fentxt = fentxt.split(\"\").reverse().join(\"\");" +
+                    "    }" +
+                    "    fentxt=fentxt.replace(/r/g,'x');" +
+                    "    fentxt=fentxt.replace(/\\\\//g,'</tr><tr>');" +
+                    "    fentxt=fentxt.replace(/1/g,'<td></td>');" +
+                    "    fentxt=fentxt.replace(/2/g,'<td></td><td></td>');" +
+                    "    fentxt=fentxt.replace(/3/g,'<td></td><td></td><td></td>');" +
+                    "    fentxt=fentxt.replace(/4/g,'<td></td><td></td><td></td><td></td>');" +
+                    "    fentxt=fentxt.replace(/5/g,'<td></td><td></td><td></td><td></td><td></td>');" +
+                    "    fentxt=fentxt.replace(/6/g,'<td></td><td></td><td></td><td></td><td></td><td></td>');" +
+                    "    fentxt=fentxt.replace(/7/g,'<td></td><td></td><td></td><td></td><td></td><td></td><td></td>');" +
+                    "    fentxt=fentxt.replace(/8/g,'<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>');" +
+                    "    fentxt=fentxt.replace(/K/g,'<td>&#9812;</td>');" +
+                    "    fentxt=fentxt.replace(/Q/g,'<td>&#9813;</td>');" +
+                    "    fentxt=fentxt.replace(/R/g,'<td>&#9814;</td>');" +
+                    "    fentxt=fentxt.replace(/B/g,'<td>&#9815;</td>');" +
+                    "    fentxt=fentxt.replace(/N/g,'<td>&#9816;</td>');" +
+                    "    fentxt=fentxt.replace(/P/g,'<td>&#9817;</td>');" +
+                    "    fentxt=fentxt.replace(/k/g,'<td>&#9818;</td>');" +
+                    "    fentxt=fentxt.replace(/q/g,'<td>&#9819;</td>');" +
+                    "    fentxt=fentxt.replace(/x/g,'<td>&#9820;</td>');" +
+                    "    fentxt=fentxt.replace(/b/g,'<td>&#9821;</td>');" +
+                    "    fentxt=fentxt.replace(/n/g,'<td>&#9822;</td>');" +
+                    "    fentxt=fentxt.replace(/p/g,'<td>&#9823;</td>');" +
+                    "    return '<div align=\"center\" width=\"100%%\"><table class=\"chess_board\" cellspacing=\"0\" cellpadding=\"0\"><tr>'+fentxt+'</tr></table></div>';" +
+                    "})('%s', %b)";
+
 
     public static String fenToChessboard(String text, Context context) {
         if (!AnkiDroidApp.getSharedPrefs(context).getBoolean("convertFenText", false)) {

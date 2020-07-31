@@ -32,12 +32,14 @@ public class CardBrowserNonAndroidTest {
         assertThat(output, is("aou aou"));
     }
 
+
     @Test
     public void soundIsRetainedWithoutTag() {
         String output = formatWithFilenamesRetained("aou[sound:foo.mp3]aou");
 
         assertThat(output, is("aou foo.mp3 aou"));
     }
+
 
     @Test
     public void imageIsStrippedCorrectly() {
@@ -46,6 +48,7 @@ public class CardBrowserNonAndroidTest {
         assertThat(output, is("aou aou"));
     }
 
+
     @Test
     public void imageIsRetainedWithNoHtml() {
         String output = formatWithFilenamesRetained("aou<img src=\"test.jpg\">aou");
@@ -53,10 +56,12 @@ public class CardBrowserNonAndroidTest {
         assertThat(output, is("aou test.jpg aou"));
     }
 
+
     @CheckResult
     private String formatWithFilenamesRetained(String input) {
         return CardBrowser.formatQAInternal(input, true);
     }
+
 
     @CheckResult
     private String formatWithFilenamesStripped(String input) {

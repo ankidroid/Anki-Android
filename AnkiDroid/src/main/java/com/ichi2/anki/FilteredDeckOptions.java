@@ -1,4 +1,3 @@
-
 package com.ichi2.anki;
 
 /****************************************************************************************
@@ -34,14 +33,13 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
-import com.ichi2.anki.analytics.UsageAnalytics;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -68,14 +66,16 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     private BroadcastReceiver mUnmountReceiver = null;
 
     // TODO: not anymore used in libanki?
-    private String[] dynExamples = new String[] { null,
+    private String[] dynExamples = new String[] {null,
             "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
             "{'search'=\"added:1\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
             "{'search'=\"rated:1:1\", 'order'=4}",
             "{'search'=\"prop:due<=2\", 'order'=6}",
             "{'search'=\"is:due tag:TAG\", 'order'=6}",
             "{'search'=\"is:due\", 'order'=3}",
-            "{'search'=\"\", 'steps'=\"1 10 20\", 'order'=0}" };
+            "{'search'=\"\", 'steps'=\"1 10 20\", 'order'=0}"};
+
+
 
     public class DeckPreferenceHack implements SharedPreferences {
 
@@ -105,6 +105,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             }
             mValues.put("resched", Boolean.toString(mDeck.getBoolean("resched")));
         }
+
 
         public class Editor implements SharedPreferences.Editor {
 
@@ -139,7 +140,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                     } else if ("stepsOn".equals(entry.getKey())) {
                         boolean on = (Boolean) entry.getValue();
                         if (on) {
-                            JSONArray steps =  StepsPreference.convertToJSON(mValues.get("steps"));
+                            JSONArray steps = StepsPreference.convertToJSON(mValues.get("steps"));
                             if (steps.length() > 0) {
                                 mDeck.put("delays", steps);
                             }
@@ -305,6 +306,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             return mValues.get(key);
         }
 
+
         public List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
 
 
@@ -327,6 +329,8 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
         }
 
     }
+
+
 
     private DeckPreferenceHack mPref;
 
@@ -371,7 +375,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             this.buildLists();
             this.updateSummaries();
         }
-        
+
         // Set the activity title to include the name of the deck
         String title = getResources().getString(R.string.deckpreferences_title);
         if (title.contains("XXX")) {
@@ -387,6 +391,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -416,6 +421,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
     private void closeDeckOptions() {
         if (mPrefChanged) {
@@ -489,6 +495,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
         newOrderPref.setEntryValues(R.array.cram_deck_conf_order_values);
         newOrderPref.setValue(mPref.getString("order", "0"));
     }
+
 
     /**
      * finish when sd card is ejected

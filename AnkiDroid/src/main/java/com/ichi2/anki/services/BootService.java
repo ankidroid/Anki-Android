@@ -14,10 +14,8 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Deck;
-import com.ichi2.utils.Permissions;
-
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.Permissions;
 
 import java.util.Calendar;
 
@@ -33,6 +31,7 @@ public class BootService extends BroadcastReceiver {
     private static boolean sWasRun = false;
 
     private boolean mFailedToShowNotifications = false;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -57,6 +56,7 @@ public class BootService extends BroadcastReceiver {
         mFailedToShowNotifications = false;
         sWasRun = true;
     }
+
 
     private void catchAlarmManagerErrors(@NonNull Context context, @NonNull Runnable runnable) {
         //#6332 - Too Many Alarms on Samsung Devices - this stops a fatal startup crash.
@@ -99,12 +99,12 @@ public class BootService extends BroadcastReceiver {
 
                 if (reminder.getBoolean("enabled")) {
                     final PendingIntent reminderIntent = PendingIntent.getBroadcast(
-                                                                                    context,
-                                                                                    (int) deckConfiguration.getLong("id"),
-                                                                                    new Intent(context, ReminderService.class).putExtra(ReminderService.EXTRA_DECK_OPTION_ID,
-                                                                                            deckConfiguration.getLong("id")),
-                                                                                    0
-                                                                                    );
+                            context,
+                            (int) deckConfiguration.getLong("id"),
+                            new Intent(context, ReminderService.class).putExtra(ReminderService.EXTRA_DECK_OPTION_ID,
+                                    deckConfiguration.getLong("id")),
+                            0
+                    );
                     final Calendar calendar = Calendar.getInstance();
 
                     calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
@@ -112,15 +112,16 @@ public class BootService extends BroadcastReceiver {
                     calendar.set(Calendar.SECOND, 0);
 
                     alarmManager.setRepeating(
-                                              AlarmManager.RTC_WAKEUP,
-                                              calendar.getTimeInMillis(),
-                                              AlarmManager.INTERVAL_DAY,
-                                              reminderIntent
-                                              );
+                            AlarmManager.RTC_WAKEUP,
+                            calendar.getTimeInMillis(),
+                            AlarmManager.INTERVAL_DAY,
+                            reminderIntent
+                    );
                 }
             }
         }
     }
+
 
     public static void scheduleNotification(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

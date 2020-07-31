@@ -32,10 +32,12 @@ public class SystemTime implements Time {
         return new Date();
     }
 
+
     @Override
     public long intTime() {
         return Utils.intTime();
     }
+
 
     @Override
     public double now() {

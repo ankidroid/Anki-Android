@@ -24,6 +24,7 @@ public class FuriganaFilters {
 
     private static final String RUBY = "<ruby><rb>$1</rb><rt>$2</rt></ruby>";
 
+
     private static String noSound(Matcher match, String repl) {
         if (match.group(2).startsWith("sound:")) {
             // return without modification
@@ -32,6 +33,7 @@ public class FuriganaFilters {
             return r.matcher(match.group(0)).replaceAll(repl);
         }
     }
+
 
     public static String kanjiFilter(String txt) {
         Matcher m = r.matcher(txt);
@@ -43,6 +45,7 @@ public class FuriganaFilters {
         return sb.toString();
     }
 
+
     public static String kanaFilter(String txt) {
         Matcher m = r.matcher(txt);
         StringBuffer sb = new StringBuffer();
@@ -52,6 +55,7 @@ public class FuriganaFilters {
         m.appendTail(sb);
         return sb.toString();
     }
+
 
     public static String furiganaFilter(String txt) {
         Matcher m = r.matcher(txt);

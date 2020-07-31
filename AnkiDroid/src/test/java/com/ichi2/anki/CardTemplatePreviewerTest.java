@@ -43,7 +43,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
 
         String modelName = "Basic";
         Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
-        JSONObject template = (JSONObject)collectionBasicModelOriginal.getJSONArray("tmpls").get(0);
+        JSONObject template = (JSONObject) collectionBasicModelOriginal.getJSONArray("tmpls").get(0);
         template.put("qfmt", template.getString("qfmt").concat("PREVIEWER_TEST"));
         String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), collectionBasicModelOriginal);
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -77,6 +77,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }
 
+
     @Test
     public void testPreviewNormal() throws Exception {
 
@@ -87,7 +88,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         Card testCard2 = getSavedCard(collectionBasicModelOriginal, 1);
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.putExtra("cardList", new long[] { testCard1.getId(), testCard2.getId() } );
+        intent.putExtra("cardList", new long[] {testCard1.getId(), testCard2.getId()});
         intent.putExtra("index", 0);
 
         ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
@@ -109,6 +110,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }
 
+
     private Card getSavedCard(Model model, int ordinal) throws Exception {
         Note n = getCol().newNote(model);
         ArrayList<String> fieldNames = Models.fieldNames(model);
@@ -116,6 +118,6 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
             n.setField(i, fieldNames.get(i));
         }
         n.flush();
-        return getCol().getNewLinkedCard(new Card(getCol()), n, (JSONObject)model.getJSONArray("tmpls").get(ordinal), 1, 1, true);
+        return getCol().getNewLinkedCard(new Card(getCol()), n, (JSONObject) model.getJSONArray("tmpls").get(ordinal), 1, 1, true);
     }
 }

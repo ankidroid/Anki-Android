@@ -95,7 +95,6 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
     }
 
 
-
     private void createClearButton(LinearLayout layoutTools, LayoutParams p) {
         Button clearButton = new Button(mActivity);
         clearButton.setText(gtxt(R.string.multimedia_editor_text_field_editing_clear));
@@ -107,7 +106,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
     /**
      * @param layoutTools to create the button
-     * @param p Button to load pronunciation from Beolingus
+     * @param p           Button to load pronunciation from Beolingus
      */
     private void createPronounceButton(LinearLayout layoutTools, LayoutParams p) {
         Button btnPronounce = new Button(mActivity);
@@ -180,8 +179,8 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
     /**
      * @param layoutTools This creates a button, which will call a dialog, allowing to pick from another note's fields
-     *            one, and use it's value in the current one.
-     * @param p layout params
+     *                    one, and use it's value in the current one.
+     * @param p           layout params
      */
     private void createCloneButton(LinearLayout layoutTools, LayoutParams p) {
         // Makes sense only for two and more fields
@@ -292,6 +291,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         }
     }
 
+
     @Override
     public void onFocusLost() {
         // do nothing
@@ -300,7 +300,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
     /**
      * @param context context with the PackageManager
-     * @param intent intent for state data
+     * @param intent  intent for state data
      * @return Needed to check, if the Color Dict is installed
      */
     private static boolean isIntentAvailable(Context context, Intent intent) {
@@ -351,7 +351,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
         Intent intent = new Intent(PICK_RESULT_ACTION);
         intent.putExtra(EXTRA_QUERY, mEditText.getText().toString()); // Search
-                                                                      // Query
+        // Query
         intent.putExtra(EXTRA_FULLSCREEN, false); //
         // intent.putExtra(EXTRA_HEIGHT, 400); //400pixel, if you don't specify,
         // fill_parent"

@@ -50,7 +50,7 @@ public class Shared {
         private int viewId;
 
 
-        public  String getDescription() {
+        public String getDescription() {
             return "Waits for an id to be visible";
         }
 
@@ -71,27 +71,36 @@ public class Shared {
         }
 
 
-        /** Get the current activity so, to inspect for View ids */
+        /**
+         * Get the current activity so, to inspect for View ids
+         */
         private Activity getCurrentActivity() {
             final Activity[] activity = new Activity[1];
             onView(isRoot()).check((view, noViewFoundException) -> {
-                    View content = view.findViewById(android.R.id.content);
-                    if (content != null) {
-                        activity[0] = scanForActivity(content.getContext());
-                    }
+                View content = view.findViewById(android.R.id.content);
+                if (content != null) {
+                    activity[0] = scanForActivity(content.getContext());
+                }
             });
             return activity[0];
         }
 
 
-        /** If the Context is a wrapper, recursively go for the Activity */
+        /**
+         * If the Context is a wrapper, recursively go for the Activity
+         */
         private Activity scanForActivity(Context cont) {
-            if (cont == null) return null;
-            else if (cont instanceof Activity) return (Activity)cont;
-            else if (cont instanceof ContextWrapper) return scanForActivity(((ContextWrapper)cont).getBaseContext());
+            if (cont == null) {
+                return null;
+            } else if (cont instanceof Activity) {
+                return (Activity) cont;
+            } else if (cont instanceof ContextWrapper) {
+                return scanForActivity(((ContextWrapper) cont).getBaseContext());
+            }
             return null;
         }
     }
+
 
     public static Collection getEmptyCol(Context context) throws IOException {
         File f = File.createTempFile("test", ".anki2");
@@ -105,13 +114,12 @@ public class Shared {
 
     /**
      * @return A File object pointing to a directory in which temporary test files can be placed. The directory is
-     *         emptied on every invocation of this method so it is suitable to use at the start of each test.
-     *         Only add files (and not subdirectories) to this directory.
+     * emptied on every invocation of this method so it is suitable to use at the start of each test.
+     * Only add files (and not subdirectories) to this directory.
      */
     public static File getTestDir(Context context) {
         return getTestDir(context, "");
     }
-
 
 
     /**
@@ -137,12 +145,12 @@ public class Shared {
     /**
      * Copy a file from the application's assets directory and return the absolute path of that
      * copy.
-     *
+     * <p>
      * Files located inside the application's assets collection are not stored on the file
      * system and can not return a usable path, so copying them to disk is a requirement.
      */
     public static String getTestFilePath(Context context, String name) throws IOException {
-        InputStream is = context.getClassLoader().getResourceAsStream("assets/"+name);
+        InputStream is = context.getClassLoader().getResourceAsStream("assets/" + name);
         String dst = new File(getTestDir(context, name), name).getAbsolutePath();
         Utils.writeToFile(is, dst);
         return dst;

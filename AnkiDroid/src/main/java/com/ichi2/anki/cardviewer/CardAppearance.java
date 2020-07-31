@@ -12,20 +12,30 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
 
-/** Responsible for calculating CSS and element styles and modifying content on a flashcard */
+/**
+ * Responsible for calculating CSS and element styles and modifying content on a flashcard
+ */
 public class CardAppearance {
 
-    /** Max size of the font for dynamic calculation of font size */
+    /**
+     * Max size of the font for dynamic calculation of font size
+     */
     private static final int DYNAMIC_FONT_MAX_SIZE = 14;
 
-    /** Min size of the font for dynamic calculation of font size */
+    /**
+     * Min size of the font for dynamic calculation of font size
+     */
     private static final int DYNAMIC_FONT_MIN_SIZE = 3;
     private static final int DYNAMIC_FONT_FACTOR = 5;
 
-    /** Constant for class attribute signaling answer */
+    /**
+     * Constant for class attribute signaling answer
+     */
     public static final String ANSWER_CLASS = "\"answer\"";
 
-    /** Constant for class attribute signaling question */
+    /**
+     * Constant for class attribute signaling question
+     */
     public static final String QUESTION_CLASS = "\"question\"";
 
     private final int mCardZoom;
@@ -34,6 +44,7 @@ public class CardAppearance {
     private final boolean mCenterVertically;
     private final ReviewerCustomFonts mCustomFonts;
 
+
     public CardAppearance(ReviewerCustomFonts customFonts, int cardZoom, int imageZoom, boolean nightMode, boolean centerVertically) {
         this.mCustomFonts = customFonts;
         this.mCardZoom = cardZoom;
@@ -41,6 +52,7 @@ public class CardAppearance {
         this.mNightMode = nightMode;
         this.mCenterVertically = centerVertically;
     }
+
 
     public boolean isNightMode() {
         return mNightMode;
@@ -54,6 +66,7 @@ public class CardAppearance {
         // TODO: find more robust solution that won't match unrelated classes like "night_mode_old"
         return card.css().contains(".night_mode") || card.css().contains(".nightMode");
     }
+
 
     public static CardAppearance create(ReviewerCustomFonts customFonts, SharedPreferences preferences) {
         int cardZoom = preferences.getInt("cardZoom", 100);
@@ -69,6 +82,7 @@ public class CardAppearance {
         // font-weight to 700
         return content.replace("font-weight:600;", "font-weight:700;");
     }
+
 
     /**
      * Converts characters in Unicode Supplementary Multilingual Plane (SMP) to their equivalent Html Entities. This is
@@ -94,7 +108,10 @@ public class CardAppearance {
         return sb.toString();
     }
 
-    /** Below could be in a better abstraction. **/
+
+    /**
+     * Below could be in a better abstraction.
+     **/
     public void appendCssStyle(StringBuilder style) {
         // Zoom cards
         if (mCardZoom != 100) {
@@ -106,6 +123,7 @@ public class CardAppearance {
             style.append(String.format("img { zoom: %s }\n", mImageZoom / 100.0));
         }
     }
+
 
     @CheckResult
     public String getCssClasses(int currentTheme) {
@@ -131,6 +149,7 @@ public class CardAppearance {
         }
         return cardClass.toString();
     }
+
 
     /**
      * Calculates a dynamic font size depending on the length of the contents taking into account that the input string
@@ -170,10 +189,11 @@ public class CardAppearance {
         return cardClass;
     }
 
+
     /**
      * Adds a div html tag around the contents to have an indication, where answer/question is displayed
      *
-     * @param content The content to surround with tags.
+     * @param content  The content to surround with tags.
      * @param isAnswer if true then the class attribute is set to "answer", "question" otherwise.
      * @return The enriched content
      */

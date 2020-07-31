@@ -16,6 +16,7 @@ final class PieChartTestParametersBuilder {
     private final double[] mArcLengths;
     private final ColorWrap[] mColors;
 
+
     PieChartTestParametersBuilder(double[] values,
                                   double firstSectorAngle) {
         if (values.length < 1) {
@@ -37,6 +38,7 @@ final class PieChartTestParametersBuilder {
         fillColors();
     }
 
+
     private double calcSum(double[] values) {
         double sum = 0.;
         for (double v : values) {
@@ -45,11 +47,13 @@ final class PieChartTestParametersBuilder {
         return sum;
     }
 
+
     private void calcArcLengths() {
         for (int i = 0; i < mNumberOfValues; i++) {
             mArcLengths[i] = 360.0 * mValues[i] / mSum;
         }
     }
+
 
     private void calcStartAngles() {
         mStartAngles[0] = mFirstSectorAngle;
@@ -58,11 +62,13 @@ final class PieChartTestParametersBuilder {
         }
     }
 
+
     private void fillColors() {
         for (int i = 0; i < mNumberOfValues; i++) {
             mColors[i] = createColorMock(i);
         }
     }
+
 
     private ColorWrap createColorMock(int i) {
         ColorWrap c = mock(ColorWrap.class);
@@ -70,13 +76,16 @@ final class PieChartTestParametersBuilder {
         return c;
     }
 
+
     double[] getStartAngles() {
         return mStartAngles;
     }
 
+
     double[] getArcLengths() {
         return mArcLengths;
     }
+
 
     ColorWrap[] getColors() {
         return mColors;

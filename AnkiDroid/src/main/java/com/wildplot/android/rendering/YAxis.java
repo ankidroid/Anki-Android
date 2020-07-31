@@ -232,9 +232,9 @@ public class YAxis implements Drawable {
     /**
      * draw number left to a marker
      *
-     * @param g     graphic object used for drawing
-     * @param field bounds of plot
-     * @param position     position of number
+     * @param g        graphic object used for drawing
+     * @param field    bounds of plot
+     * @param position position of number
      */
     private void drawNumbering(GraphicsWrap g, RectangleWrap field, double position) {
 
@@ -277,9 +277,9 @@ public class YAxis implements Drawable {
     /**
      * draw number left to a marker
      *
-     * @param g     graphic object used for drawing
-     * @param field bounds of plot
-     * @param position     position of number
+     * @param g        graphic object used for drawing
+     * @param field    bounds of plot
+     * @param position position of number
      */
     private void drawNumberingOnRightSide(GraphicsWrap g, RectangleWrap field, double position) {
         double y = position;

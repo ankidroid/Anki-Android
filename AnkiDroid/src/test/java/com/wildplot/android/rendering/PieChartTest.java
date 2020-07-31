@@ -43,7 +43,7 @@ public class PieChartTest {
         colorMockedStatic = mockStatic(Color.class);
         MockitoAnnotations.openMocks(this);
         when(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0);
-        when(plot.getFrameThickness()).thenReturn(new float[]{0, 0, 0, 0});
+        when(plot.getFrameThickness()).thenReturn(new float[] {0, 0, 0, 0});
 
         FontMetricsWrap fm = mock(FontMetricsWrap.class);
         when(fm.getHeight()).thenReturn(10f);
@@ -51,28 +51,32 @@ public class PieChartTest {
         when(graphics.getFontMetrics()).thenReturn(fm);
     }
 
+
     @After
     public void tearDown() {
         colorMockedStatic.close();
     }
 
+
     @Test(expected = IllegalArgumentException.class)
     public void constructorShouldThrowIfSizesMismatch() {
-        new PieChart(plot, new double[]{1, 1}, new ColorWrap[]{ColorWrap.RED});
+        new PieChart(plot, new double[] {1, 1}, new ColorWrap[] {ColorWrap.RED});
     }
+
 
     @Test
     public void paintShouldNotDrawAnythingIfValuesAreZero() {
-        pieChart = new PieChart(plot, new double[]{0, 0}, new ColorWrap[]{
+        pieChart = new PieChart(plot, new double[] {0, 0}, new ColorWrap[] {
                 ColorWrap.RED, ColorWrap.GREEN});
         pieChart.paint(graphics);
         verify(graphics, never()).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
                 anyFloat(), anyFloat());
     }
 
+
     @Test
     public void paintShouldDrawFullRedCircleIfOneValue() {
-        pieChart = new PieChart(plot, new double[]{1.}, new ColorWrap[]{
+        pieChart = new PieChart(plot, new double[] {1.}, new ColorWrap[] {
                 ColorWrap.RED});
         RectangleWrap r = createRectangleMock(100, 100);
         when(graphics.getClipBounds()).thenReturn(r);
@@ -83,9 +87,10 @@ public class PieChartTest {
                 floatThat(closeTo(360F)));
     }
 
+
     @Test
     public void paintShouldDrawTwoSectorsWithGivenColors() {
-        pieChart = new PieChart(plot, new double[]{1, 1}, new ColorWrap[]{
+        pieChart = new PieChart(plot, new double[] {1, 1}, new ColorWrap[] {
                 ColorWrap.RED, ColorWrap.GREEN});
         RectangleWrap r = createRectangleMock(100, 100);
         when(graphics.getClipBounds()).thenReturn(r);
@@ -103,6 +108,7 @@ public class PieChartTest {
                 floatThat(closeTo(180F)));
     }
 
+
     public static RectangleWrap createRectangleMock(int width, int height) {
         RectangleWrap r = mock(RectangleWrap.class);
         r.width = width;
@@ -111,6 +117,7 @@ public class PieChartTest {
         when(r.height()).thenReturn(height);
         return r;
     }
+
 
     private static FloatMatcher closeTo(double v) {
         return FloatMatcher.closeTo(v, PRECISION);

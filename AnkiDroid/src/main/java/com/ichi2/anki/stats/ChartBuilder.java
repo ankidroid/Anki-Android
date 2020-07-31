@@ -59,16 +59,18 @@ public class ChartBuilder {
     private double mMcount;
     private boolean mDynamicAxis;
 
-    public ChartBuilder(ChartView chartView, Collection collectionData, long deckId, Stats.ChartType chartType){
+
+    public ChartBuilder(ChartView chartView, Collection collectionData, long deckId, Stats.ChartType chartType) {
         mChartView = chartView;
         mCollectionData = collectionData;
         mDeckId = deckId;
         mChartType = chartType;
     }
 
-    private void calcStats(Stats.AxisType type){
+
+    private void calcStats(Stats.AxisType type) {
         Stats stats = new Stats(mCollectionData, mDeckId);
-        switch (mChartType){
+        switch (mChartType) {
             case FORECAST:
                 stats.calculateDue(mChartView.getContext(), type);
                 break;
@@ -109,7 +111,8 @@ public class ChartBuilder {
         mDynamicAxis = (Boolean) metaData[20];
     }
 
-    public PlotSheet renderChart(Stats.AxisType type){
+
+    public PlotSheet renderChart(Stats.AxisType type) {
         calcStats(type);
         Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);
@@ -159,7 +162,7 @@ public class ChartBuilder {
         //0 = X-axis title
         //1 = Y-axis title left
         //2 = Y-axis title right (optional)
-        if(mAxisTitles.length == 3) {
+        if (mAxisTitles.length == 3) {
             double rightYtics = ticsCalc(desiredPixelDistanceBetweenTicks, rect, mMcount * Y_AXIS_STRETCH_FACTOR);
             setupYaxis(plotSheet, hiddenPlotSheet, rightYtics, mAxisTitles[2], true, true);
         }
@@ -171,9 +174,9 @@ public class ChartBuilder {
 
     private PlotSheet createPieChart(PlotSheet plotSheet) {
         ColorWrap[] colors = {new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[0])),
-                              new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[1])),
-                              new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[2])),
-                              new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[3]))};
+                new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[1])),
+                new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[2])),
+                new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[3]))};
 
         PieChart pieChart = new PieChart(plotSheet, mSeriesList[0], colors);
         pieChart.setName(mChartView.getResources().getString(mValueLabels[0]) + ": " + (int) mSeriesList[0][0]);
@@ -246,7 +249,7 @@ public class ChartBuilder {
     }
 
 
-    private void setupCumulative(PlotSheet plotSheet, PlotSheet hiddenPlotSheet){
+    private void setupCumulative(PlotSheet plotSheet, PlotSheet hiddenPlotSheet) {
         if (mCumulative == null) {
             return;
         }
@@ -290,19 +293,19 @@ public class ChartBuilder {
         switch (mChartType) {
             case ANSWER_BUTTONS:
                 if (mCollectionData.schedVer() == 1) {
-                    timePositions = new double[]{1, 2, 3, 6, 7, 8, 9, 11, 12, 13, 14};
+                    timePositions = new double[] {1, 2, 3, 6, 7, 8, 9, 11, 12, 13, 14};
                     xAxis.setExplicitTicks(timePositions, mChartView.getResources().getStringArray(R.array.stats_eases_ticks));
                 } else {
-                    timePositions = new double[]{1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14};
+                    timePositions = new double[] {1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14};
                     xAxis.setExplicitTicks(timePositions, mChartView.getResources().getStringArray(R.array.stats_eases_ticks_schedv2));
                 }
                 break;
             case HOURLY_BREAKDOWN:
-                timePositions = new double[]{0, 6, 12, 18, 23};
+                timePositions = new double[] {0, 6, 12, 18, 23};
                 xAxis.setExplicitTicks(timePositions, mChartView.getResources().getStringArray(R.array.stats_day_time_strings));
                 break;
             case WEEKLY_BREAKDOWN:
-                timePositions = new double[]{0, 1, 2, 3, 4, 5, 6};
+                timePositions = new double[] {0, 1, 2, 3, 4, 5, 6};
                 xAxis.setExplicitTicks(timePositions, mChartView.getResources().getStringArray(R.array.stats_week_days));
                 break;
         }
@@ -352,18 +355,18 @@ public class ChartBuilder {
         switch (mChartType) {
             case ANSWER_BUTTONS:
                 if (mCollectionData.schedVer() == 1) {
-                    timePositions = new double[]{1, 2, 3, 6, 7, 8, 9, 11, 12, 13, 14};
+                    timePositions = new double[] {1, 2, 3, 6, 7, 8, 9, 11, 12, 13, 14};
                 } else {
-                    timePositions = new double[]{1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14};
+                    timePositions = new double[] {1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14};
                 }
                 yGrid.setExplicitTicks(timePositions);
                 break;
             case HOURLY_BREAKDOWN:
-                timePositions = new double[]{0, 6, 12, 18, 23};
+                timePositions = new double[] {0, 6, 12, 18, 23};
                 yGrid.setExplicitTicks(timePositions);
                 break;
             case WEEKLY_BREAKDOWN:
-                timePositions = new double[]{0, 1, 2, 3, 4, 5, 6};
+                timePositions = new double[] {0, 1, 2, 3, 4, 5, 6};
                 yGrid.setExplicitTicks(timePositions);
                 break;
         }
@@ -387,12 +390,14 @@ public class ChartBuilder {
         return tics;
     }
 
+
     public double ticksCalcY(int pixelDistance, RectangleWrap field, double start, double end) {
 
         double size = ticsCalc(pixelDistance, field, end - start);
         Timber.d("ChartBuilder ticksCalcY: pixelDistance: %d, ticks: %,.2f, start: %,.2f, end: %,.2f, height: %d", pixelDistance, size, start, end, field.height);
         return size;
     }
+
 
     public double ticsCalc(int pixelDistance, RectangleWrap field, double deltaRange) {
 

@@ -90,8 +90,10 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         return keyValueMap;
     }
 
+
     /**
      * Retrieve the list of ids to put in the context menu list
+     *
      * @return the ids of which values to show
      */
     private int[] getListIds() {
@@ -116,11 +118,12 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         return ContextMenuHelper.integerListToArray(itemIds);
     }
 
+
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
     private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
         @Override
         public void onSelection(MaterialDialog materialDialog, View view, int item,
-                CharSequence charSequence) {
+                                CharSequence charSequence) {
             switch (view.getId()) {
                 case CONTEXT_MENU_DELETE_DECK:
                     Timber.i("Delete deck selected");

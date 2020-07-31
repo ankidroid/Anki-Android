@@ -24,9 +24,12 @@ import java.util.regex.Pattern;
 
 public class TypedAnswer {
 
-    /** Regex pattern used in removing tags from text before diff */
+    /**
+     * Regex pattern used in removing tags from text before diff
+     */
     private static final Pattern sSpanPattern = Pattern.compile("</?span[^>]*>");
     private static final Pattern sBrPattern = Pattern.compile("<br\\s?/?>");
+
 
     /**
      * Clean up the correct answer text, so it can be used for the comparison with the typed text

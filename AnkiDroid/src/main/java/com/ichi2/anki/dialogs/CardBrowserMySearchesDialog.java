@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
@@ -15,6 +13,8 @@ import com.ichi2.ui.ButtonItemAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import timber.log.Timber;
 
 public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
@@ -29,11 +29,16 @@ public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
     private ArrayList<String> mSavedFilterKeys;
     private String mCurrentSearchTerms;
 
+
+
     public interface MySearchesDialogListener {
         void onSelection(String searchName);
+
         void onRemoveSearch(String searchName);
+
         void onSaveSearch(String searchName, String searchTerms);
     }
+
 
     public static CardBrowserMySearchesDialog newInstance(HashMap<String, String> savedFilters,
                                                           MySearchesDialogListener mySearchesDialogListener,
@@ -47,6 +52,7 @@ public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
         m.setArguments(args);
         return m;
     }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -79,26 +85,27 @@ public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
         } else if (type == CARD_BROWSER_MY_SEARCHES_TYPE_SAVE) {
             mCurrentSearchTerms = getArguments().getString("currentSearchTerms");
             builder.title(getString(R.string.card_browser_list_my_searches_save))
-                   .positiveText(getString(android.R.string.ok))
-                   .negativeText(getString(R.string.cancel))
-                   .input(R.string.card_browser_list_my_searches_new_name, R.string.empty_string, (dialog, text) -> {
-                       Timber.d("Saving search with title/terms: %s/%s", text, mCurrentSearchTerms);
-                       mMySearchesDialogListener.onSaveSearch(text.toString(), mCurrentSearchTerms);
-                   });
+                    .positiveText(getString(android.R.string.ok))
+                    .negativeText(getString(R.string.cancel))
+                    .input(R.string.card_browser_list_my_searches_new_name, R.string.empty_string, (dialog, text) -> {
+                        Timber.d("Saving search with title/terms: %s/%s", text, mCurrentSearchTerms);
+                        mMySearchesDialogListener.onSaveSearch(text.toString(), mCurrentSearchTerms);
+                    });
         }
         MaterialDialog dialog = builder.build();
         if (dialog.getRecyclerView() != null) {
-            LinearLayoutManager mLayoutManager = (LinearLayoutManager)dialog.getRecyclerView().getLayoutManager();
+            LinearLayoutManager mLayoutManager = (LinearLayoutManager) dialog.getRecyclerView().getLayoutManager();
             DividerItemDecoration dividerItemDecoration =
                     new DividerItemDecoration(dialog.getRecyclerView().getContext(), mLayoutManager.getOrientation());
             float scale = res.getDisplayMetrics().density;
-            int dpAsPixels = (int) (5*scale + 0.5f);
+            int dpAsPixels = (int) (5 * scale + 0.5f);
             dialog.getView().setPadding(dpAsPixels, 0, dpAsPixels, dpAsPixels);
             dialog.getRecyclerView().addItemDecoration(dividerItemDecoration);
         }
 
         return dialog;
     }
+
 
     private void removeSearch(String searchName) {
 

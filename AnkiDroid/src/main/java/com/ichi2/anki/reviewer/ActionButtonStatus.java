@@ -30,7 +30,9 @@ public class ActionButtonStatus {
     public static final int SHOW_AS_ACTION_ALWAYS = MenuItem.SHOW_AS_ACTION_ALWAYS;
     public static final int MENU_DISABLED = 3;
 
-    public @Nullable Integer getByMenuResourceId(int resourceId) {
+
+    public @Nullable
+    Integer getByMenuResourceId(int resourceId) {
         if (!mCustomButtons.containsKey(resourceId)) {
             Timber.w("Invalid resource lookup: %d", resourceId);
             return SHOW_AS_ACTION_NEVER;
@@ -42,6 +44,7 @@ public class ActionButtonStatus {
     public ActionButtonStatus(ReviewerUi reviewerUi) {
         this.mReviewerUi = reviewerUi;
     }
+
 
     public void setup(SharedPreferences preferences) {
         // NOTE: the default values below should be in sync with preferences_custom_buttons.xml and reviewer.xml
@@ -73,7 +76,7 @@ public class ActionButtonStatus {
 
 
     public void setCustomButtons(Menu menu) {
-        for(int itemId : mCustomButtons.keySet()) {
+        for (int itemId : mCustomButtons.keySet()) {
             if (mCustomButtons.get(itemId) != MENU_DISABLED) {
                 MenuItem item = menu.findItem(itemId);
                 item.setShowAsAction(mCustomButtons.get(itemId));
@@ -108,17 +111,21 @@ public class ActionButtonStatus {
         return mCustomButtons.get(R.id.action_hide_whiteboard) == MENU_DISABLED;
     }
 
+
     public boolean clearWhiteboardIsDisabled() {
         return mCustomButtons.get(R.id.action_clear_whiteboard) == MENU_DISABLED;
     }
+
 
     public boolean selectTtsIsDisabled() {
         return mCustomButtons.get(R.id.action_select_tts) == MENU_DISABLED;
     }
 
+
     public boolean saveWhiteboardIsDisabled() {
         return mCustomButtons.get(R.id.action_save_whiteboard) == MENU_DISABLED;
     }
+
 
     public boolean whiteboardPenColorIsDisabled() {
         return mCustomButtons.get(R.id.action_change_whiteboard_pen_color) == MENU_DISABLED;

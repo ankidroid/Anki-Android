@@ -19,12 +19,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,17 +36,21 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.stats.ChartView;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.stats.Stats;
-import com.ichi2.libanki.Deck;
 import com.ichi2.ui.SlidingTabLayout;
-
 import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import timber.log.Timber;
 
 
@@ -88,6 +86,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         startLoadingCollection();
     }
 
+
     @Override
     protected void onCollectionLoaded(Collection col) {
         Timber.d("onCollectionLoaded()");
@@ -104,6 +103,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectDropDownItem(position);
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -136,6 +136,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         // Default to libanki's selected deck
         selectDeckById(getCol().getDecks().selected());
     }
+
 
     @Override
     protected void onResume() {
@@ -178,6 +179,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         return super.onPrepareOptionsMenu(menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (getDrawerToggle().onOptionsItemSelected(item)) {
@@ -186,24 +188,33 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.item_time_month:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                } else {
+                    item.setChecked(true);
+                }
                 if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_MONTH) {
                     mTaskHandler.setStatType(Stats.AxisType.TYPE_MONTH);
                     mSectionsPagerAdapter.notifyDataSetChanged();
                 }
                 return true;
             case R.id.item_time_year:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                } else {
+                    item.setChecked(true);
+                }
                 if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_YEAR) {
                     mTaskHandler.setStatType(Stats.AxisType.TYPE_YEAR);
                     mSectionsPagerAdapter.notifyDataSetChanged();
                 }
                 return true;
             case R.id.item_time_all:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                } else {
+                    item.setChecked(true);
+                }
                 if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_LIFE) {
                     mTaskHandler.setStatType(Stats.AxisType.TYPE_LIFE);
                     mSectionsPagerAdapter.notifyDataSetChanged();
@@ -233,6 +244,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         mSectionsPagerAdapter.notifyDataSetChanged();
     }
 
+
     // Iterates the drop down decks, and selects the one matching the given id
     private boolean selectDeckById(long deckId) {
         for (int dropDownDeckIdx = 0; dropDownDeckIdx < mDropDownDecks.size(); dropDownDeckIdx++) {
@@ -244,6 +256,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         return false;
     }
 
+
     /**
      * @return text to be used in the subtitle of the drop-down deck selector
      */
@@ -252,12 +265,12 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     }
 
 
-    public AnkiStatsTaskHandler getTaskHandler(){
+    public AnkiStatsTaskHandler getTaskHandler() {
         return mTaskHandler;
     }
 
 
-    public ViewPager getViewPager(){
+    public ViewPager getViewPager() {
         return mViewPager;
     }
 
@@ -266,7 +279,10 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         return mSectionsPagerAdapter;
     }
 
-    private long getDeckId() { return mDeckId; }
+
+    private long getDeckId() {
+        return mDeckId;
+    }
 
 
     /**
@@ -279,6 +295,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
+
         //this is called when mSectionsPagerAdapter.notifyDataSetChanged() is called, so checkAndUpdate() here
         //works best for updating all tabs
         @Override
@@ -290,6 +307,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             return super.getItemPosition(object);
         }
 
+
         @Override
         public Fragment getItem(int position) {
             Fragment item = StatisticFragment.newInstance(position);
@@ -297,10 +315,12 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             return item;
         }
 
+
         @Override
         public int getCount() {
             return 9;
         }
+
 
         @Override
         public CharSequence getPageTitle(int position) {
@@ -329,6 +349,8 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             return null;
         }
     }
+
+
 
     public static abstract class StatisticFragment extends Fragment {
 
@@ -376,6 +398,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             }
         }
 
+
         @Override
         public void onResume() {
             super.onResume();
@@ -383,9 +406,12 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
         }
 
+
         public abstract void invalidateView();
+
         public abstract void checkAndUpdate();
     }
+
 
 
     /**
@@ -398,13 +424,15 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         private int mHeight = 0;
         private int mWidth = 0;
         private int mSectionNumber;
-        private Stats.AxisType mType  = Stats.AxisType.TYPE_MONTH;
+        private Stats.AxisType mType = Stats.AxisType.TYPE_MONTH;
         private boolean mIsCreated = false;
         private AsyncTask mCreateChartTask;
+
 
         public ChartFragment() {
             super();
         }
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -464,6 +492,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             }
             return rootView;
         }
+
 
         private void createChart() {
             switch (mSectionNumber) {
@@ -556,13 +585,16 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         }
     }
 
+
+
     public static class OverviewStatisticsFragment extends StatisticFragment {
 
         private WebView mWebView;
         private ProgressBar mProgressBar;
-        private Stats.AxisType mType  = Stats.AxisType.TYPE_MONTH;
+        private Stats.AxisType mType = Stats.AxisType.TYPE_MONTH;
         private boolean mIsCreated = false;
         private AsyncTask mCreateStatisticsOverviewTask;
+
 
         public OverviewStatisticsFragment() {
             super();
@@ -621,8 +653,9 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             return rootView;
         }
 
-        private void createStatisticOverview(){
-            AnkiStatsTaskHandler handler = (((Statistics)getActivity()).getTaskHandler());
+
+        private void createStatisticOverview() {
+            AnkiStatsTaskHandler handler = (((Statistics) getActivity()).getTaskHandler());
             mCreateStatisticsOverviewTask = handler.createStatisticsOverview(mWebView, mProgressBar);
         }
 

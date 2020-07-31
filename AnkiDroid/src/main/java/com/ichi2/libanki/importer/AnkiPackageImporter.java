@@ -1,5 +1,5 @@
 /***************************************************************************************
-  * Copyright (c) 2016 Houssam Salem <houssam.salem.au@gmail.com>                        *
+ * Copyright (c) 2016 Houssam Salem <houssam.salem.au@gmail.com>                        *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -27,6 +27,8 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 
+import org.apache.commons.compress.archivers.zip.ZipFile;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,19 +36,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import timber.log.Timber;
 
-@SuppressWarnings({"PMD.NPathComplexity"})
+@SuppressWarnings( {"PMD.NPathComplexity"})
 public class AnkiPackageImporter extends Anki2Importer {
 
     private ZipFile mZip;
     private Map<String, String> mNameToNum;
 
+
     public AnkiPackageImporter(Collection col, String file) {
         super(col, file);
     }
+
 
     @Override
     public void run() throws ImportExportException {
@@ -90,7 +93,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                 // We follow how Anki does it and fix the problem here.
                 HashMap<String, String> mediaToFileNameMap = new HashMap<>();
                 mediaToFileNameMap.put(colname, CollectionHelper.COLLECTION_FILENAME);
-                Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{colname, "media"}, mediaToFileNameMap);
+                Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[] {colname, "media"}, mediaToFileNameMap);
                 colname = CollectionHelper.COLLECTION_FILENAME;
             } catch (IOException e) {
                 Timber.e(e, "Failed to unzip apkg.");
@@ -130,7 +133,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                 while (jr.hasNext()) {
                     num = jr.nextName();
                     name = jr.nextString();
-                    File file= new File(dir, name);
+                    File file = new File(dir, name);
                     if (!Utils.isInside(file, dir)) {
                         throw (new RuntimeException("Invalid file"));
                     }
@@ -156,7 +159,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                 File path = new File(mCol.getMedia().dir(), Utils.nfcNormalized(file));
                 if (!path.exists()) {
                     try {
-                        Utils.unzipFiles(mZip, mCol.getMedia().dir(), new String[]{c}, numToName);
+                        Utils.unzipFiles(mZip, mCol.getMedia().dir(), new String[] {c}, numToName);
                     } catch (IOException e) {
                         Timber.e("Failed to extract static media file. Ignoring.");
                     }
@@ -173,6 +176,7 @@ public class AnkiPackageImporter extends Anki2Importer {
         }
         publishProgress(100, 100, 100);
     }
+
 
     @Override
     protected BufferedInputStream _srcMediaData(String fname) {

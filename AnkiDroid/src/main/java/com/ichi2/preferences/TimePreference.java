@@ -16,12 +16,14 @@ public class TimePreference extends DialogPreference {
     private int hours;
     private int minutes;
 
+
     public TimePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         setPositiveButtonText(android.R.string.ok);
         setNegativeButtonText(android.R.string.cancel);
     }
+
 
     @Override
     protected View onCreateDialogView() {
@@ -31,6 +33,7 @@ public class TimePreference extends DialogPreference {
 
         return timePicker;
     }
+
 
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
@@ -50,11 +53,13 @@ public class TimePreference extends DialogPreference {
         minutes = parseMinutes(time);
     }
 
+
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
         CompatHelper.getCompat().setTime(timePicker, hours, minutes);
     }
+
 
     @Override
     protected void onDialogClosed(boolean positiveResult) {
@@ -72,9 +77,11 @@ public class TimePreference extends DialogPreference {
         }
     }
 
+
     public static int parseHours(String time) {
         return (Integer.parseInt(time.split(":")[0]));
     }
+
 
     public static int parseMinutes(String time) {
         return (Integer.parseInt(time.split(":")[1]));

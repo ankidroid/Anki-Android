@@ -22,12 +22,9 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Pair;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.Assert;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -43,44 +40,47 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
-        "PMD.NPathComplexity","PMD.MethodNamingConventions",
-        "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
+import androidx.annotation.Nullable;
+import timber.log.Timber;
+
+@SuppressWarnings( {"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes", "PMD.AvoidReassigningParameters",
+        "PMD.NPathComplexity", "PMD.MethodNamingConventions",
+        "PMD.SwitchStmtsShouldHaveDefault", "PMD.CollapsibleIfStatements", "PMD.EmptyIfStmt"})
 public class Models {
     private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{[^}]*?cloze:(?:[^}]?:)*(.+?)\\}\\}");
     private static final Pattern fClozePattern2 = Pattern.compile("<%cloze:(.+?)%>");
     private static final Pattern fClozeOrdPattern = Pattern.compile("(?si)\\{\\{c(\\d+)::.+?\\}\\}");
 
     public static final String defaultModel =
-              "{'sortf': 0, "
-            + "'did': 1, "
-            + "'latexPre': \""
-            + "\\\\documentclass[12pt]{article}\\n"
-            + "\\\\special{papersize=3in,5in}\\n"
-            + "\\\\usepackage[utf8]{inputenc}\\n"
-            + "\\\\usepackage{amssymb,amsmath}\\n"
-            + "\\\\pagestyle{empty}\\n"
-            + "\\\\setlength{\\\\parindent}{0in}\\n"
-            + "\\\\begin{document}\\n"
-            + "\", "
-            + "'latexPost': \"\\\\end{document}\", "
-            + "'mod': 0, "
-            + "'usn': 0, "
-            + "'vers': [], " // FIXME: remove when other clients have caught up
-            + "'type': "
-            + Consts.MODEL_STD
-            + ", "
-            + "'css': \".card {\\n"
-            + " font-family: arial;\\n"
-            + " font-size: 20px;\\n"
-            + " text-align: center;\\n"
-            + " color: black;\\n"
-            + " background-color: white;\\n"
-            + "}\""
-            + "}";
+            "{'sortf': 0, "
+                    + "'did': 1, "
+                    + "'latexPre': \""
+                    + "\\\\documentclass[12pt]{article}\\n"
+                    + "\\\\special{papersize=3in,5in}\\n"
+                    + "\\\\usepackage[utf8]{inputenc}\\n"
+                    + "\\\\usepackage{amssymb,amsmath}\\n"
+                    + "\\\\pagestyle{empty}\\n"
+                    + "\\\\setlength{\\\\parindent}{0in}\\n"
+                    + "\\\\begin{document}\\n"
+                    + "\", "
+                    + "'latexPost': \"\\\\end{document}\", "
+                    + "'mod': 0, "
+                    + "'usn': 0, "
+                    + "'vers': [], " // FIXME: remove when other clients have caught up
+                    + "'type': "
+                    + Consts.MODEL_STD
+                    + ", "
+                    + "'css': \".card {\\n"
+                    + " font-family: arial;\\n"
+                    + " font-size: 20px;\\n"
+                    + " text-align: center;\\n"
+                    + " color: black;\\n"
+                    + " background-color: white;\\n"
+                    + "}\""
+                    + "}";
 
     private static final String defaultField = "{'name': \"\", " + "'ord': null, " + "'sticky': False, " +
-    // the following alter editing, and are used as defaults for the template wizard
+            // the following alter editing, and are used as defaults for the template wizard
             "'rtl': False, " + "'font': \"Arial\", " + "'size': 20, " +
             // reserved for future use
             "'media': [] }";
@@ -134,6 +134,7 @@ public class Models {
     // private transient int mDisplayPercentage = 0;
     // private boolean mNightMode = false;
 
+
     /**
      * Saving/loading registry
      * ***********************************************************************************************
@@ -174,9 +175,11 @@ public class Models {
         save(m, false);
     }
 
+
     /**
      * Save a model
-     * @param m model to save
+     *
+     * @param m         model to save
      * @param templates flag which (when true) re-generates the cards for each note which uses the model
      */
     public void save(Model m, boolean templates) {
@@ -214,6 +217,7 @@ public class Models {
         }
     }
 
+
     public boolean ensureNotEmpty() {
         if (mModels.isEmpty()) {
             // TODO: Maybe we want to restore all models if we don't have any
@@ -231,14 +235,17 @@ public class Models {
 
     /**
      * Get current model.
+     *
      * @return The model, or null if not found in the deck and in the configuration.
      */
     public Model current() {
         return current(true);
     }
 
+
     /**
      * Get current model.
+     *
      * @param forDeck If true, it tries to get the deck specified in deck by mid, otherwise or if the former is not
      *                found, it uses the configuration`s field curModel.
      * @return The model, or null if not found in the deck and in the configuration.
@@ -266,8 +273,11 @@ public class Models {
     }
 
 
-    /** get model with ID, or null. */
-    public @Nullable Model get(long id) {
+    /**
+     * get model with ID, or null.
+     */
+    public @Nullable
+    Model get(long id) {
         if (mModels.containsKey(id)) {
             return mModels.get(id);
         } else {
@@ -276,7 +286,9 @@ public class Models {
     }
 
 
-    /** get all models */
+    /**
+     * get all models
+     */
     public ArrayList<Model> all() {
         ArrayList<Model> models = new ArrayList<>();
         for (Model jsonObject : mModels.values()) {
@@ -286,7 +298,9 @@ public class Models {
     }
 
 
-    /** get model with NAME. */
+    /**
+     * get model with NAME.
+     */
     public Model byName(String name) {
         for (Model m : mModels.values()) {
             if (m.getString("name").equals(name)) {
@@ -297,9 +311,11 @@ public class Models {
     }
 
 
-    /** Create a new model, save it in the registry, and return it. */
-	// Called `new` in Anki's code. New is a reserved word in java,
-	// not in python. Thus the method has to be renamed.
+    /**
+     * Create a new model, save it in the registry, and return it.
+     */
+    // Called `new` in Anki's code. New is a reserved word in java,
+    // not in python. Thus the method has to be renamed.
     public Model newModel(String name) {
         // caller should call save() after modifying
         Model m;
@@ -313,13 +329,18 @@ public class Models {
         return m;
     }
 
+
     // not in anki
     public static boolean isModelNew(Model m) {
         return m.getLong("id") == 0;
     }
 
-    /** Delete model, and all its cards/notes. 
-     * @throws ConfirmModSchemaException */
+
+    /**
+     * Delete model, and all its cards/notes.
+     *
+     * @throws ConfirmModSchemaException
+     */
     public void rem(Model m) throws ConfirmModSchemaException {
         mCol.modSchema();
         long id = m.getLong("id");
@@ -344,7 +365,9 @@ public class Models {
     }
 
 
-    /** Add or update an existing model. Used for syncing and merging. */
+    /**
+     * Add or update an existing model. Used for syncing and merging.
+     */
     public void update(Model m) {
         mModels.put(m.getLong("id"), m);
         // mark registry changed, but don't bump mod time
@@ -382,13 +405,17 @@ public class Models {
      * Tools ***********************************************************************************************
      */
 
-    /** Note ids for M */
+    /**
+     * Note ids for M
+     */
     public ArrayList<Long> nids(Model m) {
         return mCol.getDb().queryLongList("SELECT id FROM notes WHERE mid = ?", m.getLong("id"));
     }
 
+
     /**
      * Number of notes using m
+     *
      * @param m The model to the count the notes of.
      * @return The number of notes with that model.
      */
@@ -396,9 +423,11 @@ public class Models {
         return mCol.getDb().queryScalar("select count() from notes where mid = ?", m.getLong("id"));
     }
 
+
     /**
      * Number of notes using m
-     * @param m The model to the count the notes of.
+     *
+     * @param m   The model to the count the notes of.
      * @param ord The index of the card template
      * @return The number of notes with that model.
      */
@@ -410,9 +439,11 @@ public class Models {
      * Copying ***********************************************************************************************
      */
 
-    /** Copy, save and return. */
+    /**
+     * Copy, save and return.
+     */
     public Model copy(Model m) {
-        Model m2 = m.deepClone();        
+        Model m2 = m.deepClone();
         m2.put("name", m2.getString("name") + " copy");
         add(m2);
         return m2;
@@ -431,7 +462,9 @@ public class Models {
     }
 
 
-    /** "Mapping of field name -> (ord, field). */
+    /**
+     * "Mapping of field name -> (ord, field).
+     */
     public Map<String, Pair<Integer, JSONObject>> fieldMap(JSONObject m) {
         JSONArray ja;
         ja = m.getJSONArray("flds");
@@ -462,7 +495,7 @@ public class Models {
     }
 
 
-    public void setSortIdx(Model m, int idx) throws ConfirmModSchemaException{
+    public void setSortIdx(Model m, int idx) throws ConfirmModSchemaException {
         mCol.modSchema();
         m.put("sortf", idx);
         mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
@@ -473,13 +506,14 @@ public class Models {
     private void _addField(Model m, JSONObject field) {
         // do the actual work of addField. Do not check whether model
         // is not new.
-		JSONArray ja = m.getJSONArray("flds");
-		ja.put(field);
-		m.put("flds", ja);
-		_updateFieldOrds(m);
-		save(m);
-		_transformFields(m, new TransformFieldAdd());
+        JSONArray ja = m.getJSONArray("flds");
+        ja.put(field);
+        m.put("flds", ja);
+        _updateFieldOrds(m);
+        save(m);
+        _transformFields(m, new TransformFieldAdd());
     }
+
 
     public void addField(Model m, JSONObject field) throws ConfirmModSchemaException {
         // only mod schema if model isn't new
@@ -490,6 +524,7 @@ public class Models {
         _addField(m, field);
     }
 
+
     public void addFieldInNewModel(Model m, JSONObject field) {
         // similar to Anki's addField; but thanks to assumption that
         // model is new, it never has to throw
@@ -498,6 +533,7 @@ public class Models {
         _addField(m, field);
     }
 
+
     public void addFieldModChanged(Model m, JSONObject field) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
@@ -505,6 +541,7 @@ public class Models {
         Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
         _addField(m, field);
     }
+
 
     static class TransformFieldAdd implements TransformFieldVisitor {
         @Override
@@ -543,6 +580,7 @@ public class Models {
         renameField(m, field, null);
 
     }
+
 
     static class TransformFieldDelete implements TransformFieldVisitor {
         private int idx;
@@ -596,6 +634,7 @@ public class Models {
 
     }
 
+
     static class TransformFieldMove implements TransformFieldVisitor {
         private int idx;
         private int oldidx;
@@ -621,7 +660,7 @@ public class Models {
     public void renameField(Model m, JSONObject field, String newName) throws ConfirmModSchemaException {
         mCol.modSchema();
         String pat = String.format("\\{\\{([^{}]*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
-                                   Pattern.quote(field.getString("name")));
+                Pattern.quote(field.getString("name")));
         if (newName == null) {
             newName = "";
         }
@@ -630,7 +669,7 @@ public class Models {
         JSONArray tmpls = m.getJSONArray("tmpls");
         for (int i = 0; i < tmpls.length(); ++i) {
             JSONObject t = tmpls.getJSONObject(i);
-            for (String fmt : new String[] { "qfmt", "afmt" }) {
+            for (String fmt : new String[] {"qfmt", "afmt"}) {
                 if (!"".equals(newName)) {
                     t.put(fmt, t.getString(fmt).replaceAll(pat, repl));
                 } else {
@@ -651,6 +690,7 @@ public class Models {
             f.put("ord", i);
         }
     }
+
 
     interface TransformFieldVisitor {
         public String[] transform(String[] fields);
@@ -688,7 +728,9 @@ public class Models {
     }
 
 
-    /** Note: should col.genCards() afterwards. */
+    /**
+     * Note: should col.genCards() afterwards.
+     */
     private void _addTemplate(Model m, JSONObject template) {
         // do the actual work of addTemplate. Do not consider whether
         // model is new or not.
@@ -699,7 +741,10 @@ public class Models {
         save(m);
     }
 
-    /** @throws ConfirmModSchemaException */
+
+    /**
+     * @throws ConfirmModSchemaException
+     */
     public void addTemplate(Model m, JSONObject template) throws ConfirmModSchemaException {
         //That is Anki's addTemplate method
         if (!isModelNew(m)) {
@@ -708,25 +753,28 @@ public class Models {
         _addTemplate(m, template);
     }
 
-    public void addTemplateInNewModel(Model m, JSONObject template)  {
+
+    public void addTemplateInNewModel(Model m, JSONObject template) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
         Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
         _addTemplate(m, template);
     }
 
-    public void addTemplateModChanged(Model m, JSONObject template)  {
+
+    public void addTemplateModChanged(Model m, JSONObject template) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
         Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
         _addTemplate(m, template);
     }
 
+
     /**
      * Removing a template
      *
      * @return False if removing template would leave orphan notes.
-     * @throws ConfirmModSchemaException 
+     * @throws ConfirmModSchemaException
      */
     public boolean remTemplate(Model m, JSONObject template) throws ConfirmModSchemaException {
         if (m.getJSONArray("tmpls").length() <= 1) {
@@ -746,7 +794,7 @@ public class Models {
             throw new IllegalArgumentException("Invalid template proposed for delete");
         }
         // the code in "isRemTemplateSafe" was in place here in libanki. It is extracted to a method for reuse
-        List<Long> cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
+        List<Long> cids = getCardIdsForModel(m.getLong("id"), new int[] {ord});
         if (cids == null) {
             Timber.d("remTemplate getCardIdsForModel determined it was unsafe to delete the template");
             return false;
@@ -758,9 +806,9 @@ public class Models {
         mCol.remCards(cids);
         // shift ordinals
         mCol.getDb()
-            .execute(
-                     "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
-                     mCol.usn(), Utils.intTime(), m.getLong("id"), ord);
+                .execute(
+                        "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
+                        mCol.usn(), Utils.intTime(), m.getLong("id"), ord);
         JSONArray tmpls = m.getJSONArray("tmpls");
         JSONArray ja2 = new JSONArray();
         for (int i = 0; i < tmpls.length(); ++i) {
@@ -783,10 +831,11 @@ public class Models {
      * it will return null if the result of deleting the ordinals is unsafe because it would leave notes with no cards
      *
      * @param modelId long id of the JSON model
-     * @param ords array of ints, each one is the ordinal a the card template in the given model
+     * @param ords    array of ints, each one is the ordinal a the card template in the given model
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
-    public @Nullable List<Long> getCardIdsForModel(long modelId, int[] ords) {
+    public @Nullable
+    List<Long> getCardIdsForModel(long modelId, int[] ords) {
         String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = " +
                 modelId + " and c2.ord  in " + Utils.ids2str(ords);
         List<Long> cids = mCol.getDb().queryLongList(cardIdsToDeleteSql);
@@ -855,9 +904,10 @@ public class Models {
         // apply
         save(m);
         mCol.getDb().execute("update cards set ord = (case " + sb.toString() +
-                             " end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
-                             mCol.usn(), Utils.intTime(), m.getLong("id"));
+                        " end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
+                mCol.usn(), Utils.intTime(), m.getLong("id"));
     }
+
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // unused upstream as well
     private void _syncTemplates(Model m) {
@@ -871,12 +921,13 @@ public class Models {
 
     /**
      * Change a model
-     * @param m The model to change.
-     * @param nids The list of notes that the change applies to.
+     *
+     * @param m        The model to change.
+     * @param nids     The list of notes that the change applies to.
      * @param newModel For replacing the old model with another one. Should be self if the model is not changing
-     * @param fmap Map for switching fields. This is ord->ord and there should not be duplicate targets
-     * @param cmap Map for switching cards. This is ord->ord and there should not be duplicate targets
-     * @throws ConfirmModSchemaException 
+     * @param fmap     Map for switching fields. This is ord->ord and there should not be duplicate targets
+     * @param cmap     Map for switching cards. This is ord->ord and there should not be duplicate targets
+     * @throws ConfirmModSchemaException
      */
     public void change(Model m, long[] nids, Model newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
         mCol.modSchema();
@@ -889,6 +940,7 @@ public class Models {
         }
         mCol.genCards(nids);
     }
+
 
     private void _changeNotes(long[] nids, Model newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<>();
@@ -915,12 +967,13 @@ public class Models {
                     }
                 }
                 String joinedFlds = Utils.joinFields(flds2.toArray(new String[flds2.size()]));
-                d.add(new Object[] { joinedFlds, mid, Utils.intTime(), mCol.usn(), nid });
+                d.add(new Object[] {joinedFlds, mid, Utils.intTime(), mCol.usn(), nid});
             }
         }
         mCol.getDb().executeMany("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", d);
         mCol.updateFieldCache(nids);
     }
+
 
     private void _changeCards(long[] nids, Model oldModel, Model newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<>();
@@ -955,7 +1008,7 @@ public class Models {
                     newOrd = map.get(ord);
                 }
                 if (newOrd != null) {
-                    d.add(new Object[] { newOrd, mCol.usn(), Utils.intTime(), cid });
+                    d.add(new Object[] {newOrd, mCol.usn(), Utils.intTime(), cid});
                 } else {
                     deleted.add(cid);
                 }
@@ -973,7 +1026,9 @@ public class Models {
      * Schema hash ***********************************************************************************************
      */
 
-    /** Return a hash of the schema, to see if models are compatible. */
+    /**
+     * Return a hash of the schema, to see if models are compatible.
+     */
     public String scmhash(Model m) {
         String s = "";
         JSONArray flds = m.getJSONArray("flds");
@@ -1019,6 +1074,7 @@ public class Models {
         m.put("req", req);
     }
 
+
     @SuppressWarnings("PMD.UnusedLocalVariable") // 'String f' is unused upstream as well
     private Object[] _reqForTemplate(Model m, ArrayList<String> flds, JSONObject t) {
         int nbFields = flds.size();
@@ -1031,7 +1087,7 @@ public class Models {
         String empty = mCol._renderQA(1L, m, 1L, ord, "", b, 0).get("q");
         // if full and empty are the same, the template is invalid and there is no way to satisfy it
         if (full.equals(empty)) {
-            return new Object[] { "none", new JSONArray(), new JSONArray() };
+            return new Object[] {"none", new JSONArray(), new JSONArray()};
         }
         String type = "all";
         JSONArray req = new JSONArray();
@@ -1044,7 +1100,7 @@ public class Models {
             a[i] = "ankiflag";
         }
         if (req.length() > 0) {
-            return new Object[] { type, req };
+            return new Object[] {type, req};
         }
         // if there are no required fields, switch to any mode
         type = "any";
@@ -1057,11 +1113,13 @@ public class Models {
             }
             b[i] = "";
         }
-        return new Object[] { type, req };
+        return new Object[] {type, req};
     }
 
 
-    /** Given a joined field string, return available template ordinals */
+    /**
+     * Given a joined field string, return available template ordinals
+     */
     public ArrayList<Integer> availOrds(Model m, String[] sfld) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
             return _availClozeOrds(m, sfld);
@@ -1151,7 +1209,7 @@ public class Models {
         }
         if (ords.isEmpty() && allowEmpty) {
             // empty clozes use first ord
-            return new ArrayList<>(Arrays.asList(new Integer[]{0}));
+            return new ArrayList<>(Arrays.asList(new Integer[] {0}));
         }
         return new ArrayList<>(ords);
     }
@@ -1162,7 +1220,8 @@ public class Models {
      */
 
     public void beforeUpload() {
-        boolean changed = Utils.markAsUploaded(all());;
+        boolean changed = Utils.markAsUploaded(all());
+        ;
         if (changed) {
             save();
         }
@@ -1215,44 +1274,50 @@ public class Models {
         return mModels;
     }
 
-    /** Validate model entries. */
-	public boolean validateModel() {
+
+    /**
+     * Validate model entries.
+     */
+    public boolean validateModel() {
         for (Entry<Long, Model> longJSONObjectEntry : mModels.entrySet()) {
             if (!validateBrackets(longJSONObjectEntry.getValue())) {
                 return false;
             }
         }
-		return true;
-	}
+        return true;
+    }
 
-	/** Check if there is a right bracket for every left bracket. */
-	private boolean validateBrackets(JSONObject value) {
-		String s = value.toString();
-		int count = 0;
-		boolean inQuotes = false;
-		char[] ar = s.toCharArray();
-		for (int i = 0; i < ar.length; i++) {
-			char c = ar[i];
-			// if in quotes, do not count
-			if (c == '"' && (i == 0 || (ar[i-1] != '\\'))) {
-				inQuotes = !inQuotes;
-				continue;
-			}
-			if (inQuotes) {
-				continue;
-			}
-			switch(c) {
-			case '{':
-				count++;
-				break;
-			case '}':
-				count--;
-				if (count < 0) {
-					return false;
-				}
-				break;
-			}
-		}
-		return (count == 0);
-	}
+
+    /**
+     * Check if there is a right bracket for every left bracket.
+     */
+    private boolean validateBrackets(JSONObject value) {
+        String s = value.toString();
+        int count = 0;
+        boolean inQuotes = false;
+        char[] ar = s.toCharArray();
+        for (int i = 0; i < ar.length; i++) {
+            char c = ar[i];
+            // if in quotes, do not count
+            if (c == '"' && (i == 0 || (ar[i - 1] != '\\'))) {
+                inQuotes = !inQuotes;
+                continue;
+            }
+            if (inQuotes) {
+                continue;
+            }
+            switch (c) {
+                case '{':
+                    count++;
+                    break;
+                case '}':
+                    count--;
+                    if (count < 0) {
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return (count == 0);
+    }
 }

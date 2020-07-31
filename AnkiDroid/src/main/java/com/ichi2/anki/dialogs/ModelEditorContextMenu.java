@@ -18,6 +18,7 @@ public class ModelEditorContextMenu extends AnalyticsDialogFragment {
 
     private static MaterialDialog.ListCallback mContextMenuListener;
 
+
     public static ModelEditorContextMenu newInstance(String label, MaterialDialog.ListCallback contextMenuListener) {
         ModelEditorContextMenu n = new ModelEditorContextMenu();
         mContextMenuListener = contextMenuListener;
@@ -27,6 +28,7 @@ public class ModelEditorContextMenu extends AnalyticsDialogFragment {
         n.setArguments(b);
         return n;
     }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

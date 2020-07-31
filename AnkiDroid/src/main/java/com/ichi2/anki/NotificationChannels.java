@@ -24,7 +24,8 @@ import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 
 public final class NotificationChannels {
-    public enum Channel { GENERAL, SYNC, GLOBAL_REMINDERS, DECK_REMINDERS }
+    public enum Channel {GENERAL, SYNC, GLOBAL_REMINDERS, DECK_REMINDERS}
+
 
     public static String getId(Channel channel) {
         switch (channel) {
@@ -40,6 +41,7 @@ public final class NotificationChannels {
         }
     }
 
+
     private static String getName(Channel channel, Resources res) {
         switch (channel) {
             case SYNC:
@@ -54,10 +56,12 @@ public final class NotificationChannels {
         }
     }
 
+
     /**
      * Create or update all the notification channels for the app
-     *
+     * <p>
      * TODO should be called in response to {@link android.content.Intent#ACTION_LOCALE_CHANGED}
+     *
      * @param context the context for access to localized strings for channel names
      */
     public static void setup(Context context) {

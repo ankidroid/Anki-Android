@@ -54,10 +54,10 @@ public class ActionButtonStatusTest extends RobolectricTest {
         SharedPreferences preferences = mock(SharedPreferences.class);
         Set<String> ret = new HashSet<>();
         when(preferences.getString(any(), any())).then(a -> {
-            String key = a.getArgument(0);
-            ret.add(key);
-            return "0";
-        }
+                    String key = a.getArgument(0);
+                    ret.add(key);
+                    return "0";
+                }
         );
         ActionButtonStatus status = new ActionButtonStatus(mock(ReviewerUi.class));
         status.setup(preferences);

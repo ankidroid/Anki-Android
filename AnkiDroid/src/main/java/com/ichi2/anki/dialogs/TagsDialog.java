@@ -3,11 +3,6 @@ package com.ichi2.anki.dialogs;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -30,13 +25,20 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.TreeSet;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class TagsDialog extends AnalyticsDialogFragment {
     public interface TagsDialogListener {
         void onPositive(ArrayList<String> selectedTags, int option);
     }
+
+
 
     private static final int TYPE_NONE = -1;
     public static final int TYPE_ADD_TAG = 0;
@@ -65,8 +67,9 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     private MaterialDialog mDialog;
 
+
     public static TagsDialog newInstance(int type, ArrayList<String> checked_tags,
-                                            ArrayList<String> all_tags) {
+                                         ArrayList<String> all_tags) {
         TagsDialog t = new TagsDialog();
 
         Bundle args = new Bundle();
@@ -157,6 +160,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         return mDialog;
     }
 
+
     private void adjustToolbar(View tagsDialogView) {
         Toolbar mToolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar);
         mToolbar.setTitle(mDialogTitle);
@@ -186,7 +190,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                         .input(R.string.tag_name, R.string.empty_string, (dialog, input) -> addTag(input.toString()));
                 final MaterialDialog addTagDialog = addTagBuilder.build();
                 EditText inputET = addTagDialog.getInputEditText();
-                inputET.setFilters(new InputFilter[]{addTagFilter});
+                inputET.setFilters(new InputFilter[] {addTagFilter});
                 addTagDialog.show();
             }
             return true;
@@ -196,7 +200,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mToolbarSearchView = (SearchView) mToolbarSearchItem.getActionView();
 
         EditText queryET = mToolbarSearchView.findViewById(R.id.search_src_text);
-        queryET.setFilters(new InputFilter[]{addTagFilter});
+        queryET.setFilters(new InputFilter[] {addTagFilter});
 
         mToolbarSearchView.setQueryHint(getString(R.string.filter_tags));
         mToolbarSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -205,6 +209,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 mToolbarSearchView.clearFocus();
                 return true;
             }
+
 
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -245,6 +250,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         }
     }
 
+
     public void addTag(String tag) {
         if (!TextUtils.isEmpty(tag)) {
             String feedbackText = "";
@@ -269,26 +275,34 @@ public class TagsDialog extends AnalyticsDialogFragment {
         }
     }
 
+
     public void setTagsDialogListener(TagsDialogListener selectedTagsListener) {
         mTagsDialogListener = selectedTagsListener;
     }
 
-    public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
+
+    public class TagsArrayAdapter extends RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable {
         public class ViewHolder extends RecyclerView.ViewHolder {
             private CheckedTextView mTagItemCheckedTextView;
+
+
             public ViewHolder(CheckedTextView ctv) {
                 super(ctv);
                 mTagItemCheckedTextView = ctv;
             }
         }
 
+
+
         public ArrayList<String> mTagsList;
 
-        public  TagsArrayAdapter() {
+
+        public TagsArrayAdapter() {
             mTagsList = new ArrayList<>();
             mTagsList.addAll(mAllTags);
             sortData();
         }
+
 
         public void sortData() {
             Collections.sort(mTagsList, (lhs, rhs) -> {
@@ -299,8 +313,9 @@ public class TagsDialog extends AnalyticsDialogFragment {
             });
         }
 
+
         @Override
-        public TagsArrayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,int viewType) {
+        public TagsArrayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.tags_item_list_dialog, parent, false);
 
@@ -318,6 +333,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             return vh;
         }
 
+
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             String tag = mTagsList.get(position);
@@ -325,23 +341,29 @@ public class TagsDialog extends AnalyticsDialogFragment {
             holder.mTagItemCheckedTextView.setChecked(mCurrentTags.contains(tag));
         }
 
+
         @Override
         public int getItemCount() {
             return mTagsList.size();
         }
+
 
         @Override
         public Filter getFilter() {
             return new TagsFilter();
         }
 
+
         /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
         private class TagsFilter extends Filter {
             private ArrayList<String> mFilteredTags;
+
+
             private TagsFilter() {
                 super();
                 mFilteredTags = new ArrayList<>();
             }
+
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
@@ -362,6 +384,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 filterResults.count = mFilteredTags.size();
                 return filterResults;
             }
+
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {

@@ -21,7 +21,9 @@ import java.lang.annotation.RetentionPolicy;
 
 import androidx.annotation.IntDef;
 
-/** Abstraction: Discuss moving many of these to 'Reviewer' */
+/**
+ * Abstraction: Discuss moving many of these to 'Reviewer'
+ */
 public class ViewerCommand {
     public static final int COMMAND_NOTHING = 0;
     public static final int COMMAND_SHOW_ANSWER = 1;
@@ -51,15 +53,19 @@ public class ViewerCommand {
     public static final int COMMAND_ANSWER_SECOND_BUTTON = 26;
     public static final int COMMAND_ANSWER_THIRD_BUTTON = 27;
     public static final int COMMAND_ANSWER_FOURTH_BUTTON = 28;
-    /** Answer "Good" */
+    /**
+     * Answer "Good"
+     */
     public static final int COMMAND_ANSWER_RECOMMENDED = 29;
     public static final int COMMAND_PAGE_UP = 30;
     public static final int COMMAND_PAGE_DOWN = 31;
 
     public static final int COMMAND_TAG = 32;
 
+
+
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({COMMAND_NOTHING, COMMAND_SHOW_ANSWER, COMMAND_FLIP_OR_ANSWER_EASE1, COMMAND_FLIP_OR_ANSWER_EASE2,
+    @IntDef( {COMMAND_NOTHING, COMMAND_SHOW_ANSWER, COMMAND_FLIP_OR_ANSWER_EASE1, COMMAND_FLIP_OR_ANSWER_EASE2,
             COMMAND_FLIP_OR_ANSWER_EASE3, COMMAND_FLIP_OR_ANSWER_EASE4, COMMAND_FLIP_OR_ANSWER_RECOMMENDED,
             COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED, COMMAND_UNDO, COMMAND_EDIT, COMMAND_MARK, COMMAND_LOOKUP,
             COMMAND_BURY_CARD, COMMAND_SUSPEND_CARD, COMMAND_DELETE, COMMAND_PLAY_MEDIA, COMMAND_EXIT,
@@ -68,11 +74,13 @@ public class ViewerCommand {
             COMMAND_ANSWER_SECOND_BUTTON, COMMAND_ANSWER_THIRD_BUTTON, COMMAND_ANSWER_FOURTH_BUTTON, COMMAND_ANSWER_RECOMMENDED,
             COMMAND_PAGE_UP, COMMAND_PAGE_DOWN, COMMAND_TAG
     })
-    public @interface ViewerCommandDef {}
+    public @interface ViewerCommandDef {
+    }
+
+
 
     public interface CommandProcessor {
         /**
-         *
          * @param which The command (defined in {@code ViewerCommand}) to execute
          * @return Whether the action was successfully processed.
          * <p>example failure: answering an ease on the front of the card</p>

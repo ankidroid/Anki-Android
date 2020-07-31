@@ -38,21 +38,25 @@ public class CountingFileRequestBody extends RequestBody {
     private final ProgressListener listener;
     private final String contentType;
 
+
     public CountingFileRequestBody(File file, String contentType, ProgressListener listener) {
         this.file = file;
         this.contentType = contentType;
         this.listener = listener;
     }
 
+
     @Override
     public long contentLength() {
         return file.length();
     }
 
+
     @Override
     public MediaType contentType() {
         return MediaType.parse(contentType);
     }
+
 
     @Override
     public void writeTo(BufferedSink sink) throws IOException {
@@ -69,6 +73,7 @@ public class CountingFileRequestBody extends RequestBody {
             Util.closeQuietly(source);
         }
     }
+
 
     public interface ProgressListener {
         void transferred(long num);

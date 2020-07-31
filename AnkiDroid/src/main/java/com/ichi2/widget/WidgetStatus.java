@@ -20,8 +20,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Pair;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.MetaDB;
@@ -32,6 +30,7 @@ import com.ichi2.libanki.sched.AbstractSched;
 
 import java.util.List;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import timber.log.Timber;
 
 /**
@@ -44,7 +43,9 @@ public final class WidgetStatus {
     private static AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
 
 
-    /** This class should not be instantiated. */
+    /**
+     * This class should not be instantiated.
+     */
     private WidgetStatus() {
     }
 
@@ -52,8 +53,8 @@ public final class WidgetStatus {
     /**
      * Request the widget to update its status.
      * TODO Mike - we can reduce battery usage by widget users by removing updatePeriodMillis from metadata
-     *             and replacing it with an alarm we set so device doesn't wake to update the widget, see:
-     *             https://developer.android.com/guide/topics/appwidgets/#MetaData
+     * and replacing it with an alarm we set so device doesn't wake to update the widget, see:
+     * https://developer.android.com/guide/topics/appwidgets/#MetaData
      */
     public static void update(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
@@ -70,7 +71,9 @@ public final class WidgetStatus {
     }
 
 
-    /** Returns the status of each of the decks. */
+    /**
+     * Returns the status of each of the decks.
+     */
     public static int[] fetchSmall(Context context) {
         return MetaDB.getWidgetSmallStatus(context);
     }
@@ -85,6 +88,7 @@ public final class WidgetStatus {
 
         // due, eta
         private static Pair<Integer, Integer> sSmallWidgetStatus = new Pair<>(0, 0);
+
 
         @Override
         protected Context doInBackground(Context... params) {

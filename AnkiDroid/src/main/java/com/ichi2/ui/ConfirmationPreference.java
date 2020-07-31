@@ -25,6 +25,7 @@ public class ConfirmationPreference extends DialogPreference {
     private Runnable cancelHandler = () -> { /* do nothing by default */ };
     private Runnable okHandler = () -> { /* do nothing by default */ };
 
+
     public ConfirmationPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }

@@ -43,7 +43,7 @@ import java.util.zip.ZipFile;
 import okhttp3.Response;
 import timber.log.Timber;
 
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
+@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes", "PMD.MethodNamingConventions"})
 public class RemoteMediaServer extends HttpSyncer {
 
     private Collection mCol;
@@ -166,11 +166,11 @@ public class RemoteMediaServer extends HttpSyncer {
      * the content of the "data" element, and there are several such types in the various server responses. Java
      * requires us to specifically choose a type to convert to, so we need an additional parameter (returnType) to
      * specify the type we expect.
-     * 
-     * @param resp The JSON response from the server
+     *
+     * @param resp       The JSON response from the server
      * @param returnType The type to coerce the 'data' element to.
      * @return The "data" element from the HTTP response from the server. The type of object returned is determined by
-     *         returnType.
+     * returnType.
      */
     @SuppressWarnings("unchecked")
     private <T> T _dataOnly(JSONObject resp, Class<T> returnType) throws MediaSyncException {
@@ -188,6 +188,7 @@ public class RemoteMediaServer extends HttpSyncer {
         }
         throw new RuntimeException("Did not specify a valid type for the 'data' element in resopnse");
     }
+
 
     // Difference from libAnki: we allow a custom URL to specify a different prefix, so this is only used with the
     // default URL
