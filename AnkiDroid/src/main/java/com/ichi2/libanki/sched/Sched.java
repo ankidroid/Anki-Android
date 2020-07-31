@@ -1688,10 +1688,4 @@ public class Sched extends SchedV2 {
         conf = _cardConf(card).getJSONObject("lapse");
         return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
     }
-
-
-    @Override
-    public void setContext(WeakReference<Activity> contextReference) {
-        mContextReference = contextReference;
-    }
 }
