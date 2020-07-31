@@ -31,6 +31,9 @@ public abstract class AbstractSched {
     /** Whether the queues has been computed since last reset/change of selected deck */
     protected boolean mHaveQueues;
 
+    /** Number of cards taken obtained from the scheduler today. */
+    protected int mReps;
+
     /**
      * Pop the next card from the queue. null if finished.
      */

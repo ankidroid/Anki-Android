@@ -86,7 +86,6 @@ public class SchedV2 extends AbstractSched {
     protected int mQueueLimit;
     protected int mReportLimit;
     private int mDynReportLimit;
-    protected int mReps;
     protected Integer mToday;
     public long mDayCutoff;
     private long mLrnCutoff;
