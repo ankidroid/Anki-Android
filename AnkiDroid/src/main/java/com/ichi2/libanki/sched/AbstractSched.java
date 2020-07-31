@@ -254,6 +254,13 @@ public abstract class AbstractSched {
         return tot;
     }
 
+
+
+    protected boolean _fillRev() {
+        return _fillRev(false);
+    }
+
+
     protected abstract boolean _fillRev(boolean allowSibling);
     public abstract void answerCard(Card card, int ease);
     public abstract int[] counts();
