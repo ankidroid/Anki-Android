@@ -889,7 +889,11 @@ public abstract class AbstractSched {
     /**
      * for post-import
      */
-    public abstract void maybeRandomizeDeck();
+    public void maybeRandomizeDeck() {
+        maybeRandomizeDeck(null);
+    }
+
+
     public abstract void maybeRandomizeDeck(Long did);
     public abstract boolean haveBuried(long did);
     public enum UnburyType {

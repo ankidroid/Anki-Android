@@ -1734,9 +1734,6 @@ public class SchedV2 extends AbstractSched {
     /**
      * for post-import
      */
-    public void maybeRandomizeDeck() {
-        maybeRandomizeDeck(null);
-    }
 
     public void maybeRandomizeDeck(Long did) {
         if (did == null) {
