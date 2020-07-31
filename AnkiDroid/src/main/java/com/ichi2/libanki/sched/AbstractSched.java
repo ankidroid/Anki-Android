@@ -928,7 +928,11 @@ public abstract class AbstractSched {
     }
 
 
-    public abstract void setReps(int reps);
+    public void setReps(int reps){
+        mReps = reps;
+    }
+
+
     public abstract int cardCount();
     public abstract int eta(int[] counts);
     /**

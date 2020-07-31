@@ -1413,12 +1413,6 @@ public class Sched extends SchedV2 {
     }
 
 
-    @Override
-    public void setReps(int reps){
-        mReps = reps;
-    }
-
-
     /**
      * Counts
      */

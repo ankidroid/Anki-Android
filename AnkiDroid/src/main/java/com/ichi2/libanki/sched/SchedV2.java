@@ -1837,11 +1837,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void setReps(int reps){
-        mReps = reps;
-    }
-
-
     /**
      * Counts
      */
