@@ -598,4 +598,5 @@ public abstract class AbstractSched {
             return false;
         }
     }
+    protected abstract boolean _updateLrnCutoff(boolean force);
 }
