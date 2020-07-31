@@ -21,7 +21,6 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.sched.AbstractSched.DeckDueTreeNode;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -133,8 +132,8 @@ public class SchedTest extends RobolectricTest {
         }
         getCol().getSched().deckDueTree();
         AbstractSched sched = getCol().getSched();
-        List<AbstractSched.DeckDueTreeNode> tree = sched.deckDueTree();
-        Assert.assertEquals("Tree has not the expected structure", SchedV2Test.expectedTree(sched, false), tree);
+        List<DeckDueTreeNode> tree = sched.deckDueTree();
+        Assert.assertEquals("Tree has not the expected structure", SchedV2Test.expectedTree(getCol(), false), tree);
 
     }
 

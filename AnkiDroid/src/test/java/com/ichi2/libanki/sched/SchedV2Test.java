@@ -18,6 +18,7 @@ package com.ichi2.libanki.sched;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.DeckConfig;
@@ -44,20 +45,21 @@ import static org.junit.platform.commons.util.CollectionUtils.getOnlyElement;
 @RunWith(AndroidJUnit4.class)
 public class SchedV2Test extends RobolectricTest {
 
-    protected static List<AbstractSched.DeckDueTreeNode> expectedTree(AbstractSched sched, boolean addRev) {
-        AbstractSched.DeckDueTreeNode caz = sched.new DeckDueTreeNode("cmxieunwoogyxsctnjmv::abcdefgh::ZYXW", 1, 0, 0, 0);
+    protected static List<DeckDueTreeNode> expectedTree(Collection col, boolean addRev) {
+        AbstractSched sched = col.getSched();
+        DeckDueTreeNode caz = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW", 1, 0, 0, 0);
         caz.setChildren(new ArrayList<>(), addRev);
-        AbstractSched.DeckDueTreeNode ca = sched.new DeckDueTreeNode("cmxieunwoogyxsctnjmv::abcdefgh", 1, 0, 0, 0);
-        ca.setChildren(Arrays.asList(new AbstractSched.DeckDueTreeNode[] {caz}), addRev);
-        AbstractSched.DeckDueTreeNode ci = sched.new DeckDueTreeNode("cmxieunwoogyxsctnjmv::INSBGDS", 1, 0, 0, 0);
+        DeckDueTreeNode ca = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv::abcdefgh", 1, 0, 0, 0);
+        ca.setChildren(Arrays.asList(new DeckDueTreeNode[] {caz}), addRev);
+        DeckDueTreeNode ci = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv::INSBGDS", 1, 0, 0, 0);
         ci.setChildren(new ArrayList<>(), addRev);
-        AbstractSched.DeckDueTreeNode c = sched.new DeckDueTreeNode("cmxieunwoogyxsctnjmv", 1, 0, 0, 0);
-        c.setChildren(Arrays.asList(new AbstractSched.DeckDueTreeNode[] {ci, ca}), addRev);
-        AbstractSched.DeckDueTreeNode defaul = sched.new DeckDueTreeNode("Default", 1, 0, 0, 0);
+        DeckDueTreeNode c = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv", 1, 0, 0, 0);
+        c.setChildren(Arrays.asList(new DeckDueTreeNode[] {ci, ca}), addRev);
+        DeckDueTreeNode defaul = new DeckDueTreeNode(col, "Default", 1, 0, 0, 0);
         defaul.setChildren(new ArrayList<>(), addRev);
-        AbstractSched.DeckDueTreeNode s = sched.new DeckDueTreeNode("scxipjiyozczaaczoawo", 1, 0, 0, 0);
+        DeckDueTreeNode s = new DeckDueTreeNode(col, "scxipjiyozczaaczoawo", 1, 0, 0, 0);
         s.setChildren(new ArrayList<>(), addRev);
-        List<AbstractSched.DeckDueTreeNode> expected = Arrays.asList(new AbstractSched.DeckDueTreeNode[] {defaul, c, s}); // Default is first, because start by an Upper case
+        List<DeckDueTreeNode> expected = Arrays.asList(new DeckDueTreeNode[] {defaul, c, s}); // Default is first, because start by an Upper case
         return expected;
     }
 
@@ -152,8 +154,8 @@ public class SchedV2Test extends RobolectricTest {
             addDeck(deckName);
         }
         AbstractSched sched = getCol().getSched();
-        List<AbstractSched.DeckDueTreeNode> tree = sched.deckDueTree();
-        Assert.assertEquals("Tree has not the expected structure", expectedTree(sched, true), tree);
+        List<DeckDueTreeNode> tree = sched.deckDueTree();
+        Assert.assertEquals("Tree has not the expected structure", expectedTree(getCol(), true), tree);
     }
 
 

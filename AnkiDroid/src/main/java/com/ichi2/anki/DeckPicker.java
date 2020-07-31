@@ -105,9 +105,9 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
+import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
@@ -193,7 +193,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
-    private List<AbstractSched.DeckDueTreeNode> mDueTree;
+    private List<DeckDueTreeNode> mDueTree;
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -2052,7 +2052,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mFocusedDeck = did;
         // Get some info about the deck to handle special cases
         int pos = mDeckListAdapter.findDeckPosition(did);
-        AbstractSched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
+        DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
         // Figure out what action to take
         if (deckDueTreeNode.getNewCount() + deckDueTreeNode.getLrnCount() + deckDueTreeNode.getRevCount() > 0) {
             // If there are cards to study then either go to Reviewer or StudyOptions
@@ -2165,7 +2165,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showCollectionErrorDialog();
                     return;
                 }
-                mDueTree = (List<AbstractSched.DeckDueTreeNode>) result.getObjArray()[0];
+                mDueTree = (List<DeckDueTreeNode>) result.getObjArray()[0];
 
                 __renderPage();
                 // Update the mini statistics bar as well

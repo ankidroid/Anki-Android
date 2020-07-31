@@ -54,6 +54,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
 
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -371,10 +372,10 @@ public class CardContentProvider extends ContentProvider {
                 return rv;
             }
             case DECKS: {
-                List<AbstractSched.DeckDueTreeNode> allDecks = col.getSched().deckDueList();
+                List<DeckDueTreeNode> allDecks = col.getSched().deckDueList();
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, allDecks.size());
-                for (AbstractSched.DeckDueTreeNode deck : allDecks) {
+                for (DeckDueTreeNode deck : allDecks) {
                     long id = deck.getDid();
                     String name = deck.getFullDeckName();
                     addDeckToCursor(id, name, getDeckCountsFromDueTreeNode(deck), rv, col, columns);
@@ -385,10 +386,10 @@ public class CardContentProvider extends ContentProvider {
                 /* Direct access deck */
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
-                List<AbstractSched.DeckDueTreeNode> allDecks = col.getSched().deckDueList();
+                List<DeckDueTreeNode> allDecks = col.getSched().deckDueList();
                 long deckId;
                 deckId = Long.parseLong(uri.getPathSegments().get(1));
-                for (AbstractSched.DeckDueTreeNode deck : allDecks) {
+                for (DeckDueTreeNode deck : allDecks) {
                     if(deck.getDid() == deckId){
                         addDeckToCursor(deckId, deck.getFullDeckName(), getDeckCountsFromDueTreeNode(deck), rv, col, columns);
                         return rv;
@@ -411,7 +412,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private JSONArray getDeckCountsFromDueTreeNode(AbstractSched.DeckDueTreeNode deck){
+    private JSONArray getDeckCountsFromDueTreeNode(DeckDueTreeNode deck){
         JSONArray deckCounts = new JSONArray();
         deckCounts.put(deck.getLrnCount());
         deckCounts.put(deck.getRevCount());
