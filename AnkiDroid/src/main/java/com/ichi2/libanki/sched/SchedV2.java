@@ -1418,17 +1418,6 @@ public class SchedV2 extends AbstractSched {
      * *****************************************
      */
 
-    public CharSequence finishedMsg(Context context) {
-        SpannableStringBuilder sb = new SpannableStringBuilder();
-        sb.append(context.getString(R.string.studyoptions_congrats_finished));
-        StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
-        sb.setSpan(boldSpan, 0, sb.length(), 0);
-        sb.append(_nextDueMsg(context));
-        // sb.append("\n\n");
-        // sb.append(_tomorrowDueMsg(context));
-        return sb;
-    }
-
 
     public String _nextDueMsg(Context context) {
         StringBuilder sb = new StringBuilder();
