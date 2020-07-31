@@ -373,23 +373,6 @@ public class SchedV2 extends AbstractSched {
                 did, lim);
     }
 
-    /**
-        @return The id of the note currently in the reviewer. 0 if no
-        such card.
-     */
-    protected long currentCardNid() {
-        Card currentCard = mCurrentCard;
-        /* mCurrentCard may be set to null when the reviewer gets closed. So we copy it to be sure to avoid
-           NullPointerException */
-        if (mCurrentCard == null) {
-            /* This method is used to determine whether two cards are siblings. Since 0 is not a valid nid, all cards
-            will have a nid distinct from 0. As it is used in sql statement, it is not possible to just use a function
-            areSiblings()*/
-            return 0;
-        }
-        return currentCard.getNid();
-    }
-
     private boolean _fillNew() {
         return _fillNew(false);
     }
