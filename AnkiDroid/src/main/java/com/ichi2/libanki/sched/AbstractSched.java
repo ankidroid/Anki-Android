@@ -912,7 +912,12 @@ public abstract class AbstractSched {
     }
 
 
-    public abstract void setToday(int today);
+
+    public void setToday(int today) {
+        mToday = today;
+    }
+
+
     public abstract long getDayCutoff();
     public abstract int getReps();
     public abstract void setReps(int reps);
