@@ -2547,16 +2547,6 @@ public class SchedV2 extends AbstractSched {
         return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
     }
 
-    /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
-    @Override
-    public int[] recalculateCounts() {
-        _updateLrnCutoff(true);
-        _resetLrnCount();
-        _resetNewCount();
-        _resetRevCount();
-        return new int[] { mNewCount, mLrnCount, mRevCount };
-    }
-
     /** End #5666 */
     public void discardCurrentCard() {
         mCurrentCard = null;
