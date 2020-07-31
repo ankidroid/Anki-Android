@@ -914,7 +914,11 @@ public abstract class AbstractSched {
     }
 
 
-    public abstract long getDayCutoff();
+    public long getDayCutoff() {
+        return mDayCutoff;
+    }
+
+
     public abstract int getReps();
     public abstract void setReps(int reps);
     public abstract int cardCount();

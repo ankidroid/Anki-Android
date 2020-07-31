@@ -1403,13 +1403,6 @@ public class Sched extends SchedV2 {
         return mName;
     }
 
-
-    @Override
-    public long getDayCutoff() {
-        return mDayCutoff;
-    }
-
-
     @Override
     public int getReps(){
         return mReps;
