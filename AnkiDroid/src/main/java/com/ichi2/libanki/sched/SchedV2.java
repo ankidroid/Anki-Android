@@ -81,7 +81,6 @@ public class SchedV2 extends AbstractSched {
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
 
     private String mName = "std2";
-    private boolean mHaveCustomStudy = true;
 
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
     /* The next card that will be sent to the reviewer. I.e. the result of a second call to getCard, which is not the
