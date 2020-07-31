@@ -502,21 +502,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _updateNewCardRatio() {
-        if (mCol.getConf().getInt("newSpread") == Consts.NEW_CARDS_DISTRIBUTE) {
-            if (mNewCount != 0) {
-                mNewCardModulus = (mNewCount + mRevCount) / mNewCount;
-                // if there are cards to review, ensure modulo >= 2
-                if (mRevCount != 0) {
-                    mNewCardModulus = Math.max(2, mNewCardModulus);
-                }
-                return;
-            }
-        }
-        mNewCardModulus = 0;
-    }
-
-
     protected int _deckNewLimit(long did) {
         return _deckNewLimit(did, null);
     }
