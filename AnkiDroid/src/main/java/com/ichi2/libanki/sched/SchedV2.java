@@ -390,20 +390,6 @@ public class SchedV2 extends AbstractSched {
         return currentCard.getNid();
     }
 
-    /**
-        @return The id of the card currently in the reviewer. 0 if no
-        such card.
-     */
-    protected long currentCardId() {
-        if (mCurrentCard == null) {
-            /* This method is used to ensure that query don't return current card. Since 0 is not a valid nid, all cards
-            will have a nid distinct from 0. As it is used in sql statement, it is not possible to just use a function
-            areSiblings()*/
-            return 0;
-        }
-        return mCurrentCard.getId();
-    }
-
     private boolean _fillNew() {
         return _fillNew(false);
     }

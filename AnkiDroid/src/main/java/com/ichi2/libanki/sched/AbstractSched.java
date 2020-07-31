@@ -917,4 +917,20 @@ public abstract class AbstractSched {
             buryCards(Utils.collection2Array(toBury),false);
         }
     }
+
+
+
+    /**
+     @return The id of the card currently in the reviewer. 0 if no
+     such card.
+     */
+    protected long currentCardId() {
+        if (mCurrentCard == null) {
+            /* This method is used to ensure that query don't return current card. Since 0 is not a valid nid, all cards
+            will have a nid distinct from 0. As it is used in sql statement, it is not possible to just use a function
+            areSiblings()*/
+            return 0;
+        }
+        return mCurrentCard.getId();
+    }
 }
