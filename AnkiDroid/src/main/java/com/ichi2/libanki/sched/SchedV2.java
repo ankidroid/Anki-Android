@@ -186,10 +186,6 @@ public class SchedV2 extends AbstractSched {
         mUndidCard = undidCard;
     }
 
-    public void deferReset(){
-        deferReset(null);
-    }
-
     public void reset() {
         _updateCutoff();
         _resetLrn();
