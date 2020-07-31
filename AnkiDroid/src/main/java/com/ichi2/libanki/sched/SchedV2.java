@@ -357,21 +357,6 @@ public class SchedV2 extends AbstractSched {
                 did, lim);
     }
 
-
-    /* Limit for deck without parent limits. */
-    public int _deckNewLimitSingle(Deck g) {
-        if (g.getInt("dyn") != 0) {
-            return mDynReportLimit;
-        }
-        long did = g.getLong("id");
-        DeckConfig c = mCol.getDecks().confForDid(did);
-        int lim = Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
-        if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_NEW, did)) {
-            lim--;
-        }
-        return lim;
-    }
-
     public int totalNewForCurrentDeck() {
         return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
                                         mReportLimit);
