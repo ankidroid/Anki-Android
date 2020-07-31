@@ -374,13 +374,6 @@ public class Sched extends SchedV2 {
     }
 
 
-    @Override
-    protected Card _getLrnCard() {
-        return _getLrnCard(false);
-    }
-
-
-    @Override
     protected Card _getLrnCard(boolean collapse) {
         if (_fillLrn()) {
             double cutoff = Utils.now();

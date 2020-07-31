@@ -352,6 +352,11 @@ public abstract class AbstractSched {
     }
 
 
+    protected Card _getLrnCard() {
+        return _getLrnCard(false);
+    }
+
+
     protected Card _getLrnDayCard() {
         if (_fillLrnDay()) {
             // mLrnCount -= 1; see decrementCounts()
