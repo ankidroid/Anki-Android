@@ -86,12 +86,6 @@ public class SchedV2 extends AbstractSched {
     public long mDayCutoff;
 
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
-    /** The list of parent decks of the current card.
-     * Cached for performance .
-
-        Null iff mNextCard is null.*/
-    @Nullable
-    protected List<Long> mCurrentCardParentsDid;
     /* The next card that will be sent to the reviewer. I.e. the result of a second call to getCard, which is not the
      * current card nor a sibling.
      */

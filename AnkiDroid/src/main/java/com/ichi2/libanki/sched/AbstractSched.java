@@ -94,6 +94,12 @@ public abstract class AbstractSched {
     protected int mQueueLimit;
 
 
+    /** The list of parent decks of the current card.
+     * Cached for performance .
+
+     Null iff mNextCard is null.*/
+    @Nullable
+    protected List<Long> mCurrentCardParentsDid;
 
 
     /**
