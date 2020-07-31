@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -608,4 +609,15 @@ public abstract class AbstractSched {
         }
     }
     protected abstract boolean _updateLrnCutoff(boolean force);
+
+    /** A conf object for this card. The delay for cards in filtered deck is the only difference between V1 and V2 */
+    protected JSONObject _revConf(Card card) {
+        DeckConfig conf = _cardConf(card);
+        // normal deck
+        if (card.getODid() == 0) {
+            return conf.getJSONObject("rev");
+        }
+        // dynamic deck
+        return mCol.getDecks().confForDid(card.getODid()).getJSONObject("rev");
+    }
 }
