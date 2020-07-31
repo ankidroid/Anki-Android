@@ -180,11 +180,6 @@ public class SchedV2 extends AbstractSched {
         _updateCutoff();
     }
 
-    /** Ensures that reset is executed before the next card is selected */
-    public void deferReset(Card undidCard){
-        mHaveQueues = false;
-        mUndidCard = undidCard;
-    }
 
     public void reset() {
         _updateCutoff();
