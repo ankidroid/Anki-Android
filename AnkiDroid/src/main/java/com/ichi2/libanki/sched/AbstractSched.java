@@ -28,6 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -350,6 +351,60 @@ public abstract class AbstractSched {
     }
 
 
+
+
+    // daily learning
+    protected boolean _fillLrnDay() {
+        if (mLrnCount == 0) {
+            return false;
+        }
+        if (!mLrnDayQueue.isEmpty()) {
+            return true;
+        }
+        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
+        while (!mLrnDids.isEmpty()) {
+            long did = mLrnDids.getFirst();
+            // fill the queue with the current did
+            mLrnDayQueue.clear();
+            Cursor cur = null;
+            try {
+                /* Difference with upstream:
+                 * Current card can't come in the queue.
+                 *
+                 * In standard usage, a card is not requested before
+                 * the previous card is marked as reviewed. However,
+                 * if we decide to query a second card sooner, we
+                 * don't want to get the same card a second time. This
+                 * simulate _getLrnDayCard which did remove the card
+                 * from the queue.
+                 */
+                cur = db.query(
+                        "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? and id != ? LIMIT ?",
+                        new Object[] {did, mToday, currentCardId(), mQueueLimit});
+                while (cur.moveToNext()) {
+                    mLrnDayQueue.add(cur.getLong(0));
+                }
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+            }
+            if (!mLrnDayQueue.isEmpty()) {
+                // order
+                Random r = new Random();
+                r.setSeed(mToday);
+                Collections.shuffle(mLrnDayQueue, r);
+                // is the current did empty?
+                if (mLrnDayQueue.size() < mQueueLimit) {
+                    mLrnDids.remove();
+                }
+                return true;
+            }
+            // nothing left in the deck; move to next
+            mLrnDids.remove();
+        }
+        return false;
+    }
 
     protected Card _getRevCard() {
         if (_fillRev()) {
