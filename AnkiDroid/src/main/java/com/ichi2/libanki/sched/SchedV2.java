@@ -86,7 +86,6 @@ public class SchedV2 extends AbstractSched {
 
     protected int mQueueLimit;
     private int mDynReportLimit;
-    protected Integer mToday;
     public long mDayCutoff;
 
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
