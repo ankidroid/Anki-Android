@@ -1673,9 +1673,7 @@ public class SchedV2 extends AbstractSched {
      * *********************************************
      */
 
-    public void sortCards(long[] cids, int start) {
-        sortCards(cids, start, 1, false, false);
-    }
+
 
 
     public void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift) {

@@ -854,7 +854,11 @@ public abstract class AbstractSched {
     }
 
 
-    public abstract void sortCards(long[] cids, int start);
+    public void sortCards(long[] cids, int start) {
+        sortCards(cids, start, 1, false, false);
+    }
+
+
     public abstract void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift);
     public abstract void randomizeCards(long did);
     public abstract void orderCards(long did);
