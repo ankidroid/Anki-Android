@@ -75,6 +75,12 @@ public abstract class AbstractSched {
     public abstract void reset();
 
     /** Ensures that reset is executed before the next card is selected */
+    public void deferReset(Card undidCard){
+        mHaveQueues = false;
+        mUndidCard = undidCard;
+    }
+
+
     public void deferReset(){
         deferReset(null);
     }
