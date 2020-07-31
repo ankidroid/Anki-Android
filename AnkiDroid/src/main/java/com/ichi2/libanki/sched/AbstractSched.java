@@ -857,7 +857,14 @@ public abstract class AbstractSched {
 
     public abstract void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift);
     public abstract void randomizeCards(long did);
-    public abstract void orderCards(long did);
+
+
+    public void orderCards(long did) {
+        List<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? ORDER BY nid", did);
+        sortCards(Utils.toPrimitive(cids), 1, 1, false, false);
+    }
+
+
     public abstract void resortConf(DeckConfig conf);
     /**
      * for post-import
