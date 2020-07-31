@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -506,8 +505,16 @@ public abstract class AbstractSched {
         mContextReference = contextReference;
     }
 
-
-    public abstract int[] recalculateCounts();
+    /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
+    public int[] recalculateCounts() {
+        _updateLrnCutoff(true);
+        _resetLrnCount();
+        _resetNewCount();
+        _resetRevCount();
+        return new int[] { mNewCount, mLrnCount, mRevCount };
+    }
+    
+    protected abstract void _resetLrnCount();
 
     public void setReportLimit(int reportLimit) {
         this.mReportLimit = reportLimit;
