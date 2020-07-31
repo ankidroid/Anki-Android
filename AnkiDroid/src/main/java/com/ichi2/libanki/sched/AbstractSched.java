@@ -608,8 +608,20 @@ public abstract class AbstractSched {
         return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
                 did, lim);
     }
-    /** Limit for deck without parent limits. */
-    public abstract int _deckNewLimitSingle(Deck g);
+
+    /* Limit for deck without parent limits. */
+    public int _deckNewLimitSingle(Deck g) {
+        if (g.getInt("dyn") != 0) {
+            return mDynReportLimit;
+        }
+        long did = g.getLong("id");
+        DeckConfig c = mCol.getDecks().confForDid(did);
+        int lim = Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
+        if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_NEW, did)) {
+            lim--;
+        }
+        return lim;
+    }
     public abstract int totalNewForCurrentDeck();
     public abstract int totalRevForCurrentDeck();
     public abstract Pair<Integer, Integer> _fuzzIvlRange(int ivl);
