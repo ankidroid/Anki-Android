@@ -473,6 +473,8 @@ public abstract class AbstractSched {
     public abstract int answerButtons(Card card);
     /**
      * Unbury all buried cards in all decks
+     *
+     * In V1/V2 the lrn cards differ
      */
     public abstract void unburyCards();
     public abstract void unburyCardsForDeck();
@@ -502,6 +504,7 @@ public abstract class AbstractSched {
      * Returns [deckname, did, rev, lrn, new]
      *
      * Return nulls when deck task is cancelled.
+     * The way rev cards are counted depends on the scheduler version
      */
     protected abstract List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask);
     /** load the due tree, but halt if deck task is cancelled*/
