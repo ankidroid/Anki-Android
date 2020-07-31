@@ -1771,16 +1771,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /** true if there are any rev cards due. */
-    public boolean revDue() {
-        return mCol.getDb()
-                .queryScalar(
-                        "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
-                                + " LIMIT 1",
-                        mToday) != 0;
-    }
-
-
     /** true if there are cards in learning, with review due the same
      * day, in the selected decks. */
     /* not in upstream anki. As revDue and newDue, it's used to check
