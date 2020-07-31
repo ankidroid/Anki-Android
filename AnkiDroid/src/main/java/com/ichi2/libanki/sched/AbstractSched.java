@@ -901,7 +901,13 @@ public abstract class AbstractSched {
     public abstract void unburyCardsForDeck(UnburyType type);
     public abstract void unburyCardsForDeck(long did);
     public abstract String getName();
-    public abstract int getToday();
+
+
+    public int getToday() {
+        return mToday;
+    }
+
+
     public abstract void setToday(int today);
     public abstract long getDayCutoff();
     public abstract int getReps();

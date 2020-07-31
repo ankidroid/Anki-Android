@@ -1823,11 +1823,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public int getToday() {
-        return mToday;
-    }
-
-
     public void setToday(int today) {
         mToday = today;
     }
