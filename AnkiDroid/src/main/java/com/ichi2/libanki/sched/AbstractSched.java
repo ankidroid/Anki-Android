@@ -31,6 +31,9 @@ public abstract class AbstractSched {
     /** Number of cards taken obtained from the scheduler today. */
     protected int mReps;
 
+    /** When an action is undone, reset counts need to take the card into account */
+    protected Card mUndidCard = null;
+
     /**
      * Pop the next card from the queue. null if finished.
      */
