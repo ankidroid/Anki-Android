@@ -658,7 +658,13 @@ public abstract class AbstractSched {
         rebuildDyn(0);
     }
     public abstract List<Long> rebuildDyn(long did);
-    public abstract void emptyDyn(long did);
+
+
+    public void emptyDyn(long did) {
+        emptyDyn(did, null);
+    }
+
+
     public abstract void emptyDyn(long did, String lim);
     public abstract void remFromDyn(long[] cids);
     public abstract DeckConfig _cardConf(Card card);
