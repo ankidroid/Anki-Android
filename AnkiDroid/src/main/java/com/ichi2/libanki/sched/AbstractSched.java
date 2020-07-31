@@ -78,7 +78,7 @@ public abstract class AbstractSched {
 
     /** One out of each mNewCardModulus cards seens is a new card. This tries to ensure that new cards are seen regularly.
      * This approximation mostly works if the number of review is greater (at least twice) the number of new cards.*/
-    protected int mNewCardModulus;
+    private int mNewCardModulus;
     /**
      * Pop the next card from the queue. null if finished.
      */
@@ -134,7 +134,20 @@ public abstract class AbstractSched {
 
     protected abstract Card _getCard();
 
-    public abstract void reset();
+    public void reset() {
+        _updateCutoff();
+        _resetLrn();
+        _resetRev();
+        _resetNew();
+        mHaveQueues = true;
+        decrementCounts(mUndidCard);
+        if (mUndidCard == null) {
+            discardCurrentCard();
+        } else {
+            setCurrentCard(mUndidCard);
+        }
+        mUndidCard = null;
+    }
 
 
     // Sched V1 also reset the list of rev deck.
@@ -146,6 +159,7 @@ public abstract class AbstractSched {
     /** Number of review cards in current selected deck
      * In sched V2 only current limit is applied. In sched V1, limit is applied subdeck by subdeck. */
     protected abstract void _resetRevCount();
+
 
     // In sched V2 only, the lrn cutoff is updated
     protected abstract void _resetLrn();
@@ -712,7 +726,7 @@ public abstract class AbstractSched {
     public abstract void discardCurrentCard();
 
 
-    protected void _resetNew() {
+    private void _resetNew() {
         _resetNewCount();
         mNewDids = new LinkedList<>(mCol.getDecks().active());
         mNewQueue.clear();
