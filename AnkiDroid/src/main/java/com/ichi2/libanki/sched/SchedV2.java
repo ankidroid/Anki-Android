@@ -94,27 +94,6 @@ public class SchedV2 extends AbstractSched {
 
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
-    // Queues
-    protected class LrnCard implements Comparable<LrnCard> {
-        private final long mCid;
-        private final long mDue;
-        public LrnCard(long due, long cid) {
-            mCid = cid;
-            mDue = due;
-        }
-        public long getDue () {
-            return mDue;
-        }
-        public long getId() {
-            return mCid;
-        }
-
-        @Override
-        public int compareTo(LrnCard o) {
-            return Long.compare(mDue, o.mDue);
-        }
-    }
-
 
     // Not in libanki
     protected WeakReference<Activity> mContextReference;
