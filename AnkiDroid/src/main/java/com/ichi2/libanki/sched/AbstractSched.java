@@ -351,6 +351,13 @@ public abstract class AbstractSched {
     }
 
 
+    protected Card _getLrnDayCard() {
+        if (_fillLrnDay()) {
+            // mLrnCount -= 1; see decrementCounts()
+            return mCol.getCard(mLrnDayQueue.remove());
+        }
+        return null;
+    }
 
 
     // daily learning
