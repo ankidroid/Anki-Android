@@ -75,6 +75,8 @@ public abstract class AbstractSched {
     protected final LinkedList<Long> mLrnDayQueue = new LinkedList<>();
     /** The next review cards to see. */
     protected final LinkedList<Long> mRevQueue = new LinkedList<>();
+    /** The time at which cards in learning will be considered to be due for the next day */
+    protected long mLrnCutoff;
 
     /** One out of each mNewCardModulus cards seens is a new card. This tries to ensure that new cards are seen regularly.
      * This approximation mostly works if the number of review is greater (at least twice) the number of new cards.*/
