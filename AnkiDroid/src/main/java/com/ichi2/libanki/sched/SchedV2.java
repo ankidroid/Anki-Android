@@ -1823,11 +1823,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public int getReps(){
-        return mReps;
-    }
-
-
     public void setReps(int reps){
         mReps = reps;
     }

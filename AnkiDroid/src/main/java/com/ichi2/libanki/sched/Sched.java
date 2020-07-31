@@ -1403,11 +1403,6 @@ public class Sched extends SchedV2 {
         return mName;
     }
 
-    @Override
-    public int getReps(){
-        return mReps;
-    }
-
 
     @Override
     public void setReps(int reps){

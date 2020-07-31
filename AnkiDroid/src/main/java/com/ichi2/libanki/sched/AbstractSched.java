@@ -919,7 +919,11 @@ public abstract class AbstractSched {
     }
 
 
-    public abstract int getReps();
+    public int getReps(){
+        return mReps;
+    }
+
+
     public abstract void setReps(int reps);
     public abstract int cardCount();
     public abstract int eta(int[] counts);
