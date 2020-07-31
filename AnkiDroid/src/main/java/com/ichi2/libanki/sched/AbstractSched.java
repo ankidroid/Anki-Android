@@ -73,8 +73,13 @@ public abstract class AbstractSched {
     protected abstract Card _getCard();
 
     public abstract void reset();
+
     /** Ensures that reset is executed before the next card is selected */
-    public abstract void deferReset();
+    public void deferReset(){
+        deferReset(null);
+    }
+
+
     /**
      * @param undoneCard a card undone, send back to the reviewer.*/
     public abstract void deferReset(Card undoneCard);
