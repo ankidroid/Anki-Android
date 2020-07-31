@@ -813,4 +813,6 @@ public abstract class AbstractSched {
         // dynamic deck
         return mCol.getDecks().confForDid(card.getODid()).getJSONObject("rev");
     }
+
+    protected abstract JSONObject _newConf(Card card);
 }

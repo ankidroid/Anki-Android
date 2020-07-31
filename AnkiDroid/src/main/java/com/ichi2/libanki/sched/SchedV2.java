@@ -1966,6 +1966,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @Override
     public void buryCards(long[] cids, boolean manual) {
         int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : Consts.QUEUE_TYPE_SIBLING_BURIED;
         mCol.log(cids);
