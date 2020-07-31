@@ -35,7 +35,37 @@ public abstract class AbstractSched {
      * Pop the next card from the queue. null if finished.
      */
     protected Collection mCol;
-    public abstract Card getCard();
+
+
+    /**
+     * Pop the next card from the queue. null if finished.
+     */
+    public Card getCard() {
+        _checkDay();
+        if (!mHaveQueues) {
+            reset();
+        }
+        Card card = _getCard();
+        if (card != null) {
+            mCol.log(card);
+            mReps += 1;
+            // In upstream, counts are decremented when the card is
+            // gotten; i.e. in _getLrnCard, _getRevCard and
+            // _getNewCard. This can not be done anymore since we use
+            // those methods to pre-fetch the next card. Instead we
+            // decrement the counts here, when the card is returned to
+            // the reviewer.
+            decrementCounts(card);
+            setCurrentCard(card);
+            card.startTimer();
+        } else {
+            discardCurrentCard();
+        }
+        return card;
+    }
+
+    protected abstract Card _getCard();
+
     public abstract void reset();
     /** Ensures that reset is executed before the next card is selected */
     public abstract void deferReset();
