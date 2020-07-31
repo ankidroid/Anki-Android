@@ -1730,6 +1730,7 @@ public class SchedV2 extends AbstractSched {
      * This function uses GregorianCalendar so as to be sensitive to leap years, daylight savings, etc.
      */
 
+    @Override
     protected void _updateCutoff() {
         Integer oldToday = mToday == null ? 0 : mToday;
         // days since col created
