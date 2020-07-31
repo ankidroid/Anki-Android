@@ -1625,17 +1625,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected JSONObject _revConf(Card card) {
-        DeckConfig conf = _cardConf(card);
-        // normal deck
-        if (card.getODid() == 0) {
-            return conf.getJSONObject("rev");
-        }
-        // dynamic deck
-        return mCol.getDecks().confForDid(card.getODid()).getJSONObject("rev");
-    }
-
-
     public String _deckLimit() {
         return Utils.ids2str(mCol.getDecks().active());
     }
