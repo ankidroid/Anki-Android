@@ -592,7 +592,14 @@ public abstract class AbstractSched {
     }
 
     /** New count for a single deck. */
-    public abstract int _newForDeck(long did, int lim);
+    public int _newForDeck(long did, int lim) {
+        if (lim == 0) {
+            return 0;
+        }
+        lim = Math.min(lim, mReportLimit);
+        return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
+                did, lim);
+    }
     /** Limit for deck without parent limits. */
     public abstract int _deckNewLimitSingle(Deck g);
     public abstract int totalNewForCurrentDeck();

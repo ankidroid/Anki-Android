@@ -366,17 +366,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /** New count for a single deck. */
-    public int _newForDeck(long did, int lim) {
-        if (lim == 0) {
-            return 0;
-        }
-        lim = Math.min(lim, mReportLimit);
-    	return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
-                                        did, lim);
-    }
-
-
     /* Limit for deck without parent limits. */
     public int _deckNewLimitSingle(Deck g) {
         if (g.getInt("dyn") != 0) {
