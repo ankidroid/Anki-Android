@@ -107,6 +107,8 @@ public abstract class AbstractSched {
      */
     protected Collection mCol;
 
+    // Default limit for dynamic deck
+    protected int mDynReportLimit;
 
     // Not in libanki
     protected WeakReference<Activity> mContextReference;

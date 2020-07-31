@@ -84,7 +84,6 @@ public class SchedV2 extends AbstractSched {
     private String mName = "std2";
     private boolean mHaveCustomStudy = true;
 
-    private int mDynReportLimit;
     public long mDayCutoff;
 
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
