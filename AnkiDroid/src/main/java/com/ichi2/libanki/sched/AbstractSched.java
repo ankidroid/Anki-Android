@@ -41,6 +41,17 @@ public abstract class AbstractSched {
     /** When an action is undone, reset counts need to take the card into account */
     protected Card mUndidCard = null;
 
+    /** Number of new card we expect to see today in selected deck. Number may not be exact due to buried siblings.*/
+    protected int mNewCount;
+
+    /** Depending on the scheduler:
+     * * number of cards currently in learning or
+     * * number of repetition of cards in learning assuming all cards are good*/
+    protected int mLrnCount;
+
+    /** Number of rev card we expect to see today in selected deck. Number may not be exact due to buried siblings.*/
+    protected int mRevCount;
+
     /**
      * Pop the next card from the queue. null if finished.
      */
