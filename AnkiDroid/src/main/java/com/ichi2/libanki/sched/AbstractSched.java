@@ -930,4 +930,6 @@ public abstract class AbstractSched {
         }
         return currentCard.getNid();
     }
+
+    protected abstract Card _getLrnCard(boolean collapse);
 }
