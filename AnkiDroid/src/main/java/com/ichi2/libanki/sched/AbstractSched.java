@@ -80,6 +80,26 @@ public abstract class AbstractSched {
     protected Collection mCol;
 
 
+    protected static class LrnCard implements Comparable<LrnCard> {
+        private final long mCid;
+        private final long mDue;
+        public LrnCard(long due, long cid) {
+            mCid = cid;
+            mDue = due;
+        }
+        public long getDue () {
+            return mDue;
+        }
+        public long getId() {
+            return mCid;
+        }
+
+        @Override
+        public int compareTo(LrnCard o) {
+            return Long.compare(mDue, o.mDue);
+        }
+    }
+
     /**
      * Pop the next card from the queue. null if finished.
      */
