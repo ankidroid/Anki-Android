@@ -891,6 +891,7 @@ public abstract class AbstractSched {
 
 
     public abstract void maybeRandomizeDeck(Long did);
+    // two kinds of buried exists in V2 only
     public abstract boolean haveBuried(long did);
     public enum UnburyType {
         ALL,
