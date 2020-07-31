@@ -412,14 +412,6 @@ public class SchedV2 extends AbstractSched {
                 did, lim);
     }
 
-
-    private void _resetNew() {
-        _resetNewCount();
-        mNewDids = new LinkedList<>(mCol.getDecks().active());
-        mNewQueue.clear();
-        _updateNewCardRatio();
-    }
-
     /**
         @return The id of the note currently in the reviewer. 0 if no
         such card.
