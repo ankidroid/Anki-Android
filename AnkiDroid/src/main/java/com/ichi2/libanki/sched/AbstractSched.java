@@ -674,7 +674,11 @@ public abstract class AbstractSched {
     }
 
 
-    public abstract DeckConfig _cardConf(Card card);
+    public DeckConfig _cardConf(Card card) {
+        return mCol.getDecks().confForDid(card.getDid());
+    }
+
+
     public abstract String _deckLimit();
     public abstract void _checkDay();
     public abstract CharSequence finishedMsg(Context context);

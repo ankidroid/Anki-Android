@@ -1276,10 +1276,6 @@ public class SchedV2 extends AbstractSched {
      * Tools ******************************************************************** ***************************
      */
 
-    public DeckConfig _cardConf(Card card) {
-        return mCol.getDecks().confForDid(card.getDid());
-    }
-
 
     protected JSONObject _newConf(Card card) {
         DeckConfig conf = _cardConf(card);
