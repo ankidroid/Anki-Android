@@ -116,6 +116,11 @@ public abstract class AbstractSched {
     // Default limit for dynamic deck
     protected int mDynReportLimit;
 
+
+    // Seconds at which we change day
+    public long mDayCutoff;
+
+
     // Not in libanki
     protected WeakReference<Activity> mContextReference;
 
