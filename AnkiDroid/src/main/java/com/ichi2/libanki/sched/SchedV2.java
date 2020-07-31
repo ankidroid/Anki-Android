@@ -1717,13 +1717,6 @@ public class SchedV2 extends AbstractSched {
         mCol.getDb().executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?", d);
     }
 
-
-    public void randomizeCards(long did) {
-        List<Long> cids = mCol.getDb().queryLongList("select id from cards where did = ?", did);
-        sortCards(Utils.toPrimitive(cids), 1, 1, true, false);
-    }
-
-
     /**
      * for post-import
      */
