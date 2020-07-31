@@ -1050,10 +1050,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected boolean _fillRev() {
-        return _fillRev(false);
-    }
-
     @Override
     protected boolean _fillRev(boolean allowSibling) {
         if (!mRevQueue.isEmpty()) {

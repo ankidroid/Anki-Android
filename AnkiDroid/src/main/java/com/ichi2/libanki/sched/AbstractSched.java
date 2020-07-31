@@ -254,6 +254,12 @@ public abstract class AbstractSched {
     }
 
 
+
+    protected boolean _fillRev() {
+        return _fillRev(false);
+    }
+
+
     protected abstract boolean _fillRev(boolean allowSibling);
     public abstract void answerCard(Card card, @Consts.BUTTON_TYPE int ease);
     public abstract int[] counts();
