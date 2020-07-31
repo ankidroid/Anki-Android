@@ -91,8 +91,6 @@ public class SchedV2 extends AbstractSched {
     public long mDayCutoff;
     private long mLrnCutoff;
 
-    private int mNewCardModulus;
-
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
 

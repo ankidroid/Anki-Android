@@ -75,6 +75,9 @@ public abstract class AbstractSched {
     /** The next review cards to see. */
     protected final LinkedList<Long> mRevQueue = new LinkedList<>();
 
+    /** One out of each mNewCardModulus cards seens is a new card. This tries to ensure that new cards are seen regularly.
+     * This approximation mostly works if the number of review is greater (at least twice) the number of new cards.*/
+    protected int mNewCardModulus;
     /**
      * Pop the next card from the queue. null if finished.
      */
