@@ -497,6 +497,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @Override
     protected Card _getLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
