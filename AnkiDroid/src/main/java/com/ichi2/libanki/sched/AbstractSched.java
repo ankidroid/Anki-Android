@@ -256,6 +256,16 @@ public abstract class AbstractSched {
 
 
 
+    protected Card _getRevCard() {
+        if (_fillRev()) {
+            // mRevCount -= 1; see decrementCounts()
+            return mCol.getCard(mRevQueue.remove());
+        } else {
+            return null;
+        }
+    }
+
+
     protected boolean _fillRev() {
         return _fillRev(false);
     }
