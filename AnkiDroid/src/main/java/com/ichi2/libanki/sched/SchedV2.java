@@ -119,8 +119,6 @@ public class SchedV2 extends AbstractSched {
     protected final LinkedList<Long> mLrnDayQueue = new LinkedList<>();
     protected final LinkedList<Long> mRevQueue = new LinkedList<>();
 
-    private LinkedList<Long> mNewDids = new LinkedList<>();
-    protected LinkedList<Long> mLrnDids = new LinkedList<>();
 
     // Not in libanki
     protected WeakReference<Activity> mContextReference;

@@ -52,6 +52,18 @@ public abstract class AbstractSched {
     /** Number of rev card we expect to see today in selected deck. Number may not be exact due to buried siblings.*/
     protected int mRevCount;
 
+    // Queues of decks
+    /** List of ids of decks which may still contains new cards to see today.
+     *
+     * Some decks may be missing from the list. It may have been believed that some decks were empty because of same day burying of siblings.
+     * So if the list is empty, it should be double checked before asserting that there is no more card.
+     * */
+    protected LinkedList<Long> mNewDids = new LinkedList<>();
+    /** List of ids of decks which may still contains cards in learning from a past day.
+     * */
+    protected LinkedList<Long> mLrnDids = new LinkedList<>();
+
+
     /**
      * Pop the next card from the queue. null if finished.
      */
