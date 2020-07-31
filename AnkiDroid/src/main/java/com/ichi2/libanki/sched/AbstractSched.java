@@ -156,6 +156,14 @@ public abstract class AbstractSched {
                 (long did, int lim) -> _cntFnNew(did, lim));
     }
 
+    /** Same as _resetNew, but assume discardCard is currently in the reviewer and so don't conunt it.*/
+    protected void _resetNew(@Nullable Card discardCard) {
+        _resetNew();
+        if (discardCard != null && discardCard.getQueue() == Consts.QUEUE_TYPE_NEW) {
+            mNewCount--;
+        }
+    }
+
     protected abstract int _cntFnNew(long did, int lim);
 
     /** Ensures that reset is executed before the next card is selected
