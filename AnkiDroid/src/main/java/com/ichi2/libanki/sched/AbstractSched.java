@@ -527,6 +527,21 @@ public abstract class AbstractSched {
     }
 
 
+    private void _updateNewCardRatio() {
+        if (mCol.getConf().getInt("newSpread") == Consts.NEW_CARDS_DISTRIBUTE) {
+            if (mNewCount != 0) {
+                mNewCardModulus = (mNewCount + mRevCount) / mNewCount;
+                // if there are cards to review, ensure modulo >= 2
+                if (mRevCount != 0) {
+                    mNewCardModulus = Math.max(2, mNewCardModulus);
+                }
+                return;
+            }
+        }
+        mNewCardModulus = 0;
+    }
+
+
     /**
      * @return True if it's time to display a new card when distributing.
      */
