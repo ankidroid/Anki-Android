@@ -865,7 +865,18 @@ public abstract class AbstractSched {
     }
 
 
-    public abstract void resortConf(DeckConfig conf);
+    public void resortConf(DeckConfig conf) {
+        List<Long> dids = mCol.getDecks().didsForConf(conf);
+        for (long did : dids) {
+            if (conf.getJSONObject("new").getLong("order") == 0) {
+                randomizeCards(did);
+            } else {
+                orderCards(did);
+            }
+        }
+    }
+
+
     /**
      * for post-import
      */
