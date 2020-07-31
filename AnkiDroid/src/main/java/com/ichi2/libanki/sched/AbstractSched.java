@@ -254,9 +254,7 @@ public abstract class AbstractSched {
     }
 
 
-    /**
-     * @param undoneCard a card undone, send back to the reviewer.*/
-    public abstract void deferReset(Card undoneCard);
+    protected abstract boolean _fillRev(boolean allowSibling);
     public abstract void answerCard(Card card, @Consts.BUTTON_TYPE int ease);
     public abstract int[] counts();
     public abstract int[] counts(Card card);
