@@ -2246,7 +2246,7 @@ public class SchedV2 extends AbstractSched {
      * learning and relearning cards may be seconds-based or day-based;
      * other types map directly to queues
      */
-    private String _restoreQueueSnippet() {
+    protected String _restoreQueueSnippet() {
         return "queue = (case when type in (" + Consts.CARD_TYPE_LRN + "," + Consts.CARD_TYPE_RELEARNING + ") then\n" +
                 "  (case when (case when odue then odue else due end) > 1000000000 then 1 else " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " end)\n" +
                 "else\n" +

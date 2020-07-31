@@ -189,7 +189,7 @@ public class Sched extends SchedV2 {
     public void unburyCards() {
         mCol.getConf().put("lastUnburied", mToday);
         mCol.log(mCol.getDb().queryLongList("select id from cards where queue = "+ Consts.QUEUE_TYPE_SIBLING_BURIED));
-        mCol.getDb().execute("update cards set queue=type where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED);
+        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED);
     }
 
 
@@ -202,7 +202,7 @@ public class Sched extends SchedV2 {
         // Refactored to allow unburying an arbitrary deck
         String sids = Utils.ids2str(allDecks);
         mCol.log(mCol.getDb().queryLongList("select id from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids));
-        mCol.getDb().execute("update cards set mod=?,usn=?,queue=type where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids,
+        mCol.getDb().execute("update cards set mod=?,usn=?," + _restoreQueueSnippet() + " where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids,
                 Utils.intTime(), mCol.usn());
     }
 
@@ -1347,6 +1347,9 @@ public class Sched extends SchedV2 {
                 Utils.intTime(), mCol.usn());
     }
 
+    protected String _restoreQueueSnippet() {
+        return "queue = type";
+    }
 
     /**
      * Unsuspend cards
@@ -1355,7 +1358,7 @@ public class Sched extends SchedV2 {
     public void unsuspendCards(long[] ids) {
         mCol.log(ids);
         mCol.getDb().execute(
-                "UPDATE cards SET queue = type, mod = ?, usn = ?"
+                "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = ?, usn = ?"
                         + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids),
                 Utils.intTime(), mCol.usn());
     }
