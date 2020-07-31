@@ -133,6 +133,20 @@ public abstract class AbstractSched {
 
     public abstract void reset();
 
+
+    // Sched V1 also reset the list of rev deck.
+    protected void _resetRev() {
+        _resetRevCount();
+        mRevQueue.clear();
+    }
+
+    /** Number of review cards in current selected deck
+     * In sched V2 only current limit is applied. In sched V1, limit is applied subdeck by subdeck. */
+    protected abstract void _resetRevCount();
+
+    // In sched V2 only, the lrn cutoff is updated
+    protected abstract void _resetLrn();
+
     protected void _resetNewCount() {
         mNewCount = _walkingCount((Deck g) -> _deckNewLimitSingle(g),
                 (long did, int lim) -> _cntFnNew(did, lim));
