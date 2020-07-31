@@ -440,11 +440,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected int _deckNewLimit(long did) {
-        return _deckNewLimit(did, null);
-    }
-
-
     /** New count for a single deck. */
     public int _newForDeck(long did, int lim) {
         if (lim == 0) {
