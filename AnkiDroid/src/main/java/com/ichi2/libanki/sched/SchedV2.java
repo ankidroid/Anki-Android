@@ -881,12 +881,9 @@ public class SchedV2 extends AbstractSched {
              * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
              * required when the card is reviewed.
              */
-            cur = mCol
-                    .getDb()
-                    .getDatabase()
-                    .query(
-                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ?"
-                            + " AND id != ? LIMIT ?", new Object[] { cutoff, currentCardId(), mReportLimit});
+            cur = mCol.getDb().getDatabase().query(
+                    "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ? AND id != ? LIMIT ?",
+                    new Object[] { cutoff, currentCardId(), mReportLimit});
             while (cur.moveToNext()) {
                 mLrnQueue.add(new LrnCard(cur.getLong(0), cur.getLong(1)));
             }
