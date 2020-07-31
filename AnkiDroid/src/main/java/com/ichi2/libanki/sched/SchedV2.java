@@ -89,15 +89,6 @@ public class SchedV2 extends AbstractSched {
     public long mDayCutoff;
 
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
-
-
-
-    /**
-     * The card currently being reviewed.
-     *
-     * Must not be returned during prefetching (as it is currently shown)
-     */
-    protected Card mCurrentCard;
     /** The list of parent decks of the current card.
      * Cached for performance .
 
