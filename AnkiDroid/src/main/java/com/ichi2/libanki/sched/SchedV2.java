@@ -373,10 +373,6 @@ public class SchedV2 extends AbstractSched {
                 did, lim);
     }
 
-    private boolean _fillNew() {
-        return _fillNew(false);
-    }
-
 
     protected Card _getNewCard() {
         if (_fillNew()) {
