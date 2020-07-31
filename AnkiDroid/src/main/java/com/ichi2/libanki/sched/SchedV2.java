@@ -651,6 +651,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @Override
     protected void _resetLrn() {
         _updateLrnCutoff(true);
         _resetLrnCount();
@@ -1138,16 +1139,11 @@ public class SchedV2 extends AbstractSched {
         }
     }
 
+    @Override
     protected void _resetRevCount() {
         int lim = _currentRevLimit();
         mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
                                              mToday, lim);
-    }
-
-
-    protected void _resetRev() {
-        _resetRevCount();
-        mRevQueue.clear();
     }
 
 

@@ -704,8 +704,7 @@ public class Sched extends SchedV2 {
 
     @Override
     protected void _resetRev() {
-        _resetRevCount();
-        mRevQueue.clear();
+        super._resetRev();
         mRevDids = mCol.getDecks().active();
     }
 
