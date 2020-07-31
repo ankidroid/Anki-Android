@@ -95,7 +95,6 @@ public class SchedV2 extends AbstractSched {
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
     // Queues
-    protected final LinkedList<Long> mNewQueue = new LinkedList<>();
     protected class LrnCard implements Comparable<LrnCard> {
         private final long mCid;
         private final long mDue;
@@ -115,9 +114,6 @@ public class SchedV2 extends AbstractSched {
             return Long.compare(mDue, o.mDue);
         }
     }
-    protected final LinkedList<LrnCard> mLrnQueue = new LinkedList<>();
-    protected final LinkedList<Long> mLrnDayQueue = new LinkedList<>();
-    protected final LinkedList<Long> mRevQueue = new LinkedList<>();
 
 
     // Not in libanki

@@ -21,6 +21,7 @@ import com.ichi2.utils.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
@@ -63,6 +64,16 @@ public abstract class AbstractSched {
      * */
     protected LinkedList<Long> mLrnDids = new LinkedList<>();
 
+
+    // Queues
+    /** The next new cards to see. */
+    protected final LinkedList<Long> mNewQueue = new LinkedList<>();
+    /** The next cards in same day learning to see. */
+    protected final LinkedList<LrnCard> mLrnQueue = new LinkedList<>();
+    /** The next cards in learning for more than one day to see. */
+    protected final LinkedList<Long> mLrnDayQueue = new LinkedList<>();
+    /** The next review cards to see. */
+    protected final LinkedList<Long> mRevQueue = new LinkedList<>();
 
     /**
      * Pop the next card from the queue. null if finished.
