@@ -21,6 +21,7 @@ import com.ichi2.utils.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -141,6 +142,42 @@ public abstract class AbstractSched {
 
     public void deferReset(){
         deferReset(null);
+    }
+
+    protected int _walkingCount(LimitMethod limFn, CountMethod cntFn) {
+        int tot = 0;
+        HashMap<Long, Integer> pcounts = new HashMap<>();
+        // for each of the active decks
+        for (long did : mCol.getDecks().active()) {
+            // get the individual deck's limit
+            int lim = limFn.operation(mCol.getDecks().get(did));
+            if (lim == 0) {
+                continue;
+            }
+            // check the parents
+            List<Deck> parents = mCol.getDecks().parents(did);
+            for (Deck p : parents) {
+                // add if missing
+                long id = p.getLong("id");
+                if (!pcounts.containsKey(id)) {
+                    pcounts.put(id, limFn.operation(p));
+                }
+                // take minimum of child and parent
+                lim = Math.min(pcounts.get(id), lim);
+            }
+            // see how many cards we actually have
+            int cnt = cntFn.operation(did, lim);
+            // if non-zero, decrement from parents counts
+            for (Deck p : parents) {
+                long id = p.getLong("id");
+                pcounts.put(id, pcounts.get(id) - cnt);
+            }
+            // we may also be a parent
+            pcounts.put(did, lim - cnt);
+            // and add to running total
+            tot += cnt;
+        }
+        return tot;
     }
 
 
