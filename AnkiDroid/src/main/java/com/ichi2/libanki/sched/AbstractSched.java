@@ -27,6 +27,10 @@ import timber.log.Timber;
 
 
 public abstract class AbstractSched {
+
+    /** Whether the queues has been computed since last reset/change of selected deck */
+    protected boolean mHaveQueues;
+
     /**
      * Pop the next card from the queue. null if finished.
      */
