@@ -369,16 +369,6 @@ public class SchedV2 extends AbstractSched {
      * Deck list **************************************************************** *******************************
      */
 
-
-    /**
-     * Returns [deckname, did, rev, lrn, new]
-     *
-     * Return nulls when deck task is cancelled.
-     */
-    public List<DeckDueTreeNode> deckDueList() {
-        return deckDueList(null);
-    }
-
     public List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();

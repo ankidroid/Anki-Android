@@ -132,7 +132,15 @@ public abstract class AbstractSched {
     /**
      * Returns [deckname, did, rev, lrn, new]
      */
-    public abstract List<DeckDueTreeNode> deckDueList();
+    public List<DeckDueTreeNode> deckDueList() {
+        return deckDueList(null);
+    }
+    /**
+     * Returns [deckname, did, rev, lrn, new]
+     *
+     * Return nulls when deck task is cancelled.
+     */
+    protected abstract List<DeckDueTreeNode> deckDueList(CollectionTask collectionTask);
     /** load the due tree, but halt if deck task is cancelled*/
     public abstract List<DeckDueTreeNode> deckDueTree(CollectionTask collectionTask);
     public abstract List<DeckDueTreeNode> deckDueTree();
