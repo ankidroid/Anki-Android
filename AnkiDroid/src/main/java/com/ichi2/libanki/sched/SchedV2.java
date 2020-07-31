@@ -1140,11 +1140,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void remFromDyn(long[] cids) {
-        emptyDyn(0, "id IN " + Utils.ids2str(cids) + " AND odid");
-    }
-
-
     /**
      * Generates the required SQL for order by and limit clauses, for dynamic decks.
      *

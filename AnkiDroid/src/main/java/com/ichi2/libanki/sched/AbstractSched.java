@@ -667,7 +667,13 @@ public abstract class AbstractSched {
 
 
     public abstract void emptyDyn(long did, String lim);
-    public abstract void remFromDyn(long[] cids);
+
+
+    public void remFromDyn(long[] cids) {
+        emptyDyn(0, "id IN " + Utils.ids2str(cids) + " AND odid");
+    }
+
+
     public abstract DeckConfig _cardConf(Card card);
     public abstract String _deckLimit();
     public abstract void _checkDay();
