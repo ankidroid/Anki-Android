@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Typeface;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.util.Pair;
 import android.widget.Toast;
 
@@ -689,7 +692,19 @@ public abstract class AbstractSched {
 
 
     public abstract void _checkDay();
-    public abstract CharSequence finishedMsg(Context context);
+
+    public CharSequence finishedMsg(Context context) {
+        SpannableStringBuilder sb = new SpannableStringBuilder();
+        sb.append(context.getString(R.string.studyoptions_congrats_finished));
+        StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+        sb.setSpan(boldSpan, 0, sb.length(), 0);
+        sb.append(_nextDueMsg(context));
+        // sb.append("\n\n");
+        // sb.append(_tomorrowDueMsg(context));
+        return sb;
+    }
+
+
     public abstract String _nextDueMsg(Context context);
 
 
