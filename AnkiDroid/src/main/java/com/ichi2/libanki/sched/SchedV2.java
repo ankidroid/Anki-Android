@@ -542,7 +542,8 @@ public class SchedV2 extends AbstractSched {
      * Learning queues *********************************************************** ************************************
      */
 
-    private boolean _updateLrnCutoff(boolean force) {
+    @Override
+    protected boolean _updateLrnCutoff(boolean force) {
         long nextCutoff = mTime.intTime() + mCol.getConf().getInt("collapseTime");
         if (nextCutoff - mLrnCutoff > 60 || force) {
             mLrnCutoff = nextCutoff;
