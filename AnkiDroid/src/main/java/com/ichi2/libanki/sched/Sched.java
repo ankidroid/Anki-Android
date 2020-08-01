@@ -89,6 +89,9 @@ public class Sched extends SchedV2 {
         super(col);
     }
 
+    protected long intTime() {
+        return Utils.intTime();
+    }
 
     @Override
     public void answerCard(Card card, int ease) {
@@ -131,7 +134,7 @@ public class Sched extends SchedV2 {
             throw new RuntimeException("Invalid queue");
         }
         _updateStats(card, "time", card.timeTaken());
-        card.setMod(Utils.intTime());
+        card.setMod(intTime());
         card.setUsn(mCol.usn());
         card.flushSched();
     }
@@ -610,7 +613,7 @@ public class Sched extends SchedV2 {
                     "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?"
                             + " LIMIT ?)",
-                    did, (Utils.intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
+                    did, (intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?"
@@ -1281,7 +1284,7 @@ public class Sched extends SchedV2 {
         mCol.getDb().execute(
                 "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
                         + Utils.ids2str(ids),
-                Utils.intTime(), mCol.usn());
+                intTime(), mCol.usn());
     }
 
 
@@ -1294,7 +1297,7 @@ public class Sched extends SchedV2 {
         mCol.getDb().execute(
                 "UPDATE cards SET queue = type, mod = ?, usn = ?"
                         + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids),
-                Utils.intTime(), mCol.usn());
+                intTime(), mCol.usn());
     }
 
 
@@ -1321,7 +1324,7 @@ public class Sched extends SchedV2 {
     @Override
     public void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift) {
         String scids = Utils.ids2str(cids);
-        long now = Utils.intTime();
+        long now = intTime();
         ArrayList<Long> nids = new ArrayList<>();
         for (long id : cids) {
             long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?",

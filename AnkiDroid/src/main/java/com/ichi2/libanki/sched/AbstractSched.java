@@ -151,6 +151,8 @@ public abstract class AbstractSched {
         }
     }
 
+    /** Either mTime or Utils's intTime depending on scheduler */
+    protected abstract long intTime();
     /**
      * Pop the next card from the queue. null if finished.
      */

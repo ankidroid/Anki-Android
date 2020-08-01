@@ -119,6 +119,9 @@ public class SchedV2 extends AbstractSched {
         _updateCutoff();
     }
 
+    protected long intTime() {
+        return mTime.intTime();
+    }
 
     public void answerCard(Card card, int ease) {
         mCol.log();
@@ -129,7 +132,7 @@ public class SchedV2 extends AbstractSched {
         _answerCard(card, ease);
 
         _updateStats(card, "time", card.timeTaken());
-        card.setMod(mTime.intTime());
+        card.setMod(intTime());
         card.setUsn(mCol.usn());
         card.flushSched();
     }
@@ -739,7 +742,7 @@ public class SchedV2 extends AbstractSched {
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?"
                             + " LIMIT ?)",
-                    did, (mTime.intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
+                    did, (intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?"
@@ -1539,7 +1542,7 @@ public class SchedV2 extends AbstractSched {
         mCol.getDb().execute(
                 "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
                         + Utils.ids2str(ids),
-                mTime.intTime(), mCol.usn());
+                intTime(), mCol.usn());
     }
 
 
@@ -1551,7 +1554,7 @@ public class SchedV2 extends AbstractSched {
         mCol.getDb().execute(
                 "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = ?, usn = ?"
                         + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids),
-                mTime.intTime(), mCol.usn());
+                intTime(), mCol.usn());
     }
 
 
@@ -1662,7 +1665,7 @@ public class SchedV2 extends AbstractSched {
 
     public void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift) {
         String scids = Utils.ids2str(cids);
-        long now = mTime.intTime();
+        long now = intTime();
         ArrayList<Long> nids = new ArrayList<>();
         for (long id : cids) {
             long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?",
