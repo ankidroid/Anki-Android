@@ -1135,6 +1135,16 @@ public class Sched extends SchedV2 {
     public DeckConfig _cardConf(Card card) {
         return mCol.getDecks().confForDid(card.getDid());
     }
+    @Override
+    protected JSONArray _newConfDelay(Card card) {
+        DeckConfig conf = _cardConf(card);
+        JSONArray delays = conf.optJSONArray("delays");
+        if (delays != null) {
+            return delays;
+        }
+        DeckConfig oconf = mCol.getDecks().confForDid(card.getODid());
+        return oconf.getJSONObject("new").getJSONArray("delays");
+    }
 
 
     @Override
@@ -1146,17 +1156,13 @@ public class Sched extends SchedV2 {
         }
         // dynamic deck; override some attributes, use original deck for others
         DeckConfig oconf = mCol.getDecks().confForDid(card.getODid());
-        JSONArray delays = conf.optJSONArray("delays");
-        if (delays == null) {
-            delays = oconf.getJSONObject("new").getJSONArray("delays");
-        }
         JSONObject dict = new JSONObject();
         // original deck
         dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
         dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
         dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true));
         // overrides
-        dict.put("delays", delays);
+        dict.put("delays", _newConfDelay(card));
         dict.put("separate", conf.getBoolean("separate"));
         dict.put("order", Consts.NEW_CARDS_DUE);
         dict.put("perDay", mReportLimit);

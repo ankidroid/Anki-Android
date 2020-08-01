@@ -1888,6 +1888,11 @@ public class SchedV2 extends AbstractSched {
         return mCol.getDecks().confForDid(card.getDid());
     }
 
+    @Override
+    protected JSONArray _newConfDelay(Card card) {
+        return mCol.getDecks().confForDid(card.getODid()).getJSONObject("new").getJSONArray("delays");
+    }
+
 
     protected JSONObject _newConf(Card card) {
         DeckConfig conf = _cardConf(card);
@@ -1902,7 +1907,7 @@ public class SchedV2 extends AbstractSched {
         dict.put("ints", oconf.getJSONObject("new").getJSONArray("ints"));
         dict.put("initialFactor", oconf.getJSONObject("new").getInt("initialFactor"));
         dict.put("bury", oconf.getJSONObject("new").optBoolean("bury", true));
-        dict.put("delays", oconf.getJSONObject("new").getJSONArray("delays"));
+        dict.put("delays", _newConfDelay(card));
         // overrides
         dict.put("separate", conf.getBoolean("separate"));
         dict.put("order", Consts.NEW_CARDS_DUE);

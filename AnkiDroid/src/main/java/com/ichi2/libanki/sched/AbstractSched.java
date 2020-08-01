@@ -14,6 +14,8 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Collection;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -36,6 +38,9 @@ public abstract class AbstractSched {
      * @param undoneCard a card undone, send back to the reviewer.*/
     public abstract void deferReset(Card undoneCard);
     public abstract void answerCard(Card card, @Consts.BUTTON_TYPE int ease);
+
+    /** A conf object for this card. The delay for cards in filtered deck is the only difference between V1 and V2 */
+    protected abstract JSONArray _newConfDelay(Card card);
     public abstract int[] counts();
     public abstract int[] counts(Card card);
     /**
