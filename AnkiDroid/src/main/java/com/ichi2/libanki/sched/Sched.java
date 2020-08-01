@@ -1338,9 +1338,9 @@ public class Sched extends SchedV2 {
      */
     @Override
     public void suspendCards(long[] ids) {
-        mCol.log(ids);
         remFromDyn(ids);
         removeLrn(ids);
+        mCol.log(ids);
         mCol.getDb().execute(
                 "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
                         + Utils.ids2str(ids),
