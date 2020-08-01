@@ -122,6 +122,9 @@ public class SchedV2 extends AbstractSched {
     protected long intTime() {
         return mTime.intTime();
     }
+    protected double now() {
+        return mTime.now();
+    }
 
     public void answerCard(Card card, int ease) {
         mCol.log();
@@ -448,7 +451,7 @@ public class SchedV2 extends AbstractSched {
     protected Card _getLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
-            double cutoff = mTime.now();
+            double cutoff = now();
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
@@ -724,7 +727,7 @@ public class SchedV2 extends AbstractSched {
     private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
-                    mTime.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
+                    now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
         } catch (SQLiteConstraintException e) {
             try {
                 Thread.sleep(10);
@@ -1568,7 +1571,7 @@ public class SchedV2 extends AbstractSched {
         int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : Consts.QUEUE_TYPE_SIBLING_BURIED;
         mCol.log(cids);
         mCol.getDb().execute("update cards set queue=?,mod=?,usn=? where id in " + Utils.ids2str(cids),
-                queue, mTime.now(), mCol.usn());
+                queue, now(), mCol.usn());
     }
 
 

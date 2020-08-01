@@ -93,6 +93,10 @@ public class Sched extends SchedV2 {
         return Utils.intTime();
     }
 
+    protected double now() {
+        return Utils.now();
+    }
+
     @Override
     public void answerCard(Card card, int ease) {
         mCol.log();
@@ -377,7 +381,7 @@ public class Sched extends SchedV2 {
 
     protected Card _getLrnCard(boolean collapse) {
         if (_fillLrn()) {
-            double cutoff = Utils.now();
+            double cutoff = now();
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
@@ -573,7 +577,7 @@ public class Sched extends SchedV2 {
     private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
-                    Utils.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
+                    now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
         } catch (SQLiteConstraintException e) {
             try {
                 Thread.sleep(10);
@@ -1313,7 +1317,7 @@ public class Sched extends SchedV2 {
         remFromDyn(cids);
         removeLrn(cids);
         mCol.getDb().execute("update cards set queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + ",mod=?,usn=? where id in " + Utils.ids2str(cids),
-                Utils.now(), mCol.usn());
+                now(), mCol.usn());
     }
 
     /**
