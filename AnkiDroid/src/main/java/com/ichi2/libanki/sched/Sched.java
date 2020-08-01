@@ -138,7 +138,7 @@ public class Sched extends SchedV2 {
             throw new RuntimeException("Invalid queue");
         }
         _updateStats(card, "time", card.timeTaken());
-        card.setMod(Utils.intTime());
+        card.setMod(intTime());
         card.setUsn(mCol.usn());
         card.flushSched();
     }

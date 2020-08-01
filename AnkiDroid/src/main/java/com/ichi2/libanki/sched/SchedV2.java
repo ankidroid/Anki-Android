@@ -251,7 +251,7 @@ public class SchedV2 extends AbstractSched {
         _answerCard(card, ease);
 
         _updateStats(card, "time", card.timeTaken());
-        card.setMod(mTime.intTime());
+        card.setMod(intTime());
         card.setUsn(mCol.usn());
         card.flushSched();
     }
