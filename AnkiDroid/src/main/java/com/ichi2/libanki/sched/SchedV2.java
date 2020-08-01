@@ -2254,6 +2254,10 @@ public class SchedV2 extends AbstractSched {
                 "end)  ";
     }
 
+    protected String queueIsBuriedSnippet() {
+        return " queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ") ";
+    }
+
     /**
      * Suspend cards.
      */
@@ -2296,8 +2300,8 @@ public class SchedV2 extends AbstractSched {
      * Unbury all buried cards in all decks
      */
     public void unburyCards() {
-        mCol.log(mCol.getDb().queryLongList("select id from cards where queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")"));
-        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")");
+        mCol.log(mCol.getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet()));
+        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet());
     }
 
 
@@ -2314,7 +2318,7 @@ public class SchedV2 extends AbstractSched {
         String queue;
         switch (type) {
             case ALL :
-                queue = "queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")";
+                queue = queueIsBuriedSnippet();
                 break;
             case MANUAL:
                 queue = "queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED;

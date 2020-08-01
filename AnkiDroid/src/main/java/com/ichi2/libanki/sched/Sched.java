@@ -188,8 +188,8 @@ public class Sched extends SchedV2 {
     @Override
     public void unburyCards() {
         mCol.getConf().put("lastUnburied", mToday);
-        mCol.log(mCol.getDb().queryLongList("select id from cards where queue = "+ Consts.QUEUE_TYPE_SIBLING_BURIED));
-        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED);
+        mCol.log(mCol.getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet()));
+        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet());
     }
 
 
@@ -201,8 +201,8 @@ public class Sched extends SchedV2 {
     private void unburyCardsForDeck(List<Long> allDecks) {
         // Refactored to allow unburying an arbitrary deck
         String sids = Utils.ids2str(allDecks);
-        mCol.log(mCol.getDb().queryLongList("select id from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids));
-        mCol.getDb().execute("update cards set mod=?,usn=?," + _restoreQueueSnippet() + " where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sids,
+        mCol.log(mCol.getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet() + " and did in " + sids));
+        mCol.getDb().execute("update cards set mod=?,usn=?," + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet() + " and did in " + sids,
                 Utils.intTime(), mCol.usn());
     }
 
@@ -1267,7 +1267,7 @@ public class Sched extends SchedV2 {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
         int cnt = mCol.getDb().queryScalar(
-                "select 1 from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sdids + " limit 1");
+                "select 1 from cards where " + queueIsBuriedSnippet() + " and did in " + sdids + " limit 1");
         return cnt != 0;
     }
 
@@ -1347,6 +1347,10 @@ public class Sched extends SchedV2 {
                 Utils.intTime(), mCol.usn());
     }
 
+    protected String queueIsBuriedSnippet() {
+        return "queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED;
+    }
+
     protected String _restoreQueueSnippet() {
         return "queue = type";
     }
@@ -1375,7 +1379,7 @@ public class Sched extends SchedV2 {
         mCol.log(cids);
         remFromDyn(cids);
         removeLrn(cids);
-        mCol.getDb().execute("update cards set queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + ",mod=?,usn=? where id in " + Utils.ids2str(cids),
+        mCol.getDb().execute("update cards set " + queueIsBuriedSnippet() + ",mod=?,usn=? where id in " + Utils.ids2str(cids),
                 Utils.now(), mCol.usn());
     }
 

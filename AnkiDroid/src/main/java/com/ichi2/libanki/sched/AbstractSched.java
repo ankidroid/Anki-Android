@@ -108,6 +108,7 @@ public abstract class AbstractSched {
      */
     public abstract long nextIvl(Card card, @Consts.BUTTON_TYPE int ease);
 
+    protected abstract String queueIsBuriedSnippet();
     protected abstract String _restoreQueueSnippet();
     /**
      * Suspend cards.
