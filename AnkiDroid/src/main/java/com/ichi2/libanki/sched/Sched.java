@@ -1344,11 +1344,7 @@ public class Sched extends SchedV2 {
     public void suspendCards(long[] ids) {
         remFromDyn(ids);
         removeLrn(ids);
-        mCol.log(ids);
-        mCol.getDb().execute(
-                "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
-                        + Utils.ids2str(ids),
-                intTime(), mCol.usn());
+        super.suspendCards(ids);
     }
 
     protected String queueIsBuriedSnippet() {
