@@ -56,6 +56,9 @@ public abstract class AbstractSched {
      */
     protected Card mCurrentCard;
 
+    /** Maximal number of cards to show in card counts. Need to be changed to 1000 when doing sanity check with ankiweb.*/
+    protected int mReportLimit;
+
     /** The next cards in same day learning to see. */
     protected final LinkedList<LrnCard> mLrnQueue = new LinkedList<>();
 
