@@ -174,6 +174,8 @@ public abstract class AbstractSched {
      * Completely reset cards for export.
      */
     public abstract void resetCards(Long[] ids);
+    /** Some sql indicating whether queue is one of the learn type of this scheduler*/
+    protected abstract String isLrnQueueSnippet();
     public abstract void sortCards(long[] cids, int start);
     public abstract void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift);
     public abstract void randomizeCards(long did);
