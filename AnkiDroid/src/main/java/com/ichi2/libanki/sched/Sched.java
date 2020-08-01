@@ -1359,18 +1359,6 @@ public class Sched extends SchedV2 {
         return "queue = type";
     }
 
-    /**
-     * Unsuspend cards
-     */
-    @Override
-    public void unsuspendCards(long[] ids) {
-        mCol.log(ids);
-        mCol.getDb().execute(
-                "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = ?, usn = ?"
-                        + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids),
-                intTime(), mCol.usn());
-    }
-
 
     @Override
     public void buryCards(long[] cids) {

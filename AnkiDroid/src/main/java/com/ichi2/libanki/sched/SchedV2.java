@@ -2274,18 +2274,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /**
-     * Unsuspend cards
-     */
-    public void unsuspendCards(long[] ids) {
-        mCol.log(ids);
-        mCol.getDb().execute(
-                "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = ?, usn = ?"
-                        + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids),
-                intTime(), mCol.usn());
-    }
-
-
     public void buryCards(long[] cids) {
         buryCards(cids, true);
     }

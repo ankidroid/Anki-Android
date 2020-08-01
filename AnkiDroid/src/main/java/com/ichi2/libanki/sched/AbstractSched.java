@@ -14,6 +14,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Utils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -113,10 +114,18 @@ public abstract class AbstractSched {
      * Suspend cards.
      */
     public abstract void suspendCards(long[] ids);
+
     /**
      * Unsuspend cards
      */
-    public abstract void unsuspendCards(long[] ids);
+    public void unsuspendCards(long[] ids) {
+        mCol.log(ids);
+        mCol.getDb().execute(
+                "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = ?, usn = ?"
+                        + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids),
+                intTime(), mCol.usn());
+    }
+
     public abstract void buryCards(long[] cids);
     @VisibleForTesting
     public abstract void buryCards(long[] cids, boolean manual);
