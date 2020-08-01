@@ -103,25 +103,6 @@ public class SchedV2 extends AbstractSched {
 
     // Queues
     protected final LinkedList<Long> mNewQueue = new LinkedList<>();
-    protected class LrnCard implements Comparable<LrnCard> {
-        private final long mCid;
-        private final long mDue;
-        public LrnCard(long due, long cid) {
-            mCid = cid;
-            mDue = due;
-        }
-        public long getDue () {
-            return mDue;
-        }
-        public long getId() {
-            return mCid;
-        }
-
-        @Override
-        public int compareTo(LrnCard o) {
-            return Long.compare(mDue, o.mDue);
-        }
-    }
     protected final LinkedList<LrnCard> mLrnQueue = new LinkedList<>();
     protected final LinkedList<Long> mLrnDayQueue = new LinkedList<>();
     protected final LinkedList<Long> mRevQueue = new LinkedList<>();
