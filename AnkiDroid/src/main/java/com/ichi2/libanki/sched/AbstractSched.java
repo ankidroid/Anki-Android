@@ -14,6 +14,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Utils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -102,6 +103,8 @@ public abstract class AbstractSched {
      * @return A string like “1 min” or “1.7 mo”
      */
     public abstract String nextIvlStr(Context context, Card card, @Consts.BUTTON_TYPE int ease);
+
+
     /**
      * Return the next interval for CARD, in seconds.
      */
@@ -109,10 +112,19 @@ public abstract class AbstractSched {
 
     protected abstract String queueIsBuriedSnippet();
     protected abstract String _restoreQueueSnippet();
+
     /**
      * Suspend cards.
+     *
+     * In V1, it removes card from filtered decks and cards in learning.
      */
-    public abstract void suspendCards(long[] ids);
+    public void suspendCards(long[] ids) {
+        mCol.log(ids);
+        mCol.getDb().execute(
+                "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
+                        + Utils.ids2str(ids),
+                intTime(), mCol.usn());
+    }
     /**
      * Unsuspend cards
      */
