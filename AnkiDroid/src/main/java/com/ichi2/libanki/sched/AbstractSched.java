@@ -942,7 +942,6 @@ public abstract class AbstractSched {
         return eta(counts, true);
     }
 
-
     /**
      * Return an estimate, in minutes, for how long it will take to complete all the reps in {@code counts}.
      *
@@ -960,7 +959,103 @@ public abstract class AbstractSched {
      * @param counts An array of [new, lrn, rev] counts from the scheduler's counts() method.
      * @param reload Force rebuild of estimator rates using the revlog.
      */
-    public abstract int eta(int[] counts, boolean reload);
+    public int eta(int[] counts, boolean reload) {
+        double newRate;
+        double newTime;
+        double revRate;
+        double revTime;
+        double relrnRate;
+        double relrnTime;
+
+        if (reload || mEtaCache[0] == -1) {
+            Cursor cur = null;
+            try {
+                cur = mCol
+                        .getDb()
+                        .getDatabase()
+                        .query("select "
+                                        + "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, "
+                                        + "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then time else null end) as revTime, "
+                                        + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
+                                        + "from revlog where id > ?",
+                                new Object[] {(mCol.getSched().getDayCutoff() - (10 * 86400)) * 1000});
+                if (!cur.moveToFirst()) {
+                    return -1;
+                }
+
+                newRate = cur.getDouble(0);
+                newTime = cur.getDouble(1);
+                revRate = cur.getDouble(2);
+                revTime = cur.getDouble(3);
+                relrnRate = cur.getDouble(4);
+                relrnTime = cur.getDouble(5);
+
+                if (!cur.isClosed()) {
+                    cur.close();
+                }
+
+            } finally {
+                if (cur != null && !cur.isClosed()) {
+                    cur.close();
+                }
+            }
+
+            // If the collection has no revlog data to work with, assume a 20 second average rep for that type
+            newTime = newTime == 0 ? 20000 : newTime;
+            revTime = revTime == 0 ? 20000 : revTime;
+            relrnTime = relrnTime == 0 ? 20000 : relrnTime;
+            // And a 100% success rate
+            newRate = newRate == 0 ? 1 : newRate;
+            revRate = revRate == 0 ? 1 : revRate;
+            relrnRate = relrnRate == 0 ? 1 : relrnRate;
+
+            mEtaCache[0] = newRate;
+            mEtaCache[1] = newTime;
+            mEtaCache[2] = revRate;
+            mEtaCache[3] = revTime;
+            mEtaCache[4] = relrnRate;
+            mEtaCache[5] = relrnTime;
+
+        } else {
+            newRate = mEtaCache[0];
+            newTime = mEtaCache[1];
+            revRate= mEtaCache[2];
+            revTime = mEtaCache[3];
+            relrnRate = mEtaCache[4];
+            relrnTime = mEtaCache[5];
+        }
+
+        // Calculate the total time for each queue based on the historical average duration per rep
+        double newTotal = newTime * counts[0];
+        double relrnTotal = relrnTime * counts[1];
+        double revTotal = revTime * counts[2];
+
+        // Now we have to predict how many additional relrn cards are going to be generated while reviewing the above
+        // queues, and how many relrn cards *those* reps will generate (and so on, until 0).
+
+        // Every queue has a failure rate, and each failure will become a relrn
+        int toRelrn = counts[0]; // Assume every new card becomes 1 relrn
+        toRelrn += Math.ceil((1 - relrnRate) * counts[1]);
+        toRelrn += Math.ceil((1 - revRate) * counts[2]);
+
+        // Use the accuracy rate of the relrn queue to estimate how many reps we will end up with if the cards
+        // currently in relrn continue to fail at that rate. Loop through the failures of the failures until we end up
+        // with no predicted failures left.
+
+        // Cap the lower end of the success rate to ensure the loop ends (it could be 0 if no revlog history, or
+        // negative for other reasons). 5% seems reasonable to ensure the loop doesn't iterate too much.
+        relrnRate = relrnRate < 0.05 ? 0.05 : relrnRate;
+        int futureReps = 0;
+        do {
+            // Truncation ensures the failure rate always decreases
+            int failures = (int) ((1 - relrnRate) * toRelrn);
+            futureReps += failures;
+            toRelrn = failures;
+        } while (toRelrn > 1);
+        double futureRelrnTotal = relrnTime * futureReps;
+
+        return (int) Math.round((newTotal + relrnTotal + revTotal + futureRelrnTotal) / 60000);
+    }
 
     /**
      * This is used when card is currently in the reviewer, to adapt the counts by removing this card from it.
