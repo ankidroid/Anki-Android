@@ -27,6 +27,11 @@ import timber.log.Timber;
 
 
 public abstract class AbstractSched {
+    /** Depending on the scheduler:
+     * * number of cards currently in learning or
+     * * number of repetition of cards in learning assuming all cards are good*/
+    protected int mLrnCount;
+
     /**
      * Pop the next card from the queue. null if finished.
      */

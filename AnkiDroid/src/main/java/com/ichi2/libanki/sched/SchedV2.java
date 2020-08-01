@@ -93,7 +93,6 @@ public class SchedV2 extends AbstractSched {
     private long mLrnCutoff;
 
     protected int mNewCount;
-    protected int mLrnCount;
     protected int mRevCount;
 
     private int mNewCardModulus;
