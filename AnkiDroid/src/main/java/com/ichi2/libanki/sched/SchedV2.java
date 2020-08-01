@@ -298,49 +298,8 @@ public class SchedV2 extends AbstractSched {
      * *******************************************
      */
 
-    /**
-     * Return the next due card, or null.
-     */
-    protected Card _getCard() {
-        // learning card due?
-        Card c = _getLrnCard();
-        if (c != null) {
-            return c;
-        }
-        // new first, or time for one?
-        if (_timeForNewCard()) {
-            c = _getNewCard();
-            if (c != null) {
-                return c;
-            }
-        }
-        // Day learning first and card due?
-        boolean dayLearnFirst = mCol.getConf().optBoolean("dayLearnFirst", false);
-        if (dayLearnFirst) {
-            c = _getLrnDayCard();
-            if (c != null) {
-                return c;
-            }
-        }
-        // Card due for review?
-        c = _getRevCard();
-        if (c != null) {
-            return c;
-        }
-        // day learning card due?
-        if (!dayLearnFirst) {
-            c = _getLrnDayCard();
-            if (c != null) {
-                return c;
-            }
-        }
-        // New cards left?
-        c = _getNewCard();
-        if (c != null) {
-            return c;
-        }
-        // collapse or finish
-        return _getLrnCard(true);
+    protected boolean dayLearnFirst() {
+        return mCol.getConf().optBoolean("dayLearnFirst", false);
     }
 
 

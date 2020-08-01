@@ -154,6 +154,53 @@ public abstract class AbstractSched {
     /** Either mTime or Utils's intTime depending on scheduler */
     protected abstract long intTime();
     protected abstract double now();
+    protected abstract boolean dayLearnFirst();
+
+
+    /**
+     * Return the next due card, or null.
+     */
+    protected Card _getCard() {
+        // learning card due?
+        Card c = _getLrnCard();
+        if (c != null) {
+            return c;
+        }
+        // new first, or time for one?
+        if (_timeForNewCard()) {
+            c = _getNewCard();
+            if (c != null) {
+                return c;
+            }
+        }
+        // Day learning first and card due?
+        boolean dayLearnFirst = dayLearnFirst();
+        if (dayLearnFirst) {
+            c = _getLrnDayCard();
+            if (c != null) {
+                return c;
+            }
+        }
+        // Card due for review?
+        c = _getRevCard();
+        if (c != null) {
+            return c;
+        }
+        // day learning card due?
+        c = _getLrnDayCard();
+        if (c != null) {
+            return c;
+        }
+        // New cards left?
+        if (!dayLearnFirst) {
+            c = _getNewCard();
+            if (c != null) {
+                return c;
+            }
+        }
+        // collapse or finish
+        return _getLrnCard(true);
+    }
     /**
      * Pop the next card from the queue. null if finished.
      */
@@ -180,8 +227,6 @@ public abstract class AbstractSched {
         }
         return card;
     }
-
-    protected abstract Card _getCard();
 
     public void reset() {
         _updateCutoff();
