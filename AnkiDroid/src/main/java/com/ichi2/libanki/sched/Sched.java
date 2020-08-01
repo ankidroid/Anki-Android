@@ -256,6 +256,12 @@ public class Sched extends SchedV2 {
      * *******************************************
      */
 
+
+    protected boolean dayLearnFirst() {
+        return false;
+    }
+
+
     /**
      * Return the next due card, or null.
      */
@@ -273,6 +279,14 @@ public class Sched extends SchedV2 {
                 return c;
             }
         }
+        // Day learning first and card due?
+        boolean dayLearnFirst = dayLearnFirst();
+        if (dayLearnFirst) {
+            c = _getLrnDayCard();
+            if (c != null) {
+                return c;
+            }
+        }
         // Card due for review?
         c = _getRevCard();
         if (c != null) {
@@ -284,9 +298,11 @@ public class Sched extends SchedV2 {
             return c;
         }
         // New cards left?
-        c = _getNewCard();
-        if (c != null) {
-            return c;
+        if (!dayLearnFirst) {
+            c = _getNewCard();
+            if (c != null) {
+                return c;
+            }
         }
         // collapse or finish
         return _getLrnCard(true);

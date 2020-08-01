@@ -569,6 +569,9 @@ public class SchedV2 extends AbstractSched {
      * *******************************************
      */
 
+    protected boolean dayLearnFirst() {
+        return mCol.getConf().optBoolean("dayLearnFirst", false);
+    }
     /**
      * Return the next due card, or null.
      */
@@ -586,7 +589,7 @@ public class SchedV2 extends AbstractSched {
             }
         }
         // Day learning first and card due?
-        boolean dayLearnFirst = mCol.getConf().optBoolean("dayLearnFirst", false);
+        boolean dayLearnFirst = dayLearnFirst();
         if (dayLearnFirst) {
             c = _getLrnDayCard();
             if (c != null) {

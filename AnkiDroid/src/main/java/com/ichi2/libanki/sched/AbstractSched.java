@@ -31,6 +31,7 @@ public abstract class AbstractSched {
      * Pop the next card from the queue. null if finished.
      */
     protected Collection mCol;
+    protected abstract boolean dayLearnFirst();
     public abstract Card getCard();
     public abstract void reset();
     /** Ensures that reset is executed before the next card is selected */
