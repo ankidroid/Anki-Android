@@ -1348,7 +1348,7 @@ public class Sched extends SchedV2 {
         mCol.getDb().execute(
                 "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
                         + Utils.ids2str(ids),
-                Utils.intTime(), mCol.usn());
+                intTime(), mCol.usn());
     }
 
 
