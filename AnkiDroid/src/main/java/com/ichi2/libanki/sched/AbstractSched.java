@@ -50,10 +50,17 @@ public abstract class AbstractSched {
     @Consts.CARD_QUEUE
     public abstract int countIdx(Card card);
     public abstract int answerButtons(Card card);
+
+
     /**
      * Unbury all buried cards in all decks
      */
-    public abstract void unburyCards();
+    public void unburyCards() {
+        mCol.log(mCol.getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet()));
+        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet());
+    }
+
+
     public abstract void unburyCardsForDeck();
     public abstract void _updateStats(Card card, String type, long cnt);
     public abstract void extendLimits(int newc, int rev);

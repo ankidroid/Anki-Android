@@ -2296,15 +2296,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /**
-     * Unbury all buried cards in all decks
-     */
-    public void unburyCards() {
-        mCol.log(mCol.getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet()));
-        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet());
-    }
-
-
     public void unburyCardsForDeck() {
         unburyCardsForDeck(ALL);
     }

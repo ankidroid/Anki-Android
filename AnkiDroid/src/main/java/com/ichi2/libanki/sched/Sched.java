@@ -188,8 +188,7 @@ public class Sched extends SchedV2 {
     @Override
     public void unburyCards() {
         mCol.getConf().put("lastUnburied", mToday);
-        mCol.log(mCol.getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet()));
-        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet());
+        super.unburyCards();
     }
 
 
