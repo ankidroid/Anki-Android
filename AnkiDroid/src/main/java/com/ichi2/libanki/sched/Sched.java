@@ -91,6 +91,9 @@ public class Sched extends SchedV2 {
         super(col);
     }
 
+    protected double now() {
+        return Utils.now();
+    }
 
     @Override
     public void answerCard(Card card, int ease) {
