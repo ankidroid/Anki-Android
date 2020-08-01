@@ -603,7 +603,7 @@ public class Sched extends SchedV2 {
     private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
-                    Utils.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
+                    now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
         } catch (SQLiteConstraintException e) {
             try {
                 Thread.sleep(10);
