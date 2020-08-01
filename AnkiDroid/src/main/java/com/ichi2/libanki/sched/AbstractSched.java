@@ -28,6 +28,13 @@ public abstract class AbstractSched {
      * Pop the next card from the queue. null if finished.
      */
     protected Collection mCol;
+
+
+    /**
+     *
+     * @return current time, according to mTime in V2 and real current time in V1
+     */
+    protected abstract double now();
     public abstract Card getCard();
     public abstract void reset();
     /** Ensures that reset is executed before the next card is selected */

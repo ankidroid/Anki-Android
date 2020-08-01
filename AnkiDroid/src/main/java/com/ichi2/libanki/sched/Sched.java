@@ -92,6 +92,9 @@ public class Sched extends SchedV2 {
         super(col);
     }
 
+    protected double now() {
+        return Utils.now();
+    }
 
     @Override
     public void answerCard(Card card, @Consts.BUTTON_TYPE int ease) {
@@ -1380,7 +1383,7 @@ public class Sched extends SchedV2 {
         removeLrn(cids);
         mCol.log(cids);
         mCol.getDb().execute("update cards set " + queueIsBuriedSnippet() + ",mod=?,usn=? where id in " + Utils.ids2str(cids),
-                Utils.now(), mCol.usn());
+                now(), mCol.usn());
     }
 
     /**
