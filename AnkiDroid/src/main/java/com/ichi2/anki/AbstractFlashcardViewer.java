@@ -33,6 +33,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
+import androidx.core.net.ConnectivityManagerCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
 import android.text.SpannableString;
@@ -3591,6 +3593,22 @@ see card.js for available functions
         @JavascriptInterface
         public boolean ankiIsInNightMode() {
             return isInNightMode();
+        }
+
+        @JavascriptInterface
+        public boolean ankiIsActiveNetworkMetered() {
+            try {
+                ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+                if (cm == null) {
+                    Timber.w("ConnectivityManager not found - assuming metered connection");
+                    return true;
+                }
+                return ConnectivityManagerCompat.isActiveNetworkMetered(cm);
+            } catch (Exception e) {
+                Timber.w(e, "Exception obtaining metered connection - assuming metered connection");
+                return true;
+            }
         }
     }
 }
