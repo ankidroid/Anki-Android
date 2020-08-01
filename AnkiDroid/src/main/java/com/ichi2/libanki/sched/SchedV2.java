@@ -2297,12 +2297,6 @@ public class SchedV2 extends AbstractSched {
         int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : Consts.QUEUE_TYPE_SIBLING_BURIED;
     }
 
-    protected void buryCards(long[] cids, int queue) {
-        mCol.log(cids);
-        mCol.getDb().execute("update cards set queue=?,mod=?,usn=? where id in " + Utils.ids2str(cids),
-                queue, now(), mCol.usn());
-    }
-
     public void buryCards(long[] cids, boolean manual) {
         int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : Consts.QUEUE_TYPE_SIBLING_BURIED;
         buryCards(cids, queue);

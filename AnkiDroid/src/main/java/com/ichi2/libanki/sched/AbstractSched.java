@@ -14,6 +14,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Utils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -121,6 +122,19 @@ public abstract class AbstractSched {
      * Unsuspend cards
      */
     public abstract void unsuspendCards(long[] ids);
+
+
+    /** Bury cards of cids with this specific queue.
+     *
+     * Should be called through another buryCards method to determine the queue. */
+    protected void buryCards(long[] cids, int queue) {
+        mCol.log(cids);
+        mCol.getDb().execute("update cards set queue=?,mod=?,usn=? where id in " + Utils.ids2str(cids),
+                queue, now(), mCol.usn());
+    }
+
+    /** Bury th cards of the array. Manually buried in sched V2. SIBLING buried in V1 since it's the only kind of buried
+     * which exists. */
     public abstract void buryCards(long[] cids);
     @VisibleForTesting
     public abstract void buryCards(long[] cids, boolean manual);
