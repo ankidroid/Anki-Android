@@ -32,6 +32,9 @@ public abstract class AbstractSched {
      * Pop the next card from the queue. null if finished.
      */
     protected Collection mCol;
+
+    /** Either mTime or Utils's intTime depending on scheduler */
+    protected abstract long intTime();
     public abstract Card getCard();
     public abstract void reset();
     /** Ensures that reset is executed before the next card is selected */

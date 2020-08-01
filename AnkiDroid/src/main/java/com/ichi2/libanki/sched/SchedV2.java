@@ -184,6 +184,10 @@ public class SchedV2 extends AbstractSched {
         _updateCutoff();
     }
 
+    @Override
+    protected long intTime() {
+        return mTime.intTime();
+    }
 
     /**
      * Pop the next card from the queue. null if finished.

@@ -92,6 +92,10 @@ public class Sched extends SchedV2 {
         super(col);
     }
 
+    @Override
+    protected long intTime() {
+        return Utils.intTime();
+    }
 
     @Override
     public void answerCard(Card card, @Consts.BUTTON_TYPE int ease) {
