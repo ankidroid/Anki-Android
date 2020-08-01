@@ -184,6 +184,10 @@ public class SchedV2 extends AbstractSched {
         _updateCutoff();
     }
 
+    protected long intTime() {
+        return mTime.intTime();
+    }
+
 
     /**
      * Pop the next card from the queue. null if finished.
@@ -2266,7 +2270,7 @@ public class SchedV2 extends AbstractSched {
         mCol.getDb().execute(
                 "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
                         + Utils.ids2str(ids),
-                mTime.intTime(), mCol.usn());
+                intTime(), mCol.usn());
     }
 
 
