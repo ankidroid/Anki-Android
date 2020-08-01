@@ -57,6 +57,7 @@ import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
@@ -612,7 +613,8 @@ public class Sched extends SchedV2 {
     }
 
 
-    private void removeLrn() {
+    @VisibleForTesting
+    public void removeLrn() {
     	removeLrn(null);
     }
 

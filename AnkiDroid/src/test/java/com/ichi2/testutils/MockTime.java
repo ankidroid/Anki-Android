@@ -22,21 +22,30 @@ import java.util.Date;
 
 public class MockTime implements Time {
 
-    private final long mTime;
+    private final int mStep;
+    private long mTime;
+
 
     public MockTime(long time) {
-        mTime = time;
+        this(time, 0);
     }
+
+
+    public MockTime(long time, int step) {
+        this.mTime = time;
+        this.mStep = step;
+    }
+
 
     @Override
     public long time() {
-        return mTime;
+        return getCurrentTime();
     }
 
 
     @Override
     public Date getCurrentDate() {
-        return new Date(mTime);
+        return new Date(getCurrentTime());
     }
 
     /**These need confirmation */
@@ -49,6 +58,13 @@ public class MockTime implements Time {
 
     @Override
     public double now() {
-        return (double)mTime / 1000.0d;
+        return (double) getCurrentTime() / 1000.0d;
+    }
+
+
+    private long getCurrentTime() {
+        long mTime = this.mTime;
+        this.mTime += mStep;
+        return mTime;
     }
 }

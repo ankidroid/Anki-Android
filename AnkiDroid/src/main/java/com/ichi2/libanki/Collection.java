@@ -17,6 +17,7 @@
 
 package com.ichi2.libanki;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
@@ -37,6 +38,7 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
@@ -206,6 +208,7 @@ public class Collection {
         }
     }
 
+    // Note: Additional members in the class duplicate this
     private void _loadScheduler() {
         int ver = schedVer();
         if (ver == 1) {
@@ -340,6 +343,10 @@ public class Collection {
 
     public synchronized void save(long mod) {
         save(null, mod);
+    }
+
+    public synchronized void save(String name) {
+        save(name, 0);
     }
 
 
@@ -1139,6 +1146,10 @@ public class Collection {
     /** Return a list of card ids */
     public List<Long> findCards(String search, String order) {
         return new Finder(this).findCards(search, order);
+    }
+
+    public List<Long> findCards(String search, boolean order) {
+        return findCards(search, order, null);
     }
 
     public List<Long> findCards(String search, boolean order, CollectionTask task) {
@@ -2073,6 +2084,18 @@ public class Collection {
         }
         mSched.setReportLimit(reportLimit);
         return mSched;
+    }
+
+
+    //This duplicates _loadScheduler (but returns the value and sets the report limit).
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public void replaceSchedulerForTests(Time time) {
+        int ver = schedVer();
+        if (ver == 1) {
+            throw new IllegalStateException("Not Implemented");
+        } else if (ver == 2) {
+            mSched = new SchedV2(this, time);
+        }
     }
 
     /** Allows a mock db to be inserted for testing */

@@ -23,6 +23,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 
@@ -115,6 +116,8 @@ public abstract class AbstractSched {
      */
     public abstract void unsuspendCards(long[] ids);
     public abstract void buryCards(long[] cids);
+    @VisibleForTesting
+    public abstract void buryCards(long[] cids, boolean manual);
     /**
      * Bury all cards for note until next session.
      * @param nid The id of the targeted note.
