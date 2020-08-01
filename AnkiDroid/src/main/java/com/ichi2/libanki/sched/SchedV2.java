@@ -82,8 +82,6 @@ public class SchedV2 extends AbstractSched {
     public static final int RESCHEDULE_FACTOR = Consts.STARTING_FACTOR;
 
     private String mName = "std2";
-
-    private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
     /* The next card that will be sent to the reviewer. I.e. the result of a second call to getCard, which is not the
      * current card nor a sibling.
      */

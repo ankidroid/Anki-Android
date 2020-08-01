@@ -77,8 +77,6 @@ public class Sched extends SchedV2 {
 
 
 
-    private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
-
     // Queues
     private LinkedList<Long> mRevDids = new LinkedList<>();
 
