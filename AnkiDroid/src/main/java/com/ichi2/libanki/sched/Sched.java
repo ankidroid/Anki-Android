@@ -407,7 +407,7 @@ public class Sched extends SchedV2 {
     @Override
     protected Card _getLrnCard(boolean collapse) {
         if (_fillLrn()) {
-            double cutoff = Utils.now();
+            double cutoff = now();
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
