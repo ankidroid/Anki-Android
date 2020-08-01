@@ -27,6 +27,13 @@ import timber.log.Timber;
 
 
 public abstract class AbstractSched {
+    /**
+     * The card currently being reviewed.
+     *
+     * Must not be returned during prefetching (as it is currently shown)
+     */
+    protected Card mCurrentCard;
+
     /** Depending on the scheduler:
      * * number of cards currently in learning or
      * * number of repetition of cards in learning assuming all cards are good*/

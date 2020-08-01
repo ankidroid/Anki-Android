@@ -132,12 +132,6 @@ public class SchedV2 extends AbstractSched {
     // Not in libanki
     protected WeakReference<Activity> mContextReference;
 
-    /**
-     * The card currently being reviewed.
-     *
-     * Must not be returned during prefetching (as it is currently shown)
-     */
-    protected Card mCurrentCard;
     /** The list of parent decks of the current card.
      * Cached for performance .
 
