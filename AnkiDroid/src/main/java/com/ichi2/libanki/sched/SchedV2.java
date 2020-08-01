@@ -1529,12 +1529,16 @@ public class SchedV2 extends AbstractSched {
      * learning and relearning cards may be seconds-based or day-based;
      * other types map directly to queues
      */
-    private String _restoreQueueSnippet() {
+    protected String _restoreQueueSnippet() {
         return "queue = (case when type in (" + Consts.CARD_TYPE_LRN + "," + Consts.CARD_TYPE_RELEARNING + ") then\n" +
                 "  (case when (case when odue then odue else due end) > 1000000000 then 1 else " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " end)\n" +
                 "else\n" +
                 "  type\n" +
                 "end)  ";
+    }
+
+    protected String queueIsBuriedSnippet() {
+        return " queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ") ";
     }
 
     /**
@@ -1579,8 +1583,8 @@ public class SchedV2 extends AbstractSched {
      * Unbury all buried cards in all decks
      */
     public void unburyCards() {
-        mCol.log(mCol.getDb().queryLongList("select id from cards where queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")"));
-        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")");
+        mCol.log(mCol.getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet()));
+        mCol.getDb().execute("update cards set " + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet());
     }
 
 
@@ -1597,7 +1601,7 @@ public class SchedV2 extends AbstractSched {
         String queue;
         switch (type) {
             case ALL :
-                queue = "queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")";
+                queue = queueIsBuriedSnippet();
                 break;
             case MANUAL:
                 queue = "queue = " + Consts.QUEUE_TYPE_MANUALLY_BURIED;
