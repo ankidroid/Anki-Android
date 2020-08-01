@@ -103,7 +103,6 @@ public class SchedV2 extends AbstractSched {
 
     // Queues
     protected final LinkedList<Long> mNewQueue = new LinkedList<>();
-    protected final LinkedList<LrnCard> mLrnQueue = new LinkedList<>();
     protected final LinkedList<Long> mLrnDayQueue = new LinkedList<>();
     protected final LinkedList<Long> mRevQueue = new LinkedList<>();
 

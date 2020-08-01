@@ -18,6 +18,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,6 +55,9 @@ public abstract class AbstractSched {
      * Must not be returned during prefetching (as it is currently shown)
      */
     protected Card mCurrentCard;
+
+    /** The next cards in same day learning to see. */
+    protected final LinkedList<LrnCard> mLrnQueue = new LinkedList<>();
 
     /** Depending on the scheduler:
      * * number of cards currently in learning or
