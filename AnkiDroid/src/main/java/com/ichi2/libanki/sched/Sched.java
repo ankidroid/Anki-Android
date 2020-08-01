@@ -1376,9 +1376,9 @@ public class Sched extends SchedV2 {
     @Override
     public void buryCards(long[] cids, boolean manual) {
         // The boolean is useless here. However, it ensures that we are override the method with same parameter in SchedV2.
-        mCol.log(cids);
         remFromDyn(cids);
         removeLrn(cids);
+        mCol.log(cids);
         mCol.getDb().execute("update cards set " + queueIsBuriedSnippet() + ",mod=?,usn=? where id in " + Utils.ids2str(cids),
                 Utils.now(), mCol.usn());
     }
