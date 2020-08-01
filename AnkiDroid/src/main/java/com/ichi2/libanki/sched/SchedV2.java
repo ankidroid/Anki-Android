@@ -32,6 +32,7 @@ import android.text.style.StyleSpan;
 import android.util.Pair;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.ManuallyReportedException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -169,7 +170,7 @@ public class SchedV2 extends AbstractSched {
     /** we need a constructor as the constructor performs work
      * involving the dependency, so we can't use setter injection */
     @VisibleForTesting
-    SchedV2(Collection col, Time time) {
+    public SchedV2(Collection col, Time time) {
         super();
         this.mTime = time;
         mCol = col;
@@ -2281,7 +2282,8 @@ public class SchedV2 extends AbstractSched {
         buryCards(cids, true);
     }
 
-
+    @Override
+    @VisibleForTesting
     public void buryCards(long[] cids, boolean manual) {
         int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : Consts.QUEUE_TYPE_SIBLING_BURIED;
         mCol.log(cids);

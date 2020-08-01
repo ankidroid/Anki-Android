@@ -30,6 +30,7 @@ import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 
 import com.ichi2.utils.DeckComparator;
+import com.ichi2.utils.DeckNameComparator;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
@@ -442,6 +443,13 @@ public class Decks {
         return decks;
     }
 
+    @VisibleForTesting
+    public List<String> allSortedNames() {
+        List<String> names = allNames();
+        Collections.sort(names, DeckNameComparator.instance);
+        return names;
+    }
+
 
     public Long[] allIds() {
         return mDecks.keySet().toArray(new Long[mDecks.keySet().size()]);
@@ -568,6 +576,7 @@ public class Decks {
     }
 
 
+    /* Buggy implementation. Keep as first draft if we want to use it again
     public void renameForDragAndDrop(Long draggedDeckDid, Long ontoDeckDid) throws DeckRenameException {
         Deck draggedDeck = get(draggedDeckDid);
         String draggedDeckName = draggedDeck.getString("name");
@@ -593,6 +602,7 @@ public class Decks {
             return true;
         }
     }
+    */
 
 
     private boolean _isParent(String parentDeckName, String childDeckName) {
