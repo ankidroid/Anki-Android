@@ -184,6 +184,9 @@ public class SchedV2 extends AbstractSched {
         _updateCutoff();
     }
 
+    protected double now() {
+        return mTime.now();
+    }
 
     /**
      * Pop the next card from the queue. null if finished.
