@@ -131,6 +131,9 @@ public abstract class AbstractSched {
     protected WeakReference<Activity> mContextReference;
 
 
+    protected double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
+
+
     protected static class LrnCard implements Comparable<LrnCard> {
         private final long mCid;
         private final long mDue;
