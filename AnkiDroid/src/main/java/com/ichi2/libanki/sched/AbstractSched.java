@@ -3,6 +3,7 @@ package com.ichi2.libanki.sched;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.util.Pair;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -176,6 +178,42 @@ public abstract class AbstractSched {
     public abstract void resetCards(Long[] ids);
     /** Some sql indicating whether queue is one of the learn type of this scheduler*/
     protected abstract String isLrnQueueSnippet();
+
+    protected abstract long currentCardId();
+    // sub-day learning
+    protected boolean _fillLrn() {
+        if (mLrnCount == 0) {
+            return false;
+        }
+        if (!mLrnQueue.isEmpty()) {
+            return true;
+        }
+        long cutoff = cutoff();
+        Cursor cur = null;
+        mLrnQueue.clear();
+        try {
+            /* Difference with upstream:
+             * Current card can't come in the queue.
+             *
+             * In standard usage, a card is not requested before the previous card is marked as reviewed. However, if we
+             * decide to query a second card sooner, we don't want to get the same card a second time. This simulate
+             * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
+             * required when the card is reviewed.
+             */
+            cur = mCol.getDb().getDatabase().query(
+                    "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND " + isLrnQueueSnippet() +  " AND due < ? AND id != ? LIMIT ?",
+                    new Object[]{cutoff, currentCardId(), mReportLimit});
+            while (cur.moveToNext()) {
+            }
+            // as it arrives sorted by did first, we need to sort it
+            Collections.sort(mLrnQueue);
+            return !mLrnQueue.isEmpty();
+        } finally {
+            if (cur != null && !cur.isClosed()) {
+                cur.close();
+            }
+        }
+    }
     public abstract void sortCards(long[] cids, int start);
     public abstract void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift);
     public abstract void randomizeCards(long did);
