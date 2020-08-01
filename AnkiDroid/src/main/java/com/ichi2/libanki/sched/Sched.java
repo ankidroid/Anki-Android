@@ -1374,7 +1374,7 @@ public class Sched extends SchedV2 {
         remFromDyn(cids);
         removeLrn(cids);
         mCol.getDb().execute("update cards set queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + ",mod=?,usn=? where id in " + Utils.ids2str(cids),
-                Utils.now(), mCol.usn());
+                now(), mCol.usn());
     }
 
     /**
