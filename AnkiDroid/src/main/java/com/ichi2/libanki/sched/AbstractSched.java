@@ -26,6 +26,9 @@ import timber.log.Timber;
 
 
 public abstract class AbstractSched {
+    /** Maximal number of cards to show in card counts. Need to be changed to 1000 when doing sanity check with ankiweb.*/
+    protected int mReportLimit;
+
     /**
      * Pop the next card from the queue. null if finished.
      */

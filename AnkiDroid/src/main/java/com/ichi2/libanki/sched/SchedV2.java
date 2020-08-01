@@ -85,7 +85,6 @@ public class SchedV2 extends AbstractSched {
     private boolean mHaveCustomStudy = true;
 
     protected int mQueueLimit;
-    protected int mReportLimit;
     private int mDynReportLimit;
     protected int mReps;
     protected boolean mHaveQueues;
