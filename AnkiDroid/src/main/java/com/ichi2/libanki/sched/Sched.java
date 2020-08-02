@@ -662,7 +662,14 @@ public class Sched extends SchedV2 {
         return _deckNewLimit(did, d -> _deckRevLimitSingle(d));
     }
 
-
+    /**
+     * Maximal number of rev card still to see today in deck d. It's computed as:
+     * the number of rev card to see by day according
+     * minus the number of rev cards seen today in deck d or a descendant
+     * plus the number of extra cards to see today in deck d, a parent or a descendant.
+     *
+     * Limits of its ancestors are not applied.  Current card is treated the same way as other cards.
+     * */
     @Override
     protected int _deckRevLimitSingle(Deck d) {
         if (d.getInt("dyn") != 0) {
