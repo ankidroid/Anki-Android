@@ -47,6 +47,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -257,7 +258,13 @@ public class NoteEditor extends AnkiActivity {
                 mIntent = new Intent();
                 mIntent.putExtra(EXTRA_ID, getIntent().getStringExtra(EXTRA_ID));
             } else if (!mEditFields.isEmpty()) {
-                mEditFields.getFirst().requestFocus();
+                FieldEditText firstEditField = mEditFields.getFirst();
+                // Required on my Android 9 Phone to show keyboard: https://stackoverflow.com/a/7784904
+                firstEditField.postDelayed(() -> {
+                    firstEditField.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(firstEditField, InputMethodManager.SHOW_IMPLICIT);
+                }, 200);
             }
             if (!mCloseAfter && (mProgressDialog != null) && mProgressDialog.isShowing()) {
                 try {
