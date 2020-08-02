@@ -57,8 +57,11 @@ public class RescheduleDialog extends IntegerDialog {
 
     @Nullable
     private static String getContentString(Resources resources, Card currentCard) {
-        //#5595 - Help a user reschedule cards by showing them the current interval.
+        if (currentCard.isNew()) {
+            return resources.getString(R.string.reschedule_card_dialog_new_card_warning);
+        }
 
+        //#5595 - Help a user reschedule cards by showing them the current interval.
         if (!currentCard.isReview() || currentCard.isDynamic()) {
             //DEFECT: We should be able to calculate this for all card types.
             return null;
