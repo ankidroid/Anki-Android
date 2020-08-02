@@ -4,6 +4,7 @@ import android.content.res.Resources;
 
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 
 import org.jetbrains.annotations.NotNull;
@@ -61,13 +62,18 @@ public class RescheduleDialog extends IntegerDialog {
             return resources.getString(R.string.reschedule_card_dialog_new_card_warning);
         }
 
-        //#5595 - Help a user reschedule cards by showing them the current interval.
-        if (!currentCard.isReview() || currentCard.isDynamic()) {
-            //DEFECT: We should be able to calculate this for all card types.
+        // #5595 - Help a user reschedule cards by showing them the current interval.
+        // DEFECT: We should be able to calculate this for all card types - not yet performed for non-review or dynamic cards
+        if (!currentCard.isReview()) {
             return null;
         }
 
-        return resources.getQuantityString(R.plurals.reschedule_card_dialog_interval, currentCard.getIvl(), currentCard.getIvl());
+        String message = resources.getString(R.string.reschedule_card_dialog_warning_ease_reset, SchedV2.RESCHEDULE_FACTOR / 10);
+        if (currentCard.isDynamic()) {
+            return message;
+        }
+
+        return message + "\n\n" + resources.getQuantityString(R.plurals.reschedule_card_dialog_interval, currentCard.getIvl(), currentCard.getIvl());
     }
 
 }
