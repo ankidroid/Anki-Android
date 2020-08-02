@@ -24,27 +24,65 @@ import timber.log.Timber;
 
 
 public abstract class AbstractSched {
-    /**
-     * Pop the next card from the queue. null if finished.
-     */
     protected Collection mCol;
+
+    /**
+     * Return a card due today in current deck.
+     * Between two successive calls, either the last card returned by getCard should be sent to `answerCard`
+     * or the scheduler should be reset (i.e. if there is a change of deck, an action undone, a card buried/rescheduled/suspended)
+     */
     public abstract Card getCard();
+
+    /**
+     * The collection saves some numbers such as counts, queues of cards to review, queues of decks potentially having some cards.
+     * Reset all of this and compute from scratch. This occurs because anything else than the sequence of getCard/answerCard did occur.
+     */
     public abstract void reset();
+
+
     /** Ensures that reset is executed before the next card is selected */
     public abstract void deferReset();
     /**
      * @param undoneCard a card undone, send back to the reviewer.*/
     public abstract void deferReset(Card undoneCard);
+
+    /**
+     * Does all actions required to answer the card. That is:
+     * Change its interval, due value, queue, mod time, usn, number of step left (if in learning)
+     * Put it in learning if required
+     * Log the review.
+     * Remove from filtered if required.
+     * Remove the siblings for the queue for same day spacing
+     * Bury siblings if required by the options
+     *  */
     public abstract void answerCard(Card card, @Consts.BUTTON_TYPE int ease);
+
+    /**
+     * The number of cards new, rev, and lrn in the selected deck.
+     * In sched V1, the number of remaining steps for cards in learning is returned
+     * In sched V2, the number of cards in learning is returned.
+     * The card currently in the reviewer is not counted.
+     *
+     * Technically, it counts the number of cards to review in current deck last time `reset` was called
+     * Minus the number of cards returned by getCard.
+     */
+    // TODO: consider counting the card currently in the reviewer, this would simplify the code greatly
+    // We almost never want to consider the card in the reviewer differently, and a lot of code is added to correct this.
     public abstract int[] counts();
+    /**
+     * Same as counts(), but also count `card`. In practice, we use it because `card` is in the reviewer and that is the
+     * number we actually want.
+     */
     public abstract int[] counts(Card card);
     /**
      * Return counts over next DAYS. Includes today.
      */
     public abstract int dueForecast();
     public abstract int dueForecast(int days);
+    /** Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.*/
     @Consts.CARD_QUEUE
     public abstract int countIdx(Card card);
+    /** Number of buttons to show in the reviewer for `card`.*/
     public abstract int answerButtons(Card card);
     /**
      * Unbury all buried cards in all decks
@@ -158,9 +196,13 @@ public abstract class AbstractSched {
     public abstract int getToday();
     public abstract void setToday(int today);
     public abstract long getDayCutoff();
+
+    /** Number of repetitions today*/
     public abstract int getReps();
     public abstract void setReps(int reps);
+    /** Number of cards in the current decks, its descendants and ancestors. */
     public abstract int cardCount();
+
     public abstract int eta(int[] counts);
     /**
      * Return an estimate, in minutes, for how long it will take to complete all the reps in {@code counts}.
@@ -180,6 +222,10 @@ public abstract class AbstractSched {
      * @param reload Force rebuild of estimator rates using the revlog.
      */
     public abstract int eta(int[] counts, boolean reload);
+    /**
+     * Change the counts to reflect that `card` should not be counted anymore. In practice, it means that the card has
+     * been sent to the reviewer. Either through `getCard()` or through `undo`. Assumes that card's queue has not yet
+     * changed. */
     public abstract void decrementCounts(Card card);
     public abstract boolean leechActionSuspend(Card card);
     public abstract void setContext(WeakReference<Activity> contextReference);
@@ -191,6 +237,9 @@ public abstract class AbstractSched {
         int operation(Deck g);
     }
 
+    /** Given a deck, compute the number of cards to see today, taking its pre-computed limit into consideration.  It
+     * considers either review or new cards. Used by WalkingCount to consider all subdecks and parents of a specific
+     * decks.*/
     public interface CountMethod {
         int operation(long did, int lim);
     }
@@ -219,8 +268,12 @@ public abstract class AbstractSched {
     /**
      * Notifies the scheduler that the provided card is being reviewed. Ensures that a different card is prefetched.
      *
+     * Note that counts() does not consider current card, since number are decreased as soon as a card is sent to reviewer.
+     *
      * @param card the current card in the reviewer
      */
     public abstract void setCurrentCard(@NonNull Card card);
+    /** Notifies the scheduler that there is no more current card. This is the case when a card is answered, when the
+     * scheduler is reset... */
     public abstract void discardCurrentCard();
 }
