@@ -76,9 +76,9 @@ import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
 public class SchedV2 extends AbstractSched {
 
 
-
     // Not in libanki
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
+    public static final int RESCHEDULE_FACTOR = Consts.STARTING_FACTOR;
 
     private String mName = "std2";
     private boolean mHaveCustomStudy = true;
@@ -2421,7 +2421,7 @@ public class SchedV2 extends AbstractSched {
         Random rnd = new Random();
         for (long id : ids) {
             int r = rnd.nextInt(imax - imin + 1) + imin;
-            d.add(new Object[] { Math.max(1, r), r + t, mCol.usn(), mod, Consts.STARTING_FACTOR, id });
+            d.add(new Object[] { Math.max(1, r), r + t, mCol.usn(), mod, RESCHEDULE_FACTOR, id });
         }
         remFromDyn(ids);
         mCol.getDb().executeMany(
