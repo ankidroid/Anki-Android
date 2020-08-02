@@ -830,9 +830,8 @@ public class SchedV2 extends AbstractSched {
         long did = g.getLong("id");
         DeckConfig c = mCol.getDecks().confForDid(did);
         int lim = Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
-        if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_NEW, did)) {
-            lim--;
-        }
+        // The counts shown in the reviewer does not consider the current card. E.g. if it indicates 6 new card, it means, 6 new card including current card will be seen today.
+        // So currentCard does not have to be taken into consideration in this method
         return lim;
     }
 
@@ -1331,9 +1330,8 @@ public class SchedV2 extends AbstractSched {
         long did = d.getLong("id");
         DeckConfig c = mCol.getDecks().confForDid(did);
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
-        if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_REV, did)) {
-            lim --;
-        }
+        // The counts shown in the reviewer does not consider the current card. E.g. if it indicates 6 rev card, it means, 6 rev card including current card will be seen today.
+        // So currentCard does not have to be taken into consideration in this method
 
         if (parentLimit != null) {
             return Math.min(parentLimit, lim);
