@@ -693,4 +693,8 @@ public class Card implements Cloneable {
     public boolean isReview() {
         return this.getType() == Consts.CARD_TYPE_REV && this.getQueue() == Consts.QUEUE_TYPE_REV;
     }
+
+    public boolean isNew() {
+        return this.getType() == Consts.CARD_TYPE_NEW;
+    }
 }
