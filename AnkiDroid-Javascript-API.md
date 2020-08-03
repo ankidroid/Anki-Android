@@ -148,6 +148,18 @@ In full screen, a button can be added to show side navigation drawer.
 <button onclick="ankiShowNavDrawer()">Show Navigation Drawer</button>
 ```
 
+## Get fullscreen status
+### Name
+```AnkiDroidJS.ankiIsInFullscreen()```
+### Type of return value
+```Boolean```
+### Info
+Return fullscreen status in webview
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiIsInFullscreen());
+```
+
 ## Get show / hide status of topbar
 ### Name
 ```AnkiDroidJS.ankiIsTopbarShown()```
@@ -160,6 +172,17 @@ It can be used to show / hide custom topbar design. See [#6747](https://github.c
 console.log(AnkiDroidJS.ankiIsTopbarShown());
 ```
 
+## Night mode mode status
+### Name
+```AnkiDroidJS.ankiIsInNightMode()```
+### Type of return value
+```Boolean```
+### Info
+Get night mode status. It can used to toggle between custom ```css``` based on the status.
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiIsInNightMode());
+```
 
 ## Get status about metered connection
 ### Name
@@ -483,14 +506,17 @@ If want to hide card's button / text in current card when reviewing on Anki Desk
 For more view [Window.navigator](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator) and [Navigator userAgent Property](https://www.w3schools.com/jsref/prop_nav_useragent.asp)
 
 ## Linked issues & PR
-[#6521](https://github.com/ankidroid/Anki-Android/pull/6521)
-<br>[#6766](https://github.com/ankidroid/Anki-Android/pull/6766)
-<br>[#6377](https://github.com/ankidroid/Anki-Android/pull/6377) 
-<br>[#6784](https://github.com/ankidroid/Anki-Android/pull/6784)
-<br>[#6307](https://github.com/ankidroid/Anki-Android/pull/6307) 
-<br>[#6388](https://github.com/ankidroid/Anki-Android/pull/6388) 
-<br>[#6393](https://github.com/ankidroid/Anki-Android/pull/6393)
-<br>[#6747](https://github.com/ankidroid/Anki-Android/pull/6747) 
+[#6521 apiVersioning and developerContact implementation for AnkiDroid functions call from WebView](https://github.com/ankidroid/Anki-Android/pull/6521)
+<br>[#6377 apiVersioning and developerContact implementation for AndkiDroid functions call from WebView](https://github.com/ankidroid/Anki-Android/pull/6377) 
+<br>[#6307 Make available current card's and deck's details in WebView](https://github.com/ankidroid/Anki-Android/pull/6307) 
+<br>[#6388 Get next time for review in WebView](https://github.com/ankidroid/Anki-Android/pull/6388) 
+<br>[#6393 Get Cards info (Review, Lapses, Interval, Due, Queue) in WebView](https://github.com/ankidroid/Anki-Android/pull/6393)
+<br>[#6766 JS API: Add Remaining Card Properties](https://github.com/ankidroid/Anki-Android/pull/6766)
+<br>[#6784 Javascript API: Add ankiIsActiveNetworkMetered](https://github.com/ankidroid/Anki-Android/pull/6784)
+<br>[#6747 Get Topbar shown status in card](https://github.com/ankidroid/Anki-Android/pull/6747)
+<br>[#6387 Show options menu & navigation drawer using WebView](https://github.com/ankidroid/Anki-Android/pull/6387)
+<br>[#6567 Night mode status in Card](https://github.com/ankidroid/Anki-Android/pull/6567)
+<br>[#6470 Get value of fullscreen status in JavaScript](https://github.com/ankidroid/Anki-Android/pull/6470)
 
 ## Sample Decks 
 The implementation of above functionality can be found in this github repo.
