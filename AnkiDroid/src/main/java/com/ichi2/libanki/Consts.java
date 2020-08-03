@@ -99,6 +99,9 @@ public class Consts {
     // model types
     public static final int MODEL_STD = 0;
     public static final int MODEL_CLOZE = 1;
+    @Retention(SOURCE)
+    @IntDef({MODEL_STD, MODEL_CLOZE})
+    public @interface MODEL_TYPE {}
 
     public static final int STARTING_FACTOR = 2500;
 
