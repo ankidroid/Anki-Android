@@ -32,6 +32,7 @@ import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.SyncStatus;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -857,7 +858,7 @@ public class Decks {
     private void _recoverOrphans() {
         Long[] dids = allIds();
         boolean mod = mCol.getDb().getMod();
-        mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(dids));
+        SyncStatus.ignoreDatabaseModification(() -> mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(dids)));
         mCol.getDb().setMod(mod);
     }
 

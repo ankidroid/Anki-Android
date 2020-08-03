@@ -31,6 +31,9 @@ public enum SyncStatus {
     HAS_CHANGES,
     FULL_SYNC;
 
+    private static boolean sPauseCheckingDatabase = false;
+    private static boolean sMarkedInMemory = false;
+
 
     @NonNull
     public static SyncStatus getSyncStatus(@NonNull Supplier<Collection> getCol) {
@@ -55,7 +58,7 @@ public enum SyncStatus {
             return SyncStatus.FULL_SYNC;
         }
 
-        if (dataChanged()) {
+        if (hasDatabaseChanges()) {
             return SyncStatus.HAS_CHANGES;
         } else {
             return SyncStatus.NO_CHANGES;
@@ -70,21 +73,39 @@ public enum SyncStatus {
     }
 
 
-
     /** Whether data has been changed - to be converted to Rust */
-    public static boolean dataChanged() {
+    public static boolean hasDatabaseChanges() {
         return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("changesSinceLastSync", false);
     }
 
-
     /** To be converted to Rust */
     public static void markDataAsChanged() {
+        if (sPauseCheckingDatabase) {
+            return;
+        }
+        sMarkedInMemory = true;
         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).edit().putBoolean("changesSinceLastSync", true).apply();
     }
 
 
     /** To be converted to Rust */
     public static void markSyncCompleted() {
+        sMarkedInMemory = false;
         AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).edit().putBoolean("changesSinceLastSync", false).apply();
+    }
+
+
+    public static void ignoreDatabaseModification(@NonNull Runnable runnable) {
+        sPauseCheckingDatabase = true;
+        try {
+            runnable.run();
+        } finally {
+            sPauseCheckingDatabase = false;
+        }
+    }
+
+    /** Whether a change in data has been detected - used as a heuristic to stop slow operations */
+    public static boolean hasBeenMarkedAsChangedInMemory() {
+        return sMarkedInMemory;
     }
 }
