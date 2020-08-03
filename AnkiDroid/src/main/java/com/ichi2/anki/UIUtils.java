@@ -117,6 +117,10 @@ public class UIUtils {
 
 
     public static void saveCollectionInBackground() {
+        saveCollectionInBackground(false);
+    }
+
+    public static void saveCollectionInBackground(boolean syncIgnoresDatabaseModification) {
         if (CollectionHelper.getInstance().colIsOpen()) {
             CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
                 @Override
@@ -130,7 +134,7 @@ public class UIUtils {
                     Timber.d("saveCollectionInBackground: finished");
                 }
             };
-            CollectionTask.launchCollectionTask(SAVE_COLLECTION, listener);
+            CollectionTask.launchCollectionTask(SAVE_COLLECTION, listener, new TaskData(syncIgnoresDatabaseModification));
         }
     }
 }

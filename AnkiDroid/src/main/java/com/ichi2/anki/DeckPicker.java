@@ -919,7 +919,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         super.onStop();
         if (colIsOpen()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground();
+            // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
+            UIUtils.saveCollectionInBackground(true);
         }
     }
 
