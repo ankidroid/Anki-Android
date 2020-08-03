@@ -590,14 +590,14 @@ public class Sched extends SchedV2 {
     }
 
 
-    private void _logLrn(Card card, @Consts.BUTTON_TYPE int ease, JSONObject conf, boolean leaving, int type, int lastLeft) {
+    private void _logLrn(Card card, @Consts.BUTTON_TYPE int ease, JSONObject conf, boolean leaving, @Consts.REVLOG_TYPE int type, int lastLeft) {
         int lastIvl = -(_delayForGrade(conf, lastLeft));
         int ivl = leaving ? card.getIvl() : -(_delayForGrade(conf, card.getLeft()));
         log(card.getId(), mCol.usn(), ease, ivl, lastIvl, card.getFactor(), card.timeTaken(), type);
     }
 
 
-    private void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
+    private void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                     Utils.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
