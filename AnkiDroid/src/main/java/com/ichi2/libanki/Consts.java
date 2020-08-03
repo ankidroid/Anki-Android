@@ -68,6 +68,9 @@ public class Consts {
     public static final int REM_CARD = 0;
     public static final int REM_NOTE = 1;
     public static final int REM_DECK = 2;
+    @Retention(SOURCE)
+    @IntDef({REM_CARD, REM_NOTE, REM_DECK})
+    public @interface REM_TYPE {}
 
     // count display
     public static final int COUNT_ANSWERED = 0;

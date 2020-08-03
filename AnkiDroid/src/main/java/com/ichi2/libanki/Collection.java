@@ -529,7 +529,7 @@ public class Collection {
         }
     }
 
-    public void _logRem(java.util.Collection<Long> ids, int type) {
+    public void _logRem(java.util.Collection<Long> ids, @Consts.REM_TYPE int type) {
         for (long id : ids) {
             ContentValues values = new ContentValues();
             values.put("usn", usn());
