@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
+import com.ichi2.utils.DatabaseChangeDecorator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class DB {
                 .callback(getDBCallback())
                 .build();
         SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory().create(configuration);
-        mDatabase = helper.getWritableDatabase();
+        mDatabase = new DatabaseChangeDecorator(helper.getWritableDatabase());
         mDatabase.disableWriteAheadLogging();
         mDatabase.query("PRAGMA synchronous = 2", null);
         mMod = false;
