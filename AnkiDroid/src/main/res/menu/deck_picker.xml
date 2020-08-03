@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_sync"
         android:icon="@drawable/ic_sync_white_24dp"
-        android:title="@string/sync_title"
+        android:title="@string/sync_menu_title"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_undo"
