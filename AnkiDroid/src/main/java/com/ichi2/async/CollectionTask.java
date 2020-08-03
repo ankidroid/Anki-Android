@@ -723,17 +723,14 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             col.getDb().getDatabase().beginTransaction();
             try {
                 sched.deferReset();
-                Undoable undo;
+                // collect undo information
+                Undoable undo = revertToProvidedState(BURY_CARD, card);
                 switch (type) {
                     case BURY_CARD:
-                        // collect undo information
-                        undo = revertToProvidedState(BURY_CARD, card);
                         // then bury
                         sched.buryCards(new long[] { card.getId() });
                         break;
                     case BURY_NOTE:
-                        // collect undo information
-                        undo = revertToProvidedState(BURY_NOTE, card);
                         // then bury
                         sched.buryNote(note.getId());
                         break;
@@ -755,7 +752,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         for (int i = 0; i < cards.size(); i++) {
                             cids[i] = cards.get(i).getId();
                         }
-                        undo = revertToProvidedState(SUSPEND_NOTE, card);
                         // suspend note
                         sched.suspendCards(cids);
                         break;
