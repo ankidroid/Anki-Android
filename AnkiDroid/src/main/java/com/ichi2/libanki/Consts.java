@@ -28,6 +28,10 @@ public class Consts {
     public static final int NEW_CARDS_DISTRIBUTE = 0;
     public static final int NEW_CARDS_LAST = 1;
     public static final int NEW_CARDS_FIRST = 2;
+    @Retention(SOURCE)
+    @IntDef({NEW_CARDS_DISTRIBUTE, NEW_CARDS_LAST, NEW_CARDS_FIRST})
+    public @interface NEW_CARD_ORDER {}
+
 
     // new card insertion order
     public static final int NEW_CARDS_RANDOM = 0;
