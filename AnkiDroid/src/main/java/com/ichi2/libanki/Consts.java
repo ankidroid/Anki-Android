@@ -90,6 +90,9 @@ public class Consts {
     public static final int DYN_DUE = 6;
     public static final int DYN_REVADDED = 7;
     public static final int DYN_DUEPRIORITY = 8;
+    @Retention(SOURCE)
+    @IntDef({DYN_OLDEST, DYN_RANDOM, DYN_SMALLINT, DYN_BIGINT, DYN_LAPSES, DYN_ADDED, DYN_DUE, DYN_REVADDED, DYN_DUEPRIORITY})
+    public @interface DYN_PRIORITY {}
 
     public static final int DYN_MAX_SIZE = 99999;
 

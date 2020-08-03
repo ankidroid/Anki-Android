@@ -474,7 +474,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         JSONArray ar = dyn.getJSONArray("terms");
         ar.getJSONArray(0).put(0, "deck:\"" + deckToStudyName + "\" " + terms[0]);
         ar.getJSONArray(0).put(1, terms[1]);
-        ar.getJSONArray(0).put(2, terms[2]);
+        @Consts.DYN_PRIORITY int priority = (Integer) terms[2];
+        ar.getJSONArray(0).put(2, priority);
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");

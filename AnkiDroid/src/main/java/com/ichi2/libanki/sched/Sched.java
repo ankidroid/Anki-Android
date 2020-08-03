@@ -1011,7 +1011,7 @@ public class Sched extends SchedV2 {
      * @return The generated SQL to be suffixed to "select ... from ... order by "
      */
     @Override
-    protected String _dynOrder(int o, int l) {
+    protected String _dynOrder(@Consts.DYN_PRIORITY int o, int l) {
         String t;
         switch (o) {
             case Consts.DYN_OLDEST:
