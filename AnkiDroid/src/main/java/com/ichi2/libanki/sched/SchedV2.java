@@ -770,7 +770,7 @@ public class SchedV2 extends AbstractSched {
         if (mNewCount == 0) {
             return false;
         }
-        int spread;
+        @Consts.NEW_CARD_ORDER int spread;
         spread = mCol.getConf().getInt("newSpread");
         if (spread == Consts.NEW_CARDS_LAST) {
             return false;
