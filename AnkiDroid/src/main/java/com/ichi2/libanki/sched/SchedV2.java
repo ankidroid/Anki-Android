@@ -1015,11 +1015,11 @@ public class SchedV2 extends AbstractSched {
 
     protected void _answerLrnCard(Card card, int ease) {
         JSONObject conf = _lrnConf(card);
-        int type;
+        @Consts.CARD_TYPE int type;
         if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
             type = Consts.CARD_TYPE_REV;
         } else {
-            type = 0;
+            type = Consts.CARD_TYPE_NEW;
         }
 
         // lrnCount was decremented once when card was fetched

@@ -793,12 +793,12 @@ public class Collection {
      *             2 - when previewing in models dialog, all templates
      * @return list of cards
 	 */
-	public List<Card> previewCards(Note note, int type) {
+	public List<Card> previewCards(Note note, @Consts.CARD_TYPE int type) {
         int did = 0;
         return previewCards(note, type, did);
     }
 
-    public List<Card> previewCards(Note note, int type, int did) {
+    public List<Card> previewCards(Note note, @Consts.CARD_TYPE int type, int did) {
 	    ArrayList<JSONObject> cms = null;
 	    if (type == Consts.CARD_TYPE_NEW) {
 	        cms = findTemplates(note);
