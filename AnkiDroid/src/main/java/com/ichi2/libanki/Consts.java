@@ -36,6 +36,9 @@ public class Consts {
     // new card insertion order
     public static final int NEW_CARDS_RANDOM = 0;
     public static final int NEW_CARDS_DUE = 1;
+    @Retention(SOURCE)
+    @IntDef({NEW_CARDS_RANDOM, NEW_CARDS_DUE})
+    public @interface NEW_CARDS_INSERTION {}
 
     // Queue types
     public static final int QUEUE_TYPE_MANUALLY_BURIED = -3;
