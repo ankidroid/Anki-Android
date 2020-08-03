@@ -49,6 +49,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -112,8 +113,10 @@ import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Permissions;
+import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
@@ -611,7 +614,53 @@ public class DeckPicker extends NavigationDrawerActivity implements
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_empty_cards).setEnabled(sdCardAvailable);
+
+        // I haven't had an exception here, but it feels this may be flaky
+        try {
+            displaySyncBadge(menu);
+        } catch (Exception e) {
+            Timber.w(e, "Error Displaying Sync Badge");
+        }
+
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    private void displaySyncBadge(Menu menu) {
+        MenuItem syncMenu = menu.findItem(R.id.action_sync);
+        SyncStatus syncStatus = SyncStatus.getSyncStatus(this::getCol);
+        switch (syncStatus) {
+            case NO_CHANGES:
+            case INCONCLUSIVE:
+                BadgeDrawableBuilder.removeBadge(syncMenu);
+                syncMenu.setTitle(R.string.sync_menu_title);
+                break;
+            case HAS_CHANGES:
+                // Light orange icon
+                new BadgeDrawableBuilder(getResources())
+                        .withColor(ContextCompat.getColor(this, R.color.badge_warning))
+                        .replaceBadge(syncMenu);
+                syncMenu.setTitle(R.string.sync_menu_title);
+                break;
+            case NO_ACCOUNT:
+            case FULL_SYNC:
+                if (syncStatus == SyncStatus.NO_ACCOUNT) {
+                    syncMenu.setTitle(R.string.sync_menu_title_no_account);
+                } else if (syncStatus == SyncStatus.FULL_SYNC) {
+                    syncMenu.setTitle(R.string.sync_menu_title_full_sync);
+                }
+                // Orange-red icon with exclamation mark
+                new BadgeDrawableBuilder(getResources())
+                        .withText('!')
+                        .withColor(ContextCompat.getColor(this, R.color.badge_error))
+                        .replaceBadge(syncMenu);
+                break;
+            default:
+                Timber.w("Unhandled sync status: %s", syncStatus);
+                syncMenu.setTitle(R.string.sync_title);
+                break;
+        }
     }
 
 
@@ -835,6 +884,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         /** Complete task and enqueue fetching nonessential data for
          * startup. */
         CollectionTask.launchCollectionTask(LOAD_COLLECTION_COMPLETE);
+        // Update sync status (if we've come back from a screen)
+        supportInvalidateOptionsMenu();
     }
 
 
@@ -1783,6 +1834,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     Timber.i("Regular sync completed successfully");
                     showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
                 }
+                // Mark sync as completed - then refresh the sync icon
+                SyncStatus.markSyncCompleted();
+                supportInvalidateOptionsMenu();
+
                 updateDeckList();
                 WidgetStatus.update(DeckPicker.this);
                 if (mFragmented) {
