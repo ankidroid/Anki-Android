@@ -613,7 +613,7 @@ public class Syncer {
                             "SELECT oid, type FROM graves WHERE usn"
                                     + (mCol.getServer() ? (" >= " + mMinUsn) : (" = -1")), null);
             while (cur.moveToNext()) {
-                int type = cur.getInt(1);
+                @Consts.REM_TYPE int type = cur.getInt(1);
                 switch (type) {
                     case Consts.REM_CARD:
                         cards.put(cur.getLong(0));
