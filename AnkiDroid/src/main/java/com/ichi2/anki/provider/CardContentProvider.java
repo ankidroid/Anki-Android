@@ -1166,7 +1166,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void answerCard(Collection col, AbstractSched sched, Card cardToAnswer, int ease, long timeTaken) {
+    private void answerCard(Collection col, AbstractSched sched, Card cardToAnswer, @Consts.BUTTON_TYPE int ease, long timeTaken) {
         try {
             DB db = col.getDb();
             db.getDatabase().beginTransaction();

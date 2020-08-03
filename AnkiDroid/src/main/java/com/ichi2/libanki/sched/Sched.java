@@ -93,7 +93,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    public void answerCard(Card card, int ease) {
+    public void answerCard(Card card, @Consts.BUTTON_TYPE int ease) {
         mCol.log();
         mCol.markReview(card);
         discardCurrentCard();
@@ -423,7 +423,7 @@ public class Sched extends SchedV2 {
      * @param ease 1=no, 2=yes, 3=remove
      */
     @Override
-    protected void _answerLrnCard(Card card, int ease) {
+    protected void _answerLrnCard(Card card, @Consts.BUTTON_TYPE int ease) {
         JSONObject conf = _lrnConf(card);
         @Consts.CARD_TYPE int type;
         if (card.getODid() != 0 && !card.getWasNew()) {
@@ -590,14 +590,14 @@ public class Sched extends SchedV2 {
     }
 
 
-    private void _logLrn(Card card, int ease, JSONObject conf, boolean leaving, int type, int lastLeft) {
+    private void _logLrn(Card card, @Consts.BUTTON_TYPE int ease, JSONObject conf, boolean leaving, int type, int lastLeft) {
         int lastIvl = -(_delayForGrade(conf, lastLeft));
         int ivl = leaving ? card.getIvl() : -(_delayForGrade(conf, card.getLeft()));
         log(card.getId(), mCol.usn(), ease, ivl, lastIvl, card.getFactor(), card.timeTaken(), type);
     }
 
 
-    private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
+    private void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                     Utils.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
@@ -784,7 +784,7 @@ public class Sched extends SchedV2 {
      */
 
     @Override
-    protected void _answerRevCard(Card card, int ease) {
+    protected void _answerRevCard(Card card, @Consts.BUTTON_TYPE int ease) {
         int delay = 0;
         if (ease == Consts.BUTTON_ONE) {
             delay = _rescheduleLapse(card);
@@ -846,7 +846,7 @@ public class Sched extends SchedV2 {
     }
 
 
-    private void _rescheduleRev(Card card, int ease) {
+    private void _rescheduleRev(Card card, @Consts.BUTTON_TYPE int ease) {
         // update interval
         card.setLastIvl(card.getIvl());
         if (_resched(card)) {
@@ -873,7 +873,7 @@ public class Sched extends SchedV2 {
     /**
      * Ideal next interval for CARD, given EASE.
      */
-    private int _nextRevIvl(Card card, int ease) {
+    private int _nextRevIvl(Card card, @Consts.BUTTON_TYPE int ease) {
         long delay = _daysLate(card);
         int interval = 0;
         JSONObject conf = _revConf(card);
@@ -903,7 +903,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected void _updateRevIvl(Card card, int ease) {
+    protected void _updateRevIvl(Card card, @Consts.BUTTON_TYPE int ease) {
         try {
             int idealIvl = _nextRevIvl(card, ease);
             JSONObject conf = _revConf(card);
@@ -1279,7 +1279,7 @@ public class Sched extends SchedV2 {
      * Return the next interval for CARD, in seconds.
      */
     @Override
-    public long nextIvl(Card card, int ease) {
+    public long nextIvl(Card card, @Consts.BUTTON_TYPE int ease) {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
             return _nextLrnIvl(card, ease);
         } else if (ease == Consts.BUTTON_ONE) {
@@ -1297,7 +1297,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected long _nextLrnIvl(Card card, int ease) {
+    protected long _nextLrnIvl(Card card, @Consts.BUTTON_TYPE int ease) {
         // this isn't easily extracted from the learn code
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             card.setLeft(_startingLeft(card));

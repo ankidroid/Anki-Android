@@ -1308,7 +1308,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void answerCard(int ease) {
+    protected void answerCard(@Consts.BUTTON_TYPE int ease) {
         if (mInAnswer) {
             return;
         }
@@ -2615,7 +2615,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    private boolean answerCardIfVisible(int ease) {
+    private boolean answerCardIfVisible(@Consts.BUTTON_TYPE int ease) {
         if (!sDisplayAnswer) {
             return false;
         }
