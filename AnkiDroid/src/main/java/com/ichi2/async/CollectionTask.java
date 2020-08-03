@@ -53,6 +53,7 @@ import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.SyncStatus;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -347,7 +348,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 return doInBackgroundLoadDeckCounts();
 
             case SAVE_COLLECTION:
-                doInBackgroundSaveCollection();
+                doInBackgroundSaveCollection(param);
                 break;
 
             case ANSWER_CARD:
@@ -651,12 +652,17 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    private void doInBackgroundSaveCollection() {
+    private void doInBackgroundSaveCollection(TaskData param) {
         Timber.d("doInBackgroundSaveCollection");
         Collection col = getCol();
         if (col != null) {
             try {
-                col.save();
+                // param: syncIgnoresDatabaseModification
+                if (param.getBoolean()) {
+                    SyncStatus.ignoreDatabaseModification(() -> col.save());
+                } else {
+                    col.save();
+                }
             } catch (RuntimeException e) {
                 Timber.e(e, "Error on saving deck in background");
             }
