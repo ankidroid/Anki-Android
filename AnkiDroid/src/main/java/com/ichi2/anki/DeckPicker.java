@@ -455,11 +455,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         mReviewSummaryTextView = (TextView) findViewById(R.id.today_stats_text_view);
 
-        // Hide the fragment until the counts have been loaded so that the Toolbar fills the whole screen on tablets
-        if (mFragmented) {
-            mStudyoptionsFrame.setVisibility(View.GONE);
-        }
-
         Timber.i("colOpen: %b", colOpen);
         if (colOpen) {
             // Show any necessary dialogs (e.g. changelog, special messages, etc)
