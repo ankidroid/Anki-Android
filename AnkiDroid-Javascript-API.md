@@ -49,7 +49,7 @@ When a card is shown, only the question is shown at first. So use this to perfor
 The following buttons can be called when available, there is case where only ```Again``` and ```Hard``` present so that can also be handled using JavaScript code.
 The following function will be called when buttons available on screen.
 
-### Again
+## Again
 ### Name
 ```buttonAnswerEase1()```
 ### Info
@@ -161,6 +161,19 @@ console.log(AnkiDroidJS.ankiIsTopbarShown());
 ```
 
 
+## Get status about metered connection
+### Name
+```AnkiDroidJS.ankiIsActiveNetworkMetered()```
+### Type of return value
+```Boolean```
+### Info
+Status about device connected to metered connection. It can be used stop loading heavy assets.
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiIsActiveNetworkMetered());
+```
+
+
 ## Available information about current cards in WebView 
 Add functions to ```Front / Back side``` of card to get info. 
 
@@ -175,7 +188,6 @@ Return number of new card count
 ```javascript
 console.log(AnkiDroidJS.ankiGetNewCardCount());
 ```
-
 
 ## Learn card count
 ### Name 
@@ -248,63 +260,73 @@ Return int value of flag
 console.log(AnkiDroidJS.ankiGetCardFlag());
 ```
 
-
-## Review 
-### Name
-```AnkiDroidJS.ankiGetCardReps()```
-### Type of return value
-```int```
-### Info
-Return number of reviews made on current card
-### Usage
-```javascript
-console.log(AnkiDroidJS.ankiGetCardReps());
-```
-
-
-## Lapses
-### Name
-```AnkiDroidJS.ankiGetCardLapses()```
-### Type of return value
-```int```
-### Info 
-Return number of times the card went from a "was answered correctly" 
-### Usage
-```javascript
-console.log(AnkiDroidJS.ankiGetCardLapses());
-```
-
-
-## Interval
-### Name
-```AnkiDroidJS.ankiGetCardInterval()```
-### Type of return value
-```int```
-### Info
-interval (used in SRS algorithm). Negative = seconds, positive = days
-### Usage
-```javascript
-console.log(AnkiDroidJS.ankiGetCardInterval());
-```
-
-
-## Due
+## Card ID
 ### Name 
-```AnkiDroidJS.ankiGetCardDue()```
+```AnkiDroidJS.ankiGetCardId()```
 ### Type of return value
 ```long```
 ### Info
-Due is used differently for different card types: 
+Returns the ID of the card. Example: ```1477380543053```
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardId());
 ```
-new: note id or random int
-due: integer day, relative to the collection's creation time
-learning: integer timestamp
+
+## Notes ID
+### Name 
+```AnkiDroidJS.ankiGetCardNid()```
+### Type of return value
+```long```
+### Info
+Returns the ID of the note which generated the card. Example: ```1590418157630```
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardNid());
+```
+
+## Deck ID
+### Name 
+```AnkiDroidJS.ankiGetCardDid()```
+### Type of return value
+```long```
+### Info
+Returns the ID of the deck which contains the card. Example: ```1595967594978```
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardDid());
+```
+
+
+## Last modified time of card
+### Name 
+```AnkiDroidJS.ankiGetCardMod()```
+### Type of return value
+```long```
+### Info
+Returns the last modified time as a Unix timestamp in seconds. Example: ```1477384099```
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardMod());
+```
+
+
+## Card Type
+### Name 
+```AnkiDroidJS.ankiGetCardType()```
+### Type of return value
+```int```
+### Info
+Returns card type
+```
+0 = new
+1 = learning 
+2 = review 
+3 = relearning
 ```
 ### Usage
 ```javascript
-console.log(AnkiDroidJS.ankiGetCardDue());
+console.log(AnkiDroidJS.ankiGetCardType());
 ```
-
 
 ## Queue
 ### Name
@@ -325,6 +347,116 @@ console.log(AnkiDroidJS.ankiGetCardDue());
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardQueue());
 ```
+
+## Card Left
+### Name 
+```AnkiDroidJS.ankiGetCardLeft()```
+### Type of return value
+```int```
+### Info
+```
+-- of the form a*1000+b, with:
+-- b the number of reps left till graduation
+-- a the number of reps left today
+```
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardLeft());
+```
+
+## Due
+### Name 
+```AnkiDroidJS.ankiGetCardDue()```
+### Type of return value
+```long```
+### Info
+Due is used differently for different card types: 
+```
+new: note id or random int
+due: integer day, relative to the collection's creation time
+learning: integer timestamp
+```
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardDue());
+```
+
+## Interval
+### Name
+```AnkiDroidJS.ankiGetCardInterval()```
+### Type of return value
+```int```
+### Info
+interval (used in SRS algorithm). Negative = seconds, positive = days
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardInterval());
+```
+
+## Card Ease Factor
+### Name 
+```AnkiDroidJS.ankiGetCardFactor()```
+### Type of return value
+```int```
+### Info
+Return ease factor of the card in permille (parts per thousand)
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardFactor());
+```
+
+## Review 
+### Name
+```AnkiDroidJS.ankiGetCardReps()```
+### Type of return value
+```int```
+### Info
+Return number of reviews made on current card
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardReps());
+```
+
+## Lapses
+### Name
+```AnkiDroidJS.ankiGetCardLapses()```
+### Type of return value
+```int```
+### Info 
+Return number of times the card went from a "was answered correctly" 
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardLapses());
+```
+
+## Original Due
+### Name 
+```AnkiDroidJS.ankiGetCardODue()```
+### Type of return value
+```long```
+### Info
+```
+original due: In filtered decks, it's the original due date that the card had before moving to filtered.
+                    -- If the card lapsed in scheduler1, then it's the value before the lapse. (This is used when switching to scheduler 2. At this time, cards in learning becomes due again, with their previous due date)
+                    -- In any other case it's 0.
+```
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardODue());
+```
+
+## Deck ID of home deck if filtered
+### Name 
+```AnkiDroidJS.ankiGetCardODid()```
+### Type of return value
+```long```
+### Info
+Returns the ID of the home deck for the card if it is filtered, or ```0``` if not filtered. Example: ```1595967594978```
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetCardODid());
+```
+
 
 ## Some tips to improve card / deck development 
 If want to hide card's button / text in current card when reviewing on Anki Desktop / AnkiMobile then adding all code to ```if``` block can hide the things.
@@ -352,7 +484,9 @@ For more view [Window.navigator](https://developer.mozilla.org/en-US/docs/Web/AP
 
 ## Linked issues & PR
 [#6521](https://github.com/ankidroid/Anki-Android/pull/6521)
+<br>[#6766](https://github.com/ankidroid/Anki-Android/pull/6766)
 <br>[#6377](https://github.com/ankidroid/Anki-Android/pull/6377) 
+<br>[#6784](https://github.com/ankidroid/Anki-Android/pull/6784)
 <br>[#6307](https://github.com/ankidroid/Anki-Android/pull/6307) 
 <br>[#6388](https://github.com/ankidroid/Anki-Android/pull/6388) 
 <br>[#6393](https://github.com/ankidroid/Anki-Android/pull/6393)
