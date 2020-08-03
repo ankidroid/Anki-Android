@@ -38,7 +38,7 @@ public abstract class AbstractSched {
     /**
      * @param undoneCard a card undone, send back to the reviewer.*/
     public abstract void deferReset(Card undoneCard);
-    public abstract void answerCard(Card card, int ease);
+    public abstract void answerCard(Card card, @Consts.BUTTON_TYPE int ease);
     public abstract int[] counts();
     public abstract int[] counts(Card card);
     /**
@@ -101,11 +101,11 @@ public abstract class AbstractSched {
      * @param ease The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
-    public abstract String nextIvlStr(Context context, Card card, int ease);
+    public abstract String nextIvlStr(Context context, Card card, @Consts.BUTTON_TYPE int ease);
     /**
      * Return the next interval for CARD, in seconds.
      */
-    public abstract long nextIvl(Card card, int ease);
+    public abstract long nextIvl(Card card, @Consts.BUTTON_TYPE int ease);
     /**
      * Suspend cards.
      */

@@ -124,6 +124,9 @@ public class Consts {
     public static final int BUTTON_TWO = 2;
     public static final int BUTTON_THREE = 3;
     public static final int BUTTON_FOUR = 4;
+    @Retention(SOURCE)
+    @IntDef({BUTTON_ONE, BUTTON_TWO, BUTTON_THREE, BUTTON_FOUR})
+    public @interface BUTTON_TYPE {}
 
     // Revlog types
     public static final int REVLOG_LRN = 0;

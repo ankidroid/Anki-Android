@@ -237,7 +237,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void answerCard(Card card, int ease) {
+    public void answerCard(Card card, @Consts.BUTTON_TYPE int ease) {
         mCol.log();
         discardCurrentCard();
         mCol.markReview(card);
@@ -252,7 +252,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void _answerCard(Card card, int ease) {
+    public void _answerCard(Card card, @Consts.BUTTON_TYPE int ease) {
         if (_previewingCard(card)) {
             _answerCardPreview(card, ease);
             return;
@@ -287,7 +287,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void _answerCardPreview(Card card, int ease) {
+    public void _answerCardPreview(Card card, @Consts.BUTTON_TYPE int ease) {
         if (ease == Consts.BUTTON_ONE) {
             // Repeat after delay
             card.setQueue(Consts.QUEUE_TYPE_PREVIEW);
@@ -1013,7 +1013,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected void _answerLrnCard(Card card, int ease) {
+    protected void _answerLrnCard(Card card, @Consts.BUTTON_TYPE int ease) {
         JSONObject conf = _lrnConf(card);
         @Consts.CARD_TYPE int type;
         if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
@@ -1264,14 +1264,14 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _logLrn(Card card, int ease, JSONObject conf, boolean leaving, int type, int lastLeft) {
+    private void _logLrn(Card card, @Consts.BUTTON_TYPE int ease, JSONObject conf, boolean leaving, int type, int lastLeft) {
         int lastIvl = -(_delayForGrade(conf, lastLeft));
         int ivl = leaving ? card.getIvl() : -(_delayForGrade(conf, card.getLeft()));
         log(card.getId(), mCol.usn(), ease, ivl, lastIvl, card.getFactor(), card.timeTaken(), type);
     }
 
 
-    private void log(long id, int usn, int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
+    private void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                     mTime.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
@@ -1457,7 +1457,7 @@ public class SchedV2 extends AbstractSched {
      * *********************************************
      */
 
-    protected void _answerRevCard(Card card, int ease) {
+    protected void _answerRevCard(Card card, @Consts.BUTTON_TYPE int ease) {
         int delay = 0;
         boolean early = card.getODid() != 0 && (card.getODue() > mToday);
         int type = early ? 3 : 1;
@@ -1501,7 +1501,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected void _rescheduleRev(Card card, int ease, boolean early) {
+    protected void _rescheduleRev(Card card, @Consts.BUTTON_TYPE int ease, boolean early) {
         // update interval
         card.setLastIvl(card.getIvl());
         if (early) {
@@ -1519,7 +1519,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected void _logRev(Card card, int ease, int delay, int type) {
+    protected void _logRev(Card card, @Consts.BUTTON_TYPE int ease, int delay, int type) {
         log(card.getId(), mCol.usn(), ease, ((delay != 0) ? (-delay) : card.getIvl()), card.getLastIvl(),
                 card.getFactor(), card.timeTaken(), type);
     }
@@ -1533,7 +1533,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Next interval for CARD, given EASE.
      */
-    protected int _nextRevIvl(Card card, int ease, boolean fuzz) {
+    protected int _nextRevIvl(Card card, @Consts.BUTTON_TYPE int ease, boolean fuzz) {
         long delay = _daysLate(card);
         JSONObject conf = _revConf(card);
         double fct = card.getFactor() / 1000.0;
@@ -1609,18 +1609,18 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected void _updateRevIvl(Card card, int ease) {
+    protected void _updateRevIvl(Card card, @Consts.BUTTON_TYPE int ease) {
         card.setIvl(_nextRevIvl(card, ease, true));
     }
 
 
-    private void _updateEarlyRevIvl(Card card, int ease) {
+    private void _updateEarlyRevIvl(Card card, @Consts.BUTTON_TYPE int ease) {
         card.setIvl(_earlyReviewIvl(card, ease));
     }
 
 
     /** next interval for card when answered early+correctly */
-    private int _earlyReviewIvl(Card card, int ease) {
+    private int _earlyReviewIvl(Card card, @Consts.BUTTON_TYPE int ease) {
         if (card.getODid() == 0 || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
             throw new RuntimeException("Unexpected card parameters");
         }
@@ -2166,7 +2166,7 @@ public class SchedV2 extends AbstractSched {
      * @param ease The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
-    public String nextIvlStr(Context context, Card card, int ease) {
+    public String nextIvlStr(Context context, Card card, @Consts.BUTTON_TYPE int ease) {
         long ivl = nextIvl(card, ease);
         if (ivl == 0) {
             return context.getString(R.string.sched_end);
@@ -2182,7 +2182,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Return the next interval for CARD, in seconds.
      */
-    public long nextIvl(Card card, int ease) {
+    public long nextIvl(Card card, @Consts.BUTTON_TYPE int ease) {
         // preview mode?
         if (_previewingCard(card)) {
             if (ease == Consts.BUTTON_ONE) {
@@ -2213,7 +2213,7 @@ public class SchedV2 extends AbstractSched {
 
 
     // this isn't easily extracted from the learn code
-    protected long _nextLrnIvl(Card card, int ease) {
+    protected long _nextLrnIvl(Card card, @Consts.BUTTON_TYPE int ease) {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             card.setLeft(_startingLeft(card));
         }
