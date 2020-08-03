@@ -1754,7 +1754,7 @@ public class SchedV2 extends AbstractSched {
      * @param l deck["limit"]
      * @return The generated SQL to be suffixed to "select ... from ... order by "
      */
-    protected String _dynOrder(int o, int l) {
+    protected String _dynOrder(@Consts.DYN_PRIORITY int o, int l) {
         String t;
         switch (o) {
             case Consts.DYN_OLDEST:
