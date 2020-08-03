@@ -129,10 +129,14 @@ public class Consts {
     public @interface BUTTON_TYPE {}
 
     // Revlog types
+    // They are the same as Card Type except for CRAM. So one type may switch from one to other type
     public static final int REVLOG_LRN = 0;
     public static final int REVLOG_REV = 1;
     public static final int REVLOG_RELRN = 2;
     public static final int REVLOG_CRAM = 3;
+    @Retention(SOURCE)
+    @IntDef({REVLOG_LRN, REVLOG_REV, REVLOG_RELRN, REVLOG_CRAM})
+    public @interface REVLOG_TYPE {}
 
     // The labels defined in consts.py are in AnkiDroid's resources files.
 
