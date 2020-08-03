@@ -723,26 +723,24 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             col.getDb().getDatabase().beginTransaction();
             try {
                 sched.deferReset();
+                Undoable undo;
                 switch (type) {
                     case BURY_CARD:
                         // collect undo information
-                        Undoable buryCard = revertToProvidedState(BURY_CARD, card);
-                        col.markUndo(buryCard);
+                        undo = revertToProvidedState(BURY_CARD, card);
                         // then bury
                         sched.buryCards(new long[] { card.getId() });
                         break;
                     case BURY_NOTE:
                         // collect undo information
-                        Undoable buryNote = revertToProvidedState(BURY_NOTE, card);
-                        col.markUndo(buryNote);
+                        undo = revertToProvidedState(BURY_NOTE, card);
                         // then bury
                         sched.buryNote(note.getId());
                         break;
                     case SUSPEND_CARD:
                         // collect undo information
                         Card suspendedCard = card.clone();
-                        Undoable suspendCard = new UndoSuspendCard(suspendedCard);
-                        col.markUndo(suspendCard);
+                        undo = new UndoSuspendCard(suspendedCard);
                         // suspend card
                         if (card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
                             sched.unsuspendCards(new long[] { card.getId() });
@@ -757,7 +755,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         for (int i = 0; i < cards.size(); i++) {
                             cids[i] = cards.get(i).getId();
                         }
-                        col.markUndo(revertToProvidedState(SUSPEND_NOTE, card));
+                        undo = revertToProvidedState(SUSPEND_NOTE, card);
                         // suspend note
                         sched.suspendCards(cids);
                         break;
@@ -767,13 +765,13 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         // collect undo information
                         ArrayList<Card> allCs = note.cards();
                         long cid = card.getId();
-                        Undoable deleteNote = new UndoDeleteNote(note, allCs, cid);
-                        col.markUndo(deleteNote);
+                        undo = new UndoDeleteNote(note, allCs, cid);
                         // delete note
                         col.remNotes(new long[] { note.getId() });
                         break;
                     }
                 }
+                col.markUndo(undo);
                 // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
                 publishProgress(new TaskData(col.getSched().getCard(), 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
