@@ -766,7 +766,7 @@ public class AdvancedStatistics {
         private ReviewOutcome singleReviewOutcome;
         public ReviewOutcome simSingleReview(Card c){
 
-            int type = c.getType();
+            @Consts.CARD_TYPE int type = c.getType();
 
             int outcome = draw(probabilitiesCumulative[type]);
 
@@ -789,7 +789,7 @@ public class AdvancedStatistics {
 
         private void applyOutcomeToCard(Card c, int outcome) {
 
-            int type = c.getType();
+            @Consts.CARD_TYPE int type = c.getType();
             int ivl = c.getIvl();
             double factor = c.getFactor();
 

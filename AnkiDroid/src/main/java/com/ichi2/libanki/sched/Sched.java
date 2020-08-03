@@ -425,7 +425,7 @@ public class Sched extends SchedV2 {
     @Override
     protected void _answerLrnCard(Card card, int ease) {
         JSONObject conf = _lrnConf(card);
-        int type;
+        @Consts.CARD_TYPE int type;
         if (card.getODid() != 0 && !card.getWasNew()) {
             type = Consts.CARD_TYPE_RELEARNING;
         } else if (card.getType() == Consts.CARD_TYPE_REV) {

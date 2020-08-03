@@ -430,7 +430,7 @@ public class Card implements Cloneable {
     }
 
 
-    public void setType(int type) {
+    public void setType(@Consts.CARD_TYPE int type) {
         mType = type;
     }
 
