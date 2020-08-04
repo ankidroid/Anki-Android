@@ -66,6 +66,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.RenderProcessGoneDetail;
@@ -2670,6 +2671,25 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.i("AbstractFlashcardViewer:: onJsAlert: %s", message);
             result.confirm();
             return true;
+        }
+
+        static String log = "";
+        @Override
+        public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+            /*
+            * Line: 7
+            * Message: Some message
+            * Source: file:///...
+             */
+            log += "<font color='#455A64'> Line: </font><font color='#E64A19'>" + consoleMessage.lineNumber() + "</font><br/>"
+                    + "<font color='#455A64'>Message: </font><font color='#F44336'> " + consoleMessage.message() + "</font><br/>"
+                    + "<font color='#455A64'>Source: </font><font color='#F57C00'> " + consoleMessage.sourceId() + "</font>"
+                    + "<br/><br/>";
+            return true;
+        }
+
+        public static String getConsoleLog() {
+            return log;
         }
     }
 
