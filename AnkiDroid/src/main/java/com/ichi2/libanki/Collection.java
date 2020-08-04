@@ -831,7 +831,7 @@ public class Collection {
 	    return cards;
 	}
     public List<Card> previewCards(Note note) {
-        return previewCards(note, 0);
+        return previewCards(note, Consts.CARD_TYPE_NEW);
     }
 
     /**
