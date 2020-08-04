@@ -37,12 +37,15 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.robolectric.Shadows.shadowOf;
@@ -230,6 +233,36 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat("Deck ID in the new note should be the ID provided in the intent", newNoteEditor.getDeckId(), is(currentDid));
     }
 
+
+    @Test
+    @Ignore("6795")
+    public void stickyFieldsAreUnchangedAfterAdd() {
+        // #6795 - newlines were converted to <br>
+        Model basic = makeNoteForType(NoteType.BASIC);
+
+        // Enable sticky "Front" field
+        basic.getJSONArray("flds").getJSONObject(0).put("sticky", true);
+
+        String initFirstField = "Hello";
+        String initSecondField = "unused";
+        String newFirstField = "Hello" + FieldEditText.NEW_LINE + "World"; // /r/n on Windows under Robolectric
+
+        NoteEditor editor = getNoteEditorAdding(NoteType.BASIC)
+                .withFirstField(initFirstField)
+                .withSecondField(initSecondField)
+                .build();
+
+        assertThat(Arrays.asList(editor.getCurrentFieldStrings()), contains(initFirstField, initSecondField));
+
+        editor.setFieldValueFromUi(0, newFirstField);
+        assertThat(Arrays.asList(editor.getCurrentFieldStrings()), contains(newFirstField, initSecondField));
+
+        editor.saveNote();
+        this.waitForAsyncTasksToComplete();
+
+        List<String> actual = Arrays.asList(editor.getCurrentFieldStrings());
+        assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""));
+    }
 
     private Intent getCopyNoteIntent(NoteEditor editor) {
         ShadowActivity editorShadow = Shadows.shadowOf(editor);
