@@ -2898,6 +2898,30 @@ public class SchedV2 extends AbstractSched {
         this.mReportLimit = reportLimit;
     }
 
+    @Override
+    public void undoReview(@NonNull Card oldCardData, boolean wasLeech) {
+        // remove leech tag if it didn't have it before
+        if (!wasLeech && oldCardData.note().hasTag("leech")) {
+            oldCardData.note().delTag("leech");
+            oldCardData.note().flush();
+        }
+        Timber.i("Undo Review of card %d, leech: %b", oldCardData.getId(), wasLeech);
+        // write old data
+        oldCardData.flush(false);
+        // and delete revlog entry
+        long last = mCol.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", new Object[] {oldCardData.getId()});
+        mCol.getDb().execute("DELETE FROM revlog WHERE id = " + last);
+        // restore any siblings
+        mCol.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
+                new Object[] {Utils.intTime(), mCol.usn(), oldCardData.getNid()});
+        // and finally, update daily count
+        @Consts.CARD_QUEUE int n = oldCardData.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : oldCardData.getQueue();
+        String type = (new String[]{"new", "lrn", "rev"})[n];
+        _updateStats(oldCardData, type, -1);
+        setReps(getReps() - 1);
+    }
+
+
     /** End #5666 */
     public void discardCurrentCard() {
         mCurrentCard = null;
