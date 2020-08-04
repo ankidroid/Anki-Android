@@ -235,7 +235,6 @@ public class NoteEditorTest extends RobolectricTest {
 
 
     @Test
-    @Ignore("6795")
     public void stickyFieldsAreUnchangedAfterAdd() {
         // #6795 - newlines were converted to <br>
         Model basic = makeNoteForType(NoteType.BASIC);

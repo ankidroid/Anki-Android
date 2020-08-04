@@ -231,6 +231,8 @@ public class NoteEditor extends AnkiActivity {
                 mChanged = true;
                 mSourceText = null;
                 Note oldNote = mEditorNote.clone();
+                // The saved values may have changes (newline -> <br>) use UI values instead.
+                String[] currentStrings = getCurrentFieldStrings();
                 setNote();
                 // Respect "Remember last input when adding" field option.
                 JSONArray flds;
@@ -238,7 +240,7 @@ public class NoteEditor extends AnkiActivity {
                 if (oldNote != null) {
                     for (int fldIdx = 0; fldIdx < flds.length(); fldIdx++) {
                         if (flds.getJSONObject(fldIdx).getBoolean("sticky")) {
-                            mEditFields.get(fldIdx).setText(oldNote.getFields()[fldIdx]);
+                            mEditFields.get(fldIdx).setText(currentStrings[fldIdx]);
                         }
                     }
                 }
