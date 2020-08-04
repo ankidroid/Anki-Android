@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Για να προσθέσετε κάρτες στο Ανκί-Ντρόιντ αφαιρέστε όλες τις κατηγορίες Notepad ή προσθέστε μία με όνομα «προεπιλεγμένο»</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Αύξηση σημερινού ορίου νέων καρτών κατά</string>
-    <string name="custom_study_rev_extend">Αύξηση σημερινού ορίου επαναλήψεων κατά</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Επανάληψη ξεχασμένων καρτών στις τελευταίες x μέρες:</string>
     <string name="custom_study_ahead">Επανάληψη μπροστά κατά x μέρες:</string>
     <string name="custom_study_random">Τυχαία επιλογή x καρτών από την τράπουλα:</string>

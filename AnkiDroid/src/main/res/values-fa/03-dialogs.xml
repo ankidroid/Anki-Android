@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">اضافه کردن کارت به آنکی دروید سبب حذف همه یادداشت های مجموعه ها یا اضافه کردن یک نام پیش فرض به آنها می شود</string>
     <string name="custom_study_new_total_new">کارت‌های جدید در دسته کارت: %d</string>
     <string name="custom_study_rev_total_rev">موعد مرورهای دسته: %d</string>
-    <string name="custom_study_new_extend">محدوده افزایش کارتهای جدید امروز</string>
-    <string name="custom_study_rev_extend">محدوده افزایش کارتها برای مرور امروز</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">مرور کارت های فراموش شده در x روز گذشته:</string>
     <string name="custom_study_ahead">مرور پیش از موعد تا x روز:</string>
     <string name="custom_study_random">انتخاب x کارت تصادفی از دسته:</string>

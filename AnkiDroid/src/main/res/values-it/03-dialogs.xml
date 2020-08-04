@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Per aggiungere le carte ad AnkiDroid rimuovi tutte le categorie Notepad o aggiungine una chiamata \'default\'</string>
     <string name="custom_study_new_total_new">Carte nuove nel mazzo: %d</string>
     <string name="custom_study_rev_total_rev">Da ripetere nel mazzo: %d</string>
-    <string name="custom_study_new_extend">Aumenta il limite odierno di carte nuove di</string>
-    <string name="custom_study_rev_extend">Aumenta il limite odierno di ripetizioni di</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Ripeti carte dimenticate negli ultimi x giorni:</string>
     <string name="custom_study_ahead">Ripeti in anticipo di x giorni:</string>
     <string name="custom_study_random">Seleziona x carte casualmente dal mazzo:</string>

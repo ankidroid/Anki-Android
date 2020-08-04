@@ -111,8 +111,8 @@
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">הגדלת מכסת הכרטיסים החדשים להיום ב־</string>
-    <string name="custom_study_rev_extend">הגדלת מכסת הכרטיסים לשינון להיום ב־</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
     <string name="custom_study_ahead">עבור כמה ימים ברצונך לשנן מראש?</string>
     <string name="custom_study_random">כמה כרטיסים לבחור באקראי מהחפיסה?</string>

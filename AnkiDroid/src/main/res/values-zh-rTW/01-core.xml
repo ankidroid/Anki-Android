@@ -181,6 +181,7 @@
     <string name="card_template_editor_styling">造型</string>
     <string name="card_template_editor_menu_delete">刪除</string>
     <string name="card_template_editor_menu_card_browser_appearance">卡片瀏覽器外觀</string>
+    <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">需要至少一個卡片種類。</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">刪除卡片種類 \"%2$s\"，和它的 %1$d 張卡片？</item>

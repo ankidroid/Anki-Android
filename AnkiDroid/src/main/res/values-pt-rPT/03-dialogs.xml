@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Para adicionar fichas na AnkiDroid remova todas as categorias de notas ou adicione uma com o nome \'predefinida\'</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Aumentar o limite de fichas novas de hoje em</string>
-    <string name="custom_study_rev_extend">Aumentar o limite de revisões de hoje em</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Rever fichas esquecidas nos últimos x dias:</string>
     <string name="custom_study_ahead">Rever em avanço por x dias:</string>
     <string name="custom_study_random">Selecionar aleatoriamente x fichas do baralho:</string>

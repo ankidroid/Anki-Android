@@ -93,8 +93,8 @@
     <string name="intent_aedict_category">Untuk menambah kartu ke AnkiDroid hapus semua kategori catatan atau tambahkan satu bernama \"bawaan\"</string>
     <string name="custom_study_new_total_new">Kartu baru di dek: %d</string>
     <string name="custom_study_rev_total_rev">Ulasan jatuh tempo di dek: %d</string>
-    <string name="custom_study_new_extend">Tambah batas kartu baru hari ini sampai</string>
-    <string name="custom_study_rev_extend">Tambah batas ulasan hari ini sampai</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Ulas kartu yang terlupakan dalam x hari terakhir:</string>
     <string name="custom_study_ahead">Ulas duluan sampai x hari:</string>
     <string name="custom_study_random">Pilih x kartu secara acak dari dek:</string>

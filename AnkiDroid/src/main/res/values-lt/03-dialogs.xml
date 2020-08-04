@@ -111,8 +111,8 @@
     <string name="intent_aedict_category">Norėdami „AnkiDroid“ programoje pridėti kortelių, pašalinkite visas „Notepad“ kategorijas arba pridėkite vieną, kuri vadintųsi „numatytoji“</string>
     <string name="custom_study_new_total_new">Naujos kortelės rinkinyje: %d</string>
     <string name="custom_study_rev_total_rev">Laukiančios peržiūros rinkinyje: %d</string>
-    <string name="custom_study_new_extend">Padidinti šiandienos naujų kortelių skaičių</string>
-    <string name="custom_study_rev_extend">Padidinti šiandienos peržiūrų skaičių</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Peržiūrėti korteles, kurios buvo pamirštos per paskutines x dienų:</string>
     <string name="custom_study_ahead">Kartoti į priekį x dienų:</string>
     <string name="custom_study_random">Atsitiktine tvarka iš rinkinio atrinkti x kortelių:</string>

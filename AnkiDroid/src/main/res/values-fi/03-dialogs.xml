@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Lisätäksesi kortteja AnkiDroidiin poista kaikki Notepad-kategoriat tai lisää uusi nimellä ”default”</string>
     <string name="custom_study_new_total_new">Uusia kortteja pakassa: %d</string>
     <string name="custom_study_rev_total_rev">Opiskeltavia kortteja pakassa: %d</string>
-    <string name="custom_study_new_extend">Lisää tämän päivän uusien korttien rajoitusta</string>
-    <string name="custom_study_rev_extend">Kasvata tämän päivän kertausten määrää</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Kortteja unohdettu edellisenä x päivänä:</string>
     <string name="custom_study_ahead">Kertaa etukäteen x päivää:</string>
     <string name="custom_study_random">Valitse x korttia satunnaisesti pakasta:</string>

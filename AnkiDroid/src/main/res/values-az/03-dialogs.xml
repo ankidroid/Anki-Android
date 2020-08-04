@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">AnkiDroid kartlarını əlavə etmək üçün bütün Notepad kateqoriyalarını silin və ya \"default\" adını əlavə edin</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Bu gün yeni kart limitini artırın</string>
-    <string name="custom_study_rev_extend">Bugünkü baxış limitini artırın</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Son x günlərdə unudulmuş kartları nəzərdən keçirin:</string>
     <string name="custom_study_ahead">Ön x günləri nəzərdən keçirin:</string>
     <string name="custom_study_random">Gəmidən təsadüfi x kartları seçin:</string>

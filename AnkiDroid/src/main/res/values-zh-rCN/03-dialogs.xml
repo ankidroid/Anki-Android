@@ -93,8 +93,8 @@
     <string name="intent_aedict_category">向AnkiDroid中添加卡牌，需要删除所有NotePad类别，或者添加“默认(default)”类别。</string>
     <string name="custom_study_new_total_new">牌组中的新卡片数量：%d</string>
     <string name="custom_study_rev_total_rev">牌组中到期的卡牌数量：%d</string>
-    <string name="custom_study_new_extend">将今天新卡牌的数量限制增加</string>
-    <string name="custom_study_rev_extend">将今天的复习数量限制增加</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">复习过去 x 天中忘记的卡片：</string>
     <string name="custom_study_ahead">提前 x 天复习：</string>
     <string name="custom_study_random">从牌组中随机选择 x 张卡片：</string>

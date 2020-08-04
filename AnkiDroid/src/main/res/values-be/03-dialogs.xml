@@ -111,8 +111,8 @@
     <string name="intent_aedict_category">Для таго, каб дадаць карткі ў AnkiDroid, выдаліце ўсе катэгорыі Nopepad або дадайце катэгорыю з назвай \"default\"</string>
     <string name="custom_study_new_total_new">Новых картак у калодзе: %d</string>
     <string name="custom_study_rev_total_rev">Картак для паўтарэння: %d</string>
-    <string name="custom_study_new_extend">Павялічыць сённяшняе абмежаванне на</string>
-    <string name="custom_study_rev_extend">Павялічыць абмежаванне паўтарэнняў сёння на</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Паўтарыць забытыя карткі за апошнія некалькі дзён:</string>
     <string name="custom_study_ahead">Вывучыць наперад на некалькі дзён:</string>
     <string name="custom_study_random">Выбраць некалькі выпадковых картак з калоды:</string>

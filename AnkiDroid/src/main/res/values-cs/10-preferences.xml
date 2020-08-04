@@ -109,7 +109,7 @@
     <string name="gestures_volume_down">Hlasitost dolů</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Použít také kanji/katakana, emoji/kao-moji tlačítka pro posouvání</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu">„%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Povolí globální kontextovou nabídku „%s“</string>
     <string name="double_scrolling_gap">Dvojitý posun</string>
     <string name="double_scrolling_gap_summ">Dvojitý posuvník s eReader</string>
@@ -145,7 +145,7 @@
     <string name="select_locale_title">Vyberte jazyk</string>
     <string name="safe_display">Režim bezpečného zobrazení</string>
     <string name="safe_display_summ">Zakázat všechny animace a použít bezpečnější metodu pro vykreslení karty. E-ink zařízení toto mohou vyžadovat.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">Zakázat režim úprav v jednom poli</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">Zarovnání na střed</string>
@@ -200,9 +200,9 @@
     <string name="custom_sync_server_enable_title">Použij vlastní synchronizační server</string>
     <string name="custom_sync_server_enable_summary">Pokud nechcete používat proprietární službu AnkiWeb, můžete zadat alternativní server zde</string>
     <string name="custom_sync_server_base_url_title">Synchronizovat url</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">Neplatná URL synchronizace</string>
     <string name="custom_sync_server_media_url_title">Sync url pro média</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">Neplatná URL synchronizace médií</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Změny nastavení skupiny balíčků ovlivní více balíčků. Pokud si přejete změnit pouze současný balíček, nejdříve prosím přidejte novou skupinu nastavení</string>
     <string name="studyoptions_limit_select_tags">Výběr štítků</string>

@@ -99,8 +99,8 @@
         <item>已修改笔记</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">增加今天的新卡片数量</string>
-    <string name="custom_study_increase_review_limit">增加今天的复习数量</string>
+    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
+    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">复习忘记的卡片</string>
     <string name="custom_study_review_ahead">提前复习</string>
     <string name="custom_study_random_selection">学习随机选择的卡片</string>
@@ -114,7 +114,7 @@
     <string name="note_editor_no_first_field">第一字段为空</string>
     <string name="note_editor_no_cloze_delations">此笔记类型必须包含创建填空</string>
     <string name="note_editor_no_cards_created_all_fields">当前笔记类型没有生成任何卡片。\n请选择另一个笔记类型，或点击 “卡片” 并添加一个字段替换</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">创建填空只能在完形填空笔记类型上使用</string>
     <string name="saving_facts">保存笔记</string>
     <string name="saving_model">保存卡牌记录类型</string>
     <string name="add">添加</string>
@@ -269,4 +269,22 @@
     <string name="white_board_image_save_failed">保存白板图像失败。 %s</string>
     <string name="white_board_image_saved">白板图像已保存到 %s</string>
     <string name="title_whiteboard_pen_color">白板笔颜色</string>
+    <!-- CSV/Note Import -->
+    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
+    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
+    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
+    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <plurals name="note_importer_notes_added">
+        <item quantity="other">%d notes added</item>
+    </plurals>
+    <plurals name="note_importer_notes_updated">
+        <item quantity="other">%d notes updated</item>
+    </plurals>
+    <plurals name="note_importer_notes_unchanged">
+        <item quantity="other">%d notes unchanged</item>
+    </plurals>
 </resources>

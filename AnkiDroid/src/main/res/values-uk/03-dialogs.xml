@@ -111,8 +111,8 @@
     <string name="intent_aedict_category">Щоб додати картки до AnkiDroid видаліть всі категорії Notepad або додайте категорію \'default\'</string>
     <string name="custom_study_new_total_new">Нові картки в колоді: %d</string>
     <string name="custom_study_rev_total_rev">Повторити сьогодні: %d</string>
-    <string name="custom_study_new_extend">Збільшити сьогоднішній ліміт нових карт на</string>
-    <string name="custom_study_rev_extend">Збільшити сьогоднішній ліміт повторення на</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Повторити карти забуті за останні x днів:</string>
     <string name="custom_study_ahead">Переглянути наперед за х днів:</string>
     <string name="custom_study_random">Вибрати х випадкових карт з колоди:</string>

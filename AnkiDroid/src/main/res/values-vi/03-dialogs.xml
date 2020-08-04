@@ -93,8 +93,8 @@
     <string name="intent_aedict_category">Để thêm thẻ vào AnkiDroid, hãy xoá toàn bộ danh mục Notepad hoặc thêm danh mục tên \"mặc định\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Tăng giới hạn thẻ mới hôm nay lên</string>
-    <string name="custom_study_rev_extend">Tăng giới hạn ôn tập hôm nay lên</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Ôn lại các thẻ đã quên trong x ngày trước:</string>
     <string name="custom_study_ahead">Ôn tập trước x ngày:</string>
     <string name="custom_study_random">Chọn ngẫu nhiên x thẻ từ bộ:</string>

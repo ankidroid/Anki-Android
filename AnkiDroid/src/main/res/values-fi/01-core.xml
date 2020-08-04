@@ -186,6 +186,7 @@
     <string name="card_template_editor_styling">Muotoilu</string>
     <string name="card_template_editor_menu_delete">Poista</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Valitse ainakin yksi korttityyppi</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Poista ”%2$s” korttityyppi ja sen %1$d. kortti?</item>

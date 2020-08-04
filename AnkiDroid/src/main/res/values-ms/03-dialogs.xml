@@ -93,8 +93,8 @@
     <string name="intent_aedict_category">Untuk menambah kad untuk apa yang anda perlu lakukan membuang semua Nota kategori atau menambah satu yang bernama \"default\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Meningkatkan baru hari ini kad had oleh</string>
-    <string name="custom_study_rev_extend">Meningkatkan kajian hari ini had oleh</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Kajian kad lupa pada akhir hari x:</string>
     <string name="custom_study_ahead">Mengkaji semula ke depan dengan hari x:</string>
     <string name="custom_study_random">Pilih x kad secara rawak daripada dek:</string>

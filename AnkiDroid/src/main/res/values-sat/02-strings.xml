@@ -99,8 +99,8 @@
         <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱫᱚᱞᱮᱱᱟ</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">ᱛᱮᱦᱮᱸᱧᱟᱜ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱣ ᱢᱮ</string>
-    <string name="custom_study_increase_review_limit">ᱛᱮᱦᱮᱸᱧᱟᱜ ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱣ ᱢᱮ</string>
+    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
+    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">ᱦᱤᱲᱤᱧᱼᱠᱚᱜ ᱠᱟᱰ ᱧᱮᱞ ᱵᱤᱰᱟᱩ ᱢᱮ</string>
     <string name="custom_study_review_ahead">ᱢᱟᱲᱟᱝ ᱥᱮᱱ ᱨᱤᱵᱷᱤᱣ ᱢᱮ</string>
     <string name="custom_study_random_selection">ᱨᱮᱱᱰᱚᱢ ᱥᱤᱞᱮᱠᱚᱱ ᱠᱟᱰ ᱠᱷᱚᱱ ᱯᱲᱦᱟᱣᱼᱜ ᱢᱮ</string>
@@ -114,7 +114,7 @@
     <string name="note_editor_no_first_field">ᱯᱨᱩᱛᱷᱩᱢ ᱡᱟᱭᱜᱟ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="note_editor_no_cloze_delations">ᱱᱚᱝᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮ cloze ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ </string>
     <string name="note_editor_no_cards_created_all_fields">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱮᱟᱭ ᱾ \n ᱫᱚᱭᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱢᱮ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ \'ᱠᱟᱨᱰᱥ\' ᱨᱮ ᱚᱛᱟ ᱡᱟ ᱟᱨ field substitute ᱥᱮᱞᱮᱫ ᱢᱮ</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">ᱠᱞᱚᱡ ᱢᱮᱴᱟᱹᱣ ᱫᱚ ᱠᱞᱚᱡ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱮ ᱠᱟᱹᱢᱤ ᱟ</string>
     <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ </string>
     <string name="saving_model">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
     <string name="add">ᱥᱮᱞᱮᱫ</string>
@@ -275,4 +275,25 @@
     <string name="white_board_image_save_failed">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱥᱟᱱᱪᱟᱣ ᱵᱷᱩᱞ ᱾. %s </string>
     <string name="white_board_image_saved">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ %s ᱛᱮ ᱥᱟᱱᱪᱟᱣ</string>
     <string name="title_whiteboard_pen_color">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱠᱚᱞᱚᱢ ᱨᱚᱰ</string>
+    <!-- CSV/Note Import -->
+    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
+    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
+    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
+    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <plurals name="note_importer_notes_added">
+        <item quantity="one">%d note added</item>
+        <item quantity="other">%d notes added</item>
+    </plurals>
+    <plurals name="note_importer_notes_updated">
+        <item quantity="one">%d note updated</item>
+        <item quantity="other">%d notes updated</item>
+    </plurals>
+    <plurals name="note_importer_notes_unchanged">
+        <item quantity="one">%d note unchanged</item>
+        <item quantity="other">%d notes unchanged</item>
+    </plurals>
 </resources>

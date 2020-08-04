@@ -128,4 +128,8 @@
     <string name="sync_error_501_upgrade_required">لطفا برنامه را به آخرین نسخه ارتقا دهید</string>
     <string name="sync_error_502_maintenance">آنکی‌وب در حال تعمیر است. لطفاً بعداً تلاش کنید.</string>
     <string name="sync_error_504_gateway_timeout">ارور 504</string>
+    <!-- Deck Picker Sync Icon -->
+    <string name="sync_menu_title">Sync</string>
+    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

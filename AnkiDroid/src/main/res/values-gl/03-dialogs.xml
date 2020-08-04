@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Para engadir cartóns ao AnkiDroid elimina todas as categorías do caderno de notas ou engade unha chamada \"predefinido\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Incrementar o límite de cartóns novos para hoxe</string>
-    <string name="custom_study_rev_extend">Aumentar o límite de revisións para hoxe en</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Revisar os cartóns esquecidos nos últimos x días:</string>
     <string name="custom_study_ahead">Revisar con x días de adianto:</string>
     <string name="custom_study_random">Seleccionar da baralla x cartóns ao chou:</string>

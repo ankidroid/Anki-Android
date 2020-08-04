@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Hogy új kártyákat adj az AnkiDroid-hoz, távolítsd el az összes Jegyzettömb/Notepad/ kategóriát, vagy adj hozzá egyet \'default\' névvel</string>
     <string name="custom_study_new_total_new">Új kártyák a pakliban: %d</string>
     <string name="custom_study_rev_total_rev">Ismétlések határideje a pakliban: %d</string>
-    <string name="custom_study_new_extend">Mai új kártyák számának növelése</string>
-    <string name="custom_study_rev_extend">Mai ismétlések számának növelése</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Az elmúlt x napban elfelejtett kártyák ismétlése:</string>
     <string name="custom_study_ahead">Idő előtti, x nappal előre ismétlés:</string>
     <string name="custom_study_random">A pakliból x kártya véletlen kiválasztása:</string>

@@ -128,4 +128,8 @@
     <string name="sync_error_501_upgrade_required">Proveďte upgrade na nejnovější verzi AnkiDroid</string>
     <string name="sync_error_502_maintenance">Provádí se údržba AnkiWeb. Zkuste to prosím znovu za pár minut.</string>
     <string name="sync_error_504_gateway_timeout">504 Byla přijata chyba časového limitu brány.</string>
+    <!-- Deck Picker Sync Icon -->
+    <string name="sync_menu_title">Sync</string>
+    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

@@ -68,16 +68,16 @@
         <item quantity="other">zbývá %d minut</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="few">%d hours %d left</item>
-        <item quantity="many">%d hours %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">Zbývá %d hodina %d</item>
+        <item quantity="few">Zbývají %d hodiny %d</item>
+        <item quantity="many">Zbývá %d hodiny %d</item>
+        <item quantity="other">Zbývá %d hodin %d</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="few">%d days %d left</item>
-        <item quantity="many">%d days %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">Zbývá %d den %d</item>
+        <item quantity="few">Zbývají %d dny %d</item>
+        <item quantity="many">Zbývá %d dne %d</item>
+        <item quantity="other">Zbývá %d dní %d</item>
     </plurals>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -195,7 +195,8 @@
     <string name="card_template_editor_back">Šablona rubu</string>
     <string name="card_template_editor_styling">Styl</string>
     <string name="card_template_editor_menu_delete">Odstranit</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Vzhled prohlížeče karet</string>
+    <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Je vyžadován alespoň jeden typ karty.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Odstranit typ karty \'%2$s\' a jeho %1$d kartu?</item>
@@ -205,10 +206,10 @@
     </plurals>
     <string name="invalid_template">Karta nemůže být vytvořena</string>
     <string name="card_template_editor_would_delete_note">Odebrání tohoto typu karty by způsobilo odstranění jedné nebo více poznámek. Nejprve prosím vytvořte a uložte nový typ karty.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_save_error">Změny šablony karty nelze uložit: %s</string>
     <string name="template_for_current_card_deleted">Typ karty současné karty byl odstraněn.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Vzhled prohlížeče</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Čtení a zápis do AnkiDroid databáze</string>
     <string name="read_write_permission_description">spravovat stávající poznámky, karty, typy poznámek a balíčky, a také vytvářet nové</string>

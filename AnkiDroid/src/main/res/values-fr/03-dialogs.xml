@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie « default »</string>
     <string name="custom_study_new_total_new">Nouvelles cartes dans le paquet: %d</string>
     <string name="custom_study_rev_total_rev">Révisions dues dans le paquet: %d</string>
-    <string name="custom_study_new_extend">Augmenter la limite de nouvelles cartes pour aujourd\'hui de</string>
-    <string name="custom_study_rev_extend">Augmenter la limite de révision pour aujourd\'hui de</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Revoir les cartes oubliées dans les x derniers jours :</string>
     <string name="custom_study_ahead">Réviser à l\'avance de x jours :</string>
     <string name="custom_study_random">Sélectionner x cartes au hasard dans ce paquet :</string>

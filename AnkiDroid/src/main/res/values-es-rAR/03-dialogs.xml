@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Para añadir tarjetas a AnkiDroid elimine todas las categorías de los blocks de notas y agregue una llamada \'predeterminado\'</string>
     <string name="custom_study_new_total_new">Tarjetas nuevas en el mazo: %d</string>
     <string name="custom_study_rev_total_rev">Repasos pendientes en el mazo: %d</string>
-    <string name="custom_study_new_extend">Incrementar el límite de tarjetas nuevas para hoy en</string>
-    <string name="custom_study_rev_extend">Incrementar el límite de revisiones para hoy en</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Repasar tarjetas olvidadas en los últimos x días:</string>
     <string name="custom_study_ahead">Revisar anticipadamente en x días:</string>
     <string name="custom_study_random">Seleccionar x tarjetas del mazo al azar:</string>

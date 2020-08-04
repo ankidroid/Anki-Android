@@ -93,8 +93,8 @@
     <string name="intent_aedict_category">若要增加新卡片至 AnkiDroid，刪除所有的記事本類別或新增一個 \'default\' 牌組</string>
     <string name="custom_study_new_total_new">牌組的新卡片：%d</string>
     <string name="custom_study_rev_total_rev">牌組中複習到期的卡片：%d</string>
-    <string name="custom_study_new_extend">增加今天的新卡片限制</string>
-    <string name="custom_study_rev_extend">增加今天的複習上限</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">過去 x 天內忘記的複習卡:</string>
     <string name="custom_study_ahead">提早複習 x 天:</string>
     <string name="custom_study_random">隨機選擇 x 張卡片，從牌組:</string>

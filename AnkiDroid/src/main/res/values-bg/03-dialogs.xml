@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">За да добавите карти за AnkiDroid, премахнете всички категории на Notepad или добавите такава с име \'default\'</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Увеличаване на днешното ограничение за нови карти с</string>
-    <string name="custom_study_rev_extend">Увеличаване на днешния лимит за преглед на</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Повтаряне на забравени карти през последните x дни:</string>
     <string name="custom_study_ahead">Преглед за следващите x дни:</string>
     <string name="custom_study_random">Избор на x случайни карти от тестето:</string>

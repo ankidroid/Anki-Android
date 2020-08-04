@@ -65,8 +65,8 @@
         <item>Přepnout zelený příznak</item>
         <item>Přepnout modrý příznak</item>
         <item>Odstranit příznak</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Stránka nahoru</item>
+        <item>Stránka dolů</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Vyřadit kartu</item>

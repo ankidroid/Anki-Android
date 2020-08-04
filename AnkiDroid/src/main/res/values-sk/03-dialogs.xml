@@ -111,8 +111,8 @@
     <string name="intent_aedict_category">Ak chcete pridať kartičky do AnkiDroid, odstráňte všetky kategórie poznámkového bloku alebo pridajte jednu s názvom \"predvolený\"</string>
     <string name="custom_study_new_total_new">Nové kartičky v balíčku: %d</string>
     <string name="custom_study_rev_total_rev">Na zopakovanie v balíčku: %d</string>
-    <string name="custom_study_new_extend">Zvýšiť dnešný limit nových kartičiek o</string>
-    <string name="custom_study_rev_extend">Zvýšiť dnešný limit opakovaných kartičiek o</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Zopakovať si kartičky zabudnuté za posledných x dní:</string>
     <string name="custom_study_ahead">Opakovať dopredu o x dní:</string>
     <string name="custom_study_random">Náhodne vybrať x kartičiek z balíčka:</string>

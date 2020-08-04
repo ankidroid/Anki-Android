@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
     <string name="custom_study_new_total_new">Destede yeni kart: %d</string>
     <string name="custom_study_rev_total_rev">Destede çalışılacak kart: %d</string>
-    <string name="custom_study_new_extend">Bugünün yeni kart limitini artırın</string>
-    <string name="custom_study_rev_extend">Bugünün gözden geçirme limitini artırın</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
     <string name="custom_study_ahead">X günleri önce izle:</string>
     <string name="custom_study_random">X kartları rastgele desteden seç:</string>

@@ -109,8 +109,8 @@
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ メニュー</string>
+    <string name="card_browser_enable_external_context_menu_summary">Androidアプリ全般で、テキスト選択時のコンテキストメニューに ‘%s’ を追加する</string>
     <string name="double_scrolling_gap">ダブルスクロール</string>
     <string name="double_scrolling_gap_summ">eReader とのスクロールのギャップを 2 倍にする場合、これを有効にします</string>
     <string name="swipe_sensitivity">スワイプ感度</string>
@@ -153,8 +153,8 @@
     <string name="pref_backup_max">保管するバックアップの世代数</string>
     <string name="show_estimates">回答ボタンに復習間隔を表示</string>
     <string name="show_estimates_summ">次の復習までの間隔を回答ボタンの中に表示します</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">トップバーにカード枚数、フラグボタン、マークボタンを表示する</string>
+    <string name="show_top_bar">トップバーを表示</string>
+    <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress">残りのカード枚数を表示</string>
     <string name="show_progress_summ">画面左上に、残りのカード枚数を表示します（青: 新規、赤: 基本学習および再基本学習、緑: 復習）</string>
     <string name="show_eta">推定学習時間を表示</string>

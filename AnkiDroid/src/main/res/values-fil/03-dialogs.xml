@@ -100,8 +100,8 @@
     <string name="intent_aedict_category">Upang magdagdag ng mga kard sa AnkiDroid alisin lahat ng mga kategorya ng Notepad o magdagdag ng isa na pinangalanang \"default\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Taasan ang limitasyon ng ngayong bagong kard ng</string>
-    <string name="custom_study_rev_extend">Taasan ang limitasyon ng ngayong review ng</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Ang mga review kard na nakalimutan sa huling x araw:</string>
     <string name="custom_study_ahead">Suriin nang maaga ng x araw:</string>
     <string name="custom_study_random">Pumili ng x kard sa pamamagitan ng random mula sa deck:</string>

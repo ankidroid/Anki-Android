@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Om kaarten aan AnkiDroid toe te voegen verwijder je alle Notepad categorieën of voeg een toe met de naam \'standaard\'</string>
     <string name="custom_study_new_total_new">Nieuwe kaarten in set: %d</string>
     <string name="custom_study_rev_total_rev">Herhalingen te doen in set: %d</string>
-    <string name="custom_study_new_extend">Verhoog de nieuwe kaartenlimiet voor vandaag met</string>
-    <string name="custom_study_rev_extend">Verhoog de herhalingenlimiet voor vandaag met</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Herhaal kaarten vergeten in de laatste x dagen:</string>
     <string name="custom_study_ahead">Herhaal x dagen vooruit:</string>
     <string name="custom_study_random">Kies willekeurig x kaarten uit de set:</string>

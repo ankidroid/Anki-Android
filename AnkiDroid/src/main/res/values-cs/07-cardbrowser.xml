@@ -102,6 +102,6 @@
     <string name="card_browser_interval_learning_card">(učení)</string>
     <string name="card_browser_note_editor_error">Chyba při otevírání editoru poznámek</string>
     <string name="card_browser_no_cards_in_deck">V balíčku „%s “ nebyly nalezeny žádné karty</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_search_all_decks">Prohledat všechny balíčky</string>
+    <string name="card_browser_unknown_deck_name">Neznámý</string>
 </resources>

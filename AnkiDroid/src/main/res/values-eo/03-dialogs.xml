@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Por aldoni kartojn al AnkiDroid, forigu ĉiujn kategoriojn de kajero kaj aldonu unu nomitan «default»</string>
     <string name="custom_study_new_total_new">Novaj kartoj en kartaro: %d</string>
     <string name="custom_study_rev_total_rev">Lernendaj ripetoj en kartaro: %d</string>
-    <string name="custom_study_new_extend">Pliigi hodiaŭan limigon de novaj kartoj je</string>
-    <string name="custom_study_rev_extend">Pliigi hodiaŭan limigon de kartoj por ripeti je</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Ripeti kartojn forgesitajn dum tiom da antaŭaj tagoj:</string>
     <string name="custom_study_ahead">Anticipe ripeti kartojn je tiom da tagoj:</string>
     <string name="custom_study_random">Elekti tiom da hazardaj kartoj el la kartaro:</string>

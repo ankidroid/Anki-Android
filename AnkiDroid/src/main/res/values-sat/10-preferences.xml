@@ -163,9 +163,9 @@
     <string name="new_spread">ᱱᱟᱣᱟ ᱠᱟᱰ ᱡᱟᱭᱜᱟ</string>
     <string name="learn_cutoff">ᱢᱟᱲᱟᱝ ᱥᱮᱫ ᱯᱟᱲᱦᱟᱣ ᱪᱮᱫᱚᱜ</string>
     <string name="learn_cutoff_summ">XXX ᱴᱤᱯᱤᱡ</string>
-    <string name="time_limit">Timebox time limit</string>
+    <string name="time_limit">ᱥᱚᱢᱚᱭ ᱵᱟᱠᱥᱚ ᱚᱠᱛᱚ ᱥᱤᱢᱟᱹ</string>
     <string name="time_limit_summ">XXX ᱴᱤᱯᱤᱡ</string>
-    <string name="day_offset">Start of next day</string>
+    <string name="day_offset">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱫᱤᱱ ᱮᱛᱦᱚᱵ</string>
     <string name="day_offset_summ">XXX hours past midnight</string>
     <string name="sched_ver">Experimental V2 scheduler</string>
     <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>

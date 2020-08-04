@@ -99,8 +99,8 @@
         <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Increase today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Increase today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
+    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">Review forgotten cards</string>
     <string name="custom_study_review_ahead">Review ahead</string>
     <string name="custom_study_random_selection">Study a random selection of cards</string>
@@ -309,4 +309,34 @@
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <!-- CSV/Note Import -->
+    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
+    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
+    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
+    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <plurals name="note_importer_notes_added">
+        <item quantity="one">%d note added</item>
+        <item quantity="two">%d notes added</item>
+        <item quantity="few">%d notes added</item>
+        <item quantity="many">%d notes added</item>
+        <item quantity="other">%d notes added</item>
+    </plurals>
+    <plurals name="note_importer_notes_updated">
+        <item quantity="one">%d note updated</item>
+        <item quantity="two">%d notes updated</item>
+        <item quantity="few">%d notes updated</item>
+        <item quantity="many">%d notes updated</item>
+        <item quantity="other">%d notes updated</item>
+    </plurals>
+    <plurals name="note_importer_notes_unchanged">
+        <item quantity="one">%d note unchanged</item>
+        <item quantity="two">%d notes unchanged</item>
+        <item quantity="few">%d notes unchanged</item>
+        <item quantity="many">%d notes unchanged</item>
+        <item quantity="other">%d notes unchanged</item>
+    </plurals>
 </resources>

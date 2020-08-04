@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">AnkiDroid ᱛᱮ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ Notepad ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱜᱟᱨ ᱠᱟᱜ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ “default” ᱧᱩᱛᱩᱢ ᱠᱟᱜ ᱢᱮ</string>
     <string name="custom_study_new_total_new">ᱰᱮᱠ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰᱺ%d</string>
     <string name="custom_study_rev_total_rev">ᱰᱮᱠ ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭᱺ%d</string>
-    <string name="custom_study_new_extend">ᱛᱮᱦᱮᱸᱧᱟᱜ ᱱᱟᱶᱟ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱣᱢᱮ</string>
-    <string name="custom_study_rev_extend">ᱛᱮᱦᱮᱸᱧᱟᱜ ᱨᱤᱵᱷᱣᱩ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱣᱢᱮ </string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ x ᱫᱤᱱ ᱨᱮ ᱦᱤᱲᱤᱧᱟᱜ ᱠᱚᱺ</string>
     <string name="custom_study_ahead">᱑᱐ ᱫᱤᱱ ᱢᱟᱲᱟᱝ ᱥᱮᱱ ᱨᱤᱵᱷᱤᱣᱺ</string>
     <string name="custom_study_random">ᱴᱟᱴᱠᱟ ᱡᱟᱱᱟᱢ(ᱟᱛᱷᱟᱹᱲᱤ) x ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱠᱚᱨᱟᱣ ᱢᱮ ᱰᱮᱠ ᱠᱷᱚᱱᱺ</string>
@@ -201,7 +201,7 @@
     <string name="boot_service_too_many_notifications">ᱟᱹᱰᱤᱜᱟᱱ ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱾ ᱛᱤᱱᱟᱹᱝᱜᱟᱱ ᱡᱤᱱᱥ ᱵᱟᱭ ᱫᱮᱠᱷᱟᱣᱟ</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>
+        <item quantity="other">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>
     </plurals>
 </resources>

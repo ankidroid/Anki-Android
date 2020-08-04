@@ -111,8 +111,8 @@
     <string name="intent_aedict_category">Za dodajanje kartic v AnkiDroid odstranite vse kategorija beležnice ali dodajte eno z imenom \"privzeta\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Povečaj današnjo omejitev novih kartic za</string>
-    <string name="custom_study_rev_extend">Povečaj današnjo omejitev kartic za pregled za</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Preglej kartice, ki so bile v zadnjih x-ih dneh pozabljene:</string>
     <string name="custom_study_ahead">Preglej vnaprej za x dni:</string>
     <string name="custom_study_random">Naključno izberite x kartic iz kompleta:</string>

@@ -111,8 +111,8 @@
     <string name="intent_aedict_category">Чтобы добавить карточки в AnkiDroid, удалите все категории Notepad или создайте категорию \"default\"</string>
     <string name="custom_study_new_total_new">Новых карточек в колоде: %d</string>
     <string name="custom_study_rev_total_rev">Карточек для повторения: %d</string>
-    <string name="custom_study_new_extend">Добавить новых на сегодня</string>
-    <string name="custom_study_rev_extend">Добавить повторяемых на сегодня</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Забытые за сколько дней повторить:</string>
     <string name="custom_study_ahead">На сколько дней опередить повторение:</string>
     <string name="custom_study_random">Сколько случайных карточек отобрать:</string>

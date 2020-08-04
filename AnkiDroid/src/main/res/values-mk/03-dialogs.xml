@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">За да додадете картички на AnkiDroid, отстранете ги сите обележени категории или додадете еден по име \"default\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Зголемете го ограничувањето на новата картичка од денес</string>
-    <string name="custom_study_rev_extend">Зголемете го ограничувањето на денешниот преглед</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Преглед на картички заборавени во последните x денови:</string>
     <string name="custom_study_ahead">Преглед напред за x денови:</string>
     <string name="custom_study_random">Изберете x картички по случаен избор од deck:</string>

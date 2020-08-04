@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">AnkiDroid కు కార్డులు జోడించడానికి అన్ని నోట్ప్యాడ్లో కేతగిరీలు తొలగించండి లేదా \"default\" కు ఒక పేరును జోడించండి</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">నేటి కొత్త కార్డు పరిమితిని పెంచండి</string>
-    <string name="custom_study_rev_extend">నేటి సమీక్ష పరిమితిని పెంచం</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">గత x రోజుల్లో రిజిస్టర్డ్ కార్డులను మర్చిపోయారు:</string>
     <string name="custom_study_ahead">X రోజుల ముందుగా సమీక్షించండి:</string>
     <string name="custom_study_random">డెక్ నుండి యాదృచ్ఛికంగా x కార్డులను ఎంచుకోండి:</string>

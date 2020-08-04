@@ -186,6 +186,7 @@
     <string name="card_template_editor_styling">Stil</string>
     <string name="card_template_editor_menu_delete">Sil</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">En az bir kart türü gerekiyor.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
