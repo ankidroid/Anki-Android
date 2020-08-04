@@ -1233,7 +1233,8 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private String[] getCurrentFieldStrings() {
+    @VisibleForTesting
+    String[] getCurrentFieldStrings() {
         if (mEditFields == null) {
             return new String[0];
         }
@@ -1445,27 +1446,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
         // Listen for changes in the first field so we can re-check duplicate status.
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                mFieldEdited = true;
-                if (index == 0) {
-                    setDuplicateFieldStyles();
-                }
-            }
-
-
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                // do nothing
-            }
-
-
-            @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                // do nothing
-            }
-        });
+        editText.addTextChangedListener(new EditFieldTextWatcher(index));
         editText.setEnabled(enabled);
     }
 
@@ -1937,7 +1918,9 @@ public class NoteEditor extends AnkiActivity {
 
     @VisibleForTesting
     void setFieldValueFromUi(int i, String newText) {
-        mEditFields.get(i).setText(newText);
+        FieldEditText editText = mEditFields.get(i);
+        editText.setText(newText);
+        new EditFieldTextWatcher(i).afterTextChanged(editText.getText());
     }
 
 
@@ -1945,5 +1928,36 @@ public class NoteEditor extends AnkiActivity {
     @VisibleForTesting
     long getDeckId() {
         return mCurrentDid;
+    }
+
+
+    private class EditFieldTextWatcher implements TextWatcher {
+        private final int mIndex;
+
+
+        public EditFieldTextWatcher(int index) {
+
+            this.mIndex = index;
+        }
+
+        @Override
+        public void afterTextChanged(Editable arg0) {
+            mFieldEdited = true;
+            if (mIndex == 0) {
+                setDuplicateFieldStyles();
+            }
+        }
+
+
+        @Override
+        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            // do nothing
+        }
+
+
+        @Override
+        public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            // do nothing
+        }
     }
 }
