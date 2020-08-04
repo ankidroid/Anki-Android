@@ -187,6 +187,13 @@ public abstract class AbstractSched {
     public abstract int[] recalculateCounts();
     public abstract void setReportLimit(int reportLimit);
 
+    /**
+     * Reverts answering a card.
+     * 
+     * @param card The data of the card before the review was made
+     * @param wasLeech Whether the card was a leech before the review was made (if false, remove the leech tag)
+     * */
+    public abstract void undoReview(@NonNull Card card, boolean wasLeech);
 
     /**
      * Holds the data for a single node (row) in the deck due tree (the user-visible list
