@@ -186,6 +186,13 @@ public abstract class AbstractSched {
     public abstract int[] recalculateCounts();
     public abstract void setReportLimit(int reportLimit);
 
+    /**
+     * Reverts answering a card.
+     * 
+     * @param card The data of the card before the review was made
+     * @param wasLeech Whether the card was a leech before the review was made (if false, remove the leech tag)
+     * */
+    public abstract void undoReview(@NonNull Card card, boolean wasLeech);
 
     public interface LimitMethod {
         int operation(Deck g);

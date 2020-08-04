@@ -1288,25 +1288,7 @@ public class Collection {
         Card clonedCard = card.clone();
         Undoable undoableReview = new Undoable(REVIEW) {
             public long undo(Collection col) {
-                // remove leech tag if it didn't have it before
-                if (!wasLeech && clonedCard.note().hasTag("leech")) {
-                    clonedCard.note().delTag("leech");
-                    clonedCard.note().flush();
-                }
-                Timber.i("Undo Review of card %d, leech: %b", clonedCard.getId(), wasLeech);
-                // write old data
-                clonedCard.flush(false);
-                // and delete revlog entry
-                long last = col.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", new Object[] {clonedCard.getId()});
-                col.getDb().execute("DELETE FROM revlog WHERE id = " + last);
-                // restore any siblings
-                col.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
-                        new Object[] {Utils.intTime(), col.usn(), clonedCard.getNid()});
-                // and finally, update daily count
-                @Consts.CARD_QUEUE int n = clonedCard.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : clonedCard.getQueue();
-                String type = (new String[]{"new", "lrn", "rev"})[n];
-                col.getSched()._updateStats(clonedCard, type, -1);
-                col.getSched().setReps(col.getSched().getReps() - 1);
+                col.getSched().undoReview(clonedCard, wasLeech);
                 return clonedCard.getId();
             }
         };
