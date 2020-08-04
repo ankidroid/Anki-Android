@@ -108,7 +108,7 @@ public class Sched extends SchedV2 {
             card.setQueue(Consts.QUEUE_TYPE_LRN);
             // if it was a new card, it's now a learning card
             if (card.getType() == Consts.CARD_TYPE_NEW) {
-                card.setType(Consts.QUEUE_TYPE_LRN);
+                card.setType(Consts.CARD_TYPE_LRN);
             }
             // init reps to graduation
             card.setLeft(_startingLeft(card));
