@@ -31,6 +31,8 @@ import androidx.annotation.RequiresApi;
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class BadgeDrawable extends DrawableWrapper {
 
+    public static final double ICON_SCALE_TEXT = 0.70;
+    public static final double ICON_SCALE_BARE = 0.40;
     private final Paint mPaint;
 
     private Drawable mBadge;
@@ -54,28 +56,70 @@ public class BadgeDrawable extends DrawableWrapper {
 
     public void setBadgeDrawable(@NonNull Drawable view) {
         mBadge = view;
+        invalidateSize();
 
+    }
+
+
+    private void invalidateSize() {
         // This goes out of bounds - it seems to be fine
-        int mSize = (int) (getIntrinsicWidth() * 0.70);
+        int mSize = (int) (getIntrinsicWidth() * getIconScale());
 
         mPaint.setTextSize((float) (mSize * 0.8));
 
-        int left = (int) (getIntrinsicWidth() * 0.55);
-        int bottom = (int) (getIntrinsicHeight() * 0.45);
+        int left = (int) getLeft();
+        int bottom = (int) getBottom();
 
         int right = left + mSize;
         int top = bottom - mSize;
-        mBadge.setBounds(left, top, right, bottom);
+        if (mBadge != null) {
+            mBadge.setBounds(left, top, right, bottom);
+        }
 
         float vcenter = (top + bottom) / 2.0f;
 
         mTextX = (left + right) / 2.0f;
         mTextY = vcenter - (mPaint.descent() + mPaint.ascent()) / 2;
-
     }
+
+
+    private double getBottom() {
+        int h = getIntrinsicHeight();
+        if (isShowingText()) {
+            return h * 0.45;
+        } else {
+            return (h * getIconScale());
+        }
+    }
+
+
+    private double getLeft() {
+        int w = getIntrinsicWidth();
+        if (isShowingText()) {
+            return w * 0.55;
+        } else {
+            return w - (w * getIconScale());
+        }
+    }
+
+
+    private double getIconScale() {
+        if (isShowingText()) {
+            return ICON_SCALE_TEXT;
+        } else {
+            return ICON_SCALE_BARE;
+        }
+    }
+
+
+    private boolean isShowingText() {
+        return mText != null && mText.length() > 0;
+    }
+
 
     public void setText(char c) {
         this.mText = new String(new char[] {c});
+        invalidateSize();
     }
 
     @Override
