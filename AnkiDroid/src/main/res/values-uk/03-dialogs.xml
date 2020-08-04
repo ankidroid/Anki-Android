@@ -111,8 +111,8 @@
     <string name="intent_aedict_category">Щоб додати картки до AnkiDroid видаліть всі категорії Notepad або додайте категорію \'default\'</string>
     <string name="custom_study_new_total_new">Нові картки в колоді: %d</string>
     <string name="custom_study_rev_total_rev">Повторити сьогодні: %d</string>
-    <string name="custom_study_new_extend">Збільшити сьогоднішній ліміт нових карт на</string>
-    <string name="custom_study_rev_extend">Збільшити сьогоднішній ліміт повторення на</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Повторити карти забуті за останні x днів:</string>
     <string name="custom_study_ahead">Переглянути наперед за х днів:</string>
     <string name="custom_study_random">Вибрати х випадкових карт з колоди:</string>
@@ -201,6 +201,7 @@
     <string name="error_selecting_image">Помилка встановлення зображення. Будь-ласка, перегляньте посібник. %s</string>
     <string name="error_deleting_image">Помилка видалення зображення</string>
     <string name="failed_to_apply_background_image">Не вдалося застосувати тлове зображення %s</string>
+    <string name="background_image_too_large">Занадто великий фон колоди</string>
     <string name="image_max_size_allowed">Максимально допустимий розмір зображення %d МБ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -210,4 +211,11 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Не вдалося запланувати нагадування</string>
     <string name="boot_service_too_many_notifications">Забагато нагадувань заплановано. Деякі не з’являться</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">Автоматична синхронізація може запуститися через %d секунду.</item>
+        <item quantity="few">Автоматична синхронізація може запуститися через %d секунди.</item>
+        <item quantity="many">Автоматична синхронізація може запуститися через %d секунд.</item>
+        <item quantity="other">Автоматична синхронізація може запуститися через %d секунди.</item>
+    </plurals>
 </resources>

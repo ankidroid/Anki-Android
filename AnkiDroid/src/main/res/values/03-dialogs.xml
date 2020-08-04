@@ -57,6 +57,8 @@
         <item quantity="one">%d card reset</item>
         <item quantity="other">%d cards reset</item>
     </plurals>
+
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">Reschedule card</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
@@ -71,6 +73,9 @@
         <item quantity="one">%d card rescheduled</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Database error</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
@@ -82,8 +87,8 @@
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Increase today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase today’s review limit by</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
     <string name="custom_study_ahead">Review ahead by x days:</string>
     <string name="custom_study_random">Select x cards randomly from the deck:</string>
@@ -187,6 +192,7 @@
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">Error deleting image</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     
     <!-- Global Intent handler -->
@@ -199,4 +205,11 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">An automatic sync may be triggered in %d second</item>
+        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+    </plurals>
+
 </resources>

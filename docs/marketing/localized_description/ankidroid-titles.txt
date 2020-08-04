@@ -23,7 +23,7 @@ he: AnkiDroid כרטיסי לימוד
 hi: AnkiDroid फ़्लैशकार्ड
 hu: AnkiDroid Szókártyák
 hy-AM: AnkiDroid քարտեր
-id: Kad imbas AnkiDroid
+id: Kartu flash AnkiDroid
 ko: AnkiDroid 플래시 카드
 ku: Naverokê Bixwaze
 lt: „AnkiDroid“ atminties kortelės

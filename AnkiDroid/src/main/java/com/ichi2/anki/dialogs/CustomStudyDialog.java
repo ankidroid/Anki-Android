@@ -47,6 +47,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 
+import com.ichi2.libanki.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -55,6 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import com.ichi2.async.TaskData;
 
 
 public class CustomStudyDialog extends AnalyticsDialogFragment {
@@ -220,7 +222,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                     switch (dialogId) {
                         case CUSTOM_STUDY_NEW: {
                             AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendNew", n).commit();
-                            JSONObject deck = col.getDecks().get(did);
+                            Deck deck = col.getDecks().get(did);
                             deck.put("extendNew", n);
                             col.getDecks().save(deck);
                             col.getSched().extendLimits(n, 0);
@@ -229,7 +231,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                         }
                         case CUSTOM_STUDY_REV: {
                             AnkiDroidApp.getSharedPrefs(getActivity()).edit().putInt("extendRev", n).commit();
-                            JSONObject deck = col.getDecks().get(did);
+                            Deck deck = col.getDecks().get(did);
                             deck.put("extendRev", n);
                             col.getDecks().save(deck);
                             col.getSched().extendLimits(0, n);
@@ -425,13 +427,13 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
      * @param resched whether to reschedule the cards based on the answers given (or ignore them if false)
      */
     private void createCustomStudySession(JSONArray delays, Object[] terms, Boolean resched) {
-        JSONObject dyn;
+        Deck dyn;
         final AnkiActivity activity = getAnkiActivity();
         Collection col = CollectionHelper.getInstance().getCol(activity);
         long did = getArguments().getLong("did");
         String deckToStudyName = col.getDecks().get(did).getString("name");
         String customStudyDeck = getResources().getString(R.string.custom_study_deck_name);
-        JSONObject cur = col.getDecks().byName(customStudyDeck);
+        Deck cur = col.getDecks().byName(customStudyDeck);
         if (cur != null) {
             Timber.i("Found deck: '%s'", customStudyDeck);
             if (cur.getInt("dyn") != 1) {
@@ -472,22 +474,24 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         JSONArray ar = dyn.getJSONArray("terms");
         ar.getJSONArray(0).put(0, "deck:\"" + deckToStudyName + "\" " + terms[0]);
         ar.getJSONArray(0).put(1, terms[1]);
-        ar.getJSONArray(0).put(2, terms[2]);
+        @Consts.DYN_PRIORITY int priority = (Integer) terms[2];
+        ar.getJSONArray(0).put(2, priority);
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
-        CollectionTask.launchCollectionTask(REBUILD_CRAM, new CollectionTask.TaskListener() {
-                @Override
-                public void onPreExecute() {
-                    activity.showProgressBar();
-                }
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
+            @Override
+            public void onPreExecute() {
+                activity.showProgressBar();
+            }
 
-                @Override
-                public void onPostExecute(CollectionTask.TaskData result) {
-                    activity.hideProgressBar();
-                    ((CustomStudyListener) activity).onCreateCustomStudySession();
-                }
-            });
+            @Override
+            public void onPostExecute(TaskData result) {
+                activity.hideProgressBar();
+                ((CustomStudyListener) activity).onCreateCustomStudySession();
+            }
+        };
+        CollectionTask.launchCollectionTask(REBUILD_CRAM, listener);
 
         // Hide the dialogs
         activity.dismissAllDialogFragments();

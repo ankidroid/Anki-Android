@@ -94,13 +94,13 @@
         <item>Intervalle</item>
         <item>Facilité</item>
         <item>À faire</item>
-        <item>Card Modified</item>
+        <item>Carte modifiée</item>
         <item>Créée</item>
-        <item>Note Modified</item>
+        <item>Note modifiée</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Augmenter la limite de nouvelles cartes pour aujourd\'hui</string>
-    <string name="custom_study_increase_review_limit">Augmenter la limite de révisions pour aujourd\'hui</string>
+    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
+    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">Réviser des cartes oubliées</string>
     <string name="custom_study_review_ahead">Réviser à l\'avance</string>
     <string name="custom_study_random_selection">Réviser une sélection aléatoire de cartes</string>
@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">Le premier champ est vide</string>
     <string name="note_editor_no_cloze_delations">Ce type de note doit contenir des textes à trous</string>
     <string name="note_editor_no_cards_created_all_fields">Le type de note actuel n’a produit aucune carte.\nVeuillez choisir un autre type de carte, ou cliquez sur « Cartes » et ajoutez un champ de substitution</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Les textes à trous ne fonctionneront que sur une carte de type Cloze</string>
     <string name="saving_facts">Enregistrer la note</string>
     <string name="saving_model">Enregistrement du type de note</string>
     <string name="add">Ajouter</string>
@@ -257,7 +258,6 @@
     <string name="import_needs_v2">Le planificateur V2 doit être activé pour importer ce fichier.</string>
     <string name="import_cannot_with_v2">Le planificateur V2 ne peut pas importer les paquets de cartes V1 avec la planification incluse.</string>
     <string name="export_v2_dummy_note">Ce fichier nécessite une version plus récente d\'Anki.</string>
-    <string name="export_v2_forbidden">Veuillez passer au planificateur V1 avant d\'exporter un paquet de cartes avec les informations de planification.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Le chargement de \'%s\' a échoué.</string>
     <string name="activity_start_failed">Le système ne dispose pas d\'une application qui peut effectuer cette action.</string>
@@ -279,4 +279,25 @@
     <string name="white_board_image_save_failed">Impossible d\'enregistrer l\'image du tableau blanc. %s</string>
     <string name="white_board_image_saved">Image du tableau blanc enregistrée dans %s</string>
     <string name="title_whiteboard_pen_color">Couleur du stylo du tableau blanc</string>
+    <!-- CSV/Note Import -->
+    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
+    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
+    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
+    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <plurals name="note_importer_notes_added">
+        <item quantity="one">%d note added</item>
+        <item quantity="other">%d notes added</item>
+    </plurals>
+    <plurals name="note_importer_notes_updated">
+        <item quantity="one">%d note updated</item>
+        <item quantity="other">%d notes updated</item>
+    </plurals>
+    <plurals name="note_importer_notes_unchanged">
+        <item quantity="one">%d note unchanged</item>
+        <item quantity="other">%d notes unchanged</item>
+    </plurals>
 </resources>

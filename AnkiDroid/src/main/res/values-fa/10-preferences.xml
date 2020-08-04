@@ -69,7 +69,7 @@
     <string name="whiteboard_black">حاشیه‌های تک‌رنگ</string>
     <string name="whiteboard_black_summ">حافظه کمتری استفاده می‌کند، اما در حالت شب کار نمی‌کند</string>
     <string name="use_input_tag">پاسخ را در کارت بنویسید</string>
-    <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+    <string name="use_input_tag_summ">از یک کادر نوشتن متن درون کارت برای نوشتن پاسخ استفاده کنید</string>
     <string name="dictionary">فرهنگ لغت برای مراجعه</string>
     <string name="reset_languages">بازنشانی زبان‌ها</string>
     <string name="reset_languages_summ">تنظیم مجدد زبان ( برای تبدیل متن به گفتار و فرهنگ لغت ها) برای تمامی دسته ها</string>
@@ -79,8 +79,8 @@
     <string name="image_zoom">بزرگ نمایی عکس</string>
     <string name="button_size">اندازه دکمه پاسخ</string>
     <string name="card_browser_font_size">تغییر اندازه فونت مرورگر کارت</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media">نمایش نام فایل‌ها در مرورگر کارت</string>
+    <string name="card_browser_hide_media_summary">نمایش نام فایل‌های رسانه در فیلد سوال/پاسخ در مرورگر کارت</string>
     <string name="col_path">مسیر قرارگیری AnkiDroid</string>
     <string name="fullscreen_review">حالت تمام‌صفحه</string>
     <string name="full_screen_off">خاموش</string>
@@ -94,8 +94,8 @@
     </string-array>
     <string name="gestures">فعالسازی حرکات لمسی</string>
     <string name="gestures_summ">استفاده از حرکات و ضربات لمسی برای انجام کارهایی مثل پاسخ دادن و ویرایش کارت‌ها.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links">چشم‌پوشی از فرمان‌های لمسی روی لینک‌ها</string>
+    <string name="gestures_allow_links_summary">هنگام لمس لینک/یادآور فشار داده شود فرمان لمسی عمل نخواهد کرد.</string>
     <string name="gestures_swipe_up">ضربه به سمت بالا</string>
     <string name="gestures_swipe_down">ضربه به سمت پایین</string>
     <string name="gestures_swipe_left">ضربه سمت چپ</string>
@@ -105,12 +105,12 @@
     <string name="gestures_tap_bottom">به پایین ضربه بزنید</string>
     <string name="gestures_tap_left">به چپ ضربه بزنیدضربه چپ</string>
     <string name="gestures_tap_right">به راست ضربه بزنید</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_volume_up">افزایش صدا</string>
+    <string name="gestures_volume_down">کاهش صدا</string>
     <string name="more_scrolling_buttons">خبرخوان</string>
     <string name="more_scrolling_buttons_summ">از دکمه‌های Kanji/Katakana, Emoji/Kao-moji هم برای پیمایش استفاده کن</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">منوی \'%s\'</string>
+    <string name="card_browser_enable_external_context_menu_summary">\'%s\' را در لیست به صورت عمومی فعال می‌کند</string>
     <string name="double_scrolling_gap">پیمایش دو برابری</string>
     <string name="double_scrolling_gap_summ">فعال کنید اگر می‌خواهید فاصله پیمایش را در کتابخوان دیجیتالی دو برابر کنید</string>
     <string name="swipe_sensitivity">حساسیت حرکت لمسی</string>
@@ -132,29 +132,29 @@
     <string name="notification_pref">اعلان‌ها</string>
     <string name="notification_pref_title">اطلاع بده موقعی که</string>
     <string name="never_notify">هرگز اطلاع نده</string>
-    <string name="notify_when_pending">Pending messages available</string>
+    <string name="notify_when_pending">هشدارهای مشاهده نشده</string>
     <string name="notification_minimum_cards_due">موعد مرور بیش از %d کارت</string>
     <string name="notification_minimum_cards_due_vibrate">لرزش</string>
     <string name="notification_minimum_cards_due_blink">چشمک زدن نور</string>
     <string name="timeout_answer_text">نمایش پاسخ بصورت خودکار</string>
-    <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
+    <string name="timeout_answer_summ">نمایش خودکار پاسخ بدون درخواست کاربر. تأخیر شامل زمان پخش فایل صوتی نیز می‌شود.</string>
     <string name="timeout_answer_seconds">زمان نمایش پاسخ</string>
     <string name="timeout_answer_seconds_summ">XXX ثانیه</string>
     <string name="timeout_question_seconds">زمان نمایش پرسش بعدی</string>
     <string name="timeout_question_seconds_summ">XXX ثانیه</string>
     <string name="select_locale_title">زبان را انتخاب کنید</string>
     <string name="safe_display">حالت نمایش محتاطانه</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="safe_display_summ">غیرفعال کردن همۀ انیمیشن‌ها و استفاده از حالت امن‌تر برای نقاشی روی کارت‌ها. دستگاه‌های E-ink ممکن است نیازمند از گزینه باشند.</string>
+    <string name="disable_extended_text_ui">غیرفعال کردن حالت ویرایش یک فیلد</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">فعالسازی فهرست امکانات کارت کلوز در حالت لندسکیپ.</string>
     <string name="vertical_centering">تراز در وسط</string>
     <string name="vertical_centering_summ">تراز کردن محتوای کارت‌ها بصورت عمودی در وسط</string>
     <string name="pref_backup_max">حداکثر تعداد پشتیبان‌ها</string>
     <string name="show_estimates">نمایش  دکمه زمان</string>
     <string name="show_estimates_summ">نمایش زمان مرور بعدی در بالای دکمه پاسخ</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">نمایش نوار بالا</string>
+    <string name="show_top_bar_summ">نمایش تعداد کارت‌ها، پرچم‌ها و نشان‌ها در نوار بالا</string>
     <string name="show_progress">نمایش باقیمانده</string>
     <string name="show_progress_summ">نمایش تعداد کارت‌های باقیمانده</string>
     <string name="show_eta">نمایش زمان تخمینی</string>
@@ -167,11 +167,11 @@
     <string name="time_limit_summ">XXX دقیقه</string>
     <string name="day_offset">شروع روز بعد</string>
     <string name="day_offset_summ">XXX ساعت پس از نیمه شب</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_ver">زمانبندی آزمایشی ورژن 2</string>
+    <string name="sched_ver_summ">فعالسازی سیستم زمانبندی آزمایشی. اعمال تغییرات در یک جهت در همگام‌سازی بعدی</string>
     <string name="sched_ver_toggle_title">تایید</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver_2to1">این عمل همۀ کارت‌های موجود در مراحل یادگیری و یادگیری دوباره را به حالت تازه وارد کرده، همه دسته‌های فیلترشده را پاک و نسخۀ سیستم زمانبندی کارت‌ها را عوض خواهد کرد. آیا از انجام این عمل مطمئن هستید؟</string>
+    <string name="sched_ver_1to2">سیستم زمانبندی آزمایشی ممکن است کارت‌ها را اشتباه زمانبندی کند. لطفاً قبل از اعمال تغییرات راهنما را بخوانید. اعمال تغییرات؟</string>
     <string name="pref_keep_screen_on">روشن نگه‌داشتن صفحه</string>
     <string name="pref_keep_screen_on_summ">غیرفعال کردن زمان خاموش شدن صفحه نمایش</string>
     <string name="convert_fen_text">پشتیبانی از ثبت حرکات شطرنج</string>
@@ -184,10 +184,10 @@
     <string name="custom_buttons_setting_if_room">نشان بده اگر جا باشد</string>
     <string name="custom_buttons_setting_menu_only">فقط در فهرست</string>
     <string name="reset_custom_buttons">بازگشت به حالت پیش فرض</string>
-    <string name="thirdparty_apps_title">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
+    <string name="thirdparty_apps_title">ای پی آی سایر نرم‌افزارها</string>
+    <string name="thirdparty_apps_summary">نمایش لیست کامل از همۀ نرم‌افزارهایی که از ای پی آی آنکی‌دروید استفاده می‌کنند. (برای مثال نرم‌افزارهای فرهنگ لغت و ...)</string>
     <string name="html_javascript_debugging">دیباگ کردن HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="html_javascript_debugging_summ">فعال‌سازی اتصالات از بیرونی و ذخیرۀ اچ تی ام ال کارت‌ها در مسیر آنکی‌دروید</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">آمار پیشرفته</string>
     <string name="enable_advanced_statistics_title">فعال کردن آمار پیشرفته</string>
@@ -200,14 +200,14 @@
     <string name="custom_sync_server_enable_title">استفاده از سرور همگام سازی سفارشی</string>
     <string name="custom_sync_server_enable_summary">اگر شما نمی خواهید از خدمات اختصاصی ankiWeb استفاده کنید می توانید یک سرور جایگزین را در اینجا مشخص کنید</string>
     <string name="custom_sync_server_base_url_title">لینک همگام سازی</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">لینک همگام‌سازی نامعتبر است</string>
     <string name="custom_sync_server_media_url_title">لینک همگام سازی رسانه</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">لینک همگام‌سازی فایل‌های رسانه نامعتبر است</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="deck_conf_group_summ">تغییر این گروه اختیارات این دسته چندین دسته را تحت تأثیر قرار خواهد داد. اگر قصد اعمال تغییرات فقط بر روی این دسته را دارید، لطفاً ابتدا یک گروه اختیارات جدید اضافه کنید</string>
     <string name="studyoptions_limit_select_tags">انتخاب برچسبها</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_deck_description">توضیحات دسته (فقط دستۀ فعلی را تحت تأثیر قرار خواهد داد)</string>
     <string name="deck_conf_group">گزینه های گروه</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d دسته از این گروه استفاده می کند</item>
@@ -230,8 +230,8 @@
     <string name="deck_conf_new_bury_summ">تا روز بعد از کارتهای جدید مرتبط صرف نظر شد</string>
     <string name="deck_conf_rev_bury">صرف نظر از نظرات مرتبط</string>
     <string name="deck_conf_rev_bury_summ">تا روز بعد از نظرات مرتبط صرف نظر شد</string>
-    <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings">استفاده از تنظیمات عمومی</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">استفاده از تنظیمات عمومی \'نمایش خودکار جواب\' به جای استفاده از تنظیمات این گروه</string>
     <string name="deck_conf_easy_bonus">جایزه آسان</string>
     <string name="deck_conf_ivl_fct">اصلاح کننده فاصله</string>
     <string name="deck_conf_max_ivl">حداکثر فاصله</string>
@@ -272,12 +272,12 @@
     <string name="deck_conf_cram_order">کارتهای انتخاب شده بوسیله</string>
     <string name="deck_conf_cram_reschedule">برنا مه ریزی مجدد</string>
     <string name="deck_conf_cram_reschedule_summ">برنامه ریزی مجدد کارتها براساس جوابهای من در این دسته</string>
-    <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
+    <string name="deck_conf_cram_steps">قدم‌های سفارشی (به دقیقه)</string>
     <string name="deck_conf_cram_steps_summ">تعریف مراحل سفارشی</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_enabled">فعال‌سازی اعلان‌های یادآوری برای دسته‌هایی که از این گروه اختیارات استفاده می‌کنند</string>
     <string name="deck_conf_reminders_time">یاد آوری در</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">کمک به بهتر شدن AnkiDroid!</string>
-    <string name="analytics_title">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_title">به اشتراک گذاشتن ویژگی‌های مورد استفاده</string>
+    <string name="analytics_summ">شما می‌توانید با به اشتراک گذاشتن ویژگی‌هایی که استفاده می‌کنید می‌توانید به توسعۀ آنکی‌دروید کمک کنید</string>
 </resources>

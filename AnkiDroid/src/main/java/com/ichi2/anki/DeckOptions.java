@@ -47,6 +47,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Deck;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
@@ -71,14 +72,15 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import com.ichi2.async.TaskData;
 
 /**
  * Preferences for the current deck.
  */
 public class DeckOptions extends AppCompatPreferenceActivity implements OnSharedPreferenceChangeListener {
 
-    private JSONObject mOptions;
-    private JSONObject mDeck;
+    private DeckConfig mOptions;
+    private Deck mDeck;
     private Collection mCol;
     private boolean mPreferenceChanged = false;
     private BroadcastReceiver mUnmountReceiver = null;
@@ -163,7 +165,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         }
 
 
-        private boolean parseTimerValue(JSONObject options) {
+        private boolean parseTimerValue(DeckConfig options) {
             return DeckConfig.parseTimerOpt(options, true);
         }
 
@@ -205,7 +207,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 if (oldValue != newValue) {
                                     mOptions.getJSONObject("new").put("order", newValue);
                                     CollectionTask.launchCollectionTask(REORDER, mConfChangeHandler,
-                                            new CollectionTask.TaskData(new Object[] {mOptions}));
+                                            new TaskData(new Object[] {mOptions}));
                                 }
                                 mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
                                 break;
@@ -295,7 +297,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 long newConfId = Long.parseLong((String) value);
                                 mOptions = mCol.getDecks().getConf(newConfId);
                                 CollectionTask.launchCollectionTask(CONF_CHANGE, mConfChangeHandler,
-                                        new CollectionTask.TaskData(new Object[] {mDeck, mOptions}));
+                                        new TaskData(new Object[] {mDeck, mOptions}));
                                 break;
                             }
                             case "confRename": {
@@ -308,7 +310,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "confReset":
                                 if ((Boolean) value) {
                                     CollectionTask.launchCollectionTask(CONF_RESET, mConfChangeHandler,
-                                            new CollectionTask.TaskData(new Object[] {mOptions}));
+                                            new TaskData(new Object[] {mOptions}));
                                 }
                                 break;
                             case "confAdd": {
@@ -354,7 +356,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "confSetSubdecks":
                                 if ((Boolean) value) {
                                     CollectionTask.launchCollectionTask(CONF_SET_SUBDECKS, mConfChangeHandler,
-                                            new CollectionTask.TaskData(new Object[] {mDeck, mOptions}));
+                                            new TaskData(new Object[] {mDeck, mOptions}));
                                 }
                                 break;
                             case "reminderEnabled": {
@@ -528,7 +530,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
 
                 @Override
-                public void onPostExecute(CollectionTask.TaskData result) {
+                public void onPostExecute(TaskData result) {
                     cacheValues();
                     buildLists();
                     updateSummaries();
@@ -546,7 +548,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 mCol.getDecks().remConf(mOptions.getLong("id"));
                 // Run the CPU intensive re-sort operation in a background thread
                 CollectionTask.launchCollectionTask(CONF_REMOVE, mConfChangeHandler,
-                                        new CollectionTask.TaskData(new Object[] { mOptions }));
+                                        new TaskData(new Object[] { mOptions }));
                 mDeck.put("conf", 1);
             }
         }
@@ -793,12 +795,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     @SuppressWarnings("deprecation") // Tracked as #5019 on github
     protected void buildLists() {
         ListPreference deckConfPref = (ListPreference) findPreference("deckConf");
-        ArrayList<JSONObject> confs = mCol.getDecks().allConf();
+        ArrayList<DeckConfig> confs = mCol.getDecks().allConf();
         Collections.sort(confs, NamedJSONComparator.instance);
         String[] confValues = new String[confs.size()];
         String[] confLabels = new String[confs.size()];
         for (int i = 0; i < confs.size(); i++) {
-            JSONObject o = confs.get(i);
+            DeckConfig o = confs.get(i);
             confValues[i] = o.getString("id");
             confLabels[i] = o.getString("name");
         }
@@ -824,7 +826,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private int getOptionsGroupCount() {
         int count = 0;
         long conf = mDeck.getLong("conf");
-        for (JSONObject deck : mCol.getDecks().all()) {
+        for (Deck deck : mCol.getDecks().all()) {
             if (deck.getInt("dyn") == 1) {
                 continue;
             }
@@ -853,7 +855,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         long did = mDeck.getLong("id");
         TreeMap<String, Long> children = mCol.getDecks().children(did);
         for (Map.Entry<String, Long> entry : children.entrySet()) {
-            JSONObject child = mCol.getDecks().get(entry.getValue());
+            Deck child = mCol.getDecks().get(entry.getValue());
             if (child.getInt("dyn") == 1) {
                 continue;
             }

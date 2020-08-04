@@ -29,7 +29,7 @@ import android.widget.Toast;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
-import com.ichi2.compat.CompatHelper;
+import com.ichi2.utils.DatabaseChangeDecorator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class DB {
                 .callback(getDBCallback())
                 .build();
         SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory().create(configuration);
-        mDatabase = helper.getWritableDatabase();
+        mDatabase = new DatabaseChangeDecorator(helper.getWritableDatabase());
         mDatabase.disableWriteAheadLogging();
         mDatabase.query("PRAGMA synchronous = 2", null);
         mMod = false;
@@ -170,11 +170,7 @@ public class DB {
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
-    public int queryScalar(String query) {
-        return queryScalar(query, null);
-    }
-
-    public int queryScalar(String query, Object[] selectionArgs) {
+    public int queryScalar(String query, Object... selectionArgs) {
         Cursor cursor = null;
         int scalar;
         try {
@@ -192,11 +188,7 @@ public class DB {
     }
 
 
-    public String queryString(String query) throws SQLException {
-        return queryString(query, null);
-    }
-
-    public String queryString(String query, Object[] bindArgs) throws SQLException {
+    public String queryString(String query, Object... bindArgs) throws SQLException {
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             if (!cursor.moveToNext()) {
                 throw new SQLException("No result for query: " + query);
@@ -206,11 +198,7 @@ public class DB {
     }
 
 
-    public long queryLongScalar(String query) {
-        return queryLongScalar(query, null);
-    }
-
-    public long queryLongScalar(String query, Object[] bindArgs) {
+    public long queryLongScalar(String query, Object... bindArgs) {
         long scalar;
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             if (!cursor.moveToNext()) {
@@ -229,14 +217,9 @@ public class DB {
      *
      * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
-     * @param column The column id in the result set to return.
      * @return An ArrayList with the contents of the specified column.
      */
-    public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column) {
-        return queryColumn(type, query, column, null);
-    }
-
-    public <T> ArrayList<T> queryColumn(Class<T> type, String query, int column, Object[] bindArgs) {
+    public <T> ArrayList<T> list(Class<T> type, String query, Object... bindArgs) {
         int nullExceptionCount = 0;
         InvocationTargetException nullException = null; // to catch the null exception for reporting
         ArrayList<T> results = new ArrayList<>();
@@ -246,9 +229,9 @@ public class DB {
             while (cursor.moveToNext()) {
                 try {
                     // The magical line. Almost as illegible as python code ;)
-                    results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, column)));
+                    results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, 0)));
                 } catch (InvocationTargetException e) {
-                    if (cursor.isNull(column)) { // null value encountered
+                    if (cursor.isNull(0)) { // null value encountered
                         nullExceptionCount++;
                         if (nullExceptionCount == 1) { // Toast and error report first time only
                             nullException = e;
@@ -267,7 +250,7 @@ public class DB {
             if (nullExceptionCount > 0) {
                 if (nullException != null) {
                     StringBuilder sb = new StringBuilder();
-                    sb.append("DB.queryColumn (column ").append(column).append("): ");
+                    sb.append("DB.queryColumn (column ").append(0).append("): ");
                     sb.append("Exception due to null. Query: ").append(query);
                     sb.append(" Null occurrences during this query: ").append(nullExceptionCount);
                     AnkiDroidApp.sendExceptionReport(nullException, "queryColumn_encounteredNull", sb.toString());
@@ -285,6 +268,27 @@ public class DB {
         return results;
     }
 
+    /**
+     * Convenience method for querying the database for an entire column of long. 
+     *
+     * @param type The class of the column's data type. Example: int.class, String.class.
+     * @param query The SQL query statement.
+     * @return An ArrayList with the contents of the specified column.
+     */
+    public ArrayList<Long> queryLongList(String query, Object... bindArgs) {
+        return list(Long.class, query, bindArgs);
+    }
+
+    /**
+     * Convenience method for querying the database for an entire column of String. 
+     *
+     * @param type The class of the column's data type. Example: int.class, String.class.
+     * @param query The SQL query statement.
+     * @return An ArrayList with the contents of the specified column.
+     */
+    public ArrayList<String> queryStringList(String query, Object... bindArgs) {
+        return list(String.class, query, bindArgs);
+    }
 
     /**
      * Mapping of Java type names to the corresponding Cursor.get method.
@@ -309,12 +313,7 @@ public class DB {
     }
 
 
-    public void execute(String sql) {
-        execute(sql, null);
-    }
-
-
-    public void execute(String sql, Object[] object) {
+    public void execute(String sql, Object... object) {
         String s = sql.trim().toLowerCase(Locale.US);
         // mark modified?
         for (String mo : MOD_SQLS) {

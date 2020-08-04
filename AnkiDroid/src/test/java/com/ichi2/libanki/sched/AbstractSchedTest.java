@@ -19,6 +19,7 @@ package com.ichi2.libanki.sched;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 

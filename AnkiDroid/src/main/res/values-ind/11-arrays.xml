@@ -37,22 +37,22 @@
     <string-array name="error_reporting_choice_labels">
         <item>Selalu lapor</item>
         <item>Jangan lapor</item>
-        <item>tanya aku</item>
+        <item>Tanya aku</item>
     </string-array>
     <string-array name="gestures_labels">
-        <item>tidak ada tindakan</item>
-        <item>perlihatkan Jawaban</item>
-        <item>tombol jawab 1</item>
-        <item>tombol jawab 1</item>
-        <item>tombol jawab 1</item>
+        <item>Tidak ada tindakan</item>
+        <item>Tampilkan jawaban</item>
+        <item>Tombol jawaban 1</item>
+        <item>Tombol jawaban 2</item>
+        <item>Tombol jawaban 3</item>
         <item>Tombol jawaban 4</item>
-        <item>jawaban yang direkomendasikan (hijau)</item>
-        <item>jawab lebih baik dari yang dianjurkan</item>
-        <item>Membuka</item>
-        <item>edit catatan</item>
+        <item>Jawaban yang disarankan (hijau)</item>
+        <item>Jawaban yang lebih baik dari yang disarankan</item>
+        <item>Urungkan</item>
+        <item>Edit catatan</item>
         <item>Beri catatan tag</item>
         <item>Tandai catatan</item>
-        <item>Lookup expression</item>
+        <item>Ekspresi pencarian</item>
         <item>Pendam kartu</item>
         <item>Tangguhkan kartu</item>
         <item>Hapus catatan</item>
@@ -60,52 +60,52 @@
         <item>Batalkan belajar</item>
         <item>Pendam catatan</item>
         <item>Tangguhkan catatan</item>
-        <item>Alih Bendera Merah</item>
-        <item>Alih Bendera Oranye</item>
-        <item>Alih Bendera Hijau</item>
-        <item>Alih Bendera Biru</item>
-        <item>Hapus panji</item>
+        <item>Setel Panji Merah</item>
+        <item>Setel Panji Jingga</item>
+        <item>Setel Panji Hijau</item>
+        <item>Setel Panji Biru</item>
+        <item>Hapus Panji</item>
         <item>Halaman Atas</item>
         <item>Halaman Bawah</item>
     </string-array>
     <string-array name="leech_action_labels">
-        <item>kartu suspend</item>
-        <item>hanya tag</item>
+        <item>Tangguhkan kartu</item>
+        <item>Hanya tag</item>
     </string-array>
     <string-array name="new_order_labels">
-        <item>kartu baru dalam urutan acak</item>
-        <item>kartu baru dalam rangka ditambahkan</item>
+        <item>Kartu baru dalam urutan acak</item>
+        <item>Kartu baru dalam urutan ditambahkan</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
-        <item>tertua terlihat pertama</item>
+        <item>Lihat yang paling lama dahulu</item>
         <item>Acak</item>
-        <item>Meningkatkan interval</item>
-        <item>Mengurangi interval</item>
-        <item>paling banyak</item>
-        <item>pesanan ditambahkan</item>
-        <item>Pesanan jatuh tempo</item>
-        <item>Yang terakhir ditambahkan lebih dulu</item>
-        <item>Kelebihan relatif</item>
+        <item>Interval bertambah</item>
+        <item>Interval berkurang</item>
+        <item>Paling banyak kelupaan</item>
+        <item>Urutan ditambahkan</item>
+        <item>Urutan jatuh tempo</item>
+        <item>Terakhir ditambahkan lebih dahulu</item>
+        <item>Keterlambatan relatif</item>
     </string-array>
     <string-array name="add_to_cur_labels">
         <item>Gunakan dek saat ini</item>
-        <item>memutuskan dengan jenis catatan</item>
+        <item>Tentukan menurut tipe catatan</item>
     </string-array>
     <string-array name="new_spread_labels">
         <item>Campur kartu dan ulasan baru</item>
-        <item>kartu baru setelah diperiksa</item>
-        <item>kartu baru sebelum ditinjau</item>
+        <item>Kartu baru setelah ulasan</item>
+        <item>kartu baru sebelum ulasan</item>
     </string-array>
     <string-array name="override_font_labels">
-        <item>Bila tidak ada font yang ditentukan pada flashcards</item>
+        <item>Bila tidak ada fon yang ditentukan dalam kartu flash</item>
         <item>Selalu</item>
     </string-array>
     <string-array name="day_theme_labels">
-        <item>Cahaya</item>
-        <item>polos</item>
+        <item>Terang</item>
+        <item>Biasa</item>
     </string-array>
     <string-array name="night_theme_labels">
-        <item>hitam</item>
+        <item>Hitam</item>
         <item>Gelap</item>
     </string-array>
 </resources>

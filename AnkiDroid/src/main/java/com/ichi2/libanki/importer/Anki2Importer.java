@@ -21,15 +21,17 @@ import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.ichi2.anki.R;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Media;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
-import com.ichi2.utils.JSONObject;
+import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Deck;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -47,6 +49,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
+
+import com.ichi2.async.TaskData;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
@@ -81,6 +85,9 @@ public class Anki2Importer extends Importer {
     private int mAdded;
     private int mUpdated;
 
+    /** If importing SchedV1 into SchedV2 we need to reset the learning cards */
+    private boolean mMustResetLearning;
+
     public Anki2Importer(Collection col, String file) {
         super(col, file);
         mNeedMapper = false;
@@ -100,26 +107,24 @@ public class Anki2Importer extends Importer {
             } finally {
                 mSrc.close(false);
             }
-        } catch (RuntimeException e) {
-            Timber.e(e, "RuntimeException while importing");
+        } catch (Exception e) {
+            Timber.e(e, "Exception while importing");
             throw new ImportExportException(e.getMessage());
         }
     }
 
 
-    private void _prepareFiles() throws ImportExportException {
+    private void _prepareFiles() {
         boolean importingV2 = mFile.endsWith(".anki21");
-        if (importingV2 && mCol.schedVer() == 1) {
-            throw new ImportExportException(mContext.getString(R.string.import_needs_v2));
-        }
+        this.mMustResetLearning = false;
 
         mDst = mCol;
         mSrc = Storage.Collection(mContext, mFile);
 
         if (!importingV2 && mCol.schedVer() != 1) {
+            // any scheduling included?
             if (mSrc.getDb().queryScalar("select 1 from cards where queue != " + Consts.QUEUE_TYPE_NEW + " limit 1") > 0) {
-                mSrc.close(false);
-                throw new ImportExportException(mContext.getString(R.string.import_cannot_with_v2));
+                this.mMustResetLearning = true;
             }
         }
     }
@@ -136,12 +141,17 @@ public class Anki2Importer extends Importer {
                 long id = mDst.getDecks().id(mDeckPrefix);
                 mDst.getDecks().select(id);
             }
+            Timber.i("Preparing Import");
             _prepareTS();
             _prepareModels();
+            Timber.i("Importing notes");
             _importNotes();
+            Timber.i("Importing Cards");
             _importCards();
+            Timber.i("Importing Media");
             _importStaticMedia();
             publishProgress(100, 100, 25);
+            Timber.i("Performing post-import");
             _postImport();
             publishProgress(100, 100, 50);
             mDst.getDb().getDatabase().setTransactionSuccessful();
@@ -158,6 +168,7 @@ public class Anki2Importer extends Importer {
                 try { mDst.getMedia().getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
             }
         }
+        Timber.i("Performing vacuum/analyze");
         try {
             mDst.getDb().execute("vacuum");
         } catch (Exception e) {
@@ -297,7 +308,7 @@ public class Anki2Importer extends Importer {
                 // add to col partially, so as to avoid OOM
                 if (dirty.size() >= thresExecDirty) {
                     totalDirtyCount  += dirty.size();
-                    long[] das = Utils.arrayList2array(dirty);
+                    long[] das = Utils.collection2Array(dirty);
                     mDst.updateFieldCache(das);
                     mDst.getTags().registerNotes(das);
                     dirty.clear();
@@ -345,7 +356,7 @@ public class Anki2Importer extends Importer {
             }
         }
 
-        long[] das = Utils.arrayList2array(dirty);
+        long[] das = Utils.collection2Array(dirty);
         mDst.updateFieldCache(das);
         mDst.getTags().registerNotes(das);
     }
@@ -400,13 +411,13 @@ public class Anki2Importer extends Importer {
             return mModelMap.get(srcMid);
         }
         long mid = srcMid;
-        JSONObject srcModel = mSrc.getModels().get(srcMid);
+        Model srcModel = mSrc.getModels().get(srcMid);
         String srcScm = mSrc.getModels().scmhash(srcModel);
         while (true) {
             // missing from target col?
             if (!mDst.getModels().have(mid)) {
                 // copy it over
-                JSONObject model = srcModel.deepClone();
+                Model model = srcModel.deepClone();
                 model.put("id", mid);
                 model.put("mod", Utils.intTime());
                 model.put("usn", mCol.usn());
@@ -414,11 +425,11 @@ public class Anki2Importer extends Importer {
                 break;
             }
             // there's an existing model; do the schemas match?
-            JSONObject dstModel = mDst.getModels().get(mid);
+            Model dstModel = mDst.getModels().get(mid);
             String dstScm = mDst.getModels().scmhash(dstModel);
             if (srcScm.equals(dstScm)) {
                 // they do; we can reuse this mid
-                JSONObject model = srcModel.deepClone();
+                Model model = srcModel.deepClone();
                 model.put("id", mid);
                 model.put("mod", Utils.intTime());
                 model.put("usn", mCol.usn());
@@ -446,7 +457,7 @@ public class Anki2Importer extends Importer {
             return mDecks.get(did);
         }
         // get the name in src
-        JSONObject g = mSrc.getDecks().get(did);
+        Deck g = mSrc.getDecks().get(did);
         String name = g.getString("name");
         // if there's a prefix, replace the top level deck
         if (!TextUtils.isEmpty(mDeckPrefix)) {
@@ -472,15 +483,15 @@ public class Anki2Importer extends Importer {
         long newid = mDst.getDecks().id(name);
         // pull conf over
         if (g.has("conf") && g.getLong("conf") != 1) {
-            JSONObject conf = mSrc.getDecks().getConf(g.getLong("conf"));
+            DeckConfig conf = mSrc.getDecks().getConf(g.getLong("conf"));
             mDst.getDecks().save(conf);
             mDst.getDecks().updateConf(conf);
-            JSONObject g2 = mDst.getDecks().get(newid);
+            Deck g2 = mDst.getDecks().get(newid);
             g2.put("conf", g.getLong("conf"));
             mDst.getDecks().save(g2);
         }
         // save desc
-        JSONObject deck = mDst.getDecks().get(newid);
+        Deck deck = mDst.getDecks().get(newid);
         deck.put("desc", g.getString("desc"));
         mDst.getDecks().save(deck);
         // add to deck map and return
@@ -495,6 +506,13 @@ public class Anki2Importer extends Importer {
      */
 
     private void _importCards() {
+        if (mMustResetLearning) {
+            try {
+                mSrc.changeSchedulerVer(2);
+            } catch (ConfirmModSchemaException e) {
+                throw new RuntimeException("Changing the scheduler of an import should not cause schema modification", e);
+            }
+        }
         // build map of guid -> (ord -> cid) and used id cache
         mCards = new HashMap<>();
         Map<Long, Boolean> existing = new HashMap<>();
@@ -688,7 +706,11 @@ public class Anki2Importer extends Importer {
         for (File f : new File(dir).listFiles()) {
             String fname = f.getName();
             if (fname.startsWith("_") && ! mDst.getMedia().have(fname)) {
-                _writeDstMedia(fname, _srcMediaData(fname));
+                try (BufferedInputStream data = _srcMediaData(fname)) {
+                    _writeDstMedia(fname, data);
+                } catch (IOException e) {
+                    Timber.w(e, "Failed to close stream");
+                }
             }
         }
     }
@@ -752,33 +774,36 @@ public class Anki2Importer extends Importer {
             int fnameIdx = Media.indexOfFname(p);
             while (m.find()) {
                 String fname = m.group(fnameIdx);
-                BufferedInputStream srcData = _srcMediaData(fname);
-                BufferedInputStream dstData = _dstMediaData(fname);
-                if (srcData == null) {
-                    // file was not in source, ignore
-                    m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)));
-                    continue;
-                }
-                // if model-local file exists from a previous import, use that
-                String[] split = Utils.splitFilename(fname);
-                String name = split[0];
-                String ext = split[1];
-
-                String lname = String.format(Locale.US, "%s_%s%s", name, mid, ext);
-                if (mDst.getMedia().have(lname)) {
-                    m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0).replace(fname, lname)));
-                    continue;
-                } else if (dstData == null || compareMedia(srcData, dstData)) { // if missing or the same, pass unmodified
-                    // need to copy?
-                    if (dstData == null) {
-                        _writeDstMedia(fname, srcData);
+                try (BufferedInputStream srcData = _srcMediaData(fname);
+                     BufferedInputStream dstData = _dstMediaData(fname)) {
+                    if (srcData == null) {
+                        // file was not in source, ignore
+                        m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)));
+                        continue;
                     }
-                    m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)));
-                    continue;
+                    // if model-local file exists from a previous import, use that
+                    String[] split = Utils.splitFilename(fname);
+                    String name = split[0];
+                    String ext = split[1];
+
+                    String lname = String.format(Locale.US, "%s_%s%s", name, mid, ext);
+                    if (mDst.getMedia().have(lname)) {
+                        m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0).replace(fname, lname)));
+                        continue;
+                    } else if (dstData == null || compareMedia(srcData, dstData)) { // if missing or the same, pass unmodified
+                        // need to copy?
+                        if (dstData == null) {
+                            _writeDstMedia(fname, srcData);
+                        }
+                        m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0)));
+                        continue;
+                    }
+                    // exists but does not match, so we need to dedupe
+                    _writeDstMedia(lname, srcData);
+                    m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0).replace(fname, lname)));
+                } catch (IOException e) {
+                    Timber.w(e, "Failed to close stream");
                 }
-                // exists but does not match, so we need to dedupe
-                _writeDstMedia(lname, srcData);
-                m.appendReplacement(sb, Matcher.quoteReplacement(m.group(0).replace(fname, lname)));
             }
             m.appendTail(sb);
             fields = sb.toString();
@@ -857,7 +882,7 @@ public class Anki2Importer extends Importer {
      */
     protected void publishProgress(int notesDone, int cardsDone, int postProcess) {
         if (mProgress != null) {
-            mProgress.publishProgress(new CollectionTask.TaskData(getRes().getString(R.string.import_progress,
+            mProgress.publishProgress(new TaskData(getRes().getString(R.string.import_progress,
                     notesDone, cardsDone, postProcess)));
         }
     }

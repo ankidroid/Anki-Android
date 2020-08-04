@@ -29,9 +29,7 @@ import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
-import com.ichi2.libanki.stats.Stats;
-
-import com.ichi2.utils.JSONObject;
+import com.ichi2.libanki.DeckConfig;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -498,7 +496,7 @@ public class AdvancedStatistics {
 
             Timber.d("Trying to get deck settings for deck with id=" + did);
 
-            JSONObject conf = decks.confForDid(did);
+            DeckConfig conf = decks.confForDid(did);
 
             int newPerDay = Settings.getMaxNewPerDay();
             int revPerDay = Settings.getMaxReviewsPerDay();
@@ -768,7 +766,7 @@ public class AdvancedStatistics {
         private ReviewOutcome singleReviewOutcome;
         public ReviewOutcome simSingleReview(Card c){
 
-            int type = c.getType();
+            @Consts.CARD_TYPE int type = c.getType();
 
             int outcome = draw(probabilitiesCumulative[type]);
 
@@ -791,7 +789,7 @@ public class AdvancedStatistics {
 
         private void applyOutcomeToCard(Card c, int outcome) {
 
-            int type = c.getType();
+            @Consts.CARD_TYPE int type = c.getType();
             int ivl = c.getIvl();
             double factor = c.getFactor();
 

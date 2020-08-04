@@ -78,7 +78,7 @@
     <string name="ease_button_hard">Sulit</string>
     <string name="ease_button_good">Baik</string>
     <string name="ease_button_easy">Mudah</string>
-    <string name="studyoptions_congrats_undo">Batalkan %s</string>
+    <string name="studyoptions_congrats_undo">Urungkan %s</string>
     <string name="menu_import">Impor</string>
     <string name="undo">Urungkan</string>
     <string name="undo_action_review">ulasan terakhir</string>
@@ -94,7 +94,7 @@
     <string name="undo_action_reposition_card">pindah posisi</string>
     <string name="move_all_to_deck">Pindahkan semua ke dek</string>
     <string name="unbury">Angkat</string>
-    <string name="rename_deck">Ganti nama dek</string>
+    <string name="rename_deck">Ubah nama dek</string>
     <string name="menu_add">Tambah</string>
     <string name="menu_add_note">Tambah catatan</string>
     <string name="menu_my_account">Sinkronisasi akun</string>
@@ -107,20 +107,20 @@
     <string name="menu_suspend">Tangguhkan</string>
     <string name="menu_delete_note">Hapus catatan</string>
     <string name="menu_flag">Panji</string>
-    <string name="menu_flag_card">Beri kartu bendera</string>
-    <string name="menu_flag_card_zero">Tidak ada bendera</string>
-    <string name="menu_flag_card_one">Bendera merah</string>
-    <string name="menu_flag_card_two">Bendera Oranye</string>
-    <string name="menu_flag_card_three">Bendera Hijau</string>
-    <string name="menu_flag_card_four">Bendera Biru</string>
+    <string name="menu_flag_card">Beri kartu panji</string>
+    <string name="menu_flag_card_zero">Tidak ada panji</string>
+    <string name="menu_flag_card_one">Panji merah</string>
+    <string name="menu_flag_card_two">Panji jingga</string>
+    <string name="menu_flag_card_three">Panji hijau</string>
+    <string name="menu_flag_card_four">Panji Biru</string>
     <string name="menu_edit_tags">Edit tag</string>
     <string name="delete_note_message">Yakin akan menghapus catatan ini dan semua kartunya?\n%s</string>
     <string name="menu_select">Pilih teks</string>
     <string name="menu_search">Pencarian di %1$s</string>
-    <string name="menu_mark_note">tandai catatan</string>
+    <string name="menu_mark_note">Tandai catatan</string>
     <string name="menu_unmark_note">Batal tandai catatan</string>
     <string name="menu_toggle_mic_tool_bar">Cek pelafalan</string>
-    <string name="new_deck">Buat susunan</string>
+    <string name="new_deck">Buat dek</string>
     <string name="create">Buat</string>
     <string name="new_dynamic_deck">Buat dek terfilter</string>
     <string name="night_mode">Mode malam</string>
@@ -129,7 +129,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Mohon beri AnkiDroid izin \'penyimpanan\' untuk melanjutkan</string>
+    <string name="startup_no_storage_permission">Mohon beri AnkiDroid izin ‘Penyimpanan’ untuk melanjutkan</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -142,7 +142,7 @@
     <string name="time_quantity_hours_minutes">%1$d j %2$d m </string>
     <string name="time_quantity_hours">%d j</string>
     <string name="time_quantity_days">%d hr</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d j</string>
+    <string name="time_quantity_days_hours">%1$d hr %2$d j</string>
     <string name="time_quantity_months">%.1f bln</string>
     <string name="time_quantity_years">%.1f th</string>
     <!-- or "%.1f a" -->
@@ -160,7 +160,7 @@
     <string name="studyoptions_empty_schedule">Tidak ada kartu yang dijadwalkan untuk dipelajari</string>
     <string name="studyoptions_congrats_finished">Selamat! Kamu telah selesai untuk sekarang.</string>
     <string name="studyoptions_congrats_more_rev">Batas hari ini telah dicapai, tetapi masih ada kartu-kartu untuk diulas. Kamu dapat menaikkan batasan di pengaturan.</string>
-    <string name="studyoptions_congrats_more_new">Batas hari ini telah dicapai. Ada banyak kartu baru yang tersedia; Kamu dapat menaikkan batasan di pengaturan, tetapi ini akan meningkatkan beban kerja ulasan jangka pendekmu.</string>
+    <string name="studyoptions_congrats_more_new">Batas hari ini telah dicapai. Ada banyak kartu baru yang tersedia; Kamu dapat menaikkan batas di pengaturan, tetapi ini akan menambah beban kerja ulasan jangka pendekmu.</string>
     <string name="studyoptions_congrats_custom">Untuk belajar di luar jadwal normal, sentuh tombol \"Belajar kustom\"</string>
     <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
     <string name="sd_card_not_mounted">Penyimpanan perangkat tidak terpasang</string>
@@ -169,7 +169,7 @@
     <string name="cancel_sync_confirm">Batalkan sinkronisasi?</string>
     <string name="continue_sync">Lanjutkan sinkronisasi</string>
     <string name="sync_cancelled">Sinkronisasi dibatalkan</string>
-    <string name="sync_cancel_message">Membatalkan... \ n Ini mungkin memakan waktu lama.</string>
+    <string name="sync_cancel_message">Membatalkan&#8230;\nIni dapat memakan waktu lama.</string>
     <string name="export">Ekspor</string>
     <string name="export_collection">Ekspor koleksi</string>
     <string name="export_deck">Ekspor dek</string>
@@ -181,6 +181,7 @@
     <string name="card_template_editor_styling">Penataan</string>
     <string name="card_template_editor_menu_delete">Hapus</string>
     <string name="card_template_editor_menu_card_browser_appearance">Tampilan penelusur kartu</string>
+    <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Setidaknya satu tipe kartu diperlukan.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Hapus tipe kartu \"%2$s\", beserta kartu %1$d?</item>

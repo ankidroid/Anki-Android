@@ -24,9 +24,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 
 import com.ichi2.libanki.Note;
@@ -94,6 +96,9 @@ public class RobolectricTest {
         // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
         CollectionHelper.getInstance().closeCollection(false, "RoboelectricTest: End");
 
+        // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
+        disableNullCollection();
+
         // After every test, make sure the sqlite implementation is set back to default
         DB.setSqliteOpenHelperFactory(null);
 
@@ -137,6 +142,11 @@ public class RobolectricTest {
 
     }
 
+    /** This can probably be implemented in a better manner */
+    protected void waitForAsyncTasksToComplete() {
+        advanceRobolectricLooper();
+    }
+
 
     protected Context getTargetContext() {
         return ApplicationProvider.getApplicationContext();
@@ -156,10 +166,24 @@ public class RobolectricTest {
         return CollectionHelper.getInstance().getCol(getTargetContext());
     }
 
+    /** Call this method in your test if you to test behavior with a null collection */
+    protected void enableNullCollection() {
+        CollectionHelper.LazyHolder.INSTANCE = new CollectionHelper() {
+            @Override
+            public Collection getCol(Context context) {
+                return null;
+            }
+        };
+    }
 
-    protected JSONObject getCurrentDatabaseModelCopy(String modelName) throws JSONException {
+    /** Restore regular collection behavior */
+    protected void disableNullCollection() {
+        CollectionHelper.LazyHolder.INSTANCE = new CollectionHelper();
+    }
+
+    protected Model getCurrentDatabaseModelCopy(String modelName) throws JSONException {
         Models collectionModels = getCol().getModels();
-        return new JSONObject(collectionModels.byName(modelName).toString().trim());
+        return new Model(collectionModels.byName(modelName).toString().trim());
     }
 
     protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
@@ -174,7 +198,7 @@ public class RobolectricTest {
     }
 
     protected Note addNoteUsingModelName(String name, String... fields) {
-        JSONObject model = getCol().getModels().byName(name);
+        Model model = getCol().getModels().byName(name);
         //PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         //Saves a database trip afterwards.
         if (model == null) {
@@ -192,7 +216,7 @@ public class RobolectricTest {
 
 
     protected String addNonClozeModel(String name, String[] fields, String qfmt, String afmt) {
-        JSONObject model = getCol().getModels().newModel(name);
+        Model model = getCol().getModels().newModel(name);
         for (int i = 0; i < fields.length; i++) {
             addField(model, fields[i]);
         }
@@ -204,7 +228,7 @@ public class RobolectricTest {
     }
 
 
-    private void addField(JSONObject model, String name) {
+    private void addField(Model model, String name) {
         Models models = getCol().getModels();
 
         try {
@@ -244,7 +268,7 @@ public class RobolectricTest {
 
     protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
-        CollectionTask.launchCollectionTask(taskType, new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
 
@@ -252,18 +276,19 @@ public class RobolectricTest {
 
 
             @Override
-            public void onPostExecute(CollectionTask.TaskData result) {
+            public void onPostExecute(TaskData result) {
                 completed[0] = true;
                 synchronized (RobolectricTest.this) {
                     RobolectricTest.this.notify();
                 }
             }
-        });
+        };
+        CollectionTask.launchCollectionTask(taskType, listener);
 
         wait(timeoutMs);
 
         if (!completed[0]) {
-            throw new IllegalStateException(String.format("Task %d didn't finish in %d ms", taskType, timeoutMs));
+            throw new IllegalStateException(String.format("Task %s didn't finish in %d ms", taskType, timeoutMs));
         }
     }
 }

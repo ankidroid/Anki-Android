@@ -14,21 +14,12 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki;
+package com.ichi2.anki.testutil;
 
-import com.ichi2.libanki.Collection;
+import java.util.Locale;
 
-public class NullCollectionNoteEditor extends NoteEditor {
-    @Override
-    public Collection getCol() {
-        return null;
-    }
-    @Override
-    public boolean colIsOpen() {
-        return false;
-    }
-    @Override
-    protected void onCollectionLoaded(Collection col) {
-        // it's not fair to expect the classes under test to handle this when we return null for getCol()
+public class TestEnvironment {
+    public static boolean isDisplayingDefaultEnglishStrings() {
+        return "en-US".equals(Locale.getDefault().toLanguageTag());
     }
 }

@@ -36,12 +36,15 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.sched.AbstractSched;
 
-import com.ichi2.utils.JSONObject;
+import com.ichi2.libanki.Deck;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
+
+    /* Make the selected deck roughly half transparent if there is a background */
+    public static final double SELECTED_DECK_ALPHA_AGAINST_BACKGROUND = 0.45;
 
     private LayoutInflater mLayoutInflater;
     private List<AbstractSched.DeckDueTreeNode> mDeckList;
@@ -71,6 +74,9 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     // Flags
     private boolean mHasSubdecks;
+
+    // Whether we have a background (so some items should be partially transparent).
+    private boolean mPartiallyTransparentForBackground;
 
     // ViewHolder class to save inflated views for recycling
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -137,6 +143,11 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         mDeckLongClickListener = listener;
     }
 
+    /** Sets whether the control should have partial transparency to allow a background to be seen */
+    public void enablePartialTransparencyForBackground(boolean isTransparent) {
+        mPartiallyTransparentForBackground = isTransparent;
+    }
+
 
     /**
      * Consume a list of {@link AbstractSched.DeckDueTreeNode}s to render a new deck list.
@@ -185,8 +196,11 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
         holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
         // Set background colour. The current deck has its own color
-        if (node.getDid() == mCol.getDecks().current().optLong("id")) {
+        if (isCurrentlySelectedDeck(node)) {
             holder.deckLayout.setBackgroundResource(mRowCurrentDrawable);
+            if (mPartiallyTransparentForBackground) {
+                setBackgroundAlpha(holder.deckLayout, SELECTED_DECK_ALPHA_AGAINST_BACKGROUND);
+            }
         } else {
             CompatHelper.getCompat().setSelectableBackground(holder.deckLayout);
         }
@@ -215,6 +229,19 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         holder.deckLayout.setOnLongClickListener(mDeckLongClickListener);
         holder.countsLayout.setOnClickListener(mCountsClickListener);
     }
+
+
+    private void setBackgroundAlpha(View view, @SuppressWarnings("SameParameterValue") double alphaPercentage) {
+        Drawable background = view.getBackground().mutate();
+        background.setAlpha((int) (255 * alphaPercentage));
+        view.setBackground(background);
+    }
+
+
+    private boolean isCurrentlySelectedDeck(AbstractSched.DeckDueTreeNode node) {
+        return node.getDid() == mCol.getDecks().current().optLong("id");
+    }
+
 
     @Override
     public int getItemCount() {
@@ -250,7 +277,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 }
             }
             // If any of this node's parents are collapsed, don't add it to the deck list
-            for (JSONObject parent : mCol.getDecks().parents(node.getDid())) {
+            for (Deck parent : mCol.getDecks().parents(node.getDid())) {
                 mHasSubdecks = true;    // If a deck has a parent it means it's a subdeck so set a flag
                 if (parent.optBoolean("collapsed")) {
                     return;
@@ -283,7 +310,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             }
         }
         // If the deck is not in our list, we search again using the immediate parent
-        List<JSONObject> parents = mCol.getDecks().parents(did);
+        List<Deck> parents = mCol.getDecks().parents(did);
         if (parents.size() == 0) {
             return 0;
         } else {

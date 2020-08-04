@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">Para adicionar cartões ao AnkiDroid remova todas as categorias das notas ou adicione uma com o nome \'default\'</string>
     <string name="custom_study_new_total_new">Novos cartões no deck: %d</string>
     <string name="custom_study_rev_total_rev">Revisões pendentes no baralho: %d</string>
-    <string name="custom_study_new_extend">Aumentar o limite de novos cartões hoje em</string>
-    <string name="custom_study_rev_extend">Aumentar o limite de revisões hoje em</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Revisar cartões esquecidos nos últimos x dias:</string>
     <string name="custom_study_ahead">Adiantar revisão em x dias:</string>
     <string name="custom_study_random">Selecione aleatoriamente x cartões do baralho:</string>
@@ -189,6 +189,7 @@
     <string name="error_selecting_image">Erro selecionando imagem. Por favor veja o manual. %s</string>
     <string name="error_deleting_image">Erro deletando imagem</string>
     <string name="failed_to_apply_background_image">Falha ao aplicar a imagem de fundo %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Tamanho máximo de imagem %d MB permitido</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -198,4 +199,9 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Falha ao agendar lembretes</string>
     <string name="boot_service_too_many_notifications">Muitos lembretes programados. Alguns não aparecerão</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">An automatic sync may be triggered in %d second</item>
+        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+    </plurals>
 </resources>

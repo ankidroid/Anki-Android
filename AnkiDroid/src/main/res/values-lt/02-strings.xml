@@ -99,8 +99,8 @@
         <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Padidinti šiandienos naujų kortelių skaičių</string>
-    <string name="custom_study_increase_review_limit">Padidinti šiandienos peržiūrimų kortelių skaičių</string>
+    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
+    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">Peržiūrėti pamirštas korteles</string>
     <string name="custom_study_review_ahead">Peržiūrėti į priekį</string>
     <string name="custom_study_random_selection">Studijuoti atsitiktine tvarka atrinktas korteles</string>
@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">The first field is empty</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Užrašas įrašomas</string>
     <string name="saving_model">Saving note type</string>
     <string name="add">Pridėti</string>
@@ -278,7 +279,6 @@
     <string name="import_needs_v2">Norint importuoti šį failą privalo būti įjungta V2 planuoklė.</string>
     <string name="import_cannot_with_v2">V2 planuoklė negali importuoti V1 katalogų, įtraukdama planavimo duomenis.</string>
     <string name="export_v2_dummy_note">Šiam failui reikia naujesnės „Anki“ versijos.</string>
-    <string name="export_v2_forbidden">Prašome pereiti į V1 planuoklę prieš eksportuodami vieną katalogą su planavimo duomenimis.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
@@ -300,4 +300,31 @@
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <!-- CSV/Note Import -->
+    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
+    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
+    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
+    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <plurals name="note_importer_notes_added">
+        <item quantity="one">%d note added</item>
+        <item quantity="few">%d notes added</item>
+        <item quantity="many">%d notes added</item>
+        <item quantity="other">%d notes added</item>
+    </plurals>
+    <plurals name="note_importer_notes_updated">
+        <item quantity="one">%d note updated</item>
+        <item quantity="few">%d notes updated</item>
+        <item quantity="many">%d notes updated</item>
+        <item quantity="other">%d notes updated</item>
+    </plurals>
+    <plurals name="note_importer_notes_unchanged">
+        <item quantity="one">%d note unchanged</item>
+        <item quantity="few">%d notes unchanged</item>
+        <item quantity="many">%d notes unchanged</item>
+        <item quantity="other">%d notes unchanged</item>
+    </plurals>
 </resources>

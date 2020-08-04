@@ -34,6 +34,7 @@ import com.ichi2.utils.FileUtil;
 import java.io.File;
 import java.io.IOException;
 
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 /**
@@ -80,8 +81,10 @@ public class CollectionHelper {
     /**
      * Lazy initialization holder class idiom. High performance and thread safe way to create singleton.
      */
-    private static class LazyHolder {
-        private static final CollectionHelper INSTANCE = new CollectionHelper();
+    @VisibleForTesting
+    public static class LazyHolder {
+        @VisibleForTesting
+        public static CollectionHelper INSTANCE = new CollectionHelper();
     }
 
     /**
@@ -340,4 +343,15 @@ public class CollectionHelper {
             return insufficientSpace + insufficientSpaceCurrentFree;
         }
     }
+
+    /** Fetches additional collection data not required for
+     * application startup
+     *
+     * Allows mandatory startup procedures to return early, speeding up startup. Less important tasks are offloaded here
+     * No-op if data is already fetched
+     */
+    public static void loadCollectionComplete(Collection col) {
+        col.getModels();
+    }
+
 }

@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">För att lägga till kort till AnkiDroid, ta bort alla Notepadkategorier eller lägg till en som heter \'default\'</string>
     <string name="custom_study_new_total_new">Nya kort i kortlek: %d</string>
     <string name="custom_study_rev_total_rev">Repetitioner i kö i kortlek: %d</string>
-    <string name="custom_study_new_extend">Öka dagens gräns för nya kort med</string>
-    <string name="custom_study_rev_extend">Öka dagens repetitionsgräns med</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Repetera kort som är glömda under de senaste x dagarna:</string>
     <string name="custom_study_ahead">Repetera i förväg för x dagar:</string>
     <string name="custom_study_random">Välj x kort slumpmässigt från kortleken:</string>
@@ -189,6 +189,7 @@
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">Error deleting image</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -198,4 +199,9 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">An automatic sync may be triggered in %d second</item>
+        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+    </plurals>
 </resources>

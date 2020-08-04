@@ -62,6 +62,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -418,8 +419,8 @@ public class Utils {
         return sb.toString();
     }
 
-    /** Given a list of integers, return a string '(int1,int2,...)'. */
-    public static <T> String ids2str(List<T> ids) {
+    /** Given a list of integers, return a string '(int1,int2,...)', in order given by the iterator. */
+    public static <T> String ids2str(Iterable<T> ids) {
         StringBuilder sb = new StringBuilder(512);
         sb.append("(");
         boolean isNotFirst = false;
@@ -460,7 +461,8 @@ public class Utils {
 
 
     /** LIBANKI: not in libanki */
-    public static long[] arrayList2array(List<Long> list) {
+    /** Transform a collection of Long into an array of Long */
+    public static long[] collection2Array(java.util.Collection<Long> list) {
         long[] ar = new long[list.size()];
         int i = 0;
         for (long l : list) {
@@ -478,7 +480,7 @@ public class Utils {
         // be careful not to create multiple objects without flushing them, or they
         // may share an ID.
         long t = intTime(1000);
-        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = ?", new Object[] {t}) != 0) {
+        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = ?", t) != 0) {
             t += 1;
         }
         return t;
@@ -542,6 +544,14 @@ public class Utils {
         long[] ar = new long[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
             ar[i] = jsonArray.getLong(i);
+        }
+        return ar;
+    }
+
+    public static List<Long> jsonArrayToLongList(JSONArray jsonArray) throws JSONException {
+        List<Long> ar = new ArrayList<>(jsonArray.length());
+        for (int i = 0; i < jsonArray.length(); i++) {
+            ar.add(jsonArray.getLong(i));
         }
         return ar;
     }
@@ -777,6 +787,7 @@ public class Utils {
 
     /**
      * Calls {@link #writeToFileImpl(InputStream, String)} and handles IOExceptions
+     * Does not close the provided stream
      * @throws IOException Rethrows exception after a set number of retries
      */
     public static void writeToFile(InputStream source, String destination) throws IOException {
@@ -1092,7 +1103,7 @@ public class Utils {
        @return whether there was a non-zero usn; in this case the list
        should be saved before the upload.
      */
-    public static boolean markAsUploaded(ArrayList<JSONObject> ar) {
+    public static boolean markAsUploaded(ArrayList<? extends JSONObject> ar) {
         boolean changed = false;
         for (JSONObject obj: ar) {
             if (obj.optInt("usn", 1) != 0) {

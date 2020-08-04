@@ -64,6 +64,6 @@
         <item quantity="one">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱮᱡ</item>
         <item quantity="other">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱮᱡ</item>
     </plurals>
-    <string name="widget_add_note">ᱱᱚᱴ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
-    <string name="widget_add_note_button">ᱱᱟᱶᱟ AnkiDroid ᱱᱚᱴ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
+    <string name="widget_add_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
+    <string name="widget_add_note_button">ᱱᱟᱶᱟ AnkiDroid ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
 </resources>

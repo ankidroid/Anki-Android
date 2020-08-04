@@ -128,4 +128,8 @@
     <string name="sync_error_501_upgrade_required">Калі ласка, абнавіце праграму да апошняй версіі</string>
     <string name="sync_error_502_maintenance">Сервер AnkiWeb знаходзіцца ў стане абслугоўвання. Паспрабуйце яшчэ раз праз некалькі хвілін.</string>
     <string name="sync_error_504_gateway_timeout">Памылка 504: час чакання адказу шлюза скончыўся.</string>
+    <!-- Deck Picker Sync Icon -->
+    <string name="sync_menu_title">Sync</string>
+    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

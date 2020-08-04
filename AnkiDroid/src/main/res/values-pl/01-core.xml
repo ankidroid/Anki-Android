@@ -155,7 +155,7 @@
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
     <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
+    <string name="time_quantity_hours">%d g</string>
     <string name="time_quantity_days">%d dni</string>
     <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f mc</string>
@@ -196,6 +196,7 @@
     <string name="card_template_editor_styling">Styl</string>
     <string name="card_template_editor_menu_delete">Usuń</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Czy usunąć typ kart “%2$s” oraz jego %1$d kartę?</item>

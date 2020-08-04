@@ -33,7 +33,9 @@ import com.brsanthu.googleanalytics.request.EventHit;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.R;
+import com.ichi2.utils.WebViewDebugging;
 
+import org.acra.ACRA;
 import org.acra.util.Installation;
 
 import androidx.annotation.NonNull;
@@ -287,6 +289,20 @@ public class UsageAnalytics {
     }
 
 
+    protected static boolean canGetDefaultUserAgent() {
+        // #5502 - getDefaultUserAgent starts a WebView. We can't have two WebViews with the same data directory.
+        // But ACRA starts an :acra process which does not terminate when AnkiDroid is restarted. https://crbug.com/558377
+
+        // if we're not under the ACRA process then we're fine to initialize a WebView
+        if (!ACRA.isACRASenderServiceProcess()) {
+            return true;
+        }
+
+        // If we have a custom data directory, then the crash will not occur.
+        return WebViewDebugging.hasSetDataDirectory();
+    }
+
+
     /**
      * An Android-specific device config generator. Without this it's "Desktop" and unknown for all hardware.
      * It is interesting to us what devices people use though (for instance: is Amazon Kindle support worth it?
@@ -318,7 +334,7 @@ public class UsageAnalytics {
             // Instead they respond that they auto-parse User-Agent strings for analytics attribution
             // For maximum analytics built-in report compatibility we will send the official WebView User-Agent string
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                if (canGetDefaultUserAgent() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     this.userAgent(WebSettings.getDefaultUserAgent(context));
                 } else {
                     this.userAgent(System.getProperty("http.agent"));

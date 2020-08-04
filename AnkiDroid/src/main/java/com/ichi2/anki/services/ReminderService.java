@@ -53,7 +53,7 @@ public class ReminderService extends BroadcastReceiver {
             return;
         }
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        
+
         final PendingIntent reminderIntent = PendingIntent.getBroadcast(
             context,
             (int) deckId,
@@ -70,10 +70,26 @@ public class ReminderService extends BroadcastReceiver {
         // 0 is not a valid dconf id.
         final long dConfId = intent.getLongExtra(EXTRA_DECK_OPTION_ID, 0);
         if (dConfId == 0) {
+            Timber.w("onReceive - dConfId 0, returning");
             return;
         }
 
-        if (CollectionHelper.getInstance().getCol(context).getDecks().getConf(dConfId) == null) {
+        CollectionHelper colHelper;
+        Collection col;
+        try {
+            colHelper = CollectionHelper.getInstance();
+            col = colHelper.getCol(context);
+        } catch (Throwable t) {
+            Timber.w("onReceive - unexpectedly unable to get collection. Returning.");
+            return;
+        }
+
+        if (null == col || !colHelper.colIsOpen()) {
+            Timber.w("onReceive - null or closed collection, unable to process reminders");
+            return;
+        }
+
+        if (col.getDecks().getConf(dConfId) == null) {
             final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
             final PendingIntent reminderIntent = PendingIntent.getBroadcast(
@@ -88,11 +104,13 @@ public class ReminderService extends BroadcastReceiver {
 
         final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         if (!notificationManager.areNotificationsEnabled()) {
+            Timber.v("onReceive - notifications disabled, returning");
             return;
         }
-        List<AbstractSched.DeckDueTreeNode> decksDue = getDeckOptionDue(context, dConfId, true);
+        List<AbstractSched.DeckDueTreeNode> decksDue = getDeckOptionDue(col, dConfId, true);
 
         if (null == decksDue) {
+            Timber.v("onReceive - no decks due, returning");
             return;
         }
 
@@ -101,11 +119,12 @@ public class ReminderService extends BroadcastReceiver {
             final int total = deckDue.getRevCount() + deckDue.getLrnCount() + deckDue.getNewCount();
 
             if (total <= 0) {
+                Timber.v("onReceive - no cards due in deck %d", deckId);
                 continue;
             }
 
 
-            Timber.v("Notify: study deck %s", deckDue.getFullDeckName());
+            Timber.v("onReceive - deck '%s' due count %d", deckDue.getFullDeckName(), total);
             final Notification notification =
                 new NotificationCompat.Builder(context,
                     NotificationChannels.getId(NotificationChannels.Channel.DECK_REMINDERS))
@@ -114,7 +133,7 @@ public class ReminderService extends BroadcastReceiver {
                         .setContentText(context.getResources().getQuantityString(
                                 R.plurals.reminder_text,
                                 total,
-                                CollectionHelper.getInstance().getCol(context).getDecks().name(deckId),
+                                deckDue.getFullDeckName(),
                                 total
                         ))
                         .setSmallIcon(R.drawable.ic_stat_notify)
@@ -128,6 +147,7 @@ public class ReminderService extends BroadcastReceiver {
                         .setAutoCancel(true)
                         .build();
                 notificationManager.notify((int) deckId, notification);
+            Timber.v("onReceive - notification state: %s", notification);
         }
     }
 
@@ -140,20 +160,19 @@ public class ReminderService extends BroadcastReceiver {
 
     // getDeckOptionDue information, will recur one time to workaround collection close if recur is true
     @Nullable
-    private List<AbstractSched.DeckDueTreeNode> getDeckOptionDue(Context context, long dConfId, boolean recur) {
+    private List<AbstractSched.DeckDueTreeNode> getDeckOptionDue(Collection col, long dConfId, boolean recur) {
 
-        Collection col = CollectionHelper.getInstance().getCol(context);
         // Avoid crashes if the deck option group is deleted while we
         // are working
-        if (col.getDecks().getConf(dConfId) == null) {
-            Timber.d("Deck option %s deleted while ReminderService was working. Ignoring", dConfId);
+        if (col.getDb() == null || col.getDecks().getConf(dConfId) == null) {
+            Timber.d("Deck option %s became unavailable while ReminderService was working. Ignoring", dConfId);
             return null;
         }
 
         List<AbstractSched.DeckDueTreeNode> decks = new ArrayList<>();
         try {
             // This loop over top level deck only. No notification will ever occur for subdecks.
-            for (AbstractSched.DeckDueTreeNode node : CollectionHelper.getInstance().getCol(context).getSched().deckDueTree()) {
+            for (AbstractSched.DeckDueTreeNode node : col.getSched().deckDueTree()) {
                 JSONObject deck = col.getDecks().get(node.getDid(), false);
                 // Dynamic deck has no "conf", so are not added here.
                 if (deck != null && deck.optLong("conf") == dConfId) {
@@ -170,7 +189,7 @@ public class ReminderService extends BroadcastReceiver {
                     Timber.i(ex, "Thread interrupted while waiting to retry. Likely unimportant.");
                     Thread.currentThread().interrupt();
                 }
-                return getDeckOptionDue(context, dConfId, false);
+                return getDeckOptionDue(col, dConfId, false);
             } else {
                 Timber.w(e, "Database unavailable while working. No re-tries left.");
             }

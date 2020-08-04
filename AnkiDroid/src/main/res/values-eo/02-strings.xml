@@ -58,7 +58,7 @@
     <string name="sdcard_missing_message">Malŝaltu USB-konservejon por aliri viajn kartarojn</string>
     <string name="updated_version">Ĝisdatigis al la versio %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Konservi skribtabulon</string>
     <string name="enable_whiteboard">Aktivigi skribtabulon</string>
     <string name="disable_whiteboard">Malaktivigi skribtabulon</string>
     <string name="show_whiteboard">Montri skribtabulon</string>
@@ -94,13 +94,13 @@
         <item>Intertempo</item>
         <item>Facileco</item>
         <item>Lernenda</item>
-        <item>Card Modified</item>
+        <item>Modifis karton</item>
         <item>Kreita</item>
-        <item>Note Modified</item>
+        <item>Modifis noton</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Pliigi hodiaŭan limigon de novaj kartoj</string>
-    <string name="custom_study_increase_review_limit">Pliigi hodiaŭan limigon de kartoj por ripeti</string>
+    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
+    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">Ripeti forgesitajn kartojn</string>
     <string name="custom_study_review_ahead">Antaŭripeti</string>
     <string name="custom_study_random_selection">Lerni hazarde elektitajn kartojn</string>
@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">La unua kampo estas malplena</string>
     <string name="note_editor_no_cloze_delations">Tiu ĉi noto enhavu “malplenojn” en la teksto</string>
     <string name="note_editor_no_cards_created_all_fields">El la nuna nototipo neniu karto kreiĝis.\nElektu alian nototipon aŭ frapetu “kartoj”-n por aldoni anstataŭan kampon</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Konservado de noto</string>
     <string name="saving_model">Konservado de nototipo</string>
     <string name="add">Aldoni</string>
@@ -257,7 +258,6 @@
     <string name="import_needs_v2">Planilo V2 estu aktiva por enporti tiun ĉi dosieron.</string>
     <string name="import_cannot_with_v2">Planilo V2 ne povas enporti kartarojn V1 kun inkluzivita lern-plano.</string>
     <string name="export_v2_dummy_note">Ĉi tiu dosiero postulas pli novan version de Anki.</string>
-    <string name="export_v2_forbidden">Bonvolu ŝanĝi al planilo V1 antaŭ elporti unuopan kartaron kun lern-plano.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Fiaskis enlegi “%s”.</string>
     <string name="activity_start_failed">Mankas instalita aplikaĵo por plenumi tiun ĉi agon.</string>
@@ -276,7 +276,28 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Aktivigu plenekranan reĝimon por uzi “montri navigan tirmenuon” per Ĝavoskripto.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Aktivigu plenekranan reĝimon por uzi “montri menuon de agordoj” per Ĝavoskripto.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="white_board_image_save_failed">Fiaskis konservi bildon de skribtabulo. %s</string>
+    <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>
+    <string name="title_whiteboard_pen_color">Koloro por skribi sur skribtabulo</string>
+    <!-- CSV/Note Import -->
+    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
+    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
+    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
+    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <plurals name="note_importer_notes_added">
+        <item quantity="one">%d note added</item>
+        <item quantity="other">%d notes added</item>
+    </plurals>
+    <plurals name="note_importer_notes_updated">
+        <item quantity="one">%d note updated</item>
+        <item quantity="other">%d notes updated</item>
+    </plurals>
+    <plurals name="note_importer_notes_unchanged">
+        <item quantity="one">%d note unchanged</item>
+        <item quantity="other">%d notes unchanged</item>
+    </plurals>
 </resources>

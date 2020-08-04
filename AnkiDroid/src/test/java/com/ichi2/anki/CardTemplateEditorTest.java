@@ -33,6 +33,7 @@ import org.robolectric.annotation.LooperMode;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowIntent;
 
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
 
@@ -236,7 +237,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
     public void testDeleteTemplateWithSelectivelyGeneratedCards() {
 
         String modelName = "Basic (optional reversed card)";
-        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
 
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -319,7 +320,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
     public void testDeleteTemplateWithGeneratedCards() {
 
         String modelName = "Basic (and reversed card)";
-        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
 
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -444,7 +445,7 @@ public class CardTemplateEditorTest extends RobolectricTest {
     public void testDeletePendingAddExistingCardCount() {
 
         String modelName = "Basic (optional reversed card)";
-        JSONObject collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
+        Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
 
         // Start the CardTemplateEditor with a specific model, and make sure the model starts unchanged
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -514,10 +515,10 @@ public class CardTemplateEditorTest extends RobolectricTest {
         Assert.assertEquals("card generation should result in 1 card", 1, getModelCardCount(collectionBasicModelOriginal));
     }
 
-    private int getModelCardCount(JSONObject model) {
+    private int getModelCardCount(Model model) {
         int cardCount = 0;
         for (Long noteId : getCol().getModels().nids(model)) {
-            cardCount += getCol().getNote(noteId).cards().size();
+            cardCount += getCol().getNote(noteId).numberOfCards();
         }
         return cardCount;
     }

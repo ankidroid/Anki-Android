@@ -48,6 +48,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
+import com.ichi2.utils.WebViewDebugging;
 
 import org.acra.ACRA;
 import org.acra.ReportField;
@@ -241,6 +242,16 @@ public class AnkiDroidApp extends MultiDexApplication {
 
         Timber.d("Startup - Application Start");
 
+        // The ACRA process needs a WebView for optimal UsageAnalytics values but it can't have the same data directory.
+        // Analytics falls back to a sensible default if this is not set.
+        if (ACRA.isACRASenderServiceProcess() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            try {
+                WebViewDebugging.setDataDirectorySuffix("acra");
+            } catch (Exception e) {
+                Timber.w(e, "Failed to set WebView data directory");
+            }
+        }
+
         // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
         UsageAnalytics.initialize(this);
         if (BuildConfig.DEBUG) {
@@ -335,12 +346,25 @@ public class AnkiDroidApp extends MultiDexApplication {
 
 
     public static void sendExceptionReport(Throwable e, String origin, String additionalInfo) {
+        sendExceptionReport(e, origin, additionalInfo, false);
+    }
+
+
+    public static void sendExceptionReport(Throwable e, String origin, String additionalInfo, boolean onlyIfSilent) {
         UsageAnalytics.sendAnalyticsException(e, false);
+
+        if (onlyIfSilent) {
+            String reportMode = getSharedPrefs(getInstance().getApplicationContext()).getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK);
+            if (!FEEDBACK_REPORT_ALWAYS.equals(reportMode)) {
+                Timber.i("sendExceptionReport - onlyIfSilent true, but ACRA is not 'always accept'. Skipping report send.");
+                return;
+            }
+        }
+
         ACRA.getErrorReporter().putCustomData("origin", origin);
         ACRA.getErrorReporter().putCustomData("additionalInfo", additionalInfo);
         ACRA.getErrorReporter().handleException(e);
     }
-
 
     /**
      * If you want to make sure that the next exception of any time is posted, you need to clear limiter data

@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Открыть снова</string>
     <string name="backup_error_menu_repair">Исправить базу данных</string>
     <string name="backup_repair_deck">Исправить</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">База данных исправляется&#8230;</string>
     <string name="backup_error">Ошибка</string>
     <string name="backup_invalid_file_error">Выбран неверный файл резервной копии</string>

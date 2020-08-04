@@ -83,14 +83,14 @@
         <item quantity="one">ᱱᱤᱛᱚᱜᱟᱜ ᱚᱵᱫᱷᱤᱺ %d ᱫᱤᱱ</item>
         <item quantity="other">ᱱᱤᱛᱚᱜᱟᱜ ᱚᱵᱫᱷᱤᱺ %d ᱫᱤᱱ</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">x ᱫᱤᱱ ᱧᱮᱞᱡᱚᱝ ᱞᱟᱜᱤᱫ Reschedule ᱢᱮ</string>
+    <string name="reschedule_card_dialog_message">x ᱫᱤᱱ ᱧᱮᱞᱡᱚᱝ ᱞᱟᱹᱜᱤᱫ Reschedule ᱢᱮ</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
     </plurals>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ᱨᱮᱫ ᱢᱮᱱᱮᱡᱟᱨ ᱛᱮ ᱰᱮᱠ ᱠᱷᱚᱱ ᱠᱟᱰ ᱪᱚᱭᱚᱱ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ about:downloads ᱥᱟᱠᱟᱢ ᱠᱷᱟᱱ import ᱢᱮ</string>
-    <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱦᱩᱰᱟᱹᱜ ᱦᱩᱭᱮᱱᱟ</string>
-    <string name="answering_error_message">ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱚᱞ ᱦᱩᱰᱟᱹᱜ ᱾ database ᱫᱚ ᱠᱦᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱰᱤᱥᱠ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱱᱩᱜᱟ ᱾ \n\nᱡᱚᱫᱤ ᱵᱟᱨᱚᱢᱵᱟᱨ ᱱᱚᱠᱟ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ, ᱮᱱᱰᱮᱠᱷᱟᱱ ᱟᱨ ᱢᱤᱫ ᱡᱮᱠᱷᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ backup ᱠᱷᱚᱱ ᱰᱟᱴᱟ restore ᱛᱟᱵᱚᱱ ᱯᱮ ᱾ ᱚᱱᱟ ᱞᱟᱜᱤᱫ \&quot;options\&quot; ᱨᱮ ᱚᱛᱟᱭ ᱯᱮ ᱾\n\ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱱᱚᱟ ᱫᱚ bug ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱟ; ᱫᱚᱭᱟᱠᱟᱛᱮ report ᱯᱮ ᱾ </string>
+    <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
+    <string name="answering_error_message">ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱚᱞ ᱵᱷᱩᱞ ᱾ database ᱫᱚ ᱠᱦᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱰᱤᱥᱠ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱱᱩᱜᱟ ᱾ \n\nᱡᱚᱫᱤ ᱵᱟᱨᱚᱢᱵᱟᱨ ᱱᱚᱠᱟ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ, ᱮᱱᱰᱮᱠᱷᱟᱱ ᱟᱨ ᱢᱤᱫ ᱡᱮᱠᱷᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ backup ᱠᱷᱚᱱ ᱰᱟᱴᱟ restore ᱛᱟᱵᱚᱱ ᱯᱮ ᱾ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ \&quot;options\&quot; ᱨᱮ ᱚᱛᱟᱭ ᱯᱮ ᱾\n\ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱱᱚᱟ ᱫᱚ bug ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱟ; ᱫᱚᱭᱟᱠᱟᱛᱮ report ᱯᱮ ᱾ </string>
     <string name="answering_error_report">ᱦᱩᱰᱟᱜ ᱥᱚᱱᱫᱮᱥ</string>
     <string name="repair_deck_dialog">ᱟᱢ ᱫᱚ ᱱᱚᱶᱟ database ᱥᱟᱡᱟᱣ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ ? \n\nᱮᱛᱷᱚᱵ ᱢᱟᱲᱟᱝ ᱨᱮ, ᱢᱤᱫᱴᱟᱝ ᱠᱚᱯᱤ \&quot;%s\&quot; ᱥᱚᱵᱼᱯᱷᱚᱞᱰᱟᱨ ᱨᱮ ᱛᱮᱭᱨᱚᱜᱽᱟ ᱱᱟᱦ ᱾</string>
     <string name="intent_add_saved_information">ᱰᱟᱴᱟ ᱥᱟᱝᱪᱟᱣ</string>
@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">AnkiDroid ᱛᱮ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ Notepad ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱜᱟᱨ ᱠᱟᱜ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ “default” ᱧᱩᱛᱩᱢ ᱠᱟᱜ ᱢᱮ</string>
     <string name="custom_study_new_total_new">ᱰᱮᱠ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰᱺ%d</string>
     <string name="custom_study_rev_total_rev">ᱰᱮᱠ ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭᱺ%d</string>
-    <string name="custom_study_new_extend">ᱛᱮᱦᱮᱸᱧᱟᱜ ᱱᱟᱶᱟ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱣᱢᱮ</string>
-    <string name="custom_study_rev_extend">ᱛᱮᱦᱮᱸᱧᱟᱜ ᱨᱤᱵᱷᱣᱩ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱣᱢᱮ </string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ x ᱫᱤᱱ ᱨᱮ ᱦᱤᱲᱤᱧᱟᱜ ᱠᱚᱺ</string>
     <string name="custom_study_ahead">᱑᱐ ᱫᱤᱱ ᱢᱟᱲᱟᱝ ᱥᱮᱱ ᱨᱤᱵᱷᱤᱣᱺ</string>
     <string name="custom_study_random">ᱴᱟᱴᱠᱟ ᱡᱟᱱᱟᱢ(ᱟᱛᱷᱟᱹᱲᱤ) x ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱠᱚᱨᱟᱣ ᱢᱮ ᱰᱮᱠ ᱠᱷᱚᱱᱺ</string>
@@ -109,9 +109,9 @@
     <string name="rebuild_custom_study_deck">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱷᱟᱣᱜ ᱰᱮᱠ ᱛᱮᱭᱟᱨᱚᱜᱠᱟᱱᱟ&#8230;</string>
     <string name="importing_collection">ᱴᱩᱢᱟᱹᱞ ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱᱟ...</string>
     <string name="import_media_count">ᱢᱤᱰᱤᱭᱟ ᱨᱮᱫ %1$d%%&#8230; ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱᱟ </string>
-    <string name="import_progress">• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱱᱚᱥ: %1$d%%\n• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱱᱚᱴᱥ: %2$d%%\n• ᱠᱩᱞ-ᱠᱟᱹᱢᱤᱠᱟᱱᱟ: %3$d%%</string>
-    <string name="import_update_details">%1$d of %2$d ᱟᱜᱩᱭᱮᱛ ᱱᱚᱴᱥ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ ᱾</string>
-    <string name="import_update_ignored">ᱠᱤᱪᱷᱤ ᱟᱹᱯᱰᱮᱴ ᱫᱚ ᱟᱰᱟᱜ ᱜᱤᱰᱤ ᱮᱱᱟ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱠᱷᱟᱹᱛᱤᱨ</string>
+    <string name="import_progress">• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱱᱚᱥ: %1$d%%\n• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ: %2$d%%\n• ᱠᱩᱞ-ᱠᱟᱹᱢᱤᱠᱟᱱᱟ: %3$d%%</string>
+    <string name="import_update_details">%1$d of %2$d ᱟᱜᱩᱭᱮᱛ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ ᱾</string>
+    <string name="import_update_ignored">ᱠᱤᱪᱷᱤ ᱟᱹᱯᱰᱮᱴ ᱫᱚ ᱟᱰᱟᱜ ᱜᱤᱰᱤ ᱮᱱᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱷᱟᱹᱛᱤᱨ</string>
     <string name="import_complete_count">ᱠᱟᱰ ᱟᱹᱜᱩᱜᱭᱮᱱᱟ: %d</string>
     <string name="sd_card_full_title">SD ᱠᱟᱰ ᱯᱮᱨᱮᱡ ᱮᱱᱟ</string>
     <string name="sd_card_almost_full_title">SD ᱠᱟᱰ ᱯᱟᱠᱷᱟᱯᱟᱹᱠᱷᱤ ᱯᱮᱨᱮᱡ ᱮᱱᱟ</string>
@@ -119,7 +119,7 @@
     <string name="restore_backup">ᱟᱢᱟᱜ ᱱᱚᱠᱚᱞ ᱫᱚ ᱢᱟᱨᱮ ᱴᱩᱢᱟᱹᱞ ᱥᱟᱞᱟᱜ ᱵᱚᱫᱚᱞᱚᱜ ᱟ ᱾ ᱵᱟᱝ ᱥᱚᱝᱪᱟᱣᱟᱠᱟᱱ ᱠᱟᱹᱢᱤ ᱚᱫ ᱚᱫᱚᱜᱽᱟ ᱾</string>
     <string name="dialog_cancel">ᱵᱟᱰᱨᱟ</string>
     <string name="dialog_ok">ᱴᱷᱤᱠ</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">ᱵᱟᱝ</string>
     <string name="dialog_continue">ᱞᱮᱛᱟᱲ</string>
     <string name="dialog_positive_create">ᱛᱮᱭᱟᱨ</string>
     <string name="dialog_positive_delete">ᱜᱮᱫ ᱜᱤᱰᱤ</string>
@@ -131,7 +131,7 @@
     <string name="dialog_positive_restore">ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
     <string name="dialog_positive_set">ᱥᱟᱡᱟᱣ ᱢᱮ</string>
     <string name="lookup_button_content">ᱪᱮᱛᱟᱱ ᱧᱮᱞ</string>
-    <string name="dialog_collection_path_not_dir">ᱦᱚᱨ ᱨᱮ ᱢᱮᱱᱟᱜ ᱩᱫᱩᱫᱩᱜ ᱵᱟᱭ ᱴᱦᱤᱠ ᱟᱟ</string>
+    <string name="dialog_collection_path_not_dir">ᱦᱚᱨ ᱨᱮ ᱢᱮᱱᱟᱜ ᱩᱫᱩᱫᱩᱜ ᱵᱟᱭ ᱴᱷᱤᱠ ᱟᱟ</string>
     <!-- Media checking -->
     <string name="check_media_title">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ ?</string>
     <string name="check_media_warning">ᱢᱟᱨᱟᱝ ᱢᱮᱰᱤᱭᱟ ᱴᱩᱢᱟᱹᱞ ᱫᱚ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤᱟᱭ</string>
@@ -162,7 +162,7 @@
     <string name="multimedia_editor_audio_permission_denied">ᱟᱧᱡᱚᱢ ᱨᱮᱠᱚᱰᱤᱝ ᱪᱷᱟᱰ ᱵᱟᱰ</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">Ankidrod ᱛᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid ᱫᱚ ᱫᱚᱦᱚ ᱪᱷᱟᱰ ᱫᱚᱨᱠᱟᱨ, ᱚᱠᱟ ᱫᱚ ᱟᱢᱟᱜ AnkiDroid ᱴᱩᱢᱟᱹᱞ, flashcard ᱢᱮᱰᱤᱭᱟ, ᱟᱨ ᱵᱮᱠᱚᱯ ᱫᱚᱦᱚ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱢᱤᱨᱮ ᱦᱩᱭᱩᱜ ᱟ ᱾ ᱟᱞᱮᱭᱟᱜ ᱞᱚᱰ ᱫᱚ open-source ᱜᱮᱭᱚ, volunteers ᱠᱚ ᱚᱞ ᱟᱠᱟᱫᱟ ᱚᱨ millions ᱠᱚᱣᱟᱜ ᱵᱷᱚᱨᱥᱟ ᱢᱮᱱᱟᱜᱼᱟ.\n\n ᱟᱢ ᱴᱦᱮᱱ ᱠᱩᱠᱞᱤ ᱨᱮᱭᱟᱜ ᱢᱮᱱᱟᱜ ᱠᱷᱟᱱ ᱫᱚ, ᱟᱞᱮᱭᱟᱜ ᱮᱯᱯ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱥᱟᱯᱚᱴ ᱯᱷᱚᱨᱩᱢ ᱛᱮ ᱪᱟᱞᱟᱜᱢᱮ.\n\nAnkiDroid ᱵᱮᱵᱽᱷᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱟᱹᱰᱤ ᱟᱹᱰᱤ ᱥᱟᱨᱷᱣ !\n—AnkiDroid ᱞᱟᱦᱟ ᱨᱟᱠᱟᱵ ᱫᱚᱞ</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid ᱫᱚ ᱫᱚᱦᱚ ᱪᱷᱟᱰ ᱫᱚᱨᱠᱟᱨ, ᱚᱠᱟ ᱫᱚ ᱟᱢᱟᱜ AnkiDroid ᱴᱩᱢᱟᱹᱞ, flashcard ᱢᱮᱰᱤᱭᱟ, ᱟᱨ ᱵᱮᱠᱚᱯ ᱫᱚᱦᱚ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱢᱤᱨᱮ ᱦᱩᱭᱩᱜ ᱟ ᱾ ᱟᱞᱮᱭᱟᱜ ᱞᱚᱰ ᱫᱚ open-source ᱜᱮᱭᱚ, volunteers ᱠᱚ ᱚᱞ ᱟᱠᱟᱫᱟ ᱚᱨ millions ᱠᱚᱣᱟᱜ ᱵᱷᱚᱨᱥᱟ ᱢᱮᱱᱟᱜᱼᱟ.\n\n ᱟᱢ ᱴᱷᱮᱱ ᱠᱩᱠᱞᱤ ᱨᱮᱭᱟᱜ ᱢᱮᱱᱟᱜ ᱠᱷᱟᱱ ᱫᱚ, ᱟᱞᱮᱭᱟᱜ ᱮᱯᱯ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱥᱟᱯᱚᱴ ᱯᱷᱚᱨᱩᱢ ᱛᱮ ᱪᱟᱞᱟᱜᱢᱮ.\n\nAnkiDroid ᱵᱮᱵᱽᱷᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱟᱹᱰᱤ ᱟᱹᱰᱤ ᱥᱟᱨᱷᱣ !\n—AnkiDroid ᱞᱟᱦᱟ ᱨᱟᱠᱟᱵ ᱫᱚᱞ</string>
     <string name="mutimedia_editor_assertion_failed">ᱵᱚᱝ ᱵᱟᱥᱟᱭᱟᱠᱟᱱ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ ᱮᱰᱵᱷᱟᱱᱥ ᱮᱰᱤᱴᱚᱨ ᱨᱮ ᱫᱮᱠᱷᱟᱣᱮᱫ ᱟᱭ</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid ᱦᱟᱹᱞᱤ ᱦᱚᱪᱚᱭᱮᱱᱟ</string>
@@ -186,9 +186,10 @@
     <string name="background_image_applied">ᱚᱱᱚᱰ ᱪᱮᱛᱟᱨ ᱵᱟᱦᱟᱞᱮᱱᱟ</string>
     <string name="background_image_removed">ᱚᱱᱚᱰ ᱪᱤᱛᱟᱨ ᱦᱟᱴᱟᱣ ᱮᱱᱟ</string>
     <string name="no_image_selected">ᱪᱤᱛᱟᱨ ᱵᱟᱝ ᱪᱚᱭᱚᱱ ᱟᱠᱟᱱᱟ</string>
-    <string name="error_selecting_image">ᱪᱤᱛᱟᱨ ᱪᱚᱭᱚᱱ ᱡᱚᱠᱷᱟᱜ ᱦᱩᱰᱟᱹᱜ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ ᱾ %s</string>
-    <string name="error_deleting_image">ᱪᱤᱛᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱦᱩᱰᱟᱹᱜ</string>
+    <string name="error_selecting_image">ᱪᱤᱛᱟᱨ ᱪᱚᱭᱚᱱ ᱡᱚᱠᱷᱟᱜ ᱵᱷᱩᱞ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ ᱾ %s</string>
+    <string name="error_deleting_image">ᱪᱤᱛᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱵᱷᱩᱞ</string>
     <string name="failed_to_apply_background_image">ᱚᱱᱚᱰ ᱪᱤᱛᱟᱨ ᱵᱟᱦᱟᱞ ᱰᱤᱜᱟᱹᱣ %s</string>
+    <string name="background_image_too_large">ᱰᱠᱮ ᱦᱟᱛᱟᱣ ᱵᱮᱠᱜᱟᱨᱩᱸᱰ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ</string>
     <string name="image_max_size_allowed">ᱰᱷᱮᱨ ᱢᱚᱦᱰᱟ %d MB ᱜᱟᱱᱚᱜ ᱟ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -198,4 +199,9 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱰᱤᱜᱟᱹᱣ</string>
     <string name="boot_service_too_many_notifications">ᱟᱹᱰᱤᱜᱟᱱ ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱾ ᱛᱤᱱᱟᱹᱝᱜᱟᱱ ᱡᱤᱱᱥ ᱵᱟᱭ ᱫᱮᱠᱷᱟᱣᱟ</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>
+        <item quantity="other">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>
+    </plurals>
 </resources>

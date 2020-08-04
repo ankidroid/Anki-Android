@@ -19,8 +19,10 @@ package com.ichi2.anki;
 import android.os.Bundle;
 import android.view.View;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.NoteUtils;
@@ -39,7 +41,7 @@ import timber.log.Timber;
  */
 public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private String mEditedModelFileName = null;
-    private JSONObject mEditedModel = null;
+    private Model mEditedModel = null;
     private int mOrdinal;
     private long[] mCardList;
     private Bundle mNoteEditorBundle = null;
@@ -66,6 +68,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
                 mEditedModel = TemporaryModel.getTempModel(mEditedModelFileName);
             } catch (IOException e) {
                 Timber.w(e, "Unable to load temp model from file %s", mEditedModelFileName);
+                closeCardTemplatePreviewer();
             }
         }
 
@@ -74,7 +77,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             mCurrentCard = getDummyCard(mEditedModel, mOrdinal);
             if (mCurrentCard == null) {
                 UIUtils.showSimpleSnackbar(this, R.string.invalid_template, false);
-                finishWithoutAnimation();
+                closeCardTemplatePreviewer();
             }
         }
 
@@ -89,8 +92,30 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         super.onResume();
         if (mCurrentCard == null || mOrdinal < 0) {
             Timber.e("CardTemplatePreviewer started with empty card list or invalid index");
-            finishWithoutAnimation();
+            closeCardTemplatePreviewer();
         }
+    }
+
+
+    private void closeCardTemplatePreviewer() {
+        Timber.d("CardTemplatePreviewer:: closeCardTemplatePreviewer()");
+        setResult(RESULT_OK);
+        TemporaryModel.clearTempModelFiles();
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Timber.i("CardTemplatePreviewer:: onBackPressed()");
+        closeCardTemplatePreviewer();
+    }
+
+
+    @Override
+    protected void onNavigationPressed() {
+        Timber.i("CardTemplatePreviewer:: Navigation button pressed");
+        closeCardTemplatePreviewer();
     }
 
 
@@ -136,12 +161,21 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
+        if ((mCurrentCard == null) && (mCardList == null)) {
+            Timber.d("onCollectionLoaded - incorrect state to load, closing");
+            closeCardTemplatePreviewer();
+            return;
+        }
         if (mCurrentCard == null) {
             mCurrentCard = new PreviewerCard(col, mCardList[mOrdinal]);
         }
 
         if (mNoteEditorBundle != null) {
-            mCurrentCard.setDid(mNoteEditorBundle.getLong("did"));
+            long newDid = mNoteEditorBundle.getLong("did");
+            if (col.getDecks().isDyn(newDid)) {
+                mCurrentCard.setODid(mCurrentCard.getDid());
+            }
+            mCurrentCard.setDid(newDid);
 
             Note currentNote = mCurrentCard.note();
             ArrayList<String> tagsList = mNoteEditorBundle.getStringArrayList("tags");
@@ -150,7 +184,11 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             Bundle noteFields = mNoteEditorBundle.getBundle("editFields");
             if (noteFields != null) {
                 for (String fieldOrd : noteFields.keySet()) {
-                    currentNote.setField(Integer.parseInt(fieldOrd), noteFields.getString(fieldOrd));
+                    // In case the fields on the card are out of sync with the bundle
+                    int fieldOrdInt = Integer.parseInt(fieldOrd);
+                    if (fieldOrdInt < currentNote.getFields().length) {
+                        currentNote.setField(fieldOrdInt, noteFields.getString(fieldOrd));
+                    }
                 }
             }
         }
@@ -164,14 +202,14 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     }
 
     /** Get a dummy card */
-    protected @Nullable Card getDummyCard(JSONObject model, int ordinal) {
+    protected @Nullable Card getDummyCard(Model model, int ordinal) {
         Timber.d("getDummyCard() Creating dummy note for ordinal %s", ordinal);
         if (model == null) {
             return null;
         }
         Note n = getCol().newNote(model);
         ArrayList<String> fieldNames = Models.fieldNames(model);
-        for (int i = 0; i < fieldNames.size(); i++) {
+        for (int i = 0; i < fieldNames.size() && i < n.getFields().length; i++) {
             n.setField(i, fieldNames.get(i));
         }
         try {
@@ -240,7 +278,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
         @Override
         /** Override the method that fetches the model so we can render unsaved models */
-        public JSONObject model() {
+        public Model model() {
             if (mEditedModel != null) {
                 return mEditedModel;
             }

@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">به شبکه متصل نیستيد</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">انجام بده</string>
     <string name="sync_error">خطا در همگام سازی</string>
     <string name="vague_error">خطا</string>
     <string name="retry">تلاش مجدد</string>
@@ -101,7 +101,7 @@
     <string name="sync_writing_db">نوشتن تغییرات در پایگاه داده&#8230;</string>
     <string name="sync_download_chunk">بارگیری تغییرات...</string>
     <string name="sync_upload_chunk">بارگذاری تغییرات...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">آپلود: %1$d کیلوبایت، دانلود: %2$d کیلوبایت</string>
     <string name="sync_generic_error">خطایی رخ داده است. لطفا بعدا دوباره سعی کنید.</string>
     <string name="sync_check_upload_file">درحال بررسی فایل قبل از بارگذاری...</string>
     <string name="sync_check_download_file">بررسی فایل دانلود شده...</string>
@@ -112,7 +112,7 @@
     <string name="sync_media_downloaded_count">%d فایل رسانه دانلود شده است</string>
     <string name="sync_sanity_failed">پس از همگام سازی، این مجموعه در وضعیت متناقض بود. برای رفع این مشکل آنکی دروید یک همگامسازی کامل و تحمیلی انجام خواهد داد. لطفا آنچه را که دوست دارید نگه دارید انتخاب کنید، یا اگر ترجیح می دهید بعدا همگامسازی کنید آن را لغو کنید.</string>
     <string name="sync_media_sanity_failed">همگام سازی رسانه کامل شد, اما تعداد رسانه با سرویس دهنده یکسان نیست. برای رفع هر خطایی رسانه بعدی بطور کامل همگام سازی خواهد شد.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
+    <string name="sync_media_db_error">همگام‌سازی رسانه انجام نشد چون دیتابیس فعلی خراب است. انجام بررسی رسانه را به شما پیشنهاد می‌کنیم.</string>
     <string name="sync_media_error">خطا در همگام سازی اطلاعات رسانه.</string>
     <string name="sync_media_error_check">خطا در همگام سازی رسانه. توصیه می شود رسانه را بررسی کنید.</string>
     <string name="sync_sanity_local">محلی</string>
@@ -121,11 +121,15 @@
     <string name="force_full_sync_summary">در همگام سازی بعدی، تغییرات را مجبور کن که در یک مسیر قرار بگیرند</string>
     <string name="full_sync_confirmation">تغییر درخواستی شما در هنگام همگام سازی بعدی مجموعه منجر به ارسال کامل پایگاه داده به سرور خواهد شد. اگر شما کارتهایی برای مرور دارید یا تغییرات دیگری که در دستگاه های دیگر دارید که با مجموعه اینجا همگام سازی نشده اند ،همه آنها با همگام سازی بعدی از دست خواهند رفت. ادامه می دهید؟</string>
     <string name="full_sync_confirmation_upgrade">به خاطر یک اشکال در نسخه نصب شده قبلی برنامه، اجبار به همگام سازی کامل توصیه می شود.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
+    <string name="sync_error_407_proxy_required">تأیید هویت پراکسی لازم است.</string>
     <string name="sync_error_409">در یک لحظه فقط یک عامل مثلا فقط نسخه اندروید یا نسخه رایانه می تواند به AnkiWeb دسترسی داشته باشد. اگر همگام سازی قبلی با خطا همراه بوده است لطفا دقایقی دیگر دوباره امتحان کنید.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">فایل مجموعه یا رسانۀ شما به دلیل حجم زیاد قابل همگام‌سازی نیست.</string>
+    <string name="sync_error_500_unknown">آنکی‌وب با مشکل مواجه شد. لطفاً پس از چند دقیقه دوباره تلاش کنید، اگر مشکل همچنان ادامه داشت، خرابی را گزارش دهید.</string>
     <string name="sync_error_501_upgrade_required">لطفا برنامه را به آخرین نسخه ارتقا دهید</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">آنکی‌وب در حال تعمیر است. لطفاً بعداً تلاش کنید.</string>
+    <string name="sync_error_504_gateway_timeout">ارور 504</string>
+    <!-- Deck Picker Sync Icon -->
+    <string name="sync_menu_title">Sync</string>
+    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONObject;
 
@@ -36,12 +37,15 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.robolectric.Shadows.shadowOf;
@@ -198,7 +202,8 @@ public class NoteEditorTest extends RobolectricTest {
 
     @Test
     public void verifyStartupAndCloseWithNoCollectionDoesNotCrash() {
-        try (ActivityScenario<NullCollectionNoteEditor> scenario = ActivityScenario.launch(NullCollectionNoteEditor.class)) {
+        enableNullCollection();
+        try (ActivityScenario<NoteEditor> scenario = ActivityScenario.launch(NoteEditor.class)) {
             scenario.onActivity(noteEditor -> {
                 noteEditor.onBackPressed();
                 assertThat("Pressing back should finish the activity", noteEditor.isFinishing());
@@ -229,6 +234,35 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
 
+    @Test
+    public void stickyFieldsAreUnchangedAfterAdd() {
+        // #6795 - newlines were converted to <br>
+        Model basic = makeNoteForType(NoteType.BASIC);
+
+        // Enable sticky "Front" field
+        basic.getJSONArray("flds").getJSONObject(0).put("sticky", true);
+
+        String initFirstField = "Hello";
+        String initSecondField = "unused";
+        String newFirstField = "Hello" + FieldEditText.NEW_LINE + "World"; // /r/n on Windows under Robolectric
+
+        NoteEditor editor = getNoteEditorAdding(NoteType.BASIC)
+                .withFirstField(initFirstField)
+                .withSecondField(initSecondField)
+                .build();
+
+        assertThat(Arrays.asList(editor.getCurrentFieldStrings()), contains(initFirstField, initSecondField));
+
+        editor.setFieldValueFromUi(0, newFirstField);
+        assertThat(Arrays.asList(editor.getCurrentFieldStrings()), contains(newFirstField, initSecondField));
+
+        editor.saveNote();
+        this.waitForAsyncTasksToComplete();
+
+        List<String> actual = Arrays.asList(editor.getCurrentFieldStrings());
+        assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""));
+    }
+
     private Intent getCopyNoteIntent(NoteEditor editor) {
         ShadowActivity editorShadow = Shadows.shadowOf(editor);
         editor.copyNote();
@@ -241,12 +275,12 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     private NoteEditorTestBuilder getNoteEditorAdding(NoteType noteType) {
-        JSONObject n = makeNoteForType(noteType);
+        Model n = makeNoteForType(noteType);
         return new NoteEditorTestBuilder(n);
     }
 
 
-    private JSONObject makeNoteForType(NoteType noteType) {
+    private Model makeNoteForType(NoteType noteType) {
         switch (noteType) {
             case BASIC: return getCol().getModels().byName("Basic");
             case CLOZE: return getCol().getModels().byName("Cloze");
@@ -299,7 +333,7 @@ public class NoteEditorTest extends RobolectricTest {
         switch (from) {
             case REVIEWER:
                 i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
-                AbstractFlashcardViewer.setEditorCard(n.cards().get(0));
+                AbstractFlashcardViewer.setEditorCard(n.firstCard());
                 break;
             case DECK_LIST:
                 i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
@@ -328,13 +362,13 @@ public class NoteEditorTest extends RobolectricTest {
     @SuppressWarnings("WeakerAccess")
     public class NoteEditorTestBuilder {
 
-        private final JSONObject mModel;
+        private final Model mModel;
         private String mFirstField;
         private String mSecondField;
         private String mThirdField;
 
 
-        public NoteEditorTestBuilder(JSONObject model) {
+        public NoteEditorTestBuilder(Model model) {
             if (model == null) {
                 throw new IllegalArgumentException("model was null");
             }

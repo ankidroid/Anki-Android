@@ -20,6 +20,7 @@ package com.ichi2.libanki.stats;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -29,14 +30,14 @@ import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
-
-import com.ichi2.utils.JSONObject;
+import com.ichi2.libanki.Deck;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Vector;
 
 import timber.log.Timber;
@@ -137,7 +138,7 @@ public class Stats {
                 "sum(case when type = " + Consts.CARD_TYPE_LRN + " then 1 else 0 end), "+ /* review */
                 "sum(case when type = " + Consts.CARD_TYPE_REV + " then 1 else 0 end), "+ /* relearn */
                 "sum(case when type = " + Consts.CARD_TYPE_RELEARNING + " then 1 else 0 end) "+ /* filter */
-                "from revlog where id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
+                "from revlog where id > " + ((mCol.getSched().getDayCutoff()-(long)SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query: %s", query);
 
         int cards, thetime, failed, lrn, rev, relrn, filt;
@@ -163,7 +164,7 @@ public class Stats {
             }
         }
         query = "select count(), sum(case when ease = 1 then 0 else 1 end) from revlog " +
-        "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
+        "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-(long)SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query 2: %s", query);
 
         int mcnt, msum;
@@ -195,40 +196,94 @@ public class Stats {
             } else {
                 operator = "> ";
             }
-            return "id "+ operator + ((mCol.getSched().getDayCutoff() - (timespan.days * SECONDS_PER_DAY)) * 1000);
+            return "id "+ operator + ((mCol.getSched().getDayCutoff() - (timespan.days * (long) SECONDS_PER_DAY)) * 1000);
         }
     }
 
-    public int getNewCards(AxisType timespan) {
-        String filter = getRevlogFilter(timespan,false);
-        String queryNeg = "";
-        if (timespan != AxisType.TYPE_LIFE){
-            String invfilter = getRevlogFilter(timespan,true);
-            queryNeg = " EXCEPT SELECT distinct cid FROM revlog " + invfilter;
+    public Pair<Integer, Double> getNewCards(AxisType timespan) {
+        int chunk = getChunk(timespan);
+        int num = getNum(timespan);
+        List<String> lims = new ArrayList<>();
+        if (timespan != AxisType.TYPE_LIFE) {
+            lims.add("id > " + (mCol.getSched().getDayCutoff() - (num * chunk * (long) SECONDS_PER_DAY)) * 1000);
+        }
+        lims.add("did in " + _limit());
+        String lim;
+        if (!lims.isEmpty()) {
+            lim = "where " + TextUtils.join(" and ", lims);
+        } else {
+            lim = "";
+        }
+        // PORTING: tf appears unused, but was passed into the SQL query
+        double tf;
+        if (timespan == AxisType.TYPE_MONTH) {
+            tf = 60.0; //minutes
+        } else {
+            tf = 3600.0; //hours
         }
 
-        String query = "SELECT COUNT(*) FROM(\n" +
-                "            SELECT distinct cid\n" +
-                "            FROM revlog \n" +
-                             filter +
-                             queryNeg +
-                "        )";
-        Timber.d("New cards query: %s", query);
-        Cursor cur = null;
-        int res = 0;
-        try {
-            cur = mCol.getDb().getDatabase().query(query, null);
-            while (cur.moveToNext()) {
-                res = cur.getInt(0);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
+
+        long cut = mCol.getSched().getDayCutoff();
+        int cardCount = 0;
+        String query = "select " +
+                "(cast((id/1000.0 - ?) / 86400.0 as int))/? as day," +
+                " count(id) " +
+                " from cards " + lim +
+                " group by day order by day";
+
+        try (Cursor c = mCol.getDb().getDatabase().query(query,
+                new Object[] {cut, chunk })) {
+            while (c.moveToNext()) {
+                cardCount += c.getLong(1);
             }
         }
 
-        return res;
+        long periodDays = _periodDays(timespan); // 30|365|-1
+        if (periodDays == -1) {
+            periodDays = _deckAge(DeckAgeType.ADD);
+        }
+        // Porting - being safe to avoid DIV0
+        if (periodDays == 0) {
+            Timber.w("periodDays should not be 0");
+            periodDays = 1;
+        }
+
+        return new Pair<>(cardCount, (double)cardCount / (double) periodDays);
     }
+
+    private enum DeckAgeType { ADD, REVIEW };
+
+    private long _deckAge(DeckAgeType by) {
+        String lim = _revlogLimit();
+        if (!TextUtils.isEmpty(lim)) {
+            lim += " where " + lim;
+        }
+        double t = 0;
+        if (by == DeckAgeType.REVIEW) {
+            t = mCol.getDb().queryLongScalar("select id from revlog " + lim + " order by id limit 1");
+        } else if (by == DeckAgeType.ADD) {
+            lim = "where did in " + Utils.ids2str(mCol.getDecks().active());
+            t = mCol.getDb().queryLongScalar("select id from cards " + lim + " order by id limit 1");
+        }
+
+        long period;
+        if (t == 0) {
+            period = 1;
+        } else {
+            period = Math.max(1, (int)(1+((mCol.getSched().getDayCutoff() - (t/1000)) / 86400)));
+        }
+        return period;
+    }
+
+
+    private String _revlogLimit() {
+        if (this.mWholeCollection) {
+            return "";
+        } else {
+            return "cid in (select id from cards where did in " + Utils.ids2str(mCol.getDecks().active()) + ")";
+        }
+    }
+
 
     private String getRevlogFilter(AxisType timespan,boolean inverseTimeSpan){
         ArrayList<String> lims = new ArrayList<>();
@@ -301,8 +356,9 @@ public class Stats {
         oStats.timePerDayOnAll = oStats.totalTime / oStats.allDays;
         oStats.timePerDayOnStudyDays = oStats.daysStudied == 0 ? 0 : oStats.totalTime / oStats.daysStudied;
 
-        oStats.totalNewCards = getNewCards(timespan);
-        oStats.newCardsPerDay = (double) oStats.totalNewCards / (double) oStats.allDays;
+        Pair<Integer, Double> newCardStats = getNewCards(timespan);
+        oStats.totalNewCards = newCardStats.first;
+        oStats.newCardsPerDay = newCardStats.second;
 
         ArrayList<double[]> list = eases(timespan);
         oStats.newCardsOverview = toOverview(0, list);
@@ -564,7 +620,7 @@ public class Stats {
         }
         ArrayList<String> lims = new ArrayList<>();
         if (num != -1) {
-            lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * SECONDS_PER_DAY)) * 1000));
+            lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * (long) SECONDS_PER_DAY)) * 1000));
         }
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
         if (lim.length() > 0) {
@@ -720,6 +776,24 @@ public class Stats {
     }
 
 
+    private int getChunk(AxisType axisType) {
+        switch (axisType) {
+            case TYPE_MONTH: return 1;
+            case TYPE_YEAR: return 7;
+            case TYPE_LIFE: return 30;
+            default: throw new IllegalStateException(String.format("Invalid axisType: %s", axisType));
+        }
+    }
+
+    private int getNum(AxisType axisType) {
+        switch (axisType) {
+            case TYPE_MONTH: return 31;
+            case TYPE_YEAR: return 52;
+            case TYPE_LIFE: return -1; // Note: can also be 'None'
+            default: throw new IllegalStateException(String.format("Invalid axisType: %s", axisType));
+        }
+    }
+
     /**
      * Intervals ***********************************************************************************************
      */
@@ -872,7 +946,7 @@ public class Stats {
         }
         int pd = _periodDays();
         if (pd > 0) {
-            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (SECONDS_PER_DAY * pd)) * 1000);
+            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (long) (SECONDS_PER_DAY * pd)) * 1000);
         }
         long cutoff = mCol.getSched().getDayCutoff();
         long cut = cutoff - rolloverHour * 3600;
@@ -1008,7 +1082,7 @@ public class Stats {
         int pd = _periodDays();
         if (pd > 0) {
             pd = Math.round( pd / 7 ) * 7;
-            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (SECONDS_PER_DAY * pd)) * 1000);
+            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (long) (SECONDS_PER_DAY * pd)) * 1000);
         }
 
         long cutoff = mCol.getSched().getDayCutoff();
@@ -1176,7 +1250,7 @@ public class Stats {
         }
 
         if (days > 0) {
-            lims.add("id > " + ((mCol.getSched().getDayCutoff() - (days * SECONDS_PER_DAY)) * 1000));
+            lims.add("id > " + ((mCol.getSched().getDayCutoff() - (long) (days * SECONDS_PER_DAY)) * 1000));
         }
         if (lims.size() > 0) {
             lim = "where " + lims.get(0);
@@ -1300,10 +1374,10 @@ public class Stats {
         if (deckId == ALL_DECKS_ID) {
             // All decks
             ArrayList<Long> ids = new ArrayList<>();
-            for (JSONObject d : col.getDecks().all()) {
+            for (Deck d : col.getDecks().all()) {
                 ids.add(d.getLong("id"));
             }
-            return Utils.ids2str(Utils.arrayList2array(ids));
+            return Utils.ids2str(Utils.collection2Array(ids));
         } else {
             // The given deck id and its children
             ArrayList<Long> ids = new ArrayList<>();
@@ -1356,7 +1430,12 @@ public class Stats {
     }
 
     private int _periodDays() {
-        switch (mType) {
+        return _periodDays(mType);
+    }
+
+
+    private int _periodDays(AxisType type) {
+        switch (type) {
             case TYPE_MONTH:
                 return 30;
             case TYPE_YEAR:

@@ -68,7 +68,6 @@ import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -77,6 +76,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.Deck;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
@@ -103,6 +103,7 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import com.ichi2.async.TaskData;
 
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener {
@@ -131,7 +132,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static Pattern sMarkedPattern = Pattern.compile(".*[Mm]arked.*");
 
     private List<Map<String, String>> mCards;
-    private ArrayList<JSONObject> mDropDownDecks;
+    private ArrayList<Deck> mDropDownDecks;
     private ListView mCardsListView;
     private SearchView mSearchView;
     private MultiColumnListAdapter mCardsAdapter;
@@ -258,7 +259,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute");
             mReloadRequired = true;
             int cardCount = result.getObjArray().length;
@@ -275,7 +276,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute");
             mReloadRequired = true;
             int cardCount = result.getObjArray().length;
@@ -292,7 +293,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute");
             mReloadRequired = true;
             int cardCount = result.getObjArray().length;
@@ -390,7 +391,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     void changeDeck(int deckPosition) {
         long[] ids = getSelectedCardIds();
 
-        JSONObject selectedDeck = getValidDecksForChangeDeck().get(deckPosition);
+        Deck selectedDeck = getValidDecksForChangeDeck().get(deckPosition);
 
         try {
             //#5932 - can't be dynamic
@@ -677,8 +678,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onStop() {
         Timber.d("onStop()");
         // cancel rendering the question and answer, which has shared access to mCards
-        CollectionTask.cancelTask(SEARCH_CARDS);
-        CollectionTask.cancelTask(RENDER_BROWSER_QA);
+        CollectionTask.cancelAllTasks(SEARCH_CARDS);
+        CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
@@ -865,7 +866,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (!mCheckedCardPositions.isEmpty()) {
             CollectionTask.launchCollectionTask(CHECK_CARD_SELECTION,
                     mCheckSelectedCardsHandler,
-                    new CollectionTask.TaskData(new Object[]{mCheckedCardPositions, getCards()}));
+                    new TaskData(new Object[]{mCheckedCardPositions, getCards()}));
         }
 
         mActionBarMenu.findItem(R.id.action_select_all).setVisible(!hasSelectedAllCards());
@@ -887,7 +888,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void flagTask (int flag) {
         CollectionTask.launchCollectionTask(DISMISS_MULTI,
                                 mFlagCardHandler,
-                                new CollectionTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, new Integer (flag)}));
+                                new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, new Integer (flag)}));
     }
 
     @Override
@@ -981,7 +982,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 if (mInMultiSelectMode) {
                     CollectionTask.launchCollectionTask(DISMISS_MULTI,
                             mDeleteNoteHandler,
-                            new CollectionTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.DELETE_NOTE_MULTI}));
+                            new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.DELETE_NOTE_MULTI}));
 
                     mCheckedCardPositions.clear();
                     endMultiSelectMode();
@@ -992,7 +993,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case R.id.action_mark_card:
                 CollectionTask.launchCollectionTask(DISMISS_MULTI,
                         mMarkCardHandler,
-                        new CollectionTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.MARK_NOTE_MULTI}));
+                        new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.MARK_NOTE_MULTI}));
 
                 return true;
 
@@ -1000,7 +1001,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             case R.id.action_suspend_card:
                 CollectionTask.launchCollectionTask(DISMISS_MULTI,
                         mSuspendCardHandler,
-                        new CollectionTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.SUSPEND_CARD_MULTI}));
+                        new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.SUSPEND_CARD_MULTI}));
 
                 return true;
 
@@ -1010,7 +1011,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
                 //WARNING: changeDeck depends on this index, so any changes should be reflected there.
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
-                for (JSONObject deck : getValidDecksForChangeDeck()) {
+                for (Deck deck : getValidDecksForChangeDeck()) {
                     try {
                         arrayAdapter.add(deck.getString("name"));
                     } catch (JSONException e) {
@@ -1075,7 +1076,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 Runnable confirm = () -> {
                     Timber.i("CardBrowser:: ResetProgress button pressed");
                     CollectionTask.launchCollectionTask(DISMISS_MULTI, mResetProgressCardHandler,
-                            new CollectionTask.TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.RESET_CARDS}));
+                            new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.RESET_CARDS}));
                 };
                 dialog.setConfirm(confirm);
                 showDialogFragment(dialog);
@@ -1126,7 +1127,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         5);
                 repositionDialog.setCallbackRunnable(days ->
                     CollectionTask.launchCollectionTask(DISMISS_MULTI, mRepositionCardHandler,
-                        new CollectionTask.TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, days}))
+                        new TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, days}))
                 );
                 showDialogFragment(repositionDialog);
                 return true;
@@ -1155,7 +1156,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (requestCode == EDIT_CARD && resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...");
             CollectionTask.launchCollectionTask(UPDATE_NOTE, mUpdateCardHandler,
-                    new CollectionTask.TaskData(sCardBrowserCard, false));
+                    new TaskData(sCardBrowserCard, false));
         } else if (requestCode == ADD_NOTE && resultCode == RESULT_OK) {
             if (mSearchView != null) {
                 mSearchTerms = mSearchView.getQuery().toString();
@@ -1184,7 +1185,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     // We spawn CollectionTasks that may create memory pressure, this transmits it so polling isCancelled sees the pressure
     @Override
     public void onTrimMemory(int pressureLevel) {
-        CollectionTask.cancelTask();
+        CollectionTask.cancelCurrentlyExecutingTask();
     }
 
     private long getReviewerCardId() {
@@ -1217,7 +1218,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mRestrictOnDeck = "";
             saveLastDeckId(ALL_DECKS_ID);
         } else {
-            JSONObject deck = mDropDownDecks.get(position - 1);
+            Deck deck = mDropDownDecks.get(position - 1);
             mRestrictOnDeck = "deck:\"" + deck.getString("name") + "\" ";
             saveLastDeckId(deck.getLong("id"));
         }
@@ -1240,8 +1241,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void searchCards() {
         // cancel the previous search & render tasks if still running
-        CollectionTask.cancelTask(SEARCH_CARDS);
-        CollectionTask.cancelTask(RENDER_BROWSER_QA);
+        CollectionTask.cancelAllTasks(SEARCH_CARDS);
+        CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
         String searchText;
         if (mSearchTerms == null) {
             mSearchTerms = "";
@@ -1263,7 +1264,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int numCardsToRender = (int) Math.ceil(mCardsListView.getHeight()/
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics())) + 5;
             // Perform database query to get all card ids
-            CollectionTask.launchCollectionTask(SEARCH_CARDS, mSearchCardsHandler, new CollectionTask.TaskData(
+            CollectionTask.launchCollectionTask(SEARCH_CARDS, mSearchCardsHandler, new TaskData(
                     new Object[] {searchText, ((mOrder != CARD_ORDER_NONE)),  numCardsToRender}));
         }
     }
@@ -1319,9 +1320,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     /** Returns the decks which are valid targets for "Change Deck" */
     @VisibleForTesting
-    List<JSONObject> getValidDecksForChangeDeck() {
-        List<JSONObject> nonDynamicDecks = new ArrayList<>();
-        for (JSONObject d : mDropDownDecks) {
+    List<Deck> getValidDecksForChangeDeck() {
+        List<Deck> nonDynamicDecks = new ArrayList<>();
+        for (Deck d : mDropDownDecks) {
             if (Decks.isDynamic(d)) {
                 continue;
             }
@@ -1384,7 +1385,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public ListenerWithProgressBarCloseOnFalse() {
 		}
 
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             if (timber != null) {
                 Timber.d(timber);
             }
@@ -1395,7 +1396,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
-        protected abstract void actualPostExecute(CollectionTask.TaskData result);
+        protected abstract void actualPostExecute(TaskData result);
     }
 
     /**
@@ -1428,7 +1429,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             card.put(DECK, deckName);
             // update flags (marked / suspended / etc) which determine color
             card.put(SUSPENDED, c.getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
-            card.put(FLAGS, (new Integer(c.getUserFlag())).toString());
+            card.put(FLAGS, (new Integer(c.userFlag())).toString());
         }
 
         updateList();
@@ -1436,19 +1437,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mUpdateCardHandler = new ListenerWithProgressBarCloseOnFalse("Card Browser - mUpdateCardHandler.onPostExecute()"){
         @Override
-        public void onProgressUpdate(CollectionTask.TaskData... values) {
-            updateCardInList(values[0].getCard(), values[0].getString());
+        public void onProgressUpdate(TaskData value) {
+            updateCardInList(value.getCard(), value.getString());
         }
 
         @Override
-        protected void actualPostExecute(CollectionTask.TaskData result) {
+        protected void actualPostExecute(TaskData result) {
             hideProgressBar();
         }
     };
 
     private CollectionTask.TaskListener mChangeDeckHandler = new ListenerWithProgressBarCloseOnFalse("Card Browser - mChangeDeckHandler.onPostExecute()") {
         @Override
-        protected void actualPostExecute(CollectionTask.TaskData result) {
+        protected void actualPostExecute(TaskData result) {
             hideProgressBar();
 
             searchCards();
@@ -1526,7 +1527,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         String tags = note.stringTags();
         item.put(TAGS, tags);
         item.put(MARKED, (sMarkedPattern.matcher(item.get(TAGS)).matches())?"marked": null);
-        item.put(FLAGS, (Integer.toString(c.getUserFlag())));
+        item.put(FLAGS, (Integer.toString(c.userFlag())));
         item.put(SUSPENDED, c.getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False");
         item.put(DECK, col.getDecks().name(c.getDid()));
         item.put(SFLD, note.getSFld());
@@ -1611,7 +1612,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mSuspendCardHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
-        protected void actualPostExecute(CollectionTask.TaskData result) {
+        protected void actualPostExecute(TaskData result) {
             Card[] cards = (Card[]) result.getObjArray();
             updateCardsInList(Arrays.asList(cards), null);
             hideProgressBar();
@@ -1622,7 +1623,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mMarkCardHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
-        protected void actualPostExecute(CollectionTask.TaskData result) {
+        protected void actualPostExecute(TaskData result) {
             Card[] cards = (Card[]) result.getObjArray();
             updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards))), null);
             hideProgressBar();
@@ -1632,15 +1633,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mDeleteNoteHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
-        public void onProgressUpdate(CollectionTask.TaskData... values) {
-            Card[] cards = (Card[]) values[0].getObjArray();
+        public void onProgressUpdate(TaskData value) {
+            Card[] cards = (Card[]) value.getObjArray();
             //we don't need to reorder cards here as we've already deselected all notes,
             removeNotesView(cards, false);
         }
 
 
         @Override
-        protected void actualPostExecute(CollectionTask.TaskData result) {
+        protected void actualPostExecute(TaskData result) {
             hideProgressBar();
             mActionBarTitle.setText(Integer.toString(mCheckedCardPositions.size()));
             invalidateOptionsMenu();    // maybe the availability of undo changed
@@ -1656,7 +1657,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mUndoHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
-        public void actualPostExecute(CollectionTask.TaskData result) {
+        public void actualPostExecute(TaskData result) {
             Timber.d("Card Browser - mUndoHandler.onPostExecute()");
             hideProgressBar();
             // reload whole view
@@ -1753,7 +1754,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mRenderQAHandler = new CollectionTask.TaskListener() {
         @Override
-        public void onProgressUpdate(TaskData... values) {
+        public void onProgressUpdate(TaskData value) {
             // Note: This is called every time a card is rendered.
             // It blocks the long-click callback while the task is running, so usage of the task should be minimized
             mCardsAdapter.notifyDataSetChanged();
@@ -1799,7 +1800,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mCheckSelectedCardsHandler = new ListenerWithProgressBar() {
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             hideProgressBar();
 
             Object[] resultArr = result.getObjArray();
@@ -1861,9 +1862,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     long currentTime = SystemClock.elapsedRealtime ();
                     if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
                         mLastRenderStart = currentTime;
-                        CollectionTask.cancelTask(RENDER_BROWSER_QA);
+                        CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
                         CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                                new CollectionTask.TaskData(new Object[]{getCards(), firstVisibleItem, visibleItemCount}));
+                                new TaskData(new Object[]{getCards(), firstVisibleItem, visibleItemCount}));
                     }
                 }
             }
@@ -1877,7 +1878,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
                 CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                        new CollectionTask.TaskData(new Object[]{getCards(), startIdx - 5, 2 * numVisible + 5}));
+                        new TaskData(new Object[]{getCards(), startIdx - 5, 2 * numVisible + 5}));
             }
         }
     }
@@ -2239,7 +2240,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void rerenderAllCards() {
         CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                new CollectionTask.TaskData(new Object[]{getCards(), 0, mCards.size()-1}));
+                new TaskData(new Object[]{getCards(), 0, mCards.size()-1}));
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -2273,9 +2274,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public int getChangeDeckPositionFromId(long deckId) {
-        List<JSONObject> decks = getValidDecksForChangeDeck();
+        List<Deck> decks = getValidDecksForChangeDeck();
         for (int i = 0; i < decks.size(); i++) {
-            JSONObject deck = decks.get(i);
+            Deck deck = decks.get(i);
             if (deck.getLong(ID) == deckId) {
                 return i;
             }

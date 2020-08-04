@@ -181,6 +181,7 @@
     <string name="card_template_editor_styling">Phong cách</string>
     <string name="card_template_editor_menu_delete">Xoá</string>
     <string name="card_template_editor_menu_card_browser_appearance">Xuất hiện trình duyệt thẻ</string>
+    <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Cần tối thiểu một loại thẻ</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Xoá loại thẻ \"%2$s\" và (các) thẻ %1$d của nó?</item>

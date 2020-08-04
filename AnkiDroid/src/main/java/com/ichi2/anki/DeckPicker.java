@@ -49,6 +49,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -100,10 +101,10 @@ import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.CollectionTask.TaskData;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Utils;
@@ -112,13 +113,14 @@ import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Permissions;
+import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -131,6 +133,7 @@ import java.util.TreeMap;
 import timber.log.Timber;
 
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import com.ichi2.async.TaskData;
 
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
@@ -194,8 +197,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private String mExportFileName;
 
     private List<AbstractSched.DeckDueTreeNode> mDueTree;
-
-    private List<CollectionTask> tasksToCancelOnClose;
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -276,7 +277,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private CollectionTask.TaskListener mImportAddListener = new CollectionTask.TaskListener() {
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
@@ -304,26 +305,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(CollectionTask.TaskData... values) {
-            mProgressDialog.setContent(values[0].getString());
+        public void onProgressUpdate(TaskData value) {
+            mProgressDialog.setContent(value.getString());
         }
     };
 
     private CollectionTask.TaskListener mImportReplaceListener = new CollectionTask.TaskListener() {
         @SuppressWarnings("unchecked")
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             Timber.i("Import: Replace Task Completed");
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
             Resources res = getResources();
             if (result != null && result.getBoolean()) {
-                int code = result.getInt();
-                if (code == -2) {
-                    // not a valid apkg file
-                    showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg));
-                }
                 updateDeckList();
             } else {
                 showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
@@ -342,8 +338,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(CollectionTask.TaskData... values) {
-            mProgressDialog.setContent(values[0].getString());
+        public void onProgressUpdate(TaskData value) {
+            mProgressDialog.setContent(value.getString());
         }
     };
 
@@ -357,7 +353,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
@@ -387,7 +383,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
-        tasksToCancelOnClose = new ArrayList();
         Timber.d("onCreate()");
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
@@ -424,12 +419,26 @@ public class DeckPicker extends NavigationDrawerActivity implements
         dividerDecorator.setDrawable(divider);
         mRecyclerView.addItemDecoration(dividerDecorator);
 
+        //Add background to Deckpicker activity
+        View view = mFragmented ? findViewById(R.id.deckpicker_view) : findViewById(R.id.root_layout);
+        boolean hasDeckPickerBackground = false;
+        try {
+            hasDeckPickerBackground = applyDeckPickerBackground(view);
+        } catch (OutOfMemoryError e) { //6608 - OOM should be catchable here.
+            Timber.w(e, "Failed to apply background - OOM");
+            UIUtils.showThemedToast(this, getString(R.string.background_image_too_large), false);
+        } catch (Exception e) {
+            Timber.w(e, "Failed to apply background");
+            UIUtils.showThemedToast(this, getString(R.string.failed_to_apply_background_image, e.getLocalizedMessage()), false);
+        }
+
         // create and set an adapter for the RecyclerView
         mDeckListAdapter = new DeckAdapter(getLayoutInflater(), this);
         mDeckListAdapter.setDeckClickListener(mDeckClickListener);
         mDeckListAdapter.setCountsClickListener(mCountsClickListener);
         mDeckListAdapter.setDeckExpanderClickListener(mDeckExpanderClickListener);
         mDeckListAdapter.setDeckLongClickListener(mDeckLongClickListener);
+        mDeckListAdapter.enablePartialTransparencyForBackground(hasDeckPickerBackground);
         mRecyclerView.setAdapter(mDeckListAdapter);
 
         mPullToSyncWrapper = findViewById(R.id.pull_to_sync_wrapper);
@@ -448,19 +457,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         configureFloatingActionsMenu();
 
         mReviewSummaryTextView = (TextView) findViewById(R.id.today_stats_text_view);
-
-        //Add background to Deckpicker activity
-        View view = mFragmented ? findViewById(R.id.deckpicker_view) : findViewById(R.id.root_layout);
-        try {
-            applyDeckPickerBackground(view);
-        } catch (Exception e) {
-            UIUtils.showThemedToast(this, getString(R.string.failed_to_apply_background_image, e.getLocalizedMessage()), false);
-        }
-
-        // Hide the fragment until the counts have been loaded so that the Toolbar fills the whole screen on tablets
-        if (mFragmented) {
-            mStudyoptionsFrame.setVisibility(View.GONE);
-        }
 
         Timber.i("colOpen: %b", colOpen);
         if (colOpen) {
@@ -485,22 +481,25 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private void applyDeckPickerBackground(View view) {
+    // throws doesn't seem to be checked by the compiler - consider it to be documentation
+    private boolean applyDeckPickerBackground(View view) throws OutOfMemoryError {
         //Allow the user to clear data and get back to a good state if they provide an invalid background.
         if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("deckPickerBackground", false)) {
             Timber.d("No DeckPicker background preference");
             view.setBackgroundResource(0);
-            return;
+            return false;
         }
         String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
         File imgFile = new File(currentAnkiDroidDirectory, "DeckPickerBackground.png" );
         if (!imgFile.exists()) {
             Timber.d("No DeckPicker background image");
             view.setBackgroundResource(0);
+            return false;
         } else {
             Timber.i("Applying background");
             Drawable drawable = Drawable.createFromPath(imgFile.getAbsolutePath());
             view.setBackground(drawable);
+            return true;
         }
     }
 
@@ -615,7 +614,53 @@ public class DeckPicker extends NavigationDrawerActivity implements
         menu.findItem(R.id.action_check_database).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_check_media).setEnabled(sdCardAvailable);
         menu.findItem(R.id.action_empty_cards).setEnabled(sdCardAvailable);
+
+        // I haven't had an exception here, but it feels this may be flaky
+        try {
+            displaySyncBadge(menu);
+        } catch (Exception e) {
+            Timber.w(e, "Error Displaying Sync Badge");
+        }
+
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    private void displaySyncBadge(Menu menu) {
+        MenuItem syncMenu = menu.findItem(R.id.action_sync);
+        SyncStatus syncStatus = SyncStatus.getSyncStatus(this::getCol);
+        switch (syncStatus) {
+            case NO_CHANGES:
+            case INCONCLUSIVE:
+                BadgeDrawableBuilder.removeBadge(syncMenu);
+                syncMenu.setTitle(R.string.sync_menu_title);
+                break;
+            case HAS_CHANGES:
+                // Light orange icon
+                new BadgeDrawableBuilder(getResources())
+                        .withColor(ContextCompat.getColor(this, R.color.badge_warning))
+                        .replaceBadge(syncMenu);
+                syncMenu.setTitle(R.string.sync_menu_title);
+                break;
+            case NO_ACCOUNT:
+            case FULL_SYNC:
+                if (syncStatus == SyncStatus.NO_ACCOUNT) {
+                    syncMenu.setTitle(R.string.sync_menu_title_no_account);
+                } else if (syncStatus == SyncStatus.FULL_SYNC) {
+                    syncMenu.setTitle(R.string.sync_menu_title_full_sync);
+                }
+                // Orange-red icon with exclamation mark
+                new BadgeDrawableBuilder(getResources())
+                        .withText('!')
+                        .withColor(ContextCompat.getColor(this, R.color.badge_error))
+                        .replaceBadge(syncMenu);
+                break;
+            default:
+                Timber.w("Unhandled sync status: %s", syncStatus);
+                syncMenu.setTitle(R.string.sync_title);
+                break;
+        }
     }
 
 
@@ -836,6 +881,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
             updateDeckList();
             setTitle(getResources().getString(R.string.app_name));
         }
+        /** Complete task and enqueue fetching nonessential data for
+         * startup. */
+        CollectionTask.launchCollectionTask(LOAD_COLLECTION_COMPLETE);
+        // Update sync status (if we've come back from a screen)
+        supportInvalidateOptionsMenu();
     }
 
 
@@ -857,16 +907,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     protected void onPause() {
         Timber.d("onPause()");
-        killUselessTask();
         mActivityPaused = true;
+        // The deck count will be computed on resume. No need to compute it now
+        CollectionTask.cancelAllTasks(LOAD_DECK_COUNTS);
         super.onPause();
-    }
-
-    private void killUselessTask() {
-        for (CollectionTask collectionTask: tasksToCancelOnClose) {
-            collectionTask.cancel(true);
-        }
-        tasksToCancelOnClose.clear();
     }
 
     @Override
@@ -875,7 +919,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         super.onStop();
         if (colIsOpen()) {
             WidgetStatus.update(this);
-            UIUtils.saveCollectionInBackground();
+            // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
+            UIUtils.saveCollectionInBackground(true);
         }
     }
 
@@ -1063,7 +1108,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.i("Fixing font-family definition in templates");
                 try {
                     Models models = getCol().getModels();
-                    for (JSONObject m : models.all()) {
+                    for (Model m : models.all()) {
                         String css = m.getString("css");
                         if (css.contains("font-familiy")) {
                             m.put("css", css.replace("font-familiy", "font-family"));
@@ -1229,7 +1274,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        CollectionTask.launchCollectionTask(UNDO, new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             @Override
             public void onCancelled() {
                 hideProgressBar();
@@ -1249,7 +1294,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     openReviewer();
                 }
             }
-        });
+        };
+        CollectionTask.launchCollectionTask(UNDO, listener);
     }
 
 
@@ -1369,9 +1415,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     // Callback method to handle repairing deck
-    public void repairDeck() {
-        Timber.i("Repairing Deck");
-        CollectionTask.launchCollectionTask(REPAIR_DECK, new CollectionTask.TaskListener() {
+    public void repairCollection() {
+        Timber.i("Repairing the Collection");
+        CollectionTask.TaskListener listener= new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -1381,7 +1427,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
             @Override
-            public void onPostExecute(CollectionTask.TaskData result) {
+            public void onPostExecute(TaskData result) {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                 }
@@ -1390,7 +1436,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showCollectionErrorDialog();
                 }
             }
-        });
+        };
+        CollectionTask.launchCollectionTask(REPAIR_COLLECTION, listener);
     }
 
 
@@ -1422,7 +1469,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void mediaCheck() {
-        CollectionTask.launchCollectionTask(CHECK_MEDIA, new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
@@ -1443,7 +1490,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showSimpleMessageDialog(getResources().getString(R.string.check_media_failed));
                 }
             }
-        });
+        };
+        CollectionTask.launchCollectionTask(CHECK_MEDIA, listener);
     }
 
 
@@ -1787,6 +1835,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     Timber.i("Regular sync completed successfully");
                     showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
                 }
+                // Mark sync as completed - then refresh the sync icon
+                SyncStatus.markSyncCompleted();
+                supportInvalidateOptionsMenu();
+
                 updateDeckList();
                 WidgetStatus.update(DeckPicker.this);
                 if (mFragmented) {
@@ -1865,7 +1917,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
         CollectionTask.launchCollectionTask(IMPORT, mImportAddListener,
-                new TaskData(importPath, false));
+                new TaskData(importPath));
     }
 
 
@@ -2141,7 +2193,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
-        CollectionTask task = CollectionTask.launchCollectionTask(LOAD_DECK_COUNTS, new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -2171,8 +2223,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(getCol(), mReviewSummaryTextView);
                 Timber.d("Startup - Deck List UI Completed");
             }
-        });
-        tasksToCancelOnClose.add(task);
+        };
+        CollectionTask task = CollectionTask.launchCollectionTask(LOAD_DECK_COUNTS, listener);
     }
 
     public void __renderPage() {
@@ -2331,7 +2383,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         deleteDeck(mContextMenuDid);
     }
     public void deleteDeck(final long did) {
-        CollectionTask.launchCollectionTask(DELETE_DECK, new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             // Flag to indicate if the deck being deleted is the current deck.
             private boolean removingCurrent;
 
@@ -2347,10 +2399,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             @SuppressWarnings("unchecked")
             @Override
-            public void onPostExecute(TaskData result) {
-                if (result == null) {
-                    return;
-                }
+            public void onPostExecute(@Nullable TaskData result) {
                 // In fragmented mode, if the deleted deck was the current deck, we need to reload
                 // the study options fragment with a valid deck and re-center the deck list to the
                 // new current deck. Otherwise we just update the list normally.
@@ -2371,7 +2420,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 // TODO: if we had "undo delete note" like desktop client then we won't need this.
                 getCol().clearUndo();
             }
-        }, new TaskData(did));
+        };
+        CollectionTask.launchCollectionTask(DELETE_DECK, listener, new TaskData(did));
     }
 
     /**
@@ -2386,7 +2436,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             updateDeckList();
             if (mFragmented) {
                 loadStudyOptionsFragment(false);
@@ -2396,14 +2446,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void rebuildFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(REBUILD_CRAM, mSimpleProgressListener,
-                new CollectionTask.TaskData(mFragmented));
+        CollectionTask.launchCollectionTask(REBUILD_CRAM, mSimpleProgressListener);
     }
 
     public void emptyFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        CollectionTask.launchCollectionTask(EMPTY_CRAM, mSimpleProgressListener,
-                new CollectionTask.TaskData(mFragmented));
+        CollectionTask.launchCollectionTask(EMPTY_CRAM, mSimpleProgressListener);
     }
 
     @Override
@@ -2443,7 +2491,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        CollectionTask.launchCollectionTask(FIND_EMPTY_CARDS, new CollectionTask.TaskListener() {
+        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
@@ -2460,7 +2508,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     ConfirmationDialog dialog = new ConfirmationDialog();
                     dialog.setArgs(msg);
                     Runnable confirm = () -> {
-                        getCol().remCards(Utils.arrayList2array(cids));
+                        getCol().remCards(cids);
                         UIUtils.showSimpleSnackbar(DeckPicker.this, String.format(
                                 getResources().getString(R.string.empty_cards_deleted), cids.size()), false);
                     };
@@ -2472,7 +2520,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     mProgressDialog.dismiss();
                 }
             }
-        });
+        };
+        CollectionTask.launchCollectionTask(FIND_EMPTY_CARDS, listener);
     }
 
 
@@ -2572,8 +2621,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(TaskData... values) {
-            mProgressDialog.setContent(values[0].getString());
+        public void onProgressUpdate(TaskData value) {
+            mProgressDialog.setContent(value.getString());
         }
     }
 }

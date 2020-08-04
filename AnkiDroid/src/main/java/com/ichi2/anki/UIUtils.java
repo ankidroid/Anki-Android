@@ -11,12 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.CollectionTask.TaskData;
 
 import java.util.Calendar;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import com.ichi2.async.TaskData;
 
 public class UIUtils {
 
@@ -117,8 +117,12 @@ public class UIUtils {
 
 
     public static void saveCollectionInBackground() {
+        saveCollectionInBackground(false);
+    }
+
+    public static void saveCollectionInBackground(boolean syncIgnoresDatabaseModification) {
         if (CollectionHelper.getInstance().colIsOpen()) {
-            CollectionTask.launchCollectionTask(SAVE_COLLECTION, new CollectionTask.TaskListener() {
+            CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
                 @Override
                 public void onPreExecute() {
                     Timber.d("saveCollectionInBackground: start");
@@ -129,7 +133,8 @@ public class UIUtils {
                 public void onPostExecute(TaskData result) {
                     Timber.d("saveCollectionInBackground: finished");
                 }
-            });
+            };
+            CollectionTask.launchCollectionTask(SAVE_COLLECTION, listener, new TaskData(syncIgnoresDatabaseModification));
         }
     }
 }

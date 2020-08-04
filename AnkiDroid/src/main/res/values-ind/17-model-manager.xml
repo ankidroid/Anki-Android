@@ -20,54 +20,63 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">Mengelola jenis catatan</string>
-    <string name="model_editor_label">Kelola bidang</string>
+    <string name="model_browser_label">Kelola tipe catatan</string>
+    <string name="model_editor_label">Kelola kolom</string>
     <!--Toasts-->
     <string name="toast_last_model">Kamu tidak bisa mengapus tipe catatan terakhirmu</string>
-    <string name="toast_last_field">Jenis catatan harus memiliki setidaknya satu bidang</string>
-    <string name="toast_empty_name">Anda harus memasukkan sebuah nama</string>
-    <string name="toast_duplicate_field">Nama field sudah digunakan</string>
-    <string name="toast_out_of_range">Anda harus memasukkan nilai yang valid</string>
+    <string name="toast_last_field">Tipe catatan harus memiliki setidaknya satu kolom</string>
+    <string name="toast_empty_name">Kamu harus memasukkan nama</string>
+    <string name="toast_duplicate_field">Nama kolom sudah digunakan</string>
+    <string name="toast_out_of_range">Kamu harus memasukkan nilai yang valid</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
-        <item quantity="other">%d tipe catatan yang tersedia</item>
+        <item quantity="other">%d tipe catatan tersedia</item>
     </plurals>
     <plurals name="model_browser_of_type">
         <item quantity="other">%d catatan</item>
     </plurals>
     <!--Button Values-->
-    <string name="model_editor_action_add_model">Tambahkan jenis catatan</string>
+    <string name="model_editor_action_add_model">Tambah tipe catatan</string>
     <!--Browser-->
-    <string name="model_browser_delete">Hapus jenis catatan</string>
-    <string name="model_browser_rename">Ganti nama</string>
-    <string name="model_browser_options">Pilihan</string>
+    <string name="model_browser_delete">Hapus tipe catatan</string>
+    <string name="model_browser_rename">Ubah nama</string>
+    <string name="model_browser_options">Opsi</string>
     <string name="model_browser_template">Edit kartu</string>
-    <string name="model_browser_add">Tambahkan jenis catatan</string>
+    <string name="model_browser_add">Tambah tipe catatan</string>
     <!--Rename-->
     <string name="rename_model">Ubah nama tipe catatan</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Edit kolom</string>
-    <string name="model_field_editor_add">Tambahkan bidang</string>
-    <string name="model_field_editor_delete">Hapus bidang</string>
-    <string name="model_field_editor_options">Pilihan lapangan</string>
-    <string name="model_field_editor_rename">Ganti nama field</string>
-    <string name="model_field_editor_reposition_menu">Bidang reposisi</string>
-    <string name="model_field_editor_reposition">Bidang reposisi (masukkan nilai %1$d-%2$d)</string>
+    <string name="model_field_editor_add">Tambah kolom</string>
+    <string name="model_field_editor_delete">Hapus kolom</string>
+    <string name="model_field_editor_options">Opsi kolom</string>
+    <string name="model_field_editor_rename">Ubah nama kolom</string>
+    <string name="model_field_editor_reposition_menu">Pindah posisi kolom</string>
+    <string name="model_field_editor_reposition">Pindahkan kolom (masukkan nilai %1$d-%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Ingat masukan terakhir saat menambahkan</string>
-    <string name="model_field_editor_changing">Memperbarui bidang</string>
-    <string name="model_field_editor_sort_field">Urutkan menurut bidang ini</string>
-    <string name="model_clone_suffix">salinan</string>
+    <string name="model_field_editor_changing">Memperbarui kolom</string>
+    <string name="model_field_editor_sort_field">Urutkan menurut kolom ini</string>
+    <string name="model_clone_suffix">salin</string>
     <!--Warnings-->
     <string name="model_delete_warning">Yakin ingin menghapus tipe catatan ini?</string>
-    <string name="field_delete_warning">Yakin ingin menghapus bidang ini?</string>
+    <string name="field_delete_warning">Yakin ingin menghapus kolom ini?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Tambahkan: %1$s </string>
+    <string name="model_browser_add_add">Tambah: %1$s </string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Kloning: %1$s </string>
+    <string name="model_browser_add_clone">Duplikat: %1$s </string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Masukkan templat yang penelusur kartu akan gunakan untuk menampilkan kartumu. Gunakan ini untuk menampilkan jawaban yang lebih ringkas.\n\nContoh: templat depan\n“Ibukota {{Negara}} adalah:”\nbisa diringkas lagi di penelusur kartu menjadi\n“Ibukota: {{Negara}}”</string>
     <string name="card_template_browser_appearance_question_format">Format pertanyaan</string>
     <string name="card_template_browser_appearance_answer_format">Format jawaban</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Kembalikan nilai awal?</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Kembalikan ke nilai awal?</string>
     <string name="card_template_browser_appearance_saving_note">Perubahan ini akan diterapkan saat templat kartu disimpan</string>
+    <!-- Deck Override -->
+    <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
+    <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
+    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
+    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
+    <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
+    <string name="model_manager_deck_override_dynamic_deck_error">Cannot set Deck Override to a filtered deck</string>
+    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
+    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
 </resources>

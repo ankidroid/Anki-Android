@@ -7,29 +7,26 @@ import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyFloat;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.floatThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({RectangleWrap.class, GraphicsWrap.class, ColorWrap.class, PlotSheet.class,
-        Color.class})
 public class PieChartTest {
     private static final double PRECISION = 1E-3F;
+
     @Mock
     private GraphicsWrap graphics;
 
@@ -38,17 +35,25 @@ public class PieChartTest {
 
     private PieChart pieChart;
 
+    private MockedStatic<Color> colorMockedStatic;
+
+
     @Before
     public void setUp() {
-        mockStatic(android.graphics.Color.class);
-        MockitoAnnotations.initMocks(this);
+        colorMockedStatic = mockStatic(Color.class);
+        MockitoAnnotations.openMocks(this);
         when(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0);
         when(plot.getFrameThickness()).thenReturn(new float[]{0, 0, 0, 0});
 
         FontMetricsWrap fm = mock(FontMetricsWrap.class);
         when(fm.getHeight()).thenReturn(10f);
-        when(fm.stringWidth(any(String.class))).thenReturn(30f);
+        when(fm.stringWidth(anyString())).thenReturn(30f);
         when(graphics.getFontMetrics()).thenReturn(fm);
+    }
+
+    @After
+    public void tearDown() {
+        colorMockedStatic.close();
     }
 
     @Test(expected = IllegalArgumentException.class)

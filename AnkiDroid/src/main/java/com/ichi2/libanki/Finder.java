@@ -27,6 +27,7 @@ import android.util.Pair;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.async.CollectionTask;
 
+import com.ichi2.libanki.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -77,11 +78,22 @@ public class Finder {
 
     @CheckResult
     public List<Long> findCards(String query, boolean _order) {
-        return _findCards(query, _order);
+        return findCards(query, _order, null);
+    }
+
+    @CheckResult
+    public List<Long> findCards(String query, boolean _order, CollectionTask task) {
+        return _findCards(query, _order, task);
     }
 
 
+    @CheckResult
     private List<Long> _findCards(String query, Object _order) {
+        return _findCards(query, _order, null);
+    }
+
+    @CheckResult
+    private List<Long> _findCards(String query, Object _order, CollectionTask task) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
@@ -96,6 +108,9 @@ public class Finder {
         String sql = _query(preds, order);
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
+                if (task != null && task.isCancelled()) {
+                    return new ArrayList<>();
+                }
                 res.add(cur.getLong(0));
             }
         } catch (SQLException e) {
@@ -632,7 +647,7 @@ public class Finder {
             ids = new ArrayList<>();
             val = val.replace("*", ".*");
             val = val.replace("+", "\\+");
-            for (JSONObject d : mCol.getDecks().all()) {
+            for (Deck d : mCol.getDecks().all()) {
                 String deckName = d.getString("name");
                 deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
                 if (deckName.matches("(?i)" + val)) {

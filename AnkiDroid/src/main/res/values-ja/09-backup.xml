@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">起動画面の再試行</string>
     <string name="backup_error_menu_repair">データベース修復</string>
     <string name="backup_repair_deck">修復</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">データベースを修復しています...</string>
     <string name="backup_error">エラー</string>
     <string name="backup_invalid_file_error">選択したバックアップ ファイルは無効です。</string>

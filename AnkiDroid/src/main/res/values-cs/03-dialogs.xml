@@ -89,8 +89,8 @@
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Současný interval: %d den</item>
-        <item quantity="few">Current interval: %d days</item>
-        <item quantity="many">Current interval: %d days</item>
+        <item quantity="few">Současný interval: %d dny</item>
+        <item quantity="many">Současný interval: %d dne</item>
         <item quantity="other">Současný interval: %d dní</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Přeplánovat zkoušení pro x dní:</string>
@@ -111,14 +111,14 @@
     <string name="intent_aedict_category">Chcete-li přidat AnkiDroid karty, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem \'default\'</string>
     <string name="custom_study_new_total_new">Nové karty v balíčku: %d</string>
     <string name="custom_study_rev_total_rev">K opakování v balíčku: %d</string>
-    <string name="custom_study_new_extend">Zvýšit dnešní limit nových karet o</string>
-    <string name="custom_study_rev_extend">Zvýšit dnešní limit opakovaných karet o</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Opakovat zapomenuté karty z posledních x dnů:</string>
     <string name="custom_study_ahead">Opakovat dopředu o x dnů:</string>
     <string name="custom_study_random">Vybrat náhodně x karet z balíčku:</string>
     <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Obnovování uživatelského balíčku.\nProsím čekejte...</string>
+    <string name="custom_study_rebuild_deck_corrupt">Nelze znovu sestavit balíček vlastního učení</string>
+    <string name="rebuild_custom_study_deck">Obnovování balíčku vlastního učení&#8230;</string>
     <string name="importing_collection">Importování kolekce.\nProsím čekejte&#8230;</string>
     <string name="import_media_count">Import multimediálních souborů %1$d%%\nProsím čekejte&#8230;</string>
     <string name="import_progress">• Importování poznámek: %1$d%%\n• Importování karet: %2$d%%\n• Post-processing: %3$d%%</string>
@@ -131,7 +131,7 @@
     <string name="restore_backup">Vaše kolekce bude nahrazena starší kopií. Všechny neuložené změny budou ztraceny.</string>
     <string name="dialog_cancel">Zrušit</string>
     <string name="dialog_ok">Ok</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">Ne</string>
     <string name="dialog_continue">Pokračovat</string>
     <string name="dialog_positive_create">Vytvořit</string>
     <string name="dialog_positive_delete">Odstranit</string>
@@ -167,11 +167,11 @@
     <string name="empty_cards_count">Karet k odstranění: %d</string>
     <string name="empty_cards_deleted">Odstraněno karet: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">Nelze získat oprávnění k mikrofonu.</string>
+    <string name="multimedia_editor_camera_permission_refused">Nelze získat oprávnění k fotoaparátu. Funkcionalita byla zakázána.</string>
+    <string name="multimedia_editor_failed">Nepodařilo se otevřít multimediální editor</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Oprávnění k nahrávání zvuku bylo odepřeno</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">Vítejte v AnkiDroid!</string>
     <string name="collection_load_welcome_request_permissions_details">AnkiDroid vyžaduje oprávnění k úložišti, které používáme výhradně pro ukládání vaší AnkiDroid kolekce, multimédií kartiček a záloh. Náš kód je otevřený, napsaný dobrovolníky a mají v něj důvěru miliony.\n\nPokud máte jakékoliv dotazy, nahlédněte prosím do naší příručky v aplikaci nebo navštivte naše fóra podpory.\n\nDěkujeme, že zkoušíte AnkiDroid!\n—AnkiDroid vývojový tým</string>
@@ -184,30 +184,38 @@
     <string name="integrity_check_insufficient_space">Kontrola databáze používá velké množství dočasného úložiště.\n\nDůrazně se doporučuje, abyste předtím, než budete pokračovat, měli v zařízení alespoň %s volného místa.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nMomentálně máte %s volného místa.</string>
     <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">Could not play video</string>
+    <string name="video_creation_error">Nelze přehrát video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">Nelze změnit balíček</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">Chyba při dekódování dat z karty</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <string name="database_locked_title">Databáze uzamčena</string>
+    <string name="database_locked_summary">Databázi AnkiDroid používá jiná aplikace. Zavřete prosím druhou aplikaci a znovu otevřete AnkiDroid.</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="background_image_applied">Obrázek na pozadí byl použit</string>
+    <string name="background_image_removed">Obrázek na pozadí byl odstraněn</string>
+    <string name="no_image_selected">Nebyl vybrán žádný obrázek</string>
+    <string name="error_selecting_image">Chyba při výběru obrázku. Podívejte se na manuál. %s</string>
+    <string name="error_deleting_image">Chyba při odstraňování obrázku</string>
+    <string name="failed_to_apply_background_image">Nepodařilo se použít obrázek pozadí %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Chybí požadované oprávnění k úložišti. Prosím udělte oprávnění k úložišti a zkuste to znovu.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">Nelze načíst vzhled prohlížeče karet</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">Automatická synchronizace může být spuštěna za %d sekundu</item>
+        <item quantity="few">Automatická synchronizace může být spuštěna za %d sekundy</item>
+        <item quantity="many">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other">Automatická synchronizace může být spuštěna za %d sekund</item>
+    </plurals>
 </resources>

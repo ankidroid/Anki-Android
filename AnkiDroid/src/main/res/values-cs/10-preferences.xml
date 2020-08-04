@@ -79,8 +79,8 @@
     <string name="image_zoom">Zvětšení obrázku</string>
     <string name="button_size">Velikost tlačítka pro odpověď</string>
     <string name="card_browser_font_size">Velikost písma v prohlížení</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media">Zobrazit názvy souborů v prohlížeči karet</string>
+    <string name="card_browser_hide_media_summary">Zobrazit názvy multimediálních souborů v polích otázka/odpověď v prohlížeči karet</string>
     <string name="col_path">Adresář AnkiDroid</string>
     <string name="fullscreen_review">Celoobrazovkový režim</string>
     <string name="full_screen_off">Vypnout</string>
@@ -94,8 +94,8 @@
     </string-array>
     <string name="gestures">Povolit gesta</string>
     <string name="gestures_summ">Přiřazení gest jednotlivým akcím.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links">Ignorovat dotyková gesta na odkazech</string>
+    <string name="gestures_allow_links_summary">Dotyková gesta nebudou provedena, jestliže se stiskne odkaz/nápověda.</string>
     <string name="gestures_swipe_up">Tažení nahoru</string>
     <string name="gestures_swipe_down">Tažení dolů</string>
     <string name="gestures_swipe_left">Tažení doleva</string>
@@ -105,12 +105,12 @@
     <string name="gestures_tap_bottom">Klepnutí dolů</string>
     <string name="gestures_tap_left">Klepnutí vlevo</string>
     <string name="gestures_tap_right">Klepnutí vpravo</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_volume_up">Hlasitost nahoru</string>
+    <string name="gestures_volume_down">Hlasitost dolů</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Použít také kanji/katakana, emoji/kao-moji tlačítka pro posouvání</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">„%s’ Menu</string>
+    <string name="card_browser_enable_external_context_menu_summary">Povolí globální kontextovou nabídku „%s“</string>
     <string name="double_scrolling_gap">Dvojitý posun</string>
     <string name="double_scrolling_gap_summ">Dvojitý posuvník s eReader</string>
     <string name="swipe_sensitivity">Swipe citlivost</string>
@@ -145,7 +145,7 @@
     <string name="select_locale_title">Vyberte jazyk</string>
     <string name="safe_display">Režim bezpečného zobrazení</string>
     <string name="safe_display_summ">Zakázat všechny animace a použít bezpečnější metodu pro vykreslení karty. E-ink zařízení toto mohou vyžadovat.</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">Zakázat režim úprav v jednom poli</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering">Zarovnání na střed</string>
@@ -153,7 +153,7 @@
     <string name="pref_backup_max">Maximální počet záloh</string>
     <string name="show_estimates">Zobrazit tlačítko času</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
-    <string name="show_top_bar">Show Top Bar</string>
+    <string name="show_top_bar">Zobrazit horní panel</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress">Zobraz zbývající</string>
     <string name="show_progress_summ">Zobrazit zbývající počet karet</string>
@@ -200,9 +200,9 @@
     <string name="custom_sync_server_enable_title">Použij vlastní synchronizační server</string>
     <string name="custom_sync_server_enable_summary">Pokud nechcete používat proprietární službu AnkiWeb, můžete zadat alternativní server zde</string>
     <string name="custom_sync_server_base_url_title">Synchronizovat url</string>
-    <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
+    <string name="custom_sync_server_base_url_invalid">Neplatná URL synchronizace</string>
     <string name="custom_sync_server_media_url_title">Sync url pro média</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">Neplatná URL synchronizace médií</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Změny nastavení skupiny balíčků ovlivní více balíčků. Pokud si přejete změnit pouze současný balíček, nejdříve prosím přidejte novou skupinu nastavení</string>
     <string name="studyoptions_limit_select_tags">Výběr štítků</string>
@@ -267,7 +267,7 @@
         <item quantity="other">%s podřízených balíčků budou používat tuto skupinu</item>
     </plurals>
     <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>
-    <string name="deck_conf_set_subdecks_message">Použít aktuální nastavení pro všechny podbalíčky tohoto balíčku?</string>
+    <string name="deck_conf_set_subdecks_message">Použít aktuální nastavení pro všechny podřízené balíčky tohoto balíčku?</string>
     <string name="pref_browser_editor_font">Písmo editoru a prohlížeče</string>
     <string name="deck_conf_cram_filter">Filtr</string>
     <string name="deck_conf_cram_options">Možnosti</string>

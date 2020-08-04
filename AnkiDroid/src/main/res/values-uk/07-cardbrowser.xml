@@ -85,8 +85,8 @@
         <item>Без сортування (швидше)</item>
         <item>По полю сортування </item>
         <item>По часу створення</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>За часом зміни запису</item>
+        <item>За часом зміни картки</item>
         <item>По часу планованого повторення</item>
         <item>По інтервалу</item>
         <item>По складності</item>

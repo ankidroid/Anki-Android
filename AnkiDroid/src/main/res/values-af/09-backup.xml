@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Retry opening</string>
     <string name="backup_error_menu_repair">Repair database</string>
     <string name="backup_repair_deck">Herstel</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Besig om databasis te herstel&#8230;</string>
     <string name="backup_error">Fout</string>
     <string name="backup_invalid_file_error">The selected backup file was invalid</string>

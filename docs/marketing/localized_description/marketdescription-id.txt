@@ -1,37 +1,37 @@
-Hafalkan segalanya dengan AnkiDroid!
+Hafalkan semuanya dengan AnkiDroid!
 
-AnkiDroid memungkinkan Anda mempelajari flashcards sangat efisien dengan menunjukkan mereka  sebelum Anda  lupa. Hal ini sepenuhnya kompatibel dengan perangkat lunak pengulangan spasi Anki (termasuk sinkronisasi), yang tersedia untuk Windows, Linux dan MacOS.
+AnkiDroid memungkinkanmu mempelajari kartu flash secara efisien dengan menampilkannya sesaat sebelum kamu lupa. Aplikasi ini sepenuhnya kompatibel dengan perangkat lunak hafalan berjarak Anki (termasuk sinkronisasi), yang tersedia untuk Windows, Linux dan MacOS.
 
-Belajar segala macam hal dimanapun dan kapanpun Anda inginkan. Membuat baik penggunaan waktu idle di perjalanan bus, di antrian supermarket atau menunggu situasi lain!
+Belajar banyak hal di manapun dan kapanpun kamu mau. Manfaatkan waktu gabut saat naik bus, di antrean supermarket atau waktu lainnya!
 
-Buat dek sendiri  atau download percuma dek untuk sebarang bahasa dan topik (lebih dari 6000 tersedia).
+Buat dek sendiri atau unduh dek bebas dari berbagai macam bahasa dan topik (lebih dari 6000 tersedia).
 
-Tambahkan bahan melalui aplikasi desktop Anki atau langsung melalui AnkiDroid. Aplikasi mendukung menambahkan bahan secara otomatis dari kamus!
+Tambahkan materi melalui aplikasi desktop Anki atau langsung melalui AnkiDroid. Aplikasi juga mendukung menambah materi secara otomatis dari kamus!
 
-★ fitur utama:
-• isi flashcard yang didukung: teks, gambar, suara, LaTeX
-• spasi pengulangan (algoritma supermemo 2)
+★ Fitur utama:
+• isi kartu flash yang didukung: teks, gambar, audio, LaTeX
+• hafalan berjarak (algoritma supermemo 2)
 • integrasi teks-suara
 • lebih dari 6000 dek tersedia
-• widget progres
-• statistik rinci
+• gawit kemajuan
+• statistik yang rinci
 • sinkronisasi dengan AnkiWeb
-• sumber terbuka
+• sumber terbuka (open source)
 
-★ fitur tambahan:
+★ Fitur tambahan:
 • tulis jawaban (opsional)
-• papan tulis
-• Kad editor / tambah
-Pelayar kad
+• whiteboard
+• editor/tambah kartu
+• penelusur kartu
 • tata letak tablet
-• mengimpor file koleksi yang ada (melalui Anki Desktop)
-• integrasi kamus(ColorDict, GoldenDict, Leo.org, Aedict, kamus web bermacam)
-• menambahkan kad dengan 'intent&gt; dari aplikasi lain seperti kamus
-• dukungan kustom font
-• sistem sokongan penuh
-• navigasi dengan geser, tekan
+• impor berkas koleksi yang ada (lewat Anki Desktop)
+• integrasi kamus (ColorDict, GoldenDict, Leo.org, Aedict, bermacam kamus web)
+• tambahkan kartu dengan intent dari aplikasi lain seperti kamus
+• dukungan fon kustom
+• cadangan sistem penuh
+• navigasi dengan usapan, tekan
 • dapat disesuaikan
-• penanganan tumpukan kartu dinamis
-• modus malam
-• 27 pelokalan
-• Seluruh versi AnkiDroid sebelumnya dapat diunduh dari stus web
+• penanganan dek kartu dinamis
+• mode malam
+• tersedia dalam 27 bahasa
+• Semua versi AnkiDroid sebelumnya dapat diunduh dari situs web

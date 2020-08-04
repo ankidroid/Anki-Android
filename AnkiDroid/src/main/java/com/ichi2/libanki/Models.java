@@ -96,7 +96,7 @@ public class Models {
 
     private Collection mCol;
     private boolean mChanged;
-    private HashMap<Long, JSONObject> mModels;
+    private HashMap<Long, Model> mModels;
 
     // BEGIN SQL table entries
     private int mId;
@@ -155,7 +155,7 @@ public class Models {
         if (ids != null) {
             for (int i = 0; i < ids.length(); i++) {
                 String id = ids.getString(i);
-                JSONObject o = modelarray.getJSONObject(id);
+                Model o = new Model(modelarray.getJSONObject(id));
                 mModels.put(o.getLong("id"), o);
             }
         }
@@ -170,7 +170,7 @@ public class Models {
     }
 
 
-    public void save(JSONObject m) {
+    public void save(Model m) {
         save(m, false);
     }
 
@@ -179,7 +179,7 @@ public class Models {
      * @param m model to save
      * @param templates flag which (when true) re-generates the cards for each note which uses the model
      */
-    public void save(JSONObject m, boolean templates) {
+    public void save(Model m, boolean templates) {
         if (m != null && m.has("id")) {
             m.put("mod", Utils.intTime());
             m.put("usn", mCol.usn());
@@ -204,7 +204,7 @@ public class Models {
         if (mChanged) {
             ensureNotEmpty();
             JSONObject array = new JSONObject();
-            for (Map.Entry<Long, JSONObject> o : mModels.entrySet()) {
+            for (Map.Entry<Long, Model> o : mModels.entrySet()) {
                 array.put(Long.toString(o.getKey()), o.getValue());
             }
             ContentValues val = new ContentValues();
@@ -231,9 +231,9 @@ public class Models {
 
     /**
      * Get current model.
-     * @return The JSONObject of the model, or null if not found in the deck and in the configuration.
+     * @return The model, or null if not found in the deck and in the configuration.
      */
-    public JSONObject current() {
+    public Model current() {
         return current(true);
     }
 
@@ -241,10 +241,10 @@ public class Models {
      * Get current model.
      * @param forDeck If true, it tries to get the deck specified in deck by mid, otherwise or if the former is not
      *                found, it uses the configuration`s field curModel.
-     * @return The JSONObject of the model, or null if not found in the deck and in the configuration.
+     * @return The model, or null if not found in the deck and in the configuration.
      */
-    public JSONObject current(boolean forDeck) {
-        JSONObject m = null;
+    public Model current(boolean forDeck) {
+        Model m = null;
         if (forDeck) {
             m = get(mCol.getDecks().current().optLong("mid", -1));
         }
@@ -260,14 +260,14 @@ public class Models {
     }
 
 
-    public void setCurrent(JSONObject m) {
+    public void setCurrent(Model m) {
         mCol.getConf().put("curModel", m.get("id"));
         mCol.setMod();
     }
 
 
     /** get model with ID, or null. */
-    public @Nullable JSONObject get(long id) {
+    public @Nullable Model get(long id) {
         if (mModels.containsKey(id)) {
             return mModels.get(id);
         } else {
@@ -277,9 +277,9 @@ public class Models {
 
 
     /** get all models */
-    public ArrayList<JSONObject> all() {
-        ArrayList<JSONObject> models = new ArrayList<>();
-        for (JSONObject jsonObject : mModels.values()) {
+    public ArrayList<Model> all() {
+        ArrayList<Model> models = new ArrayList<>();
+        for (Model jsonObject : mModels.values()) {
             models.add(jsonObject);
         }
         return models;
@@ -287,8 +287,8 @@ public class Models {
 
 
     /** get model with NAME. */
-    public JSONObject byName(String name) {
-        for (JSONObject m : mModels.values()) {
+    public Model byName(String name) {
+        for (Model m : mModels.values()) {
             if (m.getString("name").equals(name)) {
                 return m;
             }
@@ -300,10 +300,10 @@ public class Models {
     /** Create a new model, save it in the registry, and return it. */
 	// Called `new` in Anki's code. New is a reserved word in java,
 	// not in python. Thus the method has to be renamed.
-    public JSONObject newModel(String name) {
+    public Model newModel(String name) {
         // caller should call save() after modifying
-        JSONObject m;
-        m = new JSONObject(defaultModel);
+        Model m;
+        m = new Model(defaultModel);
         m.put("name", name);
         m.put("mod", Utils.intTime());
         m.put("flds", new JSONArray());
@@ -314,19 +314,18 @@ public class Models {
     }
 
     // not in anki
-    public static boolean isModelNew(JSONObject m) {
+    public static boolean isModelNew(Model m) {
         return m.getLong("id") == 0;
     }
 
     /** Delete model, and all its cards/notes. 
      * @throws ConfirmModSchemaException */
-    public void rem(JSONObject m) throws ConfirmModSchemaException {
+    public void rem(Model m) throws ConfirmModSchemaException {
         mCol.modSchema();
         long id = m.getLong("id");
         boolean current = current().getLong("id") == id;
         // delete notes/cards
-        mCol.remCards(Utils.arrayList2array(mCol.getDb().queryColumn(Long.class,
-                                                                     "SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = ?)", 0, new Object[] {id})));
+        mCol.remCards(mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = ?)", id));
         // then the model
         mModels.remove(id);
         save();
@@ -337,7 +336,7 @@ public class Models {
     }
 
 
-    public void add(JSONObject m) {
+    public void add(Model m) {
         _setID(m);
         update(m);
         setCurrent(m);
@@ -346,14 +345,14 @@ public class Models {
 
 
     /** Add or update an existing model. Used for syncing and merging. */
-    public void update(JSONObject m) {
+    public void update(Model m) {
         mModels.put(m.getLong("id"), m);
         // mark registry changed, but don't bump mod time
         save();
     }
 
 
-    private void _setID(JSONObject m) {
+    private void _setID(Model m) {
         long id = Utils.intTime(1000);
         while (mModels.containsKey(id)) {
             id = Utils.intTime(1000);
@@ -384,8 +383,8 @@ public class Models {
      */
 
     /** Note ids for M */
-    public ArrayList<Long> nids(JSONObject m) {
-        return mCol.getDb().queryColumn(Long.class, "SELECT id FROM notes WHERE mid = ?", 0, new Object[] {m.getLong("id")});
+    public ArrayList<Long> nids(Model m) {
+        return mCol.getDb().queryLongList("SELECT id FROM notes WHERE mid = ?", m.getLong("id"));
     }
 
     /**
@@ -393,8 +392,8 @@ public class Models {
      * @param m The model to the count the notes of.
      * @return The number of notes with that model.
      */
-    public int useCount(JSONObject m) {
-        return mCol.getDb().queryScalar("select count() from notes where mid = ?", new Object[] {m.getLong("id")});
+    public int useCount(Model m) {
+        return mCol.getDb().queryScalar("select count() from notes where mid = ?", m.getLong("id"));
     }
 
     /**
@@ -403,8 +402,8 @@ public class Models {
      * @param ord The index of the card template
      * @return The number of notes with that model.
      */
-    public int tmplUseCount(JSONObject m, int ord) {
-        return mCol.getDb().queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?", new Object[] {m.getLong("id"), ord});
+    public int tmplUseCount(Model m, int ord) {
+        return mCol.getDb().queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?", m.getLong("id"), ord);
     }
 
     /**
@@ -412,9 +411,8 @@ public class Models {
      */
 
     /** Copy, save and return. */
-    public JSONObject copy(JSONObject m) {
-        JSONObject m2 = null;
-        m2 = m.deepClone();
+    public Model copy(Model m) {
+        Model m2 = m.deepClone();        
         m2.put("name", m2.getString("name") + " copy");
         add(m2);
         return m2;
@@ -447,7 +445,7 @@ public class Models {
     }
 
 
-    public static ArrayList<String> fieldNames(JSONObject m) {
+    public static ArrayList<String> fieldNames(Model m) {
         JSONArray ja;
         ja = m.getJSONArray("flds");
         ArrayList<String> names = new ArrayList<>();
@@ -459,12 +457,12 @@ public class Models {
     }
 
 
-    public int sortIdx(JSONObject m) {
+    public int sortIdx(Model m) {
         return m.getInt("sortf");
     }
 
 
-    public void setSortIdx(JSONObject m, int idx) throws ConfirmModSchemaException{
+    public void setSortIdx(Model m, int idx) throws ConfirmModSchemaException{
         mCol.modSchema();
         m.put("sortf", idx);
         mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
@@ -472,7 +470,7 @@ public class Models {
     }
 
 
-    private void _addField(JSONObject m, JSONObject field) {
+    private void _addField(Model m, JSONObject field) {
         // do the actual work of addField. Do not check whether model
         // is not new.
 		JSONArray ja = m.getJSONArray("flds");
@@ -483,7 +481,7 @@ public class Models {
 		_transformFields(m, new TransformFieldAdd());
     }
 
-    public void addField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
+    public void addField(Model m, JSONObject field) throws ConfirmModSchemaException {
         // only mod schema if model isn't new
         // this is Anki's addField.
         if (!isModelNew(m)) {
@@ -492,7 +490,7 @@ public class Models {
         _addField(m, field);
     }
 
-    public void addFieldInNewModel(JSONObject m, JSONObject field) {
+    public void addFieldInNewModel(Model m, JSONObject field) {
         // similar to Anki's addField; but thanks to assumption that
         // model is new, it never has to throw
         // ConfirmModSchemaException.
@@ -500,7 +498,7 @@ public class Models {
         _addField(m, field);
     }
 
-    public void addFieldModChanged(JSONObject m, JSONObject field) {
+    public void addFieldModChanged(Model m, JSONObject field) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
         // ConfirmModSchemaException.
@@ -519,7 +517,7 @@ public class Models {
     }
 
 
-    public void remField(JSONObject m, JSONObject field) throws ConfirmModSchemaException {
+    public void remField(Model m, JSONObject field) throws ConfirmModSchemaException {
         mCol.modSchema();
         JSONArray ja = m.getJSONArray("flds");
         JSONArray ja2 = new JSONArray();
@@ -564,7 +562,7 @@ public class Models {
     }
 
 
-    public void moveField(JSONObject m, JSONObject field, int idx) throws ConfirmModSchemaException {
+    public void moveField(Model m, JSONObject field, int idx) throws ConfirmModSchemaException {
         mCol.modSchema();
         JSONArray ja = m.getJSONArray("flds");
         ArrayList<JSONObject> l = new ArrayList<>();
@@ -620,7 +618,7 @@ public class Models {
     }
 
 
-    public void renameField(JSONObject m, JSONObject field, String newName) throws ConfirmModSchemaException {
+    public void renameField(Model m, JSONObject field, String newName) throws ConfirmModSchemaException {
         mCol.modSchema();
         String pat = String.format("\\{\\{([^{}]*)([:#^/]|[^:#/^}][^:}]*?:|)%s\\}\\}",
                                    Pattern.quote(field.getString("name")));
@@ -659,7 +657,7 @@ public class Models {
     }
 
 
-    public void _transformFields(JSONObject m, TransformFieldVisitor fn) {
+    public void _transformFields(Model m, TransformFieldVisitor fn) {
         // model hasn't been added yet?
         if (isModelNew(m)) {
             return;
@@ -691,7 +689,7 @@ public class Models {
 
 
     /** Note: should col.genCards() afterwards. */
-    private void _addTemplate(JSONObject m, JSONObject template) {
+    private void _addTemplate(Model m, JSONObject template) {
         // do the actual work of addTemplate. Do not consider whether
         // model is new or not.
         JSONArray ja = m.getJSONArray("tmpls");
@@ -702,7 +700,7 @@ public class Models {
     }
 
     /** @throws ConfirmModSchemaException */
-    public void addTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
+    public void addTemplate(Model m, JSONObject template) throws ConfirmModSchemaException {
         //That is Anki's addTemplate method
         if (!isModelNew(m)) {
             mCol.modSchema();
@@ -710,14 +708,14 @@ public class Models {
         _addTemplate(m, template);
     }
 
-    public void addTemplateInNewModel(JSONObject m, JSONObject template)  {
+    public void addTemplateInNewModel(Model m, JSONObject template)  {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
         Assert.that(isModelNew(m), "Model was assumed to be new, but is not");
         _addTemplate(m, template);
     }
 
-    public void addTemplateModChanged(JSONObject m, JSONObject template)  {
+    public void addTemplateModChanged(Model m, JSONObject template)  {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
         Assert.that(mCol.schemaChanged(), "Mod was assumed to be already changed, but is not");
@@ -730,7 +728,7 @@ public class Models {
      * @return False if removing template would leave orphan notes.
      * @throws ConfirmModSchemaException 
      */
-    public boolean remTemplate(JSONObject m, JSONObject template) throws ConfirmModSchemaException {
+    public boolean remTemplate(Model m, JSONObject template) throws ConfirmModSchemaException {
         if (m.getJSONArray("tmpls").length() <= 1) {
             return false;
         }
@@ -748,21 +746,21 @@ public class Models {
             throw new IllegalArgumentException("Invalid template proposed for delete");
         }
         // the code in "isRemTemplateSafe" was in place here in libanki. It is extracted to a method for reuse
-        long[] cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
+        List<Long> cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
         if (cids == null) {
             Timber.d("remTemplate getCardIdsForModel determined it was unsafe to delete the template");
             return false;
         }
 
         // ok to proceed; remove cards
-        Timber.d("remTemplate proceeding to delete the template and %d cards", cids.length);
+        Timber.d("remTemplate proceeding to delete the template and %d cards", cids.size());
         mCol.modSchema();
         mCol.remCards(cids);
         // shift ordinals
         mCol.getDb()
             .execute(
                      "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
-                     new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id"), ord });
+                     mCol.usn(), Utils.intTime(), m.getLong("id"), ord);
         JSONArray tmpls = m.getJSONArray("tmpls");
         JSONArray ja2 = new JSONArray();
         for (int i = 0; i < tmpls.length(); ++i) {
@@ -788,21 +786,21 @@ public class Models {
      * @param ords array of ints, each one is the ordinal a the card template in the given model
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
-    public @Nullable long[] getCardIdsForModel(long modelId, int[] ords) {
+    public @Nullable List<Long> getCardIdsForModel(long modelId, int[] ords) {
         String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = " +
                 modelId + " and c2.ord  in " + Utils.ids2str(ords);
-        long[] cids = Utils.toPrimitive(mCol.getDb().queryColumn(Long.class, cardIdsToDeleteSql, 0));
+        List<Long> cids = mCol.getDb().queryLongList(cardIdsToDeleteSql);
         //Timber.d("cardIdsToDeleteSql was '" + cardIdsToDeleteSql + "' and got %s", Utils.ids2str(cids));
-        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.length, modelId, Utils.ids2str(ords));
+        Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size(), modelId, Utils.ids2str(ords));
 
         // all notes with this template must have at least two cards, or we could end up creating orphaned notes
         String noteCountPreDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?)";
-        int preDeleteNoteCount = mCol.getDb().queryScalar(noteCountPreDeleteSql, new Long[] {modelId});
+        int preDeleteNoteCount = mCol.getDb().queryScalar(noteCountPreDeleteSql, modelId);
         Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql);
         Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount);
         String noteCountPostDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in " + Utils.ids2str(ords);
         Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql);
-        int postDeleteNoteCount = mCol.getDb().queryScalar(noteCountPostDeleteSql, new Long[] {modelId});
+        int postDeleteNoteCount = mCol.getDb().queryScalar(noteCountPostDeleteSql, modelId);
         Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount);
 
         if (preDeleteNoteCount != postDeleteNoteCount) {
@@ -814,7 +812,7 @@ public class Models {
     }
 
 
-    public static void _updateTemplOrds(JSONObject m) {
+    public static void _updateTemplOrds(Model m) {
         JSONArray ja;
         ja = m.getJSONArray("tmpls");
         for (int i = 0; i < ja.length(); i++) {
@@ -824,7 +822,7 @@ public class Models {
     }
 
 
-    public void moveTemplate(JSONObject m, JSONObject template, int idx) {
+    public void moveTemplate(Model m, JSONObject template, int idx) {
         JSONArray ja = m.getJSONArray("tmpls");
         int oldidx = -1;
         ArrayList<JSONObject> l = new ArrayList<>();
@@ -858,12 +856,12 @@ public class Models {
         save(m);
         mCol.getDb().execute("update cards set ord = (case " + sb.toString() +
                              " end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
-                             new Object[] { mCol.usn(), Utils.intTime(), m.getLong("id") });
+                             mCol.usn(), Utils.intTime(), m.getLong("id"));
     }
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // unused upstream as well
-    private void _syncTemplates(JSONObject m) {
-        ArrayList<Long> rem = mCol.genCards(Utils.arrayList2array(nids(m)));
+    private void _syncTemplates(Model m) {
+        ArrayList<Long> rem = mCol.genCards(Utils.collection2Array(nids(m)));
     }
 
 
@@ -880,7 +878,7 @@ public class Models {
      * @param cmap Map for switching cards. This is ord->ord and there should not be duplicate targets
      * @throws ConfirmModSchemaException 
      */
-    public void change(JSONObject m, long[] nids, JSONObject newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
+    public void change(Model m, long[] nids, Model newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
         mCol.modSchema();
         assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
         if (fmap != null) {
@@ -892,7 +890,7 @@ public class Models {
         mCol.genCards(nids);
     }
 
-    private void _changeNotes(long[] nids, JSONObject newModel, Map<Integer, Integer> map) {
+    private void _changeNotes(long[] nids, Model newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<>();
         int nfields;
         long mid;
@@ -924,7 +922,7 @@ public class Models {
         mCol.updateFieldCache(nids);
     }
 
-    private void _changeCards(long[] nids, JSONObject oldModel, JSONObject newModel, Map<Integer, Integer> map) {
+    private void _changeCards(long[] nids, Model oldModel, Model newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<>();
         List<Long> deleted = new ArrayList<>();
         Cursor cur = null;
@@ -968,7 +966,7 @@ public class Models {
             }
         }
         mCol.getDb().executeMany("update cards set ord=?,usn=?,mod=? where id=?", d);
-        mCol.remCards(Utils.toPrimitive(deleted));
+        mCol.remCards(deleted);
     }
 
     /**
@@ -976,7 +974,7 @@ public class Models {
      */
 
     /** Return a hash of the schema, to see if models are compatible. */
-    public String scmhash(JSONObject m) {
+    public String scmhash(Model m) {
         String s = "";
         JSONArray flds = m.getJSONArray("flds");
         for (int i = 0; i < flds.length(); ++i) {
@@ -996,7 +994,7 @@ public class Models {
      * ***********************************************************************************************
      */
 
-    private void _updateRequired(JSONObject m) {
+    private void _updateRequired(Model m) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
             // nothing to do
             return;
@@ -1022,7 +1020,7 @@ public class Models {
     }
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // 'String f' is unused upstream as well
-    private Object[] _reqForTemplate(JSONObject m, ArrayList<String> flds, JSONObject t) {
+    private Object[] _reqForTemplate(Model m, ArrayList<String> flds, JSONObject t) {
         int nbFields = flds.size();
         String[] a = new String[nbFields];
         String[] b = new String[nbFields];
@@ -1064,7 +1062,7 @@ public class Models {
 
 
     /** Given a joined field string, return available template ordinals */
-    public ArrayList<Integer> availOrds(JSONObject m, String[] sfld) {
+    public ArrayList<Integer> availOrds(Model m, String[] sfld) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
             return _availClozeOrds(m, sfld);
         }
@@ -1120,12 +1118,12 @@ public class Models {
     }
 
 
-    public ArrayList<Integer> _availClozeOrds(JSONObject m, String[] sflds) {
+    public ArrayList<Integer> _availClozeOrds(Model m, String[] sflds) {
         return _availClozeOrds(m, sflds, true);
     }
 
 
-    public ArrayList<Integer> _availClozeOrds(JSONObject m, String[] sflds, boolean allowEmpty) {
+    public ArrayList<Integer> _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
         Set<Integer> ords = new HashSet<>();
         List<String> matches = new ArrayList<>();
@@ -1183,7 +1181,7 @@ public class Models {
 
     public HashMap<Long, HashMap<Integer, String>> getTemplateNames() {
         HashMap<Long, HashMap<Integer, String>> result = new HashMap<>();
-        for (JSONObject m : mModels.values()) {
+        for (Model m : mModels.values()) {
             JSONArray templates;
             templates = m.getJSONArray("tmpls");
             HashMap<Integer, String> names = new HashMap<>();
@@ -1213,13 +1211,13 @@ public class Models {
     }
 
 
-    public HashMap<Long, JSONObject> getModels() {
+    public HashMap<Long, Model> getModels() {
         return mModels;
     }
 
     /** Validate model entries. */
 	public boolean validateModel() {
-        for (Entry<Long, JSONObject> longJSONObjectEntry : mModels.entrySet()) {
+        for (Entry<Long, Model> longJSONObjectEntry : mModels.entrySet()) {
             if (!validateBrackets(longJSONObjectEntry.getValue())) {
                 return false;
             }
@@ -1257,4 +1255,8 @@ public class Models {
 		}
 		return (count == 0);
 	}
+
+	public static boolean isCloze(JSONObject model) {
+	    return model.getInt("type") == Consts.MODEL_CLOZE;
+    }
 }

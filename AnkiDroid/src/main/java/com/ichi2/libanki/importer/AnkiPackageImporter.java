@@ -85,8 +85,13 @@ public class AnkiPackageImporter extends Anki2Importer {
                     mLog.add(getRes().getString(R.string.import_log_insufficient_space, uncompressedSize, availableSpace));
                     return;
                 }
-
-                Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{colname, "media"}, null);
+                // The filename that we extract should be collection.anki2
+                // Importing collection.anki21 fails due to some media regexes expecting collection.anki2.
+                // We follow how Anki does it and fix the problem here.
+                HashMap<String, String> mediaToFileNameMap = new HashMap<>();
+                mediaToFileNameMap.put(colname, CollectionHelper.COLLECTION_FILENAME);
+                Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{colname, "media"}, mediaToFileNameMap);
+                colname = CollectionHelper.COLLECTION_FILENAME;
             } catch (IOException e) {
                 Timber.e(e, "Failed to unzip apkg.");
                 AnkiDroidApp.sendExceptionReport(e, "AnkiPackageImporter::run() - unzip");
@@ -118,8 +123,7 @@ public class AnkiPackageImporter extends Anki2Importer {
             File dir = new File(dirPath);
             // We need the opposite mapping in AnkiDroid since our extraction method requires it.
             Map<String, String> numToName = new HashMap<>();
-            try {
-                JsonReader jr = new JsonReader(new FileReader(mediaMapFile));
+            try (JsonReader jr = new JsonReader(new FileReader(mediaMapFile))) {
                 jr.beginObject();
                 String name; // v in anki
                 String num; // k in anki
@@ -135,7 +139,6 @@ public class AnkiPackageImporter extends Anki2Importer {
                     numToName.put(num, name);
                 }
                 jr.endObject();
-                jr.close();
             } catch (FileNotFoundException e) {
                 Timber.e("Apkg did not contain a media dict. No media will be imported.");
             } catch (IOException e) {

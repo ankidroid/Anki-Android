@@ -25,11 +25,14 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -363,7 +366,7 @@ public class Syncer {
                 result.put("client", "graves had usn = -1");
                 return result;
             }
-            for (JSONObject g : mCol.getDecks().all()) {
+            for (Deck g : mCol.getDecks().all()) {
                 if (g.getInt("usn") == -1) {
                     Timber.e("Sync - SanityCheck: unsynced deck: " + g.getString("name"));
                     result.put("client", "deck had usn = -1");
@@ -610,7 +613,7 @@ public class Syncer {
                             "SELECT oid, type FROM graves WHERE usn"
                                     + (mCol.getServer() ? (" >= " + mMinUsn) : (" = -1")), null);
             while (cur.moveToNext()) {
-                int type = cur.getInt(1);
+                @Consts.REM_TYPE int type = cur.getInt(1);
                 switch (type) {
                     case Consts.REM_CARD:
                         cards.put(cur.getLong(0));
@@ -654,9 +657,9 @@ public class Syncer {
         boolean wasServer = mCol.getServer();
         mCol.setServer(true);
         // notes first, so we don't end up with duplicate graves
-        mCol._remNotes(Utils.jsonArrayToLongArray(graves.getJSONArray("notes")));
+        mCol._remNotes(Utils.jsonArrayToLongList(graves.getJSONArray("notes")));
         // then cards
-        mCol.remCards(Utils.jsonArrayToLongArray(graves.getJSONArray("cards")), false);
+        mCol.remCards(Utils.jsonArrayToLongList(graves.getJSONArray("cards")), false);
         // and decks
         JSONArray decks = graves.getJSONArray("decks");
         for (int i = 0; i < decks.length(); i++) {
@@ -693,8 +696,8 @@ public class Syncer {
 
     private void mergeModels(JSONArray rchg) throws UnexpectedSchemaChange {
         for (int i = 0; i < rchg.length(); i++) {
-            JSONObject r = rchg.getJSONObject(i);
-            JSONObject l = mCol.getModels().get(r.getLong("id"));
+            Model r = new Model(rchg.getJSONObject(i));
+            Model l = mCol.getModels().get(r.getLong("id"));
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
                 // This is a hack to detect when the note type has been altered
@@ -722,13 +725,13 @@ public class Syncer {
         JSONArray result = new JSONArray();
         if (mCol.getServer()) {
             JSONArray decks = new JSONArray();
-            for (JSONObject g : mCol.getDecks().all()) {
+            for (Deck g : mCol.getDecks().all()) {
                 if (g.getInt("usn") >= mMinUsn) {
                     decks.put(g);
                 }
             }
             JSONArray dconfs = new JSONArray();
-            for (JSONObject g : mCol.getDecks().allConf()) {
+            for (DeckConfig g : mCol.getDecks().allConf()) {
                 if (g.getInt("usn") >= mMinUsn) {
                     dconfs.put(g);
                 }
@@ -737,14 +740,14 @@ public class Syncer {
             result.put(dconfs);
         } else {
             JSONArray decks = new JSONArray();
-            for (JSONObject g : mCol.getDecks().all()) {
+            for (Deck g : mCol.getDecks().all()) {
                 if (g.getInt("usn") == -1) {
                     g.put("usn", mMaxUsn);
                     decks.put(g);
                 }
             }
             JSONArray dconfs = new JSONArray();
-            for (JSONObject g : mCol.getDecks().allConf()) {
+            for (DeckConfig g : mCol.getDecks().allConf()) {
                 if (g.getInt("usn") == -1) {
                     g.put("usn", mMaxUsn);
                     dconfs.put(g);
@@ -761,8 +764,8 @@ public class Syncer {
     private void mergeDecks(JSONArray rchg) {
         JSONArray decks = rchg.getJSONArray(0);
         for (int i = 0; i < decks.length(); i++) {
-            JSONObject r = decks.getJSONObject(i);
-            JSONObject l = mCol.getDecks().get(r.getLong("id"), false);
+            Deck r = new Deck(decks.getJSONObject(i));
+            Deck l = mCol.getDecks().get(r.getLong("id"), false);
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
                 mCol.getDecks().update(r);
@@ -770,8 +773,8 @@ public class Syncer {
         }
         JSONArray confs = rchg.getJSONArray(1);
         for (int i = 0; i < confs.length(); i++) {
-            JSONObject r = confs.getJSONObject(i);
-            JSONObject l = mCol.getDecks().getConf(r.getLong("id"));
+            DeckConfig r = new DeckConfig(confs.getJSONObject(i));
+            DeckConfig l = mCol.getDecks().getConf(r.getLong("id"));
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
                 mCol.getDecks().updateConf(r);

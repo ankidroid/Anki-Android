@@ -87,8 +87,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 interface PreferenceContext {
@@ -923,6 +926,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         if (getCol() != null && getCol().getDb()!= null) {
             getCol().save();
         }
+    }
+
+
+    /** This is not fit for purpose (other than testing a single screen) */
+    @NonNull
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public Set<String> getLoadedPreferenceKeys() {
+        return mOriginalSumarries.keySet();
     }
 
     // ----------------------------------------------------------------------------

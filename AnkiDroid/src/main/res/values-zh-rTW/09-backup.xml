@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
+    <string name="backup_deck_no_space_left">備份未儲存。記憶卡上無足夠剩餘空間。請降低備份深度或移除其他檔案。</string>
     <string name="sd_space_warning">記憶卡少於%d mb的空間. 請釋放一些空間以避免資料遺失. </string>
     <string name="backup_delete">刪除備份中\n請稍後...</string>
     <string name="backup_restore">從備份還原</string>
@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">重試開啟</string>
     <string name="backup_error_menu_repair">修復資料庫</string>
     <string name="backup_repair_deck">修復</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">修復資料庫中\n請稍後...</string>
     <string name="backup_error">錯誤</string>
     <string name="backup_invalid_file_error">所選的備份檔案無效</string>

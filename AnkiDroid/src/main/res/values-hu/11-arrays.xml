@@ -50,23 +50,23 @@
         <item>Jobb válasz, mint a javasolt</item>
         <item>Visszavonás</item>
         <item>Megjegyzés szerkesztése</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Jegyzet címkézése</item>
+        <item>Jegyzet megjelölése</item>
+        <item>Kifejezés keresése</item>
+        <item>Kártya halasztása</item>
+        <item>Kártya felfüggesztése</item>
+        <item>Jegyzet törlése</item>
+        <item>Média lejátszása</item>
+        <item>Tanulás befejezése</item>
+        <item>Jegyzet halasztása</item>
+        <item>Jegyzet felfüggesztése</item>
+        <item>Piros jelölő bekapcsolása</item>
+        <item>Narancs Jelölő Bekapcsolása</item>
+        <item>Zöld Jelölő Bekapcsolása</item>
+        <item>Kék Jelölő Bekapcsolása</item>
+        <item>Jelölő Törlése</item>
+        <item>Felfele</item>
+        <item>Lefele</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Kártya felfüggesztése</item>

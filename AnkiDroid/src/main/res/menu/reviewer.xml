@@ -58,9 +58,10 @@
         android:visible="false"
         ankidroid:showAsAction="never"/>
     <item
-        android:id="@+id/action_enable_whiteboard"
+        android:id="@+id/action_toggle_whiteboard"
         android:title="@string/enable_whiteboard"
-        android:icon="@drawable/ic_gesture_white_24dp" />
+        android:icon="@drawable/ic_gesture_white_24dp"
+        ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_mode_edit_white_24dp"

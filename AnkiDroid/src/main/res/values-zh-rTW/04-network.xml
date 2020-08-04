@@ -112,7 +112,7 @@
     <string name="sync_media_downloaded_count">已下載 %d 個媒體檔案</string>
     <string name="sync_sanity_failed">你的收藏狀態在同步以後不一致，AnkiDroid 會強制進行完整同步來修復這問題。請選擇你想要保留哪一邊的檔案。如果你想要稍後進行同步，請選擇取消。</string>
     <string name="sync_media_sanity_failed">媒體檔案同步完成，不過媒體檔數量與伺服器上的不相等。下次將進行完整同步來更正這問題。</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
+    <string name="sync_media_db_error">媒體同步失敗，當前資料庫已損毀。建議執行媒體檢查。</string>
     <string name="sync_media_error">同步媒體資料時出錯</string>
     <string name="sync_media_error_check">同步媒體檔時發生錯誤。建議進行一次媒體檢查。</string>
     <string name="sync_sanity_local">本機</string>
@@ -123,9 +123,13 @@
     <string name="full_sync_confirmation_upgrade">由於先前安裝的 AnkiDroid 版本的程式錯誤，我們建議你強制完整同步一次。</string>
     <string name="sync_error_407_proxy_required">Proxy 要求認證。</string>
     <string name="sync_error_409">一次只能有一個用戶連線到 AnkiWeb，如果上次同步失敗了，請幾分鐘後再嘗試。</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
+    <string name="sync_error_413_collection_size">您的收藏或媒體檔案過大而不能同步。</string>
+    <string name="sync_error_500_unknown">AnkiWeb 出現錯誤。請在數分鐘後重試，如果問題復現，請提交問題回報。</string>
     <string name="sync_error_501_upgrade_required">請更新到最新版的 AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
+    <string name="sync_error_502_maintenance">AnkiWeb 正在維護中。請在數分鐘後重試。</string>
+    <string name="sync_error_504_gateway_timeout">接收到 504 網關逾時錯誤。</string>
+    <!-- Deck Picker Sync Icon -->
+    <string name="sync_menu_title">Sync</string>
+    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

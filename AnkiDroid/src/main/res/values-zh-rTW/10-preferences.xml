@@ -61,7 +61,7 @@
     <string name="pref_cat_advanced_summ">細部設定和實驗性功能</string>
     <string name="pref_cat_performance">效能</string>
     <string name="pref_cat_workarounds">解決方案</string>
-    <string name="pref_cat_plugins">插件</string>
+    <string name="pref_cat_plugins">擴充套件</string>
     <string name="about_title">關於 AnkiDroid</string>
     <string name="about_version">版本： </string>
     <!-- preferences.xml entries-->
@@ -76,12 +76,12 @@
     <string name="reset_languages_question">重設所有的語言？</string>
     <string name="reset_confirmation">重設所有狀態</string>
     <string name="card_zoom">卡片縮放</string>
-    <string name="image_zoom">圖片縮放</string>
+    <string name="image_zoom">圖像縮放</string>
     <string name="button_size">答案按鈕尺寸</string>
     <string name="card_browser_font_size">卡片瀏覽器字型縮放</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path">AnkiDroid路徑</string>
+    <string name="card_browser_hide_media">在卡片瀏覽器展示檔案名</string>
+    <string name="card_browser_hide_media_summary">在卡片瀏覽器問題/答案區域展示媒體檔案名</string>
+    <string name="col_path">AnkiDroid 路徑</string>
     <string name="fullscreen_review">全螢幕模式</string>
     <string name="full_screen_off">關閉</string>
     <string name="full_screen_system">隱藏系統狀態欄</string>
@@ -95,7 +95,7 @@
     <string name="gestures">開啓手勢</string>
     <string name="gestures_summ">替動作設定手勢，像是回答問題和編輯卡片。</string>
     <string name="gestures_allow_links">忽略連結上的點擊手勢</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links_summary">如果一個連結/提示被點擊，手勢將不被處理</string>
     <string name="gestures_swipe_up">向上撥動</string>
     <string name="gestures_swipe_down">向下撥動</string>
     <string name="gestures_swipe_left">向左撥動</string>
@@ -105,17 +105,17 @@
     <string name="gestures_tap_bottom">輕觸底部</string>
     <string name="gestures_tap_left">輕觸左邊</string>
     <string name="gestures_tap_right">輕觸右邊</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_volume_up">提高音量</string>
+    <string name="gestures_volume_down">降低音量</string>
     <string name="more_scrolling_buttons">電子書閱讀器</string>
     <string name="more_scrolling_buttons_summ">也使用漢字/片假名，emoji/kao-moji 按鈕來捲動</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ 選單</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu_summary">啟用全域性‘%s’內容選單</string>
     <string name="double_scrolling_gap">加速捲動</string>
     <string name="double_scrolling_gap_summ">加倍 eReader 的滾動間距</string>
     <string name="swipe_sensitivity">滑動靈敏度</string>
-    <string name="tts">念出文字</string>
-    <string name="tts_summ">如果沒有內含音效檔，則大聲讀出問題和答案</string>
+    <string name="tts">文字轉語音</string>
+    <string name="tts_summ">如果沒有內含音訊檔案，則讀出問題和答案</string>
     <string name="sync_fetch_missing_media">同步時取得媒體檔案</string>
     <string name="sync_fetch_missing_media_summ">同步時自動取得缺少的媒體檔案</string>
     <string name="sync_account">AnkiWeb 帳號</string>
@@ -145,16 +145,16 @@
     <string name="select_locale_title">選擇語言</string>
     <string name="safe_display">安全顯示模式</string>
     <string name="safe_display_summ">關閉所有動畫且使用較安全的方法來繪製卡片。電子墨水裝置可能會需要這個方法。</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">禁用單域編輯模式</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">在橫向模式中允許‘克漏字測驗’選單。</string>
     <string name="vertical_centering">置中</string>
     <string name="vertical_centering_summ">垂直置中卡片內容</string>
     <string name="pref_backup_max">最大備份數量</string>
     <string name="show_estimates">顯示按鈕的時間</string>
     <string name="show_estimates_summ">在答案按鈕上顯示下一次複習的時間</string>
     <string name="show_top_bar">顯示頂部列</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar_summ">顯示卡片計數，標記和頂部列標識</string>
     <string name="show_progress">顯示剩餘數量</string>
     <string name="show_progress_summ">顯示剩餘卡片數量</string>
     <string name="show_eta">顯示預計完成時間</string>
@@ -168,10 +168,10 @@
     <string name="day_offset">明天的開始時間</string>
     <string name="day_offset_summ">午夜過後 XXX 小時</string>
     <string name="sched_ver">實驗性 V2 排程器</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_ver_summ">啟用實驗性排程器。強制改變下次同步的方向</string>
     <string name="sched_ver_toggle_title">確認</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver_2to1">這將重設學習中的所有卡片，清除已過濾牌組，並改變排程器版本。繼續嗎？</string>
+    <string name="sched_ver_1to2">實驗性排程器可能造成不正確的排程。請確認您已預先閱讀文檔。繼續嗎？</string>
     <string name="pref_keep_screen_on">保持螢幕開啓</string>
     <string name="pref_keep_screen_on_summ">關閉螢幕逾時</string>
     <string name="convert_fen_text">支援國際象棋記譜法</string>
@@ -179,15 +179,15 @@
     <string name="enable_api_title">開啓 AnkiDroid API</string>
     <string name="enable_api_summary">讓其他應用程式不需經過你同意，即可連結到 AnkiDroid 且讀寫檔案</string>
     <string name="custom_buttons">頂欄按鈕</string>
-    <string name="custom_buttons_summary">自定義頂欄按鈕</string>
+    <string name="custom_buttons_summary">自訂頂部列按鈕</string>
     <string name="custom_buttons_setting_always_show">總是顯示</string>
     <string name="custom_buttons_setting_if_room">有空間時顯示</string>
     <string name="custom_buttons_setting_menu_only">僅限菜單</string>
     <string name="reset_custom_buttons">重置為預設</string>
     <string name="thirdparty_apps_title">第三方 API 應用程式</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="thirdparty_apps_summary">查看一系列使用 AnkiDroid API 的應用程式，如字典，實用工具。</string>
+    <string name="html_javascript_debugging">HTML / Javascript 偵錯</string>
+    <string name="html_javascript_debugging_summ">啟用控制 WebView 連線，並儲存卡片 HTML 到 AnkiDroid 資料夾</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">高級統計</string>
     <string name="enable_advanced_statistics_title">啟用高級統計</string>
@@ -196,18 +196,18 @@
     <string name="advanced_forecast_stats_compute_precision_title">計算精度</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title">模擬的迭代次數</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title">自定義同步服務器</string>
-    <string name="custom_sync_server_enable_title">使用自定義同步服務器</string>
-    <string name="custom_sync_server_enable_summary">如果你不想使用專有的 AnkiWeb 服務，您可以指定替代的服務器</string>
+    <string name="custom_sync_server_title">自訂同步伺服器</string>
+    <string name="custom_sync_server_enable_title">使用自訂同步伺服器</string>
+    <string name="custom_sync_server_enable_summary">如果你不想使用專有的 AnkiWeb 服務，您可以指定替代的伺服器</string>
     <string name="custom_sync_server_base_url_title">同步地址</string>
     <string name="custom_sync_server_base_url_invalid">同步地址無效</string>
     <string name="custom_sync_server_media_url_title">媒體檔案同步地址</string>
     <string name="custom_sync_server_media_url_invalid">媒體同步地址無效</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
+    <string name="deck_conf_group_summ">改變牌組群組選項將影響多個牌組。如果你希望僅改變當前牌組，請先為群組新增選項</string>
     <string name="studyoptions_limit_select_tags">選擇標籤</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description">Deck description (affects current deck only)</string>
+    <string name="deck_conf_deck_description">牌組描述(僅影響當前牌組)</string>
     <string name="deck_conf_group">設定群組</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="other">%1$s\n%2$d 個牌組使用這個群組</item>
@@ -230,7 +230,7 @@
     <string name="deck_conf_rev_bury">暫時隱藏相關的複習</string>
     <string name="deck_conf_rev_bury_summ">相關的複習將被暫時隱藏到隔天</string>
     <string name="deck_conf_use_general_timeout_settings">使用一般設定</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">使用通用‘自動展示答案’設定而不是使用此群組的設定。</string>
     <string name="deck_conf_easy_bonus">簡單卡片的間隔倍率</string>
     <string name="deck_conf_ivl_fct">間隔調節器</string>
     <string name="deck_conf_max_ivl">最長間隔為</string>
@@ -242,7 +242,7 @@
     <string name="deck_conf_max_time">最大的回答時間</string>
     <string name="deck_conf_seconds">XXX 秒</string>
     <string name="deck_conf_timer">顯示答案計時器</string>
-    <string name="deck_conf_autoplay">自動播放音效</string>
+    <string name="deck_conf_autoplay">自動播放音訊</string>
     <string name="deck_conf_replayq">重播問題</string>
     <string name="deck_conf_replayq_summ">當答案出現時，重播問題與答案的聲音檔</string>
     <string name="deck_conf_manage">管理群組</string>
@@ -270,12 +270,12 @@
     <string name="deck_conf_cram_order">依條件選擇卡片</string>
     <string name="deck_conf_cram_reschedule">重新排程</string>
     <string name="deck_conf_cram_reschedule_summ">依據我在本牌組的回答狀況來重新排程卡片</string>
-    <string name="deck_conf_cram_steps">自定義步伐（以分鐘計）</string>
+    <string name="deck_conf_cram_steps">自訂步伐（以分鐘計）</string>
     <string name="deck_conf_cram_steps_summ">設定自訂步數</string>
-    <string name="deck_conf_reminders_enabled">Enable reminder notifications for decks in this deck group</string>
+    <string name="deck_conf_reminders_enabled">為此牌組群組的牌組啟用提醒通知</string>
     <string name="deck_conf_reminders_time">提醒時間</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">幫助 AnkiDroid 做得更好！</string>
-    <string name="analytics_title">分享特性使用方式</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="analytics_title">分享功能使用方式</string>
+    <string name="analytics_summ">你可以通過幫助開發團隊看看人們在用什麼功能，來為 AnkiDroid 做出貢獻</string>
 </resources>

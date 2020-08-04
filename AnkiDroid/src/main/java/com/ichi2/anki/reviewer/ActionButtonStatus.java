@@ -48,7 +48,7 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_undo, "customButtonUndo", SHOW_AS_ACTION_ALWAYS);
         setupButton(preferences, R.id.action_schedule, "customButtonScheduleCard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_flag, "customButtonFlag", SHOW_AS_ACTION_ALWAYS);
-        setupButton(preferences, R.id.action_tag, "customButtonTag", SHOW_AS_ACTION_NEVER);
+        setupButton(preferences, R.id.action_tag, "customButtonTags", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_edit, "customButtonEditCard", SHOW_AS_ACTION_IF_ROOM);
         setupButton(preferences, R.id.action_add_note_reviewer, "customButtonAddCard", MENU_DISABLED);
         setupButton(preferences, R.id.action_replay, "customButtonReplay", SHOW_AS_ACTION_IF_ROOM);
@@ -61,6 +61,7 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_mark_card, "customButtonMarkCard", SHOW_AS_ACTION_IF_ROOM);
         setupButton(preferences, R.id.action_delete, "customButtonDelete", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_toggle_mic_tool_bar, "customButtonToggleMicToolBar", SHOW_AS_ACTION_NEVER);
+        setupButton(preferences, R.id.action_toggle_whiteboard, "customButtonEnableWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_save_whiteboard, "customButtonSaveWhiteboard", SHOW_AS_ACTION_NEVER);
         setupButton(preferences, R.id.action_change_whiteboard_pen_color, "customButtonWhiteboardPenColor", SHOW_AS_ACTION_IF_ROOM);
     }
@@ -113,5 +114,13 @@ public class ActionButtonStatus {
 
     public boolean selectTtsIsDisabled() {
         return mCustomButtons.get(R.id.action_select_tts) == MENU_DISABLED;
+    }
+
+    public boolean saveWhiteboardIsDisabled() {
+        return mCustomButtons.get(R.id.action_save_whiteboard) == MENU_DISABLED;
+    }
+
+    public boolean whiteboardPenColorIsDisabled() {
+        return mCustomButtons.get(R.id.action_change_whiteboard_pen_color) == MENU_DISABLED;
     }
 }

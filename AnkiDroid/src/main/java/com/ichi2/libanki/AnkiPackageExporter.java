@@ -22,7 +22,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ImportExportException;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -65,7 +64,7 @@ class Exporter {
     public Long[] cardIds() {
         Long[] cids;
         if (mDid == null) {
-            cids = Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards", 0));
+            cids = Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards"));
         } else {
             cids = mCol.getDecks().cids(mDid, true);
         }
@@ -120,8 +119,8 @@ class AnkiExporter extends Exporter {
         Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
                 .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
-        Set<Long> nids = new HashSet<>(mSrc.getDb().queryColumn(Long.class,
-                "select nid from cards where id in " + Utils.ids2str(cids), 0));
+        Set<Long> nids = new HashSet<>(mSrc.getDb().queryLongList(
+                "select nid from cards where id in " + Utils.ids2str(cids)));
         // notes
         Timber.d("Copy notes");
         ArrayList<Long> uniqueNids = new ArrayList<>(nids);
@@ -130,8 +129,8 @@ class AnkiExporter extends Exporter {
         // remove system tags if not exporting scheduling info
         if (!mIncludeSched) {
             Timber.d("Stripping system tags from list");
-            ArrayList<String> srcTags = mSrc.getDb().queryColumn(String.class,
-                    "select tags from notes where id in " + strnids, 0);
+            ArrayList<String> srcTags = mSrc.getDb().queryStringList(
+                    "select tags from notes where id in " + strnids);
             ArrayList<Object[]> args = new ArrayList<>(srcTags.size());
             Object [] arg = new Object[2];
             for (int row = 0; row < srcTags.size(); row++) {
@@ -143,8 +142,8 @@ class AnkiExporter extends Exporter {
         }
         // models used by the notes
         Timber.d("Finding models used by notes");
-        ArrayList<Long> mids = mSrc.getDb().queryColumn(Long.class,
-                "select distinct mid from DST_DB.notes where id in " + strnids, 0);
+        ArrayList<Long> mids = mSrc.getDb().queryLongList(
+                "select distinct mid from DST_DB.notes where id in " + strnids);
         // card history and revlog
         if (mIncludeSched) {
             Timber.d("Copy history and revlog");
@@ -164,7 +163,7 @@ class AnkiExporter extends Exporter {
         }
         // models - start with zero
         Timber.d("Copy models");
-        for (JSONObject m : mSrc.getModels().all()) {
+        for (Model m : mSrc.getModels().all()) {
             if (mids.contains(m.getLong("id"))) {
                 dst.getModels().update(m);
             }
@@ -179,7 +178,7 @@ class AnkiExporter extends Exporter {
             }
         }
         JSONObject dconfs = new JSONObject();
-        for (JSONObject d : mSrc.getDecks().all()) {
+        for (Deck d : mSrc.getDecks().all()) {
             if ("1".equals(d.getString("id"))) {
                 continue;
             }
@@ -192,7 +191,7 @@ class AnkiExporter extends Exporter {
                 }
             }
 
-            JSONObject destinationDeck = d.deepClone();
+            Deck destinationDeck = d.deepClone();
             if (!mIncludeSched) {
                 // scheduling not included, so reset deck settings to default
                 destinationDeck.put("conf", 1);
@@ -201,7 +200,7 @@ class AnkiExporter extends Exporter {
         }
         // copy used deck confs
         Timber.d("Copy deck options");
-        for (JSONObject dc : mSrc.getDecks().allConf()) {
+        for (DeckConfig dc : mSrc.getDecks().allConf()) {
             if (dconfs.has(dc.getString("id"))) {
                 dst.getDecks().updateConf(dc);
             }
@@ -211,10 +210,9 @@ class AnkiExporter extends Exporter {
         JSONObject media = new JSONObject();
         mMediaDir = mSrc.getMedia().dir();
         if (mIncludeMedia) {
-            ArrayList<Long> mid = mSrc.getDb().queryColumn(Long.class, "select mid from notes where id in " + strnids,
-                    0);
-            ArrayList<String> flds = mSrc.getDb().queryColumn(String.class,
-                    "select flds from notes where id in " + strnids, 0);
+            ArrayList<Long> mid = mSrc.getDb().queryLongList("select mid from notes where id in " + strnids);
+            ArrayList<String> flds = mSrc.getDb().queryStringList(
+                    "select flds from notes where id in " + strnids);
             for (int idx = 0; idx < mid.size(); idx++) {
                 for (String file : mSrc.getMedia().filesInStr(mid.get(idx), flds.get(idx))) {
                     // skip files in subdirs
@@ -402,10 +400,6 @@ public final class AnkiPackageExporter extends AnkiExporter {
     private JSONObject exportFiltered(ZipFile z, String path, Context context) throws IOException, JSONException, ImportExportException {
         // export into the anki2 file
         String colfile = path.replace(".apkg", ".anki2");
-
-        if (_v2sched) {
-            throw new ImportExportException(context.getString(R.string.export_v2_forbidden));
-        }
 
         super.exportInto(colfile, context);
         z.write(colfile, CollectionHelper.COLLECTION_FILENAME);

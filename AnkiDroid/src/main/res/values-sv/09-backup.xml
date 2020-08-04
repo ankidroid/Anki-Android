@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Prova att öppna igen</string>
     <string name="backup_error_menu_repair">Reparera databas</string>
     <string name="backup_repair_deck">Reparera</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Reparerar databas.\nVar vänlig vänta...</string>
     <string name="backup_error">Fel</string>
     <string name="backup_invalid_file_error">Den valda återställningsfilen var ogiltig</string>

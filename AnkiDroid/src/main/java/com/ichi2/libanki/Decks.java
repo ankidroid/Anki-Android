@@ -32,23 +32,23 @@ import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.SyncStatus;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 // fixmes:
@@ -137,11 +137,74 @@ public class Decks {
 
 
     private Collection mCol;
-    private HashMap<Long, JSONObject> mDecks;
-    private HashMap<Long, JSONObject> mDconf;
-    private HashMap<String, JSONObject> mNameMap;
+    private HashMap<Long, Deck> mDecks;
+    private HashMap<Long, DeckConfig> mDconf;
+    // Never access mNameMap directly. Uses byName
+    private NameMap mNameMap;
     private boolean mChanged;
 
+    private static class NameMap {
+        private final HashMap<String, Deck> mNameMap;
+
+        private NameMap() {
+            mNameMap = new HashMap<>();
+        }
+
+        public static NameMap constructor(java.util.Collection<Deck> decks) {
+            NameMap map = new NameMap();
+            for (Deck deck: decks) {
+                map.add(deck);
+            }
+            return map;
+        }
+
+        public synchronized Deck get(String name) {
+            String normalized = normalizeName(name);
+            Deck deck = mNameMap.get(normalized);
+            if (deck == null) {
+                return null;
+            }
+            String foundName = deck.getString("name");
+            if (!equalName(name, foundName)) {
+                AnkiDroidApp.sendExceptionReport("We looked for deck \"" + name + "\" and instead got deck \"" + foundName + "\".", "Decks - byName");
+            }
+            return deck;
+        }
+
+        public synchronized void add(Deck g) {
+            String name = g.getString("name");
+            mNameMap.put(name, g);
+            // Normalized name is also added because it's required to use it in by name.
+            // Non normalized is kept for Parent
+            mNameMap.put(normalizeName(name), g);
+        }
+
+
+        /**
+           Remove name from nameMap if it is equal to expectedDeck.
+
+           It is possible that another deck has been given name `name`,
+           in which case we don't want to remove it from nameMap.
+
+           E.g. if A is renamed to A::B and A::B already existed and get
+           renamed to A::B::B, then we don't want to remove A::B from
+           nameMap when A::B is renamed to A::B::B, since A::B is
+           potentially the correct value.
+        */
+        public synchronized void remove(String name, JSONObject expectedDeck) {
+            String[] names = new String[] {name, normalizeName(name)};
+            for (String name_: names) {
+                JSONObject currentDeck = mNameMap.get(name_);
+                if (currentDeck != null && currentDeck.getLong("id") == expectedDeck.getLong("id")) {
+                    /* Remove name from mapping only if it still maps to
+                     * expectedDeck. I.e. no other deck had been given this
+                     * name yet. */
+                    mNameMap.remove(name_);
+                }
+            }
+        }
+
+    }
 
     /**
      * Registry save/load
@@ -156,21 +219,20 @@ public class Decks {
     public void load(String decks, String dconf) {
         mDecks = new HashMap<>();
         mDconf = new HashMap<>();
-        mNameMap = new HashMap<>();
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
         for (int i = 0; i < ids.length(); i++) {
             String id = ids.getString(i);
-            JSONObject o = decksarray.getJSONObject(id);
+            Deck o = new Deck(decksarray.getJSONObject(id));
             long longId = Long.parseLong(id);
             mDecks.put(longId, o);
         }
-        resetNameMap();
+        mNameMap = NameMap.constructor(mDecks.values());
         JSONObject confarray = new JSONObject(dconf);
         ids = confarray.names();
         for (int i = 0; ids != null && i < ids.length(); i++) {
             String id = ids.getString(i);
-            mDconf.put(Long.parseLong(id), confarray.getJSONObject(id));
+            mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id)));
         }
         mChanged = false;
     }
@@ -197,12 +259,12 @@ public class Decks {
         ContentValues values = new ContentValues();
         if (mChanged) {
             JSONObject decksarray = new JSONObject();
-            for (Map.Entry<Long, JSONObject> d : mDecks.entrySet()) {
+            for (Map.Entry<Long, Deck> d : mDecks.entrySet()) {
                 decksarray.put(Long.toString(d.getKey()), d.getValue());
             }
             values.put("decks", Utils.jsonToString(decksarray));
             JSONObject confarray = new JSONObject();
-            for (Map.Entry<Long, JSONObject> d : mDconf.entrySet()) {
+            for (Map.Entry<Long, DeckConfig> d : mDconf.entrySet()) {
                 confarray.put(Long.toString(d.getKey()), d.getValue());
             }
             values.put("dconf", Utils.jsonToString(confarray));
@@ -239,7 +301,7 @@ public class Decks {
         name = strip(name);
         name = name.replace("\"", "");
         name = Normalizer.normalize(name, Normalizer.Form.NFC);
-        JSONObject deck = byName(name);
+        Deck deck = byName(name);
         if (deck != null) {
             return deck.getLong("id");
         }
@@ -250,9 +312,8 @@ public class Decks {
             // not top level; ensure all parents exist
             name = _ensureParents(name);
         }
-        JSONObject g;
         long id;
-        g = new JSONObject(type);
+        Deck g = new Deck(type);
         g.put("name", name);
         while (true) {
             id = Utils.intTime(1000);
@@ -264,14 +325,14 @@ public class Decks {
         mDecks.put(id, g);
         save(g);
         maybeAddToActive();
-        nameMapAdd(name, g);
+        mNameMap.add(g);
         //runHook("newDeck"); // TODO
         return id;
     }
 
 
     public void rem(long did) {
-        rem(did, false);
+        rem(did, true);
     }
 
 
@@ -320,14 +381,13 @@ public class Decks {
             // delete cards too?
             if (cardsToo) {
                 // don't use cids(), as we want cards in cram decks too
-                ArrayList<Long> cids = mCol.getDb().queryColumn(Long.class,
-                                                                "SELECT id FROM cards WHERE did = ? OR odid = ?", 0, new Object[] {did, did});
-                mCol.remCards(Utils.arrayList2array(cids));
+                ArrayList<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? OR odid = ?", did, did);
+                mCol.remCards(cids);
             }
         }
         // delete the deck and add a grave
         mDecks.remove(did);
-        nameMapRemove(deck.getString("name"), deck);
+        mNameMap.remove(deck.getString("name"), deck);
         // ensure we have an active deck
         if (active().contains(did)) {
             select(mDecks.keySet().iterator().next());
@@ -347,11 +407,11 @@ public class Decks {
     public ArrayList<String> allNames(boolean dyn) {
         ArrayList<String> list = new ArrayList<>();
         if (dyn) {
-            for (JSONObject x : mDecks.values()) {
+            for (Deck x : mDecks.values()) {
                 list.add(x.getString("name"));
             }
         } else {
-            for (JSONObject x : mDecks.values()) {
+            for (Deck x : mDecks.values()) {
                 if (x.getInt("dyn") == 0) {
                     list.add(x.getString("name"));
                 }
@@ -364,7 +424,7 @@ public class Decks {
     /**
      * A list of all decks.
      */
-    public ArrayList<JSONObject> all() {
+    public ArrayList<Deck> all() {
         return new ArrayList<>(mDecks.values());
     }
 
@@ -376,8 +436,8 @@ public class Decks {
      * This method does not exist in the original python module but *must* be used for any user
      * interface components that display a deck list to ensure the ordering is consistent.
      */
-    public ArrayList<JSONObject> allSorted() {
-        ArrayList<JSONObject> decks = all();
+    public ArrayList<Deck> allSorted() {
+        ArrayList<Deck> decks = all();
         Collections.sort(decks, DeckComparator.instance);
         return decks;
     }
@@ -389,14 +449,14 @@ public class Decks {
 
 
     public void collpase(long did) {
-        JSONObject deck = get(did);
+        Deck deck = get(did);
         deck.put("collapsed", !deck.getBoolean("collapsed"));
         save(deck);
     }
 
 
     public void collapseBrowser(long did) {
-        JSONObject deck = get(did);
+        Deck deck = get(did);
         boolean collapsed = deck.optBoolean("browserCollapsed", false);
         deck.put("browserCollapsed", !collapsed);
         save(deck);
@@ -412,12 +472,13 @@ public class Decks {
 
     /** Obtains the deck from the DeckID, or default if the deck was not found */
     @CheckResult
-    public @NonNull JSONObject get(long did) {
+    public @NonNull Deck get(long did) {
         return get(did, true);
     }
 
+
     @CheckResult
-    public JSONObject get(long did, boolean _default) {
+    public Deck get(long did, boolean _default) {
         if (mDecks.containsKey(did)) {
             return mDecks.get(did);
         } else if (_default) {
@@ -432,90 +493,36 @@ public class Decks {
      * Get deck with NAME, ignoring case.
      */
     @CheckResult
-    public JSONObject byName(String name) {
-        String normalized = normalizeName(name);
-        JSONObject deck = mNameMap.get(normalized);
-        if (deck == null) {
-            return null;
-        }
-        String foundName = deck.getString("name");
-        if (!equalName(name, foundName)) {
-            AnkiDroidApp.sendExceptionReport("We looked for deck \"" + name + "\" and instead got deck \"" + foundName + "\".", "Decks - byName");
-        }
-        return deck;
+    public @Nullable Deck byName(String name) {
+        return mNameMap.get(name);
     }
 
 
     /**
      * Add or update an existing deck. Used for syncing and merging.
      */
-    public void update(JSONObject g) {
+    public void update(Deck g) {
         long id = g.getLong("id");
         JSONObject oldDeck = get(id, false);
         if (oldDeck != null) {
             // In case where another update got the name
             // `oldName`, it would be a mistake to remove it from nameMap
-            nameMapRemove(oldDeck.getString("name"), oldDeck);
+            mNameMap.remove(oldDeck.getString("name"), oldDeck);
         }
-        nameMapAdd(g.getString("name"), g);
+        mNameMap.add(g);
         mDecks.put(g.getLong("id"), g);
         maybeAddToActive();
         // mark registry changed, but don't bump mod time
         save();
     }
 
-    /** Recompute the name map. Most operation deal with updating the name map directly,
-     * however, after a failed safety check, doing the whole computation is easier.*/
-    private void resetNameMap() {
-        HashMap<String, JSONObject> nameMap = new HashMap<>(mDecks.size());
-        for (JSONObject deck: mDecks.values()) {
-            nameMapAdd(deck.getString("name"), deck, nameMap);
-        }
-        mNameMap = nameMap;
-    }
-
-    private void nameMapAdd(String name, JSONObject g) {
-        nameMapAdd(name, g, mNameMap);
-    }
-
-    private void nameMapAdd(String name, JSONObject g, Map<String, JSONObject> nameMap) {
-        nameMap.put(name, g);
-        // Normalized name is also added because it's required to use it in by name.
-        // Non normalized is kept for Parent
-        nameMap.put(normalizeName(name), g);
-    }
-
-    /**
-        Remove name from nameMap if it is equal to expectedDeck.
-
-        It is possible that another deck has been given name `name`,
-        in which case we don't want to remove it from nameMap.
-
-        E.g. if A is renamed to A::B and A::B already existed and get
-        renamed to A::B::B, then we don't want to remove A::B from
-        nameMap when A::B is renamed to A::B::B, since A::B is
-        potentially the correct value.
-     */
-    private void nameMapRemove(String name, JSONObject expectedDeck) {
-        String[] names = new String[] {name, normalizeName(name)};
-        for (String name_: names) {
-            JSONObject currentDeck = byName(name_);
-            if (currentDeck != null && currentDeck.getLong("id") == expectedDeck.getLong("id")) {
-                /* Remove name from mapping only if it still maps to
-                 * expectedDeck. I.e. no other deck had been given this
-                 * name yet. */
-                mNameMap.remove(name_);
-            }
-        }
-    }
-
     /**
      * Rename deck prefix to NAME if not exists. Updates children.
      */
-    public void rename(JSONObject g, String newName) throws DeckRenameException {
+    public void rename(Deck g, String newName) throws DeckRenameException {
         newName = strip(newName);
         // make sure target node doesn't already exist
-        JSONObject deckWithThisName = byName(newName);
+        Deck deckWithThisName = byName(newName);
         if (deckWithThisName != null) {
             if (deckWithThisName.getLong("id") != g.getLong("id")) {
                 throw new DeckRenameException(DeckRenameException.ALREADY_EXISTS);
@@ -538,23 +545,23 @@ public class Decks {
         }
         // rename children
         String oldName = g.getString("name");
-        for (JSONObject grp : all()) {
+        for (Deck grp : all()) {
             String grpOldName = grp.getString("name");
             if (grpOldName.startsWith(oldName + "::")) {
                 String grpNewName = grpOldName.replaceFirst(Pattern.quote(oldName + "::"), newName + "::");
                 // In Java, String.replaceFirst consumes a regex so we need to quote the pattern to be safe
-                nameMapRemove(grpOldName, grp);
+                mNameMap.remove(grpOldName, grp);
                 grp.put("name", grpNewName);
-                nameMapAdd(grpNewName, grp);
+                mNameMap.add(grp);
                 save(grp);
             }
         }
-        nameMapRemove(oldName, g);
+        mNameMap.remove(oldName, g);
         // adjust name
         g.put("name", newName);
         // ensure we have parents again, as we may have renamed parent->child
         newName = _ensureParents(newName);
-        nameMapAdd(newName, g);
+        mNameMap.add(g);
         save(g);
         // renaming may have altered active did order
         maybeAddToActive();
@@ -562,7 +569,7 @@ public class Decks {
 
 
     public void renameForDragAndDrop(Long draggedDeckDid, Long ontoDeckDid) throws DeckRenameException {
-        JSONObject draggedDeck = get(draggedDeckDid);
+        Deck draggedDeck = get(draggedDeckDid);
         String draggedDeckName = draggedDeck.getString("name");
         String ontoDeckName = get(ontoDeckDid).getString("name");
 
@@ -670,30 +677,30 @@ public class Decks {
     /**
      * A list of all deck config.
      */
-    public ArrayList<JSONObject> allConf() {
+    public ArrayList<DeckConfig> allConf() {
         return new ArrayList<>(mDconf.values());
     }
 
 
-    public JSONObject confForDid(long did) {
-        JSONObject deck = get(did, false);
+    public DeckConfig confForDid(long did) {
+        Deck deck = get(did, false);
         assert deck != null;
         if (deck.has("conf")) {
-            JSONObject conf = getConf(deck.getLong("conf"));
+            DeckConfig conf = getConf(deck.getLong("conf"));
             conf.put("dyn", 0);
             return conf;
         }
         // dynamic decks have embedded conf
-        return deck;
+        return new DeckConfig(deck);
     }
 
 
-    public JSONObject getConf(long confId) {
+    public DeckConfig getConf(long confId) {
         return mDconf.get(confId);
     }
 
 
-    public void updateConf(JSONObject g) {
+    public void updateConf(DeckConfig g) {
         mDconf.put(g.getLong("id"), g);
         save();
     }
@@ -708,9 +715,9 @@ public class Decks {
      * Create a new configuration and return id.
      */
     public long confId(String name, String cloneFrom) {
-        JSONObject c;
+        DeckConfig c;
         long id;
-        c = new JSONObject(cloneFrom);
+        c = new DeckConfig(cloneFrom);
         while (true) {
             id = Utils.intTime(1000);
             if (!mDconf.containsKey(id)) {
@@ -733,7 +740,7 @@ public class Decks {
         assert id != 1;
         mCol.modSchema();
         mDconf.remove(id);
-        for (JSONObject g : all()) {
+        for (Deck g : all()) {
             // ignore cram decks
             if (!g.has("conf")) {
                 continue;
@@ -746,15 +753,15 @@ public class Decks {
     }
 
 
-    public void setConf(JSONObject grp, long id) {
+    public void setConf(Deck grp, long id) {
         grp.put("conf", id);
         save(grp);
     }
 
 
-    public List<Long> didsForConf(JSONObject conf) {
+    public List<Long> didsForConf(DeckConfig conf) {
         List<Long> dids = new ArrayList<>();
-        for(JSONObject deck : mDecks.values()) {
+        for(Deck deck : mDecks.values()) {
             if (deck.has("conf") && deck.getLong("conf") == conf.getLong("id")) {
                 dids.add(deck.getLong("id"));
             }
@@ -763,9 +770,9 @@ public class Decks {
     }
 
 
-    public void restoreToDefault(JSONObject conf) {
+    public void restoreToDefault(DeckConfig conf) {
         int oldOrder = conf.getJSONObject("new").getInt("order");
-        JSONObject _new = new JSONObject(defaultConf);
+        DeckConfig _new = new DeckConfig(defaultConf);
         _new.put("id", conf.getLong("id"));
         _new.put("name", conf.getString("name"));
         mDconf.put(conf.getLong("id"), _new);
@@ -789,7 +796,7 @@ public class Decks {
 
 
     public String name(long did, boolean _default) {
-        JSONObject deck = get(did, _default);
+        Deck deck = get(did, _default);
         if (deck != null) {
             return deck.getString("name");
         }
@@ -798,7 +805,7 @@ public class Decks {
 
 
     public String nameOrNone(long did) {
-        JSONObject deck = get(did, false);
+        Deck deck= get(did, false);
         if (deck != null) {
             return deck.getString("name");
         }
@@ -808,13 +815,13 @@ public class Decks {
 
     public void setDeck(long[] cids, long did) {
         mCol.getDb().execute("update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-                new Object[] { did, mCol.usn(), Utils.intTime() });
+                did, mCol.usn(), Utils.intTime());
     }
 
 
     private void maybeAddToActive() {
         // reselect current deck, or default if current has disappeared
-        JSONObject c = current();
+        Deck c = current();
         select(c.getLong("id"));
     }
 
@@ -826,96 +833,103 @@ public class Decks {
 
     public Long[] cids(long did, boolean children) {
         if (!children) {
-            return Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class, "select id from cards where did=?", 0, new Object[] {did}));
+            return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did=?", did));
         }
         List<Long> dids = new ArrayList<>();
         dids.add(did);
         for(Map.Entry<String, Long> entry : children(did).entrySet()) {
             dids.add(entry.getValue());
         }
-        return Utils.list2ObjectArray(mCol.getDb().queryColumn(Long.class,
-                "select id from cards where did in " + Utils.ids2str(Utils.arrayList2array(dids)), 0));
+        return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(Utils.collection2Array(dids))));
     }
 
 
-    private static final Pattern spaceAroundSeparator = Pattern.compile(" *:: *");
-    private static String strip(String deckName) {
-        return spaceAroundSeparator.matcher(deckName.trim()).replaceAll( "::");
-    }
-
-    /** With 2.1.28, anki started strips whitespace of deck name.
-     * This method is here for compatibility while we wait for rust.
-     * It should be executed before other methods, because both "FOO " and "FOO" will be renamed to the same name,
-     * and so this will need to be renamed by _checkDeckTree.*/
-    private void _removeSpaces () {
-        for (JSONObject deck: all()) {
-            String currentName = deck.getString("name");
-            String newName = strip(currentName);
-            if (!currentName.equals(newName)) {
-                deck.put("name", newName);
-                save(deck);
-            }
-        }
+    private static final Pattern spaceAroundSeparator = Pattern.compile("\\s*::\\s*");
+    @VisibleForTesting
+    static String strip(String deckName) {
+        //Ends of components are either the ends of the deck name, or near the ::.
+        //Deal with all spaces around ::
+        deckName = spaceAroundSeparator.matcher(deckName).replaceAll("::");
+        //Deal with spaces at start/end of the deck name.
+        deckName = deckName.trim();
+        return deckName;
     }
 
     private void _recoverOrphans() {
         Long[] dids = allIds();
         boolean mod = mCol.getDb().getMod();
-        mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(dids));
+        SyncStatus.ignoreDatabaseModification(() -> mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(dids)));
         mCol.getDb().setMod(mod);
     }
 
     private void _checkDeckTree() {
-        ArrayList<JSONObject> decks = allSorted();
-        Set<String> names = new HashSet<String>();
-        boolean correction = false;
+        ArrayList<Deck> decks = allSorted();
+        Map<String, Deck> names = new HashMap<>(decks.size());
 
-        for (JSONObject deck: decks) {
-            // ensure no sections are blank
-            if ("".equals(deck.getString("name"))) {
-                Timber.i("Fix deck with empty name");
-                deck.put("name", "blank");
+        for (Deck deck: decks) {
+            String deckName = deck.getString("name");
+
+            /** With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for
+             * compatibility while we wait for rust.  It should be executed before other changes, because both "FOO "
+             * and "FOO" will be renamed to the same name, and so this will need to be renamed again in case of
+             * duplicate.*/
+            String strippedName = strip(deckName);
+            if (!deckName.equals(strippedName)) {
+                mNameMap.remove(deckName, deck);
+                deckName = strippedName;
+                deck.put("name", deckName);
+                mNameMap.add(deck);
                 save(deck);
-                correction = true;
             }
 
-            if (deck.getString("name").indexOf("::::") != -1) {
-                Timber.i("fix deck with missing sections %s", deck.getString("name"));
-                do {
-                    deck.put("name", deck.getString("name").replace("::::", "::blank::"));
-                    // We may need to iterate, in order to replace "::::::" and adding to "blank" in it.
-                } while (deck.getString("name").indexOf("::::") != -1);
+            // ensure no sections are blank
+            if ("".equals(deckName)) {
+                Timber.i("Fix deck with empty name");
+                mNameMap.remove(deckName, deck);
+                deckName = "blank";
+                deck.put("name", "blank");
+                mNameMap.add(deck);
                 save(deck);
-                correction = true;
+            }
+
+            if (deckName.indexOf("::::") != -1) {
+                Timber.i("fix deck with missing sections %s", deck.getString("name"));
+                mNameMap.remove(deckName, deck);
+                do {
+                    deckName = deck.getString("name").replace("::::", "::blank::");
+                    // We may need to iterate, in order to replace "::::::" and adding to "blank" in it.
+                } while (deckName.indexOf("::::") != -1);
+                deck.put("name", deckName);
+                mNameMap.add(deck);
+                save(deck);
             }
 
             // two decks with the same name?
-            if (names.contains(normalizeName(deck.getString("name")))) {
-                Timber.i("fix duplicate deck name %s", deck.getString("name"));
+            Deck homonym = names.get(normalizeName(deckName));
+            if (homonym != null) {
+                Timber.i("fix duplicate deck name %s", deckName);
                 do {
-                    deck.put("name", deck.getString("name") + "+");
-                } while (names.contains(normalizeName(deck.getString("name"))));
+                    deckName += "+";
+                    deck.put("name", deckName);
+                } while (names.containsKey(normalizeName(deckName)));
+                mNameMap.add(deck);
+                mNameMap.add(homonym); // Ensuring both names are correctly in mNameMap
                 save(deck);
-                correction = true;
             }
 
             // immediate parent must exist
-            String immediateParent = parent(deck.getString("name"));
-            if (immediateParent != null && !names.contains(normalizeName(immediateParent))) {
-                Timber.i("fix deck with missing parent %s", deck.getString("name"));
-                _ensureParents(deck.getString("name"));
-                names.add(normalizeName(immediateParent));
-                correction = true;
+            String immediateParent = parent(deckName);
+            if (immediateParent != null && !names.containsKey(normalizeName(immediateParent))) {
+                Timber.i("fix deck with missing parent %s", deckName);
+                Deck parent = byName(immediateParent);
+                _ensureParents(deckName);
+                names.put(normalizeName(immediateParent), parent);
             }
-            names.add(normalizeName(deck.getString("name")));
-        }
-        if (correction) {
-            resetNameMap();
+            names.put(normalizeName(deckName), deck);
         }
     }
 
     public void checkIntegrity() {
-        _removeSpaces();
         _recoverOrphans();
         _checkDeckTree();
     }
@@ -948,7 +962,7 @@ public class Decks {
     }
 
 
-    public JSONObject current() {
+    public Deck current() {
         return get(selected());
     }
 
@@ -983,7 +997,7 @@ public class Decks {
         String name;
         name = get(did).getString("name");
         TreeMap<String, Long> actv = new TreeMap<>();
-        for (JSONObject g : all()) {
+        for (Deck g : all()) {
             if (g.getString("name").startsWith(name + "::")) {
                 actv.put(g.getString("name"), g.getLong("id"));
             }
@@ -1013,18 +1027,18 @@ public class Decks {
         HashMap<Long, HashMap> childMap = new HashMap<>();
 
         // Go through all decks, sorted by name
-        ArrayList<JSONObject> decks = all();
+        ArrayList<Deck> decks = all();
 
         Collections.sort(decks, DeckComparator.instance);
 
-        for (JSONObject deck : decks) {
+        for (Deck deck : decks) {
             HashMap node = new HashMap();
             childMap.put(deck.getLong("id"), node);
 
             List<String> parts = Arrays.asList(path(deck.getString("name")));
             if (parts.size() > 1) {
                 String immediateParent = TextUtils.join("::", parts.subList(0, parts.size() - 1));
-                long pid = mNameMap.get(immediateParent).getLong("id");
+                long pid = byName(immediateParent).getLong("id");
                 childMap.get(pid).put(deck.getLong("id"), node);
             }
         }
@@ -1032,27 +1046,34 @@ public class Decks {
         return childMap;
     }
 
+    /**
+     * @return Names of ancestors of parents of name.
+     */
+    private String[] parentsNames(String name) {
+        String[] parts = path(name);
+        String[] parentsNames = new String[parts.length - 1];
+        // Top level names have no parent, so it returns an empty list.
+        // So the array size is 1 less than the number of parts.
+        String prefix = "";
+        for (int i = 0; i < parts.length - 1; i++) {
+            prefix += parts[i];
+            parentsNames[i] = prefix;
+            prefix += "::";
+        }
+        return parentsNames;
+    }
 
     /**
      * All parents of did.
      */
-    public List<JSONObject> parents(long did) {
+    public List<Deck> parents(long did) {
         // get parent and grandparent names
-        List<String> parents = new ArrayList<>();
-        List<String> parts = Arrays.asList(path(get(did).getString("name")));
-        for (int i = 0; i < parts.size() - 1; i++) {
-            String part = parts.get(i);
-            if (parents.size() == 0) {
-                parents.add(part);
-            } else {
-                parents.add(parents.get(parents.size() - 1) + "::" + part);
-            }
-        }
+        String[] parents = parentsNames(get(did).getString("name"));
         // convert to objects
-        List<JSONObject> oParents = new ArrayList<>();
-        for (int i = 0; i < parents.size(); i++) {
-            String parentName = parents.get(i);
-            JSONObject deck = mNameMap.get(parentName);
+        List<Deck> oParents = new ArrayList<>();
+        for (int i = 0; i < parents.length; i++) {
+            String parentName = parents[i];
+            Deck deck = mNameMap.get(parentName);
             oParents.add(i, deck);
         }
         return oParents;
@@ -1145,7 +1166,7 @@ public class Decks {
     }
 
 
-    public HashMap<Long, JSONObject> getDecks() {
+    public HashMap<Long, Deck> getDecks() {
         return mDecks;
     }
 
@@ -1159,8 +1180,8 @@ public class Decks {
         return validValues.toArray(new Long[0]);
     }
 
-    private JSONObject getDeckOrFail(long deckId) throws NoSuchDeckException {
-        JSONObject deck = get(deckId, false);
+    private Deck getDeckOrFail(long deckId) throws NoSuchDeckException {
+        Deck deck = get(deckId, false);
         if (deck == null) {
             throw new NoSuchDeckException(deckId);
         }
@@ -1176,7 +1197,11 @@ public class Decks {
         getDeckOrFail(deckId).remove("conf");
     }
 
-    public static boolean isDynamic(JSONObject deck) {
+    public static boolean isDynamic(Collection col, long deckId) {
+        return Decks.isDynamic(col.getDecks().get(deckId));
+    }
+
+    public static boolean isDynamic(Deck deck) {
         return deck.getInt("dyn") != 0;
     }
 
@@ -1190,7 +1215,7 @@ public class Decks {
         if (TextUtils.isEmpty(newName)) {
             return null;
         }
-        JSONObject deck = get(did, false);
+        Deck deck = get(did, false);
         if (deck == null) {
             return null;
         }

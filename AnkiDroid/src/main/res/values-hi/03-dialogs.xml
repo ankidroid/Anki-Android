@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">AnkiDroid में कार्ड जोड़ने के लिए सभी नोटपैड श्रेणियों को हटाएँ या एक \"डिफ़ॉल्ट\" नामक पत्ता जोड़ें</string>
     <string name="custom_study_new_total_new">डेक में नए पत्ते: %d</string>
     <string name="custom_study_rev_total_rev">डेक में समीक्षा के लिए बाकी: %d</string>
-    <string name="custom_study_new_extend">आज के समीक्षा कार्ड की सीमा बढ़ाएं</string>
-    <string name="custom_study_rev_extend">आज के समीक्षा कार्ड की सीमा बढ़ाएं</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">पिछले x दिनों में भूल गए कार्ड की समीक्षा करें:</string>
     <string name="custom_study_ahead">X दिनों से आगे की समीक्षा करें:</string>
     <string name="custom_study_random">डेक से यादृच्छिक रूप से एक्स कार्ड का चयन करें:</string>
@@ -189,6 +189,7 @@
     <string name="error_selecting_image">छवि का चयन करने में त्रुटि। कृपया मैनुअल देखें। %s</string>
     <string name="error_deleting_image">चित्र हटाने में त्रुटि</string>
     <string name="failed_to_apply_background_image">पृष्ठभूमि छवि लागू करने में विफल %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -198,4 +199,9 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">An automatic sync may be triggered in %d second</item>
+        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+    </plurals>
 </resources>

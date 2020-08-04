@@ -93,8 +93,8 @@
     <string name="intent_aedict_category">AnkiDroid에 카드를 추가하기 위해 모든 메모장 범주 삭제 또는 \'기본값\'으로 지정하기</string>
     <string name="custom_study_new_total_new">카드 묶음의 새로운 카드: %d</string>
     <string name="custom_study_rev_total_rev">카드 묶음의 예정된 복습: %d</string>
-    <string name="custom_study_new_extend">오늘의 새로운 카드 학습량을 다음과 같이 늘립니다</string>
-    <string name="custom_study_rev_extend">오늘의 복습량을 다음과 같이 늘립니다</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">최근 x일 내에 잊혀진 카드:</string>
     <string name="custom_study_ahead">x일 만큼 미리 복습하기:</string>
     <string name="custom_study_random">카드 묶음으로부터 x개의 카드를 무작위로 고르기:</string>
@@ -183,6 +183,7 @@
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
     <string name="error_deleting_image">Error deleting image</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
+    <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -192,4 +193,8 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+    </plurals>
 </resources>

@@ -32,6 +32,7 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Model;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.widget.WidgetStatus;
 
@@ -41,6 +42,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import com.ichi2.async.TaskData;
 
 public class ModelFieldEditor extends AnkiActivity {
 
@@ -55,7 +57,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
     private Collection mCol;
     private JSONArray mNoteFields;
-    private JSONObject mMod;
+    private Model mMod;
 
     private ModelEditorContextMenu mContextMenu;
     private EditText mFieldNameInput;
@@ -180,7 +182,7 @@ public class ModelFieldEditor extends AnkiActivity {
                         try {
                             mCol.modSchema();
                             CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
-                                    new CollectionTask.TaskData(new Object[]{mMod, fieldName}));
+                                    new TaskData(new Object[]{mMod, fieldName}));
                         } catch (ConfirmModSchemaException e) {
 
                             //Create dialogue to for schema change
@@ -191,7 +193,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                 String fieldName1 = mFieldNameInput.getText().toString()
                                         .replaceAll("[\\n\\r]", "");
                                 CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
-                                        new CollectionTask.TaskData(new Object[]{mMod, fieldName1}));
+                                        new TaskData(new Object[]{mMod, fieldName1}));
                                 dismissContextMenu();
                             };
 
@@ -241,7 +243,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
     private void deleteField() {
         CollectionTask.launchCollectionTask(DELETE_FIELD, mChangeFieldHandler,
-                                new CollectionTask.TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
+                                new TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
     }
 
 
@@ -324,7 +326,7 @@ public class ModelFieldEditor extends AnkiActivity {
                             try {
                                 mCol.modSchema();
                                 CollectionTask.launchCollectionTask(REPOSITION_FIELD, mChangeFieldHandler,
-                                        new CollectionTask.TaskData(new Object[]{mMod,
+                                        new TaskData(new Object[]{mMod,
                                                 mNoteFields.getJSONObject(mCurrentPos), pos - 1}));
                             } catch (ConfirmModSchemaException e) {
 
@@ -337,7 +339,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                         String newPosition1 = mFieldNameInput.getText().toString();
                                         int pos1 = Integer.parseInt(newPosition1);
                                         CollectionTask.launchCollectionTask(REPOSITION_FIELD,
-                                                mChangeFieldHandler, new CollectionTask.TaskData(new Object[]{mMod,
+                                                mChangeFieldHandler, new TaskData(new Object[]{mMod,
                                                         mNoteFields.getJSONObject(mCurrentPos), pos1 - 1}));
                                         dismissContextMenu();
                                     } catch (JSONException e1) {
@@ -399,7 +401,7 @@ public class ModelFieldEditor extends AnkiActivity {
         try {
             mCol.modSchema();
             CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
-                    new CollectionTask.TaskData(new Object[]{mMod, mCurrentPos}));
+                    new TaskData(new Object[]{mMod, mCurrentPos}));
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
             ConfirmationDialog c = new ConfirmationDialog();
@@ -407,7 +409,7 @@ public class ModelFieldEditor extends AnkiActivity {
             Runnable confirm = () -> {
                 mCol.modSchemaNoCheck();
                 CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
-                        new CollectionTask.TaskData(new Object[]{mMod, mCurrentPos}));
+                        new TaskData(new Object[]{mMod, mCurrentPos}));
                 dismissContextMenu();
             };
             c.setConfirm(confirm);
@@ -472,7 +474,7 @@ public class ModelFieldEditor extends AnkiActivity {
         }
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             if (!result.getBoolean()) {
                 closeActivity(DeckPicker.RESULT_DB_ERROR);
             }

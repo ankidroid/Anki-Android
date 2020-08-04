@@ -33,6 +33,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
+import androidx.core.net.ConnectivityManagerCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
 import android.text.SpannableString;
@@ -104,6 +106,7 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sound;
 import com.ichi2.libanki.Utils;
@@ -144,6 +147,7 @@ import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import com.ichi2.async.TaskData;
 
 import com.github.zafarkhaja.semver.Version;
 
@@ -530,9 +534,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(CollectionTask.TaskData... values) {
+        public void onProgressUpdate(TaskData value) {
             boolean cardChanged = false;
-            if (mCurrentCard != values[0].getCard()) {
+            if (mCurrentCard != value.getCard()) {
                 /*
                  * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
                  * then we need to display it as a new card, without showing the answer.
@@ -540,7 +544,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 sDisplayAnswer = false;
                 cardChanged = true;  // Keep track of that so we can run a bit of new-card code
             }
-            mCurrentCard = values[0].getCard();
+            mCurrentCard = value.getCard();
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
@@ -569,7 +573,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             if (!result.getBoolean()) {
                 // RuntimeException occurred on update cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
@@ -590,8 +594,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(CollectionTask.TaskData... values) {
-            displayNext(values[0].getCard());
+        public void onProgressUpdate(TaskData value) {
+            displayNext(value.getCard());
         }
 
         protected void displayNext(Card nextCard) {
@@ -638,7 +642,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             postNextCardDisplay(result.getBoolean());
         }
 
@@ -964,6 +968,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // Tells the scheduler there is no more current cards. 0 is
+        // not a valid id.
+        if (mSched != null) {
+            mSched.discardCurrentCard();
+        }
         Timber.d("onDestroy()");
         if (mSpeakText) {
             ReadText.releaseTts();
@@ -1106,7 +1115,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (data != null && data.hasExtra("reloadRequired")) {
             getCol().getSched().deferReset();
             CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new CollectionTask.TaskData(null, 0));
+                    new TaskData(null, 0));
         }
 
         if (requestCode == EDIT_CURRENT_CARD) {
@@ -1114,7 +1123,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
                 CollectionTask.launchCollectionTask(UPDATE_NOTE, mUpdateCardHandler,
-                        new CollectionTask.TaskData(sEditorCard, true));
+                        new TaskData(sEditorCard, true));
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard();
@@ -1122,7 +1131,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
             getCol().getSched().deferReset();
             CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new CollectionTask.TaskData(null, 0));
+                    new TaskData(null, 0));
         }
         if (!mDisableClipboard) {
             clipboardSetText("");
@@ -1320,7 +1329,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void answerCard(int ease) {
+    protected void answerCard(@Consts.BUTTON_TYPE int ease) {
         if (mInAnswer) {
             return;
         }
@@ -1365,7 +1374,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mCurrentEase = ease;
 
         CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(true),
-                new CollectionTask.TaskData(mCurrentCard, mCurrentEase));
+                new TaskData(mCurrentCard, mCurrentEase));
     }
 
 
@@ -1566,8 +1575,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             displayCardAnswer();
             return;
         }
-        answerCard(cardOrdinal);
+        performClickWithVisualFeedback(cardOrdinal);
     }
+
 
     private boolean webViewRendererLastCrashedOnCard(long cardId) {
         return lastCrashingCardId != null && lastCrashingCardId == cardId;
@@ -1636,6 +1646,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mEase3Layout.setVisibility(View.GONE);
         mEase4Layout.setVisibility(View.GONE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
+        mNext1.setText("");
+        mNext2.setText("");
+        mNext3.setText("");
+        mNext4.setText("");
         focusAnswerCompletionField();
     }
 
@@ -2296,7 +2310,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      *
      * @return The configuration for the current {@link Card}
      */
-    private JSONObject getConfigForCurrentCard() {
+    private DeckConfig getConfigForCurrentCard() {
         return getCol().getDecks().confForDid(getDeckIdForCard(mCurrentCard));
     }
 
@@ -2614,7 +2628,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     private void toggleFlag(@FlagDef int flag) {
-        if (mCurrentCard.getUserFlag() == flag) {
+        if (mCurrentCard.userFlag() == flag) {
             Timber.i("Toggle flag: unsetting flag");
             onFlag(mCurrentCard, FLAG_NONE);
         } else {
@@ -2623,12 +2637,37 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    private boolean answerCardIfVisible(int ease) {
+    private boolean answerCardIfVisible(@Consts.BUTTON_TYPE int ease) {
         if (!sDisplayAnswer) {
             return false;
         }
-        answerCard(ease);
+        performClickWithVisualFeedback(ease);
         return true;
+    }
+
+
+    protected void performClickWithVisualFeedback(int ease) {
+        // Delay could potentially be lower - testing with 20 left a visible "click"
+        switch (ease) {
+            case EASE_1:
+                performClickWithVisualFeedback(mEase1Layout);
+                break;
+            case EASE_2:
+                performClickWithVisualFeedback(mEase2Layout);
+                break;
+            case EASE_3:
+                performClickWithVisualFeedback(mEase3Layout);
+                break;
+            case EASE_4:
+                performClickWithVisualFeedback(mEase4Layout);
+                break;
+        }
+    }
+
+
+    private void performClickWithVisualFeedback(LinearLayout easeLayout) {
+        easeLayout.requestFocus();
+        easeLayout.postDelayed(easeLayout::performClick, 20);
     }
 
 
@@ -3049,7 +3088,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected @FlagDef int getFlagToDisplay() {
-        return mCurrentCard.getUserFlag();
+        return mCurrentCard.userFlag();
     }
 
 
@@ -3078,7 +3117,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void dismiss(Collection.DismissType type) {
         blockControls(false);
         CollectionTask.launchCollectionTask(DISMISS, mDismissCardHandler,
-                new CollectionTask.TaskData(new Object[]{mCurrentCard, type}));
+                new TaskData(new Object[]{mCurrentCard, type}));
     }
 
     /** Signals from a WebView represent actions with no parameters */
@@ -3561,7 +3600,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     @VisibleForTesting
     void loadInitialCard() {
         CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new CollectionTask.TaskData(null, 0));
+                new TaskData(null, 0));
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {
@@ -3677,7 +3716,7 @@ see card.js for available functions
         
         @JavascriptInterface
         public int ankiGetCardFlag() {
-            return mCurrentCard.getUserFlag();
+            return mCurrentCard.userFlag();
         }
 
         @JavascriptInterface
@@ -3702,6 +3741,58 @@ see card.js for available functions
             return mCurrentCard.getIvl();
         }
 
+        /** Returns the ease as an int (percentage * 10). Default: 2500 (250%). Minimum: 1300 (130%) */
+        @JavascriptInterface
+        public int ankiGetCardFactor() {
+            return mCurrentCard.getFactor();
+        }
+
+        /** Returns the last modified time as a Unix timestamp in seconds. Example: 1477384099 */
+        @JavascriptInterface
+        public long ankiGetCardMod() {
+            return mCurrentCard.getMod();
+        }
+
+        /** Returns the ID of the card. Example: 1477380543053 */
+        @JavascriptInterface
+        public long ankiGetCardId() {
+             return mCurrentCard.getId();
+         }
+
+        /** Returns the ID of the note which generated the card. Example: 1590418157630 */
+        @JavascriptInterface
+        public long ankiGetCardNid() {
+            return mCurrentCard.getNid();
+        }
+
+        @JavascriptInterface
+        @Consts.CARD_TYPE
+        public int ankiGetCardType() {
+            return mCurrentCard.getType();
+        }
+
+        /** Returns the ID of the deck which contains the card. Example: 1595967594978 */
+        @JavascriptInterface
+        public long ankiGetCardDid() {
+            return mCurrentCard.getDid();
+        }
+
+        @JavascriptInterface
+        public int ankiGetCardLeft() {
+            return mCurrentCard.getLeft();
+        }
+
+        /** Returns the ID of the home deck for the card if it is filtered, or 0 if not filtered. Example: 1595967594978 */
+        @JavascriptInterface
+        public long ankiGetCardODid() {
+            return mCurrentCard.getODid();
+        }
+
+        @JavascriptInterface
+        public long ankiGetCardODue() {
+            return mCurrentCard.getODue();
+        }
+
         @JavascriptInterface
         @Consts.CARD_QUEUE
         public int ankiGetCardQueue() {
@@ -3724,8 +3815,29 @@ see card.js for available functions
         }
 
         @JavascriptInterface
+        public boolean ankiIsTopbarShown() {
+            return mPrefShowTopbar;
+        }
+
+        @JavascriptInterface
         public boolean ankiIsInNightMode() {
             return isInNightMode();
+        }
+
+        @JavascriptInterface
+        public boolean ankiIsActiveNetworkMetered() {
+            try {
+                ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+                if (cm == null) {
+                    Timber.w("ConnectivityManager not found - assuming metered connection");
+                    return true;
+                }
+                return ConnectivityManagerCompat.isActiveNetworkMetered(cm);
+            } catch (Exception e) {
+                Timber.w(e, "Exception obtaining metered connection - assuming metered connection");
+                return true;
+            }
         }
     }
 }

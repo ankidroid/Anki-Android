@@ -136,7 +136,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
 
     public JSONObject(JSONObject copyFrom) {
         this();
-        for (String key: this) {
+        for (String key: copyFrom) {
             put(key, copyFrom.get(key));
         }
     }
@@ -328,6 +328,19 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
 
     public JSONObject deepClone() {
         JSONObject clone = new JSONObject();
+        deepClonedInto(clone);
+        return clone;
+    }
+
+    /** deep clone this into clone.
+
+        Given a subtype `T` of JSONObject, and a JSONObject `j`, we could do
+        ```
+        T t = new T();
+        j.deepClonedInto(t);
+        ```
+        in order to obtain a deep clone of `j` of type ```T```. */
+    protected <T extends JSONObject> T deepClonedInto(T clone) {
         for (String key: this) {
             if (get(key) instanceof JSONObject) {
                 clone.put(key, getJSONObject(key).deepClone());

@@ -45,6 +45,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.HtmlUtils;
 
@@ -52,6 +53,7 @@ import com.ichi2.utils.JSONObject;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import com.ichi2.async.TaskData;
 
 public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
@@ -321,15 +323,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.rebuild_cram_deck), true);
-                CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true),
-                        new CollectionTask.TaskData(mFragmented));
+                CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
                 return true;
             case R.id.action_empty:
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                         getResources().getString(R.string.empty_cram_deck), false);
-                CollectionTask.launchCollectionTask(EMPTY_CRAM, getCollectionTaskListener(true),
-                        new CollectionTask.TaskData(mFragmented));
+                CollectionTask.launchCollectionTask(EMPTY_CRAM, getCollectionTaskListener(true));
                 return true;
             case R.id.action_rename:
                 ((DeckPicker) getActivity()).renameDeckDialog(getCol().getDecks().selected());
@@ -443,14 +443,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         if (requestCode == DECK_OPTIONS) {
             if (mLoadWithDeckOptions) {
                 mLoadWithDeckOptions = false;
-                JSONObject deck = getCol().getDecks().current();
+                Deck deck = getCol().getDecks().current();
                 if (deck.getInt("dyn") != 0 && deck.has("empty")) {
                     deck.remove("empty");
                 }
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.rebuild_cram_deck), true);
-                    CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true),
-                            new CollectionTask.TaskData(mFragmented));
+                    CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
             } else {
                 CollectionTask.waitToFinish();
                 refreshInterface(true);
@@ -508,7 +507,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         Timber.d("Refreshing StudyOptionsFragment");
         // Load the deck counts for the deck from Collection asynchronously
         CollectionTask.launchCollectionTask(UPDATE_VALUES_FROM_DECK, getCollectionTaskListener(resetDecklist),
-                new CollectionTask.TaskData(new Object[]{resetSched}));
+                new TaskData(new Object[]{resetSched}));
     }
 
 
@@ -526,7 +525,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             }
 
             @Override
-            public void onPostExecute(CollectionTask.TaskData result) {
+            public void onPostExecute(TaskData result) {
                 dismissProgressDialog();
                 if (result != null) {
                     // Get the return values back from the AsyncTask
@@ -554,7 +553,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     initAllContentViews(mStudyOptionsView);
                     // Set the deck name
                     String fullName;
-                    JSONObject deck = getCol().getDecks().current();
+                    Deck deck = getCol().getDecks().current();
                     // Main deck name
                     fullName = deck.getString("name");
                     String[] name = Decks.path(fullName);

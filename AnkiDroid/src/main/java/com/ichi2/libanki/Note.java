@@ -41,7 +41,7 @@ public class Note implements Cloneable {
 
     private long mId;
     private String mGuId;
-    private JSONObject mModel;
+    private Model mModel;
     private long mMid;
     private ArrayList<String> mTags;
     private String[] mFields;
@@ -59,12 +59,12 @@ public class Note implements Cloneable {
     }
 
 
-    public Note(Collection col, JSONObject model) {
+    public Note(Collection col, Model model) {
         this(col, model, null);
     }
 
 
-    public Note(Collection col, JSONObject model, Long id) {
+    public Note(Collection col, Model model, Long id) {
         assert !(model != null && id != null);
         mCol = col;
         if (id != null) {
@@ -134,13 +134,13 @@ public class Note implements Cloneable {
         String fields = joinedFields();
         if (mod == null && mCol.getDb().queryScalar(
                 "select 1 from notes where id = ? and tags = ? and flds = ?",
-                new String[]{Long.toString(mId), tags, fields}) > 0) {
+                Long.toString(mId), tags, fields) > 0) {
             return;
         }
         long csum = Utils.fieldChecksum(mFields[0]);
         mMod = mod != null ? mod : Utils.intTime();
         mCol.getDb().execute("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
-                new Object[] { mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData });
+                mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData);
         mCol.getTags().register(mTags);
         _postFlush();
     }
@@ -151,19 +151,34 @@ public class Note implements Cloneable {
     }
 
 
+    public int numberOfCards() {
+        return (int) mCol.getDb().queryLongScalar("SELECT count() FROM cards WHERE nid = ?", new Object[]{mId});
+    }
+
+    public List<Long> cids() {
+        return mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid = ? ORDER BY ord",
+                new Object[]{mId});
+    }
+
     public ArrayList<Card> cards() {
         ArrayList<Card> cards = new ArrayList<>();
-        try (Cursor cur = mCol.getDb().getDatabase()
-                .query("SELECT id FROM cards WHERE nid = " + mId + " ORDER BY ord", null)) {
-            while (cur.moveToNext()) {
-                cards.add(mCol.getCard(cur.getLong(0)));
-            }
+        for (long cid : cids()) {
+            // each getCard access database. This is inneficient.
+            // Seems impossible to solve without creating a constructor of a list of card.
+            // Not a big trouble since most note have a small number of cards.
+            cards.add(mCol.getCard(cid));
         }
         return cards;
     }
 
+    /** The first card, assuming it exists.*/
+    public Card firstCard() {
+        return mCol.getCard(mCol.getDb().queryLongScalar("SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1",
+                new Object[] {mId}));
+    }
 
-    public JSONObject model() {
+
+    public Model model() {
         return mModel;
     }
 
@@ -265,27 +280,31 @@ public class Note implements Cloneable {
      * ***********************************************************
      */
 
+    public enum DupeOrEmpty {
+        CORRECT,
+        EMPTY,
+        DUPE,
+    }
     /**
      * 
-     * @return 1 if first is empty; 2 if first is a duplicate, null otherwise.
+     * @return whether it has no content, dupe first field, or nothing remarkable.
      */
-    public Integer dupeOrEmpty() {
+    public DupeOrEmpty dupeOrEmpty() {
         String val = mFields[0];
         if (val.trim().length() == 0) {
-            return 1;
+            return DupeOrEmpty.EMPTY;
         }
         long csum = Utils.fieldChecksum(val);
         // find any matching csums and compare
-        for (String flds : mCol.getDb().queryColumn(
-                String.class,
+        for (String flds : mCol.getDb().queryStringList(
                 "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
-                0, new Object[] {csum, (mId != 0 ? mId : 0), mMid})) {
+                csum, (mId != 0 ? mId : 0), mMid)) {
             if (Utils.stripHTMLMedia(
                     Utils.splitFields(flds)[0]).equals(Utils.stripHTMLMedia(mFields[0]))) {
-                return 2;
+                return DupeOrEmpty.DUPE;
             }
         }
-        return null;
+        return DupeOrEmpty.CORRECT;
     }
 
 
@@ -298,7 +317,7 @@ public class Note implements Cloneable {
      * have we been added yet?
      */
     private void _preFlush() {
-        mNewlyAdded = mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE nid = ?", new Object[] {mId}) == 0;
+        mNewlyAdded = mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE nid = ?", mId) == 0;
     }
 
 
@@ -337,7 +356,7 @@ public class Note implements Cloneable {
 
 
     public String getSFld() {
-        return mCol.getDb().queryString("SELECT sfld FROM notes WHERE id = ?", new Object [] {mId});
+        return mCol.getDb().queryString("SELECT sfld FROM notes WHERE id = ?", mId);
     }
 
 

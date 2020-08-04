@@ -37,6 +37,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -676,7 +677,7 @@ public class Media {
         }
         // update media db
         mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
-        mDb.execute("update meta set dirMod = ?", new Object[] { _mtime(dir()) });
+        mDb.execute("update meta set dirMod = ?", _mtime(dir()));
         mDb.commit();
     }
 
@@ -766,7 +767,7 @@ public class Media {
 
 
     public void setLastUsn(int usn) {
-        mDb.execute("update meta set lastUsn = ?", new Object[] { usn });
+        mDb.execute("update meta set lastUsn = ?", usn);
         mDb.commit();
     }
 
@@ -786,7 +787,7 @@ public class Media {
 
     public void markClean(List<String> fnames) {
         for (String fname : fnames) {
-            mDb.execute("update media set dirty=0 where fname=?", new Object[] { fname });
+            mDb.execute("update media set dirty=0 where fname=?", fname);
         }
     }
 
@@ -796,7 +797,7 @@ public class Media {
         if (f.exists()) {
             f.delete();
         }
-        mDb.execute("delete from media where fname=?", new Object[] { fname });
+        mDb.execute("delete from media where fname=?", fname);
     }
 
 
@@ -844,8 +845,7 @@ public class Media {
     public Pair<File, List<String>> mediaChangesZip() {
         File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncToServer.zip"));
         Cursor cur = null;
-        try {
-            ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+        try (ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)))) {
             z.setMethod(ZipOutputStream.DEFLATED);
 
             List<String> fnames = new ArrayList<>();
@@ -896,7 +896,6 @@ public class Media {
             z.putNextEntry(new ZipEntry("_meta"));
             z.write(Utils.jsonToString(meta).getBytes());
             z.closeEntry();
-            z.close();
             // Don't leave lingering temp files if the VM terminates.
             f.deleteOnExit();
             return new Pair<>(f, fnames);
@@ -935,7 +934,9 @@ public class Media {
                     name = Utils.nfcNormalized(name);
                     // save file
                     String destPath = dir().concat(File.separator).concat(name);
-                    Utils.writeToFile(z.getInputStream(i), destPath);
+                    try (InputStream zipInputStream = z.getInputStream(i)) {
+                        Utils.writeToFile(zipInputStream, destPath);
+                    }
                     String csum = Utils.fileChecksum(destPath);
                     // update db
                     media.add(new Object[] {name, csum, _mtime(destPath), 0});
@@ -985,7 +986,7 @@ public class Media {
         Timber.d("Marking media file addition in media db: %s", fname);
         String path = new File(dir(), fname).getAbsolutePath();
         mDb.execute("insert or replace into media values (?,?,?,?)",
-                new Object[] { fname, _checksum(path), _mtime(path), 1 });
+                fname, _checksum(path), _mtime(path), 1);
     }
 
 
@@ -999,7 +1000,7 @@ public class Media {
         }
         Timber.d("Marking media file removal in media db: %s", fname);
         mDb.execute("insert or replace into media values (?,?,?,?)",
-                new Object[] { fname, null, 0, 1 });
+               fname, null, 0, 1);
     }
 
 

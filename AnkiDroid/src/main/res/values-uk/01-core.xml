@@ -54,7 +54,7 @@
     <!-- DeckPicker.java -->
     <string name="expand">Розгорнути</string>
     <string name="collapse">Згорнути</string>
-    <string name="study_more">Вивчати ще</string>
+    <string name="study_more">Вчити ще</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d картка до (%2$s)</item>
         <item quantity="few">%1$d картки до (%2$s)</item>
@@ -196,6 +196,7 @@
     <string name="card_template_editor_styling">Стиль</string>
     <string name="card_template_editor_menu_delete">Видалити</string>
     <string name="card_template_editor_menu_card_browser_appearance">Вигляд переглядача карток</string>
+    <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Необхідна хоча б один тип карток</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Видалити тип картки «%2$s» та його %1$d картку?</item>

@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Deck;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONObject;
 
@@ -22,6 +23,7 @@ import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowApplication;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -154,9 +156,9 @@ public class CardBrowserTest extends RobolectricTest {
         addDeck("Hello");
         CardBrowser b = getBrowserWithNotes(5);
 
-        List<JSONObject> decks = b.getValidDecksForChangeDeck();
+        List<Deck> decks = b.getValidDecksForChangeDeck();
 
-        for (JSONObject d : decks) {
+        for (Deck d : decks) {
             if (d.getString("name").equals("Hello")) {
                 return;
             }
@@ -170,9 +172,9 @@ public class CardBrowserTest extends RobolectricTest {
         addDynamicDeck("World");
         CardBrowser b = getBrowserWithNotes(5);
 
-        List<JSONObject> decks = b.getValidDecksForChangeDeck();
+        List<Deck> decks = b.getValidDecksForChangeDeck();
 
-        for (JSONObject d : decks) {
+        for (Deck d : decks) {
             if (d.getString("name").equals("World")) {
                 Assert.fail("Dynamic decks should not be transferred to by the browser.");
             }
@@ -191,8 +193,8 @@ public class CardBrowserTest extends RobolectricTest {
 
         CardBrowser b = getBrowserWithNotes(5);
 
-        List<JSONObject> decks = b.getValidDecksForChangeDeck();
-        for (JSONObject d : decks) {
+        List<Deck> decks = b.getValidDecksForChangeDeck();
+        for (Deck d : decks) {
             assertThat(validNames, hasItem(d.getString("name")));
         }
         assertThat("Additional unexpected decks were present", decks.size(), is(2));
@@ -243,10 +245,10 @@ public class CardBrowserTest extends RobolectricTest {
 
     @Test
     public void flagValueIsShownOnCard() {
-        Note n = addNote("1");
+        Note n = addNoteUsingBasicModel("1", "back");
         flagCardForNote(n, 1);
 
-        long cardId = n.cards().get(0).getId();
+        long cardId = n.cids().get(0);
 
         CardBrowser b = getBrowserWithNoNewCards();
         Map<String, String> cardProperties = b.getPropertiesForCardId(cardId);
@@ -282,7 +284,7 @@ public class CardBrowserTest extends RobolectricTest {
 
 
     private void flagCardForNote(Note n, int flag) {
-        Card c = n.cards().get(0);
+        Card c = n.firstCard();
         c.setUserFlag(flag);
         c.flush();
     }
@@ -336,7 +338,7 @@ public class CardBrowserTest extends RobolectricTest {
 
     private CardBrowser getBrowserWithNotes(int count) {
         for(int i = 0; i < count; i ++) {
-            addNote(Integer.toString(i));
+            addNoteUsingBasicModel(Integer.toString(i), "back");
         }
         ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
                 .create().start().resume().visible();
@@ -345,16 +347,7 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
     private void removeCardFromCollection(Long cardId) {
-        getCol().remCards(new long[] { cardId });
-    }
-
-    private Note addNote(String value) {
-        Note n = getCol().newNote();
-        n.setField(0, value);
-        if (getCol().addNote(n) != 1) {
-            throw new IllegalStateException("card was not added");
-        }
-        return n;
+        getCol().remCards(Arrays.asList(new Long[] {cardId}));
     }
 
     @CheckReturnValue

@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">إعادة محاولة الفتح</string>
     <string name="backup_error_menu_repair">إصلاح قاعدة البيانات</string>
     <string name="backup_repair_deck">إصلاح</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">إصلاح قاعدة البيانات.\nالرجاء الانتظار...</string>
     <string name="backup_error">Error</string>
     <string name="backup_invalid_file_error">The selected backup file was invalid</string>

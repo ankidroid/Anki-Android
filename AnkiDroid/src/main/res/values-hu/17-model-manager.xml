@@ -23,7 +23,7 @@
     <string name="model_browser_label">Jegyzettípusok kezelése</string>
     <string name="model_editor_label">Mezők kezelése</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">Nem tudod törölni az előző jegyzettípust</string>
     <string name="toast_last_field">A jegyzetfajtáknak legalább egy mezőt kell tartalmazniuk</string>
     <string name="toast_empty_name">Meg kell adnod egy nevet</string>
     <string name="toast_duplicate_field">Már használt mezőnév</string>
@@ -46,7 +46,7 @@
     <string name="model_browser_template">Kártya szerkesztése</string>
     <string name="model_browser_add">Jegyzettípus hozzáadása</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">Jegyzettípus átnevezése</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Mező szerkesztése</string>
     <string name="model_field_editor_add">Mező hozzáadása</string>
@@ -55,21 +55,30 @@
     <string name="model_field_editor_rename">Mező átnevezése</string>
     <string name="model_field_editor_reposition_menu">Áthelyezési mező</string>
     <string name="model_field_editor_reposition">Áthelyezési mező (írd be a következő értéket: %1$d–%2$d)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_toggle_sticky">A beviteli érték megjegyzése hozzáadáskor</string>
     <string name="model_field_editor_changing">A mezők frissítése</string>
     <string name="model_field_editor_sort_field">Rendezd ezt a mezőt</string>
     <string name="model_clone_suffix">másolás</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">Tényleg törölni akarod ezt a jegyzettípust?</string>
     <string name="field_delete_warning">Tényleg törölni szeretnéd ezt a mezőt?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Hozzáad: %1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Klón: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question Format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
-    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
+    <string name="card_template_browser_appearance_summary">Írd be a sablont, amit a kártya böngésző használni fog, hogy megjelenítse a kártyákat. Használt ezt, hogy tömörebb választ kapj.\n\nAz első oldali sablonon található \n\"A {{Country}}-nak a fővárosa:\"\na kártya böngészőben tömörítve így néz ki\n\"Főváros: {{Country}}\"</string>
+    <string name="card_template_browser_appearance_question_format">Kérdés formátum</string>
+    <string name="card_template_browser_appearance_answer_format">Válasz formátum</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Vissza akarja állítani az eredeti értékeket?</string>
+    <string name="card_template_browser_appearance_saving_note">Ezek a változások a kártya sablon mentésénél lépnek életbe</string>
+    <!-- Deck Override -->
+    <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
+    <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
+    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
+    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
+    <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
+    <string name="model_manager_deck_override_dynamic_deck_error">Cannot set Deck Override to a filtered deck</string>
+    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
+    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
 </resources>

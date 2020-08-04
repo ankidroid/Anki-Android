@@ -58,7 +58,7 @@
     <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。デッキにアクセスするには、USBを切断してください。</string>
     <string name="updated_version">バージョン%sへアップデートしました</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">ホワイトボードの内容を保存</string>
     <string name="enable_whiteboard">ホワイトボードを有効にする</string>
     <string name="disable_whiteboard">ホワイトボードを無効にする</string>
     <string name="show_whiteboard">ホワイトボードを表示する</string>
@@ -99,8 +99,8 @@
         <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">今日の新規カードの上限を上げる</string>
-    <string name="custom_study_increase_review_limit">今日の復習カードの上限を上げる</string>
+    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
+    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">忘却したカードを復習する</string>
     <string name="custom_study_review_ahead">予定を先取りして復習する</string>
     <string name="custom_study_random_selection">カードをランダムに学習する</string>
@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">最初のフィールドが空です</string>
     <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め問題が含まれている必要があります</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">カードの保存</string>
     <string name="saving_model">ノートタイプを保存しています</string>
     <string name="add">追加</string>
@@ -166,7 +167,7 @@
     <string name="import_log_failed_unzip">apkgファイルの解凍に失敗しました: %s</string>
     <string name="import_log_failed_copy_to">apkgファイルを %sにコピーできませんでした</string>
     <string name="import_log_failed_validate">apkgファイルの検証に失敗しました</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
+    <string name="import_log_insufficient_space">パッケージを解凍するのに十分な容量がありません。 \n必要な空き容量: %1$d \n現在の空き容量: %2$d</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_unhandled_request">インポートリクエストを処理できません</string>
@@ -246,7 +247,6 @@
     <string name="import_needs_v2">このファイルをインポートするにはV2スケジューラを有効にする必要があります。</string>
     <string name="import_cannot_with_v2">V2スケジューラは、スケジュール情報付きのV1デッキはインポートできません。</string>
     <string name="export_v2_dummy_note">このファイルはAnkiの新しいバーショーンが必要です。</string>
-    <string name="export_v2_forbidden">スケジュール情報付きの単一デッキをエクスポートする前に、V1スケジューラに切り替えてください。</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' の読み込みに失敗しました。</string>
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
@@ -265,7 +265,25 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">JavaScriptを使用してナビゲーションドロワーを使用するには、フルスクリーンをオンにしてください。</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">JavaScriptを使用してオプションメニューを表示するには、フルスクリーンをオンにしてください。</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="white_board_image_save_failed">ホワイトボード画像の保存に失敗しました。 %s</string>
+    <string name="white_board_image_saved">ホワイトボードの画像を %s に保存しました</string>
+    <string name="title_whiteboard_pen_color">ホワイトボードペンの色を選択</string>
+    <!-- CSV/Note Import -->
+    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
+    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
+    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
+    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <plurals name="note_importer_notes_added">
+        <item quantity="other">%d notes added</item>
+    </plurals>
+    <plurals name="note_importer_notes_updated">
+        <item quantity="other">%d notes updated</item>
+    </plurals>
+    <plurals name="note_importer_notes_unchanged">
+        <item quantity="other">%d notes unchanged</item>
+    </plurals>
 </resources>

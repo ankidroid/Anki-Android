@@ -53,21 +53,30 @@
     <string name="model_field_editor_rename">重新命名欄位</string>
     <string name="model_field_editor_reposition_menu">修改字段位置</string>
     <string name="model_field_editor_reposition">修改字段位置（輸入%1$d~%2$d的數值）</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_toggle_sticky">新增時記住最後輸入</string>
     <string name="model_field_editor_changing">更新欄位</string>
     <string name="model_field_editor_sort_field">按此字段排序</string>
     <string name="model_clone_suffix">複本</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">是否希望刪除此筆記類型？</string>
     <string name="field_delete_warning">你確定要刪除此欄位嗎？</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">添加：%1$s </string>
+    <string name="model_browser_add_add">新增：%1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">克隆：%1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
+    <string name="card_template_browser_appearance_summary">輸入卡片瀏覽器將用於展示你的卡片的模板。以此顯示更簡潔的答案。\n\n一種正面模板\n“{{國家}}的首都是：”\n會被卡片瀏覽器壓縮為\n“首都：{{國家}}”</string>
     <string name="card_template_browser_appearance_question_format">問題格式</string>
     <string name="card_template_browser_appearance_answer_format">回答格式</string>
     <string name="card_template_browser_appearance_restore_default_dialog">是否恢復預設值？</string>
-    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
+    <string name="card_template_browser_appearance_saving_note">這些變更將在卡片模板被儲存時套用</string>
+    <!-- Deck Override -->
+    <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
+    <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
+    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
+    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
+    <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
+    <string name="model_manager_deck_override_dynamic_deck_error">Cannot set Deck Override to a filtered deck</string>
+    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
+    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
 </resources>

@@ -3,6 +3,7 @@ package com.ichi2.libanki.sched;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Pair;
 import android.widget.Toast;
 
 
@@ -10,7 +11,9 @@ import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Collection;
 import com.ichi2.utils.JSONObject;
 
@@ -21,6 +24,7 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
+
 
 public abstract class AbstractSched {
     /**
@@ -34,7 +38,7 @@ public abstract class AbstractSched {
     /**
      * @param undoneCard a card undone, send back to the reviewer.*/
     public abstract void deferReset(Card undoneCard);
-    public abstract void answerCard(Card card, int ease);
+    public abstract void answerCard(Card card, @Consts.BUTTON_TYPE int ease);
     public abstract int[] counts();
     public abstract int[] counts(Card card);
     /**
@@ -42,7 +46,7 @@ public abstract class AbstractSched {
      */
     public abstract int dueForecast();
     public abstract int dueForecast(int days);
-    @Consts.CARD_TYPE
+    @Consts.CARD_QUEUE
     public abstract int countIdx(Card card);
     public abstract int answerButtons(Card card);
     /**
@@ -62,17 +66,17 @@ public abstract class AbstractSched {
     /** New count for a single deck. */
     public abstract int _newForDeck(long did, int lim);
     /** Limit for deck without parent limits. */
-    public abstract int _deckNewLimitSingle(JSONObject g);
+    public abstract int _deckNewLimitSingle(Deck g);
     public abstract int totalNewForCurrentDeck();
     public abstract int totalRevForCurrentDeck();
-    public abstract int[] _fuzzedIvlRange(int ivl);
+    public abstract Pair<Integer, Integer> _fuzzIvlRange(int ivl);
     /** Rebuild a dynamic deck. */
     public abstract void rebuildDyn();
     public abstract List<Long> rebuildDyn(long did);
     public abstract void emptyDyn(long did);
     public abstract void emptyDyn(long did, String lim);
     public abstract void remFromDyn(long[] cids);
-    public abstract JSONObject _cardConf(Card card);
+    public abstract DeckConfig _cardConf(Card card);
     public abstract String _deckLimit();
     public abstract void _checkDay();
     public abstract CharSequence finishedMsg(Context context);
@@ -97,11 +101,11 @@ public abstract class AbstractSched {
      * @param ease The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
-    public abstract String nextIvlStr(Context context, Card card, int ease);
+    public abstract String nextIvlStr(Context context, Card card, @Consts.BUTTON_TYPE int ease);
     /**
      * Return the next interval for CARD, in seconds.
      */
-    public abstract long nextIvl(Card card, int ease);
+    public abstract long nextIvl(Card card, @Consts.BUTTON_TYPE int ease);
     /**
      * Suspend cards.
      */
@@ -134,13 +138,19 @@ public abstract class AbstractSched {
     public abstract void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift);
     public abstract void randomizeCards(long did);
     public abstract void orderCards(long did);
-    public abstract void resortConf(JSONObject conf);
+    public abstract void resortConf(DeckConfig conf);
     /**
      * for post-import
      */
     public abstract void maybeRandomizeDeck();
     public abstract void maybeRandomizeDeck(Long did);
     public abstract boolean haveBuried(long did);
+    public enum UnburyType {
+        ALL,
+        MANUAL,
+        SIBLINGS;
+    }
+    public abstract void unburyCardsForDeck(UnburyType type);
     public abstract void unburyCardsForDeck(long did);
     public abstract String getName();
     public abstract int getToday();
@@ -373,7 +383,7 @@ public abstract class AbstractSched {
 
 
     public interface LimitMethod {
-        int operation(JSONObject g);
+        int operation(Deck g);
     }
 
     public interface CountMethod {
@@ -400,4 +410,12 @@ public abstract class AbstractSched {
             Timber.w("LeechHook :: could not show leech toast as activity was null");
         }
     }
+
+    /**
+     * Notifies the scheduler that the provided card is being reviewed. Ensures that a different card is prefetched.
+     *
+     * @param card the current card in the reviewer
+     */
+    public abstract void setCurrentCard(@NonNull Card card);
+    public abstract void discardCurrentCard();
 }

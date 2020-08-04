@@ -36,6 +36,7 @@ import android.view.MenuItem;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Deck;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
@@ -59,7 +60,7 @@ import timber.log.Timber;
  */
 public class FilteredDeckOptions extends AppCompatPreferenceActivity implements OnSharedPreferenceChangeListener {
 
-    private JSONObject mDeck;
+    private Deck mDeck;
     private Collection mCol;
     private boolean mAllowCommit = true;
     private boolean mPrefChanged = false;
@@ -127,15 +128,12 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                     if ("search".equals(entry.getKey())) {
                         JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(0, entry.getValue());
-                        mDeck.put("terms", ar);
                     } else if ("limit".equals(entry.getKey())) {
                         JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(1, entry.getValue());
-                        mDeck.put("terms", ar);
                     } else if ("order".equals(entry.getKey())) {
                         JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(2, Integer.parseInt((String) entry.getValue()));
-                        mDeck.put("terms", ar);
                     } else if ("resched".equals(entry.getKey())) {
                         mDeck.put("resched", entry.getValue());
                     } else if ("stepsOn".equals(entry.getKey())) {

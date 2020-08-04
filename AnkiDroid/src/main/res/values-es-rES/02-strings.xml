@@ -94,13 +94,13 @@
         <item>Intervalo</item>
         <item>Facilidad</item>
         <item>Programadas</item>
-        <item>Card Modified</item>
+        <item>Tarjeta modificada</item>
         <item>Creado</item>
-        <item>Note Modified</item>
+        <item>Nota modificada</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Aumentar el límite de tarjetas nuevas para hoy</string>
-    <string name="custom_study_increase_review_limit">Aumentar el límite de repasos para hoy</string>
+    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
+    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">Repasar tarjetas olvidadas</string>
     <string name="custom_study_review_ahead">Repasar con antelación</string>
     <string name="custom_study_random_selection">Estudiar una selección aleatoria de tarjetas</string>
@@ -114,6 +114,7 @@
     <string name="note_editor_no_first_field">El primer campo está vacío</string>
     <string name="note_editor_no_cloze_delations">Este tipo de nota debe contener preguntas anidadas</string>
     <string name="note_editor_no_cards_created_all_fields">El tipo de nota actual no produjo ninguna tarjeta.\nPor favor, elije otro tipo de nota o haga clic en \"Tarjetas\" y añade un sustituto de campo</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Guardando nota</string>
     <string name="saving_model">Guardando tipo de nota</string>
     <string name="add">Añadir</string>
@@ -257,7 +258,6 @@
     <string name="import_needs_v2">El programador de V2 debe estar habilitado para importar este archivo.</string>
     <string name="import_cannot_with_v2">El programador de V2 no puede importar mazos V1 con la programación incluida.</string>
     <string name="export_v2_dummy_note">Este archivo requiere una versión más reciente de Anki.</string>
-    <string name="export_v2_forbidden">Por favor, cambie al programador de V1 antes de exportar un solo mazo con información de programación.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Error al cargar \'%s\'.</string>
     <string name="activity_start_failed">El sistema no tiene una aplicación instalada que pueda realizar esta acción.</string>
@@ -279,4 +279,25 @@
     <string name="white_board_image_save_failed">No se pudo guardar la imagen de pizarra. %s</string>
     <string name="white_board_image_saved">Imagen de pizarra guardada en %s</string>
     <string name="title_whiteboard_pen_color">Color del lápiz</string>
+    <!-- CSV/Note Import -->
+    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
+    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
+    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
+    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <plurals name="note_importer_notes_added">
+        <item quantity="one">%d note added</item>
+        <item quantity="other">%d notes added</item>
+    </plurals>
+    <plurals name="note_importer_notes_updated">
+        <item quantity="one">%d note updated</item>
+        <item quantity="other">%d notes updated</item>
+    </plurals>
+    <plurals name="note_importer_notes_unchanged">
+        <item quantity="one">%d note unchanged</item>
+        <item quantity="other">%d notes unchanged</item>
+    </plurals>
 </resources>

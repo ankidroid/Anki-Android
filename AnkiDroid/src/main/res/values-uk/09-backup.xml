@@ -52,6 +52,7 @@
     <string name="backup_retry_opening">Спробувати відкрити повторно</string>
     <string name="backup_error_menu_repair">Відлагодити базу даних</string>
     <string name="backup_repair_deck">Відлагодити</string>
+    <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Відлагодження бази даних.\nБудь ласка, чекайте...</string>
     <string name="backup_error">Помилка</string>
     <string name="backup_invalid_file_error">Вибраний резервний файл - помилковий</string>

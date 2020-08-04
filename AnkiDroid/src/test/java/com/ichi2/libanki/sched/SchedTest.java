@@ -32,7 +32,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static com.ichi2.libanki.sched.SchedV2Test.TEST_DECKS;
+import static com.ichi2.libanki.DecksTest.TEST_DECKS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -114,7 +114,7 @@ public class SchedTest extends RobolectricTest {
     @NonNull
     private Card createBuriedCardInDefaultDeck() {
         Note n = addNoteUsingBasicModel("Hello", "World");
-        Card c = n.cards().get(0);
+        Card c = n.firstCard();
         c.setQueue(Consts.QUEUE_TYPE_SIBLING_BURIED);
         c.flush();
         return c;

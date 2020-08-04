@@ -26,15 +26,6 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ActionProvider;
-import androidx.core.view.MenuItemCompat;
-
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,6 +34,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ActionProvider;
+import androidx.core.view.MenuItemCompat;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -63,7 +63,6 @@ import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
-
 import java.lang.ref.WeakReference;
 
 import timber.log.Timber;
@@ -72,6 +71,7 @@ import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import com.ichi2.async.TaskData;
 
 
 public class Reviewer extends AbstractFlashcardViewer {
@@ -108,7 +108,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
         @Override
-        public void onPostExecute(CollectionTask.TaskData result) {
+        public void onPostExecute(TaskData result) {
             super.onPostExecute(result);
             invalidateOptionsMenu();
             int cardCount = result.getObjArray().length;
@@ -235,7 +235,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new CollectionTask.TaskData(null, 0));
+                new TaskData(null, 0));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -327,7 +327,11 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_change_whiteboard_pen_color:
                 Timber.i("Reviewer:: Pen Color button pressed");
-                colorPalette.setVisibility(View.VISIBLE);
+                if (colorPalette.getVisibility() == View.GONE) {
+                    colorPalette.setVisibility(View.VISIBLE);
+                } else {
+                    colorPalette.setVisibility(View.GONE);
+                }
                 break;
 
             case R.id.action_save_whiteboard:
@@ -356,15 +360,8 @@ public class Reviewer extends AbstractFlashcardViewer {
                 refreshActionBar();
                 break;
 
-            case R.id.action_enable_whiteboard:
-                // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
-                mPrefWhiteboard = ! mPrefWhiteboard;
-                Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
-                //Even though the visibility is now stored in its own setting, we want it to be dependent
-                //on the enabled status
-                setWhiteboardEnabledState(mPrefWhiteboard);
-                setWhiteboardVisibility(mPrefWhiteboard);
-                refreshActionBar();
+            case R.id.action_toggle_whiteboard:
+                toggleWhiteboard();
                 break;
 
             case R.id.action_search_dictionary:
@@ -414,6 +411,21 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
+    protected void toggleWhiteboard() {
+        // toggle whiteboard enabled state (and show/hide whiteboard item in action bar)
+        mPrefWhiteboard = ! mPrefWhiteboard;
+        Timber.i("Reviewer:: Whiteboard enabled state set to %b", mPrefWhiteboard);
+        //Even though the visibility is now stored in its own setting, we want it to be dependent
+        //on the enabled status
+        setWhiteboardEnabledState(mPrefWhiteboard);
+        setWhiteboardVisibility(mPrefWhiteboard);
+        if (!mPrefWhiteboard) {
+            colorPalette.setVisibility(View.GONE);
+        }
+        refreshActionBar();
+    }
+
+
     private void toggleMicToolBar() {
         if (mMicToolBar != null) {
             // It exists swap visibility status
@@ -453,7 +465,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days ->
             CollectionTask.launchCollectionTask(DISMISS_MULTI, mRescheduleCardHandler,
-                    new CollectionTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()},
+                    new TaskData(new Object[]{new long[]{mCurrentCard.getId()},
                     Collection.DismissType.RESCHEDULE_CARDS, days})
             );
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
@@ -473,7 +485,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
             CollectionTask.launchCollectionTask(DISMISS_MULTI, mResetProgressCardHandler,
-                    new CollectionTask.TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS}));
+                    new TaskData(new Object[]{new long[]{mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS}));
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);
@@ -499,7 +511,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         if (mCurrentCard != null) {
-            switch (mCurrentCard.getUserFlag()) {
+            switch (mCurrentCard.userFlag()) {
             case 1:
                 menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_red);
                 break;
@@ -538,19 +550,25 @@ public class Reviewer extends AbstractFlashcardViewer {
         // White board button
         if (mPrefWhiteboard) {
             // Configure the whiteboard related items in the action bar
-            menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.disable_whiteboard);
+            menu.findItem(R.id.action_toggle_whiteboard).setTitle(R.string.disable_whiteboard);
+            // Always allow "Disable Whiteboard", even if "Enable Whiteboard" is disabled
+            menu.findItem(R.id.action_toggle_whiteboard).setVisible(true);
+
             if (!mActionButtons.getStatus().hideWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
             }
             if (!mActionButtons.getStatus().clearWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
             }
-
-            menu.findItem(R.id.action_save_whiteboard).setVisible(true);
-            menu.findItem(R.id.action_change_whiteboard_pen_color).setVisible(true);
+            if (!mActionButtons.getStatus().saveWhiteboardIsDisabled()) {
+                menu.findItem(R.id.action_save_whiteboard).setVisible(true);
+            }
+            if (!mActionButtons.getStatus().whiteboardPenColorIsDisabled()) {
+                menu.findItem(R.id.action_change_whiteboard_pen_color).setVisible(true);
+            }
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp).mutate();
-            Drawable whiteboardColorPaletteIcon = ContextCompat.getDrawable(this, R.drawable.ic_color_lens_white_24dp).mutate();
+            Drawable whiteboardColorPaletteIcon = VectorDrawableCompat.create(getResources(), R.drawable.ic_color_lens_white_24dp, null).mutate();
 
             if (mShowWhiteboard) {
                 whiteboardIcon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
@@ -570,7 +588,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 colorPalette.setVisibility(View.GONE);
             }
         } else {
-            menu.findItem(R.id.action_enable_whiteboard).setTitle(R.string.enable_whiteboard);
+            menu.findItem(R.id.action_toggle_whiteboard).setTitle(R.string.enable_whiteboard);
         }
         if (colIsOpen() && getCol().getDecks().isDyn(getParentDid())) {
             menu.findItem(R.id.action_open_deck_options).setVisible(false);
@@ -841,7 +859,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         // whether there exists a sibling not buried.
         return getCol().getDb().queryScalar("select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
-                new Object[] {mCurrentCard.getNid(), mCurrentCard.getId()}) == 1;
+                mCurrentCard.getNid(), mCurrentCard.getId()) == 1;
     }
 
     private boolean buryNoteAvailable() {
@@ -850,7 +868,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         // Whether there exists a sibling which is neither susbended nor buried
         boolean bury = getCol().getDb().queryScalar("select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
-                new Object[] {mCurrentCard.getNid(), mCurrentCard.getId()}) == 1;
+                mCurrentCard.getNid(), mCurrentCard.getId()) == 1;
         return bury;
     }
 

@@ -18,24 +18,21 @@ package com.ichi2.anki;
 
 import android.util.Log;
 
+import com.ichi2.testutils.AnkiAssert;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.MockedStatic;
 
 import timber.log.Timber;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.atLeast;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(Log.class)
 public class ProductionCrashReportingTreeTest {
 
 
@@ -43,8 +40,13 @@ public class ProductionCrashReportingTreeTest {
     public void setUp() {
 
         // setup - simply instrument the class and do same log init as production
-        PowerMockito.mockStatic(Log.class);
         Timber.plant(new AnkiDroidApp.ProductionCrashReportingTree());
+    }
+
+
+    @After
+    public void tearDown() {
+        Timber.uprootAll();
     }
 
 
@@ -55,26 +57,32 @@ public class ProductionCrashReportingTreeTest {
     @Test
     public void testProductionDebugVerboseIgnored() {
 
-        // set up the platform log so that if anyone calls these 2 methods at all, it throws
-        Mockito.when(Log.v(anyString(), anyString(), any()))
-                .thenThrow(new RuntimeException("Verbose logging should have been ignored"));
-        Mockito.when(Log.d(anyString(), anyString(), any()))
-                .thenThrow(new RuntimeException("Debug logging should be ignored"));
+        try (MockedStatic<Log> ignored = mockStatic(Log.class)) {
+            // set up the platform log so that if anyone calls these 2 methods at all, it throws
+            when(Log.v(anyString(), anyString(), any()))
+                    .thenThrow(new RuntimeException("Verbose logging should have been ignored"));
+            when(Log.d(anyString(), anyString(), any()))
+                    .thenThrow(new RuntimeException("Debug logging should be ignored"));
+            when(Log.i(anyString(), anyString(), any()))
+                    .thenThrow(new RuntimeException("Info logging should throw!"));
 
-        // now call our wrapper - if it hits the platform logger it will throw
-        try {
-            Timber.v("verbose");
-            Timber.d("debug");
-        } catch (Exception e) {
-            Assert.fail("we were unable to log without exception?");
+            // now call our wrapper - if it hits the platform logger it will throw
+            AnkiAssert.assertDoesNotThrow(() -> Timber.v("verbose"));
+            AnkiAssert.assertDoesNotThrow(() -> Timber.d("debug"));
+
+            try {
+                Timber.i("info");
+                Assert.fail("we should have gone to Log.i and thrown but did not? Testing mechanism failure.");
+            } catch (Exception e) {
+                // this means everything worked, we were counting on an exception
+            }
         }
-
     }
 
 
     /**
      * The levels that are fully logged have special "tag" behavior per-level
-     *
+     * <p>
      * Info: always {@link AnkiDroidApp#TAG} as the logging tag
      * Warn/Error: tag is LoggingClass.className()'s most specific dot-separated String subsection
      */
@@ -82,19 +90,20 @@ public class ProductionCrashReportingTreeTest {
     @SuppressWarnings("PMD.JUnitTestsShoudIncludAssert")
     public void testProductionLogTag() {
 
-        // setUp() instrumented the static, now exercise it
-        Timber.i("info level message");
-        Timber.w("warn level message");
-        Timber.e("error level message");
+        try (MockedStatic<Log> autoClosed = mockStatic(Log.class)) {
 
-        // verify that info level had the constant tag
-        verifyStatic(Log.class, atLeast(1));
-        Log.i(AnkiDroidApp.TAG, "info level message", null);
+            // Now let's run through our API calls...
+            Timber.i("info level message");
+            Timber.w("warn level message");
+            Timber.e("error level message");
 
-        // verify Warn/Error has final part of calling class name to start the message
-        verifyStatic(Log.class, atLeast(1));
-        Log.w(AnkiDroidApp.TAG, this.getClass().getSimpleName() + "/ " + "warn level message", null);
-        verifyStatic(Log.class, atLeast(1));
-        Log.e(AnkiDroidApp.TAG, this.getClass().getSimpleName() + "/ " + "error level message", null);
+            // ...and make sure they hit the logger class post-processed correctly
+            AnkiAssert.assertDoesNotThrow(() ->
+                    autoClosed.verify(() -> Log.i(AnkiDroidApp.TAG, "info level message", null)));
+            AnkiAssert.assertDoesNotThrow(() ->
+                    autoClosed.verify(() -> Log.w(AnkiDroidApp.TAG, this.getClass().getSimpleName() + "/ " + "warn level message", null)));
+            AnkiAssert.assertDoesNotThrow(() ->
+                    autoClosed.verify(() -> Log.e(AnkiDroidApp.TAG, this.getClass().getSimpleName() + "/ " + "error level message", null)));
+        }
     }
 }

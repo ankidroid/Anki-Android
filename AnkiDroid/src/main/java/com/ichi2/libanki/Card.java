@@ -187,7 +187,6 @@ public class Card implements Cloneable {
         mCol.getDb().execute(
                 "insert or replace into cards values " +
                 "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                new Object[]{
                 mId,
                 mNid,
                 mDid,
@@ -206,7 +205,7 @@ public class Card implements Cloneable {
                 mODid,
                 mFlags,
                 mData
-        });
+        );
         mCol.log(this);
     }
 
@@ -278,7 +277,7 @@ public class Card implements Cloneable {
     public HashMap<String, String> _getQA(boolean reload, boolean browser) {
         if (mQA == null || reload) {
             Note f = note(reload);
-            JSONObject m = model();
+            Model m = model();
             JSONObject t = template();
             long did = mODid != 0L ? mODid : mDid;
             if (browser) {
@@ -307,7 +306,7 @@ public class Card implements Cloneable {
 
 
     // not in upstream
-    public JSONObject model() {
+    public Model model() {
         return note().model();
     }
 
@@ -331,7 +330,7 @@ public class Card implements Cloneable {
      * Time limit for answering in milliseconds.
      */
     public int timeLimit() {
-        JSONObject conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
+        DeckConfig conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
         return conf.getInt("maxTaken") * 1000;
     }
 
@@ -431,7 +430,7 @@ public class Card implements Cloneable {
     }
 
 
-    public void setType(int type) {
+    public void setType(@Consts.CARD_TYPE int type) {
         mType = type;
     }
 
@@ -584,7 +583,7 @@ public class Card implements Cloneable {
 
 
     public boolean showTimer() {
-        JSONObject options = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
+        DeckConfig options = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
         return DeckConfig.parseTimerOpt(options, true);
     }
 
@@ -638,7 +637,7 @@ public class Card implements Cloneable {
         return flags & 0b111;
     }
 
-    public int getUserFlag() {
+    public int userFlag() {
         return Card.intToFlag(mFlags);
     }
 
@@ -693,5 +692,9 @@ public class Card implements Cloneable {
 
     public boolean isReview() {
         return this.getType() == Consts.CARD_TYPE_REV && this.getQueue() == Consts.QUEUE_TYPE_REV;
+    }
+
+    public boolean isNew() {
+        return this.getType() == Consts.CARD_TYPE_NEW;
     }
 }

@@ -128,4 +128,8 @@
     <string name="sync_error_501_upgrade_required">Aggiorna all\'ultima versione di AnkiDroid</string>
     <string name="sync_error_502_maintenance">AnkiWeb è in manutenzione. Riprova tra qualche minuto.</string>
     <string name="sync_error_504_gateway_timeout">504 errore di timeout gateway ricevuto.</string>
+    <!-- Deck Picker Sync Icon -->
+    <string name="sync_menu_title">Sync</string>
+    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

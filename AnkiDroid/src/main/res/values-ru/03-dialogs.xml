@@ -111,8 +111,8 @@
     <string name="intent_aedict_category">Чтобы добавить карточки в AnkiDroid, удалите все категории Notepad или создайте категорию \"default\"</string>
     <string name="custom_study_new_total_new">Новых карточек в колоде: %d</string>
     <string name="custom_study_rev_total_rev">Карточек для повторения: %d</string>
-    <string name="custom_study_new_extend">Добавить новых на сегодня</string>
-    <string name="custom_study_rev_extend">Добавить повторяемых на сегодня</string>
+    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Забытые за сколько дней повторить:</string>
     <string name="custom_study_ahead">На сколько дней опередить повторение:</string>
     <string name="custom_study_random">Сколько случайных карточек отобрать:</string>
@@ -201,6 +201,7 @@
     <string name="error_selecting_image">Ошибка при выборе изображения. См. руководство. %s</string>
     <string name="error_deleting_image">Ошибка при удалении изображения</string>
     <string name="failed_to_apply_background_image">Не удалось установить фоновое изображение %s</string>
+    <string name="background_image_too_large">Фоновое изображение слишком большое</string>
     <string name="image_max_size_allowed">Максимальный размер изображения – %d МБ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -210,4 +211,11 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Не удалось установить напоминания</string>
     <string name="boot_service_too_many_notifications">Запланировано слишком много напоминаний. Некоторые из них не будут показаны</string>
+    <!--Sync-->
+    <plurals name="sync_automatic_sync_needs_more_time">
+        <item quantity="one">Автоматическая синхронизация может быть запущена через %d секунду</item>
+        <item quantity="few">Автоматическая синхронизация может быть запущена через %d секунды</item>
+        <item quantity="many">Автоматическая синхронизация может быть запущена через %d секунд</item>
+        <item quantity="other">Автоматическая синхронизация может быть запущена через %d секунд</item>
+    </plurals>
 </resources>

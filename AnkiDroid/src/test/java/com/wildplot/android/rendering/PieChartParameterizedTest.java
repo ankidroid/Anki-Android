@@ -7,6 +7,7 @@ import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
 import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,10 +15,9 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.mockito.InOrder;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,14 +30,10 @@ import static org.mockito.ArgumentMatchers.anyFloat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.floatThat;
 import static org.mockito.Mockito.inOrder;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PowerMockRunnerDelegate(Parameterized.class)
-@PrepareForTest({RectangleWrap.class, GraphicsWrap.class, ColorWrap.class, PlotSheet.class,
-        Color.class})
+@RunWith(Parameterized.class)
 @SuppressWarnings("WeakerAccess")
 public class PieChartParameterizedTest {
     private static final double PRECISION = 2 * 1E-3F;
@@ -59,10 +55,12 @@ public class PieChartParameterizedTest {
 
     PieChart pieChart;
 
+    private MockedStatic<Color> colorMockedStatic;
+
     @Before
     public void setUp() {
-        mockStatic(android.graphics.Color.class);
-        MockitoAnnotations.initMocks(this);
+        colorMockedStatic = Mockito.mockStatic(Color.class);
+        MockitoAnnotations.openMocks(this);
         when(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0);
         when(plot.getFrameThickness()).thenReturn(new float[]{0, 0, 0, 0});
 
@@ -74,6 +72,11 @@ public class PieChartParameterizedTest {
         RectangleWrap r = createRectangleMock(100, 100);
         when(graphics.getClipBounds()).thenReturn(r);
         pieChart = new PieChart(plot, values, colors);
+    }
+
+    @After
+    public void tearDown() {
+        colorMockedStatic.close();
     }
 
     @Test

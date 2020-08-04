@@ -160,7 +160,7 @@ public class AbstractFlashcardViewerCommandTest {
     private Card cardWith(@FlagDef int flag) {
         Card c = mock(Card.class);
         int[] flags = new int[] { flag };
-        when(c.getUserFlag()).then((invocation) -> flags[0]);
+        when(c.userFlag()).then((invocation) -> flags[0]);
         doAnswer(invocation -> {
             flags[0] = invocation.getArgument(0);
             return null;

@@ -4,8 +4,8 @@ package com.wildplot.android.rendering;
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
 
 import static java.lang.String.format;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 final class PieChartTestParametersBuilder {
     private final double[] mValues;

@@ -110,7 +110,7 @@ public class Storage {
         try {
             if (ver < 3) {
                 // new deck properties
-                for (JSONObject d : col.getDecks().all()) {
+                for (Deck d : col.getDecks().all()) {
                     d.put("dyn", 0);
                     d.put("collapsed", false);
                     col.getDecks().save(d);
@@ -118,15 +118,15 @@ public class Storage {
             }
             if (ver < 4) {
                 col.modSchemaNoCheck();
-                ArrayList<JSONObject> clozes = new ArrayList<>();
-                for (JSONObject m : col.getModels().all()) {
+                ArrayList<Model> clozes = new ArrayList<>();
+                for (Model m : col.getModels().all()) {
                     if (!m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt").contains("{{cloze:")) {
                         m.put("type", Consts.MODEL_STD);
                     } else {
                         clozes.add(m);
                     }
                 }
-                for (JSONObject m : clozes) {
+                for (Model m : clozes) {
                     try {
                         _upgradeClozeModel(col, m);
                     } catch (ConfirmModSchemaException e) {
@@ -142,7 +142,7 @@ public class Storage {
             }
             if (ver < 6) {
                 col.modSchemaNoCheck();
-                for (JSONObject m : col.getModels().all()) {
+                for (Model m : col.getModels().all()) {
                     m.put("css", new JSONObject(Models.defaultModel).getString("css"));
                     JSONArray ar = m.getJSONArray("tmpls");
                     for (int i = 0; i < ar.length(); i++) {
@@ -178,7 +178,7 @@ public class Storage {
             }
             if (ver < 11) {
                 col.modSchemaNoCheck();
-                for (JSONObject d : col.getDecks().all()) {
+                for (Deck d : col.getDecks().all()) {
                     if (d.getInt("dyn") != 0) {
                         int order = d.getInt("order");
                         // failed order was removed
@@ -202,7 +202,7 @@ public class Storage {
                     }
                     col.getDecks().save(d);
                 }
-                for (JSONObject c : col.getDecks().allConf()) {
+                for (DeckConfig c : col.getDecks().allConf()) {
                     JSONObject r = c.getJSONObject("rev");
                     r.put("ivlFct", r.optDouble("ivlFct", 1));
                     if (r.has("ivlfct")) {
@@ -211,7 +211,7 @@ public class Storage {
                     r.put("maxIvl", 36500);
                     col.getDecks().save(c);
                 }
-                for (JSONObject m : col.getModels().all()) {
+                for (Model m : col.getModels().all()) {
                     JSONArray tmpls = m.getJSONArray("tmpls");
                     for (int ti = 0; ti < tmpls.length(); ++ti) {
                         JSONObject t = tmpls.getJSONObject(ti);
@@ -228,7 +228,7 @@ public class Storage {
     }
 
 
-    private static void _upgradeClozeModel(Collection col, JSONObject m) throws ConfirmModSchemaException {
+    private static void _upgradeClozeModel(Collection col, Model m) throws ConfirmModSchemaException {
         m.put("type", Consts.MODEL_CLOZE);
         // convert first template
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);

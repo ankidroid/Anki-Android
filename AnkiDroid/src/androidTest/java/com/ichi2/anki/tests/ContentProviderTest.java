@@ -37,7 +37,9 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -48,6 +50,7 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,11 +61,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeThat;
 import static org.junit.Assume.assumeTrue;
 
 /**
@@ -109,6 +114,8 @@ public class ContentProviderTest extends InstrumentedTest {
     private static final String[] TEST_MODEL_AFMT = {"{{BACK}}", "{{FRONTS}}"};
     private static final String[] TEST_NOTE_FIELDS = {"dis is za Fr0nt", "Te$t"};
     private static final String TEST_MODEL_CSS = "styleeeee";
+    // Whether tear down should be executed. I.e. if set up was not cancelled.
+    private boolean tearDown;
 
     private int mNumDecksBeforeTest;
     /* initialCapacity set to expected value when the test is written.
@@ -133,12 +140,21 @@ public class ContentProviderTest extends InstrumentedTest {
 
         // We have parameterized the "schedVersion" variable, if we are on an emulator
         // (so it is safe) we will try to run with multiple scheduler versions
+        tearDown = false;
         if (InstrumentedTest.isEmulator()) {
             col.changeSchedulerVer(schedVersion);
+        } else {
+            if (schedVersion == 1) {
+                assumeThat(col.getSched().getName(), is("std"));
+            } else {
+                assumeThat(col.getSched().getName(), is("std2"));
+            }
         }
+        tearDown = true;
+        // Do not teardown if setup was aborted
 
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
+        Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         mModelId = model.getLong("id");
         ArrayList<String> fields = Models.fieldNames(model);
         // Use the names of the fields as test values for the notes which will be added
@@ -190,11 +206,14 @@ public class ContentProviderTest extends InstrumentedTest {
     @After
     public void tearDown() throws Exception {
         Log.i(AnkiDroidApp.TAG, "tearDown()");
+        if (!tearDown) {
+            return;
+        }
         final Collection col = getCol();
         // Delete all notes
         List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);
         if (remnantNotes.size() > 0) {
-            long[] noteIds = Utils.arrayList2array(remnantNotes);
+            long[] noteIds = Utils.collection2Array(remnantNotes);
             col.remNotes(noteIds);
             col.save();
             assertEquals("Check that remnant notes have been deleted", 0, col.findNotes("tag:" + TEST_TAG).size());
@@ -214,7 +233,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
 
     private void removeAllModelsByName(Collection col, String name) throws Exception {
-        JSONObject testModel = col.getModels().byName(name);
+        Model testModel = col.getModels().byName(name);
         while (testModel != null) {
             col.getModels().rem(testModel);
             testModel = col.getModels().byName(name);
@@ -246,7 +265,7 @@ public class ContentProviderTest extends InstrumentedTest {
         JSONObject model = col.getModels().get(mModelId);
         assertNotNull("Check model", model);
         int expectedNumCards = model.getJSONArray("tmpls").length();
-        assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.cards().size());
+        assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.numberOfCards());
         // Now delete the note
         cr.delete(newNoteUri, null, null);
         try {
@@ -266,7 +285,7 @@ public class ContentProviderTest extends InstrumentedTest {
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Collection col = getCol();
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
+        Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
         // Add the note
         Uri modelUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId);
@@ -303,7 +322,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // Get required objects for test
         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
         Collection col = getCol();
-        JSONObject model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
+        Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
         JSONArray initialFieldsArr = model.getJSONArray("flds");
         int initialFieldCount = initialFieldsArr.length();
@@ -511,7 +530,7 @@ public class ContentProviderTest extends InstrumentedTest {
             // Delete the model (this will force a full-sync)
             col.modSchemaNoCheck();
             try {
-                JSONObject model = col.getModels().get(mid);
+                Model model = col.getModels().get(mid);
                 assertNotNull("Check model", model);
                 col.getModels().rem(model);
             } catch (ConfirmModSchemaException e) {
@@ -719,7 +738,7 @@ public class ContentProviderTest extends InstrumentedTest {
                 long deckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
                 String deckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
 
-                JSONObject deck = decks.get(deckID);
+                Deck deck = decks.get(deckID);
                 assertNotNull("Check that the deck we received actually exists", deck);
                 assertEquals("Check that the received deck has the correct name", deck.getString("name"), deckName);
             }
@@ -744,7 +763,7 @@ public class ContentProviderTest extends InstrumentedTest {
                 long returnedDeckID = decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID));
                 String returnedDeckName = decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME));
 
-                JSONObject realDeck = col.getDecks().get(deckId);
+                Deck realDeck = col.getDecks().get(deckId);
                 assertEquals("Check that received deck ID equals real deck ID", deckId, returnedDeckID);
                 assertEquals("Check that received deck name equals real deck name", realDeck.getString("name"), returnedDeckName);
             }
