@@ -1556,8 +1556,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             displayCardAnswer();
             return;
         }
-        answerCard(cardOrdinal);
+        performClickWithVisualFeedback(cardOrdinal);
     }
+
 
     private boolean webViewRendererLastCrashedOnCard(long cardId) {
         return lastCrashingCardId != null && lastCrashingCardId == cardId;
@@ -2621,8 +2622,33 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (!sDisplayAnswer) {
             return false;
         }
-        answerCard(ease);
+        performClickWithVisualFeedback(ease);
         return true;
+    }
+
+
+    protected void performClickWithVisualFeedback(int ease) {
+        // Delay could potentially be lower - testing with 20 left a visible "click"
+        switch (ease) {
+            case EASE_1:
+                performClickWithVisualFeedback(mEase1Layout);
+                break;
+            case EASE_2:
+                performClickWithVisualFeedback(mEase2Layout);
+                break;
+            case EASE_3:
+                performClickWithVisualFeedback(mEase3Layout);
+                break;
+            case EASE_4:
+                performClickWithVisualFeedback(mEase4Layout);
+                break;
+        }
+    }
+
+
+    private void performClickWithVisualFeedback(LinearLayout easeLayout) {
+        easeLayout.requestFocus();
+        easeLayout.postDelayed(easeLayout::performClick, 20);
     }
 
 

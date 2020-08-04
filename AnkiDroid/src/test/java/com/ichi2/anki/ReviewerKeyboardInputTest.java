@@ -486,5 +486,10 @@ public class ReviewerKeyboardInputTest {
         public boolean hasBeenAnswered() {
             return mAnswered != null;
         }
+
+        @Override
+        protected void performClickWithVisualFeedback(int ease) {
+            answerCard(ease);
+        }
     }
 }
