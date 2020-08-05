@@ -39,6 +39,7 @@ import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
+import com.ichi2.anki.contextmenu.AnkiCardContextMenu;
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.exception.ManuallyReportedException;
 import com.ichi2.anki.exception.StorageAccessException;
@@ -265,6 +266,7 @@ public class AnkiDroidApp extends MultiDexApplication {
         }
 
         CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
+        AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
         NotificationChannels.setup(getApplicationContext());
 
         // Configure WebView to allow file scheme pages to access cookies.

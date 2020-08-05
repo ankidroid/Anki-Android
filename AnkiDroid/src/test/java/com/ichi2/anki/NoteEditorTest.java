@@ -44,6 +44,7 @@ import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -261,6 +262,14 @@ public class NoteEditorTest extends RobolectricTest {
 
         List<String> actual = Arrays.asList(editor.getCurrentFieldStrings());
         assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""));
+    }
+
+    @Test
+    public void processTextIntentShouldCopyFirstField() {
+        Intent i = new Intent(Intent.ACTION_PROCESS_TEXT);
+        i.putExtra(EXTRA_PROCESS_TEXT, "hello\nworld");
+        NoteEditor editor = startActivityNormallyOpenCollectionWithIntent(NoteEditor.class, i);
+        assertThat(Arrays.asList(editor.getCurrentFieldStrings()), contains("hello\nworld", ""));
     }
 
     private Intent getCopyNoteIntent(NoteEditor editor) {
