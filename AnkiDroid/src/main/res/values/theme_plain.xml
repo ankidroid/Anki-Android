@@ -28,6 +28,8 @@
         <item name="hardButtonRef">@drawable/footer_button_all_plain</item>
         <item name="goodButtonRef">@drawable/footer_button_all_plain</item>
         <item name="easyButtonRef">@drawable/footer_button_all_plain</item>
+        <!-- Card Browser Colors -->
+        <item name="cardBrowserDivider">?attr/dividerHorizontal</item>
         <!-- FAB -->
         <item name="fab_normal">@color/theme_plain_accent</item>
         <item name="fab_pressed">#c8607d8b</item> <!-- 55 less opacity than fab_normal -->
