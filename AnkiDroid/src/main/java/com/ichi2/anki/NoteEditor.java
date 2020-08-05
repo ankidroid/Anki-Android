@@ -106,6 +106,9 @@ import java.util.Map.Entry;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
+import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
+
 import com.ichi2.async.TaskData;
 
 /**
@@ -364,7 +367,7 @@ public class NoteEditor extends AnkiActivity {
             mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
             if (mCaller == CALLER_NOCALLER) {
                 String action = intent.getAction();
-                if ((ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND.equals(action))) {
+                if ((ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND.equals(action) || ACTION_PROCESS_TEXT.equals(action))) {
                     mCaller = CALLER_CARDEDITOR_INTENT_ADD;
                 }
             }
@@ -687,10 +690,16 @@ public class NoteEditor extends AnkiActivity {
         if (extras == null) {
             return;
         }
-        if (ACTION_CREATE_FLASHCARD.equals(intent.getAction())) {
+        mSourceText = new String[2];
+
+        if (ACTION_PROCESS_TEXT.equals(intent.getAction())) {
+            String stringExtra = intent.getStringExtra(EXTRA_PROCESS_TEXT);
+            Timber.d("Obtained %s from intent: %s", stringExtra, EXTRA_PROCESS_TEXT);
+            mSourceText[0] = stringExtra != null ? stringExtra : "";
+            mSourceText[1] = "";
+        } else if (ACTION_CREATE_FLASHCARD.equals(intent.getAction())) {
             // mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
             // mTargetLanguage = extras.getString(TARGET_LANGUAGE);
-            mSourceText = new String[2];
             mSourceText[0] = extras.getString(SOURCE_TEXT);
             mSourceText[1] = extras.getString(TARGET_TEXT);
         } else {
@@ -714,7 +723,6 @@ public class NoteEditor extends AnkiActivity {
             }
             Pair<String, String> messages = new Pair<>(first, second);
 
-            mSourceText = new String[2];
             mSourceText[0] = messages.first;
             mSourceText[1] = messages.second;
         }
