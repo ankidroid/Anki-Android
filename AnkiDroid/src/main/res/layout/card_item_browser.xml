@@ -24,7 +24,7 @@
         android:paddingStart="3dp"
         android:paddingEnd="3dp"
         android:paddingVertical="1dp"
-        android:gravity= "center_vertical"/>
+        android:gravity="top"/>
 
     <View
         android:layout_width="0.5dp"
@@ -41,6 +41,6 @@
         android:paddingStart="4dp"
         android:paddingEnd="2dp"
         android:paddingVertical="1dp"
-        android:gravity= "center_vertical"/>
+        android:gravity="top"/>
 
 </LinearLayout>
