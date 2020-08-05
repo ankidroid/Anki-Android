@@ -24,9 +24,11 @@ Install
 Install directly from [here on github](https://github.com/ankidroid/Anki-Android/releases/latest) or stay up-to-date
 automatically by installing via an app store:
 
+<span align="center">
 <a href="https://play.google.com/store/apps/details?id=com.ichi2.anki&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="50px"/></a>
 <a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki"><img alt="F-Droid" src="https://upload.wikimedia.org/wikipedia/commons/4/40/%22Get_it_on_F-Droid%22_Badge.svg" height="50px"/></a>
 <a href="http://www.amazon.com/gp/product/B004L1G7T2/ref=mas_pm_ankidroid_flashcards"><img height="50px" src="https://raw.githubusercontent.com/infinyte7/app-store-badge/master/Amazon-app-store.png"/></a>
+</span>
 
 Wiki
 ----
