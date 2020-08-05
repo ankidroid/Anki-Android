@@ -181,7 +181,7 @@
     <string name="card_template_editor_styling">造型</string>
     <string name="card_template_editor_menu_delete">刪除</string>
     <string name="card_template_editor_menu_card_browser_appearance">卡片瀏覽器外觀</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">牌組覆蓋</string>
     <string name="card_template_editor_cant_delete">需要至少一個卡片種類。</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">刪除卡片種類 \"%2$s\"，和它的 %1$d 張卡片？</item>
@@ -195,6 +195,8 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">讀寫 AnkiDroid 資料庫</string>
     <string name="read_write_permission_description">瀏覽現有的筆記、卡片、筆記類型和牌組，或者自己動手建立新的~</string>
+    <!-- Context Menu -->
     <string name="card_browser_label">卡片瀏覽器</string>
     <string name="card_browser_context_menu">卡片瀏覽器</string>
+    <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

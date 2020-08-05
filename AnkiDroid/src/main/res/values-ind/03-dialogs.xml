@@ -71,6 +71,7 @@
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d kartu direset</item>
     </plurals>
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">Jadwalkan ulang kartu</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">Jadwalkan ulang kartu</item>
@@ -82,6 +83,8 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d kartu dijadwalkan ulang</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Pilih dek di manajer penyimpanan atau kunjungi halaman about:downloads untuk mengimpor</string>
     <string name="answering_error_title">Galat basisdata</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Basisdata mungkin korup atau tidak cukup ruang pada penyimpanan. \ n \ n Jika ini sering terjadi, cobalah periksa database, perbaiki koleksi atau mengembalikan dari cadangan. Sentuh \"pengaturan\" untuk ini. \ n \ Atau bisa juga bug dari AnkiDroid; harap laporkan galatnya agar kami bisa mengeceknya.</string>

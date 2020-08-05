@@ -99,8 +99,8 @@
         <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱫᱚᱞᱮᱱᱟ</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱱᱟᱶᱟ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="custom_study_increase_review_limit">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱱᱟᱶᱟ ᱧᱮᱧᱮᱞ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="custom_study_review_forgotten">ᱦᱤᱲᱤᱧᱼᱠᱚᱜ ᱠᱟᱰ ᱧᱮᱞ ᱵᱤᱰᱟᱩ ᱢᱮ</string>
     <string name="custom_study_review_ahead">ᱢᱟᱲᱟᱝ ᱥᱮᱱ ᱨᱤᱵᱷᱤᱣ ᱢᱮ</string>
     <string name="custom_study_random_selection">ᱨᱮᱱᱰᱚᱢ ᱥᱤᱞᱮᱠᱚᱱ ᱠᱟᱰ ᱠᱷᱚᱱ ᱯᱲᱦᱟᱣᱼᱜ ᱢᱮ</string>
@@ -276,24 +276,24 @@
     <string name="white_board_image_saved">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ %s ᱛᱮ ᱥᱟᱱᱪᱟᱣ</string>
     <string name="title_whiteboard_pen_color">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱠᱚᱞᱚᱢ ᱨᱚᱰ</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱧᱟᱢᱮᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱦᱟᱹᱛᱤᱭᱟᱨ>ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱠᱚ ᱨᱮ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ ᱾ ]]></string>
+    <string name="note_importer_error_empty_first_field">ᱢᱟᱲᱟᱝ ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ: %s</string>
+    <string name="note_importer_error_first_field_matched">ᱢᱟᱲᱟᱝ ᱡᱟᱭᱜᱟ ᱥᱟᱞᱟᱜ ᱥᱚᱢᱟᱱ ᱮᱱᱟ: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">ᱢᱟᱲᱟᱝ ᱡᱟᱭᱜᱟ ᱨᱮ ᱱᱚᱠᱚᱞ ᱥᱮᱞᱮᱫ ᱮᱱᱟ: %s</string>
+    <string name="note_importer_error_appeared_twice">ᱨᱮᱪ ᱨᱮ ᱵᱟᱨ ᱡᱮᱠᱷᱟ ᱧᱮᱞᱪᱷᱚᱭ ᱮᱱᱟ: %s</string>
     <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ ᱴᱷᱮᱱ %2$d ᱡᱟᱭᱜᱟ, %3$d ᱟᱥᱟ ᱛᱟᱦᱮᱸ ᱠᱟᱱᱟ</string>
+    <string name="csv_importer_error_exception">ᱰᱟᱫ ᱮᱱᱟ: %s</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
+        <item quantity="other">%d ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d ᱱᱚᱴ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ</item>
+        <item quantity="other">%d ᱱᱚᱴ ᱠᱚ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d ᱱᱚᱴ ᱵᱟᱝ ᱵᱚᱫᱚᱞᱟᱠᱟᱱᱟ</item>
+        <item quantity="other">%d ᱱᱚᱴ ᱠᱚ ᱵᱟᱝ ᱵᱚᱫᱚᱞᱟᱠᱟᱱᱟ</item>
     </plurals>
 </resources>

@@ -99,8 +99,8 @@
         <item>Nota modificata</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Modifica il limite odierno di nuove carte</string>
+    <string name="custom_study_increase_review_limit">Modifica il limite odierno di revisioni</string>
     <string name="custom_study_review_forgotten">Ripeti carte dimenticate</string>
     <string name="custom_study_review_ahead">Ripeti in anticipo</string>
     <string name="custom_study_random_selection">Studia una selezione casuale di carte</string>
@@ -114,7 +114,7 @@
     <string name="note_editor_no_first_field">Il primo campo è vuoto</string>
     <string name="note_editor_no_cloze_delations">Questo tipo di nota deve contenere cloze</string>
     <string name="note_editor_no_cards_created_all_fields">Il tipo di nota attuale non ha prodotto nessuna carta.\nScegli un altro tipo di nota, o fai clic su «Carte» e aggiungi una sostituzione del campo</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">I cloze deletions funzionano solo sui tipi di nota Cloze</string>
     <string name="saving_facts">Salvataggio nota</string>
     <string name="saving_model">Salvataggio tipo di nota</string>
     <string name="add">Aggiungi</string>
@@ -280,24 +280,24 @@
     <string name="white_board_image_saved">Immagine lavagna salvata in %s</string>
     <string name="title_whiteboard_pen_color">Colore della penna della lavagna</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[Trovate carte vuote. Si prega di eseguire Strumenti>Carte Vuote.]]></string>
+    <string name="note_importer_error_empty_first_field">Primo campo vuoto: %s</string>
+    <string name="note_importer_error_first_field_matched">Primo campo corrisponde: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Aggiunto duplicato con il primo campo: %s</string>
+    <string name="note_importer_error_appeared_twice">Apparso due volte nel file: %s</string>
+    <string name="note_importer_error_empty_notes">Una o più note non sono state importate, perché non hanno generato alcuna carta. Ciò può accadere quando hai dei campi vuoti o quando non hai mappato il contenuto del file di testo ai giusti campi</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ ha %2$d campi, su %3$d attesi</string>
+    <string name="csv_importer_error_exception">Interrotto: %s</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d nota aggiunta</item>
+        <item quantity="other">%d note aggiunte</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d nota aggiornata</item>
+        <item quantity="other">%d note aggiornate</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d nota invariata</item>
+        <item quantity="other">%d note invariate</item>
     </plurals>
 </resources>

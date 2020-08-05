@@ -46,9 +46,9 @@
     <string name="delete_deck_default_deck">Nelze odstranit výchozí balíček</string>
     <string name="delete_deck_title">Smazat balíček</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Odstranit kartu v %1$s? Obsahuje %2$d kartu.</item>
+        <item quantity="one">Odstranit všechny karty v %1$s? Obsahuje %2$d kartu.</item>
         <item quantity="few">Odstranit všechny karty v %1$s? Obsahuje %2$d karty.</item>
-        <item quantity="many">Odstranit všechny karty v %1$s? Obsahuje %2$d karet.</item>
+        <item quantity="many">Odstranit všechny karty v %1$s? Obsahuje %2$d karty.</item>
         <item quantity="other">Odstranit všechny karty v %1$s? Obsahuje %2$d karet.</item>
     </plurals>
     <string name="delete_cram_deck_message">Jste si jistý, že si přejete poslat všechny karty z balíčku %s zpátky do původního balíčku?</string>
@@ -69,7 +69,7 @@
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d karta přesunuta</item>
         <item quantity="few">%d karty přesunuty</item>
-        <item quantity="many">%d karet přesunuto</item>
+        <item quantity="many">%d karty přesunuto</item>
         <item quantity="other">%d karet přesunuto</item>
     </plurals>
     <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
@@ -77,9 +77,10 @@
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d karta obnovena</item>
         <item quantity="few">%d karty obnoveny</item>
-        <item quantity="many">%d karet obnoveno</item>
+        <item quantity="many">%d karty obnoveno</item>
         <item quantity="other">%d karet obnoveno</item>
     </plurals>
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">Přeplánovat kartu</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Přeplánovat kartu</item>
@@ -97,12 +98,14 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d karta přeplánována</item>
         <item quantity="few">%d karty přeplánovány</item>
-        <item quantity="many">%d karet přeplánováno</item>
+        <item quantity="many">%d karty přeplánováno</item>
         <item quantity="other">%d karet přeplánováno</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Chyba databáze</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>
     <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři \'%s\'.</string>
     <string name="intent_add_saved_information">Uložená data</string>
@@ -111,8 +114,8 @@
     <string name="intent_aedict_category">Chcete-li přidat AnkiDroid karty, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem \'default\'</string>
     <string name="custom_study_new_total_new">Nové karty v balíčku: %d</string>
     <string name="custom_study_rev_total_rev">K opakování v balíčku: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">Zvýšit/snížit („-3“) dnešní limit nových karet o</string>
+    <string name="custom_study_rev_extend">Zvýšit/snížit („-3“) dnešní limit opakování o</string>
     <string name="custom_study_forgotten">Opakovat zapomenuté karty z posledních x dnů:</string>
     <string name="custom_study_ahead">Opakovat dopředu o x dnů:</string>
     <string name="custom_study_random">Vybrat náhodně x karet z balíčku:</string>
@@ -183,7 +186,7 @@
     <string name="integrity_check_continue_anyway">Přesto pokračovat</string>
     <string name="integrity_check_insufficient_space">Kontrola databáze používá velké množství dočasného úložiště.\n\nDůrazně se doporučuje, abyste předtím, než budete pokračovat, měli v zařízení alespoň %s volného místa.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nMomentálně máte %s volného místa.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
+    <string name="integrity_check_fixed_no_home_deck">Bylo obnoveno %d karet s nesprávnými domovskými balíčky. Více informací naleznete v příručce.</string>
     <string name="video_creation_error">Nelze přehrát video</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Nelze změnit balíček</string>
@@ -198,7 +201,7 @@
     <string name="background_image_applied">Obrázek na pozadí byl použit</string>
     <string name="background_image_removed">Obrázek na pozadí byl odstraněn</string>
     <string name="no_image_selected">Nebyl vybrán žádný obrázek</string>
-    <string name="error_selecting_image">Chyba při výběru obrázku. Podívejte se na manuál. %s</string>
+    <string name="error_selecting_image">Chyba při výběru obrázku. Podívejte se do příručky. %s</string>
     <string name="error_deleting_image">Chyba při odstraňování obrázku</string>
     <string name="failed_to_apply_background_image">Nepodařilo se použít obrázek pozadí %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>

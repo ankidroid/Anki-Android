@@ -74,6 +74,7 @@
         <item quantity="one">%d carta resettata</item>
         <item quantity="other">%d carte resettate</item>
     </plurals>
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">Rischedula la scheda</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Riprogramma la carta</item>
@@ -88,6 +89,8 @@
         <item quantity="one">%d carta ripianificata</item>
         <item quantity="other">%d carte ripianificate</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Seleziona il mazzo nel gestitore di file o visita la pagina about:download per importarlo</string>
     <string name="answering_error_title">Errore database</string>
     <string name="answering_error_message">Scrittura della raccolta non riuscita. La banca dati potrebbe essere danneggiata o potrebbe non esserci abbastanza spazio vuoto sul disco.\n\nSe questo accade più spesso, prova a controllare la banca dati, a riparare la collezione o a ripristinarla da un backup. Tocca «opzioni» per quello.\n\O potrebbe essere anche un errore di AnkiDroid, per favore segnala l\'errore in modo da poterlo controllare.</string>
@@ -99,8 +102,8 @@
     <string name="intent_aedict_category">Per aggiungere le carte ad AnkiDroid rimuovi tutte le categorie Notepad o aggiungine una chiamata \'default\'</string>
     <string name="custom_study_new_total_new">Carte nuove nel mazzo: %d</string>
     <string name="custom_study_rev_total_rev">Da ripetere nel mazzo: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">Aumentare/diminuire (“-3”) il limite odierno di nuove carte di</string>
+    <string name="custom_study_rev_extend">Aumentare/diminuire (“-3”) il limite odierno di revisioni di</string>
     <string name="custom_study_forgotten">Ripeti carte dimenticate negli ultimi x giorni:</string>
     <string name="custom_study_ahead">Ripeti in anticipo di x giorni:</string>
     <string name="custom_study_random">Seleziona x carte casualmente dal mazzo:</string>
@@ -201,7 +204,7 @@
     <string name="boot_service_too_many_notifications">Troppi promemoria pianificati. Alcuni non appariranno.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">Una sincronizzazione automatica potrebbe essere attivata in %d secondo</item>
+        <item quantity="other">Una sincronizzazione automatica potrebbe essere attivata in %d secondi</item>
     </plurals>
 </resources>

@@ -80,6 +80,7 @@
         <item quantity="many">%d карточек сброшены</item>
         <item quantity="other">%d карточек сброшены</item>
     </plurals>
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">Изменить расписание карточки</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Перепланировать карточку</item>
@@ -100,6 +101,8 @@
         <item quantity="many">%d карточек перепланированы</item>
         <item quantity="other">%d карточек перепланированы</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Для импорта выберите колоду в файловом менеджере или посетите страницу about:downloads</string>
     <string name="answering_error_title">Ошибка в базе данных</string>
     <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибка в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>

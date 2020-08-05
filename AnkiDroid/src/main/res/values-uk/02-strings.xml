@@ -99,8 +99,8 @@
         <item>Запис змінено</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>
+    <string name="custom_study_increase_review_limit">Змінити сьогоднішній ліміт на повторення карток</string>
     <string name="custom_study_review_forgotten">Повторити забуті картки</string>
     <string name="custom_study_review_ahead">Повторити наперед</string>
     <string name="custom_study_random_selection">Вивчати випадковий набір карток</string>
@@ -300,30 +300,30 @@
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
     <string name="title_whiteboard_pen_color">Колір пензля</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[Знайдено порожні карти. Будь ласка, запустіть Інструменти > Порожні картки.]]></string>
+    <string name="note_importer_error_empty_first_field">Порожнє перше поле: %s</string>
+    <string name="note_importer_error_first_field_matched">Перше поле відповідне: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Додано дублікат з першим полем: %s</string>
+    <string name="note_importer_error_appeared_twice">У файлі відображено двічі: %s</string>
+    <string name="note_importer_error_empty_notes">Один чи більше запис не імпортовано, оскільки вони не згенерували картки. Це може статися, коли у вас є пусті поля, або коли Ви правильно не зіставляли вміст в текстовому файлі до полів</string>
+    <string name="csv_importer_error_invalid_field_count">«%1$s» мала %2$d полів, очікувалось %3$d</string>
+    <string name="csv_importer_error_exception">Перервано: %s</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="few">%d notes added</item>
-        <item quantity="many">%d notes added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d запис додано</item>
+        <item quantity="few">%d записи додано</item>
+        <item quantity="many">%d записів додано</item>
+        <item quantity="other">%d записів додано</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="few">%d notes updated</item>
-        <item quantity="many">%d notes updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d запис оновлено</item>
+        <item quantity="few">%d записи оновлено</item>
+        <item quantity="many">%d записів оновлено</item>
+        <item quantity="other">%d записів оновлено</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="few">%d notes unchanged</item>
-        <item quantity="many">%d notes unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d запис не змінено</item>
+        <item quantity="few">%d записи не змінено</item>
+        <item quantity="many">%d записів не змінено</item>
+        <item quantity="other">%d записів не змінено</item>
     </plurals>
 </resources>

@@ -74,6 +74,7 @@
         <item quantity="one">%d kártya visszaállítva</item>
         <item quantity="other">%d kártyák visszaállítva</item>
     </plurals>
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">Kártya átütemezés</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Kártya átütemezése</item>
@@ -88,6 +89,8 @@
         <item quantity="one">%d kártya átütemezve</item>
         <item quantity="other">%d kártyák átütemezve</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Válassza ki a kártyát a fájlkezelőjéből vagy látogassa meg az about:downloads oldalt és importálja azt</string>
     <string name="answering_error_title">Adatbázis hiba</string>
     <string name="answering_error_message">A gyűjteménybe írás sikertelen. Az adatbázis lehet, hogy korrupt vagy nincs elég hely a lemezen.\n\n. Ha gyakrabban történik ilyen, akkor próbálja ellenőrizni az adatbázist, javítsa meg a gyűjteményt vagy állítsa azt vissza egy biztonsági másolatból. Ehhez nyomjon rá a \"beállításokra\".\n. Vagy lehet, hogy ez egy AnkiDroid bug; kérjük jelentse a hibát, hogy le tudjuk ellenőrizni.</string>

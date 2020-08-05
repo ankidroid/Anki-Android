@@ -212,7 +212,7 @@
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d balíček používá tuto skupinu</item>
         <item quantity="few">%1$s\n%2$d balíčky používají tuto skupinu</item>
-        <item quantity="many">%1$s\n%2$d balíčků používá tuto skupinu</item>
+        <item quantity="many">%1$s\n%2$d balíčku používá tuto skupinu</item>
         <item quantity="other">%1$s\n%2$d balíčků používá tuto skupinu</item>
     </plurals>
     <string name="deck_conf_new_cards">Nové karty</string>
@@ -263,8 +263,8 @@
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s podřízený balíček bude používat tuto skupinu</item>
         <item quantity="few">%s podřízené balíčky budou používat tuto skupinu</item>
-        <item quantity="many">%s podřízených balíčků budou používat tuto skupinu</item>
-        <item quantity="other">%s podřízených balíčků budou používat tuto skupinu</item>
+        <item quantity="many">%s podřízeného balíčku bude používat tuto skupinu</item>
+        <item quantity="other">%s podřízených balíčků bude používat tuto skupinu</item>
     </plurals>
     <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>
     <string name="deck_conf_set_subdecks_message">Použít aktuální nastavení pro všechny podřízené balíčky tohoto balíčku?</string>
