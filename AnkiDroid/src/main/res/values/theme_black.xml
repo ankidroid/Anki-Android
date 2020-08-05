@@ -54,6 +54,8 @@
         <item name="hardButtonRef">@drawable/footer_button_all_black</item>
         <item name="goodButtonRef">@drawable/footer_button_all_black</item>
         <item name="easyButtonRef">@drawable/footer_button_all_black</item>
+        <!-- Card Browser Colors -->
+        <item name="cardBrowserDivider">@color/white</item>
         <!-- Stats colors -->
         <item name="stats_young">#7c7</item>
         <item name="stats_mature">#070</item>

@@ -60,6 +60,8 @@
     <attr name="hardButtonTextColor" format="color"/>
     <attr name="goodButtonTextColor" format="color"/>
     <attr name="easyButtonTextColor" format="color"/>
+    <!-- Card Browser Colors -->
+    <attr name="cardBrowserDivider" format="color"/>
     <!-- Stats colors -->
     <attr name="stats_young" format="color"/>
     <attr name="stats_mature" format="color"/>
