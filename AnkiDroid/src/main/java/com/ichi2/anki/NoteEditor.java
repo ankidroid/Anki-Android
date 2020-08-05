@@ -20,7 +20,6 @@ package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -105,7 +104,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import androidx.core.text.HtmlCompat;
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
@@ -982,6 +980,7 @@ public class NoteEditor extends AnkiActivity {
                 Timber.i("NoteEditor:: Save note button pressed");
                 saveNote();
                 return true;
+
             case R.id.action_add_note_from_note_editor:
                 Timber.i("NoteEditor:: Add Note button pressed");
                 addNewNote();
@@ -996,6 +995,7 @@ public class NoteEditor extends AnkiActivity {
 
         }
     }
+
 
     public void addNewNote() {
         openNewNoteEditor(intent -> { });
