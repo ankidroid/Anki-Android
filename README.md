@@ -4,13 +4,13 @@
 A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!
 
 <p align="center">
-<img src="https://img.shields.io/github/v/release/ankidroid/Anki-Android" alt="release"/>
-<img src="https://travis-ci.org/ankidroid/Anki-Android.svg?branch=master&amp;status=passed" alt="build"/>
-<img src="https://img.shields.io/github/issues/ankidroid/Anki-Android" alt="issues"/>
-<img src="https://img.shields.io/github/forks/ankidroid/Anki-Android" alt="forks"/>
-<img src="https://img.shields.io/github/stars/ankidroid/Anki-Android" alt="stars"/>
-<img src="https://img.shields.io/github/contributors/ankidroid/Anki-Android" alt="contributors"/>
-<img src="https://img.shields.io/github/license/ankidroid/Anki-Android" alt="license"/>
+<a href="https://github.com/ankidroid/Anki-Android/releases"><img src="https://img.shields.io/github/v/release/ankidroid/Anki-Android" alt="release"/></a>
+<a href="https://travis-ci.org/github/ankidroid/Anki-Android"><img src="https://img.shields.io/travis/ankidroid/Anki-Android" alt="build"/></a>
+<a href="https://github.com/ankidroid/Anki-Android/issues"><img src="https://img.shields.io/github/issues/ankidroid/Anki-Android" alt="issues"/></a>
+<a href="https://github.com/ankidroid/Anki-Android/network/members"><img src="https://img.shields.io/github/forks/ankidroid/Anki-Android" alt="forks"/></a>
+<a href="https://github.com/ankidroid/Anki-Android/stargazers"><img src="https://img.shields.io/github/stars/ankidroid/Anki-Android" alt="stars"/></a>
+<a href="https://github.com/ankidroid/Anki-Android/graphs/contributors"><img src="https://img.shields.io/github/contributors/ankidroid/Anki-Android" alt="contributors"/></a>
+<a href="https://github.com/ankidroid/Anki-Android/blob/master/COPYING"><img src="https://img.shields.io/github/license/ankidroid/Anki-Android" alt="license"/></a>
 </p>
 
 ![Screenshot](https://raw.githubusercontent.com/ankidroid/ankidroiddocs/master/img/4-reviewer.png)
