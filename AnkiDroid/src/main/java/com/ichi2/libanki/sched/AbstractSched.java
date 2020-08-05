@@ -14,6 +14,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.utils.Time;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -239,6 +240,14 @@ public abstract class AbstractSched {
      * @param wasLeech Whether the card was a leech before the review was made (if false, remove the leech tag)
      * */
     public abstract void undoReview(@NonNull Card card, boolean wasLeech);
+
+
+    /**
+     * @return The current time dependency that the scheduler is using (used for Unit Testing).
+     */
+    @NonNull
+    public abstract Time getTime();
+
 
     public interface LimitMethod {
         int operation(Deck g);
