@@ -24,6 +24,7 @@ package com.ichi2.anki;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -48,6 +49,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import androidx.core.net.ConnectivityManagerCompat;
+import androidx.core.text.HtmlCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
 import android.text.SpannableString;
@@ -87,6 +89,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
+import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.dialogs.TagsDialog;
@@ -339,6 +342,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** File of the temporary mic record **/
     protected AudioView mMicToolBar;
     protected String mTempAudioPath;
+
+    // Console log in JS api
+    private static String jsApiConsoleLog = "";
+    private static boolean enableDebugMode;
 
     /**
      * Last card that the WebView Renderer crashed on.
@@ -1929,6 +1936,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void displayCardQuestion() {
         displayCardQuestion(false);
+        jsApiConsoleLog = "";
     }
 
     protected void displayCardQuestion(boolean reload) {
@@ -2673,26 +2681,39 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return true;
         }
 
-        static String log = "";
         @Override
         public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
             /*
             * Line: 7
             * Message: Some message
-            * Source: file:///...
              */
-            log += "<font color='#455A64'> Line: </font><font color='#E64A19'>" + consoleMessage.lineNumber() + "</font><br/>"
-                    + "<font color='#455A64'>Message: </font><font color='#F44336'> " + consoleMessage.message() + "</font><br/>"
-                    + "<font color='#455A64'>Source: </font><font color='#F57C00'> " + consoleMessage.sourceId() + "</font>"
-                    + "<br/><br/>";
-            return true;
-        }
+            StringBuilder sb = new StringBuilder();
 
-        public static String getConsoleLog() {
-            return log;
+            sb.append("Line: ");
+            sb.append(consoleMessage.lineNumber());
+            sb.append("<br/>");
+
+            sb.append("Message: ");
+            if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.ERROR || consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.WARNING) {
+                sb.append("<font color='#f44336'>");
+                sb.append(consoleMessage.message());
+                sb.append("</font>");
+            } else {
+                sb.append(consoleMessage.message());
+            }
+
+            sb.append("<br/><br/>");
+            showConsoleLog(sb.toString());
+
+            return true;
         }
     }
 
+    protected static void showConsoleLog(String log) {
+        if (enableDebugMode) {
+            jsApiConsoleLog += log;
+        }
+    }
 
     protected void closeReviewer(int result, boolean saveDeck) {
         // Stop the mic recording if still pending
@@ -3706,6 +3727,35 @@ see card.js for available functions
             } catch (Exception e) {
                 Timber.w(e, "Exception obtaining metered connection - assuming metered connection");
                 return true;
+            }
+        }
+
+        @JavascriptInterface
+        public void ankiJsConsoleLog(boolean enableLog) {
+            if (enableLog) {
+                enableDebugMode = true;
+
+                View parentLayout = findViewById(android.R.id.content);
+
+                Snackbar snackbar = Snackbar.make(parentLayout, "Bebug Mode Enabled", Snackbar.LENGTH_LONG);
+                View snackbarView = snackbar.getView();
+                TextView snackTextView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+                snackTextView.setTextColor(Color.WHITE);
+                snackTextView.setMaxLines(3);
+
+                snackbar.setActionTextColor(Color.MAGENTA)
+                        .setAction("view", view -> {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(AbstractFlashcardViewer.this);
+                            builder.setTitle("Console")
+                                    .setMessage(HtmlCompat.fromHtml(jsApiConsoleLog, HtmlCompat.FROM_HTML_MODE_LEGACY));
+
+                            AlertDialog alert = builder.create();
+                            alert.show();
+
+                        });
+
+                snackbar.show();
             }
         }
     }

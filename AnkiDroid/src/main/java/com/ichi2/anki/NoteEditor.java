@@ -982,10 +982,6 @@ public class NoteEditor extends AnkiActivity {
                 Timber.i("NoteEditor:: Save note button pressed");
                 saveNote();
                 return true;
-
-            case R.id.action_view_console_log:
-                viewConsoleLog();
-                return true;
             case R.id.action_add_note_from_note_editor:
                 Timber.i("NoteEditor:: Add Note button pressed");
                 addNewNote();
@@ -1000,18 +996,6 @@ public class NoteEditor extends AnkiActivity {
 
         }
     }
-
-
-    private void viewConsoleLog() {
-        String log = AbstractFlashcardViewer.AnkiDroidWebChromeClient.getConsoleLog();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Console")
-                .setMessage(HtmlCompat.fromHtml(log, HtmlCompat.FROM_HTML_MODE_LEGACY));
-
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
 
     public void addNewNote() {
         openNewNoteEditor(intent -> { });
