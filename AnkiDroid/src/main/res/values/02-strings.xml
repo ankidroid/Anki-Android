@@ -306,4 +306,9 @@
         <item quantity="one">%d note unchanged</item>
         <item quantity="other">%d notes unchanged</item>
     </plurals>
+
+    <!--js api console log-->
+    <string name="js_api_console">Console</string>
+    <string name="js_api_debug_mode_enabled">Debug Mode Enabled</string>
+    <string name="js_api_console_action">View</string>
 </resources>

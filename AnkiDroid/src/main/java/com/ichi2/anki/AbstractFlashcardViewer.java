@@ -346,6 +346,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // Console log in JS api
     private static String jsApiConsoleLog = "";
     private static boolean enableDebugMode;
+    private static boolean jsApiGetAllLog = false;
 
     /**
      * Last card that the WebView Renderer crashed on.
@@ -2683,10 +2684,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         @Override
         public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-            /*
-            * Line: 7
-            * Message: Some message
-             */
+            showConsoleLog(consoleMessage);
+            return true;
+        }
+    }
+
+    protected static void showConsoleLog(ConsoleMessage consoleMessage) {
+
+        if (!enableDebugMode) {
+            return;
+        } else {
+
             StringBuilder sb = new StringBuilder();
 
             sb.append("Line: ");
@@ -2703,15 +2711,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
 
             sb.append("<br/><br/>");
-            showConsoleLog(sb.toString());
 
-            return true;
-        }
-    }
-
-    protected static void showConsoleLog(String log) {
-        if (enableDebugMode) {
-            jsApiConsoleLog += log;
+            // when all log requested from JavaScriptInterface, by default jsApiGetAllLog is false
+            if (jsApiGetAllLog) {
+                jsApiConsoleLog += sb.toString();   // log get added to jsApiConsoleLog
+            } else {
+                jsApiConsoleLog = sb.toString();    // last log assigned to jsApiConsoleLog
+            }
         }
     }
 
@@ -3731,31 +3737,26 @@ see card.js for available functions
         }
 
         @JavascriptInterface
-        public void ankiJsConsoleLog(boolean enableLog) {
-            if (enableLog) {
+        public void ankiJsConsoleLog(boolean enableLog, boolean allLog) {
+            if (!enableLog) {
+                return;
+            } else {
                 enableDebugMode = true;
 
-                View parentLayout = findViewById(android.R.id.content);
+                if (allLog) {
+                    jsApiGetAllLog = true;
+                }
 
-                Snackbar snackbar = Snackbar.make(parentLayout, "Bebug Mode Enabled", Snackbar.LENGTH_LONG);
-                View snackbarView = snackbar.getView();
-                TextView snackTextView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-                snackTextView.setTextColor(Color.WHITE);
-                snackTextView.setMaxLines(3);
+                UIUtils.showSnackbar(AbstractFlashcardViewer.this, R.string.js_api_debug_mode_enabled, false, R.string.js_api_console_action, (v) -> {
 
-                snackbar.setActionTextColor(Color.MAGENTA)
-                        .setAction("view", view -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AbstractFlashcardViewer.this);
+                    builder.setTitle(getString(R.string.js_api_console))
+                            .setMessage(HtmlCompat.fromHtml(jsApiConsoleLog, HtmlCompat.FROM_HTML_MODE_LEGACY));
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(AbstractFlashcardViewer.this);
-                            builder.setTitle("Console")
-                                    .setMessage(HtmlCompat.fromHtml(jsApiConsoleLog, HtmlCompat.FROM_HTML_MODE_LEGACY));
+                    AlertDialog alert = builder.create();
+                    alert.show();
 
-                            AlertDialog alert = builder.create();
-                            alert.show();
-
-                        });
-
-                snackbar.show();
+                }, null);
             }
         }
     }
