@@ -19,8 +19,8 @@ A semi-official port of the open source [Anki](http://ankisrs.net/index.html) sp
 <img src="https://raw.githubusercontent.com/ankidroid/ankidroiddocs/master/img/4-reviewer.png"></img>
 </p>
 
-# Install
-
+Install
+-------
 Install directly from [here on github](https://github.com/ankidroid/Anki-Android/releases/latest) or stay up-to-date
 automatically by installing via an app store:
 
