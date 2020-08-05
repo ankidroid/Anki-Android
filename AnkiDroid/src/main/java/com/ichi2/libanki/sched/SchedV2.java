@@ -2894,6 +2894,13 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @NonNull
+    @Override
+    public Time getTime() {
+        return mTime;
+    }
+
+
     /** End #5666 */
     public void discardCurrentCard() {
         mCurrentCard = null;

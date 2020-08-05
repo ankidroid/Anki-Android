@@ -226,7 +226,8 @@ public class Collection {
             throw new RuntimeException("Unsupported scheduler version");
         }
         modSchema();
-        SchedV2 v2Sched = new SchedV2(this);
+        @SuppressLint("VisibleForTests")
+        SchedV2 v2Sched = new SchedV2(this, mSched.getTime());
         clearUndo();
         if (ver == 1) {
             v2Sched.moveToV1();
@@ -2074,7 +2075,7 @@ public class Collection {
     public void replaceSchedulerForTests(Time time) {
         int ver = schedVer();
         if (ver == 1) {
-            throw new IllegalStateException("Not Implemented");
+            mSched = new Sched(this, time);
         } else if (ver == 2) {
             mSched = new SchedV2(this, time);
         }
