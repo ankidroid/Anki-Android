@@ -21,15 +21,26 @@
         android:layout_weight="1"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        android:paddingVertical="1dp"
         android:gravity= "center_vertical"/>
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="fill_parent"
+        android:background="?attr/cardBrowserDivider" />
 
     <TextView
         android:id="@+id/card_column2"
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="2dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="2dp"
+        android:paddingVertical="1dp"
         android:gravity= "center_vertical"/>
 
 </LinearLayout>
