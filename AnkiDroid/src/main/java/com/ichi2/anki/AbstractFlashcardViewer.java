@@ -345,7 +345,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Console log in JS api
     private static String jsApiConsoleLog = "";
-    private static boolean enableDebugMode;
+    private static boolean enableDebugMode = false;
     private static boolean jsApiGetAllLog = false;
 
     /**
@@ -2696,12 +2696,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         } else {
 
             StringBuilder sb = new StringBuilder();
-
-            sb.append("Line: ");
-            sb.append(consoleMessage.lineNumber());
-            sb.append("<br/>");
-
-            sb.append("Message: ");
+            
+            // message
             if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.ERROR || consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.WARNING) {
                 sb.append("<font color='#f44336'>");
                 sb.append(consoleMessage.message());
@@ -2709,6 +2705,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } else {
                 sb.append(consoleMessage.message());
             }
+
+            // source
+            sb.append("<br/>");
+            sb.append("<font color='#37474F'>");
+            sb.append(consoleMessage.sourceId());
+
+            // line
+            sb.append(":");
+            sb.append(consoleMessage.lineNumber());
+            sb.append("</font>");
 
             sb.append("<br/><br/>");
 
