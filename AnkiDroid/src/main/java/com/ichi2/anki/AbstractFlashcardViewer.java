@@ -201,6 +201,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // js api developer contact
     private String mCardSuppliedDeveloperContact  = "";
+    private String mCardSuppliedApiVersion = "";
 
     private static final String sCurrentJsApiVersion = "0.0.1";
     private static final String sMinimumJsApiVersion = "0.0.1";
@@ -1947,6 +1948,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void displayCardQuestion() {
         displayCardQuestion(false);
+
+        // js api initialisation / reset
+        jsApiInit();
     }
 
     protected void displayCardQuestion(boolean reload) {
@@ -3639,6 +3643,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         showDialogFragment(dialog);
     }
 
+    // list of api that can be accessed
+    private final String[] sApiList = {"toggleFlag", "markCard"};
+
+    // init or reset api list
+    private void jsApiInit() {
+        mCardSuppliedApiVersion = "";
+        mCardSuppliedDeveloperContact = "";
+
+        for (int i = 0; i < sApiList.length; i++) {
+            mJsApiListMap.put(sApiList[i], false);
+        }
+    }
+
  /*
  Javascript Interface class for calling Java function from AnkiDroid WebView
 see card.js for available functions
@@ -3646,20 +3663,6 @@ see card.js for available functions
     public class JavaScriptFunction {
 
         private final Gson sGson = new Gson();
-        // list of api that can be accessed
-        private final String[] sApiList = {"toggleFlag", "markCard"};
-
-        // JavaScript Versioning
-        private String mCardSuppliedApiVersion = "";
-
-        // initialize api
-        private void initJsApi() {
-            mCardSuppliedDeveloperContact = "";
-            mCardSuppliedApiVersion = "";
-            for (int i = 0; i < sApiList.length; i++) {
-                mJsApiListMap.put(sApiList[i], false);
-            }
-        }
 
         // if supplied api version match then enable api
         private void enableJsApi() {
@@ -3670,9 +3673,6 @@ see card.js for available functions
 
         @JavascriptInterface
         public String init(String jsonData) {
-            // initialize api
-            initJsApi();
-
             JSONObject data;
             String apiStatusJson = "";
 
