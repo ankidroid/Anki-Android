@@ -271,7 +271,6 @@ public class DB {
     /**
      * Convenience method for querying the database for an entire column of long. 
      *
-     * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
@@ -282,7 +281,6 @@ public class DB {
     /**
      * Convenience method for querying the database for an entire column of String. 
      *
-     * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
