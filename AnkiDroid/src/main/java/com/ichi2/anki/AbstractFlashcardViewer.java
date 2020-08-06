@@ -3596,7 +3596,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return false;
             }
         } catch (Exception e) {
-          Timber.i(e, "requireApiVersion::exception");
+          Timber.w(e, "requireApiVersion::exception");
         }
         return false;
     }
@@ -3643,9 +3643,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         showDialogFragment(dialog);
     }
 
-    // list of api that can be accessed
-    private final String[] sApiList = {"toggleFlag", "markCard"};
-
     // init or reset api list
     private void jsApiInit() {
         mCardSuppliedApiVersion = "";
@@ -3660,6 +3657,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
  Javascript Interface class for calling Java function from AnkiDroid WebView
 see card.js for available functions
  */
+    // list of api that can be accessed
+    private final String[] sApiList = {"toggleFlag", "markCard"};
+
     public class JavaScriptFunction {
 
         private final Gson sGson = new Gson();
