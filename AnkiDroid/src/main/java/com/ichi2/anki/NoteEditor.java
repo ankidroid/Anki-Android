@@ -1642,7 +1642,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private String convertToHtmlNewline(String fieldData) {
+    private String convertToHtmlNewline(@NonNull String fieldData) {
         return fieldData.replace(FieldEditText.NEW_LINE, "<br>");
     }
 
