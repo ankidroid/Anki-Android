@@ -517,8 +517,14 @@ public class Card implements Cloneable {
     }
 
 
+    @VisibleForTesting
     public int setReps(int reps) {
         return mReps = reps;
+    }
+
+
+    public int incrReps() {
+        return ++mReps;
     }
 
 

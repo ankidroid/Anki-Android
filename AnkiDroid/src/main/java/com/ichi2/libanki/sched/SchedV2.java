@@ -259,7 +259,7 @@ public class SchedV2 extends AbstractSched {
             return;
         }
 
-        card.setReps(card.getReps() + 1);
+        card.incrReps();
 
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             // came from the new queue, move to learning

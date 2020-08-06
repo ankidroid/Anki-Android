@@ -104,7 +104,7 @@ public class Sched extends SchedV2 {
         mCol.markReview(card);
         discardCurrentCard();
         _burySiblings(card);
-        card.setReps(card.getReps() + 1);
+        card.incrReps();
         // former is for logging new cards, latter also covers filt. decks
         card.setWasNew((card.getType() == Consts.CARD_TYPE_NEW));
         boolean wasNewQ = (card.getQueue() == Consts.QUEUE_TYPE_NEW);
