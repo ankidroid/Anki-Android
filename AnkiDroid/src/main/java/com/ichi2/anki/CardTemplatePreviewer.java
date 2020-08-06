@@ -43,6 +43,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private String mEditedModelFileName = null;
     private Model mEditedModel = null;
     private int mOrdinal;
+    @Nullable
     private long[] mCardList;
     private Bundle mNoteEditorBundle = null;
 
@@ -166,7 +167,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             closeCardTemplatePreviewer();
             return;
         }
-        if (mCurrentCard == null) {
+        if (mCardList != null && mOrdinal >= 0 && mOrdinal < mCardList.length) {
             mCurrentCard = new PreviewerCard(col, mCardList[mOrdinal]);
         }
 
