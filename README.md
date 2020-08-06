@@ -1,8 +1,8 @@
 <p align="center">
-<img src="https://github.com/infinyte7/AnkiDroid-Screenshots/blob/master/banner_readme.png?raw=true"/>
+<img src="banner_readme.png"/>
 </p>
 
-<p align="center">
+
 <a href="https://github.com/ankidroid/Anki-Android/releases"><img src="https://img.shields.io/github/v/release/ankidroid/Anki-Android" alt="release"/></a>
 <a href="https://travis-ci.org/github/ankidroid/Anki-Android"><img src="https://img.shields.io/travis/ankidroid/Anki-Android" alt="build"/></a>
 <a href="https://github.com/ankidroid/Anki-Android/issues"><img src="https://img.shields.io/github/commit-activity/m/ankidroid/Anki-Android" alt="commit-activity"/></a>
@@ -10,11 +10,12 @@
 <a href="https://github.com/ankidroid/Anki-Android/stargazers"><img src="https://img.shields.io/github/stars/ankidroid/Anki-Android" alt="stars"/></a>
 <a href="https://crowdin.com/project/ankidroid"><img src="https://badges.crowdin.net/ankidroid/localized.svg"></img></a>
 <a href="https://github.com/ankidroid/Anki-Android/graphs/contributors"><img src="https://img.shields.io/github/contributors/ankidroid/Anki-Android" alt="contributors"/></a>
-<a href="https://github.com/ankidroid/Anki-Android/blob/master/COPYING"><img src="https://img.shields.io/github/license/ankidroid/Anki-Android" alt="license"/></a>
-<!--<a href="https://discord.gg/qjzcRTx"><img src="https://img.shields.io/discord/368267295601983490"></img></a>
-</p>-->
+<a href="https://discord.gg/qjzcRTx"><img src="https://img.shields.io/discord/368267295601983490"></img></a>
+</p>
+<a href="https://github.com/ankidroid/Anki-Android/blob/master/COPYING"><img src="https://img.shields.io/github/license/ankidroid/Anki-Android" alt="license"/>
 
-<img src="https://raw.githubusercontent.com/infinyte7/AnkiDroid-Screenshots/master/ankidroid_logo.png" align="left" width="200" hspace="10" vspace="10">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img><br/><br/>
+
+<img src="ankidroid_logo.png" align="left" width="200" hspace="10" vspace="10">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img><br/><br/>
 
 
 <div style="display:flex;" >
