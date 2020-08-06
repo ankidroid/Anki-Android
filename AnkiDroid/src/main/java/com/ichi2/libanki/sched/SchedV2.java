@@ -196,7 +196,7 @@ public class SchedV2 extends AbstractSched {
         Card card = _getCard();
         if (card != null) {
             mCol.log(card);
-            mReps += 1;
+            incrReps();
             // In upstream, counts are decremented when the card is
             // gotten; i.e. in _getLrnCard, _getRevCard and
             // _getNewCard. This can not be done anymore since we use
@@ -2695,9 +2695,13 @@ public class SchedV2 extends AbstractSched {
         return mReps;
     }
 
+    public void incrReps() {
+        mReps++;
+    }
 
-    public void setReps(int reps){
-        mReps = reps;
+
+    public void decrReps() {
+        mReps--;
     }
 
 
@@ -2918,7 +2922,7 @@ public class SchedV2 extends AbstractSched {
         @Consts.CARD_QUEUE int n = oldCardData.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : oldCardData.getQueue();
         String type = (new String[]{"new", "lrn", "rev"})[n];
         _updateStats(oldCardData, type, -1);
-        setReps(getReps() - 1);
+        decrReps();
     }
 
 
