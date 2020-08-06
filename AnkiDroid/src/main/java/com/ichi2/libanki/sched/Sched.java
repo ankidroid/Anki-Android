@@ -1476,47 +1476,15 @@ public class Sched extends SchedV2 {
         unburyCardsForDeck(all);
     }
 
-
+    /* Need to override. Otherwise it get SchedV2.mName variable*/
     @Override
     public String getName() {
         return mName;
     }
 
-
-    @Override
-    public int getToday() {
-        return mToday;
-    }
-
-
-    @Override
-    public void setToday(int today) {
-        mToday = today;
-    }
-
-
-    @Override
-    public long getDayCutoff() {
-        return mDayCutoff;
-    }
-
-
     /**
      * Counts
      */
-
-    @Override
-    public int cardCount() {
-        String dids = _deckLimit();
-        return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids);
-    }
-
-
-    @Override
-    public int eta(int[] counts) {
-        return eta(counts, true);
-    }
-
 
     /**
      * Return an estimate, in minutes, for how long it will take to complete all the reps in {@code counts}.
@@ -1661,37 +1629,5 @@ public class Sched extends SchedV2 {
             mLrnCount--;
             break;
         }
-    }
-
-
-    /**
-     * Sorts a card into the lrn queue LIBANKI: not in libanki
-     */
-    @Override
-    protected void _sortIntoLrn(long due, long id) {
-        Iterator<LrnCard> i = mLrnQueue.listIterator();
-        int idx = 0;
-        while (i.hasNext()) {
-            if (i.next().getDue() > due) {
-                break;
-            } else {
-                idx++;
-            }
-        }
-        mLrnQueue.add(idx, new LrnCard(due, id));
-    }
-
-
-    @Override
-    public boolean leechActionSuspend(Card card) {
-        JSONObject conf;
-        conf = _cardConf(card).getJSONObject("lapse");
-        return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
-    }
-
-
-    @Override
-    public void setContext(WeakReference<Activity> contextReference) {
-        mContextReference = contextReference;
     }
 }
