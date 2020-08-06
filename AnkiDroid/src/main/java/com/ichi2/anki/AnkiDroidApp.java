@@ -46,6 +46,7 @@ import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
@@ -263,6 +264,10 @@ public class AnkiDroidApp extends MultiDexApplication {
         if (ACRA.isACRASenderServiceProcess()) {
             Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process");
             return;
+        }
+
+        if (AdaptionUtil.isUserATestClient()) {
+            UIUtils.showThemedToast(this.getApplicationContext(), getString(R.string.user_is_a_robot), false);
         }
 
         CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);

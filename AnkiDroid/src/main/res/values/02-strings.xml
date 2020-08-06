@@ -291,6 +291,7 @@
     <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
     <string name="csv_importer_error_exception">Aborted: %s</string>
+    <string name="user_is_a_robot">If you can see this, please contact support</string>
 
     <plurals name="note_importer_notes_added">
         <item quantity="one">%d note added</item>
