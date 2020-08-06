@@ -101,7 +101,7 @@ public class SchedV2 extends AbstractSched {
     // When an action is undone, reset counts need to take the card into account
     private Card mUndidCard = null;
 
-    private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
+    protected double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
     // Queues
     protected final LinkedList<Long> mNewQueue = new LinkedList<>();
@@ -1234,7 +1234,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _graduatingIvl(Card card, JSONObject conf, boolean early) {
+    protected int _graduatingIvl(Card card, JSONObject conf, boolean early) {
         return _graduatingIvl(card, conf, early, true);
     }
 
@@ -1271,14 +1271,14 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _logLrn(Card card, @Consts.BUTTON_TYPE int ease, JSONObject conf, boolean leaving, int type, int lastLeft) {
+    protected void _logLrn(Card card, @Consts.BUTTON_TYPE int ease, JSONObject conf, boolean leaving, @Consts.REVLOG_TYPE int type, int lastLeft) {
         int lastIvl = -(_delayForGrade(conf, lastLeft));
         int ivl = leaving ? card.getIvl() : -(_delayForGrade(conf, card.getLeft()));
         log(card.getId(), mCol.usn(), ease, ivl, lastIvl, card.getFactor(), card.timeTaken(), type);
     }
 
 
-    private void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
+    protected void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                     mTime.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
