@@ -1718,6 +1718,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         // then show not logged in dialog
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
                     } else if ("noChanges".equals(resultType)) {
+                        SyncStatus.markSyncCompleted();
                         // show no changes message, use false flag so we don't show "sync error" as the Dialog title
                         showSyncLogMessage(R.string.sync_no_changes_message, "");
                     } else if ("clockOff".equals(resultType)) {
