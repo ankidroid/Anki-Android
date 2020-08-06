@@ -152,12 +152,11 @@ public class Note implements Cloneable {
 
 
     public int numberOfCards() {
-        return (int) mCol.getDb().queryLongScalar("SELECT count() FROM cards WHERE nid = ?", new Object[]{mId});
+        return (int) mCol.getDb().queryLongScalar("SELECT count() FROM cards WHERE nid = ?", mId);
     }
 
     public List<Long> cids() {
-        return mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid = ? ORDER BY ord",
-                new Object[]{mId});
+        return mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid = ? ORDER BY ord", mId);
     }
 
     public ArrayList<Card> cards() {
@@ -173,8 +172,7 @@ public class Note implements Cloneable {
 
     /** The first card, assuming it exists.*/
     public Card firstCard() {
-        return mCol.getCard(mCol.getDb().queryLongScalar("SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1",
-                new Object[] {mId}));
+        return mCol.getCard(mCol.getDb().queryLongScalar("SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1", mId));
     }
 
 

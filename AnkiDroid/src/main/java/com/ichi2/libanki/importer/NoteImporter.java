@@ -152,7 +152,7 @@ public class NoteImporter extends Importer {
         }
         // gather checks for duplicate comparison
         HashMap<Long, List<Long>> csums = new HashMap<>();
-        try (Cursor c = mCol.getDb().getDatabase().query("select csum, id from notes where mid = ?", new Object[] {mModel.getLong("id")})) {
+        try (Cursor c = mCol.getDb().query("select csum, id from notes where mid = ?", mModel.getLong("id"))) {
             while (c.moveToNext()) {
                 long csum = c.getLong(0);
                 long id = c.getLong(1);
