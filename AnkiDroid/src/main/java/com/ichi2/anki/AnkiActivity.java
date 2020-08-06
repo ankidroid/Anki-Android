@@ -77,7 +77,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         Themes.setTheme(this);
         super.onCreate(savedInstanceState);
         // Disable the notifications bar if running under the test monkey.
-        if (ActivityManager.isUserAMonkey()) {
+        if (AdaptionUtil.isUserATestClient()) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         mCustomTabActivityHelper = new CustomTabActivityHelper();

@@ -326,7 +326,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 setupContextMenuPreference(screen, AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label);
 
                 // Make it possible to test crash reporting, but only for DEBUG builds
-                if (BuildConfig.DEBUG && !ActivityManager.isUserAMonkey()) {
+                if (BuildConfig.DEBUG && !AdaptionUtil.isUserATestClient()) {
                     Timber.i("Debug mode, allowing for test crashes");
                     Preference triggerTestCrashPreference = new Preference(this);
                     triggerTestCrashPreference.setKey("trigger_crash_preference");
