@@ -25,9 +25,9 @@ Install directly from [here on github](https://github.com/ankidroid/Anki-Android
 automatically by installing via an app store:
 
 <p align="center">
-<a href="https://play.google.com/store/apps/details?id=com.ichi2.anki&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="50px"/></a>
-<a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki"><img alt="F-Droid" src="https://upload.wikimedia.org/wikipedia/commons/4/40/%22Get_it_on_F-Droid%22_Badge.svg" height="50px"/></a>
-<a href="http://www.amazon.com/gp/product/B004L1G7T2/ref=mas_pm_ankidroid_flashcards"><img height="50px" src="https://raw.githubusercontent.com/infinyte7/app-store-badge/master/Amazon-app-store.png"/></a>
+<a href="https://play.google.com/store/apps/details?id=com.ichi2.anki&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="60px"/></a>
+<a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki"><img alt="F-Droid" src="https://upload.wikimedia.org/wikipedia/commons/4/40/%22Get_it_on_F-Droid%22_Badge.svg" height="60px"/></a>
+<a href="http://www.amazon.com/gp/product/B004L1G7T2/ref=mas_pm_ankidroid_flashcards"><img height="60px" src="https://raw.githubusercontent.com/infinyte7/app-store-badge/master/Amazon-app-store.png"/></a>
 </p>
 
 Wiki
@@ -43,6 +43,14 @@ Contribute
 ----------
 You can contribute to AnkiDroid by beta testing, translating, or submitting code. 
 See the [contribution wiki page](https://github.com/ankidroid/Anki-Android/wiki/Contributing) for more info.
+
+Join Us On
+----------
+
+<a href="https://discord.gg/qjzcRTx"><img src="https://raw.githubusercontent.com/infinyte7/icons-and-badges/master/discord_logo_color.png" height="50px"/></a>
+<a href="https://www.reddit.com/r/Anki"><img src="https://raw.githubusercontent.com/infinyte7/icons-and-badges/master/reddit_logo_color.png" height="50px"/></a>
+<a href="https://www.facebook.com/AnkiDroid/"><img src="https://raw.githubusercontent.com/infinyte7/icons-and-badges/master/facebook_logo_color.png" height="50px"/></a>
+<a href="https://twitter.com/ankidroid"><img src="https://raw.githubusercontent.com/infinyte7/icons-and-badges/master/twitter_logo_color.png" height="50px"/></a>
 
 License
 -------
