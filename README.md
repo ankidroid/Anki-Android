@@ -1,5 +1,5 @@
 <p align="center">
-<img src="banner_readme.png"/>
+<img src="docs/graphics/logos/banner_readme.png"/>
 </p>
 
 <a href="https://github.com/ankidroid/Anki-Android/releases"><img src="https://img.shields.io/github/v/release/ankidroid/Anki-Android" alt="release"/></a>
@@ -13,7 +13,7 @@
 <a href="https://github.com/ankidroid/Anki-Android/blob/master/COPYING"><img src="https://img.shields.io/github/license/ankidroid/Anki-Android" alt="license"/></a>
 </p>
 
-<img src="ankidroid_logo.png" align="left" width="200" hspace="10" vspace="10">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img><br/><br/>
+<img src="docs/graphics/logos/ankidroid_logo.png" align="left" width="20%" hspace="10" vspace="10">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img><br/><br/>
 
 
 <div style="display:flex;" >
@@ -30,7 +30,7 @@
 
 <a href="http://www.amazon.com/gp/product/B004L1G7T2/ref=mas_pm_ankidroid_flashcards">
     <img alt="Get it on Amazon app store" height="64"
-        src="https://raw.githubusercontent.com/infinyte7/app-store-badge/master/Amazon-app-store.png"/>
+        src="docs/graphics/logos/Amazon-app-store.png"/>
 </a>
 
 </div>
@@ -68,10 +68,10 @@ See the [contribution wiki page](https://github.com/ankidroid/Anki-Android/wiki/
 Join Us On
 ----------
 
-<a href="https://discord.gg/qjzcRTx"><img src="https://raw.githubusercontent.com/infinyte7/icons-and-badges/master/discord_logo_color.png" height="50px"/></a>
-<a href="https://www.reddit.com/r/Anki"><img src="https://raw.githubusercontent.com/infinyte7/icons-and-badges/master/reddit_logo_color.png" height="50px"/></a>
-<a href="https://www.facebook.com/AnkiDroid/"><img src="https://raw.githubusercontent.com/infinyte7/icons-and-badges/master/facebook_logo_color.png" height="50px"/></a>
-<a href="https://twitter.com/ankidroid"><img src="https://raw.githubusercontent.com/infinyte7/icons-and-badges/master/twitter_logo_color.png" height="50px"/></a>
+<a href="https://discord.gg/qjzcRTx"><img src="docs/graphics/logos/discord_logo_color.png" height="50px"/></a>
+<a href="https://www.reddit.com/r/Anki"><img src="docs/graphics/logos/reddit_logo_color.png" height="50px"/></a>
+<a href="https://www.facebook.com/AnkiDroid/"><img src="docs/graphics/logos/facebook_logo_color.png" height="50px"/></a>
+<a href="https://twitter.com/ankidroid"><img src="docs/graphics/logos/twitter_logo_color.png" height="50px"/></a>
 
 License
 -------
