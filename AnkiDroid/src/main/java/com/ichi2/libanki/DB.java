@@ -163,6 +163,10 @@ public class DB {
         return mMod;
     }
 
+    // Allows to avoid using new Object[]
+    public Cursor query(String query, Object... selectionArgs) {
+        return mDatabase.query(query, selectionArgs);
+    }
 
     /**
      * Convenience method for querying the database for a single integer result.

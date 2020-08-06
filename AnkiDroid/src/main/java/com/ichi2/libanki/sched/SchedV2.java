@@ -692,7 +692,6 @@ public class SchedV2 extends AbstractSched {
         if (mNewCount == 0) {
             return false;
         }
-        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         while (!mNewDids.isEmpty()) {
             long did = mNewDids.getFirst();
             int lim = Math.min(mQueueLimit, _deckNewLimit(did));
@@ -712,8 +711,7 @@ public class SchedV2 extends AbstractSched {
                     // fill the queue with the current did
                     String idName = (allowSibling) ? "id": "nid";
                     long id = (allowSibling) ? currentCardId(): currentCardNid();
-                    cur = db.query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?",
-                                   new Object[]{did, id, lim});
+                    cur = mCol.getDb().query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?", did, id, lim);
                     while (cur.moveToNext()) {
                         mNewQueue.add(cur.getLong(0));
                     }
@@ -916,10 +914,9 @@ public class SchedV2 extends AbstractSched {
              */
             cur = mCol
                     .getDb()
-                    .getDatabase()
                     .query(
                             "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ?"
-                            + " AND id != ? LIMIT ?", new Object[] { cutoff, currentCardId(), mReportLimit});
+                            + " AND id != ? LIMIT ?", cutoff, currentCardId(), mReportLimit);
             while (cur.moveToNext()) {
                 mLrnQueue.add(new LrnCard(cur.getLong(0), cur.getLong(1)));
             }
@@ -965,7 +962,6 @@ public class SchedV2 extends AbstractSched {
         if (!mLrnDayQueue.isEmpty()) {
             return true;
         }
-        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         while (!mLrnDids.isEmpty()) {
             long did = mLrnDids.getFirst();
             // fill the queue with the current did
@@ -982,9 +978,9 @@ public class SchedV2 extends AbstractSched {
                  * simulate _getLrnDayCard which did remove the card
                  * from the queue.
                  */
-                cur = db.query(
+                cur = mCol.getDb().query(
                                 "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? and id != ? LIMIT ?",
-                                new Object[] {did, mToday, currentCardId(), mQueueLimit});
+                                did, mToday, currentCardId(), mQueueLimit);
                 while (cur.moveToNext()) {
                     mLrnDayQueue.add(cur.getLong(0));
                 }
@@ -1419,7 +1415,6 @@ public class SchedV2 extends AbstractSched {
             return false;
         }
         int lim = Math.min(mQueueLimit, _currentRevLimit());
-        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         if (lim != 0) {
             Cursor cur = null;
             mRevQueue.clear();
@@ -1437,9 +1432,9 @@ public class SchedV2 extends AbstractSched {
                 // fill the queue with the current did
                 String idName = (allowSibling) ? "id": "nid";
                 long id = (allowSibling) ? currentCardId(): currentCardNid();
-                cur = db.query("SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND " + idName + " != ?"
+                cur = mCol.getDb().query("SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND " + idName + " != ?"
                                + " ORDER BY due, random()  LIMIT ?",
-                               new Object[]{mToday, id, lim});
+                               mToday, id, lim);
                 while (cur.moveToNext()) {
                     mRevQueue.add(cur.getLong(0));
                 }
@@ -2390,10 +2385,9 @@ public class SchedV2 extends AbstractSched {
         // loop through and remove from queues
         Cursor cur = null;
         try {
-            cur = mCol.getDb().getDatabase().query(
+            cur = mCol.getDb().query(
                     "select id, queue from cards where nid=? and id!=? "+
-                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=" + Consts.QUEUE_TYPE_REV + " and due<=?))",
-                    new Object[] {card.getNid(), card.getId(), mToday});
+                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=" + Consts.QUEUE_TYPE_REV + " and due<=?))", card.getNid(), card.getId(), mToday);
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
@@ -2492,8 +2486,7 @@ public class SchedV2 extends AbstractSched {
         long now = mTime.intTime();
         ArrayList<Long> nids = new ArrayList<>();
         for (long id : cids) {
-            long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?",
-                                                    new Object[] {id});
+            long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?", id);
             if (!nids.contains(nid)) {
                 nids.add(nid);
             }
@@ -2750,14 +2743,13 @@ public class SchedV2 extends AbstractSched {
             try {
                 cur = mCol
                         .getDb()
-                        .getDatabase()
                         .query("select "
                                 + "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, "
                                 + "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then time else null end) as revTime, "
                                 + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
                                 + "from revlog where id > "
                                 + "?",
-                               new Object[] {(mCol.getSched().getDayCutoff() - (10 * 86400)) * 1000});
+                               (mCol.getSched().getDayCutoff() - (10 * 86400)) * 1000);
                 if (!cur.moveToFirst()) {
                     return -1;
                 }
@@ -2913,11 +2905,10 @@ public class SchedV2 extends AbstractSched {
         // write old data
         oldCardData.flush(false);
         // and delete revlog entry
-        long last = mCol.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", new Object[] {oldCardData.getId()});
+        long last = mCol.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", oldCardData.getId());
         mCol.getDb().execute("DELETE FROM revlog WHERE id = " + last);
         // restore any siblings
-        mCol.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
-                new Object[] {mTime.intTime(), mCol.usn(), oldCardData.getNid()});
+        mCol.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?", mTime.intTime(), mCol.usn(), oldCardData.getNid());
         // and finally, update daily count
         @Consts.CARD_QUEUE int n = oldCardData.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : oldCardData.getQueue();
         String type = (new String[]{"new", "lrn", "rev"})[n];
