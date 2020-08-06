@@ -107,7 +107,7 @@ public class SchedV2 extends AbstractSched {
      * */
     private Card mCardNotToFetch = null;
 
-    private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
+    protected double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
     // Queues
     protected final SimpleCardQueue mNewQueue = new SimpleCardQueue();
@@ -1089,6 +1089,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    // Overidden: no _maybeResetLrn in V1
     protected Card _getLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
@@ -1401,7 +1402,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private int _graduatingIvl(Card card, JSONObject conf, boolean early) {
+    protected int _graduatingIvl(Card card, JSONObject conf, boolean early) {
         return _graduatingIvl(card, conf, early, true);
     }
 
@@ -1439,14 +1440,14 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private void _logLrn(Card card, @Consts.BUTTON_TYPE int ease, JSONObject conf, boolean leaving, int type, int lastLeft) {
+    protected void _logLrn(Card card, @Consts.BUTTON_TYPE int ease, JSONObject conf, boolean leaving, @Consts.REVLOG_TYPE int type, int lastLeft) {
         int lastIvl = -(_delayForGrade(conf, lastLeft));
         int ivl = leaving ? card.getIvl() : -(_delayForGrade(conf, card.getLeft()));
         log(card.getId(), mCol.usn(), ease, ivl, lastIvl, card.getFactor(), card.timeTaken(), type);
     }
 
 
-    private void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
+    protected void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                     mTime.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
