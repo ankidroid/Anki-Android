@@ -1373,6 +1373,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         long did = param.getLong();
         col.getDecks().rem(did, true);
+        // TODO: if we had "undo delete note" like desktop client then we won't need this.
+        getCol().clearUndo();
     }
 
 

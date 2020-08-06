@@ -2418,8 +2418,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         Timber.e(e, "onPostExecute - Exception dismissing dialog");
                     }
                 }
-                // TODO: if we had "undo delete note" like desktop client then we won't need this.
-                getCol().clearUndo();
             }
         };
         CollectionTask.launchCollectionTask(DELETE_DECK, listener, new TaskData(did));
