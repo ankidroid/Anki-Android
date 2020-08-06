@@ -1,7 +1,6 @@
-<p align="center"><img src="https://raw.githubusercontent.com/ankidroid/Anki-Android/master/AnkiDroid/src/main/res/drawable-hdpi/anki.png"></img></p>
-<h1 align="center">AnkiDroid</h1>
-
-A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!
+<p align="center">
+<img src="https://github.com/infinyte7/AnkiDroid-Screenshots/blob/master/banner_readme.png?raw=true"/>
+</p>
 
 <p align="center">
 <a href="https://github.com/ankidroid/Anki-Android/releases"><img src="https://img.shields.io/github/v/release/ankidroid/Anki-Android" alt="release"/></a>
@@ -12,23 +11,46 @@ A semi-official port of the open source [Anki](http://ankisrs.net/index.html) sp
 <a href="https://crowdin.com/project/ankidroid"><img src="https://badges.crowdin.net/ankidroid/localized.svg"></img></a>
 <a href="https://github.com/ankidroid/Anki-Android/graphs/contributors"><img src="https://img.shields.io/github/contributors/ankidroid/Anki-Android" alt="contributors"/></a>
 <a href="https://github.com/ankidroid/Anki-Android/blob/master/COPYING"><img src="https://img.shields.io/github/license/ankidroid/Anki-Android" alt="license"/></a>
-<a href="https://discord.gg/qjzcRTx"><img src="https://img.shields.io/discord/368267295601983490"></img></a>
-</p>
+<!--<a href="https://discord.gg/qjzcRTx"><img src="https://img.shields.io/discord/368267295601983490"></img></a>
+</p>-->
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/ankidroid/ankidroiddocs/master/img/4-reviewer.png"></img>
-</p>
+<img src="https://raw.githubusercontent.com/infinyte7/AnkiDroid-Screenshots/master/ankidroid_logo.png" align="left" width="200" hspace="10" vspace="10">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img><br/><br/>
 
-Install
--------
-Install directly from [here on github](https://github.com/ankidroid/Anki-Android/releases/latest) or stay up-to-date
-automatically by installing via an app store:
 
-<p align="center">
-<a href="https://play.google.com/store/apps/details?id=com.ichi2.anki&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="60px"/></a>
-<a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki"><img alt="F-Droid" src="https://upload.wikimedia.org/wikipedia/commons/4/40/%22Get_it_on_F-Droid%22_Badge.svg" height="60px"/></a>
-<a href="http://www.amazon.com/gp/product/B004L1G7T2/ref=mas_pm_ankidroid_flashcards"><img height="60px" src="https://raw.githubusercontent.com/infinyte7/app-store-badge/master/Amazon-app-store.png"/></a>
-</p>
+<div style="display:flex;" >
+
+<a href="https://play.google.com/store/apps/details?id=com.ichi2.anki&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+    <img alt="Get it on Google Play" height="64"
+        src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" />
+</a>
+
+<a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki">
+    <img alt="Get it on F-Droid" height="64"
+        src="https://upload.wikimedia.org/wikipedia/commons/4/40/%22Get_it_on_F-Droid%22_Badge.svg">
+</a>
+
+<a href="http://www.amazon.com/gp/product/B004L1G7T2/ref=mas_pm_ankidroid_flashcards">
+    <img alt="Get it on Amazon app store" height="64"
+        src="https://raw.githubusercontent.com/infinyte7/app-store-badge/master/Amazon-app-store.png"/>
+</a>
+
+</div>
+</br></br>
+
+Features
+--------
+
+- supported flashcard contents: text, images, sounds, LaTeX
+- spaced repetition (supermemo 2 algorithm)
+- text-to-speech integration
+- more than 6000 premade decks
+- progress widget
+- detailed statistics
+- night mode
+- write answers (optional)
+- whiteboard syncing with AnkiWeb
+- add cards by intent from other applications like dictionaries
+
 
 Wiki
 ----
