@@ -135,7 +135,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     /**
      * Tasks which are running or waiting to run.
      * */
-    private static List<CollectionTask> sTasks = Collections.synchronizedList(new LinkedList<>());
+    private static final List<CollectionTask> sTasks = Collections.synchronizedList(new LinkedList<>());
 
 
     /**
@@ -247,7 +247,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 return cancel(true);
             }
         } catch (Exception e) {
-            // Potentially catching SecurityEcexption, from
+            // Potentially catching SecurityException, from
             // Thread.interrupt from FutureTask.cancel from
             // AsyncTask.cancel
             Timber.w(e, "Exception cancelling task");
@@ -275,14 +275,13 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     /** Cancel all tasks of type taskType*/
     public static void cancelAllTasks(TASK_TYPE taskType) {
         int count = 0;
-        synchronized (sTasks) {
-            for (CollectionTask task: sTasks) {
-                if (task.mType != taskType) {
-                    continue;
-                }
-                if (task.safeCancel()) {
-                    count ++;
-                }
+        // safeCancel modifies sTasks, so iterate over a concrete copy
+        for (CollectionTask task: new ArrayList<>(sTasks)) {
+            if (task.mType != taskType) {
+                continue;
+            }
+            if (task.safeCancel()) {
+                count++;
             }
         }
         if (count > 0) {
