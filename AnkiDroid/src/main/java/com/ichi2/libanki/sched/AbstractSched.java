@@ -198,9 +198,10 @@ public abstract class AbstractSched {
     public abstract void setToday(int today);
     public abstract long getDayCutoff();
 
+    public abstract void incrReps();
+    public abstract void decrReps();
     /** Number of repetitions today*/
     public abstract int getReps();
-    public abstract void setReps(int reps);
     /** Number of cards in the current decks, its descendants and ancestors. */
     public abstract int cardCount();
 

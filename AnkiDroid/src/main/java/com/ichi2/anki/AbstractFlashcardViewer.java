@@ -605,7 +605,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // Since reps are incremented on fetch of next card, we will miss counting the
             // last rep since there isn't a next card. We manually account for it here.
             if (mNoMoreCards) {
-                mSched.setReps(mSched.getReps() + 1);
+                mSched.incrReps();
             }
 
             Long[] elapsed = getCol().timeboxReached();
