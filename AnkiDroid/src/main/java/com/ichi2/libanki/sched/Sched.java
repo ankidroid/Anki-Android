@@ -413,10 +413,8 @@ public class Sched extends SchedV2 {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
             if (mLrnQueue.getFirst().getDue() < cutoff) {
-                long id = mLrnQueue.remove().getId();
-                Card card = mCol.getCard(id);
+                return mLrnQueue.remove().getCard();
                 // mLrnCount -= card.getLeft() / 1000; See decrementCount()
-                return card;
             }
         }
         return null;
@@ -751,7 +749,7 @@ public class Sched extends SchedV2 {
                                             + " AND " + idName + " != ? LIMIT ?",
                                     new Object[]{did, mToday, id, lim});
                     while (cur.moveToNext()) {
-                        mRevQueue.add(cur.getLong(0));
+                        mRevQueue.add(mCol.getCardCache(cur.getLong(0)));
                     }
                 } finally {
                     if (cur != null && !cur.isClosed()) {
