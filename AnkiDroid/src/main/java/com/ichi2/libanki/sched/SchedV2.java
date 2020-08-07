@@ -32,7 +32,6 @@ import android.text.style.StyleSpan;
 import android.util.Pair;
 
 import com.ichi2.anki.R;
-import com.ichi2.anki.exception.ManuallyReportedException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -66,7 +65,6 @@ import java.util.Random;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
@@ -99,8 +97,14 @@ public class SchedV2 extends AbstractSched {
     protected int mRevCount;
 
     private int mNewCardModulus;
-    // When an action is undone, reset counts need to take the card into account
-    private Card mUndidCard = null;
+    /** Next time you reset counts, take into account this card is in the reviewer and should not be counted.
+     * This is currently due only when the card is sent by Undo.
+     */
+    private Card mCardToDecrement = null;
+    /** Next time the queue is reset, takes into account that this card is in the reviewer and so should not be added
+     * to queue. I.e. that is mCurrentCard but should not be discarded by reset.
+     * */
+    private Card mCardNotToFetch = null;
 
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
@@ -222,7 +226,8 @@ public class SchedV2 extends AbstractSched {
     public void deferReset(Card undidCard){
         mHaveQueues = false;
         mHaveCounts = false;
-        mUndidCard = undidCard;
+        mCardToDecrement = undidCard;
+        mCardNotToFetch = undidCard;
     }
 
     public void deferReset(){
@@ -248,13 +253,8 @@ public class SchedV2 extends AbstractSched {
         _resetLrnCount();
         _resetRevCount();
         _resetNewCount();
-        decrementCounts(mUndidCard);
-        if (mUndidCard == null) {
-            discardCurrentCard();
-        } else {
-            setCurrentCard(mUndidCard);
-        }
-        mUndidCard = null;
+        decrementCounts(mCardToDecrement);
+        mCardToDecrement = null;
         mHaveCounts = true;
     }
 
@@ -265,6 +265,12 @@ public class SchedV2 extends AbstractSched {
 
     /** @param checkCutoff whether we should check cutoff before resetting*/
     private void resetQueues(boolean checkCutoff) {
+        if (mCardNotToFetch == null) {
+            discardCurrentCard();
+        } else {
+            setCurrentCard(mCardNotToFetch);
+        }
+        mCardNotToFetch = null;
         if (checkCutoff) {
             _updateCutoff();
         }
