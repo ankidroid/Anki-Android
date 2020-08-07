@@ -109,19 +109,16 @@ public class SchedV2 extends AbstractSched {
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
     // Queues
-    protected final LinkedList<Long> mNewQueue = new LinkedList<>();
-    protected class LrnCard implements Comparable<LrnCard> {
-        private final long mCid;
+    protected final LinkedList<Card.Cache> mNewQueue = new LinkedList<>();
+    protected class LrnCard extends Card.Cache implements Comparable<LrnCard> {
         private final long mDue;
         public LrnCard(long due, long cid) {
-            mCid = cid;
+            super(mCol, cid);
             mDue = due;
         }
+
         public long getDue () {
             return mDue;
-        }
-        public long getId() {
-            return mCid;
         }
 
         @Override
@@ -130,8 +127,8 @@ public class SchedV2 extends AbstractSched {
         }
     }
     protected final LinkedList<LrnCard> mLrnQueue = new LinkedList<>();
-    protected final LinkedList<Long> mLrnDayQueue = new LinkedList<>();
-    protected final LinkedList<Long> mRevQueue = new LinkedList<>();
+    protected final LinkedList<Card.Cache> mLrnDayQueue = new LinkedList<>();
+    protected final LinkedList<Card.Cache> mRevQueue = new LinkedList<>();
 
     private LinkedList<Long> mNewDids = new LinkedList<>();
     protected LinkedList<Long> mLrnDids = new LinkedList<>();
@@ -782,7 +779,7 @@ public class SchedV2 extends AbstractSched {
                     long id = (allowSibling) ? currentCardId(): currentCardNid();
                     cur = mCol.getDb().query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?", did, id, lim);
                     while (cur.moveToNext()) {
-                        mNewQueue.add(cur.getLong(0));
+                        mNewQueue.add(mCol.getCardCache(cur.getLong(0)));
                     }
                 } finally {
                     if (cur != null && !cur.isClosed()) {
@@ -810,7 +807,7 @@ public class SchedV2 extends AbstractSched {
     protected Card _getNewCard() {
         if (_fillNew()) {
             // mNewCount -= 1; see decrementCounts()
-            return mCol.getCard(mNewQueue.remove());
+            return mNewQueue.remove().getCard();
         }
         return null;
     }
@@ -1020,10 +1017,8 @@ public class SchedV2 extends AbstractSched {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
             if (mLrnQueue.getFirst().getDue() < cutoff) {
-                long id = mLrnQueue.remove().getId();
-                Card card = mCol.getCard(id);
+                return mLrnQueue.remove().getCard();
                 // mLrnCount -= 1; see decrementCounts()
-                return card;
             }
         }
         return null;
@@ -1058,7 +1053,7 @@ public class SchedV2 extends AbstractSched {
                                 "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? and id != ? LIMIT ?",
                                 did, mToday, currentCardId(), mQueueLimit);
                 while (cur.moveToNext()) {
-                    mLrnDayQueue.add(cur.getLong(0));
+                    mLrnDayQueue.add(mCol.getCardCache(cur.getLong(0)));
                 }
             } finally {
                 if (cur != null && !cur.isClosed()) {
@@ -1086,7 +1081,7 @@ public class SchedV2 extends AbstractSched {
     protected Card _getLrnDayCard() {
         if (_fillLrnDay()) {
             // mLrnCount -= 1; see decrementCounts()
-            return mCol.getCard(mLrnDayQueue.remove());
+            return mLrnDayQueue.remove().getCard();
         }
         return null;
     }
@@ -1526,7 +1521,7 @@ public class SchedV2 extends AbstractSched {
                                + " ORDER BY due, random()  LIMIT ?",
                                mToday, id, lim);
                 while (cur.moveToNext()) {
-                    mRevQueue.add(cur.getLong(0));
+                    mRevQueue.add(mCol.getCardCache(cur.getLong(0)));
                 }
             } finally {
                 if (cur != null && !cur.isClosed()) {
@@ -1552,7 +1547,7 @@ public class SchedV2 extends AbstractSched {
     protected Card _getRevCard() {
         if (_fillRev()) {
             // mRevCount -= 1; see decrementCounts()
-            return mCol.getCard(mRevQueue.remove());
+            return mRevQueue.remove().getCard();
         } else {
             return null;
         }
@@ -2506,7 +2501,7 @@ public class SchedV2 extends AbstractSched {
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
-                List<Long> queue_object;
+                List<Card.Cache> queue_object;
                 if (queue == Consts.QUEUE_TYPE_REV) {
                     queue_object = mRevQueue;
                     if (buryRev) {
