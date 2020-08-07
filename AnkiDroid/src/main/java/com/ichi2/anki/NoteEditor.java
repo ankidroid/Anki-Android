@@ -1888,7 +1888,7 @@ public class NoteEditor extends AnkiActivity {
     @TargetApi(23)
     private class ActionModeCallback implements ActionMode.Callback {
         private FieldEditText mTextBox;
-        private int mMenuId = View.generateViewId();
+        private final int mClozeMenuId = View.generateViewId();
 
         private ActionModeCallback(FieldEditText textBox) {
             super();
@@ -1903,19 +1903,24 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             // Adding the cloze deletion floating context menu item, but only once.
-            boolean itemExists = menu.findItem(mMenuId) != null;
-            if (isClozeType() && !itemExists) {
-                menu.add(Menu.NONE, mMenuId, 0, R.string.multimedia_editor_popup_cloze);
-                return true;
-            } else {
+            if (menu.findItem(mClozeMenuId) != null) {
                 return false;
             }
+
+            int initialSize = menu.size();
+
+            if (isClozeType()) {
+                menu.add(Menu.NONE, mClozeMenuId, 0, R.string.multimedia_editor_popup_cloze);
+            }
+
+            return initialSize != menu.size();
         }
 
         @SuppressLint("SetTextI18n")
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            if (item.getItemId() == mMenuId) {
+            int itemId = item.getItemId();
+            if (itemId == mClozeMenuId) {
                 convertSelectedTextToCloze(mTextBox);
                 mode.finish();
                 return true;
