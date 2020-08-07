@@ -44,6 +44,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListener;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
@@ -520,7 +521,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 return null;
             }
 
-            private CollectionTask.TaskListener mConfChangeHandler = new CollectionTask.TaskListener() {
+            private TaskListener mConfChangeHandler = new TaskListener() {
                 @Override
                 public void onPreExecute() {
                     Resources res = getResources();

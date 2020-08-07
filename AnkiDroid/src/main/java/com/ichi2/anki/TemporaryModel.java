@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import timber.log.Timber;
 
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListener;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Model;
 import com.ichi2.utils.JSONObject;
@@ -145,7 +146,7 @@ public class TemporaryModel {
     }
 
 
-    public void saveToDatabase(CollectionTask.TaskListener listener) {
+    public void saveToDatabase(TaskListener listener) {
         Timber.d("saveToDatabase() called");
         dumpChanges();
         TemporaryModel.clearTempModelFiles();

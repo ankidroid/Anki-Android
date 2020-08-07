@@ -20,6 +20,7 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskData;
+import com.ichi2.async.TaskListener;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -115,7 +116,7 @@ public class AbstractSchedTest extends RobolectricTest {
         sched.getCard();
         final boolean[] executed = {false};
         CollectionTask.launchCollectionTask(UNDO,
-                new CollectionTask.TaskListener() {
+                new TaskListener() {
                     Card card;
                     @Override
                     public void onPreExecute() {

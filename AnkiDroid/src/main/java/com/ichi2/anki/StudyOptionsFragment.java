@@ -40,6 +40,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CustomStudyDialog;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListener;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -48,8 +49,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.utils.HtmlUtils;
-
-import com.ichi2.utils.JSONObject;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
@@ -517,8 +516,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
      *                        to reflect the latest values.
      */
-    private CollectionTask.TaskListener getCollectionTaskListener(final boolean refreshDecklist) {
-        return new CollectionTask.TaskListener() {
+    private TaskListener getCollectionTaskListener(final boolean refreshDecklist) {
+        return new TaskListener() {
             @Override
             public void onPreExecute() {
 

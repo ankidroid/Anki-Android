@@ -31,6 +31,7 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListener;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.themes.StyledProgressDialog;
@@ -463,7 +464,7 @@ public class ModelFieldEditor extends AnkiActivity {
     /*
      * Called during the desk task when any field is modified
      */
-    private CollectionTask.TaskListener mChangeFieldHandler = new CollectionTask.TaskListener() {
+    private TaskListener mChangeFieldHandler = new TaskListener() {
 
         @Override
         public void onPreExecute() {

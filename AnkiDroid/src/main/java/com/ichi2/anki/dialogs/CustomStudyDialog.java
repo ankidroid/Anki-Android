@@ -44,6 +44,7 @@ import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListener;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 
@@ -479,7 +480,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
-        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
+        TaskListener listener = new TaskListener() {
             @Override
             public void onPreExecute() {
                 activity.showProgressBar();

@@ -53,6 +53,7 @@ import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
+import com.ichi2.async.TaskListener;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
@@ -86,13 +87,13 @@ public class Reviewer extends AbstractFlashcardViewer {
     private ActionButtons mActionButtons = new ActionButtons(this);
 
 
-    private CollectionTask.TaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
+    private TaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reschedule_cards_dialog_acknowledge;
         }
     };
 
-    private CollectionTask.TaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
+    private TaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reset_cards_dialog_acknowledge;
         }
