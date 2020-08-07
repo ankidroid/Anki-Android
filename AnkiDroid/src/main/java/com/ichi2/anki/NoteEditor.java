@@ -388,12 +388,15 @@ public class NoteEditor extends AnkiActivity {
             mSelectedTags = new ArrayList<>();
         }
         savedInstanceState.putStringArrayList("tags", mSelectedTags);
-        savedInstanceState.putBundle("editFields", getFieldsAsBundle());
+        savedInstanceState.putBundle("editFields", getFieldsAsBundle(false));
         super.onSaveInstanceState(savedInstanceState);
     }
 
 
-    private Bundle getFieldsAsBundle() {
+    /**
+     * @param useHtmlLineBreaks Whether field values should be converted to use HTML linebreaks
+     */
+    private Bundle getFieldsAsBundle(boolean useHtmlLineBreaks) {
         Bundle fields = new Bundle();
         // Save the content of all the note fields. We use the field's ord as the key to
         // easily map the fields correctly later.
@@ -405,7 +408,14 @@ public class NoteEditor extends AnkiActivity {
             if (e == null || e.getText() == null) {
                 continue;
             }
-            fields.putString(Integer.toString(e.getOrd()), e.getText().toString());
+
+            String fieldValue;
+            if (useHtmlLineBreaks) {
+                fieldValue = convertToHtmlNewline(e.getText().toString());
+            } else {
+                fieldValue = e.getText().toString();
+            }
+            fields.putString(Integer.toString(e.getOrd()), fieldValue);
         }
         return fields;
     }
@@ -980,6 +990,7 @@ public class NoteEditor extends AnkiActivity {
                 // Send the previewer all our current editing information
                 Bundle noteEditorBundle = new Bundle();
                 onSaveInstanceState(noteEditorBundle);
+                noteEditorBundle.putBundle("editFields", getFieldsAsBundle(true));
                 previewer.putExtra("noteEditorBundle", noteEditorBundle);
                 startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
                 return true;
@@ -1622,12 +1633,17 @@ public class NoteEditor extends AnkiActivity {
         if (fieldText != null) {
             currentValue = fieldText.toString();
         }
-        String newValue = currentValue.replace(FieldEditText.NEW_LINE, "<br>");
+        String newValue = convertToHtmlNewline(currentValue);
         if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {
             mEditorNote.values()[field.getOrd()] = newValue;
             return true;
         }
         return false;
+    }
+
+
+    private String convertToHtmlNewline(@NonNull String fieldData) {
+        return fieldData.replace(FieldEditText.NEW_LINE, "<br>");
     }
 
 
