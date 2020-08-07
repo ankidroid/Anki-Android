@@ -3648,8 +3648,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mCardSuppliedApiVersion = "";
         mCardSuppliedDeveloperContact = "";
 
-        for (int i = 0; i < sApiList.length; i++) {
-            mJsApiListMap.put(sApiList[i], false);
+        for (int i = 0; i < mApiList.length; i++) {
+            mJsApiListMap.put(mApiList[i], false);
         }
     }
 
@@ -3658,16 +3658,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 see card.js for available functions
  */
     // list of api that can be accessed
-    private final String[] sApiList = {"toggleFlag", "markCard"};
+    private final String[] mApiList = {"toggleFlag", "markCard"};
 
     public class JavaScriptFunction {
 
-        private final Gson sGson = new Gson();
+        private final Gson mGson = new Gson();
 
         // if supplied api version match then enable api
         private void enableJsApi() {
-            for (int i = 0; i < sApiList.length; i++) {
-                mJsApiListMap.put(sApiList[i], true);
+            for (int i = 0; i < mApiList.length; i++) {
+                mJsApiListMap.put(mApiList[i], true);
             }
         }
 
@@ -3686,7 +3686,7 @@ see card.js for available functions
                         enableJsApi();
                     }
 
-                    apiStatusJson = sGson.toJson(mJsApiListMap);
+                    apiStatusJson = mGson.toJson(mJsApiListMap);
                 }
 
             } catch (JSONException j) {
