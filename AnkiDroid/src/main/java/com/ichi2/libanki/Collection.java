@@ -1254,10 +1254,11 @@ public class Collection {
     }
 
     public @Nullable Undoable lastUndo() {
-        if (mUndo.isEmpty()) {
+        LinkedList<Undoable> undoables = mUndo; // Copied for synchronization
+        if (undoables.isEmpty()) {
            return null;
         }
-        return mUndo.getLast();
+        return undoables.getLast();
     }
 
 
@@ -1292,11 +1293,13 @@ public class Collection {
         return NO_REVIEW;
     }
 
+    /* Undos may get cleared during execution of markUndo. In this case the action can't be undone*/
     public void markUndo(Undoable undo) {
         Timber.d("markUndo() of type %s", undo.getDismissType());
-        mUndo.add(undo);
-        while (mUndo.size() > UNDO_SIZE_MAX) {
-            mUndo.removeFirst();
+        LinkedList<Undoable> undos = mUndo; // Copied for synchronization
+        undos.add(undo);
+        while (undos.size() > UNDO_SIZE_MAX) {
+            undos.removeFirst();
         }
     }
 
