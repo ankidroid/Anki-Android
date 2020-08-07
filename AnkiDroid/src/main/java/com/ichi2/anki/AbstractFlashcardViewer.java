@@ -86,6 +86,8 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.TypefaceHelper;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.dialogs.TagsDialog;
@@ -129,6 +131,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -145,6 +148,8 @@ import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
+
+import com.github.zafarkhaja.semver.Version;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor {
@@ -193,6 +198,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // ETA
     private int eta;
+
+    // js api developer contact
+    private String mCardSuppliedDeveloperContact  = "";
+    private String mCardSuppliedApiVersion = "";
+
+    private static final String sCurrentJsApiVersion = "0.0.1";
+    private static final String sMinimumJsApiVersion = "0.0.1";
+
+    // JS API ERROR CODE
+    private static final int ankiJsErrorCodeDefault = 0;
+    private static final int ankiJsErrorCodeMarkCard = 1;
+    private static final int ankiJsErrorCodeFlagCard = 2;
+
+    // JS api list enable/disable status
+    private HashMap<String, Boolean> mJsApiListMap = new HashMap<String, Boolean>();
 
     private boolean isInFullscreen;
 
@@ -1928,6 +1948,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void displayCardQuestion() {
         displayCardQuestion(false);
+
+        // js api initialisation / reset
+        jsApiInit();
     }
 
     protected void displayCardQuestion(boolean reload) {
@@ -3228,11 +3251,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // mark card using javascript
             if (url.startsWith("signal:mark_current_card")) {
-                executeCommand(COMMAND_MARK);
+                if (isAnkiApiNull("markCard")) {
+                    showDeveloperContact(ankiJsErrorCodeDefault);
+                    return true;
+                } else if (mJsApiListMap.get("markCard")) {
+                    executeCommand(COMMAND_MARK);
+                } else {
+                    // see 02-string.xml
+                    showDeveloperContact(ankiJsErrorCodeMarkCard);
+                }
                 return true;
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             if (url.startsWith("signal:flag_")) {
+                if (isAnkiApiNull("toggleFlag")) {
+                    showDeveloperContact(ankiJsErrorCodeDefault);
+                    return true;
+                } else if (!mJsApiListMap.get("toggleFlag")) {
+                    // see 02-string.xml
+                    showDeveloperContact(ankiJsErrorCodeFlagCard);
+                    return true;
+                }
+
                 String mFlag = url.replaceFirst("signal:flag_","");
                 switch (mFlag) {
                     case "none": executeCommand(COMMAND_UNSET_FLAG);
@@ -3489,6 +3529,78 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
+    // Check if value null
+    private boolean isAnkiApiNull(String api) {
+        return mJsApiListMap.get(api) == null;
+    }
+
+    /*
+     * see 02-strings.xml
+     * Show Error code when mark card or flag card unsupported
+     * 1 - mark card
+     * 2 - flag card
+     *
+     * show developer contact if js api used in card is deprecated
+     */
+    private void showDeveloperContact(int errorCode) {
+        String errorMsg = getString(R.string.anki_js_error_code, errorCode);
+
+        View parentLayout = findViewById(android.R.id.content);
+        String snackbarMsg;
+        snackbarMsg = getString(R.string.api_version_developer_contact, mCardSuppliedDeveloperContact, errorMsg);
+
+        Snackbar snackbar = Snackbar.make(parentLayout, snackbarMsg, Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        TextView snackTextView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        snackTextView.setTextColor(Color.WHITE);
+        snackTextView.setMaxLines(3);
+
+        snackbar.setActionTextColor(Color.MAGENTA)
+                .setAction(getString(R.string.reviewer_invalid_api_version_visit_documentation), view -> {
+                    openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki"));
+                });
+
+        snackbar.show();
+    }
+
+    /**
+     * Supplied api version must be equal to current api version to call mark card, toggle flag functions etc.
+     */
+    private boolean requireApiVersion(String apiVer, String apiDevContact) {
+        try {
+
+            if (TextUtils.isEmpty(apiDevContact)) {
+                return false;
+            }
+
+            Version mVersionCurrent = Version.valueOf(sCurrentJsApiVersion);
+            Version mVersionSupplied = Version.valueOf(apiVer);
+
+            /*
+            * if api major version equals to supplied major version then return true and also check for minor version and patch version
+            * show toast for update and contact developer if need updates
+            * otherwise return false
+            */
+            if (mVersionSupplied.equals(mVersionCurrent)) {
+                return true;
+            } else if (mVersionSupplied.lessThan(mVersionCurrent)) {
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.update_js_api_version, mCardSuppliedDeveloperContact), false);
+
+                if (mVersionSupplied.greaterThanOrEqualTo(Version.valueOf(sMinimumJsApiVersion))) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.valid_js_api_version, mCardSuppliedDeveloperContact), false);
+                return false;
+            }
+        } catch (Exception e) {
+          Timber.w(e, "requireApiVersion::exception");
+        }
+        return false;
+    }
+
     @VisibleForTesting
     void loadInitialCard() {
         CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
@@ -3531,11 +3643,57 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         showDialogFragment(dialog);
     }
 
+    // init or reset api list
+    private void jsApiInit() {
+        mCardSuppliedApiVersion = "";
+        mCardSuppliedDeveloperContact = "";
+
+        for (int i = 0; i < mApiList.length; i++) {
+            mJsApiListMap.put(mApiList[i], false);
+        }
+    }
+
  /*
  Javascript Interface class for calling Java function from AnkiDroid WebView
 see card.js for available functions
  */
+    // list of api that can be accessed
+    private final String[] mApiList = {"toggleFlag", "markCard"};
+
     public class JavaScriptFunction {
+
+        private final Gson mGson = new Gson();
+
+        // if supplied api version match then enable api
+        private void enableJsApi() {
+            for (int i = 0; i < mApiList.length; i++) {
+                mJsApiListMap.put(mApiList[i], true);
+            }
+        }
+
+        @JavascriptInterface
+        public String init(String jsonData) {
+            JSONObject data;
+            String apiStatusJson = "";
+
+            try {
+                data = new JSONObject(jsonData);
+                if (!(data == JSONObject.NULL)) {
+                    mCardSuppliedApiVersion = data.optString("version", "");
+                    mCardSuppliedDeveloperContact  = data.optString("developer", "");
+
+                    if (requireApiVersion(mCardSuppliedApiVersion, mCardSuppliedDeveloperContact)) {
+                        enableJsApi();
+                    }
+
+                    apiStatusJson = mGson.toJson(mJsApiListMap);
+                }
+
+            } catch (JSONException j) {
+                UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.invalid_json_data, j.getLocalizedMessage()), false);
+            }
+            return String.valueOf(apiStatusJson);
+        }
 
         @JavascriptInterface
         public String ankiGetNewCardCount() {

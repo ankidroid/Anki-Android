@@ -307,4 +307,12 @@
         <item quantity="one">%d note unchanged</item>
         <item quantity="other">%d notes unchanged</item>
     </plurals>
+
+    <!-- JS api -->
+    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
+    <string name="invalid_json_data">Card provided invalid data. %s</string>
+    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
+    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
+    <string name="anki_js_error_code">(Error Code: %d)</string>
 </resources>
