@@ -75,5 +75,5 @@
         <item quantity="other">Zbývá %d minut</item>
     </plurals>
     <string name="widget_add_note">Přidat poznámku</string>
-    <string name="widget_add_note_button">Přidat novou AnkiDroid poznámmku</string>
+    <string name="widget_add_note_button">Přidat novou AnkiDroid poznámku</string>
 </resources>

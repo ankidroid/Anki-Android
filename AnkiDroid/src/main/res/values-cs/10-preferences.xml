@@ -153,8 +153,8 @@
     <string name="pref_backup_max">Maximální počet záloh</string>
     <string name="show_estimates">Zobrazit tlačítko času</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
-    <string name="show_top_bar">Zobrazit horní panel</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Zobrazit horní lištu</string>
+    <string name="show_top_bar_summ">Zobrazit počty karet, příznak a označení v horní liště</string>
     <string name="show_progress">Zobraz zbývající</string>
     <string name="show_progress_summ">Zobrazit zbývající počet karet</string>
     <string name="show_eta">Zobrazit ETA</string>
@@ -274,7 +274,7 @@
     <string name="deck_conf_cram_search">Hledat</string>
     <string name="deck_conf_cram_limit">Omezit na</string>
     <string name="deck_conf_cram_order">vybrané karty</string>
-    <string name="deck_conf_cram_reschedule">Změnit plán</string>
+    <string name="deck_conf_cram_reschedule">Přeplánovat</string>
     <string name="deck_conf_cram_reschedule_summ">Přeplánovat karty podle mých odpovědí v tomto balíčku</string>
     <string name="deck_conf_cram_steps">Vlastní kroky (v minutách)</string>
     <string name="deck_conf_cram_steps_summ">Definovat vlastní kroky</string>

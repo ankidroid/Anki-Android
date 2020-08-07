@@ -278,6 +278,7 @@
     <string name="note_importer_error_empty_notes">未匯入一個或多個筆記，因為其未生成任何卡片。 當您有空字段或未將文字檔案中的內容排佈到正確的字段時，可能會發生這種情況</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
     <string name="csv_importer_error_exception">已中止：%s</string>
+    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <plurals name="note_importer_notes_added">
         <item quantity="other">%d 筆記已新增</item>
     </plurals>
@@ -287,4 +288,11 @@
     <plurals name="note_importer_notes_unchanged">
         <item quantity="other">%d 筆記未變動</item>
     </plurals>
+    <!-- JS api -->
+    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
+    <string name="invalid_json_data">Card provided invalid data. %s</string>
+    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
+    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
+    <string name="anki_js_error_code">(Error Code: %d)</string>
 </resources>
