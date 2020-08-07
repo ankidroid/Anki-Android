@@ -98,6 +98,7 @@ import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListener;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -501,10 +502,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected final CollectionTask.TaskListener mDismissCardHandler = new NextCardHandler() { /* superclass is sufficient */ };
+    protected final TaskListener mDismissCardHandler = new NextCardHandler() { /* superclass is sufficient */ };
 
 
-    private final CollectionTask.TaskListener mUpdateCardHandler = new CollectionTask.TaskListener() {
+    private final TaskListener mUpdateCardHandler = new TaskListener() {
         private boolean mNoMoreCards;
 
 
@@ -566,7 +567,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    abstract class NextCardHandler extends CollectionTask.TaskListener {
+    abstract class NextCardHandler extends TaskListener {
         private boolean mNoMoreCards;
 
 
@@ -645,7 +646,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected CollectionTask.TaskListener mAnswerCardHandler (boolean quick) {
+    protected TaskListener mAnswerCardHandler (boolean quick) {
         return new NextCardHandler() {
             @Override
             public void onPreExecute() {

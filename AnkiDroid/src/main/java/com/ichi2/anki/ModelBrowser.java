@@ -43,12 +43,11 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListener;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.widget.WidgetStatus;
-
-import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -96,7 +95,7 @@ public class ModelBrowser extends AnkiActivity {
      * Displays the loading bar when loading the mModels and displaying them
      * loading bar is necessary because card count per model is not cached *
      */
-    private CollectionTask.TaskListener mLoadingModelsHandler = new CollectionTask.TaskListener() {
+    private TaskListener mLoadingModelsHandler = new TaskListener() {
         @Override
         public void onCancelled() {
             hideProgressBar();
@@ -125,7 +124,7 @@ public class ModelBrowser extends AnkiActivity {
      * Displays loading bar when deleting a model loading bar is needed
      * because deleting a model also deletes all of the associated cards/notes *
      */
-    private CollectionTask.TaskListener mDeleteModelHandler = new CollectionTask.TaskListener() {
+    private TaskListener mDeleteModelHandler = new TaskListener() {
 
         @Override
         public void onPreExecute() {

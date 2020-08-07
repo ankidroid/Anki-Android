@@ -50,7 +50,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListener;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
@@ -628,7 +628,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
         /* Used for updating the collection when a model has been edited */
-        private CollectionTask.TaskListener mSaveModelAndExitHandler = new CollectionTask.TaskListener() {
+        private TaskListener mSaveModelAndExitHandler = new TaskListener() {
             private MaterialDialog mProgressDialog = null;
             @Override
             public void onPreExecute() {
