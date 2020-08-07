@@ -32,6 +32,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.PopupMenu;
@@ -60,6 +61,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
+import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
@@ -108,6 +110,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
@@ -947,6 +950,14 @@ public class NoteEditor extends AnkiActivity {
         closeCardEditorWithCheck();
     }
 
+
+    @Override
+    protected void onPause() {
+        dismissAllDialogFragments(); //remove the "field language" as it can't be reshown without a field reference
+        super.onPause();
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -1311,7 +1322,8 @@ public class NoteEditor extends AnkiActivity {
 
             if (Build.VERSION.SDK_INT >= 23) {
                 // Use custom implementation of ActionMode.Callback customize selection and insert menus
-                ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox);
+                Field f = new Field(getFieldByIndex(i), getCol());
+                ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox, f);
                 newTextbox.setCustomSelectionActionModeCallback(actionModeCallback);
                 newTextbox.setCustomInsertionActionModeCallback(actionModeCallback);
             }
@@ -1497,6 +1509,10 @@ public class NoteEditor extends AnkiActivity {
         return Locale.forLanguageTag(languageTag);
     }
 
+    @NonNull
+    private JSONObject getFieldByIndex(int index) {
+        return this.getCurrentlySelectedModel().getJSONArray("flds").getJSONObject(index);
+    }
 
     @Nullable
     private JSONObject getFieldByName(String name) {
@@ -1886,13 +1902,17 @@ public class NoteEditor extends AnkiActivity {
      * button in the text selection menu.
      */
     @TargetApi(23)
-    private class ActionModeCallback implements ActionMode.Callback {
-        private FieldEditText mTextBox;
+    private class ActionModeCallback implements ActionMode.Callback, LocaleSelectionDialog.LocaleSelectionDialogHandler {
+        private final FieldEditText mTextBox;
+        private final Field mField;
         private final int mClozeMenuId = View.generateViewId();
+        @RequiresApi(Build.VERSION_CODES.N)
+        private final int mSetLanugageId = View.generateViewId();
 
-        private ActionModeCallback(FieldEditText textBox) {
+        private ActionModeCallback(FieldEditText textBox, Field field) {
             super();
             mTextBox = textBox;
+            mField = field;
         }
 
         @Override
@@ -1907,11 +1927,20 @@ public class NoteEditor extends AnkiActivity {
                 return false;
             }
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(mSetLanugageId) != null) {
+                return false;
+            }
+
             int initialSize = menu.size();
 
             if (isClozeType()) {
                 menu.add(Menu.NONE, mClozeMenuId, 0, R.string.multimedia_editor_popup_cloze);
             }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                menu.add(Menu.NONE, mSetLanugageId, 1, R.string.note_editor_set_field_language);
+            }
+
 
             return initialSize != menu.size();
         }
@@ -1924,15 +1953,44 @@ public class NoteEditor extends AnkiActivity {
                 convertSelectedTextToCloze(mTextBox);
                 mode.finish();
                 return true;
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == mSetLanugageId) {
+                displaySelectInputLanguage();
+                mode.finish();
+                return true;
             } else {
                 return false;
             }
         }
 
 
+        @RequiresApi(Build.VERSION_CODES.N)
+        private void displaySelectInputLanguage() {
+            DialogFragment dialogFragment = LocaleSelectionDialog.newInstance(this);
+            showDialogFragment(dialogFragment);
+        }
+
+
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             // Left empty on purpose
+        }
+
+        @Override
+        @RequiresApi(Build.VERSION_CODES.N)
+        public void onSelectedLocale(@NonNull Locale selectedLocale) {
+            mField.setHintLocale(selectedLocale);
+            mTextBox.setHintLocale(selectedLocale);
+
+            dismissAllDialogFragments();
+
+            //NICE_TO_HAVE: show the new keyboard and focus the field here.
+        }
+
+
+        @Override
+        @RequiresApi(Build.VERSION_CODES.N)
+        public void onLocaleSelectionCancelled() {
+            dismissAllDialogFragments();
         }
     }
 
@@ -2042,6 +2100,29 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             // do nothing
+        }
+    }
+
+    private static class Field {
+        private final JSONObject mField;
+        private final Collection mCol;
+
+
+        public Field(JSONObject fieldObject, Collection collection) {
+            this.mField = fieldObject;
+            this.mCol = collection;
+        }
+
+
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        public void setHintLocale(@NonNull Locale selectedLocale) {
+            String input = selectedLocale.toLanguageTag();
+            mField.put("ad-hint-locale", input);
+            try {
+                mCol.getModels().save();
+            } catch (Exception e) {
+                Timber.w(e, "Failed to save hint locale");
+            }
         }
     }
 }

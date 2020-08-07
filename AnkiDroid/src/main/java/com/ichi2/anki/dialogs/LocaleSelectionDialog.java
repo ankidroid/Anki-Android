@@ -51,6 +51,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java8.util.Lists;
 
+/** Locale selection dialog. Note: this must be dismissed onDestroy if not called from an activity implementing LocaleSelectionDialogHandler */
 public class LocaleSelectionDialog extends AnalyticsDialogFragment {
 
     private LocaleSelectionDialogHandler dialogHandler;
@@ -69,8 +70,9 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
     @NonNull
     public static LocaleSelectionDialog newInstance(@NonNull LocaleSelectionDialogHandler handler) {
         LocaleSelectionDialog t = new LocaleSelectionDialog();
-
-        t.setArguments(new Bundle());
+        t.dialogHandler = handler;
+        Bundle args = new Bundle();
+        t.setArguments(args);
 
         return t;
     }
@@ -88,10 +90,12 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
         super.onAttach(context);
         if (context instanceof Activity) {
             Activity activity = (Activity) context;
-            if (!(context instanceof LocaleSelectionDialogHandler)) {
-                throw new IllegalArgumentException("Calling activity must implement LocaleSelectionDialogHandler");
+            if (dialogHandler == null) {
+                if (!(context instanceof LocaleSelectionDialogHandler)) {
+                    throw new IllegalArgumentException("Calling activity must implement LocaleSelectionDialogHandler");
+                }
+                this.dialogHandler = (LocaleSelectionDialogHandler) context;
             }
-            this.dialogHandler = (LocaleSelectionDialogHandler) context;
             activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         }
     }
