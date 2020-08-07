@@ -3688,5 +3688,10 @@ see card.js for available functions
                 return true;
             }
         }
+
+        @JavascriptInterface
+        public String ankiGetAnkiDroidVersion() {
+            return BuildConfig.VERSION_NAME;
+        }
     }
 }
