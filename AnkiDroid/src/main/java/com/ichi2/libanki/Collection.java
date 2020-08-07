@@ -492,6 +492,10 @@ public class Collection {
         return new Card(this, id);
     }
 
+    public Card.Cache getCardCache(long id) {
+        return new Card.Cache(this, id);
+    }
+
 
     public Note getNote(long id) {
         return new Note(this, id);
