@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 /**
@@ -714,5 +716,107 @@ public class Card implements Cloneable {
 
     public boolean isNew() {
         return this.getType() == Consts.CARD_TYPE_NEW;
+    }
+
+    /** A cache represents an intermediary step between a card id and a card object. Creating a Card has some fixed cost
+     * in term of database access. Using an id has an unknown cost: none if the card is never accessed, heavy if the
+     * card is accessed a lot of time. CardCache ensure that the cost is paid at most once, by waiting for first access
+     * to load the data, and then saving them. Since CPU and RAM is usually less of a bottleneck than database access,
+     * it may often be worth using this cache.
+     *
+     * Beware that the card is loaded only once. Change in the database are not reflected, so use it only if you can
+     * safely assume that the card has not changed. That is
+     * long id;
+     * Card card = col.getCard(id);
+     * ....
+     * Card card2 = col.getCard(id);
+     * is not equivalent to
+     * long id;
+     * Card.Cache cache = new Cache(col, id);
+     * Card card = cache.getCard();
+     * ....
+     * Card card2 = cache.getCard();
+     *
+     * It is equivalent to:
+     * long id;
+     * Card.Cache cache = new Cache(col, id);
+     * Card card = cache.getCard();
+     * ....
+     * cache.reload();
+     * Card card2 = cache.getCard();
+     */
+    public static class Cache implements Cloneable {
+        @NonNull
+        private final Collection mCol;
+        private final long mId;
+        @Nullable
+        private Card mCard;
+
+        public Cache(Collection col, long id) {
+            mCol = col;
+            mId = id;
+        }
+
+        /** Copy of cache. Useful to create a copy of a subclass without loosing card if it is loaded. */
+        protected Cache(Cache cache) {
+            mCol = cache.mCol;
+            mId = cache.mId;
+            mCard = cache.mCard;
+        }
+
+        /** Copy of cache. Useful to create a copy of a subclass without loosing card if it is loaded. */
+        public Cache(Card card) {
+            mCol = card.mCol;
+            mId = card.getId();
+            mCard = card;
+        }
+
+        /**
+         * The card with id given at creation. Note that it has content of the time at which the card was loaded, which
+         * may have changed in database. So it is not equivalent to getCol().getCard(getId()). If you need fresh data, reload
+         * first.*/
+        @NonNull
+        public synchronized Card getCard() {
+            if (mCard == null) {
+                mCard = mCol.getCard(mId);
+            }
+            return mCard;
+        }
+
+        /** Next access to card will reload the card from the database. */
+        public synchronized void reload() {
+            mCard = null;
+        }
+
+        public long getId() {
+            return mId;
+        }
+
+        @NonNull
+        public Collection getCol() {
+            return mCol;
+        }
+
+        @Override
+        public int hashCode() {
+            return Long.valueOf(mId).hashCode();
+        }
+
+        /** The cloned version represents the same card but data are not loaded. */
+        @NonNull
+        public Cache clone() {
+            return new Cache(mCol, mId);
+        }
+
+        public boolean equals(Object cache) {
+            if (!(cache instanceof Cache)) {
+                return false;
+            }
+            return mId == ((Cache) cache).mId;
+        }
+
+        public void loadQA(boolean reload, boolean browser) {
+            getCard()._getQA(reload, browser);
+        }
     }
 }
