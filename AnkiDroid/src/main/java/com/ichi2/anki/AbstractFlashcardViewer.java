@@ -597,7 +597,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPreExecute() { /* do nothing */}
+        public void onPreExecute() {
+            dealWithTimeBox();
+        }
 
 
         @Override
@@ -627,22 +629,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 AbstractFlashcardViewer.this.unblockControls();
                 AbstractFlashcardViewer.this.displayCardQuestion();
             }
-
-            // Since reps are incremented on fetch of next card, we will miss counting the
-            // last rep since there isn't a next card. We manually account for it here.
-            if (mNoMoreCards) {
-                mSched.incrReps();
-            }
-            dealWithTimeBox();
         }
 
         private void dealWithTimeBox() {
             Resources res = getResources();
             Pair<Integer, Integer> elapsed = getCol().timeboxReached();
             if (elapsed != null) {
-                // AnkiDroid is always counting one rep ahead, so we decrement it before displaying
-                // it to the user.
-                int nCards = elapsed.second.intValue() - 1;
+                int nCards = elapsed.second.intValue();
                 int nMins = elapsed.first.intValue() / 60;
                 String mins = res.getQuantityString(R.plurals.in_minutes, nMins, nMins);
                 String timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins);

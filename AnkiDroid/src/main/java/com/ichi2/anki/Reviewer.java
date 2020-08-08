@@ -235,6 +235,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
+        getCol().startTimebox();
         CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
                 new TaskData(null, 0));
 
