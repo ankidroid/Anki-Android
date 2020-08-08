@@ -40,6 +40,9 @@ public abstract class AbstractSched {
      */
     public abstract void reset();
 
+    /** Ensure that the question on the potential next card can be accessed quickly.
+     */
+    public abstract void preloadNextCard();
     public abstract void resetCounts();
     public abstract void resetQueues();
     /** Ensures that reset is executed before the next card is selected */

@@ -547,6 +547,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 cardChanged = true;  // Keep track of that so we can run a bit of new-card code
             }
             mCurrentCard = value.getCard();
+            CollectionTask.launchCollectionTask(PRELOAD_NEXT_CARD); // Tasks should always be launched from GUI. So in
+                                                                    // listener and not in background
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
                 mNoMoreCards = true;
