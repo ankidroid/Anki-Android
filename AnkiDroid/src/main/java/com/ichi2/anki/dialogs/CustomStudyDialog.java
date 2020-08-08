@@ -501,7 +501,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         AnkiActivity activity = getAnkiActivity();
         if (jumpToReviewer) {
             activity.startActivityForResultWithoutAnimation(new Intent(activity, Reviewer.class), AnkiActivity.REQUEST_REVIEW);
-            CollectionHelper.getInstance().getCol(activity).startTimebox();
         } else {
             ((CustomStudyListener) activity).onExtendStudyLimits();
         }

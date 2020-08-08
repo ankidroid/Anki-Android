@@ -243,7 +243,6 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             getActivity().finish();
         }
         animateLeft();
-        getCol().startTimebox();
     }
 
 

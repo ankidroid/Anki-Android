@@ -2472,7 +2472,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void openReviewer() {
         Intent reviewer = new Intent(this, Reviewer.class);
         startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
-        getCol().startTimebox();
     }
 
     @Override
