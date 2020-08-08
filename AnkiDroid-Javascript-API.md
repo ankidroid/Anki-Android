@@ -6,8 +6,7 @@ This api allow deck developer to add functionality to cards that can call native
 <br> View this files also for additional information.
 <br>[AbstractFlashcardViewer.java](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/java/com/ichi2/anki/AbstractFlashcardViewer.java#L3404)
 <br>[card.js](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/assets/scripts/card.js#L78)
-<br>**Note: The PR (#6521) is in progress. After merge of this PR, mark card and toggle flag implementation in front/back side of card must be changed or updated to new implementation. So check this wiki page for further updates.**
-<!-- The PR is in progress. (#6521)
+<br>
 To initialize the JavaScript API usage.
 ## Initialize 
 Calling functions using JS will not work, if api are not initialized.
@@ -18,24 +17,33 @@ AnkiDroidJS.init()
 ```
 ### Info
 For using these functions, api version and developer contact must be provided.
-The current api version is ```1.0.0```.
+The current api version is ```0.0.1```.
 
 ### Type of return value
 ```String```
 <br>All the available functions with ```enabled/disabled``` status of available functions that can be called using JavaScript.
 
 ### Usage 
+
 ```javascript
 <script>
-var jsApi = { "version" : "1.0.0", "developer" : "username@gmail.com" }
+   var jsApi = {"version" : "0.0.1", "developer" : "dev@mail.com"};
 
-var apiData = AnkiDroidJS.init(JSON.stringify(jsApi));
+   var apiStatus = AnkiDroidJS.init(JSON.stringify(jsApi));
+   console.log(apiStatus);
+   
+   api = JSON.parse(apiStatus);
+   
+   if (api['markCard']) {
+      console.log("API mark card available");
+   }   
 
-var apiStatus = JSON.parse(apiData);
-console.log(apiStatus);
+   if (api['toggleFlag']) {
+      console.log("API toggle flag available");
+   }   
 </script>
 ```
--->
+
 ## Show Answer
 ### Name
 ```showAnswer()```
@@ -481,7 +489,7 @@ console.log(AnkiDroidJS.ankiGetCardODid());
 ```
 
 
-## Some tips to improve card / deck development 
+## Some tips to improve card / deck development
 If want to hide card's button / text in current card when reviewing on Anki Desktop / AnkiMobile then adding all code to ```if``` block can hide the things.
 <br>**Note: Using this may give some problem when using AnkiWeb in Android Chrome, so to make available some functionality only to AnkiDroid app then ```wv``` in ```navigator.userAgent``` can be used.**
 ```javascript
@@ -505,6 +513,110 @@ If want to hide card's button / text in current card when reviewing on Anki Desk
 ```
 For more view [Window.navigator](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator) and [Navigator userAgent Property](https://www.w3schools.com/jsref/prop_nav_useragent.asp)
 
+## Custom topbar design
+**Note: After AnkiDroid 2.12**. Turn on fullscreen and also hide topbar from reviewer settings.
+
+<img src="https://user-images.githubusercontent.com/12841290/88459635-6404b580-cec9-11ea-9a90-b3bc01556ff0.PNG" height="500" width="241"></img>
+
+Add this to front/Back Side
+```html
+<div style="display:inline;" class="card-count">
+        <table style="width:28%; margin: 0 auto;">
+            <tbody>
+                <tr>
+                <tr id="card_count_dot" class="card-count-dot">
+                    <td style="color:#2196f3;">&#8226;</td>
+                    <td style="color:#ea2322;">&#8226;</td>
+                    <td style="color:#4caf50;">&#8226;</td>
+                </tr>
+                <tr class="card-count-num">
+                    <td style="color:#2196f3;" id="newCard"></td>
+                    <td style="color:#ea2322;" id="learnCard"></td>
+                    <td style="color:#4caf50;" id="reviewCard"></td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+<div id="deck_title" class="title">{{Subdeck}}</div>
+<div class="time-left" id="timeID"> </div>
+
+<script>
+ var UA = navigator.userAgent;
+
+ var isMobile = /Android/i.test(UA);
+ var isAndroidWebview = /wv/i.test(UA);
+
+ if (isMobile) {
+   // Here all AnkiDroid defined functions call. 
+   // It will be hidden or not called on AnkiDesktop / AnkiMobile
+   
+   if (isAndroidWebview) {
+        // Available only to AnkiDroid app only.
+
+	document.getElementById("newCard").innerText = AnkiDroidJS.ankiGetNewCardCount();
+        document.getElementById("learnCard").innerText = AnkiDroidJS.ankiGetLrnCardCount();
+        document.getElementById("reviewCard").innerText = AnkiDroidJS.ankiGetRevCardCount();
+
+        var t = AnkiDroidJS.ankiGetETA();
+        document.getElementById("timeID").innerHTML = t + " mins.";
+   }  
+ } else {
+	document.getElementById("card_count_dot").style.display = "none";
+        document.getElementById("deck_title").style.display = "none";
+}
+</script>
+```
+
+Add this to Card CSS
+```css
+/*card counts, title, time*/
+
+.card-count {
+    top: 0;
+    right: 4px;
+    position: absolute;
+    display: none;
+}
+
+.card-count-num {
+    color: black;
+    font-size: 18px;
+}
+
+.card-count-dot {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.card-count-text {
+    font-weight: light;
+    font-size: 14px;
+}
+
+.title {
+    top: 14px;
+    left: 14px;
+    position: absolute;
+    font-size: 20px;
+    color: grey;
+    font-weight: bold;
+}
+
+.time-left {
+    top: 36px;
+    left: 14px;
+    position: absolute;
+    font-size: 14px;
+    text-align: left;
+    font-weight: bold;
+    color: teal;
+}
+```
+
+## Sample Decks 
+The implementation of above functionality can be found in this github repo.
+[Anki Custom Card Layout](https://github.com/infinyte7/Anki-Custom-Card-Layout)
+
 ## Linked issues & PR
 [#6521 apiVersioning and developerContact implementation for AnkiDroid functions call from WebView](https://github.com/ankidroid/Anki-Android/pull/6521)
 <br>[#6377 apiVersioning and developerContact implementation for AndkiDroid functions call from WebView](https://github.com/ankidroid/Anki-Android/pull/6377) 
@@ -517,7 +629,3 @@ For more view [Window.navigator](https://developer.mozilla.org/en-US/docs/Web/AP
 <br>[#6387 Show options menu & navigation drawer using WebView](https://github.com/ankidroid/Anki-Android/pull/6387)
 <br>[#6567 Night mode status in Card](https://github.com/ankidroid/Anki-Android/pull/6567)
 <br>[#6470 Get value of fullscreen status in JavaScript](https://github.com/ankidroid/Anki-Android/pull/6470)
-
-## Sample Decks 
-The implementation of above functionality can be found in this github repo.
-[Anki Custom Card Layout](https://github.com/infinyte7/Anki-Custom-Card-Layout)
