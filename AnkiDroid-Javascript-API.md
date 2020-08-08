@@ -487,6 +487,26 @@ Returns the ID of the home deck for the card if it is filtered, or ```0``` if no
 console.log(AnkiDroidJS.ankiGetCardODid());
 ```
 
+## Get next time for review in WebView
+
+### Name 
+```
+AnkiDroidJS.ankiGetNextTime1()
+AnkiDroidJS.ankiGetNextTime2()
+AnkiDroidJS.ankiGetNextTime3()
+AnkiDroidJS.ankiGetNextTime4()
+```
+### Type of return value
+```String```
+### Info
+Return time for next review. Time at answer buttons (Again/Hard/Good/Easy/). It can be used to hide button if returned string is empty.
+### Usage
+```javascript
+console.log(AnkiDroidJS.ankiGetNextTime1());
+console.log(AnkiDroidJS.ankiGetNextTime2());
+console.log(AnkiDroidJS.ankiGetNextTime3());
+console.log(AnkiDroidJS.ankiGetNextTime4());
+```
 
 ## Some tips to improve card / deck development
 If want to hide card's button / text in current card when reviewing on Anki Desktop / AnkiMobile then adding all code to ```if``` block can hide the things.
