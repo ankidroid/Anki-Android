@@ -628,7 +628,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (mNoMoreCards) {
                 mSched.incrReps();
             }
+            dealWithTimeBox();
+        }
 
+        private void dealWithTimeBox() {
+            Resources res = getResources();
             Pair<Integer, Integer> elapsed = getCol().timeboxReached();
             if (elapsed != null) {
                 // AnkiDroid is always counting one rep ahead, so we decrement it before displaying
