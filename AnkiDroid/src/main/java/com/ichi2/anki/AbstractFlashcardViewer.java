@@ -1304,6 +1304,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (mInAnswer) {
             return;
         }
+        if (ease != 1 && ease != getRecommendedEase(false)) {
+            Timber.w("Non Pass/Fail grade provided");
+            return;
+        }
+
         mIsSelecting = false;
         hideLookupButton();
         int buttonNumber = getCol().getSched().answerButtons(mCurrentCard);
@@ -2490,19 +2495,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 flipOrAnswerCard(EASE_1);
                 return true;
             case COMMAND_FLIP_OR_ANSWER_EASE2:
-                flipOrAnswerCard(EASE_2);
+                flipOrAnswerCard(getRecommendedEase(false));
+                // flipOrAnswerCard(EASE_2);
                 return true;
             case COMMAND_FLIP_OR_ANSWER_EASE3:
-                flipOrAnswerCard(EASE_3);
+                // flipOrAnswerCard(EASE_3);
                 return true;
             case COMMAND_FLIP_OR_ANSWER_EASE4:
-                flipOrAnswerCard(EASE_4);
+                // flipOrAnswerCard(EASE_4);
                 return true;
             case COMMAND_FLIP_OR_ANSWER_RECOMMENDED:
                 flipOrAnswerCard(getRecommendedEase(false));
                 return true;
             case COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED:
-                flipOrAnswerCard(getRecommendedEase(true));
+                // flipOrAnswerCard(getRecommendedEase(true));
                 return true;
             case COMMAND_EXIT:
                 closeReviewer(RESULT_DEFAULT, false);
