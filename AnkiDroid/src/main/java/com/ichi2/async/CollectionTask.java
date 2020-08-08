@@ -530,6 +530,10 @@ public class CollectionTask extends BaseAsyncTask<CollectionTask.TaskData, Colle
                 if (newCard != null) {
                     // render cards before locking database
                     newCard._getQA(true);
+                    if (AnkiDroidApp.getSharedPrefs(mContext).getBoolean("miaNoBoostingOrPenalties", true)) {
+                        newCard.setFactor(Consts.STARTING_FACTOR);
+                        newCard.flush();
+                    }
                 }
                 publishProgress(new TaskData(newCard));
                 db.getDatabase().setTransactionSuccessful();

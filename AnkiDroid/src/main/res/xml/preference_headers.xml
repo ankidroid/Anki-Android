@@ -64,6 +64,17 @@
     <!-- Advanced Preferences -->
     <header
         android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
+        android:key="pref_screen_mia"
+        android:summary="@string/pref_cat_mia_summ"
+        android:title="@string/pref_cat_mia">
+        <extra
+            android:name="subscreen"
+            android:value="com.ichi2.anki.prefs.mia" />
+    </header>
+
+    <!-- Advanced Preferences -->
+    <header
+        android:fragment="com.ichi2.anki.Preferences$SettingsFragment"
         android:key="pref_screen_advanced"
         android:summary="@string/pref_cat_advanced_summ"
         android:title="@string/pref_cat_advanced">
