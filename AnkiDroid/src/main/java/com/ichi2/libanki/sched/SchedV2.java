@@ -2839,12 +2839,12 @@ public class SchedV2 extends AbstractSched {
         return mReps;
     }
 
-    public void incrReps() {
+    protected void incrReps() {
         mReps++;
     }
 
 
-    public void decrReps() {
+    protected void decrReps() {
         mReps--;
     }
 
