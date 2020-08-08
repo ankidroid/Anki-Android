@@ -1273,14 +1273,14 @@ public class Collection<T extends Time> {
 
 
     /* Return (elapsedTime, reps) if timebox reached, or null. */
-    public Long[] timeboxReached() {
+    public Pair<Integer, Integer> timeboxReached() {
         if (mConf.getLong("timeLim") == 0) {
             // timeboxing disabled
             return null;
         }
         long elapsed = getTime().intTime() - mStartTime;
         if (elapsed > mConf.getLong("timeLim")) {
-            return new Long[] { mConf.getLong("timeLim"), (long) (mSched.getReps() - mStartReps) };
+            return new Pair<Integer, Integer> (mConf.getInt("timeLim"), mSched.getReps() - mStartReps);
         }
         return null;
     }
