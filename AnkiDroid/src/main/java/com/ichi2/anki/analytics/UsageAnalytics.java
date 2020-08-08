@@ -41,6 +41,7 @@ import org.acra.util.Installation;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
+/** Disabled */
 public class UsageAnalytics {
 
     public static final String ANALYTICS_OPTIN_KEY = "analyticsOptIn";
@@ -63,6 +64,7 @@ public class UsageAnalytics {
         if (sAnalytics == null) {
             Timber.d("App tracking id 'tid' = %s", getAnalyticsTag(context));
             GoogleAnalyticsConfig gaConfig = new GoogleAnalyticsConfig()
+                    .setEnabled(false)
                     .setBatchingEnabled(true)
                     .setSamplePercentage(getAnalyticsSamplePercentage(context))
                     .setBatchSize(1); // until this handles application termination we will lose hits if batch>1
@@ -85,10 +87,11 @@ public class UsageAnalytics {
         installDefaultExceptionHandler();
 
         SharedPreferences userPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        setOptIn(userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false));
+        setOptIn(false); // setOptIn(userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false));
+
         userPrefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
             if (key.equals(ANALYTICS_OPTIN_KEY)) {
-                setOptIn(sharedPreferences.getBoolean(key, false));
+                setOptIn(false); // setOptIn(sharedPreferences.getBoolean(key, false));
             }
         });
 

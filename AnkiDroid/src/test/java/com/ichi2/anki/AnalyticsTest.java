@@ -29,6 +29,7 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -114,6 +115,7 @@ public class AnalyticsTest {
     }
 
     @Test
+    @Ignore("Analytics is disabled")
     public void testSendException() {
 
         // no root cause

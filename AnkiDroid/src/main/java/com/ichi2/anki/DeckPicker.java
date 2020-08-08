@@ -1023,9 +1023,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (skip < 2 && !preferences.getString("lastVersion", "").equals(VersionUtils.getPkgVersionName())) {
             Timber.i("AnkiDroid is being updated and a collection already exists.");
             // The user might appreciate us now, see if they will help us get better?
-            if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
-                showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance());
-            }
+//            if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
+//                showDialogFragment(DeckPickerAnalyticsOptInDialog.newInstance());
+//            }
 
             // For upgrades, we check if we are upgrading
             // to a version that contains additions to the database integrity check routine that we would
