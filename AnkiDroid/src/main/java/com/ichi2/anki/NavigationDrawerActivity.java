@@ -317,6 +317,14 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                     Timber.i("Navigating to feedback");
                     openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
                     break;
+                case R.id.nav_backers:
+                    Timber.i("navigating to backers");
+                    openUrl(Uri.parse(AnkiDroidApp.getBackersUrl()));
+                    break;
+                case R.id.nav_patreon:
+                    Timber.i("Navigating to Patreon");
+                    openUrl(Uri.parse(AnkiDroidApp.getPatreonUrl()));
+                    break;
                 default:
                     break;
             }

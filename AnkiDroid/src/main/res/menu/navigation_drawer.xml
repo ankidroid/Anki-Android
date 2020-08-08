@@ -33,5 +33,13 @@
             android:id="@+id/nav_feedback"
             android:icon="@drawable/ic_feedback_black_24dp"
             android:title="@string/send_feedback"/>
+        <item
+            android:id="@+id/nav_backers"
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:title="Backers"/>
+        <item
+            android:id="@+id/nav_patreon"
+            android:icon="@drawable/ic_patreon_logo_black_24dp"
+            android:title="Patreon"/>
     </group>
 </menu>

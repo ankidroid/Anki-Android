@@ -1,0 +1,23 @@
+<!--
+  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+
+  This program is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation; either version 3 of the License, or (at your option) any later
+  version.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with
+  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<vector android:height="23.040031dp" android:viewportHeight="767.70667"
+    android:viewportWidth="799.69336" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#141518" android:fillType="evenOdd"
+        android:pathData="m512.652,0.001c-158.768,-0 -287.939,129.287 -287.939,288.212 0,158.444 129.171,287.349 287.939,287.349 158.277,-0 287.043,-128.905 287.043,-287.349 0,-158.925 -128.765,-288.212 -287.043,-288.212" android:strokeColor="#00000000"/>
+    <path android:fillColor="#141518" android:fillType="evenOdd"
+        android:pathData="M0,767.707L140.588,767.707L140.588,-0.001L0,-0.001L0,767.707" android:strokeColor="#00000000"/>
+</vector>

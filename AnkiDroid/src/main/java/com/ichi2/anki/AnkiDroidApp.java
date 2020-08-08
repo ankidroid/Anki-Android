@@ -525,34 +525,25 @@ public class AnkiDroidApp extends MultiDexApplication {
 
     /**
      * Get the url for the feedback page
-     * @return
      */
     public static String getFeedbackUrl() {
-        //TODO actually this can be done by translating "link_help" string for each language when the App is
-        // properly translated
-        if (isCurrentLanguage("ja")) {
-            return getAppResources().getString(R.string.link_help_ja);
-        } else if (isCurrentLanguage("zh")) {
-            return getAppResources().getString(R.string.link_help_zh);
-        } else {
-            return getAppResources().getString(R.string.link_help);
-        }
+        return "https://david-allison-1.github.io/ankidroid-mia/feedback";
     }
 
     /**
      * Get the url for the manual
-     * @return
      */
     public static String getManualUrl() {
-        //TODO actually this can be done by translating "link_manual" string for each language when the App is
-        // properly translated
-        if (isCurrentLanguage("ja")) {
-            return getAppResources().getString(R.string.link_manual_ja);
-        } else if (isCurrentLanguage("zh")) {
-            return getAppResources().getString(R.string.link_manual_zh);
-        } else {
-            return getAppResources().getString(R.string.link_manual);
-        }
+        return "https://david-allison-1.github.io/ankidroid-mia/manual";
+    }
+
+    public static String getPatreonUrl() {
+        return "https://www.patreon.com/DavidAllison";
+    }
+
+
+    public static String getBackersUrl() {
+        return "https://david-allison-1.github.io/ankidroid-mia/backers";
     }
 
     /**
