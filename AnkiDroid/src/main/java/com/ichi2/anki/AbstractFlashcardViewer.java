@@ -674,6 +674,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return new NextCardHandler() {
             @Override
             public void onPreExecute() {
+                super.onPreExecute();
                 blockControls(quick);
             }
         };
