@@ -122,8 +122,7 @@ public class Info extends AnkiActivity {
                         String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
                         .append("<br/><br/>");
                 sb.append(
-                        String.format(content[1], res.getString(R.string.link_issue_tracker),
-                                res.getString(R.string.link_wiki), res.getString(R.string.link_forum))).append(
+                        String.format(content[1], res.getString(R.string.link_issue_tracker))).append(
                         "<br/><br/>");
                 sb.append(
                         String.format(content[2], res.getString(R.string.link_wikipedia_open_source),
@@ -131,8 +130,9 @@ public class Info extends AnkiActivity {
                 sb.append(
                         String.format(content[3], res.getString(R.string.link_translation),
                                 res.getString(R.string.link_donation))).append("<br/><br/>");
+                sb.append(content[4]).append("<br/><br/>");
                 sb.append(
-                        String.format(content[4], res.getString(R.string.licence_wiki),
+                        String.format(content[5], res.getString(R.string.licence_wiki),
                                 res.getString(R.string.link_source))).append("<br/><br/>");
                 sb.append("</body></html>");
                 webView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
@@ -177,7 +177,8 @@ public class Info extends AnkiActivity {
      * @return debugInfo
      */
     public String copyDebugInfo() {
-        String debugInfo = "AnkiDroid Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
+        String debugInfo = "AnkiDroid-MIA Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
+                "AnkiDroid Version: 2.12.1" + "\n\n" +
                 "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
                 "ACRA UUID = " + Installation.id(this) + "\n";
 
