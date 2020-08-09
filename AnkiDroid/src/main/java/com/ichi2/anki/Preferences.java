@@ -770,6 +770,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         switch (pref.getKey()) {
             case "about_dialog_preference":
                 pref.setSummary(getResources().getString(R.string.about_version) + " " + VersionUtils.getPkgVersionName());
+                // Easier to do a replacement hre than change all translations
+                pref.setTitle(pref.getTitle().toString().replace("AnkiDroid", "AnkiDroid-MIA"));
                 break;
             case "custom_sync_server_link":
                 SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
