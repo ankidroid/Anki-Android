@@ -55,13 +55,6 @@
     <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
     <string name="initializing_tts">מאתחל מנוע כתוב-אל-דיבור...‏</string>
     <string name="tts_no_tts">אל תדבר.‏</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s<br/>כרטיסי לימוד לאנדרואיד</h2>AnkiDroid היא אפליקציה ללימוד בעזרת כרטיסים. היא תואמת את התוכנה <a href=\"%2$s\">Anki</a> למחשב האישי באופן מלא. ניתן ליצור, להוריד וללמוד פרטי מידע הן בעזרת AnkiDroid והן בעזרת Anki למחשב האישי, וניתן לסנכרן אותן בקלות בעזרת AnkiWeb.]]></item>
-        <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-        <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-        <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid משוחררת ב<a href=\"%1$s\">רשיון הציבורי הכללי של גנו, גרסה 3</a> וקוד המקור שלה זמין <a href=\"%2$s\">באתר GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title">תצוגה מקדימה</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">מיקום התחלתי:</string>
