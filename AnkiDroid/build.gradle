@@ -18,7 +18,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.ichi2.anki"
+        applicationId "com.ichi2.anki.mia"
 
         // The version number is of the form:
         // <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
