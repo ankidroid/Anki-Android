@@ -184,6 +184,9 @@ public class Info extends AnkiActivity {
         android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboardManager != null) {
             clipboardManager.setPrimaryClip(ClipData.newPlainText(this.getTitle(), debugInfo));
+            UIUtils.showThemedToast(this, getString(R.string.about_ankidroid_successfully_copied_debug), true);
+        } else {
+            UIUtils.showThemedToast(this, getString(R.string.about_ankidroid_error_copy_debug_info), false);
         }
         return debugInfo;
     }
