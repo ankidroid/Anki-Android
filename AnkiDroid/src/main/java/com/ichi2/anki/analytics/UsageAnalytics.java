@@ -35,9 +35,6 @@ import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.R;
 import com.ichi2.utils.WebViewDebugging;
 
-import org.acra.ACRA;
-import org.acra.util.Installation;
-
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
@@ -77,7 +74,6 @@ public class UsageAnalytics {
                             .applicationVersion(Integer.toString(BuildConfig.VERSION_CODE))
                             .applicationId(BuildConfig.APPLICATION_ID)
                             .trackingId(getAnalyticsTag(context))
-                            .clientId(Installation.id(context))
                             .anonymizeIp(context.getResources().getBoolean(R.bool.ga_anonymizeIp))
                     )
                     .withHttpClient(new OkHttpClientImpl(gaConfig))
@@ -295,11 +291,6 @@ public class UsageAnalytics {
     protected static boolean canGetDefaultUserAgent() {
         // #5502 - getDefaultUserAgent starts a WebView. We can't have two WebViews with the same data directory.
         // But ACRA starts an :acra process which does not terminate when AnkiDroid is restarted. https://crbug.com/558377
-
-        // if we're not under the ACRA process then we're fine to initialize a WebView
-        if (!ACRA.isACRASenderServiceProcess()) {
-            return true;
-        }
 
         // If we have a custom data directory, then the crash will not occur.
         return WebViewDebugging.hasSetDataDirectory();

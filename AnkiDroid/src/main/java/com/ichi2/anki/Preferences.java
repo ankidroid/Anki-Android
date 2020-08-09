@@ -651,10 +651,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     break;
                 }
                 case AnkiDroidApp.FEEDBACK_REPORT_KEY: {
-                    String value = prefs.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "");
-                    AnkiDroidApp.getInstance().setAcraReportingMode(value);
-                    // If the user changed error reporting, make sure future reports have a chance to post
-                    AnkiDroidApp.deleteACRALimiterData(this);
                     // We also need to re-chain our UncaughtExceptionHandlers
                     UsageAnalytics.reInitialize();
                     break;

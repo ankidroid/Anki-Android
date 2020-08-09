@@ -71,9 +71,6 @@ android {
         debug {
             debuggable true
             splits.abi.universalApk = true // Build universal APK for debug always
-            // Check Crash Reports page on developer wiki for info on ACRA testing
-            buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
-
             // #6009 Allow optional disabling of JaCoCo for general build (assembleDebug).
             // jacocoDebug task was slow, hung, and wasn't required unless I wanted coverage
             if (project.rootProject.file('local.properties').exists()) {
@@ -90,7 +87,6 @@ android {
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         }
     }
 
@@ -228,13 +224,6 @@ dependencies {
     // #6419  - API 27 (& maybe others) could not perform new ZipFile() on a 2GB+ apkg
     // noinspection GradleDependency - pinned at 1.12 until API21 minSdkVersion (File.toPath usage)
     implementation 'org.apache.commons:commons-compress:1.12'
-
-
-    // May need a resolution strategy for support libs to our versions
-    implementation'ch.acra:acra-http:5.5.1'
-    implementation'ch.acra:acra-dialog:5.5.1'
-    implementation'ch.acra:acra-toast:5.5.1'
-    implementation'ch.acra:acra-limiter:5.5.1'
 
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     //noinspection GradleDependency NewerVersionAvailable

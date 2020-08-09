@@ -37,8 +37,6 @@ import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.VersionUtils;
 
-import org.acra.util.Installation;
-
 import timber.log.Timber;
 
 /**
@@ -179,8 +177,7 @@ public class Info extends AnkiActivity {
     public String copyDebugInfo() {
         String debugInfo = "AnkiDroid-MIA Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
                 "AnkiDroid Version: 2.12.1" + "\n\n" +
-                "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
-                "ACRA UUID = " + Installation.id(this) + "\n";
+                "Android Version = " + Build.VERSION.RELEASE;
 
         android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboardManager != null) {
