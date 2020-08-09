@@ -631,6 +631,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         MenuItem syncMenu = menu.findItem(R.id.action_sync);
         SyncStatus syncStatus = SyncStatus.getSyncStatus(this::getCol);
         switch (syncStatus) {
+            case BADGE_DISABLED:
             case NO_CHANGES:
             case INCONCLUSIVE:
                 BadgeDrawableBuilder.removeBadge(syncMenu);
