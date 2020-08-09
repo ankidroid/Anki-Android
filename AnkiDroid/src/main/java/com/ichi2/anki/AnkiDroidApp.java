@@ -61,6 +61,7 @@ import org.acra.annotation.AcraLimiter;
 import org.acra.annotation.AcraToast;
 import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.DialogConfigurationBuilder;
+import org.acra.config.LimiterData;
 import org.acra.config.ToastConfigurationBuilder;
 import org.acra.sender.HttpSender;
 
@@ -376,11 +377,14 @@ public class AnkiDroidApp extends MultiDexApplication {
     /**
      * If you want to make sure that the next exception of any time is posted, you need to clear limiter data
      *
-     * ACRA 5.3.x does this automatically on version upgrade (https://github.com/ACRA/acra/pull/696), until then they blessed deleting file
      * @param context the context leading to the directory with ACRA limiter data
      */
     public static void deleteACRALimiterData(Context context) {
-        context.getFileStreamPath("ACRA-limiter.json").delete();
+        try {
+            new LimiterData().store(context);
+        } catch (Exception e) {
+            Timber.w(e, "Unable to clear ACRA limiter data");
+        }
     }
 
     /**
