@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -143,6 +144,7 @@ public class Info extends AnkiActivity {
 
             case TYPE_NEW_VERSION:
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                mainView.setBackgroundColor(Color.rgb(0xe7,0xe7,0xe7));
                 webView.loadUrl("file:///android_asset/changelog.html");
                 break;
 
