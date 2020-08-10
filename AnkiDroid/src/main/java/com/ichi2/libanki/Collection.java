@@ -64,6 +64,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -1271,10 +1272,10 @@ public class Collection {
         }
         return null;
     }
-    public String undoName(Resources res) {
-        DismissType type = undoType();
-        if (type != null) {
-            return res.getString(type.undoNameId);
+    public @NonNull String undoName(Resources res) {
+        Undoable undoable = lastUndo();
+        if (undoable != null) {
+            return undoable.getName(res);
         }
         return "";
     }

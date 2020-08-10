@@ -8,6 +8,7 @@ import com.ichi2.libanki.Collection.DismissType;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Collection.DismissType.*;
@@ -51,5 +52,9 @@ public abstract class Undoable {
                 return cid;
             }
         };
+    }
+
+    public @NonNull String getName(Resources res) {
+        return res.getString(mDt.undoNameId);
     }
 }
