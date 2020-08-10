@@ -6,6 +6,7 @@ import android.content.Context;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Undoable;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class TaskData {
     private Context mContext;
     private int mType;
     private Object[] mObjects;
+    private Undoable mUndoable;
 
 
     public TaskData(Object[] obj) {
@@ -38,6 +40,10 @@ public class TaskData {
     public TaskData(Object[] obj, boolean bool) {
         mObjects = obj;
         mBool = bool;
+    }
+
+    public TaskData(Undoable undoable) {
+        mUndoable = undoable;
     }
 
 
@@ -217,5 +223,10 @@ public class TaskData {
         }
 
         return clazz.isAssignableFrom(val.getClass());
+    }
+
+
+    public Undoable getUndoable() {
+        return mUndoable;
     }
 }
