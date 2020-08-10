@@ -216,5 +216,5 @@
     <!-- Context Menu -->
     <string name="card_browser_label">Переглядач карток</string>
     <string name="card_browser_context_menu">Переглядач карток</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Anki картка</string>
 </resources>

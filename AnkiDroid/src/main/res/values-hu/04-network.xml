@@ -129,7 +129,7 @@
     <string name="sync_error_502_maintenance">Az AnkiWeb karbantartás alatt van. Kérjük próbálkozzon újra egy pár perc múlva.</string>
     <string name="sync_error_504_gateway_timeout">504 Gateway Timeout hiba észlelve.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title">Szinkronizálás</string>
+    <string name="sync_menu_title_full_sync">Szinkronizálás (teljes)</string>
+    <string name="sync_menu_title_no_account">Szinkronizálás (bejelentkezés)</string>
 </resources>

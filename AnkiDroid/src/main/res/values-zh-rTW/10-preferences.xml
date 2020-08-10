@@ -123,6 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">自動同步</string>
     <string name="automatic_sync_choice_summ">如果距離上次同步超過 10 分鐘，則在開啓/關閉 app 時自動同步。</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">白天主題</string>
     <string name="night_theme">夜間主題</string>
     <string name="default_font">預設字型</string>

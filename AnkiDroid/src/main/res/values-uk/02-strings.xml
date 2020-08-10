@@ -308,7 +308,7 @@
     <string name="note_importer_error_empty_notes">Один чи більше запис не імпортовано, оскільки вони не згенерували картки. Це може статися, коли у вас є пусті поля, або коли Ви правильно не зіставляли вміст в текстовому файлі до полів</string>
     <string name="csv_importer_error_invalid_field_count">«%1$s» мала %2$d полів, очікувалось %3$d</string>
     <string name="csv_importer_error_exception">Перервано: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">Виявлено автоматичний тест. Якщо Ви — людина, зверніться до підтримки AnkiDroid</string>
     <plurals name="note_importer_notes_added">
         <item quantity="one">%d запис додано</item>
         <item quantity="few">%d записи додано</item>
@@ -328,10 +328,13 @@
         <item quantity="other">%d записів не змінено</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">Ця картка використовує непідтримувані функції AnkiDroid. Зверніться до розробника %s або перегляньте вікі. %s</string>
+    <string name="invalid_json_data">Картці надано некоректні дані. %s</string>
+    <string name="valid_js_api_version">Неправильна версія API AnkiDroid JS. Зверніться до розробника %s або перегляньте вікі</string>
+    <string name="update_js_api_version">Доступне оновлення JS API. Зверніться до розробника %s або перегляньте вікі</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Перегляд</string>
+    <string name="anki_js_error_code">(Код помилки: %d)</string>
+    <!-- About AnkiDroid screen -->
+    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
+    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
 </resources>

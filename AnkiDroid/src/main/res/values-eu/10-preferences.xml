@@ -124,6 +124,8 @@
     <string name="automatic_sync_choice">Sinkronizazio automatikoa</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Egunerako gaia</string>
     <string name="night_theme">Gauerako gaia</string>
     <string name="default_font">Default font</string>

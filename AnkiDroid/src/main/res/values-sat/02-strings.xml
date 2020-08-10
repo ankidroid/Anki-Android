@@ -55,7 +55,7 @@
     <string name="check_all_tags">ᱪᱮᱠ ᱢᱮ/ᱡᱷᱚᱛᱟ ᱴᱮᱜ uncheck ᱢᱮ</string>
     <string name="filter_tags">ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ</string>
     <string name="no_tags">ᱟᱢ ᱴᱮᱜ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱠᱟᱜᱼᱟᱢ</string>
-    <string name="sdcard_missing_message">USB ᱥᱴᱚᱨᱮᱡ ᱵᱚᱸᱫ ᱞᱮᱠᱷᱟᱱ ᱰᱮᱠᱥ ᱨᱮ ᱦᱚᱠ ᱮᱢ ᱧᱮᱢ ᱟᱢ</string>
+    <string name="sdcard_missing_message">USB ᱥᱴᱚᱨᱮᱡ ᱵᱚᱸᱫ ᱞᱮᱠᱷᱟᱱ ᱰᱮᱠ ᱚᱠ ᱨᱮ ᱦᱚᱠ ᱮᱢ ᱧᱮᱢ ᱟᱢ</string>
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ </string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
@@ -252,7 +252,7 @@
     <string name="apk_share_error">apkg ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱵᱷᱩᱞ</string>
     <!-- Import and export v2 feedback -->
     <string name="import_needs_v2">ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱞᱟᱹᱜᱤᱫ V2 scheduler ᱮᱱᱮᱵᱟᱹᱞ ᱢᱮ ᱾</string>
-    <string name="import_cannot_with_v2">V2 scheduler V1 ᱰᱮᱠᱥ ᱵᱟᱭ ᱵᱷᱮᱡᱟ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟᱭ ᱥᱮᱰᱭᱩᱞ ᱛᱟᱦᱮᱸ ᱠᱟᱛᱮ ᱦᱚᱸ ᱾</string>
+    <string name="import_cannot_with_v2">V2 scheduler V1 ᱰᱮᱠ ᱚᱠ ᱵᱟᱭ ᱵᱷᱮᱡᱟ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟᱭ ᱥᱮᱰᱭᱩᱞ ᱛᱟᱦᱮᱸ ᱠᱟᱛᱮ ᱦᱚᱸ ᱾</string>
     <string name="export_v2_dummy_note">ᱱᱚᱶᱟ ᱨᱮᱫ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ Anki ᱨᱮᱭᱟᱜ ᱱᱟᱶᱟ ᱵᱷᱚᱨᱥᱚᱱ ᱫᱚᱨᱠᱟᱨ ᱾</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' ᱞᱚᱰ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ ᱾</string>
@@ -299,9 +299,12 @@
     </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
+    <string name="invalid_json_data">ᱠᱟᱰ ᱵᱷᱩᱞ ᱰᱟᱴᱟ ᱮᱢᱠᱮᱫ ᱟ ᱾ %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">ᱫᱮᱠᱷᱟᱣ</string>
+    <string name="anki_js_error_code">(ᱵᱷᱩᱞ ᱠᱳᱰ: %d)</string>
+    <!-- About AnkiDroid screen -->
+    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
+    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
 </resources>

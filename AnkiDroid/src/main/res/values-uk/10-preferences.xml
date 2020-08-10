@@ -124,6 +124,8 @@
     <string name="automatic_sync_choice">Автоматична синхронізація</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронізувати на старт / завершення роботи
     програми. Якщо остання синхронізація була більше 10 хвилин тому.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Денна тема</string>
     <string name="night_theme">Нічна тема</string>
     <string name="default_font">Типовий шрифт</string>

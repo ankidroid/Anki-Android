@@ -288,7 +288,7 @@
     <string name="note_importer_error_empty_notes">Una o più note non sono state importate, perché non hanno generato alcuna carta. Ciò può accadere quando hai dei campi vuoti o quando non hai mappato il contenuto del file di testo ai giusti campi</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ ha %2$d campi, su %3$d attesi</string>
     <string name="csv_importer_error_exception">Interrotto: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">Rilevato test automatico. Se sei umano, contatta il supporto AnkiDroid</string>
     <plurals name="note_importer_notes_added">
         <item quantity="one">%d nota aggiunta</item>
         <item quantity="other">%d note aggiunte</item>
@@ -302,10 +302,13 @@
         <item quantity="other">%d note invariate</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">Questa scheda utilizza funzioni AnkiDroid non supportate. Contatta lo sviluppatore %s, o visualizza la wiki. %s</string>
+    <string name="invalid_json_data">La scheda fornisce dati non validi. %s</string>
+    <string name="valid_js_api_version">Versione API JS AnkiDroid non valida. Contatta lo sviluppatore %s, o visualizza la wiki</string>
+    <string name="update_js_api_version">Aggiornamento disponibile per API JS AnkiDroid. Contatta lo sviluppatore %s, o visualizza wiki</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Visualizza</string>
+    <string name="anki_js_error_code">(Codice errore: %d)</string>
+    <!-- About AnkiDroid screen -->
+    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
+    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
 </resources>

@@ -124,6 +124,8 @@
     <string name="automatic_sync_choice">Automatická synchronizácia</string>
     <string name="automatic_sync_choice_summ">Synchronizovať automaticky pri štarte/ukončení aplikácie, ak posledná synchronizácia bola pred viac než 10
         minútami.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Denný motív</string>
     <string name="night_theme">Nočný motív</string>
     <string name="default_font">Predvolené písmo</string>

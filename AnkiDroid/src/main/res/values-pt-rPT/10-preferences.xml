@@ -124,6 +124,8 @@
     <string name="automatic_sync_choice">Sincronização automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automaticalmente ao iniciar/sair da aplicação, se a última sicnronização foi há mais 
         de 10 minutos.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Tema do dia</string>
     <string name="night_theme">Tema noturno</string>
     <string name="default_font">Letra predefinida</string>

@@ -99,8 +99,8 @@
         <item>已修改笔记</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">修改今天的新卡片数量限制</string>
+    <string name="custom_study_increase_review_limit">修改今天的复习卡片数量限制</string>
     <string name="custom_study_review_forgotten">复习忘记的卡片</string>
     <string name="custom_study_review_ahead">提前复习</string>
     <string name="custom_study_random_selection">学习随机选择的卡片</string>
@@ -270,29 +270,32 @@
     <string name="white_board_image_saved">白板图像已保存到 %s</string>
     <string name="title_whiteboard_pen_color">白板笔颜色</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[找到空的卡片。请运行 工具 > 空卡片。]]></string>
+    <string name="note_importer_error_empty_first_field">第一个字段为空：%s</string>
+    <string name="note_importer_error_first_field_matched">第一个字段匹配：%s</string>
+    <string name="note_importer_error_added_duplicate_first_field">已添加重复的第一个字段：%s</string>
+    <string name="note_importer_error_appeared_twice">在文件中出现两次：%s</string>
+    <string name="note_importer_error_empty_notes">一个或多个笔记未被导入，因为它们没有生成任何卡片。 当您有空字段或您未将文本文件中的内容映射到正确字段时，可能发生此情况</string>
+    <string name="csv_importer_error_invalid_field_count">“%1$s”有 %2$d 个字段，而期望 %3$d 个字段</string>
+    <string name="csv_importer_error_exception">已中止：%s</string>
+    <string name="user_is_a_robot">检测到自动测试。如果您是真人，请联系 AnkiDroid 支持</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="other">%d notes added</item>
+        <item quantity="other">%d 条笔记已添加</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="other">%d notes updated</item>
+        <item quantity="other">%d 条笔记已更新</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="other">%d 条笔记未变更</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">此卡片使用不受支持的 AnkiDroid 功能。请联系开发者 %s，或查看维基。%s</string>
+    <string name="invalid_json_data">卡片提供了无效数据。%s</string>
+    <string name="valid_js_api_version">无效的 AnkiDroid JS API 版本。请联系开发者 %s，或查看维基</string>
+    <string name="update_js_api_version">AnkiDroid JS API 更新可用。请联系开发者 %s，或查看维基</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">查看</string>
+    <string name="anki_js_error_code">（错误代码：%d）</string>
+    <!-- About AnkiDroid screen -->
+    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
+    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
 </resources>

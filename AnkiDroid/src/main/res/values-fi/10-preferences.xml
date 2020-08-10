@@ -123,6 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Automaattinen synkronointi</string>
     <string name="automatic_sync_choice_summ">Synkronoi automaattisesti sovelluksen auetessa tai suljetessam, jos viimeistä synkronoinnista on enemmän kuin 10         minuuttia.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Päiväteema</string>
     <string name="night_theme">Yöteema</string>
     <string name="default_font">Oletusfontti</string>

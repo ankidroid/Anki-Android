@@ -123,6 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">స్వయంచాలక సమకాలీకరణ</string>
     <string name="automatic_sync_choice_summ">గత సమకాలీకరణ 10         నిముషాల కంటే ఎక్కువగా ఉంటే అనువర్తనం ప్రారంభించండి / నిష్క్రమణలో స్వయంచాలకంగా సమకాలీకరించండి.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">డే థీమ్</string>
     <string name="night_theme">నైట్ థీమ్</string>
     <string name="default_font">డిఫాల్ట్ ఫాంట్</string>

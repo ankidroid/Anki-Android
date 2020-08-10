@@ -101,8 +101,8 @@
         <item quantity="many">%d карток переплановано</item>
         <item quantity="other">%d картки переплановано</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">Нова картка перепланована. Планування також перетворює нові картки на переглянуті. Використовуйте опцію «переставити картку», щоб змінити позицію нової карти в новій черзі</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Планування також скидає, як планувальник відноситься до карти в майбутньому (легкість картки буде встановлено на %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Виберіть колоду у вашому файловому менеджері або перейдіть на сторінку about:downloads (про:завантаження) для її імпорту</string>
     <string name="answering_error_title">Помилка бази даних</string>
     <string name="answering_error_message">Під час запису в колекцію сталася помилка. Причиною може бути пошкоджена база даних або відсутність місця на диску.\n\nЯкщо це трапляється частіше, будь ласка, спробуйте перевірити базу даних, полагодити колекцію, або відновити її з резервної копії. Для цього натисніть на «налаштування».\n\nОднак, це також може бути недолік AnkiDroid; будь ласка, надішліть звіт для перевірки цього.</string>

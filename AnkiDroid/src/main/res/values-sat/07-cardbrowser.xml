@@ -43,11 +43,11 @@
         <item quantity="one">%d ᱠᱟᱰ ᱫᱮᱠᱷᱟᱣᱼᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱫᱮᱠᱷᱟᱣᱼᱮᱱᱟ</item>
     </plurals>
-    <string name="card_browser_all_decks">ᱡᱷᱚᱛᱚ ᱰᱮᱠᱥ</string>
+    <string name="card_browser_all_decks">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱚᱠ</string>
     <string name="card_browser_delete_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
     <string name="card_browser_suspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
     <string name="card_browser_toggle_suspend_card">(ᱵᱟᱝ)ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
-    <string name="card_browser_change_deck">ᱰᱮᱠᱥ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="card_browser_change_deck">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="card_browser_unsuspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
     <string name="card_browser_mark_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱢᱟᱨᱠ ᱢᱮ</string>
     <string name="card_browser_flag">ᱯᱚᱛᱠᱟ</string>
@@ -100,6 +100,6 @@
     <string name="card_browser_interval_learning_card">(ᱪᱮᱫᱚᱜ)</string>
     <string name="card_browser_note_editor_error">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱮᱰᱤᱴᱚᱨ ᱚᱰᱚᱠ ᱡᱚᱠᱷᱟᱜ ᱵᱷᱩᱞ</string>
     <string name="card_browser_no_cards_in_deck">ᱰᱮᱠ ᱨᱮ ᱪᱚᱫ ᱠᱟᱰ ᱠᱚ ᱵᱟᱹᱱᱩᱜᱼᱟ ‘%s’</string>
-    <string name="card_browser_search_all_decks">ᱠᱷᱚᱛᱚ ᱰᱮᱠᱥ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
+    <string name="card_browser_search_all_decks">ᱠᱷᱚᱛᱚ ᱰᱮᱠ ᱚᱠ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
     <string name="card_browser_unknown_deck_name">ᱵᱟᱝ ᱵᱟᱰᱟᱭᱟᱜ</string>
 </resources>

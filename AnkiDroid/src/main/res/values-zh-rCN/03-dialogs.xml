@@ -83,8 +83,8 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d 张卡牌已重新安排</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">正在重新安排新卡片。重新安排也会将新卡片转为复习卡片。请使用“更改卡片位置”选项来更改新卡片在新队列中的位置</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">重新安排计划还将重置调度器将来如何处理卡片（难度系数将设置为 %d%%）</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">在您的文件管理器中选择牌组，或访问关于：下载页面以便导入</string>
     <string name="answering_error_title">数据库错误</string>
     <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是 AnkiDroid 的 bug，请报告这个错误，我们会尽力解决。</string>
@@ -96,8 +96,8 @@
     <string name="intent_aedict_category">向AnkiDroid中添加卡牌，需要删除所有NotePad类别，或者添加“默认(default)”类别。</string>
     <string name="custom_study_new_total_new">牌组中的新卡片数量：%d</string>
     <string name="custom_study_rev_total_rev">牌组中到期的卡牌数量：%d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">增加/减少（“-3”）今天的新卡片限制</string>
+    <string name="custom_study_rev_extend">增加/减少（“-3”）今天的复习卡片限制</string>
     <string name="custom_study_forgotten">复习过去 x 天中忘记的卡片：</string>
     <string name="custom_study_ahead">提前 x 天复习：</string>
     <string name="custom_study_random">从牌组中随机选择 x 张卡片：</string>

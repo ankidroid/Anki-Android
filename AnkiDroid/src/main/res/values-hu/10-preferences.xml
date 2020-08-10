@@ -124,6 +124,8 @@
     <string name="automatic_sync_choice">Automatikus szinkronizálás</string>
     <string name="automatic_sync_choice_summ">Automatikus szinkronizálás az applikáció indításakor/kilépéskor, ha az utolsó több mint 10
         perce volt.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Nappali téma</string>
     <string name="night_theme">Éjszakai téma</string>
     <string name="default_font">Alapértelmezett betűtípus</string>

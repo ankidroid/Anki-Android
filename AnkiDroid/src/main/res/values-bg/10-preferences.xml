@@ -123,6 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Автоматична синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронизиране пи стариране/изход от приложението, ако последното синхронизиране е от повече от 10        минути.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Дневна тема</string>
     <string name="night_theme">Нощна тема</string>
     <string name="default_font">Шрифт по подразбиране</string>

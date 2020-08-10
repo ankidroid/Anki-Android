@@ -49,7 +49,7 @@
         <item quantity="one">%1$s ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱷᱚᱛ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱰ ᱢᱮᱱᱟᱼᱜᱟ ᱾</item>
         <item quantity="other">%1$s ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱷᱚᱛ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱰ ᱢᱮᱱᱟᱼᱜᱟ ᱾</item>
     </plurals>
-    <string name="delete_cram_deck_message">ᱡᱷᱚᱛᱟ %s ᱠᱟᱰ ᱟᱡᱟᱜ ᱢᱩᱞ ᱰᱮᱠᱥ ᱛᱮ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
+    <string name="delete_cram_deck_message">ᱡᱷᱚᱛᱟ %s ᱠᱟᱰ ᱟᱡᱟᱜ ᱢᱩᱞ ᱰᱮᱠ ᱚᱠ ᱛᱮ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
     <string name="no_tts_available_message">text-to-speech ᱯᱟᱹᱨᱥᱤ ᱵᱟᱱᱩᱜᱼᱟ ᱾</string>
     <string name="initializing_tts">TTS ᱮᱛᱚᱷᱚᱵᱽᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>

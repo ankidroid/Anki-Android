@@ -124,6 +124,8 @@
     <string name="automatic_sync_choice">Sinkronisasi otomatis</string>
     <string name="automatic_sync_choice_summ">Sinkronkan secara otomatis saat masuk/keluar aplikasi jika sinkronisasi terakhir lebih dari 10
          menit yang lalu.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Tema siang</string>
     <string name="night_theme">Tema malam</string>
     <string name="default_font">Fon dasar</string>

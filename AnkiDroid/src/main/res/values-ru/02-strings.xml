@@ -99,8 +99,8 @@
         <item>Запись изменена</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Изменить лимит новых карточек на сегодня</string>
+    <string name="custom_study_increase_review_limit">Изменить лимит повторяемых карточек на сегодня</string>
     <string name="custom_study_review_forgotten">Повторить забытые</string>
     <string name="custom_study_review_ahead">Повторить с опережением</string>
     <string name="custom_study_random_selection">Учить случайный набор карточек</string>
@@ -299,38 +299,41 @@
     <string name="white_board_image_saved">Изображение доски сохранено в %s</string>
     <string name="title_whiteboard_pen_color">Цвет маркера</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[Найдены пустые карточки. Нажмите «Инструменты» — »Пустые карточки».]]></string>
+    <string name="note_importer_error_empty_first_field">Пустое первое поле: %s</string>
+    <string name="note_importer_error_first_field_matched">Совпадение по первому полю: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Добавлен дубликат с первым полем: %s</string>
+    <string name="note_importer_error_appeared_twice">Дважды встречается в файле: %s</string>
+    <string name="note_importer_error_empty_notes">Одно или несколько записей не были импортированы, потому что они не создали никаких карточек. Это может произойти, если есть пустые поля или если вы не сопоставили содержимое текстового файла с верными полями</string>
+    <string name="csv_importer_error_invalid_field_count">В «%1$s» %2$d поля, но должно быть %3$d</string>
+    <string name="csv_importer_error_exception">Прервано: %s</string>
+    <string name="user_is_a_robot">Обнаружен автоматический тест. Если вы человек, обратитесь в службу поддержки AnkiDroid</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="few">%d notes added</item>
-        <item quantity="many">%d notes added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d запись добавлена</item>
+        <item quantity="few">%d записи добавлено</item>
+        <item quantity="many">%d записей добавлены</item>
+        <item quantity="other">%d записей добавлено</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="few">%d notes updated</item>
-        <item quantity="many">%d notes updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d запись обновлена</item>
+        <item quantity="few">%d записи обновлены</item>
+        <item quantity="many">%d записей обновлены</item>
+        <item quantity="other">%d записей обновлено</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="few">%d notes unchanged</item>
-        <item quantity="many">%d notes unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d запись не изменена</item>
+        <item quantity="few">%d записи не изменены</item>
+        <item quantity="many">%d записей не изменены</item>
+        <item quantity="other">%d записей не изменено</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">Эта карта использует неподдерживаемые в AnkiDroid функции. Свяжитесь с разработчиком %s или обратитесь к вики-справке. %s</string>
+    <string name="invalid_json_data">В карточек недопустимые данные. %s</string>
+    <string name="valid_js_api_version">Недопустимый версия AnkiDroid JS API. Свяжитесь с разработчиком %s или обратитесь к вики-справке</string>
+    <string name="update_js_api_version">Доступна новая версия AnkiDroid JS API. Свяжитесь с разработчиком %s или обратитесь к вики-справке. %s</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Вид</string>
+    <string name="anki_js_error_code">(Код ошибки: %d)</string>
+    <!-- About AnkiDroid screen -->
+    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
+    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
 </resources>

@@ -124,6 +124,8 @@
     <string name="automatic_sync_choice">Samodejna sinhronizacija</string>
     <string name="automatic_sync_choice_summ">Samodejni sinhroniziraj ob zagonu/zapiranju programa, če je bila
         zadnja sinhronizacija pred več kot 10-mi minutami.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Dnevna tema</string>
     <string name="night_theme">Nočna tema</string>
     <string name="default_font">Privzeta pisava</string>
