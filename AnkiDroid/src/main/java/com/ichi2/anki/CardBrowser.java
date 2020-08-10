@@ -1203,6 +1203,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     // We spawn CollectionTasks that may create memory pressure, this transmits it so polling isCancelled sees the pressure
     @Override
     public void onTrimMemory(int pressureLevel) {
+        super.onTrimMemory(pressureLevel);
         CollectionTask.cancelCurrentlyExecutingTask();
     }
 
