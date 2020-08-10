@@ -55,8 +55,8 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("${homePath}/src/android-keystore")
-            keyAlias "nrkeystorealias"
+            storeFile file("${homePath}/src/android-mia-keystore.jks")
+            keyAlias "ankidroidwithaddons"
             storePassword System.getenv("KSTOREPWD")
             keyPassword System.getenv("KEYPWD")
         }
