@@ -1,13 +1,7 @@
 import com.android.ddmlib.DdmPreferences
 import com.android.build.OutputFile
 
-plugins {
- // Gradle plugin portal 
- id 'com.github.triplet.play' version '2.8.0'
-}
-
 apply plugin: 'com.android.application'
-apply plugin: 'app.brant.amazonappstorepublisher'
 
 repositories {
     google()
@@ -172,17 +166,6 @@ android {
         }
     }
     ndkVersion "21.1.6352462"
-}
-
-play {
-    serviceAccountCredentials = file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json")
-    track = 'beta'
-}
-amazon {
-    securityProfile = file("${homePath}/src/AnkiDroid-Amazon-Publish-Security-Profile.json")
-    applicationId = "amzn1.devportal.mobileapp.524a424d314931494c55383833305539"
-    pathToApks = [ file("./build/outputs/apk/release/AnkiDroid-universal-release.apk") ]
-    replaceEdit = true
 }
 
 // Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
