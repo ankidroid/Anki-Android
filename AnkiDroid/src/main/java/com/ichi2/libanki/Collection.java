@@ -1299,7 +1299,7 @@ public class Collection {
 
     public boolean undoAvailable() {
         Timber.d("undoAvailable() undo size: %s", mUndo.size());
-        return mUndo.size() > 0;
+        return !mUndo.isEmpty();
     }
 
     public long undo() {
