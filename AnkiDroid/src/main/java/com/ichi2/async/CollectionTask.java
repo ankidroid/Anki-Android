@@ -911,6 +911,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
         Collection.DismissType type = (Collection.DismissType) data[1];
+        Undoable undoable = null;
         try {
             col.getDb().getDatabase().beginTransaction();
             try {
@@ -939,9 +940,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                             sched.unsuspendCards(cids);
                         }
 
-                        Undoable suspendCardMulti = new UndoSuspendCardMulti(cards, originalSuspended);
-                        // mark undo for all at once
-                        col.markUndo(suspendCardMulti);
+                        undoable = new UndoSuspendCardMulti(cards, originalSuspended);
 
                         // reload cards because they'll be passed back to caller
                         for (Card c : cards) {
@@ -976,9 +975,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
                         CardUtils.markAll(new ArrayList<>(notes), !originalUnmarked.isEmpty());
 
-                        Undoable markNoteMulti = new UndoMarkNoteMulti(originalMarked, originalUnmarked);
-                        // mark undo for all at once
-                        col.markUndo(markNoteMulti);
+                        undoable = new UndoMarkNoteMulti(originalMarked, originalUnmarked);
 
                         // reload cards because they'll be passed back to caller
                         for (Card c : cards) {
@@ -1003,9 +1000,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         }
 
 
-                        Undoable deleteNoteMulti = new UndoDeleteNoteMulti(notesArr, allCards);
-
-                        col.markUndo(deleteNoteMulti);
+                        undoable = new UndoDeleteNoteMulti(notesArr, allCards);
 
                         col.remNotes(uniqueNoteIds);
                         sched.deferReset();
@@ -1059,9 +1054,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                             card.flush();
                         }
 
-                        Undoable changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
-                        // mark undo for all at once
-                        col.markUndo(changeDeckMulti);
+                        undoable = new UndoChangeDeckMulti(cards, originalDids);
                         break;
                     }
 
@@ -1072,8 +1065,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         try {
                             Timber.d("Saving undo information of type %s on %d cards", type, cards.length);
                             Card[] cards_copied = deepCopyCardArray(cards);
-                            Undoable repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(type, cards_copied);
-                            col.markUndo(repositionRescheduleResetCards);
+                            undoable = new UndoRepositionRescheduleResetCards(type, cards_copied);
                         } catch (CancellationException ce) {
                             Timber.i(ce, "Cancelled while handling type %s, skipping undo", type);
                         }
@@ -1102,6 +1094,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
             return new TaskData(false);
+        }
+
+        if (undoable != null) {
+            // mark undo for all at once
+            col.markUndo(undoable);
         }
         // pass cards back so more actions can be performed by the caller
         // (querying the cards again is unnecessarily expensive)
