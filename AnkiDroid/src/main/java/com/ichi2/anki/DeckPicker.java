@@ -107,6 +107,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
+import com.ichi2.libanki.Undoable;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
@@ -182,6 +183,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private SwipeRefreshLayout mPullToSyncWrapper;
 
     private TextView mReviewSummaryTextView;
+
+    @Nullable
+    private Undoable mUndoable;
 
     private BroadcastReceiver mUnmountReceiver = null;
 
@@ -594,12 +598,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return false;
         }
         // Show / hide undo
-        if (mFragmented || !getCol().undoAvailable()) {
+        mUndoable = getCol().lastUndo();
+        if (mFragmented || mUndoable == null) {
             menu.findItem(R.id.action_undo).setVisible(false);
         } else {
             Resources res = getResources();
             menu.findItem(R.id.action_undo).setVisible(true);
-            String undo = res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res));
+            String undo = res.getString(R.string.studyoptions_congrats_undo, mUndoable.getName(res));
             menu.findItem(R.id.action_undo).setTitle(undo);
         }
         return super.onPrepareOptionsMenu(menu);
@@ -1271,8 +1276,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void undo() {
         Timber.i("undo()");
-        String undoReviewString = getResources().getString(R.string.undo_action_review);
-        final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
+        final boolean isReview = undoReviewString.equals(mUndoable.Name(getResources()));
         TaskListener listener = new TaskListener() {
             @Override
             public void onCancelled() {
@@ -1294,7 +1298,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
         };
-        CollectionTask.launchCollectionTask(UNDO, listener);
+        CollectionTask.launchCollectionTask(UNDO_NAMED, listener, new TaskData(mUndoable));
     }
 
 

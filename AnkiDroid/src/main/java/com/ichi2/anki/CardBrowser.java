@@ -76,6 +76,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Undoable;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.Themes;
@@ -142,6 +143,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MultiColumnListAdapter mCardsAdapter;
     private String mSearchTerms;
     private String mRestrictOnDeck;
+    @Nullable
+    private Undoable mUndoable;
 
     private MenuItem mSearchItem;
     private MenuItem mSaveSearchItem;
@@ -784,8 +787,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         if (mActionBarMenu != null && mActionBarMenu.findItem(R.id.action_undo) != null) {
             MenuItem undo =  mActionBarMenu.findItem(R.id.action_undo);
-            undo.setVisible(getCol().undoAvailable());
-            undo.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, getCol().undoName(getResources())));
+            mUndoable = getCol().lastUndo();
+            undo.setVisible(mUndoable != null);
+            if (mUndoable != null) {
+                undo.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, mUndoable.getName(getResources())));
+            }
         }
 
         // Maybe we were called from ACTION_PROCESS_TEXT.
@@ -1034,8 +1040,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
 
             case R.id.action_undo:
-                if (getCol().undoAvailable()) {
-                    CollectionTask.launchCollectionTask(UNDO, mUndoHandler);
+                if (mUndoable != null && !mUndoable.isStarted()) {
+                    CollectionTask.launchCollectionTask(UNDO_NAMED, mUndoHandler, new TaskData(mUndoable));
                 }
                 return true;
             case R.id.action_select_none:

@@ -45,6 +45,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Undoable;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
@@ -108,6 +109,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     private Thread mFullNewCountThread = null;
 
     private StudyOptionsListener mListener;
+
+    @Nullable
+    private Undoable mUndoable;
 
     /**
      * Callbacks for UI events
@@ -295,7 +299,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         switch (item.getItemId()) {
             case R.id.action_undo:
                 Timber.i("StudyOptionsFragment:: Undo button pressed");
-                getCol().undo();
+                mUndoable.undo(getCol());
                 openReviewer();
                 return true;
             case R.id.action_deck_options:
@@ -381,12 +385,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             // Switch on or off unbury depending on if there are cards to unbury
             menu.findItem(R.id.action_unbury).setVisible(getCol().getSched().haveBuried());
             // Switch on or off undo depending on whether undo is available
-            if (!getCol().undoAvailable()) {
+            mUndoable = getCol().lastUndo();
+            if (mUndoable == null) {
                 menu.findItem(R.id.action_undo).setVisible(false);
             } else {
                 menu.findItem(R.id.action_undo).setVisible(true);
                 Resources res = AnkiDroidApp.getAppResources();
-                menu.findItem(R.id.action_undo).setTitle(res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res)));
+                menu.findItem(R.id.action_undo).setTitle(res.getString(R.string.studyoptions_congrats_undo, mUndoable.getName(res)));
             }
             // Set the back button listener
             if (!mFragmented) {
