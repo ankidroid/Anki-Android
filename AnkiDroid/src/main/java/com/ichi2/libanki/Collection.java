@@ -1877,12 +1877,24 @@ public class Collection {
         }
         String s = String.format("[%s] %s:%s(): %s", Utils.intTime(), trace.getFileName(), trace.getMethodName(),
                 TextUtils.join(",  ", args));
-        mLogHnd.println(s);
+        writeLog(s);
+    }
+
+
+    private void writeLog(String s) {
+        if (mLogHnd != null) {
+            try {
+                mLogHnd.println(s);
+            } catch (Exception e) {
+                Timber.w(e, "Failed to write to collection log");
+            }
+        }
         Timber.d(s);
     }
 
 
     private void _openLog() {
+        Timber.i("Opening Collection Log");
         if (!mDebugLog) {
             return;
         }
@@ -1905,6 +1917,7 @@ public class Collection {
 
 
     private void _closeLog() {
+        Timber.i("Closing Collection Log");
         if (mLogHnd != null) {
             mLogHnd.close();
             mLogHnd = null;
