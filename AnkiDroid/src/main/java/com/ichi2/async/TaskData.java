@@ -93,6 +93,12 @@ public class TaskData {
         mBool = bool;
     }
 
+    public TaskData(boolean bool, Object[] obj, Undoable undoable) {
+        mBool = bool;
+        mObjects = obj;
+        mUndoable = undoable;
+    }
+
     public TaskData(boolean bool, Object[] obj) {
         mBool = bool;
         mObjects = obj;

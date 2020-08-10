@@ -1102,7 +1102,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
         // pass cards back so more actions can be performed by the caller
         // (querying the cards again is unnecessarily expensive)
-        return new TaskData(true, cards);
+        return new TaskData(true, cards, undoable);
     }
 
     private Card[] deepCopyCardArray(Card[] originals) throws CancellationException {

@@ -1461,7 +1461,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, String.format(getString(R.string.changed_deck_message), deckName), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CollectionTask.launchCollectionTask(UNDO, mUndoHandler);
+                    CollectionTask.launchCollectionTask(UNDO_NAMED, mUndoHandler, new TaskData(result.getUndoable()));
                 }
             }, mCardsListView, null);
         }
@@ -1584,7 +1584,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mUndoSnackbar = UIUtils.showSnackbar(CardBrowser.this, getString(R.string.deleted_message), SNACKBAR_DURATION, R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CollectionTask.launchCollectionTask(UNDO, mUndoHandler);
+                    CollectionTask.launchCollectionTask(UNDO_NAMED, mUndoHandler, new TaskData(result.getUndoable()));
                 }
             }, mCardsListView, null);
         }
