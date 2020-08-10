@@ -1276,7 +1276,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void undo() {
         Timber.i("undo()");
-        final boolean isReview = undoReviewString.equals(mUndoable.Name(getResources()));
         TaskListener listener = new TaskListener() {
             @Override
             public void onCancelled() {
@@ -1292,7 +1291,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             public void onPostExecute(TaskData result) {
                 hideProgressBar();
                 Timber.i("Undo completed");
-                if (isReview) {
+                if (mUndoable.isReview()) {
                     Timber.i("Review undone - opening reviewer.");
                     openReviewer();
                 }

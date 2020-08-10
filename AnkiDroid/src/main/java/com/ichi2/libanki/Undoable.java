@@ -74,4 +74,9 @@ public abstract class Undoable {
     public @NonNull String getName(Resources res) {
         return res.getString(mDt.undoNameId);
     }
+
+    /** Whether this Undoable undo a review. Reviews need special care when undone*/
+    public boolean isReview() {
+        return false;
+    }
 }

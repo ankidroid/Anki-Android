@@ -1332,6 +1332,11 @@ public class Collection {
                 col.getSched().undoReview(clonedCard, wasLeech);
                 return clonedCard.getId();
             }
+
+            @Override
+            public boolean isReview() {
+                return true;
+            }
         };
         markUndo(undoableReview);
     }
