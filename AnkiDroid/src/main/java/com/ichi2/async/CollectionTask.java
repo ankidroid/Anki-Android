@@ -636,7 +636,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("UNDO: Suspend Card %d", suspendedCard.getId());
             suspendedCard.flush(false);
             return suspendedCard.getId();
@@ -658,7 +658,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undo: Delete note");
             ArrayList<Long> ids = new ArrayList<>();
             note.flush(note.getMod(), false);
@@ -763,7 +763,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undo: Suspend multiple cards");
             List<Long> toSuspendIds = new ArrayList<>();
             List<Long> toUnsuspendIds = new ArrayList<>();
@@ -807,7 +807,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undo: Delete notes");
             // undo all of these at once instead of one-by-one
             ArrayList<Long> ids = new ArrayList<>();
@@ -838,7 +838,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undo: Change Decks");
             // move cards to original deck
             for (int i = 0; i < cards.length; i++) {
@@ -866,7 +866,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undo: Mark notes");
             CardUtils.markAll(originalMarked, true);
             CardUtils.markAll(originalUnmarked, false);
@@ -885,7 +885,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undoing action of type %s on %d cards", getDismissType(), cards_copied.length);
             for (int i = 0; i < cards_copied.length; i++) {
                 Card card = cards_copied[i];
@@ -1138,6 +1138,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 } else if (cid == MULTI_CARD) {
                     /* multi-card action undone, no action to take here */
                     Timber.d("Multi-select undo succeeded");
+                } else if (cid == NOT_UNDONE) {
+                    Timber.d("Undoing already processing");
                 } else {
                     // cid is actually a card id.
                     // a review was undone,

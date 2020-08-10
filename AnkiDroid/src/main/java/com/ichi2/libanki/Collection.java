@@ -1291,7 +1291,7 @@ public class Collection {
         if (lastUndo != null ) {
             return lastUndo.undo(this);
         }
-        return NO_REVIEW;
+        return Undoable.NOT_UNDONE;
     }
 
     /* Undos may get cleared during execution of markUndo. In this case the action can't be undone*/
@@ -1308,7 +1308,7 @@ public class Collection {
         boolean wasLeech = card.note().hasTag("leech");
         Card clonedCard = card.clone();
         Undoable undoableReview = new Undoable(REVIEW) {
-            public long undo(Collection col) {
+            protected long actualUndo(Collection col) {
                 col.getSched().undoReview(clonedCard, wasLeech);
                 return clonedCard.getId();
             }
