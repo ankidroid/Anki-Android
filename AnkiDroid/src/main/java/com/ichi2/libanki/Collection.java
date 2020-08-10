@@ -73,6 +73,7 @@ import timber.log.Timber;
 import com.ichi2.async.TaskData;
 
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
+import static com.ichi2.libanki.Undoable.NO_REVIEW;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -1252,12 +1253,20 @@ public class Collection {
         mUndo = new LinkedList<>();
     }
 
+    public @Nullable Undoable lastUndo() {
+        if (mUndo.isEmpty()) {
+           return null;
+        }
+        return mUndo.getLast();
+    }
+
 
     /** Undo menu item name, or "" if undo unavailable. */
     @VisibleForTesting
     public DismissType undoType() {
-        if (mUndo.size() > 0) {
-            return mUndo.getLast().getDismissType();
+        Undoable undoable = lastUndo();
+        if (undoable != null) {
+            return undoable.getDismissType();
         }
         return null;
     }
@@ -1275,9 +1284,12 @@ public class Collection {
     }
 
     public long undo() {
-        Undoable lastUndo = mUndo.removeLast();
+        Undoable lastUndo = lastUndo();
         Timber.d("undo() of type %s", lastUndo.getDismissType());
-        return lastUndo.undo(this);
+        if (lastUndo != null ) {
+            return lastUndo.undo(this);
+        }
+        return NO_REVIEW;
     }
 
     public void markUndo(Undoable undo) {
