@@ -57,6 +57,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -1255,11 +1256,27 @@ public class Collection {
     }
 
     public @Nullable Undoable lastUndo() {
+        cleanUndo();
         LinkedList<Undoable> undoables = mUndo; // Copied for synchronization
         if (undoables.isEmpty()) {
            return null;
         }
         return undoables.getLast();
+    }
+
+    /**
+     * [type, undoName, data] type 1 = review; type 2 =
+     */
+    public void cleanUndo() {
+        synchronized (mUndo) {
+            Iterator<Undoable> it = mUndo.iterator();
+            while (it.hasNext()) {
+                Undoable undoable = it.next();
+                if (undoable.isStarted()) {
+                    it.remove();
+                }
+            }
+        }
     }
 
 
@@ -1298,9 +1315,12 @@ public class Collection {
     public void markUndo(Undoable undo) {
         Timber.d("markUndo() of type %s", undo.getDismissType());
         LinkedList<Undoable> undos = mUndo; // Copied for synchronization
-        undos.add(undo);
-        while (undos.size() > UNDO_SIZE_MAX) {
-            undos.removeFirst();
+        synchronized(undos) {
+            undos.add(undo);
+            cleanUndo();
+            while (undos.size() > UNDO_SIZE_MAX) {
+                undos.removeFirst();
+            }
         }
     }
 
