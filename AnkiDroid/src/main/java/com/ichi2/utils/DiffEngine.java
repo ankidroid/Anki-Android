@@ -18,15 +18,11 @@ package com.ichi2.utils;
 
 import android.text.Html;
 
-import com.github.difflib.algorithm.DiffException;
 import com.github.difflib.text.DiffRow;
 import com.github.difflib.text.DiffRowGenerator;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-
-import timber.log.Timber;
 
 
 /**
@@ -51,16 +47,10 @@ public class DiffEngine {
                 .reportLinesUnchanged(true)
                 .build();
 
-        List<DiffRow> diffRows = Collections.emptyList();
-        try {
-            diffRows = generator.generateDiffRows(
-                    Arrays.asList(typed.split("\\s+")),
-                    Arrays.asList(correct.split("\\s+")));
-        } catch (DiffException e) {
-            Timber.w(e, "Unexpected diff exception");
-            // This will offer the users a chance to request specific help but should be impossible, no localization
-            prettyTyped.append(wrapBad("Diff error, contact AnkiDroid support: " + e.getLocalizedMessage()));
-        }
+        List<DiffRow> diffRows = generator.generateDiffRows(
+                Arrays.asList(typed.split("\\s+")),
+                Arrays.asList(correct.split("\\s+")));
+
         for (DiffRow aDiff : diffRows) {
             switch (aDiff.getTag()) {
                 case CHANGE:
