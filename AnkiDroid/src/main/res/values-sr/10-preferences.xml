@@ -124,6 +124,8 @@
     <string name="automatic_sync_choice">Аутоматска синхронизација</string>
     <string name="automatic_sync_choice_summ">Синхронизуј аутоматски на старт/излаз, ако је од последње синхронизације прошло више
         од 10 минута.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Day theme</string>
     <string name="night_theme">Night theme</string>
     <string name="default_font">Подразумевани фонт</string>

@@ -17,6 +17,7 @@
 
 package com.ichi2.libanki;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
@@ -37,6 +38,7 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
@@ -206,6 +208,7 @@ public class Collection {
         }
     }
 
+    // Note: Additional members in the class duplicate this
     private void _loadScheduler() {
         int ver = schedVer();
         if (ver == 1) {
@@ -223,7 +226,8 @@ public class Collection {
             throw new RuntimeException("Unsupported scheduler version");
         }
         modSchema();
-        SchedV2 v2Sched = new SchedV2(this);
+        @SuppressLint("VisibleForTests")
+        SchedV2 v2Sched = new SchedV2(this, mSched.getTime());
         clearUndo();
         if (ver == 1) {
             v2Sched.moveToV1();
@@ -340,6 +344,10 @@ public class Collection {
 
     public synchronized void save(long mod) {
         save(null, mod);
+    }
+
+    public synchronized void save(String name) {
+        save(name, 0);
     }
 
 
@@ -824,7 +832,7 @@ public class Collection {
 	    return cards;
 	}
     public List<Card> previewCards(Note note) {
-        return previewCards(note, 0);
+        return previewCards(note, Consts.CARD_TYPE_NEW);
     }
 
     /**
@@ -1141,6 +1149,10 @@ public class Collection {
         return new Finder(this).findCards(search, order);
     }
 
+    public List<Long> findCards(String search, boolean order) {
+        return findCards(search, order, null);
+    }
+
     public List<Long> findCards(String search, boolean order, CollectionTask task) {
         return new Finder(this).findCards(search, order, task);
     }
@@ -1277,25 +1289,7 @@ public class Collection {
         Card clonedCard = card.clone();
         Undoable undoableReview = new Undoable(REVIEW) {
             public long undo(Collection col) {
-                // remove leech tag if it didn't have it before
-                if (!wasLeech && clonedCard.note().hasTag("leech")) {
-                    clonedCard.note().delTag("leech");
-                    clonedCard.note().flush();
-                }
-                Timber.i("Undo Review of card %d, leech: %b", clonedCard.getId(), wasLeech);
-                // write old data
-                clonedCard.flush(false);
-                // and delete revlog entry
-                long last = col.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", new Object[] {clonedCard.getId()});
-                col.getDb().execute("DELETE FROM revlog WHERE id = " + last);
-                // restore any siblings
-                col.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?",
-                        new Object[] {Utils.intTime(), col.usn(), clonedCard.getNid()});
-                // and finally, update daily count
-                @Consts.CARD_QUEUE int n = clonedCard.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : clonedCard.getQueue();
-                String type = (new String[]{"new", "lrn", "rev"})[n];
-                col.getSched()._updateStats(clonedCard, type, -1);
-                col.getSched().setReps(col.getSched().getReps() - 1);
+                col.getSched().undoReview(clonedCard, wasLeech);
                 return clonedCard.getId();
             }
         };
@@ -1883,12 +1877,24 @@ public class Collection {
         }
         String s = String.format("[%s] %s:%s(): %s", Utils.intTime(), trace.getFileName(), trace.getMethodName(),
                 TextUtils.join(",  ", args));
-        mLogHnd.println(s);
+        writeLog(s);
+    }
+
+
+    private void writeLog(String s) {
+        if (mLogHnd != null) {
+            try {
+                mLogHnd.println(s);
+            } catch (Exception e) {
+                Timber.w(e, "Failed to write to collection log");
+            }
+        }
         Timber.d(s);
     }
 
 
     private void _openLog() {
+        Timber.i("Opening Collection Log");
         if (!mDebugLog) {
             return;
         }
@@ -1911,6 +1917,7 @@ public class Collection {
 
 
     private void _closeLog() {
+        Timber.i("Closing Collection Log");
         if (mLogHnd != null) {
             mLogHnd.close();
             mLogHnd = null;
@@ -2073,6 +2080,18 @@ public class Collection {
         }
         mSched.setReportLimit(reportLimit);
         return mSched;
+    }
+
+
+    //This duplicates _loadScheduler (but returns the value and sets the report limit).
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public void replaceSchedulerForTests(Time time) {
+        int ver = schedVer();
+        if (ver == 1) {
+            mSched = new Sched(this, time);
+        } else if (ver == 2) {
+            mSched = new SchedV2(this, time);
+        }
     }
 
     /** Allows a mock db to be inserted for testing */

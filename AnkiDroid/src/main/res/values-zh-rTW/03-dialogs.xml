@@ -71,6 +71,7 @@
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d 卡片已重設</item>
     </plurals>
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">重置卡片進度</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">重置卡片</item>
@@ -82,6 +83,8 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d 卡片已重置</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">選擇你的檔案管理器中的牌組，或訪問 about:downloads 頁面以匯入</string>
     <string name="answering_error_title">資料庫錯誤</string>
     <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的收藏或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>

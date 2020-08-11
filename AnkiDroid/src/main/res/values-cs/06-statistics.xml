@@ -164,7 +164,7 @@
     <plurals name="stats_today_cards">
         <item quantity="one">Dnes studována &lt;b&gt;%1$d karta&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
         <item quantity="few">Dnes studovány &lt;b&gt;%1$d karty&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
-        <item quantity="many">Dnes studováno &lt;b&gt;%1$d karet&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
+        <item quantity="many">Dnes studováno &lt;b&gt;%1$d karty&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
         <item quantity="other">Dnes studováno &lt;b&gt;%1$d karet&lt;/b&gt; za &lt;b&gt;%2$s&lt;/b&gt;</item>
     </plurals>
 </resources>

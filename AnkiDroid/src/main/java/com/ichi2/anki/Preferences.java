@@ -51,6 +51,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.contextmenu.AnkiCardContextMenu;
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.debug.DatabaseLock;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -61,7 +62,6 @@ import com.ichi2.anki.web.CustomSyncServer;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
@@ -91,6 +91,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
@@ -321,15 +322,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     startActivity(i);
                     return true;
                 });
-                // FIXME: The menu is named in the system language (as it's defined in the manifest which may be
-                //  different than the app language
-                CheckBoxPreference cardBrowserContextMenuPreference = (CheckBoxPreference) screen.findPreference(CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY);
-                String menuName = getString(R.string.card_browser_context_menu);
-                cardBrowserContextMenuPreference.setTitle(getString(R.string.card_browser_enable_external_context_menu, menuName));
-                cardBrowserContextMenuPreference.setSummary(getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
+                setupContextMenuPreference(screen, CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu);
+                setupContextMenuPreference(screen, AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label);
 
                 // Make it possible to test crash reporting, but only for DEBUG builds
-                if (BuildConfig.DEBUG && !ActivityManager.isUserAMonkey()) {
+                if (BuildConfig.DEBUG && !AdaptionUtil.isUserATestClient()) {
                     Timber.i("Debug mode, allowing for test crashes");
                     Preference triggerTestCrashPreference = new Preference(this);
                     triggerTestCrashPreference.setKey("trigger_crash_preference");
@@ -422,6 +419,18 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 break;
         }
     }
+
+
+    private void setupContextMenuPreference(PreferenceScreen screen, String key, @StringRes int contextMenuName) {
+        // FIXME: The menu is named in the system language (as it's defined in the manifest which may be
+        //  different than the app language
+        CheckBoxPreference cardBrowserContextMenuPreference = (CheckBoxPreference) screen.findPreference(key);
+        String menuName = getString(contextMenuName);
+        // Note: The below format strings are generic, not card browser specific despite the name
+        cardBrowserContextMenuPreference.setTitle(getString(R.string.card_browser_enable_external_context_menu, menuName));
+        cardBrowserContextMenuPreference.setSummary(getString(R.string.card_browser_enable_external_context_menu_summary, menuName));
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -739,6 +748,10 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 }
                 case CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY:
                     CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
+                    break;
+                case AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY:
+                    AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
+                    break;
             }
             // Update the summary text to reflect new value
             updateSummary(pref);

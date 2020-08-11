@@ -41,8 +41,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21300110
-        versionName="2.13alpha10"
+        versionCode=21300113
+        versionName="2.13alpha13"
         minSdkVersion 16
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 28
@@ -207,19 +207,19 @@ dependencies {
     // Can possibly remove if upstream PR merges https://github.com/JakeWharton/timber/pull/398
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:19.0.0'
+            force 'org.jetbrains:annotations:20.0.0'
         }
     }
 
-    compileOnly 'org.jetbrains:annotations:19.0.0'
+    compileOnly 'org.jetbrains:annotations:20.0.0'
     compileOnly "com.google.auto.service:auto-service-annotations:1.0-rc7"
     annotationProcessor "com.google.auto.service:auto-service:1.0-rc7"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0'
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'androidx.appcompat:appcompat:1.2.0-rc02'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.browser:browser:1.2.0'
     implementation 'androidx.exifinterface:exifinterface:1.2.0'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
@@ -231,7 +231,7 @@ dependencies {
     implementation 'io.requery:sqlite-android:3.32.2'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
-    implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
+    implementation "io.github.java-diff-utils:java-diff-utils:4.7"
     // #6419  - API 27 (& maybe others) could not perform new ZipFile() on a 2GB+ apkg
     // noinspection GradleDependency - pinned at 1.12 until API21 minSdkVersion (File.toPath usage)
     implementation 'org.apache.commons:commons-compress:1.12'
@@ -270,4 +270,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'org.smali:dexlib2:2.4.0'
+
+    //For AnkiDroid JS API Versioning
+    implementation "com.github.zafarkhaja:java-semver:0.9.0"
 }

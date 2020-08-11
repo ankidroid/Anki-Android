@@ -49,7 +49,7 @@
         <item quantity="one">%1$s ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱷᱚᱛ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱰ ᱢᱮᱱᱟᱼᱜᱟ ᱾</item>
         <item quantity="other">%1$s ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱷᱚᱛ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱰ ᱢᱮᱱᱟᱼᱜᱟ ᱾</item>
     </plurals>
-    <string name="delete_cram_deck_message">ᱡᱷᱚᱛᱟ %s ᱠᱟᱰ ᱟᱡᱟᱜ ᱢᱩᱞ ᱰᱮᱠᱥ ᱛᱮ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
+    <string name="delete_cram_deck_message">ᱡᱷᱚᱛᱟ %s ᱠᱟᱰ ᱟᱡᱟᱜ ᱢᱩᱞ ᱰᱮᱠ ᱚᱠ ᱛᱮ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
     <string name="no_tts_available_message">text-to-speech ᱯᱟᱹᱨᱥᱤ ᱵᱟᱱᱩᱜᱼᱟ ᱾</string>
     <string name="initializing_tts">TTS ᱮᱛᱚᱷᱚᱵᱽᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
@@ -74,6 +74,7 @@
         <item quantity="one">%d ᱠᱟᱰ ᱨᱤᱥᱮᱴ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱴ</item>
     </plurals>
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">ᱠᱟᱰ‌ ᱨᱤᱥᱮᱰᱭᱩᱞ</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
@@ -88,6 +89,8 @@
         <item quantity="one">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ᱨᱮᱫ ᱢᱮᱱᱮᱡᱟᱨ ᱛᱮ ᱰᱮᱠ ᱠᱷᱚᱱ ᱠᱟᱰ ᱪᱚᱭᱚᱱ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ about:downloads ᱥᱟᱠᱟᱢ ᱠᱷᱟᱱ import ᱢᱮ</string>
     <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
     <string name="answering_error_message">ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱚᱞ ᱵᱷᱩᱞ ᱾ database ᱫᱚ ᱠᱦᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱰᱤᱥᱠ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱱᱩᱜᱟ ᱾ \n\nᱡᱚᱫᱤ ᱵᱟᱨᱚᱢᱵᱟᱨ ᱱᱚᱠᱟ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ, ᱮᱱᱰᱮᱠᱷᱟᱱ ᱟᱨ ᱢᱤᱫ ᱡᱮᱠᱷᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ backup ᱠᱷᱚᱱ ᱰᱟᱴᱟ restore ᱛᱟᱵᱚᱱ ᱯᱮ ᱾ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ \&quot;options\&quot; ᱨᱮ ᱚᱛᱟᱭ ᱯᱮ ᱾\n\ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱱᱚᱟ ᱫᱚ bug ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱟ; ᱫᱚᱭᱟᱠᱟᱛᱮ report ᱯᱮ ᱾ </string>

@@ -181,7 +181,7 @@
     <string name="card_template_editor_styling">样式</string>
     <string name="card_template_editor_menu_delete">删除</string>
     <string name="card_template_editor_menu_card_browser_appearance">卡牌浏览器外观</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">牌组覆盖</string>
     <string name="card_template_editor_cant_delete">至少需要保留一个卡片类型。</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">确定删除\"%2$s\"笔记类型类型和它包含的%1$d张卡片吗？</item>
@@ -195,6 +195,8 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">读取并写入 AnkiDroid 数据库</string>
     <string name="read_write_permission_description">浏览现有的笔记、 卡片、 笔记类型和牌组，或者自己动手创建新的~</string>
+    <!-- Context Menu -->
     <string name="card_browser_label">卡牌浏览器</string>
     <string name="card_browser_context_menu">卡牌浏览器</string>
+    <string name="context_menu_anki_card_label">Anki 卡</string>
 </resources>

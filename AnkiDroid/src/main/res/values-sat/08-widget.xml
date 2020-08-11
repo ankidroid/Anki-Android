@@ -52,7 +52,7 @@
     </plurals>
     <plurals name="widget_decks">
         <item quantity="one">%1$d ᱰᱮᱠ</item>
-        <item quantity="other">%1$d ᱰᱮᱠᱥ</item>
+        <item quantity="other">%1$d ᱰᱮᱠ ᱚᱠ</item>
     </plurals>
     <string name="widget_small">AnkiDroid ᱠᱟᱹᱴᱤᱡ</string>
     <string name="widget_small_button">AnkiDroid</string>

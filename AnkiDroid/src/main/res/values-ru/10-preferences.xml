@@ -123,6 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Автоматическая синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Дневная тема</string>
     <string name="night_theme">Ночная тема</string>
     <string name="default_font">Шрифт по умолчанию</string>
@@ -275,7 +277,7 @@
     <string name="deck_conf_cram_limit">Количество</string>
     <string name="deck_conf_cram_order">Отобрать</string>
     <string name="deck_conf_cram_reschedule">Перепланировать</string>
-    <string name="deck_conf_cram_reschedule_summ">Расписание карточек меняется в зависимости от ответов</string>
+    <string name="deck_conf_cram_reschedule_summ">Перепланировать карточки в зависимости от ответов</string>
     <string name="deck_conf_cram_steps">Заданные шаги (мин.)</string>
     <string name="deck_conf_cram_steps_summ">Задать свои шаги</string>
     <string name="deck_conf_reminders_enabled">Включает напоминания для колод в этой группе</string>

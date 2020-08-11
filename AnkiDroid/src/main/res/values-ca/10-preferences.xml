@@ -123,6 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Sincronització automàtica</string>
     <string name="automatic_sync_choice_summ">Sincronitza automàticament en l\'app al Inici/sortir si el sync anterior va ser fa més de 10 minuts.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Tema diürn</string>
     <string name="night_theme">Tema nocturn</string>
     <string name="default_font">Tipus de lletra per omissió</string>

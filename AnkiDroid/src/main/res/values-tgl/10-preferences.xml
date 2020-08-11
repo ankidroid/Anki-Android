@@ -124,6 +124,8 @@
     <string name="automatic_sync_choice">Awtomatikong pag-synchronize</string>
     <string name="automatic_sync_choice_summ">Awtomatikong i-sync sa start / exit ng app kung ang huling pag-sync ay higit sa 10
         minuto ang nakalipas.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Araw ng tema</string>
     <string name="night_theme">Tema ng gabi</string>
     <string name="default_font">Default na font</string>

@@ -73,12 +73,12 @@
     <string name="card_template_browser_appearance_restore_default_dialog">Ripristinare i valori predefiniti?</string>
     <string name="card_template_browser_appearance_saving_note">Queste modifiche vengono applicate quando il modello della carta viene salvato</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">Cannot set Deck Override to a filtered deck</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="card_template_editor_deck_override_on">Sovrascrivi Mazzo (on)</string>
+    <string name="card_template_editor_deck_override_off">Sovrascrivi Mazzo (off)</string>
+    <string name="model_manager_deck_override_added_message">Imposta il mazzo predefinito ‘%1$s’ a ‘%2$s’</string>
+    <string name="model_manager_deck_override_removed_message">Rimosso il mazzo predefinito per ‘%s’</string>
+    <string name="model_manager_deck_override_cloze_error">Impossibile impostare la sovrascrittura del mazzo per le note Cloze</string>
+    <string name="model_manager_deck_override_dynamic_deck_error">Impossibile impostare la sovrascrittura su un mazzo filtrato</string>
+    <string name="deck_override_explanation">Seleziona il mazzo in cui inserire le nuove carte ‘%s’</string>
+    <string name="deck_picker_dialog_filter_decks">Filtra mazzi</string>
 </resources>

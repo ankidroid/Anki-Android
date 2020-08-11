@@ -68,6 +68,7 @@ import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListener;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -251,7 +252,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     };
 
 
-    private CollectionTask.TaskListener mRepositionCardHandler = new CollectionTask.TaskListener() {
+    private TaskListener mRepositionCardHandler = new TaskListener() {
         @Override
         public void onPreExecute() {
             Timber.d("CardBrowser::RepositionCardHandler() onPreExecute");
@@ -268,7 +269,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mResetProgressCardHandler = new CollectionTask.TaskListener() {
+    private TaskListener mResetProgressCardHandler = new TaskListener() {
         @Override
         public void onPreExecute() {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPreExecute");
@@ -285,7 +286,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mRescheduleCardHandler = new CollectionTask.TaskListener() {
+    private TaskListener mRescheduleCardHandler = new TaskListener() {
         @Override
         public void onPreExecute() {
             Timber.d("CardBrowser::RescheduleCardHandler() onPreExecute");
@@ -1368,7 +1369,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private abstract class ListenerWithProgressBar extends CollectionTask.TaskListener {
+    private abstract class ListenerWithProgressBar extends TaskListener {
         @Override
         public void onPreExecute() {
             showProgressBar();
@@ -1435,7 +1436,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         updateList();
     }
 
-    private CollectionTask.TaskListener mUpdateCardHandler = new ListenerWithProgressBarCloseOnFalse("Card Browser - mUpdateCardHandler.onPostExecute()"){
+    private TaskListener mUpdateCardHandler = new ListenerWithProgressBarCloseOnFalse("Card Browser - mUpdateCardHandler.onPostExecute()"){
         @Override
         public void onProgressUpdate(TaskData value) {
             updateCardInList(value.getCard(), value.getString());
@@ -1447,7 +1448,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mChangeDeckHandler = new ListenerWithProgressBarCloseOnFalse("Card Browser - mChangeDeckHandler.onPostExecute()") {
+    private TaskListener mChangeDeckHandler = new ListenerWithProgressBarCloseOnFalse("Card Browser - mChangeDeckHandler.onPostExecute()") {
         @Override
         protected void actualPostExecute(TaskData result) {
             hideProgressBar();
@@ -1610,7 +1611,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         updateList();
     }
 
-    private CollectionTask.TaskListener mSuspendCardHandler = new ListenerWithProgressBarCloseOnFalse() {
+    private TaskListener mSuspendCardHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
         protected void actualPostExecute(TaskData result) {
             Card[] cards = (Card[]) result.getObjArray();
@@ -1619,9 +1620,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             invalidateOptionsMenu();    // maybe the availability of undo changed
         }
     };
-    private CollectionTask.TaskListener mFlagCardHandler = mSuspendCardHandler;
+    private TaskListener mFlagCardHandler = mSuspendCardHandler;
 
-    private CollectionTask.TaskListener mMarkCardHandler = new ListenerWithProgressBarCloseOnFalse() {
+    private TaskListener mMarkCardHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
         protected void actualPostExecute(TaskData result) {
             Card[] cards = (Card[]) result.getObjArray();
@@ -1631,7 +1632,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mDeleteNoteHandler = new ListenerWithProgressBarCloseOnFalse() {
+    private TaskListener mDeleteNoteHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
         public void onProgressUpdate(TaskData value) {
             Card[] cards = (Card[]) value.getObjArray();
@@ -1655,7 +1656,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mUndoHandler = new ListenerWithProgressBarCloseOnFalse() {
+    private TaskListener mUndoHandler = new ListenerWithProgressBarCloseOnFalse() {
         @Override
         public void actualPostExecute(TaskData result) {
             Timber.d("Card Browser - mUndoHandler.onPostExecute()");
@@ -1669,7 +1670,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mSearchCardsHandler = new ListenerWithProgressBar() {
+    private TaskListener mSearchCardsHandler = new ListenerWithProgressBar() {
         @Override
         public void onPostExecute(TaskData result) {
             if (result != null) {
@@ -1752,7 +1753,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private CollectionTask.TaskListener mRenderQAHandler = new CollectionTask.TaskListener() {
+    private TaskListener mRenderQAHandler = new TaskListener() {
         @Override
         public void onProgressUpdate(TaskData value) {
             // Note: This is called every time a card is rendered.
@@ -1798,7 +1799,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mCheckSelectedCardsHandler = new ListenerWithProgressBar() {
+    private TaskListener mCheckSelectedCardsHandler = new ListenerWithProgressBar() {
         @Override
         public void onPostExecute(TaskData result) {
             hideProgressBar();

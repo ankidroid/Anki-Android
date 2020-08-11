@@ -28,7 +28,7 @@ import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.sched.AbstractSched;
+import com.ichi2.libanki.sched.DeckDueTreeNode;
 
 import java.util.List;
 
@@ -124,8 +124,8 @@ public final class WidgetStatus {
             col.getSched()._checkDay();
 
             // Only count the top-level decks in the total
-            List<AbstractSched.DeckDueTreeNode> nodes = col.getSched().deckDueTree();
-            for (AbstractSched.DeckDueTreeNode node : nodes) {
+            List<DeckDueTreeNode> nodes = col.getSched().deckDueTree();
+            for (DeckDueTreeNode node : nodes) {
                 total[0] += node.getNewCount();
                 total[1] += node.getLrnCount();
                 total[2] += node.getRevCount();

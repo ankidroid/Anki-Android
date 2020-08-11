@@ -99,8 +99,8 @@
         <item>Modifis noton</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Modifi hodiaŭan limigon de novaj kartoj</string>
+    <string name="custom_study_increase_review_limit">Modifi hodiaŭan limigon de kartoj por ripeti</string>
     <string name="custom_study_review_forgotten">Ripeti forgesitajn kartojn</string>
     <string name="custom_study_review_ahead">Antaŭripeti</string>
     <string name="custom_study_random_selection">Lerni hazarde elektitajn kartojn</string>
@@ -114,7 +114,7 @@
     <string name="note_editor_no_first_field">La unua kampo estas malplena</string>
     <string name="note_editor_no_cloze_delations">Tiu ĉi noto enhavu “malplenojn” en la teksto</string>
     <string name="note_editor_no_cards_created_all_fields">El la nuna nototipo neniu karto kreiĝis.\nElektu alian nototipon aŭ frapetu “kartoj”-n por aldoni anstataŭan kampon</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Trutekstaj malplenoj nur funkcias kun la nototipo “truteksto”</string>
     <string name="saving_facts">Konservado de noto</string>
     <string name="saving_model">Konservado de nototipo</string>
     <string name="add">Aldoni</string>
@@ -280,14 +280,15 @@
     <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>
     <string name="title_whiteboard_pen_color">Koloro por skribi sur skribtabulo</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[Trovis malplenajn kartojn. Ekigu “iloj” → “malplenaj kartoj”]]></string>
+    <string name="note_importer_error_empty_first_field">Unua kampo malplena: %s</string>
+    <string name="note_importer_error_first_field_matched">Unua kampo kongruis al: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Aldonis duplikaton al unua kampo: %s</string>
+    <string name="note_importer_error_appeared_twice">Aperis dufoje en dosiero: %s</string>
     <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
     <string name="csv_importer_error_exception">Aborted: %s</string>
+    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <plurals name="note_importer_notes_added">
         <item quantity="one">%d note added</item>
         <item quantity="other">%d notes added</item>
@@ -300,4 +301,14 @@
         <item quantity="one">%d note unchanged</item>
         <item quantity="other">%d notes unchanged</item>
     </plurals>
+    <!-- JS api -->
+    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
+    <string name="invalid_json_data">Card provided invalid data. %s</string>
+    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
+    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
+    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <!-- About AnkiDroid screen -->
+    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
+    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
 </resources>

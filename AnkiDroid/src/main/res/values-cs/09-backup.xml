@@ -59,7 +59,7 @@
     <string name="backup_restore_select_title">Vyberte zálohu pro obnovení</string>
     <string name="backup_restore_no_backups">Žádné zálohy pro tento balíček nejsou k dispozici. Máte-li zálohu na stolním počítači, zkopírujte jí ručně do složky AnkiDroid</string>
     <string name="open_collection_failed_title">Kolekce není otevřena</string>
-    <string name="corrupt_db_message">Bohužel váš balíček se poškodil.\n\nKlikněte na \'Možnosti\' pro obnovení ze zálohy. Pokud se obnova nepovede, viz následující pokyny k ruční opravě databáze: \n%1$s</string>
+    <string name="corrupt_db_message">Vaše kolekce se poškodila.\n\nklepněte na „Možnosti“, kde ji můžete obnovit ze zálohy, nebo, pokud se obnova nepovede, přečtěte si následující pokyny k ruční opravě databáze:\n%1$s</string>
     <string name="access_collection_failed_message">Došlo k chybě při přístupu k vašemu balíčku. To může být způsobeno chybou v aplikaci, nebo může být problém s balíčkem. \n\nZkuste spustit kontrolu databáze nebo obnovení ze zálohy stisknutím tlačítka \'Možnosti\'. Objeví-li se znovu tato zpráva, zašlete nám zprávu: \n%1$s</string>
     <string name="deck_repair_error">Kolekci nelze opravit</string>
 </resources>

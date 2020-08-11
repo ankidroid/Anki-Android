@@ -124,6 +124,8 @@
     <string name="automatic_sync_choice">Sincronización automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar autom. ao iniciar/saír da aplicación se pasaron máis de 10
         minutos dende a última sincronización.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Day theme</string>
     <string name="night_theme">Night theme</string>
     <string name="default_font">Fonte por defecto</string>

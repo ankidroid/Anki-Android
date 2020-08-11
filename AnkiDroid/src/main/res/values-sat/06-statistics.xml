@@ -100,7 +100,7 @@
     <string name="stats_overview_card_types_lowest_ease">ᱡᱚᱛᱚ ᱠᱷᱚᱱ ᱠᱚᱢ ᱥᱚᱦᱚᱡ: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">ᱢᱟᱸᱡᱞᱟ ᱨᱟᱥ ᱥᱚᱦᱚᱡ: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">ᱡᱟᱹᱥᱛᱤ ᱥᱚᱦᱚᱡ: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="deck_summary_all_decks">ᱡᱷᱚᱛᱚ ᱰᱮᱠᱥ</string>
+    <string name="deck_summary_all_decks">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱚᱠ</string>
     <string name="stats_select_time_scale">ᱥᱚᱢᱚᱭᱼᱢᱟᱯ ᱪᱚᱭᱚᱱ</string>
     <string-array name="due_x_axis_title">
         <item>ᱫᱤᱱ</item>

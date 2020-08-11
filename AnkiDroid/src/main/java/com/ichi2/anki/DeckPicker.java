@@ -101,14 +101,15 @@ import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListener;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
+import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
@@ -196,7 +197,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
-    private List<AbstractSched.DeckDueTreeNode> mDueTree;
+    private List<DeckDueTreeNode> mDueTree;
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -275,7 +276,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mImportAddListener = new CollectionTask.TaskListener() {
+    private TaskListener mImportAddListener = new TaskListener() {
         @Override
         public void onPostExecute(TaskData result) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -310,7 +311,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mImportReplaceListener = new CollectionTask.TaskListener() {
+    private TaskListener mImportReplaceListener = new TaskListener() {
         @SuppressWarnings("unchecked")
         @Override
         public void onPostExecute(TaskData result) {
@@ -343,7 +344,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    private CollectionTask.TaskListener mExportListener = new CollectionTask.TaskListener() {
+    private TaskListener mExportListener = new TaskListener() {
 
         @Override
         public void onPreExecute() {
@@ -631,6 +632,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         MenuItem syncMenu = menu.findItem(R.id.action_sync);
         SyncStatus syncStatus = SyncStatus.getSyncStatus(this::getCol);
         switch (syncStatus) {
+            case BADGE_DISABLED:
             case NO_CHANGES:
             case INCONCLUSIVE:
                 BadgeDrawableBuilder.removeBadge(syncMenu);
@@ -1085,9 +1087,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
             preferences.edit().putLong(UPGRADE_VERSION_KEY, current).apply();
 
-            // New version, clear out old exception report limits
-            AnkiDroidApp.deleteACRALimiterData(this);
-
             // Delete the media database made by any version before 2.3 beta due to upgrade errors.
             // It is rebuilt on the next sync or media check
             if (previous < 20300200) {
@@ -1274,7 +1273,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
+        TaskListener listener = new TaskListener() {
             @Override
             public void onCancelled() {
                 hideProgressBar();
@@ -1417,7 +1416,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback method to handle repairing deck
     public void repairCollection() {
         Timber.i("Repairing the Collection");
-        CollectionTask.TaskListener listener= new CollectionTask.TaskListener() {
+        TaskListener listener= new TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -1469,7 +1468,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public void mediaCheck() {
-        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
+        TaskListener listener = new TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
@@ -1718,6 +1717,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         // then show not logged in dialog
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
                     } else if ("noChanges".equals(resultType)) {
+                        SyncStatus.markSyncCompleted();
                         // show no changes message, use false flag so we don't show "sync error" as the Dialog title
                         showSyncLogMessage(R.string.sync_no_changes_message, "");
                     } else if ("clockOff".equals(resultType)) {
@@ -2103,7 +2103,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mFocusedDeck = did;
         // Get some info about the deck to handle special cases
         int pos = mDeckListAdapter.findDeckPosition(did);
-        AbstractSched.DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
+        DeckDueTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
         // Figure out what action to take
         if (deckDueTreeNode.getNewCount() + deckDueTreeNode.getLrnCount() + deckDueTreeNode.getRevCount() > 0) {
             // If there are cards to study then either go to Reviewer or StudyOptions
@@ -2193,7 +2193,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     private void updateDeckList() {
-        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
+        TaskListener listener = new TaskListener() {
 
             @Override
             public void onPreExecute() {
@@ -2216,7 +2216,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     showCollectionErrorDialog();
                     return;
                 }
-                mDueTree = (List<AbstractSched.DeckDueTreeNode>) result.getObjArray()[0];
+                mDueTree = (List<DeckDueTreeNode>) result.getObjArray()[0];
 
                 __renderPage();
                 // Update the mini statistics bar as well
@@ -2383,7 +2383,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         deleteDeck(mContextMenuDid);
     }
     public void deleteDeck(final long did) {
-        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
+        TaskListener listener = new TaskListener() {
             // Flag to indicate if the deck being deleted is the current deck.
             private boolean removingCurrent;
 
@@ -2417,8 +2417,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         Timber.e(e, "onPostExecute - Exception dismissing dialog");
                     }
                 }
-                // TODO: if we had "undo delete note" like desktop client then we won't need this.
-                getCol().clearUndo();
             }
         };
         CollectionTask.launchCollectionTask(DELETE_DECK, listener, new TaskData(did));
@@ -2427,7 +2425,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /**
      * Show progress bars and rebuild deck list on completion
      */
-    private CollectionTask.TaskListener mSimpleProgressListener = new CollectionTask.TaskListener() {
+    private TaskListener mSimpleProgressListener = new TaskListener() {
 
         @Override
         public void onPreExecute() {
@@ -2491,7 +2489,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
+        TaskListener listener = new TaskListener() {
             @Override
             public void onPreExecute() {
                 mProgressDialog = StyledProgressDialog.show(DeckPicker.this, "",
@@ -2562,7 +2560,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     @VisibleForTesting
-    class CheckDatabaseListener extends CollectionTask.TaskListener {
+    class CheckDatabaseListener extends TaskListener {
         @Override
         public void onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(DeckPicker.this, AnkiDroidApp.getAppResources().getString(R.string.app_name),

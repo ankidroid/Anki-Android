@@ -124,6 +124,8 @@
     <string name="automatic_sync_choice">Penyegerakkan sari kata</string>
     <string name="automatic_sync_choice_summ">Sync secara automatik pada aplikasi mula/keluar jika sync terakhir itu lebih dari 10
 minit yang lalu.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Tema hari</string>
     <string name="night_theme">Tema malam</string>
     <string name="default_font">Fon lalai</string>

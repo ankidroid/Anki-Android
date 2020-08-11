@@ -74,6 +74,7 @@
         <item quantity="one">%d tarjeta reiniciada</item>
         <item quantity="other">%d tarjetas reiniciadas</item>
     </plurals>
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">Reprogramar tarjeta</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reprogramar tarjeta</item>
@@ -88,6 +89,8 @@
         <item quantity="one">%d tarjeta reprogramada</item>
         <item quantity="other">%d tarjetas reprogramadas</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Selecciona el mazo en tu gestor de archivos o visita la página about:downloads para importarlo</string>
     <string name="answering_error_title">Error en base de datos</string>
     <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, presiona \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>

@@ -163,6 +163,10 @@ public class DB {
         return mMod;
     }
 
+    // Allows to avoid using new Object[]
+    public Cursor query(String query, Object... selectionArgs) {
+        return mDatabase.query(query, selectionArgs);
+    }
 
     /**
      * Convenience method for querying the database for a single integer result.
@@ -271,7 +275,6 @@ public class DB {
     /**
      * Convenience method for querying the database for an entire column of long. 
      *
-     * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
@@ -282,7 +285,6 @@ public class DB {
     /**
      * Convenience method for querying the database for an entire column of String. 
      *
-     * @param type The class of the column's data type. Example: int.class, String.class.
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */

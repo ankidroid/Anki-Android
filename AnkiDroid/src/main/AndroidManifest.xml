@@ -266,6 +266,18 @@
             android:exported="false"
             android:configChanges="locale"
             />
+
+        <activity-alias
+            android:name="com.ichi2.anki.AnkiCardContextMenuAction"
+            android:label="@string/context_menu_anki_card_label"
+            android:enabled="false"
+            android:targetActivity=".NoteEditor">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
         <activity
             android:name="com.ichi2.anki.NoteEditor"
             android:label="@string/fact_adder_intent_title"

@@ -123,6 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">स्वचालित सिंक्रनाइज़ेशन</string>
     <string name="automatic_sync_choice_summ">यदि अंतिम सिंक्रनाइज़ेशन 10 मिनट पहले से अधिक था, तो अनुप्रयोग प्रारंभ/निकास पर स्वचालित रूप से सिंक्रनाइज़ करें ।</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">दिवस थीम</string>
     <string name="night_theme">रात विषय</string>
     <string name="default_font">डिफ़ॉल्ट फ़ॉंट</string>

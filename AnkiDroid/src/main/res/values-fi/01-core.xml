@@ -201,6 +201,8 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Lue ja kirjoita AnkiDroidi-tietokantaan</string>
     <string name="read_write_permission_description">lupa päästä olemassaoleviin merkintöihin, kortteihin, merkintätyyppeihin ja pakkoihin, sekä luoda uusia</string>
+    <!-- Context Menu -->
     <string name="card_browser_label">Korttiselain</string>
     <string name="card_browser_context_menu">Korttiselain</string>
+    <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

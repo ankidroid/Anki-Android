@@ -144,7 +144,7 @@ public class IntentHandler extends Activity {
         reloadIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         reloadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivityIfNeeded(reloadIntent, 0);
-        AnkiActivity.finishActivityWithFade(this);
+        finish();
     }
 
 

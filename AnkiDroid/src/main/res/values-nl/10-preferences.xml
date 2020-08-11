@@ -123,6 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Automatische synchronisatie</string>
     <string name="automatic_sync_choice_summ">Synchronizeer automatisch bij het starten en sluiten van de app indien de laatste synchronisatie meer dan 10 minuten geleden was.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Dag thema</string>
     <string name="night_theme">Nacht thema</string>
     <string name="default_font">Standaardlettertype</string>

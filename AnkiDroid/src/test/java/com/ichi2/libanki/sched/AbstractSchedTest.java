@@ -20,8 +20,14 @@ import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskData;
+import com.ichi2.async.TaskListener;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Note;
+import com.ichi2.utils.JSONArray;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,6 +43,7 @@ import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertTrue;
 
 // Note: These tests can't be run individually but can from the class-level
 // gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.sched.AbstractSchedTest.*"
@@ -84,5 +91,52 @@ public class AbstractSchedTest extends RobolectricTest {
         int[] countsAfterUndo = sched.counts();
 
         assertThat("Counts after an undo should be the same as before an undo", countsAfterUndo, is(countsBeforeUndo));
+    }
+
+    @Test
+    public void ensureUndoCorrectCounts() {
+        Collection col = getCol();
+        AbstractSched sched = col.getSched();
+        Deck deck = col.getDecks().get(1);
+        DeckConfig dconf = col.getDecks().getConf(1);
+        dconf.getJSONObject("new").put("perDay", 10);
+        JSONArray newCount = deck.getJSONArray("newToday");
+        for (int i = 0; i < 20; i++) {
+            Note note = col.newNote();
+            note.setField(0, "a");
+            col.addNote(note);
+        }
+        sched.reset();
+        assertThat(col.cardCount(), is(20));
+        assertThat(sched.counts()[0], is(10));
+        Card card = sched.getCard();
+        assertThat(sched.counts()[0], is(9));
+        assertThat(sched.counts(card)[0], is(10));
+        sched.answerCard(card, 3);
+        sched.getCard();
+        final boolean[] executed = {false};
+        CollectionTask.launchCollectionTask(UNDO,
+                new TaskListener() {
+                    Card card;
+                    @Override
+                    public void onPreExecute() {
+
+                    }
+
+                    @Override
+                    public void onProgressUpdate(TaskData data) {
+                        card = data.getCard();
+                    }
+
+
+                    @Override
+                    public void onPostExecute(TaskData result) {
+                        assertThat(sched.counts()[0], is(9));
+                        assertThat(sched.counts(card)[0], is(10));
+                        executed[0] = true;
+                    }
+                });
+        waitForAsyncTasksToComplete();
+        assertTrue(executed[0]);
     }
 }

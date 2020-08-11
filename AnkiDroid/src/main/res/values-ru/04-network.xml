@@ -129,7 +129,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb находится на обслуживании. Повторите ещё раз через несколько минут.</string>
     <string name="sync_error_504_gateway_timeout">Ошибка 504: шлюз не отвечает</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title">Синхронизация</string>
+    <string name="sync_menu_title_full_sync">Синхронизация (полная)</string>
+    <string name="sync_menu_title_no_account">Синхронизация (при входе)</string>
 </resources>

@@ -74,6 +74,7 @@
         <item quantity="one">%d Karte zurücksetzen</item>
         <item quantity="other">%d Karten zurücksetzen</item>
     </plurals>
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">Karte umplanen</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Karte umplanen</item>
@@ -88,6 +89,8 @@
         <item quantity="one">%d Karte umgeplant</item>
         <item quantity="other">%d Karten umgeplant</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Wählen Sie den Stapel in Ihrem Dateimanager aus oder besuchen Sie zum Importieren die Seite about:downloads</string>
     <string name="answering_error_title">Datenbankfehler</string>
     <string name="answering_error_message">Es konnte nicht in die Sammlung geschrieben werden. Dies kann an einer beschädigten Datenbank oder an unzureichendem Speicherplatz liegen.\n\nFalls dies häufiger vorkommt, versuchen Sie bitte, die Datenbank zu überprüfen, die Sammlung zu reparieren oder sie von einer Sicherung wiederherzustellen. Tippen Sie hierfür auf »Optionen«.\n\nEs könnte aber auch ein Fehler in AnkiDroid vorliegen. Damit wird dies überprüfen können, bitten wir Sie, den Fehler zu melden.</string>

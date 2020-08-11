@@ -39,12 +39,14 @@ import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
+import com.ichi2.anki.contextmenu.AnkiCardContextMenu;
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
 import com.ichi2.anki.exception.ManuallyReportedException;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
@@ -59,6 +61,7 @@ import org.acra.annotation.AcraLimiter;
 import org.acra.annotation.AcraToast;
 import org.acra.config.CoreConfigurationBuilder;
 import org.acra.config.DialogConfigurationBuilder;
+import org.acra.config.LimiterData;
 import org.acra.config.ToastConfigurationBuilder;
 import org.acra.sender.HttpSender;
 
@@ -264,7 +267,12 @@ public class AnkiDroidApp extends MultiDexApplication {
             return;
         }
 
+        if (AdaptionUtil.isUserATestClient()) {
+            UIUtils.showThemedToast(this.getApplicationContext(), getString(R.string.user_is_a_robot), false);
+        }
+
         CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
+        AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
         NotificationChannels.setup(getApplicationContext());
 
         // Configure WebView to allow file scheme pages to access cookies.
@@ -369,11 +377,14 @@ public class AnkiDroidApp extends MultiDexApplication {
     /**
      * If you want to make sure that the next exception of any time is posted, you need to clear limiter data
      *
-     * ACRA 5.3.x does this automatically on version upgrade (https://github.com/ACRA/acra/pull/696), until then they blessed deleting file
      * @param context the context leading to the directory with ACRA limiter data
      */
     public static void deleteACRALimiterData(Context context) {
-        context.getFileStreamPath("ACRA-limiter.json").delete();
+        try {
+            new LimiterData().store(context);
+        } catch (Exception e) {
+            Timber.w(e, "Unable to clear ACRA limiter data");
+        }
     }
 
     /**

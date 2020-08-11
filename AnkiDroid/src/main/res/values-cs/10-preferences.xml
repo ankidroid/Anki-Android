@@ -123,6 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Automatická synchronizace</string>
     <string name="automatic_sync_choice_summ">Automaticky synchronizovat aplikaci při startu a při ukončení pokud od poslední synchronizace uplynulo více než 10 minut.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Motivy vzhledu - den</string>
     <string name="night_theme">Motivy vzhledu - noc</string>
     <string name="default_font">Výchozí písmo</string>
@@ -153,8 +155,8 @@
     <string name="pref_backup_max">Maximální počet záloh</string>
     <string name="show_estimates">Zobrazit tlačítko času</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
-    <string name="show_top_bar">Zobrazit horní panel</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Zobrazit horní lištu</string>
+    <string name="show_top_bar_summ">Zobrazit počty karet, příznak a označení v horní liště</string>
     <string name="show_progress">Zobraz zbývající</string>
     <string name="show_progress_summ">Zobrazit zbývající počet karet</string>
     <string name="show_eta">Zobrazit ETA</string>
@@ -212,7 +214,7 @@
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d balíček používá tuto skupinu</item>
         <item quantity="few">%1$s\n%2$d balíčky používají tuto skupinu</item>
-        <item quantity="many">%1$s\n%2$d balíčků používá tuto skupinu</item>
+        <item quantity="many">%1$s\n%2$d balíčku používá tuto skupinu</item>
         <item quantity="other">%1$s\n%2$d balíčků používá tuto skupinu</item>
     </plurals>
     <string name="deck_conf_new_cards">Nové karty</string>
@@ -263,8 +265,8 @@
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s podřízený balíček bude používat tuto skupinu</item>
         <item quantity="few">%s podřízené balíčky budou používat tuto skupinu</item>
-        <item quantity="many">%s podřízených balíčků budou používat tuto skupinu</item>
-        <item quantity="other">%s podřízených balíčků budou používat tuto skupinu</item>
+        <item quantity="many">%s podřízeného balíčku bude používat tuto skupinu</item>
+        <item quantity="other">%s podřízených balíčků bude používat tuto skupinu</item>
     </plurals>
     <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>
     <string name="deck_conf_set_subdecks_message">Použít aktuální nastavení pro všechny podřízené balíčky tohoto balíčku?</string>
@@ -274,7 +276,7 @@
     <string name="deck_conf_cram_search">Hledat</string>
     <string name="deck_conf_cram_limit">Omezit na</string>
     <string name="deck_conf_cram_order">vybrané karty</string>
-    <string name="deck_conf_cram_reschedule">Změnit plán</string>
+    <string name="deck_conf_cram_reschedule">Přeplánovat</string>
     <string name="deck_conf_cram_reschedule_summ">Přeplánovat karty podle mých odpovědí v tomto balíčku</string>
     <string name="deck_conf_cram_steps">Vlastní kroky (v minutách)</string>
     <string name="deck_conf_cram_steps_summ">Definovat vlastní kroky</string>

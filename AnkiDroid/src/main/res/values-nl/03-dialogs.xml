@@ -74,6 +74,7 @@
         <item quantity="one">%d kaart gereset</item>
         <item quantity="other">%d kaarten gereset</item>
     </plurals>
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">Kaart herplannen</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Kaart herplannen</item>
@@ -88,6 +89,8 @@
         <item quantity="one">%d kaart opnieuw ingepland</item>
         <item quantity="other">%d kaarten opnieuw ingepland</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Selecteer de set in uw bestandsmanager of ga naar de pagina over:downloads om het te importeren.</string>
     <string name="answering_error_title">Fout in database</string>
     <string name="answering_error_message">Het schrijven naar de collectie is mislukt. De database kan corrupt zijn of er is onvoldoende opslagruimte op de schijf.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn. Gelieve de fout te melden zodat we dit kunnen controleren.</string>

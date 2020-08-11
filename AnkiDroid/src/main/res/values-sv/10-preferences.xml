@@ -123,6 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Automatisk synkronering</string>
     <string name="automatic_sync_choice_summ">Synka automatiskt på app start/avstängning om den senaste synkningen var mer än 10        minuter sedan.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">Dags-tema</string>
     <string name="night_theme">Natt-tema</string>
     <string name="default_font">Standardteckensnitt</string>

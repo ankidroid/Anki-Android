@@ -186,7 +186,7 @@
     <string name="card_template_editor_styling">Stile</string>
     <string name="card_template_editor_menu_delete">Elimina</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aspetto del browser delle carte</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">Sovrascrittura Mazzo</string>
     <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Eliminare il tipo di carta \'%2$s\', e la sua carta %1$d?</item>
@@ -201,6 +201,8 @@
     <!-- Permissions -->
     <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
     <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>
+    <!-- Context Menu -->
     <string name="card_browser_label">Browser delle carte</string>
     <string name="card_browser_context_menu">Browser delle carte</string>
+    <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

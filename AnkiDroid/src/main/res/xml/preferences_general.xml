@@ -44,6 +44,11 @@
             android:key="automaticSyncMode"
             android:summary="@string/automatic_sync_choice_summ"
             android:title="@string/automatic_sync_choice" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="showSyncStatusBadge"
+            android:summary="@string/sync_status_badge_summ"
+            android:title="@string/sync_status_badge" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_general">
         <ListPreference

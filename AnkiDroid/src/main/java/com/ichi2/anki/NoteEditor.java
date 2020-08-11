@@ -74,6 +74,7 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskListener;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -106,6 +107,9 @@ import java.util.Map.Entry;
 
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
+import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
+
 import com.ichi2.async.TaskData;
 
 /**
@@ -212,7 +216,7 @@ public class NoteEditor extends AnkiActivity {
     // restoring the Activity.
     private Bundle mSavedFields;
 
-    private CollectionTask.TaskListener mSaveNoteHandler = new CollectionTask.TaskListener() {
+    private TaskListener mSaveNoteHandler = new TaskListener() {
         private boolean mCloseAfter = false;
         private Intent mIntent;
 
@@ -364,7 +368,7 @@ public class NoteEditor extends AnkiActivity {
             mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
             if (mCaller == CALLER_NOCALLER) {
                 String action = intent.getAction();
-                if ((ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND.equals(action))) {
+                if ((ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND.equals(action) || ACTION_PROCESS_TEXT.equals(action))) {
                     mCaller = CALLER_CARDEDITOR_INTENT_ADD;
                 }
             }
@@ -385,12 +389,15 @@ public class NoteEditor extends AnkiActivity {
             mSelectedTags = new ArrayList<>();
         }
         savedInstanceState.putStringArrayList("tags", mSelectedTags);
-        savedInstanceState.putBundle("editFields", getFieldsAsBundle());
+        savedInstanceState.putBundle("editFields", getFieldsAsBundle(false));
         super.onSaveInstanceState(savedInstanceState);
     }
 
 
-    private Bundle getFieldsAsBundle() {
+    /**
+     * @param useHtmlLineBreaks Whether field values should be converted to use HTML linebreaks
+     */
+    private Bundle getFieldsAsBundle(boolean useHtmlLineBreaks) {
         Bundle fields = new Bundle();
         // Save the content of all the note fields. We use the field's ord as the key to
         // easily map the fields correctly later.
@@ -402,7 +409,14 @@ public class NoteEditor extends AnkiActivity {
             if (e == null || e.getText() == null) {
                 continue;
             }
-            fields.putString(Integer.toString(e.getOrd()), e.getText().toString());
+
+            String fieldValue;
+            if (useHtmlLineBreaks) {
+                fieldValue = convertToHtmlNewline(e.getText().toString());
+            } else {
+                fieldValue = e.getText().toString();
+            }
+            fields.putString(Integer.toString(e.getOrd()), fieldValue);
         }
         return fields;
     }
@@ -687,10 +701,16 @@ public class NoteEditor extends AnkiActivity {
         if (extras == null) {
             return;
         }
-        if (ACTION_CREATE_FLASHCARD.equals(intent.getAction())) {
+        mSourceText = new String[2];
+
+        if (ACTION_PROCESS_TEXT.equals(intent.getAction())) {
+            String stringExtra = intent.getStringExtra(EXTRA_PROCESS_TEXT);
+            Timber.d("Obtained %s from intent: %s", stringExtra, EXTRA_PROCESS_TEXT);
+            mSourceText[0] = stringExtra != null ? stringExtra : "";
+            mSourceText[1] = "";
+        } else if (ACTION_CREATE_FLASHCARD.equals(intent.getAction())) {
             // mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
             // mTargetLanguage = extras.getString(TARGET_LANGUAGE);
-            mSourceText = new String[2];
             mSourceText[0] = extras.getString(SOURCE_TEXT);
             mSourceText[1] = extras.getString(TARGET_TEXT);
         } else {
@@ -714,7 +734,6 @@ public class NoteEditor extends AnkiActivity {
             }
             Pair<String, String> messages = new Pair<>(first, second);
 
-            mSourceText = new String[2];
             mSourceText[0] = messages.first;
             mSourceText[1] = messages.second;
         }
@@ -972,6 +991,7 @@ public class NoteEditor extends AnkiActivity {
                 // Send the previewer all our current editing information
                 Bundle noteEditorBundle = new Bundle();
                 onSaveInstanceState(noteEditorBundle);
+                noteEditorBundle.putBundle("editFields", getFieldsAsBundle(true));
                 previewer.putExtra("noteEditorBundle", noteEditorBundle);
                 startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
                 return true;
@@ -1614,12 +1634,17 @@ public class NoteEditor extends AnkiActivity {
         if (fieldText != null) {
             currentValue = fieldText.toString();
         }
-        String newValue = currentValue.replace(FieldEditText.NEW_LINE, "<br>");
+        String newValue = convertToHtmlNewline(currentValue);
         if (!mEditorNote.values()[field.getOrd()].equals(newValue)) {
             mEditorNote.values()[field.getOrd()] = newValue;
             return true;
         }
         return false;
+    }
+
+
+    private String convertToHtmlNewline(@NonNull String fieldData) {
+        return fieldData.replace(FieldEditText.NEW_LINE, "<br>");
     }
 
 

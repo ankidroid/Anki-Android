@@ -123,6 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">همگام سازی خودکار</string>
     <string name="automatic_sync_choice_summ">همگام سازی خودکار موقع ورود و خروج از برنامه اگر از آخرین همگام سازی بیشتر از 10 دقیقه گذشته باشد.</string>
+    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="day_theme">پس زمینه روز</string>
     <string name="night_theme">پس زمینه شب</string>
     <string name="default_font">قلم پیش فرض</string>

@@ -92,7 +92,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         ANSWER_CARD,
         ADD_NOTE,
         UPDATE_NOTE,
-        UPDATE_NOTES_MULTI,
         UNDO,
         DISMISS,
         DISMISS_MULTI,
@@ -114,8 +113,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         CONF_SET_SUBDECKS,
         RENDER_BROWSER_QA,
         CHECK_MEDIA,
-        ADD_TEMPLATE,
-        REMOVE_TEMPLATE,
         COUNT_MODELS,
         DELETE_MODEL,
         DELETE_FIELD,
@@ -135,7 +132,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     /**
      * Tasks which are running or waiting to run.
      * */
-    private static List<CollectionTask> sTasks = Collections.synchronizedList(new LinkedList<>());
+    private static final List<CollectionTask> sTasks = Collections.synchronizedList(new LinkedList<>());
 
 
     /**
@@ -247,7 +244,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 return cancel(true);
             }
         } catch (Exception e) {
-            // Potentially catching SecurityEcexption, from
+            // Potentially catching SecurityException, from
             // Thread.interrupt from FutureTask.cancel from
             // AsyncTask.cancel
             Timber.w(e, "Exception cancelling task");
@@ -275,14 +272,13 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     /** Cancel all tasks of type taskType*/
     public static void cancelAllTasks(TASK_TYPE taskType) {
         int count = 0;
-        synchronized (sTasks) {
-            for (CollectionTask task: sTasks) {
-                if (task.mType != taskType) {
-                    continue;
-                }
-                if (task.safeCancel()) {
-                    count ++;
-                }
+        // safeCancel modifies sTasks, so iterate over a concrete copy
+        for (CollectionTask task: new ArrayList<>(sTasks)) {
+            if (task.mType != taskType) {
+                continue;
+            }
+            if (task.safeCancel()) {
+                count++;
             }
         }
         if (count > 0) {
@@ -360,9 +356,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             case UPDATE_NOTE:
                 return doInBackgroundUpdateNote(param);
 
-            case UPDATE_NOTES_MULTI:
-                return doInBackgroundUpdateNotes(param);
-
             case UNDO:
                 return doInBackgroundUndo();
 
@@ -423,12 +416,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case CHECK_MEDIA:
                 return doInBackgroundCheckMedia();
-
-            case ADD_TEMPLATE:
-                return doInBackgroundAddTemplate(param);
-
-            case REMOVE_TEMPLATE:
-                return doInBackgroundRemoveTemplate(param);
 
             case COUNT_MODELS:
                 return doInBackgroundCountModels();
@@ -559,38 +546,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 } else {
                     publishProgress(new TaskData(editCard, editNote.stringTags()));
                 }
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                col.getDb().getDatabase().endTransaction();
-            }
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
-            return new TaskData(false);
-        }
-        return new TaskData(true);
-    }
-
-    // same as doInBackgroundUpdateNote but for multiple notes
-    private TaskData doInBackgroundUpdateNotes(TaskData param) {
-        Timber.d("doInBackgroundUpdateNotes");
-        // Save the note
-        Collection col = getCol();
-        Object[] data = param.getObjArray();
-        Card[] cards = (Card[]) data[0];
-
-        try {
-            col.getDb().getDatabase().beginTransaction();
-            try {
-                for (Card card : cards) {
-                    Note note = card.note();
-                    // TODO: undo integration
-                    note.flush();
-                    // flush card too, in case, did has been changed
-                    card.flush();
-                    publishProgress(new TaskData(card, note.stringTags()));
-                }
-
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
                 col.getDb().getDatabase().endTransaction();
@@ -1355,7 +1310,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             boolean reset = (Boolean) obj[0];
             if (reset) {
                 // reset actually required because of counts, which is used in getCollectionTaskListener
-                sched.reset();
+                sched.resetCounts();
             }
             int[] counts = sched.counts();
             int totalNewCount = sched.totalNewForCurrentDeck();
@@ -1374,6 +1329,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         long did = param.getLong();
         col.getDecks().rem(did, true);
+        // TODO: if we had "undo delete note" like desktop client then we won't need this.
+        getCol().clearUndo();
     }
 
 
@@ -1688,45 +1645,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
     /**
-     * Add a new card template
-     */
-    private TaskData doInBackgroundAddTemplate(TaskData param) {
-        // mod should have been changed by addNewTemplateWithCheck in
-        // main/java/com/ichi2/anki/CardTemplateEditor
-        Timber.d("doInBackgroundAddTemplate");
-        Collection col = getCol();
-        Object [] args = param.getObjArray();
-        Model model = (Model) args[0];
-        JSONObject template = (JSONObject) args[1];
-        // add the new template
-        col.getModels().addTemplateModChanged(model, template);
-        col.save();
-        return new TaskData(true);
-    }
-
-    /**
-     * Remove a card template. Note: it's necessary to call save model after this to re-generate the cards
-     */
-    private TaskData doInBackgroundRemoveTemplate(TaskData param) {
-        Timber.d("doInBackgroundRemoveTemplate");
-        Collection col = getCol();
-        Object [] args = param.getObjArray();
-        Model model = (Model) args[0];
-        JSONObject template = (JSONObject) args[1];
-        try {
-            boolean success = col.getModels().remTemplate(model, template);
-            if (! success) {
-                return new TaskData("removeTemplateFailed", false);
-            }
-            col.save();
-        } catch (ConfirmModSchemaException e) {
-            Timber.e("doInBackgroundRemoveTemplate :: ConfirmModSchemaException");
-            return new TaskData(false);
-        }
-        return new TaskData(true);
-    }
-
-    /**
      * Handles everything for a model change at once - template add / deletes as well as content updates
      */
     private TaskData doInBackgroundSaveModel(TaskData param) {
@@ -1964,40 +1882,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
-    /**
-     * Listener for the status and result of a {@link CollectionTask}.
-     * <p>
-     * Its methods are guaranteed to be invoked on the main thread.
-     * <p>
-     * Their semantics is equivalent to the methods of {@link AsyncTask}.
-     */
-    public static abstract class TaskListener {
-
-        /** Invoked before the task is started. */
-        public abstract void onPreExecute();
-
-
-        /**
-         * Invoked after the task has completed.
-         * <p>
-         * The semantics of the result depends on the task itself.
-         */
-        public abstract void onPostExecute(TaskData result);
-
-
-        /**
-         * Invoked when the background task publishes an update.
-         * <p>
-         * The semantics of the update data depends on the task itself.
-         */
-        public void onProgressUpdate(TaskData value) {
-            // most implementations do nothing with this, provide them a default implementation
-        }
-
-        public void onCancelled() {
-            // most implementations do nothing with this, provide them a default implementation
-        }
-    }
 
     /**
      * Helper class for allowing inner function to publish progress of an AsyncTask.

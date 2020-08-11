@@ -29,7 +29,8 @@ public enum SyncStatus {
     NO_ACCOUNT,
     NO_CHANGES,
     HAS_CHANGES,
-    FULL_SYNC;
+    FULL_SYNC,
+    BADGE_DISABLED;
 
     private static boolean sPauseCheckingDatabase = false;
     private static boolean sMarkedInMemory = false;
@@ -50,6 +51,10 @@ public enum SyncStatus {
 
     @NonNull
     public static SyncStatus getSyncStatus(@NonNull Collection col) {
+        if (isDisabled()) {
+            return SyncStatus.BADGE_DISABLED;
+        }
+
         if (!isLoggedIn()) {
             return SyncStatus.NO_ACCOUNT;
         }
@@ -63,6 +68,12 @@ public enum SyncStatus {
         } else {
             return SyncStatus.NO_CHANGES;
         }
+    }
+
+
+    private static boolean isDisabled() {
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        return !preferences.getBoolean("showSyncStatusBadge", true);
     }
 
 

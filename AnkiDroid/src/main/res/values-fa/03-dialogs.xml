@@ -74,6 +74,7 @@
         <item quantity="one">%d کارت تنظیم مجدد شد</item>
         <item quantity="other">%d کارت تنظیم مجدد شدند</item>
     </plurals>
+    <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">زمانبندی دوباره کارت</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">زمانبندی مجدد کارت</item>
@@ -88,6 +89,8 @@
         <item quantity="one">%d کارت زمان‌بندی مجدد شد</item>
         <item quantity="other">%d کارت زمان‌بندی مجدد شدند</item>
     </plurals>
+    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">دسته را در نرم افزار مدیریت فایل خود انتخاب کنید یا برای وارد کردن آن به صفحۀ about:downloads مراجعه کنید</string>
     <string name="answering_error_title">خطای پایگاه داده</string>
     <string name="answering_error_message">ذخیرۀ مجموعه انجام نشد. دیتابیس ممکن است خراب باشد یا ممکن است فضای کافی نداشته باشید.\n\nاگر این اتفاق غالباً رخ می‌دهد، بررسی دیتابیس، تعمیر مجموعه یا بازنشانی مجموعه از یک فایل پشتیبان قبلی را برای حل کردن مشکل امتحان کنید. برای این کار به \"گزینه‌ها\" مراجعه کنید.\nاین خطا همچنین ممکن است به دلیل مشکل در آنکی‌دروید باشد؛ اگر هیچ یک از موارد بالا مشکل شما را حل نکرد، لطفاً خطا را به ما گزارش دهید تا ما بتوانیم به بررسی آن بپردازیم.</string>

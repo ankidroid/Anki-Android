@@ -25,6 +25,7 @@ import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskData;
+import com.ichi2.async.TaskListener;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
@@ -37,8 +38,12 @@ import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.AssumptionViolatedException;
 import org.junit.Before;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
@@ -268,7 +273,7 @@ public class RobolectricTest {
 
     protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
-        CollectionTask.TaskListener listener = new CollectionTask.TaskListener() {
+        TaskListener listener = new TaskListener() {
             @Override
             public void onPreExecute() {
 
@@ -290,5 +295,62 @@ public class RobolectricTest {
         if (!completed[0]) {
             throw new IllegalStateException(String.format("Task %s didn't finish in %d ms", taskType, timeoutMs));
         }
+    }
+    /**
+     * Call to assume that <code>actual</code> satisfies the condition specified by <code>matcher</code>.
+     * If not, the test halts and is ignored.
+     * Example:
+     * <pre>:
+     *   assumeThat(1, is(1)); // passes
+     *   foo(); // will execute
+     *   assumeThat(0, is(1)); // assumption failure! test halts
+     *   int x = 1 / 0; // will never execute
+     * </pre>
+     *
+     * @param <T> the static type accepted by the matcher (this can flag obvious compile-time problems such as {@code assumeThat(1, is("a"))}
+     * @param actual the computed value being compared
+     * @param matcher an expression, built of {@link Matcher}s, specifying allowed values
+     * @see org.hamcrest.CoreMatchers
+     * @see org.junit.matchers.JUnitMatchers
+     */
+    public <T> void assumeThat(T actual, Matcher<T> matcher) {
+        this.advanceRobolectricLooper();
+        Assume.assumeThat(actual, matcher);
+    }
+
+    /**
+     * Call to assume that <code>actual</code> satisfies the condition specified by <code>matcher</code>.
+     * If not, the test halts and is ignored.
+     * Example:
+     * <pre>:
+     *   assumeThat("alwaysPasses", 1, is(1)); // passes
+     *   foo(); // will execute
+     *   assumeThat("alwaysFails", 0, is(1)); // assumption failure! test halts
+     *   int x = 1 / 0; // will never execute
+     * </pre>
+     *
+     * @param <T> the static type accepted by the matcher (this can flag obvious compile-time problems such as {@code assumeThat(1, is("a"))}
+     * @param actual the computed value being compared
+     * @param matcher an expression, built of {@link Matcher}s, specifying allowed values
+     * @see org.hamcrest.CoreMatchers
+     * @see org.junit.matchers.JUnitMatchers
+     */
+    public <T> void assumeThat(String message, T actual, Matcher<T> matcher) {
+        this.advanceRobolectricLooper();
+        Assume.assumeThat(message, actual, matcher);
+    }
+
+
+
+    /**
+     * If called with an expression evaluating to {@code false}, the test will halt and be ignored.
+     *
+     * @param b If <code>false</code>, the method will attempt to stop the test and ignore it by
+     * throwing {@link AssumptionViolatedException}.
+     * @param message A message to pass to {@link AssumptionViolatedException}.
+     */
+    public void assumeTrue(String message, boolean b) {
+        this.advanceRobolectricLooper();
+        Assume.assumeTrue(message, b);
     }
 }

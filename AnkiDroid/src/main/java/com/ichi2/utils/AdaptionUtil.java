@@ -17,6 +17,7 @@
 package com.ichi2.utils;
 
 import android.app.ActivityManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -25,6 +26,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
+
+import com.ichi2.anki.AnkiDroidApp;
 
 import java.util.List;
 
@@ -44,10 +48,36 @@ public class AdaptionUtil {
         return sHasWebBrowser;
     }
 
+    public static boolean isUserATestClient() {
+        try {
+            return
+                    ActivityManager.isUserAMonkey() ||
+                            isRunningUnderFirebaseTestLab();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    public static boolean isRunningUnderFirebaseTestLab() {
+        try {
+            return isRunningUnderFirebaseTestLab(AnkiDroidApp.getInstance().getContentResolver());
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    private static boolean isRunningUnderFirebaseTestLab(ContentResolver contentResolver) {
+        // https://firebase.google.com/docs/test-lab/android/android-studio#modify_instrumented_test_behavior_for
+        String testLabSetting = Settings.System.getString(contentResolver, "firebase.test.lab");
+        return "true".equals(testLabSetting);
+    }
+
 
     private static boolean checkHasWebBrowser(Context context) {
         // The test monkey often gets stuck on the Shared Decks WebView, ignore it as it shouldn't crash.
-        if (ActivityManager.isUserAMonkey()) {
+        if (isUserATestClient()) {
             return false;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
