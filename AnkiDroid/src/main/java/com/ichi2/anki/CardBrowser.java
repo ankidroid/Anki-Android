@@ -1768,8 +1768,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 title = R.string.card_browser_unsuspend_card;
                 icon = R.drawable.ic_action_unsuspend;
             }
-            mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(title));
-            mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(icon);
+            MenuItem suspend_item = mActionBarMenu.findItem(R.id.action_suspend_card);
+            suspend_item.setTitle(getString(title));
+            suspend_item.setIcon(icon);
 
             if (hasUnmarked) {
                 title = R.string.card_browser_mark_card;
@@ -1778,8 +1779,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 title = R.string.card_browser_unmark_card;
                 icon = R.drawable.ic_star_white_24dp;
             }
-            mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(title));
-            mActionBarMenu.findItem(R.id.action_mark_card).setIcon(icon);
+            MenuItem mark_item = mActionBarMenu.findItem(R.id.action_mark_card);
+            mark_item.setTitle(getString(title));
+            mark_item.setIcon(icon);
         }
 
 
