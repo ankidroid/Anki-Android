@@ -319,4 +319,8 @@
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+
+    <!-- Reviewing - Confirm Navigation -->
+    <string name="pref_js_confirm_nav_summ">Auto confirm navigation while reviewing</string>
+    <string name="pref_js_confirm_nav_title">Confirm Navigation</string>
 </resources>

@@ -123,6 +123,11 @@
                 android:title="@string/advanced_statistics_title"/>
             <CheckBoxPreference
                 android:defaultValue="false"
+                android:key="jsConfirmNavigation"
+                android:summary="@string/pref_js_confirm_nav_summ"
+                android:title="@string/pref_js_confirm_nav_title"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
                 android:key="html_javascript_debugging"
                 android:summary="@string/html_javascript_debugging_summ"
                 android:title="@string/html_javascript_debugging"/>

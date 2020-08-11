@@ -240,6 +240,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
 
+    // Confirm Navigation JS popup
+    private static boolean mPrefConfirmNav;
+
     protected boolean mOptUseGeneralTimerSettings;
 
     protected boolean mUseTimer;
@@ -1736,6 +1739,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
+        //confirm navigation popup in webview
+        mPrefConfirmNav = preferences.getBoolean("jsConfirmNavigation", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
@@ -2694,6 +2699,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.i("AbstractFlashcardViewer:: onJsAlert: %s", message);
             result.confirm();
             return true;
+        }
+
+        @Override
+        public boolean onJsBeforeUnload (WebView view, String url, String message, JsResult result) {
+            if (mPrefConfirmNav) {
+                result.confirm();
+                return true;
+            }
+            return false;
         }
     }
 
