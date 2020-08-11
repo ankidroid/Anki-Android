@@ -1759,21 +1759,27 @@ public class CardBrowser extends NavigationDrawerActivity implements
             boolean hasUnsuspended = (boolean) resultArr[0];
             boolean hasUnmarked = (boolean) resultArr[1];
 
+            int title;
+            int icon;
             if (hasUnsuspended) {
-                mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_suspend_card));
-                mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(R.drawable.ic_action_suspend);
+                title = R.string.card_browser_suspend_card;
+                icon = R.drawable.ic_action_suspend;
             } else {
-                mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(R.string.card_browser_unsuspend_card));
-                mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(R.drawable.ic_action_unsuspend);
+                title = R.string.card_browser_unsuspend_card;
+                icon = R.drawable.ic_action_unsuspend;
             }
+            mActionBarMenu.findItem(R.id.action_suspend_card).setTitle(getString(title));
+            mActionBarMenu.findItem(R.id.action_suspend_card).setIcon(icon);
 
             if (hasUnmarked) {
-                mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_mark_card));
-                mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_outline_white_24dp);
+                title = R.string.card_browser_mark_card;
+                icon = R.drawable.ic_star_outline_white_24dp;
             } else {
-                mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(R.string.card_browser_unmark_card));
-                mActionBarMenu.findItem(R.id.action_mark_card).setIcon(R.drawable.ic_star_white_24dp);
+                title = R.string.card_browser_unmark_card;
+                icon = R.drawable.ic_star_white_24dp;
             }
+            mActionBarMenu.findItem(R.id.action_mark_card).setTitle(getString(title));
+            mActionBarMenu.findItem(R.id.action_mark_card).setIcon(icon);
         }
 
 
