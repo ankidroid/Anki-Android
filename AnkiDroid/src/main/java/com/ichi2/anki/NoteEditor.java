@@ -841,6 +841,7 @@ public class NoteEditor extends AnkiActivity {
             getCol().getModels().current().put("tags", ja);
             getCol().getModels().setChanged();
             CollectionTask.launchCollectionTask(ADD_NOTE, mSaveNoteHandler, new TaskData(mEditorNote));
+            mReloadRequired = true;
         } else {
             // Check whether note type has been changed
             final Model newModel = getCurrentlySelectedModel();
