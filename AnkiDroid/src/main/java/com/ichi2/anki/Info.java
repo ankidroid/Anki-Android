@@ -177,9 +177,17 @@ public class Info extends AnkiActivity {
      * @return debugInfo
      */
     public String copyDebugInfo() {
+        String schedName = "Not found";
+        try {
+            schedName = getCol().getSched().getName();
+        } catch (Throwable e) {
+            Timber.e(e, "Sched name not found");
+        }
+
         String debugInfo = "AnkiDroid Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
                 "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
-                "ACRA UUID = " + Installation.id(this) + "\n";
+                "ACRA UUID = " + Installation.id(this) + "\n\n" +
+                "Scheduler = " + schedName + "\n";
 
         android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboardManager != null) {
