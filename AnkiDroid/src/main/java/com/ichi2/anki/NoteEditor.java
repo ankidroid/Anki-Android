@@ -164,6 +164,7 @@ public class NoteEditor extends AnkiActivity {
     public static final int REQUEST_TEMPLATE_EDIT = 3;
     public static final int REQUEST_PREVIEW = 4;
 
+    /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved.*/
     private boolean mChanged = false;
     private boolean mTagsEdited = false;
     private boolean mFieldEdited = false;
