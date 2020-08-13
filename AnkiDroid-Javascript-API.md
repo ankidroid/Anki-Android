@@ -648,3 +648,4 @@ The implementation of above functionality can be found in this github repo.
 <br>[#6387 Show options menu & navigation drawer using WebView](https://github.com/ankidroid/Anki-Android/pull/6387)
 <br>[#6567 Night mode status in Card](https://github.com/ankidroid/Anki-Android/pull/6567)
 <br>[#6470 Get value of fullscreen status in JavaScript](https://github.com/ankidroid/Anki-Android/pull/6470)²
+<br>[#6886 Automatically flip card if there is no cloze hint + detect ankidroid](https://github.com/ankidroid/Anki-Android/issues/6886)
