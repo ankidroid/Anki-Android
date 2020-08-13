@@ -59,11 +59,7 @@ public class DeckDueTreeNode implements Comparable {
         // If we made it this far then the arrays are of different length. The longer one should
         // always come after since it contains all of the sections of the shorter one inside it
         // (i.e., the short one is an ancestor of the longer one).
-        if (rhs.getDepth() > getDepth()) {
-            return -1;
-        } else {
-            return 1;
-        }
+        return Integer.compare(getDepth(), rhs.getDepth());
     }
 
     @Override
