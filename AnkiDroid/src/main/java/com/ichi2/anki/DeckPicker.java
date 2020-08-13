@@ -2182,7 +2182,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Get some info about the deck to handle special cases
         int pos = mDeckListAdapter.findDeckPosition(did);
         AbstractDeckTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
-        if (!deckDueTreeNode.shouldDisplayCounts()) {
+        if (!deckDueTreeNode.shouldDisplayCounts() || deckDueTreeNode.knownToHaveRep()) {
             // If we don't yet have numbers, we trust the user that they knows what they opens, tries to open it.
             // If there is nothing to review, it'll come back to deck picker.
             openReviewerOrStudyOptions(dontSkipStudyOptions);
@@ -2190,11 +2190,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         // There are numbers
         // Figure out what action to take
-        if (deckDueTreeNode.getNewCount() + deckDueTreeNode.getLrnCount() + deckDueTreeNode.getRevCount() > 0) {
-            // If there are cards to study then either go to Reviewer or StudyOptions
-            openReviewerOrStudyOptions(dontSkipStudyOptions);
-            return;
-        }
         if (getCol().getSched().hasCardsTodayAfterStudyAheadLimit()) {
             // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
             openStudyOptions(false);
