@@ -152,6 +152,14 @@ With some JavaScript it's possible to draw shapes on the front card and display 
 
 A third party AnkiDroid user made his code open source: you can get it, along with an example deck on [anki-canvas' project page](https://github.com/pigoz/anki-canvas)
 
+### Detect if card is running under AnkiDroid (JS)
+
+```javascript
+document.documentElement.classList.contains("android"); //AnkiDroid
+```
+
+See: https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/assets/card_template.html#L2 or 
+
 
 ### Designing custom cards layout for buttons
 See [AnkiDroid Javascript API](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-Javascript-API)
