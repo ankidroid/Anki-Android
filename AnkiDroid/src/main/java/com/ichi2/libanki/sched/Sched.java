@@ -299,34 +299,34 @@ public class Sched extends SchedV2 {
     }
 
 
-    protected List<? extends Card.Cache>[] _fillNextCard() {
+    protected CardQueue<? extends Card.Cache>[] _fillNextCard() {
         // learning card due?
         if (_fillLrn()) {
-            return new List[]{mLrnQueue};
+            return new CardQueue[]{mLrnQueue};
         }
         // new first, or time for one?
         if (_timeForNewCard()) {
             if (_fillNew()) {
-                return new List[]{mLrnQueue, mNewQueue};
+                return new CardQueue[]{mLrnQueue, mNewQueue};
             }
         }
         // Card due for review?
         if (_fillRev()) {
-            return new List[]{mLrnQueue, mRevQueue};
+            return new CardQueue[]{mLrnQueue, mRevQueue};
         }
         // day learning card due?
         if (_fillLrnDay()) {
-            return new List[]{mLrnQueue, mLrnDayQueue};
+            return new CardQueue[]{mLrnQueue, mLrnDayQueue};
         }
         // New cards left?
         if (_fillNew()) {
-            return new List[]{mLrnQueue, mNewQueue};
+            return new CardQueue[]{mLrnQueue, mNewQueue};
         }
         // collapse or finish
         if (_preloadLrnCard(true)) {
-            return new List[]{mLrnQueue};
+            return new CardQueue[]{mLrnQueue};
         }
-        return new List[]{};
+        return new CardQueue[]{};
     }
     /**
      * New cards **************************************************************** *******************************
@@ -415,7 +415,7 @@ public class Sched extends SchedV2 {
                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
                            new Object[]{mDayCutoff, currentCardId(), mReportLimit});
             while (cur.moveToNext()) {
-                mLrnQueue.add(new LrnCard(cur.getLong(0), cur.getLong(1) ));
+                mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
             // as it arrives sorted by did first, we need to sort it
             Collections.sort(mLrnQueue);
@@ -442,7 +442,7 @@ public class Sched extends SchedV2 {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
             if (mLrnQueue.getFirst().getDue() < cutoff) {
-                return mLrnQueue.remove().getCard();
+                return mLrnQueue.removeFirstCard();
                 // mLrnCount -= card.getLeft() / 1000; See decrementCount()
             }
         }
@@ -778,7 +778,7 @@ public class Sched extends SchedV2 {
                                             + " AND " + idName + " != ? LIMIT ?",
                                     new Object[]{did, mToday, id, lim});
                     while (cur.moveToNext()) {
-                        mRevQueue.add(mCol.getCardCache(cur.getLong(0)));
+                        mRevQueue.add(cur.getLong(0));
                     }
                 } finally {
                     if (cur != null && !cur.isClosed()) {

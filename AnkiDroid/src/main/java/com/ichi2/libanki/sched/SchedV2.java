@@ -61,6 +61,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 import androidx.annotation.NonNull;
@@ -105,7 +106,7 @@ public class SchedV2 extends AbstractSched {
     private double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
     // Queues
-    protected final LinkedList<Card.Cache> mNewQueue = new LinkedList<>();
+    protected final SimpleCardQueue mNewQueue = new SimpleCardQueue();
     protected class LrnCard extends Card.Cache implements Comparable<LrnCard> {
         private final long mDue;
         public LrnCard(long due, long cid) {
@@ -122,9 +123,38 @@ public class SchedV2 extends AbstractSched {
             return Long.compare(mDue, o.mDue);
         }
     }
-    protected final LinkedList<LrnCard> mLrnQueue = new LinkedList<>();
-    protected final LinkedList<Card.Cache> mLrnDayQueue = new LinkedList<>();
-    protected final LinkedList<Card.Cache> mRevQueue = new LinkedList<>();
+
+    protected abstract class CardQueue<T extends Card.Cache> extends LinkedList<T> {
+        public void loadFirstCard() {
+            if (!isEmpty()) {
+                // No nead to reload. If the card was changed, reset would have been called and emptied the queue
+                get(0).loadQA(false, false);
+            }
+        }
+
+        public Card removeFirstCard() throws NoSuchElementException {
+            return remove().getCard();
+        }
+
+        public boolean remove(long cid) {
+            // CardCache and LrnCache with the same id will be considered as equal so it's a valid implementation.
+            return remove(new Card.Cache(mCol, cid));
+        }
+    }
+
+    protected class SimpleCardQueue extends CardQueue<Card.Cache> {
+        public void add(long id) {
+            add(new Card.Cache(mCol, id));
+        }
+    }
+    protected class LrnCardQueue extends CardQueue<LrnCard> {
+        public void add(long due, long cid) {
+            add(new LrnCard(due, cid));
+        }
+    }
+    protected final LrnCardQueue mLrnQueue = new LrnCardQueue();
+    protected final SimpleCardQueue mLrnDayQueue = new SimpleCardQueue();
+    protected final SimpleCardQueue mRevQueue = new SimpleCardQueue();
 
     private LinkedList<Long> mNewDids = new LinkedList<>();
     protected LinkedList<Long> mLrnDids = new LinkedList<>();
@@ -674,53 +704,50 @@ public class SchedV2 extends AbstractSched {
     /** similar to _getCard but only fill the queues without taking the card.
      * Returns lists that may contain the next cards.
      */
-    protected List<? extends Card.Cache>[] _fillNextCard() {
+    protected CardQueue<? extends Card.Cache>[] _fillNextCard() {
         // learning card due?
         if (_preloadLrnCard(false)) {
-            return new List[]{mLrnQueue};
+            return new CardQueue[]{mLrnQueue};
         }
         // new first, or time for one?
         if (_timeForNewCard()) {
             if (_fillNew()) {
-                return new List[]{mLrnQueue, mNewQueue};
+                return new CardQueue[]{mLrnQueue, mNewQueue};
             }
         }
         // Day learning first and card due?
         boolean dayLearnFirst = mCol.getConf().optBoolean("dayLearnFirst", false);
         if (dayLearnFirst) {
             if (_fillLrnDay()) {
-                return new List[]{mLrnQueue, mLrnDayQueue};
+                return new CardQueue[]{mLrnQueue, mLrnDayQueue};
             }
         }
         // Card due for review?
         if (_fillRev()) {
-            return new List[]{mLrnQueue, mRevQueue};
+            return new CardQueue[]{mLrnQueue, mRevQueue};
         }
         // day learning card due?
         if (!dayLearnFirst) {
             if (_fillLrnDay()) {
-                return new List[]{mLrnQueue, mLrnDayQueue};
+                return new CardQueue[]{mLrnQueue, mLrnDayQueue};
             }
         }
         // New cards left?
         if (_fillNew()) {
-            return new List[]{mLrnQueue, mNewQueue};
+            return new CardQueue[]{mLrnQueue, mNewQueue};
         }
         // collapse or finish
         if (_preloadLrnCard(true)) {
-            return new List[]{mLrnQueue};
+            return new CardQueue[]{mLrnQueue};
         }
-        return new List[]{};
+        return new CardQueue[]{};
     }
 
     /** pre load the potential next card. It may loads many card because, depending on the time taken, the next card may
      * be a card in review or not. */
     public void preloadNextCard() {
-        for (List<? extends Card.Cache> caches: _fillNextCard()) {
-            if (!caches.isEmpty()) {
-                // No nead to reload. If the card was changed, reset would have been called and emptied the queue
-                caches.get(0).loadQA(false, false);
-            }
+        for (CardQueue<? extends Card.Cache> caches: _fillNextCard()) {
+            caches.loadFirstCard();
         }
     }
 
@@ -826,7 +853,7 @@ public class SchedV2 extends AbstractSched {
                     long id = (allowSibling) ? currentCardId(): currentCardNid();
                     cur = mCol.getDb().query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?", did, id, lim);
                     while (cur.moveToNext()) {
-                        mNewQueue.add(mCol.getCardCache(cur.getLong(0)));
+                        mNewQueue.add(cur.getLong(0));
                     }
                 } finally {
                     if (cur != null && !cur.isClosed()) {
@@ -854,7 +881,7 @@ public class SchedV2 extends AbstractSched {
     protected Card _getNewCard() {
         if (_fillNew()) {
             // mNewCount -= 1; see decrementCounts()
-            return mNewQueue.remove().getCard();
+            return mNewQueue.removeFirstCard();
         }
         return null;
     }
@@ -1038,7 +1065,7 @@ public class SchedV2 extends AbstractSched {
                             "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ?"
                             + " AND id != ? LIMIT ?", cutoff, currentCardId(), mReportLimit);
             while (cur.moveToNext()) {
-                mLrnQueue.add(new LrnCard(cur.getLong(0), cur.getLong(1)));
+                mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
             // as it arrives sorted by did first, we need to sort it
             Collections.sort(mLrnQueue);
@@ -1064,7 +1091,7 @@ public class SchedV2 extends AbstractSched {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
             if (mLrnQueue.getFirst().getDue() < cutoff) {
-                return mLrnQueue.remove().getCard();
+                return mLrnQueue.removeFirstCard();
                 // mLrnCount -= 1; see decrementCounts()
             }
         }
@@ -1116,7 +1143,7 @@ public class SchedV2 extends AbstractSched {
                                 "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? and id != ? LIMIT ?",
                                 did, mToday, currentCardId(), mQueueLimit);
                 while (cur.moveToNext()) {
-                    mLrnDayQueue.add(mCol.getCardCache(cur.getLong(0)));
+                    mLrnDayQueue.add(cur.getLong(0));
                 }
             } finally {
                 if (cur != null && !cur.isClosed()) {
@@ -1144,7 +1171,7 @@ public class SchedV2 extends AbstractSched {
     protected Card _getLrnDayCard() {
         if (_fillLrnDay()) {
             // mLrnCount -= 1; see decrementCounts()
-            return mLrnDayQueue.remove().getCard();
+            return mLrnDayQueue.removeFirstCard();
         }
         return null;
     }
@@ -1584,7 +1611,7 @@ public class SchedV2 extends AbstractSched {
                                + " ORDER BY due, random()  LIMIT ?",
                                mToday, id, lim);
                 while (cur.moveToNext()) {
-                    mRevQueue.add(mCol.getCardCache(cur.getLong(0)));
+                    mRevQueue.add(cur.getLong(0));
                 }
             } finally {
                 if (cur != null && !cur.isClosed()) {
@@ -1610,7 +1637,7 @@ public class SchedV2 extends AbstractSched {
     protected Card _getRevCard() {
         if (_fillRev()) {
             // mRevCount -= 1; see decrementCounts()
-            return mRevQueue.remove().getCard();
+            return mRevQueue.removeFirstCard();
         } else {
             return null;
         }
@@ -2578,7 +2605,7 @@ public class SchedV2 extends AbstractSched {
                 }
                 // even if burying disabled, we still discard to give
                 // same-day spacing
-                queue_object.remove(mCol.getCardCache(cid));
+                queue_object.remove(cid);
             }
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -3127,8 +3154,8 @@ public class SchedV2 extends AbstractSched {
         mCurrentCardParentsDid = currentCardParentsDid;
         _burySiblings(card);
         // if current card is next card or in the queue
-        mRevQueue.remove(mCol.getCardCache(card.getId()));
-        mNewQueue.remove(mCol.getCardCache(card.getId()));
+        mRevQueue.remove(card.getId());
+        mNewQueue.remove(card.getId());
     }
 
     protected boolean currentCardIsInQueueWithDeck(int queue, long did) {
