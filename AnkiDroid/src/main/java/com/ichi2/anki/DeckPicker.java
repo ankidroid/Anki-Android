@@ -2154,6 +2154,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
+    private void openReviewerOrStudyOptions(boolean dontSkipStudyOptions) {
+        if (mFragmented || dontSkipStudyOptions) {
+            // Go to StudyOptions screen when tablet or deck counts area was clicked
+            openStudyOptions(false);
+        } else {
+            // Otherwise jump straight to the reviewer
+            openReviewer();
+        }
+    }
+
     private void handleDeckSelection(long did, boolean dontSkipStudyOptions) {
         // Clear the undo history when selecting a new deck
         if (getCol().getDecks().selected() != did) {
@@ -2171,13 +2181,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Figure out what action to take
         if (deckDueTreeNode.getNewCount() + deckDueTreeNode.getLrnCount() + deckDueTreeNode.getRevCount() > 0) {
             // If there are cards to study then either go to Reviewer or StudyOptions
-            if (mFragmented || dontSkipStudyOptions) {
-                // Go to StudyOptions screen when tablet or deck counts area was clicked
-                openStudyOptions(false);
-            } else {
-                // Otherwise jump straight to the reviewer
-                openReviewer();
-            }
+            openReviewerOrStudyOptions(dontSkipStudyOptions);
             return;
         }
         if (getCol().getSched().hasCardsTodayAfterStudyAheadLimit()) {
