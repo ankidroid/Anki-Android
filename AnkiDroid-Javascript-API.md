@@ -10,19 +10,19 @@ This api allow deck developer to add functionality to cards that can call native
 ## Initialize 
 If api is not initialized, then Calling functions ```markCard``` ```toggleFlag``` will not work. Initialize js api using ```AnkiDroidJS.init()```
 
-### Name
+* #### Name
 ```javascript
 AnkiDroidJS.init()
 ```
-### Info
+* #### Info
 For using these functions, api version and developer contact must be provided.
 The current api version is ```0.0.1```.
 
-### Type of return value
+* #### Type of return value
 ```String```
 <br>All the available functions with ```enabled/disabled``` status of available functions that can be called using JavaScript.
 
-### Usage 
+* #### Usage 
 
 ```javascript
 <script>
@@ -44,11 +44,11 @@ The current api version is ```0.0.1```.
 ```
 
 ## Show Answer
-### Name
+* #### Name
 ```showAnswer()```
-### Info
+* #### Info
 When a card is shown, only the question is shown at first. So use this to perform show answer click through JS.
-### Usage 
+* #### Usage 
 ```javascript
 <button onclick="showAnswer();">Show Answer From JavaScript</button>
 ```
@@ -57,64 +57,64 @@ The following buttons can be called when available, there is case where only ```
 The following function will be called when buttons available on screen.
 
 ## Again
-### Name
+* #### Name
 ```buttonAnswerEase1()```
-### Info
+* #### Info
 Perform ```Again``` button click
-### Usage
+* #### Usage
 ```javascript
 <button onclick="buttonAnswerEase1();">Again From JS</button>
 ```
 
 
 ## Hard
-### Name
+* #### Name
 ```buttonAnswerEase2()```
-### Info
+* #### Info
 Perform ```Hard``` button click
-### Usage
+* #### Usage
 ```javascript
 <button onclick="buttonAnswerEase2();">Hard From JS</button>
 ```
 
 
 ## Good
-### Name
+* #### Name
 ```buttonAnswerEase3()```
-### Info
+* #### Info
 Perform ```Good``` button click
-### Usage
+* #### Usage
 ```javascript
 <button onclick="buttonAnswerEase3();">Good From JS</button>
 ```
 
 
 ## Easy
-### Name
+* #### Name
 ```buttonAnswerEase4()```
-### Info
+* #### Info
 Perform ```Easy``` button click
-### Usage
+* #### Usage
 ```javascript
 <button onclick="buttonAnswerEase4();">Easy From JS</button>
 ```
 
 
 ## Mark / Unmark current card
-### Name
+* #### Name
 ```ankiMarkCard()```
-### Info
+* #### Info
 Adds a tag called "Marked" the current note, so it can be easily found in a search.
-### Usage
+* #### Usage
 ```javascript
 <button onclick="ankiMarkCard();">Mark</button>
 ```
 
 
 ## Flag / Remove flag in current card
-### Name 
+* #### Name 
 ```ankiToggleFlag()```
-### Info
+* #### Info
 Adds a colored marker to the card, or toggles it off. Flags will appear during study, and it can be easily found in a search.
 <br>Pass the arguments ```"none"```, ```"red"```, ```"orange"```, ```"green"```, ```"blue"``` for flagging respective flag.
 <br>Numerical value can also be passed. 
@@ -127,7 +127,7 @@ Number from ```0...4``` can be used to flag.
 4 - blue
 ```
 For flagging <b>red</b> in current card.
-### Usage
+* #### Usage
 ```javascript
 <button onclick="ankiToggleFlag("red");">Red Flag</button>
 ```
@@ -137,68 +137,68 @@ For flagging <b>green</b> in current card
 ```
 
 ## Show options menu using JavaScript
-### Name
+* #### Name
 ```ankiShowOptionsMenu()```
-### Info
+* #### Info
 In full screen, a button can be added to show options menu.
-### Usage
+* #### Usage
 ```javascript
 <button onclick="ankiShowOptionsMenu()">Show Options Menu</button>
 ```
 ## Show navigation drawer using JavaScript
-### Name
+* #### Name
 ```ankiShowNavDrawer()```
-### Info
+* #### Info
 In full screen, a button can be added to show side navigation drawer.
-### Usage
+* #### Usage
 ```javascript
 <button onclick="ankiShowNavDrawer()">Show Navigation Drawer</button>
 ```
 
 ## Get fullscreen status
-### Name
+* #### Name
 ```AnkiDroidJS.ankiIsInFullscreen()```
-### Type of return value
+* #### Type of return value
 ```Boolean```
-### Info
+* #### Info
 Return fullscreen status in webview
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiIsInFullscreen());
 ```
 
 ## Get show / hide status of topbar
-### Name
+* #### Name
 ```AnkiDroidJS.ankiIsTopbarShown()```
-### Type of return value
+* #### Type of return value
 ```Boolean```
-### Info
+* #### Info
 It can be used to show / hide custom topbar design. See [#6747](https://github.com/ankidroid/Anki-Android/pull/6747) for more.
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiIsTopbarShown());
 ```
 
 ## Night mode mode status
-### Name
+* #### Name
 ```AnkiDroidJS.ankiIsInNightMode()```
-### Type of return value
+* #### Type of return value
 ```Boolean```
-### Info
+* #### Info
 Get night mode status. It can used to toggle between custom ```css``` based on the status.
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiIsInNightMode());
 ```
 
 ## Get status about metered connection
-### Name
+* #### Name
 ```AnkiDroidJS.ankiIsActiveNetworkMetered()```
-### Type of return value
+* #### Type of return value
 ```Boolean```
-### Info
+* #### Info
 Status about device connected to metered connection. It can be used stop loading heavy assets.
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiIsActiveNetworkMetered());
 ```
@@ -208,75 +208,75 @@ console.log(AnkiDroidJS.ankiIsActiveNetworkMetered());
 Add functions to ```Front / Back side``` of card to get info. 
 
 ## New card count
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetNewCardCount()```
-### Type of return value
+* #### Type of return value
 ```String```
-### Info
+* #### Info
 Return number of new card count
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetNewCardCount());
 ```
 
 ## Learn card count
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetLrnCardCount()```
-### Type of return value
+* #### Type of return value
 ```String```
-### Info
+* #### Info
 Return number of learn card count
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetLrnCardCount());
 ```
 
 
 ## Review card count
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetRevCardCount()```
-### Type of return value
+* #### Type of return value
 ```String```
-### Info
+* #### Info
 Return number of review card count
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetRevCardCount());
 ```
 
 
 ## ETA
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetETA()```
-### Type of return value
+* #### Type of return value
 ```int```
-### Info
+* #### Info
 Return remaining time to complete review
-### Usage 
+* #### Usage 
 ```javascript
 console.log(AnkiDroidJS.ankiGetETA());
 ```
 
 
 ## Mark status
-### Name
+* #### Name
 ```AnkiDroidJS.ankiGetCardMark()```
-### Type of return value
+* #### Type of return value
 ```true/false```
-### Info 
+* #### Info 
 Return current card marked or not. Return boolean value of mark status, true for marked, false for unmarked
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardMark());
 ```
 
 
 ## Flag status
-### Name
+* #### Name
 ```AnkiDroidJS.ankiGetCardFlag()```
-### Type of return value
+* #### Type of return value
 ```int```
-### Info
+* #### Info
 Return int value of flag 
 ```
 0-none, 
@@ -285,67 +285,67 @@ Return int value of flag
 3-green, 
 4-blue
 ```
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardFlag());
 ```
 
 ## Card ID
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetCardId()```
-### Type of return value
+* #### Type of return value
 ```long```
-### Info
+* #### Info
 Returns the ID of the card. Example: ```1477380543053```
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardId());
 ```
 
 ## Notes ID
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetCardNid()```
-### Type of return value
+* #### Type of return value
 ```long```
-### Info
+* #### Info
 Returns the ID of the note which generated the card. Example: ```1590418157630```
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardNid());
 ```
 
 ## Deck ID
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetCardDid()```
-### Type of return value
+* #### Type of return value
 ```long```
-### Info
+* #### Info
 Returns the ID of the deck which contains the card. Example: ```1595967594978```
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardDid());
 ```
 
 
 ## Last modified time of card
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetCardMod()```
-### Type of return value
+* #### Type of return value
 ```long```
-### Info
+* #### Info
 Returns the last modified time as a Unix timestamp in seconds. Example: ```1477384099```
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardMod());
 ```
 
 
 ## Card Type
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetCardType()```
-### Type of return value
+* #### Type of return value
 ```int```
-### Info
+* #### Info
 Returns card type
 ```
 0 = new
@@ -353,17 +353,17 @@ Returns card type
 2 = review 
 3 = relearning
 ```
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardType());
 ```
 
 ## Queue
-### Name
+* #### Name
 ```AnkiDroidJS.ankiGetCardQueue()```
-### Type of return value
+* #### Type of return value
 ```int```
-### Info
+* #### Info
 ```
  -3 = user buried(In scheduler 2),
  -2 = sched buried (In scheduler 2), 
@@ -373,134 +373,134 @@ console.log(AnkiDroidJS.ankiGetCardType());
   3 = in learning, next rev in at least a day after the previous review
   4 = preview
 ```
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardQueue());
 ```
 
 ## Card Left
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetCardLeft()```
-### Type of return value
+* #### Type of return value
 ```int```
-### Info
+* #### Info
 ```
 -- of the form a*1000+b, with:
 -- b the number of reps left till graduation
 -- a the number of reps left today
 ```
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardLeft());
 ```
 
 ## Due
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetCardDue()```
-### Type of return value
+* #### Type of return value
 ```long```
-### Info
+* #### Info
 Due is used differently for different card types: 
 ```
 new: note id or random int
 due: integer day, relative to the collection's creation time
 learning: integer timestamp
 ```
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardDue());
 ```
 
 ## Interval
-### Name
+* #### Name
 ```AnkiDroidJS.ankiGetCardInterval()```
-### Type of return value
+* #### Type of return value
 ```int```
-### Info
+* #### Info
 interval (used in SRS algorithm). Negative = seconds, positive = days
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardInterval());
 ```
 
 ## Card Ease Factor
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetCardFactor()```
-### Type of return value
+* #### Type of return value
 ```int```
-### Info
+* #### Info
 Return ease factor of the card in permille (parts per thousand)
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardFactor());
 ```
 
 ## Review 
-### Name
+* #### Name
 ```AnkiDroidJS.ankiGetCardReps()```
-### Type of return value
+* #### Type of return value
 ```int```
-### Info
+* #### Info
 Return number of reviews made on current card
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardReps());
 ```
 
 ## Lapses
-### Name
+* #### Name
 ```AnkiDroidJS.ankiGetCardLapses()```
-### Type of return value
+* #### Type of return value
 ```int```
-### Info 
+* #### Info 
 Return number of times the card went from a "was answered correctly" 
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardLapses());
 ```
 
 ## Original Due
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetCardODue()```
-### Type of return value
+* #### Type of return value
 ```long```
-### Info
+* #### Info
 ```
 original due: In filtered decks, it's the original due date that the card had before moving to filtered.
                     -- If the card lapsed in scheduler1, then it's the value before the lapse. (This is used when switching to scheduler 2. At this time, cards in learning becomes due again, with their previous due date)
                     -- In any other case it's 0.
 ```
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardODue());
 ```
 
 ## Deck ID of home deck if filtered
-### Name 
+* #### Name 
 ```AnkiDroidJS.ankiGetCardODid()```
-### Type of return value
+* #### Type of return value
 ```long```
-### Info
+* #### Info
 Returns the ID of the home deck for the card if it is filtered, or ```0``` if not filtered. Example: ```1595967594978```
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetCardODid());
 ```
 
 ## Get next time for review in WebView
 
-### Name 
+* #### Name 
 ```
 AnkiDroidJS.ankiGetNextTime1()
 AnkiDroidJS.ankiGetNextTime2()
 AnkiDroidJS.ankiGetNextTime3()
 AnkiDroidJS.ankiGetNextTime4()
 ```
-### Type of return value
+* #### Type of return value
 ```String```
-### Info
+* #### Info
 Return time for next review. Time at answer buttons (Again/Hard/Good/Easy/). It can be used to hide button if returned string is empty.
-### Usage
+* #### Usage
 ```javascript
 console.log(AnkiDroidJS.ankiGetNextTime1());
 console.log(AnkiDroidJS.ankiGetNextTime2());
@@ -647,4 +647,4 @@ The implementation of above functionality can be found in this github repo.
 <br>[#6747 Get Topbar shown status in card](https://github.com/ankidroid/Anki-Android/pull/6747)
 <br>[#6387 Show options menu & navigation drawer using WebView](https://github.com/ankidroid/Anki-Android/pull/6387)
 <br>[#6567 Night mode status in Card](https://github.com/ankidroid/Anki-Android/pull/6567)
-<br>[#6470 Get value of fullscreen status in JavaScript](https://github.com/ankidroid/Anki-Android/pull/6470)
+<br>[#6470 Get value of fullscreen status in JavaScript](https://github.com/ankidroid/Anki-Android/pull/6470)²
