@@ -169,6 +169,10 @@ public class DeckDueTreeNode implements Comparable {
                 mRevCount += ch.getRevCount();
             }
         }
+        applyLimit(addRev);
+    }
+
+    protected void applyLimit(boolean addRev) {
         // limit the counts to the deck's limits
         JSONObject conf = mCol.getDecks().confForDid(mDid);
         if (conf.getInt("dyn") == 0) {
