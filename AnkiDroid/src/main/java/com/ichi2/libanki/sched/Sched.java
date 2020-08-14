@@ -212,7 +212,7 @@ public class Sched extends SchedV2 {
         mCol.getDecks().checkIntegrity();
         ArrayList<Deck> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
-        ArrayList<DeckDueTreeNode> data = new ArrayList<>();
+        ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>();
         for (Deck deck : decks) {
             if (collectionTask != null && collectionTask.isCancelled()) {
                 return null;
@@ -236,11 +236,11 @@ public class Sched extends SchedV2 {
             // reviews
             int rev = _revForDeck(deck.getLong("id"), rlim);
             // save to list
-            data.add(new DeckDueTreeNode(mCol, deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            deckNodes.add(new DeckDueTreeNode(mCol, deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
             // add deck as a parent
             lims.put(Decks.normalizeName(deck.getString("name")), new Integer[]{nlim, rlim});
         }
-        return data;
+        return deckNodes;
     }
 
 
