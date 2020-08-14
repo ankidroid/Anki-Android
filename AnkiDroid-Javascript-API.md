@@ -532,6 +532,56 @@ If want to hide card's button / text in current card when reviewing on Anki Desk
 ```
 For more view [Window.navigator](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator) and [Navigator userAgent Property](https://www.w3schools.com/jsref/prop_nav_useragent.asp)
 
+## Adding progress bar to card template
+**Note: After AnkiDroid 2.12**. Turn on fullscreen and also hide topbar from reviewer settings. More better implementation can be done for this.
+
+Front/Back HTML
+```html
+
+<div class="progress" id="progress">
+    <div class="progress-bar" id="bar"></div>
+</div>
+
+<!-- anki-persistence -->
+<script>
+    // v0.5.2 - https://github.com/SimonLammer/anki-persistence/blob/62463a7f63e79ce12f7a622a8ca0beb4c1c5d556/script.js
+    if (void 0 === window.Persistence) { var _persistenceKey = "github.com/SimonLammer/anki-persistence/", _defaultKey = "_default"; if (window.Persistence_sessionStorage = function () { var e = !1; try { "object" == typeof window.sessionStorage && (e = !0, this.clear = function () { for (var e = 0; e < sessionStorage.length; e++) { var t = sessionStorage.key(e); 0 == t.indexOf(_persistenceKey) && (sessionStorage.removeItem(t), e--) } }, this.setItem = function (e, t) { void 0 == t && (t = e, e = _defaultKey), sessionStorage.setItem(_persistenceKey + e, JSON.stringify(t)) }, this.getItem = function (e) { return void 0 == e && (e = _defaultKey), JSON.parse(sessionStorage.getItem(_persistenceKey + e)) }, this.removeItem = function (e) { void 0 == e && (e = _defaultKey), sessionStorage.removeItem(_persistenceKey + e) }) } catch (e) { } this.isAvailable = function () { return e } }, window.Persistence_windowKey = function (e) { var t = window[e], i = !1; "object" == typeof t && (i = !0, this.clear = function () { t[_persistenceKey] = {} }, this.setItem = function (e, i) { void 0 == i && (i = e, e = _defaultKey), t[_persistenceKey][e] = i }, this.getItem = function (e) { return void 0 == e && (e = _defaultKey), t[_persistenceKey][e] || null }, this.removeItem = function (e) { void 0 == e && (e = _defaultKey), delete t[_persistenceKey][e] }, void 0 == t[_persistenceKey] && this.clear()), this.isAvailable = function () { return i } }, window.Persistence = new Persistence_sessionStorage, Persistence.isAvailable() || (window.Persistence = new Persistence_windowKey("py")), !Persistence.isAvailable()) { var titleStartIndex = window.location.toString().indexOf("title"), titleContentIndex = window.location.toString().indexOf("main", titleStartIndex); titleStartIndex > 0 && titleContentIndex > 0 && titleContentIndex - titleStartIndex < 10 && (window.Persistence = new Persistence_windowKey("qt")) } }
+</script>
+<!----------->
+
+<script>
+        var cardCount = parseInt(AnkiDroidJS.ankiGetNewCardCount()) + parseInt(AnkiDroidJS.ankiGetLrnCardCount()) + parseInt(AnkiDroidJS.ankiGetRevCardCount());
+
+        var totalCardCount = 1;
+        if (Persistence.isAvailable()) {
+            totalCardCount = Persistence.getItem("total");
+            if (totalCardCount == null) {
+                totalCardCount = cardCount;    // count set to total card count at first card, it will not change for current session
+                Persistence.setItem("total", totalCardCount);
+            }
+        }
+
+        // progress bar percentage
+        var per = Math.trunc(100 - cardCount * 100 / totalCardCount);
+        document.getElementById("bar").style.width = per + "%";
+</script>
+```
+Card CSS
+```css
+.progress {
+    width: 100%;
+    border-radius: 2px;
+    background-color: #ddd;
+}
+
+.progress-bar {
+    width: 1%;
+    height: 12px;
+    border-radius: 2px;
+    background-color: limegreen;
+}
+```
+
 ## Custom topbar design
 **Note: After AnkiDroid 2.12**. Turn on fullscreen and also hide topbar from reviewer settings.
 
