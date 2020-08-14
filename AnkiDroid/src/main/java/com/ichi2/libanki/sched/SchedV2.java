@@ -472,7 +472,7 @@ public class SchedV2 extends AbstractSched {
         mCol.getDecks().checkIntegrity();
         ArrayList<Deck> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
-        ArrayList<DeckDueTreeNode> data = new ArrayList<>();
+        ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>();
         HashMap<Long, HashMap> childMap = mCol.getDecks().childMap();
         for (Deck deck : decks) {
             if (collectionTask != null && collectionTask.isCancelled()) {
@@ -498,11 +498,11 @@ public class SchedV2 extends AbstractSched {
             int rlim = _deckRevLimitSingle(deck, plim);
             int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
             // save to list
-            data.add(new DeckDueTreeNode(mCol, deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            deckNodes.add(new DeckDueTreeNode(mCol, deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
             // add deck as a parent
             lims.put(Decks.normalizeName(deck.getString("name")), new Integer[]{nlim, rlim});
         }
-        return data;
+        return deckNodes;
     }
 
     /** Similar to deck due tree, but ignore the number of cards.
@@ -539,70 +539,70 @@ public class SchedV2 extends AbstractSched {
         return _groupChildren(deckDueTree, true);
     }
 
-    private @NonNull <T extends AbstractDeckTreeNode> List<T> _groupChildren(@NonNull List<T> grps, boolean checkDone) {
+    private @NonNull <T extends AbstractDeckTreeNode> List<T> _groupChildren(@NonNull List<T> decks, boolean checkDone) {
         // sort based on name's components
-        Collections.sort(grps);
+        Collections.sort(decks);
         // then run main function
-        return _groupChildrenMain(grps, checkDone);
+        return _groupChildrenMain(decks, checkDone);
     }
 
 
-    protected @NonNull  <T extends AbstractDeckTreeNode> List<T> _groupChildrenMain(@NonNull List<T> grps, boolean checkDone) {
-        return _groupChildrenMain(grps, 0, checkDone);
+    protected @NonNull  <T extends AbstractDeckTreeNode> List<T> _groupChildrenMain(@NonNull List<T> decks, boolean checkDone) {
+        return _groupChildrenMain(decks, 0, checkDone);
     }
 
     /**
-        @return the tree structure of all decks from @grps, starting
+        @return the tree structure of all decks from @descandants, starting
         at specified depth.
 
-        @param grps a list of decks of dept at least depth, having all
+        @param descendants a list of decks of dept at least depth, having all
         the same first depth name elements, sorted in deck order.
         @param depth The depth of the tree we are creating
         @param checkDone whether the set of deck was checked. If
         false, we can't assume all decks have parents and that there
         is no duplicate. Instead, we'll ignore problems.
      */
-    protected @NonNull <T extends AbstractDeckTreeNode>List<T> _groupChildrenMain(@NonNull List<T> grps, int depth, boolean checkDone) {
-        List<T> tree = new ArrayList<>();
+    protected @NonNull <T extends AbstractDeckTreeNode>List<T> _groupChildrenMain(@NonNull List<T> descendants, int depth, boolean checkDone) {
+        List<T> children = new ArrayList<>();
         // group and recurse
-        ListIterator<T> it = grps.listIterator();
+        ListIterator<T> it = descendants.listIterator();
         while (it.hasNext()) {
-            T node = it.next();
-            String head = node.getDeckNameComponent(depth);
-            List<AbstractDeckTreeNode> children  = new ArrayList<>();
+            T child = it.next();
+            String head = child.getDeckNameComponent(depth);
+            List<AbstractDeckTreeNode> descendantsOfChild  = new ArrayList<>();
             /* Compose the "children" node list. The children is a
              * list of all the nodes that proceed the current one that
              * contain the same at depth `depth`, except for the
              * current one itself.  I.e., they are subdecks that stem
-             * from this node.  This is our version of python's
+             * from this descendant.  This is our version of python's
              * itertools.groupby. */
-            if (!checkDone && node.getDepth() != depth) {
-                JSONObject deck = mCol.getDecks().get(node.getDid());
-                Timber.d("Deck %s (%d)'s parent is missing. Ignoring for quick display.", deck.getString("name"), node.getDid());
+            if (!checkDone && child.getDepth() != depth) {
+                JSONObject deck = mCol.getDecks().get(child.getDid());
+                Timber.d("Deck %s (%d)'s parent is missing. Ignoring for quick display.", deck.getString("name"), child.getDid());
                 continue;
             }
             while (it.hasNext()) {
-                AbstractDeckTreeNode next = it.next();
-                if (head.equals(next.getDeckNameComponent(depth))) {
+                AbstractDeckTreeNode descendantOfChild = it.next();
+                if (head.equals(descendantOfChild.getDeckNameComponent(depth))) {
                     // Same head - add to tail of current head.
-                    if (!checkDone && next.getDepth() == depth) {
-                        JSONObject deck = mCol.getDecks().get(next.getDid());
-                        Timber.d("Deck %s (%d)'s is a duplicate name. Ignoring for quick display.", deck.getString("name"), next.getDid());
+                    if (!checkDone && descendantOfChild.getDepth() == depth) {
+                        JSONObject deck = mCol.getDecks().get(descendantOfChild.getDid());
+                        Timber.d("Deck %s (%d)'s is a duplicate name. Ignoring for quick display.", deck.getString("name"), descendantOfChild.getDid());
                         continue;
                     }
-                    children.add(next);
+                    descendantsOfChild.add(descendantOfChild);
                 } else {
-                    // We've iterated past this head, so step back in order to use this node as the
+                    // We've iterated past this head, so step back in order to use this descendant as the
                     // head in the next iteration of the outer loop.
                     it.previous();
                     break;
                 }
             }
-            // the children set contains direct children but not the children of children...
-            node.setChildren(_groupChildrenMain(children, depth + 1, checkDone), "std".equals(getName()));
-            tree.add(node);
+            // the children_sDescendant set contains direct children_sDescendant but not the children_sDescendant of children_sDescendant...
+            child.setChildren(_groupChildrenMain(descendantsOfChild, depth + 1, checkDone), "std".equals(getName()));
+            children.add(child);
         }
-        return tree;
+        return children;
     }
 
 
