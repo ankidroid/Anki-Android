@@ -80,7 +80,7 @@ import static org.junit.platform.commons.util.CollectionUtils.getOnlyElement;
 @RunWith(AndroidJUnit4.class)
 public class SchedV2Test extends RobolectricTest {
 
-    protected static List<DeckDueTreeNode> expectedTree(Collection col, boolean addRev) {
+    protected static DeckDueTreeRoot expectedTree(Collection col, boolean addRev) {
         AbstractSched sched = col.getSched();
         DeckDueTreeNode caz = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW", 1, 0, 0, 0);
         caz.setChildren(new ArrayList<>(), addRev);
@@ -95,7 +95,9 @@ public class SchedV2Test extends RobolectricTest {
         DeckDueTreeNode s = new DeckDueTreeNode(col, "scxipjiyozczaaczoawo", 1, 0, 0, 0);
         s.setChildren(new ArrayList<>(), addRev);
         List<DeckDueTreeNode> expected = Arrays.asList(defaul, c, s); // Default is first, because start by an Upper case
-        return expected;
+        DeckDueTreeRoot root = new DeckDueTreeRoot(col);
+        root.setChildren(expected, addRev);
+        return root;
     }
 
 
@@ -193,7 +195,7 @@ public class SchedV2Test extends RobolectricTest {
             addDeck(deckName);
         }
         AbstractSched sched = getCol().getSched();
-        List<DeckDueTreeNode> tree = sched.deckDueTree();
+        DeckDueTreeRoot tree = sched.deckDueTree();
         Assert.assertEquals("Tree has not the expected structure", expectedTree(getCol(), true), tree);
     }
 
@@ -680,7 +682,7 @@ public class SchedV2Test extends RobolectricTest {
         }
 
         // position 0 is default deck. Different from upstream
-        DeckDueTreeNode tree = col.getSched().deckDueTree().get(1);
+        DeckDueTreeNode tree = col.getSched().deckDueTree().getChildren().get(1);
         // (('parent', 1514457677462, 5, 0, 0, (('child', 1514457677463, 5, 0, 0, ()),)))
         assertEquals("parent", tree.getFullDeckName());
         assertEquals(5, tree.getRevCount());  // paren, tree.review_count)t
@@ -696,7 +698,7 @@ public class SchedV2Test extends RobolectricTest {
         col.getSched().answerCard(c, 3);
         assertArrayEquals(new int[] {0, 0, 4}, col.getSched().counts());
 
-        tree = col.getSched().deckDueTree().get(1);
+        tree = col.getSched().deckDueTree().getChildren().get(1);
         assertEquals(4, tree.getRevCount());
         assertEquals(4, tree.getChildren().get(0).getRevCount());
     }
@@ -1311,7 +1313,7 @@ public class SchedV2Test extends RobolectricTest {
         col.addNote(note);
         col.reset();
         assertEquals(5, col.getDecks().allSortedNames().size());
-        DeckDueTreeNode tree = col.getSched().deckDueTree().get(0);
+        DeckDueTreeNode tree = col.getSched().deckDueTree().getChildren().get(0);
         assertEquals("Default", tree.getLastDeckNameComponent());
         // sum of child and parent
         assertEquals(1, tree.getDid());
@@ -1337,7 +1339,7 @@ public class SchedV2Test extends RobolectricTest {
         col.getDecks().id("new2");
         // new should not appear twice in tree
         List<String> names = new ArrayList<>();
-        for (DeckDueTreeNode tree : col.getSched().deckDueTree()) {
+        for (DeckDueTreeNode tree : col.getSched().deckDueTree().getChildren()) {
             names.add(tree.getLastDeckNameComponent());
         }
         names.remove("new");

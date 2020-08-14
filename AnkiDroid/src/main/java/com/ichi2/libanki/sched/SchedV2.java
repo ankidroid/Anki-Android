@@ -543,11 +543,13 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public List<DeckDueTreeNode> deckDueTree() {
+    @Override
+    public DeckDueTreeRoot deckDueTree() {
         return deckDueTree(null);
     }
 
-    public List<DeckDueTreeNode> deckDueTree(CollectionTask collectionTask) {
+    @Override
+    public DeckDueTreeRoot deckDueTree(CollectionTask collectionTask) {
         List<DeckDueTreeNode> deckDueTree = deckDueList(collectionTask);
         if (deckDueTree == null) {
             return null;
@@ -556,7 +558,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private List<DeckDueTreeNode> _groupChildren(List<DeckDueTreeNode> decks, boolean checkDone) {
+    private DeckDueTreeRoot _groupChildren(List<DeckDueTreeNode> decks, boolean checkDone) {
         // sort based on name's components
         Collections.sort(decks);
         // then run main function
@@ -564,10 +566,15 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> decks, boolean checkDone) {
+    protected DeckDueTreeRoot _groupChildrenMain(List<DeckDueTreeNode> decks, boolean checkDone) {
         return _groupChildrenMain(decks, 0, checkDone);
     }
 
+    protected DeckDueTreeRoot _groupChildrenMain(List<DeckDueTreeNode> descendants, int depth, boolean checkDone) {
+        DeckDueTreeRoot root = new DeckDueTreeRoot(mCol);
+        _groupChildrenMain(descendants, depth, checkDone, root);
+        return root;
+    }
     /**
         @return the tree structure of all decks from @descandants, starting
         at specified depth.
@@ -579,7 +586,7 @@ public class SchedV2 extends AbstractSched {
         false, we can't assume all decks have parents and that there
         is no duplicate. Instead, we'll ignore problems.
      */
-    protected List<DeckDueTreeNode> _groupChildrenMain(List<DeckDueTreeNode> descendants, int depth, boolean checkDone) {
+    protected void _groupChildrenMain(List<DeckDueTreeNode> descendants, int depth, boolean checkDone, DeckDueTreeNode parent) {
         List<DeckDueTreeNode> children = new ArrayList<>();
         // group and recurse
         ListIterator<DeckDueTreeNode> it = descendants.listIterator();
@@ -616,10 +623,10 @@ public class SchedV2 extends AbstractSched {
                 }
             }
             // the children_sDescendant set contains direct children_sDescendant but not the children_sDescendant of children_sDescendant...
-            child.setChildren(_groupChildrenMain(descendantsOfChild, depth + 1, checkDone), "std".equals(getName()));
+            _groupChildrenMain(descendantsOfChild, depth + 1, checkDone, child);
             children.add(child);
         }
-        return children;
+        parent.setChildren(children, "std".equals(getName()));
     }
 
 

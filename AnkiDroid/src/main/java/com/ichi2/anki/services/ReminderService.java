@@ -172,7 +172,7 @@ public class ReminderService extends BroadcastReceiver {
         List<DeckDueTreeNode> decks = new ArrayList<>();
         try {
             // This loop over top level deck only. No notification will ever occur for subdecks.
-            for (DeckDueTreeNode node : col.getSched().deckDueTree()) {
+            for (DeckDueTreeNode node : col.getSched().deckDueTree().getChildren()) {
                 JSONObject deck = col.getDecks().get(node.getDid(), false);
                 // Dynamic deck has no "conf", so are not added here.
                 if (deck != null && deck.optLong("conf") == dConfId) {

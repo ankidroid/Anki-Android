@@ -128,9 +128,9 @@ public class SchedTest extends RobolectricTest {
 
     @NonNull
     private DeckDueTreeNode getCountsForDid(double didToFind) {
-        List<DeckDueTreeNode> tree = getCol().getSched().deckDueTree();
+        DeckDueTreeRoot tree = getCol().getSched().deckDueTree();
 
-        for (DeckDueTreeNode node : tree) {
+        for (DeckDueTreeNode node : tree.getChildren()) {
             if (node.getDid() == didToFind) {
                 return node;
             }
@@ -170,7 +170,7 @@ public class SchedTest extends RobolectricTest {
         }
         getCol().getSched().deckDueTree();
         AbstractSched sched = getCol().getSched();
-        List<DeckDueTreeNode> tree = sched.deckDueTree();
+        DeckDueTreeRoot tree = sched.deckDueTree();
         Assert.assertEquals("Tree has not the expected structure", SchedV2Test.expectedTree(getCol(), false), tree);
 
     }
@@ -853,7 +853,7 @@ public class SchedTest extends RobolectricTest {
         assertEquals(86400, col.getSched().nextIvl(c, 3));
         // delete the deck, returning the card mid-study
         col.getDecks().rem(col.getDecks().selected());
-        assertEquals(1, col.getSched().deckDueTree().size());
+        assertEquals(1, col.getSched().deckDueTree().getChildren().size());
         c.load();
         assertEquals(1, c.getIvl());
         assertEquals(col.getSched().getToday() + 1, c.getDue());
@@ -1227,7 +1227,7 @@ public class SchedTest extends RobolectricTest {
         col.addNote(note);
         col.reset();
         assertEquals(5, col.getDecks().allSortedNames().size());
-        DeckDueTreeNode tree = col.getSched().deckDueTree().get(0);
+        DeckDueTreeNode tree = col.getSched().deckDueTree().getChildren().get(0);
         assertEquals("Default", tree.getLastDeckNameComponent());
         // sum of child and parent
         assertEquals(1, tree.getDid());
