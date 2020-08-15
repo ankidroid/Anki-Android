@@ -302,7 +302,7 @@
         <item quantity="other">%d note invariate</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">Questa scheda utilizza funzioni AnkiDroid non supportate. Contatta lo sviluppatore %s, o visualizza la wiki. %s</string>
+    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
     <string name="invalid_json_data">La scheda fornisce dati non validi. %s</string>
     <string name="valid_js_api_version">Versione API JS AnkiDroid non valida. Contatta lo sviluppatore %s, o visualizza la wiki</string>
     <string name="update_js_api_version">Aggiornamento disponibile per API JS AnkiDroid. Contatta lo sviluppatore %s, o visualizza wiki</string>

@@ -89,8 +89,8 @@
         <item quantity="one">%d kártya átütemezve</item>
         <item quantity="other">%d kártyák átütemezve</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">Új kártya ütemezése. Az ütemezés az új kártyákat felülvizsgálja. A \"kártya átrendezése\" opcióval módosíthatod az új kártya helyzetét az új sorban</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Az ütemezés visszaállítja azt is, ahogyan az ütemező a jövőben kezeli a kártyát (az egyszerűséget %d%% -ra állítja)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Válassza ki a kártyát a fájlkezelőjéből vagy látogassa meg az about:downloads oldalt és importálja azt</string>
     <string name="answering_error_title">Adatbázis hiba</string>
     <string name="answering_error_message">A gyűjteménybe írás sikertelen. Az adatbázis lehet, hogy korrupt vagy nincs elég hely a lemezen.\n\n. Ha gyakrabban történik ilyen, akkor próbálja ellenőrizni az adatbázist, javítsa meg a gyűjteményt vagy állítsa azt vissza egy biztonsági másolatból. Ehhez nyomjon rá a \"beállításokra\".\n. Vagy lehet, hogy ez egy AnkiDroid bug; kérjük jelentse a hibát, hogy le tudjuk ellenőrizni.</string>
@@ -102,8 +102,8 @@
     <string name="intent_aedict_category">Hogy új kártyákat adj az AnkiDroid-hoz, távolítsd el az összes Jegyzettömb/Notepad/ kategóriát, vagy adj hozzá egyet \'default\' névvel</string>
     <string name="custom_study_new_total_new">Új kártyák a pakliban: %d</string>
     <string name="custom_study_rev_total_rev">Ismétlések határideje a pakliban: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">Növeld/csökkentsd (\"-3\") a mai új kártyák korlátját</string>
+    <string name="custom_study_rev_extend">Növeld/csökkentsd (\"-3\") a mai ismétlődő kártyák korlátját</string>
     <string name="custom_study_forgotten">Az elmúlt x napban elfelejtett kártyák ismétlése:</string>
     <string name="custom_study_ahead">Idő előtti, x nappal előre ismétlés:</string>
     <string name="custom_study_random">A pakliból x kártya véletlen kiválasztása:</string>
@@ -204,7 +204,7 @@
     <string name="boot_service_too_many_notifications">Túl sok emlékeztető van beütemezve. Néhány nem fog megjelenni</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">Egy auto szinkronizálás elindulhat %d másodperc elteltével.</item>
+        <item quantity="other">Egy automatikus szinkronizálás elindulhat %d másodperc múlva</item>
     </plurals>
 </resources>

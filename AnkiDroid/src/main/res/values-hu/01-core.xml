@@ -186,7 +186,7 @@
     <string name="card_template_editor_styling">Stílus</string>
     <string name="card_template_editor_menu_delete">Törlés</string>
     <string name="card_template_editor_menu_card_browser_appearance">A kártya böngésző kinézete</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">Kártyacsomag felülírása</string>
     <string name="card_template_editor_cant_delete">Legalább egy kártya típus szükséges</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Törlöd a “%2$s” és a %1$d kártya típusát?</item>
@@ -204,5 +204,5 @@
     <!-- Context Menu -->
     <string name="card_browser_label">Kártya böngésző</string>
     <string name="card_browser_context_menu">Kártya böngésző</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Anki Kártya</string>
 </resources>

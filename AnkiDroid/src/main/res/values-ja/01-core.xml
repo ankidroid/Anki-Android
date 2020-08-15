@@ -189,7 +189,7 @@
     <string name="invalid_template">カードを作成できませんでした</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
     <string name="card_template_editor_save_error">カードテンプレートの変更を保存できません: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="template_for_current_card_deleted">現在のカードのカードタイプが削除されました。</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
@@ -198,5 +198,5 @@
     <!-- Context Menu -->
     <string name="card_browser_label">Card Browser</string>
     <string name="card_browser_context_menu">AnkiDroid検索</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Ankiカード</string>
 </resources>

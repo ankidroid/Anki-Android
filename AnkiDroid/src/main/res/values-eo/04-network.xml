@@ -129,7 +129,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb estas vartata. Bonvolu reprovi ĝin en kelkaj minutoj.</string>
     <string name="sync_error_504_gateway_timeout">Okazis eraro 504: templimo de konekto atingita.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title">Samtempigo</string>
+    <string name="sync_menu_title_full_sync">Samtempigo (plena)</string>
+    <string name="sync_menu_title_no_account">Samtempigo (ensaluto)</string>
 </resources>

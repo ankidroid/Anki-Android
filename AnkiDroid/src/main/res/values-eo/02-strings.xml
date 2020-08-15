@@ -54,7 +54,7 @@
     <string name="add_tag">Aldoni etikedon</string>
     <string name="check_all_tags">(Mal)marki ĉiujn etikedojn</string>
     <string name="filter_tags">Filtri etikedojn</string>
-    <string name="no_tags">Vi ankoraŭ aldonis neniujn etikedojn</string>
+    <string name="no_tags">Vi ankoraŭ aldonis neniun etikedon</string>
     <string name="sdcard_missing_message">Malŝaltu USB-konservejon por aliri viajn kartarojn</string>
     <string name="updated_version">Ĝisdatigis al la versio %s</string>
     <!-- Reviewer.java -->
@@ -285,30 +285,30 @@
     <string name="note_importer_error_first_field_matched">Unua kampo kongruis al: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">Aldonis duplikaton al unua kampo: %s</string>
     <string name="note_importer_error_appeared_twice">Aperis dufoje en dosiero: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_error_empty_notes">Almenaŭ unu noto ne estis enportita, ĉar ili generis neniun karton. Tio ĉi povas okazi kiam vi havas malplenajn kampojn aŭ kiam vi ne bildigis enhavon en la teksta dosiero al la ĝustaj kampoj.</string>
+    <string name="csv_importer_error_invalid_field_count">“%1$s” havis %2$d kampojn, %3$d estis esperataj</string>
+    <string name="csv_importer_error_exception">Ĉesigita: %s</string>
+    <string name="user_is_a_robot">Eltrovita aŭtomata testo. Se vi estas homo, kontaktu la helpteamon AnkiDroid</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d noto aldonita</item>
+        <item quantity="other">%d notoj aldonitaj</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d noto aktualigita</item>
+        <item quantity="other">%d notoj aktualigitaj</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d noto ne ŝanĝita</item>
+        <item quantity="other">%d notoj ne ŝanĝitaj</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="invalid_json_data">Karto liveris malĝustajn datumojn. %s</string>
+    <string name="valid_js_api_version">Malĝusta versio de JS API AnkiDroid. Kontaktu la programiston %s aŭ legu la vikion</string>
+    <string name="update_js_api_version">Disponebla ĝisdatigo por JS API AnkiDroid. Kontaktu la programiston %s aŭ legu la vikion</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Montri</string>
+    <string name="anki_js_error_code">(Erar-kodo: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">Kopiis senerarigajn informojn al tondujo</string>
+    <string name="about_ankidroid_error_copy_debug_info">Eraro okazis dum kopii senerarigajn informojn al tondujo</string>
 </resources>

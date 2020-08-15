@@ -105,8 +105,8 @@
     <string name="gestures_tap_bottom">下をタップ</string>
     <string name="gestures_tap_left">左をタップ</string>
     <string name="gestures_tap_right">右をタップ</string>
-    <string name="gestures_volume_up">Volume up</string>
-    <string name="gestures_volume_down">Volume down</string>
+    <string name="gestures_volume_up">音量アップボタン</string>
+    <string name="gestures_volume_down">音量ダウンボタン</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ メニュー</string>

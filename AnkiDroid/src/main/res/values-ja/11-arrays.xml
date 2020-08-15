@@ -50,16 +50,16 @@
         <item>推奨される回答よりも良い回答</item>
         <item>元に戻す</item>
         <item>ノートを編集</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
+        <item>ノートにタグを付ける</item>
+        <item>ノートにマークを付ける</item>
         <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
+        <item>カードを延期</item>
+        <item>カードを保留</item>
         <item>Delete note</item>
         <item>音声・動画を再生</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
+        <item>学習を中断</item>
+        <item>ノートを延期</item>
+        <item>ノートを保留</item>
         <item>赤フラグを付ける/取り外す</item>
         <item>橙フラグを付ける/取り外す</item>
         <item>緑フラグを付ける/取り外す</item>

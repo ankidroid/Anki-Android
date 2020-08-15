@@ -328,13 +328,13 @@
         <item quantity="other">%d записів не змінено</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">Ця картка використовує непідтримувані функції AnkiDroid. Зверніться до розробника %s або перегляньте вікі. %s</string>
+    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
     <string name="invalid_json_data">Картці надано некоректні дані. %s</string>
     <string name="valid_js_api_version">Неправильна версія API AnkiDroid JS. Зверніться до розробника %s або перегляньте вікі</string>
     <string name="update_js_api_version">Доступне оновлення JS API. Зверніться до розробника %s або перегляньте вікі</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Перегляд</string>
     <string name="anki_js_error_code">(Код помилки: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">Скопійовано дані відлагодження до буфера обміну</string>
+    <string name="about_ankidroid_error_copy_debug_info">Помилка копіювання даних відлагодження до буфера обміну</string>
 </resources>

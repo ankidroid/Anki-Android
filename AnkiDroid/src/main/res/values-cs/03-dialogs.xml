@@ -212,7 +212,7 @@
     <!-- Browser Appearance -->
     <string name="card_template_editor_card_browser_appearance_failed">Nelze načíst vzhled prohlížeče karet</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
+    <string name="boot_service_failed_to_schedule_notifications">Nepodařilo se naplánovat upomínky</string>
     <string name="boot_service_too_many_notifications">Naplánováno příliš mnoho upomínek. Některé se nezobrazí</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">

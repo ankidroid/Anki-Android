@@ -123,8 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Автоматическая синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">Отображать статус синхронизации</string>
+    <string name="sync_status_badge_summ">Изменить значок синхронизации, когда можно выгрузить изменения</string>
     <string name="day_theme">Дневная тема</string>
     <string name="night_theme">Ночная тема</string>
     <string name="default_font">Шрифт по умолчанию</string>
