@@ -37,11 +37,14 @@ public class ModelTest {
     public void bigQuery() throws IOException {
         Models models = testCol.getModels();
         Model model = models.all().get(0);
-        StringBuffer buf = new StringBuffer();
-        for (long i = 0L; i < 400_000L; ++i ) {
-            buf.append("abcdefghijkl");
+        final String testString = "test";
+        final int size = testString.length() * 1024 * 1024;
+        StringBuilder buf = new StringBuilder((int) (size * 1.01));
+        // * 1.01 for padding
+        for (int i = 0; i < 1024 * 1024 ; ++i ) {
+            buf.append(testString);
         }
-        model.put("test", buf.toString());
+        model.put(testString, buf.toString());
         // Buf should be more than 4MB, so at least two chunks from database.
         models.flush();
         // Reload models
