@@ -146,7 +146,8 @@ public class SchedV2 extends AbstractSched {
         }
     }
 
-    protected class SimpleCardQueue extends CardQueue<Card.Cache> {
+    @VisibleForTesting
+    class SimpleCardQueue extends CardQueue<Card.Cache> {
         public void add(long id) {
             add(new Card.Cache(mCol, id));
         }
