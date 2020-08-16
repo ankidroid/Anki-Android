@@ -505,11 +505,13 @@ public class Reviewer extends AbstractFlashcardViewer {
         // NOTE: This is called every time a new question is shown via invalidate options menu
         getMenuInflater().inflate(R.menu.reviewer, menu);
         mActionButtons.setCustomButtonsStatus(menu);
+        int alpha = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
         } else {
             menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_outline_white_24dp);
         }
+        menu.findItem(R.id.action_mark_card).getIcon().mutate().setAlpha(alpha);
 
         if (mCurrentCard != null) {
             switch (mCurrentCard.userFlag()) {
@@ -530,6 +532,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 break;
             }
         }
+        menu.findItem(R.id.action_flag).getIcon().mutate().setAlpha(alpha);
 
         // Undo button
         @DrawableRes int undoIcon;
@@ -544,9 +547,9 @@ public class Reviewer extends AbstractFlashcardViewer {
             undoIcon = R.drawable.ic_undo_white_24dp;
             undoEnabled = (colIsOpen() && getCol().undoAvailable());
         }
-        int alpha = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
+        int alpha_undo = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         menu.findItem(R.id.action_undo).setIcon(undoIcon);
-        menu.findItem(R.id.action_undo).setEnabled(undoEnabled).getIcon().mutate().setAlpha(alpha);
+        menu.findItem(R.id.action_undo).setEnabled(undoEnabled).getIcon().mutate().setAlpha(alpha_undo);
 
         // White board button
         if (mPrefWhiteboard) {
@@ -614,6 +617,10 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_bury).setIcon(R.drawable.ic_flip_to_back_white_24dp);
             menu.findItem(R.id.action_bury).setTitle(R.string.menu_bury_card);
         }
+        alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
+        menu.findItem(R.id.action_bury).getIcon().mutate().setAlpha(alpha);
+        menu.findItem(R.id.action_suspend).getIcon().mutate().setAlpha(alpha);
+
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_schedule), new ScheduleProvider(this));
         return super.onCreateOptionsMenu(menu);
     }
