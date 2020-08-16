@@ -123,7 +123,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         FIND_EMPTY_CARDS,
         CHECK_CARD_SELECTION,
         LOAD_COLLECTION_COMPLETE,
-        PRELOAD_NEXT_CARD
     }
 
     /**
@@ -451,10 +450,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case LOAD_COLLECTION_COMPLETE:
                 doInBackgroundLoadCollectionComplete();
-                break;
-
-            case PRELOAD_NEXT_CARD:
-                doInBackgroundPreloadNextCard();
                 break;
 
             default:
@@ -1872,15 +1867,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
         return new TaskData(new Object[] { hasUnsuspended, hasUnmarked});
-    }
-
-    public void doInBackgroundPreloadNextCard() {
-        try {
-            getCol().getSched().counts(); // Ensure counts are recomputed if necessary, to know queue to look for
-            getCol().getSched().preloadNextCard();
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundPreloadNextCard - RuntimeException on preloading card");
-        }
     }
 
     public void doInBackgroundLoadCollectionComplete() {

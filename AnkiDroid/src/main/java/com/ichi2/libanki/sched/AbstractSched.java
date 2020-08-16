@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.Task;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
@@ -41,7 +42,7 @@ public abstract class AbstractSched {
 
     /** Ensure that the question on the potential next card can be accessed quickly.
      */
-    public abstract void preloadNextCard();
+    public abstract void preloadNextCardTaskInBackground();
     public abstract void resetCounts();
     public abstract void resetQueues();
     /** Ensures that reset is executed before the next card is selected */

@@ -33,6 +33,8 @@ import android.util.Pair;
 
 import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.Task;
+import com.ichi2.async.TaskData;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -699,11 +701,17 @@ public class SchedV2 extends AbstractSched {
 
     /** pre load the potential next card. It may loads many card because, depending on the time taken, the next card may
      * be a card in review or not. */
-    public void preloadNextCard() {
-        for (CardQueue<? extends Card.Cache> caches: _fillNextCard()) {
-            caches.loadFirstCard();
-        }
+    // No need for a static object. The scheduler is not removed from memory
+    public void preloadNextCardTaskInBackground() {
+        Task task = (CollectionTask collectionTask) -> {
+            for (CardQueue<? extends Card.Cache> caches: _fillNextCard()) {
+                caches.loadFirstCard();
+            };
+            return null;
+        };
+        CollectionTask.launchCollectionTask(null, new TaskData(task));
     }
+
 
 
     /**
