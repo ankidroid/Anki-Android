@@ -128,21 +128,51 @@ public class SchedV2 extends AbstractSched {
         }
     }
 
-    protected abstract class CardQueue<T extends Card.Cache> extends LinkedList<T> {
+    protected abstract class CardQueue<T extends Card.Cache> {
+        private final LinkedList<T> mQueue = new LinkedList<>();
+
         public void loadFirstCard() {
-            if (!isEmpty()) {
+            if (!mQueue.isEmpty()) {
                 // No nead to reload. If the card was changed, reset would have been called and emptied the queue
-                get(0).loadQA(false, false);
+                mQueue.get(0).loadQA(false, false);
             }
         }
 
         public Card removeFirstCard() throws NoSuchElementException {
-            return remove().getCard();
+            return mQueue.remove().getCard();
         }
 
         public boolean remove(long cid) {
             // CardCache and LrnCache with the same id will be considered as equal so it's a valid implementation.
-            return remove(new Card.Cache(mCol, cid));
+            return mQueue.remove(new Card.Cache(mCol, cid));
+        }
+
+        public void add(T elt) {
+            mQueue.add(elt);
+        }
+
+        public void clear() {
+            mQueue.clear();
+        }
+
+        public boolean isEmpty() {
+            return mQueue.isEmpty();
+        }
+
+        public int size() {
+            return mQueue.size();
+        }
+
+        protected LinkedList<T> getQueue() {
+            return mQueue;
+        }
+
+        public void shuffle(Random r) {
+            Collections.shuffle(mQueue, r);
+        }
+
+        public Iterator<T> listIterator() {
+            return mQueue.listIterator();
         }
     }
 
@@ -155,6 +185,18 @@ public class SchedV2 extends AbstractSched {
     protected class LrnCardQueue extends CardQueue<LrnCard> {
         public void add(long due, long cid) {
             add(new LrnCard(due, cid));
+        }
+
+        public void add(int pos, LrnCard card) {
+            getQueue().add(pos, card);
+        }
+
+        public void sort() {
+            Collections.sort(getQueue());
+        }
+
+        public long getFirstDue() {
+            return getQueue().getFirst().mDue;
         }
     }
     protected final LrnCardQueue mLrnQueue = new LrnCardQueue();
@@ -1075,7 +1117,7 @@ public class SchedV2 extends AbstractSched {
                 mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
             // as it arrives sorted by did first, we need to sort it
-            Collections.sort(mLrnQueue);
+            mLrnQueue.sort();
             return !mLrnQueue.isEmpty();
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -1098,7 +1140,7 @@ public class SchedV2 extends AbstractSched {
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
-            if (mLrnQueue.getFirst().getDue() < cutoff) {
+            if (mLrnQueue.getFirstDue() < cutoff) {
                 return mLrnQueue.removeFirstCard();
                 // mLrnCount -= 1; see decrementCounts()
             }
@@ -1114,7 +1156,7 @@ public class SchedV2 extends AbstractSched {
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
-            if (mLrnQueue.getFirst().getDue() < cutoff) {
+            if (mLrnQueue.getFirstDue() < cutoff) {
                 return true;
                 // mLrnCount -= 1; see decrementCounts()
             }
@@ -1162,7 +1204,7 @@ public class SchedV2 extends AbstractSched {
                 // order
                 Random r = new Random();
                 r.setSeed(mToday);
-                Collections.shuffle(mLrnDayQueue, r);
+                mLrnDayQueue.shuffle(r);
                 // is the current did empty?
                 if (mLrnDayQueue.size() < mQueueLimit) {
                     mLrnDids.remove();
@@ -1280,7 +1322,7 @@ public class SchedV2 extends AbstractSched {
                 // sure we don't put it at the head of the queue and end up showing
                 // it twice in a row
                 if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
-                    long smallestDue = mLrnQueue.getFirst().getDue();
+                    long smallestDue = mLrnQueue.getFirstDue();
                     card.setDue(Math.max(card.getDue(), smallestDue + 1));
                 }
                 _sortIntoLrn(card.getDue(), card.getId());

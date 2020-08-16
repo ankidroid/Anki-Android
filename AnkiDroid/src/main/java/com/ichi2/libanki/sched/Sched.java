@@ -381,7 +381,7 @@ public class Sched extends SchedV2 {
                 mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
             // as it arrives sorted by did first, we need to sort it
-            Collections.sort(mLrnQueue);
+            mLrnQueue.sort();
             return !mLrnQueue.isEmpty();
         } finally {
             if (cur != null && !cur.isClosed()) {
@@ -398,7 +398,7 @@ public class Sched extends SchedV2 {
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
-            if (mLrnQueue.getFirst().getDue() < cutoff) {
+            if (mLrnQueue.getFirstDue() < cutoff) {
                 return mLrnQueue.removeFirstCard();
                 // mLrnCount -= card.getLeft() / 1000; See decrementCount()
             }
@@ -468,7 +468,7 @@ public class Sched extends SchedV2 {
                 // it twice in a row
                 card.setQueue(Consts.QUEUE_TYPE_LRN);
                 if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
-                    long smallestDue = mLrnQueue.getFirst().getDue();
+                    long smallestDue = mLrnQueue.getFirstDue();
                     card.setDue(Math.max(card.getDue(), smallestDue + 1));
                 }
                 _sortIntoLrn(card.getDue(), card.getId());
@@ -725,7 +725,7 @@ public class Sched extends SchedV2 {
                     } else {
                         Random r = new Random();
                         r.setSeed(mToday);
-                        Collections.shuffle(mRevQueue, r);
+                        mRevQueue.shuffle(r);
                     }
                     // is the current did empty?
                     if (mRevQueue.size() < lim) {
