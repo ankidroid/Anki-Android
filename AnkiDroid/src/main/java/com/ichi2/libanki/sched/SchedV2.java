@@ -2599,7 +2599,7 @@ public class SchedV2 extends AbstractSched {
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
-                List<Card.Cache> queue_object;
+                SimpleCardQueue queue_object;
                 if (queue == Consts.QUEUE_TYPE_REV) {
                     queue_object = mRevQueue;
                     if (buryRev) {
