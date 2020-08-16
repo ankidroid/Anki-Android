@@ -26,6 +26,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONArray;
 
@@ -36,13 +37,20 @@ import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameter;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+
+import timber.log.Timber;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 // Note: These tests can't be run individually but can from the class-level
@@ -138,5 +146,61 @@ public class AbstractSchedTest extends RobolectricTest {
                 });
         waitForAsyncTasksToComplete();
         assertTrue(executed[0]);
+    }
+
+    @Test
+    public void testCardQueue() {
+        Collection col = getCol();
+        SchedV2 sched = (SchedV2) col.getSched();
+        SchedV2.SimpleCardQueue queue = sched.new SimpleCardQueue();
+        assertThat(queue.size(), is(0));
+        final int nbCard = 6;
+        long[] cids = new long[nbCard];
+        for (int i = 0; i < nbCard; i++) {
+            Note note = addNoteUsingBasicModel("foo", "bar");
+            Card card = note.firstCard();
+            long cid = card.getId();
+            cids[i] = cid;
+            queue.add(cid);
+        }
+        assertThat(queue, hasSize(nbCard));
+        assertEquals(cids[0], queue.removeFirstCard().getId());
+        assertThat(queue, hasSize(nbCard - 1));
+        queue.remove(cids[1]);
+        assertThat(queue, hasSize(nbCard - 2));
+        queue.remove(cids[3]);
+        assertThat(queue, hasSize(nbCard - 3));
+        assertEquals(cids[2], queue.removeFirstCard().getId());
+        assertThat(queue, hasSize(nbCard - 4));
+        assertEquals(cids[4], queue.removeFirstCard().getId());
+        assertThat(queue, hasSize(nbCard - 5));
+    }
+
+    @Test
+    public void siblingCorrectlyBuried() {
+        // #6903
+        Collection col = getCol();
+        AbstractSched sched = col.getSched();
+        Models models = col.getModels();
+        DeckConfig dconf = col.getDecks().getConf(1);
+        dconf.getJSONObject("new").put("bury", true);
+        final int nbNote = 2;
+        Note[] notes = new Note[nbNote];
+        for (int i = 0; i < nbNote; i++) {
+            Note note  = addNoteUsingBasicAndReversedModel("front", "back");
+            notes[i] = note;
+        }
+        sched.reset();
+
+        for (int i = 0; i < nbNote; i++) {
+            Card card = sched.getCard();
+            assertArrayEquals(new int[] {nbNote * 2 - i, 0, 0}, sched.counts(card));
+            assertEquals(notes[i].firstCard().getId(), card.getId());
+            assertEquals(Consts.QUEUE_TYPE_NEW, card.getQueue());
+            sched.answerCard(card, sched.answerButtons(card));
+        }
+
+        Card card = sched.getCard();
+        assertNull(card);
     }
 }
