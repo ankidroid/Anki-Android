@@ -163,17 +163,17 @@ public class AbstractSchedTest extends RobolectricTest {
             cids[i] = cid;
             queue.add(cid);
         }
-        assertThat(queue, hasSize(nbCard));
+        assertThat(queue.size(), is(nbCard));
         assertEquals(cids[0], queue.removeFirstCard().getId());
-        assertThat(queue, hasSize(nbCard - 1));
+        assertThat(queue.size(), is(nbCard - 1));
         queue.remove(cids[1]);
-        assertThat(queue, hasSize(nbCard - 2));
+        assertThat(queue.size(), is(nbCard - 2));
         queue.remove(cids[3]);
-        assertThat(queue, hasSize(nbCard - 3));
+        assertThat(queue.size(), is(nbCard - 3));
         assertEquals(cids[2], queue.removeFirstCard().getId());
-        assertThat(queue, hasSize(nbCard - 4));
+        assertThat(queue.size(), is(nbCard - 4));
         assertEquals(cids[4], queue.removeFirstCard().getId());
-        assertThat(queue, hasSize(nbCard - 5));
+        assertThat(queue.size(), is(nbCard - 5));
     }
 
     @Test
