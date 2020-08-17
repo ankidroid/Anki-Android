@@ -19,16 +19,10 @@
 package com.ichi2.libanki.sched;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteConstraintException;
-import android.graphics.Typeface;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.style.StyleSpan;
 
-import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -46,11 +40,8 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;

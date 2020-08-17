@@ -297,4 +297,6 @@ public abstract class AbstractSched {
     /** Notifies the scheduler that there is no more current card. This is the case when a card is answered, when the
      * scheduler is reset... */
     public abstract void discardCurrentCard();
+
+    public abstract Collection getCol();
 }

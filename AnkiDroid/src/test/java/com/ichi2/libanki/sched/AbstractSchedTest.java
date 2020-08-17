@@ -152,7 +152,7 @@ public class AbstractSchedTest extends RobolectricTest {
     public void testCardQueue() {
         Collection col = getCol();
         SchedV2 sched = (SchedV2) col.getSched();
-        SchedV2.SimpleCardQueue queue = sched.new SimpleCardQueue();
+        SimpleCardQueue queue = new SimpleCardQueue(sched);
         assertThat(queue.size(), is(0));
         final int nbCard = 6;
         long[] cids = new long[nbCard];
