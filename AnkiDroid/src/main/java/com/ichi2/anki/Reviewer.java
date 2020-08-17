@@ -505,61 +505,67 @@ public class Reviewer extends AbstractFlashcardViewer {
         // NOTE: This is called every time a new question is shown via invalidate options menu
         getMenuInflater().inflate(R.menu.reviewer, menu);
         mActionButtons.setCustomButtonsStatus(menu);
-        int alpha = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
+        int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
+        MenuItem markCardIcon = menu.findItem(R.id.action_mark_card);
         if (mCurrentCard != null && mCurrentCard.note().hasTag("marked")) {
-            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
+            markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white_24dp);
         } else {
-            menu.findItem(R.id.action_mark_card).setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_outline_white_24dp);
+            markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_outline_white_24dp);
         }
-        menu.findItem(R.id.action_mark_card).getIcon().mutate().setAlpha(alpha);
+        markCardIcon.getIcon().mutate().setAlpha(alpha);
 
+        MenuItem flag_icon = menu.findItem(R.id.action_flag);
         if (mCurrentCard != null) {
             switch (mCurrentCard.userFlag()) {
             case 1:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_red);
+                flag_icon.setIcon(R.drawable.ic_flag_red);
                 break;
             case 2:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_orange);
+                flag_icon.setIcon(R.drawable.ic_flag_orange);
                 break;
             case 3:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_green);
+                flag_icon.setIcon(R.drawable.ic_flag_green);
                 break;
             case 4:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_blue);
+                flag_icon.setIcon(R.drawable.ic_flag_blue);
                 break;
             default:
-                menu.findItem(R.id.action_flag).setIcon(R.drawable.ic_flag_transparent);
+                flag_icon.setIcon(R.drawable.ic_flag_transparent);
                 break;
             }
         }
-        menu.findItem(R.id.action_flag).getIcon().mutate().setAlpha(alpha);
+        flag_icon.getIcon().mutate().setAlpha(alpha);
 
         // Undo button
-        @DrawableRes int undoIcon;
+        @DrawableRes int undoIconId;
         boolean undoEnabled;
         if (mShowWhiteboard && mWhiteboard != null && mWhiteboard.isUndoModeActive()) {
             // Whiteboard is here and strokes have been added at some point
-            undoIcon = R.drawable.ic_eraser_variant_white_24dp;
+            undoIconId = R.drawable.ic_eraser_variant_white_24dp;
             undoEnabled = !mWhiteboard.undoEmpty();
         } else {
             // We can arrive here even if `mShowWhiteboard &&
             // mWhiteboard != null` if no stroke had ever been made
-            undoIcon = R.drawable.ic_undo_white_24dp;
+            undoIconId = R.drawable.ic_undo_white_24dp;
             undoEnabled = (colIsOpen() && getCol().undoAvailable());
         }
         int alpha_undo = (undoEnabled && getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
-        menu.findItem(R.id.action_undo).setIcon(undoIcon);
-        menu.findItem(R.id.action_undo).setEnabled(undoEnabled).getIcon().mutate().setAlpha(alpha_undo);
+        MenuItem undoIcon = menu.findItem(R.id.action_undo);
+        undoIcon.setIcon(undoIconId);
+        undoIcon.setEnabled(undoEnabled).getIcon().mutate().setAlpha(alpha_undo);
 
+        MenuItem toggle_whiteboard_icon = menu.findItem(R.id.action_toggle_whiteboard);
+        MenuItem hide_whiteboard_icon = menu.findItem(R.id.action_hide_whiteboard);
+        MenuItem change_pen_color_icon = menu.findItem(R.id.action_change_whiteboard_pen_color);
         // White board button
         if (mPrefWhiteboard) {
             // Configure the whiteboard related items in the action bar
-            menu.findItem(R.id.action_toggle_whiteboard).setTitle(R.string.disable_whiteboard);
+            toggle_whiteboard_icon.setTitle(R.string.disable_whiteboard);
             // Always allow "Disable Whiteboard", even if "Enable Whiteboard" is disabled
-            menu.findItem(R.id.action_toggle_whiteboard).setVisible(true);
+            toggle_whiteboard_icon.setVisible(true);
 
             if (!mActionButtons.getStatus().hideWhiteboardIsDisabled()) {
-                menu.findItem(R.id.action_hide_whiteboard).setVisible(true);
+                hide_whiteboard_icon.setVisible(true);
             }
             if (!mActionButtons.getStatus().clearWhiteboardIsDisabled()) {
                 menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
@@ -568,7 +574,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 menu.findItem(R.id.action_save_whiteboard).setVisible(true);
             }
             if (!mActionButtons.getStatus().whiteboardPenColorIsDisabled()) {
-                menu.findItem(R.id.action_change_whiteboard_pen_color).setVisible(true);
+                change_pen_color_icon.setVisible(true);
             }
 
             Drawable whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white_24dp).mutate();
@@ -576,23 +582,23 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             if (mShowWhiteboard) {
                 whiteboardIcon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
-                menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
-                menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.hide_whiteboard);
+                hide_whiteboard_icon.setIcon(whiteboardIcon);
+                hide_whiteboard_icon.setTitle(R.string.hide_whiteboard);
 
                 whiteboardColorPaletteIcon.setAlpha(Themes.ALPHA_ICON_ENABLED_LIGHT);
-                menu.findItem(R.id.action_change_whiteboard_pen_color).setIcon(whiteboardColorPaletteIcon);
+                change_pen_color_icon.setIcon(whiteboardColorPaletteIcon);
             } else {
                 whiteboardIcon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
-                menu.findItem(R.id.action_hide_whiteboard).setIcon(whiteboardIcon);
-                menu.findItem(R.id.action_hide_whiteboard).setTitle(R.string.show_whiteboard);
+                hide_whiteboard_icon.setIcon(whiteboardIcon);
+                hide_whiteboard_icon.setTitle(R.string.show_whiteboard);
 
                 whiteboardColorPaletteIcon.setAlpha(Themes.ALPHA_ICON_DISABLED_LIGHT);
-                menu.findItem(R.id.action_change_whiteboard_pen_color).setEnabled(false);
-                menu.findItem(R.id.action_change_whiteboard_pen_color).setIcon(whiteboardColorPaletteIcon);
+                change_pen_color_icon.setEnabled(false);
+                change_pen_color_icon.setIcon(whiteboardColorPaletteIcon);
                 colorPalette.setVisibility(View.GONE);
             }
         } else {
-            menu.findItem(R.id.action_toggle_whiteboard).setTitle(R.string.enable_whiteboard);
+            toggle_whiteboard_icon.setTitle(R.string.enable_whiteboard);
         }
         if (colIsOpen() && getCol().getDecks().isDyn(getParentDid())) {
             menu.findItem(R.id.action_open_deck_options).setVisible(false);
@@ -601,25 +607,27 @@ public class Reviewer extends AbstractFlashcardViewer {
             menu.findItem(R.id.action_select_tts).setVisible(true);
         }
         // Setup bury / suspend providers
-        MenuItemCompat.setActionProvider(menu.findItem(R.id.action_suspend), new SuspendProvider(this));
-        MenuItemCompat.setActionProvider(menu.findItem(R.id.action_bury), new BuryProvider(this));
+        MenuItem suspend_icon = menu.findItem(R.id.action_suspend);
+        MenuItem bury_icon = menu.findItem(R.id.action_bury);
+        MenuItemCompat.setActionProvider(suspend_icon, new SuspendProvider(this));
+        MenuItemCompat.setActionProvider(bury_icon, new BuryProvider(this));
         if (suspendNoteAvailable()) {
-            menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_action_suspend_dropdown);
-            menu.findItem(R.id.action_suspend).setTitle(R.string.menu_suspend);
+            suspend_icon.setIcon(R.drawable.ic_action_suspend_dropdown);
+            suspend_icon.setTitle(R.string.menu_suspend);
         } else {
-            menu.findItem(R.id.action_suspend).setIcon(R.drawable.ic_action_suspend);
-            menu.findItem(R.id.action_suspend).setTitle(R.string.menu_suspend_card);
+            suspend_icon.setIcon(R.drawable.ic_action_suspend);
+            suspend_icon.setTitle(R.string.menu_suspend_card);
         }
         if (buryNoteAvailable()) {
-            menu.findItem(R.id.action_bury).setIcon(R.drawable.ic_flip_to_back_white_24px_dropdown);
-            menu.findItem(R.id.action_bury).setTitle(R.string.menu_bury);
+            bury_icon.setIcon(R.drawable.ic_flip_to_back_white_24px_dropdown);
+            bury_icon.setTitle(R.string.menu_bury);
         } else {
-            menu.findItem(R.id.action_bury).setIcon(R.drawable.ic_flip_to_back_white_24dp);
-            menu.findItem(R.id.action_bury).setTitle(R.string.menu_bury_card);
+            bury_icon.setIcon(R.drawable.ic_flip_to_back_white_24dp);
+            bury_icon.setTitle(R.string.menu_bury_card);
         }
         alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
-        menu.findItem(R.id.action_bury).getIcon().mutate().setAlpha(alpha);
-        menu.findItem(R.id.action_suspend).getIcon().mutate().setAlpha(alpha);
+        bury_icon.getIcon().mutate().setAlpha(alpha);
+        suspend_icon.getIcon().mutate().setAlpha(alpha);
 
         MenuItemCompat.setActionProvider(menu.findItem(R.id.action_schedule), new ScheduleProvider(this));
         return super.onCreateOptionsMenu(menu);
