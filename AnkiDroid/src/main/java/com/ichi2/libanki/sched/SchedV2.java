@@ -60,7 +60,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 import androidx.annotation.NonNull;
@@ -110,98 +109,13 @@ public class SchedV2 extends AbstractSched {
     protected double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
     // Queues
-    protected final SimpleCardQueue mNewQueue = new SimpleCardQueue();
-    protected class LrnCard extends Card.Cache implements Comparable<LrnCard> {
-        private final long mDue;
-        public LrnCard(long due, long cid) {
-            super(mCol, cid);
-            mDue = due;
-        }
+    protected final SimpleCardQueue mNewQueue = new SimpleCardQueue(this);
 
-        public long getDue () {
-            return mDue;
-        }
 
-        @Override
-        public int compareTo(LrnCard o) {
-            return Long.compare(mDue, o.mDue);
-        }
-    }
 
-    protected abstract class CardQueue<T extends Card.Cache> {
-        private final LinkedList<T> mQueue = new LinkedList<>();
-
-        public void loadFirstCard() {
-            if (!mQueue.isEmpty()) {
-                // No nead to reload. If the card was changed, reset would have been called and emptied the queue
-                mQueue.get(0).loadQA(false, false);
-            }
-        }
-
-        public Card removeFirstCard() throws NoSuchElementException {
-            return mQueue.remove().getCard();
-        }
-
-        public boolean remove(long cid) {
-            // CardCache and LrnCache with the same id will be considered as equal so it's a valid implementation.
-            return mQueue.remove(new Card.Cache(mCol, cid));
-        }
-
-        public void add(T elt) {
-            mQueue.add(elt);
-        }
-
-        public void clear() {
-            mQueue.clear();
-        }
-
-        public boolean isEmpty() {
-            return mQueue.isEmpty();
-        }
-
-        public int size() {
-            return mQueue.size();
-        }
-
-        protected LinkedList<T> getQueue() {
-            return mQueue;
-        }
-
-        public void shuffle(Random r) {
-            Collections.shuffle(mQueue, r);
-        }
-
-        public Iterator<T> listIterator() {
-            return mQueue.listIterator();
-        }
-    }
-
-    @VisibleForTesting
-    class SimpleCardQueue extends CardQueue<Card.Cache> {
-        public void add(long id) {
-            add(new Card.Cache(mCol, id));
-        }
-    }
-    protected class LrnCardQueue extends CardQueue<LrnCard> {
-        public void add(long due, long cid) {
-            add(new LrnCard(due, cid));
-        }
-
-        public void add(int pos, LrnCard card) {
-            getQueue().add(pos, card);
-        }
-
-        public void sort() {
-            Collections.sort(getQueue());
-        }
-
-        public long getFirstDue() {
-            return getQueue().getFirst().mDue;
-        }
-    }
-    protected final LrnCardQueue mLrnQueue = new LrnCardQueue();
-    protected final SimpleCardQueue mLrnDayQueue = new SimpleCardQueue();
-    protected final SimpleCardQueue mRevQueue = new SimpleCardQueue();
+    protected final LrnCardQueue mLrnQueue = new LrnCardQueue(this);
+    protected final SimpleCardQueue mLrnDayQueue = new SimpleCardQueue(this);
+    protected final SimpleCardQueue mRevQueue = new SimpleCardQueue(this);
 
     private LinkedList<Long> mNewDids = new LinkedList<>();
     protected LinkedList<Long> mLrnDids = new LinkedList<>();
@@ -3119,7 +3033,7 @@ public class SchedV2 extends AbstractSched {
                 idx++;
             }
         }
-        mLrnQueue.add(idx, new LrnCard(due, id));
+        mLrnQueue.add(idx, new LrnCard(mCol, due, id));
     }
 
 
@@ -3213,5 +3127,9 @@ public class SchedV2 extends AbstractSched {
         Card currentCard = mCurrentCard;
         List<Long> currentCardParentsDid = mCurrentCardParentsDid;
         return currentCard != null && currentCard.getQueue() == queue && currentCardParentsDid != null && currentCardParentsDid.contains(did);
+    }
+
+    public Collection getCol() {
+        return mCol;
     }
 }
