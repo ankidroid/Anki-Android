@@ -1322,7 +1322,7 @@ public class Collection<T extends Time> {
         return mUndo.size() > 0;
     }
 
-    public long undo() {
+    public @Nullable Card undo() {
         Undoable lastUndo = mUndo.removeLast();
         Timber.d("undo() of type %s", lastUndo.getDismissType());
         return lastUndo.undo(this);
@@ -1340,9 +1340,9 @@ public class Collection<T extends Time> {
         boolean wasLeech = card.note().hasTag("leech");
         Card clonedCard = card.clone();
         Undoable undoableReview = new Undoable(REVIEW) {
-            public long undo(Collection col) {
+            public @Nullable Card undo(@NonNull Collection col) {
                 col.getSched().undoReview(clonedCard, wasLeech);
-                return clonedCard.getId();
+                return clonedCard;
             }
         };
         markUndo(undoableReview);
