@@ -1623,6 +1623,96 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     };
 
+    public static class ChangeDeckMulti extends CollectionTask.DismissMulti {
+        private long mNewDid;
+        public ChangeDeckMulti(long[] cardIds, long newDid) {
+            super(cardIds);
+            mNewDid = newDid;
+        }
+
+
+        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+            Collection col = task.getCol();
+
+            Timber.i("Changing %d cards to deck: '%d'", cards.length, mNewDid);
+            Deck deckData = col.getDecks().get(mNewDid);
+
+            if (Decks.isDynamic(deckData)) {
+                //#5932 - can't change to a dynamic deck. Use "Rebuild"
+                Timber.w("Attempted to move to dynamic deck. Cancelling task.");
+                return new TaskData(false);
+            }
+
+            //Confirm that the deck exists (and is not the default)
+            try {
+                long actualId = deckData.getLong("id");
+                if (actualId != mNewDid) {
+                    Timber.w("Attempted to move to deck %d, but got %d", mNewDid, actualId);
+                    return new TaskData(false);
+                }
+            } catch (Exception e) {
+                Timber.e(e, "failed to check deck");
+                return new TaskData(false);
+            }
+
+            long[] changedCardIds = new long[cards.length];
+            for (int i = 0; i < cards.length; i++) {
+                changedCardIds[i] = cards[i].getId();
+            }
+            col.getSched().remFromDyn(changedCardIds);
+
+            long[] originalDids = new long[cards.length];
+
+            for (int i = 0; i < cards.length; i++) {
+                Card card = cards[i];
+                card.load();
+                // save original did for undo
+                originalDids[i] = card.getDid();
+                // then set the card ID to the new deck
+                card.setDid(mNewDid);
+                Note note = card.note();
+                note.flush();
+                // flush card too, in case, did has been changed
+                card.flush();
+            }
+
+            // mark undo for all at once
+            col.markUndo(new UndoChangeDeckMulti(cards, originalDids));
+            return null;
+        }
+    }
+
+
+
+
+    private static class UndoChangeDeckMulti extends Undoable {
+        private final Card[] cards;
+        private final long[] originalDids;
+
+
+        public UndoChangeDeckMulti(Card[] cards, long[] originalDids) {
+            super(Collection.DismissType.CHANGE_DECK_MULTI);
+            this.cards = cards;
+            this.originalDids = originalDids;
+        }
+
+
+        public long undo(Collection col) {
+            Timber.i("Undo: Change Decks");
+            // move cards to original deck
+            for (int i = 0; i < cards.length; i++) {
+                Card card = cards[i];
+                card.load();
+                card.setDid(originalDids[i]);
+                Note note = card.note();
+                note.flush();
+                card.flush();
+            }
+            return MULTI_CARD;  // don't fetch new card
+
+        }
+    }
+
     @CheckResult
     private static String formatQA(String text, Context context) {
         boolean showFilenames = AnkiDroidApp.getSharedPrefs(context).getBoolean("card_browser_show_media_filenames", false);
@@ -2864,8 +2954,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) //should only be called from changeDeck()
     void executeChangeCollectionTask(long[] ids, long newDid) {
         mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
-        CollectionTask.launchCollectionTask(DISMISS_MULTI, new ChangeDeckHandler(this),
-                new TaskData(new CollectionTask.ChangeDeckMulti(ids, newDid)));
+        CollectionTask.launchCollectionTask(DISMISS_MULTI, changeDeckHandler(),
+                new TaskData(new ChangeDeckMulti(ids, newDid)));
     }
 
 
