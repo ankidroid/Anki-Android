@@ -74,6 +74,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
@@ -660,10 +661,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("UNDO: Suspend Card %d", suspendedCard.getId());
             suspendedCard.flush(false);
-            return suspendedCard.getId();
+            return suspendedCard;
         }
     }
 
@@ -671,18 +672,18 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private static class UndoDeleteNote extends Undoable {
         private final Note note;
         private final ArrayList<Card> allCs;
-        private final long cid;
+        private final @NonNull Card card;
 
 
-        public UndoDeleteNote(Note note, ArrayList<Card> allCs, long cid) {
+        public UndoDeleteNote(Note note, ArrayList<Card> allCs, @NonNull Card card) {
             super(Collection.DismissType.DELETE_NOTE);
             this.note = note;
             this.allCs = allCs;
-            this.cid = cid;
+            this.card = card;
         }
 
 
-        public long undo(Collection col) {
+        public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Delete note");
             ArrayList<Long> ids = new ArrayList<>();
             note.flush(note.getMod(), false);
@@ -692,7 +693,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 ids.add(c.getId());
             }
             col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.collection2Array(ids)));
-            return cid;
+            return card;
         }
     }
 
@@ -751,8 +752,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                     case DELETE_NOTE: {
                         // collect undo information
                         ArrayList<Card> allCs = note.cards();
-                        long cid = card.getId();
-                        Undoable deleteNote = new UndoDeleteNote(note, allCs, cid);
+                        Undoable deleteNote = new UndoDeleteNote(note, allCs, card);
                         col.markUndo(deleteNote);
                         // delete note
                         col.remNotes(new long[] { note.getId() });
@@ -787,7 +787,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Suspend multiple cards");
             List<Long> toSuspendIds = new ArrayList<>();
             List<Long> toUnsuspendIds = new ArrayList<>();
@@ -813,7 +813,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             col.getSched().suspendCards(toSuspendIdsArray);
             col.getSched().unsuspendCards(toUnsuspendIdsArray);
 
-            return MULTI_CARD;  // don't fetch new card
+            return null;  // don't fetch new card
 
         }
     }
@@ -831,7 +831,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Delete notes");
             // undo all of these at once instead of one-by-one
             ArrayList<Long> ids = new ArrayList<>();
@@ -844,7 +844,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 ids.add(c.getId());
             }
             col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.collection2Array(ids)));
-            return MULTI_CARD;  // don't fetch new card
+            return null;  // don't fetch new card
 
         }
     }
@@ -862,7 +862,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Change Decks");
             // move cards to original deck
             for (int i = 0; i < cards.length; i++) {
@@ -873,7 +873,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 note.flush();
                 card.flush();
             }
-            return MULTI_CARD;  // don't fetch new card
+            return null;  // don't fetch new card
 
         }
     }
@@ -890,11 +890,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Mark notes");
             CardUtils.markAll(originalMarked, true);
             CardUtils.markAll(originalUnmarked, false);
-            return MULTI_CARD;  // don't fetch new card
+            return null;  // don't fetch new card
         }
     }
 
@@ -909,15 +909,17 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undoing action of type %s on %d cards", getDismissType(), cards_copied.length);
             for (int i = 0; i < cards_copied.length; i++) {
                 Card card = cards_copied[i];
                 card.flush(false);
             }
-            col.reset();
+            // /* card schedule change undone, reset and get
+            // new card */
             Timber.d("Single card non-review change undo succeeded");
-            return col.getSched().getCard().getId();
+            col.reset();
+            return col.getSched().getCard();
         }
     }
 
@@ -1149,9 +1151,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     @VisibleForTesting
     public static Card nonTaskUndo(Collection col) {
         AbstractSched sched = col.getSched();
-        Card newCard = null;
-        long cid = col.undo();
-        if (cid == MULTI_CARD) {
+        Card card = col.undo();
+        if (card == null) {
             /* multi-card action undone, no action to take here */
             Timber.d("Multi-select undo succeeded");
         } else {
@@ -1159,12 +1160,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             // a review was undone,
             /* card review undone, set up to review that card again */
             Timber.d("Single card review undo succeeded");
-            newCard = col.getCard(cid);
-            newCard.startTimer();
+            card.startTimer();
             col.reset();
-            sched.deferReset(newCard);
+            sched.deferReset(card);
         }
-        return newCard;
+        return card;
     }
 
     private TaskData doInBackgroundUndo() {
@@ -1172,10 +1172,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         AbstractSched sched = col.getSched();
         try {
             col.getDb().getDatabase().beginTransaction();
-            Card newCard = null;
             try {
-                newCard = nonTaskUndo(col);
-                publishProgress(new TaskData(newCard, 0));
+                Card card = nonTaskUndo(col);
+                publishProgress(new TaskData(card, 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
                 col.getDb().getDatabase().endTransaction();
