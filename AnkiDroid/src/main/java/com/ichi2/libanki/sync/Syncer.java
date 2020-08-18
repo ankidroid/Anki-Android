@@ -402,24 +402,24 @@ public class Syncer {
             // check for missing parent decks
             mCol.getSched().deckDueList();
             // return summary of deck
-            JSONArray ja = new JSONArray();
-            JSONArray sa = new JSONArray();
+            JSONArray check = new JSONArray();
+            JSONArray counts = new JSONArray();
 
             //#5666 - not in libAnki
             //We modified mReportLimit inside the scheduler, and this causes issues syncing dynamic decks.
             AbstractSched syncScheduler = mCol.createScheduler(SYNC_SCHEDULER_REPORT_LIMIT);
             for (int c : syncScheduler.recalculateCounts()) {
-                sa.put(c);
+                counts.put(c);
             }
-            ja.put(sa);
-            ja.put(mCol.getDb().queryScalar("SELECT count() FROM cards"));
-            ja.put(mCol.getDb().queryScalar("SELECT count() FROM notes"));
-            ja.put(mCol.getDb().queryScalar("SELECT count() FROM revlog"));
-            ja.put(mCol.getDb().queryScalar("SELECT count() FROM graves"));
-            ja.put(mCol.getModels().all().size());
-            ja.put(mCol.getDecks().all().size());
-            ja.put(mCol.getDecks().allConf().size());
-            result.put("client", ja);
+            check.put(counts);
+            check.put(mCol.getDb().queryScalar("SELECT count() FROM cards"));
+            check.put(mCol.getDb().queryScalar("SELECT count() FROM notes"));
+            check.put(mCol.getDb().queryScalar("SELECT count() FROM revlog"));
+            check.put(mCol.getDb().queryScalar("SELECT count() FROM graves"));
+            check.put(mCol.getModels().all().size());
+            check.put(mCol.getDecks().all().size());
+            check.put(mCol.getDecks().allConf().size());
+            result.put("client", check);
             return result;
         } catch (JSONException e) {
             Timber.e(e, "Syncer.sanityCheck()");

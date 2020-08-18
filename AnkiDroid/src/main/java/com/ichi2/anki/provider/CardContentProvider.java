@@ -996,8 +996,8 @@ public class CardContentProvider extends ContentProvider {
                 try {
                     models.addField(existingModel, field);
                     col.save();
-                    JSONArray ja = existingModel.getJSONArray("flds");
-                    return ContentUris.withAppendedId(uri, ja.length() - 1);
+                    JSONArray flds = existingModel.getJSONArray("flds");
+                    return ContentUris.withAppendedId(uri, flds.length() - 1);
                 } catch (ConfirmModSchemaException e) {
                     throw new IllegalArgumentException("Unable to insert field: " + name, e);
                 } catch (JSONException e) {

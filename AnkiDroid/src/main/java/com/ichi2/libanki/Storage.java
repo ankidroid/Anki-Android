@@ -185,10 +185,10 @@ public class Storage {
                         if (order >= 5) {
                             order -= 1;
                         }
-                        JSONArray ja = new JSONArray(Arrays.asList(new Object[] { d.getString("search"),
+                        JSONArray terms = new JSONArray(Arrays.asList(new Object[] { d.getString("search"),
                                 d.getInt("limit"), order }));
                         d.put("terms", new JSONArray());
-                        d.getJSONArray("terms").put(0, ja);
+                        d.getJSONArray("terms").put(0, terms);
                         d.remove("search");
                         d.remove("limit");
                         d.remove("order");
@@ -237,10 +237,10 @@ public class Storage {
         }
         t.put("name", "Cloze");
         // delete non-cloze cards for the model
-        JSONArray ja = m.getJSONArray("tmpls");
+        JSONArray tmpls = m.getJSONArray("tmpls");
         ArrayList<JSONObject> rem = new ArrayList<>();
-        for (int i = 1; i < ja.length(); i++) {
-            JSONObject ta = ja.getJSONObject(i);
+        for (int i = 1; i < tmpls.length(); i++) {
+            JSONObject ta = tmpls.getJSONObject(i);
             if (!ta.getString("afmt").contains("{{cloze:")) {
                 rem.add(ta);
             }
@@ -248,9 +248,9 @@ public class Storage {
         for (JSONObject r : rem) {
             col.getModels().remTemplate(m, r);
         }
-        JSONArray newArray = new JSONArray();
-        newArray.put(ja.getJSONObject(0));
-        m.put("tmpls", newArray);
+        JSONArray newTmpls = new JSONArray();
+        newTmpls.put(tmpls.getJSONObject(0));
+        m.put("tmpls", newTmpls);
         col.getModels()._updateTemplOrds(m);
         col.getModels().save(m);
 

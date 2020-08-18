@@ -698,17 +698,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             fld = fld.split(":")[1];
         }
         // loop through fields for a match
-        JSONArray ja = mCurrentCard.model().getJSONArray("flds");
-        for (int i = 0; i < ja.length(); i++) {
-            String name = ja.getJSONObject(i).getString("name");
+        JSONArray flds = mCurrentCard.model().getJSONArray("flds");
+        for (int i = 0; i < flds.length(); i++) {
+            String name = flds.getJSONObject(i).getString("name");
             if (name.equals(fld)) {
                 mTypeCorrect = mCurrentCard.note().getItem(name);
                 if (clozeIdx != 0) {
                     // narrow to cloze
                     mTypeCorrect = contentForCloze(mTypeCorrect, clozeIdx);
                 }
-                mTypeFont = ja.getJSONObject(i).getString("font");
-                mTypeSize = ja.getJSONObject(i).getInt("size");
+                mTypeFont = flds.getJSONObject(i).getString("font");
+                mTypeSize = flds.getJSONObject(i).getInt("size");
                 break;
             }
         }

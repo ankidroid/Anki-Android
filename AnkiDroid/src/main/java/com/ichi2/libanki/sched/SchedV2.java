@@ -433,10 +433,10 @@ public class SchedV2 extends AbstractSched {
         }
         for (Deck g : decks) {
             // add
-            JSONArray ja = g.getJSONArray("newToday");
-            ja.put(1, ja.getInt(1) - newc);
-            ja = g.getJSONArray("revToday");
-            ja.put(1, ja.getInt(1) - rev);
+            JSONArray today = g.getJSONArray("newToday");
+            today.put(1, today.getInt(1) - newc);
+            today = g.getJSONArray("revToday");
+            today.put(1, today.getInt(1) - rev);
             mCol.getDecks().save(g);
         }
     }
@@ -1255,10 +1255,10 @@ public class SchedV2 extends AbstractSched {
         left = left % 1000;
         try {
             double delay;
-            JSONArray ja = conf.getJSONArray("delays");
-            int len = ja.length();
+            JSONArray delays = conf.getJSONArray("delays");
+            int len = delays.length();
             try {
-                delay = ja.getDouble(len - left);
+                delay = delays.getDouble(len - left);
             } catch (JSONException e) {
                 if (conf.getJSONArray("delays").length() > 0) {
                     delay = conf.getJSONArray("delays").getDouble(0);
@@ -1370,14 +1370,13 @@ public class SchedV2 extends AbstractSched {
             return card.getIvl() + bonus;
         }
         int ideal;
-        JSONArray ja;
-        ja = conf.getJSONArray("ints");
+        JSONArray ints = conf.getJSONArray("ints");
         if (!early) {
             // graduate
-            ideal = ja.getInt(0);
+            ideal = ints.getInt(0);
         } else {
             // early remove
-            ideal = ja.getInt(1);
+            ideal = ints.getInt(1);
         }
         if (fuzz) {
             ideal = _fuzzedIvl(ideal);
@@ -2201,10 +2200,10 @@ public class SchedV2 extends AbstractSched {
     protected void update(Deck g) {
         for (String t : new String[] { "new", "rev", "lrn", "time" }) {
             String key = t + "Today";
-            JSONArray ja = g.getJSONArray(key);
+            JSONArray tToday = g.getJSONArray(key);
             if (g.getJSONArray(key).getInt(0) != mToday) {
-                ja.put(0, mToday);
-                ja.put(1, 0);
+                tToday.put(0, mToday);
+                tToday.put(1, 0);
             }
         }
     }

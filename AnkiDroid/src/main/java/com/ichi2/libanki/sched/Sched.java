@@ -540,13 +540,12 @@ public class Sched extends SchedV2 {
             return card.getIvl();
         }
         int ideal;
-        JSONArray ja;
-        ja = conf.getJSONArray("ints");
+        JSONArray ints = conf.getJSONArray("ints");
         if (!early) {
             // graduate
-            ideal = ja.getInt(0);
+            ideal = ints.getInt(0);
         } else {
-            ideal = ja.getInt(1);
+            ideal = ints.getInt(1);
         }
         if (adj) {
             return _adjRevIvl(card, ideal);

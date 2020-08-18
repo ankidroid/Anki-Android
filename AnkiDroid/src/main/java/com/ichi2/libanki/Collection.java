@@ -856,9 +856,9 @@ public class Collection {
 	        }
 	    } else {
 	        cms = new ArrayList<>();
-            JSONArray ja = note.model().getJSONArray("tmpls");
-            for (int i = 0; i < ja.length(); ++i) {
-                cms.add(ja.getJSONObject(i));
+            JSONArray tmpls = note.model().getJSONArray("tmpls");
+            for (int i = 0; i < tmpls.length(); ++i) {
+                cms.add(tmpls.getJSONObject(i));
             }
 	    }
 	    if (cms.isEmpty()) {
