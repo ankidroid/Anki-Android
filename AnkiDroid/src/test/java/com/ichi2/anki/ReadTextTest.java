@@ -24,6 +24,7 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Sound.SoundSide.QUESTION;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
@@ -72,7 +73,7 @@ public class ReadTextTest extends RobolectricTest{
 
     @CheckResult
     private String getValueFromReadSide(@NonNull String content) {
-        ReadText.readCardSide(0, content, 1, 1, "blank");
+        ReadText.readCardSide(QUESTION, content, 1, 1, "blank");
         return ReadText.getTextToSpeak();
     }
 }

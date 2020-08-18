@@ -31,6 +31,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.Sound;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -48,13 +49,13 @@ public class ReadText {
     private static WeakReference<Context> mReviewer;
     private static long mDid;
     private static int mOrd;
-    private static int mQuestionAnswer;
+    private static Sound.SoundSide mQuestionAnswer;
     public static final String NO_TTS = "0";
     public static ArrayList<String[]> sTextQueue = new ArrayList<>();
     private static Compat compat = CompatHelper.getCompat();
     private static Object mTtsParams = compat.initTtsParams();
 
-    public static int getmQuestionAnswer() {
+    public static Sound.SoundSide getmQuestionAnswer() {
         return mQuestionAnswer;
     }
 
@@ -76,7 +77,7 @@ public class ReadText {
     }
 
 
-    public static String getLanguage(long did, int ord, int qa) {
+    public static String getLanguage(long did, int ord, Sound.SoundSide qa) {
         return MetaDB.getLanguage(mReviewer.get(), did, ord, qa);
     }
 
@@ -89,7 +90,7 @@ public class ReadText {
      * @param ord  The card template ordinal
      * @param qa   The card question or card answer
      */
-    public static void selectTts(String text, long did, int ord, int qa) {
+    public static void selectTts(String text, long did, int ord, Sound.SoundSide qa) {
         //TODO: Consolidate with ReadText.readCardSide
         mTextToSpeak = text;
         mQuestionAnswer = qa;
@@ -158,14 +159,14 @@ public class ReadText {
     /**
      * Read a card side using a TTS service.
      *
-     * @param cardSide         Card side to be read; Sound.SOUNDS_QUESTION or Sound.SOUNDS_ANSWER.
+     * @param cardSide         Card side to be read; SoundSide.SOUNDS_QUESTION or SoundSide.SOUNDS_ANSWER.
      * @param cardSideContents Contents of the card side to be read, in HTML format. If it contains
      *                         any &lt;tts service="android"&gt; elements, only their contents is
      *                         read; otherwise, all text is read. See TtsParser for more details.
      * @param did              Index of the deck containing the card.
      * @param ord              The card template ordinal.
      */
-    public static void readCardSide(int cardSide, String cardSideContents, long did, int ord, String clozeReplacement) {
+    public static void readCardSide(Sound.SoundSide cardSide, String cardSideContents, long did, int ord, String clozeReplacement) {
         boolean isFirstText = true;
         for (TtsParser.LocalisedText textToRead : TtsParser.getTextsToRead(cardSideContents, clozeReplacement)) {
             if (!textToRead.getText().isEmpty()) {
@@ -194,7 +195,7 @@ public class ReadText {
      *
      * @param queueMode TextToSpeech.QUEUE_ADD or TextToSpeech.QUEUE_FLUSH.
      */
-    private static void textToSpeech(String text, long did, int ord, int qa, String localeCode,
+    private static void textToSpeech(String text, long did, int ord, Sound.SoundSide qa, String localeCode,
                                      int queueMode) {
         mTextToSpeak = text;
         mQuestionAnswer = qa;
