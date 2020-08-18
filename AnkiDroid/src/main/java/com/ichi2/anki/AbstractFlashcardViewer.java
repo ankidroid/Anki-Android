@@ -346,7 +346,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int mGestureVolumeUp;
     private int mGestureVolumeDown;
 
-    private Spanned mCardContent;
+    private String mCardContent;
     private String mBaseUrl;
 
     private int mFadeDuration = 300;
@@ -2204,15 +2204,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         content = CardAppearance.convertSmpToHtmlEntity(content);
-        mCardContent = new SpannedString(mCardTemplate.replace("::content::", content)
-                .replace("::style::", style).replace("::class::", cardClass));
+        mCardContent = mCardTemplate.replace("::content::", content)
+                .replace("::style::", style).replace("::class::", cardClass);
         Timber.d("base url = %s", mBaseUrl);
 
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
             try {
                 try (FileOutputStream f = new FileOutputStream(new File(CollectionHelper.getCurrentAnkiDroidDirectory(this),
                         "card.html"))) {
-                    f.write(mCardContent.toString().getBytes());
+                    f.write(mCardContent.getBytes());
                 }
             } catch (IOException e) {
                 Timber.d(e, "failed to save card");
@@ -2344,7 +2344,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.w("fillFlashCard() called with no card content");
             return;
         }
-        final String cardContent = mCardContent.toString();
+        final String cardContent = mCardContent;
         processCardAction(cardWebView -> loadContentIntoCard(cardWebView, cardContent));
         mGestureDetectorImpl.onFillFlashcard();
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
