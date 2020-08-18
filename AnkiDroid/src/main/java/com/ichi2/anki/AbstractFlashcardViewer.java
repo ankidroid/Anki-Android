@@ -1931,30 +1931,36 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         jsApiInit();
     }
 
-    protected void displayCardQuestion(boolean reload) {
-        Timber.d("displayCardQuestion()");
-        sDisplayAnswer = false;
-        this.mMissingImageHandler.onCardSideChange();
-
-        setInterface();
-
-        String displayString = "";
+    /** String, as it will be displayed in the web viewer. Sound/video removed, image escaped...
+     Or warning if required*/
+    private String displayString(boolean reload) {
         if (mCurrentCard.isEmpty()) {
-            displayString = getResources().getString(R.string.empty_card_warning);
+            return getResources().getString(R.string.empty_card_warning);
         } else {
             String question = mCurrentCard.q(reload);
             question = getCol().getMedia().escapeImages(question);
             question = typeAnsQuestionFilter(question);
 
             Timber.v("question: '%s'", question);
+
+            return CardAppearance.enrichWithQADiv(question, false);
+        }
+    }
+
+    protected void displayCardQuestion(boolean reload) {
+        Timber.d("displayCardQuestion()");
+        sDisplayAnswer = false;
+
+        setInterface();
+
+        String displayString = displayString(reload);
+        if (!mCurrentCard.isEmpty()) {
             // Show text entry based on if the user wants to write the answer
             if (typeAnswer()) {
                 mAnswerField.setVisibility(View.VISIBLE);
             } else {
                 mAnswerField.setVisibility(View.GONE);
             }
-
-            displayString = CardAppearance.enrichWithQADiv(question, false);
 
             //if (mSpeakText) {
             // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
