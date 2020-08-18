@@ -619,25 +619,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
-    public static class Flag extends DismissMulti {
-        public int mData;
-        public Flag(long[] cardIds, int data) {
-            super(cardIds);
-            mData = data;
-        }
-
-
-        public TaskData actualBackground(CollectionTask task, Card[] cards) {
-            Collection col = task.getCol();
-            int flag = mData;
-            col.setUserFlag(flag, getCardIds());
-            for (Card c : cards) {
-                c.load();
-            }
-            return null;
-        }
-    }
-
     public static class MarkNoteMulti extends DismissMulti {
         public MarkNoteMulti(long[] cardIds) {
             super(cardIds);

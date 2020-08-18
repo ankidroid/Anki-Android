@@ -909,10 +909,36 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
+
+    private FlagCardHandler flagCardHandler(){
+        return new FlagCardHandler(this);
+    }
+
+    private static class FlagCardHandler extends SuspendCardHandler{public FlagCardHandler(CardBrowser browser) {super(browser);}};
+
+    public static class Flag extends CollectionTask.DismissMulti {
+        public int mData;
+        public Flag(long[] cardIds, int data) {
+            super(cardIds);
+            mData = data;
+        }
+
+
+        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+            Collection col = task.getCol();
+            int flag = mData;
+            col.setUserFlag(flag, getCardIds());
+            for (Card c : cards) {
+                c.load();
+            }
+            return null;
+        }
+    }
+
     private void flagTask (int flag) {
         CollectionTask.launchCollectionTask(DISMISS_MULTI,
                                             flagCardHandler(),
-                                            new TaskData(new CollectionTask.Flag(getSelectedCardIds(), flag)));
+                                            new TaskData(new Flag(getSelectedCardIds(), flag)));
     }
 
     @Override
@@ -1605,12 +1631,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
     };
-
-    private FlagCardHandler flagCardHandler(){
-        return new FlagCardHandler(this);
-    }
-    private static class FlagCardHandler extends SuspendCardHandler{public FlagCardHandler(CardBrowser browser) {super(browser);}};
-
     private MarkCardHandler markCardHandler() {
         return new MarkCardHandler(this);
     }
