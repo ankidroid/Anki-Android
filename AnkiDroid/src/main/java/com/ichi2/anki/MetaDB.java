@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Pair;
 
+import com.ichi2.libanki.Sound;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -210,7 +212,7 @@ public class MetaDB {
      *            {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED}
      * @param language the language to associate, as a two-characters, lowercase string
      */
-    public static void storeLanguage(Context context, long did, int ord, int qa, String language) {
+    public static void storeLanguage(Context context, long did, int ord, Sound.SoundSide qa, String language) {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL("INSERT INTO languages (did, ord, qa, language) " + " VALUES (?, ?, ?, ?);", new Object[] {
@@ -228,7 +230,7 @@ public class MetaDB {
      *            {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED}
      * @param language the language to associate, as a two-characters, lowercase string
      */
-    public static void updateLanguage(Context context, long did, int ord, int qa, String language) {
+    public static void updateLanguage(Context context, long did, int ord, Sound.SoundSide qa, String language) {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL("UPDATE languages SET language = ? WHERE did = ? AND ord = ? AND qa = ?;", new Object[] {
@@ -247,7 +249,7 @@ public class MetaDB {
      *            {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED} return the language associate with
      *            the type, as a two-characters, lowercase string, or the empty string if no association is defined
      */
-    public static String getLanguage(Context context, long did, int ord, int qa) {
+    public static String getLanguage(Context context, long did, int ord, Sound.SoundSide qa) {
         openDBIfClosed(context);
         String language = "";
         Cursor cur = null;

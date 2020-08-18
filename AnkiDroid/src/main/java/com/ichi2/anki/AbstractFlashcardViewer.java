@@ -149,6 +149,7 @@ import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
+import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;
 
@@ -354,6 +355,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private Sound mSoundPlayer = new Sound();
 
+    /** Time taken o play all medias in mSoundPlayer */
     private long mUseTimerDynamicMS;
 
     /** File of the temporary mic record **/
@@ -1249,7 +1251,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void generateQuestionSoundList() {
-        mSoundPlayer.addSounds(mBaseUrl, mCurrentCard.qSimple(), Sound.SOUNDS_QUESTION);
+        mSoundPlayer.addSounds(mBaseUrl, mCurrentCard.qSimple(), SoundSide.QUESTION);
     }
 
 
@@ -1905,12 +1907,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if(!mUseTimer) {
                 return;
             }
-            if (ReadText.getmQuestionAnswer() == Sound.SOUNDS_QUESTION) {
+            if (ReadText.getmQuestionAnswer() == SoundSide.QUESTION) {
                 long delay = mWaitAnswerSecond * 1000;
                 if (delay > 0) {
                     mTimeoutHandler.postDelayed(mShowAnswerTask, delay);
                 }
-            } else if (ReadText.getmQuestionAnswer() == Sound.SOUNDS_ANSWER) {
+            } else if (ReadText.getmQuestionAnswer() == SoundSide.ANSWER) {
                 long delay = mWaitQuestionSecond * 1000;
                 if (delay > 0) {
                     mTimeoutHandler.postDelayed(mShowQuestionTask, delay);
@@ -2146,7 +2148,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // additionally, this condition reduces computation time
         if (!mAnswerSoundsAdded) {
             String answerSoundSource = removeFrontSideAudio(answer);
-            mSoundPlayer.addSounds(mBaseUrl, answerSoundSource, Sound.SOUNDS_ANSWER);
+            mSoundPlayer.addSounds(mBaseUrl, answerSoundSource, SoundSide.ANSWER);
             mAnswerSoundsAdded = true;
         }
     }
@@ -2173,7 +2175,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // leaving the card (such as when edited)
             mSoundPlayer.resetSounds();
             mAnswerSoundsAdded = false;
-            mSoundPlayer.addSounds(mBaseUrl, newContent, Sound.SOUNDS_QUESTION);
+            mSoundPlayer.addSounds(mBaseUrl, newContent, SoundSide.QUESTION);
             if (mUseTimer && !mAnswerSoundsAdded && getConfigForCurrentCard().optBoolean("autoplay", false)) {
                 addAnswerSounds(mCurrentCard.a());
             }
@@ -2240,27 +2242,27 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (!useTTS) { // Text to speech not in effect here
                 if (doAudioReplay && replayQuestion && sDisplayAnswer) {
                     // only when all of the above are true will question be played with answer, to match desktop
-                    mSoundPlayer.playSounds(Sound.SOUNDS_QUESTION_AND_ANSWER);
+                    mSoundPlayer.playSounds(SoundSide.QUESTION_AND_ANSWER);
                 } else if (sDisplayAnswer) {
-                    mSoundPlayer.playSounds(Sound.SOUNDS_ANSWER);
+                    mSoundPlayer.playSounds(SoundSide.ANSWER);
                     if (mUseTimer) {
-                        mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(Sound.SOUNDS_ANSWER);
+                        mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.ANSWER);
                     }
                 } else { // question is displayed
-                    mSoundPlayer.playSounds(Sound.SOUNDS_QUESTION);
+                    mSoundPlayer.playSounds(SoundSide.QUESTION);
                     // If the user wants to show the answer automatically
                     if (mUseTimer) {
-                        mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(Sound.SOUNDS_QUESTION_AND_ANSWER);
+                        mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.QUESTION_AND_ANSWER);
                     }
                 }
             } else { // Text to speech is in effect here
                 // If the question is displayed or if the question should be replayed, read the question
                 if (mTtsInitialized) {
                     if (!sDisplayAnswer || doAudioReplay && replayQuestion) {
-                        readCardText(mCurrentCard, Sound.SOUNDS_QUESTION);
+                        readCardText(mCurrentCard, SoundSide.QUESTION);
                     }
                     if (sDisplayAnswer) {
-                        readCardText(mCurrentCard, Sound.SOUNDS_ANSWER);
+                        readCardText(mCurrentCard, SoundSide.ANSWER);
                     }
                 } else {
                     mReplayOnTtsInit = true;
@@ -2275,11 +2277,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @param card     The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
-    private void readCardText(final Card card, final int cardSide) {
+    private void readCardText(final Card card, final SoundSide cardSide) {
         final String cardSideContent;
-        if (Sound.SOUNDS_QUESTION == cardSide) {
+        if (SoundSide.QUESTION == cardSide) {
             cardSideContent = card.q(true);
-        } else if (Sound.SOUNDS_ANSWER == cardSide) {
+        } else if (SoundSide.ANSWER == cardSide) {
             cardSideContent = card.getPureAnswer();
         } else {
             Timber.w("Unrecognised cardSide");
@@ -2296,10 +2298,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (mTtsInitialized) {
             if (!sDisplayAnswer) {
                 ReadText.selectTts(getTextForTts(mCurrentCard.q(true)), getDeckIdForCard(mCurrentCard), mCurrentCard.getOrd(),
-                        Sound.SOUNDS_QUESTION);
+                        SoundSide.QUESTION);
             } else {
                 ReadText.selectTts(getTextForTts(mCurrentCard.getPureAnswer()), getDeckIdForCard(mCurrentCard),
-                        mCurrentCard.getOrd(), Sound.SOUNDS_ANSWER);
+                        mCurrentCard.getOrd(), SoundSide.ANSWER);
             }
         }
     }

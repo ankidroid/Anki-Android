@@ -89,14 +89,16 @@ public class Sound {
     /**
      * Subset Flags: Flags that indicate the subset of sounds to involve
      */
-    public static final int  SOUNDS_QUESTION = 0;
-    public static final int  SOUNDS_ANSWER = 1;
-    public static final int  SOUNDS_QUESTION_AND_ANSWER = 2;
+    public enum SoundSide {
+        QUESTION,
+        ANSWER,
+        QUESTION_AND_ANSWER
+    };
 
     /**
      * Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true.
      */
-    private HashMap<Integer, ArrayList<String>> mSoundPaths = new HashMap<>();
+    private HashMap<SoundSide, ArrayList<String>> mSoundPaths = new HashMap<>();
 
 
     /**
@@ -124,9 +126,9 @@ public class Sound {
      * sorted by the order of appearance on the card.
      * @param soundDir -- base path to the media files
      * @param content -- parsed for sound entries, the entries expected in display order
-     * @param qa -- the base categorization of the sounds in the content, Sound.SOUNDS_QUESTION or Sound.SOUNDS_ANSWER
+     * @param qa -- the base categorization of the sounds in the content, SoundSide.SOUNDS_QUESTION or SoundSide.SOUNDS_ANSWER
      */
-    public void addSounds(String soundDir, String content, int qa) {
+    public void addSounds(String soundDir, String content, SoundSide qa) {
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
@@ -139,7 +141,7 @@ public class Sound {
             String sound = matcher.group(1);
 
             // Construct the sound path and store it
-            Timber.d("Adding Sound to side: %d", qa);
+            Timber.d("Adding Sound to side: %s", qa);
             mSoundPaths.get(qa).add(getSoundPath(soundDir, sound));
         }
     }
@@ -152,25 +154,25 @@ public class Sound {
      */
     private Boolean makeQuestionAnswerList() {
         // if combined list already exists, don't recreate
-        if (mSoundPaths.containsKey(Sound.SOUNDS_QUESTION_AND_ANSWER)) {
+        if (mSoundPaths.containsKey(SoundSide.QUESTION_AND_ANSWER)) {
             return false; // combined list already exists
         }
 
         // make combined list only if necessary to avoid an empty combined list
-        if (mSoundPaths.containsKey(Sound.SOUNDS_QUESTION) || mSoundPaths.containsKey(Sound.SOUNDS_ANSWER)) {
+        if (mSoundPaths.containsKey(SoundSide.QUESTION) || mSoundPaths.containsKey(SoundSide.ANSWER)) {
             // some list exists to place into combined list
-            mSoundPaths.put(Sound.SOUNDS_QUESTION_AND_ANSWER, new ArrayList<>());
+            mSoundPaths.put(SoundSide.QUESTION_AND_ANSWER, new ArrayList<>());
         } else { // no need to make list
             return false;
         }
 
-        ArrayList<String> combinedSounds = mSoundPaths.get(Sound.SOUNDS_QUESTION_AND_ANSWER);
+        ArrayList<String> combinedSounds = mSoundPaths.get(SoundSide.QUESTION_AND_ANSWER);
 
-        if (mSoundPaths.containsKey(Sound.SOUNDS_QUESTION)) {
-            combinedSounds.addAll(mSoundPaths.get(Sound.SOUNDS_QUESTION));
+        if (mSoundPaths.containsKey(SoundSide.QUESTION)) {
+            combinedSounds.addAll(mSoundPaths.get(SoundSide.QUESTION));
         }
-        if (mSoundPaths.containsKey(Sound.SOUNDS_ANSWER)) {
-            combinedSounds.addAll(mSoundPaths.get(Sound.SOUNDS_ANSWER));
+        if (mSoundPaths.containsKey(SoundSide.ANSWER)) {
+            combinedSounds.addAll(mSoundPaths.get(SoundSide.ANSWER));
         }
 
         return true;
@@ -225,14 +227,14 @@ public class Sound {
 
     /**
      * Plays the sounds for the indicated sides
-     * @param qa -- One of Sound.SOUNDS_QUESTION, Sound.SOUNDS_ANSWER, or Sound.SOUNDS_QUESTION_AND_ANSWER
+     * @param qa -- One of SoundSide.SOUNDS_QUESTION, SoundSide.SOUNDS_ANSWER, or SoundSide.SOUNDS_QUESTION_AND_ANSWER
      */
-    public void playSounds(int qa) {
+    public void playSounds(SoundSide qa) {
         // If there are sounds to play for the current card, start with the first one
         if (mSoundPaths != null && mSoundPaths.containsKey(qa)) {
-            Timber.d("playSounds %d", qa);
+            Timber.d("playSounds %s", qa);
             playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null);
-        } else if (mSoundPaths != null && qa == Sound.SOUNDS_QUESTION_AND_ANSWER) {
+        } else if (mSoundPaths != null && qa == SoundSide.QUESTION_AND_ANSWER) {
             if (makeQuestionAnswerList()) {
                 Timber.d("playSounds: playing both question and answer");
                 playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null);
@@ -244,11 +246,11 @@ public class Sound {
 
     /**
      * Returns length in milliseconds.
-     * @param qa -- One of Sound.SOUNDS_QUESTION, Sound.SOUNDS_ANSWER, or Sound.SOUNDS_QUESTION_AND_ANSWER
+     * @param qa -- One of SoundSide.SOUNDS_QUESTION, SoundSide.SOUNDS_ANSWER, or SoundSide.SOUNDS_QUESTION_AND_ANSWER
      */
-    public long getSoundsLength(int qa) {
+    public long getSoundsLength(SoundSide qa) {
         long length = 0;
-        if (mSoundPaths != null && (qa == Sound.SOUNDS_QUESTION_AND_ANSWER && makeQuestionAnswerList() || mSoundPaths.containsKey(qa))) {
+        if (mSoundPaths != null && (qa == SoundSide.QUESTION_AND_ANSWER && makeQuestionAnswerList() || mSoundPaths.containsKey(qa))) {
             MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
             for (String uri_string : mSoundPaths.get(qa)) {
                 Uri soundUri = Uri.parse(uri_string);
@@ -411,7 +413,7 @@ public class Sound {
         /**
          * Question/Answer
          */
-        private final int mQa;
+        private final SoundSide mQa;
 
         /**
          * next sound to play (onCompletion() is first called after the first (0) has been played)
@@ -419,7 +421,7 @@ public class Sound {
         private int mNextToPlay = 1;
 
 
-        private PlayAllCompletionListener(int qa) {
+        private PlayAllCompletionListener(SoundSide qa) {
             mQa = qa;
         }
 
@@ -502,9 +504,9 @@ public class Sound {
     }
 
     public boolean hasQuestion() {
-        return mSoundPaths.containsKey(Sound.SOUNDS_QUESTION);
+        return mSoundPaths.containsKey(SoundSide.QUESTION);
     }
     public boolean hasAnswer() {
-        return mSoundPaths.containsKey(Sound.SOUNDS_ANSWER);
+        return mSoundPaths.containsKey(SoundSide.ANSWER);
     }
 }
