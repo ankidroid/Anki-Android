@@ -1959,19 +1959,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         setInterface();
 
         String displayString = displayString(reload);
-        if (!mCurrentCard.isEmpty()) {
+        if (!mCurrentCard.isEmpty() && typeAnswer()) {
             // Show text entry based on if the user wants to write the answer
-            if (typeAnswer()) {
-                mAnswerField.setVisibility(View.VISIBLE);
-            } else {
-                mAnswerField.setVisibility(View.GONE);
-            }
-
-            //if (mSpeakText) {
-            // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
-            // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
-            //}
+            mAnswerField.setVisibility(View.VISIBLE);
+        } else {
+            mAnswerField.setVisibility(View.GONE);
         }
+
+        //if (mSpeakText) {
+        // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
+        // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
+        //}
 
         updateCard(displayString);
         hideEaseButtons();
