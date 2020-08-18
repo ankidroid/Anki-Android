@@ -59,6 +59,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -66,6 +67,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -75,6 +77,7 @@ import timber.log.Timber;
 import com.ichi2.async.TaskData;
 
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
+import static com.ichi2.libanki.Undoable.NO_REVIEW;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -1287,39 +1290,72 @@ public class Collection {
         mUndo = new LinkedList<>();
     }
 
+    public @Nullable Undoable lastUndo() {
+        cleanUndo();
+        LinkedList<Undoable> undoables = mUndo; // Copied for synchronization
+        if (undoables.isEmpty()) {
+           return null;
+        }
+        return undoables.getLast();
+    }
+
+    /**
+     * [type, undoName, data] type 1 = review; type 2 =
+     */
+    public void cleanUndo() {
+        synchronized (mUndo) {
+            Iterator<Undoable> it = mUndo.iterator();
+            while (it.hasNext()) {
+                Undoable undoable = it.next();
+                if (undoable.isStarted()) {
+                    it.remove();
+                }
+            }
+        }
+    }
+
 
     /** Undo menu item name, or "" if undo unavailable. */
     @VisibleForTesting
     public DismissType undoType() {
-        if (mUndo.size() > 0) {
-            return mUndo.getLast().getDismissType();
+        Undoable undoable = lastUndo();
+        if (undoable != null) {
+            return undoable.getDismissType();
         }
         return null;
     }
-    public String undoName(Resources res) {
-        DismissType type = undoType();
-        if (type != null) {
-            return res.getString(type.undoNameId);
+    public @NonNull String undoName(Resources res) {
+        Undoable undoable = lastUndo();
+        if (undoable != null) {
+            return undoable.getName(res);
         }
         return "";
     }
 
     public boolean undoAvailable() {
         Timber.d("undoAvailable() undo size: %s", mUndo.size());
-        return mUndo.size() > 0;
+        return !mUndo.isEmpty();
     }
 
     public long undo() {
-        Undoable lastUndo = mUndo.removeLast();
+        Undoable lastUndo = lastUndo();
         Timber.d("undo() of type %s", lastUndo.getDismissType());
-        return lastUndo.undo(this);
+        if (lastUndo != null ) {
+            return lastUndo.undo(this);
+        }
+        return Undoable.NOT_UNDONE;
     }
 
+    /* Undos may get cleared during execution of markUndo. In this case the action can't be undone*/
     public void markUndo(Undoable undo) {
         Timber.d("markUndo() of type %s", undo.getDismissType());
-        mUndo.add(undo);
-        while (mUndo.size() > UNDO_SIZE_MAX) {
-            mUndo.removeFirst();
+        LinkedList<Undoable> undos = mUndo; // Copied for synchronization
+        synchronized(undos) {
+            undos.add(undo);
+            cleanUndo();
+            while (undos.size() > UNDO_SIZE_MAX) {
+                undos.removeFirst();
+            }
         }
     }
 
@@ -1327,9 +1363,14 @@ public class Collection {
         boolean wasLeech = card.note().hasTag("leech");
         Card clonedCard = card.clone();
         Undoable undoableReview = new Undoable(REVIEW) {
-            public long undo(Collection col) {
+            protected long actualUndo(Collection col) {
                 col.getSched().undoReview(clonedCard, wasLeech);
                 return clonedCard.getId();
+            }
+
+            @Override
+            public boolean isReview() {
+                return true;
             }
         };
         markUndo(undoableReview);

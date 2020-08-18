@@ -92,6 +92,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         ANSWER_CARD,
         ADD_NOTE,
         UPDATE_NOTE,
+        UNDO_NAMED,
         UNDO,
         DISMISS,
         DISMISS_MULTI,
@@ -359,6 +360,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case UNDO:
                 return doInBackgroundUndo();
+
+            case UNDO_NAMED:
+                return doInBackgroundUndoNamed(param);
 
             case SEARCH_CARDS:
                 return doInBackgroundSearchCards(param);
@@ -641,7 +645,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("UNDO: Suspend Card %d", suspendedCard.getId());
             suspendedCard.flush(false);
             return suspendedCard.getId();
@@ -663,7 +667,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undo: Delete note");
             ArrayList<Long> ids = new ArrayList<>();
             note.flush(note.getMod(), false);
@@ -768,7 +772,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undo: Suspend multiple cards");
             List<Long> toSuspendIds = new ArrayList<>();
             List<Long> toUnsuspendIds = new ArrayList<>();
@@ -812,7 +816,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undo: Delete notes");
             // undo all of these at once instead of one-by-one
             ArrayList<Long> ids = new ArrayList<>();
@@ -843,7 +847,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undo: Change Decks");
             // move cards to original deck
             for (int i = 0; i < cards.length; i++) {
@@ -871,7 +875,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undo: Mark notes");
             CardUtils.markAll(originalMarked, true);
             CardUtils.markAll(originalUnmarked, false);
@@ -890,7 +894,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
 
-        public long undo(Collection col) {
+        protected long actualUndo(Collection col) {
             Timber.i("Undoing action of type %s on %d cards", getDismissType(), cards_copied.length);
             for (int i = 0; i < cards_copied.length; i++) {
                 Card card = cards_copied[i];
@@ -912,6 +916,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
         Collection.DismissType type = (Collection.DismissType) data[1];
+        Undoable undoable = null;
         try {
             col.getDb().getDatabase().beginTransaction();
             try {
@@ -940,9 +945,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                             sched.unsuspendCards(cids);
                         }
 
-                        Undoable suspendCardMulti = new UndoSuspendCardMulti(cards, originalSuspended);
-                        // mark undo for all at once
-                        col.markUndo(suspendCardMulti);
+                        undoable = new UndoSuspendCardMulti(cards, originalSuspended);
 
                         // reload cards because they'll be passed back to caller
                         for (Card c : cards) {
@@ -977,9 +980,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
                         CardUtils.markAll(new ArrayList<>(notes), !originalUnmarked.isEmpty());
 
-                        Undoable markNoteMulti = new UndoMarkNoteMulti(originalMarked, originalUnmarked);
-                        // mark undo for all at once
-                        col.markUndo(markNoteMulti);
+                        undoable = new UndoMarkNoteMulti(originalMarked, originalUnmarked);
 
                         // reload cards because they'll be passed back to caller
                         for (Card c : cards) {
@@ -1004,9 +1005,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         }
 
 
-                        Undoable deleteNoteMulti = new UndoDeleteNoteMulti(notesArr, allCards);
-
-                        col.markUndo(deleteNoteMulti);
+                        undoable = new UndoDeleteNoteMulti(notesArr, allCards);
 
                         col.remNotes(uniqueNoteIds);
                         sched.deferReset();
@@ -1060,9 +1059,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                             card.flush();
                         }
 
-                        Undoable changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
-                        // mark undo for all at once
-                        col.markUndo(changeDeckMulti);
+                        undoable = new UndoChangeDeckMulti(cards, originalDids);
                         break;
                     }
 
@@ -1073,8 +1070,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         try {
                             Timber.d("Saving undo information of type %s on %d cards", type, cards.length);
                             Card[] cards_copied = deepCopyCardArray(cards);
-                            Undoable repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(type, cards_copied);
-                            col.markUndo(repositionRescheduleResetCards);
+                            undoable = new UndoRepositionRescheduleResetCards(type, cards_copied);
                         } catch (CancellationException ce) {
                             Timber.i(ce, "Cancelled while handling type %s, skipping undo", type);
                         }
@@ -1104,9 +1100,14 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
             return new TaskData(false);
         }
+
+        if (undoable != null) {
+            // mark undo for all at once
+            col.markUndo(undoable);
+        }
         // pass cards back so more actions can be performed by the caller
         // (querying the cards again is unnecessarily expensive)
-        return new TaskData(true, cards);
+        return new TaskData(true, cards, undoable);
     }
 
     private Card[] deepCopyCardArray(Card[] originals) throws CancellationException {
@@ -1143,10 +1144,59 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 } else if (cid == MULTI_CARD) {
                     /* multi-card action undone, no action to take here */
                     Timber.d("Multi-select undo succeeded");
+                } else if (cid == NOT_UNDONE) {
+                    Timber.d("Undoing already processing");
                 } else {
                     // cid is actually a card id.
                     // a review was undone,
                      /* card review undone, set up to review that card again */
+                    Timber.d("Single card review undo succeeded");
+                    newCard = col.getCard(cid);
+                    newCard.startTimer();
+                    col.reset();
+                    sched.deferReset(newCard);
+                    col.getSched().setCurrentCard(newCard);
+                }
+                // TODO: handle leech undoing properly
+                publishProgress(new TaskData(newCard, 0));
+                col.getDb().getDatabase().setTransactionSuccessful();
+            } finally {
+                col.getDb().getDatabase().endTransaction();
+            }
+        } catch (RuntimeException e) {
+            Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
+            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
+            return new TaskData(false);
+        }
+        return new TaskData(true);
+    }
+
+
+    private TaskData doInBackgroundUndoNamed(TaskData param) {
+        Collection col = getCol();
+        AbstractSched sched = col.getSched();
+        Undoable undoable = param.getUndoable();
+        try {
+            col.getDb().getDatabase().beginTransaction();
+            Card newCard = null;
+            try {
+                Timber.d("undo() of type %s", undoable.getDismissType());
+                long cid = undoable.undo(getCol());
+                if (cid == NO_REVIEW) {
+                    // /* card schedule change undone, reset and get
+                    // new card */
+                    Timber.d("Single card non-review change undo succeeded");
+                    col.reset();
+                    newCard = sched.getCard();
+                } else if (cid == MULTI_CARD) {
+                    /* multi-card action undone, no action to take here */
+                    Timber.d("Multi-select undo succeeded");
+                } else if (cid == NOT_UNDONE) {
+                    Timber.d("Undoing already processing");
+                } else {
+                    // cid is actually a card id.
+                    // a review was undone,
+                    /* card review undone, set up to review that card again */
                     Timber.d("Single card review undo succeeded");
                     newCard = col.getCard(cid);
                     newCard.startTimer();
