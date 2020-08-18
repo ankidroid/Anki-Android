@@ -1943,12 +1943,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         setInterface();
 
-        String question;
         String displayString = "";
         if (mCurrentCard.isEmpty()) {
             displayString = getResources().getString(R.string.empty_card_warning);
         } else {
-            question = mCurrentCard.q(reload);
+            String question = mCurrentCard.q(reload);
             question = getCol().getMedia().escapeImages(question);
             question = typeAnsQuestionFilter(question);
 
