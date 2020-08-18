@@ -332,6 +332,30 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                 .show();
     }
 
+    private static class RepositionFieldDialogTask implements Task {
+        private final Model mModel;
+        private final JSONObject mField;
+        private final int mIndex;
+
+        public RepositionFieldDialogTask(Model mModel, JSONObject mField, int mIndex) {
+            this.mModel = mModel;
+            this.mField = mField;
+            this.mIndex = mIndex;
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundRepositionField");
+            Collection col = collectionTask.getCol();
+            try {
+                col.getModels().moveField(mModel, mField, mIndex);
+                col.save();
+            } catch (ConfirmModSchemaException e) {
+                //Should never be reached
+                return new TaskData(false);
+            }
+            return new TaskData(true);
+        }
+    }
 
     /*
      * Allows the user to select a number less than the number of fields in the current model to
@@ -360,11 +384,14 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                         } else {
                             changeHandler listener = changeFieldHandler();
                             // Input is valid, now attempt to modify
+                            JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
+                            /**
+                             * Repositions the given field in the given model
+                             */
+                            TaskData task = new TaskData(new RepositionFieldDialogTask(mMod, field, pos - 1));
                             try {
                                 mCol.modSchema();
-                                CollectionTask.launchCollectionTask(REPOSITION_FIELD, listener,
-                                        new TaskData(new Object[]{mMod,
-                                                mNoteFields.getJSONObject(mCurrentPos), pos - 1}));
+                                CollectionTask.launchCollectionTask(null, listener, task);
                             } catch (ConfirmModSchemaException e) {
 
                                 // Handle mod schema confirmation
@@ -375,9 +402,8 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                                         mCol.modSchemaNoCheck();
                                         String newPosition1 = mFieldNameInput.getText().toString();
                                         int pos1 = Integer.parseInt(newPosition1);
-                                        CollectionTask.launchCollectionTask(REPOSITION_FIELD,
-                                                listener, new TaskData(new Object[]{mMod,
-                                                        mNoteFields.getJSONObject(mCurrentPos), pos1 - 1}));
+                                        CollectionTask.launchCollectionTask(null,
+                                                listener, task);
                                         dismissContextMenu();
                                     } catch (JSONException e1) {
                                         throw new RuntimeException(e1);
