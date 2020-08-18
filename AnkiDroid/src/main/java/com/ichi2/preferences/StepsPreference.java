@@ -90,13 +90,13 @@ public class StepsPreference extends EditTextPreference {
      * @return The correctly formatted string or null if the input is not valid.
      */
     private String getValidatedStepsInput(String steps) {
-        JSONArray ja = convertToJSON(steps);
-        if (ja == null) {
+        JSONArray stepsAr = convertToJSON(steps);
+        if (stepsAr == null) {
             return null;
         } else {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < ja.length(); i++) {
-                sb.append(ja.getString(i)).append(" ");
+            for (int i = 0; i < stepsAr.length(); i++) {
+                sb.append(stepsAr.getString(i)).append(" ");
             }
             return sb.toString().trim();
         }
@@ -126,10 +126,10 @@ public class StepsPreference extends EditTextPreference {
      * @return The steps as a JSONArray or null if the steps are not valid.
      */
     public static JSONArray convertToJSON(String steps) {
-        JSONArray ja = new JSONArray();
+        JSONArray stepsAr = new JSONArray();
         steps = steps.trim();
         if (TextUtils.isEmpty(steps)) {
-            return ja;
+            return stepsAr;
         }
         try {
             for (String s : steps.split("\\s+")) {
@@ -141,9 +141,9 @@ public class StepsPreference extends EditTextPreference {
                 // Use whole numbers if we can (but still allow decimals)
                 int i = (int) f;
                 if (i == f) {
-                    ja.put(i);
+                    stepsAr.put(i);
                 } else {
-                    ja.put(f);
+                    stepsAr.put(f);
                 }
             }
         } catch (NumberFormatException e) {
@@ -152,7 +152,7 @@ public class StepsPreference extends EditTextPreference {
             // Can't serialize float. Value likely too big/small.
             return null;
         }
-        return ja;
+        return stepsAr;
     }
 
 

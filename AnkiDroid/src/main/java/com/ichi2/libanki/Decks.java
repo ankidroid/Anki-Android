@@ -955,10 +955,10 @@ public class Decks {
      * The currently active dids. Make sure to copy before modifying.
      */
     public LinkedList<Long> active() {
-        JSONArray ja = mCol.getConf().getJSONArray("activeDecks");
+        JSONArray activeDecks = mCol.getConf().getJSONArray("activeDecks");
         LinkedList<Long> result = new LinkedList<>();
-        for (int i = 0; i < ja.length(); i++) {
-            result.add(ja.getLong(i));
+        for (int i = 0; i < activeDecks.length(); i++) {
+            result.add(activeDecks.getLong(i));
         }
         return result;
     }
@@ -988,11 +988,11 @@ public class Decks {
         // and active decks (current + all children)
         TreeMap<String, Long> actv = children(did); // Note: TreeMap is already sorted
         actv.put(name, did);
-        JSONArray ja = new JSONArray();
+        JSONArray activeDecks = new JSONArray();
         for (Long n : actv.values()) {
-            ja.put(n);
+            activeDecks.put(n);
         }
-        mCol.getConf().put("activeDecks", ja);
+        mCol.getConf().put("activeDecks", activeDecks);
         mCol.setMod();
     }
 

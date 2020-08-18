@@ -834,11 +834,11 @@ public class NoteEditor extends AnkiActivity {
             mEditorNote.model().put("did", mCurrentDid);
             // Save tags to model
             mEditorNote.setTagsFromStr(tagsAsString(mSelectedTags));
-            JSONArray ja = new JSONArray();
+            JSONArray tags = new JSONArray();
             for (String t : mSelectedTags) {
-                ja.put(t);
+                tags.put(t);
             }
-            getCol().getModels().current().put("tags", ja);
+            getCol().getModels().current().put("tags", tags);
             getCol().getModels().setChanged();
             CollectionTask.launchCollectionTask(ADD_NOTE, mSaveNoteHandler, new TaskData(mEditorNote));
             mReloadRequired = true;

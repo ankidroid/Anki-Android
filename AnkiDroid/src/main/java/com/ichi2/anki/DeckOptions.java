@@ -217,19 +217,19 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getJSONObject("new").put("perDay", value);
                                 break;
                             case "newGradIvl": {
-                                JSONArray ja = new JSONArray(); // [graduating, easy]
+                                JSONArray newInts = new JSONArray(); // [graduating, easy]
 
-                                ja.put(value);
-                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(1));
-                                mOptions.getJSONObject("new").put("ints", ja);
+                                newInts.put(value);
+                                newInts.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(1));
+                                mOptions.getJSONObject("new").put("ints", newInts);
                                 break;
                             }
                             case "newEasy": {
-                                JSONArray ja = new JSONArray(); // [graduating, easy]
+                                JSONArray newInts = new JSONArray(); // [graduating, easy]
 
-                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(0));
-                                ja.put(value);
-                                mOptions.getJSONObject("new").put("ints", ja);
+                                newInts.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(0));
+                                newInts.put(value);
+                                mOptions.getJSONObject("new").put("ints", newInts);
                                 break;
                             }
                             case "newBury":

@@ -45,10 +45,10 @@ public class RemoteServer extends HttpSyncer {
     public Response hostKey(String user, String pw) throws UnknownHttpResponseException {
         try {
             mPostVars = new HashMap<>();
-            JSONObject jo = new JSONObject();
-            jo.put("u", user);
-            jo.put("p", pw);
-            return super.req("hostKey", HttpSyncer.getInputStream(Utils.jsonToString(jo)));
+            JSONObject credentials = new JSONObject();
+            credentials.put("u", user);
+            credentials.put("p", pw);
+            return super.req("hostKey", HttpSyncer.getInputStream(Utils.jsonToString(credentials)));
         } catch (JSONException e) {
             return null;
         }
@@ -60,11 +60,11 @@ public class RemoteServer extends HttpSyncer {
         mPostVars = new HashMap<>();
         mPostVars.put("k", mHKey);
         mPostVars.put("s", mSKey);
-        JSONObject jo = new JSONObject();
-        jo.put("v", Consts.SYNC_VER);
-        jo.put("cv",
+        JSONObject meta = new JSONObject();
+        meta.put("v", Consts.SYNC_VER);
+        meta.put("cv",
                 String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
-        return super.req("meta", HttpSyncer.getInputStream(Utils.jsonToString(jo)));
+        return super.req("meta", HttpSyncer.getInputStream(Utils.jsonToString(meta)));
     }
 
 

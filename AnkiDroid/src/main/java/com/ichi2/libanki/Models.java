@@ -433,12 +433,11 @@ public class Models {
 
     /** "Mapping of field name -> (ord, field). */
     public Map<String, Pair<Integer, JSONObject>> fieldMap(JSONObject m) {
-        JSONArray ja;
-        ja = m.getJSONArray("flds");
+        JSONArray flds = m.getJSONArray("flds");
         // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
         Map<String, Pair<Integer, JSONObject>> result = new HashMap<>();
-        for (int i = 0; i < ja.length(); i++) {
-            JSONObject f = ja.getJSONObject(i);
+        for (int i = 0; i < flds.length(); i++) {
+            JSONObject f = flds.getJSONObject(i);
             result.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
         }
         return result;
@@ -446,11 +445,10 @@ public class Models {
 
 
     public static ArrayList<String> fieldNames(Model m) {
-        JSONArray ja;
-        ja = m.getJSONArray("flds");
+        JSONArray flds = m.getJSONArray("flds");
         ArrayList<String> names = new ArrayList<>();
-        for (int i = 0; i < ja.length(); i++) {
-            names.add(ja.getJSONObject(i).getString("name"));
+        for (int i = 0; i < flds.length(); i++) {
+            names.add(flds.getJSONObject(i).getString("name"));
         }
         return names;
 
@@ -473,9 +471,9 @@ public class Models {
     private void _addField(Model m, JSONObject field) {
         // do the actual work of addField. Do not check whether model
         // is not new.
-		JSONArray ja = m.getJSONArray("flds");
-		ja.put(field);
-		m.put("flds", ja);
+		JSONArray flds = m.getJSONArray("flds");
+		flds.put(field);
+		m.put("flds", flds);
 		_updateFieldOrds(m);
 		save(m);
 		_transformFields(m, new TransformFieldAdd());
@@ -519,17 +517,17 @@ public class Models {
 
     public void remField(Model m, JSONObject field) throws ConfirmModSchemaException {
         mCol.modSchema();
-        JSONArray ja = m.getJSONArray("flds");
-        JSONArray ja2 = new JSONArray();
+        JSONArray flds = m.getJSONArray("flds");
+        JSONArray flds2 = new JSONArray();
         int idx = -1;
-        for (int i = 0; i < ja.length(); ++i) {
-            if (field.equals(ja.getJSONObject(i))) {
+        for (int i = 0; i < flds.length(); ++i) {
+            if (field.equals(flds.getJSONObject(i))) {
                 idx = i;
                 continue;
             }
-            ja2.put(ja.getJSONObject(i));
+            flds2.put(flds.getJSONObject(i));
         }
-        m.put("flds", ja2);
+        m.put("flds", flds2);
         int sortf = m.getInt("sortf");
         if (sortf >= m.getJSONArray("flds").length()) {
             m.put("sortf", sortf - 1);
@@ -564,12 +562,12 @@ public class Models {
 
     public void moveField(Model m, JSONObject field, int idx) throws ConfirmModSchemaException {
         mCol.modSchema();
-        JSONArray ja = m.getJSONArray("flds");
+        JSONArray flds = m.getJSONArray("flds");
         ArrayList<JSONObject> l = new ArrayList<>();
         int oldidx = -1;
-        for (int i = 0; i < ja.length(); ++i) {
-            l.add(ja.getJSONObject(i));
-            if (field.equals(ja.getJSONObject(i))) {
+        for (int i = 0; i < flds.length(); ++i) {
+            l.add(flds.getJSONObject(i));
+            if (field.equals(flds.getJSONObject(i))) {
                 oldidx = i;
                 if (idx == oldidx) {
                     return;
@@ -583,9 +581,9 @@ public class Models {
         l.add(idx, field);
         m.put("flds", new JSONArray(l));
         // restore sort field
-        ja = m.getJSONArray("flds");
-        for (int i = 0; i < ja.length(); ++i) {
-            if (Utils.jsonToString(ja.getJSONObject(i)).equals(sortf)) {
+        flds = m.getJSONArray("flds");
+        for (int i = 0; i < flds.length(); ++i) {
+            if (Utils.jsonToString(flds.getJSONObject(i)).equals(sortf)) {
                 m.put("sortf", i);
                 break;
             }
@@ -644,10 +642,9 @@ public class Models {
 
 
     public void _updateFieldOrds(JSONObject m) {
-        JSONArray ja;
-        ja = m.getJSONArray("flds");
-        for (int i = 0; i < ja.length(); i++) {
-            JSONObject f = ja.getJSONObject(i);
+        JSONArray flds = m.getJSONArray("flds");
+        for (int i = 0; i < flds.length(); i++) {
+            JSONObject f = flds.getJSONObject(i);
             f.put("ord", i);
         }
     }
@@ -692,9 +689,9 @@ public class Models {
     private void _addTemplate(Model m, JSONObject template) {
         // do the actual work of addTemplate. Do not consider whether
         // model is new or not.
-        JSONArray ja = m.getJSONArray("tmpls");
-        ja.put(template);
-        m.put("tmpls", ja);
+        JSONArray tmpls = m.getJSONArray("tmpls");
+        tmpls.put(template);
+        m.put("tmpls", tmpls);
         _updateTemplOrds(m);
         save(m);
     }
@@ -733,10 +730,10 @@ public class Models {
             return false;
         }
         // find cards using this template
-        JSONArray ja = m.getJSONArray("tmpls");
+        JSONArray tmpls = m.getJSONArray("tmpls");
         int ord = -1;
-        for (int i = 0; i < ja.length(); ++i) {
-            if (ja.getJSONObject(i).equals(template)) {
+        for (int i = 0; i < tmpls.length(); ++i) {
+            if (tmpls.getJSONObject(i).equals(template)) {
                 ord = i;
                 break;
             }
@@ -761,15 +758,15 @@ public class Models {
             .execute(
                      "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
                      mCol.usn(), Utils.intTime(), m.getLong("id"), ord);
-        JSONArray tmpls = m.getJSONArray("tmpls");
-        JSONArray ja2 = new JSONArray();
+        tmpls = m.getJSONArray("tmpls");
+        JSONArray tmpls2 = new JSONArray();
         for (int i = 0; i < tmpls.length(); ++i) {
             if (template.equals(tmpls.getJSONObject(i))) {
                 continue;
             }
-            ja2.put(tmpls.getJSONObject(i));
+            tmpls2.put(tmpls.getJSONObject(i));
         }
-        m.put("tmpls", ja2);
+        m.put("tmpls", tmpls2);
         _updateTemplOrds(m);
         save(m);
         Timber.d("remTemplate done working");
@@ -813,28 +810,27 @@ public class Models {
 
 
     public static void _updateTemplOrds(Model m) {
-        JSONArray ja;
-        ja = m.getJSONArray("tmpls");
-        for (int i = 0; i < ja.length(); i++) {
-            JSONObject f = ja.getJSONObject(i);
+        JSONArray tmpls = m.getJSONArray("tmpls");
+        for (int i = 0; i < tmpls.length(); i++) {
+            JSONObject f = tmpls.getJSONObject(i);
             f.put("ord", i);
         }
     }
 
 
     public void moveTemplate(Model m, JSONObject template, int idx) {
-        JSONArray ja = m.getJSONArray("tmpls");
+        JSONArray tmpls = m.getJSONArray("tmpls");
         int oldidx = -1;
         ArrayList<JSONObject> l = new ArrayList<>();
         HashMap<Integer, Integer> oldidxs = new HashMap<>();
-        for (int i = 0; i < ja.length(); ++i) {
-            if (ja.getJSONObject(i).equals(template)) {
+        for (int i = 0; i < tmpls.length(); ++i) {
+            if (tmpls.getJSONObject(i).equals(template)) {
                 oldidx = i;
                 if (idx == oldidx) {
                     return;
                 }
             }
-            JSONObject t = ja.getJSONObject(i);
+            JSONObject t = tmpls.getJSONObject(i);
             oldidxs.put(t.hashCode(), t.getInt("ord"));
             l.add(t);
         }
@@ -844,11 +840,11 @@ public class Models {
         _updateTemplOrds(m);
         // generate change map - We use StringBuilder
         StringBuilder sb = new StringBuilder();
-        ja = m.getJSONArray("tmpls");
-        for (int i = 0; i < ja.length(); ++i) {
-            JSONObject t = ja.getJSONObject(i);
+        tmpls = m.getJSONArray("tmpls");
+        for (int i = 0; i < tmpls.length(); ++i) {
+            JSONObject t = tmpls.getJSONObject(i);
             sb.append("when ord = ").append(oldidxs.get(t.hashCode())).append(" then ").append(t.getInt("ord"));
-            if (i != ja.length() - 1) {
+            if (i != tmpls.length() - 1) {
                 sb.append(" ");
             }
         }
