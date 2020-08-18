@@ -78,9 +78,12 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Undoable;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.WrongId;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
@@ -1032,7 +1035,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 if (mInMultiSelectMode) {
                     CollectionTask.launchCollectionTask(DISMISS_MULTI,
                             mDeleteNoteHandler,
-                            new TaskData(new CollectionTask.DeleteNoteMulti(getSelectedCardIds())));
+                            new TaskData(new DeleteNoteMulti(getSelectedCardIds())));
 
                     mCheckedCards.clear();
                     endMultiSelectMode();
@@ -1676,6 +1679,68 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }, browser.mCardsListView, null);
         }
     };
+
+    public static class DeleteNoteMulti extends CollectionTask.DismissMulti {
+        public DeleteNoteMulti(long[] cardIds) {
+            super(cardIds);
+        }
+
+
+        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+            Collection col = task.getCol();
+            AbstractSched sched = col.getSched();
+            // list of all ids to pass to remNotes method.
+            // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
+            Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
+            List<Card> allCards = CardUtils.getAllCards(notes);
+            // delete note
+            long[] uniqueNoteIds = new long[notes.size()];
+            Note[] notesArr = notes.toArray(new Note[notes.size()]);
+            int count = 0;
+            for (Note note : notes) {
+                uniqueNoteIds[count] = note.getId();
+                count++;
+            }
+
+            col.markUndo(new UndoDeleteNoteMulti(notesArr, allCards));
+
+            col.remNotes(uniqueNoteIds);
+            sched.deferReset();
+            // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
+            task.doProgress(new TaskData(allCards.toArray(new Card[allCards.size()])));
+            return null;
+        }
+    }
+
+    private static class UndoDeleteNoteMulti extends Undoable {
+        private final Note[] notesArr;
+        private final List<Card> allCards;
+
+
+        public UndoDeleteNoteMulti(Note[] notesArr, List<Card> allCards) {
+            super(Collection.DismissType.DELETE_NOTE_MULTI);
+            this.notesArr = notesArr;
+            this.allCards = allCards;
+        }
+
+
+        public long undo(Collection col) {
+            Timber.i("Undo: Delete notes");
+            // undo all of these at once instead of one-by-one
+            ArrayList<Long> ids = new ArrayList<>();
+            for (Note n : notesArr) {
+                n.flush(n.getMod(), false);
+                ids.add(n.getId());
+            }
+            for (Card c : allCards) {
+                c.flush(false);
+                ids.add(c.getId());
+            }
+            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.collection2Array(ids)));
+            return MULTI_CARD;  // don't fetch new card
+
+        }
+    }
 
     private final UndoHandler mUndoHandler = new UndoHandler(this);
     private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse {
