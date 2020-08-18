@@ -555,7 +555,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         @CheckResult @NonNull
         private JSONObject getCurrentTemplate() {
             int currentCardTemplateIndex = getCurrentCardTemplateIndex();
-            return (JSONObject) mTemplateEditor.getTempModel().getModel().getJSONArray("tmpls").get(currentCardTemplateIndex);
+            return mTemplateEditor.getTempModel().getModel().getJSONArray("tmpls").getJSONObject(currentCardTemplateIndex);
         }
 
 
@@ -772,8 +772,8 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             JSONObject oldTemplate = templates.getJSONObject(oldPosition);
             newTemplate = Models.newTemplate(newCardName(templates));
             // Set up question & answer formats
-            newTemplate.put("qfmt", oldTemplate.get("qfmt"));
-            newTemplate.put("afmt", oldTemplate.get("afmt"));
+            newTemplate.put("qfmt", oldTemplate.getString("qfmt"));
+            newTemplate.put("afmt", oldTemplate.getString("afmt"));
             // Reverse the front and back if only one template
             if (templates.length() == 1) {
                 flipQA(newTemplate);

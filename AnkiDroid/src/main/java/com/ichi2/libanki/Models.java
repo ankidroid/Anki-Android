@@ -261,7 +261,7 @@ public class Models {
 
 
     public void setCurrent(Model m) {
-        mCol.getConf().put("curModel", m.get("id"));
+        mCol.getConf().put("curModel", m.getLong("id"));
         mCol.setMod();
     }
 
@@ -527,7 +527,7 @@ public class Models {
                 idx = i;
                 continue;
             }
-            ja2.put(ja.get(i));
+            ja2.put(ja.getJSONObject(i));
         }
         m.put("flds", ja2);
         int sortf = m.getInt("sortf");
@@ -736,7 +736,7 @@ public class Models {
         JSONArray ja = m.getJSONArray("tmpls");
         int ord = -1;
         for (int i = 0; i < ja.length(); ++i) {
-            if (ja.get(i).equals(template)) {
+            if (ja.getJSONObject(i).equals(template)) {
                 ord = i;
                 break;
             }
@@ -767,7 +767,7 @@ public class Models {
             if (template.equals(tmpls.getJSONObject(i))) {
                 continue;
             }
-            ja2.put(tmpls.get(i));
+            ja2.put(tmpls.getJSONObject(i));
         }
         m.put("tmpls", ja2);
         _updateTemplOrds(m);
@@ -828,7 +828,7 @@ public class Models {
         ArrayList<JSONObject> l = new ArrayList<>();
         HashMap<Integer, Integer> oldidxs = new HashMap<>();
         for (int i = 0; i < ja.length(); ++i) {
-            if (ja.get(i).equals(template)) {
+            if (ja.getJSONObject(i).equals(template)) {
                 oldidx = i;
                 if (idx == oldidx) {
                     return;

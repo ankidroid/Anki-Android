@@ -1088,7 +1088,7 @@ public class Collection {
         }
         int cardNum = ord + 1;
         fields.put("Tags", tags.trim());
-        fields.put("Type", (String) model.get("name"));
+        fields.put("Type", model.getString("name"));
         fields.put("Deck", mDecks.name(did));
         String baseName = Decks.basename(fields.get("Deck"));
         fields.put("Subdeck", baseName);

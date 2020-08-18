@@ -43,7 +43,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
 
         String modelName = "Basic";
         Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
-        JSONObject template = (JSONObject)collectionBasicModelOriginal.getJSONArray("tmpls").get(0);
+        JSONObject template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0);
         template.put("qfmt", template.getString("qfmt").concat("PREVIEWER_TEST"));
         String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), collectionBasicModelOriginal);
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -116,6 +116,6 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
             n.setField(i, fieldNames.get(i));
         }
         n.flush();
-        return getCol().getNewLinkedCard(new Card(getCol()), n, (JSONObject)model.getJSONArray("tmpls").get(ordinal), 1, 1, true);
+        return getCol().getNewLinkedCard(new Card(getCol()), n, model.getJSONArray("tmpls").getJSONObject(ordinal), 1, 1, true);
     }
 }

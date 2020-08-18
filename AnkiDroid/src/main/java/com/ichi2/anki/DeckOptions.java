@@ -151,7 +151,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     final JSONArray reminderTime = reminder.getJSONArray("time");
 
                     mValues.put("reminderEnabled", Boolean.toString(reminder.getBoolean("enabled")));
-                    mValues.put("reminderTime", String.format("%1$02d:%2$02d", reminderTime.get(0), reminderTime.get(1)));
+                    mValues.put("reminderTime", String.format("%1$02d:%2$02d", reminderTime.getLong(0), reminderTime.getLong(1)));
                 } else {
                     mValues.put("reminderEnabled", "false");
                     mValues.put("reminderTime", TimePreference.DEFAULT_VALUE);
@@ -220,14 +220,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 JSONArray ja = new JSONArray(); // [graduating, easy]
 
                                 ja.put(value);
-                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(1));
+                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(1));
                                 mOptions.getJSONObject("new").put("ints", ja);
                                 break;
                             }
                             case "newEasy": {
                                 JSONArray ja = new JSONArray(); // [graduating, easy]
 
-                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(0));
+                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(0));
                                 ja.put(value);
                                 mOptions.getJSONObject("new").put("ints", ja);
                                 break;

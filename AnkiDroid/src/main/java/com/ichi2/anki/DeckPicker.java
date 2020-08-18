@@ -2285,7 +2285,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
     public void exportDeck(long did) {
         String msg;
-        msg = getResources().getString(R.string.confirm_apkg_export_deck, getCol().getDecks().get(did).get("name"));
+        msg = getResources().getString(R.string.confirm_apkg_export_deck, getCol().getDecks().get(did).getString("name"));
         showDialogFragment(ExportDialog.newInstance(msg, did));
     }
 

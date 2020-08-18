@@ -446,9 +446,9 @@ public class Utils {
             for (int i = 0; i < len; i++) {
                 try {
                     if (i == (len - 1)) {
-                        str.append(ids.get(i));
+                        str.append(ids.getLong(i));
                     } else {
-                        str.append(ids.get(i)).append(",");
+                        str.append(ids.getLong(i)).append(",");
                     }
                 } catch (JSONException e) {
                     Timber.e(e, "ids2str :: JSONException");

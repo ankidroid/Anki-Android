@@ -106,7 +106,7 @@ public class StdModels {
         JSONObject fm = mm.newField(av);
         mm.addFieldInNewModel(m, fm);
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(1);
-        t.put("qfmt", "{{#" + av +"}}" + t.get("qfmt") + "{{/" + av +"}}");
+        t.put("qfmt", "{{#" + av +"}}" + t.getString("qfmt") + "{{/" + av +"}}");
         return m;
     },
         R.string.forward_optional_reverse_model_name);

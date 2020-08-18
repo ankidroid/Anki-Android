@@ -1229,6 +1229,6 @@ public class Decks {
         if (deck == null) {
             return null;
         }
-        return deck.get("name") + DECK_SEPARATOR + subdeckName;
+        return deck.getString("name") + DECK_SEPARATOR + subdeckName;
     }
 }
