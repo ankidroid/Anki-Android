@@ -431,49 +431,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
-    private static class UndoSuspendCardMulti extends Undoable {
-        private final Card[] cards;
-        private final boolean[] originalSuspended;
-
-
-        public UndoSuspendCardMulti(Card[] cards, boolean[] originalSuspended) {
-            super(Collection.DismissType.SUSPEND_CARD_MULTI);
-            this.cards = cards;
-            this.originalSuspended = originalSuspended;
-        }
-
-
-        public long undo(Collection col) {
-            Timber.i("Undo: Suspend multiple cards");
-            List<Long> toSuspendIds = new ArrayList<>();
-            List<Long> toUnsuspendIds = new ArrayList<>();
-            for (int i = 0; i < cards.length; i++) {
-                Card card = cards[i];
-                if (originalSuspended[i]) {
-                    toSuspendIds.add(card.getId());
-                } else {
-                    toUnsuspendIds.add(card.getId());
-                }
-            }
-
-            // unboxing
-            long[] toSuspendIdsArray = new long[toSuspendIds.size()];
-            long[] toUnsuspendIdsArray = new long[toUnsuspendIds.size()];
-            for (int i = 0; i < toSuspendIds.size(); i++) {
-                toSuspendIdsArray[i] = toSuspendIds.get(i);
-            }
-            for (int i = 0; i < toUnsuspendIds.size(); i++) {
-                toUnsuspendIdsArray[i] = toUnsuspendIds.get(i);
-            }
-
-            col.getSched().suspendCards(toSuspendIdsArray);
-            col.getSched().unsuspendCards(toUnsuspendIdsArray);
-
-            return MULTI_CARD;  // don't fetch new card
-
-        }
-    }
-
     
     private static class UndoChangeDeckMulti extends Undoable {
         private final Card[] cards;
@@ -521,50 +478,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 card.flush(false);
             }
             return NO_REVIEW;
-        }
-    }
-
-    public static class SuspendCardMulti extends DismissMulti {
-        public SuspendCardMulti(long[] cardIds) {
-            super(cardIds);
-        }
-
-        public TaskData actualBackground(CollectionTask task, Card[] cards) {
-            Collection col = task.getCol();
-            AbstractSched sched = col.getSched();
-            // collect undo information
-            long[] cids = new long[cards.length];
-            boolean[] originalSuspended = new boolean[cards.length];
-            boolean hasUnsuspended = false;
-            for (int i = 0; i < cards.length; i++) {
-                Card card = cards[i];
-                cids[i] = card.getId();
-                if (card.getQueue() != Consts.QUEUE_TYPE_SUSPENDED) {
-                    hasUnsuspended = true;
-                    originalSuspended[i] = false;
-                } else {
-                    originalSuspended[i] = true;
-                }
-            }
-
-            // if at least one card is unsuspended -> suspend all
-            // otherwise unsuspend all
-            if (hasUnsuspended) {
-                sched.suspendCards(cids);
-            } else {
-                sched.unsuspendCards(cids);
-            }
-
-            // mark undo for all at once
-            col.markUndo(new UndoSuspendCardMulti(cards, originalSuspended));
-
-            // reload cards because they'll be passed back to caller
-            for (Card c : cards) {
-                c.load();
-            }
-
-            sched.deferReset();
-            return null;
         }
     }
 
