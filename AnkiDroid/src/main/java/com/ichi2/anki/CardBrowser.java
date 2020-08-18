@@ -106,6 +106,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CancellationException;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
@@ -332,6 +333,88 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true);
+        }
+    }
+
+
+
+    public static class RescheduleRepositionReset extends CollectionTask.DismissMulti {
+        private final Collection.DismissType mType;
+        private final int mData;
+
+        public RescheduleRepositionReset(long[] cardDids, Collection.DismissType type) {
+            this(cardDids, type, 0);
+        }
+
+        public RescheduleRepositionReset(long[] cardDids, Collection.DismissType type, int data) {
+            super(cardDids);
+            mType = type;
+            mData = data;
+        }
+
+        public TaskData actualBackground(CollectionTask task, Card[] cards) {
+            Collection col = task.getCol();
+            AbstractSched sched = col.getSched();
+            // collect undo information, sensitive to memory pressure, same for all 3 cases
+            try {
+                Timber.d("Saving undo information of type %s on %d cards", mType, cards.length);
+                col.markUndo(new UndoRepositionRescheduleResetCards(mType, deepCopyCardArray(task, cards)));
+            } catch (CancellationException ce) {
+                Timber.i(ce, "Cancelled while handling type %s, skipping undo", mType);
+            }
+            switch (mType) {
+            case RESCHEDULE_CARDS:
+                sched.reschedCards(getCardIds(), mData, mData);
+                break;
+            case REPOSITION_CARDS:
+                sched.sortCards(getCardIds(), mData, 1, false, true);
+                break;
+            case RESET_CARDS:
+                sched.forgetCards(getCardIds());
+                break;
+            }
+            // In all cases schedule a new card so Reviewer doesn't sit on the old one
+            col.reset();
+            task.doProgress(new TaskData(sched.getCard(), 0));
+            return null;
+        }
+
+        private Card[] deepCopyCardArray(CollectionTask task, Card[] originals) throws CancellationException {
+            Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
+            Card[] copies = new Card[originals.length];
+            for (int i = 0; i < originals.length; i++) {
+                if (task.isCancelled()) {
+                    Timber.i("Cancelled during deep copy, probably memory pressure?");
+                    throw new CancellationException("Cancelled during deep copy");
+                }
+
+                // TODO: the performance-naive implementation loads from database instead of working in memory
+                // the high performance version would implement .clone() on Card and test it well
+                copies[i] = new Card(col, originals[i].getId());
+            }
+            return copies;
+        }
+    }
+
+
+
+    private static class UndoRepositionRescheduleResetCards extends Undoable {
+        private final Card[] cards_copied;
+
+
+        public UndoRepositionRescheduleResetCards(Collection.DismissType type, Card[] cards_copied) {
+            super(type);
+            this.cards_copied = cards_copied;
+        }
+
+
+        public long undo(Collection col) {
+            Timber.i("Undoing action of type %s on %d cards", getDismissType(), cards_copied.length);
+            for (int i = 0; i < cards_copied.length; i++) {
+                Card card = cards_copied[i];
+                card.flush(false);
+            }
+            return NO_REVIEW;
         }
     }
 
@@ -1129,7 +1212,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 Runnable confirm = () -> {
                     Timber.i("CardBrowser:: ResetProgress button pressed");
                     CollectionTask.launchCollectionTask(DISMISS_MULTI, resetProgressCardHandler(),
-                            new TaskData(new CollectionTask.RescheduleRepositionReset(getSelectedCardIds(), Collection.DismissType.RESET_CARDS)));
+                            new TaskData(new RescheduleRepositionReset(getSelectedCardIds(), Collection.DismissType.RESET_CARDS)));
                 };
                 dialog.setConfirm(confirm);
                 showDialogFragment(dialog);
@@ -1142,7 +1225,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
                     CollectionTask.launchCollectionTask(DISMISS_MULTI,
                         rescheduleCardHandler(),
-                        new TaskData(new CollectionTask.RescheduleRepositionReset(selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays)));
+                        new TaskData(new RescheduleRepositionReset(selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays)));
 
                 RescheduleDialog rescheduleDialog;
                 if (selectedCardIds.length == 1) {
@@ -1180,7 +1263,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         5);
                 repositionDialog.setCallbackRunnable(days ->
                     CollectionTask.launchCollectionTask(DISMISS_MULTI, repositionCardHandler(),
-                        new TaskData(new CollectionTask.RescheduleRepositionReset(cardIds, Collection.DismissType.REPOSITION_CARDS, days)))
+                        new TaskData(new RescheduleRepositionReset(cardIds, Collection.DismissType.REPOSITION_CARDS, days)))
                 );
                 showDialogFragment(repositionDialog);
                 return true;
