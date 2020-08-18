@@ -104,6 +104,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -1467,7 +1468,8 @@ public class NoteEditor extends AnkiActivity {
     private void initFieldEditText(FieldEditText editText, final int index, String[] values, Typeface customTypeface, boolean enabled) {
         String name = values[0];
         String content = values[1];
-        editText.init(index, name, content);
+        Locale hintLocale = getHintLocaleForField(name);
+        editText.init(index, name, content, hintLocale);
         if (customTypeface != null) {
             editText.setTypeface(customTypeface);
         }
@@ -1475,6 +1477,40 @@ public class NoteEditor extends AnkiActivity {
         // Listen for changes in the first field so we can re-check duplicate status.
         editText.addTextChangedListener(new EditFieldTextWatcher(index));
         editText.setEnabled(enabled);
+    }
+
+
+    private Locale getHintLocaleForField(String name) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return null;
+        }
+
+        JSONObject field = getFieldByName(name);
+        if (field == null) {
+            return null;
+        }
+        String languageTag = field.optString("ad-hint-locale", null);
+        if (languageTag == null) {
+            return null;
+        }
+
+        return Locale.forLanguageTag(languageTag);
+    }
+
+
+    @Nullable
+    private JSONObject getFieldByName(String name) {
+        Pair<Integer, JSONObject> pair;
+        try {
+            pair = Models.fieldMap(this.getCurrentlySelectedModel()).get(name);
+        } catch (Exception e) {
+            Timber.w("Failed to obtain field '%s'", name);
+            return null;
+        }
+        if (pair == null) {
+            return null;
+        }
+        return pair.second;
     }
 
 
@@ -1579,7 +1615,7 @@ public class NoteEditor extends AnkiActivity {
         if (mSelectedTags == null) {
             mSelectedTags = mEditorNote.getTags();
         }
-        // nb: setOnItemSelectedListener needs to occur after this
+        // nb: setOnItemSelectedListener and populateEditFields need to occur after this
         setNoteTypePosition();
         updateDeckPosition();
         updateTags();
