@@ -80,6 +80,7 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Note.ClozeUtils;
@@ -1693,7 +1694,7 @@ public class NoteEditor extends AnkiActivity {
     private void updateFieldsFromMap(JSONObject newModel) {
         // Get the field map for new model and old fields list
         String [][] oldFields = mEditorNote.items();
-        Map<String, Pair<Integer, JSONObject>> fMapNew = getCol().getModels().fieldMap(newModel);
+        Map<String, Pair<Integer, JSONObject>> fMapNew = Models.fieldMap(newModel);
         // Build array of label/values to provide to field EditText views
         String[][] fields = new String[fMapNew.size()][2];
         for (String fname : fMapNew.keySet()) {
