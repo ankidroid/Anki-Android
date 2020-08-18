@@ -43,6 +43,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
@@ -432,7 +434,8 @@ public class Models {
 
 
     /** "Mapping of field name -> (ord, field). */
-    public Map<String, Pair<Integer, JSONObject>> fieldMap(JSONObject m) {
+    @NonNull
+    public static Map<String, Pair<Integer, JSONObject>> fieldMap(@NonNull JSONObject m) {
         JSONArray flds = m.getJSONArray("flds");
         // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
         Map<String, Pair<Integer, JSONObject>> result = new HashMap<>();
