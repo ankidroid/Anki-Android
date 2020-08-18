@@ -288,14 +288,25 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         parent.addView(newView);
     }
 
+    private TaskListener undoListener = new TaskListener() {
+        @Override
+        public void onPreExecute() {
+
+        }
+
+
+        @Override
+        public void onPostExecute(TaskData result) {
+            openReviewer();
+        }
+    };
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_undo:
                 Timber.i("StudyOptionsFragment:: Undo button pressed");
-                getCol().undo();
-                openReviewer();
+                CollectionTask.launchCollectionTask(UNDO, undoListener);
                 return true;
             case R.id.action_deck_options:
                 Timber.i("StudyOptionsFragment:: Deck options button pressed");
