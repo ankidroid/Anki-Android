@@ -277,7 +277,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * Variables to hold layout objects that we need to update or handle events for
      */
     private View mLookUpIcon;
-    private WebView mCard;
+    private WebView mCardWebView;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
     private TextView mTextBarNew;
@@ -493,9 +493,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 return false;
             }
             //Gesture listener is added before mCard is set
-            processCardAction(card -> {
-                if (card == null) return;
-                card.dispatchTouchEvent(event);
+            processCardAction(cardWebView -> {
+                if (cardWebView == null) return;
+                cardWebView.dispatchTouchEvent(event);
             });
             return false;
         }
@@ -504,8 +504,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     @SuppressLint("CheckResult")
     //This is intentionally package-private as it removes the need for synthetic accessors
     void processCardAction(Consumer<WebView> cardConsumer) {
-        processCardFunction(card -> {
-            cardConsumer.consume(card);
+        processCardFunction(cardWebView -> {
+            cardConsumer.consume(cardWebView);
             return true;
         });
     }
@@ -515,7 +515,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Lock readLock = mCardLock.readLock();
         try {
             readLock.lock();
-            return cardFunction.apply(mCard);
+            return cardFunction.apply(mCardWebView);
         } finally {
             readLock.unlock();
         }
@@ -989,7 +989,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (mCardFrame != null) {
             mCardFrame.removeAllViews();
         }
-        destroyWebView(mCard); //OK to do without a lock
+        destroyWebView(mCardWebView); //OK to do without a lock
     }
 
 
@@ -1005,7 +1005,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (processCardFunction(card -> processHardwareButtonScroll(keyCode, card))) {
+        if (processCardFunction(cardWebView -> processHardwareButtonScroll(keyCode, cardWebView))) {
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -1609,7 +1609,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** Used to set the "javascript:" URIs for IPC */
     private void loadUrlInViewer(final String url) {
-        processCardAction(card -> card.loadUrl(url));
+        processCardAction(cardWebView -> cardWebView.loadUrl(url));
     }
 
     private <T extends View> T inflateNewView(@IdRes int id) {
@@ -1804,14 +1804,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     private void recreateWebView() {
-        if (mCard == null) {
-            mCard = createWebView();
+        if (mCardWebView == null) {
+            mCardWebView = createWebView();
             WebViewDebugging.initializeDebugging(AnkiDroidApp.getSharedPrefs(this));
-            mCardFrame.addView(mCard);
-            mGestureDetectorImpl.onWebViewCreated(mCard);
+            mCardFrame.addView(mCardWebView);
+            mGestureDetectorImpl.onWebViewCreated(mCardWebView);
         }
-        if (mCard.getVisibility() != View.VISIBLE) {
-            mCard.setVisibility(View.VISIBLE);
+        if (mCardWebView.getVisibility() != View.VISIBLE) {
+            mCardWebView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -2098,9 +2098,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * @param dy amount to be scrolled
      */
     public void scrollCurrentCardBy(int dy) {
-        processCardAction(card -> {
-            if (dy != 0 && card.canScrollVertically(dy)) {
-                card.scrollBy(0, dy);
+        processCardAction(cardWebView -> {
+            if (dy != 0 && cardWebView.canScrollVertically(dy)) {
+                cardWebView.scrollBy(0, dy);
             }
         });
     }
@@ -2116,12 +2116,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         MotionEvent eDown = MotionEvent.obtain(SystemClock.uptimeMillis(),
                 SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, x, y,
                 1, 1, 0, 1, 1, 0, 0);
-        processCardAction(card -> card.dispatchTouchEvent(eDown));
+        processCardAction(cardWebView -> cardWebView.dispatchTouchEvent(eDown));
 
         MotionEvent eUp = MotionEvent.obtain(eDown.getDownTime(),
                 SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, x, y,
                 1, 1, 0, 1, 1, 0, 0);
-        processCardAction(card -> card.dispatchTouchEvent(eUp));
+        processCardAction(cardWebView -> cardWebView.dispatchTouchEvent(eUp));
 
     }
 
@@ -2163,7 +2163,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Add CSS for font color and font size
         if (mCurrentCard == null) {
-            processCardAction(card -> card.getSettings().setDefaultFontSize(calculateDynamicFontSize(newContent)));
+            processCardAction(cardWebView -> cardWebView.getSettings().setDefaultFontSize(calculateDynamicFontSize(newContent)));
         }
 
         if (sDisplayAnswer) {
@@ -2343,7 +2343,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return;
         }
         final String cardContent = mCardContent.toString();
-        processCardAction(card -> loadContentIntoCard(card, cardContent));
+        processCardAction(cardWebView -> loadContentIntoCard(cardWebView, cardContent));
         mGestureDetectorImpl.onFillFlashcard();
         if (mShowTimer && mCardTimer.getVisibility() == View.INVISIBLE) {
             switchTopBarVisibility(View.VISIBLE);
@@ -2620,16 +2620,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private void onPageUp() {
         //pageUp performs a half scroll, we want a full page
-        processCardAction(card -> {
-            card.pageUp(false);
-            card.pageUp(false);
+        processCardAction(cardWebView -> {
+            cardWebView.pageUp(false);
+            cardWebView.pageUp(false);
         });
     }
 
     private void onPageDown() {
-        processCardAction(card -> {
-            card.pageDown(false);
-            card.pageDown(false);
+        processCardAction(cardWebView -> {
+            cardWebView.pageDown(false);
+            cardWebView.pageDown(false);
         });
     }
 
@@ -2956,9 +2956,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mDispatchedTouchEvents.add(upEvent);
 
             Timber.d("Dispatching touch events");
-            processCardAction(card -> {
-                card.dispatchTouchEvent(downEvent);
-                card.dispatchTouchEvent(upEvent);
+            processCardAction(cardWebView -> {
+                cardWebView.dispatchTouchEvent(downEvent);
+                cardWebView.dispatchTouchEvent(upEvent);
             });
             return false;
         }
@@ -3427,7 +3427,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Timber.i("Obtained write lock for card");
             try {
                 writeLock.lock();
-                if (mCard == null || !mCard.equals(view)) {
+                if (mCardWebView == null || !mCardWebView.equals(view)) {
                     //A view crashed that wasn't ours.
                     //We have nothing to handle. Returning false is a desire to crash, so return true.
                     Timber.i("Unrelated WebView Renderer terminated. Crashed: %b",  detail.didCrash());
@@ -3442,8 +3442,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mCardFrame.removeAllViews();
                 mCardFrameParent.removeView(mCardFrame);
                 //destroy after removal from the view - produces logcat warnings otherwise
-                destroyWebView(mCard);
-                mCard = null;
+                destroyWebView(mCardWebView);
+                mCardWebView = null;
                 //inflate a new instance of mCardFrame
                 mCardFrame = inflateNewView(R.id.flashcard);
                 //Even with the above, I occasionally saw the above error. Manually trigger the GC.
@@ -3522,7 +3522,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     void handleUrlFromJavascript(String url) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //WebViewCompat recommended here, but I'll avoid the dependency as it's test code
-            CardViewerWebClient c = ((CardViewerWebClient) this.mCard.getWebViewClient());
+            CardViewerWebClient c = ((CardViewerWebClient) this.mCardWebView.getWebViewClient());
             if (c == null) {
                 throw new IllegalStateException("Couldn't obtain WebView - maybe it wasn't created yet");
             }
