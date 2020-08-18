@@ -503,26 +503,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
-    private static class UndoMarkNoteMulti extends Undoable {
-        private final List<Note> originalMarked;
-        private final List<Note> originalUnmarked;
-
-
-        public UndoMarkNoteMulti(List<Note> originalMarked, List<Note> originalUnmarked) {
-            super(Collection.DismissType.MARK_NOTE_MULTI);
-            this.originalMarked = originalMarked;
-            this.originalUnmarked = originalUnmarked;
-        }
-
-
-        public long undo(Collection col) {
-            Timber.i("Undo: Mark notes");
-            CardUtils.markAll(originalMarked, true);
-            CardUtils.markAll(originalUnmarked, false);
-            return MULTI_CARD;  // don't fetch new card
-        }
-    }
-
 
     private static class UndoRepositionRescheduleResetCards extends Undoable {
         private final Card[] cards_copied;
@@ -584,39 +564,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             }
 
             sched.deferReset();
-            return null;
-        }
-    }
-
-    public static class MarkNoteMulti extends DismissMulti {
-        public MarkNoteMulti(long[] cardIds) {
-            super(cardIds);
-        }
-
-
-        public TaskData actualBackground(CollectionTask task, Card[] cards) {
-            Collection col = task.getCol();
-            Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
-            // collect undo information
-            List<Note> originalMarked = new ArrayList<>();
-            List<Note> originalUnmarked = new ArrayList<>();
-
-            for (Note n : notes) {
-                if (n.hasTag("marked"))
-                    originalMarked.add(n);
-                else
-                    originalUnmarked.add(n);
-            }
-
-            CardUtils.markAll(new ArrayList<>(notes), !originalUnmarked.isEmpty());
-
-            // mark undo for all at once
-            col.markUndo(new UndoMarkNoteMulti(originalMarked, originalUnmarked));
-
-            // reload cards because they'll be passed back to caller
-            for (Card c : cards) {
-                c.load();
-            }
             return null;
         }
     }
