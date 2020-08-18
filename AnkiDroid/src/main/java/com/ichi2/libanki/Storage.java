@@ -249,7 +249,7 @@ public class Storage {
             col.getModels().remTemplate(m, r);
         }
         JSONArray newArray = new JSONArray();
-        newArray.put(ja.get(0));
+        newArray.put(ja.getJSONObject(0));
         m.put("tmpls", newArray);
         col.getModels()._updateTemplOrds(m);
         col.getModels().save(m);

@@ -264,7 +264,7 @@ public class Card implements Cloneable {
 
 
     public String css() {
-        return String.format(Locale.US, "<style>%s</style>", model().get("css"));
+        return String.format(Locale.US, "<style>%s</style>", model().getString("css"));
     }
 
 

@@ -379,7 +379,7 @@ public class ModelBrowser extends AnkiActivity {
                 //Model that is being cloned
                 Model oldModel = mModels.get(position - nbStdModels).deepClone();
                 Model newModel = StdModels.basicModel.add(col);
-                oldModel.put("id", newModel.get("id"));
+                oldModel.put("id", newModel.getLong("id"));
                 model = oldModel;
             }
             model.put("name", modelName);

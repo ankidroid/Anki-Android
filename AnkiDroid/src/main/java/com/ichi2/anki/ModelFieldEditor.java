@@ -388,7 +388,7 @@ public class ModelFieldEditor extends AnkiActivity {
     private void renameField() throws ConfirmModSchemaException {
         String fieldLabel = mFieldNameInput.getText().toString()
                 .replaceAll("[\\n\\r]", "");
-        JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
+        JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
         mCol.getModels().renameField(mMod, field, fieldLabel);
         mCol.getModels().save();
         fullRefreshList();
@@ -424,7 +424,7 @@ public class ModelFieldEditor extends AnkiActivity {
      */
     private void toggleStickyField() {
         // Get the current field
-        JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
+        JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
         // If the sticky setting is enabled then disable it, otherwise enable it
         if (field.getBoolean("sticky")) {
             field.put("sticky", false);
