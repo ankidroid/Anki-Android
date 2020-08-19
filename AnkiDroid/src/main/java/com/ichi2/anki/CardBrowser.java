@@ -115,6 +115,9 @@ import com.ichi2.async.TaskData;
 
 import static com.ichi2.anki.CardBrowser.Column.*;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+import static com.ichi2.libanki.Collection.DismissType.REPOSITION_CARDS;
+import static com.ichi2.libanki.Collection.DismissType.RESCHEDULE_CARDS;
+import static com.ichi2.libanki.Collection.DismissType.RESET_CARDS;
 
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener {
@@ -336,20 +339,43 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+    public static class ResetTask extends RescheduleRepositionReset {
+        public ResetTask(long[] cardDids) {
+            super(cardDids, RESET_CARDS);
+        }
+        protected void actualActualBackground(AbstractSched sched) {
+            sched.forgetCards(getCardIds());        }
+    }
+
+    public static class RescheduleTask extends RescheduleRepositionReset {
+        private final int mSchedule;
+        public RescheduleTask(long[] cardDids, int schedule) {
+            super(cardDids, RESCHEDULE_CARDS);
+            mSchedule = schedule;
+        }
+        protected void actualActualBackground(AbstractSched sched) {
+            sched.reschedCards(getCardIds(), mSchedule, mSchedule);
+        }
+    }
+
+    public static class RepositionTask extends RescheduleRepositionReset {
+        private final int mPos;
+        public RepositionTask(long[] cardDids, int pos) {
+            super(cardDids, REPOSITION_CARDS);
+            mPos = pos;
+        }
+        protected void actualActualBackground(AbstractSched sched) {
+            sched.sortCards(getCardIds(), mPos, 1, false, true);
+        }
+    }
 
 
-    public static class RescheduleRepositionReset extends CollectionTask.DismissMulti {
+    protected abstract static class RescheduleRepositionReset extends CollectionTask.DismissMulti {
         private final Collection.DismissType mType;
-        private final int mData;
 
         public RescheduleRepositionReset(long[] cardDids, Collection.DismissType type) {
-            this(cardDids, type, 0);
-        }
-
-        public RescheduleRepositionReset(long[] cardDids, Collection.DismissType type, int data) {
             super(cardDids);
             mType = type;
-            mData = data;
         }
 
         public TaskData actualBackground(CollectionTask task, Card[] cards) {
@@ -362,22 +388,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } catch (CancellationException ce) {
                 Timber.i(ce, "Cancelled while handling type %s, skipping undo", mType);
             }
-            switch (mType) {
-            case RESCHEDULE_CARDS:
-                sched.reschedCards(getCardIds(), mData, mData);
-                break;
-            case REPOSITION_CARDS:
-                sched.sortCards(getCardIds(), mData, 1, false, true);
-                break;
-            case RESET_CARDS:
-                sched.forgetCards(getCardIds());
-                break;
-            }
+            actualActualBackground(sched);
             // In all cases schedule a new card so Reviewer doesn't sit on the old one
             col.reset();
             task.doProgress(new TaskData(sched.getCard(), 0));
             return null;
         }
+
+        protected abstract void actualActualBackground(AbstractSched sched);
 
         private Card[] deepCopyCardArray(CollectionTask task, Card[] originals) throws CancellationException {
             Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
@@ -1212,7 +1230,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 Runnable confirm = () -> {
                     Timber.i("CardBrowser:: ResetProgress button pressed");
                     CollectionTask.launchCollectionTask(DISMISS_MULTI, resetProgressCardHandler(),
-                            new TaskData(new RescheduleRepositionReset(getSelectedCardIds(), Collection.DismissType.RESET_CARDS)));
+                            new TaskData(new ResetTask(getSelectedCardIds())));
                 };
                 dialog.setConfirm(confirm);
                 showDialogFragment(dialog);
@@ -1225,7 +1243,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
                     CollectionTask.launchCollectionTask(DISMISS_MULTI,
                         rescheduleCardHandler(),
-                        new TaskData(new RescheduleRepositionReset(selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays)));
+                        new TaskData(new RescheduleTask(selectedCardIds, newDays)));
 
                 RescheduleDialog rescheduleDialog;
                 if (selectedCardIds.length == 1) {
@@ -1263,7 +1281,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         5);
                 repositionDialog.setCallbackRunnable(days ->
                     CollectionTask.launchCollectionTask(DISMISS_MULTI, repositionCardHandler(),
-                        new TaskData(new RescheduleRepositionReset(cardIds, Collection.DismissType.REPOSITION_CARDS, days)))
+                        new TaskData(new RepositionTask(cardIds, days)))
                 );
                 showDialogFragment(repositionDialog);
                 return true;

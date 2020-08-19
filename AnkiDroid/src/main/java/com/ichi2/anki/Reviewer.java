@@ -465,8 +465,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days ->
             CollectionTask.launchCollectionTask(DISMISS_MULTI, mRescheduleCardHandler,
-                    new TaskData(new CardBrowser.RescheduleRepositionReset(new long[]{mCurrentCard.getId()},
-                    Collection.DismissType.RESCHEDULE_CARDS, days))
+                    new TaskData(new CardBrowser.RescheduleTask(new long[]{mCurrentCard.getId()}, days))
             );
         RescheduleDialog dialog = RescheduleDialog.rescheduleSingleCard(getResources(), mCurrentCard, runnable);
 
@@ -485,7 +484,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
             CollectionTask.launchCollectionTask(DISMISS_MULTI, mResetProgressCardHandler,
-                    new TaskData(new CardBrowser.RescheduleRepositionReset(new long[]{mCurrentCard.getId()}, Collection.DismissType.RESET_CARDS)));
+                    new TaskData(new CardBrowser.ResetTask(new long[]{mCurrentCard.getId()})));
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);
