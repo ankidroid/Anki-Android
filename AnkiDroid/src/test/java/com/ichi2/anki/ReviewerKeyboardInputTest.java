@@ -265,7 +265,7 @@ public class ReviewerKeyboardInputTest {
         private int mAnswerButtonCount = 4;
         private boolean mEditedCard;
         private boolean mMarkedCard;
-        private Collection.DismissType mDismissType;
+        private DismissCard mDismissType;
         private boolean mUndoCalled;
         private boolean mReplayAudioCalled;
         private ControlBlock mControlsAreBlocked = ControlBlock.UNBLOCKED;
@@ -423,12 +423,12 @@ public class ReviewerKeyboardInputTest {
         }
 
         public boolean getSuspendNoteCalled() {
-            return mDismissType == Collection.DismissType.SUSPEND_NOTE;
+            return mDismissType instanceof SuspendNote;
         }
 
 
         public boolean getBuryNoteCalled() {
-            return mDismissType == Collection.DismissType.BURY_NOTE;
+            return mDismissType instanceof BuryNote;
         }
 
 
@@ -442,7 +442,7 @@ public class ReviewerKeyboardInputTest {
         }
 
         @Override
-        protected void dismiss(Collection.DismissType type) {
+        protected void dismiss(DismissCard type) {
             this.mDismissType = type;
         }
 
@@ -459,7 +459,7 @@ public class ReviewerKeyboardInputTest {
 
 
         public boolean getSuspendCardCalled() {
-            return mDismissType == Collection.DismissType.SUSPEND_CARD;
+            return mDismissType instanceof SuspendCard;
         }
 
 

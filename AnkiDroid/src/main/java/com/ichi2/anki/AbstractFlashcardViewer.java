@@ -152,8 +152,6 @@ import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
-import static com.ichi2.libanki.Collection.DismissType.BURY_NOTE;
-import static com.ichi2.libanki.Collection.DismissType.DELETE_NOTE;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_CARD;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
 import static com.ichi2.libanki.Undoable.revertToProvidedState;
@@ -562,7 +560,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    protected class DismissCard extends NextCardHandler implements Task {
+
+    // Todo: make static when listener can be static
+    protected abstract class DismissCard extends NextCardHandler implements Task {
         /* superclass is sufficient for listener*/
 
         private final Collection.DismissType mType;
@@ -585,52 +585,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 col.getDb().getDatabase().beginTransaction();
                 try {
                     sched.deferReset();
-                    switch (mType) {
-                        case BURY_CARD:
-                            // collect undo information
-                            col.markUndo(revertToProvidedState(BURY_CARD, getCard()));
-                            // then bury
-                            sched.buryCards(new long[] { getCard().getId() });
-                            break;
-                        case BURY_NOTE:
-                            // collect undo information
-                            col.markUndo(revertToProvidedState(BURY_NOTE, getCard()));
-                            // then bury
-                            sched.buryNote(note.getId());
-                            break;
-                        case SUSPEND_CARD:
-                            // collect undo information
-                            col.markUndo(revertToProvidedState(SUSPEND_CARD, getCard()));
-                            // suspend card
-                            if (getCard().getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
-                                sched.unsuspendCards(new long[] { getCard().getId() });
-                            } else {
-                                sched.suspendCards(new long[] { getCard().getId() });
-                            }
-                            break;
-                        case SUSPEND_NOTE: {
-                            // collect undo information
-                            col.markUndo(revertToProvidedState(SUSPEND_NOTE, getCard()));
-                            ArrayList<Card> cards = note.cards();
-                            long[] cids = new long[cards.size()];
-                            for (int i = 0; i < cards.size(); i++) {
-                                cids[i] = cards.get(i).getId();
-                            }
-                            // suspend note
-                            sched.suspendCards(cids);
-                            break;
-                        }
-
-                        case DELETE_NOTE: {
-                            // collect undo information
-                            // delete note
-                            ArrayList<Card> allCs = note.cards();
-                            long cid = getCard().getId();
-                            col.markUndo(new UndoDeleteNote(note, allCs, cid));
-                            col.remNotes(new long[] { note.getId() });
-                            break;
-                        }
-                    }
+                    actualBackground(collectionTask);
                     // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
                     collectionTask.doProgress(new TaskData(col.getSched().getCard(), 0));
                     col.getDb().getDatabase().setTransactionSuccessful();
@@ -645,6 +600,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return new TaskData(true);
         }
 
+        protected abstract void actualBackground(CollectionTask task);
 
         public CollectionTask launch() {
             return CollectionTask.launchCollectionTask(null, this, new TaskData(this));
@@ -1432,7 +1388,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .onPositive((dialog, which) -> {
                     Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                     mSoundPlayer.stopSounds();
-                    dismiss(Collection.DismissType.DELETE_NOTE);
+                    Note note = mCurrentCard.note();
+                    dismiss(new DeleteNote(mCurrentCard, note, mCurrentCard.getId(), note.cards()));
                 })
                 .build().show();
     }
@@ -2688,16 +2645,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 lookUpOrSelectText();
                 return true;
             case COMMAND_BURY_CARD:
-                dismiss(BURY_CARD);
+                dismiss(new BuryCard(mCurrentCard));
                 return true;
             case COMMAND_BURY_NOTE:
-                dismiss(Collection.DismissType.BURY_NOTE);
+                dismiss(new BuryNote(mCurrentCard));
                 return true;
             case COMMAND_SUSPEND_CARD:
-                dismiss(Collection.DismissType.SUSPEND_CARD);
+                dismiss(new SuspendCard(mCurrentCard));
                 return true;
             case COMMAND_SUSPEND_NOTE:
-                dismiss(Collection.DismissType.SUSPEND_NOTE);
+                dismiss(new SuspendNote(mCurrentCard));
                 return true;
             case COMMAND_DELETE:
                 showDeleteNoteDialog();
@@ -3246,9 +3203,103 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } */
     }
 
-    protected void dismiss(Collection.DismissType type) {
+
+    protected class BuryNote extends DismissCard {
+        public BuryNote(Card card) {
+            super(Collection.DismissType.BURY_NOTE, card);
+        }
+
+
+        protected void actualBackground(CollectionTask collectionTask) {
+            Collection col = collectionTask.getCol();
+            AbstractSched sched = col.getSched();
+            Note note = getCard().note();
+            // then bury
+            sched.buryNote(note.getId());
+        }
+    }
+
+    protected class BuryCard extends DismissCard {
+        public BuryCard(Card card) {
+            super(Collection.DismissType.BURY_CARD, card);
+        }
+
+
+        protected void actualBackground(CollectionTask collectionTask) {
+            Collection col = collectionTask.getCol();
+            // collect undo information
+            col.markUndo(revertToProvidedState(BURY_CARD, getCard()));
+            AbstractSched sched = col.getSched();
+            Note note = getCard().note();
+            // then bury
+            sched.buryCards(new long[] { getCard().getId() });
+        }
+    }
+
+    protected class SuspendCard extends DismissCard {
+        public SuspendCard(Card card) {
+            super(Collection.DismissType.SUSPEND_CARD, card);
+        }
+
+
+        protected void actualBackground(CollectionTask collectionTask) {
+            Collection col = collectionTask.getCol();
+            col.markUndo(revertToProvidedState(SUSPEND_CARD, getCard()));
+            AbstractSched sched = col.getSched();
+            // suspend card
+            if (getCard().getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
+                sched.unsuspendCards(new long[] { getCard().getId() });
+            } else {
+                sched.suspendCards(new long[] { getCard().getId() });
+            }
+        }
+    }
+
+    protected class SuspendNote extends DismissCard {
+        public SuspendNote(Card card) {
+            super(Collection.DismissType.SUSPEND_NOTE, card);
+        }
+
+
+        protected void actualBackground(CollectionTask task) {
+            Collection col = task.getCol();
+            col.markUndo(revertToProvidedState(SUSPEND_NOTE, getCard()));
+            AbstractSched sched = col.getSched();
+            Note note = getCard().note();
+            // collect undo information
+            ArrayList<Card> cards = note.cards();
+            long[] cids = new long[cards.size()];
+            for (int i = 0; i < cards.size(); i++) {
+                cids[i] = cards.get(i).getId();
+            }
+            // suspend note
+            sched.suspendCards(cids);
+        }
+    }
+
+    protected class DeleteNote extends DismissCard {
+        private final Note mNote;
+        private final long mCid;
+        private final ArrayList<Card> mAllCs;
+        public DeleteNote(Card card, Note mNote, long mCid, ArrayList<Card> mAllCs) {
+            super(Collection.DismissType.DELETE_NOTE, card);
+            this.mNote = mNote;
+            this.mCid = mCid;
+            this.mAllCs = mAllCs;
+        }
+
+
+        protected void actualBackground(CollectionTask task) {
+            Collection col = task.getCol();
+            col.markUndo(new UndoDeleteNote(mNote, mAllCs, mCid));
+            Note note = getCard().note();
+            // delete note
+            col.remNotes(new long[] { note.getId() });
+        }
+    }
+    protected void dismiss(DismissCard dismiss) {
         blockControls(false);
-        new DismissCard(type, mCurrentCard).launch();
+        dismiss.launch();
     }
 
     /** Signals from a WebView represent actions with no parameters */

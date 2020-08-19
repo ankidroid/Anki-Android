@@ -310,7 +310,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 Timber.i("Reviewer:: Bury button pressed");
                 if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
                     Timber.d("Bury card due to no submenu");
-                    dismiss(DismissType.BURY_CARD);
+                    dismiss(new BuryCard(mCurrentCard));
                 }
                 break;
 
@@ -318,7 +318,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 Timber.i("Reviewer:: Suspend button pressed");
                 if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
                     Timber.d("Suspend card due to no submenu");
-                    dismiss(DismissType.SUSPEND_CARD);
+                    dismiss(new SuspendCard(mCurrentCard));
                 }
                 break;
 
@@ -920,10 +920,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_suspend_card:
-                    dismiss(DismissType.SUSPEND_CARD);
+                    dismiss(new SuspendCard(mCurrentCard));
                     return true;
                 case R.id.action_suspend_note:
-                    dismiss(DismissType.SUSPEND_NOTE);
+                    dismiss(new SuspendCard(mCurrentCard));
                     return true;
                 default:
                     return false;
@@ -962,10 +962,10 @@ public class Reviewer extends AbstractFlashcardViewer {
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_bury_card:
-                    dismiss(DismissType.BURY_CARD);
+                    dismiss(new BuryCard(mCurrentCard));
                     return true;
                 case R.id.action_bury_note:
-                    dismiss(DismissType.BURY_NOTE);
+                    dismiss(new BuryNote(mCurrentCard));
                     return true;
                 default:
                     return false;
