@@ -126,8 +126,8 @@ public class UIUtils {
 
     public static void saveCollectionInBackground(boolean syncIgnoresDatabaseModification) {
         if (CollectionHelper.getInstance().colIsOpen()) {
-            new TaskAndListener<Void, TaskData>() {
-                public TaskData background(CollectionTask<Void, ?> collectionTask) {
+            new TaskAndListener<Void, Void>() {
+                public Void background(CollectionTask<Void, ?> collectionTask) {
                     Timber.d("doInBackgroundSaveCollection");
                     Collection col = collectionTask.getCol();
                     if (col != null) {
@@ -152,7 +152,7 @@ public class UIUtils {
 
 
                 @Override
-                public void onPostExecute(TaskData result) {
+                public void onPostExecute(Void result) {
                     Timber.d("saveCollectionInBackground: finished");
                 }
             }.launch();
