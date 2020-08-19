@@ -1057,61 +1057,66 @@ public class CardContentProvider extends ContentProvider {
             case MEDIA:
                 // insert a media file
                 // contentvalue should have data and preferredFileName values
-                Uri fileUri = Uri.parse(values.getAsString(FlashCardsContract.AnkiMedia.FILE_URI));
-                String preferredName = values.getAsString(FlashCardsContract.AnkiMedia.PREFERRED_NAME);
-                InputStream inputStream = null;
-
-                try {
-                    ContentResolver cR = mContext.getContentResolver();
-                    Media media = col.getMedia();
-                    // idea, open input stream and save to cache directory, then
-                    // pass this (hopefully temporary) file to the media.addFile function.
-                    inputStream = cR.openInputStream(fileUri);
-                    String fileMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(cR.getType(fileUri)); // return eg "jpeg"
-                    // should we be enforcing strict mimetypes? which types?
-                    File tempFile;
-                    try {
-                        tempFile = File.createTempFile(
-                                preferredName+"_", // the beginning of the filename.
-                                "." + fileMimeType, // this is the extension, if null, '.tmp' is used, need to get the extension from MIME type?
-                                new File(media.dir())
-                        );
-                        tempFile.deleteOnExit();
-                    } catch (Exception e) {
-                        Timber.e(e, "Could not create temporary media file. ");
-                        return null;
-                    }
-
-                    // copy contents into temp file (possibly check file size and warn if large?)
-                    try {
-                        CompatHelper.getCompat().copyFile(inputStream, tempFile.getAbsolutePath());
-                    } catch (FileNotFoundException e) {
-                        Timber.e(e, "File not found when opening stream for supplied media file.");
-                        return null;
-                    } catch (Exception e) {
-                        Timber.e(e, "Unable to copy media file from ContentProvider");
-                        return null;
-                    } finally {
-                        if (inputStream != null) {
-                            inputStream.close();
-                        }
-                    }
-
-                    String fname = media.addFile(tempFile);
-                    Timber.d("insert -> MEDIA: fname = %s", fname);
-                    File f = new File(fname);
-                    Timber.d("insert -> MEDIA: f = %s", f);
-                    Uri uriFromF = Uri.fromFile(f);
-                    Timber.d("insert -> MEDIA: uriFromF = %s", uriFromF);
-                    return Uri.fromFile(new File(fname));
-
-                } catch (IOException e) {
-                    Timber.w(e, "insert failed from %s", fileUri);
-                    return null;
-                }
+                return insertMediaFile(values, col);
             default:
                 // Unknown URI type
                 throw new IllegalArgumentException("uri " + uri + " is not supported");
+        }
+    }
+
+    private Uri insertMediaFile(ContentValues values, Collection col) {
+        // Insert media file using libanki.Media.addFile and return Uri for the inserted file.
+        Uri fileUri = Uri.parse(values.getAsString(FlashCardsContract.AnkiMedia.FILE_URI));
+        String preferredName = values.getAsString(FlashCardsContract.AnkiMedia.PREFERRED_NAME);
+        InputStream inputStream = null;
+
+        try {
+            ContentResolver cR = mContext.getContentResolver();
+            Media media = col.getMedia();
+            // idea, open input stream and save to cache directory, then
+            // pass this (hopefully temporary) file to the media.addFile function.
+            inputStream = cR.openInputStream(fileUri);
+            String fileMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(cR.getType(fileUri)); // return eg "jpeg"
+            // should we be enforcing strict mimetypes? which types?
+            File tempFile;
+            try {
+                tempFile = File.createTempFile(
+                        preferredName+"_", // the beginning of the filename.
+                        "." + fileMimeType, // this is the extension, if null, '.tmp' is used, need to get the extension from MIME type?
+                        new File(media.dir())
+                );
+                tempFile.deleteOnExit();
+            } catch (Exception e) {
+                Timber.e(e, "Could not create temporary media file. ");
+                return null;
+            }
+
+            // copy contents into temp file (possibly check file size and warn if large?)
+            try {
+                CompatHelper.getCompat().copyFile(inputStream, tempFile.getAbsolutePath());
+            } catch (FileNotFoundException e) {
+                Timber.e(e, "File not found when opening stream for supplied media file.");
+                return null;
+            } catch (Exception e) {
+                Timber.e(e, "Unable to copy media file from ContentProvider");
+                return null;
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            }
+
+            String fname = media.addFile(tempFile);
+            Timber.d("insert -> MEDIA: fname = %s", fname);
+            File f = new File(fname);
+            Timber.d("insert -> MEDIA: f = %s", f);
+            Uri uriFromF = Uri.fromFile(f);
+            Timber.d("insert -> MEDIA: uriFromF = %s", uriFromF);
+            return Uri.fromFile(new File(fname));
+
+        } catch (IOException e) {
+            Timber.w(e, "insert failed from %s", fileUri);
+            return null;
         }
     }
 
