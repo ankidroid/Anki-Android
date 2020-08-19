@@ -25,7 +25,7 @@ jobs:
         # Run a check that exits with error unless it is 1.8 version to future-proof against unexpected upgrades
         run: java -fullversion 2>&1 | grep '1.8'
         shell: bash
-  
+
      - name: Install github-release
         run: |
           mkdir ~/bin/
@@ -59,20 +59,3 @@ jobs:
         env:
           KSTOREPWD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEYPWD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
-          # - uses: webfactory/ssh-agent@v0.2.0
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      # - name: Publish Packages
-      #   run: |
-      #     yarn logout
-      #     echo "@react-native-firebase:registry=http://registry.npmjs.org/" > ~/.npmrc
-      #     echo "registry=http://registry.npmjs.org/" >> ~/.npmrc
-      #     echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      #     npm whoami
-      #     git diff --exit-code
-      #     yarn lerna version --yes
-      #     yarn lerna publish from-package --yes
-      #   env:
-      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
