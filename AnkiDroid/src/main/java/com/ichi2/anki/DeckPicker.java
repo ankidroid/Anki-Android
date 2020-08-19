@@ -1065,8 +1065,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private static class ResumeTask implements Task<Void, TaskData> {
-        public TaskData background(CollectionTask<Void, ?> collectionTask) {
+    private static class ResumeTask implements Task<Void, Void> {
+        public Void background(CollectionTask<Void, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             if (col != null) {
                 CollectionHelper.loadCollectionComplete(col);
