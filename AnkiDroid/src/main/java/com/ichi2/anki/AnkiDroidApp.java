@@ -522,14 +522,14 @@ public class AnkiDroidApp extends MultiDexApplication {
             editor.putBoolean(ACRA.PREF_DISABLE_ACRA, false);
             // Switch between auto-report via toast and manual report via dialog
             CoreConfigurationBuilder builder = getAcraCoreConfigBuilder();
+            DialogConfigurationBuilder dialogBuilder = builder.getPluginConfigurationBuilder(DialogConfigurationBuilder.class);
+            ToastConfigurationBuilder toastBuilder = builder.getPluginConfigurationBuilder(ToastConfigurationBuilder.class);
             if (value.equals(FEEDBACK_REPORT_ALWAYS)) {
-                // Toast text defaults to always, we just need to disable the dialog
-                builder.getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
-                        .setEnabled(false);
+                dialogBuilder.setEnabled(false);
+                toastBuilder.setResText(R.string.feedback_auto_toast_text);
             } else if (value.equals(FEEDBACK_REPORT_ASK)) {
-                // Both are enabled via annotation, just need to alter toast text
-                builder.getPluginConfigurationBuilder(ToastConfigurationBuilder.class)
-                        .setResText(R.string.feedback_manual_toast_text);
+                dialogBuilder.setEnabled(true);
+                toastBuilder.setResText(R.string.feedback_manual_toast_text);
             }
             setAcraConfigBuilder(builder);
         }

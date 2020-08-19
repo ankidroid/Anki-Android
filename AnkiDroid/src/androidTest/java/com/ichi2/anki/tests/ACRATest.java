@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Instrumentation;
 import android.content.SharedPreferences;
 
+import androidx.annotation.StringRes;
 import androidx.test.annotation.UiThreadTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
@@ -14,6 +15,7 @@ import com.ichi2.anki.R;
 import org.acra.ACRA;
 import org.acra.builder.ReportBuilder;
 import org.acra.collections.ImmutableList;
+import org.acra.config.ACRAConfigurationException;
 import org.acra.config.Configuration;
 import org.acra.config.CoreConfiguration;
 import org.acra.config.LimitingReportAdministrator;
@@ -29,6 +31,10 @@ import java.lang.reflect.Method;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.AnkiDroidApp.FEEDBACK_REPORT_ALWAYS;
+import static com.ichi2.anki.AnkiDroidApp.FEEDBACK_REPORT_ASK;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -40,7 +46,7 @@ public class ACRATest {
     @Rule public GrantPermissionRule mRuntimePermissionRule =
             GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-    private AnkiDroidApp app = null;
+    private AnkiDroidApp mApp = null;
 
     private String[] debugLogcatArguments = { "-t", "300", "-v", "long", "ACRA:S"};
     //private String[] prodLogcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" };
@@ -50,10 +56,10 @@ public class ACRATest {
     @UiThreadTest
     public void setUp() {
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        app = (AnkiDroidApp) instrumentation.getTargetContext().getApplicationContext();
+        mApp = (AnkiDroidApp) instrumentation.getTargetContext().getApplicationContext();
         // Note: attachBaseContext can't be called twice as we're using the same instance between all tests.
-        app.initializeLoggingAndCrashReporting();
-        app.onCreate();
+        mApp.initializeLoggingAndCrashReporting();
+        mApp.onCreate();
     }
 
     /**
@@ -64,18 +70,18 @@ public class ACRATest {
      * @exception NoSuchFieldException if the method isn't found, possibly IllegalAccess or InvocationAccess as well
      */
     private void setAcraConfig(String mode, SharedPreferences prefs) throws Exception {
-        Method method = app.getClass().getDeclaredMethod("set" + mode + "ACRAConfig", SharedPreferences.class);
+        Method method = mApp.getClass().getDeclaredMethod("set" + mode + "ACRAConfig", SharedPreferences.class);
         method.setAccessible(true);
-        method.invoke(app, prefs);
+        method.invoke(mApp, prefs);
     }
 
     @Test
     public void testDebugConfiguration() throws Exception {
 
         // Debug mode overrides all saved state so no setup needed
-        setAcraConfig("Debug", AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()));
+        setAcraConfig("Debug");
         assertArrayEquals("Debug logcat arguments not set correctly",
-                app.getAcraCoreConfigBuilder().build().logcatArguments().toArray(),
+                mApp.getAcraCoreConfigBuilder().build().logcatArguments().toArray(),
                 new ImmutableList<>(debugLogcatArguments).toArray());
         verifyDebugACRAPreferences();
     }
@@ -94,41 +100,26 @@ public class ACRATest {
     public void testProductionConfigurationUserDisabled() throws Exception {
 
         // set up as if the user had prefs saved to disable completely
-        AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()).edit()
-                .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_NEVER).commit();
+        setReportConfig(AnkiDroidApp.FEEDBACK_REPORT_NEVER);
 
         // ACRA initializes production logcat via annotation and we can't mock Build.DEBUG
         // That means we are restricted from verifying production logcat args and this is the debug case again
-        setAcraConfig("Production", AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()));
+        setAcraConfig("Production");
         verifyDebugACRAPreferences();
     }
 
     @Test
     public void testProductionConfigurationUserAsk() throws Exception {
         // set up as if the user had prefs saved to ask
-        AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()).edit()
-                .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_ASK).commit();
+        setReportConfig(FEEDBACK_REPORT_ASK);
 
         // If the user is set to ask, then it's production, with interaction mode dialog
-        setAcraConfig("Production", AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()));
+        setAcraConfig("Production");
         verifyACRANotDisabled();
 
-        CoreConfiguration config = app.getAcraCoreConfigBuilder().build();
-
-        for (Configuration configuration : config.pluginConfigurations()) {
-
-            // Make sure the toast is configured correctly
-            if (configuration.getClass().toString().contains("Toast")) {
-                assertEquals(app.getResources().getString(R.string.feedback_manual_toast_text),
-                        ((ToastConfiguration)configuration).text());
-                assertTrue("Toast is not enabled", configuration.enabled());
-            }
-
-            // Make sure the dialog is set to pop up
-            if (configuration.getClass().toString().contains("Dialog")) {
-                assertTrue("Dialog is not enabled", configuration.enabled());
-            }
-        }
+        assertToastMessage(R.string.feedback_manual_toast_text);
+        assertToastIsEnabled();
+        assertDialogEnabledStatus("Dialog should be enabled", true);
     }
 
     @Test
@@ -137,12 +128,11 @@ public class ACRATest {
         Timber.plant(new AnkiDroidApp.ProductionCrashReportingTree());
 
         // set up as if the user had prefs saved to full auto
-        AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()).edit()
-                .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_ALWAYS).commit();
+        setReportConfig(FEEDBACK_REPORT_ALWAYS);
 
         // If the user is set to always, then it's production, with interaction mode toast
         // will be useful with ACRA 5.2.0
-        setAcraConfig("Production", AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()));
+        setAcraConfig("Production");
 
         // The same class/method combo is only sent once, so we face a new method each time (should test that system later)
         Exception crash = new Exception("testCrashReportSend at " + System.currentTimeMillis());
@@ -180,36 +170,107 @@ public class ACRATest {
     }
 
 
+    @Test
+    public void testProductionConfigurationUserAlways() throws Exception {
+        // set up as if the user had prefs saved to full auto
+        setReportConfig(FEEDBACK_REPORT_ALWAYS);
+
+        // If the user is set to always, then it's production, with interaction mode toast
+        setAcraConfig("Production");
+        verifyACRANotDisabled();
+
+        assertToastMessage(R.string.feedback_auto_toast_text);
+        assertToastIsEnabled();
+        assertDialogEnabledStatus("Dialog should not be enabled", false);
+    }
+
+
+    @Test
+    public void testDialogEnabledWhenMovingFromAlwaysToAsk() throws Exception {
+        // Raised in #6891 - we ned to ensure that the dialog is re-enabled after this transition.
+        setReportConfig(FEEDBACK_REPORT_ALWAYS);
+
+        // If the user is set to ask, then it's production, with interaction mode dialog
+        setAcraConfig("Production");
+        verifyACRANotDisabled();
+
+        assertDialogEnabledStatus("dialog should be disabled when status is ALWAYS", false);
+        assertToastMessage(R.string.feedback_auto_toast_text);
+
+        setAcraReportingMode(FEEDBACK_REPORT_ASK);
+
+        assertDialogEnabledStatus("dialog should be re-enabled after changed to ASK", true);
+        assertToastMessage(R.string.feedback_manual_toast_text);
+    }
+
+    @Test
+    public void testToastTextWhenMovingFromAskToAlways() throws Exception {
+        // Raised in #6891 - we ned to ensure that the text is fixed after this transition.
+        setReportConfig(FEEDBACK_REPORT_ASK);
+
+        // If the user is set to ask, then it's production, with interaction mode dialog
+        setAcraConfig("Production");
+        verifyACRANotDisabled();
+
+        assertToastMessage(R.string.feedback_manual_toast_text);
+
+        setAcraReportingMode(FEEDBACK_REPORT_ALWAYS);
+
+        assertToastMessage(R.string.feedback_auto_toast_text);
+    }
+
+
+    private void setAcraReportingMode(String feedbackReportAlways) {
+        AnkiDroidApp.getInstance().setAcraReportingMode(feedbackReportAlways);
+    }
+
+
+    private void assertDialogEnabledStatus(String message, boolean isEnabled) throws ACRAConfigurationException {
+        CoreConfiguration config = mApp.getAcraCoreConfigBuilder().build();
+        for (Configuration configuration : config.pluginConfigurations()) {
+            // Make sure the dialog is set to pop up
+            if (configuration.getClass().toString().contains("Dialog")) {
+                assertThat(message, configuration.enabled(), is(isEnabled));
+            }
+        }
+    }
+
+
+    private void assertToastIsEnabled() throws ACRAConfigurationException {
+        CoreConfiguration config = mApp.getAcraCoreConfigBuilder().build();
+        for (Configuration configuration : config.pluginConfigurations()) {
+
+            if (configuration.getClass().toString().contains("Toast")) {
+                assertThat("Toast should be enabled", configuration.enabled(), is(true));
+            }
+        }
+    }
+
+    private void assertToastMessage(@StringRes int res) throws ACRAConfigurationException {
+        CoreConfiguration config = mApp.getAcraCoreConfigBuilder().build();
+        for (Configuration configuration : config.pluginConfigurations()) {
+
+            if (configuration.getClass().toString().contains("Toast")) {
+                assertEquals(mApp.getResources().getString(res),
+                        ((ToastConfiguration)configuration).text());
+                assertTrue("Toast should be enabled", configuration.enabled());
+            }
+        }
+    }
+
     private void verifyACRANotDisabled() {
         assertFalse("ACRA was not enabled correctly",
                 AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()).getBoolean(ACRA.PREF_DISABLE_ACRA, false));
     }
 
 
-    @Test
-    public void testProductionConfigurationUserAlways() throws Exception {
-        // set up as if the user had prefs saved to full auto
+    private void setAcraConfig(String production) throws Exception {
+        setAcraConfig(production, AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()));
+    }
+
+
+    private void setReportConfig(String feedbackReportAsk) {
         AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()).edit()
-                .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_ALWAYS).commit();
-
-        // If the user is set to always, then it's production, with interaction mode toast
-        setAcraConfig("Production", AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()));
-        verifyACRANotDisabled();
-
-        CoreConfiguration config = app.getAcraCoreConfigBuilder().build();
-        for (Configuration configuration : config.pluginConfigurations()) {
-
-            // Make sure the toast is configured correctly
-            if (configuration.getClass().toString().contains("Toast")) {
-                assertEquals(app.getResources().getString(R.string.feedback_auto_toast_text),
-                        ((ToastConfiguration)configuration).text());
-                assertTrue("Toast is not enabled", configuration.enabled());
-            }
-
-            // Make sure the dialog is disabled
-            if (configuration.getClass().toString().contains("Dialog")) {
-                assertFalse("Dialog is still enabled", configuration.enabled());
-            }
-        }
+                .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, feedbackReportAsk).commit();
     }
 }
