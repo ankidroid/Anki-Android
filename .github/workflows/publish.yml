@@ -1,0 +1,78 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release_app:
+    name: 'Release App'
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'master'
+          fetch-depth: 0
+
+      - uses: actions/cache@v2
+        name: Gradle Cache
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ hashFiles('**/*.gradle*') }}-v1
+
+      - name: Verify JDK 1.8
+        # OpenJDK1.8 is the default in GitHub ubuntu-latest runner, setup is not required
+        # Run a check that exits with error unless it is 1.8 version to future-proof against unexpected upgrades
+        run: java -fullversion 2>&1 | grep '1.8'
+        shell: bash
+  
+     - name: Install github-release
+        run: |
+          mkdir ~/bin/
+          curl -o ~/bin/github-release.bz2 https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2
+          cd ~/bin
+          bunzip2 github-release.bz2
+        shell: bash
+
+      - name: GIT Setup
+        run: |
+          git config --global user.name 'Mike Hardy'
+          git config --global user.email 'github@mikehardy.net'
+          git config --global signingkey '2FB9315A0E38FF42!'
+          git remote set-url origin git@github.com:$GITHUB_REPOSITORY
+        shell: bash
+
+      - name: Credential Prep
+        run: |
+          mkdir ~/src
+          echo ${{ secrets.AMAZON_PUBLISH_CREDENTIALS }} | base64 -d > ~/src/AnkiDroid-Amazon-Publish-Security-Profile.json.gz
+          echo ${{ secrets.GOOGLE_PUBLISH_CREDENTIALS }} | base64 -d > ~/src/AnkiDroid-GCP-Publish-Credentials.json.gz
+          echo ${{ secrets.RELEASES_PUBLISH_TOKEN }} | base64 -d > ~/src/my-github-personal-access-token.gz
+          echo ${{ secrets.KEYSTORE }} | base64 -d > ~/src/android-keystore.gz.txt
+          echo ${{ secrets.CROWDIN_API_KEY }} | base64 -d > ~/src/crowdin_key.txt.gz
+          cd ~/src
+          gunzip *gz
+        shell: bash
+
+      - name: Build and Release
+        run: ./tools/release.sh
+        env:
+          KSTOREPWD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEYPWD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+          # - uses: webfactory/ssh-agent@v0.2.0
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      # - name: Publish Packages
+      #   run: |
+      #     yarn logout
+      #     echo "@react-native-firebase:registry=http://registry.npmjs.org/" > ~/.npmrc
+      #     echo "registry=http://registry.npmjs.org/" >> ~/.npmrc
+      #     echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      #     npm whoami
+      #     git diff --exit-code
+      #     yarn lerna version --yes
+      #     yarn lerna publish from-package --yes
+      #   env:
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

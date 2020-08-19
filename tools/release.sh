@@ -86,11 +86,14 @@ if [ "$PUBLIC" != "public" ]; then
   sed -i -e s/versionCode="$PREVIOUS_CODE"/versionCode="$GUESSED_CODE"/g $GRADLEFILE
 fi
 
-# Read the key passwords
-read -rsp "Enter keystore password: " KSTOREPWD; echo
-read -rsp "Enter key password: " KEYPWD; echo
-export KSTOREPWD
-export KEYPWD
+# Read the key passwords if needed
+if [ "$KSTOREPWD" == "" ]; then
+  read -rsp "Enter keystore password: " KSTOREPWD; echo
+  read -rsp "Enter key password: " KEYPWD; echo
+  export KSTOREPWD
+  export KEYPWD
+fi
+
 # Build signed APK using Gradle and publish to Play
 # Configuration for pushing to Play specified in build.gradle 'play' task
 if ! ./gradlew publishReleaseApk
