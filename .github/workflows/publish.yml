@@ -26,12 +26,13 @@ jobs:
         run: java -fullversion 2>&1 | grep '1.8'
         shell: bash
 
-      - name: Install github-release
+      - name: Install Release Utilities
         run: |
           mkdir ~/bin/
           curl -L -o ~/bin/github-release.bz2 https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2
           cd ~/bin
           bunzip2 github-release.bz2
+          gem install asciidoctor
         shell: bash
 
       - name: GIT Setup

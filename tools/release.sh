@@ -17,6 +17,9 @@
 SUFFIX=""
 PUBLIC=$1
 
+# Make sure we can find our binaries
+export PATH="~/bin:$PATH"
+
 # Check basic expectations
 for UTILITY in sed gawk github-release asciidoctor; do
   if ! command -v "$UTILITY" >/dev/null 2>&1; then echo "$UTILITY" missing; exit 1; fi
