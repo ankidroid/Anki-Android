@@ -49,7 +49,7 @@ jobs:
           echo "${{ secrets.AMAZON_PUBLISH_CREDENTIALS }}" | base64 -d > ~/src/AnkiDroid-Amazon-Publish-Security-Profile.json.gz
           echo "${{ secrets.GOOGLE_PUBLISH_CREDENTIALS }}" | base64 -d > ~/src/AnkiDroid-GCP-Publish-Credentials.json.gz
           echo "${{ secrets.RELEASES_PUBLISH_TOKEN }}" | base64 -d > ~/src/my-github-personal-access-token.gz
-          echo "${{ secrets.KEYSTORE }}" | base64 -d > ~/src/android-keystore.gz.txt
+          echo "${{ secrets.KEYSTORE }}" | base64 -d > ~/src/android-keystore.gz
           echo "${{ secrets.CROWDIN_API_KEY }}" | base64 -d > ~/src/crowdin_key.txt.gz
           cd ~/src
           gunzip *gz
