@@ -1106,7 +1106,7 @@ public class CardContentProvider extends ContentProvider {
                     return Uri.fromFile(new File(fname));
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Timber.w(e, "insert failed from %s", fileUri);
                     return null;
                 }
             default:
