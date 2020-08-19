@@ -111,7 +111,6 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.Task;
 import com.ichi2.async.TaskAndListener;
 import com.ichi2.async.TaskAndListenerWithContext;
-import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.AnkiPackageExporter;
@@ -1630,12 +1629,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private RepairCollectionTask repairCollectionTask() {
-        return new RepairCollectionTask(this);
-    }
-    private static class RepairCollectionTask extends TaskListenerWithContext<DeckPicker>{
-        public RepairCollectionTask(DeckPicker deckPicker) {
+    private static class RepairCollection extends TaskAndListenerWithContext<DeckPicker>{
+        public RepairCollection(DeckPicker deckPicker) {
             super(deckPicker);
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundRepairCollection");
+            Collection col = collectionTask.getCol();
+            if (col != null) {
+                Timber.i("RepairCollection: Closing collection");
+                col.close(false);
+            }
+            return new TaskData(BackupManager.repairCollection(col));
         }
 
         @Override
@@ -1659,8 +1665,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback method to handle repairing deck
     public void repairCollection() {
         Timber.i("Repairing the Collection");
-        TaskListener listener= repairCollectionTask();
-        CollectionTask.launchCollectionTask(REPAIR_COLLECTION, listener);
+        new RepairCollection(this).launch(REPAIR_COLLECTION);
     }
 
 

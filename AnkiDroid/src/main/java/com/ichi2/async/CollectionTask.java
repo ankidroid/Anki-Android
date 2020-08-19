@@ -298,9 +298,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
 
-        case REPAIR_COLLECTION:
-            return doInBackgroundRepairCollection();
-
         default:
             return doInBackgroundCode(param);
         }
@@ -464,17 +461,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             // (querying the cards again is unnecessarily expensive)
             return new TaskData(true, cards);
         }
-    }
-
-
-    private TaskData doInBackgroundRepairCollection() {
-        Timber.d("doInBackgroundRepairCollection");
-        Collection col = getCol();
-        if (col != null) {
-            Timber.i("RepairCollection: Closing collection");
-            col.close(false);
-        }
-        return new TaskData(BackupManager.repairCollection(col));
     }
 
 
