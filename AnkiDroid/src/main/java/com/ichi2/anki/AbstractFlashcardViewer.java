@@ -563,7 +563,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     // Todo: make static when listener can be static
-    protected abstract class DismissCard extends NextCardHandler<GetCard, TaskData> implements Task<GetCard, TaskData> {
+    protected abstract class DismissCard extends NextCardHandler<GetCard, GetBoolean> implements Task<GetCard, GetBoolean> {
         /* superclass is sufficient for listener*/
 
         private final Collection.DismissType mType;
@@ -578,7 +578,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         @Override
-        public TaskData background(CollectionTask<GetCard, ?> collectionTask) {
+        public GetBoolean background(CollectionTask<GetCard, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             Note note = getCard().note();
@@ -596,14 +596,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", mType);
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote");
-                return new TaskData(false);
+                return () -> false;
             }
-            return new TaskData(true);
+            return () -> true;
         }
 
         protected abstract void actualBackground(CollectionTask<GetCard, ?> task);
 
-        public CollectionTask<GetCard, TaskData> launch() {
+        public CollectionTask<GetCard, GetBoolean> launch() {
             return CollectionTask.launchCollectionTask(this, this);
         }
     }
