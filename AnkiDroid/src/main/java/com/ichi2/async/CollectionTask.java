@@ -97,7 +97,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         LOAD_DECK_COUNTS,
         REBUILD_CRAM,
         EMPTY_CRAM,
-        IMPORT,
         SEARCH_CARDS,
         EXPORT_APKG,
         REORDER,
@@ -367,9 +366,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case EMPTY_CRAM:
                 return doInBackgroundEmptyCram();
-
-            case IMPORT:
-                return doInBackgroundImportAdd(param);
 
             case EXPORT_APKG:
                 return doInBackgroundExportApkg(param);
@@ -1136,22 +1132,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         col.getSched().emptyDyn(col.getDecks().selected());
         return StudyOptionsFragment.updateValuesFromDeck(this, true);
-    }
-
-
-    private TaskData doInBackgroundImportAdd(TaskData param) {
-        Timber.d("doInBackgroundImportAdd");
-        Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
-        Collection col = getCol();
-        String path = param.getString();
-        AnkiPackageImporter imp = new AnkiPackageImporter(col, path);
-        imp.setProgressCallback(new ProgressCallback(this, res));
-        try {
-            imp.run();
-        } catch (ImportExportException e) {
-            return new TaskData(e.getMessage(), true);
-        }
-        return new TaskData(new Object[] {imp});
     }
 
 

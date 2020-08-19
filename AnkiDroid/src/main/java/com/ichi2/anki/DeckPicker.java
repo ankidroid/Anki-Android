@@ -111,7 +111,6 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskAndListenerWithContext;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
-import com.ichi2.async.Task;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
@@ -298,10 +297,26 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-        private final ImportAddListener mImportAddListener = new ImportAddListener(this);
-    private static class ImportAddListener extends TaskListenerWithContext<DeckPicker> {
-        public ImportAddListener(DeckPicker deckPicker) {
+    private static class ImportAdd extends TaskAndListenerWithContext<DeckPicker> {
+        private final String mPath;
+        public ImportAdd(DeckPicker deckPicker, String path) {
             super(deckPicker);
+            mPath = path;
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundImportAdd");
+            Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
+            Collection col = collectionTask.getCol();
+            AnkiPackageImporter imp = new AnkiPackageImporter(col, mPath);
+            imp.setProgressCallback(new CollectionTask.ProgressCallback(collectionTask, res));
+            try {
+                imp.run();
+            } catch (
+                    ImportExportException e) {
+                return new TaskData(e.getMessage(), true);
+            }
+            return new TaskData(new Object[] {imp});
         }
 
         @Override
@@ -2120,8 +2135,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
-        CollectionTask.launchCollectionTask(IMPORT, mImportAddListener,
-                new TaskData(importPath));
+        new ImportAdd(this, importPath).launch();
     }
 
     // Callback to import a file -- replacing the existing collection
