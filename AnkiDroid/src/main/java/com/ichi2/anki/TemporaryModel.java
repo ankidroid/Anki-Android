@@ -33,10 +33,12 @@ import timber.log.Timber;
 
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.Task;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
+import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
 
@@ -145,14 +147,84 @@ public class TemporaryModel {
         addTemplateChange(ChangeType.DELETE, ord);
     }
 
+    private static class SaveToDatabaseTask implements Task {
+        private final Model model;
+        private final ArrayList<Object[]> templateChanges;
+
+        public SaveToDatabaseTask(Model model, ArrayList<Object[]> templateChanges) {
+            this.model = model;
+            this.templateChanges = templateChanges;
+        }
+
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundSaveModel");
+            Collection col = collectionTask.getCol();
+            Model oldModel = col.getModels().get(model.getLong("id"));
+
+            // TODO need to save all the cards that will go away, for undo
+            //  (do I need to remove them from graves during undo also?)
+            //    - undo (except for cards) could just be Models.update(model) / Models.flush() / Collection.reset() (that was prior "undo")
+            JSONArray newTemplates = model.getJSONArray("tmpls");
+
+            col.getDb().getDatabase().beginTransaction();
+
+            try {
+                for (Object[] change : templateChanges) {
+                    JSONArray oldTemplates = oldModel.getJSONArray("tmpls");
+                    switch ((ChangeType) change[1]) {
+                    case ADD:
+                        Timber.d("doInBackgroundSaveModel() adding template %s", change[0]);
+                        try {
+                            col.getModels().addTemplate(oldModel, newTemplates.getJSONObject((int) change[0]));
+                        } catch (Exception e) {
+                            Timber.e(e, "Unable to add template %s to model %s", change[0], model.getLong("id"));
+                            return new TaskData(e.getLocalizedMessage(), false);
+                        }
+                        break;
+                    case DELETE:
+                        Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0]);
+                        try {
+                            col.getModels().remTemplate(oldModel, oldTemplates.getJSONObject((int) change[0]));
+                        } catch (Exception e) {
+                            Timber.e(e, "Unable to delete template %s from model %s", change[0], model.getLong("id"));
+                            return new TaskData(e.getLocalizedMessage(), false);
+                        }
+                        break;
+                    default:
+                        Timber.w("Unknown change type? %s", change[1]);
+                        break;
+                    }
+                }
+
+                col.getModels().save(model, true);
+                col.getModels().update(model);
+                col.reset();
+                col.save();
+                if (col.getDb().getDatabase().inTransaction()) {
+                    col.getDb().getDatabase().setTransactionSuccessful();
+                } else {
+                    Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot mark transaction successful.");
+                }
+            } finally {
+                if (col.getDb().getDatabase().inTransaction()) {
+                    col.getDb().getDatabase().endTransaction();
+                } else {
+                    Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot end transaction.");
+                }
+            }
+            return new TaskData(true);
+        }
+    }
 
     public void saveToDatabase(TaskListener listener) {
         Timber.d("saveToDatabase() called");
         dumpChanges();
         TemporaryModel.clearTempModelFiles();
-        TaskData args = new TaskData(new Object[] {mEditedModel, getAdjustedTemplateChanges()});
-        CollectionTask.launchCollectionTask(SAVE_MODEL, listener, args);
-
+        /**
+         * Handles everything for a model change at once - template add / deletes as well as content updates
+         */
+        CollectionTask.launchCollectionTask(null, listener,
+                                            new TaskData(new SaveToDatabaseTask(mEditedModel, getAdjustedTemplateChanges())));
     }
 
 

@@ -101,7 +101,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         SEARCH_CARDS,
         RENDER_BROWSER_QA,
         COUNT_MODELS,
-        SAVE_MODEL,
         FIND_EMPTY_CARDS,
         CHECK_CARD_SELECTION,
         LOAD_COLLECTION_COMPLETE,
@@ -361,9 +360,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case COUNT_MODELS:
                 return doInBackgroundCountModels();
-
-            case SAVE_MODEL:
-                return doInBackgroundSaveModel(param);
 
             case FIND_EMPTY_CARDS:
                 return doInBackGroundFindEmptyCards(param);
@@ -1089,70 +1085,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
 
-    /**
-     * Handles everything for a model change at once - template add / deletes as well as content updates
-     */
-    private TaskData doInBackgroundSaveModel(TaskData param) {
-        Timber.d("doInBackgroundSaveModel");
-        Collection col = getCol();
-        Object [] args = param.getObjArray();
-        Model model = (Model) args[0];
-        ArrayList<Object[]> templateChanges = (ArrayList<Object[]>)args[1];
-        Model oldModel = col.getModels().get(model.getLong("id"));
-
-        // TODO need to save all the cards that will go away, for undo
-        //  (do I need to remove them from graves during undo also?)
-        //    - undo (except for cards) could just be Models.update(model) / Models.flush() / Collection.reset() (that was prior "undo")
-        JSONArray newTemplates = model.getJSONArray("tmpls");
-
-        col.getDb().getDatabase().beginTransaction();
-
-        try {
-            for (Object[] change : templateChanges) {
-                JSONArray oldTemplates = oldModel.getJSONArray("tmpls");
-                switch ((TemporaryModel.ChangeType) change[1]) {
-                    case ADD:
-                        Timber.d("doInBackgroundSaveModel() adding template %s", change[0]);
-                        try {
-                            col.getModels().addTemplate(oldModel, newTemplates.getJSONObject((int) change[0]));
-                        } catch (Exception e) {
-                            Timber.e(e, "Unable to add template %s to model %s", change[0], model.getLong("id"));
-                            return new TaskData(e.getLocalizedMessage(), false);
-                        }
-                        break;
-                    case DELETE:
-                        Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0]);
-                        try {
-                            col.getModels().remTemplate(oldModel, oldTemplates.getJSONObject((int) change[0]));
-                        } catch (Exception e) {
-                            Timber.e(e, "Unable to delete template %s from model %s", change[0], model.getLong("id"));
-                            return new TaskData(e.getLocalizedMessage(), false);
-                        }
-                        break;
-                    default:
-                        Timber.w("Unknown change type? %s", change[1]);
-                        break;
-                }
-            }
-
-            col.getModels().save(model, true);
-            col.getModels().update(model);
-            col.reset();
-            col.save();
-            if (col.getDb().getDatabase().inTransaction()) {
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } else {
-                Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot mark transaction successful.");
-            }
-        } finally {
-            if (col.getDb().getDatabase().inTransaction()) {
-                col.getDb().getDatabase().endTransaction();
-            } else {
-                Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot end transaction.");
-            }
-        }
-        return new TaskData(true);
-    }
 
 
     /*
