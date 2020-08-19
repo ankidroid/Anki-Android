@@ -24,7 +24,7 @@ export PATH="~/bin:$PATH"
 for UTILITY in sed gawk github-release asciidoctor; do
   if ! command -v "$UTILITY" >/dev/null 2>&1; then echo "$UTILITY" missing; exit 1; fi
 done
-if ! [ -f ../ankidroiddocs/changelog.asc ]; then
+if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/changelog.asc ]; then
   echo "Could not find ../ankidroiddocs/changelog.asc?"
   exit 1
 fi
