@@ -36,10 +36,8 @@ jobs:
 
       - name: GIT Setup
         run: |
-          git config --global user.name 'Mike Hardy'
-          git config --global user.email 'github@mikehardy.net'
-          git config --global signingkey '2FB9315A0E38FF42!'
-          git remote set-url origin git@github.com:$GITHUB_REPOSITORY
+          git config --global user.name 'AnkiDroid Releases'
+          git config --global user.email 'ankidroid@ankidroid.org'
         shell: bash
 
       - name: Credential Prep
