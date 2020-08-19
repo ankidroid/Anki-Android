@@ -21,12 +21,12 @@ jobs:
           key: gradle-${{ hashFiles('**/*.gradle*') }}-v1
 
       - name: Verify JDK 1.8
-        # OpenJDK1.8 is the default in GitHub ubuntu-latest runner, setup is not required
+        # OpenJDK1.8 is the default in GitHub macOS 10.15 runner, setup is not required
         # Run a check that exits with error unless it is 1.8 version to future-proof against unexpected upgrades
         run: java -fullversion 2>&1 | grep '1.8'
         shell: bash
 
-     - name: Install github-release
+      - name: Install github-release
         run: |
           mkdir ~/bin/
           curl -o ~/bin/github-release.bz2 https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2
