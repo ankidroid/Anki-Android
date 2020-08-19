@@ -1092,8 +1092,9 @@ public class CardContentProvider extends ContentProvider {
                         Timber.e(e, "Unable to copy media file from ContentProvider");
                         return null;
                     } finally {
-                        assert inputStream != null;
-                        inputStream.close();
+                        if (inputStream != null) {
+                            inputStream.close();
+                        }
                     }
 
                     String fname = media.addFile(tempFile);
