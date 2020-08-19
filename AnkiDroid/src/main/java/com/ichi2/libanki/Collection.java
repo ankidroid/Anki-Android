@@ -1280,8 +1280,11 @@ public class Collection {
      * Undo ********************************************************************* **************************
      */
 
-    /**
-     * [type, undoName, data] type 1 = review; type 2 =
+    /* Note from upstream:
+     * this data structure is a mess, and will be updated soon
+     * in the review case, [1, "Review", [firstReviewedCard, secondReviewedCard, ...], wasLeech]
+     * in the checkpoint case, [2, "action name"]
+     * wasLeech should have been recorded for each card, not globally
      */
     public void clearUndo() {
         mUndo = new LinkedList<>();

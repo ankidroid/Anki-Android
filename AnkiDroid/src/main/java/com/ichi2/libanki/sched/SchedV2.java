@@ -324,7 +324,8 @@ public class SchedV2 extends AbstractSched {
         }
     }
 
-
+    // note: when adding revlog entries in the future, make sure undo
+    // code deletes the entries
     public void _answerCardPreview(Card card, @Consts.BUTTON_TYPE int ease) {
         if (ease == Consts.BUTTON_ONE) {
             // Repeat after delay
@@ -3071,9 +3072,13 @@ public class SchedV2 extends AbstractSched {
         Timber.i("Undo Review of card %d, leech: %b", oldCardData.getId(), wasLeech);
         // write old data
         oldCardData.flush(false);
-        // and delete revlog entry
-        long last = mCol.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", oldCardData.getId());
-        mCol.getDb().execute("DELETE FROM revlog WHERE id = " + last);
+        DeckConfig conf = _cardConf(oldCardData);
+        boolean previewing = conf.getInt("dyn") != 0 && ! conf.getBoolean("resched");
+        if (! previewing) {
+            // and delete revlog entry
+            long last = mCol.getDb().queryLongScalar("SELECT id FROM revlog WHERE cid = ? ORDER BY id DESC LIMIT 1", oldCardData.getId());
+            mCol.getDb().execute("DELETE FROM revlog WHERE id = " + last);
+        }
         // restore any siblings
         mCol.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?", mTime.intTime(), mCol.usn(), oldCardData.getNid());
         // and finally, update daily count
