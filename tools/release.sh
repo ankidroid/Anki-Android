@@ -103,7 +103,7 @@ if ! ./gradlew publishReleaseApk
 then
   # APK contains problems, abort release
   git checkout -- $GRADLEFILE # Revert version change
-  exit
+  exit 1
 fi
 
 # Now build the universal release also
@@ -111,7 +111,7 @@ if ! ./gradlew assembleRelease -Duniversal-apk=true
 then
   # APK contains problems, abort release
   git checkout -- $GRADLEFILE # Revert version change
-  exit
+  exit 1
 fi
 
 # Copy universal APK to cwd
