@@ -163,10 +163,12 @@ public final class AddContentApi {
      * then set FLAG_GRANT_READ_URI_PERMISSION using something like:
      * getContext().grantUriPermission("com.ichi2.anki", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) and then afterward
      * remove the permission with getContext().revokePermission(uri, Intent.FLAG_GRAN_READ_URI_PERMISSION)
-     * @param fileUri   Uri for the file to be added.
-     * @param preferredName String that will be added to the beginning of the file name in the media collection
-     * @param mimeType  String indicating the mimeType of the media. Accepts "audio" or "image"
-     * @return the correctly formatted String for the media file to be placed in the desired field of a Card.
+     * @param fileUri   Uri for the file to be added, required.
+     * @param preferredName String that will be added to the beginning of the file name in the
+     *                      media collection, required.
+     * @param mimeType  String indicating the mimeType of the media. Accepts "audio" or "image", required.
+     * @return the correctly formatted String for the media file to be placed in the desired field of a Card, or null
+     *          if unsuccessful.
      */
     public String addMediaFromUri(Uri fileUri, String preferredName, String mimeType) {
         ContentValues contentValues = new ContentValues();

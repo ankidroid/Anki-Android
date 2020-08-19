@@ -99,6 +99,7 @@ import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
  * .../decks (access the deck list)
  * .../decks/# (access the specified deck)
  * .../selected_deck (access the currently selected deck)
+ * .../media (add media files to anki collection.media)
  * <p/>
  * Note that unlike Android's contact providers:
  * <ul>

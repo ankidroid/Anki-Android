@@ -1186,8 +1186,28 @@ public class FlashCardsContract {
 
     }
 
-    public static class AnkiMedia {
 
+
+    /**
+     * For interacting with Anki's media collection.
+     * <p></p>
+     * To insert a file into the media collection use:
+     * <pre>
+     *     <code>
+     *     Uri fileUri = ...; //&lt;-- Use real Uri for media file here
+     *     String preferredName = "my_media_file"; //&lt;-- Use preferred name for inserted media file here
+     *     ContentResolver cr = getContentResolver();
+     *     ContentValues cv = new ContentValues();
+     *     cv.put(AnkiMedia.FILE_URI, fileUri.toString());
+     *     cv.put(AnkiMedia.PREFERRED_NAME, "file_name");
+     *     Uri insertedFile = cr.insert(AnkiMedia.CONTENT_URI, cv);
+     *     </code>
+     * </pre>
+     */
+    public static class AnkiMedia {
+        /**
+         * Content Uri for the MEDIA row of the CardContentProvider
+         */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "media");
 
         /**
