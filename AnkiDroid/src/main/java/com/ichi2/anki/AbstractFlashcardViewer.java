@@ -562,7 +562,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     // Todo: make static when listener can be static
-    protected abstract class DismissCard extends NextCardHandler implements Task<TaskData, TaskData> {
+    protected abstract class DismissCard extends NextCardHandler<TaskData, TaskData> implements Task<TaskData, TaskData> {
         /* superclass is sufficient for listener*/
 
         private final Collection.DismissType mType;
@@ -672,7 +672,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    abstract class NextCardHandler extends TaskListener<TaskData, TaskData> {
+    public interface GetBoolean {
+        boolean getBoolean();
+    }
+
+    public interface GetCard {
+        Card getCard();
+    }
+
+    abstract class NextCardHandler<Progress extends GetCard, Result extends GetBoolean> extends TaskListener<Progress, Result> {
         private boolean mNoMoreCards;
 
 
@@ -683,7 +691,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(TaskData value) {
+        public void onProgressUpdate(Progress value) {
             displayNext(value.getCard());
         }
 
@@ -726,7 +734,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void onPostExecute(Result result) {
             postNextCardDisplay(result.getBoolean());
         }
 
@@ -748,7 +756,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected class AnswerCard extends NextCardHandler implements Task<TaskData, TaskData> {
+    protected class AnswerCard extends NextCardHandler<TaskData, TaskData> implements Task<TaskData, TaskData> {
         private final Card mOldCard;
         @Consts.BUTTON_TYPE private final int mEase;
         private final boolean mQuick;
