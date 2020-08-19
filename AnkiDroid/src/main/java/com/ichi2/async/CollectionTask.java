@@ -43,8 +43,6 @@ import com.ichi2.libanki.Deck;
 
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
-import com.ichi2.utils.PairWithBoolean;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -311,7 +309,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
 
 
-    public static class UpdateNote implements Task<Pair<Card, String>, PairWithBoolean<Card[]>> {
+    public static class UpdateNote implements Task<Pair<Card, String>, Pair<Boolean, Card[]>> {
         private final Card mEditCard;
         private final boolean mFromReviewer;
 
@@ -323,7 +321,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
 
         @Override
-        public PairWithBoolean<Card[]> background(CollectionTask<Pair<Card, String>, ?> task) {
+        public Pair<Boolean, Card[]> background(CollectionTask<Pair<Card, String>, ?> task) {
             Timber.d("doInBackgroundUpdateNote");
             // Save the note
             Collection col = task.getCol();
@@ -358,9 +356,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
-                return new PairWithBoolean<>(false);
+                return new Pair(false, null);
             }
-            return new PairWithBoolean<>(true);
+            return new Pair(true, null);
         }
     }
 
@@ -384,7 +382,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public abstract static class DismissMulti<Progress> implements Task<Progress, PairWithBoolean<Card[]>> {
+    public abstract static class DismissMulti<Progress> implements Task<Progress, Pair<Boolean, Card[]>> {
         private final long[] mCardIds;
 
         public DismissMulti(long[] cardIds) {
@@ -395,9 +393,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return mCardIds;
         }
 
-        public abstract PairWithBoolean<Card[]> actualBackground(CollectionTask<Progress, ?> task, Card[] cards);
+        public abstract Pair<Boolean, Card[]> actualBackground(CollectionTask<Progress, ?> task, Card[] cards);
 
-        public PairWithBoolean<Card[]> background(CollectionTask<Progress, ?> task) {
+        public Pair<Boolean, Card[]> background(CollectionTask<Progress, ?> task) {
             Collection col = task.getCol();
             AbstractSched sched = col.getSched();
             // query cards
@@ -409,7 +407,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             try {
                 col.getDb().getDatabase().beginTransaction();
                 try {
-                    PairWithBoolean<Card[]> res = actualBackground(task, cards);
+                    Pair<Boolean, Card[]> res = actualBackground(task, cards);
                     if (res != null) {
                         return res;
                     }
@@ -421,11 +419,11 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard");
-                return new PairWithBoolean<>(false);
+                return new Pair(false, null);
             }
             // pass cards back so more actions can be performed by the caller
             // (querying the cards again is unnecessarily expensive)
-            return new PairWithBoolean<>(true);
+            return new Pair(true, null);
         }
     }
 

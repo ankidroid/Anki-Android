@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki.sched;
 
+import android.util.Pair;
+
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -32,8 +34,6 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.libanki.Undoable;
-import com.ichi2.utils.PairWithBoolean;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -124,7 +124,7 @@ public class AbstractSchedTest extends RobolectricTest {
         sched.answerCard(card, 3);
         sched.getCard();
         final boolean[] executed = {false};
-        launchCollectionTask(new TaskListener<Card, PairWithBoolean<Card[]>>() {
+        launchCollectionTask(new TaskListener<Card, Pair<Boolean, Card[]>>() {
                     Card card;
                     @Override
                     public void onPreExecute() {
@@ -138,7 +138,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
 
                     @Override
-                    public void onPostExecute(PairWithBoolean<Card[]> result) {
+                    public void onPostExecute(Pair<Boolean, Card[]> result) {
                         assertThat(sched.newCount(), is(9));
                         assertThat(sched.counts(card)[0], is(10));
                         executed[0] = true;

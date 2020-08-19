@@ -26,6 +26,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,7 +62,6 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
-import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
@@ -108,7 +108,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
         @Override
-        public void onPostExecute(PairWithBoolean<Card[]> result) {
+        public void onPostExecute(Pair<Boolean, Card[]> result) {
             super.onPostExecute(result);
             invalidateOptionsMenu();
             int cardCount = result.second.length;

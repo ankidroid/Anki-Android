@@ -132,7 +132,6 @@ import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.ImportUtils;
-import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.Triple;
@@ -1477,7 +1476,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private UndoTaskListener undoTaskListener(boolean isReview) {
         return new UndoTaskListener(isReview, this);
     }
-    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Card, PairWithBoolean<Card[]>> {
+    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Card, Pair<Boolean, Card[]>> {
         private final boolean isReview;
 
         public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {
@@ -1499,7 +1498,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, PairWithBoolean<Card[]> result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Pair<Boolean, Card[]> result) {
             deckPicker.hideProgressBar();
             Timber.i("Undo completed");
             if (isReview) {

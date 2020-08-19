@@ -126,7 +126,6 @@ import com.ichi2.utils.FunctionalInterfaces.Function;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
-import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.WebViewDebugging;
 
 import java.io.ByteArrayInputStream;
@@ -562,7 +561,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     // Todo: make static when listener can be static
-    protected abstract class DismissCard extends NextCardHandler<Card[]> implements Task<Card, PairWithBoolean<Card[]>> {
+    protected abstract class DismissCard extends NextCardHandler<Card[]> implements Task<Card, Pair<Boolean, Card[]>> {
         /* superclass is sufficient for listener*/
 
         private final Collection.DismissType mType;
@@ -577,7 +576,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         @Override
-        public PairWithBoolean<Card[]> background(CollectionTask<Card, ?> collectionTask) {
+        public Pair<Boolean, Card[]> background(CollectionTask<Card, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             Note note = getCard().note();
@@ -595,20 +594,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", mType);
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote");
-                return new PairWithBoolean<>(false);
+                return new Pair(false, null);
             }
-            return new PairWithBoolean<>(true);
+            return new Pair(true, null);
         }
 
         protected abstract void actualBackground(CollectionTask<Card, ?> task);
 
-        public CollectionTask<Card, PairWithBoolean<Card[]>> launch() {
+        public CollectionTask<Card, Pair<Boolean, Card[]>> launch() {
             return CollectionTask.launchCollectionTask(this, this);
         }
     }
 
 
-    private final TaskListener<Pair<Card, String>, PairWithBoolean<Card[]>> mUpdateCardHandler = new TaskListener<Pair<Card, String>, PairWithBoolean<Card[]>>() {
+    private final TaskListener<Pair<Card, String>, Pair<Boolean, Card[]>> mUpdateCardHandler = new TaskListener<Pair<Card, String>, Pair<Boolean, Card[]>>() {
         private boolean mNoMoreCards;
 
 
@@ -660,7 +659,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(PairWithBoolean<Card[]> result) {
+        public void onPostExecute(Pair<Boolean, Card[]> result) {
             if (!result.first) {
                 // RuntimeException occurred on update cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
@@ -672,7 +671,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    abstract class NextCardHandler<Result> extends TaskListener<Card, PairWithBoolean<Result>> {
+    abstract class NextCardHandler<Result> extends TaskListener<Card, Pair<Boolean, Result>> {
         private boolean mNoMoreCards;
 
 
@@ -726,7 +725,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(PairWithBoolean<Result> result) {
+        public void onPostExecute(Pair<Boolean, Result> result) {
             postNextCardDisplay(result.first);
         }
 
@@ -748,7 +747,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected class AnswerCard extends NextCardHandler<Card[]> implements Task<Card, PairWithBoolean<Card[]>> {
+    protected class AnswerCard extends NextCardHandler<Card[]> implements Task<Card, Pair<Boolean, Card[]>> {
         private final Card mOldCard;
         @Consts.BUTTON_TYPE private final int mEase;
         private final boolean mQuick;
@@ -764,7 +763,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mEase = ease;
         }
 
-        public PairWithBoolean<Card[]> background(CollectionTask<Card, ?> collectionTask) {
+        public Pair<Boolean, Card[]> background(CollectionTask<Card, ?> collectionTask) {
             Collection col = collectionTask.getCol();
             AbstractSched sched = col.getSched();
             Card newCard = null;
@@ -790,9 +789,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } catch (RuntimeException e) {
                 Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
-                return new PairWithBoolean<>(false);
+                return new Pair(false, null);
             }
-            return new PairWithBoolean<>(true);
+            return new Pair(true, null);
         }
 
         @Override
@@ -801,7 +800,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             blockControls(mQuick);
         }
 
-        public CollectionTask<Card, PairWithBoolean<Card[]>> launch() {
+        public CollectionTask<Card, Pair<Boolean, Card[]>> launch() {
             return CollectionTask.launchCollectionTask(this, this);
         }
     }
