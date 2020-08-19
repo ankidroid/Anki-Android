@@ -30,8 +30,8 @@ import static org.hamcrest.Matchers.notNullValue;
 @RunWith(AndroidJUnit4.class)
 public abstract class AbstractCollectionTaskTest extends RobolectricTest {
 
-    protected TaskData execute(CollectionTask.TASK_TYPE taskType) {
-        CollectionTask task = CollectionTask.launchCollectionTask(taskType);
+    protected TaskData execute(Task task_) {
+        CollectionTask task = CollectionTask.launchCollectionTask(null, new TaskData(task_));
         try {
             return task.execute().get();
         } catch (Exception e) {

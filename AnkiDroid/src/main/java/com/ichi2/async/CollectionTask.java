@@ -69,7 +69,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     public enum TASK_TYPE {
         DISMISS_MULTI,
-        CHECK_DATABASE,
         REPAIR_COLLECTION,
         LOAD_DECK_COUNTS,
         REBUILD_CRAM,
@@ -299,9 +298,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         // Actually execute the task now that we are at the front of the queue.
         switch (mType) {
 
-        case CHECK_DATABASE:
-            return doInBackgroundCheckDatabase();
-
         case REPAIR_COLLECTION:
             return doInBackgroundRepairCollection();
 
@@ -467,27 +463,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             // pass cards back so more actions can be performed by the caller
             // (querying the cards again is unnecessarily expensive)
             return new TaskData(true, cards);
-        }
-    }
-
-
-    private TaskData doInBackgroundCheckDatabase() {
-        Timber.d("doInBackgroundCheckDatabase");
-        Collection col = getCol();
-        // Don't proceed if collection closed
-        if (col == null) {
-            Timber.e("doInBackgroundCheckDatabase :: supplied collection was null");
-            return new TaskData(false);
-        }
-
-        Collection.CheckDatabaseResult result = col.fixIntegrity(new ProgressCallback(this, AnkiDroidApp.getAppResources()));
-        if (result.getFailed()) {
-            //we can fail due to a locked database, which requires knowledge of the failure.
-            return new TaskData(false, new Object[] { result });
-        } else {
-            // Close the collection and we restart the app to reload
-            CollectionHelper.getInstance().closeCollection(true, "Check Database Completed");
-            return new TaskData(true, new Object[] { result });
         }
     }
 

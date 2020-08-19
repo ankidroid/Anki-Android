@@ -109,6 +109,7 @@ import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.Task;
+import com.ichi2.async.TaskAndListener;
 import com.ichi2.async.TaskAndListenerWithContext;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
@@ -1685,7 +1686,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void performIntegrityCheck() {
         Timber.i("performIntegrityCheck()");
-        CollectionTask.launchCollectionTask(CHECK_DATABASE, new CheckDatabaseListener());
+        CollectionTask.launchCollectionTask(null, new CheckDatabaseListener(), new TaskData(new CheckDatabaseTask()));
     }
 
     private static class MediaCheck extends TaskAndListenerWithContext<DeckPicker>{
@@ -2959,8 +2960,30 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
+    // TODO merge with listener when it becomes static
     @VisibleForTesting
-    class CheckDatabaseListener extends TaskListener {
+    public static class CheckDatabaseTask implements Task {
+        public TaskData background(CollectionTask collectionTask) {
+            Timber.d("doInBackgroundCheckDatabase");
+            Collection col = collectionTask.getCol();
+            // Don't proceed if collection closed
+            if (col == null) {
+                Timber.e("doInBackgroundCheckDatabase :: supplied collection was null");
+                return new TaskData(false);
+            }
+
+            Collection.CheckDatabaseResult result = col.fixIntegrity(new CollectionTask.ProgressCallback(collectionTask, AnkiDroidApp.getAppResources()));
+            if (result.getFailed()) {
+                //we can fail due to a locked database, which requires knowledge of the failure.
+                return new TaskData(false, new Object[] { result });
+            } else {
+                // Close the collection and we restart the app to reload
+                CollectionHelper.getInstance().closeCollection(true, "Check Database Completed");
+                return new TaskData(true, new Object[] { result });
+            }
+        }
+    }
+    public class CheckDatabaseListener extends TaskListener {
         @Override
         public void onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(DeckPicker.this, AnkiDroidApp.getAppResources().getString(R.string.app_name),
