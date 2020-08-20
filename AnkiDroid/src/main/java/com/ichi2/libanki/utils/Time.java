@@ -35,11 +35,6 @@ public abstract class Time {
         return intTimeMS() / 1000L;
     };
 
-    /**The time in milisecond. */
-    public double now() {
-        return (double) intTimeMS();
-    }
-
     public abstract long intTimeMS();
 
     /** Calendar for this date */

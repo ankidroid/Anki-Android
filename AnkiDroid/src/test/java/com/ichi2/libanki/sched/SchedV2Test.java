@@ -359,15 +359,15 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(3, c.getLeft() % 1000);
         assertEquals(3, c.getLeft() / 1000);
         // it should be due in 30 seconds
-        long t = Math.round(c.getDue() - col.getTime().now());
+        long t = Math.round(c.getDue() - col.getTime().intTime());
         assertThat(t, is(greaterThanOrEqualTo(25L)));
         assertThat(t, is(lessThanOrEqualTo(40L)));
         // pass it once
         col.getSched().answerCard(c, 3);
         // it should be due in 3 minutes
-        double dueIn = c.getDue() - col.getTime().now();
-        assertThat(dueIn, is(greaterThanOrEqualTo(178.d)));
-        assertThat(dueIn, is(lessThanOrEqualTo(180 * 1.25)));
+        long dueIn = c.getDue() - col.getTime().intTime();
+        assertThat(dueIn, is(greaterThanOrEqualTo(178L)));
+        assertThat(dueIn, is(lessThanOrEqualTo((long)(180 * 1.25))));
         assertEquals(2, c.getLeft() % 1000);
         assertEquals(2, c.getLeft() / 1000);
         // check log is accurate
@@ -379,9 +379,9 @@ public class SchedV2Test extends RobolectricTest {
         // pass again
         col.getSched().answerCard(c, 3);
         // it should be due in 10 minutes
-        dueIn = c.getDue() - col.getTime().now();
-        assertThat(dueIn, is(greaterThanOrEqualTo(599.d)));
-        assertThat(dueIn, is(lessThanOrEqualTo(600 * 1.25)));
+        dueIn = c.getDue() - col.getTime().intTime();
+        assertThat(dueIn, is(greaterThanOrEqualTo(599L)));
+        assertThat(dueIn, is(lessThanOrEqualTo((long)(600 * 1.25))));
         assertEquals(1, c.getLeft() % 1000);
         assertEquals(1, c.getLeft() / 1000);
         // the next pass should graduate the card
@@ -1614,10 +1614,10 @@ public class SchedV2Test extends RobolectricTest {
         Card c = col.getSched().getCard();
         col.getSched().answerCard(c, 2);
         // should be due in ~ 5.5 mins
-        double expected = col.getTime().now() + 5.5 * 60;
+        long expected = col.getTime().intTime() + (int)(5.5 * 60);
         long due = c.getDue();
-        assertThat(expected - 10, is(lessThan((double)due)));
-        assertThat((double)due, is(lessThanOrEqualTo(expected * 1.25)));
+        assertThat(expected - 10, is(lessThan(due)));
+        assertThat(due, is(lessThanOrEqualTo((long)(expected * 1.25))));
 
         long ivl = col.getDb().queryLongScalar("select ivl from revlog");
         assertEquals((long) (-5.5 * 60), ivl);

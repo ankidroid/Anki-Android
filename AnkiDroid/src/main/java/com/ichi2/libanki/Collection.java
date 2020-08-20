@@ -104,7 +104,7 @@ public class Collection<T extends Time> {
 
     private AbstractSched mSched;
 
-    private double mStartTime;
+    private long mStartTime;
     private int mStartReps;
 
     // BEGIN: SQL table columns
@@ -1267,7 +1267,7 @@ public class Collection<T extends Time> {
 
 
     public void startTimebox() {
-        mStartTime = getTime().now();
+        mStartTime = getTime().intTime();
         mStartReps = mSched.getReps();
     }
 
@@ -1278,7 +1278,7 @@ public class Collection<T extends Time> {
             // timeboxing disabled
             return null;
         }
-        double elapsed = getTime().now() - mStartTime;
+        long elapsed = getTime().intTime() - mStartTime;
         if (elapsed > mConf.getLong("timeLim")) {
             return new Long[] { mConf.getLong("timeLim"), (long) (mSched.getReps() - mStartReps) };
         }

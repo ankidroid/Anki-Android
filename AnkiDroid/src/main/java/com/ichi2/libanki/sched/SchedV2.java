@@ -1041,7 +1041,7 @@ public class SchedV2 extends AbstractSched {
     protected Card _getLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
-            double cutoff = getTime().now();
+            long cutoff = getTime().intTime();
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
@@ -1057,7 +1057,7 @@ public class SchedV2 extends AbstractSched {
     protected boolean _preloadLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
-            double cutoff = getTime().now();
+            long cutoff = getTime().intTime();
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
@@ -1397,7 +1397,7 @@ public class SchedV2 extends AbstractSched {
     protected void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
-                    getTime().now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
+                    getTime().intTime() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
         } catch (SQLiteConstraintException e) {
             try {
                 Thread.sleep(10);
@@ -2198,7 +2198,7 @@ public class SchedV2 extends AbstractSched {
 
     public void _checkDay() {
         // check if the day has rolled over
-        if (getTime().now() > mDayCutoff) {
+        if (getTime().intTime() > mDayCutoff) {
             reset();
         }
     }
@@ -2463,7 +2463,7 @@ public class SchedV2 extends AbstractSched {
         int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : Consts.QUEUE_TYPE_SIBLING_BURIED;
         mCol.log(cids);
         mCol.getDb().execute("update cards set queue=?,mod=?,usn=? where id in " + Utils.ids2str(cids),
-                queue, getTime().now(), mCol.usn());
+                queue, getTime().intTime(), mCol.usn());
     }
 
 

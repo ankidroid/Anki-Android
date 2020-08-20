@@ -323,13 +323,13 @@ public class SchedTest extends RobolectricTest {
         assertEquals(3, c.getLeft() % 1000);
         assertEquals(3, c.getLeft() / 1000);
         // it should be due in 30 seconds
-        long t = Math.round(c.getDue() - col.getTime().now());
+        long t = Math.round(c.getDue() - col.getTime().intTime());
         assertThat(t, is(greaterThanOrEqualTo(25L)));
         assertThat(t, is(lessThanOrEqualTo(40L)));
         // pass it once
         col.getSched().answerCard(c, 2);
         // it should be due in 3 minutes
-        assertEquals(Math.round(c.getDue() - col.getTime().now()), 179, 1);
+        assertEquals(Math.round(c.getDue() - col.getTime().intTime()), 179, 1);
         assertEquals(2, c.getLeft() % 1000);
         assertEquals(2, c.getLeft() / 1000);
         // check log is accurate
@@ -341,7 +341,7 @@ public class SchedTest extends RobolectricTest {
         // pass again
         col.getSched().answerCard(c, 2);
         // it should be due in 10 minutes
-        assertEquals(c.getDue() - col.getTime().now(), 599, 1);
+        assertEquals(c.getDue() - col.getTime().intTime(), 599, 1);
         assertEquals(1, c.getLeft() % 1000);
         assertEquals(1, c.getLeft() / 1000);
         // the next pass should graduate the card
