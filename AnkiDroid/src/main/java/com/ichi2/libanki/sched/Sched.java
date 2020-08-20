@@ -446,7 +446,7 @@ public class Sched extends SchedV2 {
                 // not collapsed; add some randomness
                 delay *= Utils.randomFloatInRange(1f, 1.25f);
             }
-            card.setDue((int) (getTime().now() + delay));
+            card.setDue(getTime().intTime() + delay);
 
             // due today?
             if (card.getDue() < mDayCutoff) {
