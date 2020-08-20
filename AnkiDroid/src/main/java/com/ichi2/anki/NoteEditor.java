@@ -393,7 +393,13 @@ public class NoteEditor extends AnkiActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
+    protected void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        addInstanceStateToBundle(savedInstanceState);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+    private void addInstanceStateToBundle(@NonNull Bundle savedInstanceState) {
         Timber.i("Saving instance");
         savedInstanceState.putInt("caller", mCaller);
         savedInstanceState.putBoolean("addNote", mAddNote);
@@ -405,7 +411,6 @@ public class NoteEditor extends AnkiActivity {
         }
         savedInstanceState.putStringArrayList("tags", mSelectedTags);
         savedInstanceState.putBundle("editFields", getFieldsAsBundle(false));
-        super.onSaveInstanceState(savedInstanceState);
     }
 
 
@@ -1000,17 +1005,7 @@ public class NoteEditor extends AnkiActivity {
 
             case R.id.action_preview:
                 Timber.i("NoteEditor:: Preview button pressed");
-                Intent previewer = new Intent(NoteEditor.this, CardTemplatePreviewer.class);
-
-                previewer.putExtra("ordinal", 0);
-                previewer.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, TemporaryModel.saveTempModel(this, mEditorNote.model()));
-
-                // Send the previewer all our current editing information
-                Bundle noteEditorBundle = new Bundle();
-                onSaveInstanceState(noteEditorBundle);
-                noteEditorBundle.putBundle("editFields", getFieldsAsBundle(true));
-                previewer.putExtra("noteEditorBundle", noteEditorBundle);
-                startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
+                performPreview();
                 return true;
 
             case R.id.action_save:
@@ -1061,6 +1056,22 @@ public class NoteEditor extends AnkiActivity {
     // ----------------------------------------------------------------------------
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
+
+    @VisibleForTesting
+    void performPreview() {
+        Intent previewer = new Intent(NoteEditor.this, CardTemplatePreviewer.class);
+
+        previewer.putExtra("ordinal", 0);
+        previewer.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, TemporaryModel.saveTempModel(this, mEditorNote.model()));
+
+        // Send the previewer all our current editing information
+        Bundle noteEditorBundle = new Bundle();
+        addInstanceStateToBundle(noteEditorBundle);
+        noteEditorBundle.putBundle("editFields", getFieldsAsBundle(true));
+        previewer.putExtra("noteEditorBundle", noteEditorBundle);
+        startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
+    }
+
 
     /**
      * finish when sd card is ejected

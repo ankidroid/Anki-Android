@@ -27,7 +27,6 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
-import com.ichi2.utils.JSONObject;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -45,6 +44,7 @@ import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
+import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -270,6 +270,13 @@ public class NoteEditorTest extends RobolectricTest {
         i.putExtra(EXTRA_PROCESS_TEXT, "hello\nworld");
         NoteEditor editor = startActivityNormallyOpenCollectionWithIntent(NoteEditor.class, i);
         assertThat(Arrays.asList(editor.getCurrentFieldStrings()), contains("hello\nworld", ""));
+    }
+
+    @Test
+    public void previewWorksWithNoError() {
+        // #6923 regression test - Low value - Could not make this fail as onSaveInstanceState did not crash under Robolectric.
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+        assertDoesNotThrow(editor::performPreview);
     }
 
     private Intent getCopyNoteIntent(NoteEditor editor) {
