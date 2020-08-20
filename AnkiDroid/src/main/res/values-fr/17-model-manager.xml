@@ -47,12 +47,16 @@
     <string name="model_browser_add">Ajouter un type de note</string>
     <!--Rename-->
     <string name="rename_model">Renommer le type de note</string>
+    <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Modifier les champs</string>
     <string name="model_field_editor_add">Ajouter un champ</string>
     <string name="model_field_editor_delete">Supprimer le champ</string>
     <string name="model_field_editor_options">Options du champ</string>
     <string name="model_field_editor_rename">Renommer le champ</string>
+    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Repositionner le champ</string>
     <string name="model_field_editor_reposition">Repositionner le champ (entrez une valeur %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Se souvenir de la dernière entrée lors de l\'ajout</string>

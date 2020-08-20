@@ -94,12 +94,12 @@
         <item>Intervalo</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Card Modified</item>
+        <item>Cartão modificado</item>
         <item>Created</item>
-        <item>Note Modified</item>
+        <item>Nota modificada</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
+    <string name="custom_study_increase_new_limit">Modificar o novo limite de cartões de hoje</string>
     <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">Revisar cartões esquecidos</string>
     <string name="custom_study_review_ahead">Antecipar revisão</string>
@@ -113,6 +113,7 @@
     <string name="note_editor_no_cards_created">Nenhum cartão criado. Por favor, preencha mais campos</string>
     <string name="note_editor_no_first_field">O primeiro campo está vazio</string>
     <string name="note_editor_no_cloze_delations">Este tipo de nota deve conter uma omissão de lacuna</string>
+    <string name="note_editor_set_field_language">Set field language</string>
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota atual não produziu nenhum cartão.\nPor favor, escolha outro tipo de nota, ou clique em \'Cartas\' e adicione uma substituição de campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Salvando nota</string>
@@ -276,7 +277,7 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Por favor ative a  tela cheia para usar \"Mostrar Opções de Navegação\" usando JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Por favor, ative a tela cheia para usar \"Mostrar Menu de Opções\" usando JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
+    <string name="white_board_image_save_failed">Falha ao salvar imagem do quadro. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
     <!-- CSV/Note Import -->
@@ -287,8 +288,8 @@
     <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
     <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="csv_importer_error_exception">Cancelado: %s</string>
+    <string name="user_is_a_robot">Teste automático detectado. Se você é humano, entre em contato com o suporte do AnkiDroid</string>
     <plurals name="note_importer_notes_added">
         <item quantity="one">%d note added</item>
         <item quantity="other">%d notes added</item>

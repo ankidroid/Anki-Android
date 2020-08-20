@@ -83,8 +83,8 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d kartu dijadwalkan ulang</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">Kartu baru sedang dijadwalkan ulang. Menjadwalkan ulang membuat kartu baru menjadi kartu ulasan. Gunakan opsi \'Pindah posisi kartu\' untuk mengubah posisi kartu baru dalam antrean baru</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Penjadwalan ulang juga mereset bagaimana algoritma menjadwalkan kartu kedepannya (renggang akan diatur ke %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Pilih dek di manajer penyimpanan atau kunjungi halaman about:downloads untuk mengimpor</string>
     <string name="answering_error_title">Galat basisdata</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Basisdata mungkin korup atau tidak cukup ruang pada penyimpanan. \ n \ n Jika ini sering terjadi, cobalah periksa database, perbaiki koleksi atau mengembalikan dari cadangan. Sentuh \"pengaturan\" untuk ini. \ n \ Atau bisa juga bug dari AnkiDroid; harap laporkan galatnya agar kami bisa mengeceknya.</string>
@@ -96,8 +96,8 @@
     <string name="intent_aedict_category">Untuk menambah kartu ke AnkiDroid hapus semua kategori catatan atau tambahkan satu bernama \"bawaan\"</string>
     <string name="custom_study_new_total_new">Kartu baru di dek: %d</string>
     <string name="custom_study_rev_total_rev">Ulasan jatuh tempo di dek: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">Tambahkan/kurangi (“-3”) batas kartu baru hari ini sampai</string>
+    <string name="custom_study_rev_extend">Tambahkan/kurangi (“-3”) batas kartu ulasan hari ini sampai</string>
     <string name="custom_study_forgotten">Ulas kartu yang terlupakan dalam x hari terakhir:</string>
     <string name="custom_study_ahead">Ulas duluan sampai x hari:</string>
     <string name="custom_study_random">Pilih x kartu secara acak dari dek:</string>
@@ -196,8 +196,11 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Gagal menjadwalkan pengingat</string>
     <string name="boot_service_too_many_notifications">Terlalu banyak pengingat dijadwalkan. Sebagian tidak akan muncul</string>
+    <!-- Locale Selection Dialog -->
+    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
+    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other">Sinkronisasi otomatis dapat terjadi dalam %d detik</item>
     </plurals>
 </resources>

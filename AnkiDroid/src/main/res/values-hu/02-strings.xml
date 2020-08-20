@@ -113,6 +113,7 @@
     <string name="note_editor_no_cards_created">A kártyák nem lettek létrehozva. Kérjük töltsön ki több mezőt</string>
     <string name="note_editor_no_first_field">Az első mező üres</string>
     <string name="note_editor_no_cloze_delations">Ennek a jegyzet típusnak részleges törléseket kell tartalmaznia</string>
+    <string name="note_editor_set_field_language">Set field language</string>
     <string name="note_editor_no_cards_created_all_fields">A jelenlegi jegyzettípus nem hozott létre semmilyen kártyát.\nKérjük válasszon más jegyzettípust, vagy kattintson a \"Kártyákra\" és adjon hozzá egy mezőhelyettesítést</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">A kitöltő törlések csak a kitöltő jegyzet típuson működnek</string>
     <string name="saving_facts">Jegyzet mentése</string>
@@ -302,7 +303,7 @@
         <item quantity="other">%d bejegyzés változatlan</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="api_version_developer_contact">Ez a kártya nem támogatott AnkiDroid funkciókat használ. Vegye fel a kapcsolatot a fejlesztővel %1$s, vagy tekintse meg a wikit . %2$s</string>
     <string name="invalid_json_data">Érvénytelen adatok a kártyákon. %s</string>
     <string name="valid_js_api_version">Érvénytelen AnkiDroid JS API verzió. Vegye fel a kapcsolatot a fejlesztővel  %s, vagy a wiki megtekintése</string>
     <string name="update_js_api_version">Az AnkiDroid JS API frissítés elérhető. Vegye fel a kapcsolatot a fejlesztővel %s, vagy a wiki megtekintése</string>

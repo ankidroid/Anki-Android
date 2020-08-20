@@ -113,6 +113,7 @@
     <string name="note_editor_no_cards_created">没有已创建的卡片。请填写更多字段</string>
     <string name="note_editor_no_first_field">第一字段为空</string>
     <string name="note_editor_no_cloze_delations">此笔记类型必须包含创建填空</string>
+    <string name="note_editor_set_field_language">Set field language</string>
     <string name="note_editor_no_cards_created_all_fields">当前笔记类型没有生成任何卡片。\n请选择另一个笔记类型，或点击 “卡片” 并添加一个字段替换</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">创建填空只能在完形填空笔记类型上使用</string>
     <string name="saving_facts">保存笔记</string>
@@ -289,7 +290,7 @@
         <item quantity="other">%d 条笔记未变更</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="api_version_developer_contact">此卡片使用不受支持的 AnkiDroid 功能。请联系开发者 %1$s，或查看维基。%2$s</string>
     <string name="invalid_json_data">卡片提供了无效数据。%s</string>
     <string name="valid_js_api_version">无效的 AnkiDroid JS API 版本。请联系开发者 %s，或查看维基</string>
     <string name="update_js_api_version">AnkiDroid JS API 更新可用。请联系开发者 %s，或查看维基</string>

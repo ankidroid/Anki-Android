@@ -113,6 +113,7 @@
     <string name="note_editor_no_cards_created">Карткі не створаны. Калі ласка, запоўніце неабходныя палі.</string>
     <string name="note_editor_no_first_field">Першае поле пустое</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="note_editor_set_field_language">Set field language</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Захаванне нататкі</string>

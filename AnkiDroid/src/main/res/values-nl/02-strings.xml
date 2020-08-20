@@ -113,6 +113,7 @@
     <string name="note_editor_no_cards_created">Geen kaarten aangemaakt. Vul alstublieft meer velden in</string>
     <string name="note_editor_no_first_field">Het eerste veld is leeg</string>
     <string name="note_editor_no_cloze_delations">Dit type notitie moet invuloefeningen bevatten.</string>
+    <string name="note_editor_set_field_language">Set field language</string>
     <string name="note_editor_no_cards_created_all_fields">Het huidige type memo produceerde geen kaarten.\nKies alstublieft een ander type memo, of klik op \'Kaarten\' en voeg een veld substitutie toe.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Kaart opslaan</string>

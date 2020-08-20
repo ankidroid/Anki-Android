@@ -202,6 +202,9 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Échec de la planification des rappels</string>
     <string name="boot_service_too_many_notifications">Trop de rappels planifiés. Certains n’apparaîtront pas</string>
+    <!-- Locale Selection Dialog -->
+    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
+    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>

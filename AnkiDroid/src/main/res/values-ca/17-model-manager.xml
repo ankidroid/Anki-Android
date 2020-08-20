@@ -47,12 +47,16 @@
     <string name="model_browser_add">Afegeix el tipus de nota</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
+    <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Edita els camps</string>
     <string name="model_field_editor_add">Afegeix el camp</string>
     <string name="model_field_editor_delete">Suprimeix el camp</string>
     <string name="model_field_editor_options">Opcions del camp</string>
     <string name="model_field_editor_rename">Canviar el nom del camp</string>
+    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Camp de repós</string>
     <string name="model_field_editor_reposition">Camp de repós (entri un valor %1$d-%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>

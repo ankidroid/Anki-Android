@@ -113,6 +113,7 @@
     <string name="note_editor_no_cards_created">Neniu karto kreita. Bonvolu plenigi pliajn kampojn</string>
     <string name="note_editor_no_first_field">La unua kampo estas malplena</string>
     <string name="note_editor_no_cloze_delations">Tiu ĉi noto enhavu “malplenojn” en la teksto</string>
+    <string name="note_editor_set_field_language">Set field language</string>
     <string name="note_editor_no_cards_created_all_fields">El la nuna nototipo neniu karto kreiĝis.\nElektu alian nototipon aŭ frapetu “kartoj”-n por aldoni anstataŭan kampon</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Trutekstaj malplenoj nur funkcias kun la nototipo “truteksto”</string>
     <string name="saving_facts">Konservado de noto</string>
@@ -302,7 +303,7 @@
         <item quantity="other">%d notoj ne ŝanĝitaj</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="api_version_developer_contact">Tiu ĉi karto uzas eblaĵojn nesubtenatajn de AnkiDroid. Kontaktu la programiston %1$s aŭ legu la vikion. %2$s</string>
     <string name="invalid_json_data">Karto liveris malĝustajn datumojn. %s</string>
     <string name="valid_js_api_version">Malĝusta versio de JS API AnkiDroid. Kontaktu la programiston %s aŭ legu la vikion</string>
     <string name="update_js_api_version">Disponebla ĝisdatigo por JS API AnkiDroid. Kontaktu la programiston %s aŭ legu la vikion</string>
