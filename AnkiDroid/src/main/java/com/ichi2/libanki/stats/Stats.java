@@ -91,7 +91,7 @@ public class Stats {
     private double mPeak;
     private double mMcount;
 
-    public static final double SECONDS_PER_DAY = 86400.0;
+    public static final long SECONDS_PER_DAY = 86400L;
     public static final long ALL_DECKS_ID = 0L;
 
     public Stats(Collection col, long did) {
@@ -138,7 +138,7 @@ public class Stats {
                 "sum(case when type = " + Consts.CARD_TYPE_LRN + " then 1 else 0 end), "+ /* review */
                 "sum(case when type = " + Consts.CARD_TYPE_REV + " then 1 else 0 end), "+ /* relearn */
                 "sum(case when type = " + Consts.CARD_TYPE_RELEARNING + " then 1 else 0 end) "+ /* filter */
-                "from revlog where id > " + ((mCol.getSched().getDayCutoff()-(long)SECONDS_PER_DAY)*1000) + " " +  lim;
+                "from revlog where id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query: %s", query);
 
         int cards, thetime, failed, lrn, rev, relrn, filt;
@@ -164,7 +164,7 @@ public class Stats {
             }
         }
         query = "select count(), sum(case when ease = 1 then 0 else 1 end) from revlog " +
-        "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-(long)SECONDS_PER_DAY)*1000) + " " +  lim;
+        "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query 2: %s", query);
 
         int mcnt, msum;
@@ -196,7 +196,7 @@ public class Stats {
             } else {
                 operator = "> ";
             }
-            return "id "+ operator + ((mCol.getSched().getDayCutoff() - (timespan.days * (long) SECONDS_PER_DAY)) * 1000);
+            return "id "+ operator + ((mCol.getSched().getDayCutoff() - (timespan.days * SECONDS_PER_DAY)) * 1000);
         }
     }
 
@@ -205,7 +205,7 @@ public class Stats {
         int num = getNum(timespan);
         List<String> lims = new ArrayList<>();
         if (timespan != AxisType.TYPE_LIFE) {
-            lims.add("id > " + (mCol.getSched().getDayCutoff() - (num * chunk * (long) SECONDS_PER_DAY)) * 1000);
+            lims.add("id > " + (mCol.getSched().getDayCutoff() - (num * chunk * SECONDS_PER_DAY)) * 1000);
         }
         lims.add("did in " + _limit());
         String lim;
@@ -620,7 +620,7 @@ public class Stats {
         }
         ArrayList<String> lims = new ArrayList<>();
         if (num != -1) {
-            lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * (long) SECONDS_PER_DAY)) * 1000));
+            lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * SECONDS_PER_DAY)) * 1000));
         }
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
         if (lim.length() > 0) {
@@ -946,7 +946,7 @@ public class Stats {
         }
         int pd = _periodDays();
         if (pd > 0) {
-            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (long) (SECONDS_PER_DAY * pd)) * 1000);
+            lim += " and id > " + ((mCol.getSched().getDayCutoff() -  (SECONDS_PER_DAY * pd)) * 1000);
         }
         long cutoff = mCol.getSched().getDayCutoff();
         long cut = cutoff - rolloverHour * 3600;
@@ -1082,7 +1082,7 @@ public class Stats {
         int pd = _periodDays();
         if (pd > 0) {
             pd = Math.round( pd / 7 ) * 7;
-            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (long) (SECONDS_PER_DAY * pd)) * 1000);
+            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (SECONDS_PER_DAY * pd)) * 1000);
         }
 
         long cutoff = mCol.getSched().getDayCutoff();
@@ -1250,7 +1250,7 @@ public class Stats {
         }
 
         if (days > 0) {
-            lims.add("id > " + ((mCol.getSched().getDayCutoff() - (long) (days * SECONDS_PER_DAY)) * 1000));
+            lims.add("id > " + ((mCol.getSched().getDayCutoff() - (days * SECONDS_PER_DAY)) * 1000));
         }
         if (lims.size() > 0) {
             lim = "where " + lims.get(0);
