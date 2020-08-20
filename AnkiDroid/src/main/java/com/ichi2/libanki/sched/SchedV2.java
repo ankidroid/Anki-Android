@@ -1809,9 +1809,9 @@ public class SchedV2 extends AbstractSched {
             // of the normal factor
             minNewIvl = factor / 2;
         } else if (ease == 3) {
-            factor = card.getFactor() / 1000;
+            factor = card.getFactor() / 1000.0;
         } else { // ease == 4
-            factor = card.getFactor() / 1000;
+            factor = card.getFactor() / 1000.0;
             double ease4 = conf.getDouble("ease4");
             // 1.3 -> 1.15
             easyBonus = ease4 - (ease4 - 1)/2;
