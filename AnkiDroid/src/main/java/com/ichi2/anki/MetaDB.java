@@ -216,7 +216,7 @@ public class MetaDB {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL("INSERT INTO languages (did, ord, qa, language) " + " VALUES (?, ?, ?, ?);", new Object[] {
-                    did, ord, qa, language });
+                    did, ord, qa.getInt(), language });
             Timber.v("Store language for deck %d", did);
         } catch (Exception e) {
             Timber.e(e,"Error storing language in MetaDB ");
@@ -234,7 +234,7 @@ public class MetaDB {
         openDBIfClosed(context);
         try {
             mMetaDb.execSQL("UPDATE languages SET language = ? WHERE did = ? AND ord = ? AND qa = ?;", new Object[] {
-                    language, did, ord, qa});
+                    language, did, ord, qa.getInt()});
             Timber.v("Update language for deck %d", did);
         } catch (Exception e) {
             Timber.e(e,"Error updating language in MetaDB ");
@@ -254,9 +254,8 @@ public class MetaDB {
         String language = "";
         Cursor cur = null;
         try {
-            String query = "SELECT language FROM languages " + "WHERE did = " + did + " AND ord = " + ord
-                    + " AND qa = " + qa + " " + "LIMIT 1";
-            cur = mMetaDb.rawQuery(query, null);
+            String query = "SELECT language FROM languages WHERE did = ? AND ord = ? AND qa = ? LIMIT 1";
+            cur = mMetaDb.rawQuery(query, new String[] {Long.toString(did), Integer.toString(ord), Integer.toString(qa.getInt())});
             Timber.v("getLanguage: %s", query);
             if (cur.moveToNext()) {
                 language = cur.getString(0);
