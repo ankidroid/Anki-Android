@@ -89,7 +89,7 @@ before_install:
   # Set up JDK 8 for Android SDK - Java is universally needed: codacy, unit tests, emulators
   - travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS
   - export TARGET_JDK="${JDK}"
-  - JDK="1.8"
+  - JDK="adopt@1.8"
   - source $GRAVIS/install-jdk
 
   # Set up Android SDK - this is needed everywhere but coverage finalization, so toggle on that
@@ -135,7 +135,7 @@ install:
   - if [ "$LOCALE" != "NONE" ]; then adb shell am broadcast -a com.android.intent.action.SET_LOCALE --es com.android.intent.extra.LOCALE "$LOCALE" com.android.customlocale2; fi
 
   # Switch back to our target JDK version to build and run tests
-  - JDK="${TARGET_JDK}"
+  - JDK="adopt@${TARGET_JDK}"
   - source $GRAVIS/install-jdk
 
 script:
