@@ -348,7 +348,7 @@ Here is an annotated description of the JSONObjects in the decks field of the `c
       0 -- NEW_CARDS_DISTRIBUTE (Mix new cards and reviews)
       1 -- NEW_CARDS_LAST (see new cards after review)
       2 -- NEW_CARDS_FIRST (See new card before review)",
-    "collapseTime": "'Preferences>Basic>Learn ahead limit'*60.
+    "collapseTime": "'Preferences>Basic>Learn ahead limit'*60. If there is no more card to review now but next card in learning is in less than collapseTime second, show it now.
     If there are no other card to review, then we can review cards in learning in advance if they are due in less than this number of seconds.",
     "timeLim": "'Preferences>Basic>Timebox time limit'*60. Each time this number of second elapse, anki tell you how many card you reviewed.",
     "estTimes": "'Preferences>Basic>Show next review time above answer buttons'. A Boolean."
