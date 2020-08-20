@@ -140,6 +140,7 @@ install:
 
 script:
   - travis_retry ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint # warm gradle w/travis_retry to handle network blips
+  - if [ "$UNIT_TEST" = "TRUE" ]; then travis_retry ./gradlew robolectricSdkDownload; fi # pre-download robolectric jars w/travis_retry to handle network blips
   - if [ "$UNIT_TEST" = "TRUE" ]; then ./gradlew jacocoUnitTestReport; fi
   - if [ "$LINT" != "FALSE" ]; then ./gradlew lint$LINT; fi
   - if [ "$API" != "NONE" ]; then ./gradlew jacocoAndroidTestReport; fi
