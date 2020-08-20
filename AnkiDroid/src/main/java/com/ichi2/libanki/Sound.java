@@ -90,9 +90,17 @@ public class Sound {
      * Subset Flags: Flags that indicate the subset of sounds to involve
      */
     public enum SoundSide {
-        QUESTION,
-        ANSWER,
-        QUESTION_AND_ANSWER
+        QUESTION(0),
+        ANSWER(1),
+        QUESTION_AND_ANSWER(2);
+
+        private final int mInt;
+        SoundSide(int i) {
+            mInt = i;
+        }
+        public int getInt() {
+            return mInt;
+        };
     };
 
     /**
