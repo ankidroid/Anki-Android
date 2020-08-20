@@ -131,13 +131,7 @@ public class ReadText {
                             if (!locale.equals(NO_TTS)) {
                                 speak(mTextToSpeak, locale, TextToSpeech.QUEUE_FLUSH);
                             }
-                            String language = getLanguage(mDid, mOrd, mQuestionAnswer);
-                            if ("".equals(language)) { // No language stored
-                                MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
-                            } else {
-                                MetaDB.updateLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
-                            }
-
+                            MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
                         }
                     });
         }

@@ -85,9 +85,8 @@ public class ReadTextTest extends RobolectricTest{
         MetaDB.storeLanguage(getTargetContext(), 1, 1, QUESTION, "French");
         assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is("French"));
         MetaDB.storeLanguage(getTargetContext(), 1, 1, QUESTION, "German");
-        // store does not update an already existing language
-        assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is("French"));
-        MetaDB.updateLanguage(getTargetContext(), 1, 1, QUESTION, "Deutsch");
-        assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is("Deutsch"));
+        assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is("German"));
+        MetaDB.storeLanguage(getTargetContext(), 2, 1, QUESTION, "English");
+        assertThat(MetaDB.getLanguage(getTargetContext(), 2, 1, QUESTION), is("English"));
     }
 }
