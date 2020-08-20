@@ -40,7 +40,7 @@ env:
    - API=24 LOCALE="zh_CN"
    - API=25 LOCALE="es_ES"
    #- API=26 # Fails with unrecognized tests? orchestrator change or something?
-   - API=27 LOCALE="fr_FR"
+   #- API=27 LOCALE="fr_FR" # API27 has become very flaky recently, disabling 2020/08/20
    - API=28 # API28 does not handle locale changes for some reason, so it is our default locale test
    - API=29 LOCALE="pt_BR"
    - API=30 EMU_FLAVOR=google_apis LOCALE="de_DE" # This will be API30 when released, until now it is R, with intermittent failure
