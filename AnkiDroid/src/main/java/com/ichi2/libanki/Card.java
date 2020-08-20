@@ -345,6 +345,7 @@ public class Card implements Cloneable {
      * Time taken to answer card, in integer MS.
      */
     public int timeTaken() {
+        // Indeed an int. Difference between two big numbers is still small.
         int total = (int) ((getCol().getTime().now() - mTimerStarted) * 1000);
         return Math.min(total, timeLimit());
     }
