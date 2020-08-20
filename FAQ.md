@@ -9,7 +9,7 @@ If a deck background image was set, remove `DeckBackgroundImage.png` from the /A
 
 ### I cannot find AnkiDroid on Google Play. Is the app restricted in some way?
 
-No AnkiDroid is not restricted in any way, see the [[installation guide|Installation]] for help with installing.
+No, AnkiDroid is not restricted in any way, see the [[installation guide|Installation]] for help with installing.
 
 ### I don't like the last update of AnkiDroid, how can I return to a previous version?
 
