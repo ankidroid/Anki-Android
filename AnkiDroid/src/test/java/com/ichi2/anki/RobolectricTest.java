@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Pair;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -27,6 +28,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
@@ -198,8 +200,9 @@ public class RobolectricTest {
         return controller.get();
     }
 
-    protected Note addNoteUsingBasicModel(String front, String back) {
-        return addNoteUsingModelName("Basic", front, back);
+    protected Pair<Note, Card> addNoteUsingBasicModel(String front, String back) {
+        Note note = addNoteUsingModelName("Basic", front, back);
+        return new Pair<>(note, note.firstCard());
     }
 
     protected Note addNoteUsingBasicAndReversedModel(String front, String back) {

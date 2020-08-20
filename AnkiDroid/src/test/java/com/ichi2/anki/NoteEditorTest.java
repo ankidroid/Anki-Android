@@ -221,7 +221,7 @@ public class NoteEditorTest extends RobolectricTest {
         final int DECK_ID_NOT_FOUND = -404;
         long currentDid = addDeck("Basic::Test");
         getCol().getConf().put("curDeck", currentDid);
-        Note n = super.addNoteUsingBasicModel("Test", "Note");
+        Note n = super.addNoteUsingBasicModel("Test", "Note").first;
         n.model().put("did", currentDid);
         NoteEditor editor = getNoteEditorEditingExistingBasicNote("Test", "Note", FromScreen.DECK_LIST);
 
@@ -332,7 +332,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     private NoteEditor getNoteEditorEditingExistingBasicNote(String front, String back, FromScreen from) {
-        Note n = super.addNoteUsingBasicModel(front, back);
+        Note n = super.addNoteUsingBasicModel(front, back).first;
         return getNoteEditorEditingExistingBasicNote(n, from, NoteEditor.class);
     }
 

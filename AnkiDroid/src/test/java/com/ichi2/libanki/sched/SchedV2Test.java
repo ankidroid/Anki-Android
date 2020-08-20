@@ -130,7 +130,7 @@ public class SchedV2Test extends RobolectricTest {
         'odue': 0, 'ord': 0, 'queue': 2, 'reps': 22, 'type': 2, 'usn': -1}
 
          */
-        Note n = addNoteUsingBasicModel("Hello", "World");
+        Note n = addNoteUsingBasicModel("Hello", "World").first;
         Card c = getOnlyElement(n.cards());
         c.setType(Consts.CARD_TYPE_REV);
         c.setQueue(Consts.QUEUE_TYPE_REV);

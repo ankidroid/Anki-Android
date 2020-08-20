@@ -157,8 +157,7 @@ public class AbstractSchedTest extends RobolectricTest {
         final int nbCard = 6;
         long[] cids = new long[nbCard];
         for (int i = 0; i < nbCard; i++) {
-            Note note = addNoteUsingBasicModel("foo", "bar");
-            Card card = note.firstCard();
+            Card card = addNoteUsingBasicModel("foo", "bar").second;
             long cid = card.getId();
             cids[i] = cid;
             queue.add(cid);

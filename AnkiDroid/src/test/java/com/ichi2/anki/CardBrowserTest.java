@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.util.Pair;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -245,10 +246,11 @@ public class CardBrowserTest extends RobolectricTest {
 
     @Test
     public void flagValueIsShownOnCard() {
-        Note n = addNoteUsingBasicModel("1", "back");
-        flagCardForNote(n, 1);
+        Pair<Note, Card> nc = addNoteUsingBasicModel("1", "back");
+        Card c = nc.second;
+        flagCardForNote(c, 1);
 
-        long cardId = n.cids().get(0);
+        long cardId = c.getId();
 
         CardBrowser b = getBrowserWithNoNewCards();
         CardBrowser.CardCache cardProperties = b.getPropertiesForCardId(cardId);
@@ -284,8 +286,7 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
 
-    private void flagCardForNote(Note n, int flag) {
-        Card c = n.firstCard();
+    private void flagCardForNote(Card c, int flag) {
         c.setUserFlag(flag);
         c.flush();
     }

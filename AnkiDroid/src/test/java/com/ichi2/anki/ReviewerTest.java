@@ -2,6 +2,7 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -72,8 +73,8 @@ public class ReviewerTest extends RobolectricTest {
     @Test
     public void jsTime4ShouldBeBlankIfButtonUnavailable() {
         // #6623 - easy should be blank when displaying a card with 3 buttons (after displaying a review)
-        Note firstNote = addNoteUsingBasicModel("Hello", "World");
-        moveToReviewQueue(firstNote.firstCard());
+        Card firstCard = addNoteUsingBasicModel("Hello", "World").second;
+        moveToReviewQueue(firstCard);
 
         addNoteUsingBasicModel("Hello", "World2");
 
