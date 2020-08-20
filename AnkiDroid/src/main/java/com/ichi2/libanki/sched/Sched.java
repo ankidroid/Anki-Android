@@ -53,6 +53,8 @@ import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
                     "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
@@ -465,7 +467,7 @@ public class Sched extends SchedV2 {
                 _sortIntoLrn(card.getDue(), card.getId());
             } else {
                 // the card is due in one or more days, so we need to use the day learn queue
-                long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
+                long ahead = ((card.getDue() - mDayCutoff) / SECONDS_PER_DAY) + 1;
                 card.setDue(mToday + ahead);
                 card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
             }
@@ -790,7 +792,7 @@ public class Sched extends SchedV2 {
             _sortIntoLrn(card.getDue(), card.getId());
         } else {
             // day learn queue
-            long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
+            long ahead = ((card.getDue() - mDayCutoff) / SECONDS_PER_DAY) + 1;
             card.setDue(mToday + ahead);
             card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
         }
@@ -1102,9 +1104,9 @@ public class Sched extends SchedV2 {
     protected void _updateCutoff() {
         Integer oldToday = mToday;
         // days since col created
-        mToday = (int) ((mTime.now() - mCol.getCrt()) / 86400);
+        mToday = (int) ((mTime.now() - mCol.getCrt()) / SECONDS_PER_DAY);
         // end of day cutoff
-        mDayCutoff = mCol.getCrt() + ((mToday + 1) * 86400);
+        mDayCutoff = mCol.getCrt() + ((mToday + 1) * SECONDS_PER_DAY);
         if (oldToday != mToday) {
             mCol.log(mToday, mDayCutoff);
         }
@@ -1159,10 +1161,10 @@ public class Sched extends SchedV2 {
             if (conf.getJSONArray("delays").length() > 0) {
                 return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
             }
-            return _nextLapseIvl(card, conf) * 86400L;
+            return _nextLapseIvl(card, conf) * SECONDS_PER_DAY;
         } else {
             // review
-            return _nextRevIvl(card, ease) * 86400L;
+            return _nextRevIvl(card, ease) * SECONDS_PER_DAY;
         }
     }
 
@@ -1182,7 +1184,7 @@ public class Sched extends SchedV2 {
             if (!_resched(card)) {
                 return 0;
             }
-            return _graduatingIvl(card, conf, true, false) * 86400L;
+            return _graduatingIvl(card, conf, true, false) * SECONDS_PER_DAY;
         } else {
             int left = card.getLeft() % 1000 - 1;
             if (left <= 0) {
@@ -1190,7 +1192,7 @@ public class Sched extends SchedV2 {
                 if (!_resched(card)) {
                     return 0;
                 }
-                return _graduatingIvl(card, conf, false, false) * 86400L;
+                return _graduatingIvl(card, conf, false, false) * SECONDS_PER_DAY;
             } else {
                 return _delayForGrade(conf, left);
             }
@@ -1311,7 +1313,7 @@ public class Sched extends SchedV2 {
                                 + "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING+ ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then time else null end) as revTime, "
                                 + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
                                 + "from revlog where id > "
-                                + ((mCol.getSched().getDayCutoff() - (10 * 86400)) * 1000), null);
+                                + ((mCol.getSched().getDayCutoff() - (10 * SECONDS_PER_DAY)) * 1000), null);
                 if (!cur.moveToFirst()) {
                     return -1;
                 }

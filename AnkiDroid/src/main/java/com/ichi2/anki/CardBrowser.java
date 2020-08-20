@@ -107,6 +107,7 @@ import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
 import static com.ichi2.anki.CardBrowser.Column.*;
+import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener {
@@ -2195,7 +2196,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 case Consts.CARD_TYPE_LRN :
                     return AnkiDroidApp.getInstance().getString(R.string.card_browser_interval_learning_card);
                 default:
-                    return Utils.roundedTimeSpanUnformatted(AnkiDroidApp.getInstance(), getCard().getIvl()*86400);
+                    return Utils.roundedTimeSpanUnformatted(AnkiDroidApp.getInstance(), getCard().getIvl()*SECONDS_PER_DAY);
                 }
             case LAPSES:
                 return Integer.toString(getCard().getLapses());

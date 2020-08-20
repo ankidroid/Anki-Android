@@ -49,6 +49,8 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 public class Finder {
 
@@ -513,7 +515,7 @@ public class Finder {
             }
             ease = "and ease=" + r[1];
         }
-        long cutoff = (mCol.getSched().getDayCutoff() - 86400 * days) * 1000;
+        long cutoff = (mCol.getSched().getDayCutoff() - SECONDS_PER_DAY * days) * 1000;
         return "c.id in (select cid from revlog where id>" + cutoff + " " + ease + ")";
     }
 
@@ -525,7 +527,7 @@ public class Finder {
         } catch (NumberFormatException e) {
             return null;
         }
-        long cutoff = (mCol.getSched().getDayCutoff() - 86400 * days) * 1000;
+        long cutoff = (mCol.getSched().getDayCutoff() - SECONDS_PER_DAY * days) * 1000;
         return "c.id > " + cutoff;
     }
 

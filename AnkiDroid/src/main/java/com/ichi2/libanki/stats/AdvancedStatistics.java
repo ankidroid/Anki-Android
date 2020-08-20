@@ -42,6 +42,8 @@ import java.util.Stack;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+
 /**
  * Display forecast statistics based on a simulation of future reviews.
  *
@@ -1101,7 +1103,7 @@ public class AdvancedStatistics {
         }
 
         public int getNSecsPerDay() {
-            return 86400;
+            return (int) SECONDS_PER_DAY;
         }
     }
 

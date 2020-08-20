@@ -308,7 +308,7 @@ public class FinderTest extends RobolectricTest {
             assertEquals(1, col.findCards("rated:2:2").size());
             // added
             assertEquals(0, col.findCards("added:0").size());
-            col.getDb().execute("update cards set id = id - 86400*1000 where id = ?", id);
+            col.getDb().execute("update cards set id = id - " + SECONDS_PER_DAY * 1000 + " where id = ?", id);
             assertEquals(col.cardCount() - 1, col.findCards("added:1").size());
             assertEquals(col.cardCount(), col.findCards("added:2").size());
         } else {
