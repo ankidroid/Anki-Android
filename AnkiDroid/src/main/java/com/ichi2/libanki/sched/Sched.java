@@ -382,7 +382,7 @@ public class Sched extends SchedV2 {
     @Override
     protected Card _getLrnCard(boolean collapse) {
         if (_fillLrn()) {
-            double cutoff = getTime().now();
+            long cutoff = getTime().intTime();
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
@@ -442,7 +442,7 @@ public class Sched extends SchedV2 {
                 }
             }
             int delay = _delayForGrade(conf, card.getLeft());
-            if (card.getDue() < getTime().now()) {
+            if (card.getDue() < getTime().intTime()) {
                 // not collapsed; add some randomness
                 delay *= Utils.randomFloatInRange(1f, 1.25f);
             }
@@ -778,7 +778,7 @@ public class Sched extends SchedV2 {
             card.setODue(card.getDue());
         }
         delay = _delayForGrade(conf, 0);
-        card.setDue((long) (delay + getTime().now()));
+        card.setDue(delay + getTime().intTime());
         card.setLeft(_startingLeft(card));
         // queue 1
         if (card.getDue() < mDayCutoff) {
@@ -1099,7 +1099,7 @@ public class Sched extends SchedV2 {
     protected void _updateCutoff() {
         Integer oldToday = mToday;
         // days since col created
-        mToday = (int) ((getTime().now() - mCol.getCrt()) / SECONDS_PER_DAY);
+        mToday = (int) ((getTime().intTime() - mCol.getCrt()) / SECONDS_PER_DAY);
         // end of day cutoff
         mDayCutoff = mCol.getCrt() + ((mToday + 1) * SECONDS_PER_DAY);
         if (oldToday != mToday) {
@@ -1236,7 +1236,7 @@ public class Sched extends SchedV2 {
         remFromDyn(cids);
         removeLrn(cids);
         mCol.getDb().execute("update cards set " + queueIsBuriedSnippet() + ",mod=?,usn=? where id in " + Utils.ids2str(cids),
-                getTime().now(), mCol.usn());
+                getTime().intTime(), mCol.usn());
     }
 
 

@@ -76,10 +76,10 @@ public class Card implements Cloneable {
     public static final int TYPE_REV = 2;
 
     private Collection mCol;
-    private double mTimerStarted;
+    private long mTimerStarted;
 
     // Not in LibAnki. Record time spent reviewing in order to restore when resuming.
-    private double mElapsedTime;
+    private long mElapsedTime;
 
     // BEGIN SQL table entries
     private long mId;
@@ -121,7 +121,7 @@ public class Card implements Cloneable {
 
     public Card(Collection col, Long id) {
         mCol = col;
-        mTimerStarted = Double.NaN;
+        mTimerStarted = 0L;
         mQA = null;
         mNote = null;
         if (id != null) {
@@ -328,7 +328,7 @@ public class Card implements Cloneable {
 
 
     public void startTimer() {
-        mTimerStarted = getCol().getTime().now();
+        mTimerStarted = getCol().getTime().intTime();
     }
 
 
@@ -346,7 +346,7 @@ public class Card implements Cloneable {
      */
     public int timeTaken() {
         // Indeed an int. Difference between two big numbers is still small.
-        int total = (int) ((getCol().getTime().now() - mTimerStarted) * 1000);
+        int total = (int) ((getCol().getTime().intTime() - mTimerStarted) * 1000);
         return Math.min(total, timeLimit());
     }
 
@@ -389,7 +389,7 @@ public class Card implements Cloneable {
      * method when the session resumes to start counting review time again.
      */
     public void stopTimer() {
-        mElapsedTime = getCol().getTime().now() - mTimerStarted;
+        mElapsedTime = getCol().getTime().intTime() - mTimerStarted;
     }
 
 
@@ -402,10 +402,10 @@ public class Card implements Cloneable {
      * or the result of timeTaken() will be wrong.
      */
     public void resumeTimer() {
-        mTimerStarted = getCol().getTime().now() - mElapsedTime;
+        mTimerStarted = getCol().getTime().intTime() - mElapsedTime;
     }
 
-    public void setTimerStarted(double timeStarted){ mTimerStarted = timeStarted; }
+    public void setTimerStarted(long timeStarted){ mTimerStarted = timeStarted; }
 
     public long getId() {
         return mId;
