@@ -318,7 +318,7 @@ public class AdvancedStatistics {
 
         EaseClassifier classifier = new EaseClassifier(mCol.getTime(), mCol.getDb().getDatabase());
         ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier, end, chunk);
-        TodayStats todayStats = new TodayStats(mCol.getDb().getDatabase(), Settings.getDayStartCutoff((int) mCol.getCrt()));
+        TodayStats todayStats = new TodayStats(mCol.getDb().getDatabase(), Settings.getDayStartCutoff(mCol.getCrt()));
 
         long t0 = mCol.getTime().intTimeMS();
         SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
@@ -1082,7 +1082,7 @@ public class AdvancedStatistics {
          * @param collectionCreatedTime The difference, measured in seconds, between midnight, January 1, 1970 UTC and the time at which the collection was created.
          * @return Today in days counted from the time at which the collection was created
          */
-        public int getToday(int collectionCreatedTime) {
+        public int getToday(long collectionCreatedTime) {
             Timber.d("Collection creation timestamp: " + collectionCreatedTime);
 
             long currentTime = mCol.getTime().intTime();
@@ -1095,7 +1095,7 @@ public class AdvancedStatistics {
          * @param collectionCreatedTime The difference, measured in seconds, between midnight, January 1, 1970 UTC and the time at which the collection was created.
          * @return The beginning of today in milliseconds counted from the time at which the collection was created
          */
-        public long getDayStartCutoff (int collectionCreatedTime) {
+        public long getDayStartCutoff (long collectionCreatedTime) {
             long today = getToday(collectionCreatedTime);
             return (collectionCreatedTime + (today * SECONDS_PER_DAY)) * 1000;
         }
