@@ -39,6 +39,9 @@ import com.ichi2.anki.FlashCardsContract.Model;
 import com.ichi2.anki.FlashCardsContract.Note;
 import com.ichi2.anki.FlashCardsContract.AnkiMedia;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -170,7 +173,9 @@ public final class AddContentApi {
      * @return the correctly formatted String for the media file to be placed in the desired field of a Card, or null
      *          if unsuccessful.
      */
-    public String addMediaFromUri(Uri fileUri, String preferredName, String mimeType) {
+    public @Nullable String addMediaFromUri(
+            @NotNull Uri fileUri, @NotNull String preferredName, @NotNull String mimeType
+    ) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(AnkiMedia.FILE_URI, fileUri.toString());
         preferredName = preferredName.replace(" ", "_");
@@ -188,7 +193,7 @@ public final class AddContentApi {
 
     }
 
-    public String formatMediaName(String fname, String mimeType) {
+    private @Nullable String formatMediaName(@NotNull String fname, @NotNull String mimeType) {
         String formatted_fname;
         if (mimeType.equals("audio")) {
             formatted_fname = String.format("[sound:%s]", fname.substring(1)); // first character in the path is "/"
