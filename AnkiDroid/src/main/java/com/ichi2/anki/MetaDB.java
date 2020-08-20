@@ -215,29 +215,17 @@ public class MetaDB {
     public static void storeLanguage(Context context, long did, int ord, Sound.SoundSide qa, String language) {
         openDBIfClosed(context);
         try {
-            mMetaDb.execSQL("INSERT INTO languages (did, ord, qa, language) " + " VALUES (?, ?, ?, ?);", new Object[] {
-                    did, ord, qa.getInt(), language });
-            Timber.v("Store language for deck %d", did);
+            if ("".equals(getLanguage(context, did, ord, qa))) {
+                mMetaDb.execSQL("INSERT INTO languages (did, ord, qa, language) " + " VALUES (?, ?, ?, ?);", new Object[] {
+                        did, ord, qa.getInt(), language });
+                Timber.v("Store language for deck %d", did);
+            } else {
+                mMetaDb.execSQL("UPDATE languages SET language = ? WHERE did = ? AND ord = ? AND qa = ?;", new Object[] {
+                        language, did, ord, qa.getInt()});
+                Timber.v("Update language for deck %d", did);
+            }
         } catch (Exception e) {
             Timber.e(e,"Error storing language in MetaDB ");
-        }
-    }
-
-    /**
-     * Associates a language to a deck, model, and card model for a given type.
-     *
-     * @param qa the part of the card for which to store the association, {@link #LANGUAGES_QA_QUESTION},
-     *            {@link #LANGUAGES_QA_ANSWER}, or {@link #LANGUAGES_QA_UNDEFINED}
-     * @param language the language to associate, as a two-characters, lowercase string
-     */
-    public static void updateLanguage(Context context, long did, int ord, Sound.SoundSide qa, String language) {
-        openDBIfClosed(context);
-        try {
-            mMetaDb.execSQL("UPDATE languages SET language = ? WHERE did = ? AND ord = ? AND qa = ?;", new Object[] {
-                    language, did, ord, qa.getInt()});
-            Timber.v("Update language for deck %d", did);
-        } catch (Exception e) {
-            Timber.e(e,"Error updating language in MetaDB ");
         }
     }
 
