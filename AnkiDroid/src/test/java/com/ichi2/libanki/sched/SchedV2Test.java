@@ -988,8 +988,8 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(4, col.getSched().answerButtons(c));
         assertEquals(600, col.getSched().nextIvl(c, 1));
         assertEquals(Math.round(75 * 1.2) * 86400, col.getSched().nextIvl(c, 2));
-        assumeThat("Investigate this difference", col.getSched().nextIvl(c, 3), is(((long)(75 * 2.5)) * 86400));
-        assumeThat("Investigate this difference", col.getSched().nextIvl(c, 4), is(Math.round(75 * 2.5 * 1.15)));
+        assertThat(col.getSched().nextIvl(c, 3), is((long)(75 * 2.5) * 86400));
+        assertThat(col.getSched().nextIvl(c, 4), is((long)(75 * 2.5 * 1.15) * 86400));
 
         // answer 'good'
         col.getSched().answerCard(c, 3);
