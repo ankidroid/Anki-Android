@@ -16,6 +16,8 @@
 
 package com.ichi2.anki;
 
+import com.ichi2.libanki.Sound;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,5 +77,17 @@ public class ReadTextTest extends RobolectricTest{
     private String getValueFromReadSide(@NonNull String content) {
         ReadText.readCardSide(QUESTION, content, 1, 1, "blank");
         return ReadText.getTextToSpeak();
+    }
+
+    @Test
+    public void SaveValue() {
+        assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is(""));
+        MetaDB.storeLanguage(getTargetContext(), 1, 1, QUESTION, "French");
+        assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is("French"));
+        MetaDB.storeLanguage(getTargetContext(), 1, 1, QUESTION, "German");
+        // store does not update an already existing language
+        assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is("French"));
+        MetaDB.updateLanguage(getTargetContext(), 1, 1, QUESTION, "Deutsch");
+        assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is("Deutsch"));
     }
 }
