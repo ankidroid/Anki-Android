@@ -1089,7 +1089,7 @@ public class AdvancedStatistics {
 
             int currentTime = (int) (getNow() / 1000);
             Timber.d("Now: " + currentTime);
-            return (currentTime - collectionCreatedTime) / getNSecsPerDay();
+            return (int) ((currentTime - collectionCreatedTime) / SECONDS_PER_DAY);
         }
 
         /**
@@ -1099,11 +1099,7 @@ public class AdvancedStatistics {
          */
         public long getDayStartCutoff (int collectionCreatedTime) {
             long today = getToday(collectionCreatedTime);
-            return (collectionCreatedTime + (today * getNSecsPerDay())) * 1000;
-        }
-
-        public int getNSecsPerDay() {
-            return (int) SECONDS_PER_DAY;
+            return (collectionCreatedTime + (today * SECONDS_PER_DAY)) * 1000;
         }
     }
 

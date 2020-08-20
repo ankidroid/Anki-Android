@@ -37,6 +37,7 @@ import timber.log.Timber;
 import static com.ichi2.libanki.Consts.CARD_TYPE_REV;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED;
+import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
 import static com.ichi2.utils.CollectionUtils.getLastListElement;
 import static org.hamcrest.MatcherAssert.assertThat;
