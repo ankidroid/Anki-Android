@@ -59,6 +59,7 @@ import static com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED;
 import static com.ichi2.libanki.Consts.STARTING_FACTOR;
 import static com.ichi2.libanki.DecksTest.TEST_DECKS;
 import static com.ichi2.libanki.Utils.intTime;
+import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.testutils.AnkiAssert.checkRevIvl;
 import static com.ichi2.testutils.AnkiAssert.without_unicode_isolation;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -516,7 +517,7 @@ public class SchedV2Test extends RobolectricTest {
         assertArrayEquals(new int[] {0, 1, 0}, col.getSched().counts());
         c = col.getSched().getCard();
 
-        assertEquals(86400, col.getSched().nextIvl(c, 3));
+        assertEquals(SECONDS_PER_DAY, col.getSched().nextIvl(c, 3));
         // answering it will place it in queue 3
         col.getSched().answerCard(c, 3);
         assertEquals(col.getSched().getToday() + 1, c.getDue());
@@ -529,7 +530,7 @@ public class SchedV2Test extends RobolectricTest {
         assertArrayEquals(new int[] {0, 1, 0}, col.getSched().counts());
         c = col.getSched().getCard();
         // nextIvl should work
-        assertEquals(86400 * 2, col.getSched().nextIvl(c, 3));
+        assertEquals(SECONDS_PER_DAY * 2, col.getSched().nextIvl(c, 3));
         // if we fail it, it should be back in the correct queue
         col.getSched().answerCard(c, 1);
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
@@ -542,7 +543,7 @@ public class SchedV2Test extends RobolectricTest {
         c.flush();
         col.reset();
         // the last pass should graduate it into a review card
-        assertEquals(86400, col.getSched().nextIvl(c, 3));
+        assertEquals(SECONDS_PER_DAY, col.getSched().nextIvl(c, 3));
         col.getSched().answerCard(c, 3);
         assertEquals(CARD_TYPE_REV, c.getType());
         assertEquals(QUEUE_TYPE_REV, c.getQueue());
@@ -814,31 +815,31 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(30, col.getSched().nextIvl(c, 1));
         assertEquals((30 + 180) / 2, col.getSched().nextIvl(c, 2));
         assertEquals(180, col.getSched().nextIvl(c, 3));
-        assertEquals(4 * 86400, col.getSched().nextIvl(c, 4));
+        assertEquals(4 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 4));
         col.getSched().answerCard(c, 1);
         // cards in learning
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         assertEquals(30, col.getSched().nextIvl(c, 1));
         assertEquals((30 + 180) / 2, col.getSched().nextIvl(c, 2));
         assertEquals(180, col.getSched().nextIvl(c, 3));
-        assertEquals(4 * 86400, col.getSched().nextIvl(c, 4));
+        assertEquals(4 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 4));
         col.getSched().answerCard(c, 3);
         assertEquals(30, col.getSched().nextIvl(c, 1));
         assertEquals((180 + 600) / 2, col.getSched().nextIvl(c, 2));
         assertEquals(600, col.getSched().nextIvl(c, 3));
-        assertEquals(4 * 86400, col.getSched().nextIvl(c, 4));
+        assertEquals(4 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 4));
         col.getSched().answerCard(c, 3);
         // normal graduation is tomorrow
-        assertEquals(1 * 86400, col.getSched().nextIvl(c, 3));
-        assertEquals(4 * 86400, col.getSched().nextIvl(c, 4));
+        assertEquals(1 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 3));
+        assertEquals(4 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 4));
         // lapsed cards
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         c.setType(CARD_TYPE_REV);
         c.setIvl(100);
         c.setFactor(STARTING_FACTOR);
         assertEquals(60, col.getSched().nextIvl(c, 1));
-        assertEquals(100 * 86400, col.getSched().nextIvl(c, 3));
-        assertEquals(101 * 86400, col.getSched().nextIvl(c, 4));
+        assertEquals(100 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 3));
+        assertEquals(101 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 4));
         // review cards
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         c.setQueue(QUEUE_TYPE_REV);
@@ -849,12 +850,12 @@ public class SchedV2Test extends RobolectricTest {
         // or 1 day if relearn is false
         conf.getJSONObject("lapse").put("delays", new JSONArray(new double[] {}));
         col.getDecks().save(conf);
-        assertEquals(1 * 86400, col.getSched().nextIvl(c, 1));
-        // (* 100 1.2 86400)10368000.0
+        assertEquals(1 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 1));
+        // (* 100 1.2 SECONDS_PER_DAY)10368000.0
         assertEquals(10368000, col.getSched().nextIvl(c, 2));
-        // (* 100 2.5 86400)21600000.0
+        // (* 100 2.5 SECONDS_PER_DAY)21600000.0
         assertEquals(21600000, col.getSched().nextIvl(c, 3));
-        // (* 100 2.5 1.3 86400)28080000.0
+        // (* 100 2.5 1.3 SECONDS_PER_DAY)28080000.0
         assertEquals(28080000, col.getSched().nextIvl(c, 4));
 
         assertThat(without_unicode_isolation(col.getSched().nextIvlStr(getTargetContext(), c, 4)), is("10.8 mo"));
@@ -986,9 +987,9 @@ public class SchedV2Test extends RobolectricTest {
         c = col.getSched().getCard();
         assertEquals(4, col.getSched().answerButtons(c));
         assertEquals(600, col.getSched().nextIvl(c, 1));
-        assertEquals(Math.round(75 * 1.2) * 86400, col.getSched().nextIvl(c, 2));
-        assertThat(col.getSched().nextIvl(c, 3), is((long)(75 * 2.5) * 86400));
-        assertThat(col.getSched().nextIvl(c, 4), is((long)(75 * 2.5 * 1.15) * 86400));
+        assertEquals(Math.round(75 * 1.2) * SECONDS_PER_DAY, col.getSched().nextIvl(c, 2));
+        assertThat(col.getSched().nextIvl(c, 3), is((long)(75 * 2.5) * SECONDS_PER_DAY));
+        assertThat(col.getSched().nextIvl(c, 4), is((long)(75 * 2.5 * 1.15) * SECONDS_PER_DAY));
 
         // answer 'good'
         col.getSched().answerCard(c, 3);
@@ -1008,9 +1009,9 @@ public class SchedV2Test extends RobolectricTest {
         col.reset();
         c = col.getSched().getCard();
 
-        assertEquals(60 * 86400, col.getSched().nextIvl(c, 2));
-        assertEquals(100 * 86400, col.getSched().nextIvl(c, 3));
-        assertEquals(114 * 86400, col.getSched().nextIvl(c, 4));
+        assertEquals(60 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 2));
+        assertEquals(100 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 3));
+        assertEquals(114 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 4));
     }
 
 

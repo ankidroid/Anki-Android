@@ -226,7 +226,7 @@ public class Stats {
         long cut = mCol.getSched().getDayCutoff();
         int cardCount = 0;
         String query = "select " +
-                "(cast((id/1000.0 - ?) / 86400.0 as int))/? as day," +
+                "(cast((id/1000.0 - ?) / " + SECONDS_PER_DAY + ".0 as int))/? as day," +
                 " count(id) " +
                 " from cards " + lim +
                 " group by day order by day";
@@ -270,7 +270,7 @@ public class Stats {
         if (t == 0) {
             period = 1;
         } else {
-            period = Math.max(1, (int)(1+((mCol.getSched().getDayCutoff() - (t/1000)) / 86400)));
+            period = Math.max(1, (int)(1+((mCol.getSched().getDayCutoff() - (t/1000)) / SECONDS_PER_DAY)));
         }
         return period;
     }

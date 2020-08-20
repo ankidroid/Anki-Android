@@ -36,6 +36,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import timber.log.Timber;
 
+import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+
 public class AnkiStatsTaskHandler {
 
     private static AnkiStatsTaskHandler sInstance;
@@ -210,7 +212,7 @@ public class AnkiStatsTaskHandler {
                 int cards;
                 int minutes;
                 Cursor cur = null;
-                String query = "select count(), sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff() - 86400) * 1000);
+                String query = "select count(), sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff() - SECONDS_PER_DAY) * 1000);
                 Timber.d("DeckPreviewStatistics query: " + query);
 
                 try {

@@ -9,6 +9,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+
 @SuppressWarnings("PMD.ExcessiveMethodLength")
 public class CardStats {
 
@@ -34,7 +36,7 @@ public class CardStats {
                 next = 0;
             } else {
                 if (c.getQueue() == Consts.QUEUE_TYPE_REV || c.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
-                    next = Utils.intTime(1000) + ((c.getDue() - col.getSched().getToday()) * 86400000);
+                    next = Utils.intTime(1000) + ((c.getDue() - col.getSched().getToday()) * SECONDS_PER_DAY * 1000);
                 } else {
                     next = c.getDue();
                 }

@@ -41,6 +41,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+
 /**
  A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
  the next interval), the note it is derived from (from which field data is retrieved), its own ownership (which deck it
@@ -696,7 +698,7 @@ public class Card implements Cloneable {
         } else if (getQueue() == Consts.QUEUE_TYPE_REV || getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || (getType() == Consts.CARD_TYPE_REV && getQueue() < 0)) {
             long time = System.currentTimeMillis() / 1000L;
             long nbDaySinceCreation = (due - getCol().getSched().getToday());
-            date = time + (nbDaySinceCreation * 86400L);
+            date = time + (nbDaySinceCreation * SECONDS_PER_DAY);
         } else {
             return "";
         }

@@ -68,6 +68,7 @@ import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
+import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
@@ -1244,7 +1245,7 @@ public class SchedV2 extends AbstractSched {
             }
         } else {
             // the card is due in one or more days, so we need to use the day learn queue
-            long ahead = ((card.getDue() - mDayCutoff) / 86400) + 1;
+            long ahead = ((card.getDue() - mDayCutoff) / SECONDS_PER_DAY) + 1;
             card.setDue(mToday + ahead);
             card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
         }
@@ -2194,7 +2195,7 @@ public class SchedV2 extends AbstractSched {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
 
-        return (int) ((mTime.time() - c.getTimeInMillis()) / 1000) / 86400;
+        return (int) (((mTime.time() - c.getTimeInMillis()) / 1000) / SECONDS_PER_DAY);
     }
 
 
@@ -2377,14 +2378,14 @@ public class SchedV2 extends AbstractSched {
             if (conf.getJSONArray("delays").length() > 0) {
                 return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
             }
-            return _lapseIvl(card, conf) * 86400L;
+            return _lapseIvl(card, conf) * SECONDS_PER_DAY;
         } else {
             // review
             boolean early = card.getODid() != 0 && (card.getODue() > mToday);
             if (early) {
-                return _earlyReviewIvl(card, ease) * 86400L;
+                return _earlyReviewIvl(card, ease) * SECONDS_PER_DAY;
             } else {
-                return _nextRevIvl(card, ease, false) * 86400L;
+                return _nextRevIvl(card, ease, false) * SECONDS_PER_DAY;
             }
         }
     }
@@ -2403,12 +2404,12 @@ public class SchedV2 extends AbstractSched {
         } else if (ease == Consts.BUTTON_TWO) {
             return _delayForRepeatingGrade(conf, card.getLeft());
         } else if (ease == Consts.BUTTON_FOUR) {
-            return _graduatingIvl(card, conf, true, false) * 86400L;
+            return _graduatingIvl(card, conf, true, false) * SECONDS_PER_DAY;
         } else { // ease == 3
             int left = card.getLeft() % 1000 - 1;
             if (left <= 0) {
                 // graduate
-                return _graduatingIvl(card, conf, false, false) * 86400L;
+                return _graduatingIvl(card, conf, false, false) * SECONDS_PER_DAY;
             } else {
                 return _delayForGrade(conf, left);
             }
@@ -2915,7 +2916,7 @@ public class SchedV2 extends AbstractSched {
                                 + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
                                 + "from revlog where id > "
                                 + "?",
-                               (mCol.getSched().getDayCutoff() - (10 * 86400)) * 1000);
+                               (mCol.getSched().getDayCutoff() - (10 * SECONDS_PER_DAY)) * 1000);
                 if (!cur.moveToFirst()) {
                     return -1;
                 }

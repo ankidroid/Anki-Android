@@ -103,7 +103,7 @@ public class ExportingTest extends RobolectricTest {
        Note note = col.newNote();
        note.setItem("Front","foo");
        col.addNote(note);
-       col.crt -= 86400 * 10;
+       col.crt -= SECONDS_PER_DAY * 10;
        col.flush();
        col.getSched().reset();
        Card c = col.getSched().getCard();
