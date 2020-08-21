@@ -344,6 +344,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    /** new count, lrn count, rev count.  */
     public int[] counts() {
         if (!mHaveCounts) {
             resetCounts();
@@ -1237,7 +1238,7 @@ public class SchedV2 extends AbstractSched {
                 // if the queue is not empty and there's nothing else to do, make
                 // sure we don't put it at the head of the queue and end up showing
                 // it twice in a row
-                if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
+                if (!mLrnQueue.isEmpty() && revCount() == 0 && newCount() == 0) {
                     long smallestDue = mLrnQueue.getFirstDue();
                     card.setDue(Math.max(card.getDue(), smallestDue + 1));
                 }

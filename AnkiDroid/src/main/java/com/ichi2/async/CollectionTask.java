@@ -1872,6 +1872,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     public void doInBackgroundPreloadNextCard() {
         try {
+            getCol().getSched().counts(); // Ensure counts are recomputed if necessary, to know queue to look for
             getCol().getSched().preloadNextCard();
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundPreloadNextCard - RuntimeException on preloading card");

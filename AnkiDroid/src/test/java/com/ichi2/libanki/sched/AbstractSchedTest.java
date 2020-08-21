@@ -118,9 +118,9 @@ public class AbstractSchedTest extends RobolectricTest {
         }
         sched.reset();
         assertThat(col.cardCount(), is(20));
-        assertThat(sched.counts()[0], is(10));
+        assertThat(sched.newCount(), is(10));
         Card card = sched.getCard();
-        assertThat(sched.counts()[0], is(9));
+        assertThat(sched.newCount(), is(9));
         assertThat(sched.counts(card)[0], is(10));
         sched.answerCard(card, 3);
         sched.getCard();
@@ -141,7 +141,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
                     @Override
                     public void onPostExecute(TaskData result) {
-                        assertThat(sched.counts()[0], is(9));
+                        assertThat(sched.newCount(), is(9));
                         assertThat(sched.counts(card)[0], is(10));
                         executed[0] = true;
                     }
@@ -223,7 +223,7 @@ public class AbstractSchedTest extends RobolectricTest {
         private void assertNewCountIs(String explanation, long did, int expected) {
             decks.select(did);
             sched.resetCounts();
-            assertThat(explanation, sched.counts()[0], is(expected));
+            assertThat(explanation, sched.newCount(), is(expected));
         }
 
         private void increaseAndAssertNewCountsIs(String explanation, long did, int a, int b, int c, int d) {

@@ -460,7 +460,7 @@ public class Sched extends SchedV2 {
                 // sure we don't put it at the head of the queue and end up showing
                 // it twice in a row
                 card.setQueue(Consts.QUEUE_TYPE_LRN);
-                if (!mLrnQueue.isEmpty() && mRevCount == 0 && mNewCount == 0) {
+                if (!mLrnQueue.isEmpty() && revCount() == 0 && newCount() == 0) {
                     long smallestDue = mLrnQueue.getFirstDue();
                     card.setDue(Math.max(card.getDue(), smallestDue + 1));
                 }

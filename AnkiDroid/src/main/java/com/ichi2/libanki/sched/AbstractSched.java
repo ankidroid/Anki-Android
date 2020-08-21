@@ -74,6 +74,26 @@ public abstract class AbstractSched {
     // TODO: consider counting the card currently in the reviewer, this would simplify the code greatly
     // We almost never want to consider the card in the reviewer differently, and a lot of code is added to correct this.
     public abstract int[] counts();
+
+
+    /** Number of new card in selected decks. Recompute it if we reseted.*/
+    public int newCount() {
+        // We need to actually recompute the three elements, because we potentially need to deal with undid card
+        // in any deck where it may be
+        return counts()[0];
+    }
+
+
+    /** Number of lrn card in selected decks. Recompute it if we reseted.*/
+    public int lrnCount() {
+        return counts()[1];
+    }
+
+
+    /** Number of rev card in selected decks. Recompute it if we reseted.*/
+    public int revCount() {
+        return counts()[2];
+    }
     /**
      * Same as counts(), but also count `card`. In practice, we use it because `card` is in the reviewer and that is the
      * number we actually want.
