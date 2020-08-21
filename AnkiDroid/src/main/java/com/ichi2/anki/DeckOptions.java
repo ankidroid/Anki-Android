@@ -44,7 +44,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -75,6 +74,7 @@ import java.util.TreeMap;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+
 import com.ichi2.async.TaskData;
 
 /**
@@ -391,11 +391,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                                 alarmManager.cancel(reminderIntent);
                                 if ((Boolean) value) {
-                                    final Calendar calendar = Calendar.getInstance();
-
-                                    calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
-                                    calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
-                                    calendar.set(Calendar.SECOND, 0);
+                                    final Calendar calendar = reminderToCalendar(reminder);
 
                                     alarmManager.setRepeating(
                                             AlarmManager.RTC_WAKEUP,
@@ -426,11 +422,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                                 alarmManager.cancel(reminderIntent);
 
-                                final Calendar calendar = Calendar.getInstance();
-
-                                calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
-                                calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
-                                calendar.set(Calendar.SECOND, 0);
+                                final Calendar calendar = reminderToCalendar(reminder);
 
                                 alarmManager.setRepeating(
                                         AlarmManager.RTC_WAKEUP,
@@ -904,5 +896,15 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     private void restartActivity() {
         recreate();
+    }
+
+    public static Calendar reminderToCalendar(JSONObject reminder) {
+
+        final Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
+        calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
+        calendar.set(Calendar.SECOND, 0);
+        return calendar;
     }
 }
