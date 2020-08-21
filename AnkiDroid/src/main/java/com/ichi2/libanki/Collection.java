@@ -67,6 +67,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -126,6 +127,9 @@ public class Collection {
     private static final int fDefaultSchedulerVersion = 1;
     private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
 
+    // Not in libAnki.
+    private Time mTime;
+
     // other options
     public static final String defaultConf = "{"
             +
@@ -163,10 +167,16 @@ public class Collection {
     private static final int UNDO_SIZE_MAX = 20;
 
     public Collection(Context context, DB db, String path, boolean server, boolean log) {
+        this(context, db, path, server, log, new SystemTime());
+    }
+
+    @VisibleForTesting
+    public Collection(Context context, DB db, String path, boolean server, boolean log, Time time) {
         mContext = context;
         mDebugLog = log;
         mDb = db;
         mPath = path;
+        mTime = time;
         _openLog();
         log(path, VersionUtils.getPkgVersionName());
         mServer = server;
@@ -213,15 +223,11 @@ public class Collection {
 
     // Note: Additional members in the class duplicate this
     private void _loadScheduler() {
-        _loadScheduler(new SystemTime());
-    }
-
-    private void _loadScheduler(Time time) {
         int ver = schedVer();
         if (ver == 1) {
-            mSched = new Sched(this, time);
+            mSched = new Sched(this);
         } else if (ver == 2) {
-            mSched = new SchedV2(this, time);
+            mSched = new SchedV2(this);
         }
     }
 
@@ -234,7 +240,7 @@ public class Collection {
         }
         modSchema();
         @SuppressLint("VisibleForTests")
-        SchedV2 v2Sched = new SchedV2(this, mSched.getTime());
+        SchedV2 v2Sched = new SchedV2(this);
         clearUndo();
         if (ver == 1) {
             v2Sched.moveToV1();
@@ -243,7 +249,7 @@ public class Collection {
         }
         mConf.put("schedVer", ver);
         setMod();
-        _loadScheduler(mSched.getTime());
+        _loadScheduler();
     }
 
 
@@ -2132,12 +2138,12 @@ public class Collection {
 
     //This duplicates _loadScheduler (but returns the value and sets the report limit).
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public void replaceSchedulerForTests(Time time) {
+    public void replaceSchedulerForTests() {
         int ver = schedVer();
         if (ver == 1) {
-            mSched = new Sched(this, time);
+            mSched = new Sched(this);
         } else if (ver == 2) {
-            mSched = new SchedV2(this, time);
+            mSched = new SchedV2(this);
         }
     }
 
@@ -2219,5 +2225,16 @@ public class Collection {
         public boolean getFailed() {
             return mFailed;
         }
+    }
+
+    @NonNull
+    public Time getTime() {
+        return mTime;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public void setTime(Time time) {
+        mTime = time;
+        _loadScheduler();
     }
 }

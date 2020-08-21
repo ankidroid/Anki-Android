@@ -148,7 +148,7 @@ public class SchedV2Test extends RobolectricTest {
         c.setDid(dynId);
         c.flush();
 
-        SchedV2 v2 = new SchedV2(getCol(), new MockTime(1587928085001L));
+        SchedV2 v2 = new SchedV2(getCol());
 
         Card schedCard = v2.getCard();
         assertThat(schedCard, Matchers.notNullValue());
@@ -217,7 +217,7 @@ public class SchedV2Test extends RobolectricTest {
     private void changeSchedulerVer(Collection col, int ver) throws ConfirmModSchemaException {
         col.changeSchedulerVer(ver);
         col.setCrt(1596540138L);
-        col.replaceSchedulerForTests(mTime);
+        col.replaceSchedulerForTests();
     }
 
     private double now() {
