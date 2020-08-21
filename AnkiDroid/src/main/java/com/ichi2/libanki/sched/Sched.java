@@ -84,11 +84,6 @@ public class Sched extends SchedV2 {
         super(col);
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public Sched(@NonNull Collection col, @NonNull Time time) {
-        super(col, time);
-    }
-
     @Override
     public void answerCard(Card card, @Consts.BUTTON_TYPE int ease) {
         mCol.log();

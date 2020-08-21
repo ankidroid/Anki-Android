@@ -144,7 +144,7 @@ public class SchedV2Test extends RobolectricTest {
         c.setDid(dynId);
         c.flush();
 
-        SchedV2 v2 = new SchedV2(getCol(), new MockTime(1587928085001L));
+        SchedV2 v2 = new SchedV2(getCol());
 
         Card schedCard = v2.getCard();
         assertThat(schedCard, Matchers.notNullValue());
@@ -206,14 +206,8 @@ public class SchedV2Test extends RobolectricTest {
 
     public Collection getColV2() throws Exception {
         Collection col = getCol();
-        changeSchedulerVer(col, 2);
+        col.changeSchedulerVer(2);
         return col;
-    }
-
-    private void changeSchedulerVer(Collection col, int ver) throws ConfirmModSchemaException {
-        col.changeSchedulerVer(ver);
-        col.setCrt(1596540138L);
-        col.replaceSchedulerForTests(mTime);
     }
 
     private double now() {
@@ -1514,7 +1508,7 @@ public class SchedV2Test extends RobolectricTest {
     @Test
     public void test_moveVersions() throws Exception {
         Collection col = getColV2();
-        changeSchedulerVer(col, 1);
+        col.changeSchedulerVer( 1);
 
         Note n = col.newNote();
         n.setItem("Front", "one");
@@ -1526,7 +1520,7 @@ public class SchedV2Test extends RobolectricTest {
         col.getSched().answerCard(c, 1);
 
         // the move to v2 should reset it to new
-        changeSchedulerVer(col, 2);
+        col.changeSchedulerVer( 2);
         c.load();
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
         assertEquals(CARD_TYPE_NEW, c.getType());
@@ -1540,7 +1534,7 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(QUEUE_TYPE_MANUALLY_BURIED, c.getQueue());
 
         // revert to version 1
-        changeSchedulerVer(col, 1);
+        col.changeSchedulerVer(1);
 
         // card should have moved queues
         c.load();
@@ -1553,7 +1547,7 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(QUEUE_TYPE_NEW, c.getType());
 
         // make sure relearning cards transition correctly to v1
-        changeSchedulerVer(col, 2);
+        col.changeSchedulerVer(2);
         // card with 100 day interval, answering again
         col.getSched().reschedCards(new long[] {c.getId()}, 100, 100);
         c.load();
@@ -1566,7 +1560,7 @@ public class SchedV2Test extends RobolectricTest {
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 1);
         // due should be correctly set when removed from learning early
-        changeSchedulerVer(col, 1);
+        col.changeSchedulerVer( 1);
         c.load();
         assertEquals(50, c.getDue());
     }

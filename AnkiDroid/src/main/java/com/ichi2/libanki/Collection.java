@@ -38,6 +38,7 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
@@ -66,6 +67,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -125,6 +127,9 @@ public class Collection {
     private static final int fDefaultSchedulerVersion = 1;
     private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
 
+    // Not in libAnki.
+    private final Time mTime;
+
     // other options
     public static final String defaultConf = "{"
             +
@@ -162,10 +167,19 @@ public class Collection {
     private static final int UNDO_SIZE_MAX = 20;
 
     public Collection(Context context, DB db, String path, boolean server, boolean log) {
+        this(context, db, path, server, log, null);
+    }
+
+    @VisibleForTesting
+    public Collection(Context context, DB db, String path, boolean server, boolean log, Time time) {
+        if (time == null) {
+            time = new SystemTime();
+        }
         mContext = context;
         mDebugLog = log;
         mDb = db;
         mPath = path;
+        mTime = time;
         _openLog();
         log(path, VersionUtils.getPkgVersionName());
         mServer = server;
@@ -229,7 +243,7 @@ public class Collection {
         }
         modSchema();
         @SuppressLint("VisibleForTests")
-        SchedV2 v2Sched = new SchedV2(this, mSched.getTime());
+        SchedV2 v2Sched = new SchedV2(this);
         clearUndo();
         if (ver == 1) {
             v2Sched.moveToV1();
@@ -2124,18 +2138,6 @@ public class Collection {
         return mSched;
     }
 
-
-    //This duplicates _loadScheduler (but returns the value and sets the report limit).
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public void replaceSchedulerForTests(Time time) {
-        int ver = schedVer();
-        if (ver == 1) {
-            mSched = new Sched(this, time);
-        } else if (ver == 2) {
-            mSched = new SchedV2(this, time);
-        }
-    }
-
     /** Allows a mock db to be inserted for testing */
     @VisibleForTesting
     public void setDb(DB database) {
@@ -2214,5 +2216,10 @@ public class Collection {
         public boolean getFailed() {
             return mFailed;
         }
+    }
+
+    @NonNull
+    public Time getTime() {
+        return mTime;
     }
 }

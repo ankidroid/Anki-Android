@@ -36,6 +36,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
+import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
@@ -168,7 +169,10 @@ public class RobolectricTest {
 
 
     protected Collection getCol() {
-        return CollectionHelper.getInstance().getCol(getTargetContext());
+        // 2020/08/07, 07:00:00. Normally not near day cutoff.
+        MockTime time = new MockTime(1596783600000L, 10);
+        Collection col = CollectionHelper.getInstance().getCol(getTargetContext(), time);
+        return col;
     }
 
     /** Call this method in your test if you to test behavior with a null collection */
