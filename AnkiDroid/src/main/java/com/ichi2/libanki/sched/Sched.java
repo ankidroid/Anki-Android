@@ -130,7 +130,7 @@ public class Sched extends SchedV2 {
             throw new RuntimeException("Invalid queue");
         }
         _updateStats(card, "time", card.timeTaken());
-        card.setMod(mTime.intTime());
+        card.setMod(getTime().intTime());
         card.setUsn(mCol.usn());
         card.flushSched();
     }
@@ -199,7 +199,7 @@ public class Sched extends SchedV2 {
         String sids = Utils.ids2str(allDecks);
         mCol.log(mCol.getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet() + " and did in " + sids));
         mCol.getDb().execute("update cards set mod=?,usn=?," + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet() + " and did in " + sids,
-                mTime.intTime(), mCol.usn());
+                getTime().intTime(), mCol.usn());
     }
 
     /**
@@ -387,7 +387,7 @@ public class Sched extends SchedV2 {
     @Override
     protected Card _getLrnCard(boolean collapse) {
         if (_fillLrn()) {
-            double cutoff = mTime.now();
+            double cutoff = getTime().now();
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
@@ -447,11 +447,11 @@ public class Sched extends SchedV2 {
                 }
             }
             int delay = _delayForGrade(conf, card.getLeft());
-            if (card.getDue() < mTime.now()) {
+            if (card.getDue() < getTime().now()) {
                 // not collapsed; add some randomness
                 delay *= Utils.randomFloatInRange(1f, 1.25f);
             }
-            card.setDue((int) (mTime.now() + delay));
+            card.setDue((int) (getTime().now() + delay));
 
             // due today?
             if (card.getDue() < mDayCutoff) {
@@ -583,7 +583,7 @@ public class Sched extends SchedV2 {
         mCol.getDb().execute(
                 "update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", mod = ?" +
                 ", usn = ?, odue = 0 where queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type = " + Consts.CARD_TYPE_REV + " " + extra,
-                mTime.intTime(), mCol.usn());
+                getTime().intTime(), mCol.usn());
         // new cards in learning
         forgetCards(Utils.collection2Array(mCol.getDb().queryLongList( "SELECT id FROM cards WHERE queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " + extra)));
     }
@@ -594,7 +594,7 @@ public class Sched extends SchedV2 {
                     "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?"
                             + " LIMIT ?)",
-                    did, (mTime.intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
+                    did, (getTime().intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?"
@@ -783,7 +783,7 @@ public class Sched extends SchedV2 {
             card.setODue(card.getDue());
         }
         delay = _delayForGrade(conf, 0);
-        card.setDue((long) (delay + mTime.now()));
+        card.setDue((long) (delay + getTime().now()));
         card.setLeft(_startingLeft(card));
         // queue 1
         if (card.getDue() < mDayCutoff) {
@@ -958,7 +958,7 @@ public class Sched extends SchedV2 {
 
     private void _moveToDyn(long did, List<Long> ids) {
         ArrayList<Object[]> data = new ArrayList<>();
-        //long t = mTime.intTime(); // unused variable present (and unused) upstream
+        //long t = getTime().intTime(); // unused variable present (and unused) upstream
         int u = mCol.usn();
         for (long c = 0; c < ids.size(); c++) {
             // start at -100000 so that reviews are all due
@@ -1104,7 +1104,7 @@ public class Sched extends SchedV2 {
     protected void _updateCutoff() {
         Integer oldToday = mToday;
         // days since col created
-        mToday = (int) ((mTime.now() - mCol.getCrt()) / SECONDS_PER_DAY);
+        mToday = (int) ((getTime().now() - mCol.getCrt()) / SECONDS_PER_DAY);
         // end of day cutoff
         mDayCutoff = mCol.getCrt() + ((mToday + 1) * SECONDS_PER_DAY);
         if (oldToday != mToday) {
@@ -1215,7 +1215,7 @@ public class Sched extends SchedV2 {
         mCol.getDb().execute(
                 "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
                         + Utils.ids2str(ids),
-                mTime.intTime(), mCol.usn());
+                getTime().intTime(), mCol.usn());
     }
 
     protected String queueIsBuriedSnippet() {
@@ -1241,7 +1241,7 @@ public class Sched extends SchedV2 {
         remFromDyn(cids);
         removeLrn(cids);
         mCol.getDb().execute("update cards set " + queueIsBuriedSnippet() + ",mod=?,usn=? where id in " + Utils.ids2str(cids),
-                mTime.now(), mCol.usn());
+                getTime().now(), mCol.usn());
     }
 
 
