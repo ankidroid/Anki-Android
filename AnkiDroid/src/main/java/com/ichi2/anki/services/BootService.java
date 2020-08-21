@@ -14,7 +14,6 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Deck;
 import com.ichi2.utils.Permissions;
 
 import com.ichi2.utils.JSONObject;
@@ -23,6 +22,8 @@ import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
+
+import static com.ichi2.anki.DeckOptions.reminderToCalendar;
 
 public class BootService extends BroadcastReceiver {
 
@@ -105,11 +106,7 @@ public class BootService extends BroadcastReceiver {
                                                                                             deckConfiguration.getLong("id")),
                                                                                     0
                                                                                     );
-                    final Calendar calendar = Calendar.getInstance();
-
-                    calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
-                    calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
-                    calendar.set(Calendar.SECOND, 0);
+                    final Calendar calendar = reminderToCalendar(reminder);
 
                     alarmManager.setRepeating(
                                               AlarmManager.RTC_WAKEUP,
