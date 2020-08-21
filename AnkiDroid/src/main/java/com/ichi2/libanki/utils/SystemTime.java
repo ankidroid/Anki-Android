@@ -22,12 +22,6 @@ import java.util.Date;
 
 public class SystemTime implements Time {
     @Override
-    public long time() {
-        return new Date().getTime();
-    }
-
-
-    @Override
     public Date getCurrentDate() {
         return new Date();
     }
@@ -40,5 +34,10 @@ public class SystemTime implements Time {
     @Override
     public double now() {
         return Utils.now();
+    }
+
+    @Override
+    public long intTimeMS() {
+        return Utils.intTime(1000);
     }
 }

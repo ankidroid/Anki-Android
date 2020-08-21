@@ -2184,7 +2184,7 @@ public class SchedV2 extends AbstractSched {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
 
-        return (int) (((getTime().time() - c.getTimeInMillis()) / 1000) / SECONDS_PER_DAY);
+        return (int) (((getTime().intTimeMS() - c.getTimeInMillis()) / 1000) / SECONDS_PER_DAY);
     }
 
 
