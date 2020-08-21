@@ -20,10 +20,11 @@ import java.util.Date;
 
 /** Allows injection of time dependencies */
 public interface Time {
-    long time();
     Date getCurrentDate();
     /**The time in integer seconds. */
     long intTime();
     /**The time in integer seconds. */
     double now();
+
+    long intTimeMS();
 }

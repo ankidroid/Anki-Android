@@ -21,7 +21,6 @@ import com.ichi2.libanki.utils.Time;
 import java.util.Date;
 
 public class MockTime implements Time {
-
     private final int mStep;
     private long mTime;
 
@@ -38,12 +37,6 @@ public class MockTime implements Time {
 
 
     @Override
-    public long time() {
-        return getCurrentTime();
-    }
-
-
-    @Override
     public Date getCurrentDate() {
         return new Date(getCurrentTime());
     }
@@ -53,6 +46,11 @@ public class MockTime implements Time {
     @Override
     public long intTime() {
         return (long) now();
+    }
+
+    @Override
+    public long intTimeMS() {
+        return getCurrentTime();
     }
 
 
