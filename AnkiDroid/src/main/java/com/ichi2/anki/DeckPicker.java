@@ -805,8 +805,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if ((requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS)
                 && resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
             // Show a message when reviewing has finished
-            int[] studyOptionsCounts = getCol().getSched().counts();
-            if (studyOptionsCounts[0] + studyOptionsCounts[1] + studyOptionsCounts[2] == 0) {
+            if (getCol().getSched().count() == 0) {
                 UIUtils.showSimpleSnackbar(this, R.string.studyoptions_congrats_finished, false);
             } else {
                 UIUtils.showSimpleSnackbar(this, R.string.studyoptions_no_cards_due, false);
