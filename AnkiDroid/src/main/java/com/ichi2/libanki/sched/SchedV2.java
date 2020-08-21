@@ -142,6 +142,10 @@ public class SchedV2 extends AbstractSched {
     // Not in libAnki.
     protected final Time mTime;
 
+    // For testing
+    private boolean mPendingReset;
+
+
     /**
      * card types: 0=new, 1=lrn, 2=rev, 3=relrn
      * queue types: 0=new, 1=(re)lrn, 2=rev, 3=day (re)lrn,
@@ -208,6 +212,7 @@ public class SchedV2 extends AbstractSched {
 
     /** Ensures that reset is executed before the next card is selected */
     public void deferReset(Card undidCard){
+        mPendingReset = true;
         mHaveQueues = false;
         mHaveCounts = false;
         mCardToDecrement = undidCard;
@@ -222,6 +227,7 @@ public class SchedV2 extends AbstractSched {
         _updateCutoff();
         resetCounts(false);
         resetQueues(false);
+        mPendingReset = false;
     }
 
     @Override
@@ -3093,6 +3099,17 @@ public class SchedV2 extends AbstractSched {
     @Override
     public Time getTime() {
         return mTime;
+    }
+
+
+    @VisibleForTesting
+    @Override
+    public int getNewCount() {
+        // Emulate past Anki Dekstop behaviour - we'd now call reset() on getCard()
+        if (mPendingReset) {
+            reset();
+        }
+        return mNewCount;
     }
 
 

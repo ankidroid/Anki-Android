@@ -253,6 +253,9 @@ public abstract class AbstractSched {
     @NonNull
     public abstract Time getTime();
 
+    @VisibleForTesting
+    public abstract int getNewCount();
+
 
     public interface LimitMethod {
         int operation(Deck g);

@@ -201,7 +201,7 @@ public class SchedTest extends RobolectricTest {
         note.setItem("Back", "two");
         col.addNote(note);
         col.reset();
-        // assertEquals(1, col.getSched().newCount); get access of new count
+        assertEquals(1, col.getSched().getNewCount());
         // fetch it
         Card c = col.getSched().getCard();
         assertNotNull(c);
@@ -257,8 +257,7 @@ public class SchedTest extends RobolectricTest {
         long c2 = col.getDecks().confId("new conf");
         col.getDecks().setConf(col.getDecks().get(deck2), c2);
         col.reset();
-        // both confs have defaulted to a limit of 20
-        // assertEquals(20, col.getSched().newCount); TODO: newCount getter
+        assertEquals("both confs have defaulted to a limit of 20", 20, col.getSched().getNewCount());
         // first card we get comes from parent
         Card c = col.getSched().getCard();
         assertEquals(1, c.getDid());
@@ -267,13 +266,13 @@ public class SchedTest extends RobolectricTest {
         conf1.getJSONObject("new").put("perDay", 10);
         col.getDecks().save(conf1);
         col.reset();
-        //assertEquals(10, col.getSched().newCount);TODO: newCount getter
+        assertEquals(10, col.getSched().getNewCount());
         // if we limit child to 4, we should get 9
         DeckConfig conf2 = col.getDecks().confForDid(deck2);
         conf2.getJSONObject("new").put("perDay", 4);
         col.getDecks().save(conf2);
         col.reset();
-        //assertEquals(9, col.getSched().newCount);TODO: newCount getter
+        assertEquals(9, col.getSched().getNewCount());
     }
 
 
