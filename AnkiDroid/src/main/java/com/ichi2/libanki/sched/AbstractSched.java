@@ -62,6 +62,15 @@ public abstract class AbstractSched {
      *  */
     public abstract void answerCard(Card card, @Consts.BUTTON_TYPE int ease);
 
+    /** Number of new, rev and lrn card to review in selected deck. Sum of elements of counts.*/
+    public int count() {
+        int s = 0;
+        for (int c: counts()) {
+            s += c;
+        }
+        return s;
+    }
+
     /**
      * The number of cards new, rev, and lrn in the selected deck.
      * In sched V1, the number of remaining steps for cards in learning is returned

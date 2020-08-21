@@ -456,8 +456,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         } else if (requestCode == AnkiActivity.REQUEST_REVIEW) {
             if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
                 // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
-                int[] counts = getCol().getSched().counts();
-                if ((counts[0]+counts[1]+counts[2])>0 && mStudyOptionsView != null) {
+                if (getCol().getSched().count() > 0 && mStudyOptionsView != null) {
                     View rootLayout = mStudyOptionsView.findViewById(R.id.studyoptions_main);
                     UIUtils.showSnackbar(getActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout);
                 }
