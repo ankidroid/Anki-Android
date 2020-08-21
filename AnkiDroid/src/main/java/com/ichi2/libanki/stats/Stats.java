@@ -938,8 +938,7 @@ public class Stats {
         }
         int rolloverHour;
         if (mCol.schedVer() == 1) {
-            Calendar sd = GregorianCalendar.getInstance();
-            sd.setTimeInMillis(mCol.getCrt() * 1000);
+            Calendar sd = mCol.crtGregorianCalendar();
             rolloverHour = sd.get(Calendar.HOUR_OF_DAY);
         } else {
             rolloverHour = mCol.getConf().optInt("rollover", 4);

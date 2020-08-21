@@ -55,9 +55,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -2088,6 +2091,20 @@ public class Collection {
 
     public long getCrt() {
         return mCrt;
+    }
+
+    public Calendar crtCalendar() {
+        Calendar calendar = Calendar.getInstance();
+        Timestamp timestamp = new Timestamp(getCrt() * 1000);
+        calendar.setTimeInMillis(timestamp.getTime());
+        return calendar;
+    }
+
+    public GregorianCalendar crtGregorianCalendar() {
+        GregorianCalendar calendar = new GregorianCalendar();
+        Timestamp timestamp = new Timestamp(getCrt() * 1000);
+        calendar.setTimeInMillis(timestamp.getTime());
+        return calendar;
     }
 
 
