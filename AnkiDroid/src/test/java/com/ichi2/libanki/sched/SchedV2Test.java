@@ -856,9 +856,8 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(21600000, col.getSched().nextIvl(c, 3));
         // (* 100 2.5 1.3 86400)28080000.0
         assertEquals(28080000, col.getSched().nextIvl(c, 4));
-        // TODO: upstream is 10.8, try to understand the differencek
-        assumeThat(without_unicode_isolation(col.getSched().nextIvlStr(getTargetContext(), c, 4)), either(is("10.7 mo")).or(is("10.8 mo")));
-        assumeTrue("Investigate this difference: Anki displays 10.8, we display 10.7", false);
+
+        assertThat(without_unicode_isolation(col.getSched().nextIvlStr(getTargetContext(), c, 4)), is("10.8 mo"));
     }
 
 

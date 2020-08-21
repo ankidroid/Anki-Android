@@ -87,14 +87,13 @@ public class Utils {
     private static final long TIME_HOUR_LONG = 60 * TIME_MINUTE_LONG;
     private static final long TIME_DAY_LONG = 24 * TIME_HOUR_LONG;
     // These are doubles on purpose because we want a rounded, not integer result later.
+    // Use values from Anki Desktop:
+    // https://github.com/ankitects/anki/blob/05cc47a5d3d48851267cda47f62af79f468eb028/rslib/src/sched/timespan.rs#L83
     private static final double TIME_MINUTE = 60.0;  // seconds
-    private static final double TIME_HOUR = 60 * TIME_MINUTE;
-    private static final double TIME_DAY = 24 * TIME_HOUR;
-    // How long is a year? This is a tropical year, according to NIST.
-    // http://www.physics.nist.gov/Pubs/SP811/appenB9.html
-    private static final double TIME_YEAR = 31556930.0;  // seconds
-    // Pretty much everybody agrees that one year is twelve months
-    private static final double TIME_MONTH = TIME_YEAR / 12.0;
+    private static final double TIME_HOUR = 60.0 * TIME_MINUTE;
+    private static final double TIME_DAY = 24.0 * TIME_HOUR;
+    private static final double TIME_MONTH = 30.0 * TIME_DAY;
+    private static final double TIME_YEAR = 12.0 * TIME_MONTH;
 
 
     // List of all extensions we accept as font files.

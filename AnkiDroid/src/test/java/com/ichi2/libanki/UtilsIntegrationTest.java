@@ -55,6 +55,20 @@ public class UtilsIntegrationTest extends RobolectricTest {
     }
 
 
+    @Test
+    @Config(qualifiers = "en")
+    public void timeQuantityMonths() {
+        // Anki Desktop 2.1.30: '\u206810.8\u2069 months'
+        assertThat(timeQuantityNextInterval(28080000), is("10.8 mo"));
+    }
+
+
+    @NotNull
+    private String timeQuantityNextInterval(@SuppressWarnings("SameParameterValue") int time_s) {
+        return Utils.timeQuantityNextIvl(getTargetContext(), time_s);
+    }
+
+
     @NotNull
     @CheckResult
     private String deckPickerTime(long time) {
