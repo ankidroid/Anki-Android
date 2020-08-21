@@ -84,7 +84,7 @@ public class Sched extends SchedV2 {
         super(col);
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @VisibleForTesting
     public Sched(@NonNull Collection col, @NonNull Time time) {
         super(col, time);
     }
