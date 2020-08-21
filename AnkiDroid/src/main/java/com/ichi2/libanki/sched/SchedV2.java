@@ -2176,9 +2176,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private int _daysSinceCreation() {
-        Date startDate = new Date(mCol.getCrt() * 1000);
-        Calendar c = Calendar.getInstance();
-        c.setTime(startDate);
+        Calendar c = mCol.crtCalendar();
         c.set(Calendar.HOUR, mCol.getConf().optInt("rollover", 4));
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);

@@ -552,9 +552,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             ((ListPreference)pref).setValueIndex(conf.getInt("newSpread"));
                             break;
                         case "dayOffset":
-                            Calendar calendar = new GregorianCalendar();
-                            Timestamp timestamp = new Timestamp(col.getCrt() * 1000);
-                            calendar.setTimeInMillis(timestamp.getTime());
+                            Calendar calendar = col.crtGregorianCalendar();
                             ((SeekBarPreference)pref).setValue(calendar.get(Calendar.HOUR_OF_DAY));
                             break;
                         case "schedVer":
@@ -635,9 +633,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     break;
                 case "dayOffset": {
                     int hours = ((SeekBarPreference) pref).getValue();
-                    Timestamp crtTime = new Timestamp(getCol().getCrt() * 1000);
-                    Calendar date = GregorianCalendar.getInstance();
-                    date.setTimeInMillis(crtTime.getTime());
+                    Calendar date = getCol().crtGregorianCalendar();
                     date.set(Calendar.HOUR_OF_DAY, hours);
                     getCol().setCrt(date.getTimeInMillis() / 1000);
                     getCol().setMod();
