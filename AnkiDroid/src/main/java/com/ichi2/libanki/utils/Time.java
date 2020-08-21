@@ -16,7 +16,9 @@
 
 package com.ichi2.libanki.utils;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /** Allows injection of time dependencies */
 public interface Time {
@@ -27,4 +29,8 @@ public interface Time {
     double now();
 
     long intTimeMS();
+
+    Calendar calendar();
+
+    GregorianCalendar gregorianCalendar();
 }

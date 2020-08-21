@@ -18,7 +18,9 @@ package com.ichi2.libanki.utils;
 
 import com.ichi2.libanki.Utils;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class SystemTime implements Time {
     @Override
@@ -40,4 +42,17 @@ public class SystemTime implements Time {
     public long intTimeMS() {
         return Utils.intTime(1000);
     }
+
+    @Override
+    public Calendar calendar() {
+        Calendar cal = Calendar.getInstance();
+        return cal;
+    }
+
+    @Override
+    public GregorianCalendar gregorianCalendar() {
+        GregorianCalendar cal = new GregorianCalendar();
+        return cal;
+    }
+
 }

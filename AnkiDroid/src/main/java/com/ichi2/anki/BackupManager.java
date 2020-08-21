@@ -111,7 +111,7 @@ public class BackupManager {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.US);
         Calendar cal = new GregorianCalendar();
-        cal.setTimeInMillis(System.currentTimeMillis());
+        cal.setTimeInMillis(System.currentTimeMillis()); // Uses real time, no col accessible
 
         // Abort backup if one was already made less than 5 hours ago
         Date lastBackupDate = null;

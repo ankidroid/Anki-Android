@@ -18,7 +18,9 @@ package com.ichi2.testutils;
 
 import com.ichi2.libanki.utils.Time;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MockTime implements Time {
 
@@ -73,4 +75,19 @@ public class MockTime implements Time {
         this.mTime += mStep;
         return mTime;
     }
+
+    @Override
+    public Calendar calendar() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getCurrentDate());
+        return cal;
+    }
+
+    @Override
+    public GregorianCalendar gregorianCalendar() {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(getCurrentDate());
+        return cal;
+    }
+
 }
