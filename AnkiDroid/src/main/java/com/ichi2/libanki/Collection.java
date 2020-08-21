@@ -38,6 +38,7 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.libanki.template.Template;
+import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
@@ -212,11 +213,15 @@ public class Collection {
 
     // Note: Additional members in the class duplicate this
     private void _loadScheduler() {
+        _loadScheduler(new SystemTime());
+    }
+
+    private void _loadScheduler(Time time) {
         int ver = schedVer();
         if (ver == 1) {
-            mSched = new Sched(this);
+            mSched = new Sched(this, time);
         } else if (ver == 2) {
-            mSched = new SchedV2(this);
+            mSched = new SchedV2(this, time);
         }
     }
 
@@ -238,7 +243,7 @@ public class Collection {
         }
         mConf.put("schedVer", ver);
         setMod();
-        _loadScheduler();
+        _loadScheduler(mSched.getTime());
     }
 
 
