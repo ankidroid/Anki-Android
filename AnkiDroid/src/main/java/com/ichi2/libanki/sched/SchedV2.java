@@ -2159,14 +2159,12 @@ public class SchedV2 extends AbstractSched {
         if (rolloverTime < 0) {
             rolloverTime = 24 + rolloverTime;
         }
-        Calendar date = Calendar.getInstance();
-        date.setTime(getTime().getCurrentDate());
+        Calendar date = getTime().calendar();
         date.set(Calendar.HOUR_OF_DAY, rolloverTime);
         date.set(Calendar.MINUTE, 0);
         date.set(Calendar.SECOND, 0);
         date.set(Calendar.MILLISECOND, 0);
-        Calendar today = Calendar.getInstance();
-        today.setTime(getTime().getCurrentDate());
+        Calendar today = getTime().calendar();
         if (date.before(today)) {
             date.add(Calendar.DAY_OF_MONTH, 1);
         }
