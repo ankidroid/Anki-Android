@@ -285,7 +285,7 @@ public class SchedV2 extends AbstractSched {
         _answerCard(card, ease);
 
         _updateStats(card, "time", card.timeTaken());
-        card.setMod(mTime.intTime());
+        card.setMod(getTime().intTime());
         card.setUsn(mCol.usn());
         card.flushSched();
     }
@@ -331,7 +331,7 @@ public class SchedV2 extends AbstractSched {
         if (ease == Consts.BUTTON_ONE) {
             // Repeat after delay
             card.setQueue(Consts.QUEUE_TYPE_PREVIEW);
-            card.setDue(mTime.intTime() + _previewDelay(card));
+            card.setDue(getTime().intTime() + _previewDelay(card));
             mLrnCount += 1;
         } else if (ease == Consts.BUTTON_TWO) {
             // Restore original card state and remove from filtered deck
@@ -956,7 +956,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     private boolean _updateLrnCutoff(boolean force) {
-        long nextCutoff = mTime.intTime() + mCol.getConf().getInt("collapseTime");
+        long nextCutoff = getTime().intTime() + mCol.getConf().getInt("collapseTime");
         if (nextCutoff - mLrnCutoff > 60 || force) {
             mLrnCutoff = nextCutoff;
             return true;
@@ -1014,7 +1014,7 @@ public class SchedV2 extends AbstractSched {
             return true;
         }
         long cutoff = 0;
-        cutoff = mTime.intTime() + mCol.getConf().getLong("collapseTime");
+        cutoff = getTime().intTime() + mCol.getConf().getLong("collapseTime");
         Cursor cur = null;
         mLrnQueue.clear();
         try {
@@ -1053,7 +1053,7 @@ public class SchedV2 extends AbstractSched {
     protected Card _getLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
-            double cutoff = mTime.now();
+            double cutoff = getTime().now();
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
@@ -1069,7 +1069,7 @@ public class SchedV2 extends AbstractSched {
     protected boolean _preloadLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
-            double cutoff = mTime.now();
+            double cutoff = getTime().now();
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
@@ -1224,7 +1224,7 @@ public class SchedV2 extends AbstractSched {
         if (delay == null) {
             delay = _delayForGrade(conf, card.getLeft());
         }
-        card.setDue(mTime.intTime() + delay);
+        card.setDue(getTime().intTime() + delay);
 
         // due today?
         if (card.getDue() < mDayCutoff) {
@@ -1233,7 +1233,7 @@ public class SchedV2 extends AbstractSched {
             int fuzz = new Random().nextInt(maxExtra);
             card.setDue(Math.min(mDayCutoff - 1, card.getDue() + fuzz));
             card.setQueue(Consts.QUEUE_TYPE_LRN);
-            if (card.getDue() < (mTime.intTime() + mCol.getConf().getInt("collapseTime"))) {
+            if (card.getDue() < (getTime().intTime() + mCol.getConf().getInt("collapseTime"))) {
                 mLrnCount += 1;
                 // if the queue is not empty and there's nothing else to do, make
                 // sure we don't put it at the head of the queue and end up showing
@@ -1347,7 +1347,7 @@ public class SchedV2 extends AbstractSched {
 
     private int _leftToday(JSONArray delays, int left, long now) {
         if (now == 0) {
-            now = mTime.intTime();
+            now = getTime().intTime();
         }
         int ok = 0;
         int offset = Math.min(left, delays.length());
@@ -1409,7 +1409,7 @@ public class SchedV2 extends AbstractSched {
     protected void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
-                    mTime.now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
+                    getTime().now() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
         } catch (SQLiteConstraintException e) {
             try {
                 Thread.sleep(10);
@@ -1428,7 +1428,7 @@ public class SchedV2 extends AbstractSched {
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?"
                             + " LIMIT ?)",
-                    did, (mTime.intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
+                    did, (getTime().intTime() + mCol.getConf().getInt("collapseTime")), mReportLimit);
             return cnt + mCol.getDb().queryScalar(
                     "SELECT count() FROM (SELECT null FROM cards WHERE did = ?"
                             + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?"
@@ -2172,13 +2172,13 @@ public class SchedV2 extends AbstractSched {
             rolloverTime = 24 + rolloverTime;
         }
         Calendar date = Calendar.getInstance();
-        date.setTime(mTime.getCurrentDate());
+        date.setTime(getTime().getCurrentDate());
         date.set(Calendar.HOUR_OF_DAY, rolloverTime);
         date.set(Calendar.MINUTE, 0);
         date.set(Calendar.SECOND, 0);
         date.set(Calendar.MILLISECOND, 0);
         Calendar today = Calendar.getInstance();
-        today.setTime(mTime.getCurrentDate());
+        today.setTime(getTime().getCurrentDate());
         if (date.before(today)) {
             date.add(Calendar.DAY_OF_MONTH, 1);
         }
@@ -2196,7 +2196,7 @@ public class SchedV2 extends AbstractSched {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
 
-        return (int) (((mTime.time() - c.getTimeInMillis()) / 1000) / SECONDS_PER_DAY);
+        return (int) (((getTime().time() - c.getTimeInMillis()) / 1000) / SECONDS_PER_DAY);
     }
 
 
@@ -2214,7 +2214,7 @@ public class SchedV2 extends AbstractSched {
 
     public void _checkDay() {
         // check if the day has rolled over
-        if (mTime.now() > mDayCutoff) {
+        if (getTime().now() > mDayCutoff) {
             reset();
         }
     }
@@ -2452,7 +2452,7 @@ public class SchedV2 extends AbstractSched {
         mCol.getDb().execute(
                 "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
                         + Utils.ids2str(ids),
-                mTime.intTime(), mCol.usn());
+                getTime().intTime(), mCol.usn());
     }
 
 
@@ -2464,7 +2464,7 @@ public class SchedV2 extends AbstractSched {
         mCol.getDb().execute(
                 "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = ?, usn = ?"
                         + " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids),
-                mTime.intTime(), mCol.usn());
+                getTime().intTime(), mCol.usn());
     }
 
     // Overriden. manual is false by default in V1
@@ -2479,7 +2479,7 @@ public class SchedV2 extends AbstractSched {
         int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : Consts.QUEUE_TYPE_SIBLING_BURIED;
         mCol.log(cids);
         mCol.getDb().execute("update cards set queue=?,mod=?,usn=? where id in " + Utils.ids2str(cids),
-                queue, mTime.now(), mCol.usn());
+                queue, getTime().now(), mCol.usn());
     }
 
 
@@ -2523,7 +2523,7 @@ public class SchedV2 extends AbstractSched {
 
         mCol.log(mCol.getDb().queryLongList("select id from cards where " + queue + " and did in " + sids));
         mCol.getDb().execute("update cards set mod=?,usn=?, " + _restoreQueueSnippet() + " where " + queue + " and did in " + sids,
-                mTime.intTime(), mCol.usn());
+                getTime().intTime(), mCol.usn());
     }
 
 
@@ -2611,7 +2611,7 @@ public class SchedV2 extends AbstractSched {
     public void reschedCards(long[] ids, int imin, int imax) {
         ArrayList<Object[]> d = new ArrayList<>();
         int t = mToday;
-        long mod = mTime.intTime();
+        long mod = getTime().intTime();
         Random rnd = new Random();
         for (long id : ids) {
             int r = rnd.nextInt(imax - imin + 1) + imin;
@@ -2649,7 +2649,7 @@ public class SchedV2 extends AbstractSched {
 
     public void sortCards(long[] cids, int start, int step, boolean shuffle, boolean shift) {
         String scids = Utils.ids2str(cids);
-        long now = mTime.intTime();
+        long now = getTime().intTime();
         ArrayList<Long> nids = new ArrayList<>();
         for (long id : cids) {
             long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?", id);
@@ -2764,10 +2764,10 @@ public class SchedV2 extends AbstractSched {
         // remove review cards from relearning
         if (schedVer == 1) {
             mCol.getDb().execute("update cards set due = odue, queue = " + Consts.QUEUE_TYPE_REV + ", type = " + Consts.CARD_TYPE_REV + ", mod = ?, usn = ?, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (" + Consts.CARD_TYPE_REV + "," + Consts.CARD_TYPE_RELEARNING + ")",
-                                 mTime.intTime(), mCol.usn());
+                                 getTime().intTime(), mCol.usn());
         } else {
             mCol.getDb().execute("update cards set due = ?+ivl, queue = " + Consts.QUEUE_TYPE_REV + ", type = " + Consts.CARD_TYPE_REV + ", mod = ?, usn = ?, odue = 0 where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and type in (" + Consts.CARD_TYPE_REV + "," + Consts.CARD_TYPE_RELEARNING + ")",
-                                 mToday, mTime.intTime(), mCol.usn());
+                                 mToday, getTime().intTime(), mCol.usn());
         }
 
 
@@ -2779,14 +2779,14 @@ public class SchedV2 extends AbstractSched {
     // v1 doesn't support buried/suspended (re)learning cards
     private void _resetSuspendedLearning() {
         mCol.getDb().execute("update cards set type = (case when type = " + Consts.CARD_TYPE_LRN + " then " + Consts.CARD_TYPE_NEW + " when type in (" + Consts.CARD_TYPE_REV + ", " + Consts.CARD_TYPE_RELEARNING + ") then " + Consts.CARD_TYPE_REV + " else type end), due = (case when odue then odue else due end), odue = 0, mod = ?, usn = ? where queue < 0",
-                             mTime.intTime(), mCol.usn());
+                             getTime().intTime(), mCol.usn());
     }
 
 
     // no 'manually buried' queue in v1
     private void _moveManuallyBuried() {
         mCol.getDb().execute("update cards set queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", mod=? where queue=" + Consts.QUEUE_TYPE_MANUALLY_BURIED,
-                             mTime.intTime());
+                             getTime().intTime());
     }
 
     // adding 'hard' in v2 scheduler means old ease entries need shifting
@@ -3080,7 +3080,7 @@ public class SchedV2 extends AbstractSched {
             mCol.getDb().execute("DELETE FROM revlog WHERE id = " + last);
         }
         // restore any siblings
-        mCol.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?", mTime.intTime(), mCol.usn(), oldCardData.getNid());
+        mCol.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?", getTime().intTime(), mCol.usn(), oldCardData.getNid());
         // and finally, update daily count
         @Consts.CARD_QUEUE int n = oldCardData.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : oldCardData.getQueue();
         String type = (new String[]{"new", "lrn", "rev"})[n];
