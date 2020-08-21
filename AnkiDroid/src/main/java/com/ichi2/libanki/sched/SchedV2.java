@@ -140,9 +140,6 @@ public class SchedV2 extends AbstractSched {
      * current card nor a sibling.
      */
 
-    // Not in libAnki.
-    protected final Time mTime;
-
     /**
      * card types: 0=new, 1=lrn, 2=rev, 3=relrn
      * queue types: 0=new, 1=(re)lrn, 2=rev, 3=day (re)lrn,
@@ -152,17 +149,8 @@ public class SchedV2 extends AbstractSched {
      * odue/odid store original due/did when cards moved to filtered deck
      *
      */
-
     public SchedV2(Collection col) {
-        this(col, new SystemTime());
-    }
-
-    /** we need a constructor as the constructor performs work
-     * involving the dependency, so we can't use setter injection */
-    @VisibleForTesting
-    public SchedV2(Collection col, Time time) {
         super();
-        this.mTime = time;
         mCol = col;
         mQueueLimit = 50;
         mReportLimit = 99999;
@@ -3090,9 +3078,8 @@ public class SchedV2 extends AbstractSched {
 
 
     @NonNull
-    @Override
     public Time getTime() {
-        return mTime;
+        return mCol.getTime();
     }
 
 
