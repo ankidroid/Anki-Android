@@ -6,6 +6,7 @@ import com.ichi2.libanki.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
@@ -61,7 +62,7 @@ abstract class CardQueue<T extends Card.Cache> {
         Collections.shuffle(mQueue, r);
     }
 
-    public Iterator<T> listIterator() {
+    public ListIterator<T> listIterator() {
         return mQueue.listIterator();
     }
 

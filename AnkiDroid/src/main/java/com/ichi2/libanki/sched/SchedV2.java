@@ -3024,16 +3024,14 @@ public class SchedV2 extends AbstractSched {
      * Sorts a card into the lrn queue LIBANKI: not in libanki
      */
     protected void _sortIntoLrn(long due, long id) {
-        Iterator<LrnCard> i = mLrnQueue.listIterator();
-        int idx = 0;
+        ListIterator<LrnCard> i = mLrnQueue.listIterator();
         while (i.hasNext()) {
             if (i.next().getDue() > due) {
+                i.previous();
                 break;
-            } else {
-                idx++;
             }
         }
-        mLrnQueue.add(idx, new LrnCard(mCol, due, id));
+        i.add(new LrnCard(mCol, due, id));
     }
 
 
