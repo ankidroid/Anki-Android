@@ -22,21 +22,24 @@ import java.util.Date;
 
 public class MockTime implements Time {
 
+    /** Number of miliseconds between each call. */
     private final int mStep;
+    /** Time since epoch in MS. */
     private long mTime;
 
-
+    /** A clock at time Time, only changed explicitly*/
     public MockTime(long time) {
         this(time, 0);
     }
 
-
+    /** A clock at time Time, each call advance by step ms.*/
     public MockTime(long time, int step) {
         this.mTime = time;
         this.mStep = step;
     }
 
 
+    /** Date of this clock */
     @Override
     public long time() {
         return getCurrentTime();
@@ -50,18 +53,21 @@ public class MockTime implements Time {
 
     /**These need confirmation */
 
+    /** Time in second since epoch.  */
     @Override
     public long intTime() {
         return (long) now();
     }
 
 
+    /** Time in second since epoch.  */
     @Override
     public double now() {
         return (double) getCurrentTime() / 1000.0d;
     }
 
 
+    /** Time in second since epoch. This is where step is added. */
     private long getCurrentTime() {
         long mTime = this.mTime;
         this.mTime += mStep;

@@ -20,6 +20,7 @@ import java.util.Date;
 
 /** Allows injection of time dependencies */
 public interface Time {
+    /** Time in milisecond since epoch*/
     long time();
     Date getCurrentDate();
     /**The time in integer seconds. */
