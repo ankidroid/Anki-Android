@@ -244,14 +244,14 @@ public class SchedV2Test extends RobolectricTest {
     public void test_new_v2() throws Exception {
         Collection col = getColV2();
         col.reset();
-        // assertEquals(0, col.getSched().newCount);TODO: newCount getter
+        assertEquals(0, col.getSched().counts()[0]);
         // add a note
         Note note = col.newNote();
         note.setItem("Front", "one");
         note.setItem("Back", "two");
         col.addNote(note);
         col.reset();
-        // assertEquals(1, col.getSched().newCount);TODO: newCount getter
+        assertEquals(1, col.getSched().counts()[0]);
         // fetch it
         Card c = col.getSched().getCard();
         assertNotNull(c);
@@ -307,7 +307,7 @@ public class SchedV2Test extends RobolectricTest {
         col.getDecks().setConf(col.getDecks().get(deck2), c2);
         col.reset();
         // both confs have defaulted to a limit of 20
-        // assertEquals(20, col.getSched().newCount);TODO: newCount getter
+        assertEquals(20, col.getSched().counts()[0]);
         // first card we get comes from parent
         Card c = col.getSched().getCard();
         assertEquals(1, c.getDid());
@@ -316,13 +316,13 @@ public class SchedV2Test extends RobolectricTest {
         conf1.getJSONObject("new").put("perDay", 10);
         col.getDecks().save(conf1);
         col.reset();
-        // assertEquals(10, col.getSched().newCount);TODO: newCount getter
+        assertEquals(10, col.getSched().counts()[0]);
         // if we limit child to 4, we should get 9
         DeckConfig conf2 = col.getDecks().confForDid(deck2);
         conf2.getJSONObject("new").put("perDay", 4);
         col.getDecks().save(conf2);
         col.reset();
-        //assertEquals(9, col.getSched().newCount);TODO: newCount getter
+        assertEquals(9, col.getSched().counts()[0]);
     }
 
 
