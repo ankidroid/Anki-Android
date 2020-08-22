@@ -24,36 +24,7 @@ import java.util.GregorianCalendar;
 
 public class SystemTime extends Time {
     @Override
-    public Date getCurrentDate() {
-        return new Date();
-    }
-
-    @Override
-    /**The time in integer seconds. */
-    public long intTime() {
-        return System.currentTimeMillis() / 1000;
-    }
-
-    /**The time in integer seconds. */
-    public double now() {
-        return (System.currentTimeMillis() / 1000.0);
-    }
-
     public long intTimeMS() {
         return System.currentTimeMillis();
     }
-
-    @Override
-    public Calendar calendar() {
-        Calendar cal = Calendar.getInstance();
-        return cal;
-    }
-
-    @Override
-    public GregorianCalendar gregorianCalendar() {
-        GregorianCalendar cal = new GregorianCalendar();
-        return cal;
-    }
-
-
 }

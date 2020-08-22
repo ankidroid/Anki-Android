@@ -18,10 +18,6 @@ package com.ichi2.testutils;
 
 import com.ichi2.libanki.utils.Time;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 public class MockTime extends Time {
 
     /** Number of miliseconds between each call. */
@@ -40,37 +36,9 @@ public class MockTime extends Time {
         this.mStep = step;
     }
 
-
-    /** Date of this clock */
-    @Override
-    public Date getCurrentDate() {
-        return new Date(getCurrentTime());
-    }
-
-    /**These need confirmation */
-
-    /** Time in second since epoch.  */
-    @Override
-    public long intTime() {
-        return (long) now();
-    }
-
     /** Time in milisecond since epoch. */
     @Override
     public long intTimeMS() {
-        return getCurrentTime();
-    }
-
-
-    /** Time in second since epoch.  */
-    @Override
-    public double now() {
-        return (double) getCurrentTime() / 1000.0d;
-    }
-
-
-    /** Time in second since epoch. This is where step is added. */
-    private long getCurrentTime() {
         long mTime = this.mTime;
         this.mTime += mStep;
         return mTime;
