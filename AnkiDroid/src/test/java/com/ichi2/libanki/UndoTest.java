@@ -46,7 +46,7 @@ public class UndoTest extends RobolectricTest {
         assertEquals("studyopts", col.undoName(getTargetContext().getResources()));
         // with about 5 minutes until it's clobbered
         /* lastSave
-           assertThat(Utils.now() - col._lastSave, lesserThan(1));
+           assertThat(getTime().now() - col._lastSave, lesserThan(1));
         */
         // undoing should restore the old value
         col.undo();

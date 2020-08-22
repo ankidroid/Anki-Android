@@ -2152,13 +2152,6 @@ public class Collection {
         return mSched;
     }
 
-
-    //This duplicates _loadScheduler (but returns the value and sets the report limit).
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public void replaceSchedulerForTests(Time time) {
-        mTime = time;
-    }
-
     /** Allows a mock db to be inserted for testing */
     @VisibleForTesting
     public void setDb(DB database) {

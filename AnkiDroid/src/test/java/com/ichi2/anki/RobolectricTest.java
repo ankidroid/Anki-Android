@@ -36,6 +36,7 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
+import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
@@ -57,6 +58,7 @@ import androidx.test.core.app.ApplicationProvider;
 import timber.log.Timber;
 
 import static android.os.Looper.getMainLooper;
+import static com.ichi2.anki.UIUtils.getDayStart;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -167,8 +169,16 @@ public class RobolectricTest {
     }
 
 
+    /** A collection. Created one second ago, not near cutoff time.
+    * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
+     * we don't get two equal time.*/
     protected Collection getCol() {
-        return CollectionHelper.getInstance().getCol(getTargetContext());
+        Collection col = CollectionHelper.getInstance().getCol(getTargetContext());
+        // 2020/08/07, 07:00:00. Normally not near day cutoff.
+        MockTime time = new MockTime(1596783600000L, 10);
+        col.setCrt(getDayStart(time)); // 2020/08/04, 00:00:00
+        col.setTime(time);
+        return col;
     }
 
     /** Call this method in your test if you to test behavior with a null collection */
