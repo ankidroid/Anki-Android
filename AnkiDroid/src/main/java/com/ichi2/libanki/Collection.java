@@ -169,10 +169,6 @@ public class Collection {
 
     private static final int UNDO_SIZE_MAX = 20;
 
-    public Collection(Context context, DB db, String path, boolean server, boolean log) {
-        this(context, db, path, server, log, null);
-    }
-
     @VisibleForTesting
     public Collection(Context context, DB db, String path, boolean server, boolean log, @Nullable Time time) {
         if (time == null) {
