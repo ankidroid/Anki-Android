@@ -1074,11 +1074,6 @@ public class AdvancedStatistics {
             return Consts.STARTING_FACTOR;
         }
 
-        public long getNow() {
-            //return 1451223980146L;
-            return System.currentTimeMillis();
-        }
-
         /**
          * Today.
          * @param collectionCreatedTime The difference, measured in seconds, between midnight, January 1, 1970 UTC and the time at which the collection was created.
@@ -1087,7 +1082,7 @@ public class AdvancedStatistics {
         public int getToday(int collectionCreatedTime) {
             Timber.d("Collection creation timestamp: " + collectionCreatedTime);
 
-            int currentTime = (int) (getNow() / 1000);
+            int currentTime = (int) (System.currentTimeMillis() / 1000);
             Timber.d("Now: " + currentTime);
             return (int) ((currentTime - collectionCreatedTime) / SECONDS_PER_DAY);
         }
