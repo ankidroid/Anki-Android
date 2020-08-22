@@ -109,13 +109,14 @@ public class SchedV2Test extends RobolectricTest {
      */
     @Test
     public void filteredDeckSchedulingOptionsRegressionTest() {
-        getCol().setCrt(1587852900L);
+        Collection col = getCol();
+        col.setCrt(1587852900L);
         //30 minutes learn ahead. required as we have 20m delay
-        getCol().getConf().put("collapseTime", 1800);
+        col.getConf().put("collapseTime", 1800);
 
         long homeDeckId = addDeck("Poorretention");
 
-        DeckConfig homeDeckConf = getCol().getDecks().confForDid(homeDeckId);
+        DeckConfig homeDeckConf = col.getDecks().confForDid(homeDeckId);
         JSONObject lapse = homeDeckConf.getJSONObject("lapse");
 
         lapse.put("minInt", 2);
@@ -124,7 +125,7 @@ public class SchedV2Test extends RobolectricTest {
 
         ensureLapseMatchesSppliedAnkiDesktopConfig(lapse);
 
-        getCol().flush();
+        col.flush();
 
         long dynId = addDynamicDeck("Dyn");
 
@@ -148,7 +149,7 @@ public class SchedV2Test extends RobolectricTest {
         c.setDid(dynId);
         c.flush();
 
-        SchedV2 v2 = new SchedV2(getCol());
+        SchedV2 v2 = new SchedV2(col);
 
         Card schedCard = v2.getCard();
         assertThat(schedCard, Matchers.notNullValue());
@@ -217,7 +218,7 @@ public class SchedV2Test extends RobolectricTest {
     private void changeSchedulerVer(Collection col, int ver) throws ConfirmModSchemaException {
         col.changeSchedulerVer(ver);
         col.setCrt(1596540138L);
-        col.replaceSchedulerForTests();
+        col.setTime(mTime);
     }
 
     private double now() {
