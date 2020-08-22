@@ -75,6 +75,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
@@ -1143,6 +1144,33 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         return copies;
     }
 
+    @VisibleForTesting
+    public static Card nonTaskUndo(Collection col) {
+        AbstractSched sched = col.getSched();
+        Card newCard = null;
+        long cid = col.undo();
+        if (cid == NO_REVIEW) {
+            // /* card schedule change undone, reset and get
+            // new card */
+            Timber.d("Single card non-review change undo succeeded");
+            col.reset();
+            newCard = sched.getCard();
+        } else if (cid == MULTI_CARD) {
+            /* multi-card action undone, no action to take here */
+            Timber.d("Multi-select undo succeeded");
+        } else {
+            // cid is actually a card id.
+            // a review was undone,
+            /* card review undone, set up to review that card again */
+            Timber.d("Single card review undo succeeded");
+            newCard = col.getCard(cid);
+            newCard.startTimer();
+            col.reset();
+            sched.deferReset(newCard);
+            sched.setCurrentCard(newCard);
+        }
+        return newCard;
+    }
 
     private TaskData doInBackgroundUndo() {
         Collection col = getCol();
@@ -1151,28 +1179,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             col.getDb().getDatabase().beginTransaction();
             Card newCard = null;
             try {
-                long cid = col.undo();
-                if (cid == NO_REVIEW) {
-                    // /* card schedule change undone, reset and get
-                    // new card */
-                    Timber.d("Single card non-review change undo succeeded");
-                    col.reset();
-                    newCard = sched.getCard();
-                } else if (cid == MULTI_CARD) {
-                    /* multi-card action undone, no action to take here */
-                    Timber.d("Multi-select undo succeeded");
-                } else {
-                    // cid is actually a card id.
-                    // a review was undone,
-                     /* card review undone, set up to review that card again */
-                    Timber.d("Single card review undo succeeded");
-                    newCard = col.getCard(cid);
-                    newCard.startTimer();
-                    col.reset();
-                    sched.deferReset(newCard);
-                    col.getSched().setCurrentCard(newCard);
-                }
-                // TODO: handle leech undoing properly
+                newCard = nonTaskUndo(col);
                 publishProgress(new TaskData(newCard, 0));
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
