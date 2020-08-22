@@ -16,6 +16,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -39,7 +41,7 @@ public class ClozeTest extends RobolectricTest {
         }
         // a cloze model with no clozes is not empty
         f.setItem("Text", "nothing");
-        assertTrue(d.addNote(f) > 0);
+        assertThat(d.addNote(f), is(greaterThan(0)));
         // try with one cloze
         f = d.newNote(d.getModels().byName("Cloze"));
         f.setItem("Text", "hello {{c1::world}}");
