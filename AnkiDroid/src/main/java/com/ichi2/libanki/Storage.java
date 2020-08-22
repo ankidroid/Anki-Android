@@ -31,6 +31,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -47,8 +49,11 @@ public class Storage {
     public static Collection Collection(Context context, String path, boolean server, boolean log) {
         return Collection(context, path, server, log, null);
     }
-    public static Collection Collection(Context context, String path, boolean server, boolean log, Time time) {
+    public static Collection Collection(Context context, String path, boolean server, boolean log, @Nullable Time time) {
         assert path.endsWith(".anki2");
+        if (time == null) {
+            time = new SystemTime();
+        }
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
         // connect
@@ -57,9 +62,9 @@ public class Storage {
             // initialize
             int ver;
             if (create) {
-                ver = _createDB(db);
+                ver = _createDB(db, time);
             } else {
-                ver = _upgradeSchema(db);
+                ver = _upgradeSchema(db, time);
             }
             db.execute("PRAGMA temp_store = memory");
             // add db to col and do any remaining upgrades
@@ -84,7 +89,7 @@ public class Storage {
     }
 
 
-    private static int _upgradeSchema(DB db) {
+    private static int _upgradeSchema(DB db, @NonNull Time time) {
         int ver = db.queryScalar("SELECT ver FROM col");
         if (ver == Consts.SCHEMA_VERSION) {
             return ver;
@@ -92,7 +97,7 @@ public class Storage {
         // add odid to cards, edue->odue
         if (db.queryScalar("SELECT ver FROM col") == 1) {
             db.execute("ALTER TABLE cards RENAME TO cards2");
-            _addSchema(db, false);
+            _addSchema(db, false, time);
             db.execute("insert into cards select id, nid, did, ord, mod, usn, type, queue, due, ivl, factor, reps, lapses, left, edue, 0, flags, data from cards2");
             db.execute("DROP TABLE cards2");
             db.execute("UPDATE col SET ver = 2");
@@ -101,7 +106,7 @@ public class Storage {
         // remove did from notes
         if (db.queryScalar("SELECT ver FROM col") == 2) {
             db.execute("ALTER TABLE notes RENAME TO notes2");
-            _addSchema(db, false);
+            _addSchema(db, time);
             db.execute("insert into notes select id, guid, mid, mod, usn, tags, flds, sfld, csum, flags, data from notes2");
             db.execute("DROP TABLE notes2");
             db.execute("UPDATE col SET ver = 3");
@@ -262,23 +267,23 @@ public class Storage {
     }
 
 
-    private static int _createDB(DB db) {
+    private static int _createDB(DB db, @NonNull Time time) {
         db.execute("PRAGMA page_size = 4096");
         db.execute("PRAGMA legacy_file_format = 0");
         db.execute("VACUUM");
-        _addSchema(db);
+        _addSchema(db, time);
         _updateIndices(db);
         db.execute("ANALYZE");
         return Consts.SCHEMA_VERSION;
     }
 
 
-    private static void _addSchema(DB db) {
-        _addSchema(db, true);
+    private static void _addSchema(DB db, @NonNull Time time) {
+        _addSchema(db, true, time);
     }
 
 
-    private static void _addSchema(DB db, boolean setColConf) {
+    private static void _addSchema(DB db, boolean setColConf, @NonNull Time time) {
         db.execute("create table if not exists col ( " + "id              integer primary key, "
                 + "crt             integer not null," + "mod             integer not null,"
                 + "scm             integer not null," + "ver             integer not null,"
@@ -310,20 +315,20 @@ public class Storage {
         db.execute("create table if not exists graves (" + "    usn             integer not null,"
                 + "    oid             integer not null," + "    type            integer not null" + ")");
         db.execute("INSERT OR IGNORE INTO col VALUES(1,0,0," +
-                Utils.intTime(1000) + "," + Consts.SCHEMA_VERSION + // Use real time, because no access to col
+                time.intTimeMS() + "," + Consts.SCHEMA_VERSION +
                 ",0,0,0,'','{}','','','{}')");
         if (setColConf) {
-            _setColVars(db);
+            _setColVars(db, time);
         }
     }
 
 
-    private static void _setColVars(DB db) {
+    private static void _setColVars(DB db, @NonNull Time time) {
         JSONObject g = new JSONObject(Decks.defaultDeck);
         g.put("id", 1);
         g.put("name", "Default");
         g.put("conf", 1);
-        g.put("mod", Utils.intTime()); // Uses real time, so can't be tested with mocked time
+        g.put("mod", time.intTime());
         JSONObject gc = new JSONObject(Decks.defaultConf);
         gc.put("id", 1);
         JSONObject ag = new JSONObject();
