@@ -1031,7 +1031,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
      */
     private void onFinishedStartup() {
         // create backup in background if needed
-        BackupManager.performBackupInBackground(getCol().getPath());
+        BackupManager.performBackupInBackground(getCol().getPath(), getCol().getTime());
 
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {

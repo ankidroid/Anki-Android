@@ -1428,7 +1428,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             // unload collection and trigger a backup
             CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
             CollectionHelper.getInstance().lockCollection();
-            BackupManager.performBackupInBackground(colPath, true);
+            BackupManager.performBackupInBackground(colPath, true, col.getTime());
         }
         // overwrite collection
         File f = new File(colFile);

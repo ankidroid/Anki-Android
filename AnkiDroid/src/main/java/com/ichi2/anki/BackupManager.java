@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.FileUtil;
 
 import java.io.BufferedOutputStream;
@@ -40,6 +41,7 @@ import java.util.UnknownFormatConversionException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class BackupManager {
@@ -84,18 +86,18 @@ public class BackupManager {
     }
 
 
-    public static boolean performBackupInBackground(String path) {
-        return performBackupInBackground(path, BACKUP_INTERVAL, false);
+    public static boolean performBackupInBackground(String path, @NonNull Time time) {
+        return performBackupInBackground(path, BACKUP_INTERVAL, false, time);
     }
 
 
-    public static boolean performBackupInBackground(String path, boolean force) {
-        return performBackupInBackground(path, BACKUP_INTERVAL, force);
+    public static boolean performBackupInBackground(String path, boolean force, @NonNull Time time) {
+        return performBackupInBackground(path, BACKUP_INTERVAL, force, time);
     }
 
 
     @SuppressWarnings("PMD.NPathComplexity")
-    private static boolean performBackupInBackground(final String colPath, int interval, boolean force) {
+    private static boolean performBackupInBackground(final String colPath, int interval, boolean force, @NonNull Time time) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
         if (prefs.getInt("backupMax", 8) == 0 && !force) {
             Timber.w("backups are disabled");
@@ -111,7 +113,7 @@ public class BackupManager {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.US);
         Calendar cal = new GregorianCalendar();
-        cal.setTimeInMillis(System.currentTimeMillis()); // Uses real time, no col accessible
+        cal.setTimeInMillis(time.intTimeMS());
 
         // Abort backup if one was already made less than 5 hours ago
         Date lastBackupDate = null;
@@ -124,7 +126,7 @@ public class BackupManager {
                 lastBackupDate = null;
             }
         }
-        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000L > Utils.intTime(1000) && !force) { // Uses real time, not collection ones
+        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000L > time.intTimeMS() && !force) {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours");
             return false;
         }
