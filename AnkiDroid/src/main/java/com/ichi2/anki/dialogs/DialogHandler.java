@@ -120,7 +120,7 @@ public class DialogHandler extends Handler {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mActivity.get());
             Resources res = mActivity.get().getResources();
             String hkey = preferences.getString("hkey", "");
-            long millisecondsSinceLastSync = Utils.intTime(1000) - preferences.getLong("lastSyncTime", 0);
+            long millisecondsSinceLastSync = Utils.intTime(1000) - preferences.getLong("lastSyncTime", 0); // Uses real time, not collection's one.
             boolean limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL;
             if (!limited && hkey.length() > 0 && Connection.isOnline()) {
                 ((DeckPicker) mActivity.get()).sync();
