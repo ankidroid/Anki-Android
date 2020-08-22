@@ -1643,7 +1643,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onPreExecute() {
             countUp = 0;
             countDown = 0;
-            final long syncStartTime = System.currentTimeMillis();
+            final long syncStartTime = Utils.intTime(1000);
 
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 try {
@@ -1670,7 +1670,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable() &&
                             !Connection.getIsCancelled()) {
                         // If less than 2s has elapsed since sync started then don't ask for confirmation
-                        if (System.currentTimeMillis() - syncStartTime < 2000) {
+                        if (Utils.intTime(1000) - syncStartTime < 2000) {
                             Connection.cancel();
                             mProgressDialog.setContent(R.string.sync_cancel_message);
                             return true;
