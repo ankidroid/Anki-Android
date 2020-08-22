@@ -36,7 +36,7 @@ public class CardStats {
                 next = 0;
             } else {
                 if (c.getQueue() == Consts.QUEUE_TYPE_REV || c.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
-                    next = Utils.intTime(1000) + ((c.getDue() - col.getSched().getToday()) * SECONDS_PER_DAY * 1000);
+                    next = col.getTime().intTimeMS() + ((c.getDue() - col.getSched().getToday()) * SECONDS_PER_DAY * 1000);
                 } else {
                     next = c.getDue();
                 }

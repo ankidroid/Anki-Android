@@ -183,14 +183,14 @@ public class Collection {
         _openLog();
         log(path, VersionUtils.getPkgVersionName());
         mServer = server;
-        //mLastSave = Utils.now(); // assigned but never accessed - only leaving in for upstream comparison
+        //mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
         clearUndo();
         mMedia = new Media(this, server);
         mDecks = new Decks(this);
         mTags = new Tags(this);
         load();
         if (mCrt == 0) {
-            mCrt = UIUtils.getDayStart() / 1000;
+            mCrt = UIUtils.getDayStart(getTime()) / 1000;
         }
         mStartReps = 0;
         mStartTime = 0;
@@ -370,7 +370,7 @@ public class Collection {
      */
     public void flush(long mod) {
         Timber.i("flush - Saving information to DB...");
-        mMod = (mod == 0 ? Utils.intTime(1000) : mod);
+        mMod = (mod == 0 ? getTime().intTimeMS() : mod);
         ContentValues values = new ContentValues();
         values.put("crt", mCrt);
         values.put("mod", mMod);
@@ -413,7 +413,7 @@ public class Collection {
         }
         // undoing non review operation is handled differently in ankidroid
 //        _markOp(name);
-        //mLastSave = Utils.now(); // assigned but never accessed - only leaving in for upstream comparison
+        //mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
     }
 
     /**
@@ -473,7 +473,7 @@ public class Collection {
      * thrown when in fact it is never thrown.
      */
     public void modSchemaNoCheck() {
-        mScm = Utils.intTime(1000);
+        mScm = getTime().intTimeMS();
         setMod();
     }
 
@@ -778,7 +778,7 @@ public class Collection {
         // build cards for each note
         ArrayList<Object[]> data = new ArrayList<>();
         long ts = Utils.maxID(mDb);
-        long now = Utils.intTime();
+        long now = getTime().intTime();
         ArrayList<Long> rem = new ArrayList<>();
         int usn = usn();
         cur = null;
@@ -1271,7 +1271,7 @@ public class Collection {
 
 
     public void startTimebox() {
-        mStartTime = Utils.now();
+        mStartTime = getTime().now();
         mStartReps = mSched.getReps();
     }
 
@@ -1282,7 +1282,7 @@ public class Collection {
             // timeboxing disabled
             return null;
         }
-        double elapsed = Utils.now() - mStartTime;
+        double elapsed = getTime().now() - mStartTime;
         if (elapsed > mConf.getLong("timeLim")) {
             return new Long[] { mConf.getLong("timeLim"), (long) (mSched.getReps() - mStartReps) };
         }
@@ -1567,7 +1567,7 @@ public class Collection {
         mDb.execute("update cards " +
                         "set did = " + nextDeckId + ", " +
                         "odid = 0," +
-                        "mod = " +  Utils.intTime() + ", " +
+                        "mod = " +  getTime().intTime() + ", " +
                         "usn = " + usn() + " " +
                         "where did in " +
                         Utils.ids2str(dynDeckIds) +
@@ -1643,7 +1643,7 @@ public class Collection {
         notifyProgress.run();
         if (ids.size() > 0) {
             problems.add("Reviews had incorrect due date.");
-            mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
+            mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  getTime().intTime() +
                     ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.collection2Array(ids)));
         }
         return problems;
@@ -1663,7 +1663,7 @@ public class Collection {
         Timber.d("fixNewCardDuePositionOverflow");
         // new cards can't have a due position > 32 bits
         notifyProgress.run();
-        mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
+        mDb.execute("UPDATE cards SET due = 1000000, mod = " + getTime().intTime() + ", usn = " + usn()
                 + " WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW);
         return Collections.emptyList();
     }
@@ -1931,7 +1931,7 @@ public class Collection {
                 args[i] = Arrays.toString((long []) args[i]);
             }
         }
-        String s = String.format("[%s] %s:%s(): %s", Utils.intTime(), trace.getFileName(), trace.getMethodName(),
+        String s = String.format("[%s] %s:%s(): %s", getTime().intTime(), trace.getFileName(), trace.getMethodName(),
                 TextUtils.join(",  ", args));
         writeLog(s);
     }
@@ -1986,7 +1986,7 @@ public class Collection {
     public void setUserFlag(int flag, long[] cids)  {
         assert (0<= flag && flag <= 7);
         mDb.execute("update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(cids),
-                    0b111, flag, usn(), Utils.intTime());
+                    0b111, flag, usn(), getTime().intTime());
     }
 
     /**
@@ -2155,13 +2155,8 @@ public class Collection {
 
     //This duplicates _loadScheduler (but returns the value and sets the report limit).
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public void replaceSchedulerForTests() {
-        int ver = schedVer();
-        if (ver == 1) {
-            mSched = new Sched(this);
-        } else if (ver == 2) {
-            mSched = new SchedV2(this);
-        }
+    public void replaceSchedulerForTests(Time time) {
+        mTime = time;
     }
 
     /** Allows a mock db to be inserted for testing */

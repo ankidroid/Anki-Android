@@ -1174,7 +1174,7 @@ public class CardContentProvider extends ContentProvider {
             try {
                 if (cardToAnswer != null) {
                     if(timeTaken != -1){
-                        cardToAnswer.setTimerStarted(Utils.now()-timeTaken/1000);
+                        cardToAnswer.setTimerStarted(col.getTime().now()-timeTaken/1000);
                     }
                     sched.answerCard(cardToAnswer, ease);
                 }

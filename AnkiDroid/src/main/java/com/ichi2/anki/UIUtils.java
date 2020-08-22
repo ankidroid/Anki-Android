@@ -18,6 +18,8 @@ import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.utils.Time;
 
 public class UIUtils {
 
@@ -104,8 +106,8 @@ public class UIUtils {
     }
 
 
-    public static long getDayStart() {
-        Calendar cal = Calendar.getInstance();
+    public static long getDayStart(Time time) {
+        Calendar cal = time.calendar();
         if (cal.get(Calendar.HOUR_OF_DAY) < 4) {
             cal.roll(Calendar.DAY_OF_YEAR, -1);
         }

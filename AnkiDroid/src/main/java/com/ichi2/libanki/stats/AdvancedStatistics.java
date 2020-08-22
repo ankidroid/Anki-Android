@@ -30,7 +30,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.utils.Time;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -316,13 +316,13 @@ public class AdvancedStatistics {
 
         ArrayList<int[]> dues = new ArrayList<>();
 
-        EaseClassifier classifier = new EaseClassifier(mCol.getDb().getDatabase());
+        EaseClassifier classifier = new EaseClassifier(mCol.getTime(), mCol.getDb().getDatabase());
         ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier, end, chunk);
         TodayStats todayStats = new TodayStats(mCol.getDb().getDatabase(), Settings.getDayStartCutoff((int) mCol.getCrt()));
 
-        long t0 = Utils.intTime(1000);
+        long t0 = mCol.getTime().intTimeMS();
         SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
-        long t1 = Utils.intTime(1000);
+        long t1 = mCol.getTime().intTimeMS();
 
         Timber.d("Simulation of all decks took: " + (t1 - t0) + " ms");
 
@@ -660,14 +660,14 @@ public class AdvancedStatistics {
                 queryBaseYoungMature
                         + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl >= 21;";
 
-        public EaseClassifier(SupportSQLiteDatabase db) {
+        public EaseClassifier(Time time, SupportSQLiteDatabase db) {
             this.db = db;
 
             singleReviewOutcome = new ReviewOutcome(null, 0);
 
-            long t0 = Utils.intTime(1000);;
+            long t0 = time.intTimeMS();;
             calculateCumProbabilitiesForNewEasePerCurrentEase();
-            long t1 = Utils.intTime(1000);;
+            long t1 = time.intTimeMS();;
 
             Timber.d("Calculating probability distributions took: " + (t1 - t0) + " ms");
 
@@ -1026,9 +1026,11 @@ public class AdvancedStatistics {
         private final int computeNDays;
         private final double computeMaxError;
         private final int simulateNIterations;
+        private final Collection mCol;
 
         public Settings(Context context) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+            mCol = CollectionHelper.getInstance().getCol(context);
 
             computeNDays = prefs.getInt("advanced_forecast_stats_compute_n_days", 0);
             int computePrecision = prefs.getInt("advanced_forecast_stats_compute_precision", 90);
@@ -1083,7 +1085,7 @@ public class AdvancedStatistics {
         public int getToday(int collectionCreatedTime) {
             Timber.d("Collection creation timestamp: " + collectionCreatedTime);
 
-            long currentTime = Utils.intTime();
+            long currentTime = mCol.getTime().intTime();
             Timber.d("Now: " + currentTime);
             return (int) ((currentTime - collectionCreatedTime) / SECONDS_PER_DAY);
         }
