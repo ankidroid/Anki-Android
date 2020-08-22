@@ -29,18 +29,18 @@ public class SystemTime extends Time {
     }
 
     @Override
+    /**The time in integer seconds. */
     public long intTime() {
-        return Utils.intTime();
+        return System.currentTimeMillis() / 1000;
     }
 
-    @Override
+    /**The time in integer seconds. */
     public double now() {
-        return Utils.now();
+        return (System.currentTimeMillis() / 1000.0);
     }
 
-    @Override
     public long intTimeMS() {
-        return Utils.intTime(1000);
+        return System.currentTimeMillis();
     }
 
     @Override
