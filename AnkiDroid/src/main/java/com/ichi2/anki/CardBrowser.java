@@ -1876,11 +1876,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
             int lastVisibleItem = firstVisibleItem + visibleItemCount;
-            int size = getCardCount();
+            List<CardCache> cards = getCards();
+            // List is never cleared, only reset to a new list. So it's safe here.
+            int size = cards.size();
             if ((size > 0) && (firstVisibleItem < size) && ((lastVisibleItem - 1) < size)) {
-                boolean firstLoaded = getCards().get(firstVisibleItem).isLoaded();
+                boolean firstLoaded = cards.get(firstVisibleItem).isLoaded();
                 // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
-                boolean lastLoaded = getCards().get(lastVisibleItem - 1).isLoaded();
+                boolean lastLoaded = cards.get(lastVisibleItem - 1).isLoaded();
                 if (!firstLoaded || !lastLoaded) {
                     showProgressBar();
                     // Also start rendering the items on the screen every 300ms while scrolling
@@ -1889,7 +1891,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         mLastRenderStart = currentTime;
                         CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
                         CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                                new TaskData(new Object[]{getCards(), firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index}));
+                                new TaskData(new Object[]{cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index}));
                     }
                 }
             }
