@@ -90,7 +90,7 @@ import static com.ichi2.libanki.Collection.DismissType.REVIEW;
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt","PMD.ExcessiveMethodLength"})
-public class Collection {
+public class Collection<T extends Time> {
 
     private Context mContext;
 
@@ -131,7 +131,7 @@ public class Collection {
     private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
 
     // Not in libAnki.
-    private final Time mTime;
+    private final T mTime;
 
     // other options
     public static final String defaultConf = "{"
@@ -170,10 +170,7 @@ public class Collection {
     private static final int UNDO_SIZE_MAX = 20;
 
     @VisibleForTesting
-    public Collection(Context context, DB db, String path, boolean server, boolean log, @Nullable Time time) {
-        if (time == null) {
-            time = new SystemTime();
-        }
+    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull T time) {
         mContext = context;
         mDebugLog = log;
         mDb = db;
@@ -2232,7 +2229,7 @@ public class Collection {
     }
 
     @NonNull
-    public Time getTime() {
+    public T getTime() {
         return mTime;
     }
 }
