@@ -20,6 +20,9 @@ package com.ichi2.anki;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
@@ -35,6 +38,10 @@ public class Previewer extends AbstractFlashcardViewer {
     private long[] mCardList;
     private int mIndex;
     private boolean mShowingAnswer;
+    private SeekBar progressSeekBar;
+    private TextView progressText;
+    private boolean mEnableLiveSeek = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +65,64 @@ public class Previewer extends AbstractFlashcardViewer {
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
         startLoadingCollection();
+        initPreviewProgress();
     }
+
+
+    private void initPreviewProgress() {
+        progressSeekBar = findViewById(R.id.preview_progress_seek_bar);
+        progressText = findViewById(R.id.preview_progress_text);
+        LinearLayout progressLayout = findViewById(R.id.preview_progress_layout);
+
+        //Show layout only when the cardList is bigger than 1
+        if (mCardList.length > 1) {
+            progressLayout.setVisibility(View.VISIBLE);
+            progressSeekBar.setMax(mCardList.length - 1);
+            setSeekBarListener();
+            updateProgress();
+        }
+    }
+
+
+    private void setSeekBarListener() {
+        progressSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    mIndex = progress;
+                    updateProgress();
+                    if (mEnableLiveSeek) {
+                        mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                        displayCardQuestion();
+                    }
+                }
+            }
+
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Mandatory override, but unused
+            }
+
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (!mEnableLiveSeek) {
+                    if (mIndex >= 0 && mIndex < mCardList.length) {
+                        mCurrentCard = getCol().getCard(mCardList[mIndex]);
+                        displayCardQuestion();
+                    }
+                }
+            }
+        });
+    }
+
 
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         mCurrentCard = col.getCard(mCardList[mIndex]);
-        if (mShowingAnswer){
+        if (mShowingAnswer) {
             displayCardQuestion();
             displayCardAnswer();
         } else {
@@ -124,6 +182,7 @@ public class Previewer extends AbstractFlashcardViewer {
         return false;
     }
 
+
     private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -135,6 +194,7 @@ public class Previewer extends AbstractFlashcardViewer {
                     mCurrentCard = getCol().getCard(mCardList[mIndex]);
                 }
                 displayCardQuestion();
+                updateProgress();
             } else {
                 // If we are showing the question, any click will show an answer...
                 if (view.getId() == R.id.flashcard_layout_ease1) {
@@ -146,6 +206,17 @@ public class Previewer extends AbstractFlashcardViewer {
             }
         }
     };
+
+
+    private void updateProgress() {
+        if (progressSeekBar.getProgress() != mIndex) {
+            progressSeekBar.setProgress(mIndex);
+        }
+
+        String progress = (mIndex + 1) + "/" + mCardList.length;
+        progressText.setText(progress);
+    }
+
 
     private void updateButtonState() {
         // If we are in single-card mode, we show the "Show Answer" button on the question side
@@ -167,8 +238,8 @@ public class Previewer extends AbstractFlashcardViewer {
         mEase3Layout.setVisibility(View.GONE);
         mEase4Layout.setVisibility(View.GONE);
 
-        final int[] background = Themes.getResFromAttr(this, new int[]{R.attr.hardButtonRef});
-        final int[] textColor = Themes.getColorFromAttr(this, new int[]{R.attr.hardButtonTextColor});
+        final int[] background = Themes.getResFromAttr(this, new int[] {R.attr.hardButtonRef});
+        final int[] textColor = Themes.getColorFromAttr(this, new int[] {R.attr.hardButtonTextColor});
 
         mNext1.setTextSize(30);
         mEase1.setVisibility(View.GONE);
