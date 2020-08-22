@@ -60,6 +60,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -68,6 +69,8 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -173,6 +176,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private static final int SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400;
 
+    // Short animation duration from system
+    private int mShortAnimDuration;
+
+    private RelativeLayout mDeckPickerContent;
+
     private MaterialDialog mProgressDialog;
     private View mStudyoptionsFrame;
     private RecyclerView mRecyclerView;
@@ -180,6 +188,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private DeckAdapter mDeckListAdapter;
     private FloatingActionsMenu mActionsMenu;
     private Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
+
+    private LinearLayout mNoDecksPlaceholder;
 
     private SwipeRefreshLayout mPullToSyncWrapper;
 
@@ -428,7 +438,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         initNavigationDrawer(mainView);
         setTitle(getResources().getString(R.string.app_name));
 
+        mDeckPickerContent = findViewById(R.id.deck_picker_content);
         mRecyclerView = findViewById(R.id.files);
+        mNoDecksPlaceholder = findViewById(R.id.no_decks_placeholder);
+
+        mDeckPickerContent.setVisibility(View.GONE);
+        mNoDecksPlaceholder.setVisibility(View.GONE);
 
         // specify a LinearLayoutManager and set up item dividers for the RecyclerView
         mRecyclerViewLayoutManager = new LinearLayoutManager(this);
@@ -500,6 +515,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
         }
+
+        mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
     // throws doesn't seem to be checked by the compiler - consider it to be documentation
@@ -2290,6 +2307,89 @@ public class DeckPicker extends NavigationDrawerActivity implements
             updateDeckList();
             return;
         }
+
+        boolean isEmpty = false;
+
+        // Check if default deck is the only available
+        if (mDueTree.size() == 1 && mDueTree.get(0).getDid() == 1) {
+            DeckDueTreeNode node = mDueTree.get(0);
+
+            // Check if it's empty
+            isEmpty = node.getNewCount() + node.getLrnCount() + node.getRevCount() == 0;
+        }
+
+        float translation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8,
+                getResources().getDisplayMetrics());
+
+        boolean decksListShown = mDeckPickerContent.getVisibility() == View.VISIBLE;
+        boolean placeholderShown = mNoDecksPlaceholder.getVisibility() == View.VISIBLE;
+
+        if (isEmpty) {
+            if (decksListShown) {
+                mDeckPickerContent.setAlpha(1);
+                mDeckPickerContent.setTranslationY(0);
+                mDeckPickerContent.animate()
+                        .alpha(0)
+                        .translationY(translation)
+                        .setDuration(mShortAnimDuration)
+                        .setStartDelay(0)
+                        .withStartAction(null)
+                        .withEndAction(() -> {
+                            mDeckPickerContent.setVisibility(View.GONE);
+                        });
+            }
+
+            if (!placeholderShown) {
+                mNoDecksPlaceholder.setAlpha(0);
+                mNoDecksPlaceholder.setTranslationY(translation);
+                mNoDecksPlaceholder.animate()
+                        .alpha(1)
+                        .translationY(0)
+                        .setDuration(mShortAnimDuration)
+                        .setStartDelay(decksListShown ? mShortAnimDuration * 2 : 0)
+                        .withStartAction(() -> {
+                            mNoDecksPlaceholder.setVisibility(View.VISIBLE);
+                        })
+                        .withEndAction(null);
+            }
+        } else {
+            if (!decksListShown) {
+                mDeckPickerContent.setAlpha(0);
+                mDeckPickerContent.setTranslationY(translation);
+                mDeckPickerContent.animate()
+                        .alpha(1)
+                        .translationY(0)
+                        .setDuration(mShortAnimDuration)
+                        .setStartDelay(placeholderShown ? mShortAnimDuration * 2 : 0)
+                        .withStartAction(() -> {
+                            mDeckPickerContent.setVisibility(View.VISIBLE);
+                        })
+                        .withEndAction(null);
+            }
+
+            if (placeholderShown) {
+                mNoDecksPlaceholder.setAlpha(1);
+                mNoDecksPlaceholder.setTranslationY(0);
+                mNoDecksPlaceholder.animate()
+                        .alpha(0)
+                        .translationY(translation)
+                        .setDuration(mShortAnimDuration)
+                        .setStartDelay(0)
+                        .withStartAction(null)
+                        .withEndAction(() -> {
+                            mNoDecksPlaceholder.setVisibility(View.GONE);
+                        });
+            }
+        }
+
+        if (isEmpty) {
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setSubtitle(null);
+            }
+            // We're done here
+            return;
+        }
+
         mDeckListAdapter.buildDeckList(mDueTree, getCol());
 
         // Set the "x due in y minutes" subtitle
