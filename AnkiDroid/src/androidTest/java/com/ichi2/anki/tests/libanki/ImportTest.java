@@ -37,6 +37,7 @@ import com.ichi2.libanki.importer.Importer;
 
 import com.ichi2.libanki.importer.NoteImporter;
 import com.ichi2.libanki.importer.TextImporter;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
@@ -64,7 +65,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(androidx.test.runner.AndroidJUnit4.class)
 public class ImportTest {
 
-    private Collection testCol;
+    private Collection<Time> testCol;
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =

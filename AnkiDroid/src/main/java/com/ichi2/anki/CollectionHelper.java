@@ -102,10 +102,10 @@ public class CollectionHelper {
      * @param context context which can be used to get the setting for the path to the Collection
      * @return instance of the Collection
      */
-    public synchronized Collection getCol(Context context) {
-        return getCol(context, null);
+    public synchronized Collection<Time> getCol(Context context) {
+        return getCol(context, new SystemTime());
     }
-    public synchronized Collection getCol(Context context, Time time) {
+    public synchronized <T extends Time> Collection<T> getCol(Context context, @NonNull T time) {
         // Open collection
         if (!colIsOpen()) {
             String path = getCollectionPath(context);

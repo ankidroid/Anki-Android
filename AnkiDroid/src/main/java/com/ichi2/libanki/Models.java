@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.JSONArray;
@@ -96,7 +97,7 @@ public class Models {
     // private static final Pattern sModelPattern = Pattern.compile("%\\(modelTags\\)s");
     // private static final Pattern sTemplPattern = Pattern.compile("%\\(cardModel\\)s");
 
-    private Collection mCol;
+    private Collection<Time> mCol;
     private boolean mChanged;
     private HashMap<Long, Model> mModels;
 

@@ -46,6 +46,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.AssumptionViolatedException;
 import org.junit.Before;
+import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowDialog;
@@ -172,10 +173,10 @@ public class RobolectricTest {
     /** A collection. Created one second ago, not near cutoff time.
     * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time.*/
-    protected Collection getCol() {
+    protected Collection<MockTime> getCol() {
         // 2020/08/07, 07:00:00. Normally not near day cutoff.
         MockTime time = new MockTime(1596783600000L, 10);
-        Collection col = CollectionHelper.getInstance().getCol(getTargetContext(), time);
+        Collection<MockTime> col = CollectionHelper.getInstance().getCol(getTargetContext(), time);
         return col;
     }
 
