@@ -299,7 +299,7 @@ public class NoteImporter extends Importer {
                 id,
                 guid64(),
                 mModel.getLong("id"),
-                intTime(),
+                mCol.getTime().intTime(),
                 mCol.usn(),
                 mCol.getTags().join(n.mTags),
                 n.fieldsStr,
@@ -323,16 +323,16 @@ public class NoteImporter extends Importer {
         String tags;
         if (mTagsMapped) {
             tags = mCol.getTags().join(n.mTags);
-            return new Object[] {intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr, tags };
+            return new Object[] {mCol.getTime().intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr, tags };
         } else if (mTagModified != null) {
             tags = mCol.getDb().queryString("select tags from notes where id = ?", id);
             List<String> tagList = mCol.getTags().split(tags);
             tagList.addAll(StringUtils.splitOnWhitespace(mTagModified));
             tags = mCol.getTags().join(tagList);
-            return new Object[] {intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr };
+            return new Object[] {mCol.getTime().intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr };
         } else {
             // This looks inconsistent but is fine, see: addUpdates
-            return new Object[] {intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr };
+            return new Object[] {mCol.getTime().intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr };
         }
     }
 

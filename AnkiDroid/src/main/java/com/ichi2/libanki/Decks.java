@@ -249,7 +249,7 @@ public class Decks {
      */
     public void save(JSONObject g) {
         if (g != null) {
-            g.put("mod", Utils.intTime());
+            g.put("mod", mCol.getTime().intTime());
             g.put("usn", mCol.usn());
         }
         mChanged = true;
@@ -317,7 +317,7 @@ public class Decks {
         Deck g = new Deck(type);
         g.put("name", name);
         while (true) {
-            id = Utils.intTime(1000);
+            id = mCol.getTime().intTimeMS();
             if (!mDecks.containsKey(id)) {
                 break;
             }
@@ -729,7 +729,7 @@ public class Decks {
         long id;
         c = new DeckConfig(cloneFrom);
         while (true) {
-            id = Utils.intTime(1000);
+            id = mCol.getTime().intTimeMS();
             if (!mDconf.containsKey(id)) {
                 break;
             }
@@ -825,7 +825,7 @@ public class Decks {
 
     public void setDeck(long[] cids, long did) {
         mCol.getDb().execute("update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-                did, mCol.usn(), Utils.intTime());
+                did, mCol.usn(), mCol.getTime().intTime());
     }
 
 

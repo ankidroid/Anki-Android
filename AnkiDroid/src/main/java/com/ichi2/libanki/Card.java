@@ -182,7 +182,7 @@ public class Card implements Cloneable {
 
     public void flush(boolean changeModUsn) {
         if (changeModUsn) {
-            mMod = Utils.intTime();
+            mMod = getCol().getTime().intTime();
             mUsn = mCol.usn();
         }
         // bug check
@@ -217,7 +217,7 @@ public class Card implements Cloneable {
 
 
     public void flushSched() {
-        mMod = Utils.intTime();
+        mMod = getCol().getTime().intTime();
         mUsn = mCol.usn();
         // bug check
         //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
@@ -328,7 +328,7 @@ public class Card implements Cloneable {
 
 
     public void startTimer() {
-        mTimerStarted = Utils.now();
+        mTimerStarted = getCol().getTime().now();
     }
 
 
@@ -345,7 +345,7 @@ public class Card implements Cloneable {
      * Time taken to answer card, in integer MS.
      */
     public int timeTaken() {
-        int total = (int) ((Utils.now() - mTimerStarted) * 1000);
+        int total = (int) ((getCol().getTime().now() - mTimerStarted) * 1000);
         return Math.min(total, timeLimit());
     }
 
@@ -388,7 +388,7 @@ public class Card implements Cloneable {
      * method when the session resumes to start counting review time again.
      */
     public void stopTimer() {
-        mElapsedTime = Utils.now() - mTimerStarted;
+        mElapsedTime = getCol().getTime().now() - mTimerStarted;
     }
 
 
@@ -401,7 +401,7 @@ public class Card implements Cloneable {
      * or the result of timeTaken() will be wrong.
      */
     public void resumeTimer() {
-        mTimerStarted = Utils.now() - mElapsedTime;
+        mTimerStarted = getCol().getTime().now() - mElapsedTime;
     }
 
     public void setTimerStarted(double timeStarted){ mTimerStarted = timeStarted; }
@@ -696,7 +696,7 @@ public class Card implements Cloneable {
         } else if (getQueue() == Consts.QUEUE_TYPE_NEW || getType() == Consts.CARD_TYPE_NEW) {
             return (new Long(due)).toString();
         } else if (getQueue() == Consts.QUEUE_TYPE_REV || getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || (getType() == Consts.CARD_TYPE_REV && getQueue() < 0)) {
-            long time = Utils.intTime();
+            long time = mCol.getTime().intTime();
             long nbDaySinceCreation = (due - getCol().getSched().getToday());
             date = time + (nbDaySinceCreation * SECONDS_PER_DAY);
         } else {

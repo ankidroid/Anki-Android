@@ -966,7 +966,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         String hkey = preferences.getString("hkey", "");
         long lastSyncTime = preferences.getLong("lastSyncTime", 0);
         if (hkey.length() != 0 && preferences.getBoolean("automaticSyncMode", false) &&
-                Connection.isOnline() && Utils.intTime(1000) - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
+                Connection.isOnline() && getCol().getTime().intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL) {
             Timber.i("Triggering Automatic Sync");
             sync();
         }
@@ -1643,7 +1643,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onPreExecute() {
             countUp = 0;
             countDown = 0;
-            final long syncStartTime = Utils.intTime(1000);
+            final long syncStartTime = getCol().getTime().intTimeMS();
 
             if (mProgressDialog == null || !mProgressDialog.isShowing()) {
                 try {
@@ -1670,7 +1670,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable() &&
                             !Connection.getIsCancelled()) {
                         // If less than 2s has elapsed since sync started then don't ask for confirmation
-                        if (Utils.intTime(1000) - syncStartTime < 2000) {
+                        if (getCol().getTime().intTimeMS() - syncStartTime < 2000) {
                             Connection.cancel();
                             mProgressDialog.setContent(R.string.sync_cancel_message);
                             return true;
