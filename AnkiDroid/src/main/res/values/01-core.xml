@@ -54,7 +54,7 @@
         <item quantity="other">%d days %d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">No flashcards yet</string>
-    <string name="no_cards_placeholder_description">You can add your own decks\nor import existing decks.</string>
+    <string name="no_cards_placeholder_description">You can add your own cards\nor import decks using + icon.</string>
 
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
