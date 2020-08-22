@@ -129,7 +129,7 @@ public class Card implements Cloneable {
             load();
         } else {
             // to flush, set nid, ord, and due
-            mId = Utils.timestampID(mCol.getDb(), "cards");
+            mId = mCol.getTime().timestampID(mCol.getDb(), "cards");
             mDid = 1;
             mType = Consts.CARD_TYPE_NEW;
             mQueue = Consts.QUEUE_TYPE_NEW;

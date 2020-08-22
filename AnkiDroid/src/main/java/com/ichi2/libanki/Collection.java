@@ -777,7 +777,7 @@ public class Collection {
         }
         // build cards for each note
         ArrayList<Object[]> data = new ArrayList<>();
-        long ts = Utils.maxID(mDb);
+        long ts = getTime().maxID(mDb);
         long now = getTime().intTime();
         ArrayList<Long> rem = new ArrayList<>();
         int usn = usn();

@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class MockTime implements Time {
+public class MockTime extends Time {
 
     /** Number of miliseconds between each call. */
     private final int mStep;
@@ -74,20 +74,6 @@ public class MockTime implements Time {
         long mTime = this.mTime;
         this.mTime += mStep;
         return mTime;
-    }
-
-    @Override
-    public Calendar calendar() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(getCurrentDate());
-        return cal;
-    }
-
-    @Override
-    public GregorianCalendar gregorianCalendar() {
-        GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(getCurrentDate());
-        return cal;
     }
 
 }

@@ -32,10 +32,8 @@ import static com.ichi2.libanki.Consts.NEW_CARDS_RANDOM;
 import static com.ichi2.libanki.Utils.collection2Array;
 import static com.ichi2.libanki.Utils.fieldChecksum;
 import static com.ichi2.libanki.Utils.guid64;
-import static com.ichi2.libanki.Utils.intTime;
 import static com.ichi2.libanki.Utils.joinFields;
 import static com.ichi2.libanki.Utils.splitFields;
-import static com.ichi2.libanki.Utils.timestampID;
 import static com.ichi2.libanki.importer.NoteImporter.ImportMode.ADD_MODE;
 import static com.ichi2.libanki.importer.NoteImporter.ImportMode.IGNORE_MODE;
 import static com.ichi2.libanki.importer.NoteImporter.ImportMode.UPDATE_MODE;
@@ -167,7 +165,7 @@ public class NoteImporter extends Importer {
         HashMap<String, Boolean> firsts = new HashMap<>();
         int fld0index = mMapping.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
         mFMap = mCol.getModels().fieldMap(mModel);
-        mNextId = timestampID(mCol.getDb(), "notes");
+        mNextId = mCol.getTime().timestampID(mCol.getDb(), "notes");
         // loop through the notes
         List<Object[]> updates = new ArrayList<>();
         List<String> updateLog = new ArrayList<>();
