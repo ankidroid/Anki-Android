@@ -24,20 +24,32 @@ import java.util.GregorianCalendar;
 
 /** Allows injection of time dependencies */
 public abstract class Time {
-    public abstract Date getCurrentDate();
+
+    /** Date of this time */
+    public Date getCurrentDate() {
+        return new Date(intTimeMS());
+    }
+
     /**The time in integer seconds. */
-    public abstract long intTime();
-    /**The time in integer seconds. */
-    public abstract double now();
+    public long intTime() {
+        return intTimeMS() / 1000L;
+    };
+
+    /**The time in milisecond. */
+    public double now() {
+        return (double) intTimeMS();
+    }
 
     public abstract long intTimeMS();
 
+    /** Calendar for this date */
     public Calendar calendar() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(getCurrentDate());
         return cal;
     }
 
+    /** Gregorian calendar for this date */
     public GregorianCalendar gregorianCalendar() {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(getCurrentDate());
@@ -55,7 +67,6 @@ public abstract class Time {
         return t;
     }
 
-
     /** Return the first safe ID to use. */
     public long maxID(DB db) {
         long now = intTimeMS();
@@ -63,5 +74,4 @@ public abstract class Time {
         now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
         return now + 1;
     }
-
 }
