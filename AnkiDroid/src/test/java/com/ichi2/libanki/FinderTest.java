@@ -20,6 +20,7 @@ import android.util.Pair;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.libanki.sched.SchedV2;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONObject;
 
 import org.junit.Test;

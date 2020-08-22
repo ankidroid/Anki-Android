@@ -54,7 +54,6 @@ import static com.ichi2.libanki.Consts.QUEUE_TYPE_NEW;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
 import static com.ichi2.libanki.Consts.STARTING_FACTOR;
 import static com.ichi2.libanki.DecksTest.TEST_DECKS;
-import static com.ichi2.libanki.Utils.intTime;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.testutils.AnkiAssert.checkRevIvl;
 import static com.ichi2.testutils.AnkiAssert.without_unicode_isolation;
@@ -213,7 +212,7 @@ public class SchedTest extends RobolectricTest {
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
         assertEquals(CARD_TYPE_NEW, c.getType());
         // if we answer it, it should become a learn card
-        long t = intTime();
+        long t = col.getTime().intTime();
         col.getSched().answerCard(c, 1);
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         assertEquals(CARD_TYPE_LRN, c.getType());
@@ -324,13 +323,13 @@ public class SchedTest extends RobolectricTest {
         assertEquals(3, c.getLeft() % 1000);
         assertEquals(3, c.getLeft() / 1000);
         // it should be due in 30 seconds
-        long t = Math.round(c.getDue() - Utils.now());
+        long t = Math.round(c.getDue() - col.getTime().now());
         assertThat(t, is(greaterThanOrEqualTo(25L)));
         assertThat(t, is(lessThanOrEqualTo(40L)));
         // pass it once
         col.getSched().answerCard(c, 2);
         // it should be due in 3 minutes
-        assertEquals(Math.round(c.getDue() - Utils.now()), 179, 1);
+        assertEquals(Math.round(c.getDue() - col.getTime().now()), 179, 1);
         assertEquals(2, c.getLeft() % 1000);
         assertEquals(2, c.getLeft() / 1000);
         // check log is accurate
@@ -342,7 +341,7 @@ public class SchedTest extends RobolectricTest {
         // pass again
         col.getSched().answerCard(c, 2);
         // it should be due in 10 minutes
-        assertEquals(c.getDue() - Utils.now(), 599, 1);
+        assertEquals(c.getDue() - col.getTime().now(), 599, 1);
         assertEquals(1, c.getLeft() % 1000);
         assertEquals(1, c.getLeft() / 1000);
         // the next pass should graduate the card
@@ -513,8 +512,8 @@ public class SchedTest extends RobolectricTest {
         assertEquals(1, c.getIvl());
         // but because it's in the learn queue, its current due time should be in
         // the future
-        assertThat(c.getDue(), is(greaterThanOrEqualTo(Utils.intTime())));
-        assertThat(c.getDue() - Utils.intTime(), is(greaterThan(118L)));
+        assertThat(c.getDue(), is(greaterThanOrEqualTo(col.getTime().intTime())));
+        assertThat(c.getDue() - col.getTime().intTime(), is(greaterThan(118L)));
         // factor should have been decremented
         assertEquals(2300, c.getFactor());
         // check counters
@@ -755,7 +754,7 @@ public class SchedTest extends RobolectricTest {
         col.reset();
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 1);
-        assertThat(c.getDue(), is(greaterThanOrEqualTo(Utils.intTime())));
+        assertThat(c.getDue(), is(greaterThanOrEqualTo(col.getTime().intTime())));
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         assertEquals(CARD_TYPE_REV, c.getType());
         col.getSched().suspendCards(new long[] {c.getId()});
