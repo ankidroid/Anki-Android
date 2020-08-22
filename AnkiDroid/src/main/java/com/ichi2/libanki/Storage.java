@@ -305,7 +305,7 @@ public class Storage {
         db.execute("create table if not exists graves (" + "    usn             integer not null,"
                 + "    oid             integer not null," + "    type            integer not null" + ")");
         db.execute("INSERT OR IGNORE INTO col VALUES(1,0,0," +
-                Utils.intTime(1000) + "," + Consts.SCHEMA_VERSION +
+                Utils.intTime(1000) + "," + Consts.SCHEMA_VERSION + // Use real time, because no access to col
                 ",0,0,0,'','{}','','','{}')");
         if (setColConf) {
             _setColVars(db);
@@ -318,7 +318,7 @@ public class Storage {
         g.put("id", 1);
         g.put("name", "Default");
         g.put("conf", 1);
-        g.put("mod", Utils.intTime());
+        g.put("mod", Utils.intTime()); // Uses real time, so can't be tested with mocked time
         JSONObject gc = new JSONObject(Decks.defaultConf);
         gc.put("id", 1);
         JSONObject ag = new JSONObject();

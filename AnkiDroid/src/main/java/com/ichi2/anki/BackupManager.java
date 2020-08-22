@@ -124,7 +124,7 @@ public class BackupManager {
                 lastBackupDate = null;
             }
         }
-        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000L > Utils.intTime(1000) && !force) {
+        if (lastBackupDate != null && lastBackupDate.getTime() + interval * 3600000L > Utils.intTime(1000) && !force) { // Uses real time, not collection ones
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours");
             return false;
         }
