@@ -13,6 +13,7 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
 import com.ichi2.anki.analytics.UsageAnalytics;
 
@@ -119,8 +120,9 @@ public class DialogHandler extends Handler {
         } else if (msg.what == MSG_DO_SYNC) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mActivity.get());
             Resources res = mActivity.get().getResources();
+            Collection col = mActivity.get().getCol();
             String hkey = preferences.getString("hkey", "");
-            long millisecondsSinceLastSync = Utils.intTime(1000) - preferences.getLong("lastSyncTime", 0); // Uses real time, not collection's one.
+            long millisecondsSinceLastSync = col.getTime().intTimeMS() - preferences.getLong("lastSyncTime", 0);
             boolean limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL;
             if (!limited && hkey.length() > 0 && Connection.isOnline()) {
                 ((DeckPicker) mActivity.get()).sync();
