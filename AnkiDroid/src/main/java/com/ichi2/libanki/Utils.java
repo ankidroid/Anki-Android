@@ -115,20 +115,6 @@ public class Utils {
 
     private static final int FILE_COPY_BUFFER_SIZE = 1024 * 32;
 
-    /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
-    public static double now() {
-        return (System.currentTimeMillis() / 1000.0);
-    }
-
-
-    /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
-    public static long intTime() {
-        return intTime(1);
-    }
-    public static long intTime(int scale) {
-        return (long) (now() * scale);
-    }
-
     /**
      * Return a string representing a time quantity
      *
