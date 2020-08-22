@@ -61,6 +61,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -192,7 +195,7 @@ public class ContentProviderTest extends InstrumentedTest {
             newNote.setField(idx, fields[idx]);
         }
         newNote.addTag(tag);
-        assertTrue("At least one card added for note", col.addNote(newNote) >= 1);
+        assertThat("At least one card added for note", col.addNote(newNote), is(greaterThanOrEqualTo(1)));
         for (Card c: newNote.cards()) {
             c.setDid(did);
             c.flush();
@@ -501,7 +504,7 @@ public class ContentProviderTest extends InstrumentedTest {
             // Test updating the model CSS (to test updating MODELS_ID Uri)
             cv = new ContentValues();
             cv.put(FlashCardsContract.Model.CSS, TEST_MODEL_CSS);
-            assertTrue(cr.update(modelUri, cv, null, null) > 0);
+            assertThat(cr.update(modelUri, cv, null, null), is(greaterThan(0)));
             col = reopenCol();
             model = col.getModels().get(mid);
             assertNotNull("Check model", model);
@@ -515,7 +518,7 @@ public class ContentProviderTest extends InstrumentedTest {
                 cv.put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[i]);
                 cv.put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[i]);
                 Uri tmplUri = Uri.withAppendedPath(Uri.withAppendedPath(modelUri, "templates"), Integer.toString(i));
-                assertTrue("Update rows", cr.update(tmplUri, cv, null, null) > 0);
+                assertThat("Update rows", cr.update(tmplUri, cv, null, null), is(greaterThan(0)));
                 col = reopenCol();
                 model = col.getModels().get(mid);
                 assertNotNull("Check model", model);
@@ -549,7 +552,7 @@ public class ContentProviderTest extends InstrumentedTest {
         final Cursor allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
         assertNotNull(allModels);
         try {
-            assertTrue("Check that there is at least one result", allModels.getCount() > 0);
+            assertThat("Check that there is at least one result", allModels.getCount(), is(greaterThan(0)));
             while (allModels.moveToNext()) {
                 long modelId = allModels.getLong(allModels.getColumnIndex(FlashCardsContract.Model._ID));
                 Uri modelUri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, Long.toString(modelId));
@@ -562,9 +565,9 @@ public class ContentProviderTest extends InstrumentedTest {
                     String nameFromModel = singleModel.getString(allModels.getColumnIndex(FlashCardsContract.Model.NAME));
                     assertEquals("Check that model names are the same", nameFromModel, nameFromModels);
                     String flds = allModels.getString(allModels.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES));
-                    assertTrue("Check that valid number of fields", Utils.splitFields(flds).length >= 1);
+                    assertThat("Check that valid number of fields", Utils.splitFields(flds).length, is(greaterThanOrEqualTo(1)));
                     int numCards = allModels.getInt(allModels.getColumnIndex(FlashCardsContract.Model.NUM_CARDS));
-                    assertTrue("Check that valid number of cards", numCards >= 1);
+                    assertThat("Check that valid number of cards", numCards, is(greaterThanOrEqualTo(1)));
                 } finally {
                     singleModel.close();
                 }
@@ -592,7 +595,7 @@ public class ContentProviderTest extends InstrumentedTest {
                 final Cursor cardsCursor = cr.query(cardsUri, null, null, null, null);
                 assertNotNull("Check that there is a valid cursor after query for cards", cardsCursor);
                 try {
-                    assertTrue("Check that there is at least one result for cards", cardsCursor.getCount() > 0);
+                    assertThat("Check that there is at least one result for cards", cardsCursor.getCount(), is(greaterThan(0)));
                     while (cardsCursor.moveToNext()) {
                         long targetDid = mTestDeckIds.get(0);
                         // Move to test deck (to test NOTES_ID_CARDS_ORD Uri)

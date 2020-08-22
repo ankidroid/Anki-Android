@@ -65,7 +65,11 @@ import static com.ichi2.testutils.AnkiAssert.without_unicode_isolation;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.either;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -263,7 +267,8 @@ public class SchedV2Test extends RobolectricTest {
         col.getSched().answerCard(c, 1);
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         assertEquals(CARD_TYPE_LRN, c.getType());
-        assertTrue(c.getDue() >= t);
+        assertThat(c.getDue(), is(greaterThanOrEqualTo(t)));
+
 
         // disabled for now, as the learn fudging makes this randomly fail
         // // the default order should ensure siblings are not seen together, and
@@ -370,12 +375,14 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(3, c.getLeft() / 1000);
         // it should be due in 30 seconds
         long t = Math.round(c.getDue() - now());
-        assertTrue(t >= 25 && t <= 40);
+        assertThat(t, is(greaterThanOrEqualTo(25L)));
+        assertThat(t, is(lessThanOrEqualTo(40L)));
         // pass it once
         col.getSched().answerCard(c, 3);
         // it should be due in 3 minutes
         double dueIn = c.getDue() - now();
-        assertTrue(178 <= dueIn && dueIn <= 180 * 1.25);
+        assertThat(dueIn, is(greaterThanOrEqualTo(178.d)));
+        assertThat(dueIn, is(lessThanOrEqualTo(180 * 1.25)));
         assertEquals(2, c.getLeft() % 1000);
         assertEquals(2, c.getLeft() / 1000);
         // check log is accurate
@@ -388,7 +395,8 @@ public class SchedV2Test extends RobolectricTest {
         col.getSched().answerCard(c, 3);
         // it should be due in 10 minutes
         dueIn = c.getDue() - now();
-        assertTrue(599 <= dueIn && dueIn <= 600 * 1.25);
+        assertThat(dueIn, is(greaterThanOrEqualTo(599.d)));
+        assertThat(dueIn, is(lessThanOrEqualTo(600 * 1.25)));
         assertEquals(1, c.getLeft() % 1000);
         assertEquals(1, c.getLeft() / 1000);
         // the next pass should graduate the card
@@ -929,7 +937,7 @@ public class SchedV2Test extends RobolectricTest {
         col.reset();
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 1);
-        assertTrue(c.getDue() >= now());
+        assertThat(c.getDue(), is(greaterThanOrEqualTo(intTime())));
         long due = c.getDue();
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         assertEquals(CARD_TYPE_RELEARNING, c.getType());
@@ -1053,7 +1061,7 @@ public class SchedV2Test extends RobolectricTest {
         // should be able to advance learning steps
         col.getSched().answerCard(c, 3);
         // should be due at least an hour in the future
-        assertTrue(c.getDue() - intTime() > 60 * 60);
+        assertThat(c.getDue() - intTime(), is(greaterThan(60 * 60L)));
 
         // emptying the deck preserves learning state
         col.getSched().emptyDyn(did);
@@ -1061,7 +1069,7 @@ public class SchedV2Test extends RobolectricTest {
         assertEquals(CARD_TYPE_LRN, c.getQueue());
         assertEquals(QUEUE_TYPE_LRN, c.getType());
         assertEquals(1001, c.getLeft());
-        assertTrue(c.getDue() - intTime() > 60 * 60);
+        assertThat(c.getDue() - intTime(), is(greaterThan(60 * 60L)));
     }
 
 
@@ -1618,8 +1626,9 @@ public class SchedV2Test extends RobolectricTest {
         col.getSched().answerCard(c, 2);
         // should be due in ~ 5.5 mins
         double expected = now() + 5.5 * 60;
-        long due = c.getDue();
-        assertTrue((expected - 10 < due) && (due < expected * 1.25));
+        double due = c.getDue();
+        assertThat(expected - 10, is(lessThan(due)));
+        assertThat(due, is(lessThanOrEqualTo(expected * 1.25)));
 
         long ivl = col.getDb().queryLongScalar("select ivl from revlog");
         assertEquals((long) (-5.5 * 60), ivl);

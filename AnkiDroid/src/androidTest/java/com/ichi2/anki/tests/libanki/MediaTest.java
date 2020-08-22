@@ -38,6 +38,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -205,7 +208,7 @@ public class MediaTest {
         path = new File(testCol.getMedia().dir(), testCol.getMedia().addFile(path));
         // should have been logged
         testCol.getMedia().findChanges();
-        assertTrue(added(testCol).size() > 0);
+        assertThat(added(testCol).size(), is(greaterThan(0)));
         assertEquals(0, removed(testCol).size());
         // if we modify it, the cache won't notice
         os = new FileOutputStream(path, true);

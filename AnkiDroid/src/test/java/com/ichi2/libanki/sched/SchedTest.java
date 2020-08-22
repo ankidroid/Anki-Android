@@ -61,7 +61,11 @@ import static com.ichi2.testutils.AnkiAssert.without_unicode_isolation;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.either;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
@@ -213,7 +217,7 @@ public class SchedTest extends RobolectricTest {
         col.getSched().answerCard(c, 1);
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         assertEquals(CARD_TYPE_LRN, c.getType());
-        assertTrue(c.getDue() >= t);
+        assertThat(c.getDue(), is(greaterThanOrEqualTo(t)));
 
         // disabled for now, as the learn fudging makes this randomly fail
         // // the default order should ensure siblings are not seen together, and
@@ -321,7 +325,8 @@ public class SchedTest extends RobolectricTest {
         assertEquals(3, c.getLeft() / 1000);
         // it should be due in 30 seconds
         long t = Math.round(c.getDue() - Utils.now());
-        assertTrue(t >= 25 && t <= 40);
+        assertThat(t, is(greaterThanOrEqualTo(25L)));
+        assertThat(t, is(lessThanOrEqualTo(40L)));
         // pass it once
         col.getSched().answerCard(c, 2);
         // it should be due in 3 minutes
@@ -508,8 +513,8 @@ public class SchedTest extends RobolectricTest {
         assertEquals(1, c.getIvl());
         // but because it's in the learn queue, its current due time should be in
         // the future
-        assertTrue(c.getDue() >= Utils.now());
-        assertTrue((c.getDue() - Utils.now()) > 118);
+        assertThat(c.getDue(), is(greaterThanOrEqualTo(Utils.intTime())));
+        assertThat(c.getDue() - Utils.intTime(), is(greaterThan(118L)));
         // factor should have been decremented
         assertEquals(2300, c.getFactor());
         // check counters
@@ -750,7 +755,7 @@ public class SchedTest extends RobolectricTest {
         col.reset();
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 1);
-        assertTrue(c.getDue() >= Utils.now());
+        assertThat(c.getDue(), is(greaterThanOrEqualTo(Utils.intTime())));
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         assertEquals(CARD_TYPE_REV, c.getType());
         col.getSched().suspendCards(new long[] {c.getId()});
