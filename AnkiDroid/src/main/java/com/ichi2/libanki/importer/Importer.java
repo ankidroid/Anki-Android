@@ -64,7 +64,7 @@ public abstract class Importer {
      */
 
     protected void _prepareTS() {
-        mTs = Utils.maxID(mDst.getDb());
+        mTs = mCol.getTime().maxID(mDst.getDb());
     }
 
 

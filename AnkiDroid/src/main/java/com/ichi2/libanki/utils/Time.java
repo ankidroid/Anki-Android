@@ -16,21 +16,52 @@
 
 package com.ichi2.libanki.utils;
 
+import com.ichi2.libanki.DB;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 /** Allows injection of time dependencies */
-public interface Time {
-    Date getCurrentDate();
+public abstract class Time {
+    public abstract Date getCurrentDate();
     /**The time in integer seconds. */
-    long intTime();
+    public abstract long intTime();
     /**The time in integer seconds. */
-    double now();
+    public abstract double now();
 
-    long intTimeMS();
+    public abstract long intTimeMS();
 
-    Calendar calendar();
+    public Calendar calendar() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getCurrentDate());
+        return cal;
+    }
 
-    GregorianCalendar gregorianCalendar();
+    public GregorianCalendar gregorianCalendar() {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(getCurrentDate());
+        return cal;
+    }
+
+    /** Return a non-conflicting timestamp for table. */
+    public long timestampID(DB db, String table) {
+        // be careful not to create multiple objects without flushing them, or they
+        // may share an ID.
+        long t = intTimeMS();
+        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = ?", t) != 0) {
+            t += 1;
+        }
+        return t;
+    }
+
+
+    /** Return the first safe ID to use. */
+    public long maxID(DB db) {
+        long now = intTimeMS();
+        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
+        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
+        return now + 1;
+    }
+
 }

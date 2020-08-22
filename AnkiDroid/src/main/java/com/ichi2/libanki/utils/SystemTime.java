@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class SystemTime implements Time {
+public class SystemTime extends Time {
     @Override
     public Date getCurrentDate() {
         return new Date();
@@ -54,5 +54,6 @@ public class SystemTime implements Time {
         GregorianCalendar cal = new GregorianCalendar();
         return cal;
     }
+
 
 }

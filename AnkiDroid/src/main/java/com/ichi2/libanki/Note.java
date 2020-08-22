@@ -71,7 +71,7 @@ public class Note implements Cloneable {
             mId = id;
             load();
         } else {
-            mId = Utils.timestampID(mCol.getDb(), "notes");
+            mId = mCol.getTime().timestampID(mCol.getDb(), "notes");
             mGuId = Utils.guid64();
             mModel = model;
             mMid = model.getLong("id");

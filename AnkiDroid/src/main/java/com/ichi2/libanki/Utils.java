@@ -474,26 +474,6 @@ public class Utils {
         return list.toArray(new Long[0]);
     }
 
-    /** Return a non-conflicting timestamp for table. */
-    public static long timestampID(DB db, String table) {
-        // be careful not to create multiple objects without flushing them, or they
-        // may share an ID.
-        long t = intTime(1000);
-        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = ?", t) != 0) {
-            t += 1;
-        }
-        return t;
-    }
-
-
-    /** Return the first safe ID to use. */
-    public static long maxID(DB db) {
-        long now = intTime(1000);
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
-        return now + 1;
-    }
-
 
     // used in ankiweb
     private static String base62(int num, String extra) {
