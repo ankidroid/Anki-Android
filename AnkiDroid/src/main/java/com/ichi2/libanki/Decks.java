@@ -696,7 +696,13 @@ public class Decks {
         Deck deck = get(did, false);
         assert deck != null;
         if (deck.has("conf")) {
-            DeckConfig conf = getConf(deck.getLong("conf"));
+            long confId = deck.getLong("conf");
+            DeckConfig conf = getConf(confId);
+            if (conf == null) {
+                Timber.d("Deck %d has confi id %d which does not exists anymore. Putting back default conf in place.", did, confId);
+                deck.put("conf", 1);
+                conf = getConf(1);
+            }
             conf.put("dyn", 0);
             return conf;
         }
@@ -705,6 +711,7 @@ public class Decks {
     }
 
 
+    @Nullable
     public DeckConfig getConf(long confId) {
         return mDconf.get(confId);
     }
