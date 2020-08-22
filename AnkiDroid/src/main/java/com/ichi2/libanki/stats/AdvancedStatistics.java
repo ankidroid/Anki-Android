@@ -30,6 +30,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -319,9 +320,9 @@ public class AdvancedStatistics {
         ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier, end, chunk);
         TodayStats todayStats = new TodayStats(mCol.getDb().getDatabase(), Settings.getDayStartCutoff((int) mCol.getCrt()));
 
-        long t0 = System.currentTimeMillis();
+        long t0 = Utils.intTime(1000);
         SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
-        long t1 = System.currentTimeMillis();
+        long t1 = Utils.intTime(1000);
 
         Timber.d("Simulation of all decks took: " + (t1 - t0) + " ms");
 
@@ -664,9 +665,9 @@ public class AdvancedStatistics {
 
             singleReviewOutcome = new ReviewOutcome(null, 0);
 
-            long t0 = System.currentTimeMillis();
+            long t0 = Utils.intTime(1000);;
             calculateCumProbabilitiesForNewEasePerCurrentEase();
-            long t1 = System.currentTimeMillis();
+            long t1 = Utils.intTime(1000);;
 
             Timber.d("Calculating probability distributions took: " + (t1 - t0) + " ms");
 
@@ -1082,7 +1083,7 @@ public class AdvancedStatistics {
         public int getToday(int collectionCreatedTime) {
             Timber.d("Collection creation timestamp: " + collectionCreatedTime);
 
-            int currentTime = (int) (System.currentTimeMillis() / 1000);
+            long currentTime = Utils.intTime();
             Timber.d("Now: " + currentTime);
             return (int) ((currentTime - collectionCreatedTime) / SECONDS_PER_DAY);
         }
