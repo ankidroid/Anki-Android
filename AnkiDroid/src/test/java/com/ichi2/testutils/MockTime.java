@@ -76,4 +76,28 @@ public class MockTime extends Time {
         return mTime;
     }
 
+    /** Add ms milisecond*/
+    public void addMs(long ms) {
+        mTime += ms;
+    }
+
+    /** add s seconds */
+    public void addS(long s) {
+        addMs(s * 1000L);
+    }
+
+    /** add m minutes */
+    public void addM(long m) {
+        addS(m * 60);
+    }
+
+    /** add h hours*/
+    public void addH(long h) {
+        addM(h * 60);
+    }
+
+    /** add d days*/
+    public void addD(long d) {
+        addH(d * 24);
+    }
 }
