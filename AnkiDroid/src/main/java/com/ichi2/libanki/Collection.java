@@ -131,7 +131,7 @@ public class Collection {
     private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
 
     // Not in libAnki.
-    private Time mTime;
+    private final Time mTime;
 
     // other options
     public static final String defaultConf = "{"
@@ -170,11 +170,14 @@ public class Collection {
     private static final int UNDO_SIZE_MAX = 20;
 
     public Collection(Context context, DB db, String path, boolean server, boolean log) {
-        this(context, db, path, server, log, new SystemTime());
+        this(context, db, path, server, log, null);
     }
 
     @VisibleForTesting
-    public Collection(Context context, DB db, String path, boolean server, boolean log, Time time) {
+    public Collection(Context context, DB db, String path, boolean server, boolean log, @Nullable Time time) {
+        if (time == null) {
+            time = new SystemTime();
+        }
         mContext = context;
         mDebugLog = log;
         mDb = db;
@@ -2235,11 +2238,5 @@ public class Collection {
     @NonNull
     public Time getTime() {
         return mTime;
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public void setTime(Time time) {
-        mTime = time;
-        _loadScheduler();
     }
 }
