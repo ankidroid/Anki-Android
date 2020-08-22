@@ -28,6 +28,8 @@ import androidx.annotation.Nullable;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
+import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.preferences.PreferenceExtensions;
 import com.ichi2.utils.FileUtil;
 
@@ -101,6 +103,9 @@ public class CollectionHelper {
      * @return instance of the Collection
      */
     public synchronized Collection getCol(Context context) {
+        return getCol(context, null);
+    }
+    public synchronized Collection getCol(Context context, Time time) {
         // Open collection
         if (!colIsOpen()) {
             String path = getCollectionPath(context);
@@ -114,7 +119,7 @@ public class CollectionHelper {
             }
             // Open the database
             Timber.i("Begin openCollection: %s", path);
-            mCollection = Storage.Collection(context, path, false, true);
+            mCollection = Storage.Collection(context, path, false, true, time);
             Timber.i("End openCollection: %s", path);
         }
         return mCollection;

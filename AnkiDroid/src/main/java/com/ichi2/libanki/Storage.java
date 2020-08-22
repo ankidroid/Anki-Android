@@ -21,6 +21,8 @@ import android.content.Context;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 
+import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -43,6 +45,9 @@ public class Storage {
 
 
     public static Collection Collection(Context context, String path, boolean server, boolean log) {
+        return Collection(context, path, server, log, null);
+    }
+    public static Collection Collection(Context context, String path, boolean server, boolean log, Time time) {
         assert path.endsWith(".anki2");
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
@@ -58,7 +63,7 @@ public class Storage {
             }
             db.execute("PRAGMA temp_store = memory");
             // add db to col and do any remaining upgrades
-            Collection col = new Collection(context, db, path, server, log);
+            Collection col = new Collection(context, db, path, server, log, time);
             if (ver < Consts.SCHEMA_VERSION) {
                 _upgrade(col, ver);
             } else if (ver > Consts.SCHEMA_VERSION) {

@@ -173,11 +173,9 @@ public class RobolectricTest {
     * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time.*/
     protected Collection getCol() {
-        Collection col = CollectionHelper.getInstance().getCol(getTargetContext());
         // 2020/08/07, 07:00:00. Normally not near day cutoff.
         MockTime time = new MockTime(1596783600000L, 10);
-        col.setCrt(getDayStart(time)); // 2020/08/04, 00:00:00
-        col.setTime(time);
+        Collection col = CollectionHelper.getInstance().getCol(getTargetContext(), time);
         return col;
     }
 
