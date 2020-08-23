@@ -84,6 +84,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
+
+import net.ankiweb.rsdroid.BackendException;
+import net.ankiweb.rsdroid.BackendFactory;
+import net.ankiweb.rsdroid.BackendUtils;
+
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
 import static com.ichi2.libanki.Consts.DECK_DYN;
@@ -128,6 +133,7 @@ public class Collection {
     private LinkedBlockingDeque<Undoable> mUndo;
 
     private final String mPath;
+    private BackendFactory mBackendFactory;
     private boolean mDebugLog;
     private PrintWriter mLogHnd;
 
@@ -187,12 +193,13 @@ public class Collection {
     private static final int UNDO_SIZE_MAX = 20;
 
     @VisibleForTesting
-    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time) {
+    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time, @Nullable BackendFactory backendFactory) {
         mContext = context;
         mDebugLog = log;
         mDb = db;
         mPath = path;
         mTime = time;
+        mBackendFactory = backendFactory;
         _openLog();
         log(path, VersionUtils.getPkgVersionName());
         mServer = server;
@@ -469,7 +476,7 @@ public class Collection {
     public void reopen() {
         Timber.i("Reopening Database");
         if (mDb == null) {
-            mDb = new DB(mPath);
+            mDb = new DB(mPath, mBackendFactory);
             mMedia.connect();
             _openLog();
         }

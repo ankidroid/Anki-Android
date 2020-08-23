@@ -19,14 +19,19 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+
+import net.ankiweb.rsdroid.BackendFactory;
+import net.ankiweb.rsdroid.BackendV1;
+import net.ankiweb.rsdroid.RustBackendFailedException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,6 +46,9 @@ import static com.ichi2.libanki.Consts.DECK_STD;
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
 public class Storage {
+
+    private static boolean sUseBackend = true;
+
 
     /* Open a new or existing collection. Path must be unicode */
     public static Collection Collection(Context context, String path) {
@@ -65,8 +73,31 @@ public class Storage {
         assert path.endsWith(".anki2");
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
+        BackendFactory backendFactory = null;
         // connect
-        DB db = new DB(path);
+        BackendV1 instance;
+
+        // This isn't ideal - as opening the collection performs some creation operations, but we need it before new DB()
+        // TODO: Delete the DB if creating and operations fail - as the col data won't be correct.
+        // but: not if the database already existed
+        DB db = null;
+        try {
+            backendFactory = BackendFactory.createInstance();
+            // Note: This will partially create the database
+            Timber.i("backend: open collection %s", path);
+            db = new DB(path, backendFactory);
+        } catch (RustBackendFailedException e) {
+            Timber.e("Loading Rust Backend failed - falling back to Java");
+            AnkiDroidApp.sendExceptionReport(e, "Storage::Collection");
+        }
+
+        if (db == null) {
+            backendFactory = null;
+            Timber.i("backend: skipping open collection");
+            db = new DB(path);
+        }
+
+
         try {
             // initialize
             int ver;
@@ -77,7 +108,7 @@ public class Storage {
             }
             db.execute("PRAGMA temp_store = memory");
             // add db to col and do any remaining upgrades
-            Collection col = new Collection(context, db, path, server, log, time);
+            Collection col = new Collection(context, db, path, server, log, time, backendFactory);
             if (ver < Consts.SCHEMA_VERSION) {
                 _upgrade(col, ver);
             } else if (ver > Consts.SCHEMA_VERSION) {
@@ -95,6 +126,14 @@ public class Storage {
             db.close();
             throw e;
         }
+    }
+
+    /**
+     * Whether the collection should try to be opened with a Rust-based DB Backend
+     * Falls back to Java if init fails.
+     * */
+    protected static boolean useBackend() {
+        return sUseBackend;
     }
 
 
@@ -276,11 +315,18 @@ public class Storage {
 
 
     private static int _createDB(DB db, @NonNull Time time) {
-        db.execute("PRAGMA page_size = 4096");
-        db.execute("PRAGMA legacy_file_format = 0");
-        db.execute("VACUUM");
-        _addSchema(db, time);
-        _updateIndices(db);
+        if (useBackend()) {
+            _setColVars(db, time);
+            // This line is required for testing - otherwise Rust will override a mocked time.
+            db.execute("update col set crt = ?", UIUtils.getDayStart(time) / 1000);
+        } else {
+            db.execute("PRAGMA page_size = 4096");
+            db.execute("PRAGMA legacy_file_format = 0");
+            db.execute("VACUUM");
+            _addSchema(db, time);
+            _updateIndices(db);
+        }
+
         db.execute("ANALYZE");
         return Consts.SCHEMA_VERSION;
     }
@@ -366,4 +412,8 @@ public class Storage {
         _updateIndices(db);
     }
 
+
+    public static void setUseBackend(boolean useBackend) {
+        sUseBackend = useBackend;
+    }
 }
