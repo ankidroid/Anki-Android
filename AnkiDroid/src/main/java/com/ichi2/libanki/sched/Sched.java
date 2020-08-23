@@ -287,7 +287,7 @@ public class Sched extends SchedV2 {
 
     protected CardQueue<? extends Card.Cache>[] _fillNextCard() {
         // learning card due?
-        if (_fillLrn()) {
+        if (_preloadLrnCard(false)) {
             return new CardQueue[]{mLrnQueue};
         }
         // new first, or time for one?
