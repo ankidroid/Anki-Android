@@ -66,6 +66,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -2308,77 +2309,42 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return;
         }
 
-        boolean isEmpty = false;
+        // Check if default deck is the only available and there are no cards
+        boolean isEmpty = mDueTree.size() == 1 && mDueTree.get(0).getDid() == 1 && getCol().cardCount() == 0;
 
-        // Check if default deck is the only available
-        if (mDueTree.size() == 1 && mDueTree.get(0).getDid() == 1) {
-            DeckDueTreeNode node = mDueTree.get(0);
+        SharedPreferences prefs = getSharedPreferences("com.ichi2.anki_preferences", MODE_PRIVATE);
+        boolean safeDisplay = prefs.getBoolean("safeDisplay", false);
 
-            // Check if it's empty
-            isEmpty = node.getNewCount() + node.getLrnCount() + node.getRevCount() == 0;
-        }
+        if (safeDisplay) {
+            mDeckPickerContent.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+            mNoDecksPlaceholder.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
 
-        float translation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8,
-                getResources().getDisplayMetrics());
-
-        boolean decksListShown = mDeckPickerContent.getVisibility() == View.VISIBLE;
-        boolean placeholderShown = mNoDecksPlaceholder.getVisibility() == View.VISIBLE;
-
-        if (isEmpty) {
-            if (decksListShown) {
-                mDeckPickerContent.setAlpha(1);
-                mDeckPickerContent.setTranslationY(0);
-                mDeckPickerContent.animate()
-                        .alpha(0)
-                        .translationY(translation)
-                        .setDuration(mShortAnimDuration)
-                        .setStartDelay(0)
-                        .withStartAction(null)
-                        .withEndAction(() -> {
-                            mDeckPickerContent.setVisibility(View.GONE);
-                        });
-            }
-
-            if (!placeholderShown) {
-                mNoDecksPlaceholder.setAlpha(0);
-                mNoDecksPlaceholder.setTranslationY(translation);
-                mNoDecksPlaceholder.animate()
-                        .alpha(1)
-                        .translationY(0)
-                        .setDuration(mShortAnimDuration)
-                        .setStartDelay(decksListShown ? mShortAnimDuration * 2 : 0)
-                        .withStartAction(() -> {
-                            mNoDecksPlaceholder.setVisibility(View.VISIBLE);
-                        })
-                        .withEndAction(null);
-            }
         } else {
-            if (!decksListShown) {
-                mDeckPickerContent.setAlpha(0);
-                mDeckPickerContent.setTranslationY(translation);
-                mDeckPickerContent.animate()
-                        .alpha(1)
-                        .translationY(0)
-                        .setDuration(mShortAnimDuration)
-                        .setStartDelay(placeholderShown ? mShortAnimDuration * 2 : 0)
-                        .withStartAction(() -> {
-                            mDeckPickerContent.setVisibility(View.VISIBLE);
-                        })
-                        .withEndAction(null);
-            }
+            float translation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8,
+                    getResources().getDisplayMetrics());
 
-            if (placeholderShown) {
-                mNoDecksPlaceholder.setAlpha(1);
-                mNoDecksPlaceholder.setTranslationY(0);
-                mNoDecksPlaceholder.animate()
-                        .alpha(0)
-                        .translationY(translation)
-                        .setDuration(mShortAnimDuration)
-                        .setStartDelay(0)
-                        .withStartAction(null)
-                        .withEndAction(() -> {
-                            mNoDecksPlaceholder.setVisibility(View.GONE);
-                        });
+            boolean decksListShown = mDeckPickerContent.getVisibility() == View.VISIBLE;
+            boolean placeholderShown = mNoDecksPlaceholder.getVisibility() == View.VISIBLE;
+
+            if (isEmpty) {
+                if (decksListShown) {
+                    fadeOut(mDeckPickerContent, mShortAnimDuration, translation);
+                }
+
+                if (!placeholderShown) {
+                    fadeIn(mNoDecksPlaceholder, mShortAnimDuration, translation)
+                            // This is some bad choreographing here
+                            .setStartDelay(decksListShown ? mShortAnimDuration * 2 : 0);
+                }
+            } else {
+                if (!decksListShown) {
+                    fadeIn(mDeckPickerContent, mShortAnimDuration, translation)
+                            .setStartDelay(placeholderShown ? mShortAnimDuration * 2 : 0);
+                }
+
+                if (placeholderShown) {
+                    fadeOut(mNoDecksPlaceholder, mShortAnimDuration, translation);
+                }
             }
         }
 
@@ -2415,6 +2381,40 @@ public class DeckPicker extends NavigationDrawerActivity implements
             scrollDecklistToDeck(current);
             mFocusedDeck = current;
         }
+    }
+
+    // Animation utility methods used by __renderPage() method
+
+    public static ViewPropertyAnimator fadeIn(View view, int duration) {
+        return fadeIn(view, duration, 0);
+    }
+
+    public static ViewPropertyAnimator fadeIn(View view, int duration, float translation) {
+        view.setAlpha(0);
+        view.setTranslationY(translation);
+        return view.animate()
+                .alpha(1)
+                .translationY(0)
+                .setDuration(duration)
+                .withStartAction(() -> {
+                    view.setVisibility(View.VISIBLE);
+                });
+    }
+
+    public static ViewPropertyAnimator fadeOut(View view, int duration) {
+        return fadeOut(view, duration, 0);
+    }
+
+    public static ViewPropertyAnimator fadeOut(View view, int duration, float translation) {
+        view.setAlpha(1);
+        view.setTranslationY(0);
+        return view.animate()
+                .alpha(0)
+                .translationY(translation)
+                .setDuration(duration)
+                .withEndAction(() -> {
+                    view.setVisibility(View.GONE);
+                });
     }
 
 
