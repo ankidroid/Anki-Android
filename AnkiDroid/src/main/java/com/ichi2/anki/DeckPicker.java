@@ -60,14 +60,18 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -173,6 +177,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private static final int SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400;
 
+    // Short animation duration from system
+    private int mShortAnimDuration;
+
+    private RelativeLayout mDeckPickerContent;
+
     private MaterialDialog mProgressDialog;
     private View mStudyoptionsFrame;
     private RecyclerView mRecyclerView;
@@ -180,6 +189,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private DeckAdapter mDeckListAdapter;
     private FloatingActionsMenu mActionsMenu;
     private Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
+
+    private LinearLayout mNoDecksPlaceholder;
 
     private SwipeRefreshLayout mPullToSyncWrapper;
 
@@ -428,7 +439,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         initNavigationDrawer(mainView);
         setTitle(getResources().getString(R.string.app_name));
 
+        mDeckPickerContent = findViewById(R.id.deck_picker_content);
         mRecyclerView = findViewById(R.id.files);
+        mNoDecksPlaceholder = findViewById(R.id.no_decks_placeholder);
+
+        mDeckPickerContent.setVisibility(View.GONE);
+        mNoDecksPlaceholder.setVisibility(View.GONE);
 
         // specify a LinearLayoutManager and set up item dividers for the RecyclerView
         mRecyclerViewLayoutManager = new LinearLayoutManager(this);
@@ -500,6 +516,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 }
             }
         }
+
+        mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
     // throws doesn't seem to be checked by the compiler - consider it to be documentation
@@ -2290,6 +2308,54 @@ public class DeckPicker extends NavigationDrawerActivity implements
             updateDeckList();
             return;
         }
+
+        // Check if default deck is the only available and there are no cards
+        boolean isEmpty = mDueTree.size() == 1 && mDueTree.get(0).getDid() == 1 && getCol().isEmpty();
+
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(getBaseContext());
+        boolean safeDisplay = prefs.getBoolean("safeDisplay", false);
+
+        if (safeDisplay) {
+            mDeckPickerContent.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+            mNoDecksPlaceholder.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+
+        } else {
+            float translation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8,
+                    getResources().getDisplayMetrics());
+
+            boolean decksListShown = mDeckPickerContent.getVisibility() == View.VISIBLE;
+            boolean placeholderShown = mNoDecksPlaceholder.getVisibility() == View.VISIBLE;
+
+            if (isEmpty) {
+                if (decksListShown) {
+                    fadeOut(mDeckPickerContent, mShortAnimDuration, translation);
+                }
+
+                if (!placeholderShown) {
+                    fadeIn(mNoDecksPlaceholder, mShortAnimDuration, translation)
+                            // This is some bad choreographing here
+                            .setStartDelay(decksListShown ? mShortAnimDuration * 2 : 0);
+                }
+            } else {
+                if (!decksListShown) {
+                    fadeIn(mDeckPickerContent, mShortAnimDuration, translation)
+                            .setStartDelay(placeholderShown ? mShortAnimDuration * 2 : 0);
+                }
+
+                if (placeholderShown) {
+                    fadeOut(mNoDecksPlaceholder, mShortAnimDuration, translation);
+                }
+            }
+        }
+
+        if (isEmpty) {
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setSubtitle(null);
+            }
+            // We're done here
+            return;
+        }
+
         mDeckListAdapter.buildDeckList(mDueTree, getCol());
 
         // Set the "x due in y minutes" subtitle
@@ -2315,6 +2381,40 @@ public class DeckPicker extends NavigationDrawerActivity implements
             scrollDecklistToDeck(current);
             mFocusedDeck = current;
         }
+    }
+
+    // Animation utility methods used by __renderPage() method
+
+    public static ViewPropertyAnimator fadeIn(View view, int duration) {
+        return fadeIn(view, duration, 0);
+    }
+
+    public static ViewPropertyAnimator fadeIn(View view, int duration, float translation) {
+        view.setAlpha(0);
+        view.setTranslationY(translation);
+        return view.animate()
+                .alpha(1)
+                .translationY(0)
+                .setDuration(duration)
+                .withStartAction(() -> {
+                    view.setVisibility(View.VISIBLE);
+                });
+    }
+
+    public static ViewPropertyAnimator fadeOut(View view, int duration) {
+        return fadeOut(view, duration, 0);
+    }
+
+    public static ViewPropertyAnimator fadeOut(View view, int duration, float translation) {
+        view.setAlpha(1);
+        view.setTranslationY(0);
+        return view.animate()
+                .alpha(0)
+                .translationY(translation)
+                .setDuration(duration)
+                .withEndAction(() -> {
+                    view.setVisibility(View.GONE);
+                });
     }
 
 
