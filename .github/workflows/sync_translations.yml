@@ -21,8 +21,9 @@ jobs:
 
       - name: GIT Setup
         run: |
-          git config --global user.name 'AnkiDroid Releases'
+          git config --global user.name 'AnkiDroid Translations'
           git config --global user.email 'ankidroid@ankidroid.org'
+          git co -b i18n_sync
         shell: bash
 
       - name: Credential Prep
@@ -40,3 +41,4 @@ jobs:
         run: |
           ./tools/update-localizations.py
           git push
+          echo "The results of the sync are on the i18n_sync branch, PR them from there for merge."
