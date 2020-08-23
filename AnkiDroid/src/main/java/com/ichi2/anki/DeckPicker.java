@@ -229,8 +229,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /** If we have accepted the "We will show you permissions" dialog, don't show it again on activity rebirth */
     private boolean mClosedWelcomeMessage;
 
-    private Time mTime = new SystemTime();
-
     // ----------------------------------------------------------------------------
     // LISTENERS
     // ----------------------------------------------------------------------------
@@ -1999,7 +1997,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         File exportDir = new File(getExternalCacheDir(), "export");
         exportDir.mkdirs();
         File exportPath;
-        String timeStampSuffix = "-" + TimeUtils.getTimestamp(mTime);
+        String timeStampSuffix = "-" + TimeUtils.getTimestamp(getCol().getTime());
         if (filename != null) {
             // filename has been explicitly specified
             exportPath = new File(exportDir, filename);

@@ -59,6 +59,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
@@ -95,9 +96,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private @Nullable String mAnkiCacheDirectory; // system provided 'External Cache Dir' with "temp-photos" on it
                                                   // e.g.  '/self/primary/Android/data/com.ichi2.anki.AnkiDroid/cache/temp-photos'
     private DisplayMetrics mMetrics = null;
-    private SystemTime mTime = new SystemTime();
+    private final Time mTime;
 
     private Button mCropButton = null;
+
+    public BasicImageFieldController(Time time) {
+        super();
+        mTime = time;
+    }
 
     private int getMaxImageSize() {
         DisplayMetrics metrics = getDisplayMetrics();
