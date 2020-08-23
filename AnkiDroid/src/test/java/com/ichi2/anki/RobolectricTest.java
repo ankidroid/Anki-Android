@@ -36,12 +36,15 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.JSONException;
+
+import net.ankiweb.rsdroid.testing.RustBackendLoader;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -86,11 +89,16 @@ public class RobolectricTest {
 
     @Before
     public void setUp() {
+
+        RustBackendLoader.init();
+
         // If you want to see the Android logging (from Timber), you need to set it up here
         ShadowLog.stream = System.out;
 
         // Robolectric can't handle our default sqlite implementation of requery, it needs the framework
         DB.setSqliteOpenHelperFactory(getHelperFactory());
+        // But, don't use the helper unless useLegacyHelper is true
+        Storage.setUseBackend(!useLegacyHelper());
 
         //Reset static variable for custom tabs failure.
         CustomTabActivityHelper.resetFailed();
@@ -100,6 +108,11 @@ public class RobolectricTest {
 
         // BUG: We do not reset the MetaDB
         MetaDB.closeDB();
+    }
+
+
+    protected boolean useLegacyHelper() {
+        return false;
     }
 
 
