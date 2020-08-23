@@ -23,6 +23,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class SystemTime extends Time {
+
+    public SystemTime() {
+    }
+
+
     @Override
     public long intTimeMS() {
         return System.currentTimeMillis();
