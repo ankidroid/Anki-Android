@@ -339,7 +339,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 Timber.i("Reviewer:: Save whiteboard button pressed");
                 if (mWhiteboard != null) {
                     try {
-                        String savedWhiteboardFileName = mWhiteboard.saveWhiteboard();
+                        String savedWhiteboardFileName = mWhiteboard.saveWhiteboard(getCol().getTime());
                         UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true);
                     } catch (Exception e) {
                         UIUtils.showThemedToast(Reviewer.this, getString(R.string.white_board_image_save_failed, e.getLocalizedMessage()), true);

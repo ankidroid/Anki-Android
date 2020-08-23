@@ -47,6 +47,7 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.IFieldController;
 import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Permissions;
 
 import java.io.File;
@@ -176,7 +177,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return;
         }
 
-        IControllerFactory controllerFactory = BasicControllerFactory.getInstance();
+        IControllerFactory controllerFactory = BasicControllerFactory.getInstance(getCol().getTime());
 
         IFieldController fieldController = controllerFactory.createControllerForField(newUI.getField());
 

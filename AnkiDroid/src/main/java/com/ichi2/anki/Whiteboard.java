@@ -38,6 +38,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 
 import java.io.File;
@@ -77,7 +78,6 @@ public class Whiteboard extends View {
     private boolean mUndoModeActive = false;
     private final int foregroundColor;
     private final LinearLayout mColorPalette;
-    private SystemTime mTime = new SystemTime();
 
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
@@ -489,7 +489,7 @@ public class Whiteboard extends View {
         return mCurrentlyDrawing;
     }
 
-    protected String saveWhiteboard() throws FileNotFoundException {
+    protected String saveWhiteboard(Time time) throws FileNotFoundException {
 
         Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
@@ -502,7 +502,7 @@ public class Whiteboard extends View {
         }
 
         String baseFileName = "Whiteboard";
-        String timeStamp = TimeUtils.getTimestamp(mTime);
+        String timeStamp = TimeUtils.getTimestamp(time);
         String finalFileName = baseFileName + timeStamp + ".png";
 
         File saveWhiteboardImagFile = new File(ankiDroidFolder, finalFileName);
