@@ -175,7 +175,7 @@
     <string name="sched_ver_2to1">Cela réinitialisera les cartes en apprentissage, effacera les paquets de cartes filtrés et modifiera la version du planificateur. Continuer ?</string>
     <string name="sched_ver_1to2">Le planificateur expérimental pourrait causer une planification incorrecte. Veuillez vous assurer d\'avoir lu la documentation au préalable. Continuer ?</string>
     <string name="pref_keep_screen_on">Garder l’écran allumé</string>
-    <string name="pref_keep_screen_on_summ">Désactiver l’extinction aromatique de l’écran</string>
+    <string name="pref_keep_screen_on_summ">Désactiver l’extinction automatique de l’écran</string>
     <string name="convert_fen_text">Support de la notation algébrique (échecs)</string>
     <string name="convert_fen_text_summ">Échiquier avec la notation Forsyth-Edwards Notation. La notation doit être placée entre des balises [fen][/fen].</string>
     <string name="enable_api_title">Activer l\'API AnkiDroid</string>

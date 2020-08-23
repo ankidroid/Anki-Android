@@ -79,6 +79,8 @@
         <item quantity="many">%d dní %d zostáva</item>
         <item quantity="other">%d dní %d zostáva</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Dnes naučená %1$d kartička počas %2$s</item>

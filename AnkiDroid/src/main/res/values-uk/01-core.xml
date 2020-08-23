@@ -79,6 +79,8 @@
         <item quantity="many">залишилося %d діб %d</item>
         <item quantity="other">залишилося %d доби %d</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Сьогодні вивчена %1$d карта за %2$s</item>
@@ -176,7 +178,7 @@
     <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
     <string name="studyoptions_congrats_more_rev">Досягнуто добового обмеження повторювань, але залишилися картки на перегляд. Ви можете збільшити щоденне обмеження у налаштуваннях.</string>
     <string name="studyoptions_congrats_more_new">Досягнуто добового обмеження повторювань. Ви можете збільшити обмеження в налаштуваннях. Це короткочасно збільшить навантаження.</string>
-    <string name="studyoptions_congrats_custom">Для додаткового навчання натисніть кнопку «Персоналізація навчання»</string>
+    <string name="studyoptions_congrats_custom">Для додаткового навчання натисніть кнопку «Додаткове навчання»</string>
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
     <string name="empty_cloze_warning">Будь ласка, змініть цей запис та додайте пропуски. (%1$s)</string>

@@ -68,6 +68,8 @@
     <plurals name="reviewer_window_title_days">
         <item quantity="other">เหลืออีก %d day %d </item>
     </plurals>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">วันนี้เรียนไป %1$d การ์ดภายใน %2$s </item>
