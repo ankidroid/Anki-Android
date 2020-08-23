@@ -130,7 +130,7 @@ There is a new way to publish, using GitHub Actions
 
 ### Publishing new versions
 
-Note: This is for alpha only right now, and probably won't work with the new branch protections until the workflow is updated
+Note: This is for alpha only right now. It will be extended for the betas as a next step
 
 1. Run the [Publish](https://github.com/ankidroid/Anki-Android/actions?query=workflow%3APublish) Action
   - Open that action
