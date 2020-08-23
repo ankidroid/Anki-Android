@@ -40,5 +40,5 @@ jobs:
       - name: Pull translation updates from crowdin
         run: |
           ./tools/update-localizations.py
-          git push
+          git push --set-upstream origin i18n_sync
           echo "The results of the sync are on the i18n_sync branch, PR them from there for merge."
