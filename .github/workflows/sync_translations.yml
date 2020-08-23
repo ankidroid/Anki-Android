@@ -19,11 +19,6 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pycurl
-
       - name: GIT Setup
         run: |
           git config --global user.name 'AnkiDroid Releases'
@@ -39,7 +34,7 @@ jobs:
         shell: bash
 
       - name: Push translation sources to crowdin
-        run: ./tools/manage-crowdin.py
+        run: ./tools/manage-crowdin.sh
 
       - name: Pull translation updates from crowdin
         run: ./tools/update-localizations.py
