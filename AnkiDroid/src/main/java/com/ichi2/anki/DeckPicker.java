@@ -2312,7 +2312,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Check if default deck is the only available and there are no cards
         boolean isEmpty = mDueTree.size() == 1 && mDueTree.get(0).getDid() == 1 && getCol().isEmpty();
 
-        SharedPreferences prefs = getSharedPreferences("com.ichi2.anki_preferences", MODE_PRIVATE);
+        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(getBaseContext());
         boolean safeDisplay = prefs.getBoolean("safeDisplay", false);
 
         if (safeDisplay) {
