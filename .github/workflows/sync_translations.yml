@@ -34,7 +34,7 @@ jobs:
         shell: bash
 
       - name: Push translation sources to crowdin
-        run: ./tools/manage_crowdin.py
+        run: ./tools/manage-crowdin.py
 
       - name: Pull translation updates from crowdin
-        run: ./tools/update_localizations.py
+        run: ./tools/update-localizations.py
