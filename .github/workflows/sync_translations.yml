@@ -24,6 +24,7 @@ jobs:
           git config --global user.name 'AnkiDroid Translations'
           git config --global user.email 'ankidroid@ankidroid.org'
           git checkout -b i18n_sync
+          git reset --hard origin/master
         shell: bash
 
       - name: Credential Prep
@@ -40,6 +41,6 @@ jobs:
       - name: Pull translation updates from crowdin
         run: |
           ./tools/update-localizations.py
-          git push --set-upstream origin i18n_sync
+          git push --set-upstream origin +i18n_sync
           echo "The results of the sync are on the i18n_sync branch, PR them from there for merge."
           echo "https://github.com/ankidroid/Anki-Android/compare/i18n_sync?expand=1"
