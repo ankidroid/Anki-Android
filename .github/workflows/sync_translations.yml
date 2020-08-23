@@ -1,0 +1,40 @@
+name: Sync Translations
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync_translations:
+    name: 'Sync Translations with Crowdin'
+    timeout-minutes: 20
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'master'
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: GIT Setup
+        run: |
+          git config --global user.name 'AnkiDroid Releases'
+          git config --global user.email 'ankidroid@ankidroid.org'
+        shell: bash
+
+      - name: Credential Prep
+        run: |
+          mkdir ~/src
+          echo "${{ secrets.CROWDIN_API_KEY }}" | base64 -d > ~/src/crowdin_key.txt.gz
+          cd ~/src
+          gunzip *gz
+        shell: bash
+
+      - name: Push translation sources to crowdin
+        run: ./tools/manage_translations.py
+
+      - name: Pull translation updates from crowdin
+        run: ./tools/update_localizations.py
