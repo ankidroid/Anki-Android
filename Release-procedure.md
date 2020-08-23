@@ -114,3 +114,28 @@ This is a partially manual process, but Amazon has begun accepting our builds ag
 You need to be part of Nicolas Raoul's Amazon Developer organization (he can send you an invite, currently Mike Hardy is a member) and with that you authority you may create new releases and submit them for review / distribution. You will also need the Amazon App Store publishing credential JSON (similar to the Google Publishing JSON needed for the Play Store)
 
 After running the release script, for public releases only, there should be a new release present on the Amazon App Store in unpublished state: https://developer.amazon.com/apps-and-games/console/apps/list.html - fill in the description for the release, and submit it for review
+
+## GitHub Automated Workflow
+
+There is a new way to publish, using GitHub Actions
+
+### Crowdin / translations sync
+
+1. Run the [Sync Translations](https://github.com/ankidroid/Anki-Android/actions?query=workflow%3A%22Sync+Translations%22) Action
+  - open that action
+  - find the button on the right labeled "Run Workflow"
+  - Run the workflow against the master branch
+1. Make a PR for the resulting changes - https://github.com/ankidroid/Anki-Android/compare/i18n_sync?expand=1
+1. Have someone review and approve the PR and merge it to master
+
+### Publishing new versions
+
+Note: This is for alpha only right now, and probably won't work with the new branch protections until the workflow is updated
+
+1. Run the [Publish](https://github.com/ankidroid/Anki-Android/actions?query=workflow%3APublish) Action
+  - Open that action
+  - Find the button on the right labeled "Run Workflow"
+  - Run the workflow against the master branch for alphas, or the correct release branch for betas/public releases
+1. For public releases
+  - make sure changelog.asc in ankidroiddocs has an entry for the new version on it's master branch or the release script will abort
+  - go to the various stores (Google Play Store, Amazon App Store, Huawei AppGallery) and submit the new build for release
