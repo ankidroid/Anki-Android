@@ -113,7 +113,7 @@
     <string name="note_editor_no_cards_created">Картки не створено. Будь ласка, заповність більше полів</string>
     <string name="note_editor_no_first_field">Перше поле пусте</string>
     <string name="note_editor_no_cloze_delations">Цей тип примітки повинен містити видалення</string>
-    <string name="note_editor_set_field_language">Set field language</string>
+    <string name="note_editor_set_field_language">Встановити мову поля</string>
     <string name="note_editor_no_cards_created_all_fields">Від поточного типу запису нема жодної картки. \nБудь ласка, оберіть інший тип запису чи натисніть «картки», додати поле підміни</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Завдання з пропусками працюватиме лише у типі запису з завданнями з пропуском</string>
     <string name="saving_facts">Зберегти запис</string>
@@ -211,7 +211,7 @@
     <string name="upgrade_import_no_file_found">Ввізного файлу %1$s не знайдено</string>
     <string name="study_options">Налаштування</string>
     <string name="select_tts">Обрати TTS мову</string>
-    <string name="custom_study">Додатковий трейнінг</string>
+    <string name="custom_study">Додаткове навчання</string>
     <string name="more_options">Ще</string>
     <string name="dyn_deck_desc">Це спеціальна колекція для навчання поза межами нормального розкладу. Картки будуть автоматично повернуті до їх початкових колекцій після повторення. Видалення цієї колекції з списку поврне всі карточки до початкових колекцій.</string>
     <string name="steps_error">Дії повинні бути числами, більшими за 0</string>
@@ -329,7 +329,7 @@
         <item quantity="other">%d записів не змінено</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="api_version_developer_contact">Ця картка використовує непідтримувані функції AnkiDroid. Зверніться до розробника %1$s, або перегляньте вікі. %2$s</string>
     <string name="invalid_json_data">Картці надано некоректні дані. %s</string>
     <string name="valid_js_api_version">Неправильна версія API AnkiDroid JS. Зверніться до розробника %s або перегляньте вікі</string>
     <string name="update_js_api_version">Доступне оновлення JS API. Зверніться до розробника %s або перегляньте вікі</string>

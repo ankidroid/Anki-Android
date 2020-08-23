@@ -121,7 +121,7 @@
     <string name="custom_study_random">Вибрати х випадкових карт з колоди:</string>
     <string name="custom_study_preview">Повторити нові карти додані за останні х днів:</string>
     <string name="custom_study_rebuild_deck_corrupt">Не вдалося перебудувати колоду додаткового навчання</string>
-    <string name="rebuild_custom_study_deck">Перестворення додаткової колоди.\nБудь-ласка, зачекайте&#8230;</string>
+    <string name="rebuild_custom_study_deck">Перестворення колоди додаткового навчання.\nБудь-ласка, зачекайте&#8230;</string>
     <string name="importing_collection">Завантаження колекції. \nБудь ласка, зачекайте&#8230;</string>
     <string name="import_media_count">Завантаження медіа файлів %1$d%%\nБудь ласка, зачекайте&#8230;</string>
     <string name="import_progress">• Імпортування записів: %1$d%%\n• Імпортування карток: %2$d%%\n• Обробка: %3$d%%</string>
@@ -215,8 +215,8 @@
     <string name="boot_service_failed_to_schedule_notifications">Не вдалося запланувати нагадування</string>
     <string name="boot_service_too_many_notifications">Забагато нагадувань заплановано. Деякі не з’являться</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title">Вибір натяку клавіатури</string>
+    <string name="locale_selection_dialog_summary">Деякі багатомовні клавіатури, наприклад, GBoard підтримує зміну мови під час редагування тексту\n\nБудь ласка, запитайте функцію \"setImeHintLocals\" у виробника клавіатури, якщо ваша клавіатура не змінює мову.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Автоматична синхронізація може запуститися через %d секунду.</item>
