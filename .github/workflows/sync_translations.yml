@@ -23,7 +23,7 @@ jobs:
         run: |
           git config --global user.name 'AnkiDroid Translations'
           git config --global user.email 'ankidroid@ankidroid.org'
-          git co -b i18n_sync
+          git checkout -b i18n_sync
         shell: bash
 
       - name: Credential Prep
