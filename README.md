@@ -31,7 +31,7 @@
 
 </div>
 
-Downloads
+Install
 ---------
 <div style="display:flex;" >
 
