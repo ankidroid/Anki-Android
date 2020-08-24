@@ -16,7 +16,7 @@
 <img src="docs/graphics/logos/ankidroid_logo.png" align="left" width="43%" height="100%">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img>
 
 <div style="display:flex;">
-
+    
 - night mode
 - whiteboard 
 - progress widget
@@ -31,9 +31,11 @@
 
 </div>
 
+<br/>
+
 Install
 ---------
-<div style="display:flex;" >
+<div style="display:flex;">
 
 <a href="https://play.google.com/store/apps/details?id=com.ichi2.anki&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
     <img alt="Get it on Google Play" height="80"
