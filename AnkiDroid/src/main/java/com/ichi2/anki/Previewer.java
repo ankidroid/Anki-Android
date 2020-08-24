@@ -18,12 +18,23 @@
 
 package com.ichi2.anki;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
 
+import androidx.core.content.res.ResourcesCompat;
 import timber.log.Timber;
 
 /**
@@ -35,13 +46,16 @@ public class Previewer extends AbstractFlashcardViewer {
     private long[] mCardList;
     private int mIndex;
     private boolean mShowingAnswer;
+    private float mAnimTranslation;
+
+    // Buttons state for animation handling
+    private boolean mPrevBtnShown = false;
+    private boolean mNextBtnShown = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
-
-        mDisableAnimations = true;
 
         mCardList = getIntent().getLongArrayExtra("cardList");
         mIndex = getIntent().getIntExtra("index", -1);
@@ -60,18 +74,21 @@ public class Previewer extends AbstractFlashcardViewer {
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
         startLoadingCollection();
+
+        mAnimTranslation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8,
+                getResources().getDisplayMetrics());
     }
 
     @Override
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         mCurrentCard = col.getCard(mCardList[mIndex]);
-        if (mShowingAnswer){
-            displayCardQuestion();
+
+        displayCardQuestion();
+        if (mShowingAnswer) {
             displayCardAnswer();
-        } else {
-            displayCardQuestion();
         }
+
         showBackIcon();
     }
 
@@ -86,6 +103,14 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void initLayout() {
         super.initLayout();
         mTopBarLayout.setVisibility(View.GONE);
+
+        findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
+        mPreviewButtonsLayout.setVisibility(View.VISIBLE);
+
+        mPreviewToggleAnswer.setOnClickListener(mToggleAnswerHandler);
+
+        mPreviewPrevCard.setOnClickListener(mSelectScrollHandler);
+        mPreviewNextCard.setOnClickListener(mSelectScrollHandler);
     }
 
 
@@ -115,6 +140,41 @@ public class Previewer extends AbstractFlashcardViewer {
     }
 
 
+    @Override
+    protected void hideEaseButtons() {
+        final int[] textColor = Themes.getColorFromAttr(this, new int[] {R.attr.largeButtonTextColor});
+
+        setRippleBackground(this, mPreviewToggleAnswer, R.drawable.preview_flashcard_show_answer_background);
+        mPreviewToggleAnswer.setText(R.string.show_answer);
+        mPreviewToggleAnswer.setTextColor(textColor[0]);
+    }
+
+
+    @Override
+    protected void displayAnswerBottomBar() {
+        final int[] textColor = Themes.getColorFromAttr(this, new int[] {R.attr.largeButtonSecondaryTextColor});
+
+        setRippleBackground(this, mPreviewToggleAnswer, R.drawable.preview_flashcard_hide_answer_background);
+        mPreviewToggleAnswer.setText(R.string.hide_answer);
+        mPreviewToggleAnswer.setTextColor(textColor[0]);
+    }
+
+    public static void setRippleBackground(Context context, View view, int resId) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            RippleDrawable from = (RippleDrawable) view.getBackground().mutate();
+            RippleDrawable to =
+                    (RippleDrawable) ResourcesCompat.getDrawable(context.getResources(), resId, context.getTheme());
+
+            if (to != null) {
+                Drawable underlyingBackground = to.findDrawableByLayerId(R.id.underlying_background);
+                from.setDrawableByLayerId(R.id.underlying_background, underlyingBackground);
+            }
+        } else {
+            view.setBackgroundResource(resId);
+        }
+    }
+
+
     // we don't want the Activity title to be changed.
     @Override
     protected void updateScreenCounts() { /* do nothing */ }
@@ -129,21 +189,23 @@ public class Previewer extends AbstractFlashcardViewer {
     private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if (view.getId() == R.id.preview_previous_flashcard) {
+                mIndex--;
+            } else if (view.getId() == R.id.preview_next_flashcard) {
+                mIndex++;
+            }
+
+            mCurrentCard = getCol().getCard(mCardList[mIndex]);
+            displayCardQuestion();
+        }
+    };
+
+    private View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
             if (mShowingAnswer) {
-                // If we are showing the answer, any click will show a question...
-                if (view.getId() == R.id.flashcard_layout_ease2) {
-                    // ...but if they clicked "forward" we need to move to the next card first
-                    mIndex++;
-                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
-                }
                 displayCardQuestion();
             } else {
-                // If we are showing the question, any click will show an answer...
-                if (view.getId() == R.id.flashcard_layout_ease1) {
-                    // ...but if they clicked "reverse" we need to go to the previous card first
-                    mIndex--;
-                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
-                }
                 displayCardAnswer();
             }
         }
@@ -153,52 +215,40 @@ public class Previewer extends AbstractFlashcardViewer {
         // If we are in single-card mode, we show the "Show Answer" button on the question side
         // and hide all the buttons on the answer side.
         if (mCardList.length == 1) {
-            if (!mShowingAnswer) {
-                mFlipCardLayout.setVisibility(View.VISIBLE);
-            } else {
-                findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
-                mFlipCardLayout.setVisibility(View.GONE);
-                hideEaseButtons();
-            }
+            mPreviewPrevCard.setVisibility(View.GONE);
+            mPreviewNextCard.setVisibility(View.GONE);
             return;
         }
 
-        mFlipCardLayout.setVisibility(View.GONE);
-        mEaseButtonsLayout.setVisibility(View.VISIBLE);
-        mEase1Layout.setVisibility(View.VISIBLE);
-        mEase2Layout.setVisibility(View.VISIBLE);
-        mEase3Layout.setVisibility(View.GONE);
-        mEase4Layout.setVisibility(View.GONE);
+        boolean prevBtnDisabled = mIndex <= 0;
+        boolean nextBtnDisabled = mIndex >= mCardList.length - 1;
 
-        final int[] background = Themes.getResFromAttr(this, new int[]{R.attr.hardButtonRef});
-        final int[] textColor = Themes.getColorFromAttr(this, new int[]{R.attr.hardButtonTextColor});
+        mPreviewPrevCard.setEnabled(!prevBtnDisabled);
+        mPreviewNextCard.setEnabled(!nextBtnDisabled);
 
-        mNext1.setTextSize(30);
-        mEase1.setVisibility(View.GONE);
-        mNext1.setTextColor(textColor[0]);
-        mEase1Layout.setOnClickListener(mSelectScrollHandler);
-        mEase1Layout.setBackgroundResource(background[0]);
-
-        mNext2.setTextSize(30);
-        mEase2.setVisibility(View.GONE);
-        mNext2.setTextColor(textColor[0]);
-        mEase2Layout.setOnClickListener(mSelectScrollHandler);
-        mEase2Layout.setBackgroundResource(background[0]);
-
-        if (mIndex == 0 && !mShowingAnswer) {
-            mEase1Layout.setEnabled(false);
-            mNext1.setText("-");
+        if (mSafeDisplay) {
+            mPreviewPrevCard.setVisibility(prevBtnDisabled ? View.INVISIBLE : View.VISIBLE);
+            mPreviewNextCard.setVisibility(nextBtnDisabled ? View.INVISIBLE : View.VISIBLE);
         } else {
-            mEase1Layout.setEnabled(true);
-            mNext1.setText("<");
-        }
+            // should we move these animation methods out?
 
-        if (mIndex == mCardList.length - 1 && mShowingAnswer) {
-            mEase2Layout.setEnabled(false);
-            mNext2.setText("-");
-        } else {
-            mEase2Layout.setEnabled(true);
-            mNext2.setText(">");
+            if (prevBtnDisabled && mPrevBtnShown) {
+                DeckPicker.fadeOut(mPreviewPrevCard, mShortAnimDuration, mAnimTranslation, null);
+                mPrevBtnShown = false;
+            }
+            if (!prevBtnDisabled && !mPrevBtnShown) {
+                DeckPicker.fadeIn(mPreviewPrevCard, mShortAnimDuration, mAnimTranslation);
+                mPrevBtnShown = true;
+            }
+
+            if (nextBtnDisabled && mNextBtnShown) {
+                DeckPicker.fadeOut(mPreviewNextCard, mShortAnimDuration, mAnimTranslation, null);
+                mNextBtnShown = false;
+            }
+            if (!nextBtnDisabled && !mNextBtnShown) {
+                DeckPicker.fadeIn(mPreviewNextCard, mShortAnimDuration, mAnimTranslation);
+                mNextBtnShown = true;
+            }
         }
     }
 }

@@ -2388,15 +2388,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public static ViewPropertyAnimator fadeIn(View view, int duration, float translation) {
+        return fadeIn(view, duration, translation, () -> view.setVisibility(View.VISIBLE));
+    }
+
+    public static ViewPropertyAnimator fadeIn(View view, int duration, float translation, Runnable startAction) {
         view.setAlpha(0);
         view.setTranslationY(translation);
         return view.animate()
                 .alpha(1)
                 .translationY(0)
                 .setDuration(duration)
-                .withStartAction(() -> {
-                    view.setVisibility(View.VISIBLE);
-                });
+                .withStartAction(startAction);
     }
 
     public static ViewPropertyAnimator fadeOut(View view, int duration) {
@@ -2404,15 +2406,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public static ViewPropertyAnimator fadeOut(View view, int duration, float translation) {
+        return fadeOut(view, duration, translation, () -> view.setVisibility(View.GONE));
+    }
+
+    public static ViewPropertyAnimator fadeOut(View view, int duration, float translation, Runnable endAction) {
         view.setAlpha(1);
         view.setTranslationY(0);
         return view.animate()
                 .alpha(0)
                 .translationY(translation)
                 .setDuration(duration)
-                .withEndAction(() -> {
-                    view.setVisibility(View.GONE);
-                });
+                .withEndAction(endAction);
     }
 
 

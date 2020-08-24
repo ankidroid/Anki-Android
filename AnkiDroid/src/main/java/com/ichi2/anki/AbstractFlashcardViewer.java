@@ -216,8 +216,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private boolean isInFullscreen;
 
-    protected boolean mDisableAnimations = false;
-
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -237,7 +235,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
-    private boolean mSafeDisplay;
+    protected boolean mSafeDisplay;
     // Android WebView
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
@@ -257,7 +255,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected boolean mUseInputTag;
 
     // Default short animation duration, provided by Android framework
-    private int mShortAnimDuration;
+    protected int mShortAnimDuration;
 
     // Preferences from the collection
     private boolean mShowNextReviewTime;
@@ -304,6 +302,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected LinearLayout mEase2Layout;
     protected LinearLayout mEase3Layout;
     protected LinearLayout mEase4Layout;
+    protected LinearLayout mPreviewButtonsLayout;
+    protected ImageView mPreviewPrevCard;
+    protected ImageView mPreviewNextCard;
+    protected Button mPreviewToggleAnswer;
     protected RelativeLayout mTopBarLayout;
     private Chronometer mCardTimer;
     protected Whiteboard mWhiteboard;
@@ -1472,7 +1474,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         Button mFlipCard = (Button) findViewById(R.id.flip_card);
-        mFlipCard.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
         mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
 
@@ -1489,6 +1490,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             params.height = params.height * mRelativeButtonSize / 100;
             mButtonHeightSet = true;
         }
+
+        mPreviewButtonsLayout = findViewById(R.id.preview_buttons_layout);
+        mPreviewPrevCard = findViewById(R.id.preview_previous_flashcard);
+        mPreviewNextCard = findViewById(R.id.preview_next_flashcard);
+        mPreviewToggleAnswer = findViewById(R.id.preview_flip_flashcard);
 
         mTextBarNew = (TextView) findViewById(R.id.new_number);
         mTextBarLearn = (TextView) findViewById(R.id.learn_number);
@@ -1647,7 +1653,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Runnable after = () -> mFlipCardLayout.setVisibility(View.GONE);
 
         // hide "Show Answer" button
-        if (mSafeDisplay || mDisableAnimations) {
+        if (mSafeDisplay) {
             after.run();
         } else {
             mEaseButtonsLayout.setAlpha(0);
@@ -1672,7 +1678,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         boolean easeButtonsVisible = mEaseButtonsLayout.getVisibility() == View.VISIBLE;
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
-        if (mSafeDisplay || mDisableAnimations || !easeButtonsVisible) {
+        if (mSafeDisplay || !easeButtonsVisible) {
             after.run();
         } else {
             mEaseButtonsLayout.setAlpha(1);

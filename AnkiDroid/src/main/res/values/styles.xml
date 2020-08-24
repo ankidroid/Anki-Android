@@ -90,6 +90,37 @@
         <item name="android:textColor">?attr/easyButtonTextColor</item>
     </style>
 
+    <!-- Styles for previewer buttons -->
+    <style name="PreviewerButtonBase">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <!-- split into separate top/bottom/left/right attributes
+             because otherwise `android:padding` would override separate attributes -->
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:background">@drawable/preview_flashcard_show_answer_background</item>
+        <item name="tint">?attr/largeButtonTextColor</item>
+    </style>
+    <style name="PreviewerButton" parent="PreviewerButtonBase" />
+
+    <style name="PreviewerButton.Secondary">
+        <item name="android:background">@drawable/preview_flashcard_hide_answer_background</item>
+        <item name="tint">?attr/largeButtonSecondaryTextColor</item>
+    </style>
+
+    <style name="PreviewerButton.Text">
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:textColor">?attr/largeButtonTextColor</item>
+    </style>
+    <style name="PreviewerButton.Secondary.Text">
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:textColor">?attr/largeButtonSecondaryTextColor</item>
+    </style>
+
     <!-- FAB menu items -->
     <style name="menu_labels_style">
         <item name="android:background">?attr/fab_item_background</item>
