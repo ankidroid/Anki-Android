@@ -110,6 +110,7 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">No</string>
+    <string name="dialog_positive_add">Add</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_positive_create">Create</string>
     <string name="dialog_positive_delete">Delete</string>

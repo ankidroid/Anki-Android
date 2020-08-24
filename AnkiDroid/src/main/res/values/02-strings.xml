@@ -113,6 +113,7 @@
     <string name="reordering_cards">Reordering cards…</string>
     <string name="field_remapping">%1$s (from “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+    <string name="note_editor_dialog_duplicate">The front card with such content already exists. Do you want to add a duplicate?</string>
 
     <plurals name="timebox_reached">
         <item quantity="one">%1$d card studied in %2$s</item>
