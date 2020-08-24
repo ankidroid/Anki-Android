@@ -1560,25 +1560,6 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void setDuplicateFieldStyles() {
-        FieldEditText field = mEditFields.get(0);
-        // Keep copy of current internal value for this field.
-        String oldValue = mEditorNote.getFields()[0];
-        // Update the field in the Note so we can run a dupe check on it.
-        updateField(field);
-        // 1 is empty, 2 is dupe, null is neither.
-        Note.DupeOrEmpty dupeCode = mEditorNote.dupeOrEmpty();
-        // Change bottom line color of text field
-        if (dupeCode != null && dupeCode == Note.DupeOrEmpty.DUPE) {
-            field.setDupeStyle();
-        } else {
-            field.setDefaultStyle();
-        }
-        // Put back the old value so we don't interfere with modification detection
-        mEditorNote.values()[0] = oldValue;
-    }
-
-
     private String getFieldsText() {
         String[] fields = new String[mEditFields.size()];
         for (int i = 0; i < mEditFields.size(); i++) {
@@ -1841,7 +1822,6 @@ public class NoteEditor extends AnkiActivity {
                 }
                 setNote();
                 resetEditFields(oldValues);
-                setDuplicateFieldStyles();
             }
         }
 
@@ -2096,9 +2076,6 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public void afterTextChanged(Editable arg0) {
             mFieldEdited = true;
-            if (mIndex == 0) {
-                setDuplicateFieldStyles();
-            }
         }
 
 

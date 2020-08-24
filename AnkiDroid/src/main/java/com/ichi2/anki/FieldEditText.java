@@ -125,13 +125,6 @@ public class FieldEditText extends AppCompatEditText {
         setImeHintLocales(new LocaleList(locale));
     }
 
-    /**
-     * Modify the style of this view to represent a duplicate field.
-     */
-    public void setDupeStyle() {
-        setBackgroundColor(Themes.getColorFromAttr(getContext(), R.attr.duplicateColor));
-    }
-
 
     /**
      * Restore the default style of this view.
