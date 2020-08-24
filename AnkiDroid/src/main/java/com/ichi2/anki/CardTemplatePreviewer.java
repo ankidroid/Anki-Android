@@ -64,9 +64,6 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             mEditedModelFileName = parameters.getString(TemporaryModel.INTENT_MODEL_FILENAME);
             mCardList = parameters.getLongArray("cardList");
             mOrdinal = parameters.getInt("ordinal");
-        }
-
-        if (savedInstanceState != null) {
             mShowingAnswer = savedInstanceState.getBoolean("showingAnswer", mShowingAnswer);
         }
 
