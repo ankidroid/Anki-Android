@@ -26,7 +26,7 @@
 - text-to-speech integration
 - more than 6000 premade decks
 - spaced repetition (supermemo 2 algorithm)
-- supported flashcard contents: text, images, sounds, LaTeX
+- supported contents: text, images, sounds, MathJax
 - add cards by intent from other applications like dictionaries
 
 </div>
