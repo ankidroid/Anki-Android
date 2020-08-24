@@ -1,5 +1,5 @@
 <p align="center">
-<img src="docs/graphics/logos/banner_readme.png"/>
+<img width="100%" src="docs/graphics/logos/banner_readme.png"/>
 </p>
 
 <a href="https://github.com/ankidroid/Anki-Android/releases"><img src="https://img.shields.io/github/v/release/ankidroid/Anki-Android" alt="release"/></a>
@@ -13,7 +13,7 @@
 <a href="https://github.com/ankidroid/Anki-Android/blob/master/COPYING"><img src="https://img.shields.io/github/license/ankidroid/Anki-Android" alt="license"/></a>
 </p>
 
-<img src="docs/graphics/logos/ankidroid_logo.png" align="left" width="20%" hspace="10" vspace="10">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img>
+<img src="docs/graphics/logos/ankidroid_logo.png" align="left" width="30%" hspace="10" vspace="10">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img>
 <br/>
 
 
@@ -21,20 +21,26 @@
 
 <a href="https://play.google.com/store/apps/details?id=com.ichi2.anki&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
     <img alt="Get it on Google Play" height="64"
-        src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" />
+        src="docs/graphics/logos/google-badge.png" />
 </a>
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki">
     <img alt="Get it on F-Droid" height="64"
-        src="https://upload.wikimedia.org/wikipedia/commons/4/40/%22Get_it_on_F-Droid%22_Badge.svg">
+        src="docs/graphics/logos/f-droid-badge.png">
 </a>
 
 <a href="http://www.amazon.com/gp/product/B004L1G7T2/ref=mas_pm_ankidroid_flashcards">
     <img alt="Get it on Amazon app store" height="64"
-        src="docs/graphics/logos/Amazon-app-store.png"/>
+        src="docs/graphics/logos/amazon-badge.png"/>
+</a>
+
+<a href="https://appgallery5.huawei.com/#/app/C102711481">
+    <img alt="Get it on Huawei app gallery" height="64"
+        src="docs/graphics/logos/huawei-badge.png"/>
 </a>
 
 </div>
+
 </br></br>
 
 Features
@@ -48,7 +54,8 @@ Features
 - detailed statistics
 - night mode
 - write answers (optional)
-- whiteboard syncing with AnkiWeb
+- whiteboard 
+- syncing with AnkiWeb
 - add cards by intent from other applications like dictionaries
 
 
