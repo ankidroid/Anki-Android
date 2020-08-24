@@ -13,10 +13,14 @@
 <a href="https://github.com/ankidroid/Anki-Android/blob/master/COPYING"><img src="https://img.shields.io/github/license/ankidroid/Anki-Android" alt="license"/></a>
 </p>
 
-<img src="docs/graphics/logos/ankidroid_logo.png" align="left" width="43%" height="100%">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img>
+# AnkiDroid
+
+<img src="docs/graphics/logos/ankidroid_logo.png" align="right" width="40%" height="100%">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img>
+
+### Features
 
 <div style="display:flex;">
-    
+ 
 - night mode
 - whiteboard 
 - progress widget
@@ -30,8 +34,6 @@
 - add cards by intent from other applications like dictionaries
 
 </div>
-
-<br/><br/>
 
 Install
 ---------
