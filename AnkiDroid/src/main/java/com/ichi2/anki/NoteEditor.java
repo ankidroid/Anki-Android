@@ -61,6 +61,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
+import com.ichi2.anki.dialogs.DuplicateFrontCardDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -1010,7 +1011,7 @@ public class NoteEditor extends AnkiActivity {
 
             case R.id.action_save:
                 Timber.i("NoteEditor:: Save note button pressed");
-                saveNote();
+                saveNoteWithDuplicateCheck();
                 return true;
 
             case R.id.action_add_note_from_note_editor:
@@ -1070,6 +1071,18 @@ public class NoteEditor extends AnkiActivity {
         noteEditorBundle.putBundle("editFields", getFieldsAsBundle(true));
         previewer.putExtra("noteEditorBundle", noteEditorBundle);
         startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
+    }
+
+
+    private void saveNoteWithDuplicateCheck() {
+        updateField(mEditFields.get(0));
+        if(mEditorNote.dupeOrEmpty() == Note.DupeOrEmpty.DUPE) {
+               DuplicateFrontCardDialog
+                    .getDefault(this)
+                    .onPositive((dialog, which) -> saveNote())
+                    .show();
+        }
+        else { saveNote(); }
     }
 
 
