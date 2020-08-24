@@ -1,5 +1,5 @@
 <p align="center">
-<img width="100%" src="docs/graphics/logos/banner_readme.png"/>
+<img src="docs/graphics/logos/banner_readme.png"/>
 </p>
 
 <a href="https://github.com/ankidroid/Anki-Android/releases"><img src="https://img.shields.io/github/v/release/ankidroid/Anki-Android" alt="release"/></a>
@@ -13,7 +13,7 @@
 <a href="https://github.com/ankidroid/Anki-Android/blob/master/COPYING"><img src="https://img.shields.io/github/license/ankidroid/Anki-Android" alt="license"/></a>
 </p>
 
-<img src="docs/graphics/logos/ankidroid_logo.png" align="left" width="40%" hspace="10" vspace="10">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img>
+<img src="docs/graphics/logos/ankidroid_logo.png" align="left" width="43%" height="100%">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img>
 
 <div style="display:flex;">
 
