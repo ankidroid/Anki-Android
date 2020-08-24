@@ -13,51 +13,49 @@
 <a href="https://github.com/ankidroid/Anki-Android/blob/master/COPYING"><img src="https://img.shields.io/github/license/ankidroid/Anki-Android" alt="license"/></a>
 </p>
 
-<img src="docs/graphics/logos/ankidroid_logo.png" align="left" width="30%" hspace="10" vspace="10">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img>
-<br/>
+<img src="docs/graphics/logos/ankidroid_logo.png" align="left" width="40%" hspace="10" vspace="10">A semi-official port of the open source [Anki](http://ankisrs.net/index.html) spaced repetition flashcard system to Android. Memorize anything with AnkiDroid!</img>
 
+<div style="display:flex;">
 
+- night mode
+- whiteboard 
+- progress widget
+- detailed statistics
+- syncing with AnkiWeb
+- write answers (optional)
+- text-to-speech integration
+- more than 6000 premade decks
+- spaced repetition (supermemo 2 algorithm)
+- supported flashcard contents: text, images, sounds, LaTeX
+- add cards by intent from other applications like dictionaries
+
+</div>
+
+Downloads
+---------
 <div style="display:flex;" >
 
 <a href="https://play.google.com/store/apps/details?id=com.ichi2.anki&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-    <img alt="Get it on Google Play" height="64"
+    <img alt="Get it on Google Play" height="80"
         src="docs/graphics/logos/google-badge.png" />
 </a>
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki">
-    <img alt="Get it on F-Droid" height="64"
+    <img alt="Get it on F-Droid" height="80"
         src="docs/graphics/logos/f-droid-badge.png">
 </a>
 
 <a href="http://www.amazon.com/gp/product/B004L1G7T2/ref=mas_pm_ankidroid_flashcards">
-    <img alt="Get it on Amazon app store" height="64"
+    <img alt="Get it on Amazon app store" height="80"
         src="docs/graphics/logos/amazon-badge.png"/>
 </a>
 
 <a href="https://appgallery5.huawei.com/#/app/C102711481">
-    <img alt="Get it on Huawei app gallery" height="64"
+    <img alt="Get it on Huawei app gallery" height="80"
         src="docs/graphics/logos/huawei-badge.png"/>
 </a>
 
 </div>
-
-</br></br>
-
-Features
---------
-
-- supported flashcard contents: text, images, sounds, LaTeX
-- spaced repetition (supermemo 2 algorithm)
-- text-to-speech integration
-- more than 6000 premade decks
-- progress widget
-- detailed statistics
-- night mode
-- write answers (optional)
-- whiteboard 
-- syncing with AnkiWeb
-- add cards by intent from other applications like dictionaries
-
 
 Wiki
 ----
