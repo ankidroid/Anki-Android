@@ -59,6 +59,7 @@
         <item name="hardButtonRef">@drawable/footer_button_hard_dark</item>
         <item name="goodButtonRef">@drawable/footer_button_good_dark</item>
         <item name="easyButtonRef">@drawable/footer_button_easy_dark</item>
+        <item name="answerButtonsHighlightColor">#66FFFFFF</item>
         <!-- Card Browser Colors -->
         <item name="cardBrowserDivider">@color/white</item>
         <!-- Stats colors -->

@@ -41,6 +41,8 @@ public class Previewer extends AbstractFlashcardViewer {
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
+        mDisableAnimations = true;
+
         mCardList = getIntent().getLongArrayExtra("cardList");
         mIndex = getIntent().getIntExtra("index", -1);
 
@@ -162,6 +164,7 @@ public class Previewer extends AbstractFlashcardViewer {
         }
 
         mFlipCardLayout.setVisibility(View.GONE);
+        mEaseButtonsLayout.setVisibility(View.VISIBLE);
         mEase1Layout.setVisibility(View.VISIBLE);
         mEase2Layout.setVisibility(View.VISIBLE);
         mEase3Layout.setVisibility(View.GONE);

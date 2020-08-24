@@ -60,6 +60,7 @@
     <attr name="hardButtonTextColor" format="color"/>
     <attr name="goodButtonTextColor" format="color"/>
     <attr name="easyButtonTextColor" format="color"/>
+    <attr name="answerButtonsHighlightColor" format="color"/>
     <!-- Card Browser Colors -->
     <attr name="cardBrowserDivider" format="color"/>
     <!-- Stats colors -->

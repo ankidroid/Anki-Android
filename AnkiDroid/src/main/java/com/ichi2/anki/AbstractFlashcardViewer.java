@@ -51,8 +51,6 @@ import androidx.core.net.ConnectivityManagerCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
 import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.util.TypedValue;
@@ -218,6 +216,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private boolean isInFullscreen;
 
+    protected boolean mDisableAnimations = false;
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -237,6 +237,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
+    private boolean mSafeDisplay;
     // Android WebView
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
@@ -254,6 +255,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected int mOptWaitQuestionSecond;
 
     protected boolean mUseInputTag;
+
+    // Default short animation duration, provided by Android framework
+    private int mShortAnimDuration;
 
     // Preferences from the collection
     private boolean mShowNextReviewTime;
@@ -295,6 +299,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected TextView mEase3;
     protected TextView mEase4;
     protected LinearLayout mFlipCardLayout;
+    protected LinearLayout mEaseButtonsLayout;
     protected LinearLayout mEase1Layout;
     protected LinearLayout mEase2Layout;
     protected LinearLayout mEase3Layout;
@@ -879,6 +884,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         View mainView = findViewById(android.R.id.content);
         initNavigationDrawer(mainView);
+
+        mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
     protected int getContentViewAttr(int fullscreenMode) {
@@ -1434,34 +1441,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mGestureDetectorImpl = mLinkOverridesTouchGesture ? new LinkDetectingGestureDetector() : new MyGestureDetector();
         gestureDetector = new GestureDetectorCompat(this, mGestureDetectorImpl);
 
-        mEase1 = (TextView) findViewById(R.id.ease1);
-        mEase1.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
-        mEase1Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease1);
+        mEaseButtonsLayout = findViewById(R.id.ease_buttons);
+
+        mEase1 = findViewById(R.id.ease1);
+        mEase1Layout = findViewById(R.id.flashcard_layout_ease1);
         mEase1Layout.setOnClickListener(mSelectEaseHandler);
 
-        mEase2 = (TextView) findViewById(R.id.ease2);
-        mEase2.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
-        mEase2Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease2);
+        mEase2 = findViewById(R.id.ease2);
+        mEase2Layout = findViewById(R.id.flashcard_layout_ease2);
         mEase2Layout.setOnClickListener(mSelectEaseHandler);
 
-        mEase3 = (TextView) findViewById(R.id.ease3);
-        mEase3.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
-        mEase3Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease3);
+        mEase3 = findViewById(R.id.ease3);
+        mEase3Layout = findViewById(R.id.flashcard_layout_ease3);
         mEase3Layout.setOnClickListener(mSelectEaseHandler);
 
-        mEase4 = (TextView) findViewById(R.id.ease4);
-        mEase4.setTypeface(TypefaceHelper.get(this, "Roboto-Medium"));
-        mEase4Layout = (LinearLayout) findViewById(R.id.flashcard_layout_ease4);
+        mEase4 = findViewById(R.id.ease4);
+        mEase4Layout = findViewById(R.id.flashcard_layout_ease4);
         mEase4Layout.setOnClickListener(mSelectEaseHandler);
 
-        mNext1 = (TextView) findViewById(R.id.nextTime1);
-        mNext2 = (TextView) findViewById(R.id.nextTime2);
-        mNext3 = (TextView) findViewById(R.id.nextTime3);
-        mNext4 = (TextView) findViewById(R.id.nextTime4);
-        mNext1.setTypeface(TypefaceHelper.get(this, "Roboto-Regular"));
-        mNext2.setTypeface(TypefaceHelper.get(this, "Roboto-Regular"));
-        mNext3.setTypeface(TypefaceHelper.get(this, "Roboto-Regular"));
-        mNext4.setTypeface(TypefaceHelper.get(this, "Roboto-Regular"));
+        mNext1 = findViewById(R.id.nextTime1);
+        mNext2 = findViewById(R.id.nextTime2);
+        mNext3 = findViewById(R.id.nextTime3);
+        mNext4 = findViewById(R.id.nextTime4);
 
         if (!mShowNextReviewTime) {
             mNext1.setVisibility(View.GONE);
@@ -1641,21 +1642,43 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected void displayAnswerBottomBar() {
-        // hide flipcard button
-        mFlipCardLayout.setVisibility(View.GONE);
+        mEaseButtonsLayout.setVisibility(View.VISIBLE);
+
+        Runnable after = () -> mFlipCardLayout.setVisibility(View.GONE);
+
+        // hide "Show Answer" button
+        if (mSafeDisplay || mDisableAnimations) {
+            after.run();
+        } else {
+            mEaseButtonsLayout.setAlpha(0);
+            mEaseButtonsLayout.animate().alpha(1).setDuration(mShortAnimDuration).withEndAction(after);
+        }
     }
 
 
     protected void hideEaseButtons() {
-        mEase1Layout.setVisibility(View.GONE);
-        mEase2Layout.setVisibility(View.GONE);
-        mEase3Layout.setVisibility(View.GONE);
-        mEase4Layout.setVisibility(View.GONE);
+        Runnable after = () -> {
+            mEaseButtonsLayout.setVisibility(View.GONE);
+            mEase1Layout.setVisibility(View.GONE);
+            mEase2Layout.setVisibility(View.GONE);
+            mEase3Layout.setVisibility(View.GONE);
+            mEase4Layout.setVisibility(View.GONE);
+            mNext1.setText("");
+            mNext2.setText("");
+            mNext3.setText("");
+            mNext4.setText("");
+        };
+
+        boolean easeButtonsVisible = mEaseButtonsLayout.getVisibility() == View.VISIBLE;
         mFlipCardLayout.setVisibility(View.VISIBLE);
-        mNext1.setText("");
-        mNext2.setText("");
-        mNext3.setText("");
-        mNext4.setText("");
+
+        if (mSafeDisplay || mDisableAnimations || !easeButtonsVisible) {
+            after.run();
+        } else {
+            mEaseButtonsLayout.setAlpha(1);
+            mEaseButtonsLayout.animate().alpha(0).setDuration(mShortAnimDuration).withEndAction(after);
+        }
+
         focusAnswerCompletionField();
     }
 
@@ -1740,6 +1763,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
+        mSafeDisplay = preferences.getBoolean("safeDisplay", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
