@@ -18,7 +18,7 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.LinearLayout;
+import android.view.View;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Model;
@@ -32,10 +32,12 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.android.controller.ActivityController;
+import org.robolectric.annotation.LooperMode;
 
 import java.util.ArrayList;
 
 @RunWith(RobolectricTestRunner.class)
+@LooperMode(LooperMode.Mode.PAUSED)
 public class CardTemplatePreviewerTest extends RobolectricTest {
 
     @Test
@@ -72,7 +74,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         // Make sure we can click
         Assert.assertFalse("Showing the answer already?", testCardTemplatePreviewer.getShowingAnswer());
         testCardTemplatePreviewer.disableDoubleClickPrevention();
-        LinearLayout showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.flashcard_layout_flip);
+        View showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.preview_flip_flashcard);
         showAnswerButton.performClick();
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }
@@ -104,7 +106,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         // Make sure we can click
         Assert.assertFalse("Showing the answer already?", testCardTemplatePreviewer.getShowingAnswer());
         testCardTemplatePreviewer.disableDoubleClickPrevention();
-        LinearLayout showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.flashcard_layout_flip);
+        View showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.preview_flip_flashcard);
         showAnswerButton.performClick();
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }
