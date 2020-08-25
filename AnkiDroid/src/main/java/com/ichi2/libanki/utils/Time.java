@@ -84,4 +84,15 @@ public abstract class Time {
         calendar.setTimeInMillis(timestamp.getTime());
         return calendar;
     }
+
+
+    /**
+     * Calculate the UTC offset
+     */
+    public static double utcOffset() {
+        // Okay to use real time, as the result does not depends on time at all here
+        Calendar cal = Calendar.getInstance();
+        // 4am
+        return 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+    }
 }
