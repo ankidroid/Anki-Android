@@ -49,6 +49,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
@@ -391,7 +392,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                                 alarmManager.cancel(reminderIntent);
                                 if ((Boolean) value) {
-                                    final Calendar calendar = reminderToCalendar(reminder);
+                                    final Calendar calendar = reminderToCalendar(mCol.getTime(), reminder);
 
                                     alarmManager.setRepeating(
                                             AlarmManager.RTC_WAKEUP,
@@ -422,7 +423,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                                 alarmManager.cancel(reminderIntent);
 
-                                final Calendar calendar = reminderToCalendar(reminder);
+                                final Calendar calendar = reminderToCalendar(mCol.getTime(), reminder);
 
                                 alarmManager.setRepeating(
                                         AlarmManager.RTC_WAKEUP,
@@ -898,9 +899,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         recreate();
     }
 
-    public static Calendar reminderToCalendar(JSONObject reminder) {
+    public static Calendar reminderToCalendar(Time time, JSONObject reminder) {
 
-        final Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = time.calendar();
 
         calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
         calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));

@@ -106,7 +106,7 @@ public class BootService extends BroadcastReceiver {
                                                                                             deckConfiguration.getLong("id")),
                                                                                     0
                                                                                     );
-                    final Calendar calendar = reminderToCalendar(reminder);
+                    final Calendar calendar = reminderToCalendar(col.getTime(), reminder);
 
                     alarmManager.setRepeating(
                                               AlarmManager.RTC_WAKEUP,
