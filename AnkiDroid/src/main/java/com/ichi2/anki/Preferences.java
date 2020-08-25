@@ -637,7 +637,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     date.set(Calendar.HOUR_OF_DAY, hours);
                     getCol().setCrt(date.getTimeInMillis() / 1000);
                     getCol().setMod();
-                    BootService.scheduleNotification(this);
+                    BootService.scheduleNotification(getCol().getTime(), this);
                     break;
                 }
                 case "minimumCardsDueForNotification": {
@@ -645,7 +645,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     if (listpref != null) {
                         updateNotificationPreference(listpref);
                         if (Integer.valueOf(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
-                            BootService.scheduleNotification(this);
+                            BootService.scheduleNotification(getCol().getTime(), this);
                         } else {
                             PendingIntent intent = PendingIntent.getBroadcast(this, 0,
                                     new Intent(this, NotificationService.class), 0);

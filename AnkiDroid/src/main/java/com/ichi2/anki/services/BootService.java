@@ -14,6 +14,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Permissions;
 
 import com.ichi2.utils.JSONObject;
@@ -54,7 +55,7 @@ public class BootService extends BroadcastReceiver {
 
         Timber.i("Executing Boot Service");
         catchAlarmManagerErrors(context, () -> scheduleDeckReminder(context));
-        catchAlarmManagerErrors(context, () -> scheduleNotification(context));
+        catchAlarmManagerErrors(context, () -> scheduleNotification(col.getTime(), context));
         mFailedToShowNotifications = false;
         sWasRun = true;
     }
@@ -119,7 +120,7 @@ public class BootService extends BroadcastReceiver {
         }
     }
 
-    public static void scheduleNotification(Context context) {
+    public static void scheduleNotification(Time time, Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         // Don't schedule a notification if the due reminders setting is not enabled
@@ -127,7 +128,7 @@ public class BootService extends BroadcastReceiver {
             return;
         }
 
-        final Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = time.calendar();
         calendar.set(Calendar.HOUR_OF_DAY, sp.getInt("dayOffset", 0));
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
