@@ -26,6 +26,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.NoteUtils;
+import com.ichi2.themes.Themes;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
@@ -47,6 +48,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private long[] mCardList;
     private Bundle mNoteEditorBundle = null;
 
+    private boolean mShowingAnswer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
@@ -61,6 +64,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             mEditedModelFileName = parameters.getString(TemporaryModel.INTENT_MODEL_FILENAME);
             mCardList = parameters.getLongArray("cardList");
             mOrdinal = parameters.getInt("ordinal");
+            mShowingAnswer = parameters.getBoolean("showingAnswer", mShowingAnswer);
         }
 
         if (mEditedModelFileName != null) {
@@ -131,23 +135,57 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     protected void initLayout() {
         super.initLayout();
         mTopBarLayout.setVisibility(View.GONE);
+
+        findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
+        mPreviewButtonsLayout.setVisibility(View.VISIBLE);
+
+        mPreviewToggleAnswer.setOnClickListener(mToggleAnswerHandler);
+
+        mPreviewPrevCard.setVisibility(View.GONE);
+        mPreviewNextCard.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void hideEaseButtons() {
+        final int[] textColor = Themes.getColorFromAttr(this, new int[] {R.attr.largeButtonTextColor});
+
+        Previewer.setRippleBackground(this, mPreviewToggleAnswer, R.drawable.preview_flashcard_show_answer_background);
+        mPreviewToggleAnswer.setText(R.string.show_answer);
+        mPreviewToggleAnswer.setTextColor(textColor[0]);
+    }
+
+    @Override
+    protected void displayAnswerBottomBar() {
+        final int[] textColor = Themes.getColorFromAttr(this, new int[] {R.attr.largeButtonSecondaryTextColor});
+
+        Previewer.setRippleBackground(this, mPreviewToggleAnswer, R.drawable.preview_flashcard_hide_answer_background);
+        mPreviewToggleAnswer.setText(R.string.hide_answer);
+        mPreviewToggleAnswer.setTextColor(textColor[0]);
     }
 
     @Override
     protected void displayCardQuestion() {
         super.displayCardQuestion();
-        mFlipCardLayout.setVisibility(View.VISIBLE);
+        mShowingAnswer = false;
     }
 
-
-    // Called via mFlipCardListener in parent class when answer button pressed
     @Override
     protected void displayCardAnswer() {
         super.displayCardAnswer();
-        findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
-        mFlipCardLayout.setVisibility(View.GONE);
-        hideEaseButtons();
+        mShowingAnswer = true;
     }
+
+    private View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (mShowingAnswer) {
+                displayCardQuestion();
+            } else {
+                displayCardAnswer();
+            }
+        }
+    };
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -155,6 +193,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         outState.putLongArray("cardList", mCardList);
         outState.putInt("ordinal", mOrdinal);
         outState.putBundle("noteEditorBundle", mNoteEditorBundle);
+        outState.putBoolean("showingAnswer", mShowingAnswer);
         super.onSaveInstanceState(outState);
     }
 
@@ -195,6 +234,10 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
         displayCardQuestion();
+        if (mShowingAnswer) {
+            displayCardAnswer();
+        }
+
         showBackIcon();
     }
 

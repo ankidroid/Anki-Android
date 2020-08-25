@@ -24,7 +24,12 @@
         <item name="android:fontFamily">@string/font_fontFamily_medium</item>
     </style>
 
-    <style name="FooterButtonEaseText" parent="FooterButtonNextTime">
+    <style name="FooterButtonEaseText" parent="FooterButtonEaseTextBase">
         <item name="android:fontFamily">@string/font_fontFamily_medium</item>
+    </style>
+
+    <style name="PreviewerButton" parent="PreviewerButtonBase">
+        <item name="android:elevation">4dp</item>
+        <item name="android:stateListAnimator">@animator/previewer_button_raise</item>
     </style>
 </resources>

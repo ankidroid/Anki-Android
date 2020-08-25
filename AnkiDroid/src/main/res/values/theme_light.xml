@@ -38,7 +38,13 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_light</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">@color/material_light_blue_700</item>
+        <item name="largeButtonBackgroundColorFocused">@color/material_light_blue_600</item>
+        <item name="largeButtonBackgroundColorPressed">@color/material_light_blue_900</item>
         <item name="largeButtonTextColor">@color/white</item>
+        <item name="largeButtonSecondaryBackgroundColor">#FAFAFA</item>
+        <item name="largeButtonSecondaryBackgroundColorFocused">#F0F0F0</item>
+        <item name="largeButtonSecondaryBackgroundColorPressed">#EEEEEE</item>
+        <item name="largeButtonSecondaryTextColor">@color/material_grey_500</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -67,6 +73,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="hardButtonTextColor">@color/white</item>
         <item name="goodButtonTextColor">@color/white</item>
         <item name="easyButtonTextColor">@color/white</item>
+        <item name="answerButtonsHighlightColor">#AAFFFFFF</item>
         <!-- Reviewer button drawables -->
         <item name="againButtonRef">@drawable/footer_button_again</item>
         <item name="hardButtonRef">@drawable/footer_button_hard</item>
