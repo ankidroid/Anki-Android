@@ -2090,17 +2090,11 @@ public class Collection<T extends Time> {
     }
 
     public Calendar crtCalendar() {
-        Calendar calendar = Calendar.getInstance();
-        Timestamp timestamp = new Timestamp(getCrt() * 1000);
-        calendar.setTimeInMillis(timestamp.getTime());
-        return calendar;
+        return Time.calendar(getCrt() * 1000);
     }
 
     public GregorianCalendar crtGregorianCalendar() {
-        GregorianCalendar calendar = new GregorianCalendar();
-        Timestamp timestamp = new Timestamp(getCrt() * 1000);
-        calendar.setTimeInMillis(timestamp.getTime());
-        return calendar;
+        return Time.gregorianCalendar(getCrt() * 1000);
     }
 
 

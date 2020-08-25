@@ -35,6 +35,7 @@ import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.ImportUtils;
 
 import com.ichi2.utils.JSONArray;
@@ -822,8 +823,7 @@ public class Utils {
         // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         df.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-        cal.setTimeInMillis(System.currentTimeMillis() - (long) utcOffset * 1000L);
+        Calendar cal = Time.gregorianCalendar(System.currentTimeMillis() - (long) utcOffset * 1000L);
         return Date.valueOf(df.format(cal.getTime()));
     }
 
