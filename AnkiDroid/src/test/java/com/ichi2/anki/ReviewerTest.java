@@ -8,13 +8,23 @@ import android.view.MenuItem;
 import com.ichi2.anki.AbstractFlashcardViewer.JavaScriptFunction;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.reviewer.ActionButtonStatus;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.utils.Time;
+import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.PreferenceUtils;
+import com.ichi2.utils.JSONArray;
+import com.ichi2.utils.JSONObject;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.annotation.LooperMode;
 
 import java.util.ArrayList;
@@ -24,9 +34,13 @@ import java.util.List;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
+import java.util.List;
+
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import timber.log.Timber;
 
+import static com.ichi2.anki.AbstractFlashcardViewer.EASE_2;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
 import static com.ichi2.anki.AbstractFlashcardViewer.RESULT_DEFAULT;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,9 +52,32 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assume.assumeTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(ParameterizedRobolectricTestRunner.class)
 @LooperMode(LooperMode.Mode.PAUSED)
 public class ReviewerTest extends RobolectricTest {
+
+
+    @ParameterizedRobolectricTestRunner.Parameter
+    public int schedVersion;
+
+    @ParameterizedRobolectricTestRunner.Parameters(name = "SchedV{0}")
+    public static java.util.Collection<Object[]> initParameters() {
+        // This does one run with schedVersion injected as 1, and one run as 2
+        return Arrays.asList(new Object[][] { { 1 }, { 2 } });
+    }
+
+    @Before
+    @Override
+    public void setUp() {
+        super.setUp();
+        try {
+            Timber.d("scheduler version is " + schedVersion);
+            getCol().changeSchedulerVer(schedVersion);
+        } catch (ConfirmModSchemaException e) {
+            throw new RuntimeException("Could not change schedVer", e);
+        }
+    }
+
 
     @Test
     public void verifyStartupNoCollection() {
@@ -93,10 +130,11 @@ public class ReviewerTest extends RobolectricTest {
 
         displayAnswer(reviewer);
 
-        assertThat("The 4th button should not be visible", reviewer.getAnswerButtonCount(), is(3));
-
-        String learnTime = javaScriptFunction.ankiGetNextTime4();
-        assertThat("If the 4th button is not visible, there should be no time4 in JS", learnTime, isEmptyString());
+        if (schedVersion == 1) {
+            assertThat("The 4th button should not be visible", reviewer.getAnswerButtonCount(), is(3));
+            String learnTime = javaScriptFunction.ankiGetNextTime4();
+            assertThat("If the 4th button is not visible, there should be no time4 in JS", learnTime, isEmptyString());
+        }
     }
 
     @Test
@@ -143,6 +181,116 @@ public class ReviewerTest extends RobolectricTest {
             e.putString(k, Integer.toString(ActionButtonStatus.MENU_DISABLED));
         }
         e.apply();
+    }
+
+    @Test
+    public synchronized void testMultipleCards() throws ConfirmModSchemaException, InterruptedException {
+        addNoteWithThreeCards();
+        Collection<MockTime> col = getCol();
+        JSONObject nw = col.getDecks().confForDid(1).getJSONObject("new");
+        MockTime time = col.getTime();
+        nw.put("delays", new JSONArray(new int[] {1, 10, 60, 120}));
+
+        waitForAsyncTasksToComplete();
+
+        Reviewer reviewer = startReviewer();
+
+        waitForAsyncTasksToComplete();
+
+        assertCounts(reviewer,3, 0, 0);
+
+        answerCardOrdinalAsGood(reviewer, 1); // card 1 is shown
+        time.addM(3); // card get scheduler in [10, 12.5] minutes
+        // We wait 3 minutes to ensure card 2 is scheduled after card 1
+        answerCardOrdinalAsGood(reviewer, 2); // card 2 is shown
+        time.addM(3); // Same as above
+        answerCardOrdinalAsGood(reviewer, 3); // card 3 is shown
+
+        undo(reviewer);
+
+        assertCurrentOrdIs(reviewer, 3);
+
+        answerCardOrdinalAsGood(reviewer, 3); // card 3 is shown
+
+        assertCurrentOrdIsNot(reviewer, 3); // Anki Desktop shows "1"
+    }
+
+
+    private void assertCurrentOrdIsNot(Reviewer r, int i) {
+        waitForAsyncTasksToComplete();
+        int ord = r.mCurrentCard.getOrd();
+
+        assertThat("Unexpected card ord", ord + 1, not(is(i)));
+    }
+
+
+    private void undo(Reviewer reviewer) {
+        reviewer.undo();
+        waitForAsyncTasksToComplete();
+    }
+
+
+    private void assertCounts(Reviewer r, int newCount, int stepCount, int revCount) {
+
+        List<String> countList = new ArrayList<>();
+        JavaScriptFunction jsApi = r.new JavaScriptFunction();
+        countList.add(jsApi.ankiGetNewCardCount());
+        countList.add(jsApi.ankiGetLrnCardCount());
+        countList.add(jsApi.ankiGetRevCardCount());
+
+        List<Integer> expexted = new ArrayList<>();
+        expexted.add(newCount);
+        expexted.add(stepCount);
+        expexted.add(revCount);
+
+        assertThat(countList.toString(), is(expexted.toString())); // We use toString as hamcrest does not print the whole array and stops at [0].
+    }
+
+
+    private void answerCardOrdinalAsGood(Reviewer r, int i) {
+        assertCurrentOrdIs(r, i);
+
+        r.answerCard(getCol().getSched().getGoodNewButton());
+
+        waitForAsyncTasksToComplete();
+    }
+
+
+    private void assertCurrentOrdIs(Reviewer r, int i) {
+        waitForAsyncTasksToComplete();
+        int ord = r.mCurrentCard.getOrd();
+
+        assertThat("Unexpected card ord", ord + 1, is(i));
+    }
+
+
+    private void addNoteWithThreeCards() throws ConfirmModSchemaException {
+        Models models = getCol().getModels();
+        Model m = models.copy(models.current());
+        m.put("name", "Three");
+        models.add(m);
+        m = models.byName("Three");
+        models.flush();
+        cloneTemplate(models, m);
+        cloneTemplate(models, m);
+
+        Note newNote = getCol().newNote();
+        newNote.setField(0, "Hello");
+        assertThat(newNote.model().get("name"), is("Three"));
+
+        assertThat(getCol().addNote(newNote), is(3));
+    }
+
+
+    private void cloneTemplate(Models models, Model m) throws ConfirmModSchemaException {
+        JSONArray tmpls = m.getJSONArray("tmpls");
+        JSONObject defaultTemplate = tmpls.getJSONObject(0);
+
+        JSONObject newTemplate = defaultTemplate.deepClone();
+        newTemplate.put("ord", tmpls.length());
+        newTemplate.put("name", "Card " + tmpls.length() + 1);
+
+        models.addTemplate(m, newTemplate);
     }
 
 
