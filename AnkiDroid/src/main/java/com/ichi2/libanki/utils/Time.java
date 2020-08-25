@@ -18,6 +18,7 @@ package com.ichi2.libanki.utils;
 
 import com.ichi2.libanki.DB;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -68,5 +69,19 @@ public abstract class Time {
         now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
         now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
         return now + 1;
+    }
+
+    public static Calendar calendar(long timeInMS) {
+        Calendar calendar = Calendar.getInstance();
+        Timestamp timestamp = new Timestamp(timeInMS);
+        calendar.setTimeInMillis(timestamp.getTime());
+        return calendar;
+    }
+
+    public static GregorianCalendar gregorianCalendar(long timeInMS) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        Timestamp timestamp = new Timestamp(timeInMS);
+        calendar.setTimeInMillis(timestamp.getTime());
+        return calendar;
     }
 }

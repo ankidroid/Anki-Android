@@ -31,6 +31,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.utils.Time;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -1075,8 +1076,7 @@ public class Stats {
             lim = " and " + lim;
         }
 
-        Calendar sd = GregorianCalendar.getInstance();
-        sd.setTimeInMillis(mCol.getSched().getDayCutoff() * 1000);
+        Calendar sd = Time.gregorianCalendar(mCol.getSched().getDayCutoff() * 1000);
 
         int pd = _periodDays();
         if (pd > 0) {
