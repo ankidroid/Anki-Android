@@ -256,7 +256,7 @@ public class BackupManager {
         File colFile = new File(colPath);
 
         // move file
-        Date value = Utils.genToday(Utils.utcOffset());
+        Date value = Utils.genToday(Time.utcOffset());
         String movedFilename = String.format(Utils.ENGLISH_LOCALE, colFile.getName().replace(".anki2", "")
                 + "-corrupt-%tF.anki2", value);
         File movedFile = new File(getBrokenDirectory(colFile.getParentFile()), movedFilename);

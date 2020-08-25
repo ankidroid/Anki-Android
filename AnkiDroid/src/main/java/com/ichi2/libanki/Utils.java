@@ -883,16 +883,6 @@ public class Utils {
         return results;
     }
 
-
-    /**
-     * Calculate the UTC offset
-     */
-    public static double utcOffset() {
-        Calendar cal = Calendar.getInstance();
-        // 4am
-        return 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
-    }
-
     /**
      * Returns a String array with two elements:
      * 0 - file name
