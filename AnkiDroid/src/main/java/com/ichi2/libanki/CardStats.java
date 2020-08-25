@@ -15,7 +15,7 @@ import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 public class CardStats {
 
     public static String report(Context context, Card c, Collection col) {
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = col.getTime().calendar();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         Resources res = context.getResources();
