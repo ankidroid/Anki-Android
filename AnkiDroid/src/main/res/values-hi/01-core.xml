@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">उतर टाइप करें</string>
     <string name="show_answer">जवाब देखें</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">फिर से</string>
     <string name="ease_button_hard">कठिन</string>
     <string name="ease_button_good">अच्छा</string>

@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Cavabı yazın</string>
     <string name="show_answer">Cavabı göstər</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Təkrar</string>
     <string name="ease_button_hard">Çətin</string>
     <string name="ease_button_good">Yaxşı</string>

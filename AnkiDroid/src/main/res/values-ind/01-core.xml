@@ -40,7 +40,7 @@
 <resources>
     <!-- Navigation drawer items-->
     <string name="decks">Dek</string>
-    <string name="card_browser">Penelusur kartu</string>
+    <string name="card_browser">Peramban kartu</string>
     <string name="statistics">Statistik</string>
     <string name="settings">Pengaturan</string>
     <string name="help">Bantuan</string>
@@ -67,8 +67,8 @@
     <plurals name="reviewer_window_title_days">
         <item quantity="other">%d hari %d jam lagi</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Koleksi kosong</string>
+    <string name="no_cards_placeholder_description">Mulai tambahkan kartu\nmenggunakan ikon +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">Mempelajari %1$d kartu dalam %2$s hari ini</item>
@@ -76,6 +76,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Ketik jawaban</string>
     <string name="show_answer">Tampilkan jawaban</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Ulang</string>
     <string name="ease_button_hard">Sulit</string>
     <string name="ease_button_good">Baik</string>
@@ -182,7 +183,7 @@
     <string name="card_template_editor_back">Templat belakang</string>
     <string name="card_template_editor_styling">Penataan</string>
     <string name="card_template_editor_menu_delete">Hapus</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Tampilan penelusur kartu</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Tampilan Peramban Kartu</string>
     <string name="card_template_editor_deck_override">Paksa Lokasi Dek</string>
     <string name="card_template_editor_cant_delete">Setidaknya satu tipe kartu diperlukan.</string>
     <plurals name="card_template_editor_confirm_delete">
@@ -193,12 +194,12 @@
     <string name="card_template_editor_save_error">Tidak dapat menyimpan perubahan templat kartu: %s</string>
     <string name="template_for_current_card_deleted">Templat untuk kartu ini sudah dihapus.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Tampilan penelusur</string>
+    <string name="card_template_browser_appearance_title">Tampilan Peramban </string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Baca dan tulis ke basisdata AnkiDroid</string>
     <string name="read_write_permission_description">mengakses catatan yang ada, kartu, tipe catatan, dan dek, serta membuat yang baru</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Penelusur kartu</string>
-    <string name="card_browser_context_menu">Penelusur kartu</string>
+    <string name="card_browser_label">Peramban Kartu</string>
+    <string name="card_browser_context_menu">Peramban Kartu</string>
     <string name="context_menu_anki_card_label">Kartu Anki</string>
 </resources>

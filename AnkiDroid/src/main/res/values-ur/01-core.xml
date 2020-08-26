@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">جواب لکھیں</string>
     <string name="show_answer">جواب دکھائیے</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">دوبارہ</string>
     <string name="ease_button_hard">مشکل</string>
     <string name="ease_button_good">عمدہ</string>

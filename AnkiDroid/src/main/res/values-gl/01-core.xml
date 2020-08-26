@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Escribir resposta</string>
     <string name="show_answer">Amosar resposta</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">De novo</string>
     <string name="ease_button_hard">Difícil</string>
     <string name="ease_button_good">Ben</string>

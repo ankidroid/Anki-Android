@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Tik antwoord</string>
     <string name="show_answer">Wys antwoord</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Weer</string>
     <string name="ease_button_hard">Moeilik</string>
     <string name="ease_button_good">Goed</string>

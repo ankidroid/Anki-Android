@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Antwoord schrijven</string>
     <string name="show_answer">Toon antwoord</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Opnieuw</string>
     <string name="ease_button_hard">Moeilijk</string>
     <string name="ease_button_good">Goed</string>

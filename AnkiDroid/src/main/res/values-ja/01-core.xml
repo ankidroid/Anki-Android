@@ -76,6 +76,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">回答の入力</string>
     <string name="show_answer">解答を表示</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">もう一度</string>
     <string name="ease_button_hard">難しい</string>
     <string name="ease_button_good">普通</string>

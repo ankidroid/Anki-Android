@@ -77,6 +77,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">พิมพ์คำตอบ</string>
     <string name="show_answer">แสดงคำตอบ</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">อีกครั้ง</string>
     <string name="ease_button_hard">ยาก</string>
     <string name="ease_button_good">ดี</string>

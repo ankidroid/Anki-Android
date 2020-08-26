@@ -76,6 +76,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">輸入答案</string>
     <string name="show_answer">顯示答案</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">由頭嚟過</string>
     <string name="ease_button_hard">深</string>
     <string name="ease_button_good">中</string>
