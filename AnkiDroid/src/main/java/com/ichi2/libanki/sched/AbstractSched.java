@@ -321,4 +321,8 @@ public abstract class AbstractSched {
     public abstract void discardCurrentCard();
 
     public abstract Collection getCol();
+
+    /** The button to press to enter "good" on a new card. */
+    @VisibleForTesting
+    public abstract  @Consts.BUTTON_TYPE int getGoodNewButton();
 }

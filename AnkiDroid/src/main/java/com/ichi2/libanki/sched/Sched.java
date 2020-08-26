@@ -1415,4 +1415,11 @@ public class Sched extends SchedV2 {
             break;
         }
     }
+
+    /** The button to press on a new card to answer "good".*/
+    @Override
+    @VisibleForTesting
+    public @Consts.BUTTON_TYPE int getGoodNewButton() {
+        return 2;
+    }
 }

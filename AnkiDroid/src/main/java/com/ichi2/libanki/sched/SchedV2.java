@@ -3139,4 +3139,11 @@ public class SchedV2 extends AbstractSched {
     public Collection getCol() {
         return mCol;
     }
+
+    @Override
+    @VisibleForTesting
+    public @Consts.BUTTON_TYPE int getGoodNewButton() {
+        return 3;
+    }
+
 }
