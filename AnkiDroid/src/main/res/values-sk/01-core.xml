@@ -91,6 +91,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Napísať odpoveď</string>
     <string name="show_answer">Zobraziť odpoveď</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Znovu</string>
     <string name="ease_button_hard">Ťažké</string>
     <string name="ease_button_good">Dobré</string>

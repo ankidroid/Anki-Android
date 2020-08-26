@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">entajpu respondon</string>
     <string name="show_answer">montri respondon</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">denove</string>
     <string name="ease_button_hard">malfacile</string>
     <string name="ease_button_good">facile</string>

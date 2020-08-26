@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">پاسخ را تایپ کنید</string>
     <string name="show_answer">نمایش پاسخ</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">دوباره</string>
     <string name="ease_button_hard">سخت</string>
     <string name="ease_button_good">خوب</string>

@@ -101,6 +101,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">أدخل الإجابة</string>
     <string name="show_answer">اظهار الإجابة</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">مجددًا</string>
     <string name="ease_button_hard">صعب</string>
     <string name="ease_button_good">جيد</string>

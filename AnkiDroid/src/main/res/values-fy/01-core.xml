@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Typ antwurd</string>
     <string name="show_answer">Toan antwurd</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Opnij</string>
     <string name="ease_button_hard">Muoilik</string>
     <string name="ease_button_good">Goed</string>

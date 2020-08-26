@@ -91,6 +91,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Увядзіце адказ</string>
     <string name="show_answer">Паказаць адказ</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Зноў</string>
     <string name="ease_button_hard">Цяжка</string>
     <string name="ease_button_good">Добра</string>

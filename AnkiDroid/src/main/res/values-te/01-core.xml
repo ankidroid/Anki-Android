@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">సమాధానం టైప్</string>
     <string name="show_answer">సమాధానం చూపించు</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">మళ్ళీ</string>
     <string name="ease_button_hard">హార్డ్</string>
     <string name="ease_button_good">గుడ్</string>

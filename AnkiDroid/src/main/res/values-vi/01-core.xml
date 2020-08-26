@@ -76,6 +76,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Gõ đáp án</string>
     <string name="show_answer">Hiện đáp án</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Học lại</string>
     <string name="ease_button_hard">Khó</string>
     <string name="ease_button_good">Tốt</string>

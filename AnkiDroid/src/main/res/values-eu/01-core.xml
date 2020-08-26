@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Idatzi erantzuna</string>
     <string name="show_answer">Erakutsi erantzuna</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Berriro</string>
     <string name="ease_button_hard">Zaila</string>
     <string name="ease_button_good">Ona</string>

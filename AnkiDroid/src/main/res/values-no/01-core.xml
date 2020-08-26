@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Skriv svar</string>
     <string name="show_answer">Vis svaret</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Igjen</string>
     <string name="ease_button_hard">Vanskelig</string>
     <string name="ease_button_good">Bra</string>

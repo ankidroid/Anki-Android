@@ -81,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Type answer</string>
     <string name="show_answer">Show answer</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Përsëri</string>
     <string name="ease_button_hard">Vështirë</string>
     <string name="ease_button_good">Mirë</string>

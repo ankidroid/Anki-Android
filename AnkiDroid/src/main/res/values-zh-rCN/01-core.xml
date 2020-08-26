@@ -67,8 +67,8 @@
     <plurals name="reviewer_window_title_days">
         <item quantity="other">剩余 %d 天 %d</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">收藏为空</string>
+    <string name="no_cards_placeholder_description">开始添加卡牌\n使用 + 图标。</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">今天学习了%1$d张卡片，用了%2$s。</item>
@@ -76,6 +76,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">输入答案</string>
     <string name="show_answer">显示答案</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">重来</string>
     <string name="ease_button_hard">困难</string>
     <string name="ease_button_good">一般</string>

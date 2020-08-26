@@ -82,6 +82,7 @@ mga natitirang minuto</item>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">I-type ang sagot</string>
     <string name="show_answer">Ipakita ang sagot</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Muli</string>
     <string name="ease_button_hard">Mahirap</string>
     <string name="ease_button_good">Mabuti</string>
