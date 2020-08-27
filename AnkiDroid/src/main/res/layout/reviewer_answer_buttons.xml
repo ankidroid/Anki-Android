@@ -3,7 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:clipChildren="false"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -28,8 +27,7 @@
         android:orientation="horizontal"
         android:background="?attr/hardButtonRef"
         android:visibility="gone"
-        tools:visibility="visible"
-        style="@style/FooterButtonLayout">
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/preview_flip_flashcard"
@@ -66,8 +64,7 @@
     <FrameLayout
         android:id="@+id/answer_options_layout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        style="@style/FooterButtonLayout">
+        android:layout_height="fill_parent">
 
         <LinearLayout
             android:id="@+id/flashcard_layout_flip"
