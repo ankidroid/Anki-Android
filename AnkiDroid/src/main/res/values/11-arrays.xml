@@ -17,256 +17,320 @@
 <resources>
   <string-array
       name="error_reporting_choice_labels"
+      comment="."
       >
     <item
+        comment="."
         >
       Always report
     </item>
     <item
+        comment="."
         >
       Never report
     </item>
     <item
+        comment="."
         >
       Ask me
     </item>
   </string-array>
   <string-array
       name="gestures_labels"
+      comment="."
       >
     <item
+        comment="."
         >
       No action
     </item>
     <item
+        comment="."
         >
       Show answer
     </item>
     <item
+        comment="."
         >
       Answer button 1
     </item>
     <item
+        comment="."
         >
       Answer button 2
     </item>
     <item
+        comment="."
         >
       Answer button 3
     </item>
     <item
+        comment="."
         >
       Answer button 4
     </item>
     <item
+        comment="."
         >
       Answer recommended (green)
     </item>
     <item
+        comment="."
         >
       Answer better than recommended
     </item>
     <item
+        comment="."
         >
       Undo
     </item>
     <item
+        comment="."
         >
       Edit note
     </item>
     <item
+        comment="."
         >
       Tag note
     </item>
     <item
+        comment="."
         >
       Mark note
     </item>
     <item
+        comment="."
         >
       Lookup expression
     </item>
     <item
+        comment="."
         >
       Bury card
     </item>
     <item
+        comment="."
         >
       Suspend card
     </item>
     <item
+        comment="."
         >
       Delete note
     </item>
     <item
+        comment="."
         >
       Play media
     </item>
     <item
+        comment="."
         >
       Abort learning
     </item>
     <item
+        comment="."
         >
       Bury note
     </item>
     <item
+        comment="."
         >
       Suspend note
     </item>
     <item
+        comment="."
         >
       Toggle Red Flag
     </item>
     <item
+        comment="."
         >
       Toggle Orange Flag
     </item>
     <item
+        comment="."
         >
       Toggle Green Flag
     </item>
     <item
+        comment="."
         >
       Toggle Blue Flag
     </item>
     <item
+        comment="."
         >
       Remove Flag
     </item>
     <item
+        comment="."
         >
       Page Up
     </item>
     <item
+        comment="."
         >
       Page Down
     </item>
   </string-array>
   <string-array
       name="leech_action_labels"
+      comment="."
       >
     <item
+        comment="."
         >
       Suspend card
     </item>
     <item
+        comment="."
         >
       Tag only
     </item>
   </string-array>
   <string-array
       name="new_order_labels"
+      comment="."
       >
     <item
+        comment="."
         >
       New cards in random order
     </item>
     <item
+        comment="."
         >
       New cards in order added
     </item>
   </string-array>
   <string-array
       name="cram_deck_conf_order_labels"
+      comment="."
       >
     <item
+        comment="."
         >
       Oldest seen first
     </item>
     <item
+        comment="."
         >
       Random
     </item>
     <item
+        comment="."
         >
       Increasing intervals
     </item>
     <item
+        comment="."
         >
       Decreasing intervals
     </item>
     <item
+        comment="."
         >
       Most lapsed
     </item>
     <item
+        comment="."
         >
       Order added
     </item>
     <item
+        comment="."
         >
       Order due
     </item>
     <item
+        comment="."
         >
       Latest added first
     </item>
     <item
+        comment="."
         >
       Relative overdueness
     </item>
   </string-array>
   <string-array
       name="add_to_cur_labels"
+      comment="."
       >
     <item
+        comment="."
         >
       Use current deck
     </item>
     <item
+        comment="."
         >
       Decide by note type
     </item>
   </string-array>
   <string-array
       name="new_spread_labels"
+      comment="."
       >
     <item
+        comment="."
         >
       Mix new cards and reviews
     </item>
     <item
+        comment="."
         >
       New cards after reviews
     </item>
     <item
+        comment="."
         >
       New cards before reviews
     </item>
   </string-array>
   <string-array
       name="override_font_labels"
+      comment="."
       >
     <item
+        comment="."
         >
       When no font specified on flashcards
     </item>
     <item
+        comment="."
         >
       Always
     </item>
   </string-array>
   <string-array
       name="day_theme_labels"
+      comment="."
       >
     <item
+        comment="."
         >
       Light
     </item>
     <item
+        comment="."
         >
       Plain
     </item>
   </string-array>
   <string-array
       name="night_theme_labels"
+      comment="."
       >
     <item
+        comment="."
         >
       Black
     </item>
     <item
+        comment="."
         >
       Dark
     </item>

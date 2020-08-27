@@ -22,62 +22,74 @@
   <!-- Navigation drawer items-->
   <string
       name="decks"
+      comment="A list of cards. What the user select to choose what to review."
       >
     Decks
   </string>
   <string
       name="card_browser"
+      comment="The screen in which you can search for cards, select some and edit them."
       >
     Card browser
   </string>
   <string
       name="statistics"
+      comment="The screen where you can see aggregated informations about your review history."
       >
     Statistics
   </string>
   <string
       name="settings"
+      comment="The screen where the user can change global parameter ."
       >
     Settings
   </string>
   <string
       name="help"
+      comment="A button to get some information. Either global help for AnkiDroid or help for a specific context."
       >
     Help
   </string>
   <string
       name="send_feedback"
+      comment="The screen allowing user to send feedbacks to the AnkiDroid team."
       >
     Send feedback
   </string>
 
   <string
       name="studyoptions_title"
+      comment="Title of the page showing information about current deck."
       >
     Deck overview
   </string>
   <string
       name="studyoptions_due_today"
+      comment="Label in deck overview for the number of cards that are going to be due today."
       >
     Due today:
   </string>
   <string
       name="studyoptions_new_total"
+      comment="Label in deck overview for the number of new cards (for today or later) in selected deck."
       >
     Total new cards:
   </string>
   <string
       name="studyoptions_total_cards"
+      comment="Label in deck overview for the total number of cards in the selected deck."
       >
     Total cards:
   </string>
   <string
       name="studyoptions_eta"
+      comment="Label in the deck overview for the estimated time the user will spend reviewing this deck."
       >
     Estimated time (min):
   </string>
   <string
       name="studyoptions_start"
+      comment="Label of the button to move from overview and start studying."
       >
     Study
   </string>
@@ -85,21 +97,25 @@
   <!-- DeckPicker.java -->
   <string
       name="expand"
+      comment="Description of the action done in the deck picker, i.e. expanding subdecks of a deck. Used for accessibility."
       >
     Expand
   </string>
   <string
       name="collapse"
+      comment="Description of the action done in the deck picker, i.e. collapsing subdecks of a deck. Used for accessibility."
       >
     Collapse
   </string>
   <string
       name="study_more"
+      comment="Link to invite users to increase the number of card they'll study today in a deck."
       >
     Study more
   </string>
   <plurals
       name="deckpicker_title"
+      comment="Message under AnkiDroid in the main screen."
       >
     <item quantity="one">
       %1$d card due (%2$s)
@@ -110,6 +126,7 @@
     </plurals>
     <plurals
         name="reviewer_window_title"
+        comment="Shown in reviewer to indicates how much time is expected to be spent in it, in minutes (at most 59)."
         >
       <item quantity="one">
         %d minute left
@@ -120,6 +137,7 @@
     </plurals>
     <plurals
         name="reviewer_window_title_hours"
+        comment="Shown in reviewer to indicates how much time is expected to be spent in it, in hours (at most 23) and minutes."
         >
       <item quantity="one">
         %d hour %d left
@@ -130,6 +148,7 @@
     </plurals>
     <plurals
         name="reviewer_window_title_days"
+        comment="Shown in reviewer to indicates how much time is expected to be spent in it, in days and hours."
         >
       <item quantity="one">
         %d day %d left
@@ -140,11 +159,13 @@
     </plurals>
     <string
         name="no_cards_placeholder_title"
+        comment="Message displayed on start, before the user adds they first cards or decks, to explain why they can't start reviewing yet."
         >
       Collection is empty
     </string>
     <string
         name="no_cards_placeholder_description"
+        comment="Message displayed on start, to explain to the user how to start creating cards to learn."
         >
       Start adding cards\nusing the + icon.
     </string>
@@ -152,6 +173,7 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals
         name="studied_cards_today"
+        comment="Message in deck picker telling the user how much time was spent and how much card reviewed today."
         >
       <item quantity="one">
         Studied %1$d card in %2$s today
@@ -165,236 +187,283 @@
     <!-- flashcard_portrait.xml -->
     <string
         name="type_answer_hint"
+        comment="In the reviewer, for cards where you should type the answer. This is the text displayed in the field while it's empty, to indicate the field purpose."
         >
       Type answer
     </string>
     <string
         name="show_answer"
+        comment="In the reviewer, on question side. Label of the button which should be pressed to show the answer."
         >
       Show answer
     </string>
     <string
         name="hide_answer"
+        comment="In previewer, inverse of 'show_answer'; goes back to question side of the card."
         >
       Hide answer
     </string>
     <string
         name="ease_button_again"
+        comment="In the reviewer, on the answer side. Label of the left-most button."
         >
       Again
     </string>
     <string
         name="ease_button_hard"
+        comment="In the reviewer, on the answer side. Label of the second button in most case."
         >
       Hard
     </string>
     <string
         name="ease_button_good"
+        comment="In the reviewer, on the answer side. Label of the default button."
         >
       Good
     </string>
     <string
         name="ease_button_easy"
+        comment="In the reviewer, on the answer side. Label of the right-most button."
         >
       Easy
     </string>
     <string
         name="studyoptions_congrats_undo"
+        comment="Label of button inviting to undo, and explaining what will be undone."
         >
       Undo %s
     </string>
     <string
         name="menu_import"
+        comment="Label of the 'import' menu entry in deck picker."
         >
       Import
     </string>
     <string
         name="undo"
+        comment="Label of the 'undo' button in card browser, reviewer and study option."
         >
       Undo
     </string>
     <string
         name="undo_action_review"
+        comment="Label indicating that, if you press undo, it'll undo the last review."
         >
       last review
     </string>
     <string
         name="undo_action_bury_card"
+        comment="Label indicating that, if you press undo, it'll undo burying a card."
         >
       bury card
     </string>
     <string
         name="undo_action_bury_note"
+        comment="Label indicating that, if you press undo, it'll undo the burying a note."
         >
       bury note
     </string>
     <string
         name="undo_action_suspend_card"
+        comment="Label indicating that, if you press undo, it'll undo the suspension of a card."
         >
       suspend card
     </string>
     <string
         name="undo_action_suspend_note"
+        comment="Label indicating that, if you press undo, it'll undo the suspension of a note."
         >
       suspend note
     </string>
     <string
         name="undo_action_delete"
+        comment="Label indicating that, if you press undo, it'll undo the deletion of a note."
         >
       delete note
     </string>
     <string
         name="undo_action_delete_multi"
+        comment="Label indicating that, if you press undo, it'll undo the deletion of notes."
         >
       delete notes
     </string>
     <string
         name="undo_action_change_deck_multi"
+        comment="Label indicating that, if you press undo, it'll undo changing decks of cards."
         >
       change decks
     </string>
     <string
         name="undo_action_reschedule_card"
+        comment="Label indicating that, if you press undo, it'll undo the rescheduling of card(s)."
         >
       reschedule
     </string>
     <string
         name="undo_action_reset_card"
+        comment="Label indicating that, if you press undo, it'll undo resetting the progress of card(s)."
         >
       reset progress
     </string>
     <string
         name="undo_action_reposition_card"
+        comment="Label indicating that, if you press undo, it'll undo the repositioning card(s)."
         >
       reposition
     </string>
     <string
         name="move_all_to_deck"
+        comment="Label indicating that, if you press undo, it'll undo the move of cards."
         >
       Move all to deck
     </string>
     <string
         name="unbury"
+        comment="Label of the menu item which unbury the cards of a deck."
         >
       Unbury
     </string>
     <string
         name="rename_deck"
+        comment="Label of the menu item which rename a deck.."
         >
       Rename deck
     </string>
     <string
         name="menu_add_note"
+        comment="Label of the menu item to add notes from the reviewer. Same effect as menu_add but displayed in the reviewer."
         >
       Add note
     </string>
     <string
         name="menu_dismiss_note"
+        comment="In reviewer's option, label of the part of the menu dealing with all options removing a card from reviewer today. I.e. suspend, bury and delete."
         >
       Hide / delete
     </string>
     <string
         name="menu_bury_card"
+        comment="Label of the reviewer's menu entry to bury current card."
         >
       Bury card
     </string>
     <string
         name="menu_bury_note"
+        comment="Label of the reviewer's menu entry to bury the note of current card."
         >
       Bury note
     </string>
     <string
         name="menu_suspend_card"
+        comment="Label of the reviewer's menu entry to suspend current card."
         >
       Suspend card
     </string>
     <string
         name="menu_suspend_note"
+        comment="Label of the reviewer's menu entry to suspend current note."
         >
       Suspend note
     </string>
     <string
         name="menu_bury"
+        comment="Label of the reviewer's menu entry to bury. It'll ask whether to bury card or note if it's relevant. Also the label in the preference regarding the bury button."
         >
       Bury
     </string>
     <string
         name="menu_suspend"
+        comment="Label of the reviewer's menu entry to bury. It'll ask whether to suspend card or note if it's relevant. Also the label in the preference regarding the suspend button."
         >
       Suspend
     </string>
     <string
         name="menu_delete_note"
+        comment="Label of the reviewer's menu entry to delete the note. Also the label in the preference regarding the delete button."
         >
       Delete note
     </string>
     <string
         name="menu_flag_card"
+        comment="Label of the reviewer/card browser's menu entry to select which flag to add to a card. Also the label of the preference entry related to this menu entry."
         >
       Flag card
     </string>
     <string
         name="menu_flag_card_zero"
+        comment="Label of the reviewer/card browser's menu entry to remove the card(s)'s flag."
         >
       No flag
     </string>
     <string
         name="menu_flag_card_one"
+        comment="Label of the reviewer/card browser's menu entry to add the red flag to the current/selected card(s)."
         >
       Red flag
     </string>
     <string
         name="menu_flag_card_two"
+        comment="Label of the reviewer/card browser's menu entry to add the orange flag to the current/selected card(s)."
         >
       Orange flag
     </string>
     <string
         name="menu_flag_card_three"
+        comment="Label of the reviewer/card browser's menu entry to add the green flag to the current/selected card(s)."
         >
       Green flag
     </string>
     <string
         name="menu_flag_card_four"
+        comment="Label of the reviewer/card browser's menu entry to add the blue flag to the current/selected card(s)."
         >
       Blue flag
     </string>
     <string
         name="menu_edit_tags"
+        comment="Label of the menu item (and its preference entry) which open the window with a list of tag, allowing you to add/remove already existing tag to the note."
         >
       Edit tags
     </string>
     <string
         name="delete_note_message"
+        comment="The message shown to the user when they click on the delete note button."
         >
       Really delete this note and all its cards?\n%s
     </string>
     <string
         name="menu_select"
+        comment="TODO: what is it ?."
         >
       Select text
     </string>
     <string
         name="menu_search"
+        comment="TODO: Not used yet ?."
         >
       Lookup in %1$s
     </string>
     <string
         name="menu_mark_note"
+        comment="Label of the menu item (and its preference entry) which mark the current note (i.e. add the yellow star)."
         >
       Mark note
     </string>
     <string
         name="menu_unmark_note"
+        comment="Label of the menu item (and its preference entry) which unmark the current note (i.e. remove the yellow star)."
         >
       Unmark note
     </string>
     <string
         name="menu_toggle_mic_tool_bar"
+        comment="Label of the menu item (and its preference entry) which add a recorder/player, to let user hear themselves pronunce something. Represented as a mic."
         >
       Check pronunciation
     </string>
     <string
         name="new_deck"
+        comment="Title of the window inviting to create a deck, and label of the button to open this window."
         >
       Create deck
     </string>
@@ -405,34 +474,31 @@
     </string>
     <string
         name="new_dynamic_deck"
+        comment="Label of the menu item in deck picker inviting to create a filtered deck."
         >
       Create filtered deck
     </string>
     <string
         name="night_mode"
+        comment="Label near the switch between night and day mode."
         >
       Night mode
     </string>
     <string
         name="directory_inaccessible"
+        comment="An error message explaining that the directory can't be accessed."
         >
       AnkiDroid directory is inaccessible
     </string>
-    <!--This is shown when AnkiDroid starts up with no storage permissions.
-    The user is taken to the "App Info" screen, and needs to click "Permissions" and
-    grant AnkiDroid the 'Storage' permission. This needs to be a fairly generic message as implementations
-    of the permissions/app info screen will differ between devices. -->
+    <!-- -->
     <string
         name="startup_no_storage_permission"
+        comment="This is shown when AnkiDroid starts up with no storage permissions. The user is taken to the &quot;App Info&quot; screen, and needs to click &quot;Permissions&quot; and grant AnkiDroid the 'Storage' permission. This needs to be a fairly generic message as implementations of the permissions/app info screen will differ between devices."
         >
       Please grant AnkiDroid the ‘Storage’ permission to continue
     </string>
     <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
+        The time_quantities are units of time. They are used without plurals or dots.<br/>s, min, h, d, are standard (ISO 31-1) units and should usually not be translated, at least not for languages using the Latin  alphabet.
     -->
     <string
         name="time_quantity_seconds"
@@ -476,133 +542,159 @@
     </string><!-- or "%.1f a" -->
     <string
         name="rebuild_cram_deck"
+        comment="Label of meny entry offering to rebuild a cram deck."
         >
+
       Rebuilding cram deck
     </string>
     <string
         name="empty_cram_label"
+        comment="Label of the menu item inviting to empty the cram deck."
         >
       Empty
     </string>
     <string
         name="create_subdeck"
+        comment="Title of the window offering the user to create a subdeck of the deck they selected. label of the menu item opening this window."
         >
       Create subdeck
     </string>
     <string
         name="empty_cram_deck"
+        comment="Message explaining to the user that the cram deck is getting emptied."
         >
       Emptying cram deck
     </string>
     <string
         name="custom_study_deck_name"
+        comment="Default name of a custom study deck."
         >
       Custom study session
     </string>
     <string
         name="custom_study_deck_exists"
+        comment="The user just tried to create a custom study deck. However a deck with the default name of custom study deck exists. This message explain this existing deck should be renamed before the user can create a new custom study deck."
         >
       Rename the existing custom study deck first
     </string>
     <string
         name="invalid_deck_name"
+        comment="Warns user they entered a deck name which is not valid. Currently, that only means that it contains only whitespace, tab and other invisible characters."
         >
       Invalid deck name
     </string>
     <string
         name="studyoptions_empty"
+        comment="Message shown to the user when the select a deck to review and this deck is empty."
         >
       This deck is empty. Press the + button to add new content.
     </string>
     <string
         name="studyoptions_limit_reached"
+        comment="Message shown when the user select a deck, no card can be seen now because of daily limit, however there remain new cards or card due today in the deck."
         >
       Daily study limit reached
     </string>
     <string
         name="studyoptions_empty_schedule"
+        comment="Message shown when a user select a deck, and there is no new card nor any card in learning, or review card due today."
         >
       No cards scheduled to study
     </string>
     <string
         name="studyoptions_congrats_finished"
+        comment="Message shown to user when the reviewer closed because there is no more card to see."
         >
       Congratulations! You have finished for now.
     </string>
     <string
         name="studyoptions_congrats_more_rev"
+        comment="Message shown to the user when there are card to review in the selected deck, due today, but can't be seen because of the daily limit."
         >
       Today’s limit has been reached, but there are still cards to review. You can increase the limit in the options.
     </string>
     <string
         name="studyoptions_congrats_more_new"
+        comment="Message shown to the user when there are new card(s) in the selected deck that can't be seen because of the daily limit."
         >
-    Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but
-    this will increase your short-term review workload.
+      Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.
     </string>
     <string
         name="studyoptions_congrats_custom"
+        comment="Message explaining that more cards can be reviewed by creating a custom study session."
         >
       To study outside of the normal schedule, touch the “Custom study” button
     </string>
     <string
         name="studyoptions_no_cards_due"
+        comment="Message shown to the user when there are cards in learning due later, that can't be shown yet."
         >
       No cards are due yet
     </string>
 
     <string
         name="sd_card_not_mounted"
+        comment="Message shown to user when the card on which data is supposed to be saved can't be accessed."
         >
       Device storage not mounted
     </string>
     <string
         name="empty_cloze_warning"
+        comment="Message shown on the question side telling when the note type is cloze, but there are no cloze deletion in the cloze field."
         >
       Edit this note and add some cloze deletions. (%1$s)
     </string>
     <string
         name="button_sync"
+        comment="Label of the sync button (for accessibility) and of the sync android activity (A theoretical button on android which would start a sync)."
         >
       Sync
     </string>
     <string
         name="cancel_sync_confirm"
+        comment="Message shown when the user press on cancel during sync."
         >
       Do you want to cancel the sync?
     </string>
     <string
         name="continue_sync"
+        comment="In the box asking the user whether they want to cancel sync, this is the label of the button which state that sync is not cancelled."
         >
       Continue sync
     </string>
     <string
         name="sync_cancelled"
+        comment="Message confirming to user that the sync was correctly cancelled as they requested."
         >
       Sync cancelled
     </string>
     <string
         name="sync_cancel_message"
+        comment="Message shown to user when they requested cancellation of sync, stating that this is ongoing."
         >
       Cancelling…\nThis may take some time.
     </string>
     <string
         name="export"
+        comment="Title of the export dialog. That is, the dialog that the user create by selecting Export deck or by selecting from the deck picker menu."
         >
       Export
     </string>
     <string
         name="export_collection"
+        comment="Label of the deckpicker's menu item. When clicked, it allows user to export their whole collection."
         >
       Export collection
     </string>
     <string
         name="export_deck"
+        comment="Label of the menu item, obtained when pressing a deck, allowing to export this deck."
         >
       Export deck
     </string>
     <string
         name="nothing"
+        comment="When a user want to change the type of a note, they are asked for each field/card type to which field/card they want to send it. This is the label of the option which states that the field/card should be deleted."
         >
       Nothing
     </string>
@@ -610,46 +702,55 @@
     <!-- Card template editor -->
     <string
         name="title_activity_template_editor"
+        comment="Title of the window in which the user can edit the card types."
         >
       Card types
     </string>
     <string
         name="card_template_editor_front"
+        comment="In the Card Type window: label explaining that the text field below contains the template of the front of this card type."
         >
       Front template
     </string>
     <string
         name="card_template_editor_back"
+        comment="In the Card Type window: label explaining that the text field below contains the template of the back of this card type."
         >
       Back template
     </string>
     <string
         name="card_template_editor_styling"
+        comment="In the Card Type window: label explaining that the text field below contains the css of this card type."
         >
       Styling
     </string>
     <string
         name="card_template_editor_menu_delete"
+        comment="Label of the menu item in card template editor which allow to delete the card type."
         >
       Delete
     </string>
     <string
         name="card_template_editor_menu_card_browser_appearance"
+        comment="The label of the menu item in card template editor which allow to change the apparence of the card in the card browser."
         >
       Card Browser Appearance
     </string>
     <string
         name="card_template_editor_deck_override"
+        comment="The label of the menu item, in card template editor, which allow to set the deck in which the card of this card type goes when they are created. This override the current deck selection when creating cards."
         >
       Deck Override
     </string>
     <string
         name="card_template_editor_cant_delete"
+        comment="Message shown to the user when they try to delete the last card type of a note type."
         >
       At least one card type is required
     </string>
     <plurals
         name="card_template_editor_confirm_delete"
+        comment="Ask the user to confirm they want to delete a card type, giving them the card type name and the number of existing card of this type."
         >
       <item quantity="one">
         Delete the “%2$s” card type, and its %1$d card?
@@ -660,21 +761,25 @@
     </plurals>
     <string
         name="invalid_template"
+        comment="In the previewer of card template, warn the user that the generation did not occurs."
         >
       A card could not be generated
     </string>
     <string
         name="card_template_editor_would_delete_note"
+        comment="In the card template editor, after the user requested to delete a card type, tells them this can't be done because otherwise a note would have no card left."
         >
       Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.
     </string>
     <string
         name="card_template_editor_save_error"
+        comment="In the card template editor, warn the user their change were not saved because of the reason in the parameter."
         >
       Unable to save card template changes: %s
     </string>
     <string
         name="template_for_current_card_deleted"
+        comment="If the user opened a card to edit, then edited the note type by deleting the card type of the current card, then the editor mus close. This warn the user that the editor is closing because they are looking at a card whose type does not exists anymore."
         >
       The card type for the current card was deleted.
     </string>
@@ -689,11 +794,13 @@
     <!-- Permissions -->
     <string
         name="read_write_permission_label"
+        comment="If an external app asks to interact with Ankidroid and require to change the collection, then this is the short description that the user will see to explain what authorization they are granting to the other app."
         >
       Read and write to the AnkiDroid database
     </string>
     <string
         name="read_write_permission_description"
+        comment="If an external app asks to interact with Ankidroid and require to change the collection, then this is the long description that the user will see to explain what authorization they are granting to the other app."
         >
       access existing notes, cards, note types, and decks, as well as create new ones
     </string>
@@ -701,17 +808,20 @@
     <!-- Context Menu -->
     <string
         name="card_browser_label"
+        comment="If the user add a button on android which opens directly the card browser, then this is the string labelling the button."
         >
       Card Browser
     </string>
     <string
         name="card_browser_context_menu"
+        comment="Label of the menu item proposing to open to open the card browser when some text is selected. TODO: check."
         >
       Card Browser
     </string>
 
     <string
         name="context_menu_anki_card_label"
+        comment="TODO: what does it label ?."
         >
       Anki Card
     </string>

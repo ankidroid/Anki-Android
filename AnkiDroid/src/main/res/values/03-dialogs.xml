@@ -21,41 +21,49 @@
 <resources>
   <string
       name="check_db_title"
+      comment="Title of the dialog offering the user to check the database and warinngi it may take time."
       >
     Check database?
   </string>
   <string
       name="check_db_warning"
+      comment="Message shown to user who want to check the databas, warning them it may be long."
       >
     This may take a long time
   </string>
   <string
       name="check_db_acknowledge"
+      comment="Message shown at the end of the database check to explain it is done."
       >
     Database checked
   </string>
   <string
       name="check_db_acknowledge_shrunk"
+      comment="Message shown at the end of the database check to explain it is done and telling them how much space they saved."
       >
     Database checked and optimized.\nShrunk by %d MB.
   </string>
   <string
       name="contextmenu_deckpicker_delete_deck"
+      comment="Label of the menu item, in the deck picker, offering to delete the selected deck."
       >
     Delete deck
   </string>
   <string
       name="delete_deck_default_deck"
+      comment="Message telling the user that we can't grant their request to a deck, because it's the default deck and this deck can not be deleted."
       >
     The default deck can’t be deleted
   </string>
   <string
       name="delete_deck_title"
+      comment="Title of the message box asking the user to confirm whether they want to delete a deck as they required."
       >
     Delete deck?
   </string>
   <plurals
       name="delete_deck_message"
+      comment="Content of the message box asking the user to confirm that they want to delete a deck."
       >
     <item quantity="one">
       Delete all cards in %1$s? It contains %2$d card.
@@ -66,45 +74,55 @@
   </plurals>
   <string
       name="delete_cram_deck_message"
+      comment="Message shown to user who are asking to delete a cram deck, this explain what occurs to this deck's card.."
       >
     Send all cards in %s back to their original decks?
   </string>
   <string
       name="no_tts_available_message"
+      comment="Warning shown to user that we didn't find any teext-to speech language available to offer them."
       >
     No text-to-speech language available
   </string>
   <string
       name="initializing_tts"
+      comment="Message shown to the user to explain that we intend to use TTS. This may take time, so it shows it has not been forgotten, just that it needs to load."
       >
     Initializing TTS…
   </string>
   <string
       name="tts_no_tts"
+      comment="When the user is asked to choose a TTS language, this is an extra option not to activate TTS in this case."
       >
     Don’t speak
   </string>
 
   <string-array
       name="about_content"
+      comment="Message shown in the Preferences>Advanced>About Ankidroid screen. This is the screen where the user can obtain debug info."
       >
     <item
+        comment="."
         >
       <![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>AnkiDroid is a flashcard application which is fully compatible with the desktop software <a href=\"%2$s\">Anki</a>. You can create, download and learn material on both AnkiDroid or Anki Desktop, and synchronize them easily with AnkiWeb.]]>
     </item>
     <item
+        comment="."
         >
       <![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]>
     </item>
     <item
+        comment="."
         >
       <![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]>
     </item>
     <item
+        comment="."
         >
       <![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]>
     </item>
     <item
+        comment="."
         >
       <![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]>
     </item>
@@ -112,27 +130,32 @@
 
   <string
       name="preview_title"
+      comment="Title of the Previewer windows. Label of the android activity which opens the previewer directly."
       >
     Preview
   </string>
   <string
       name="reposition_card_dialog_title"
+      comment="Title of the dialog in the card browser offering to reposition card.."
       >
     Reposition new card
   </string>
   <string
       name="reposition_card_dialog_message"
+      comment="In the reposition card dialog, in the card browser, label of the field to enter the start of the reposition.."
       >
     Start position:
   </string>
   <string
       name="reposition_card_not_new_error"
+      comment="Error message shown to the user when they try to reposition a card which is not new."
       >
     Only new cards can be repositioned
   </string>
 
   <plurals
       name="reposition_card_dialog_acknowledge"
+      comment="Message shown to the user after they repositioned card.."
       >
     <item quantity="one">
       %d card repositioned
@@ -143,16 +166,19 @@
   </plurals>
   <string
       name="reset_card_dialog_title"
+      comment="Title of the dialog box offering to reset the progress of card."
       >
     Reset card progress
   </string>
   <string
       name="reset_card_dialog_message"
+      comment="Message in the dialog box explaining to the user what will occur if they reset the cards."
       >
     This card will be placed at the end of the new card queue
   </string>
   <plurals
       name="reset_cards_dialog_acknowledge"
+      comment="Message shown to the user after they reset cards, recapping what occurred."
       >
     <item quantity="one">
       %d card reset
@@ -165,11 +191,13 @@
   <!-- Reschedule Card Dialog -->
   <string
       name="reschedule_card_dialog_title"
+      comment="Title of the Reschedule card dialog."
       >
     Reschedule card
   </string>
   <plurals
       name="reschedule_cards_dialog_title"
+      comment="Message shown to the user in the reschedule card dialogs."
       >
     <item quantity="one">
       Reschedule card
@@ -180,6 +208,7 @@
   </plurals>
   <plurals
       name="reschedule_card_dialog_interval"
+      comment="TODO: where is it used ?."
       >
     <item quantity="one">
       Current interval: %d day
@@ -190,11 +219,13 @@
   </plurals>
   <string
       name="reschedule_card_dialog_message"
+      comment="In the Reschedule card dialog, this is the background text explaining to the user what mean the field they should fill."
       >
     Reschedule for review in x days
   </string>
   <plurals
       name="reschedule_cards_dialog_acknowledge"
+      comment="Mesasage shown after rescheduling, recapping what occured."
       >
     <item quantity="one">
       %d card rescheduled
@@ -205,226 +236,269 @@
   </plurals>
   <string
       name="reschedule_card_dialog_new_card_warning"
+      comment="Warning shown to the user when they selected a new card and want to reschedule it, which is not the normal way things should occur."
       >
-  A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option
-  to change a new card\'s position within the new queue
+  A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue
   </string>
   <string
       name="reschedule_card_dialog_warning_ease_reset"
+      comment="In the rescheduling box, message explaining what means the action they are about to do."
       >
     Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)
   </string>
 
   <string
       name="firefox_workaround_launched_reviewer_opening_deck"
+      comment="Message explaining the user how to import a deck they downloaded from firefox, as it's not straightforward."
       >
     Select the deck in your file manager or visit the about:downloads page to import it
   </string>
   <string
       name="answering_error_title"
+      comment="Title of the message box and notification box explaining that there was some database related error (and that we don't have more informations)."
       >
     Database error
   </string>
   <string
       name="answering_error_message"
+      comment="In the database error message box, message explaining what may have occured."
       >
     Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.
   </string>
   <string
       name="answering_error_report"
+      comment="Background default text to show the user they should type a report about the current error in this field."
       >
     Report error
   </string>
   <string
       name="repair_deck_dialog"
+      comment="In case of error, if the user selected &quot;repair the database&quot;, it'll ask the user to confirm their choice."
       >
     Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.
   </string>
   <string
       name="intent_aedict_empty"
+      comment="TODO: explain what it means. Need to know aedict probably."
       >
     Category “default” is empty
   </string>
   <string
       name="intent_aedict_category"
+      comment="TODO: explain what it means. Need to know aedict probably."
       >
     To add cards to AnkiDroid remove all Notepad categories or add one named “default”
   </string>
   <string
       name="custom_study_new_total_new"
+      comment="In custom study, show the number of new cards in the deck. That's the maximal number number of new card that can be added to see today."
       >
     New cards in deck: %d
   </string>
   <string
       name="custom_study_rev_total_rev"
+      comment="In custom study, show the number of review cards due today in the deck. That's the maximal number number of review card that can be added to see today."
       >
     Reviews due in deck: %d
   </string>
   <string
       name="custom_study_new_extend"
+      comment="."
       >
     Increase/decrease (“-3”) today’s new card limit by
   </string>
   <string
       name="custom_study_rev_extend"
+      comment="."
       >
     Increase/decrease (“-3”) today’s review limit by
   </string>
   <string
       name="custom_study_forgotten"
+      comment="."
       >
     Review cards forgotten in last x days:
   </string>
   <string
       name="custom_study_ahead"
+      comment="."
       >
     Review ahead by x days:
   </string>
   <string
       name="custom_study_random"
+      comment="."
       >
     Select x cards randomly from the deck:
   </string>
   <string
       name="custom_study_preview"
+      comment="."
       >
     Preview new cards added in the last x days:
   </string>
   <string
       name="custom_study_rebuild_deck_corrupt"
+      comment="."
       >
     Could not rebuild custom study deck
   </string>
 
   <string
       name="rebuild_custom_study_deck"
+      comment="."
       >
     Rebuilding custom study deck…
   </string>
   <string
       name="importing_collection"
+      comment="."
       >
     Importing collection…
   </string>
   <string
       name="import_media_count"
+      comment="."
       >
     Importing media files %1$d%%…
   </string>
   <string
       name="import_progress"
+      comment="."
       >
     • Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%
   </string>
   <string
       name="import_update_details"
+      comment="."
       >
     Updated %1$d of %2$d existing notes.
   </string>
   <string
       name="import_update_ignored"
+      comment="."
       >
     Some updates were ignored because note type has changed
   </string>
   <string
       name="import_complete_count"
+      comment="."
       >
     Cards imported: %d
   </string>
   <string
       name="sd_card_full_title"
+      comment="."
       >
     SD card full
   </string>
   <string
       name="sd_card_almost_full_title"
+      comment="."
       >
     SD card almost full
   </string>
   <string
       name="restore_backup_title"
+      comment="."
       >
     Restore backup?
   </string>
   <string
       name="restore_backup"
+      comment="."
       >
     Your collection will be replaced with an older copy. Any unsaved progress will be lost.
   </string>
 
   <string
       name="dialog_cancel"
+      comment="."
       >
     Cancel
   </string>
   <string
       name="dialog_ok"
+      comment="."
       >
     OK
   </string>
   <string
       name="dialog_no"
+      comment="."
       >
     No
   </string>
   <string
       name="dialog_continue"
+      comment="."
       >
     Continue
   </string>
   <string
       name="dialog_positive_create"
+      comment="."
       >
     Create
   </string>
   <string
       name="dialog_positive_delete"
+      comment="."
       >
     Delete
   </string>
   <string
       name="dialog_positive_disable"
+      comment="."
       >
     Disable
   </string>
   <string
       name="dialog_positive_overwrite"
+      comment="."
       >
     Overwrite
   </string>
   <string
       name="dialog_positive_remove"
+      comment="."
       >
     Remove
   </string>
   <string
       name="dialog_positive_repair"
+      comment="."
       >
     Repair
   </string>
   <string
       name="dialog_positive_replace"
+      comment="."
       >
     Replace
   </string>
   <string
       name="dialog_positive_restore"
+      comment="."
       >
     Restore
   </string>
   <string
       name="dialog_positive_set"
+      comment="."
       >
     Set
   </string>
 
   <string
       name="lookup_button_content"
+      comment="."
       >
     Look up
   </string>
   <string
       name="dialog_collection_path_not_dir"
+      comment="."
       >
     The path specified wasn’t a valid directory
   </string>
@@ -432,61 +506,73 @@
   <!-- Media checking -->
   <string
       name="check_media_title"
+      comment="."
       >
     Check media?
   </string>
   <string
       name="check_media_warning"
+      comment="."
       >
     This may take a long time with large media collections
   </string>
   <string
       name="check_media_message"
+      comment="."
       >
     Checking media…
   </string>
   <string
       name="check_media_acknowledge"
+      comment="."
       >
     Media checked
   </string>
   <string
       name="check_media_failed"
+      comment="."
       >
     Media check failed
   </string>
   <string
       name="check_media_invalid"
+      comment="."
       >
     Files with invalid encoding: %d
   </string>
   <string
       name="check_media_unused"
+      comment="."
       >
     Files in media folder but not used by any cards: %d
   </string>
   <string
       name="check_media_nohave"
+      comment="."
       >
     Files used on cards but not in media folder: %d
   </string>
   <string
       name="check_media_no_unused_missing"
+      comment="."
       >
     No unused or missing files found
   </string>
   <string
       name="check_media_db_updated"
+      comment="."
       >
     Media database rebuilt
   </string>
   <string
       name="check_media_delete_unused"
+      comment="."
       >
     Delete unused
   </string>
   <string
       name="check_media_deleted"
+      comment="."
       >
     Files deleted: %d
   </string>
@@ -494,16 +580,19 @@
   <!-- Tags Dialog Options -->
   <string
       name="tags_dialog_option_all_cards"
+      comment="."
       >
     All cards
   </string>
   <string
       name="tags_dialog_option_new_cards"
+      comment="."
       >
     New
   </string>
   <string
       name="tags_dialog_option_due_cards"
+      comment="."
       >
     Due
   </string>
@@ -511,21 +600,25 @@
   <!-- Empty cards -->
   <string
       name="emtpy_cards_finding"
+      comment="."
       >
     Finding empty cards…
   </string>
   <string
       name="empty_cards_none"
+      comment="."
       >
     No empty cards
   </string>
   <string
       name="empty_cards_count"
+      comment="."
       >
     Cards to delete: %d
   </string>
   <string
       name="empty_cards_deleted"
+      comment="."
       >
     Cards deleted: %d
   </string>
@@ -533,16 +626,19 @@
   <!-- Multimedia - Edit Field Activity -->
   <string
       name="multimedia_editor_audio_permission_refused"
+      comment="."
       >
     Could not obtain microphone permission.
   </string>
   <string
       name="multimedia_editor_camera_permission_refused"
+      comment="."
       >
     Could not obtain camera permission. Functionality has been disabled.
   </string>
   <string
       name="multimedia_editor_failed"
+      comment="."
       >
     Failed to open Multimedia Editor
   </string>
@@ -550,6 +646,7 @@
   <!-- Multimedia - Audio View -->
   <string
       name="multimedia_editor_audio_permission_denied"
+      comment="."
       >
     Audio recording permission denied
   </string>
@@ -557,16 +654,19 @@
   <!-- Initial collection load -->
   <string
       name="collection_load_welcome_request_permissions_title"
+      comment="."
       >
     Welcome to AnkiDroid!
   </string>
   <string
       name="collection_load_welcome_request_permissions_details"
+      comment="."
       >
     AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team
   </string>
   <string
       name="mutimedia_editor_assertion_failed"
+      comment="."
       >
     Unknown error occurred displaying Advanced Editor
   </string>
@@ -574,42 +674,50 @@
   <!-- Database Integrity Check -->
   <string
       name="integrity_check_startup_title"
+      comment="."
       >
     AnkiDroid Upgraded
   </string>
   <string
       name="integrity_check_startup_content"
+      comment="."
       >
     AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.
   </string>
   <string
       name="integrity_check_positive"
+      comment="."
       >
     Check Database
   </string>
   <string
       name="integrity_check_continue_anyway"
+      comment="."
       >
     Continue Anyway
   </string>
   <string
       name="integrity_check_insufficient_space"
+      comment="."
       >
     Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.
   </string>
   <string
       name="integrity_check_insufficient_space_extra_content"
+      comment="."
       >
     \n\nYou currently have %s free.
   </string>
   <string
       name="integrity_check_fixed_no_home_deck"
+      comment="."
       >
     %d cards with incorrect home decks were recovered. Please see the manual for more information.
   </string>
 
   <string
       name="video_creation_error"
+      comment="."
       >
     Could not play video
   </string>
@@ -617,12 +725,14 @@
   <!-- Card Browser -->
   <string
       name="card_browser_deck_change_error"
+      comment="."
       >
     Could not change deck
   </string>
   <!-- AbstractFlashCardViewer -->
   <string
       name="card_viewer_url_decode_error"
+      comment="."
       >
     Error decoding data from card
   </string>
@@ -630,6 +740,7 @@
   <!-- Deck Options -->
   <string
       name="deck_options_corrupt"
+      comment="."
       >
     Failed to process deck options: %s
   </string>
@@ -637,11 +748,13 @@
   <!-- Database Errors-->
   <string
       name="database_locked_title"
+      comment="."
       >
     Database Locked
   </string>
   <string
       name="database_locked_summary"
+      comment="."
       >
     The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.
   </string>
@@ -649,41 +762,49 @@
   <!-- Deck Picker Background-->
   <string
       name="background_image_applied"
+      comment="."
       >
     Background image applied
   </string>
   <string
       name="background_image_removed"
+      comment="."
       >
     Background image removed
   </string>
   <string
       name="no_image_selected"
+      comment="."
       >
     No image selected
   </string>
   <string
       name="error_selecting_image"
+      comment="."
       >
     Error selecting image. Please see manual. %s
   </string>
   <string
       name="error_deleting_image"
+      comment="."
       >
     Error deleting image
   </string>
   <string
       name="failed_to_apply_background_image"
+      comment="."
       >
     Failed to apply background image %s
   </string>
   <string
       name="background_image_too_large"
+      comment="."
       >
     Deck Picker background too large
   </string>
   <string
       name="image_max_size_allowed"
+      comment="."
       >
     Maximum image size %d MB allowed
   </string>
@@ -692,6 +813,7 @@
   <!-- Also used by Card Browser, not renaming to save translators effort -->
   <string
       name="intent_handler_failed_no_storage_permission"
+      comment="."
       >
     Missing required storage permission. Please grant storage permission then retry your action.
   </string>
@@ -699,6 +821,7 @@
   <!-- Browser Appearance -->
   <string
       name="card_template_editor_card_browser_appearance_failed"
+      comment="."
       >
     Could not load Card Browser Appearance
   </string>
@@ -706,11 +829,13 @@
   <!-- Boot Service -->
   <string
       name="boot_service_failed_to_schedule_notifications"
+      comment="."
       >
     Failed to schedule reminders
   </string>
   <string
       name="boot_service_too_many_notifications"
+      comment="."
       >
     Too many reminders scheduled. Some will not appear
   </string>
@@ -718,11 +843,13 @@
   <!-- Locale Selection Dialog -->
   <string
       name="locale_selection_dialog_title"
+      comment="."
       >
     Keyboard Hint Selection
   </string>
   <string
       name="locale_selection_dialog_summary"
+      comment="."
       >
     Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.
   </string>
@@ -731,6 +858,7 @@
   <!--Sync-->
   <plurals
       name="sync_automatic_sync_needs_more_time"
+      comment="."
       >
     <item quantity="one">
       An automatic sync may be triggered in %d second

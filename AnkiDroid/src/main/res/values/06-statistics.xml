@@ -21,557 +21,675 @@
 <resources>
   <string
       name="statistics_young"
+      comment="."
       >
     Young
   </string>
   <string
       name="statistics_mature"
+      comment="."
       >
     Mature
   </string>
   <string
       name="statistics_young_and_learn"
+      comment="."
       >
     Young+Learn
   </string>
   <string
       name="statistics_unlearned"
+      comment="."
       >
     Unseen
   </string>
   <string
       name="statistics_suspended_and_buried"
+      comment="."
       >
     Suspended+Buried
   </string>
   <string
       name="statistics_relearn"
+      comment="."
       >
     Relearn
   </string>
   <string
       name="statistics_learn"
+      comment="."
       >
     Learn
   </string>
   <string
       name="statistics_cram"
+      comment="."
       >
     Cram
   </string>
   <string
       name="stats_cards"
+      comment="."
       >
     Cards
   </string>
   <string
       name="stats_cards_intervals"
+      comment="."
       >
     Cards with given interval
   </string>
   <string
       name="stats_cumulative_cards"
+      comment="."
       >
     Cumulative cards
   </string>
   <string
       name="stats_cumulative_answers"
+      comment="."
       >
     Cumulative answers
   </string>
   <string
       name="stats_cumulative_time_minutes"
+      comment="."
       >
     Cumulative minutes
   </string>
   <string
       name="stats_cumulative_time_hours"
+      comment="."
       >
     Cumulative hours
   </string>
   <string
       name="stats_cumulative"
+      comment="."
       >
     Cumulative
   </string>
   <string
       name="stats_cumulative_percentage"
+      comment="."
       >
     Cumulative percentage
   </string>
   <string formatted="false"
           name="stats_cumulative_correct_percentage"
+          comment="."
           >
     Cumulative correct %
   </string>
   <string
       name="stats_answers"
+      comment="."
       >
     Answers
   </string>
   <string
       name="stats_minutes"
+      comment="."
       >
     Minutes
   </string>
   <string
       name="stats_hours"
+      comment="."
       >
     Hours
   </string>
   <string
       name="stats_percentage"
+      comment="."
       >
     Percentage
   </string>
   <string
       name="stats_period_month"
+      comment="."
       >
     1 month
   </string>
   <string
       name="stats_period_year"
+      comment="."
       >
     1 year
   </string>
   <string
       name="stats_period_lifetime"
+      comment="."
       >
     deck life
   </string>
   <string
       name="stats_deck_collection"
+      comment="."
       >
     collection
   </string>
   <string
       name="stats_time_of_day"
+      comment="."
       >
     Time of day
   </string>
   <string
       name="stats_day_of_week"
+      comment="."
       >
     Day of week
   </string>
   <string formatted="false"
           name="stats_percentage_correct"
+          comment="."
           >
     % correct
   </string>
   <string
       name="stats_reviews"
+      comment="."
       >
     Reviews
   </string>
   <string
       name="stats_answer_type"
+      comment="."
       >
     Answer type
   </string>
   <string
       name="stats_today_again_count"
+      comment="."
       >
     Again count: &lt;b&gt;%d&lt;/b&gt;
   </string>
   <string
       name="stats_today_correct_count"
+      comment="."
       >
     (&lt;b&gt;%.1f%%&lt;/b&gt; correct)
   </string>
   <string
       name="stats_today_type_breakdown"
+      comment="."
       >
     Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;
   </string>
   <string
       name="stats_today_mature_cards"
+      comment="."
       >
     Correct answers on mature cards: %1$d/%2$d (%3$.1f%%)
   </string>
   <string
       name="stats_today_no_mature_cards"
+      comment="."
       >
     No mature cards were studied today
   </string>
 
   <string
       name="stats_overview_forecast_total"
+      comment="."
       >
     Total: &lt;b&gt;%1$d&lt;/b&gt; reviews
   </string>
   <string
       name="stats_overview_forecast_average"
+      comment="."
       >
     Average: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day
   </string>
   <string
       name="stats_overview_forecast_due_tomorrow"
+      comment="."
       >
     Due tomorrow: &lt;b&gt;%1$d&lt;/b&gt;
   </string>
 
   <string
       name="stats_overview_days_studied"
+      comment="."
       >
     Days studied: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)
   </string>
   <string
       name="stats_overview_total_reviews"
+      comment="."
       >
     Total: &lt;b&gt;%1$d&lt;/b&gt; reviews
   </string>
   <string
       name="stats_overview_reviews_per_day_studydays"
+      comment="."
       >
     Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day
   </string>
   <string
       name="stats_overview_reviews_per_day_all"
+      comment="."
       >
     If you studied every day: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day
   </string>
 
   <string
       name="stats_overview_total_time_in_period"
+      comment="."
       >
     Total: &lt;b&gt;%d&lt;/b&gt; minutes
   </string>
   <string
       name="stats_overview_time_per_day_studydays"
+      comment="."
       >
     Average for days studied: &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day
   </string>
   <string
       name="stats_overview_time_per_day_all"
+      comment="."
       >
     If you studied every day:  &lt;b&gt;%1$.1f&lt;/b&gt; minutes/day
   </string>
   <string
       name="stats_overview_average_answer_time"
+      comment="."
       >
     Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)
   </string>
 
   <string
       name="stats_overview_new_cards_per_day"
+      comment="."
       >
     Average: &lt;b&gt;%1$.1f&lt;/b&gt; cards/day
   </string>
   <string
       name="stats_overview_total_new_cards"
+      comment="."
       >
     Total: &lt;b&gt;%1$d&lt;/b&gt; cards
   </string>
 
   <string
       name="stats_overview_average_interval"
+      comment="."
       >
     "Average interval: "
   </string>
   <string
       name="stats_overview_longest_interval"
+      comment="."
       >
     "Longest interval: "
   </string>
 
   <string
       name="stats_overview_years"
+      comment="."
       >
     &lt;b&gt;%1$.1f&lt;/b&gt; years
   </string>
   <string
       name="stats_overview_months"
+      comment="."
       >
     &lt;b&gt;%1$.1f&lt;/b&gt; months
   </string>
   <string
       name="stats_overview_days"
+      comment="."
       >
     &lt;b&gt;%1$.1f&lt;/b&gt; days
   </string>
   <string
       name="stats_overview_hours"
+      comment="."
       >
     &lt;b&gt;%1$.1f&lt;/b&gt; hours
   </string>
 
   <string
       name="stats_overview_answer_buttons_learn"
+      comment="."
       >
     Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)
   </string>
   <string
       name="stats_overview_answer_buttons_young"
+      comment="."
       >
     Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)
   </string>
   <string
       name="stats_overview_answer_buttons_mature"
+      comment="."
       >
     Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)
   </string>
 
   <string
       name="stats_overview_card_types_total_cards"
+      comment="."
       >
     Total cards: &lt;b&gt;%d&lt;/b&gt;
   </string>
   <string
       name="stats_overview_card_types_total_notes"
+      comment="."
       >
     Total notes: &lt;b&gt;%d&lt;/b&gt;
   </string>
   <string
       name="stats_overview_card_types_lowest_ease"
+      comment="."
       >
     Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;
   </string>
   <string
       name="stats_overview_card_types_average_ease"
+      comment="."
       >
     Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;
   </string>
   <string
       name="stats_overview_card_types_highest_ease"
+      comment="."
       >
     Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;
   </string>
 
   <string
       name="deck_summary_all_decks"
+      comment="."
       >
     All decks
   </string>
   <string
       name="stats_select_time_scale"
+      comment="."
       >
     Select timescale
   </string>
   <string-array
       name="due_x_axis_title"
+      comment="."
       >
     <item
+        comment="."
         >
       Days
     </item>
     <item
+        comment="."
         >
       Weeks
     </item>
     <item
+        comment="."
         >
       Months
     </item>
   </string-array>
   <string
       name="stats_today"
+      comment="."
       >
     Today
   </string>
   <string
       name="stats_overview"
+      comment="."
       >
     Overview
   </string>
   <string
       name="stats_forecast"
+      comment="."
       >
     Forecast
   </string>
   <string
       name="stats_review_count"
+      comment="."
       >
     Review count
   </string>
   <string
       name="stats_review_time"
+      comment="."
       >
     Review time
   </string>
   <string
       name="stats_added"
+      comment="."
       >
     Added
   </string>
   <string
       name="stats_review_intervals"
+      comment="."
       >
     Intervals
   </string>
   <string
       name="stats_breakdown"
+      comment="."
       >
     Hourly breakdown
   </string>
   <string
       name="stats_weekly_breakdown"
+      comment="."
       >
     Weekly breakdown
   </string>
   <string
       name="stats_answer_buttons"
+      comment="."
       >
     Answer buttons
   </string>
   <string
       name="stats_cards_types"
+      comment="."
       >
     Card types
   </string>
 
   <string-array
       name="stats_day_time_strings"
+      comment="."
       >
     <item
+        comment="."
         >
       4AM
     </item>
     <item
+        comment="."
         >
       10AM
     </item>
     <item
+        comment="."
         >
       4PM
     </item>
     <item
+        comment="."
         >
       10PM
     </item>
     <item
+        comment="."
         >
       3AM
     </item>
   </string-array>
   <string-array
       name="stats_week_days"
+      comment="."
       >
     <item
+        comment="."
         >
       Sun
     </item>
     <item
+        comment="."
         >
       Mon
     </item>
     <item
+        comment="."
         >
       Tue
     </item>
     <item
+        comment="."
         >
       Wed
     </item>
     <item
+        comment="."
         >
       Thu
     </item>
     <item
+        comment="."
         >
       Fri
     </item>
     <item
+        comment="."
         >
       Sat
     </item>
   </string-array>
   <string-array
       name="stats_eases_ticks"
+      comment="."
       >
     <item
+        comment="."
         >
       1
     </item>
     <item
+        comment="."
         >
       2
     </item>
     <item
+        comment="."
         >
       3
     </item>
     <item
+        comment="."
         >
       1
     </item>
     <item
+        comment="."
         >
       2
     </item>
     <item
+        comment="."
         >
       3
     </item>
     <item
+        comment="."
         >
       4
     </item>
     <item
+        comment="."
         >
       1
     </item>
     <item
+        comment="."
         >
       2
     </item>
     <item
+        comment="."
         >
       3
     </item>
     <item
+        comment="."
         >
       4
     </item>
   </string-array>
   <string-array
       name="stats_eases_ticks_schedv2"
+      comment="."
       >
     <item
+        comment="."
         >
       1
     </item>
     <item
+        comment="."
         >
       2
     </item>
     <item
+        comment="."
         >
       3
     </item>
     <item
+        comment="."
         >
       4
     </item>
     <item
+        comment="."
         >
       1
     </item>
     <item
+        comment="."
         >
       2
     </item>
     <item
+        comment="."
         >
       3
     </item>
     <item
+        comment="."
         >
       4
     </item>
     <item
+        comment="."
         >
       1
     </item>
     <item
+        comment="."
         >
       2
     </item>
     <item
+        comment="."
         >
       3
     </item>
     <item
+        comment="."
         >
       4
     </item>
@@ -579,6 +697,7 @@
 
   <plurals
       name="stats_today_cards"
+      comment="."
       >
     <item quantity="one">
       Studied &lt;b&gt;%1$d card&lt;/b&gt; in &lt;b&gt;%2$s&lt;/b&gt; today

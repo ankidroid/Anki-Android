@@ -4,26 +4,31 @@
     <!--Fields-->
     <string
         name="front_field_name"
+        comment="."
         >
       Front
     </string>
     <string
         name="back_field_name"
+        comment="."
         >
       Back
     </string>
     <string
         name="text_field_name"
+        comment="."
         >
       Text
     </string>
     <string
         name="extra_field_name"
+        comment="."
         >
       Extra
     </string>
     <string
         name="field_to_ask_front_name"
+        comment="."
         >
       Add Reverse
     </string>
@@ -32,16 +37,19 @@
     <!--Card type-->
     <string
         name="card_one_name"
+        comment="."
         >
       Card 1
     </string>
     <string
         name="card_two_name"
+        comment="."
         >
       Card 2
     </string>
     <string
         name="card_cloze_name"
+        comment="."
         >
       Cloze
     </string>
@@ -50,26 +58,31 @@
     <!--Note type-->
     <string
         name="basic_model_name"
+        comment="."
         >
       Basic
     </string>
     <string
         name="cloze_model_name"
+        comment="."
         >
       Cloze
     </string>
     <string
         name="basic_typing_model_name"
+        comment="."
         >
       Basic (type in the answer)
     </string>
     <string
         name="forward_reverse_model_name"
+        comment="."
         >
       Basic (and reversed card)
     </string>
     <string
         name="forward_optional_reverse_model_name"
+        comment="."
         >
       Basic (optional reversed card)
     </string>

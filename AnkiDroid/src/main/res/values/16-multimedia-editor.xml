@@ -17,26 +17,31 @@
   <!-- Main editor popup menu items -->
   <string
       name="multimedia_editor_popup_image"
+      comment="."
       >
     Add image
   </string>
   <string
       name="multimedia_editor_popup_audio_clip"
+      comment="."
       >
     Add audio clip
   </string>
   <string
       name="multimedia_editor_popup_audio"
+      comment="."
       >
     Record audio
   </string>
   <string
       name="multimedia_editor_popup_text"
+      comment="."
       >
     Advanced editor
   </string>
   <string
       name="multimedia_editor_popup_cloze"
+      comment="."
       >
     Cloze deletion
   </string>
@@ -44,41 +49,48 @@
   <!-- Translation activity (Glosbe) -->
   <string
       name="multimedia_editor_trans_poweredglosbe"
+      comment="."
       >
     Powered by glosbe.com
   </string>
   <!-- these are like translate f r o m  and t o  some othe languages -->
   <string
       name="multimedia_editor_trans_from"
+      comment="."
       >
     From
   </string>
   <string
       name="multimedia_editor_trans_to"
+      comment="."
       >
     To
   </string>
   <!-- imperative for the button title -->
   <string
       name="multimedia_editor_trans_translate"
+      comment="."
       >
     Translate
   </string>
   <!-- waiting message -->
   <string
       name="multimedia_editor_trans_translating_online"
+      comment="."
       >
     Translating online
   </string>
   <!-- pick the right translation imperative -->
   <string
       name="multimedia_editor_trans_pick_translation"
+      comment="."
       >
     Pick translation
   </string>
   <!-- in controller when fails -->
   <string
       name="multimedia_editor_trans_translation_failed"
+      comment="."
       >
     Translation failed
   </string>
@@ -86,12 +98,14 @@
   <!-- dialog title to ask for translation source -->
   <string
       name="multimedia_editor_trans_pick_translation_source"
+      comment="."
       >
     Pick dictionary
   </string>
   <!-- dialog asking to install ColorDict -->
   <string
       name="multimedia_editor_trans_install_color_dict"
+      comment="."
       >
     Install ColorDict first
   </string>
@@ -99,27 +113,32 @@
   <!-- Pronunciation activity (Beolingus) -->
   <string
       name="multimedia_editor_pron_load"
+      comment="."
       >
     Load
   </string>
   <string
       name="multimedia_editor_pron_looking_up"
+      comment="."
       >
     Looking up pronunciation
   </string>
   <!-- in controller when fails -->
   <string
       name="multimedia_editor_pron_pronunciation_failed"
+      comment="."
       >
     Pronunciation failed
   </string>
   <string
       name="multimedia_editor_word_search_try_lower_case"
+      comment="."
       >
     Try using only lower case characters
   </string>
   <string
       name="multimedia_editor_poweredbeolingus"
+      comment="."
       >
     Powered by Beolingus
   </string>
@@ -128,26 +147,31 @@
   <!-- these are button names to convert field type -->
   <string
       name="multimedia_editor_field_editing_text"
+      comment="."
       >
     Text
   </string>
   <string
       name="multimedia_editor_field_editing_image"
+      comment="."
       >
     Image
   </string>
   <string
       name="multimedia_editor_field_editing_audio"
+      comment="."
       >
     Audio recording
   </string>
   <string
       name="multimedia_editor_field_editing_audio_clip"
+      comment="."
       >
     Audio Clip
   </string>
   <string
       name="multimedia_editor_field_editing_done"
+      comment="."
       >
     Done
   </string>
@@ -156,48 +180,57 @@
   <!-- buttons -->
   <string
       name="multimedia_editor_text_field_editing_search_label"
+      comment="."
       >
     Search for:
   </string>
   <string
       name="multimedia_editor_text_field_editing_show"
+      comment="."
       >
     Image
   </string>
   <string
       name="multimedia_editor_text_field_editing_say"
+      comment="."
       >
     Pronunciation
   </string>
   <string
       name="multimedia_editor_text_field_editing_clear"
+      comment="."
       >
     Clear
   </string>
   <string
       name="multimedia_editor_text_field_editing_clone"
+      comment="."
       >
     Clone from
   </string>
   <string
       name="multimedia_editor_text_field_editing_translate"
+      comment="."
       >
     Translation
   </string>
   <!-- message to user, when there is no text or many words, but the user tries something -->
   <string
       name="multimedia_editor_text_field_editing_no_text"
+      comment="."
       >
     Input some text first
   </string>
   <string
       name="multimedia_editor_text_field_editing_many_words"
+      comment="."
       >
     Dictionary usually expects one word
   </string>
   <!-- message when cloning -->
   <string
       name="multimedia_editor_text_field_editing_clone_source"
+      comment="."
       >
     Take from
   </string>
@@ -209,16 +242,19 @@
   <!-- for buttons -->
   <string
       name="multimedia_editor_image_field_editing_galery"
+      comment="."
       >
     Gallery
   </string>
   <string
       name="multimedia_editor_image_field_editing_photo"
+      comment="."
       >
     Camera
   </string>
   <string
       name="multimedia_editor_image_field_editing_library"
+      comment="."
       >
     Library
   </string>
@@ -227,12 +263,14 @@
   <!-- message on the progress dialog for the user to wait, means process -->
   <string
       name="multimedia_editor_general_downloading"
+      comment="."
       >
     Downloading
   </string>
   <!-- when process finishes -->
   <string
       name="multimedia_editor_general_done"
+      comment="."
       >
     Done
   </string>
@@ -240,6 +278,7 @@
   <!-- General word search and failures -->
   <string
       name="multimedia_editor_error_word_not_found"
+      comment="."
       >
     The word was not found
   </string>
@@ -247,11 +286,13 @@
   <!-- failure when contacting glosbe or similar -->
   <string
       name="multimedia_editor_trans_getting_failure"
+      comment="."
       >
     Getting translation failed
   </string>
   <string
       name="multimedia_editor_searching_word"
+      comment="."
       >
     Searching the word
   </string>
@@ -259,22 +300,26 @@
   <!-- General -->
   <string
       name="multimedia_editor_progress_wait_title"
+      comment="."
       >
     Wait
   </string>
   <!-- not a good message, when an unexpected error happens -->
   <string
       name="multimedia_editor_something_wrong"
+      comment="."
       >
     Something went wrong
   </string>
   <string
       name="multimedia_editor_attach_mm_content"
+      comment="."
       >
     Attach multimedia content to the %1$s field
   </string>
   <string
       name="multimedia_editor_attach_media"
+      comment="."
       >
     Attach media
   </string>
@@ -283,16 +328,19 @@
   <!-- Message when recording fails -->
   <string
       name="multimedia_editor_audio_view_recording_failed"
+      comment="."
       >
     Recording failed
   </string>
   <string
       name="multimedia_editor_audio_view_playing_failed"
+      comment="."
       >
     Playing failed
   </string>
   <string
       name="multimedia_editor_audio_view_create_failed"
+      comment="."
       >
     Unable to create recorder tool bar
   </string>
@@ -301,16 +349,19 @@
 
   <string
       name="title_activity_edit_text"
+      comment="."
       >
     Editing field
   </string>
   <string
       name="title_activity_translation"
+      comment="."
       >
     Translation
   </string>
   <string
       name="title_activity_load_pronounciation"
+      comment="."
       >
     Pronunciation
   </string>
@@ -318,6 +369,7 @@
   <!-- Network failure -->
   <string
       name="network_no_connection"
+      comment="."
       >
     No connection
   </string>
@@ -325,26 +377,31 @@
   <!-- Crop function-->
   <string
       name="crop_image"
+      comment="."
       >
     Do you want to crop this image?
   </string>
   <string
       name="crop_button"
+      comment="."
       >
     Crop image
   </string>
   <string
       name="save_dialog_content"
+      comment="."
       >
     Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?
   </string>
   <string
       name="select_image_failed"
+      comment="."
       >
     "Select image failed, Please retry"
   </string>
   <string
       name="activity_result_unexpected"
+      comment="."
       >
     App returned an unexpected value. You may need to use a different app
   </string>

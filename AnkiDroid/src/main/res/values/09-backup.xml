@@ -22,117 +22,140 @@
 
   <string
       name="backup_deck_no_space_left"
+      comment="."
       >
     Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.
   </string>
   <string
       name="sd_space_warning"
+      comment="."
       >
     Less than %d MB space on your SD card left.\nFree some space to avoid data loss.
   </string>
   <string
       name="backup_delete"
+      comment="."
       >
     Deleting backups…
   </string>
   <string
       name="backup_restore"
+      comment="."
       >
     Restore from backup
   </string>
   <string
       name="backup_new_collection"
+      comment="."
       >
     New collection
   </string>
   <string
       name="backup_del_collection"
+      comment="."
       >
     Delete collection and create new one
   </string>
   <string
       name="backup_del_collection_question"
+      comment="."
       >
     Delete the collection and create a new one? This will drop all your learning progress and delete all cards.
   </string>
   <string
       name="backup_full_sync_from_server"
+      comment="."
       >
     Full sync from server
   </string>
   <string
       name="backup_full_sync_from_server_question"
+      comment="."
       >
     Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.
   </string>
   <string
       name="error_handling_title"
+      comment="."
       >
     Error handling
   </string>
   <string
       name="error_handling_options"
+      comment="."
       >
     Options
   </string>
   <string
       name="backup_retry_opening"
+      comment="."
       >
     Retry opening
   </string>
   <string
       name="backup_error_menu_repair"
+      comment="."
       >
     Repair database
   </string>
   <string
       name="backup_repair_deck"
+      comment="."
       >
     Repair
   </string>
   <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
   <string
       name="backup_repair_deck_progress"
+      comment="."
       >
     Repairing database…
   </string>
   <string
       name="backup_error"
+      comment="."
       >
     Error
   </string>
   <string
       name="backup_invalid_file_error"
+      comment="."
       >
     The selected backup file was invalid
   </string>
   <string
       name="backup_restore_select_title"
+      comment="."
       >
     Select backup to restore
   </string>
   <string
       name="backup_restore_no_backups"
+      comment="."
       >
     No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.
   </string>
   <string
       name="open_collection_failed_title"
+      comment="."
       >
     Collection not opened
   </string>
   <string
       name="corrupt_db_message"
+      comment="."
       >
     Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s
   </string>
   <string
       name="access_collection_failed_message"
+      comment="."
       >
     An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s
   </string>
   <string
       name="deck_repair_error"
+      comment="."
       >
     Collection couldn’t be repaired
   </string>

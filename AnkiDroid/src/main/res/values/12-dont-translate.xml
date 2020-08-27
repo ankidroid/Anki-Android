@@ -18,6 +18,7 @@
 <resources>
   <string
       name="crowdin_test_string_do_not_translate"
+      comment="."
       >
     You can ignore this string. It\'s used only for test. You can also
 translate it to ensure that you don\'t get notification that a string is missing. (In this case, simply uses a single

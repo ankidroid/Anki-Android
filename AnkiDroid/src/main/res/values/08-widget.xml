@@ -22,11 +22,13 @@
   <!-- Widget -->
   <string
       name="widget_minimum_cards_due_notification_ticker_title"
+      comment="."
       >
     Cards due
   </string>
   <plurals
       name="widget_minimum_cards_due_notification_ticker_text"
+      comment="."
       >
     <item quantity="one">
       %d AnkiDroid card due
@@ -37,17 +39,20 @@
   </plurals>
   <string
       name="widget_no_cards_due"
+      comment="."
       >
     No cards due
   </string>
   <string
       name="widget_loading"
+      comment="."
       >
     Widget loading…
   </string>
 
   <plurals
       name="widget_cards_in_decks_due"
+      comment="."
       >
     <item quantity="one">
       %1$d card due in %2$s
@@ -58,6 +63,7 @@
   </plurals>
   <plurals
       name="widget_decks"
+      comment="."
       >
     <item quantity="one">
       %1$d deck
@@ -69,18 +75,21 @@
 
   <string
       name="widget_small"
+      comment="."
       >
     AnkiDroid small
   </string>
 
   <string
       name="widget_small_button"
+      comment="."
       >
     AnkiDroid
   </string>
 
   <plurals
       name="widget_cards_due"
+      comment="."
       >
     <item quantity="one">
       %d card due
@@ -91,6 +100,7 @@
   </plurals>
   <plurals
       name="widget_eta"
+      comment="."
       >
     <item quantity="one">
       %d minute remaining
@@ -102,6 +112,7 @@
 
   <string
       name="widget_add_note_button"
+      comment="."
       >
     Add new AnkiDroid note
   </string>

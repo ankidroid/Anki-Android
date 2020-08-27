@@ -23,6 +23,7 @@
   <!-- CardBrowser -->
   <plurals
       name="card_browser_subtitle"
+      comment="."
       >
     <item quantity="one">
       %d card shown
@@ -34,280 +35,338 @@
 
   <string
       name="card_browser_all_decks"
+      comment="."
       >
     All decks
   </string>
   <string
       name="card_browser_delete_card"
+      comment="."
       >
     Delete notes
   </string>
   <string
       name="card_browser_suspend_card"
+      comment="."
       >
     Suspend cards
   </string>
   <string
       name="card_browser_toggle_suspend_card"
+      comment="."
       >
     (un)suspend cards
   </string>
   <string
       name="card_browser_change_deck"
+      comment="."
       >
     Change deck
   </string>
   <string
       name="card_browser_unsuspend_card"
+      comment="."
       >
     Unsuspend cards
   </string>
   <string
       name="card_browser_mark_card"
+      comment="."
       >
     Mark notes
   </string>
   <string
       name="card_browser_flag"
+      comment="."
       >
     Flag
   </string>
   <string
       name="card_browser_toggle_mark_card"
+      comment="."
       >
     (un)mark notes
   </string>
   <string
       name="card_browser_unmark_card"
+      comment="."
       >
     Unmark notes
   </string>
   <string
       name="delete_card_title"
+      comment="."
       >
     Delete note?
   </string>
   <string
       name="delete_cards_title"
+      comment="."
       >
     Delete notes?
   </string>
   <string
       name="delete_card_message"
+      comment="."
       >
     Delete all cards of this note?\nSearch field: %s
   </string>
   <string
       name="delete_card_mult_message"
+      comment="."
       >
     Delete all cards of all selected notes?\n(Not only selected cards)
   </string>
   <string
       name="deleted_message"
+      comment="."
       >
     Notes deleted
   </string>
   <string
       name="changed_deck_message"
+      comment="."
       >
     Moved to %s
   </string>
   <string
       name="card_browser_suspended_cards"
+      comment="."
       >
     (un)suspended cards
   </string>
   <string
       name="card_browser_show_marked"
+      comment="."
       >
     Filter marked
   </string>
   <string
       name="card_browser_show_suspended"
+      comment="."
       >
     Filter suspended
   </string>
   <string
       name="card_browser_search_by_tag"
+      comment="."
       >
     Filter by tag
   </string>
   <string
       name="card_browser_tags_shown"
+      comment="."
       >
     Tags: %1$s
   </string>
   <string
       name="card_browser_list_my_searches"
+      comment="."
       >
     My searches
   </string>
   <string
       name="card_browser_list_my_searches_save"
+      comment="."
       >
     Save search
   </string>
   <string
       name="card_browser_list_my_searches_title"
+      comment="."
       >
     Choose a saved search
   </string>
   <string
       name="card_browser_list_my_searches_new_name"
+      comment="."
       >
     Name for the current search
   </string>
   <string
       name="card_browser_list_my_searches_new_search_error_empty_name"
+      comment="."
       >
     You can’t save a search without a name
   </string>
   <string
       name="card_browser_list_my_searches_new_search_error_dup"
+      comment="."
       >
     Name exists
   </string>
   <string
       name="card_browser_list_my_searches_remove_content"
+      comment="."
       >
     Delete “%1$s”?
   </string>
   <string
       name="card_browser_change_display_order"
+      comment="."
       >
     Change display order
   </string>
   <string
       name="card_browser_change_display_order_title"
+      comment="."
       >
     Choose display order
   </string>
   <string
       name="card_browser_change_display_order_reverse"
+      comment="."
       >
     Select a field twice to reverse
   </string>
   <string
       name="card_details_question"
+      comment="."
       >
     Question
   </string>
   <string
       name="card_details_answer"
+      comment="."
       >
     Answer
   </string>
   <string
       name="card_details_due"
+      comment="."
       >
     Due
   </string>
   <string
       name="card_details_tags"
+      comment="."
       >
     Tags
   </string>
   <string
       name="card_browser_filtering_cards"
+      comment="."
       >
     Filtering cards… \nPress back button to cancel
   </string>
   <string-array
       name="card_browser_order_labels"
+      comment="."
       >
     <item
+        comment="."
         >
       No sorting (faster)
     </item>
     <item
+        comment="."
         >
       By sort field
     </item>
     <item
+        comment="."
         >
       By created time
     </item>
     <item
+        comment="."
         >
       By note modification time
     </item>
     <item
+        comment="."
         >
       By card modification time
     </item>
     <item
+        comment="."
         >
       By due time
     </item>
     <item
+        comment="."
         >
       By interval
     </item>
     <item
+        comment="."
         >
       By ease
     </item>
     <item
+        comment="."
         >
       By reviews
     </item>
     <item
+        comment="."
         >
       By lapses
     </item>
   </string-array>
   <string
       name="card_browser_select_all"
+      comment="."
       >
     Select all
   </string>
   <string
       name="card_browser_select_none"
+      comment="."
       >
     Select none
   </string>
   <string
       name="card_browser_edit_note"
+      comment="."
       >
     Edit note
   </string>
   <string
       name="card_browser_interval_new_card"
+      comment="."
       >
     (new)
   </string>
   <string
       name="card_browser_ease_new_card"
+      comment="."
       >
     (new)
   </string>
   <string
       name="card_browser_due_filtered_card"
+      comment="."
       >
     (filtered)
   </string>
   <string
       name="card_browser_interval_learning_card"
+      comment="."
       >
     (learning)
   </string>
   <string
       name="card_browser_note_editor_error"
+      comment="."
       >
     Error opening Note Editor
   </string>
   <string
       name="card_browser_no_cards_in_deck"
+      comment="."
       >
     No cards found in deck ‘%s’
   </string>
   <string
       name="card_browser_search_all_decks"
+      comment="."
       >
     Search all decks
   </string>
   <string
       name="card_browser_unknown_deck_name"
+      comment="."
       >
     Unknown
   </string>

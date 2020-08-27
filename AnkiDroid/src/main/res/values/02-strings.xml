@@ -22,6 +22,7 @@
   <!-- How to format a percentage shown in the summary field of a preference -->
   <string
       name="preference_summary_percentage"
+      comment="XXX is a number. The translation should state how to present a percentage and contains XXX in place of the number."
       >
     XXX%
   </string>
@@ -29,61 +30,73 @@
   <!-- Navigation drawer strings -->
   <string
       name="CardEditorCardDeck"
+      comment="When the note is edited for an already existing card, this label the deck of this card. This indicates in particular that changing the deck will only affect this card and not the remaining of the note."
       >
     Card deck:
   </string>
   <string
       name="CardEditorNoteDeck"
+      comment="When adding a card, this label the choice of deck. It indicates that all cards of the note created will go to this deck (except if deck override is used)."
       >
     Deck:
   </string>
   <string
       name="CardEditorModel"
+      comment="In the card editor, labels showing where to choose the note type."
       >
     Type:
   </string>
   <string
       name="CardEditorTags"
+      comment="Label on the left of the list of tags, on the bottom of the card editor."
       >
     Tags: %1$s
   </string>
   <string
       name="CardEditorCards"
+      comment="In the bottom of the card editor, the list of card type of the current card."
       >
     Cards: %1$s
   </string>
   <string
       name="tag_name"
+      comment="The hint shown in the field of the add tag window, when there is no tag, to indicate to the user what they are expected to type."
       >
     Tag name
   </string>
   <string
       name="add_new_filter_tags"
+      comment="The hint, shown in the search bar of the tag list window, when nothing is searched yet, to indicate to the user what is this field purpose."
       >
     Add/filter tags
   </string>
   <string
       name="add_tag"
+      comment="Title of the window inviting the user to type a tag to add to their note."
       >
     Add tag
   </string>
   <string
       name="check_all_tags"
+      comment="Title of the 'select all' button in the window containing the tag list. Shown when the button is pressed, not normally seen."
       >
     Check/uncheck all tags
   </string>
   <string
       name="filter_tags"
+      comment="It is: -The hint of the field in which to search for some tag. -The label of the button allowing to search tags and make the search field appear."
       >
     Filter tags
   </string>
   <string
       name="no_tags"
+      comment="The string in the tag list which indicates that there is not a single task in the collection."
       >
     You haven’t added any tags yet
   </string>
   <string
       name="updated_version"
+      comment="Message telling the version of AnkiDroid has been updated.."
       >
     Updated to version %s
   </string>
@@ -91,91 +104,109 @@
   <!-- Reviewer.java -->
   <string
       name="save_whiteboard"
+      comment="Label of the menu item used to save the whiteboard. Also the label in the preference of the menu item allowing to change the saving preference of the whiteboard."
       >
     Save whiteboard
   </string>
   <string
       name="enable_whiteboard"
+      comment="Label of menu item used to enable the whiteboard. Label of the icon allowing to enable the whiteboard. Also the label of the preference related to enabling whiteboard."
       >
     Enable whiteboard
   </string>
   <string
       name="disable_whiteboard"
+      comment="Label of the icon which allows to disable the whiteboard."
       >
     Disable whiteboard
   </string>
   <string
       name="show_whiteboard"
+      comment="Label of the icon which allow to show the whiteboard."
       >
     Show whiteboard
   </string>
   <string
       name="hide_whiteboard"
+      comment="Label of the menu item and of the icon to hide the whiteboard. Also the label of the preference entry dealing with this icon."
       >
     Hide whiteboard
   </string>
   <string
       name="clear_whiteboard"
+      comment="Label of the menu item to clear the whiteboard and label of the related preference entry."
       >
     Clear whiteboard
   </string>
   <string
       name="replay_audio"
+      comment="Label of the menu item to replay the audio, and label of the related preference entry."
       >
     Replay audio
   </string>
   <string
       name="leech_suspend_notification"
+      comment="Notification shown to the user when they press again and the card is now considered as a leech and suspended."
       >
     Card marked as leech and suspended
   </string>
   <string
       name="leech_notification"
+      comment="Notification shown to the user when they press again and the card is now considered as a leech (but not suspended)."
       >
     Card marked as leech
   </string>
   <string
       name="corrupt_font"
+      comment="Message shown to the user when the font was not correctly created."
       >
     Corrupt font file %s
   </string>
   <string
       name="webview_crash_unknown"
+      comment="Message warning the user that the webview (tool to display the card content as a web page) crashed for unknown reason. This is a part of longer message."
       >
     Unknown error
   </string>
   <string
       name="webview_crash_unknwon_detailed"
+      comment="Message inside a material dialog explaining that an error was caused by webview for unknown reason."
       >
     This was caused by an internal error in the WebView
   </string>
   <string
       name="webview_crash_oom"
+      comment="Message warning the user that the webview (tool to display the card content as a web page) crashed because the system didn't have any memory available. It's part of a longer message."
       >
     Out of Memory
   </string>
   <string
       name="webview_crash_oom_details"
+      comment="Message inside a material dialog explaining that an error was caused by webview because of lack of memory."
       >
     The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.
   </string>
   <string
       name="webview_crash_nonfatal"
+      comment="Message telling the user the webview crashed and why it did (or that we don't know why)."
       >
     WebView renderer crashed. Cause: %s
   </string>
   <string
       name="webview_crash_fatal"
+      comment="Message telling the user the webview crashed and why it did (or that we don't know why) and that we can't recover."
       >
     Fatal Error: WebView renderer crashed. Cause: %s
   </string>
   <string
       name="webview_crash_loop_dialog_title"
+      comment="Title of the dialog box explaining that the webview failed."
       >
     System WebView Rendering Failure
   </string>
   <string
       name="webview_crash_loop_dialog_content"
+      comment="Message of the dialog explaining webview failed to render, with card number and explanation."
       >
     System WebView failed to render card \'%1$s\'.\n %2$s
   </string>
@@ -185,10 +216,12 @@
       name="browser_column1_headings"
       >
     <item
+        comment="In card browser, label showing that the first column shows the start of the question side of the card."
         >
       Question
     </item>
     <item
+        comment="In card browser, label showing that the first column shows the content of the field used for sorting."
         >
       Sort field
     </item>
@@ -197,58 +230,72 @@
       name="browser_column2_headings"
       >
     <item
+        comment="In card browser, label showing that the second column shows the start of the answer side (with question trimmed potentially)."
         >
       Answer
     </item>
     <item
+        comment="In card browser, label showing that the second column shows the name of the card type."
         >
       Card
     </item>
     <item
+        comment="In card browser, label showing that the second column shows the card's deck."
         >
       Deck
     </item>
     <item
+        comment="In card browser, label showing that the second column shows the note type."
         >
       Note
     </item>
     <item
+        comment="In card browser, label showing that the second column shows the start of the question side of the card."
         >
       Question
     </item>
     <item
+        comment="In card browser, label showing that the second column shows the tags of the note."
         >
       Tags
     </item>
     <item
+        comment="In card browser, label showing that the second column shows the number of lapses."
         >
       Lapses
     </item>
     <item
+        comment="In card browser, label showing that the second column shows the number of time the card was reviewed."
         >
       Reviews
     </item>
     <item
+        comment="In card browser, label showing that the second column shows the interval between the last review and the next one (for card in reviews)."
         >
       Interval
     </item>
     <item
+        comment="In card browser, label showing that the second column shows the &quot;ease factor&quot; of the card."
         >
       Ease
     </item>
     <item
+        comment="In card browser, label showing that the second column shows when the card is due next. Its position in the list of new card or a date."
         >
       Due
     </item>
     <item
+        comment="In card browser, label showing that the second column shows the last time the card was modified."
         >
       Card Modified
     </item>
     <item
+        comment="In card browser, label showing that the second column shows when the card was created."
         >
       Created
     </item>
     <item
+        comment="In card browser, label showing that the second column shows when the note was modified."
         >
       Note Modified
     </item>
@@ -257,36 +304,43 @@
   <!-- Custom study options -->
   <string
       name="custom_study_increase_new_limit"
+      comment="Label of the menu item in custom study to increase the number of new card seen in the selected deck today."
       >
     Modify today’s new card limit
   </string>
   <string
       name="custom_study_increase_review_limit"
+      comment="Label of the menu item in custom study to increase the number of review card seen in the selected deck today."
       >
     Modify today’s review card limit
   </string>
   <string
       name="custom_study_review_forgotten"
+      comment="Label of the menu item in custom study to invite the user to review forgotten cards."
       >
     Review forgotten cards
   </string>
   <string
       name="custom_study_review_ahead"
+      comment="Label of the menu item in custom study to invite the user to review cards that are due in a few days."
       >
     Review ahead
   </string>
   <string
       name="custom_study_random_selection"
+      comment="Label of the menu item in custom study to invite the user to review a random selection of cards."
       >
     Study a random selection of cards
   </string>
   <string
       name="custom_study_preview_new"
+      comment="Label of the menu item in custom study to invite the user to preview new cards."
       >
     Preview new cards
   </string>
   <string
       name="custom_study_limit_tags"
+      comment="Label of the menu item in custom study to invite the user to TODO : what is it ?."
       >
     Limit to particular tags
   </string>
@@ -294,92 +348,111 @@
   <!-- Card editor -->
   <string
       name="cardeditor_title_edit_card"
+      comment="Title of the window used to edit existing cards."
       >
     Edit note
   </string>
   <string
       name="discard_unsaved_changes"
+      comment="Ask user to confirm they want to discard and ignore change they made to a card or a card type."
       >
     Close and lose current input?
   </string>
   <string
       name="note_editor_no_cards_created"
+      comment="Message shown if the user asked to create a note, and this failed but we don't know the reason."
       >
     No cards created. Please fill in more fields
   </string>
   <string
       name="note_editor_no_first_field"
+      comment="Message shown if the user asked to create a note, and this failed because they did not fill the first field."
       >
     The first field is empty
   </string>
   <string
       name="note_editor_no_cloze_delations"
+      comment="Message shown if the user asked to create a note, and this failed because the note type is a cloze type and they did not provide a cloze."
       >
     This note type must contain cloze deletions
   </string>
   <string
       name="note_editor_set_field_language"
+      comment="Label of the item obtained by maintening pression in a field, to invite to set the local language of the field (TODO: what's the purpose)."
       >
     Set field language
   </string>
   <string
       name="note_editor_no_cards_created_all_fields"
+      comment="Message shown if the user asked to create a note, and this failed even if all fields are filled. This show the note type should be corrected or changed."
       >
     The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution
   </string>
   <string
       name="note_editor_insert_cloze_no_cloze_note_type"
+      comment="Message shown to the user if they entered the shortcut to enter a cloze deletion while to warn them that they are not currently in a cloze type."
       >
     Cloze deletions will only work on a Cloze note type
   </string>
+  <!-- Note used to be called "fact". Old name kept because changing it would require to ask for new translation in all languages -->
   <string
       name="saving_facts"
+      comment="Message shown to the user when they added a new note, to indicate it's currently done."
       >
     Saving note
   </string>
   <string
       name="saving_model"
+      comment="Message shown to the user when they added or changed a note type, to indicate it's currently done."
       >
     Saving note type
   </string>
   <string
       name="save"
+      comment="Label of the tick icon which validate change of card, card template."
       >
     Save
   </string>
   <string
       name="close"
+      comment="Label of buttons inviting teh user to close a window without doing any actual actions."
       >
     Close
   </string>
   <string
       name="select"
+      comment="In custom study, when limiting to tag. This is the button to create the custom study deck using the tags that were selected."
       >
     Select
   </string>
   <string
       name="saving_changes"
+      comment="In the card template editor, message of a dialog displayed while the note type is being saved."
       >
     Saving changes…
   </string>
   <string
       name="reordering_cards"
+      comment="Message shown when some change is done to configurations and the result is processed. TODO: why is it shown even if the change is not related to reordering ?"
       >
     Reordering cards…
   </string>
   <string
       name="field_remapping"
+      comment="When a card is edited and its note type is changed, the label of the %1th field indicates that the original content of this field come from a field called %2."
       >
     %1$s (from “%2$s”)
   </string>
   <string
       name="confirm_map_cards_to_nothing"
+      comment="If a card is edited, its note type changed, and there is a risk that cards are lost, warn the user this risk exists."
       >
     Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?
   </string>
 
   <plurals
       name="timebox_reached"
+      comment="Message telling regularly to the user how many review they made (%1) in the amount of time %2 they specified in the preference.."
       >
     <item quantity="one">
       %1$d card studied in %2$s
@@ -388,9 +461,9 @@
       %1$d cards studied in %2$s
     </item>
   </plurals>
-  <!-- minutes used in '[studied in] x minutes' context, causing inflexion in some languages -->
   <plurals
       name="in_minutes"
+      comment="minutes used in '[studied in] x minutes' context, causing inflexion in some languages."
       >
     <item quantity="one">
       %1$d minute
@@ -402,47 +475,56 @@
 
   <string
       name="fact_adder_intent_title"
+      comment="Label of the button on android which directly open the 'add note' window."
       >
     AnkiDroid card
   </string>
   <string
       name="note_editor_copy_note"
+      comment="When editing an already existing card, label of the button allowing to create a new note copying the current one."
       >
     Copy note
   </string>
   <string
       name="card_editor_reposition_card"
+      comment="Label of the menu item in the card browser to reposition selected cards."
       >
     Reposition
   </string>
   <string
       name="card_editor_reset_card"
+      comment="Label of the menu item in the card browser and reviewer to reset the progress of selected cards. Also the title ."
       >
     Reset progress
   </string>
   <string
       name="card_editor_reschedule_card"
+      comment="Label of the menu item in the card browser/reviweer to reschedule the progress of selected/current cards. Also the label of the menu entry related to this button in the preferences"
       >
     Reschedule
   </string>
   <string
       name="error_insufficient_memory"
+      comment="Error message shown to user when a commit fail due to lack of memory on device (RAM, not storage)."
       >
     Operation not possible due to insufficient memory on your device
   </string>
   <string
       name="rename"
+      comment="Label of the button the user should click when they have entered the new name of a field, deck, note type, to confirm the renaming should occur"
       >
     Rename
   </string>
   <string
       name="default_conf_delete_error"
+      comment="Error message shown to the user if they try to delete the default option, explaining that this is not allowed."
       >
     The default options group can’t be removed
   </string>
 
   <plurals
       name="factadder_cards_added"
+      comment="Toast appearing when a note is added, telling how many cards were generated."
       >
     <item quantity="one">
       %d card added
@@ -453,223 +535,261 @@
   </plurals>
 
   <string
-      name="help_title"
-      >
-    Help
-  </string>
-  <string
       name="check_db"
+      comment="Label of the menu items allowing users to check the database."
       >
     Check database
   </string>
   <string
       name="check_media"
+      comment="Label of the menu items and buttons allowing users to check the media."
       >
     Check media
   </string>
   <string
       name="empty_cards"
+      comment="Label of the menu items allowing users to delete the empty cards."
       >
     Empty cards
   </string>
   <string
       name="check_db_message"
+      comment="Message shown to the user to let them know the app is checking the database."
       >
     Checking database…
   </string>
   <string
       name="empty_card_warning"
+      comment="Message shown in the reviewer when a card is empty to let the user know how to solve this problem."
       >
     This card is empty. Use the “Empty cards” option from the menu on the deck list screen.
   </string>
   <string
       name="unknown_type_field_warning"
+      comment="Message shown to the user in the reviewer to warn them the template of the card tehy are seeing contains a reference to a field which does not appear in the note type."
       >
     Type answer: unknown field %s
   </string>
   <string
       name="delete_deck"
+      comment="Message shown to the user to let them know the app is currently deleting deck."
       >
     Deleting deck…
   </string>
 
   <string
       name="show_hint"
+      comment="Label of the link in the reviewer which, when clicked, lead to showing the content of the field in parameter."
       >
     Show %s
   </string>
   <string
       name="info_rate"
+      comment="Label of the button inviting the user to rate AnkiDroid in the app store."
       >
     Rate AnkiDroid
   </string>
   <string
       name="import_title"
+      comment="Title of various box allowing the user to decide what to import or to let them know import is currently occurring."
       >
     Importing
   </string>
   <string
       name="import_select_title"
+      comment="Title of the dialgo inviting the user to choose a file to import."
       >
     Choose a file to import
   </string>
   <string
       name="import_message_add"
+      comment="Label of the button the user should press to confirm they have chosen the correct file to import."
       >
     Add
   </string>
   <string
       name="import_message_replace_confirm"
+      comment="Message shown to the user when they ask to import a collection, to explain that it will delete and replace current collection and check whether they are okay with it."
       >
     This will delete your existing collection and replace it with the data of file %s
   </string>
   <string
       name="import_message_add_confirm"
+      comment="Message asking the user whether they want to import the file in paramater to the collection and warn them it may takes time."
       >
     Add “%s” to collection? This may take a long time
   </string>
   <string
       name="import_log_no_apkg"
+      comment="Title and mesage of dialog explaining that the import failed because the file does not have the good format."
       >
     This isn’t a valid Anki package file
   </string>
   <string
       name="import_log_failed_unzip"
+      comment="Message shown to the user when the apkg can't be unzipped."
       >
     Failed to unzip apkg: %s
   </string>
   <string
       name="import_log_failed_copy_to"
+      comment="Message added to the list of errors shown to the error if file was not being able to be copied."
       >
     Failed to copy apkg to %s
   </string>
   <string
       name="import_log_failed_validate"
+      comment="Message added to the list of errors shown to the error if during importing, the file was find not to be valid."
       >
     apkg failed validation
   </string>
   <string
       name="import_log_insufficient_space"
+      comment="Message added to the list of errors shown to the error if during importing, there was not enough space to unzip a file."
       >
     There is not enough space to unzip the package. Needed %1$d, available %2$d
   </string>
   <string
       name="import_log_file_cache_cleared"
+      comment="Message added to the list of errors shown to the error if during importing, unzip seemed to succed but the unzipped could not be found."
       >
     Error importing file, likely a cache clear during processing.\nPlease try again
   </string>
   <string
       name="import_succeeded_but_check_database"
+      comment="Message added to the list of errors shown to the error if importing decks lead to errors that required a Check Database."
       >
     Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s
   </string>
   <string
       name="import_error_unhandled_request"
+      comment="TODO: what does it means."
       >
     Unable to process import request
   </string>
   <string
       name="import_error_exception"
+      comment="Message telling the package was not correctly imported, followed by the logs."
       >
     Failed to import package\n\n%s
   </string>
   <string
       name="import_error_not_apkg_extension"
+      comment="Error message stating a file can't be imported because of improper extension."
       >
     Filename “%s” doesn’t have .apkg or .colpkg extension
   </string>
   <string
       name="import_error_load_imported_database"
+      comment="Error message explaining to the user that they can't import file of format .anki2 in AnkiDroid and they need to read how to do it."
       >
     Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.
   </string>
   <string
       name="import_error_content_provider"
+      comment="Error message explaining to the user that they can't import the file of the selected format in AnkiDroid and they need to read how to do it. Giving the url of the manual localized if it exists, english otherwise"
       >
     The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s
   </string>
   <string
       name="import_error_copy_file_to_cache"
+      comment="Error message telling the user there is probably lack of storage, and a message which may help get debugging otherwise."
       >
     copyFileToCache() failed (possibly out of storage space)
   </string>
   <string
       name="import_replacing"
+      comment="Message shown when importing a whole new collection replacing the previous one to tell users to wait."
       >
     Replacing collection…
   </string>
   <string
       name="import_interrupted"
+      comment="Message shown to user if for some reason, importing a deck was interrupted."
       >
     Import interrupted
   </string>
   <string
       name="export_include_schedule"
+      comment="Label of the checkbox in the exporter asking user whether they want to include the scheduling in their export."
       >
     Include scheduling
   </string>
   <string
       name="export_include_media"
+      comment="Label of the checkbox in the exporter asking user whether they want to include medias in their export."
       >
     Include media
   </string>
   <string
       name="confirm_apkg_export"
+      comment="Message in the exporter window to ask to confirm the user want to export."
       >
     Export collection as Anki package?
   </string>
   <string
       name="confirm_apkg_export_deck"
+      comment="Ask the user to confirm they want to export a deck and recall which deck they are exporting."
       >
     Export “%s” as apkg file?
   </string>
   <string
       name="export_in_progress"
+      comment="."
       >
     Exporting Anki package file…
   </string>
   <string
       name="export_successful_title"
+      comment="."
       >
     Send Anki package?
   </string>
   <string
       name="export_send_button"
+      comment="."
       >
     Send
   </string>
   <string
       name="export_save_button"
+      comment="."
       >
     Save to file
   </string>
   <string
       name="export_send_no_handlers"
+      comment="."
       >
     No applications available to handle apkg. Saving...
   </string>
   <string
       name="export_save_apkg_successful"
+      comment="."
       >
     Successfully saved Anki package
   </string>
   <string
       name="export_save_apkg_unsuccessful"
+      comment="."
       >
     Save Anki package failed
   </string>
   <string
       name="export_successful"
+      comment="."
       >
     File “%s” was exported. Do you want to send it with another app?
   </string>
   <string
       name="export_email_subject"
+      comment="."
       >
     AnkiDroid exported flashcards: %s
   </string>
   <string
       name="export_email_text"
+      comment="."
       >
     <![CDATA[
              Hi!
@@ -680,87 +800,104 @@
   </string>
   <string
       name="export_unsuccessful"
+      comment="."
       >
     Error exporting apkg file
   </string>
   <string
       name="import_hint"
+      comment="."
       >
     Place the apkg file in directory “%s” and touch “OK” to import cards
   </string>
   <string
       name="upgrade_import_no_file_found"
+      comment="."
       >
     No importable %1$s file found
   </string>
   <string
       name="study_options"
+      comment="."
       >
     Options
   </string>
   <string
       name="select_tts"
+      comment="."
       >
     Set TTS language
   </string>
   <string
       name="custom_study"
+      comment="."
       >
     Custom study
   </string>
   <string
       name="more_options"
+      comment="."
       >
     More
   </string>
   <string
       name="dyn_deck_desc"
+      comment="."
       >
     This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.
   </string>
   <string
       name="steps_error"
+      comment="."
       >
     Steps must be numbers greater than 0
   </string>
   <string
       name="steps_min_error"
+      comment="."
       >
     At least one step is required
   </string>
   <string
       name="sched_end"
+      comment="."
       >
     (end)
   </string>
   <string
       name="sched_unbury_action"
+      comment="."
       >
     To see them now touch the “Unbury” item in the menu
   </string>
   <string
       name="sched_has_buried"
+      comment="."
       >
     Some related or buried cards were delayed until tomorrow
   </string>
   <string
       name="tag_editor_add_feedback"
+      comment="."
       >
     Touch “%2$s” to confirm adding “%1$s”
   </string>
   <string
       name="tag_editor_add_feedback_existing"
+      comment="."
       >
     Existing tag “%1$s” selected
   </string>
   <string
       name="lookup_hint"
+      comment="."
       >
     After copying the text, tap anywhere on the flashcard to show the search icon
   </string>
   <!-- Time spans -->
   <plurals
       name="time_span_seconds"
+      comment="."
       >
     <item quantity="one">
       %s second
@@ -771,6 +908,7 @@
   </plurals>
   <plurals
       name="time_span_minutes"
+      comment="."
       >
     <item quantity="one">
       %s minute
@@ -781,6 +919,7 @@
   </plurals>
   <plurals
       name="time_span_hours"
+      comment="."
       >
     <item quantity="one">
       %s hour
@@ -791,6 +930,7 @@
   </plurals>
   <plurals
       name="time_span_days"
+      comment="."
       >
     <item quantity="one">
       %s day
@@ -801,6 +941,7 @@
   </plurals>
   <plurals
       name="time_span_months"
+      comment="."
       >
     <item quantity="one">
       %s month
@@ -811,6 +952,7 @@
   </plurals>
   <plurals
       name="time_span_years"
+      comment="."
       >
     <item quantity="one">
       %s year
@@ -824,33 +966,39 @@
        than. -->
   <string
       name="less_than_time"
+      comment="."
       >
     &lt; %s
   </string>
 
   <string
       name="decks_rename_exists"
+      comment="."
       >
     That deck already exists
   </string>
   <string
       name="decks_rename_filtered_nosubdecks"
+      comment="."
       >
     A filtered deck cannot have subdecks
   </string>
   <string
       name="filtered_deck_name"
+      comment="."
       >
     Filtered Deck
   </string>
 
   <string
       name="reminder_title"
+      comment="."
       >
     Do not forget to study today!
   </string>
   <plurals
       name="reminder_text"
+      comment="."
       >
     <item quantity="one">
       %2$d card to review in %1$s
@@ -862,104 +1010,123 @@
   <!-- Currently only used if exporting APKG fails -->
   <string
       name="apk_share_error"
+      comment="."
       >
     Error sharing apkg file
   </string>
   <!-- Import and export v2 feedback -->
   <string
       name="import_needs_v2"
+      comment="."
       >
     V2 scheduler must be enabled to import this file.
   </string>
   <string
       name="import_cannot_with_v2"
+      comment="."
       >
     V2 scheduler can not import V1 decks with scheduling included.
   </string>
   <string
       name="export_v2_dummy_note"
+      comment="."
       >
     This file requires a newer version of Anki.
   </string>
   <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
   <string
       name="activity_start_failed_load_url"
+      comment="."
       >
     Loading \'%s\' failed.
   </string>
   <string
       name="activity_start_failed"
+      comment="."
       >
     The system does not have an app installed that can perform this action.
   </string>
   <string
       name="multimedia_editor_image_compression_failed"
+      comment="."
       >
     <![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]>
   </string>
   <string
       name="no_browser_notification"
+      comment="."
       >
     No browser found，please visit web page by pc or mobile:
   </string>
   <string
       name="no_outgoing_link_in_cardbrowser"
+      comment="."
       >
     External page link in card is not supported.
   </string>
   <!-- The name of the deck which corrupt cards will be moved to -->
   <string
       name="check_integrity_recovered_deck_name"
+      comment="."
       >
     Recovered Cards
   </string>
   <!-- Deckpicker Background -->
   <string
       name="background_image_title"
+      comment="."
       >
     Background
   </string>
   <string
       name="choose_an_image"
+      comment="."
       >
     Choose an Image
   </string>
   <!-- Card Template Browser Appearance -->
   <string
       name="restore_default"
+      comment="."
       >
     Restore Default
   </string>
   <string
       name="reviewer_tts_cloze_spoken_replacement"
+      comment="."
       >
     Blank
   </string>
   <!-- in options menu & Navigation Drawer -->
   <string
       name="ankidroid_turn_on_fullscreen_nav_drawer"
+      comment="."
       >
     Please turn on fullscreen to use Show Navigation Drawer using JavaScript.
   </string>
   <string
       name="ankidroid_turn_on_fullscreen_options_menu"
+      comment="."
       >
     Please turn on fullscreen to use Show Options Menu using JavaScript.
   </string>
   <!-- Whiteboard save image message in Reviewer -->
   <string
       name="white_board_image_save_failed"
+      comment="."
       >
     Failed to save whiteboard image. %s
   </string>
   <string
       name="white_board_image_saved"
+      comment="."
       >
     Whiteboard image saved to %s
   </string>
 
   <string
       name="title_whiteboard_pen_color"
+      comment="."
       >
     Whiteboard pen color
   </string>
@@ -968,53 +1135,63 @@
   <!-- CSV/Note Import -->
   <string
       name="note_importer_empty_cards_found"
+      comment="."
       >
     <![CDATA[Empty cards found. Please run Tools>Empty Cards.]]>
   </string>
 
   <string
       name="note_importer_error_empty_first_field"
+      comment="."
       >
     Empty first field: %s
   </string>
   <string
       name="note_importer_error_first_field_matched"
+      comment="."
       >
     First field matched: %s
   </string>
   <string
       name="note_importer_error_added_duplicate_first_field"
+      comment="."
       >
     Added duplicate with first field: %s
   </string>
   <string
       name="note_importer_error_appeared_twice"
+      comment="."
       >
     Appeared twice in file: %s
   </string>
   <string
       name="note_importer_error_empty_notes"
+      comment="."
       >
     One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields
   </string>
   <string
       name="csv_importer_error_invalid_field_count"
+      comment="."
       >
     ‘%1$s’ had %2$d fields, expected %3$d
   </string>
   <string
       name="csv_importer_error_exception"
+      comment="."
       >
     Aborted: %s
   </string>
   <string
       name="user_is_a_robot"
+      comment="."
       >
     Detected automated test. If you are a human, contact AnkiDroid support
   </string>
 
   <plurals
       name="note_importer_notes_added"
+      comment="."
       >
     <item quantity="one">
       %d note added
@@ -1026,6 +1203,7 @@
 
   <plurals
       name="note_importer_notes_updated"
+      comment="."
       >
     <item quantity="one">
       %d note updated
@@ -1037,6 +1215,7 @@
 
   <plurals
       name="note_importer_notes_unchanged"
+      comment="."
       >
     <item quantity="one">
       %d note unchanged
@@ -1049,31 +1228,37 @@
   <!-- JS api -->
   <string
       name="api_version_developer_contact"
+      comment="."
       >
     This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s
   </string>
   <string
       name="invalid_json_data"
+      comment="."
       >
     Card provided invalid data. %s
   </string>
   <string
       name="valid_js_api_version"
+      comment="."
       >
     Invalid AnkiDroid JS API version. Contact developer %s, or view wiki
   </string>
   <string
       name="update_js_api_version"
+      comment="."
       >
     AnkiDroid JS API update available. Contact developer %s, or view wiki
   </string>
   <string
       name="reviewer_invalid_api_version_visit_documentation"
+      comment="."
       >
     View
   </string>
   <string
       name="anki_js_error_code"
+      comment="."
       >
     (Error Code: %d)
   </string>
@@ -1081,11 +1266,13 @@
   <!-- About AnkiDroid screen -->
   <string
       name="about_ankidroid_successfully_copied_debug"
+      comment="."
       >
     Copied debug information to clipboard
   </string>
   <string
       name="about_ankidroid_error_copy_debug_info"
+      comment="."
       >
     Error copying debug information to clipboard
   </string>
