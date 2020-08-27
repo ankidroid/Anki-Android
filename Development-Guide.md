@@ -159,6 +159,7 @@ As described in the [contributing wiki](https://github.com/ankidroid/Anki-Androi
 
 * Developers can freely add, delete, or modify strings in English to the resources folder (`values/`) and commit to git.
   * Renaming translation keys should be avoided if at all possible if the use is the same as it causes re-translation (appears as a delete-old/add-new to translators).
+  * If you update the value of an existing key it *will not* be marked as needing translation. Existing translations are preserved. If you need to change a string significantly, meaning it needs re-translation, you must use a new key and remove the old key.
 * A project owner will run a script that pushes those changes to the crowdin platform
 * Translators will see any new untranslated strings on crowdin and submit their translations
 * Before release a project owner will run another script which pulls all the current translations from crowdin and overwrites the existing files
