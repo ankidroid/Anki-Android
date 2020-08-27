@@ -64,6 +64,6 @@ for i in "${I18N_FILES[@]}"; do
     echo "FILE arg is -F \"files[${I18N_FILE_TARGET_NAME}]=@${I18N_FILE_SOURCE_NAME}\" "
     curl \
       -F "files[${I18N_FILE_TARGET_NAME}]=@${I18N_FILE_SOURCE_NAME}" \
-      https://api.crowdin.com/api/project/${PROJECT_IDENTIFIER}/update-file?key=${CROWDIN_KEY}
+      https://api.crowdin.com/api/project/${PROJECT_IDENTIFIER}/update-file?update_option=update_without_changes&key=${CROWDIN_KEY}
   fi
 done
