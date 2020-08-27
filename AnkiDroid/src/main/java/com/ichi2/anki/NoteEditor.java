@@ -76,7 +76,6 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -226,6 +225,12 @@ public class NoteEditor extends AnkiActivity {
     private SaveNoteHandler saveNoteHandler() {
         return new SaveNoteHandler(this);
     }
+
+    private enum AddClozeType {
+        SAME_NUMBER,
+        INCREMENT_NUMBER
+    }
+
     private static class SaveNoteHandler extends TaskListenerWithContext<NoteEditor> {
         private boolean mCloseAfter = false;
         private Intent mIntent;
@@ -683,7 +688,7 @@ public class NoteEditor extends AnkiActivity {
                 break;
             case KeyEvent.KEYCODE_C: {
                 if (event.isCtrlPressed() && event.isShiftPressed()) {
-                    insertCloze();
+                    insertCloze(event.isAltPressed() ? AddClozeType.SAME_NUMBER : AddClozeType.INCREMENT_NUMBER);
                     // Anki Desktop warns, but still inserts the cloze
                     if (!isClozeType()) {
                         UIUtils.showSimpleSnackbar(this, R.string.note_editor_insert_cloze_no_cloze_note_type, false);
@@ -699,13 +704,13 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void insertCloze() {
+    private void insertCloze(AddClozeType addClozeType) {
         View v = getCurrentFocus();
         if (!(v instanceof FieldEditText)) {
             return;
         }
         FieldEditText editText = (FieldEditText) v;
-        convertSelectedTextToCloze(editText);
+        convertSelectedTextToCloze(editText, addClozeType);
     }
 
 
@@ -1410,7 +1415,7 @@ public class NoteEditor extends AnkiActivity {
                         }
                         case R.id.menu_multimedia_add_cloze: {
                             Timber.i("NoteEditor:: Insert cloze button pressed");
-                            convertSelectedTextToCloze(index);
+                            convertSelectedTextToCloze(index, AddClozeType.INCREMENT_NUMBER);
                             return true;
                         }
                         default:
@@ -1961,7 +1966,7 @@ public class NoteEditor extends AnkiActivity {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             int itemId = item.getItemId();
             if (itemId == mClozeMenuId) {
-                convertSelectedTextToCloze(mTextBox);
+                convertSelectedTextToCloze(mTextBox, AddClozeType.INCREMENT_NUMBER);
                 mode.finish();
                 return true;
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == mSetLanugageId) {
@@ -2005,14 +2010,14 @@ public class NoteEditor extends AnkiActivity {
         }
     }
 
-    private void convertSelectedTextToCloze(int fieldIndex) {
+    private void convertSelectedTextToCloze(int fieldIndex, AddClozeType addClozeType) {
         if (fieldIndex < 0 || fieldIndex > mEditFields.size()) {
             Timber.w("Invalid field index %d requested for cloze insertion.", fieldIndex);
         }
-        convertSelectedTextToCloze(mEditFields.get(fieldIndex));
+        convertSelectedTextToCloze(mEditFields.get(fieldIndex), addClozeType);
     }
 
-    private void convertSelectedTextToCloze(FieldEditText textBox) {
+    private void convertSelectedTextToCloze(FieldEditText textBox, AddClozeType addClozeType) {
         // get the current text and selection locations
         int selectionStart = textBox.getSelectionStart();
         int selectionEnd = textBox.getSelectionEnd();
@@ -2031,6 +2036,10 @@ public class NoteEditor extends AnkiActivity {
         String selectedText = text.substring(start, end);
         String afterText = text.substring(end);
         int nextClozeIndex = getNextClozeIndex();
+        if (addClozeType == AddClozeType.SAME_NUMBER) {
+            nextClozeIndex = nextClozeIndex - 1;
+        }
+        nextClozeIndex = Math.max(1, nextClozeIndex);
 
         // Format the cloze deletion open bracket
         String clozeOpenBracket = "{{c" + (nextClozeIndex) + "::";
