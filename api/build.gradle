@@ -53,7 +53,7 @@ dependencies {
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.6.2'
     testImplementation 'org.robolectric:robolectric:4.3.1'
 
-    lintChecks project(":lint-rules")
+    lintPublish project(":lint-rules")
 }
 
 // Borrowed from here:

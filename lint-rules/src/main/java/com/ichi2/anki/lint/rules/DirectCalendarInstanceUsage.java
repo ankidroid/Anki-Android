@@ -24,16 +24,16 @@ import java.util.List;
 
 /**
  * This custom Lint rules will raise an error if a developer uses the {@link Calendar#getInstance()} method instead
- * of using the Calendar provided by the new SystemTime class.
+ * of using the {@link Calendar} provided by the collection's getTime() method.
  */
 public class DirectCalendarInstanceUsage extends Detector implements SourceCodeScanner {
 
     @VisibleForTesting
     static final String ID = "DirectCalendarInstanceUsage";
     @VisibleForTesting
-    static final String DESCRIPTION = "Use SystemTime instead of directly creating Calendar instances";
+    static final String DESCRIPTION = "Use the collection's getTime() method instead of directly creating Calendar instances";
     private static final String EXPLANATION = "Manually creating Calendar instances means time cannot be controlled " +
-            "during testing. Calendar instances must be obtained through the collection's method `getTime()`";
+            "during testing. Calendar instances must be obtained through the collection's getTime() method";
     private static Implementation implementation = new Implementation(DirectCalendarInstanceUsage.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
@@ -41,7 +41,7 @@ public class DirectCalendarInstanceUsage extends Detector implements SourceCodeS
             EXPLANATION,
             Constants.ANKI_TIME_CATEGORY,
             Constants.ANKI_TIME_PRIORITY,
-            Severity.ERROR,
+            Constants.ANKI_TIME_SEVERITY,
             implementation
     );
 
@@ -64,7 +64,7 @@ public class DirectCalendarInstanceUsage extends Detector implements SourceCodeS
         super.visitMethodCall(context, node, method);
         JavaEvaluator evaluator = context.getEvaluator();
         List<UClass> foundClasses = context.getUastFile().getClasses();
-        if (!LintUtils.isAnAllowedClass(foundClasses, "Time", "SystemTime") && evaluator.isMemberInClass(method, "java.util.Calendar")) {
+        if (!LintUtils.isAnAllowedClass(foundClasses, "Time") && evaluator.isMemberInClass(method, "java.util.Calendar")) {
             context.report(
                     ISSUE,
                     context.getCallLocation(node, true, true),

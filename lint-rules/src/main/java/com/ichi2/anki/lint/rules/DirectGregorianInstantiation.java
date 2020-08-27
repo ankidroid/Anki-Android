@@ -24,17 +24,17 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
- * This custom Lint rules will raise an error if a developer uses the {@link GregorianCalendar#from(ZonedDateTime)}
- * method to obtain an instance instead of using the new SystemTime class.
+ * This custom Lint rules will raise an error if a developer creates {@link GregorianCalendar} instances directly
+ * instead of using the collection's getTime() method.
  */
 public class DirectGregorianInstantiation extends Detector implements SourceCodeScanner {
 
     @VisibleForTesting
     static final String ID = "DirectGregorianInstantiation";
     @VisibleForTesting
-    static final String DESCRIPTION = "Use SystemTime instead of directly creating GregorianCalendar instances";
-    private static final String EXPLANATION = "Creating GregorianCalendar instances with from() is not allowed, as " +
-            "it prevents control of time during testing. Use the SystemTime class instead";
+    static final String DESCRIPTION = "Use the collection's getTime() method instead of directly creating GregorianCalendar instances";
+    private static final String EXPLANATION = "Creating GregorianCalendar instances directly is not allowed, as it " +
+            "prevents control of time during testing. Use the collection's getTime() method instead";
     private static Implementation implementation = new Implementation(DirectGregorianInstantiation.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
@@ -42,7 +42,7 @@ public class DirectGregorianInstantiation extends Detector implements SourceCode
             EXPLANATION,
             Constants.ANKI_TIME_CATEGORY,
             Constants.ANKI_TIME_PRIORITY,
-            Severity.ERROR,
+            Constants.ANKI_TIME_SEVERITY,
             implementation
     );
 
@@ -75,7 +75,7 @@ public class DirectGregorianInstantiation extends Detector implements SourceCode
         super.visitMethodCall(context, node, method);
         JavaEvaluator evaluator = context.getEvaluator();
         List<UClass> foundClasses = context.getUastFile().getClasses();
-        if (!LintUtils.isAnAllowedClass(foundClasses, "Time", "SystemTime") && evaluator.isMemberInClass(method, "java.util.GregorianCalendar")) {
+        if (!LintUtils.isAnAllowedClass(foundClasses, "Time") && evaluator.isMemberInClass(method, "java.util.GregorianCalendar")) {
             context.report(
                     ISSUE,
                     context.getCallLocation(node, true, true),
@@ -89,7 +89,7 @@ public class DirectGregorianInstantiation extends Detector implements SourceCode
     public void visitConstructor(@NotNull JavaContext context, @NotNull UCallExpression node, @NotNull PsiMethod constructor) {
         super.visitConstructor(context, node, constructor);
         List<UClass> foundClasses = context.getUastFile().getClasses();
-        if (!LintUtils.isAnAllowedClass(foundClasses, "Time", "SystemTime")) {
+        if (!LintUtils.isAnAllowedClass(foundClasses, "Time")) {
             context.report(
                     ISSUE,
                     node,

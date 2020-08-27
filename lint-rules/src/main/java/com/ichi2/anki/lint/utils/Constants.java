@@ -1,6 +1,7 @@
 package com.ichi2.anki.lint.utils;
 
 import com.android.tools.lint.detector.api.Category;
+import com.android.tools.lint.detector.api.Severity;
 
 import static com.android.tools.lint.detector.api.Category.create;
 
@@ -19,4 +20,9 @@ public class Constants {
      * The priority for the Lint issues used by all rules related to the restrictions introduced by SystemTime.
      */
     public static final int ANKI_TIME_PRIORITY = 10;
+
+    /**
+     * The severity for the Lint issues used by all rules related to the restrictions introduced by SystemTime.
+     */
+    public static final Severity ANKI_TIME_SEVERITY = Severity.FATAL;
 }

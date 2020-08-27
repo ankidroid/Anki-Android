@@ -23,16 +23,16 @@ import java.util.List;
 
 /**
  * This custom Lint rules will raise an error if a developer uses the {@link System#currentTimeMillis()} method instead
- * of using the time provided by the new SystemTime class.
+ * of using the time provided by the new Time class.
  */
 public class DirectSystemCurrentTimeMillisUsage extends Detector implements SourceCodeScanner {
 
     @VisibleForTesting
     static final String ID = "DirectSystemCurrentTimeMillisUsage";
     @VisibleForTesting
-    static final String DESCRIPTION = "Use SystemTime instead of System.currentTimeMillis()";
+    static final String DESCRIPTION = "Use the collection's getTime() method instead of System.currentTimeMillis()";
     private static final String EXPLANATION = "Using time directly means time values cannot be controlled during testing. " +
-            "Time values like System.currentTimeMillis() must be obtained through the SystemTime class";
+            "Time values like System.currentTimeMillis() must be obtained through the Time obtained from a Collection";
     private static Implementation implementation = new Implementation(DirectSystemCurrentTimeMillisUsage.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
@@ -40,7 +40,7 @@ public class DirectSystemCurrentTimeMillisUsage extends Detector implements Sour
             EXPLANATION,
             Constants.ANKI_TIME_CATEGORY,
             Constants.ANKI_TIME_PRIORITY,
-            Severity.ERROR,
+            Constants.ANKI_TIME_SEVERITY,
             implementation
     );
 
@@ -63,7 +63,7 @@ public class DirectSystemCurrentTimeMillisUsage extends Detector implements Sour
         super.visitMethodCall(context, node, method);
         JavaEvaluator evaluator = context.getEvaluator();
         List<UClass> foundClasses = context.getUastFile().getClasses();
-        if (!LintUtils.isAnAllowedClass(foundClasses, "Time", "SystemTime") && evaluator.isMemberInClass(method, "java.lang.System")) {
+        if (!LintUtils.isAnAllowedClass(foundClasses, "SystemTime") && evaluator.isMemberInClass(method, "java.lang.System")) {
             context.report(
                     ISSUE,
                     context.getCallLocation(node, true, true),
