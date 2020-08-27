@@ -18,23 +18,11 @@
 
 package com.ichi2.anki;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RippleDrawable;
-import android.graphics.drawable.TransitionDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 
 import com.ichi2.libanki.Collection;
-import com.ichi2.themes.Themes;
 
-import androidx.core.content.res.ResourcesCompat;
 import timber.log.Timber;
 
 /**
@@ -46,11 +34,6 @@ public class Previewer extends AbstractFlashcardViewer {
     private long[] mCardList;
     private int mIndex;
     private boolean mShowingAnswer;
-    private float mAnimTranslation;
-
-    // Buttons state for animation handling
-    private boolean mPrevBtnShown = false;
-    private boolean mNextBtnShown = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +57,6 @@ public class Previewer extends AbstractFlashcardViewer {
         // Ensure navigation drawer can't be opened. Various actions in the drawer cause crashes.
         disableDrawerSwipe();
         startLoadingCollection();
-
-        mAnimTranslation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8,
-                getResources().getDisplayMetrics());
     }
 
     @Override
@@ -105,9 +85,9 @@ public class Previewer extends AbstractFlashcardViewer {
         mTopBarLayout.setVisibility(View.GONE);
 
         findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
-        mPreviewButtonsLayout.setVisibility(View.VISIBLE);
 
-        mPreviewToggleAnswer.setOnClickListener(mToggleAnswerHandler);
+        mPreviewButtonsLayout.setVisibility(View.VISIBLE);
+        mPreviewButtonsLayout.setOnClickListener(mToggleAnswerHandler);
 
         mPreviewPrevCard.setOnClickListener(mSelectScrollHandler);
         mPreviewNextCard.setOnClickListener(mSelectScrollHandler);
@@ -127,7 +107,7 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void displayCardQuestion() {
         super.displayCardQuestion();
         mShowingAnswer = false;
-        updateButtonState();
+        updateButtonsState();
     }
 
 
@@ -136,42 +116,18 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void displayCardAnswer() {
         super.displayCardAnswer();
         mShowingAnswer = true;
-        updateButtonState();
+        updateButtonsState();
     }
 
 
     @Override
     protected void hideEaseButtons() {
-        final int[] textColor = Themes.getColorFromAttr(this, new int[] {R.attr.largeButtonTextColor});
-
-        setRippleBackground(this, mPreviewToggleAnswer, R.drawable.preview_flashcard_show_answer_background);
-        mPreviewToggleAnswer.setText(R.string.show_answer);
-        mPreviewToggleAnswer.setTextColor(textColor[0]);
+        /* do nothing */
     }
-
 
     @Override
     protected void displayAnswerBottomBar() {
-        final int[] textColor = Themes.getColorFromAttr(this, new int[] {R.attr.largeButtonSecondaryTextColor});
-
-        setRippleBackground(this, mPreviewToggleAnswer, R.drawable.preview_flashcard_hide_answer_background);
-        mPreviewToggleAnswer.setText(R.string.hide_answer);
-        mPreviewToggleAnswer.setTextColor(textColor[0]);
-    }
-
-    public static void setRippleBackground(Context context, View view, int resId) {
-        if (Build.VERSION.SDK_INT >= 21) {
-            RippleDrawable from = (RippleDrawable) view.getBackground().mutate();
-            RippleDrawable to =
-                    (RippleDrawable) ResourcesCompat.getDrawable(context.getResources(), resId, context.getTheme());
-
-            if (to != null) {
-                Drawable underlyingBackground = to.findDrawableByLayerId(R.id.underlying_background);
-                from.setDrawableByLayerId(R.id.underlying_background, underlyingBackground);
-            }
-        } else {
-            view.setBackgroundResource(resId);
-        }
+        /* do nothing */
     }
 
 
@@ -211,14 +167,16 @@ public class Previewer extends AbstractFlashcardViewer {
         }
     };
 
-    private void updateButtonState() {
+    private void updateButtonsState() {
         // If we are in single-card mode, we show the "Show Answer" button on the question side
-        // and hide all the buttons on the answer side.
+        // and hide navigation buttons.
         if (mCardList.length == 1) {
             mPreviewPrevCard.setVisibility(View.GONE);
             mPreviewNextCard.setVisibility(View.GONE);
             return;
         }
+
+        mPreviewToggleAnswerText.setText(mShowingAnswer ? R.string.hide_answer : R.string.show_answer);
 
         boolean prevBtnDisabled = mIndex <= 0;
         boolean nextBtnDisabled = mIndex >= mCardList.length - 1;
@@ -226,29 +184,7 @@ public class Previewer extends AbstractFlashcardViewer {
         mPreviewPrevCard.setEnabled(!prevBtnDisabled);
         mPreviewNextCard.setEnabled(!nextBtnDisabled);
 
-        if (mSafeDisplay) {
-            mPreviewPrevCard.setVisibility(prevBtnDisabled ? View.INVISIBLE : View.VISIBLE);
-            mPreviewNextCard.setVisibility(nextBtnDisabled ? View.INVISIBLE : View.VISIBLE);
-        } else {
-            // should we move these animation methods out?
-
-            if (prevBtnDisabled && mPrevBtnShown) {
-                DeckPicker.fadeOut(mPreviewPrevCard, mShortAnimDuration, mAnimTranslation, null);
-                mPrevBtnShown = false;
-            }
-            if (!prevBtnDisabled && !mPrevBtnShown) {
-                DeckPicker.fadeIn(mPreviewPrevCard, mShortAnimDuration, mAnimTranslation);
-                mPrevBtnShown = true;
-            }
-
-            if (nextBtnDisabled && mNextBtnShown) {
-                DeckPicker.fadeOut(mPreviewNextCard, mShortAnimDuration, mAnimTranslation, null);
-                mNextBtnShown = false;
-            }
-            if (!nextBtnDisabled && !mNextBtnShown) {
-                DeckPicker.fadeIn(mPreviewNextCard, mShortAnimDuration, mAnimTranslation);
-                mNextBtnShown = true;
-            }
-        }
+        mPreviewPrevCard.setAlpha(prevBtnDisabled ? 0.38F : 1);
+        mPreviewNextCard.setAlpha(nextBtnDisabled ? 0.38F : 1);
     }
 }
