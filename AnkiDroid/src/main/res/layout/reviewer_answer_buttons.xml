@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:clipChildren="false"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -20,59 +21,53 @@
          original AOSP soft keyboard, so don't.
     -->
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/preview_buttons_layout"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="48dp"
         android:orientation="horizontal"
-        android:clipChildren="false"
+        android:background="?attr/hardButtonRef"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="visible"
+        style="@style/FooterButtonLayout">
+
+        <TextView
+            android:id="@+id/preview_flip_flashcard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="?attr/answerButtonTextColor"
+            android:text="@string/show_answer"
+            style="@style/FooterButton" />
 
         <ImageView
             android:id="@+id/preview_previous_flashcard"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:padding="12dp"
             android:focusable="true"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_24"
-            android:visibility="invisible"
-            tools:visibility="visible"
-            style="@style/PreviewerButton.Secondary" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/preview_flip_flashcard"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/show_answer"
-                style="@style/PreviewerButton.Text" />
-        </LinearLayout>
+            android:background="@drawable/item_background_light_selectable_borderless"
+            app:srcCompat="@drawable/ic_baseline_chevron_left_24"
+            app:tint="?attr/hardButtonTextColor" />
 
         <ImageView
             android:id="@+id/preview_next_flashcard"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:padding="12dp"
             android:focusable="true"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_baseline_arrow_forward_24"
-            style="@style/PreviewerButton.Secondary" />
-    </LinearLayout>
+            android:background="@drawable/item_background_light_selectable_borderless"
+            app:srcCompat="@drawable/ic_baseline_chevron_right_24"
+            app:tint="?attr/hardButtonTextColor" />
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/answer_options_layout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        style="@style/FooterButtonLayout">
 
         <LinearLayout
             android:id="@+id/flashcard_layout_flip"
@@ -81,14 +76,14 @@
             android:orientation="vertical">
 
             <Button
-                style="@style/FooterButtonLayout"
+                style="@style/FooterButton"
                 android:background="?attr/hardButtonRef"
                 android:id="@+id/flip_card"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:clickable="false"
                 android:text="@string/show_answer"
-                android:textColor="?attr/answerButtonTextColor"/>
+                android:textColor="?attr/answerButtonTextColor" />
         </LinearLayout>
 
         <LinearLayout
@@ -100,7 +95,7 @@
             tools:visibility="visible">
 
             <LinearLayout
-                style="@style/FooterButtonLayout"
+                style="@style/FooterButton"
                 android:background="?attr/againButtonRef"
                 android:id="@+id/flashcard_layout_ease1"
                 android:layout_width="0dip"
@@ -120,7 +115,7 @@
             </LinearLayout>
 
             <LinearLayout
-                style="@style/FooterButtonLayout"
+                style="@style/FooterButton"
                 android:background="?attr/hardButtonRef"
                 android:id="@+id/flashcard_layout_ease2"
                 android:layout_width="0dip"
@@ -140,7 +135,7 @@
             </LinearLayout>
 
             <LinearLayout
-                style="@style/FooterButtonLayout"
+                style="@style/FooterButton"
                 android:background="?attr/goodButtonRef"
                 android:id="@+id/flashcard_layout_ease3"
                 android:layout_width="0dip"
@@ -160,7 +155,7 @@
             </LinearLayout>
 
             <LinearLayout
-                style="@style/FooterButtonLayout"
+                style="@style/FooterButton"
                 android:background="?attr/easyButtonRef"
                 android:id="@+id/flashcard_layout_ease4"
                 android:layout_width="0dip"

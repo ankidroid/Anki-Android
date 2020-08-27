@@ -74,7 +74,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         // Make sure we can click
         Assert.assertFalse("Showing the answer already?", testCardTemplatePreviewer.getShowingAnswer());
         testCardTemplatePreviewer.disableDoubleClickPrevention();
-        View showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.preview_flip_flashcard);
+        View showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.preview_buttons_layout);
         showAnswerButton.performClick();
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }
@@ -106,7 +106,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         // Make sure we can click
         Assert.assertFalse("Showing the answer already?", testCardTemplatePreviewer.getShowingAnswer());
         testCardTemplatePreviewer.disableDoubleClickPrevention();
-        View showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.preview_flip_flashcard);
+        View showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.preview_buttons_layout);
         showAnswerButton.performClick();
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }

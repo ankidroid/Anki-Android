@@ -84,7 +84,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.util.TypefaceHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.ichi2.anim.ActivityTransitionAnimation;
@@ -303,10 +302,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected LinearLayout mEase2Layout;
     protected LinearLayout mEase3Layout;
     protected LinearLayout mEase4Layout;
-    protected LinearLayout mPreviewButtonsLayout;
+    protected FrameLayout mPreviewButtonsLayout;
     protected ImageView mPreviewPrevCard;
     protected ImageView mPreviewNextCard;
-    protected Button mPreviewToggleAnswer;
+    protected TextView mPreviewToggleAnswerText;
     protected RelativeLayout mTopBarLayout;
     private Chronometer mCardTimer;
     protected Whiteboard mWhiteboard;
@@ -1493,7 +1492,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mPreviewButtonsLayout = findViewById(R.id.preview_buttons_layout);
         mPreviewPrevCard = findViewById(R.id.preview_previous_flashcard);
         mPreviewNextCard = findViewById(R.id.preview_next_flashcard);
-        mPreviewToggleAnswer = findViewById(R.id.preview_flip_flashcard);
+        mPreviewToggleAnswerText = findViewById(R.id.preview_flip_flashcard);
 
         mTextBarNew = (TextView) findViewById(R.id.new_number);
         mTextBarLearn = (TextView) findViewById(R.id.learn_number);

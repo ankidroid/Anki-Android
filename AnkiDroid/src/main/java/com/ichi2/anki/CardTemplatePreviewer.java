@@ -26,7 +26,6 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.NoteUtils;
-import com.ichi2.themes.Themes;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
@@ -139,41 +138,40 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
         mPreviewButtonsLayout.setVisibility(View.VISIBLE);
 
-        mPreviewToggleAnswer.setOnClickListener(mToggleAnswerHandler);
+        mPreviewButtonsLayout.setOnClickListener(mToggleAnswerHandler);
 
         mPreviewPrevCard.setVisibility(View.GONE);
         mPreviewNextCard.setVisibility(View.GONE);
     }
 
-    @Override
-    protected void hideEaseButtons() {
-        final int[] textColor = Themes.getColorFromAttr(this, new int[] {R.attr.largeButtonTextColor});
-
-        Previewer.setRippleBackground(this, mPreviewToggleAnswer, R.drawable.preview_flashcard_show_answer_background);
-        mPreviewToggleAnswer.setText(R.string.show_answer);
-        mPreviewToggleAnswer.setTextColor(textColor[0]);
-    }
-
-    @Override
-    protected void displayAnswerBottomBar() {
-        final int[] textColor = Themes.getColorFromAttr(this, new int[] {R.attr.largeButtonSecondaryTextColor});
-
-        Previewer.setRippleBackground(this, mPreviewToggleAnswer, R.drawable.preview_flashcard_hide_answer_background);
-        mPreviewToggleAnswer.setText(R.string.hide_answer);
-        mPreviewToggleAnswer.setTextColor(textColor[0]);
-    }
 
     @Override
     protected void displayCardQuestion() {
         super.displayCardQuestion();
         mShowingAnswer = false;
+        updateButtonsState();
     }
+
 
     @Override
     protected void displayCardAnswer() {
         super.displayCardAnswer();
         mShowingAnswer = true;
+        updateButtonsState();
     }
+
+
+    @Override
+    protected void hideEaseButtons() {
+        /* do nothing */
+    }
+
+
+    @Override
+    protected void displayAnswerBottomBar() {
+        /* do nothing */
+    }
+
 
     private View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
         @Override
@@ -185,6 +183,11 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             }
         }
     };
+
+
+    private void updateButtonsState() {
+        mPreviewToggleAnswerText.setText(mShowingAnswer ? R.string.hide_answer : R.string.show_answer);
+    }
 
 
     @Override
