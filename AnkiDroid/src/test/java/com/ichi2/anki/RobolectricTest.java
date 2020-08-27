@@ -242,6 +242,15 @@ public class RobolectricTest {
         return addNoteUsingModelName("Basic", front, back);
     }
 
+    protected Note addRevNoteUsingBasicModelDueToday(String front, String back) {
+        Note note = addNoteUsingBasicModel(front, back);
+        Card card = note.firstCard();
+        card.setQueue(Consts.QUEUE_TYPE_REV);
+        card.setType(Consts.CARD_TYPE_REV);
+        card.setDue(getCol().getSched().getToday());
+        return note;
+    }
+
     protected Note addNoteUsingBasicAndReversedModel(String front, String back) {
         return addNoteUsingModelName("Basic (and reversed card)", front, back);
     }
