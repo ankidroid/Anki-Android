@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+~
+~ This program is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU General Public License as published by the Free Software
+~ Foundation; either version 3 of the License, or (at your option) any later
+~ version.
+~
+~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+~
+~ You should have received a copy of the GNU General Public License along with
+~ this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!-- This contains strings that are used to test the translation process. They should not be used in actual code -->
+<resources>
+<string name="crowdin_test_string_do_not_translate">You can ignore this string. It\'s used only for test. You can also
+translate it to ensure that you don\'t get notification that a string is missing. (In this case, simply uses a single
+letter to save time)</string>
+</resources>
+
