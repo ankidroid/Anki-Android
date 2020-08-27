@@ -22,16 +22,16 @@ import java.util.List;
 
 /**
  * This custom Lint rules will raise an error if a developer instantiates the {@link java.util.Date} class directly
- * instead of using a {@link java.util.Date} provided through the new SystemTime class.
+ * instead of using a {@link java.util.Date} provided through the collection's getTime() method.
  */
 public class DirectDateInstantiation extends Detector implements SourceCodeScanner {
 
     @VisibleForTesting
     static final String ID = "DirectDateInstantiation";
     @VisibleForTesting
-    static final String DESCRIPTION = "Use SystemTime instead of directly instantiating Date";
+    static final String DESCRIPTION = "Use the collection's getTime() method instead of directly instantiating Date";
     private static final String EXPLANATION = "Creating Date instances directly means dates cannot be controlled during" +
-            " testing, so it is not allowed. Use the SystemTime class instead";
+            " testing, so it is not allowed. Use the collection's getTime() method instead";
     private static Implementation implementation = new Implementation(DirectDateInstantiation.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
@@ -39,7 +39,7 @@ public class DirectDateInstantiation extends Detector implements SourceCodeScann
             EXPLANATION,
             Constants.ANKI_TIME_CATEGORY,
             Constants.ANKI_TIME_PRIORITY,
-            Severity.ERROR,
+            Constants.ANKI_TIME_SEVERITY,
             implementation
     );
 
@@ -61,7 +61,7 @@ public class DirectDateInstantiation extends Detector implements SourceCodeScann
     public void visitConstructor(@NotNull JavaContext context, @NotNull UCallExpression node, @NotNull PsiMethod constructor) {
         super.visitConstructor(context, node, constructor);
         List<UClass> foundClasses = context.getUastFile().getClasses();
-        if (!LintUtils.isAnAllowedClass(foundClasses, "Time", "SystemTime")) {
+        if (!LintUtils.isAnAllowedClass(foundClasses, "Time")) {
             context.report(
                     ISSUE,
                     node,

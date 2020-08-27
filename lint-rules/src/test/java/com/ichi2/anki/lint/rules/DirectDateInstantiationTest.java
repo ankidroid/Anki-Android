@@ -28,6 +28,17 @@ public class DirectDateInstantiationTest {
             "        Date d = new Date();                     \n" +
             "    }                                            \n" +
             "}                                                \n";
+    private final String javaFileWithTime = "                 \n" +
+            "package com.ichi2.anki.lint.rules;               \n" +
+            "                                                 \n" +
+            "import java.util.Date;                           \n" +
+            "                                                 \n" +
+            "public abstract class Time {                     \n" +
+            "                                                 \n" +
+            "    public static void main(String[] args) {     \n" +
+            "        Date d = new Date();                     \n" +
+            "    }                                            \n" +
+            "}                                                \n";
 
 
     @Test
@@ -43,5 +54,16 @@ public class DirectDateInstantiationTest {
                     assertTrue(output.contains(DirectDateInstantiation.ID));
                     assertTrue(output.contains(DirectDateInstantiation.DESCRIPTION));
                 });
+    }
+
+    @Test
+    public void allowsUsageInTimeClass() {
+        lint().
+                allowMissingSdk().
+                allowCompilationErrors()
+                .files(create(stubDate), create(javaFileWithTime))
+                .issues(DirectDateInstantiation.ISSUE)
+                .run()
+                .expectClean();
     }
 }

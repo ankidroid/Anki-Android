@@ -67,17 +67,6 @@ public class DirectGregorianInstantiationTest {
             "        GregorianCalendar gc = new GregorianCalendar();        \n" +
             "    }                                                          \n" +
             "}                                                              \n";
-    private final String javaFileWithSystemTime = "                         \n" +
-            "package com.ichi2.anki.lint.rules;                             \n" +
-            "                                                               \n" +
-            "import java.util.GregorianCalendar;                            \n" +
-            "                                                               \n" +
-            "public class SystemTime {                                      \n" +
-            "                                                               \n" +
-            "    public static void main(String[] args) {                   \n" +
-            "        GregorianCalendar gc = new GregorianCalendar();        \n" +
-            "    }                                                          \n" +
-            "}                                                              \n";
 
 
     @Test
@@ -114,20 +103,9 @@ public class DirectGregorianInstantiationTest {
                 allowMissingSdk()
                 .allowCompilationErrors()
                 .files(create(stubGregorian), create(javaFileWithTime))
-                .issues(DirectSystemTimeInstantiation.ISSUE)
+                .issues(DirectGregorianInstantiation.ISSUE)
                 .run()
                 .expectClean();
     }
 
-
-    @Test
-    public void doesNotShowErrorsWhenUsedInSystemTime() {
-        lint().
-                allowMissingSdk()
-                .allowCompilationErrors()
-                .files(create(stubGregorian), create(javaFileWithSystemTime))
-                .issues(DirectSystemTimeInstantiation.ISSUE)
-                .run()
-                .expectClean();
-    }
 }

@@ -29,6 +29,17 @@ public class DirectSystemCurrentTimeMillisUsageTest {
             "        long time = System.currentTimeMillis();                \n" +
             "    }                                                          \n" +
             "}                                                              \n";
+    private final String javaFileWithSystemTime = "                         \n" +
+            "package com.ichi2.anki.lint.rules;                             \n" +
+            "                                                               \n" +
+            "import java.lang.System;                                       \n" +
+            "                                                               \n" +
+            "public class SystemTime {                                      \n" +
+            "                                                               \n" +
+            "    public static void main(String[] args) {                   \n" +
+            "        long time = System.currentTimeMillis();                \n" +
+            "    }                                                          \n" +
+            "}                                                              \n";
 
 
     @Test
@@ -44,5 +55,16 @@ public class DirectSystemCurrentTimeMillisUsageTest {
                     assertTrue(output.contains(DirectSystemCurrentTimeMillisUsage.ID));
                     assertTrue(output.contains(DirectSystemCurrentTimeMillisUsage.DESCRIPTION));
                 });
+    }
+
+    @Test
+    public void allowsUsageForSystemTime() {
+        lint().
+                allowMissingSdk().
+                allowCompilationErrors()
+                .files(create(stubSystem), create(javaFileWithSystemTime))
+                .issues(DirectSystemCurrentTimeMillisUsage.ISSUE)
+                .run()
+                .expectClean();
     }
 }

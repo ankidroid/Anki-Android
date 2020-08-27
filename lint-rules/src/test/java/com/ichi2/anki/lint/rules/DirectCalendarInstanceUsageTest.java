@@ -30,6 +30,18 @@ public class DirectCalendarInstanceUsageTest {
             "        c.clear();                                             \n" +
             "    }                                                          \n" +
             "}                                                              \n";
+    private final String javaFileWithTime = "                               \n" +
+            "package com.ichi2.anki.lint.rules;                             \n" +
+            "                                                               \n" +
+            "import java.util.Calendar;                                     \n" +
+            "                                                               \n" +
+            "public abstract class Time {                                   \n" +
+            "                                                               \n" +
+            "    public static void main(String[] args) {                   \n" +
+            "        Calendar c = Calendar.getInstance();                   \n" +
+            "        c.clear();                                             \n" +
+            "    }                                                          \n" +
+            "}                                                              \n";
 
 
     @Test
@@ -45,8 +57,17 @@ public class DirectCalendarInstanceUsageTest {
                     assertTrue(output.contains(DirectCalendarInstanceUsage.ID));
                     assertTrue(output.contains(DirectCalendarInstanceUsage.DESCRIPTION));
                 });
+    }
 
-
+    @Test
+    public void allowsUsageInTimeClass() {
+        lint()
+                .allowMissingSdk()
+                .allowCompilationErrors()
+                .files(create(stubCalendar), create(javaFileWithTime))
+                .issues(DirectCalendarInstanceUsage.ISSUE)
+                .run()
+                .expectClean();
     }
 
 }

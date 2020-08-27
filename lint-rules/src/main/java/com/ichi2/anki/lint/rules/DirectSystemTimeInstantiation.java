@@ -32,9 +32,9 @@ public class DirectSystemTimeInstantiation extends Detector implements SourceCod
     @VisibleForTesting
     static final String ID = "DirectSystemTimeInstantiation";
     @VisibleForTesting
-    static final String DESCRIPTION = "Use Time instead of SystemTime";
+    static final String DESCRIPTION = "Use the collection's getTime() method instead of instantiating SystemTime";
     private static final String EXPLANATION = "Creating SystemTime instances directly means time cannot be controlled during" +
-            " testing, so it is not allowed. Use the Time class instead";
+            " testing, so it is not allowed. Use the collection's getTime() method instead";
     private static Implementation implementation = new Implementation(DirectSystemTimeInstantiation.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
@@ -42,7 +42,7 @@ public class DirectSystemTimeInstantiation extends Detector implements SourceCod
             EXPLANATION,
             Constants.ANKI_TIME_CATEGORY,
             Constants.ANKI_TIME_PRIORITY,
-            Severity.ERROR,
+            Constants.ANKI_TIME_SEVERITY,
             implementation
     );
 
