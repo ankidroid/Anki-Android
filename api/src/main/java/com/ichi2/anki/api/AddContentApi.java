@@ -164,8 +164,33 @@ public final class AddContentApi {
     /**
      * Add a media file to AnkiDroid's media collection. You would likely supply this uri through a FileProvider, and
      * then set FLAG_GRANT_READ_URI_PERMISSION using something like:
-     * getContext().grantUriPermission("com.ichi2.anki", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) and then afterward
-     * remove the permission with getContext().revokePermission(uri, Intent.FLAG_GRAN_READ_URI_PERMISSION)
+     *
+     * <pre>
+     *     <code>
+     *     getContext().grantUriPermission("com.ichi2.anki", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+     *     // Then when file is added, remove the permission
+     *     // add File ...
+     *     getContext().revokePermission(uri, Intent.FLAG_GRAN_READ_URI_PERMISSION)
+     *     </code>
+     * </pre>
+     *
+     * Example usage:
+     *  <pre>
+     *      <code>
+     *      Long modelId = getModelId(); // implementation can be seen in api sample app
+     *      Long deckId = getDeckId(); // as above
+     *      Set&lt;String&gt; tags = getTags(); // as above
+     *      Uri fileUri = ... // this will be returned by a File Picker activity where we select an image file
+     *      String addedImageFileName = mApi.addMediaFromUri(fileUri, "My_Image_File", "image");
+     *
+     *      String[] fields = new String[] {"text on front of card", "text on back of card " + addedImageFileName};
+     *      mApi.addNote(modelId, deckId, fields, tags)
+     *      </code>
+     *  </pre>
+     *
+     *
+     *
+     *
      * @param fileUri   Uri for the file to be added, required.
      * @param preferredName String that will be added to the beginning of the file name in the
      *                      media collection, required.
