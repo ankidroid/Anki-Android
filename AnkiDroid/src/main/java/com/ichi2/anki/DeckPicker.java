@@ -2219,7 +2219,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // If the deck is empty and has no children then show a message saying it's empty
             final Uri helpUrl = Uri.parse(getResources().getString(R.string.link_manual_getting_started));
             mayOpenUrl(helpUrl);
-            UIUtils.showSnackbar(this, R.string.empty_deck, false, R.string.help,
+            UIUtils.showSnackbar(this, R.string.studyoptions_empty, false, R.string.help,
                     v -> openHelpUrl(helpUrl), findViewById(R.id.root_layout), mSnackbarShowHideCallback);
             if (mFragmented) {
                 openStudyOptions(false);

@@ -505,11 +505,6 @@
       Rename the existing custom study deck first
     </string>
     <string
-        name="empty_deck"
-        >
-      This deck is empty
-    </string>
-    <string
         name="invalid_deck_name"
         >
       Invalid deck name
