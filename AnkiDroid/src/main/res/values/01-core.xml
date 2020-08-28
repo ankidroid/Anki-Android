@@ -477,7 +477,7 @@
     <string
         name="rebuild_cram_deck"
         >
-      Rebuilding cram deck…
+      Rebuilding cram deck
     </string>
     <string
         name="rebuild_cram_label"
@@ -497,7 +497,7 @@
     <string
         name="empty_cram_deck"
         >
-      Emptying cram deck…
+      Emptying cram deck
     </string>
     <string
         name="custom_study_deck_name"
