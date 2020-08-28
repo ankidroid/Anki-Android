@@ -45,9 +45,9 @@ public class CompatV19 extends CompatV18 implements Compat {
                 (new View.OnSystemUiVisibilityChangeListener() {
                     @Override
                     public void onSystemUiVisibilityChange(int flags) {
-                        final Toolbar toolbar = (Toolbar) a.findViewById(R.id.toolbar);
-                        final LinearLayout answerButtons = (LinearLayout) a.findViewById(R.id.answer_options_layout);
-                        final RelativeLayout topbar = (RelativeLayout) a.findViewById(R.id.top_bar);
+                        final View toolbar = a.findViewById(R.id.toolbar);
+                        final View answerButtons = a.findViewById(R.id.answer_options_layout);
+                        final View topbar = a.findViewById(R.id.top_bar);
                         if (toolbar == null || topbar == null || answerButtons == null) {
                             return;
                         }
