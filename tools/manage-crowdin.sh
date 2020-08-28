@@ -53,6 +53,10 @@ for i in "${I18N_FILES[@]}"; do
   echo "$i"
   I18N_FILE_TARGET_NAME="${i}.xml"
   I18N_FILE_SOURCE_NAME="${I18N_FILE_BASE}${I18N_FILE_TARGET_NAME}"
+  I18N_FILE_TRIMMED_NAME="${I18N_FILE_BASE}trimmed_${I18N_FILE_TARGET_NAME}"
+  # Trim line. Start/end of lines is useful for readability but not for strings.
+  # Start/end of white space is emphasized and distracting on crowdin
+  cat I18N_FILE_SOURCE_NAME | sed -e "s/^ *\([^ ].*[^ ]\) *$/\\1/" > I18N_FILE_TRIMMED_NAME
 
   if [ "$i" == "14-marketdescription" ]; then
     I18N_FILE_TARGET_NAME="14-marketdescription.txt"
@@ -62,9 +66,9 @@ for i in "${I18N_FILES[@]}"; do
   if [ "$I18N_FILE_TARGET_NAME" != "" ]; then  
     echo "Update of Master File ${I18N_FILE_TARGET_NAME} from ${I18N_FILE_SOURCE_NAME}"
 
-    echo "FILE arg is -F \"files[${I18N_FILE_TARGET_NAME}]=@${I18N_FILE_SOURCE_NAME}\" "
+    echo "FILE arg is -F \"files[${I18N_FILE_TARGET_NAME}]=@${I18N_FILE_TRIMMED_NAME}\" "
     curl \
-      -F "files[${I18N_FILE_TARGET_NAME}]=@${I18N_FILE_SOURCE_NAME}" \
+      -F "files[${I18N_FILE_TARGET_NAME}]=@${I18N_FILE_TRIMMED_NAME}" \
       -F "update_option=update_without_changes" \
       https://api.crowdin.com/api/project/${PROJECT_IDENTIFIER}/update-file?key=${CROWDIN_KEY}
   fi
