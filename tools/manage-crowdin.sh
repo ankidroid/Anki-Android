@@ -42,7 +42,7 @@ declare -a I18N_FILES=(
   '09-backup'
   '10-preferences'
   '11-arrays'
-  '12-dont-translate.xml'
+  '12-dont-translate'
   '14-marketdescription'
   '16-multimedia-editor'
   '17-model-manager'
@@ -65,7 +65,7 @@ for i in "${I18N_FILES[@]}"; do
     echo "FILE arg is -F \"files[${I18N_FILE_TARGET_NAME}]=@${I18N_FILE_SOURCE_NAME}\" "
     curl \
       -F "files[${I18N_FILE_TARGET_NAME}]=@${I18N_FILE_SOURCE_NAME}" \
-      -F "update_option=update_without_changes"
+      -F "update_option=update_without_changes" \
       https://api.crowdin.com/api/project/${PROJECT_IDENTIFIER}/update-file?key=${CROWDIN_KEY}
   fi
 done
