@@ -64,6 +64,7 @@ import com.ichi2.libanki.Utils;
 
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
+import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -1069,14 +1070,14 @@ public class CardContentProvider extends ContentProvider {
         // Insert media file using libanki.Media.addFile and return Uri for the inserted file.
         Uri fileUri = Uri.parse(values.getAsString(FlashCardsContract.AnkiMedia.FILE_URI));
         String preferredName = values.getAsString(FlashCardsContract.AnkiMedia.PREFERRED_NAME);
-        InputStream inputStream = null;
+
 
         try {
             ContentResolver cR = mContext.getContentResolver();
             Media media = col.getMedia();
             // idea, open input stream and save to cache directory, then
             // pass this (hopefully temporary) file to the media.addFile function.
-            inputStream = cR.openInputStream(fileUri);
+
             String fileMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(cR.getType(fileUri)); // return eg "jpeg"
             // should we be enforcing strict mimetypes? which types?
             File tempFile;
@@ -1092,20 +1093,7 @@ public class CardContentProvider extends ContentProvider {
                 return null;
             }
 
-            // copy contents into temp file (possibly check file size and warn if large?)
-            try {
-                CompatHelper.getCompat().copyFile(inputStream, tempFile.getAbsolutePath());
-            } catch (FileNotFoundException e) {
-                Timber.e(e, "File not found when opening stream for supplied media file.");
-                return null;
-            } catch (Exception e) {
-                Timber.e(e, "Unable to copy media file from ContentProvider");
-                return null;
-            } finally {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-            }
+            FileUtil.internalizeUri(fileUri, null, tempFile, cR);
 
             String fname = media.addFile(tempFile);
             Timber.d("insert -> MEDIA: fname = %s", fname);
