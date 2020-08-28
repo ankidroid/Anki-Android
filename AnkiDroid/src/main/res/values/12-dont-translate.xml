@@ -19,7 +19,9 @@
   <string
       name="crowdin_test_string_do_not_translate"
       >
-    In order to ensure this string is not shown as untranslated, translate it the way you want. Probably using a single letter, so that it\'s quick. This string will never appear in ankidroid and is present here only to test crowdin feature.
+    You can ignore this string. It\'s used only for test. You can also
+translate it to ensure that you don\'t get notification that a string is missing. (In this case, simply uses a single
+letter to save time)
   </string>
 </resources>
 
