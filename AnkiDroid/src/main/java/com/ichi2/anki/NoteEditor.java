@@ -1509,9 +1509,6 @@ public class NoteEditor extends AnkiActivity {
         if (customTypeface != null) {
             editText.setTypeface(customTypeface);
         }
-
-        // Listen for changes in the first field so we can re-check duplicate status.
-        editText.addTextChangedListener(new EditFieldTextWatcher(index));
         editText.setEnabled(enabled);
     }
 
