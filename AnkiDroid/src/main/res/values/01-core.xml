@@ -289,11 +289,6 @@
       Add note
     </string>
     <string
-        name="menu_my_account"
-        >
-      Sync account
-    </string>
-    <string
         name="menu_dismiss_note"
         >
       Hide / delete

@@ -231,7 +231,7 @@
             />
         <activity
             android:name="com.ichi2.anki.MyAccount"
-            android:label="@string/menu_my_account"
+            android:label="@string/button_sync"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             />
