@@ -15,8 +15,8 @@
     <item
         android:id="@+id/action_add"
         android:icon="@drawable/ic_menu_add"
-        android:title="@string/menu_add"
-        ankidroid:showAsAction="never"/>
+        android:title="@string/menu_add_note"
+        ankidroid:showAsAction="never" />
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/ic_action_cancel"

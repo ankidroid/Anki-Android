@@ -284,11 +284,6 @@
       Rename deck
     </string>
     <string
-        name="menu_add"
-        >
-      Add
-    </string>
-    <string
         name="menu_add_note"
         >
       Add note
