@@ -44,7 +44,7 @@ MENU_DISABLED = 3
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="customButtonFlag"
-            android:title="@string/menu_flag" />
+            android:title="@string/menu_flag_card" />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/custom_button_labels"

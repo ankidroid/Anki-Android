@@ -329,11 +329,6 @@
       Delete note
     </string>
     <string
-        name="menu_flag"
-        >
-      Flag
-    </string>
-    <string
         name="menu_flag_card"
         >
       Flag card
