@@ -1231,7 +1231,7 @@ public class CardContentProvider extends ContentProvider {
                     rb.add(currentCard.qSimple());
                     break;
                 case FlashCardsContract.Card.ANSWER_SIMPLE:
-                    rb.add(currentCard._getQA(false).get("a"));
+                    rb.add(currentCard._getQA(false).second);
                     break;
                 case FlashCardsContract.Card.ANSWER_PURE:
                     rb.add(currentCard.getPureAnswer());

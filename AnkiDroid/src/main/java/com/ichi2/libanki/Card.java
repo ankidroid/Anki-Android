@@ -21,6 +21,7 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.util.Pair;
 
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.async.CancelListener;
@@ -109,7 +110,7 @@ public class Card implements Cloneable {
     private String mData;
     // END SQL table entries
 
-    private HashMap<String, String> mQA;
+    private Pair<String, String> mQA;
     private Note mNote;
 
     // Used by Sched to determine which queue to move the card to after answering.
@@ -261,12 +262,12 @@ public class Card implements Cloneable {
 
 
     public String q(boolean reload, boolean browser) {
-        return css() + _getQA(reload, browser).get("q");
+        return css() + _getQA(reload, browser).first;
     }
 
 
     public String a() {
-        return css() + _getQA().get("a");
+        return css() + _getQA().second;
     }
 
 
@@ -275,17 +276,18 @@ public class Card implements Cloneable {
     }
 
 
-    public HashMap<String, String> _getQA() {
+    public Pair<String, String> _getQA() {
         return _getQA(false);
     }
 
 
-    public HashMap<String, String> _getQA(boolean reload) {
+    /** Return question/answer pair*/
+    public Pair<String, String> _getQA(boolean reload) {
         return _getQA(reload, false);
     }
 
 
-    public HashMap<String, String> _getQA(boolean reload, boolean browser) {
+    public Pair<String, String> _getQA(boolean reload, boolean browser) {
         if (mQA == null || reload) {
             Note f = note(reload);
             Model m = model();
@@ -369,7 +371,7 @@ public class Card implements Cloneable {
 
 
     public String qSimple() {
-        return _getQA(false).get("q");
+        return _getQA(false).first;
     }
 
 
@@ -377,7 +379,7 @@ public class Card implements Cloneable {
      * Returns the answer with anything before the <hr id=answer> tag removed
      */
     public String getPureAnswer() {
-        String s = _getQA(false).get("a");
+        String s = _getQA(false).second;
         String target = "<hr id=answer>";
         int pos = s.indexOf(target);
         if (pos == -1) {

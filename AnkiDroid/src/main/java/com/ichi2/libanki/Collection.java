@@ -1099,12 +1099,12 @@ public class Collection {
     /**
      * Returns hash of id, question, answer.
      */
-    public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags) {
+    public Pair<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags) {
         return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null);
     }
 
 
-    public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
+    public Pair<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
         Map<String, Pair<Integer, JSONObject>> fmap = Models.fieldMap(model);
@@ -1129,10 +1129,9 @@ public class Collection {
         fields.put("Card", template.getString("name"));
         fields.put(String.format(Locale.US, "c%d", cardNum), "1");
         // render q & a
-        HashMap<String, String> d = new HashMap<>(2);
-        d.put("id", Long.toString(cid));
         qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
         afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
+        String q = null, a = null;
         for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>("a", afmt)}) {
             String type = p.first;
             String format = p.second;
@@ -1143,7 +1142,7 @@ public class Collection {
                 format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
                 format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
                 // the following line differs from libanki // TODO: why?
-                fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                fields.put("FrontSide", q); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
             String html = new Template(format, fields).render();
             html = ChessFilter.fenToChessboard(html, getContext());
@@ -1151,16 +1150,20 @@ public class Collection {
                 // browser don't show image. So compiling LaTeX actually remove information.
                 html = LaTeX.mungeQA(html, this, model);
             }
-            d.put(type, html);
+            if ("q".equals(type)) {
+                q = html;
+            } else {
+                a = html;
+            }
             // empty cloze?
             if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
                 if (Models._availClozeOrds(model, flist, false).size() == 0) {
                     String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
-                    d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
+                    q = mContext.getString(R.string.empty_cloze_warning, link);
                 }
             }
         }
-        return d;
+        return new Pair<>(q, a);
     }
 
 
