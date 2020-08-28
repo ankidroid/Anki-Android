@@ -480,11 +480,6 @@
       Rebuilding cram deck
     </string>
     <string
-        name="rebuild_cram_label"
-        >
-      Rebuild
-    </string>
-    <string
         name="empty_cram_label"
         >
       Empty

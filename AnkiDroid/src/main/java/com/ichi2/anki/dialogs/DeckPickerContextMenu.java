@@ -84,7 +84,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         keyValueMap.put(CONTEXT_MENU_DELETE_DECK, res.getString(R.string.contextmenu_deckpicker_delete_deck));
         keyValueMap.put(CONTEXT_MENU_EXPORT_DECK, res.getString(R.string.export_deck));
         keyValueMap.put(CONTEXT_MENU_UNBURY, res.getString(R.string.unbury));
-        keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_REBUILD, res.getString(R.string.rebuild_cram_label));
+        keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_REBUILD, res.getString(R.string.rebuild_cram_deck));
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_EMPTY, res.getString(R.string.empty_cram_label));
         keyValueMap.put(CONTEXT_MENU_CREATE_SUBDECK, res.getString(R.string.create_subdeck));
         return keyValueMap;

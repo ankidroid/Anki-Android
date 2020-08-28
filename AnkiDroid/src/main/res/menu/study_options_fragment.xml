@@ -8,7 +8,7 @@
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_rebuild"
-        android:title="@string/rebuild_cram_label"
+        android:title="@string/rebuild_cram_deck"
         android:visibility = "gone"
         android:icon="@drawable/ic_refresh_white_24dp"
         ankidroid:showAsAction="ifRoom"/>
