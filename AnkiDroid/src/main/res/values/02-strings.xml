@@ -146,11 +146,6 @@
     Replay audio
   </string>
   <string
-      name="toggle_mic_tool_bar"
-      >
-    Check Pronunciation
-  </string>
-  <string
       name="leech_suspend_notification"
       >
     Card marked as leech and suspended
