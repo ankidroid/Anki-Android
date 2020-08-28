@@ -1089,7 +1089,7 @@ public class CardContentProvider extends ContentProvider {
                 );
                 tempFile.deleteOnExit();
             } catch (Exception e) {
-                Timber.e(e, "Could not create temporary media file. ");
+                Timber.w(e, "Could not create temporary media file. ");
                 return null;
             }
 
