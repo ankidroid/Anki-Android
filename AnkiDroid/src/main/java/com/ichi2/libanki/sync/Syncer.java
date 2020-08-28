@@ -98,6 +98,7 @@ public class Syncer {
     public Object[] sync(Connection con) throws UnknownHttpResponseException {
         mSyncMsg = "";
         // if the deck has any pending changes, flush them first and bump mod time
+        mCol.getSched()._updateCutoff();
         mCol.save();
         // step 1: login & metadata
         Response ret = mServer.meta();
