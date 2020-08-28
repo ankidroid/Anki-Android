@@ -69,7 +69,7 @@ public class CompatV16 implements Compat {
         a.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         final int fullscreenMode = Integer.parseInt(AnkiDroidApp.getSharedPrefs(a).getString("fullscreenMode", "0"));
         if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
-            final LinearLayout answerButtons = a.findViewById(R.id.answer_options_layout);
+            final View answerButtons = a.findViewById(R.id.answer_options_layout);
             answerButtons.setVisibility(View.GONE);
         }
     }
