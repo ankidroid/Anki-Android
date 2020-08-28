@@ -73,7 +73,6 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="hardButtonTextColor">@color/white</item>
         <item name="goodButtonTextColor">@color/white</item>
         <item name="easyButtonTextColor">@color/white</item>
-        <item name="answerButtonsHighlightColor">#AAFFFFFF</item>
         <!-- Reviewer button drawables -->
         <item name="againButtonRef">@drawable/footer_button_again</item>
         <item name="hardButtonRef">@drawable/footer_button_hard</item>
