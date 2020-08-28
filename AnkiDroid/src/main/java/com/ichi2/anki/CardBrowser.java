@@ -2119,7 +2119,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             super(cache);
             mLoaded = cache.mLoaded;
             mQa = cache.mQa;
-            mPosition = getPosition();
+            mPosition = position;
         }
 
         public int getPosition() {
