@@ -31,6 +31,8 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
+    <color name="answer_buttons_highlight_color">#66FFFFFF</color>
+
 
     <!-- Material Design: http://www.google.com/design/spec/style/color.html#color-color-palette -->
     <!-- Can eventually be shortened once settled on a color scheme -->
