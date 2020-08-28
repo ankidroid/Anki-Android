@@ -1081,11 +1081,21 @@ public class CardContentProvider extends ContentProvider {
             String fileMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(cR.getType(fileUri)); // return eg "jpeg"
             // should we be enforcing strict mimetypes? which types?
             File tempFile;
+            File externalCacheDir = mContext.getExternalCacheDir();
+            if (externalCacheDir == null) {
+                Timber.e("createUI() unable to get external cache directory");
+                return null;
+            }
+            File tempMediaDir = new File(externalCacheDir.getAbsolutePath() + "/temp-media");
+            if (!tempMediaDir.exists() && !tempMediaDir.mkdir()) {
+                Timber.e("temp-media dir did not exist and could not be created");
+                return null;
+            }
             try {
                 tempFile = File.createTempFile(
                         preferredName+"_", // the beginning of the filename.
                         "." + fileMimeType, // this is the extension, if null, '.tmp' is used, need to get the extension from MIME type?
-                        new File(media.dir())
+                        tempMediaDir
                 );
                 tempFile.deleteOnExit();
             } catch (Exception e) {
