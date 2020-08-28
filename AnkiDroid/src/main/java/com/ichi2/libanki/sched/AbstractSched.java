@@ -39,6 +39,7 @@ public abstract class AbstractSched {
      */
     public abstract void reset();
 
+    public abstract void _updateCutoff();
     /** Ensure that the question on the potential next card can be accessed quickly.
      */
     public abstract void preloadNextCard();
