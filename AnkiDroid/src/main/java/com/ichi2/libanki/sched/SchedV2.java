@@ -2151,7 +2151,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     /* Overriden: other way to count time*/
-    protected void _updateCutoff() {
+    public void _updateCutoff() {
         Integer oldToday = mToday == null ? 0 : mToday;
         // days since col created
         mToday = _daysSinceCreation();

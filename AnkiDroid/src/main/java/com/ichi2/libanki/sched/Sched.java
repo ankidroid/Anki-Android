@@ -1096,7 +1096,7 @@ public class Sched extends SchedV2 {
      */
 
     @Override
-    protected void _updateCutoff() {
+    public void _updateCutoff() {
         Integer oldToday = mToday;
         // days since col created
         mToday = (int) ((getTime().intTime() - mCol.getCrt()) / SECONDS_PER_DAY);
