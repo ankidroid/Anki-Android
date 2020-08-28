@@ -19,6 +19,7 @@
 
 package com.ichi2.libanki;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -791,8 +792,10 @@ public class Utils {
             Timber.d("Creating new file... = %s", destination);
             f.createNewFile();
 
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
             long startTimeMillis = System.currentTimeMillis();
             long sizeBytes = CompatHelper.getCompat().copyFile(source, destination);
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
             long endTimeMillis = System.currentTimeMillis();
 
             Timber.d("Finished writeToFile!");
