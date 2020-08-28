@@ -4,7 +4,7 @@ tasks.whenTaskAdded { task ->
             task.doFirst {
                 android.lintOptions.abortOnError = true
                 android.lintOptions.warningsAsErrors true
-                android.lintOptions.check 'NewApi', 'InlinedApi'
+                android.lintOptions.check 'NewApi', 'InlinedApi', 'WrongViewCast'
             }
         } else {
             task.doFirst {
