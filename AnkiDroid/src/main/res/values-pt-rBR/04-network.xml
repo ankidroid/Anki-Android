@@ -129,7 +129,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb está em manutenção. Por favor, tente novamente em alguns minutos.</string>
     <string name="sync_error_504_gateway_timeout">504 erro de tempo limite de gateway recebido.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title">Sincronizar</string>
+    <string name="sync_menu_title_full_sync">Sincronização (completa)</string>
+    <string name="sync_menu_title_no_account">Sincronizar (entrar)</string>
 </resources>

@@ -39,7 +39,7 @@
 
 -->
 <resources>
-    <string name="youre_offline">Vous n\'êtes pas connecté à Internet</string>
+    <string name="youre_offline">Vous êtes hors ligne</string>
     <string name="sync_even_if_offline">Essayer quand même</string>
     <string name="sync_error">Erreur de synchronisation</string>
     <string name="vague_error">Erreur</string>
@@ -129,7 +129,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb est en cours de maintenance. Veuillez réessayer dans quelques minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 Erreur de délai d\'attente de la passerelle reçue.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title">Synchroniser</string>
+    <string name="sync_menu_title_full_sync">Synchroniser (tout)</string>
+    <string name="sync_menu_title_no_account">Synchroniser (se connecter)</string>
 </resources>

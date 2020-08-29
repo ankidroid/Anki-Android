@@ -89,8 +89,8 @@
         <item quantity="one">%d carte replanifiée</item>
         <item quantity="other">%d cartes replanifiées</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">Une nouvelle carte est en cours de replanification. La replanification transforme également les nouvelles cartes en cartes de révision. Utilisez l\'option « repositionner la carte » pour changer la position d\'une nouvelle carte dans la nouvelle file d\'attente</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">La replanification réinitialise également la façon dont le planificateur traite la carte dans le futur (la facilité sera réglée à %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Sélectionnez le paquet dans votre gestionnaire de fichiers ou visitez la page about:downloads pour l’importer</string>
     <string name="answering_error_title">Erreur de la base de données</string>
     <string name="answering_error_message">L\'écriture de la collection a échoué. La base de données pourrait être corrompue ou il se peut qu\'il n\'y ait pas assez d\'espace libre sur le disque.\n\nSi ceci se produit plus souvent, essayez de vérifier la base de données, de réparer la collection ou de la restaurer à partir d\'une sauvegarde. Touchez « options » pour cela.\n\Ou il pourrait s\'agir d\'une erreur AnkiDroid ; veuillez signaler l\'erreur pour que nous puissions vérifier ceci.</string>
@@ -102,8 +102,8 @@
     <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie « default »</string>
     <string name="custom_study_new_total_new">Nouvelles cartes dans le paquet: %d</string>
     <string name="custom_study_rev_total_rev">Révisions dues dans le paquet: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">Augmentation/diminution (« -3 ») de la limite actuelle de la nouvelle carte</string>
+    <string name="custom_study_rev_extend">Augmentation/diminution (« -3 ») de la limite de révision d\'aujourd\'hui de</string>
     <string name="custom_study_forgotten">Revoir les cartes oubliées dans les x derniers jours :</string>
     <string name="custom_study_ahead">Réviser à l\'avance de x jours :</string>
     <string name="custom_study_random">Sélectionner x cartes au hasard dans ce paquet :</string>
@@ -203,11 +203,11 @@
     <string name="boot_service_failed_to_schedule_notifications">Échec de la planification des rappels</string>
     <string name="boot_service_too_many_notifications">Trop de rappels planifiés. Certains n’apparaîtront pas</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title">Sélection des indices clavier</string>
+    <string name="locale_selection_dialog_summary">Certains claviers multilingues, comme GBoard, prennent en charge le changement de langue lors de l\'édition du texte\n\nVeuillez demander la fonctionnalité « setImeHintLocales » du fabricant de votre clavier si votre clavier ne change pas de langue.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">Une synchronisation automatique peut être déclenchée dans %d seconde</item>
+        <item quantity="other">Une synchronisation automatique peut être déclenchée dans %d secondes</item>
     </plurals>
 </resources>

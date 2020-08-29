@@ -79,8 +79,8 @@
     <string name="image_zoom">Zoom da imagem</string>
     <string name="button_size">Tamanho do botão de resposta</string>
     <string name="card_browser_font_size">Dimensionamento de fonte do navegador de cartões</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media">Exibir nomes de arquivo no navegador de cartão</string>
+    <string name="card_browser_hide_media_summary">Exibir nomes de arquivo de mídia nos campos de pergunta/resposta do navegador do cartão.</string>
     <string name="col_path">Diretório do AnkiDroid</string>
     <string name="fullscreen_review">Modo tela cheia</string>
     <string name="full_screen_off">Desligar</string>
@@ -94,8 +94,8 @@
     </string-array>
     <string name="gestures">Habilitar gestos</string>
     <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cartões.</string>
-    <string name="gestures_allow_links">Ignore touch gestures on links</string>
-    <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_allow_links">Ignorar gestos de toque nos links</string>
+    <string name="gestures_allow_links_summary">Gestos de toque não serão processados se um link/dica for pressionado.</string>
     <string name="gestures_swipe_up">Deslizar para cima</string>
     <string name="gestures_swipe_down">Deslizar para baixo</string>
     <string name="gestures_swipe_left">Deslizar à esquerda</string>
@@ -109,8 +109,8 @@
     <string name="gestures_volume_down">Diminuir volume</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Também utilizar botões de kanji/katakana, emoji/kao-moji para rolagem</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu">‘%s’ Menu </string>
+    <string name="card_browser_enable_external_context_menu_summary">Habilita o menu de contexto globalmente ‘%s\'</string>
     <string name="double_scrolling_gap">Rolagem dupla</string>
     <string name="double_scrolling_gap_summ">Duplicar a lacuna de rolagem com eReader</string>
     <string name="swipe_sensitivity">Sensibilidade do gesto</string>
@@ -123,8 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Sincronização automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automaticamente ao iniciar/sair do aplicativo se a última sincronização foi há mais de 10 minutos.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">Exibir status da sincronização</string>
+    <string name="sync_status_badge_summ">Alterar o ícone de sincronização quando alterações forem enviadas.</string>
     <string name="day_theme">Tema Dia</string>
     <string name="night_theme">Tema Noite</string>
     <string name="default_font">Fonte padrão</string>
@@ -155,8 +155,8 @@
     <string name="pref_backup_max">Número máximo de backups</string>
     <string name="show_estimates">Mostrar o tempo no botão</string>
     <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
-    <string name="show_top_bar">Show Top Bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_top_bar">Mostrar barra superior</string>
+    <string name="show_top_bar_summ">Mostrar contagem de cartões, bandeira e marca na barra superior</string>
     <string name="show_progress">Mostar restantes</string>
     <string name="show_progress_summ">Mostrar contagem de cartões restantes</string>
     <string name="show_eta">Mostrar tempo restante estimado</string>
@@ -204,7 +204,7 @@
     <string name="custom_sync_server_base_url_title">Url de sincronismo</string>
     <string name="custom_sync_server_base_url_invalid">Url de sincronização inválido</string>
     <string name="custom_sync_server_media_url_title">Url de sincronismo de mídia</string>
-    <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
+    <string name="custom_sync_server_media_url_invalid">Mídia com URL de sincronização inválido</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Alterações às opções do grupo de deck afetarão vários decks. Se você deseja alterar apenas o deck atual, por favor, adicione um novo grupo de opções primeiro</string>
     <string name="studyoptions_limit_select_tags">Selecione Tags</string>
