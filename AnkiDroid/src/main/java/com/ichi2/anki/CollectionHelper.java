@@ -125,6 +125,15 @@ public class CollectionHelper {
         return mCollection;
     }
 
+    /** Collection time if possible, otherwise real time.*/
+    public synchronized Time getTimeSafe(Context context) {
+        try {
+            return getCol(context).getTime();
+        } catch (Exception e) {
+            return new SystemTime();
+        }
+    }
+
     /**
      * Call getCol(context) inside try / catch statement.
      * Send exception report and return null if there was an exception.
