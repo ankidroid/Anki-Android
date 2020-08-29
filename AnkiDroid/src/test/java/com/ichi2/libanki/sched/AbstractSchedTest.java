@@ -126,7 +126,7 @@ public class AbstractSchedTest extends RobolectricTest {
         Card card = sched.getCard();
         assertThat(sched.newCount(), is(9));
         assertThat(sched.counts(card)[0], is(10));
-        sched.answerCard(card, 3);
+        sched.answerCard(card, sched.getGoodNewButton());
         sched.getCard();
         nonTaskUndo(col);
         card.load();
