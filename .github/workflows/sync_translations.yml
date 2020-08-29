@@ -8,6 +8,8 @@ jobs:
     name: 'Sync Translations with Crowdin'
     timeout-minutes: 20
     runs-on: macos-latest
+    env:
+      CROWDIN_KEY: ${{ secrets.CROWDIN_API_KEY }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -30,9 +32,7 @@ jobs:
       - name: Credential Prep
         run: |
           mkdir ~/src
-          echo "${{ secrets.CROWDIN_API_KEY }}" | base64 -d > ~/src/crowdin_key.txt.gz
-          cd ~/src
-          gunzip *gz
+          echo "${{ secrets.CROWDIN_API_KEY }}" > ~/src/crowdin_key.txt
         shell: bash
 
       - name: Push translation sources to crowdin
