@@ -813,25 +813,6 @@ public class Utils {
 
 
     /**
-     *  Returns the effective date of the present moment.
-     *  If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
-     *  otherwise today
-     *  Note that the Date class is java.sql.Date whose constructor sets hours, minutes etc to zero
-     *
-     * @param utcOffset The UTC offset in seconds we are going to use to determine today or yesterday.
-     * @return The date (with time set to 00:00:00) that corresponds to today in Anki terms
-     */
-    public static Date genToday(double utcOffset) {
-        // The result is not adjusted for timezone anymore, following libanki model
-        // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Calendar cal = Time.gregorianCalendar(System.currentTimeMillis() - (long) utcOffset * 1000L);
-        return Date.valueOf(df.format(cal.getTime()));
-    }
-
-
-    /**
      * Indicates whether the specified action can be used as an intent. This method queries the package manager for
      * installed packages that can respond to an intent with the specified action. If no suitable package is found, this
      * method returns false.

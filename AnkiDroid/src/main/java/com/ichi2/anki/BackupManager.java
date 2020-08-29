@@ -222,6 +222,7 @@ public class BackupManager {
     public static boolean repairCollection(Collection col) {
         String deckPath = col.getPath();
         File deckFile = new File(deckPath);
+        Time time = col.getTime();
         Timber.i("BackupManager - RepairCollection - Closing Collection");
         col.close();
 
@@ -238,7 +239,7 @@ public class BackupManager {
                 return false;
             }
 
-            if (!moveDatabaseToBrokenFolder(deckPath, false)) {
+            if (!moveDatabaseToBrokenFolder(deckPath, false, time)) {
                 Timber.e("repairCollection - could not move corrupt file to broken folder");
                 return false;
             }
@@ -252,11 +253,11 @@ public class BackupManager {
     }
 
 
-    public static boolean moveDatabaseToBrokenFolder(String colPath, boolean moveConnectedFilesToo) {
+    public static boolean moveDatabaseToBrokenFolder(String colPath, boolean moveConnectedFilesToo, Time time) {
         File colFile = new File(colPath);
 
         // move file
-        Date value = Utils.genToday(Time.utcOffset());
+        Date value = time.genToday(Time.utcOffset());
         String movedFilename = String.format(Utils.ENGLISH_LOCALE, colFile.getName().replace(".anki2", "")
                 + "-corrupt-%tF.anki2", value);
         File movedFile = new File(getBrokenDirectory(colFile.getParentFile()), movedFilename);
