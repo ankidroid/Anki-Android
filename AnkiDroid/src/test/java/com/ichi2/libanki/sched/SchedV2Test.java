@@ -497,7 +497,7 @@ public class SchedV2Test extends RobolectricTest {
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
-        col.getSched().reset();
+        col.reset();
         Card c = col.getSched().getCard();
         DeckConfig conf = col.getSched()._cardConf(c);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 10, 1440, 2880}));
@@ -682,7 +682,7 @@ public class SchedV2Test extends RobolectricTest {
 
         // .counts() should match
         col.getDecks().select(child.getLong("id"));
-        col.getSched().reset();
+        col.reset();
         assertArrayEquals(new int[] {0, 0, 5}, col.getSched().counts());
 
         // answering a card in the child should decrement parent count
@@ -1555,7 +1555,7 @@ public class SchedV2Test extends RobolectricTest {
         DeckConfig conf = col.getSched()._cardConf(c);
         conf.getJSONObject("lapse").put("mult", 0.5);
         col.getDecks().save(conf);
-        col.getSched().reset();
+        col.reset();
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 1);
         c.load();

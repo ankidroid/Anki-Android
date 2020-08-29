@@ -146,7 +146,7 @@ public class SchedTest extends RobolectricTest {
 
     private Card getCardInDefaultDeck(Sched s) {
         selectDefaultDeck();
-        s.reset();
+        s.deferReset();
         return s.getCard();
     }
 
@@ -418,7 +418,7 @@ public class SchedTest extends RobolectricTest {
         Note note = col.newNote();
         note.setItem("Front", "one");
         col.addNote(note);
-        col.getSched().reset();
+        col.reset();
         Card c = col.getSched().getCard();
         DeckConfig conf = col.getSched()._cardConf(c);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 10, 1440, 2880}));

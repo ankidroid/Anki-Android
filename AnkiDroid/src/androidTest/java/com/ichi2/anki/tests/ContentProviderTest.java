@@ -793,7 +793,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
         Card nextCard = null;
         for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
-            sched.reset();
+            col.reset();
             nextCard = sched.getCard();
             if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
         }
@@ -829,7 +829,7 @@ public class ContentProviderTest extends InstrumentedTest {
             col.getDecks().select(deckToTest);
             Card nextCard = null;
             for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
-                sched.reset();
+                col.reset();
                 nextCard = sched.getCard();
                 if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
             }
@@ -861,7 +861,7 @@ public class ContentProviderTest extends InstrumentedTest {
     private Card getFirstCardFromScheduler(Collection col) {
         long deckId = mTestDeckIds.get(0);
         col.getDecks().select(deckId);
-        col.getSched().reset();
+        col.reset();
         return col.getSched().getCard();
     }
     /**
@@ -891,7 +891,7 @@ public class ContentProviderTest extends InstrumentedTest {
         int updateCount = cr.update(reviewInfoUri, values, null, null);
         assertEquals("Check if update returns 1", 1, updateCount);
         try { Thread.currentThread().wait(500); } catch (Exception e) {/* do nothing */}
-        col.getSched().reset();
+        col.reset();
         Card newCard = col.getSched().getCard();
         if(newCard != null){
             if(newCard.note().getId() == card.note().getId() && newCard.getOrd() == card.getOrd()){
@@ -994,7 +994,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // --------------------------------------
 
         col.getSched().unsuspendCards(new long[]{cardId});
-        col.getSched().reset();
+        col.reset();
     }
 
 
