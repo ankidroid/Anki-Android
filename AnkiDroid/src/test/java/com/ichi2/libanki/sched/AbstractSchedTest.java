@@ -125,30 +125,10 @@ public class AbstractSchedTest extends RobolectricTest {
         assertThat(sched.counts(card)[0], is(10));
         sched.answerCard(card, 3);
         sched.getCard();
-        final boolean[] executed = {false};
-        CollectionTask.launchCollectionTask(UNDO,
-                new TaskListener() {
-                    Card card;
-                    @Override
-                    public void onPreExecute() {
-
-                    }
-
-                    @Override
-                    public void onProgressUpdate(TaskData data) {
-                        card = data.getCard();
-                    }
-
-
-                    @Override
-                    public void onPostExecute(TaskData result) {
-                        assertThat(sched.newCount(), is(9));
-                        assertThat(sched.counts(card)[0], is(10));
-                        executed[0] = true;
-                    }
-                });
-        waitForAsyncTasksToComplete();
-        assertTrue(executed[0]);
+        nonTaskUndo(col);
+        card.load();
+        assertThat(sched.newCount(), is(9));
+        assertThat(sched.counts(card)[0], is(10));
     }
 
     @Test
