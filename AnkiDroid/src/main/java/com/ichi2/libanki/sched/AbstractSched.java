@@ -44,7 +44,6 @@ public abstract class AbstractSched {
      */
     public abstract void preloadNextCard();
     public abstract void resetCounts();
-    public abstract void resetQueues();
     /** Ensures that reset is executed before the next card is selected */
     public abstract void deferReset();
     /**
