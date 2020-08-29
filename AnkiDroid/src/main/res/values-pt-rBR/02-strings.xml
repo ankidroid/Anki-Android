@@ -58,7 +58,7 @@
     <string name="sdcard_missing_message">Desconecte o armazenamento USB para acessar seus decks</string>
     <string name="updated_version">Atualizado para a versão %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Salvar quadro.</string>
     <string name="enable_whiteboard">Habilitar quadro</string>
     <string name="disable_whiteboard">Desativar quadro</string>
     <string name="show_whiteboard">Mostrar quadro</string>
@@ -100,7 +100,7 @@
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modificar o novo limite de cartões de hoje</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_review_limit">Modificar o limite de revisões de hoje.</string>
     <string name="custom_study_review_forgotten">Revisar cartões esquecidos</string>
     <string name="custom_study_review_ahead">Antecipar revisão</string>
     <string name="custom_study_random_selection">Estudar uma seleção aleatória de cartões</string>
@@ -113,9 +113,9 @@
     <string name="note_editor_no_cards_created">Nenhum cartão criado. Por favor, preencha mais campos</string>
     <string name="note_editor_no_first_field">O primeiro campo está vazio</string>
     <string name="note_editor_no_cloze_delations">Este tipo de nota deve conter uma omissão de lacuna</string>
-    <string name="note_editor_set_field_language">Set field language</string>
+    <string name="note_editor_set_field_language">Definir idioma do campo.</string>
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota atual não produziu nenhum cartão.\nPor favor, escolha outro tipo de nota, ou clique em \'Cartas\' e adicione uma substituição de campo</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions somente funcionarão no cartão do tipo Cloze.</string>
     <string name="saving_facts">Salvando nota</string>
     <string name="saving_model">Saving note type</string>
     <string name="add">Adicionar</string>
@@ -278,38 +278,38 @@
     <string name="ankidroid_turn_on_fullscreen_options_menu">Por favor, ative a tela cheia para usar \"Mostrar Menu de Opções\" usando JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Falha ao salvar imagem do quadro. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="white_board_image_saved">Imagem do quadro branco salva em %s</string>
+    <string name="title_whiteboard_pen_color">Cor da caneta.</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[Cartões vazios encontrados. Por favor, execute Ferramentas>Cartões Vazios.]]></string>
+    <string name="note_importer_error_empty_first_field">Primeiro campo vazio: %s</string>
+    <string name="note_importer_error_first_field_matched">Primeiro campo correspondido: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Adicionado com o primeiro campo duplicado.</string>
+    <string name="note_importer_error_appeared_twice">Apareceu duas vezes no arquivo: %s</string>
+    <string name="note_importer_error_empty_notes">Uma ou mais notas não foram importadas, pois não geraram nenhum cartão. Isso pode acontecer quando você tem campos vazios ou quando você não colocou o conteúdo do arquivo de texto nos campos corretos.</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s tinha %2$d campos, esperado %3$d</string>
     <string name="csv_importer_error_exception">Cancelado: %s</string>
     <string name="user_is_a_robot">Teste automático detectado. Se você é humano, entre em contato com o suporte do AnkiDroid</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d nota adicionada.</item>
+        <item quantity="other">%d notas adicionadas.</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d nota atualizada.</item>
+        <item quantity="other">%d notas atualizadas.</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d nota inalterada</item>
+        <item quantity="other">%d notas inalteradas.</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">Este cartão usa recursos não suportados pelo AnkiDroid. Entre em contato com o desenvolvedor %1$s, ou veja a wiki. %2$s</string>
+    <string name="invalid_json_data">Cartão forneceu dados inválidos. %s</string>
+    <string name="valid_js_api_version">Versão inválida da API AnkiDroid JS. Entre em contato com o desenvolvedor %s, ou veja a wiki.</string>
+    <string name="update_js_api_version">Atualização da API AnkiDroid JS disponível. Contate desenvolvedor %s, ou veja a wiki.</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Visualizar</string>
+    <string name="anki_js_error_code">(Código de erro: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">Informações de debug copiadas para a área de transferência.</string>
+    <string name="about_ankidroid_error_copy_debug_info">Erro ao copiar informações de debug para a área de transferência.</string>
 </resources>

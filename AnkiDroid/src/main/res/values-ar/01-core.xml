@@ -45,7 +45,7 @@
     <string name="settings">الإعدادات</string>
     <string name="help">المساعدة</string>
     <string name="send_feedback">إرسال الآراء والاقتراحات</string>
-    <string name="studyoptions_title">نظرة عامة عن شَدّة الأوراق</string>
+    <string name="studyoptions_title">موجز الرزمة</string>
     <string name="studyoptions_due_today">المستحق اليوم:</string>
     <string name="studyoptions_new_total">مجموع البطاقات الجديدة:</string>
     <string name="studyoptions_total_cards">مجموع البطاقات:</string>
@@ -80,15 +80,15 @@
         <item quantity="other">باقي %d ساعة</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="zero">%d أيام متبقية %d</item>
-        <item quantity="one">%d day %d left</item>
-        <item quantity="two">%d days %d left</item>
-        <item quantity="few">%d days %d left</item>
-        <item quantity="many">%d days %d left</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="zero">تبقى %d يوم و%d ساعة</item>
+        <item quantity="one">تبقى %d يوم و%d ساعة</item>
+        <item quantity="two">تبقى %d يوم و%d ساعة</item>
+        <item quantity="few">تبقى %d أيام و%d ساعة</item>
+        <item quantity="many">تبقى %d يوم و%d ساعة</item>
+        <item quantity="other">تبقى %d أيام و%d ساعة</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">المجموعة فارغة</string>
+    <string name="no_cards_placeholder_description">ابدأ بإضافة بطاقات\nباستخدام أيقونة +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="zero">تم دراسة %1$d بطاقة خلال %2$s اليوم</item>
@@ -101,12 +101,12 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">أدخل الإجابة</string>
     <string name="show_answer">اظهار الإجابة</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">إخفاء الجواب</string>
     <string name="ease_button_again">مجددًا</string>
     <string name="ease_button_hard">صعب</string>
     <string name="ease_button_good">جيد</string>
     <string name="ease_button_easy">سهل</string>
-    <string name="studyoptions_congrats_undo">تراجع عن%s</string>
+    <string name="studyoptions_congrats_undo">تراجع عن %s</string>
     <string name="menu_import">استيراد</string>
     <string name="undo">تراجع</string>
     <string name="undo_action_review">آخر مراجعة</string>
@@ -123,8 +123,8 @@
     <string name="move_all_to_deck">نقل الكل إلى شَدّة الأوراق</string>
     <string name="unbury">إلغِ الدفن</string>
     <string name="rename_deck">إعادة تسمية شَدّة الأوراق</string>
-    <string name="menu_add">اضافة</string>
-    <string name="menu_add_note">إضافة ملاحظة</string>
+    <string name="menu_add">إضافة</string>
+    <string name="menu_add_note">إضافة ملحوظة</string>
     <string name="menu_my_account">حساب المزامنة</string>
     <string name="menu_dismiss_note">اخفِ / احذف</string>
     <string name="menu_bury_card">ادفن البطاقة</string>
@@ -134,20 +134,20 @@
     <string name="menu_bury">ادفن</string>
     <string name="menu_suspend">عَطِّل</string>
     <string name="menu_delete_note">ملاحظة الحذف</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag">مؤشر</string>
+    <string name="menu_flag_card">أشر على البطاقة</string>
+    <string name="menu_flag_card_zero">لا مؤشر</string>
+    <string name="menu_flag_card_one">مؤشر أحمر</string>
+    <string name="menu_flag_card_two">مؤشر برتقالي</string>
+    <string name="menu_flag_card_three">مؤشر أخضر</string>
+    <string name="menu_flag_card_four">مؤشر أزرق</string>
+    <string name="menu_edit_tags">تعديل السمات</string>
     <string name="delete_note_message">هل تريد حقا حذف هذه الملاحظة و جميع بطاقاتها؟\n%s</string>
     <string name="menu_select">حدد نصا</string>
     <string name="menu_search">البحث في %1$s</string>
     <string name="menu_mark_note">أشِّر الملاحظة</string>
     <string name="menu_unmark_note">الغِ تأشير الملاحظة</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">تحقق من النطق</string>
     <string name="new_deck">إنشاء شَدّة أوراق</string>
     <string name="create">إنشاء</string>
     <string name="new_dynamic_deck">انشئ شَدّة أوراق مُفَلتَرة</string>
@@ -157,7 +157,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">الرجاء منح أنكيدرويد إذن «التخزين» للاستمرار</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -167,22 +167,22 @@
     -->
     <string name="time_quantity_seconds">%d ثانية</string>
     <string name="time_quantity_minutes">%d دقيقة</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d س %2$d د</string>
     <string name="time_quantity_hours">%d ساعة</string>
     <string name="time_quantity_days">%d يوم</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
+    <string name="time_quantity_days_hours">%1$d ي %2$d س</string>
     <string name="time_quantity_months">%.1f شهر</string>
     <string name="time_quantity_years">%.1f سنة</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_cram_deck">إعادة بناء المراجعة المركزة لشَدّة الأوراق.\n يرجى الانتظار...</string>
     <string name="rebuild_cram_label">إعادة بناء</string>
     <string name="empty_cram_label">فارغ</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">إنشاء رزمة فرعية</string>
     <string name="empty_cram_deck">إفراغ المراجعة المركزة لشَدّة الأوراق.\n يرجى الانتظار...</string>
     <string name="custom_study_deck_name">دورة دراسية مخصصة</string>
     <string name="custom_study_deck_exists">الرجاء إعادة تسمية شَدّة الأوراق المدرسة المخصصة الحالية اولاً.</string>
     <string name="empty_deck">شَدّة الأوراق هذه فارغة</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="invalid_deck_name">اسم رزمة غير صالح</string>
     <string name="studyoptions_empty">شَدّة الأوراق هذه فارغة. اضغط الزر + لإضافة محتوى جديد.</string>
     <string name="studyoptions_limit_reached">تم الوصول لحد الدراسة اليومي</string>
     <string name="studyoptions_empty_schedule">لا توجد بطاقات مُجَدْوَلة للدراسة</string>
@@ -208,8 +208,8 @@
     <string name="card_template_editor_back">قالب الجهة الخلفية</string>
     <string name="card_template_editor_styling">النمط</string>
     <string name="card_template_editor_menu_delete">احذف</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_menu_card_browser_appearance">مظهر متصفح البطاقات</string>
+    <string name="card_template_editor_deck_override">الرزمة المهيمنة</string>
     <string name="card_template_editor_cant_delete">مطلوب نوع بطاقة واحد على الأقل</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="zero">حذف نوع البطاقة \"%2$s\"، والبطاقات %1$d؟</item>
@@ -220,16 +220,16 @@
         <item quantity="other">حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
     </plurals>
     <string name="invalid_template">لا يمكن إنشاء بطاقة</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">سيؤدي حذف نوع البطاقة هذا إلى حذف ملحوظة أو أكثر. الرجاء إنشاء نوع بطاقة جديد وحفظه أولًا.</string>
+    <string name="card_template_editor_save_error">يتعذر حفظ تغييرات قالب البطاقة: %s</string>
     <string name="template_for_current_card_deleted">تم حذف نوع البطاقة للبطاقة الحالية.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">مظهر المتصفح</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة البيانات أنكيدرويد</string>
     <string name="read_write_permission_description">حصل على ملاحظات، وبطاقات، وأنواع الملاحظات، وشَدّات أوراق، كما يمكن أيضاً إنشاء شَدّات أوراق جديدة.</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_label">متصفح البطاقات</string>
+    <string name="card_browser_context_menu">متصفح البطاقات</string>
+    <string name="context_menu_anki_card_label">بطاقة أنكي</string>
 </resources>

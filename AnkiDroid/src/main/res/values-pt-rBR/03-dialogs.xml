@@ -89,8 +89,8 @@
         <item quantity="one">%d cartão reagendado</item>
         <item quantity="other">%d cartões reagendados</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">Um novo cartão está sendo reagendado. O reagendamento também transforma os novos cartões em cartões de revisão. Usar a opção \'reposicionar o cartão\' para mudar a posição do novo cartão dentro da nova fila.</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">O reagendamento também redefine como o agendador lida com o cartão no futuro (facilidade será configurada para %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Selecione o baralho no seu gerenciador de arquivos ou visite a página about:downloads para importá-lo</string>
     <string name="answering_error_title">Erro de banco de dados</string>
     <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Isso pode estar relacionado a um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso ocorrer frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso pode ser um bug do AnkiDroid; relate o erro para que possamos verificar o problema.</string>
@@ -102,8 +102,8 @@
     <string name="intent_aedict_category">Para adicionar cartões ao AnkiDroid remova todas as categorias das notas ou adicione uma com o nome \'default\'</string>
     <string name="custom_study_new_total_new">Novos cartões no deck: %d</string>
     <string name="custom_study_rev_total_rev">Revisões pendentes no baralho: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">Aumentar/diminuir (\"-3\") limite de novos cartões de hoje.</string>
+    <string name="custom_study_rev_extend">Aumentar/diminuir (\"-3\") o limite de revisões de hoje.</string>
     <string name="custom_study_forgotten">Revisar cartões esquecidos nos últimos x dias:</string>
     <string name="custom_study_ahead">Adiantar revisão em x dias:</string>
     <string name="custom_study_random">Selecione aleatoriamente x cartões do baralho:</string>
@@ -122,7 +122,7 @@
     <string name="restore_backup">A sua coleção será substituída por uma cópia mais antiga. Qualquer progresso não salvo será perdido.</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_no">Não</string>
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_positive_create">Criar</string>
     <string name="dialog_positive_delete">Excluir</string>
@@ -192,22 +192,22 @@
     <string name="error_selecting_image">Erro selecionando imagem. Por favor veja o manual. %s</string>
     <string name="error_deleting_image">Erro deletando imagem</string>
     <string name="failed_to_apply_background_image">Falha ao aplicar a imagem de fundo %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
+    <string name="background_image_too_large">Fundo do seletor de deck muito grande</string>
     <string name="image_max_size_allowed">Tamanho máximo de imagem %d MB permitido</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Falta a permissão de armazenamento necessário. Por favor, conceda permissão de armazenamento e tente novamente.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">Não foi possível carregar a aparência do Navegador do Cartão</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Falha ao agendar lembretes</string>
     <string name="boot_service_too_many_notifications">Muitos lembretes programados. Alguns não aparecerão</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title">Seleção de dicas para o teclado</string>
+    <string name="locale_selection_dialog_summary">Alguns teclados multilíngues, como GBoard suportam alterar o idioma ao editar o texto\n\nPor favor, solicite o recurso \"setImeHintLocales\" do seu fabricante de teclado se o seu teclado não alterar o idioma. </string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">Uma sincronização automática pode ser executada em %d segundos.</item>
+        <item quantity="other">Uma sincronização automática pode ser executada em %d segundos.</item>
     </plurals>
 </resources>

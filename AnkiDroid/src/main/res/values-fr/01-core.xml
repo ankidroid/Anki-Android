@@ -71,8 +71,8 @@
         <item quantity="one">%d jour %d restant</item>
         <item quantity="other">%d jours %d restants</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">La collection est vide</string>
+    <string name="no_cards_placeholder_description">Commencez à ajouter des cartes\nen utilisant l\'icône +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Aujourd’hui, %1$d carte a été étudiée en %2$s</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Taper la réponse</string>
     <string name="show_answer">Afficher la réponse</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Cacher la réponse</string>
     <string name="ease_button_again">Encore</string>
     <string name="ease_button_hard">Difficile</string>
     <string name="ease_button_good">Bon</string>
@@ -189,7 +189,7 @@
     <string name="card_template_editor_styling">Style</string>
     <string name="card_template_editor_menu_delete">Supprimer</string>
     <string name="card_template_editor_menu_card_browser_appearance">Apparence du navigateur de cartes</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">Forcer le paquet</string>
     <string name="card_template_editor_cant_delete">Il faut au moins un type de carte.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Supprimer le type de carte “%2$s” et sa %1$d carte ?</item>
@@ -207,5 +207,5 @@
     <!-- Context Menu -->
     <string name="card_browser_label">Navigateur de cartes</string>
     <string name="card_browser_context_menu">Navigateur de cartes</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Carte Anki</string>
 </resources>
