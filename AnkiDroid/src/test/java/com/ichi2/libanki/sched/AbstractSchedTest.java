@@ -30,6 +30,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONArray;
 
 import org.junit.Before;
@@ -53,6 +54,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -285,5 +287,77 @@ mw.col.sched.extendLimits(1, 0)
     @Test
     public void increaseToday() {
         new IncreaseToday().test();
+    }
+
+
+    protected void undoAndRedo(boolean preload) {
+        Collection<MockTime> col = getCol();
+        MockTime time = col.getTime();
+        DeckConfig conf = col.getDecks().confForDid(1);
+        conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 3, 5, 10}));
+        col.getConf().put("collapseTime", 20 * 60);
+        AbstractSched sched = col.getSched();
+
+        Note note = addNoteUsingBasicModel("foo", "bar");
+
+        col.reset();
+
+        Card card = sched.getCard();
+        assertNotNull(card);
+        assertArrayEquals(new int[]{1, 0, 0}, sched.counts(card));
+        if (preload) {
+            sched.preloadNextCard();
+        }
+
+        sched.answerCard(card, sched.getGoodNewButton());
+        //time.addM(15);
+
+        card = sched.getCard();
+        assertNotNull(card);
+        assertArrayEquals(new int[]{0, (schedVersion == 1) ? 3 : 1, 0}, sched.counts(card));
+        if (preload) {
+            sched.preloadNextCard();
+        }
+
+
+        sched.answerCard(card, sched.getGoodNewButton());
+
+        card = sched.getCard();
+        assertNotNull(card);
+        assertArrayEquals(new int[]{0, (schedVersion == 1) ? 2 : 1, 0}, sched.counts(card));
+        if (preload) {
+            sched.preloadNextCard();
+        }
+
+        assertNotNull(card);
+
+        card = nonTaskUndo(col);
+        assertNotNull(card);
+        assertArrayEquals(new int[]{0, (schedVersion == 1) ? 3 : 1, 0}, sched.counts(card));
+        sched.count();
+        if (preload) {
+            sched.preloadNextCard();
+        }
+
+
+        sched.answerCard(card, sched.getGoodNewButton());
+        card = sched.getCard();
+        assertNotNull(card);
+        if (preload) {
+            sched.preloadNextCard();
+        }
+        assertArrayEquals(new int[]{0, (schedVersion == 1) ? 2 : 1, 0}, sched.counts(card));
+
+        assertNotNull(card);
+    }
+
+    @Test
+    public void undoAndRedoPreload() {
+        undoAndRedo(true);
+    }
+
+    @Test
+    public void undoAndRedoNoPreload() {
+        undoAndRedo(false);
     }
 }
