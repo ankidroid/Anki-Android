@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <!-- We use this file bacause we want to enable for the release build the NewApi, InlinedApi and
-       our Anki Time related checks. Using the check() method on lintOptions would be a better option
-       but it doesn't work as it will NOT recognize any custom Lint checks(from local module or
-       dependency library) .
-       To add more checks for the release build you will need to modify this file to change the
-       severity of that check to fatal.
-       Also, note that any new issues will appear when linting as this is not an exclusive list of
-       issues to use in linting, it's a file to change issues on top of other default checks.
-       If a new issue was created by the framework or other libraries which should be disabled for
-       release then add it to this file like this:
+    <!-- INFORMATION ABOUT USAGE
+    We use this file bacause we want to enable for the release build various checks from the
+    Android SDK(initially just NewApi and InlinedApi) plus our own custom Anki time usage related
+    checks. Using the check() method on lintOptions in the lint.gradle file would be nice but it
+    doesn't work as it will NOT recognize any custom Lint checks(from a local module(like lint-rules)
+    or from a library added as a dependency) .
+
+    To allow more checks for the release build you will need to modify this file to change the
+    severity of that check to fatal. For example, to enable for release the WrongViewCast check
+    change:
+
+        <issue id="WrongViewCast" severity="fatal" />
+
+    Also, note that any NEW issue will appear when linting as this is not an exclusive list of
+    issues to use in linting, it's a file used to declare how the issues are applied to the project.
+    If a NEW issue is created by the Android framework or added by other libraries which should be
+    disabled for release then add it to this file like this:
 
        <issue id="NewIssueId" severity="ignore"/>
     -->
