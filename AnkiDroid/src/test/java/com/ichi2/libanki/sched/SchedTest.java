@@ -49,6 +49,7 @@ import static com.ichi2.libanki.Consts.CARD_TYPE_LRN;
 import static com.ichi2.libanki.Consts.CARD_TYPE_NEW;
 import static com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING;
 import static com.ichi2.libanki.Consts.CARD_TYPE_REV;
+import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_LRN;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_NEW;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
@@ -435,7 +436,7 @@ public class SchedTest extends RobolectricTest {
         // answering it will place it in queue 3
         col.getSched().answerCard(c, 2);
         assertEquals(col.getSched().getToday() + 1, c.getDue());
-        assertEquals(CARD_TYPE_RELEARNING, c.getQueue());
+        assertEquals(QUEUE_TYPE_DAY_LEARN_RELEARN, c.getQueue());
         assertNull(col.getSched().getCard());
         // for testing, move it back a day
         c.setDue(c.getDue() - 1);
