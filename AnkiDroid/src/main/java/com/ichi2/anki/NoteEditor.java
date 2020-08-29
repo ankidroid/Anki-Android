@@ -771,17 +771,11 @@ public class NoteEditor extends AnkiActivity {
                             mSourceText[0] = entry_lines[1];
                             mSourceText[1] = entry_lines[0];
                             mAedictIntent = true;
-                        } else {
-                            UIUtils.showThemedToast(NoteEditor.this,
-                                    getResources().getString(R.string.intent_aedict_empty), false);
-                            return true;
+                            return false;
                         }
-                    } else {
-                        UIUtils.showThemedToast(NoteEditor.this, getResources().getString(R.string.intent_aedict_empty),
-                                false);
-                        return true;
                     }
-                    return false;
+                    UIUtils.showThemedToast(NoteEditor.this, getResources().getString(R.string.intent_aedict_empty),false);
+                    return true;
                 }
             }
         }
