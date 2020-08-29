@@ -207,7 +207,7 @@ public class SchedV2 extends AbstractSched {
         deferReset(null);
     }
 
-    public void reset() {
+    protected void reset() {
         _updateCutoff();
         resetCounts(false);
         resetQueues(false);

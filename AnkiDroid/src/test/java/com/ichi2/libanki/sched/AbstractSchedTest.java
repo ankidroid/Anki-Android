@@ -86,8 +86,9 @@ public class AbstractSchedTest extends RobolectricTest {
         // #6587
         addNoteUsingBasicModel("Hello", "World");
 
-        AbstractSched sched = getCol().getSched();
-        sched.reset();
+        Collection col = getCol();
+        AbstractSched sched = col.getSched();
+        col.reset();
 
         Card cardBeforeUndo = sched.getCard();
         int[] countsBeforeUndo = sched.counts();
@@ -117,7 +118,7 @@ public class AbstractSchedTest extends RobolectricTest {
             note.setField(0, "a");
             col.addNote(note);
         }
-        sched.reset();
+        col.reset();
         assertThat(col.cardCount(), is(20));
         assertThat(sched.newCount(), is(10));
         Card card = sched.getCard();
@@ -173,7 +174,7 @@ public class AbstractSchedTest extends RobolectricTest {
             Note note  = addNoteUsingBasicAndReversedModel("front", "back");
             notes[i] = note;
         }
-        sched.reset();
+        col.reset();
 
         for (int i = 0; i < nbNote; i++) {
             Card card = sched.getCard();
@@ -225,7 +226,8 @@ public class AbstractSchedTest extends RobolectricTest {
         }
 
         public void test() {
-            Models models = getCol().getModels();
+            Collection col = getCol();
+            Models models = col.getModels();
 
             DeckConfig dconf = decks.getConf(1);
             dconf.getJSONObject("new").put("perDay", 0);
@@ -248,7 +250,7 @@ public class AbstractSchedTest extends RobolectricTest {
             increaseAndAssertNewCountsIs("Adding a review in D add it in its parents too", dId, 5, 5, 3, 4);
 
             decks.select(cId);
-            sched.reset();
+            col.reset();
             for (int i = 0; i < 3; i++) {
                 Card card = sched.getCard();
                 sched.answerCard(card, sched.answerButtons(card));

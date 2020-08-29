@@ -100,7 +100,7 @@ public class DecksTest extends RobolectricTest {
         assertEqualsArrayList(new Long[] {parentId}, col.getDecks().active());
         // let's create a child
         long childId = col.getDecks().id("new deck::child");
-        col.getSched().reset();
+        col.reset();
         // it should have been added to the active list
         assertEquals(parentId, col.getDecks().selected());
         assertEqualsArrayList(new Long[] {parentId, childId}, col.getDecks().active());

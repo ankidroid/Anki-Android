@@ -37,7 +37,7 @@ public abstract class AbstractSched {
      * The collection saves some numbers such as counts, queues of cards to review, queues of decks potentially having some cards.
      * Reset all of this and compute from scratch. This occurs because anything else than the sequence of getCard/answerCard did occur.
      */
-    public abstract void reset();
+    protected abstract void reset();
 
     public abstract void _updateCutoff();
     /** Ensure that the question on the potential next card can be accessed quickly.
