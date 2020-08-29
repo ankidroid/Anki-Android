@@ -19,9 +19,11 @@ package com.ichi2.libanki.utils;
 import com.ichi2.libanki.DB;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /** Allows injection of time dependencies */
 public abstract class Time {
@@ -94,5 +96,26 @@ public abstract class Time {
         Calendar cal = Calendar.getInstance();
         // 4am
         return 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
+    }
+
+
+
+
+    /**
+     *  Returns the effective date of the present moment.
+     *  If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
+     *  otherwise today
+     *  Note that the Date class is java.sql.Date whose constructor sets hours, minutes etc to zero
+     *
+     * @param utcOffset The UTC offset in seconds we are going to use to determine today or yesterday.
+     * @return The date (with time set to 00:00:00) that corresponds to today in Anki terms
+     */
+    public java.sql.Date genToday(double utcOffset) {
+        // The result is not adjusted for timezone anymore, following libanki model
+        // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Calendar cal = Time.gregorianCalendar( intTimeMS()- (long) utcOffset * 1000L);
+        return java.sql.Date.valueOf(df.format(cal.getTime()));
     }
 }

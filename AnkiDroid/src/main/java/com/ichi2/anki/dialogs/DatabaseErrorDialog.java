@@ -13,6 +13,7 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.libanki.utils.Time;
 
 import java.io.File;
 import java.io.IOException;
@@ -243,9 +244,11 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         .positiveText(res.getString(R.string.dialog_positive_create))
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .onPositive((inner_dialog, which) -> {
-                            CollectionHelper.getInstance().closeCollection(false, "DatabaseErrorDialog: Before Create New Collection");
+                            CollectionHelper ch = CollectionHelper.getInstance();
+                            Time time = ch.getTimeSafe(getContext());
+                            ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection");
                             String path1 = CollectionHelper.getCollectionPath(getActivity());
-                            if (BackupManager.moveDatabaseToBrokenFolder(path1, false)) {
+                            if (BackupManager.moveDatabaseToBrokenFolder(path1, false, time)) {
                                 ((DeckPicker) getActivity()).restartActivity();
                             } else {
                                 ((DeckPicker) getActivity()).showDatabaseErrorDialog(DIALOG_LOAD_FAILED);
