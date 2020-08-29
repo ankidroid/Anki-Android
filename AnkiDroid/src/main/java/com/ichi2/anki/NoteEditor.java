@@ -1923,7 +1923,7 @@ public class NoteEditor extends AnkiActivity {
         private final Field mField;
         private final int mClozeMenuId = View.generateViewId();
         @RequiresApi(Build.VERSION_CODES.N)
-        private final int mSetLanugageId = View.generateViewId();
+        private final int mSetLanguageId = View.generateViewId();
 
         private ActionModeCallback(FieldEditText textBox, Field field) {
             super();
@@ -1943,7 +1943,7 @@ public class NoteEditor extends AnkiActivity {
                 return false;
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(mSetLanugageId) != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(mSetLanguageId) != null) {
                 return false;
             }
 
@@ -1954,7 +1954,7 @@ public class NoteEditor extends AnkiActivity {
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                menu.add(Menu.NONE, mSetLanugageId, 1, R.string.note_editor_set_field_language);
+                menu.add(Menu.NONE, mSetLanguageId, 1, R.string.note_editor_set_field_language);
             }
 
 
@@ -1969,7 +1969,7 @@ public class NoteEditor extends AnkiActivity {
                 convertSelectedTextToCloze(mTextBox, AddClozeType.INCREMENT_NUMBER);
                 mode.finish();
                 return true;
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == mSetLanugageId) {
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == mSetLanguageId) {
                 displaySelectInputLanguage();
                 mode.finish();
                 return true;
