@@ -98,14 +98,10 @@ public class SchedV2 extends AbstractSched {
     protected int mRevCount;
 
     private int mNewCardModulus;
-    /** Next time you reset counts, take into account this card is in the reviewer and should not be counted.
-     * This is currently due only when the card is sent by Undo.
-     */
-    private Card mCardToDecrement = null;
     /** Next time the queue is reset, takes into account that this card is in the reviewer and so should not be added
      * to queue. I.e. that is mCurrentCard but should not be discarded by reset.
      * */
-    private Card mCardNotToFetch = null;
+    protected Card mCardNotToFetch = null;
 
     protected double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
@@ -196,15 +192,16 @@ public class SchedV2 extends AbstractSched {
     }
 
     /** Ensures that reset is executed before the next card is selected */
-    public void deferReset(Card undidCard){
+    public void deferReset(Card card){
         mHaveQueues = false;
         mHaveCounts = false;
-        mCardToDecrement = undidCard;
-        mCardNotToFetch = undidCard;
+        setCurrentCard(card);
     }
 
-    public void deferReset(){
-        deferReset(null);
+    public void deferReset() {
+        mHaveQueues = false;
+        mHaveCounts = false;
+        discardCurrentCard();
     }
 
     protected void reset() {
@@ -226,24 +223,11 @@ public class SchedV2 extends AbstractSched {
         _resetLrnCount();
         _resetRevCount();
         _resetNewCount();
-        decrementCounts(mCardToDecrement);
-        mCardToDecrement = null;
         mHaveCounts = true;
-    }
-
-    @Override
-    public void resetQueues() {
-        resetQueues(true);
     }
 
     /** @param checkCutoff whether we should check cutoff before resetting*/
     private void resetQueues(boolean checkCutoff) {
-        if (mCardNotToFetch == null) {
-            discardCurrentCard();
-        } else {
-            setCurrentCard(mCardNotToFetch);
-        }
-        mCardNotToFetch = null;
         if (checkCutoff) {
             _updateCutoff();
         }
@@ -720,6 +704,13 @@ public class SchedV2 extends AbstractSched {
     /** pre load the potential next card. It may loads many card because, depending on the time taken, the next card may
      * be a card in review or not. */
     public void preloadNextCard() {
+        _checkDay();
+        if (!mHaveCounts) {
+             resetCounts(false);
+        }
+        if (!mHaveQueues) {
+            resetQueues(false);
+        }
         for (CardQueue<? extends Card.Cache> caches: _fillNextCard()) {
             caches.loadFirstCard();
         }
@@ -748,8 +739,8 @@ public class SchedV2 extends AbstractSched {
     @SuppressWarnings("unused")
     protected int _cntFnNew(long did, int lim) {
         return mCol.getDb().queryScalar(
-                "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
-                did, lim);
+                "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND id != ? LIMIT ?)",
+                did, currentCardId(), lim);
     }
 
 
@@ -951,6 +942,9 @@ public class SchedV2 extends AbstractSched {
         int lim = Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
         // The counts shown in the reviewer does not consider the current card. E.g. if it indicates 6 new card, it means, 6 new card including current card will be seen today.
         // So currentCard does not have to be taken into consideration in this method
+        if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_NEW, did)) {
+            lim--;
+        }
         return lim;
     }
 
@@ -986,16 +980,16 @@ public class SchedV2 extends AbstractSched {
         // sub-day
         mLrnCount = mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit()
-                + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?", mLrnCutoff);
+                + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND id != ? AND due < ?", currentCardId(), mLrnCutoff);
 
         // day
         mLrnCount += mCol.getDb().queryScalar(
-                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?",
-                mToday);
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? AND id != ?",
+                mToday, currentCardId());
 
         // previews
         mLrnCount += mCol.getDb().queryScalar(
-                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_PREVIEW);
+                "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_PREVIEW + " AND id != ? ", currentCardId());
     }
 
 
@@ -1500,6 +1494,9 @@ public class SchedV2 extends AbstractSched {
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
         // The counts shown in the reviewer does not consider the current card. E.g. if it indicates 6 rev card, it means, 6 rev card including current card will be seen today.
         // So currentCard does not have to be taken into consideration in this method
+        if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_REV, did)) {
+            lim--;
+        }
 
         if (parentLimit != null) {
             return Math.min(parentLimit, lim);
@@ -1535,8 +1532,8 @@ public class SchedV2 extends AbstractSched {
     // Overriden: V1 uses _walkingCount
     protected void _resetRevCount() {
         int lim = _currentRevLimit();
-        mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
-                                             mToday, lim);
+        mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND id != ? LIMIT ?)",
+                                             mToday, currentCardId(), lim);
     }
 
 
@@ -3143,7 +3140,7 @@ public class SchedV2 extends AbstractSched {
     @Override
     @VisibleForTesting
     public @Consts.BUTTON_TYPE int getGoodNewButton() {
-        return 3;
+        return Consts.BUTTON_THREE;
     }
 
 }

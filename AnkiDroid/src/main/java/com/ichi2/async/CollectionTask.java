@@ -1167,7 +1167,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             newCard.startTimer();
             col.reset();
             sched.deferReset(newCard);
-            sched.setCurrentCard(newCard);
         }
         return newCard;
     }
