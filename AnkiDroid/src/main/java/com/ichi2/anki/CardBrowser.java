@@ -588,6 +588,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext()).edit()
                             .putInt("cardBrowserColumn2", mColumn2Index).commit();
                     Column[] fromMap = mCardsAdapter.getFromMapping();
+                    fromMap[1] = COLUMN2_KEYS[mColumn2Index];
                     mCardsAdapter.setFromMapping(fromMap);
                 }
             }
