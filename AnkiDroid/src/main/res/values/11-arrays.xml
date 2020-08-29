@@ -18,202 +18,256 @@
   <string-array
       name="error_reporting_choice_labels"
       >
-    <item>
+    <item
+        >
       Always report
     </item>
-    <item>
+    <item
+        >
       Never report
     </item>
-    <item>
+    <item
+        >
       Ask me
     </item>
   </string-array>
   <string-array
       name="gestures_labels"
       >
-    <item>
+    <item
+        >
       No action
     </item>
-    <item>
+    <item
+        >
       Show answer
     </item>
-    <item>
+    <item
+        >
       Answer button 1
     </item>
-    <item>
+    <item
+        >
       Answer button 2
     </item>
-    <item>
+    <item
+        >
       Answer button 3
     </item>
-    <item>
+    <item
+        >
       Answer button 4
     </item>
-    <item>
+    <item
+        >
       Answer recommended (green)
     </item>
-    <item>
+    <item
+        >
       Answer better than recommended
     </item>
-    <item>
+    <item
+        >
       Undo
     </item>
-    <item>
+    <item
+        >
       Edit note
     </item>
-    <item>
+    <item
+        >
       Tag note
     </item>
-    <item>
+    <item
+        >
       Mark note
     </item>
-    <item>
+    <item
+        >
       Lookup expression
     </item>
-    <item>
+    <item
+        >
       Bury card
     </item>
-    <item>
+    <item
+        >
       Suspend card
     </item>
-    <item>
+    <item
+        >
       Delete note
     </item>
-    <item>
+    <item
+        >
       Play media
     </item>
-    <item>
+    <item
+        >
       Abort learning
     </item>
-    <item>
+    <item
+        >
       Bury note
     </item>
-    <item>
+    <item
+        >
       Suspend note
     </item>
-    <item>
+    <item
+        >
       Toggle Red Flag
     </item>
-    <item>
+    <item
+        >
       Toggle Orange Flag
     </item>
-    <item>
+    <item
+        >
       Toggle Green Flag
     </item>
-    <item>
+    <item
+        >
       Toggle Blue Flag
     </item>
-    <item>
+    <item
+        >
       Remove Flag
     </item>
-    <item>
+    <item
+        >
       Page Up
     </item>
-    <item>
+    <item
+        >
       Page Down
     </item>
   </string-array>
   <string-array
       name="leech_action_labels"
       >
-    <item>
+    <item
+        >
       Suspend card
     </item>
-    <item>
+    <item
+        >
       Tag only
     </item>
   </string-array>
   <string-array
       name="new_order_labels"
       >
-    <item>
+    <item
+        >
       New cards in random order
     </item>
-    <item>
+    <item
+        >
       New cards in order added
     </item>
   </string-array>
   <string-array
       name="cram_deck_conf_order_labels"
       >
-    <item>
+    <item
+        >
       Oldest seen first
     </item>
-    <item>
+    <item
+        >
       Random
     </item>
-    <item>
+    <item
+        >
       Increasing intervals
     </item>
-    <item>
+    <item
+        >
       Decreasing intervals
     </item>
-    <item>
+    <item
+        >
       Most lapsed
     </item>
-    <item>
+    <item
+        >
       Order added
     </item>
-    <item>
+    <item
+        >
       Order due
     </item>
-    <item>
+    <item
+        >
       Latest added first
     </item>
-    <item>
+    <item
+        >
       Relative overdueness
     </item>
   </string-array>
   <string-array
       name="add_to_cur_labels"
       >
-    <item>
+    <item
+        >
       Use current deck
     </item>
-    <item>
+    <item
+        >
       Decide by note type
     </item>
   </string-array>
   <string-array
       name="new_spread_labels"
       >
-    <item>
+    <item
+        >
       Mix new cards and reviews
     </item>
-    <item>
+    <item
+        >
       New cards after reviews
     </item>
-    <item>
+    <item
+        >
       New cards before reviews
     </item>
   </string-array>
   <string-array
       name="override_font_labels"
       >
-    <item>
+    <item
+        >
       When no font specified on flashcards
     </item>
-    <item>
+    <item
+        >
       Always
     </item>
   </string-array>
   <string-array
       name="day_theme_labels"
       >
-    <item>
+    <item
+        >
       Light
     </item>
-    <item>
+    <item
+        >
       Plain
     </item>
   </string-array>
   <string-array
       name="night_theme_labels"
       >
-    <item>
+    <item
+        >
       Black
     </item>
-    <item>
+    <item
+        >
       Dark
     </item>
   </string-array>

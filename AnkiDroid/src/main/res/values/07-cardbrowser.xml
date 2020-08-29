@@ -215,34 +215,44 @@
   <string-array
       name="card_browser_order_labels"
       >
-    <item>
+    <item
+        >
       No sorting (faster)
     </item>
-    <item>
+    <item
+        >
       By sort field
     </item>
-    <item>
+    <item
+        >
       By created time
     </item>
-    <item>
+    <item
+        >
       By note modification time
     </item>
-    <item>
+    <item
+        >
       By card modification time
     </item>
-    <item>
+    <item
+        >
       By due time
     </item>
-    <item>
+    <item
+        >
       By interval
     </item>
-    <item>
+    <item
+        >
       By ease
     </item>
-    <item>
+    <item
+        >
       By reviews
     </item>
-    <item>
+    <item
+        >
       By lapses
     </item>
   </string-array>

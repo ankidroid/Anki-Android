@@ -261,10 +261,12 @@
   <string-array
       name="answer_buttons_position_labels"
       >
-    <item>
+    <item
+        >
       Top
     </item>
-    <item>
+    <item
+        >
       Bottom
     </item>
   </string-array>

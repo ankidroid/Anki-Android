@@ -351,13 +351,16 @@
   <string-array
       name="due_x_axis_title"
       >
-    <item>
+    <item
+        >
       Days
     </item>
-    <item>
+    <item
+        >
       Weeks
     </item>
-    <item>
+    <item
+        >
       Months
     </item>
   </string-array>
@@ -420,121 +423,156 @@
   <string-array
       name="stats_day_time_strings"
       >
-    <item>
+    <item
+        >
       4AM
     </item>
-    <item>
+    <item
+        >
       10AM
     </item>
-    <item>
+    <item
+        >
       4PM
     </item>
-    <item>
+    <item
+        >
       10PM
     </item>
-    <item>
+    <item
+        >
       3AM
     </item>
   </string-array>
   <string-array
       name="stats_week_days"
       >
-    <item>
+    <item
+        >
       Sun
     </item>
-    <item>
+    <item
+        >
       Mon
     </item>
-    <item>
+    <item
+        >
       Tue
     </item>
-    <item>
+    <item
+        >
       Wed
     </item>
-    <item>
+    <item
+        >
       Thu
     </item>
-    <item>
+    <item
+        >
       Fri
     </item>
-    <item>
+    <item
+        >
       Sat
     </item>
   </string-array>
   <string-array
       name="stats_eases_ticks"
       >
-    <item>
+    <item
+        >
       1
     </item>
-    <item>
+    <item
+        >
       2
     </item>
-    <item>
+    <item
+        >
       3
     </item>
-    <item>
+    <item
+        >
       1
     </item>
-    <item>
+    <item
+        >
       2
     </item>
-    <item>
+    <item
+        >
       3
     </item>
-    <item>
+    <item
+        >
       4
     </item>
-    <item>
+    <item
+        >
       1
     </item>
-    <item>
+    <item
+        >
       2
     </item>
-    <item>
+    <item
+        >
       3
     </item>
-    <item>
+    <item
+        >
       4
     </item>
   </string-array>
   <string-array
       name="stats_eases_ticks_schedv2"
       >
-    <item>
+    <item
+        >
       1
     </item>
-    <item>
+    <item
+        >
       2
     </item>
-    <item>
+    <item
+        >
       3
     </item>
-    <item>
+    <item
+        >
       4
     </item>
-    <item>
+    <item
+        >
       1
     </item>
-    <item>
+    <item
+        >
       2
     </item>
-    <item>
+    <item
+        >
       3
     </item>
-    <item>
+    <item
+        >
       4
     </item>
-    <item>
+    <item
+        >
       1
     </item>
-    <item>
+    <item
+        >
       2
     </item>
-    <item>
+    <item
+        >
       3
     </item>
-    <item>
+    <item
+        >
       4
     </item>
   </string-array>

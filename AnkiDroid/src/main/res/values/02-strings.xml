@@ -210,56 +210,72 @@
   <string-array
       name="browser_column1_headings"
       >
-    <item>
+    <item
+        >
       Question
     </item>
-    <item>
+    <item
+        >
       Sort field
     </item>
   </string-array>
   <string-array
       name="browser_column2_headings"
       >
-    <item>
+    <item
+        >
       Answer
     </item>
-    <item>
+    <item
+        >
       Card
     </item>
-    <item>
+    <item
+        >
       Deck
     </item>
-    <item>
+    <item
+        >
       Note
     </item>
-    <item>
+    <item
+        >
       Question
     </item>
-    <item>
+    <item
+        >
       Tags
     </item>
-    <item>
+    <item
+        >
       Lapses
     </item>
-    <item>
+    <item
+        >
       Reviews
     </item>
-    <item>
+    <item
+        >
       Interval
     </item>
-    <item>
+    <item
+        >
       Ease
     </item>
-    <item>
+    <item
+        >
       Due
     </item>
-    <item>
+    <item
+        >
       Card Modified
     </item>
-    <item>
+    <item
+        >
       Created
     </item>
-    <item>
+    <item
+        >
       Note Modified
     </item>
   </string-array>
