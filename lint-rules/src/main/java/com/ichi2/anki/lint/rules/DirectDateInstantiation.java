@@ -5,17 +5,18 @@ import com.android.tools.lint.detector.api.Implementation;
 import com.android.tools.lint.detector.api.Issue;
 import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.Severity;
 import com.android.tools.lint.detector.api.SourceCodeScanner;
 import com.google.common.annotations.VisibleForTesting;
 import com.ichi2.anki.lint.utils.Constants;
 import com.ichi2.anki.lint.utils.LintUtils;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiType;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.uast.UCallExpression;
 import org.jetbrains.uast.UClass;
+import org.jetbrains.uast.UExpression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,14 @@ public class DirectDateInstantiation extends Detector implements SourceCodeScann
     public void visitConstructor(@NotNull JavaContext context, @NotNull UCallExpression node, @NotNull PsiMethod constructor) {
         super.visitConstructor(context, node, constructor);
         List<UClass> foundClasses = context.getUastFile().getClasses();
+        // this checks for usage of new Date(ms) which we allow
+        List<UExpression> argTypes = node.getValueArguments();
+        if (argTypes != null && argTypes.size() == 1) {
+            UExpression onlyArgument = argTypes.get(0);
+            if (onlyArgument != null && onlyArgument.getExpressionType().equalsToText("long")) {
+                return;
+            }
+        }
         if (!LintUtils.isAnAllowedClass(foundClasses, "Time")) {
             context.report(
                     ISSUE,

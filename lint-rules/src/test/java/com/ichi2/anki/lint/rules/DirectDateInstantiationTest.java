@@ -15,6 +15,9 @@ public class DirectDateInstantiationTest {
             "    public Date() {                              \n" +
             "                                                 \n" +
             "    }                                            \n" +
+            "    public Date(long time) {                     \n" +
+            "                                                 \n" +
+            "    }                                            \n" +
             "}                                                \n";
 
     private final String javaFileToBeTested = "               \n" +
@@ -37,6 +40,17 @@ public class DirectDateInstantiationTest {
             "                                                 \n" +
             "    public static void main(String[] args) {     \n" +
             "        Date d = new Date();                     \n" +
+            "    }                                            \n" +
+            "}                                                \n";
+    private final String javaFileUsingDateWithLong = "        \n" +
+            "package com.ichi2.anki.lint.rules;               \n" +
+            "                                                 \n" +
+            "import java.util.Date;                           \n" +
+            "                                                 \n" +
+            "public class TestJavaClass {                     \n" +
+            "                                                 \n" +
+            "    public static void main(String[] args) {     \n" +
+            "        Date d = new Date(1L);                   \n" +
             "    }                                            \n" +
             "}                                                \n";
 
@@ -62,6 +76,17 @@ public class DirectDateInstantiationTest {
                 allowMissingSdk().
                 allowCompilationErrors()
                 .files(create(stubDate), create(javaFileWithTime))
+                .issues(DirectDateInstantiation.ISSUE)
+                .run()
+                .expectClean();
+    }
+
+    @Test
+    public void allowsUsageWithLongValue() {
+        lint().
+                allowMissingSdk().
+                allowCompilationErrors()
+                .files(create(stubDate), create(javaFileUsingDateWithLong))
                 .issues(DirectDateInstantiation.ISSUE)
                 .run()
                 .expectClean();
