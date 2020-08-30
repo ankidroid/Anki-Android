@@ -103,8 +103,13 @@ public class CollectionHelper {
      * @return instance of the Collection
      */
     public synchronized Collection getCol(Context context) {
+        if (colIsOpen()) {
+            return mCollection;
+        }
         return getCol(context, new SystemTime());
     }
+
+    @VisibleForTesting
     public synchronized Collection getCol(Context context, @NonNull Time time) {
         // Open collection
         if (!colIsOpen()) {
