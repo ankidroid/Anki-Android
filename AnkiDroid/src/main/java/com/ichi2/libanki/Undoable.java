@@ -15,7 +15,6 @@ import static com.ichi2.libanki.Collection.DismissType.*;
 public abstract class Undoable {
     private final DismissType mDt;
     public static final long MULTI_CARD = -1L;
-    public static final long NO_REVIEW = 0L;
 
     /**
      * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.
