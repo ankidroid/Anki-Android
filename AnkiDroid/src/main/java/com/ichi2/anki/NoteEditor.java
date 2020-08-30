@@ -871,7 +871,7 @@ public class NoteEditor extends AnkiActivity {
             final Model oldModel = (mCurrentEditedCard == null) ? null : mCurrentEditedCard.model();
             if (!newModel.equals(oldModel)) {
                 mReloadRequired = true;
-                if (mModelChangeCardMap.size() < mEditorNote.numberOfCards() || mModelChangeCardMap.containsKey(null)) {
+                if (mModelChangeCardMap.size() < mEditorNote.numberOfCards() || mModelChangeCardMap.containsValue(null)) {
                     // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
                     ConfirmationDialog dialog = new ConfirmationDialog ();
                     dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing));
