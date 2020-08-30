@@ -316,8 +316,7 @@ public class RobolectricTest {
                 }
             }
         };
-        CollectionTask.launchCollectionTask(taskType, listener, data);
-
+        TaskManager.launchCollectionTask(taskType, listener, data);
 
         wait(timeoutMs);
 

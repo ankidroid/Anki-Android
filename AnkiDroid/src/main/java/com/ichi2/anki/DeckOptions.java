@@ -41,6 +41,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
@@ -212,7 +213,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 int oldValue = mOptions.getJSONObject("new").getInt("order");
                                 if (oldValue != newValue) {
                                     mOptions.getJSONObject("new").put("order", newValue);
-                                    CollectionTask.launchCollectionTask(REORDER, confChangeHandler(),
+                                    TaskManager.launchCollectionTask(REORDER, confChangeHandler(),
                                             new TaskData(new Object[] {mOptions}));
                                 }
                                 mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
@@ -302,7 +303,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "deckConf": {
                                 long newConfId = Long.parseLong((String) value);
                                 mOptions = mCol.getDecks().getConf(newConfId);
-                                CollectionTask.launchCollectionTask(CONF_CHANGE, confChangeHandler(),
+                                TaskManager.launchCollectionTask(CONF_CHANGE, confChangeHandler(),
                                         new TaskData(new Object[] {mDeck, mOptions}));
                                 break;
                             }
@@ -315,7 +316,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             }
                             case "confReset":
                                 if ((Boolean) value) {
-                                    CollectionTask.launchCollectionTask(CONF_RESET, confChangeHandler(),
+                                    TaskManager.launchCollectionTask(CONF_RESET, confChangeHandler(),
                                             new TaskData(new Object[] {mOptions}));
                                 }
                                 break;
@@ -361,7 +362,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "confSetSubdecks":
                                 if ((Boolean) value) {
-                                    CollectionTask.launchCollectionTask(CONF_SET_SUBDECKS, confChangeHandler(),
+                                    TaskManager.launchCollectionTask(CONF_SET_SUBDECKS, confChangeHandler(),
                                             new TaskData(new Object[] {mDeck, mOptions}));
                                 }
                                 break;
@@ -533,7 +534,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 // Remove options group, asking user to confirm full sync if necessary
                 mCol.getDecks().remConf(mOptions.getLong("id"));
                 // Run the CPU intensive re-sort operation in a background thread
-                CollectionTask.launchCollectionTask(CONF_REMOVE, confChangeHandler(),
+                TaskManager.launchCollectionTask(CONF_REMOVE, confChangeHandler(),
                                         new TaskData(new Object[] { mOptions }));
                 mDeck.put("conf", 1);
             }

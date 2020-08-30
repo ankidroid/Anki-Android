@@ -66,14 +66,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.NonNull;
@@ -81,6 +80,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.async.TaskManager.setLatestInstance;
 import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
 import static com.ichi2.libanki.Collection.DismissType.BURY_NOTE;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
@@ -136,112 +136,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * A reference to the application context to use to fetch the current Collection object.
      */
     private Context mContext;
-    /**
-     * Tasks which are running or waiting to run.
-     * */
-    private static final List<CollectionTask> sTasks = Collections.synchronizedList(new LinkedList<>());
-
-
-    /**
-     * The most recently started {@link CollectionTask} instance.
-     */
-    private static CollectionTask sLatestInstance;
-
-
-    /**
-     * Starts a new {@link CollectionTask}, with no listener
-     * <p>
-     * Tasks will be executed serially, in the order in which they are started.
-     * <p>
-     * This method must be called on the main thread.
-     *
-     * @param type of the task to start
-     * @return the newly created task
-     */
-    public static CollectionTask launchCollectionTask(TASK_TYPE type) {
-        return launchCollectionTask(type, null, null);
-    }
-
-    /**
-     * Starts a new {@link CollectionTask}, with no listener
-     * <p>
-     * Tasks will be executed serially, in the order in which they are started.
-     * <p>
-     * This method must be called on the main thread.
-     *
-     * @param type of the task to start
-     * @param param to pass to the task
-     * @return the newly created task
-     */
-    public static CollectionTask launchCollectionTask(TASK_TYPE type, TaskData param) {
-        return launchCollectionTask(type, null, param);
-    }
-
-    /**
-     * Starts a new {@link CollectionTask}, with a listener provided for callbacks during execution
-     * <p>
-     * Tasks will be executed serially, in the order in which they are started.
-     * <p>
-     * This method must be called on the main thread.
-     *
-     * @param type of the task to start
-     * @param listener to the status and result of the task, may be null
-     * @return the newly created task
-     */
-    public static CollectionTask launchCollectionTask(TASK_TYPE type, @Nullable TaskListener listener) {
-        // Start new task
-        return launchCollectionTask(type, listener, null);
-    }
-
-    /**
-     * Starts a new {@link CollectionTask}, with a listener provided for callbacks during execution
-     * <p>
-     * Tasks will be executed serially, in the order in which they are started.
-     * <p>
-     * This method must be called on the main thread.
-     *
-     * @param type of the task to start
-     * @param listener to the status and result of the task, may be null
-     * @param param to pass to the task
-     * @return the newly created task
-     */
-    public static CollectionTask launchCollectionTask(TASK_TYPE type, @Nullable TaskListener listener, TaskData param) {
-        // Start new task
-        CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
-        newTask.execute(param);
-        return newTask;
-    }
-
-
-    /**
-     * Block the current thread until the currently running CollectionTask instance (if any) has finished.
-     */
-    public static void waitToFinish() {
-        waitToFinish(null);
-    }
-
-    /**
-     * Block the current thread until the currently running CollectionTask instance (if any) has finished.
-     * @param timeout timeout in seconds
-     * @return whether or not the previous task was successful or not
-     */
-    public static boolean waitToFinish(Integer timeout) {
-        try {
-            if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                Timber.d("CollectionTask: waiting for task %s to finish...", sLatestInstance.mType);
-                if (timeout != null) {
-                    sLatestInstance.get(timeout, TimeUnit.SECONDS);
-                } else {
-                    sLatestInstance.get();
-                }
-
-            }
-            return true;
-        } catch (Exception e) {
-            Timber.e(e, "Exception waiting for task to finish");
-            return false;
-        }
-    }
 
     /** Cancel the current task.
      * @return whether cancelling did occur.*/
@@ -256,54 +150,29 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             // AsyncTask.cancel
             Timber.w(e, "Exception cancelling task");
         } finally {
-            sTasks.remove(this);
+            TaskManager.removeTask(this);
         }
         return false;
-    }
-
-
-    /** Cancel the current task only if it's of type taskType */
-    public static void cancelCurrentlyExecutingTask() {
-        CollectionTask latestInstance = sLatestInstance;
-        if (latestInstance != null) {
-            if (latestInstance.safeCancel()) {
-                Timber.i("Cancelled task %s", latestInstance.mType);
-            }
-        }
     }
 
     private Collection getCol() {
         return CollectionHelper.getInstance().getCol(mContext);
     }
 
-    /** Cancel all tasks of type taskType*/
-    public static void cancelAllTasks(TASK_TYPE taskType) {
-        int count = 0;
-        // safeCancel modifies sTasks, so iterate over a concrete copy
-        for (CollectionTask task: new ArrayList<>(sTasks)) {
-            if (task.mType != taskType) {
-                continue;
-            }
-            if (task.safeCancel()) {
-                count++;
-            }
-        }
-        if (count > 0) {
-            Timber.i("Cancelled %d instances of task %s", count, taskType);
-        }
-    }
-
 
     private final TASK_TYPE mType;
+    protected TASK_TYPE getType() {
+        return mType;
+    }
     private final TaskListener mListener;
     private CollectionTask mPreviousTask;
 
 
-    private CollectionTask(TASK_TYPE type, TaskListener listener, CollectionTask previousTask) {
+    protected CollectionTask(TASK_TYPE type, TaskListener listener, CollectionTask previousTask) {
         mType = type;
         mListener = listener;
         mPreviousTask = previousTask;
-        sTasks.add(this);
+        TaskManager.addTasks(this);
     }
 
     @Override
@@ -311,7 +180,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         try {
             return actualDoInBackground(params[0]);
         } finally {
-            sTasks.remove(this);
+            TaskManager.removeTask(this);
         }
     }
 
@@ -337,7 +206,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 Timber.d(e, "previously running task was cancelled: %s", mPreviousTask.mType);
             }
         }
-        sLatestInstance = this;
+        setLatestInstance(this);
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
@@ -505,7 +374,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     @Override
     protected void onCancelled(){
-        sTasks.remove(this);
+        TaskManager.removeTask(this);
         if (mListener != null) {
             mListener.onCancelled();
         }
@@ -761,7 +630,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
         return new TaskData(true);
     }
-
 
 
     private static class UndoSuspendCardMulti extends Undoable {
@@ -1280,7 +1148,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             return new TaskData(false);
         }
 
-        Collection.CheckDatabaseResult result = col.fixIntegrity(new ProgressCallback(this, AnkiDroidApp.getAppResources()));
+        Collection.CheckDatabaseResult result = col.fixIntegrity(new TaskManager.ProgressCallback(this, AnkiDroidApp.getAppResources()));
         if (result.getFailed()) {
             //we can fail due to a locked database, which requires knowledge of the failure.
             return new TaskData(false, new Object[] { result });
@@ -1358,7 +1226,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         String path = param.getString();
         AnkiPackageImporter imp = new AnkiPackageImporter(col, path);
-        imp.setProgressCallback(new ProgressCallback(this, res));
+        imp.setProgressCallback(new TaskManager.ProgressCallback(this, res));
         try {
             imp.run();
         } catch (ImportExportException e) {
@@ -1899,37 +1767,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
-
-    /**
-     * Helper class for allowing inner function to publish progress of an AsyncTask.
-     */
-    public static class ProgressCallback {
-        private final Resources res;
-        private final CollectionTask task;
-
-
-        public ProgressCallback(CollectionTask task, Resources res) {
-            this.res = res;
-            if (res != null) {
-                this.task = task;
-            } else {
-                this.task = null;
-            }
-        }
-
-
-        public Resources getResources() {
-            return res;
-        }
-
-
-        public void publishProgress(TaskData value) {
-            if (task != null) {
-                task.doProgress(value);
-            }
-        }
-    }
-
     /** Whether col is readable */
     private boolean hasValidCol() {
         try {
@@ -1939,7 +1776,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             return false;
         }
     }
-
 
     public void doProgress(TaskData value) {
         publishProgress(value);

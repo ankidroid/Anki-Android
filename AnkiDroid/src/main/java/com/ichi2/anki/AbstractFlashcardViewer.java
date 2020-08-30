@@ -102,6 +102,7 @@ import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.sched.AbstractSched;
@@ -545,7 +546,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 cardChanged = true;  // Keep track of that so we can run a bit of new-card code
             }
             mCurrentCard = value.getCard();
-            CollectionTask.launchCollectionTask(PRELOAD_NEXT_CARD); // Tasks should always be launched from GUI. So in
+            TaskManager.launchCollectionTask(PRELOAD_NEXT_CARD); // Tasks should always be launched from GUI. So in
                                                                     // listener and not in background
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
@@ -1136,7 +1137,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (resultCode == RESULT_OK) {
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
-                CollectionTask.launchCollectionTask(UPDATE_NOTE, mUpdateCardHandler,
+                TaskManager.launchCollectionTask(UPDATE_NOTE, mUpdateCardHandler,
                         new TaskData(sEditorCard, true));
                 onEditedNoteChanged();
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
@@ -1241,7 +1242,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            CollectionTask.launchCollectionTask(UNDO, mAnswerCardHandler(false));
+            TaskManager.launchCollectionTask(UNDO, mAnswerCardHandler(false));
         }
     }
 
@@ -1394,7 +1395,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(true),
+        TaskManager.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(true),
                 new TaskData(mCurrentCard, mCurrentEase));
     }
 
@@ -3125,7 +3126,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void dismiss(Collection.DismissType type) {
         blockControls(false);
-        CollectionTask.launchCollectionTask(DISMISS, mDismissCardHandler,
+        TaskManager.launchCollectionTask(DISMISS, mDismissCardHandler,
                 new TaskData(new Object[]{mCurrentCard, type}));
     }
 
@@ -3622,7 +3623,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
+        TaskManager.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
                 new TaskData(null, 0));
     }
 
