@@ -67,14 +67,6 @@
   </plurals>
 
 
-  <!--Button Values-->
-  <string
-      name="model_editor_action_add_model"
-      >
-    Add note type
-  </string>
-
-
   <!--Browser-->
   <string
       name="model_browser_delete"
