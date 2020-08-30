@@ -43,10 +43,8 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.Reviewer;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
-import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 

@@ -31,7 +31,6 @@ import java.util.ArrayList;
 
 import timber.log.Timber;
 
-import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;

@@ -12,16 +12,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ichi2.async.CollectionTask;
-
 import java.util.Calendar;
 
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+
 import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
-import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.utils.Time;
+
+import static com.ichi2.async.CollectionTask.TASK_TYPE.SAVE_COLLECTION;
 
 public class UIUtils {
 
