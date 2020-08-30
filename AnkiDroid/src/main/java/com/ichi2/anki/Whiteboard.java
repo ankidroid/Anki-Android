@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -50,6 +51,7 @@ import java.util.Stack;
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  */
+@SuppressLint("ViewConstructor")
 public class Whiteboard extends View {
 
     private static final float TOUCH_TOLERANCE = 4;
