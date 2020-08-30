@@ -697,8 +697,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     protected void onStop() {
         Timber.d("onStop()");
         // cancel rendering the question and answer, which has shared access to mCards
-        CollectionTask.cancelAllTasks(SEARCH_CARDS);
-        CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
+        invalidate();
         super.onStop();
         if (!isFinishing()) {
             WidgetStatus.update(this);
@@ -1260,10 +1259,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
         searchCards();
     }
 
-    private void searchCards() {
-        // cancel the previous search & render tasks if still running
+    private void invalidate() {
         CollectionTask.cancelAllTasks(SEARCH_CARDS);
         CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
+        mCards.clear();
+        mCheckedCards.clear();
+    }
+
+    private void searchCards() {
+        // cancel the previous search & render tasks if still running
+        invalidate();
         String searchText;
         if (mSearchTerms == null) {
             mSearchTerms = "";
