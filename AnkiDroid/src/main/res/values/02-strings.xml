@@ -442,11 +442,6 @@
     AnkiDroid card
   </string>
   <string
-      name="note_editor_add_note"
-      >
-    Add note
-  </string>
-  <string
       name="note_editor_copy_note"
       >
     Copy note
