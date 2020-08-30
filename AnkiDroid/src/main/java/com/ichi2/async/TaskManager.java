@@ -10,11 +10,17 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public abstract class TaskManager {
 
-    private static final TaskManager sTaskManager = new BackgroundTaskManager();
+    private static TaskManager sTaskManager = new BackgroundTaskManager();
+
+    @VisibleForTesting
+    public static void setManager(TaskManager tm) {
+        sTaskManager = tm;
+    }
 
 
     protected static void addTasks(CollectionTask task){

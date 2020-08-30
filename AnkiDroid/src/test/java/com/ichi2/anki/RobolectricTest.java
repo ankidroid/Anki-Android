@@ -26,6 +26,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
@@ -36,6 +37,8 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
+import com.ichi2.libanki.utils.Time;
+import com.ichi2.testutils.MockTaskManager;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -85,6 +88,8 @@ public class RobolectricTest {
 
         //See: #6140 - This global ideally shouldn't exist, but it will cause crashes if set.
         DialogHandler.discardMessage();
+
+        TaskManager.setManager(new MockTaskManager());
     }
 
     @After
@@ -189,6 +194,11 @@ public class RobolectricTest {
         CollectionHelper.LazyHolder.INSTANCE = new CollectionHelper() {
             @Override
             public Collection getCol(Context context) {
+                return null;
+            }
+
+            @Override
+            public Collection getCol(Context context, Time time) {
                 return null;
             }
         };
