@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import com.ichi2.async.CollectionTask.TASK_TYPE;
 import com.ichi2.async.TaskData;
+import com.ichi2.async.TaskManager;
 import com.ichi2.testutils.AnkiAssert;
 
 import org.junit.Ignore;
@@ -44,7 +45,7 @@ public class BackupManagerIntegrationTest extends RobolectricTest {
         // Perform a write
         addNoteUsingBasicModel("Hello", "World");
 
-        waitForTask(TASK_TYPE.IMPORT_REPLACE, new TaskData(path), 1000);
+        TaskManager.launchCollectionTask(TASK_TYPE.IMPORT_REPLACE, new TaskData(path));
 
         assertThat("database should be read-write", getCol().getDb().getDatabase().isReadOnly(), is(false));
         AnkiAssert.assertDoesNotThrow(() -> addNoteUsingBasicModel("Hello", "World"));

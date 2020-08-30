@@ -296,44 +296,6 @@ public class RobolectricTest {
 
         return (SchedV2) sched;
     }
-
-
-
-
-    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
-        waitForTask(taskType, null, timeoutMs);
-    }
-
-
-    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, @Nullable TaskData data, int timeoutMs) throws InterruptedException {
-        boolean[] completed = new boolean[] { false };
-        TaskListener listener = new TaskListener() {
-            @Override
-            public void onPreExecute() {
-
-            }
-
-
-            @Override
-            public void onPostExecute(TaskData result) {
-
-                if (result == null || !result.getBoolean()) {
-                    throw new IllegalArgumentException("Task failed");
-                }
-                completed[0] = true;
-                synchronized (RobolectricTest.this) {
-                    RobolectricTest.this.notify();
-                }
-            }
-        };
-        TaskManager.launchCollectionTask(taskType, listener, data);
-
-        wait(timeoutMs);
-
-        if (!completed[0]) {
-            throw new IllegalStateException(String.format("Task %s didn't finish in %d ms", taskType, timeoutMs));
-        }
-    }
     /**
      * Call to assume that <code>actual</code> satisfies the condition specified by <code>matcher</code>.
      * If not, the test halts and is ignored.
