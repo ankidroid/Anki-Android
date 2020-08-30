@@ -169,7 +169,6 @@ public class ReviewerTest extends RobolectricTest {
 
         assumeTrue("Whiteboard should now be enabled", reviewer.mPrefWhiteboard);
 
-        super.advanceRobolectricLooper();
     }
 
 
@@ -193,11 +192,7 @@ public class ReviewerTest extends RobolectricTest {
         MockTime time = getCollectionTime();
         nw.put("delays", new JSONArray(new int[] {1, 10, 60, 120}));
 
-        waitForAsyncTasksToComplete();
-
         Reviewer reviewer = startReviewer();
-
-        waitForAsyncTasksToComplete();
 
         assertCounts(reviewer,3, 0, 0);
 
@@ -219,7 +214,6 @@ public class ReviewerTest extends RobolectricTest {
 
 
     private void assertCurrentOrdIsNot(Reviewer r, int i) {
-        waitForAsyncTasksToComplete();
         int ord = r.mCurrentCard.getOrd();
 
         assertThat("Unexpected card ord", ord + 1, not(is(i)));
@@ -228,7 +222,6 @@ public class ReviewerTest extends RobolectricTest {
 
     private void undo(Reviewer reviewer) {
         reviewer.undo();
-        waitForAsyncTasksToComplete();
     }
 
 
@@ -253,13 +246,10 @@ public class ReviewerTest extends RobolectricTest {
         assertCurrentOrdIs(r, i);
 
         r.answerCard(getCol().getSched().getGoodNewButton());
-
-        waitForAsyncTasksToComplete();
     }
 
 
     private void assertCurrentOrdIs(Reviewer r, int i) {
-        waitForAsyncTasksToComplete();
         int ord = r.mCurrentCard.getOrd();
 
         assertThat("Unexpected card ord", ord + 1, is(i));
@@ -297,9 +287,9 @@ public class ReviewerTest extends RobolectricTest {
 
 
     private void displayAnswer(Reviewer reviewer) {
-        waitForAsyncTasksToComplete();
+        waitForAsyncTasksToComplete(); // Useful because of javascript still in background
         reviewer.displayCardAnswer();
-        waitForAsyncTasksToComplete();
+        waitForAsyncTasksToComplete(); // Useful because of javascript still in background
     }
 
     private Reviewer startReviewer() {
@@ -308,7 +298,6 @@ public class ReviewerTest extends RobolectricTest {
 
     private <T extends Reviewer> T startReviewer(Class<T> clazz) {
         T reviewer = super.startActivityNormallyOpenCollectionWithIntent(clazz, new Intent());
-        waitForAsyncTasksToComplete();
         return reviewer;
     }
 
