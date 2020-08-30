@@ -1148,7 +1148,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             return new TaskData(false);
         }
 
-        Collection.CheckDatabaseResult result = col.fixIntegrity(new TaskManager.ProgressCallback(this, AnkiDroidApp.getAppResources()));
+        Collection.CheckDatabaseResult result = col.fixIntegrity(TaskManager.progressCallback(this, AnkiDroidApp.getAppResources()));
         if (result.getFailed()) {
             //we can fail due to a locked database, which requires knowledge of the failure.
             return new TaskData(false, new Object[] { result });
@@ -1226,7 +1226,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         String path = param.getString();
         AnkiPackageImporter imp = new AnkiPackageImporter(col, path);
-        imp.setProgressCallback(new TaskManager.ProgressCallback(this, res));
+        imp.setProgressCallback(TaskManager.progressCallback(this, res));
         try {
             imp.run();
         } catch (ImportExportException e) {

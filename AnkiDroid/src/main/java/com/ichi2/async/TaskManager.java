@@ -160,6 +160,10 @@ public class TaskManager {
         }
     }
 
+    public static ProgressCallback progressCallback(CollectionTask task, Resources res) {
+        return new ProgressCallback(task, res);
+    }
+
 
     /**
      * Helper class for allowing inner function to publish progress of an AsyncTask.
@@ -169,7 +173,7 @@ public class TaskManager {
         private CollectionTask task;
 
 
-        public ProgressCallback(CollectionTask task, Resources res) {
+        protected ProgressCallback(CollectionTask task, Resources res) {
             this.res = res;
             if (res != null) {
                 this.task = task;
