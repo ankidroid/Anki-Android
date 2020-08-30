@@ -1635,6 +1635,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         @Override
+        public void actualOnPreExecute(@NonNull CardBrowser browser) {
+            super.actualOnPreExecute(browser);
+            browser.invalidate();
+        }
+
+        @Override
         public void actualOnProgressUpdate(@NonNull CardBrowser browser, TaskData value) {
             Card[] cards = (Card[]) value.getObjArray();
             //we don't need to reorder cards here as we've already deselected all notes,
@@ -1654,6 +1660,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     CollectionTask.launchCollectionTask(UNDO, browser.mUndoHandler);
                 }
             }, browser.mCardsListView, null);
+            browser.searchCards();
         }
     };
 
