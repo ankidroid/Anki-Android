@@ -69,6 +69,7 @@ import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
@@ -287,7 +288,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         getCol().startTimebox();
-        CollectionTask.launchCollectionTask(GET_CARD, mAnswerCardHandler(false));
+        TaskManager.launchCollectionTask(GET_CARD, mAnswerCardHandler(false));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -514,7 +515,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     private void showRescheduleCardDialog() {
         Consumer<Integer> runnable = days ->
-            CollectionTask.launchCollectionTask(DISMISS_MULTI, mRescheduleCardHandler,
+                TaskManager.launchCollectionTask(DISMISS_MULTI, mRescheduleCardHandler,
                     new TaskData(new Object[]{Collections.singleton(mCurrentCard.getId()),
                     Collection.DismissType.RESCHEDULE_CARDS, days})
             );
@@ -534,7 +535,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         dialog.setArgs(title, message);
         Runnable confirm = () -> {
             Timber.i("NoteEditor:: ResetProgress button pressed");
-            CollectionTask.launchCollectionTask(DISMISS_MULTI, mResetProgressCardHandler,
+            TaskManager.launchCollectionTask(DISMISS_MULTI, mResetProgressCardHandler,
                     new TaskData(new Object[]{Collections.singleton(mCurrentCard.getId()), Collection.DismissType.RESET_CARDS}));
         };
         dialog.setConfirm(confirm);
@@ -808,7 +809,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void performReload() {
         getCol().getSched().deferReset();
-        CollectionTask.launchCollectionTask(GET_CARD, mAnswerCardHandler(false));
+        TaskManager.launchCollectionTask(GET_CARD, mAnswerCardHandler(false));
     }
 
 

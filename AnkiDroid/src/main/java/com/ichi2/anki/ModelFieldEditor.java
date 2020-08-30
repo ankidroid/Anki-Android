@@ -33,6 +33,7 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.themes.StyledProgressDialog;
@@ -192,7 +193,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                         changeHandler listener = changeFieldHandler();
                         try {
                             mCol.modSchema();
-                            CollectionTask.launchCollectionTask(ADD_FIELD, listener,
+                            TaskManager.launchCollectionTask(ADD_FIELD, listener,
                                     new TaskData(new Object[]{mMod, fieldName}));
                         } catch (ConfirmModSchemaException e) {
 
@@ -203,7 +204,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                                 mCol.modSchemaNoCheck();
                                 String fieldName1 = mFieldNameInput.getText().toString()
                                         .replaceAll("[\\n\\r]", "");
-                                CollectionTask.launchCollectionTask(ADD_FIELD, listener,
+                                TaskManager.launchCollectionTask(ADD_FIELD, listener,
                                         new TaskData(new Object[]{mMod, fieldName1}));
                                 dismissContextMenu();
                             };
@@ -253,7 +254,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     }
 
     private void deleteField() {
-        CollectionTask.launchCollectionTask(DELETE_FIELD, changeFieldHandler(),
+        TaskManager.launchCollectionTask(DELETE_FIELD, changeFieldHandler(),
                                 new TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
     }
 
@@ -337,7 +338,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                             // Input is valid, now attempt to modify
                             try {
                                 mCol.modSchema();
-                                CollectionTask.launchCollectionTask(REPOSITION_FIELD, listener,
+                                TaskManager.launchCollectionTask(REPOSITION_FIELD, listener,
                                         new TaskData(new Object[]{mMod,
                                                 mNoteFields.getJSONObject(mCurrentPos), pos - 1}));
                             } catch (ConfirmModSchemaException e) {
@@ -350,7 +351,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                                         mCol.modSchemaNoCheck();
                                         String newPosition1 = mFieldNameInput.getText().toString();
                                         int pos1 = Integer.parseInt(newPosition1);
-                                        CollectionTask.launchCollectionTask(REPOSITION_FIELD,
+                                        TaskManager.launchCollectionTask(REPOSITION_FIELD,
                                                 listener, new TaskData(new Object[]{mMod,
                                                         mNoteFields.getJSONObject(mCurrentPos), pos1 - 1}));
                                         dismissContextMenu();
@@ -413,7 +414,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         changeHandler listener = changeFieldHandler();
         try {
             mCol.modSchema();
-            CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, listener,
+            TaskManager.launchCollectionTask(CHANGE_SORT_FIELD, listener,
                     new TaskData(new Object[]{mMod, mCurrentPos}));
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
@@ -421,7 +422,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
             c.setArgs(getResources().getString(R.string.full_sync_confirmation));
             Runnable confirm = () -> {
                 mCol.modSchemaNoCheck();
-                CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, listener,
+                TaskManager.launchCollectionTask(CHANGE_SORT_FIELD, listener,
                         new TaskData(new Object[]{mMod, mCurrentPos}));
                 dismissContextMenu();
             };

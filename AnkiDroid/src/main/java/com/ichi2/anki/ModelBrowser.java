@@ -42,6 +42,7 @@ import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
@@ -229,7 +230,7 @@ public class ModelBrowser extends AnkiActivity {
 
     @Override
     public void onDestroy() {
-        CollectionTask.cancelAllTasks(COUNT_MODELS);
+        TaskManager.cancelAllTasks(COUNT_MODELS);
         super.onDestroy();
     }
 
@@ -241,7 +242,7 @@ public class ModelBrowser extends AnkiActivity {
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         this.col = col;
-        CollectionTask.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
+        TaskManager.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
     }
 
 
@@ -504,14 +505,14 @@ public class ModelBrowser extends AnkiActivity {
      * Reloads everything
      */
     private void fullRefresh() {
-        CollectionTask.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
+        TaskManager.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
     }
 
     /*
      * Deletes the currently selected model
      */
     private void deleteModel() {
-        CollectionTask.launchCollectionTask(DELETE_MODEL, deleteModelHandler(),
+        TaskManager.launchCollectionTask(DELETE_MODEL, deleteModelHandler(),
                 new TaskData(mCurrentID));
         mModels.remove(mModelListPosition);
         mModelIds.remove(mModelListPosition);
@@ -613,7 +614,7 @@ public class ModelBrowser extends AnkiActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TEMPLATE_EDIT) {
-            CollectionTask.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
+            TaskManager.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
         }
     }
 }

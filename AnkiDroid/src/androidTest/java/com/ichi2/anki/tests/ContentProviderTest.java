@@ -36,6 +36,7 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -793,9 +794,9 @@ public class ContentProviderTest extends InstrumentedTest {
         for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
             col.reset();
             nextCard = sched.getCard();
-            CollectionTask.waitToFinish();
+            TaskManager.waitToFinish();
             if(nextCard != null && nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
-            CollectionTask.waitToFinish();
+            TaskManager.waitToFinish();
 
         }
         assertNotNull("Check that there actually is a next scheduled card", nextCard);
