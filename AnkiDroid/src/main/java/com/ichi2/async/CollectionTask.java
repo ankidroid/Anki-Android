@@ -915,7 +915,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 Card card = cards_copied[i];
                 card.flush(false);
             }
-            return NO_REVIEW;
+            col.reset();
+            Timber.d("Single card non-review change undo succeeded");
+            return col.getSched().getCard().getId();
         }
     }
 
@@ -1149,13 +1151,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         AbstractSched sched = col.getSched();
         Card newCard = null;
         long cid = col.undo();
-        if (cid == NO_REVIEW) {
-            // /* card schedule change undone, reset and get
-            // new card */
-            Timber.d("Single card non-review change undo succeeded");
-            col.reset();
-            newCard = sched.getCard();
-        } else if (cid == MULTI_CARD) {
+        if (cid == MULTI_CARD) {
             /* multi-card action undone, no action to take here */
             Timber.d("Multi-select undo succeeded");
         } else {
