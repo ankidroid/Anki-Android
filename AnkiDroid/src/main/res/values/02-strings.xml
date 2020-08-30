@@ -319,11 +319,6 @@
 
   <!-- Card editor -->
   <string
-      name="cardeditor_title_add_note"
-      >
-    Add note
-  </string>
-  <string
       name="cardeditor_title_edit_card"
       >
     Edit note
