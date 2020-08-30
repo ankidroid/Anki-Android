@@ -33,6 +33,7 @@ import timber.log.Timber;
 
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Model;
 import com.ichi2.utils.JSONObject;
@@ -151,7 +152,7 @@ public class TemporaryModel {
         dumpChanges();
         TemporaryModel.clearTempModelFiles();
         TaskData args = new TaskData(new Object[] {mEditedModel, getAdjustedTemplateChanges()});
-        CollectionTask.launchCollectionTask(SAVE_MODEL, listener, args);
+        TaskManager.launchCollectionTask(SAVE_MODEL, listener, args);
 
     }
 

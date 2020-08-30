@@ -27,6 +27,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -363,7 +364,7 @@ public class RobolectricTest {
                 }
             }
         };
-        CollectionTask.launchCollectionTask(taskType, listener, data);
+        TaskManager.launchCollectionTask(taskType, listener, data);
         advanceRobolectricLooper();
 
         wait(timeoutMs);

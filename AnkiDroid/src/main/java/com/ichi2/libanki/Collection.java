@@ -35,6 +35,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.ProgressSender;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.hooks.ChessFilter;
@@ -1448,7 +1449,7 @@ public class Collection {
 
 
     /** Fix possible problems and rebuild caches. */
-    public CheckDatabaseResult fixIntegrity(CollectionTask.ProgressCallback progressCallback) {
+    public CheckDatabaseResult fixIntegrity(TaskManager.ProgressCallback progressCallback) {
         File file = new File(mPath);
         CheckDatabaseResult result = new CheckDatabaseResult(file.length());
         final int[] currentTask = {1};
@@ -1935,7 +1936,7 @@ public class Collection {
     }
 
 
-    private void fixIntegrityProgress(CollectionTask.ProgressCallback progressCallback, int current, int total) {
+    private void fixIntegrityProgress(TaskManager.ProgressCallback progressCallback, int current, int total) {
         progressCallback.publishProgress(new TaskData(
                 progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total));
     }
