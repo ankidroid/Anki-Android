@@ -388,7 +388,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             DB db = col.getDb();
             db.executeInTransaction(() -> {
                 int value = col.addNote(note);
-                publishProgress(new TaskData(value));
+                TaskManager.publishProgress(new TaskData(value));
             });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note");
@@ -424,9 +424,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                     } else {
                         newCard = sched.getCard();
                     }
-                    publishProgress(new TaskData(newCard));
+                    TaskManager.publishProgress(this, new TaskData(newCard));
                 } else {
-                    publishProgress(new TaskData(editCard, editNote.stringTags()));
+                    TaskManager.publishProgress(this, new TaskData(editCard, editNote.stringTags()));
                 }
             });
         } catch (RuntimeException e) {
@@ -455,7 +455,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                     // render cards before locking database
                     newCard._getQA(true);
                 }
-                publishProgress(new TaskData(newCard));
+                TaskManager.publishProgress(new TaskData(newCard));
             });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
@@ -621,7 +621,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                     }
                 }
                 // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
-                publishProgress(new TaskData(col.getSched().getCard(), 0));
+                TaskManager.publishProgress(new TaskData(col.getSched().getCard(), 0));
             });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", type);
@@ -894,7 +894,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         col.remNotes(uniqueNoteIds);
                         sched.deferReset();
                         // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
-                        publishProgress(new TaskData(allCards.toArray(new Card[allCards.size()])));
+                        TaskManager.publishProgress(this, new TaskData(allCards.toArray(new Card[allCards.size()])));
                         break;
                     }
 
@@ -974,7 +974,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         }
                         // In all cases schedule a new card so Reviewer doesn't sit on the old one
                         col.reset();
-                        publishProgress(new TaskData(sched.getCard(), 0));
+                        TaskManager.publishProgress(this, new TaskData(sched.getCard(), 0));
                         break;
                     }
                 }
@@ -1033,7 +1033,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         try {
             col.getDb().executeInTransaction(() -> {
                 Card card = nonTaskUndo(col);
-                publishProgress(new TaskData(card, 0));
+                TaskManager.publishProgress(new TaskData(card, 0));
             });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
@@ -1133,7 +1133,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             // Update item
             card.load(false, column1Index, column2Index);
             float progress = (float) i / n * 100;
-            publishProgress(new TaskData((int) progress));
+            TaskManager.publishProgress(this, new TaskData((int) progress));
         }
         return new TaskData(new Object[] { cards, invalidCardIds });
     }
@@ -1295,8 +1295,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             }
         }
 
-        publishProgress(new TaskData(res.getString(R.string.importing_collection)));
-
+        TaskManager.publishProgress(this, new TaskData(res.getString(R.string.importing_collection)));
         if (hasValidCol()) {
             // unload collection and trigger a backup
             Time time = CollectionHelper.getInstance().getTimeSafe(mContext);
@@ -1346,7 +1345,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                     Utils.unzipFiles(zip, mediaDir, new String[] { c }, numToName);
                 }
                 ++i;
-                publishProgress(new TaskData(res.getString(R.string.import_media_count, (i + 1) * 100 / total)));
+                TaskManager.publishProgress(this, new TaskData(res.getString(R.string.import_media_count, (i + 1) * 100 / total)));
             }
             zip.close();
             // delete tmp dir
@@ -1777,7 +1776,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
-    public void doProgress(TaskData value) {
+    public void publishProgress(TaskData value) {
         publishProgress(value);
     }
 }

@@ -186,9 +186,13 @@ public class TaskManager {
 
         public void publishProgress(TaskData value) {
             if (task != null) {
-                task.doProgress(value);
+                TaskManager.publishProgress(task, value);
             }
         }
     }
 
+    // Here so that progress can be published differently depending on the manager.
+    public static void publishProgress(CollectionTask ct, TaskData value) {
+        ct.publishProgress(value);
+    }
 }
