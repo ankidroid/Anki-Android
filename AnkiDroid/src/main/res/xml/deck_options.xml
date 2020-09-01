@@ -22,7 +22,8 @@
         <ListPreference
             android:key="deckConf"
             android:title="@string/deck_conf_group" />
-        <PreferenceScreen android:title="@string/deck_conf_manage" >
+        <PreferenceScreen android:title="@string/deck_conf_manage"
+            android:summary="@string/deck_conf_manage_summ" >
             <Preference
                 android:enabled="false"
                 android:key="currentConf"
