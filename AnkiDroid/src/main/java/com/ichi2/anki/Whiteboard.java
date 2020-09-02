@@ -265,7 +265,7 @@ public class Whiteboard extends View {
         // To fix issue #1336, just make the whiteboard big and square.
         final Point p = getDisplayDimenions();
         int bitmapSize = Math.max(p.x, p.y);
-        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_4444);
+        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888);
     }
 
     private void drawStart(float x, float y) {
