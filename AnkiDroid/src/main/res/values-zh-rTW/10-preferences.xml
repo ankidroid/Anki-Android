@@ -123,8 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">自動同步</string>
     <string name="automatic_sync_choice_summ">如果距離上次同步超過 10 分鐘，則在開啓/關閉 app 時自動同步。</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">顯示同步狀態</string>
+    <string name="sync_status_badge_summ">可上傳變更時，變更同步圖標</string>
     <string name="day_theme">白天主題</string>
     <string name="night_theme">夜間主題</string>
     <string name="default_font">預設字型</string>
@@ -248,6 +248,7 @@
     <string name="deck_conf_replayq">重播問題</string>
     <string name="deck_conf_replayq_summ">當答案出現時，重播問題與答案的聲音檔</string>
     <string name="deck_conf_manage">管理群組</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">目前使用的群組</string>
     <string name="deck_conf_rename">重新命名</string>
     <string name="deck_conf_reset">還原預設值</string>

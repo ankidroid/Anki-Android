@@ -252,6 +252,7 @@
     <string name="deck_conf_replayq">Pakartoti klausimą</string>
     <string name="deck_conf_replayq_summ">Parodžius atsakymą, pakartotinai pagroti klausimo ir atsakymo garso įrašus</string>
     <string name="deck_conf_manage">Grupės valdymas</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Esama grupė</string>
     <string name="deck_conf_rename">Pervadinti</string>
     <string name="deck_conf_reset">Atkurti numatytuosius parametrus</string>

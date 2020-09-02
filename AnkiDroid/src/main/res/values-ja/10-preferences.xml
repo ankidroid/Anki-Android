@@ -248,6 +248,7 @@
     <string name="deck_conf_replayq">質問の音声・動画も再生</string>
     <string name="deck_conf_replayq_summ">解答が表示されている時に「音声・動画を再生」を選択すると、解答の音声・動画の前に質問の音声・動画も再生します</string>
     <string name="deck_conf_manage">オプショングループの管理</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">このデッキが使用しているオプショングループ</string>
     <string name="deck_conf_rename">名前の変更</string>
     <string name="deck_conf_reset">標準の設定へ戻す</string>

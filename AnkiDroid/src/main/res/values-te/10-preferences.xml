@@ -250,6 +250,7 @@
     <string name="deck_conf_replayq">ప్రశ్నని రీప్లే చేయండి</string>
     <string name="deck_conf_replayq_summ">జవాబుకు సమాధానమివ్వగానే ప్రశ్న మరియు సమాధానం ఆడియో రెండింటిని రీప్లే చేయండి</string>
     <string name="deck_conf_manage">గ్రూప్ మేనేజ్మెంట్</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">ప్రస్తుత సమూహం</string>
     <string name="deck_conf_rename">పేరుమార్చు</string>
     <string name="deck_conf_reset">నిర్ణీత విలువలకు మార్చు</string>

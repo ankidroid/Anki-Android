@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">Vraag opnieuw stellen</string>
     <string name="deck_conf_replayq_summ">Bij het antwoord ook het geluid van de vraag en het antwoord afspelen</string>
     <string name="deck_conf_manage">Groepenbeheer</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Huidige groep</string>
     <string name="deck_conf_rename">Naam wijzigen</string>
     <string name="deck_conf_reset">Standaardinstellingen herstellen</string>

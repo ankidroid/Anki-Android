@@ -250,6 +250,7 @@
     <string name="deck_conf_replayq">I-replay ang tanong</string>
     <string name="deck_conf_replayq_summ">Kapag ipinakita ang sagot, i-replay ang parehong tanong at sagot na audio</string>
     <string name="deck_conf_manage">Pamamahala ng grupo</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Kasalukuyang grupo</string>
     <string name="deck_conf_rename">Palitan ang pangalan</string>
     <string name="deck_conf_reset">Ibalik sa dating ayos</string>

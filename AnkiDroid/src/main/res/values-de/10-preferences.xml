@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">Frage erneut abspielen</string>
     <string name="deck_conf_replayq_summ">Spiele sowohl Frage als auch Antwort erneut ab, wenn die Antwort gezeigt wird</string>
     <string name="deck_conf_manage">Gruppenverwaltung</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Aktuelle Gruppe</string>
     <string name="deck_conf_rename">Umbenennen</string>
     <string name="deck_conf_reset">Standard wiederherstellen</string>

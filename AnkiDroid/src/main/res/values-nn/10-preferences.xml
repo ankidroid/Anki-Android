@@ -250,6 +250,7 @@
     <string name="deck_conf_replayq">Spill spørsmålet på nytt</string>
     <string name="deck_conf_replayq_summ">Spill av både spørsmål- og svar-lyd når svaret vises</string>
     <string name="deck_conf_manage">Group management</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Current group</string>
     <string name="deck_conf_rename">Endre navn</string>
     <string name="deck_conf_reset">Gjenopprett standardinnstillinger</string>

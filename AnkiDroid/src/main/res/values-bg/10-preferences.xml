@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">Повторение на въпроса</string>
     <string name="deck_conf_replayq_summ">Когато се вижда отговора, да се възпроизведе звук на въпроса и отговора</string>
     <string name="deck_conf_manage">Управление на група</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Настояща група</string>
     <string name="deck_conf_rename">Преименуване</string>
     <string name="deck_conf_reset">Възстанови по подразбиране</string>

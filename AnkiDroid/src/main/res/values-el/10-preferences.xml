@@ -250,6 +250,7 @@
     <string name="deck_conf_replayq">Ξαναδείξε την ερώτηση</string>
     <string name="deck_conf_replayq_summ">Όταν φανεί η απάντηση, ξαναπαίξε τον ήχο από την ερώτηση και την απάντηση</string>
     <string name="deck_conf_manage">Group management</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Current group</string>
     <string name="deck_conf_rename">Rename</string>
     <string name="deck_conf_reset">Επαναφορά προεπιλογών</string>

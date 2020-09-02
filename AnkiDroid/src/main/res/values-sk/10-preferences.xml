@@ -252,6 +252,7 @@
     <string name="deck_conf_replayq">Znova prehrať otázku</string>
     <string name="deck_conf_replayq_summ">Pri zobrazení odpovede prehrať audio otázky aj odpovede</string>
     <string name="deck_conf_manage">Spravovanie skupiny</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Aktuálna skupina</string>
     <string name="deck_conf_rename">Premenovať</string>
     <string name="deck_conf_reset">Obnoviť predvolené</string>

@@ -250,6 +250,7 @@
     <string name="deck_conf_replayq">Ismételje meg a kérdést</string>
     <string name="deck_conf_replayq_summ">Ismételje meg a kérdést és a választ hanggal együtt, amikor a válasz megjelenik</string>
     <string name="deck_conf_manage">Konfigurációkezelés</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Aktuális csoport</string>
     <string name="deck_conf_rename">Átnevezés</string>
     <string name="deck_conf_reset">Alapértelmezések visszaállítása</string>

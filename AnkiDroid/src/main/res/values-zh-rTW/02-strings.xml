@@ -110,11 +110,11 @@
     <string name="cardeditor_title_add_note">新增筆記</string>
     <string name="cardeditor_title_edit_card">編輯筆記</string>
     <string name="discard_unsaved_changes">關閉且放棄當前的輸入？</string>
-    <string name="note_editor_no_cards_created">未建立卡片。請填寫更多字段</string>
-    <string name="note_editor_no_first_field">第一字段為空</string>
+    <string name="note_editor_no_cards_created">未建立卡片。請輸入更多欄位</string>
+    <string name="note_editor_no_first_field">第一欄位為空</string>
     <string name="note_editor_no_cloze_delations">此筆記類型必須包含克漏字測驗</string>
-    <string name="note_editor_set_field_language">Set field language</string>
-    <string name="note_editor_no_cards_created_all_fields">當前的筆記類型不會產生任何卡片。請選擇其他筆記類型，或點擊‘卡片’並新增取代字段</string>
+    <string name="note_editor_set_field_language">選擇欄位語言</string>
+    <string name="note_editor_no_cards_created_all_fields">目前的筆記類型不會產生任何卡片。請選擇其他的筆記類型，或點擊「卡片」並新增取代欄位</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">克漏字測驗僅工作於克漏字筆記類型</string>
     <string name="saving_facts">儲存筆記中</string>
     <string name="saving_model">儲存筆記類型中</string>
@@ -154,7 +154,7 @@
     <string name="empty_cards">空白卡片</string>
     <string name="check_db_message">檢查資料庫。\n請稍後...</string>
     <string name="empty_card_warning">這張卡片是空的。請使用牌組列表界面右上角菜單中的“空白卡片”選項來查找空白卡片。</string>
-    <string name="unknown_type_field_warning">輸入答案：未知的表格 %s</string>
+    <string name="unknown_type_field_warning">輸入答案：未知的欄位 %s</string>
     <string name="delete_deck">刪除牌組中...\n請稍候</string>
     <string name="show_hint">顯示%s</string>
     <string name="info_rate">評價 AnkiDroid</string>
@@ -272,14 +272,14 @@
     <string name="title_whiteboard_pen_color">白板筆色彩</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[已找到空白卡片。請運作 工具 > 空白卡片。]]></string>
-    <string name="note_importer_error_empty_first_field">第一字段為空：%s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
+    <string name="note_importer_error_empty_first_field">第一欄位為空：%s</string>
+    <string name="note_importer_error_first_field_matched">第一個欄位符合：%s</string>
+    <string name="note_importer_error_added_duplicate_first_field">第一個欄位重複新增：%s</string>
     <string name="note_importer_error_appeared_twice">第兩次出現在檔案中：%s</string>
-    <string name="note_importer_error_empty_notes">未匯入一個或多個筆記，因為其未生成任何卡片。 當您有空字段或未將文字檔案中的內容排佈到正確的字段時，可能會發生這種情況</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="note_importer_error_empty_notes">未匯入一個或多個筆記，因為其未生成任何卡片。 當您有空欄位或未將文字檔案中的內容排到正確的欄位時，可能會發生這種情況</string>
+    <string name="csv_importer_error_invalid_field_count">「%1$s」有%2$d個欄位，預期%3$d</string>
     <string name="csv_importer_error_exception">已中止：%s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">已偵測到自動測驗。如果您不是機器人，請聯絡AnkiDroid支援.</string>
     <plurals name="note_importer_notes_added">
         <item quantity="other">%d 筆記已新增</item>
     </plurals>
@@ -290,13 +290,13 @@
         <item quantity="other">%d 筆記未變動</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">這張卡使用AnkiDroid不支援的功能。請連絡開發人員%1$s，或查看wiki。%2$s</string>
+    <string name="invalid_json_data">卡片提供了無效的資訊。%s</string>
+    <string name="valid_js_api_version">AnkiDroid JS API版本無效。請連絡開發人員%s，或查看wiki。</string>
+    <string name="update_js_api_version">AnkiDroid JS API有新版本可更新。請連絡開發人員%s，或查看wiki。</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">檢視</string>
+    <string name="anki_js_error_code">(錯誤代碼： %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">已經錯誤資訊複製到剪貼簿</string>
+    <string name="about_ankidroid_error_copy_debug_info">將錯誤資訊複製到剪貼簿時發生錯誤</string>
 </resources>

@@ -284,7 +284,7 @@
     <string name="note_importer_empty_cards_found"><![CDATA[Cartões vazios encontrados. Por favor, execute Ferramentas>Cartões Vazios.]]></string>
     <string name="note_importer_error_empty_first_field">Primeiro campo vazio: %s</string>
     <string name="note_importer_error_first_field_matched">Primeiro campo correspondido: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Adicionado com o primeiro campo duplicado.</string>
+    <string name="note_importer_error_added_duplicate_first_field">Adicionado com o primeiro campo duplicado: %s</string>
     <string name="note_importer_error_appeared_twice">Apareceu duas vezes no arquivo: %s</string>
     <string name="note_importer_error_empty_notes">Uma ou mais notas não foram importadas, pois não geraram nenhum cartão. Isso pode acontecer quando você tem campos vazios ou quando você não colocou o conteúdo do arquivo de texto nos campos corretos.</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s tinha %2$d campos, esperado %3$d</string>

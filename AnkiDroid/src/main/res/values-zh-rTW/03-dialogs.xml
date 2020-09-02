@@ -83,8 +83,8 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d 卡片已重置</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">一張新卡片正在重新排程。重新排程也會將新卡片變為複習卡。使用選項「變更位置」來變更一張新卡片的新排序位置</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">重新排程也會重設排程對卡片未來的影響改變（間格倍數會被設為%d%%）</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">選擇你的檔案管理器中的牌組，或訪問 about:downloads 頁面以匯入</string>
     <string name="answering_error_title">資料庫錯誤</string>
     <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的收藏或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>
@@ -96,8 +96,8 @@
     <string name="intent_aedict_category">若要增加新卡片至 AnkiDroid，刪除所有的記事本類別或新增一個 \'default\' 牌組</string>
     <string name="custom_study_new_total_new">牌組的新卡片：%d</string>
     <string name="custom_study_rev_total_rev">牌組中複習到期的卡片：%d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">將今天的新卡片上限新增/減少(“-3”)</string>
+    <string name="custom_study_rev_extend">將今天的複習卡片上限新增/減少(“-3”)</string>
     <string name="custom_study_forgotten">過去 x 天內忘記的複習卡:</string>
     <string name="custom_study_ahead">提早複習 x 天:</string>
     <string name="custom_study_random">隨機選擇 x 張卡片，從牌組:</string>
@@ -197,10 +197,10 @@
     <string name="boot_service_failed_to_schedule_notifications">排定提醒失敗</string>
     <string name="boot_service_too_many_notifications">已設定太多提醒。部分將不會出現</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title">鍵盤提示選擇</string>
+    <string name="locale_selection_dialog_summary">有些多國語言鍵盤，想是GBoard支援編輯文字時切換語言。\n\n如果您的鍵盤不會切換語言，句請請求您的鍵盤開發人員提供「setImeHintLocales」功能。</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other">%d秒後可執行自動同步</item>
     </plurals>
 </resources>

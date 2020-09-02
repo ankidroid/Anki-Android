@@ -248,6 +248,7 @@
     <string name="deck_conf_replayq">질문 반복</string>
     <string name="deck_conf_replayq_summ">정답이 보여졌을 때, 질문과 정답 오디오 둘 다 다시 재생합니다.</string>
     <string name="deck_conf_manage">그룹 관리</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">현재 그룹</string>
     <string name="deck_conf_rename">이름 바꾸기</string>
     <string name="deck_conf_reset">기본값 복원</string>

@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">Volver a reproducir pregunta</string>
     <string name="deck_conf_replayq_summ">Cuando la respuesta sea mostrada, reproducir el audio de la pregunta y de la respuesta</string>
     <string name="deck_conf_manage">Administración de grupos</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Grupo actual</string>
     <string name="deck_conf_rename">Renombrar</string>
     <string name="deck_conf_reset">Restablecer predefinidos</string>

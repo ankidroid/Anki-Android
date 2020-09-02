@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">Ulangi pertanyaan</string>
     <string name="deck_conf_replayq_summ">Saat jawaban ditampilkan, ulangi pertanyaan dan audio jawaban</string>
     <string name="deck_conf_manage">Manajemen grup</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Grup saat ini</string>
     <string name="deck_conf_rename">Ubah nama</string>
     <string name="deck_conf_reset">Kembalikan ke awal</string>

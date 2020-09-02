@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">फिर से खेलना सवाल</string>
     <string name="deck_conf_replayq_summ">जब जवाब दिखाया, फिर से खेलना दोनों प्रश्न और उत्तर ऑडियो</string>
     <string name="deck_conf_manage">समूह प्रबंधन</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">वर्तमान समूह</string>
     <string name="deck_conf_rename">नाम बदलें</string>
     <string name="deck_conf_reset">मूल पुनस्थापित करें</string>

@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">Reludi semandon</string>
     <string name="deck_conf_replayq_summ">Kiam montri respondon, reludi kaj demandon kaj respondon</string>
     <string name="deck_conf_manage">Administri grupojn</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Nuna grupo</string>
     <string name="deck_conf_rename">Alinomi</string>
     <string name="deck_conf_reset">Restarigi normojn</string>

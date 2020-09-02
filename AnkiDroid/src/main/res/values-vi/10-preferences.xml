@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">Phát lại câu hỏi</string>
     <string name="deck_conf_replayq_summ">Khi trả lời được hiển thị, phát lại cả hai : câu hỏi và trả lời âm thanh</string>
     <string name="deck_conf_manage">Quản lý Nhóm</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Nhóm hiện tại</string>
     <string name="deck_conf_rename">Đổi Tên</string>
     <string name="deck_conf_reset">Phục hồi mặc định</string>

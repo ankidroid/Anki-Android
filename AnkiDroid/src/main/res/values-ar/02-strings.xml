@@ -42,192 +42,192 @@
     <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">فتح القائمة</string>
-    <string name="drawer_close">أغلق القائمة</string>
+    <string name="drawer_close">إغلاق القائمة</string>
     <string name="CardEditorLaterMessage">حفظ المعلومات لوقت لاحق</string>
-    <string name="CardEditorCardDeck">بطاقة:</string>
-    <string name="CardEditorNoteDeck">شَدّة أوراق:</string>
+    <string name="CardEditorCardDeck">رزمة البطاقة:</string>
+    <string name="CardEditorNoteDeck">رزمة:</string>
     <string name="CardEditorModel">النوع:</string>
-    <string name="CardEditorTags">الوسوم: %1$s</string>
+    <string name="CardEditorTags">سمات: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
-    <string name="tag_name">اسم الوسم</string>
-    <string name="add_new_filter_tags">اضف/صفي الوسوم</string>
-    <string name="add_tag">اضف وسم</string>
-    <string name="check_all_tags">الاختيار/إلغاء تحديد كافة الوسوم</string>
-    <string name="filter_tags">تصفية الوسوم</string>
-    <string name="no_tags">لم تقم بإضافة أية وسوم بعد</string>
-    <string name="sdcard_missing_message">بطاقة التخزين المؤمنة غير متوفرة بسبب أنها مستخدمة كوحدة تخزين USB . افصل USB للوصول إلى شَدّات أوراقك.</string>
-    <string name="updated_version">تحديث للإصدار %s</string>
+    <string name="tag_name">اسم السمة</string>
+    <string name="add_new_filter_tags">إضافة/فلترة السمات</string>
+    <string name="add_tag">إضافة سمة</string>
+    <string name="check_all_tags">تحديد/إلغاء تحديد كل السمات</string>
+    <string name="filter_tags">فلترة السمات</string>
+    <string name="no_tags">لم تضف أي سمات بعد</string>
+    <string name="sdcard_missing_message">أوقف تخزين USB للوصول إلى رزمك</string>
+    <string name="updated_version">تم التحديث إلى الإصدار: %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">حفظ السبورة</string>
     <string name="enable_whiteboard">تمكين السبورة</string>
     <string name="disable_whiteboard">تعطيل السبورة</string>
-    <string name="show_whiteboard">إظهار  لوح السبورة</string>
-    <string name="hide_whiteboard">إخفاء لوح السبورة</string>
-    <string name="clear_whiteboard">مسح لوح السبورة</string>
+    <string name="show_whiteboard">إظهار السبورة</string>
+    <string name="hide_whiteboard">إخفاء السبورة</string>
+    <string name="clear_whiteboard">مسح السبورة</string>
     <string name="replay_audio">إعادة تشغيل الصوت</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
-    <string name="leech_suspend_notification">البطاقة علمت كسَئُولة و معلقة</string>
-    <string name="leech_notification">البطاقة علمت كسَئُولة</string>
+    <string name="toggle_mic_tool_bar">تحقق من النطق</string>
+    <string name="leech_suspend_notification">عُلِّمت البطاقة كمستعصية وعُلِّقت</string>
+    <string name="leech_notification">عُلِّمت البطاقة كمستعصية</string>
     <string name="corrupt_font">ملف خط معطوب %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_unknown">‏‏خطأ غير معروف</string>
+    <string name="webview_crash_unknwon_detailed">حدث هذا بسبب خطأ داخلي في عارض الويب</string>
+    <string name="webview_crash_oom">‮نفذت الذاكرة</string>
+    <string name="webview_crash_oom_details">تم إنهاء عارض الويب من قبل النظام. يحدث هذا عادة عندما ينفذ التطبيق من الذاكرة، غالبًا بسبب خطوط أو وسائط كبيرة.</string>
+    <string name="webview_crash_nonfatal">توقف معالج عارض الويب عن العمل. السبب: %s</string>
+    <string name="webview_crash_fatal">خطأ قاتل: توقف معالج عارض الويب عن العمل. السبب: %s</string>
+    <string name="webview_crash_loop_dialog_title">فشل في معالجة عارض الويب الخاص بالنظام</string>
+    <string name="webview_crash_loop_dialog_content">فشل عارض ويب النظام في عرض البطاقة %1$s.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>سؤال</item>
-        <item>فرز الحقل</item>
+        <item>حقل الفرز</item>
     </string-array>
     <string-array name="browser_column2_headings">
         <item>الجواب</item>
         <item>بطاقة</item>
-        <item>شَدّة أوراق</item>
-        <item>ملاحظة</item>
+        <item>رزمة</item>
+        <item>ملحوظة</item>
         <item>سؤال</item>
-        <item>وسوم</item>
-        <item>هفوات</item>
-        <item>ملاحظات</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>سمات</item>
+        <item>سقطات</item>
+        <item>مراجعات</item>
+        <item>الفاصل الزمني</item>
+        <item>سهولة</item>
+        <item>تاريخ الاستحقاق</item>
+        <item>تاريخ تعديل البطاقة</item>
+        <item>تاريخ الإنشاء</item>
+        <item>تاريخ تعديل الملحوظة</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">تعديل الحد اليومي للبطاقات الجديدة</string>
+    <string name="custom_study_increase_review_limit">تعديل الحد اليومي لبطاقات المراجعة</string>
     <string name="custom_study_review_forgotten">مراجعة بطاقات المنسيّة</string>
-    <string name="custom_study_review_ahead">المراجعة مقدماً</string>
-    <string name="custom_study_random_selection">أدرس مجموعة بطاقات عشوائية</string>
+    <string name="custom_study_review_ahead">المراجعة مبكرًا</string>
+    <string name="custom_study_random_selection">ادرس مجموعة بطاقات عشوائية</string>
     <string name="custom_study_preview_new">معاينة البطاقات الجديدة</string>
-    <string name="custom_study_limit_tags">Limit to particular tags</string>
+    <string name="custom_study_limit_tags">قصر على سمات معينة</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">أضف ملاحظة</string>
-    <string name="cardeditor_title_edit_card">حرر الملاحظة</string>
-    <string name="discard_unsaved_changes">Close and lose current input?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_set_field_language">Set field language</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
-    <string name="saving_facts">حفظ الملاحظة</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="cardeditor_title_add_note">أضف ملحوظة</string>
+    <string name="cardeditor_title_edit_card">حرر الملحوظة</string>
+    <string name="discard_unsaved_changes">هل أنت متأكد من الإغلاق وخسران المدخلات الحالية؟</string>
+    <string name="note_editor_no_cards_created">لم تُنشَأ أي بطاقات. الرجاء تعبئة مزيد من الحقول</string>
+    <string name="note_editor_no_first_field">الحقل الأول فارغ</string>
+    <string name="note_editor_no_cloze_delations">يجب أن يحتوي نوع الملحوظة هذا على عبارات ملء فراغات</string>
+    <string name="note_editor_set_field_language">تعيين لغة الحقل</string>
+    <string name="note_editor_no_cards_created_all_fields">لا يولّد نوع الملحوظة الحالي أي بطاقات.\nالرجاء اختيار نوع آخر، أو الضغط على «بطاقات» وإضافة حقل بديل</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">تعمل عبارات ملء الفراغات في نوع ملحوظة ملء فراغات فقط.</string>
+    <string name="saving_facts">حفظ الملحوظة</string>
+    <string name="saving_model">حفظ نوع الملحوظة</string>
     <string name="add">أضف</string>
     <string name="save">حفظ</string>
     <string name="close">أغلق</string>
     <string name="select">حدد</string>
-    <string name="saving_changes">حفظ التغييرات...</string>
-    <string name="reordering_cards">أعادة ترتيب البطاقات&#8230;</string>
-    <string name="field_remapping">%1$s (from “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
+    <string name="saving_changes">يجري حفظ التغييرات...</string>
+    <string name="reordering_cards">تجري إعادة ترتيب البطاقات&#8230;</string>
+    <string name="field_remapping">%1$s (من “%2$s”)</string>
+    <string name="confirm_map_cards_to_nothing">البطاقات غير المُوزعة ستُحذف. إذا لم يتبقَّ لملحوظة أي بطاقة، ستُحذف. هل أنت متأكد من الاستمرار؟</string>
     <plurals name="timebox_reached">
-        <item quantity="zero">%1$d cards studied in %2$s</item>
-        <item quantity="one">%1$d card studied in %2$s</item>
-        <item quantity="two">%1$d cards studied in %2$s</item>
-        <item quantity="few">%1$d cards studied in %2$s</item>
-        <item quantity="many">%1$d cards studied in %2$s</item>
-        <item quantity="other">%1$d cards studied in %2$s</item>
+        <item quantity="zero">درست %1$d بطاقة خلال %2$s</item>
+        <item quantity="one">درست %1$d بطاقة خلال %2$s</item>
+        <item quantity="two">درست %1$d بطاقة خلال %2$s</item>
+        <item quantity="few">درست %1$d بطاقات خلال %2$s</item>
+        <item quantity="many">درست %1$d بطاقة خلال %2$s</item>
+        <item quantity="other">درست %1$d بطاقة خلال %2$s</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="zero">%1$d minutes</item>
-        <item quantity="one">%1$d minute</item>
-        <item quantity="two">%1$d minutes</item>
-        <item quantity="few">%1$d minutes</item>
-        <item quantity="many">%1$d minutes</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="zero">%1$d دقيقة</item>
+        <item quantity="one">%1$d دقيقة</item>
+        <item quantity="two">%1$d دقيقة</item>
+        <item quantity="few">%1$d دقائق</item>
+        <item quantity="many">%1$d دقيقة</item>
+        <item quantity="other">%1$d دقيقة</item>
     </plurals>
-    <string name="studyoptions_welcome_title">مرحباً بكم مع آنكيدرويد</string>
-    <string name="fact_adder_intent_title">بطاقة آنكيدرويد</string>
-    <string name="note_editor_add_note">Add note</string>
-    <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">انسخ البطاقة</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="studyoptions_welcome_title">مرحبًا بك مع أنكيدرويد</string>
+    <string name="fact_adder_intent_title">بطاقة أنكيدرويد</string>
+    <string name="note_editor_add_note">إضافة ملحوظة</string>
+    <string name="note_editor_copy_note">نسخ الملحوظة</string>
+    <string name="card_editor_copy_card">نسخ البطاقة</string>
+    <string name="card_editor_reposition_card">تغيير الموضع</string>
     <string name="card_editor_reset_card">أعد تعيين التقدم</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
-    <string name="card_editor_preview_card">المعاينة</string>
-    <string name="error_insufficient_memory">العملية غير ممكنة نظرا للذاكرة غير الكافية في جهازك</string>
+    <string name="card_editor_reschedule_card">إعادة الجدولة</string>
+    <string name="card_editor_preview_card">معاينة</string>
+    <string name="error_insufficient_memory">العملية غير ممكنة نظرًا للذاكرة غير الكافية في جهازك</string>
     <string name="rename">أعد التسمية</string>
-    <string name="default_conf_delete_error">The default options group can’t be removed</string>
+    <string name="default_conf_delete_error">لا يمكن إزالة مجموعة الخيارات الافتراضية</string>
     <plurals name="factadder_cards_added">
-        <item quantity="zero">%d cards added</item>
-        <item quantity="one">%d card added</item>
-        <item quantity="two">%d cards added</item>
-        <item quantity="few">%d cards added</item>
-        <item quantity="many">%d cards added</item>
-        <item quantity="other">%d cards added</item>
+        <item quantity="zero">أضيفت %d بطاقة</item>
+        <item quantity="one">أضيفت %d بطاقة</item>
+        <item quantity="two">أضيفت %d بطاقة</item>
+        <item quantity="few">أضيفت %d بطاقات</item>
+        <item quantity="many">أضيفت %d بطاقة</item>
+        <item quantity="other">أضيفت %d بطاقة</item>
     </plurals>
     <string name="help_title">تعليمات</string>
-    <string name="check_db">افحص قاعدة البيانات</string>
-    <string name="check_media">Check media</string>
+    <string name="check_db">فحص قاعدة البيانات</string>
+    <string name="check_media">فحص الوسائط</string>
     <string name="empty_cards">بطاقات فارغة</string>
     <string name="check_db_message">فحص قاعدة البيانات.\nالرجاء الانتظار...</string>
-    <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
-    <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck">جاري حذف شَدّة الأوراق&#8230;</string>
+    <string name="empty_card_warning">هذه البطاقة فارغة. استخدم خيار «بطاقات فارغة» من القائمة في شاشة قائمة الرزم.</string>
+    <string name="unknown_type_field_warning">إدخال الجواب: حقل غير معروف %s</string>
+    <string name="delete_deck">يجري حذف الرزمة...</string>
     <string name="show_hint">إظهار %s</string>
     <string name="info_rate">قيم أنكيدرويد</string>
     <string name="col_load_failed">فشل تحميل المجموعة-\nاضغط تراجع لإغلاق أنكيدرويد.</string>
-    <string name="import_title">أستيراد</string>
-    <string name="import_select_title">اختر ملف للاستيراد</string>
+    <string name="import_title">استيراد</string>
+    <string name="import_select_title">اختر ملفًا لاستيراده</string>
     <string name="import_message_add">إضافة</string>
-    <string name="import_message_replace_confirm">سيقوم بحذف المجموعة الحالية الخاصة بك واستبدالها ببيانات الملف %s. هل أنت متأكد؟</string>
-    <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
-    <string name="import_error_exception">Failed to import package\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
-    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
-    <string name="import_replacing">Replacing collection&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
-    <string name="export_include_schedule">Include scheduling</string>
-    <string name="export_include_media">Include media</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
-    <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Send Anki package?</string>
-    <string name="export_send_button">Send</string>
-    <string name="export_save_button">Save to file</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-    <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
+    <string name="import_message_add_confirm">هل تريد إضافة “%s” إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا</string>
+    <string name="import_log_no_apkg">ليس هذا ملف حزمة أنكي صالحًا</string>
+    <string name="import_log_failed_unzip">فشل فك ضغط ملف apkg: %s</string>
+    <string name="import_log_failed_copy_to">فشل نسخ ملف apkg إلى %s</string>
+    <string name="import_log_failed_validate">فشل التحقق من صحة ملف apkg</string>
+    <string name="import_log_insufficient_space">لا توجد مساحة كافية لفك ضغط الحزمة. تحتاج %1$d، لكن المتوفر %2$d</string>
+    <string name="import_log_file_cache_cleared">حدث خطأ عند استيراد الملف. يحتمل أن يكون بسبب مسح ذاكرة الكاش عند المعالجة.\nحاول مجددًا</string>
+    <string name="import_succeeded_but_check_database">نجح استيراد البيانات لكن فشل تنظيف ما بعد الاستيراد. استخدم ميزة فحص قاعدة البيانات لاحقًا. المسبب: %s</string>
+    <string name="import_error_unhandled_request">تعذرت معالجة طلب الاستيراد</string>
+    <string name="import_error_exception">فشل استيراد الحزمة\n\n%s</string>
+    <string name="import_error_not_apkg_extension">لا يحتوي اسم الملف “%s” على لاحقة .apkg أو .colpkg</string>
+    <string name="import_error_load_imported_database">استبدالات قاعدة بيانات أنكي (.anki2) غير مدعومة. الرجاء الاطلاع على الدليل لتعليمات الاستبدال.</string>
+    <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة أنكيدرويد. الرجاء الاطلاع على دليل المستخدم لكيفية استيراد ملفات أنكي يدويًا: \n%s</string>
+    <string name="import_error_copy_file_to_cache">فشلت copyFileToCache() (ربما بسبب نفاذ مساحة التخزين)</string>
+    <string name="import_replacing">يجري استبدال المجموعة&#8230;</string>
+    <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
+    <string name="export_include_schedule">اشمل معلومات الجدولة</string>
+    <string name="export_include_media">اشمل الوسائط</string>
+    <string name="confirm_apkg_export">هل تريد تصدير المجموعة كحزمة أنكي؟</string>
+    <string name="confirm_apkg_export_deck">هل تريد تصدير “%s” كملف apkg؟</string>
+    <string name="export_in_progress">يجري تصدير ملف حزمة أنكي&#8230;</string>
+    <string name="export_successful_title">هل تريد إرسال حزمة أنكي؟</string>
+    <string name="export_send_button">إرسال</string>
+    <string name="export_save_button">حفظ إلى ملف</string>
+    <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ...</string>
+    <string name="export_save_apkg_successful">تم حفظ حزمة أنكي بنجاح</string>
+    <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة أنكي</string>
+    <string name="export_successful">تم تصدير الملف \"%s\". هل تريد إرساله بواسطة تطبيق آخر؟</string>
+    <string name="export_email_subject">بطاقات مصدّرة من قبل أنكيدرويد: %s</string>
+    <string name="export_email_text"><![CDATA[        مرحبًا!
         <br/><br/>
-        This is an Anki flashcards deck send from <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
-        Try to open it using one of the available <a href="http://ankisrs.net/#download">Anki distributions</a> and enjoy easy and efficient learning!
+        هذه رزمة بطاقات أنكي مرسلة من قبل <a href="https://ankidroid.org/docs/manual.html">AnkiDroid</a>.
+        جرّب فتحها باستخدام توزيعة من <a href="http://ankisrs.net/#download">توزيعات أنكي</a> المتوفرة واستمتع بتعلم سهل وفعّال!
         ]]></string>
-    <string name="export_unsuccessful">Error exporting apkg file</string>
-    <string name="import_hint">لاستيراد البطاقات، ضع الملف apkg في الدليل %s ثم اضغط موافق</string>
-    <string name="upgrade_import_no_file_found">لا يوجد غير قابلة للاستيراد %1$s غير موجود</string>
+    <string name="export_unsuccessful">حدث خطأ عند تصدير ملف apkg</string>
+    <string name="import_hint">لاستيراد البطاقات، ضع ملف الـ apkg في المجلد “%s” وانقر «موافق»</string>
+    <string name="upgrade_import_no_file_found">تعذر العثور على ملف %1$s يمكن استيراده</string>
     <string name="study_options">الخيارات</string>
-    <string name="select_tts">تعيين اللّغة</string>
+    <string name="select_tts">تعيين لغة تحويل النص إلى كلام</string>
     <string name="custom_study">دراسة مخصصة</string>
     <string name="more_options">المزيد</string>
-    <string name="dyn_deck_desc">هذه قاعدة خاصة للدراسة خارج الجدول الزمني الاعتيادي. البطاقات سوف تعود الى شَداتها الأصلية تلقائياً بعد مراجعتها منك. حذف شَدّة الأوراق هذه من قائمة الشَّدّات سوف يعيد كل البطاقات المتبقية إلى حالة شَدّاتها الأصلية.</string>
-    <string name="steps_error">Steps must be numbers greater than 0</string>
-    <string name="steps_min_error">At least one step is required</string>
+    <string name="dyn_deck_desc">هذه رزمة خاصة للدراسة خارج الجدول المعتاد. ستعود البطاقات إلى رزمها الأصلية تلقائيًا بعد مراجعتها. يؤدي حذف هذه الرزمة من قائمة الرزم إلى إعادة كل البطاقات المتبقية إلى رزمها الأصلية.</string>
+    <string name="steps_error">يجب أن تكون الخطوات أعداد أكبر من 0</string>
+    <string name="steps_min_error">يلزم خطوة واحدة على الأقل</string>
     <string name="sched_end">(النهاية)</string>
-    <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
-    <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
-    <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
-    <string name="lookup_hint">After copying the text, tap anywhere on the flashcard to show the search icon</string>
+    <string name="sched_unbury_action">لرؤيتها انقر «نكش» في القائمة</string>
+    <string name="sched_has_buried">تم تأجيل بعض البطاقات المدفونة أو ذات الصلة حتى الغد</string>
+    <string name="tag_editor_add_feedback">انقر “%2$s” لتأكيد إضافة “%1$s”</string>
+    <string name="tag_editor_add_feedback_existing">تم تحديد السمة الموجودة “%1$s”</string>
+    <string name="lookup_hint">بعد نسخ النص، انقر في أي مكان على البطاقة لعرض أيقونة البحث</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="zero">%s ثانية</item>
@@ -238,130 +238,130 @@
         <item quantity="other">%s ثانية</item>
     </plurals>
     <plurals name="time_span_minutes">
-        <item quantity="zero">%s minutes</item>
-        <item quantity="one">%s minute</item>
-        <item quantity="two">%s minutes</item>
-        <item quantity="few">%s minutes</item>
-        <item quantity="many">%s minutes</item>
-        <item quantity="other">%s minutes</item>
+        <item quantity="zero">%s دقيقة</item>
+        <item quantity="one">%s دقيقة</item>
+        <item quantity="two">%s دقيقة</item>
+        <item quantity="few">%s دقائق</item>
+        <item quantity="many">%s دقيقة</item>
+        <item quantity="other">%s دقيقة</item>
     </plurals>
     <plurals name="time_span_hours">
-        <item quantity="zero">%s hours</item>
-        <item quantity="one">%s hour</item>
-        <item quantity="two">%s hours</item>
-        <item quantity="few">%s hours</item>
-        <item quantity="many">%s hours</item>
-        <item quantity="other">%s hours</item>
+        <item quantity="zero">%s ساعة</item>
+        <item quantity="one">%s ساعة</item>
+        <item quantity="two">%s ساعة</item>
+        <item quantity="few">%s ساعات</item>
+        <item quantity="many">%s ساعة</item>
+        <item quantity="other">%s ساعة</item>
     </plurals>
     <plurals name="time_span_days">
-        <item quantity="zero">%s days</item>
-        <item quantity="one">%s day</item>
-        <item quantity="two">%s days</item>
-        <item quantity="few">%s days</item>
-        <item quantity="many">%s days</item>
-        <item quantity="other">%s days</item>
+        <item quantity="zero">%s يوم</item>
+        <item quantity="one">%s يوم</item>
+        <item quantity="two">%s يوم</item>
+        <item quantity="few">%s أيام</item>
+        <item quantity="many">%s يوم</item>
+        <item quantity="other">%s يوم</item>
     </plurals>
     <plurals name="time_span_months">
-        <item quantity="zero">%s months</item>
-        <item quantity="one">%s month</item>
-        <item quantity="two">%s months</item>
-        <item quantity="few">%s months</item>
-        <item quantity="many">%s months</item>
-        <item quantity="other">%s months</item>
+        <item quantity="zero">%s شهر</item>
+        <item quantity="one">%s شهر</item>
+        <item quantity="two">%s شهر</item>
+        <item quantity="few">%s أشهر</item>
+        <item quantity="many">%s شهرًا</item>
+        <item quantity="other">%s شهر</item>
     </plurals>
     <plurals name="time_span_years">
-        <item quantity="zero">%s years</item>
-        <item quantity="one">%s year</item>
-        <item quantity="two">%s years</item>
-        <item quantity="few">%s years</item>
-        <item quantity="many">%s years</item>
-        <item quantity="other">%s years</item>
+        <item quantity="zero">%s عام</item>
+        <item quantity="one">%s عام</item>
+        <item quantity="two">%s عام</item>
+        <item quantity="few">%s أعوام</item>
+        <item quantity="many">%s عامًا</item>
+        <item quantity="other">%s عام</item>
     </plurals>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
-    <string name="less_than_time">&lt; %s</string>
-    <string name="decks_rename_exists">شَدّة الأوراق هذه موجودة بالفعل</string>
-    <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-    <string name="filtered_deck_name">شَدّة الأوراق مُفلترة</string>
-    <string name="reminder_title">لا تنسى بالمراجعة اليوم!</string>
+    <string name="less_than_time">&gt; %s</string>
+    <string name="decks_rename_exists">هذه الرزمة موجودة بالفعل</string>
+    <string name="decks_rename_filtered_nosubdecks">لا يمكن أن يكون لرزمة مفلترة رزم فرعية</string>
+    <string name="filtered_deck_name">رزمة مفلترة</string>
+    <string name="reminder_title">لا تنسَ أن تدرس اليوم!</string>
     <plurals name="reminder_text">
-        <item quantity="zero">%2$d cards to review in %1$s</item>
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="two">%2$d cards to review in %1$s</item>
-        <item quantity="few">%2$d cards to review in %1$s</item>
-        <item quantity="many">%2$d cards to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="zero">%2$d بطاقة بانتظار المراجعة في %1$s</item>
+        <item quantity="one">%2$d بطاقة بانتظار المراجعة في %1$s</item>
+        <item quantity="two">%2$d بطاقة بانتظار المراجعة في %1$s</item>
+        <item quantity="few">%2$d بطاقات بانتظار المراجعة في %1$s</item>
+        <item quantity="many">%2$d بطاقة بانتظار المراجعة في %1$s</item>
+        <item quantity="other">%2$d بطاقة بانتظار المراجعة في %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">حصل خطا أثناء مشاركة ملف ( apkg )</string>
+    <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
+    <string name="import_needs_v2">يجب تفعيل مجدول V2 لاستيراد هذا الملف.</string>
+    <string name="import_cannot_with_v2">لا يمكن لمجدول V2 استيراد رزم V1 مع معلومات الجدولة.</string>
+    <string name="export_v2_dummy_note">يتطلب هذا الملف إصدارًا أحدث من أنكي.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="activity_start_failed_load_url">فشل تحميل \'%s\'.</string>
+    <string name="activity_start_failed">ليس للنظام تطبيق منصب يمكنه إجراء هذا.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[قد تكون صور الكاميرا كبيرة. قد ترغب في ضغط الصور وتغيير حجمها في مجلد الوسائط]]></string>
+    <string name="no_browser_notification">تعذر العثور على متصفح، الرجاء زيارة صفحة الويب بواسطة حاسوب شخصي أو هاتف محمول: </string>
+    <string name="no_outgoing_link_in_cardbrowser">روابط الصفحات الخارجية في البطاقات غير مدعومة.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">تم استرجاع البطاقات</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="background_image_title">خلفية</string>
+    <string name="choose_an_image">اختيار صورة</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default">استعادة الافتراضي</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">فارغ</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">الرجاء تفعيل وضع ملء الشاشة لاستخدام ميزة إظهار قائمة التنقل باستخدام جافا سكريبت.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">الرجاء تفعيل وضع ملء الشاشة لاستخدام ميزة إظهار الخيارات باستخدام جافا سكريبت.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="white_board_image_save_failed">فشل حفظ صورة السبورة. %s</string>
+    <string name="white_board_image_saved">تم حفظ صورة السبورة إلى %s</string>
+    <string name="title_whiteboard_pen_color">لون قلم السبورة</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[عُثِر على بطاقات فارغة. استخدم أدوات>بطاقات فارغة.]]></string>
+    <string name="note_importer_error_empty_first_field">حقل أول فارغ: %s</string>
+    <string name="note_importer_error_first_field_matched">الحقل الأول مطابق: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">أضيفت ملحوظة مكررة بحقل أول: %s</string>
+    <string name="note_importer_error_appeared_twice">ظهر مرتين في الملف: %s</string>
+    <string name="note_importer_error_empty_notes">لم يتم استيراد واحدة أو أكثر من الملحوظات، لأنها لا تولّد أي بطاقات. يمكن أن يحدث هذا عندما يكون لديك حقول فارغة أو عندما لا توزع المحتوى في الملف النصي إلى الحقول الصحيحة.</string>
+    <string name="csv_importer_error_invalid_field_count">\'%1$s\' له %2$d حقل، لكن توقع %3$d</string>
+    <string name="csv_importer_error_exception">تم الإلغاء: %s</string>
+    <string name="user_is_a_robot">تم الكشف عن اختبار تلقائي. إذا كنت بشراً، اتصل بدعم أنكيدرويد</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="zero">%d notes added</item>
-        <item quantity="one">%d note added</item>
-        <item quantity="two">%d notes added</item>
-        <item quantity="few">%d notes added</item>
-        <item quantity="many">%d notes added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="zero">أضيفت %d ملحوظة</item>
+        <item quantity="one">أضيفت %d ملحوظة</item>
+        <item quantity="two">أضيفت %d ملحوظة</item>
+        <item quantity="few">أضيفت %d ملحوظات</item>
+        <item quantity="many">أضيفت %d ملحوظة</item>
+        <item quantity="other">أضيفت %d ملحوظة</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="zero">%d notes updated</item>
-        <item quantity="one">%d note updated</item>
-        <item quantity="two">%d notes updated</item>
-        <item quantity="few">%d notes updated</item>
-        <item quantity="many">%d notes updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="zero">حُدِّثت %d ملحوظة</item>
+        <item quantity="one">حُدِّثت %d ملحوظة</item>
+        <item quantity="two">حُدِّثت %d ملحوظة</item>
+        <item quantity="few">حُدِّثت %d ملحوظات</item>
+        <item quantity="many">حُدِّثت %d ملحوظة</item>
+        <item quantity="other">حُدِّثت %d ملحوظة</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="zero">%d notes unchanged</item>
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="two">%d notes unchanged</item>
-        <item quantity="few">%d notes unchanged</item>
-        <item quantity="many">%d notes unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="zero">%d ملحوظة لم تتغير</item>
+        <item quantity="one">%d ملحوظة لم تتغير</item>
+        <item quantity="two">%d ملحوظة لم تتغير</item>
+        <item quantity="few">%d ملحوظات لم تتغير</item>
+        <item quantity="many">%d ملحوظة لم تتغير</item>
+        <item quantity="other">%d ملحوظة لم تتغير</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">تستخدم هذه البطاقة ميزات أنكيدرويد غير مدعومة. اتصل بالمطور %1$s، أو اطلع على الويكي. %2$s</string>
+    <string name="invalid_json_data">وفرت البطاقة بيانات غير صالحة. %s</string>
+    <string name="valid_js_api_version">إصدار واجهة برمجة جافا سكريبت لأنكيدرويد غير صالح. اتصل بالمطور %s، أو اطلع على الويكي</string>
+    <string name="update_js_api_version">يتوفر تحديث لواجهة برمجة جافا سكريبت لأنكيدرويد. اتصل بالمطور %s، أو اطلع على الويكي</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">إطلاع</string>
+    <string name="anki_js_error_code">(رمز الخطأ: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">نُسِخت معلومات التصحيح إلى الحافظة</string>
+    <string name="about_ankidroid_error_copy_debug_info">حدث خطأ عند نسخ معلومات التصحيح إلى الحافظة</string>
 </resources>

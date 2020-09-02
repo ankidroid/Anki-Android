@@ -252,6 +252,7 @@
     <string name="deck_conf_replayq">Ponovno predvajaj vpr.</string>
     <string name="deck_conf_replayq_summ">Ob prikazu odgovora ponovno predvajaj zvok tako vprašanja kot odgovora</string>
     <string name="deck_conf_manage">Upravljanje skupin</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Trenutna skupina</string>
     <string name="deck_conf_rename">Preimenuj</string>
     <string name="deck_conf_reset">Obnovi privzete</string>

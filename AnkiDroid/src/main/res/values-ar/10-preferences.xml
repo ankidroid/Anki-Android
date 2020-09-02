@@ -254,6 +254,7 @@
     <string name="deck_conf_replayq">إعادة تشغيل السؤال</string>
     <string name="deck_conf_replayq_summ">عندما تظهر الإجابة، أعد تشغيل كل من السؤال والإجابة الصوتية</string>
     <string name="deck_conf_manage">Group management</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Current group</string>
     <string name="deck_conf_rename">Rename</string>
     <string name="deck_conf_reset">Restore defaults</string>

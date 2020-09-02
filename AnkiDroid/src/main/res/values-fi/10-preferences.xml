@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">Toista kysymys</string>
     <string name="deck_conf_replayq_summ">Toista sekä kysymyksen, että vastauksen äänet, kun vastaus näytetään</string>
     <string name="deck_conf_manage">Ryhmien hallinta</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Nykyinen ryhmä</string>
     <string name="deck_conf_rename">Nimeä uudelleen</string>
     <string name="deck_conf_reset">Palauta oletusarvot</string>

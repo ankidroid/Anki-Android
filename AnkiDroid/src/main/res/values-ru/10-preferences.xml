@@ -251,6 +251,7 @@
     <string name="deck_conf_replayq">Повторять вопрос</string>
     <string name="deck_conf_replayq_summ">Воспроизводит вопрос при показе ответа</string>
     <string name="deck_conf_manage">Управление конфигурациями</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Текущая конфигурация</string>
     <string name="deck_conf_rename">Переименовать</string>
     <string name="deck_conf_reset">Сбросить настройки</string>

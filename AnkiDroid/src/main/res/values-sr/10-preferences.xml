@@ -251,6 +251,7 @@
     <string name="deck_conf_replayq">Репродуковање питања</string>
     <string name="deck_conf_replayq_summ">При приказу одговора, репродукуј аудио и питања и одговора</string>
     <string name="deck_conf_manage">Групе</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Текућа група</string>
     <string name="deck_conf_rename">Преименуј</string>
     <string name="deck_conf_reset">Врати подразумевана подешавања</string>

@@ -254,6 +254,7 @@
     <string name="deck_conf_replayq">Відтворити питання</string>
     <string name="deck_conf_replayq_summ">Після показу відповіді відтворити аудіо питання і відповіді</string>
     <string name="deck_conf_manage">Управління групами</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Поточна група</string>
     <string name="deck_conf_rename">Перейменувати</string>
     <string name="deck_conf_reset">Відновити типові</string>
