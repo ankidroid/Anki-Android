@@ -486,6 +486,7 @@ public class Whiteboard extends View {
         return mCurrentlyDrawing;
     }
 
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     protected String saveWhiteboard(Time time) throws FileNotFoundException {
 
         Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
