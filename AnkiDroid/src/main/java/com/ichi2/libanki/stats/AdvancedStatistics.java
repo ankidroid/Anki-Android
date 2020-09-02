@@ -20,7 +20,6 @@ package com.ichi2.libanki.stats;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.preference.PreferenceManager;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -1026,10 +1025,10 @@ public class AdvancedStatistics {
         private final int computeNDays;
         private final double computeMaxError;
         private final int simulateNIterations;
-        private final Collection mCol;
+        private final Collection<Time> mCol;
 
         public Settings(Context context) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context);
             mCol = CollectionHelper.getInstance().getCol(context);
 
             computeNDays = prefs.getInt("advanced_forecast_stats_compute_n_days", 0);
@@ -1038,9 +1037,9 @@ public class AdvancedStatistics {
 
             simulateNIterations = prefs.getInt("advanced_forecast_stats_mc_n_iterations", 1);
 
-            Timber.d("computeNDays: " + computeNDays);
-            Timber.d("computeMaxError: " + computeMaxError);
-            Timber.d("simulateNIterations: " + simulateNIterations);
+            Timber.d("computeNDays: %s", computeNDays);
+            Timber.d("computeMaxError: %s", computeMaxError);
+            Timber.d("simulateNIterations: %s", simulateNIterations);
         }
 
         public int getComputeNDays() {

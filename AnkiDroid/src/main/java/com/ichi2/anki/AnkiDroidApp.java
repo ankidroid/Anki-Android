@@ -28,7 +28,6 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Environment;
 import android.os.LocaleList;
-import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -322,8 +321,9 @@ public class AnkiDroidApp extends MultiDexApplication {
      * @param context Context to get preferences for.
      * @return A SharedPreferences object for this instance of the app.
      */
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public static SharedPreferences getSharedPrefs(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context);
+        return android.preference.PreferenceManager.getDefaultSharedPreferences(context);
     }
 
 

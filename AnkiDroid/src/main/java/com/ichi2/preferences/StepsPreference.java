@@ -17,7 +17,6 @@
 package com.ichi2.preferences;
 
 import android.content.Context;
-import android.preference.EditTextPreference;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -29,7 +28,8 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 
-public class StepsPreference extends EditTextPreference {
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+public class StepsPreference extends android.preference.EditTextPreference {
 
     private final boolean mAllowEmpty;
 
