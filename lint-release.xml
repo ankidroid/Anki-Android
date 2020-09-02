@@ -25,6 +25,7 @@
     <issue id="ViewConstructor" severity="fatal" />
     <issue id="ViewHolder" severity="fatal" />
     <issue id="ViewTag" severity="fatal" />
+    <issue id="WrongConstant" severity="fatal" />
     <issue id="WrongViewCast" severity="fatal" />
 
     <!-- This come from Timber and we need to also ignore them  -->
@@ -296,7 +297,6 @@
     <issue id="ResourceType" severity="ignore" />
     <issue id="RestrictedApi" severity="ignore" />
     <issue id="WrongThread" severity="ignore" />
-    <issue id="WrongConstant" severity="ignore" />
     <issue id="VisibleForTests" severity="ignore" />
     <issue id="ProtectedPermissions" severity="ignore" />
     <issue id="TextFields" severity="ignore" />
