@@ -21,7 +21,6 @@ package com.ichi2.async;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 
@@ -505,6 +504,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         super.publishProgress(id, up, down);
     }
 
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/7013
     public static boolean isOnline() {
         if (sAllowSyncOnNoConnection) {
             return true;
@@ -512,7 +512,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm != null) {
-            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+            android.net.NetworkInfo netInfo = cm.getActiveNetworkInfo();
             return (netInfo != null) && netInfo.isConnected();
         }
         return false;
