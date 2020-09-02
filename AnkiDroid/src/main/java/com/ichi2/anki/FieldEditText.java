@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.LocaleList;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -70,7 +69,7 @@ public class FieldEditText extends AppCompatEditText {
 
     private boolean shouldDisableExtendedTextUi() {
         try {
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+            SharedPreferences sp = AnkiDroidApp.getSharedPrefs(this.getContext());
             return sp.getBoolean("disableExtendedTextUi", false);
         } catch (Exception e) {
             Timber.e(e, "Failed to get extended UI preference");

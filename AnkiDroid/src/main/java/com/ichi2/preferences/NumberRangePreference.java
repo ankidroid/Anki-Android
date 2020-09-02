@@ -17,7 +17,6 @@
 package com.ichi2.preferences;
 
 import android.content.Context;
-import android.preference.EditTextPreference;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -25,7 +24,8 @@ import android.util.AttributeSet;
 
 import com.ichi2.anki.AnkiDroidApp;
 
-public class NumberRangePreference extends EditTextPreference {
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+public class NumberRangePreference extends android.preference.EditTextPreference {
 
     private final int mMin;
     private final int mMax;
