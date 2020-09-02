@@ -451,19 +451,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             switch (view.getId()) {
                 case R.id.flashcard_layout_ease1:
                     Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
-                    answerCard(EASE_1);
+                    answerCard(Consts.BUTTON_ONE);
                     break;
                 case R.id.flashcard_layout_ease2:
                     Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
-                    answerCard(EASE_2);
+                    answerCard(Consts.BUTTON_TWO);
                     break;
                 case R.id.flashcard_layout_ease3:
                     Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
-                    answerCard(EASE_3);
+                    answerCard(Consts.BUTTON_THREE);
                     break;
                 case R.id.flashcard_layout_ease4:
                     Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
-                    answerCard(EASE_4);
+                    answerCard(Consts.BUTTON_FOUR);
                     break;
                 default:
                     mCurrentEase = 0;
@@ -2626,13 +2626,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 onFlag(mCurrentCard, FLAG_NONE);
                 return true;
             case COMMAND_ANSWER_FIRST_BUTTON:
-                return answerCardIfVisible(EASE_1);
+                return answerCardIfVisible(Consts.BUTTON_ONE);
             case COMMAND_ANSWER_SECOND_BUTTON:
-                return answerCardIfVisible(EASE_2);
+                return answerCardIfVisible(Consts.BUTTON_TWO);
             case COMMAND_ANSWER_THIRD_BUTTON:
-                return answerCardIfVisible(EASE_3);
+                return answerCardIfVisible(Consts.BUTTON_THREE);
             case COMMAND_ANSWER_FOURTH_BUTTON:
-                return answerCardIfVisible(EASE_4);
+                return answerCardIfVisible(Consts.BUTTON_FOUR);
             case COMMAND_ANSWER_RECOMMENDED:
                 return answerCardIfVisible(getRecommendedEase(false));
             case COMMAND_PAGE_UP:

@@ -1423,6 +1423,6 @@ public class Sched extends SchedV2 {
     @Override
     @VisibleForTesting
     public @Consts.BUTTON_TYPE int getGoodNewButton() {
-        return 2;
+        return Consts.BUTTON_TWO;
     }
 }
