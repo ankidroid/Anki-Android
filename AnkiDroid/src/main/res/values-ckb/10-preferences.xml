@@ -250,6 +250,7 @@
     <string name="deck_conf_replayq">Dîsa bipirse</string>
     <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
     <string name="deck_conf_manage">Group management</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Koma niha</string>
     <string name="deck_conf_rename">Nav biguherîne</string>
     <string name="deck_conf_reset">Restore defaults</string>

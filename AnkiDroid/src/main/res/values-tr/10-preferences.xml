@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">Tekrar Sor</string>
     <string name="deck_conf_replayq_summ">Cevap gösterildiği zaman, hem sesi hem de soru ve cevabı tekrarla</string>
     <string name="deck_conf_manage">Grup yönetimi</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Şu anki grup</string>
     <string name="deck_conf_rename">Adını değiştir</string>
     <string name="deck_conf_reset">Varsayılanlara geri dön</string>

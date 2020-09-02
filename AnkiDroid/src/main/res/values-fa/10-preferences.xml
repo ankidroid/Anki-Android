@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">پخش مجدد سوال</string>
     <string name="deck_conf_replayq_summ">هنگام نمایش پاسخ, مجددا هر دو سوال و پاسخ صوتی را پخش کن</string>
     <string name="deck_conf_manage">گروه مدیریت</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">گروه فعلی</string>
     <string name="deck_conf_rename">تغییر نام</string>
     <string name="deck_conf_reset">بازیابی پیش فرضها</string>

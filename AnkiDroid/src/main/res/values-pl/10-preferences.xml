@@ -251,6 +251,7 @@
     <string name="deck_conf_replayq">Powtórz pytanie</string>
     <string name="deck_conf_replayq_summ">Po pokazaniu odpowiedzi powtórz i audio pytania i odpowiedzi</string>
     <string name="deck_conf_manage">Zarządzanie grupą ustawień</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Bieżąca grupa ustawień</string>
     <string name="deck_conf_rename">Zmień nazwę</string>
     <string name="deck_conf_reset">Przywróć domyślne</string>

@@ -251,6 +251,7 @@
     <string name="deck_conf_replayq">Repetare întrebare</string>
     <string name="deck_conf_replayq_summ">După afișarea răspunsului, repetă atât întrebarea cât și răspunsul cu sonor</string>
     <string name="deck_conf_manage">Group management</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Current group</string>
     <string name="deck_conf_rename">Rename</string>
     <string name="deck_conf_reset">Restore defaults</string>

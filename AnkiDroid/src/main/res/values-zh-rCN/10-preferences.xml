@@ -248,6 +248,7 @@
     <string name="deck_conf_replayq">重播问题</string>
     <string name="deck_conf_replayq_summ">显示答案时，同时播放问题和答案的音频。</string>
     <string name="deck_conf_manage">组管理</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">当前组</string>
     <string name="deck_conf_rename">重命名</string>
     <string name="deck_conf_reset">恢复默认</string>

@@ -254,6 +254,7 @@
     <string name="deck_conf_replayq">Прайграванне пытання</string>
     <string name="deck_conf_replayq_summ">Пасля паказу адказу прайграць аўдыя пытання і адказу</string>
     <string name="deck_conf_manage">Кіраванне канфігурацыямі</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Цякучая група</string>
     <string name="deck_conf_rename">Пераіменаваць</string>
     <string name="deck_conf_reset">Скінуць налады</string>

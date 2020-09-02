@@ -250,6 +250,7 @@
     <string name="deck_conf_replayq">Repetir pergunta</string>
     <string name="deck_conf_replayq_summ">Quando a resposta for mostrada, voltar a reproduzir o áudio da pergunta e da resposta</string>
     <string name="deck_conf_manage">Gestão de grupos</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Grupo atual</string>
     <string name="deck_conf_rename">Renomear</string>
     <string name="deck_conf_reset">Restaurar predefinições</string>

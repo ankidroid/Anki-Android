@@ -154,8 +154,7 @@
     <string name="time_quantity_months">%.1f ወርሒ</string>
     <string name="time_quantity_years">%.1f ዓመት</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">ዝሸምደድካዮ  ባይታ ከምባሓዱሽ ሕነጾ...
-\"%.1f a\"</string>
+    <string name="rebuild_cram_deck">ዝሸምደድካዮ  ባይታ ከምባሓዱሽ ሕነጾ&#8230;</string>
     <string name="rebuild_cram_label">ከምባሓዱሽ ህነጽ</string>
     <string name="empty_cram_label">ባዶ ቦታ</string>
     <string name="create_subdeck">Create subdeck</string>

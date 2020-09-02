@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">Spela upp fråga igen</string>
     <string name="deck_conf_replayq_summ">När svar visats, spela upp både fråge- och svarsljud igen</string>
     <string name="deck_conf_manage">Grupphantering</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Nuvarande grupp</string>
     <string name="deck_conf_rename">Byt namn</string>
     <string name="deck_conf_reset">Återställ standardinställningar</string>

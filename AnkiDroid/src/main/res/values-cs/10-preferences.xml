@@ -251,6 +251,7 @@
     <string name="deck_conf_replayq">Přehrát otázku</string>
     <string name="deck_conf_replayq_summ">Při zobrazení odpovědi přehrát audio otázky i odpovědi</string>
     <string name="deck_conf_manage">Správa skupin</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Aktuální skupina</string>
     <string name="deck_conf_rename">Přejmenovat</string>
     <string name="deck_conf_reset">Obnovit výchozí</string>

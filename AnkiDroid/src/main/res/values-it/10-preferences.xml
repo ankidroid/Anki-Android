@@ -123,8 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Sincronizzazione automatica</string>
     <string name="automatic_sync_choice_summ">Sincronizza automaticamente all\'avvio/uscita se l\'ultima sincronizzazione è stata più di 10 minuti fa.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">Visualizza stato di sincronizzazione</string>
+    <string name="sync_status_badge_summ">Cambia l\'icona di sincronizzazione quando le modifiche possono essere caricate</string>
     <string name="day_theme">Tema di giorno</string>
     <string name="night_theme">Tema notturno</string>
     <string name="default_font">Carattere predefinito</string>
@@ -249,6 +249,7 @@
     <string name="deck_conf_replayq">Riproduci la domanda</string>
     <string name="deck_conf_replayq_summ">Quando viene mostrata la risposta, riproduci l\'audio sia della domanda che della risposta</string>
     <string name="deck_conf_manage">Gestione gruppi</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Gruppo corrente</string>
     <string name="deck_conf_rename">Rinomina</string>
     <string name="deck_conf_reset">Ripristina le impostazioni predefinite</string>

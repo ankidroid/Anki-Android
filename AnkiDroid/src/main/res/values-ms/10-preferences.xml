@@ -249,6 +249,7 @@ minit yang lalu.</string>
     <string name="deck_conf_replayq">Replay soalan</string>
     <string name="deck_conf_replayq_summ">Ketika menjawab ditunjukkan, replay kedua-dua pertanyaan dan jawaban audio</string>
     <string name="deck_conf_manage">Kumpulan pengurusan</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Semasa kumpulan</string>
     <string name="deck_conf_rename">Menamakan</string>
     <string name="deck_conf_reset">Memulihkan mungkir</string>
