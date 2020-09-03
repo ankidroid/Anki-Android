@@ -45,7 +45,9 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.net.ConnectivityManagerCompat;
 import androidx.core.view.GestureDetectorCompat;
@@ -56,6 +58,7 @@ import android.text.style.UnderlineSpan;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -69,6 +72,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.RenderProcessGoneDetail;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
@@ -88,6 +92,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
@@ -387,7 +392,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     /** Handle Mark/Flag state of cards */
     private CardMarker mCardMarker;
-    // private int zEase;
+
+    /** Handle providing help for "Image Not Found" */
+    private MissingImageHandler mMissingImageHandler = new MissingImageHandler(this::displayCouldNotFindImageSnackbar);
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -1989,6 +1996,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void displayCardQuestion(boolean reload) {
         Timber.d("displayCardQuestion()");
         sDisplayAnswer = false;
+        this.mMissingImageHandler.onCardSideChange();
 
         setInterface();
 
@@ -2073,6 +2081,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void displayCardAnswer() {
         Timber.d("displayCardAnswer()");
+        mMissingImageHandler.onCardSideChange();
 
         // prevent answering (by e.g. gestures) before card is loaded
         if (mCurrentCard == null) {
@@ -2645,6 +2654,32 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 Timber.w("Unknown command requested: %s", which);
                 return false;
         }
+    }
+
+    /** Displays a snackbar which does not obscure the answer buttons */
+    protected void showSnackbar(String mainText, @StringRes int buttonText, OnClickListener onClickListener) {
+        // BUG: Moving from full screen to non-full screen obscures the buttons
+
+        Snackbar sb = UIUtils.getSnackbar(this, mainText, Snackbar.LENGTH_LONG, buttonText, onClickListener, mCardWebView, null);
+
+        View easeButtons = findViewById(R.id.answer_options_layout);
+        View previewButtons = findViewById(R.id.preview_buttons_layout);
+
+        View upperView = previewButtons != null && previewButtons.getVisibility() != View.GONE ? previewButtons : easeButtons;
+
+        // we need to check for View.GONE as setting the anchor does not seem to respect this property
+        // (there's a gap even if the view is invisible)
+
+        if (upperView != null && upperView.getVisibility() != View.GONE) {
+            View sbView = sb.getView();
+            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) sbView.getLayoutParams();
+            layoutParams.setAnchorId(upperView.getId());
+            layoutParams.anchorGravity = Gravity.TOP;
+            layoutParams.gravity = Gravity.TOP;
+            sbView.setLayoutParams(layoutParams);
+        }
+
+        sb.show();
     }
 
 
@@ -3223,6 +3258,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            super.onReceivedError(view, request, error);
+            mMissingImageHandler.processFailure(request);
+        }
+
+
+        @Override
+        public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+            super.onReceivedHttpError(view, request, errorResponse);
+            mMissingImageHandler.processFailure(request);
+        }
+
+
+        @Override
         @SuppressWarnings("deprecation") // tracked as #5017 in github
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             return filterUrl(url);
@@ -3541,6 +3590,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     .show();
         }
     }
+
+
+    private void displayCouldNotFindImageSnackbar(String filename) {
+        OnClickListener onClickListener = (v) -> openUrl(Uri.parse(getString(R.string.link_faq_missing_media)));
+        showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename), R.string.card_viewer_could_not_find_image_get_help, onClickListener);
+    }
+
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     protected String getTypedInputText() {
