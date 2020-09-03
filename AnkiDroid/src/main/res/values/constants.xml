@@ -13,7 +13,7 @@
 ~
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
---><resources>
+--><resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--
         WARNING: These values here match static values defined in Deck.java DO
@@ -144,6 +144,7 @@
     <string name="link_manual_zh">https://docs.ankidroid.org/manual-zh.html</string>
     <string name="link_manual_getting_started">https://docs.ankidroid.org/manual.html#gettingStarted</string>
     <string name="link_faq_tts">https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking</string>
+    <string name="link_faq_missing_media" tools:ignore="Typos">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">http://ankisrs.net/docs/manual.html#corrupt-collections</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
