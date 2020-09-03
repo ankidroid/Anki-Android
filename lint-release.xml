@@ -22,6 +22,9 @@
 <lint>
     <issue id="NewApi" severity="fatal" />
     <issue id="InlinedApi" severity="fatal" />
+    <issue id="StringFormatCount" severity="fatal" />
+    <issue id="StringFormatMatches" severity="fatal" />
+    <issue id="StringFormatInvalid" severity="fatal" />
     <issue id="ViewConstructor" severity="fatal" />
     <issue id="ViewHolder" severity="fatal" />
     <issue id="ViewTag" severity="fatal" />
@@ -285,9 +288,6 @@
     <issue id="SSLCertificateSocketFactoryGetInsecure" severity="ignore" />
     <issue id="StateListReachable" severity="ignore" />
     <issue id="AuthLeak" severity="ignore" />
-    <issue id="StringFormatCount" severity="ignore" />
-    <issue id="StringFormatMatches" severity="ignore" />
-    <issue id="StringFormatInvalid" severity="ignore" />
     <issue id="PluralsCandidate" severity="ignore" />
     <issue id="UseCheckPermission" severity="ignore" />
     <issue id="CheckResult" severity="ignore" />
