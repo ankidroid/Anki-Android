@@ -216,7 +216,7 @@
     <string name="boot_service_too_many_notifications">Запланировано слишком много напоминаний. Некоторые из них не будут показаны</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_summary">Некоторые многоязычные клавиатуры, например GBoard, могут переключать языка при редактировании текста\n\nПожалуйста, запросите функцию «setImeHintLocales» у разработчика клавиатуры, если клавиатура не переключает язык.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Автоматическая синхронизация может быть запущена через %d секунду</item>

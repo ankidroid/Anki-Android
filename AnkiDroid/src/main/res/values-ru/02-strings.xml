@@ -113,7 +113,7 @@
     <string name="note_editor_no_cards_created">Карточки не созданы. Заполните больше полей</string>
     <string name="note_editor_no_first_field">Первое поле пусто</string>
     <string name="note_editor_no_cloze_delations">Этот тип записи должен содержать задание с пропусками</string>
-    <string name="note_editor_set_field_language">Set field language</string>
+    <string name="note_editor_set_field_language">Задать язык поля</string>
     <string name="note_editor_no_cards_created_all_fields">Текущий тип записи не производит никаких карточек.\nВыберите другой тип записи или нажмите «Карты» и добавьте подстановку поля</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Задание с пропусками работают только в типе записи с пропусками</string>
     <string name="saving_facts">Запись сохраняется</string>
@@ -328,7 +328,7 @@
         <item quantity="other">%d записей не изменено</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="api_version_developer_contact">Эта карточка использует неподдерживаемые в AnkiDroid функции. Свяжитесь с разработчиком %1$s или обратитесь к вики-справке. %2$s</string>
     <string name="invalid_json_data">В карточек недопустимые данные. %s</string>
     <string name="valid_js_api_version">Недопустимый версия AnkiDroid JS API. Свяжитесь с разработчиком %s или обратитесь к вики-справке</string>
     <string name="update_js_api_version">Доступна новая версия AnkiDroid JS API. Свяжитесь с разработчиком %s или обратитесь к вики-справке.</string>
@@ -337,4 +337,7 @@
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Отладочная информация скопирована в буфер обмена</string>
     <string name="about_ankidroid_error_copy_debug_info">Ошибка при копировании отладочной информации в буфер обмена</string>
+    <!-- Card Viewer -->
+    <string name="card_viewer_could_not_find_image">Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image_get_help">Help</string>
 </resources>
