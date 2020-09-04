@@ -38,6 +38,7 @@ import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.SyncStatus;
 
 
 import java.util.ArrayList;
@@ -1116,7 +1117,7 @@ public class Sched extends SchedV2 {
         // unbury if the day has rolled over
         int unburied = mCol.getConf().optInt("lastUnburied", 0);
         if (unburied < mToday) {
-            unburyCards();
+            SyncStatus.ignoreDatabaseModification(this::unburyCards);
         }
     }
 
