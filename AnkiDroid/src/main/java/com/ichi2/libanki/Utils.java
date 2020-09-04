@@ -75,6 +75,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -676,9 +677,20 @@ public class Utils {
         return contentOfMyInputStream;
     }
 
+    public static void unzipAllFiles(ZipFile zipFile, String targetDirectory) throws IOException {
+        List<String> entryNames = new ArrayList<>();
+        Enumeration<ZipArchiveEntry> i = zipFile.getEntries();
+        while (i.hasMoreElements()) {
+            ZipArchiveEntry e = i.nextElement();
+            entryNames.add(e.getName());
+        }
 
-    public static void unzipFiles(ZipFile zipFile, String targetDirectory, String[] zipEntries,
-                                  Map<String, String> zipEntryToFilenameMap) throws IOException {
+        unzipFiles(zipFile, targetDirectory, entryNames.toArray(new String[0]), null);
+
+    }
+
+    public static void unzipFiles(ZipFile zipFile, String targetDirectory, @NonNull String[] zipEntries,
+                                  @Nullable Map<String, String> zipEntryToFilenameMap) throws IOException {
         File dir = new File(targetDirectory);
         if (!dir.exists() && !dir.mkdirs()) {
             throw new IOException("Failed to create target directory: " + targetDirectory);

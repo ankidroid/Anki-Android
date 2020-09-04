@@ -364,7 +364,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         File mdir = new File(mCol.getMedia().dir());
         if (mdir.exists() && mdir.isDirectory()) {
             File[] mediaFiles = mdir.listFiles();
-            return _exportMedia(z, mediaFiles);
+            return _exportMedia(z, mediaFiles, ValidateFiles.SKIP_VALIDATION);
         } else {
             return new JSONObject();
         }
@@ -377,14 +377,19 @@ public final class AnkiPackageExporter extends AnkiExporter {
         for (String fileName: fileNames){
             files[i++] = new File(mdir, fileName);
         }
-        return _exportMedia(z, files);
+        return _exportMedia(z, files, ValidateFiles.VALIDATE);
     }
 
-    private JSONObject _exportMedia(ZipFile z, File[] files) throws IOException {
+    private JSONObject _exportMedia(ZipFile z, File[] files, ValidateFiles validateFiles) throws IOException {
         int c = 0;
         JSONObject media = new JSONObject();
         for (File file : files) {
             // todo: deflate SVG files, as in dae/anki@a5b0852360b132c0d04094f5ca8f1933f64d7c7e
+            if (validateFiles == ValidateFiles.VALIDATE && !file.exists()) {
+                // Anki 2.1.30 does the same
+                Timber.d("Skipping missing file %s", file);
+                continue;
+            }
             z.write(file.getPath(), Integer.toString(c));
             try {
                 media.put(Integer.toString(c), file.getName());
@@ -443,6 +448,13 @@ public final class AnkiPackageExporter extends AnkiExporter {
         c.save();
         c.close();
         zip.write(f.getAbsolutePath(), CollectionHelper.COLLECTION_FILENAME);
+    }
+
+
+    /** Whether media files should be validated before being added to the zip */
+    private enum ValidateFiles {
+        VALIDATE,
+        SKIP_VALIDATION
     }
 }
 
