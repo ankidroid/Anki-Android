@@ -48,6 +48,7 @@ import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.SyncStatus;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -2165,7 +2166,7 @@ public class SchedV2 extends AbstractSched {
         // unbury if the day has rolled over
         int unburied = mCol.getConf().optInt("lastUnburied", 0);
         if (unburied < mToday) {
-            unburyCards();
+            SyncStatus.ignoreDatabaseModification(this::unburyCards);
             mCol.getConf().put("lastUnburied", mToday);
         }
     }
