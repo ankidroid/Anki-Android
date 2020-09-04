@@ -304,4 +304,7 @@ Dek itu sudah ada</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <!-- Card Viewer -->
+    <string name="card_viewer_could_not_find_image">Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image_get_help">Help</string>
 </resources>

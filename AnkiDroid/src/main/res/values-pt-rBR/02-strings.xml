@@ -284,7 +284,7 @@
     <string name="note_importer_empty_cards_found"><![CDATA[Cartões vazios encontrados. Por favor, execute Ferramentas>Cartões Vazios.]]></string>
     <string name="note_importer_error_empty_first_field">Primeiro campo vazio: %s</string>
     <string name="note_importer_error_first_field_matched">Primeiro campo correspondido: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Adicionado com o primeiro campo duplicado: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Adicionada duplicata com o primeiro campo: %s</string>
     <string name="note_importer_error_appeared_twice">Apareceu duas vezes no arquivo: %s</string>
     <string name="note_importer_error_empty_notes">Uma ou mais notas não foram importadas, pois não geraram nenhum cartão. Isso pode acontecer quando você tem campos vazios ou quando você não colocou o conteúdo do arquivo de texto nos campos corretos.</string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s tinha %2$d campos, esperado %3$d</string>
@@ -312,4 +312,7 @@
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Informações de debug copiadas para a área de transferência.</string>
     <string name="about_ankidroid_error_copy_debug_info">Erro ao copiar informações de debug para a área de transferência.</string>
+    <!-- Card Viewer -->
+    <string name="card_viewer_could_not_find_image">Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image_get_help">Help</string>
 </resources>

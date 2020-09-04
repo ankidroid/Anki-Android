@@ -114,7 +114,7 @@
         <item quantity="other">تمت إعادة جدولة %d بطاقة</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">تجري إعادة جدولة بطاقة جديدة. تحول إعادة الجدولة البطاقات الجديدة إلى بطاقات مراجعة. استخدم خيار «تغيير الموضع» لتغيير موضع بطاقة جديدة في صف البطاقات الجديدة</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">تعيد إعادة الجدولة تعيين طريقة تعامل المجدول مع البطاقة في المستقبل (سيتم تعيين السهولة إلى %%)</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">تعيد إعادة الجدولة تعيين طريقة تعامل المجدول مع البطاقة في المستقبل (سيتم تعيين السهولة إلى %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">اختر الرزمة في مدير الملفات أو زر صفحة حول:تنزيلات لاستيرادها</string>
     <string name="answering_error_title">خطأ في قاعدة البيانات</string>
     <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا كان هذا يحدث غالبًا، جرب فحص قاعدة البيانات، أو إصلاح المجموعة، أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في أنكي درويد ربما؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
@@ -136,7 +136,7 @@
     <string name="rebuild_custom_study_deck">تجري إعادة بناء رزمة الدراسة المخصصة&#8230;</string>
     <string name="importing_collection">يجري استيراد المجموعة&#8230;</string>
     <string name="import_media_count">يجري استيراد ملفات الوسائط %1$d&#8230;</string>
-    <string name="import_progress">• استيراد الملحوظات: %1$• استيراد البطاقات: %2$• بعد المعالجة: %3$dd\nd\n</string>
+    <string name="import_progress">• استيراد الملحوظات: %1$d%%\n• استيراد البطاقات: %2$d%%\n• بعد المعالجة: %3$d%%</string>
     <string name="import_update_details">تم تحديث %1$d من أصل %2$d ملحوظة موجودة.</string>
     <string name="import_update_ignored">تم تجاهل بعض التحديثات لأن نوع الملحوظة قد تغير</string>
     <string name="import_complete_count">البطاقات المستوردة: %d</string>
