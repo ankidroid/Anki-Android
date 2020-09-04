@@ -26,9 +26,12 @@ Translating is easy and fun:
 
 For each grey bullet, translate the English text to your language.
 
-**Tip:**
+**Tips:**
 
-Many terms such as "note" or "leech" and some other messages should be consistent with Anki Desktop. You can copy the translations from Anki Desktop via it's [translation website](https://i18n.ankiweb.net/projects/anki-desktop/) (or more rarely [this one](https://i18n.ankiweb.net/projects/anki-core/)). Click on a _language code_ file (e.g. "ja_JP" for Japanese) to view a single language, and use your browser's search feature to search for the word or sentence you are looking for.
+* Many terms such as "note" or "leech" and some other messages should be consistent with Anki Desktop. You can copy the translations from Anki Desktop via it's [translation website](https://i18n.ankiweb.net/projects/anki-desktop/) (or more rarely [this one](https://i18n.ankiweb.net/projects/anki-core/)). Click on a _language code_ file (e.g. "ja_JP" for Japanese) to view a single language, and use your browser's search feature to search for the word or sentence you are looking for.
+
+* Some translation strings may have many plural forms in your language. These are represented by labels like `one`, `few`, `many`, etc. in Crowdin.
+You can find the meanings of these terms for your language [here](https://unicode-org.github.io/cldr-staging/charts/37/supplemental/language_plural_rules.html).
 
 ## Logic of the separation in different files
 
