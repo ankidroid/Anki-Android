@@ -15,7 +15,6 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.PreferenceUtils;
 import com.ichi2.utils.JSONArray;
@@ -25,7 +24,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.ParameterizedRobolectricTestRunner;
-import org.robolectric.annotation.LooperMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,13 +32,10 @@ import java.util.List;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
-import java.util.List;
 
 import androidx.test.core.app.ActivityScenario;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
-import static com.ichi2.anki.AbstractFlashcardViewer.EASE_2;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
 import static com.ichi2.anki.AbstractFlashcardViewer.RESULT_DEFAULT;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -53,7 +48,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assume.assumeTrue;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
-@LooperMode(LooperMode.Mode.PAUSED)
 public class ReviewerTest extends RobolectricTest {
 
 
@@ -167,7 +161,7 @@ public class ReviewerTest extends RobolectricTest {
 
         assumeTrue("Whiteboard should now be enabled", reviewer.mPrefWhiteboard);
 
-        super.advanceRobolectricLooper();
+        super.advanceRobolectricLooperWithSleep();
     }
 
 

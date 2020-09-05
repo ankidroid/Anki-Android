@@ -9,7 +9,6 @@ import android.content.SharedPreferences.Editor;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.annotation.LooperMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +23,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-@LooperMode(LooperMode.Mode.PAUSED)
 public class DeckPickerTest extends RobolectricTest {
 
     @Test

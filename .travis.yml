@@ -20,7 +20,7 @@ env:
     - LOCALE="NONE"
     - GRAVIS_REPO="https://github.com/DanySK/Gravis-CI.git"
     - GRAVIS="$HOME/gravis"
-    - JDK="1.8"
+    - JDK="1.11"
     - TOOLS=${ANDROID_HOME}/tools
     # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
@@ -44,7 +44,6 @@ env:
    - API=28 # API28 does not handle locale changes for some reason, so it is our default locale test
    - API=29 LOCALE="pt_BR"
    - API=30 EMU_FLAVOR=google_apis LOCALE="de_DE" # This will be API30 when released, until now it is R, with intermittent failure
-   - API=24 JDK="1.11" # make sure we work in future dev environments
    - API=24 JDK="1.14" # make sure we work in future dev environments
 
 jobs:
@@ -77,7 +76,6 @@ jobs:
       script: echo finalize codacy coverage uploads
   allow_failures:
     - env: API=30 EMU_FLAVOR=google_apis LOCALE="de_DE" # unreleased Android API30 is failing in local builds, let's expose that on Travis
-    - env: API=24 JDK="1.11" # non-default JDKs should not hold up success reporting
     - env: API=24 JDK="1.14" # non-default JDKs should not hold up success reporting
     - env: LINT=Debug API=NONE # we want to see the full lint report vs baseline but not fail on it
     - env: FINALIZE_COVERAGE=TRUE API=NONE # finalizing coverage should not hold up success reporting
@@ -86,7 +84,8 @@ before_install:
   # This section may run on all platforms, and may run for unit tests or for coverage finalization
   # It should not make assumptions about os platform or desired tool installation
 
-  # Set up JDK 8 for Android SDK - Java is universally needed: codacy, unit tests, emulators
+  # Set up JDK 8 for Android SDK install - sdkmanager does not work with JDK11+
+  # If we switch to be based off "commandlinetools" JDK11 is supposed to work, untested: https://developer.android.com/studio#command-tools
   - travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS
   - export TARGET_JDK="${JDK}"
   - JDK="adopt@1.8"
@@ -101,8 +100,8 @@ before_install:
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then yes | travis_retry sdkmanager --licenses >/dev/null; fi # accept all sdkmanager warnings
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "platform-tools" >/dev/null; fi
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "tools" >/dev/null; fi # A second time per Travis docs, gets latest versions
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "build-tools;28.0.3" >/dev/null; fi # Implicit gradle dependency - gradle drives changes
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "platforms;android-28" >/dev/null; fi # We need the API of the current compileSdkVersion from gradle.properties
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "build-tools;29.0.3" >/dev/null; fi # Implicit gradle dependency - gradle drives changes
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "platforms;android-29" >/dev/null; fi # We need the API of the current compileSdkVersion from gradle.properties
 
 install:
   # In our setup, install only runs on matrix entries we want full emulator tests on
@@ -134,11 +133,11 @@ install:
   # Switch locale
   - if [ "$LOCALE" != "NONE" ]; then adb shell am broadcast -a com.android.intent.action.SET_LOCALE --es com.android.intent.extra.LOCALE "$LOCALE" com.android.customlocale2; fi
 
+script:
   # Switch back to our target JDK version to build and run tests
   - JDK="adopt@${TARGET_JDK}"
   - source $GRAVIS/install-jdk
 
-script:
   - travis_retry ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint # warm gradle w/travis_retry to handle network blips
   - if [ "$UNIT_TEST" = "TRUE" ]; then travis_retry ./gradlew robolectricSdkDownload; fi # pre-download robolectric jars w/travis_retry to handle network blips
   - if [ "$UNIT_TEST" = "TRUE" ]; then ./gradlew jacocoUnitTestReport; fi

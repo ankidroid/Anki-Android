@@ -77,8 +77,11 @@ public class ImportUtilsTest extends RobolectricTest {
     private String importValidFile(String fileName) {
         TestFileImporter testFileImporter = new TestFileImporter(fileName);
 
+        advanceRobolectricLooperWithSleep();
         Intent intent = getValidClipDataUri(fileName);
+        advanceRobolectricLooperWithSleep();
         Context mockContext = spy(getTargetContext());
+        advanceRobolectricLooperWithSleep();
         testFileImporter.handleFileImport(mockContext, intent);
         String cacheFileName = testFileImporter.getCacheFileName();
 

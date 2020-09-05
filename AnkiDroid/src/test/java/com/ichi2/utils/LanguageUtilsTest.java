@@ -115,10 +115,10 @@ public class LanguageUtilsTest extends RobolectricTest {
     @Config(qualifiers = "en")
     public void localeThreeLetterRegionalVariantResolves() {
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                "yue (Taiwan)",
+                "Cantonese (Taiwan)",
                 is(LanguageUtil.getLocale("yue-TW").getDisplayName()));
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                "yue (Taiwan)",
+                "Cantonese (Taiwan)",
                 is(LanguageUtil.getLocale("yue_TW").getDisplayName()));
     }
 }

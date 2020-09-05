@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
-import org.robolectric.annotation.LooperMode;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -30,7 +29,6 @@ import static org.junit.Assert.assertEquals;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
-@LooperMode(LooperMode.Mode.PAUSED)
 public class AbstractFlashcardViewerTest extends RobolectricTest {
 
     public static class NonAbstractFlashcardViewer extends AbstractFlashcardViewer {
