@@ -2862,10 +2862,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
 
             // Go back to immersive mode if the user had temporarily exited it (and then execute swipe gesture)
-            if (mPrefFullscreenReview > 0 &&
-                    CompatHelper.getCompat().isImmersiveSystemUiVisible(AbstractFlashcardViewer.this)) {
-                delayedHide(INITIAL_HIDE_DELAY);
-            }
+            AbstractFlashcardViewer.this.onFling();
             if (mGesturesEnabled) {
                 try {
                     float dy = e2.getY() - e1.getY();
@@ -2937,9 +2934,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             // Go back to immersive mode if the user had temporarily exited it (and ignore the tap gesture)
-            if (mPrefFullscreenReview > 0 &&
-                    CompatHelper.getCompat().isImmersiveSystemUiVisible(AbstractFlashcardViewer.this)) {
-                delayedHide(INITIAL_HIDE_DELAY);
+            if (onSingleTap()) {
                 return true;
             }
             return executeTouchCommand(e);
@@ -2983,6 +2978,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return true;
         }
     }
+
+
+    protected boolean onSingleTap() {
+        return false;
+    }
+
+
+    protected void onFling() {
+
+    }
+
 
     /** #6141 - blocks clicking links from executing "touch" gestures.
      * COULD_BE_BETTER: Make base class static and move this out of the CardViewer */
@@ -3067,21 +3073,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             return type == HitTestResult.SRC_ANCHOR_TYPE
                     || type == HitTestResult.SRC_IMAGE_ANCHOR_TYPE;
         }
-    }
-
-    protected final Handler mFullScreenHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (mPrefFullscreenReview > 0) {
-                CompatHelper.getCompat().setFullScreen(AbstractFlashcardViewer.this);
-            }
-        }
-    };
-
-    protected void delayedHide(int delayMillis) {
-        Timber.d("Fullscreen delayed hide in %dms", delayMillis);
-        mFullScreenHandler.removeMessages(0);
-        mFullScreenHandler.sendEmptyMessageDelayed(0, delayMillis);
     }
 
     /**

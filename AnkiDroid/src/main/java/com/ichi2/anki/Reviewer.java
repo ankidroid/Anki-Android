@@ -26,6 +26,8 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -782,6 +784,40 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mPrefWhiteboard) {
             setWhiteboardVisibility(mShowWhiteboard);
         }
+    }
+
+    @Override
+    protected boolean onSingleTap() {
+        if (mPrefFullscreenReview &&
+                CompatHelper.getCompat().isImmersiveSystemUiVisible(this)) {
+            delayedHide(INITIAL_HIDE_DELAY);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected void onFling() {
+        if (mPrefFullscreenReview &&
+                CompatHelper.getCompat().isImmersiveSystemUiVisible(this)) {
+            delayedHide(INITIAL_HIDE_DELAY);
+        }
+    }
+
+
+    protected final Handler mFullScreenHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (mPrefFullscreenReview) {
+                CompatHelper.getCompat().setFullScreen(Reviewer.this);
+            }
+        }
+    };
+
+    protected void delayedHide(int delayMillis) {
+        Timber.d("Fullscreen delayed hide in %dms", delayMillis);
+        mFullScreenHandler.removeMessages(0);
+        mFullScreenHandler.sendEmptyMessageDelayed(0, delayMillis);
     }
 
 
