@@ -69,6 +69,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -2128,6 +2129,10 @@ public class Collection {
     }
 
     /** Not in libAnki */
+    @CheckResult
+    public List<Long> filterToValidCards(long[] cards) {
+        return getDb().queryLongList("select id from cards where id in " + Utils.ids2str(cards));
+    }
 
     //This duplicates _loadScheduler (but returns the value and sets the report limit).
     public AbstractSched createScheduler(int reportLimit) {
