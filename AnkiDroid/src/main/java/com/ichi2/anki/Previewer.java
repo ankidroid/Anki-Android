@@ -18,12 +18,19 @@
 
 package com.ichi2.anki;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Utils;
 
+import java.util.HashSet;
+import java.util.List;
+
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 /**
@@ -36,6 +43,11 @@ public class Previewer extends AbstractFlashcardViewer {
     private int mIndex;
     private boolean mShowingAnswer;
 
+    /** Communication with Browser */
+    private boolean mReloadRequired;
+    private boolean mNoteChanged;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
@@ -47,6 +59,8 @@ public class Previewer extends AbstractFlashcardViewer {
         if (savedInstanceState != null){
             mIndex = savedInstanceState.getInt("index", mIndex);
             mShowingAnswer = savedInstanceState.getBoolean("showingAnswer", mShowingAnswer);
+            mReloadRequired = savedInstanceState.getBoolean("reloadRequired");
+            mNoteChanged = savedInstanceState.getBoolean("noteChanged");
         }
 
         if (mCardList.length == 0 || mIndex < 0 || mIndex > mCardList.length - 1) {
@@ -73,6 +87,27 @@ public class Previewer extends AbstractFlashcardViewer {
         showBackIcon();
     }
 
+    /** Given a new collection of card Ids, find the 'best' valid card given the current collection
+     * We define the best as searching to the left, then searching to the right of the current element
+     * This occurs as many cards can be deleted when editing a note (from the Card Template Editor) */
+    private int getNextIndex(List<Long> newCardList) {
+        HashSet<Long> validIndices = new HashSet<>(newCardList);
+
+        for (int i = mIndex; i >= 0; i--) {
+            if (validIndices.contains(mCardList[i])) {
+                return newCardList.indexOf(mCardList[i]);
+            }
+        }
+
+        for (int i = mIndex + 1; i < validIndices.size(); i++) {
+            if (validIndices.contains(mCardList[i])) {
+                return newCardList.indexOf(mCardList[i]);
+            }
+        }
+
+        throw new IllegalStateException("newCardList was empty");
+    }
+
 
     @Override
     protected void setTitle() {
@@ -96,10 +131,44 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                editCard();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK, getResultIntent());
+        super.onBackPressed();
+    }
+
+
+    @Override
+    protected void onNavigationPressed() {
+        setResult(RESULT_OK, getResultIntent());
+        super.onNavigationPressed();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.previewer, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putLongArray("cardList", mCardList);
         outState.putInt("index", mIndex);
         outState.putBoolean("showingAnswer", mShowingAnswer);
+        outState.putBoolean("reloadRequired", mReloadRequired);
+        outState.putBoolean("noteChanged", mNoteChanged);
         super.onSaveInstanceState(outState);
     }
 
@@ -143,11 +212,30 @@ public class Previewer extends AbstractFlashcardViewer {
         return false;
     }
 
+
     @Override
     protected void performReload() {
-        // This should not happen.
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        mReloadRequired = true;
+        List<Long> newCardList = getCol().filterToValidCards(mCardList);
+
+        if (newCardList.isEmpty()) {
+            finishWithoutAnimation();
+            return;
+        }
+
+        mIndex = getNextIndex(newCardList);
+        mCardList = Utils.collection2Array(newCardList);
+        mCurrentCard = getCol().getCard(mCardList[mIndex]);
+        displayCardQuestion();
     }
+
+
+    @Override
+    protected void onEditedNoteChanged() {
+        super.onEditedNoteChanged();
+        mNoteChanged = true;
+    }
+
 
     private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override
@@ -193,5 +281,13 @@ public class Previewer extends AbstractFlashcardViewer {
 
         mPreviewPrevCard.setAlpha(prevBtnDisabled ? 0.38F : 1);
         mPreviewNextCard.setAlpha(nextBtnDisabled ? 0.38F : 1);
+    }
+
+    @NonNull
+    private Intent getResultIntent() {
+        Intent intent = new Intent();
+        intent.putExtra("reloadRequired", mReloadRequired);
+        intent.putExtra("noteChanged", mNoteChanged);
+        return intent;
     }
 }

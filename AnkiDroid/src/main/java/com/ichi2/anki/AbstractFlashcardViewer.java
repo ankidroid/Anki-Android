@@ -1142,6 +1142,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
                 CollectionTask.launchCollectionTask(UPDATE_NOTE, mUpdateCardHandler,
                         new TaskData(sEditorCard, true));
+                onEditedNoteChanged();
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard();
@@ -1153,6 +1154,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             clipboardSetText("");
         }
     }
+
+
+    protected void onEditedNoteChanged() {
+
+    }
+
 
     /** An action which may invalidate the current list of cards has been performed */
     protected abstract void performReload();
