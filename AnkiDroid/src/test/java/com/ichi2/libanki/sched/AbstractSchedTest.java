@@ -291,8 +291,7 @@ mw.col.sched.extendLimits(1, 0)
 
 
     protected void undoAndRedo(boolean preload) {
-        Collection<MockTime> col = getCol();
-        MockTime time = col.getTime();
+        Collection col = getCol();
         DeckConfig conf = col.getDecks().confForDid(1);
         conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 3, 5, 10}));
         col.getConf().put("collapseTime", 20 * 60);
@@ -310,7 +309,6 @@ mw.col.sched.extendLimits(1, 0)
         }
 
         sched.answerCard(card, sched.getGoodNewButton());
-        //time.addM(15);
 
         card = sched.getCard();
         assertNotNull(card);

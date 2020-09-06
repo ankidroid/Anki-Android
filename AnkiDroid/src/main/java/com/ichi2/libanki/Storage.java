@@ -46,10 +46,10 @@ public class Storage {
     }
 
 
-    public static Collection<Time> Collection(Context context, String path, boolean server, boolean log) {
+    public static Collection Collection(Context context, String path, boolean server, boolean log) {
         return Collection(context, path, server, log, new SystemTime());
     }
-    public static <T extends Time> Collection<T> Collection(Context context, String path, boolean server, boolean log, @NonNull T time) {
+    public static Collection Collection(Context context, String path, boolean server, boolean log, @NonNull Time time) {
         assert path.endsWith(".anki2");
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
@@ -65,7 +65,7 @@ public class Storage {
             }
             db.execute("PRAGMA temp_store = memory");
             // add db to col and do any remaining upgrades
-            Collection<T> col = new Collection(context, db, path, server, log, time);
+            Collection col = new Collection(context, db, path, server, log, time);
             if (ver < Consts.SCHEMA_VERSION) {
                 _upgrade(col, ver);
             } else if (ver > Consts.SCHEMA_VERSION) {

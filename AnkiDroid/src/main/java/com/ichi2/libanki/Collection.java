@@ -38,7 +38,6 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.libanki.template.Template;
-import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.DatabaseChangeDecorator;
@@ -90,7 +89,7 @@ import static com.ichi2.libanki.Collection.DismissType.REVIEW;
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt","PMD.ExcessiveMethodLength"})
-public class Collection<T extends Time> {
+public class Collection {
 
     private Context mContext;
 
@@ -131,7 +130,7 @@ public class Collection<T extends Time> {
     private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
 
     // Not in libAnki.
-    private final T mTime;
+    private final Time mTime;
 
     // other options
     public static final String defaultConf = "{"
@@ -170,7 +169,7 @@ public class Collection<T extends Time> {
     private static final int UNDO_SIZE_MAX = 20;
 
     @VisibleForTesting
-    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull T time) {
+    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time) {
         mContext = context;
         mDebugLog = log;
         mDb = db;
@@ -2223,7 +2222,7 @@ public class Collection<T extends Time> {
     }
 
     @NonNull
-    public T getTime() {
+    public Time getTime() {
         return mTime;
     }
 }
