@@ -15,7 +15,6 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.utils.Time;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.PreferenceUtils;
 import com.ichi2.utils.JSONArray;
@@ -186,9 +185,9 @@ public class ReviewerTest extends RobolectricTest {
     @Test
     public synchronized void testMultipleCards() throws ConfirmModSchemaException, InterruptedException {
         addNoteWithThreeCards();
-        Collection<MockTime> col = getCol();
+        Collection col = getCol();
         JSONObject nw = col.getDecks().confForDid(1).getJSONObject("new");
-        MockTime time = col.getTime();
+        MockTime time = getCollectionTime();
         nw.put("delays", new JSONArray(new int[] {1, 10, 60, 120}));
 
         waitForAsyncTasksToComplete();

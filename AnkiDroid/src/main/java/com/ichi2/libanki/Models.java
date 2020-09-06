@@ -97,7 +97,7 @@ public class Models {
     // private static final Pattern sModelPattern = Pattern.compile("%\\(modelTags\\)s");
     // private static final Pattern sTemplPattern = Pattern.compile("%\\(cardModel\\)s");
 
-    private Collection<Time> mCol;
+    private Collection mCol;
     private boolean mChanged;
     private HashMap<Long, Model> mModels;
 

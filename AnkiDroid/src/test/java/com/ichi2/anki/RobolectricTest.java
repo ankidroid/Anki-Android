@@ -173,11 +173,14 @@ public class RobolectricTest {
     /** A collection. Created one second ago, not near cutoff time.
     * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time.*/
-    protected Collection<MockTime> getCol() {
+    protected Collection getCol() {
         // 2020/08/07, 07:00:00. Normally not near day cutoff.
         MockTime time = new MockTime(1596783600000L, 10);
-        Collection<MockTime> col = CollectionHelper.getInstance().getCol(getTargetContext(), time);
-        return col;
+        return CollectionHelper.getInstance().getCol(getTargetContext(), time);
+    }
+
+    protected MockTime getCollectionTime() {
+        return (MockTime) getCol().getTime();
     }
 
     /** Call this method in your test if you to test behavior with a null collection */
