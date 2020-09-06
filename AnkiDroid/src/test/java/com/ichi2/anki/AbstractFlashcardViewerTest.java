@@ -38,6 +38,13 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         protected void setTitle() {
         }
 
+
+        @Override
+        protected void performReload() {
+            // intentionally blank
+        }
+
+
         public String getTypedInput() {
             return super.getTypedInputText();
         }

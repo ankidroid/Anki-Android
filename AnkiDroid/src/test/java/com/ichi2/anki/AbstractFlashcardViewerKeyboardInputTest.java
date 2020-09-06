@@ -82,6 +82,13 @@ public class AbstractFlashcardViewerKeyboardInputTest {
             return mFocusTextField;
         }
 
+
+        @Override
+        protected void performReload() {
+            // intentionally blank
+        }
+
+
         @Override
         protected void displayCardAnswer() {
             mDisplayAnswer = true;

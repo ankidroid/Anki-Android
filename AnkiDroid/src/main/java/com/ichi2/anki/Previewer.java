@@ -21,6 +21,7 @@ package com.ichi2.anki;
 import android.os.Bundle;
 import android.view.View;
 
+import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Collection;
 
 import timber.log.Timber;
@@ -140,6 +141,12 @@ public class Previewer extends AbstractFlashcardViewer {
     public boolean executeCommand(int which) {
         /* do nothing */
         return false;
+    }
+
+    @Override
+    protected void performReload() {
+        // This should not happen.
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
 
     private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {

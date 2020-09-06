@@ -1133,9 +1133,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
            The card could have been rescheduled, the deck could have changed, or a change of
            note type could have lead to the card being deleted */
         if (data != null && data.hasExtra("reloadRequired")) {
-            getCol().getSched().deferReset();
-            CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new TaskData(null, 0));
+            performReload();
         }
 
         if (requestCode == EDIT_CURRENT_CARD) {
@@ -1149,14 +1147,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 redrawCard();
             }
         } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
-            getCol().getSched().deferReset();
-            CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                    new TaskData(null, 0));
+            performReload();
         }
         if (!mDisableClipboard) {
             clipboardSetText("");
         }
     }
+
+    /** An action which may invalidate the current list of cards has been performed */
+    protected abstract void performReload();
 
 
     // ----------------------------------------------------------------------------
