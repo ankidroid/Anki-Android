@@ -653,6 +653,15 @@ public class Reviewer extends AbstractFlashcardViewer {
         return super.onKeyUp(keyCode, event);
     }
 
+
+    @Override
+    protected void performReload() {
+        getCol().getSched().deferReset();
+        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
+                new TaskData(null, 0));
+    }
+
+
     @Override
     protected void displayAnswerBottomBar() {
         super.displayAnswerBottomBar();

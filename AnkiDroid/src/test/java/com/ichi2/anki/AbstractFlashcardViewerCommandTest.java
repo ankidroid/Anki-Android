@@ -183,6 +183,12 @@ public class AbstractFlashcardViewerCommandTest {
 
 
         @Override
+        protected void performReload() {
+            // intentionally blank
+        }
+
+
+        @Override
         public ControlBlock getControlBlocked() {
             return ControlBlock.UNBLOCKED;
         }

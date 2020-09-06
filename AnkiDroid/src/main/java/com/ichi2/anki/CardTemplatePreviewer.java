@@ -117,6 +117,13 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
 
     @Override
+    protected void performReload() {
+        // This should not happen.
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+    }
+
+
+    @Override
     protected void onNavigationPressed() {
         Timber.i("CardTemplatePreviewer:: Navigation button pressed");
         closeCardTemplatePreviewer();
