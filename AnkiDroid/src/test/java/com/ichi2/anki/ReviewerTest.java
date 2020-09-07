@@ -114,7 +114,7 @@ public class ReviewerTest extends RobolectricTest {
         addNoteUsingBasicModel("Hello", "World2");
 
         Reviewer reviewer = startReviewer();
-        JavaScriptFunction javaScriptFunction = reviewer.new JavaScriptFunction();
+        JavaScriptFunction javaScriptFunction = reviewer.javaScriptFunction();
 
 
         // The answer needs to be displayed to be able to get the time.
@@ -232,7 +232,7 @@ public class ReviewerTest extends RobolectricTest {
     private void assertCounts(Reviewer r, int newCount, int stepCount, int revCount) {
 
         List<String> countList = new ArrayList<>();
-        JavaScriptFunction jsApi = r.new JavaScriptFunction();
+        JavaScriptFunction jsApi = r.javaScriptFunction();
         countList.add(jsApi.ankiGetNewCardCount());
         countList.add(jsApi.ankiGetLrnCardCount());
         countList.add(jsApi.ankiGetRevCardCount());

@@ -195,14 +195,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mReplayOnTtsInit = false;
 
     protected static final int MENU_DISABLED = 3;
-    // TODO: Consider extracting to ViewModel
-    // Card counts
-    private SpannableString newCount;
-    private SpannableString lrnCount;
-    private SpannableString revCount;
-
-    // ETA
-    private int eta;
 
     // js api developer contact
     private String mCardSuppliedDeveloperContact  = "";
@@ -230,8 +222,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * Variables to hold preferences
      */
     private CardAppearance mCardAppearance;
-    private boolean mPrefHideDueCount;
-    private boolean mPrefShowETA;
     private boolean mPrefShowTopbar;
     private boolean mShowTimer;
     protected boolean mPrefWhiteboard;
@@ -264,7 +254,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Preferences from the collection
     private boolean mShowNextReviewTime;
-    private boolean mShowRemainingCardCount;
 
     // Answer card & cloze deletion variables
     private String mTypeCorrect = null;
@@ -288,9 +277,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private WebView mCardWebView;
     private FrameLayout mCardFrame;
     private FrameLayout mTouchLayer;
-    private TextView mTextBarNew;
-    private TextView mTextBarLearn;
-    private TextView mTextBarReview;
     private TextView mChosenAnswer;
     protected TextView mNext1;
     protected TextView mNext2;
@@ -1507,16 +1493,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mPreviewNextCard = findViewById(R.id.preview_next_flashcard);
         mPreviewToggleAnswerText = findViewById(R.id.preview_flip_flashcard);
 
-        mTextBarNew = (TextView) findViewById(R.id.new_number);
-        mTextBarLearn = (TextView) findViewById(R.id.learn_number);
-        mTextBarReview = (TextView) findViewById(R.id.review_number);
-
-        if (!mShowRemainingCardCount) {
-            mTextBarNew.setVisibility(View.GONE);
-            mTextBarLearn.setVisibility(View.GONE);
-            mTextBarReview.setVisibility(View.GONE);
-        }
-
         mCardTimer = (Chronometer) findViewById(R.id.card_time);
 
         mChosenAnswer = (TextView) findViewById(R.id.choosen_answer);
@@ -1589,7 +1565,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
 
         // Javascript interface for calling AnkiDroid functions in webview, see card.js
-        webView.addJavascriptInterface(new JavaScriptFunction(), "AnkiDroidJS");
+        webView.addJavascriptInterface(javaScriptFunction(), "AnkiDroidJS");
         return webView;
     }
 
@@ -1714,14 +1690,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private void switchTopBarVisibility(int visible) {
+    protected void switchTopBarVisibility(int visible) {
         if (mShowTimer) {
             mCardTimer.setVisibility(visible);
-        }
-        if (mShowRemainingCardCount) {
-            mTextBarNew.setVisibility(visible);
-            mTextBarLearn.setVisibility(visible);
-            mTextBarReview.setVisibility(visible);
         }
         mChosenAnswer.setVisibility(visible);
     }
@@ -1729,11 +1700,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void initControls() {
         mCardFrame.setVisibility(View.VISIBLE);
-        if (mShowRemainingCardCount) {
-            mTextBarNew.setVisibility(View.VISIBLE);
-            mTextBarLearn.setVisibility(View.VISIBLE);
-            mTextBarReview.setVisibility(View.VISIBLE);
-        }
         mChosenAnswer.setVisibility(View.VISIBLE);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
@@ -1765,8 +1731,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
-        mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
-        mPrefShowETA = preferences.getBoolean("showETA", true);
         mUseInputTag = preferences.getBoolean("useInputTag", false);
         // On newer Androids, ignore this setting, which should be hidden in the prefs anyway.
         mDisableClipboard = "0".equals(preferences.getString("dictionary", "0"));
@@ -1807,12 +1771,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private void restoreCollectionPreferences() {
+    protected void restoreCollectionPreferences() {
 
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
             mShowNextReviewTime = getCol().getConf().getBoolean("estTimes");
-            mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
 
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck
@@ -1876,46 +1839,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void updateScreenCounts() {
         if (mCurrentCard == null) return;
         ActionBar actionBar = getSupportActionBar();
-        int[] counts = mSched.counts(mCurrentCard);
 
         if (actionBar != null) {
             String title = Decks.basename(getCol().getDecks().get(mCurrentCard.getDid()).getString("name"));
             actionBar.setTitle(title);
-            if (mPrefShowETA) {
-                eta = mSched.eta(counts, false);
-                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));
-            }
         }
 
         if (!mPrefShowTopbar) {
             mTopBarLayout.setVisibility(View.GONE);
         }
-
-        newCount = new SpannableString(String.valueOf(counts[0]));
-        lrnCount = new SpannableString(String.valueOf(counts[1]));
-        revCount = new SpannableString(String.valueOf(counts[2]));
-        if (mPrefHideDueCount) {
-            revCount = new SpannableString("???");
-        }
-
-        switch (mSched.countIdx(mCurrentCard)) {
-            case Consts.CARD_TYPE_NEW:
-                newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
-                break;
-            case Consts.CARD_TYPE_LRN:
-                lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
-                break;
-            case Consts.CARD_TYPE_REV:
-                revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
-                break;
-            default:
-                Timber.w("Unknown card type %s", mSched.countIdx(mCurrentCard));
-                break;
-        }
-
-        mTextBarNew.setText(newCount);
-        mTextBarLearn.setText(lrnCount);
-        mTextBarReview.setText(revCount);
     }
 
     /*
@@ -3745,6 +3677,9 @@ see card.js for available functions
  */
     // list of api that can be accessed
     private final String[] mApiList = {"toggleFlag", "markCard"};
+    public JavaScriptFunction javaScriptFunction() {
+        return new JavaScriptFunction();
+    }
 
     public class JavaScriptFunction {
 
@@ -3781,24 +3716,31 @@ see card.js for available functions
             return String.valueOf(apiStatusJson);
         }
 
+        // This method and the one belows return "default" values when there is no count nor ETA.
+        // Javascript may expect ETA and Counts to be set, this ensure it does not bug too much by providing a value of correct type
+        // but with a clearly incorrect value.
+        // It's overridden in the Reviewer, where those values are actually defined.
         @JavascriptInterface
         public String ankiGetNewCardCount() {
-            return newCount.toString();
+            return "-1";
         }
+
 
         @JavascriptInterface
         public String ankiGetLrnCardCount() {
-            return lrnCount.toString();
+            return "-1";
         }
+
 
         @JavascriptInterface
         public String ankiGetRevCardCount() {
-            return revCount.toString();
+            return "-1";
         }
+
 
         @JavascriptInterface
         public int ankiGetETA() {
-            return eta;
+            return -1;
         }
 
         @JavascriptInterface
