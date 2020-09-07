@@ -23,8 +23,7 @@ public class AnkiAssert {
         try {
             runnable.run();
         } catch (Exception e) {
-            Timber.e(e);
-            Assert.fail();
+            throw new AssertionError("method should not throw", e);
         }
     }
 

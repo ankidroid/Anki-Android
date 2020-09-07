@@ -18,9 +18,6 @@ package com.ichi2.libanki.sched;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskData;
-import com.ichi2.async.TaskListener;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -30,7 +27,6 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONArray;
 
 import org.junit.Before;
@@ -40,23 +36,18 @@ import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameter;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import timber.log.Timber;
-
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.UNDO;
 import static com.ichi2.async.CollectionTask.nonTaskUndo;
+import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 // Note: These tests can't be run individually but can from the class-level
 // gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.sched.AbstractSchedTest.*"
@@ -189,6 +180,22 @@ public class AbstractSchedTest extends RobolectricTest {
         Card card = sched.getCard();
         assertNull(card);
     }
+
+    @Test
+    public void deckDueTreeInconsistentDecksPasses() {
+        // https://github.com/ankidroid/Anki-Android/issues/6383#issuecomment-686266966
+        // The bad data came from AnkiWeb, this passes using "addDeck" but we can't assume this is always called.
+
+        String parent = "DANNY SULLIVAN MCM DECK";
+        String child = "Danny Sullivan MCM Deck::*MCM_UNTAGGED_CARDS";
+
+        addDeckWithExactName(parent);
+        addDeckWithExactName(child);
+
+        getCol().getDecks().checkIntegrity();
+        assertDoesNotThrow(() -> getCol().getSched().deckDueList());
+    }
+
 
     private class IncreaseToday {
         private final long aId, bId, cId, dId;
@@ -357,5 +364,17 @@ mw.col.sched.extendLimits(1, 0)
     @Test
     public void undoAndRedoNoPreload() {
         undoAndRedo(false);
+    }
+
+    private void addDeckWithExactName(String name) {
+        Decks decks = getCol().getDecks();
+
+        long did = addDeck(name);
+        Deck d = decks.get(did);
+        d.put("name", name);
+        decks.update(d);
+
+        boolean hasMatch = decks.all().stream().anyMatch(x -> name.equals(x.getString("name")));
+        assertThat(String.format("Deck %s should exist", name), hasMatch, is(true));
     }
 }
