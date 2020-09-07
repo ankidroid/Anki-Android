@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: 'master'
-          fetch-depth: 0
 
       - uses: actions/cache@v2
         name: Gradle Cache
