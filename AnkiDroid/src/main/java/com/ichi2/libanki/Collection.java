@@ -310,9 +310,15 @@ public class Collection {
         String db_name = ((DatabaseChangeDecorator) db).getWrapped().getClass().getName();
         if ("io.requery.android.database.sqlite.SQLiteDatabase".equals(db_name)) {
             try {
-                Field cursorWindowSize = io.requery.android.database.CursorWindow.class.getDeclaredField("sCursorWindowSize");
+                Field cursorWindowSize = io.requery.android.database.CursorWindow.class.getDeclaredField("sDefaultCursorWindowSize");
                 cursorWindowSize.setAccessible(true);
-                sCursorWindowSize = cursorWindowSize.getInt(null);
+                int possibleCursorWindowSize = cursorWindowSize.getInt(null);
+                Timber.d("Reflectively discovered database default cursor window size %d", possibleCursorWindowSize);
+                if (possibleCursorWindowSize > 0) {
+                    sCursorWindowSize = possibleCursorWindowSize;
+                } else {
+                    Timber.w("Obtained unusable cursor window size: %d. Using default %d", possibleCursorWindowSize, sCursorWindowSize);
+                }
             } catch (Exception e) {
                 Timber.w(e, "Unable to get window size from requery cursor.");
             }
