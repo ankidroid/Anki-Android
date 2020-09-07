@@ -181,6 +181,7 @@
         <activity-alias
             android:name="com.ichi2.anki.CardBrowserContextMenuAction"
             android:label="@string/card_browser_context_menu"
+            android:enabled="false"
             android:targetActivity="com.ichi2.anki.CardBrowser">
             <intent-filter>
                 <action android:name="android.intent.action.PROCESS_TEXT" />
@@ -275,7 +276,7 @@
         <activity-alias
             android:name="com.ichi2.anki.AnkiCardContextMenuAction"
             android:label="@string/context_menu_anki_card_label"
-            android:enabled="false"
+            android:enabled="true"
             android:targetActivity=".NoteEditor">
             <intent-filter>
                 <action android:name="android.intent.action.PROCESS_TEXT" />

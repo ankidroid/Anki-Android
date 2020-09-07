@@ -43,7 +43,7 @@ public class AnkiCardContextMenu extends SystemContextMenu {
 
     @Override
     protected boolean getDefaultEnabledStatus() {
-        return false;
+        return true;
     }
 
     @NonNull
