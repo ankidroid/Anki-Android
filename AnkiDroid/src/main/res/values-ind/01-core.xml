@@ -149,11 +149,11 @@
     <string name="time_quantity_months">%.1f bln</string>
     <string name="time_quantity_years">%.1f th</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Membuat ulang dek intensif&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Buat ulang</string>
     <string name="empty_cram_label">Kosong</string>
     <string name="create_subdeck">Buat subdek</string>
-    <string name="empty_cram_deck">Mengosongkan dek intensif&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Sesi belajar kustom</string>
     <string name="custom_study_deck_exists">Ubah nama dek belajar kustom yang ada</string>
     <string name="empty_deck">Dek ini kosong</string>

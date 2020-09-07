@@ -159,11 +159,11 @@
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Atjaunoju piepildīto deku.\nLūdzu uzgaidiet...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Atjaunot</string>
     <string name="empty_cram_label">Tukšs</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Piepildītais deks iztukšojas.\nLūdzu uzgaidiet...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Pielāgota pētījuma sesija</string>
     <string name="custom_study_deck_exists">Lūdzu vispirms pārsauciet eksistējošo Pielāgoto pētījuma Deku.</string>
     <string name="empty_deck">This deck is empty</string>

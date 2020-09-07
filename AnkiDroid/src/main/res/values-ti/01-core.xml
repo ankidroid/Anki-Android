@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f ወርሒ</string>
     <string name="time_quantity_years">%.1f ዓመት</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">ዝሸምደድካዮ  ባይታ ከምባሓዱሽ ሕነጾ&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">ከምባሓዱሽ ህነጽ</string>
     <string name="empty_cram_label">ባዶ ቦታ</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">ዝተሸምደደ ባይታ ጥርሑ ግበሮ</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">መጽናዕቲ ብዝጠዕም ምምዕርራይ</string>
     <string name="custom_study_deck_exists">መጀመርያ ዝነበረ ምምዕርራይ መጽናዕቲ ባይታ ከምባሓዱሽ ሰዩም።</string>
     <string name="empty_deck">እዚ ባይታ እዚ ጥርሑ እዩ ዘሎ።</string>

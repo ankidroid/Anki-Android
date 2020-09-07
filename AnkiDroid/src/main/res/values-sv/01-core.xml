@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f må</string>
     <string name="time_quantity_years">%.1f år</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Återskapar kortlek för råplugg.\nVänligen vänta...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Bygg om</string>
     <string name="empty_cram_label">Töm</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Tömmer kortleken för råplugg.\nVar god vänta...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Anpassad studiesession</string>
     <string name="custom_study_deck_exists">Var god döp om den existerande anpassade studiekortleken först.</string>
     <string name="empty_deck">Den här leken är tom</string>

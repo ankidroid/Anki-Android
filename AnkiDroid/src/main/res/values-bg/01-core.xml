@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f мес</string>
     <string name="time_quantity_years">%.1f г</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Пренареждане тестето за зубрене&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Възстанови</string>
     <string name="empty_cram_label">Празно</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Изчистване тестето за зубрене&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Допълнително време за учене</string>
     <string name="custom_study_deck_exists">Първо преименувайте съществуващото тесте за учене</string>
     <string name="empty_deck">Това тесте е празно</string>

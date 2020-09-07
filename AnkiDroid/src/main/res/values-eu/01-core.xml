@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f hi</string>
     <string name="time_quantity_years">%.1f ur</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Intentsiborako sorta berreraikitzen&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Berreraiki</string>
     <string name="empty_cram_label">Hustu</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Intentsiborako sorta husten&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Ikasketa saio pertsonalizatua</string>
     <string name="custom_study_deck_exists">Aldatu izena dagoen ikasketa sortari aurretik</string>
     <string name="empty_deck">Sorta hau hutsik dago</string>

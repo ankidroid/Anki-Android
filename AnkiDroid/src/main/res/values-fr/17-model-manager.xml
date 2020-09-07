@@ -48,15 +48,15 @@
     <!--Rename-->
     <string name="rename_model">Renommer le type de note</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_title">Suggestion de langue du clavier</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">Suggestion de langue définie sur %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Modifier les champs</string>
     <string name="model_field_editor_add">Ajouter un champ</string>
     <string name="model_field_editor_delete">Supprimer le champ</string>
     <string name="model_field_editor_options">Options du champ</string>
     <string name="model_field_editor_rename">Renommer le champ</string>
-    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
+    <string name="model_field_editor_language_hint">Définir la suggestion de langue du clavier</string>
     <string name="model_field_editor_reposition_menu">Repositionner le champ</string>
     <string name="model_field_editor_reposition">Repositionner le champ (entrez une valeur %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Se souvenir de la dernière entrée lors de l\'ajout</string>
@@ -77,12 +77,12 @@
     <string name="card_template_browser_appearance_restore_default_dialog">Rétablir les valeurs par défaut ?</string>
     <string name="card_template_browser_appearance_saving_note">Ces modifications sont appliquées quand le modèle de carte est sauvegardé</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
+    <string name="card_template_editor_deck_override_on">Substitution du paquet (activé)</string>
+    <string name="card_template_editor_deck_override_off">Substitution du paquet (désactivé)</string>
+    <string name="model_manager_deck_override_added_message">Définir le paquet par défaut « %1$s » pour « %2$s »</string>
     <string name="model_manager_deck_override_removed_message">Paquet par défaut retiré pour « %s »</string>
     <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
     <string name="model_manager_deck_override_dynamic_deck_error">Cannot set Deck Override to a filtered deck</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
+    <string name="deck_override_explanation">Sélectionnez le paquet dans lequel placer les nouvelles cartes « %s »</string>
     <string name="deck_picker_dialog_filter_decks">Filtrer les paquets</string>
 </resources>

@@ -35,9 +35,9 @@
 -->
 <resources>
     <string-array name="error_reporting_choice_labels">
-        <item>أرسل التقرير دائماً</item>
-        <item>لا ترسل التقرير بتاتاً</item>
-        <item>إسألني</item>
+        <item>أبلغ دائمًا</item>
+        <item>لا تبلغ أبدًا</item>
+        <item>اسألني</item>
     </string-array>
     <string-array name="gestures_labels">
         <item>بدون اجراء</item>
@@ -47,30 +47,30 @@
         <item>زر الإجابة 3</item>
         <item>زر الإجابة 4</item>
         <item>الإجابة الموصى بها (أخضر)</item>
-        <item>الإجابة أفضل مما أوصى بها</item>
+        <item>الإجابة بأفضل مما أوصي به</item>
         <item>تراجع</item>
-        <item>Edit note</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>تحرير الملحوظة</item>
+        <item>إضافة سمة إلى الملحوظة</item>
+        <item>تعليم الملحوظة</item>
+        <item>بحث عن التعبير</item>
+        <item>دفن البطاقة</item>
+        <item>تعليق البطاقة</item>
+        <item>حذف البطاقة</item>
+        <item>تشغيل الوسائط</item>
+        <item>توقف عن التعلم</item>
+        <item>دفن الملحوظة</item>
+        <item>تعليق الملحوظة</item>
+        <item>تفعيل المؤشر الأحمر</item>
+        <item>تفعيل المؤشر البرتقالي</item>
+        <item>تفعيل المؤشر الأخضر</item>
+        <item>تفعيل المؤشر الأزرق</item>
+        <item>إزالة المؤشر</item>
+        <item>تمرير صفحة إلى الأعلى</item>
+        <item>تمرير صفحة إلى الأسفل</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>علق البطاقة</item>
-        <item>الوسم فقط</item>
+        <item>إضافة سمة فقط</item>
     </string-array>
     <string-array name="new_order_labels">
         <item>البطاقات الجديدة في ترتيب عشوائي</item>
@@ -79,33 +79,33 @@
     <string-array name="cram_deck_conf_order_labels">
         <item>مشاهدة الأقدم أولا</item>
         <item>عشوائي</item>
-        <item>زيادة الفترات</item>
+        <item>فواصل زمنية متزايدة</item>
         <item>تقليل الفترات</item>
         <item>الأكثر نسيانا</item>
         <item>إضافة الترتيب</item>
         <item>ترتيب الاستحقاق</item>
-        <item>Latest added first</item>
-        <item>Relative overdueness</item>
+        <item>المضافة مؤخرًا أولًا</item>
+        <item>التأخير النسبي</item>
     </string-array>
     <string-array name="add_to_cur_labels">
-        <item>Use current deck</item>
-        <item>Decide by note type</item>
+        <item>استخدام الرزمة الحالية</item>
+        <item>تقرير حسب نوع الملحوظة</item>
     </string-array>
     <string-array name="new_spread_labels">
-        <item>Mix new cards and reviews</item>
-        <item>New cards after reviews</item>
-        <item>New cards before reviews</item>
+        <item>خلط البطاقات الجديدة والمراجعات</item>
+        <item>إظهار البطاقات الجديدة بعد المراجعات</item>
+        <item>إظهار البطاقات الجديدة قبل المراجعات</item>
     </string-array>
     <string-array name="override_font_labels">
-        <item>When no font specified on flashcards</item>
-        <item>Always</item>
+        <item>عندما لا يكون هناك خط محدد في البطاقات</item>
+        <item>دائمًا</item>
     </string-array>
     <string-array name="day_theme_labels">
-        <item>Light</item>
-        <item>Plain</item>
+        <item>فاتح</item>
+        <item>بسيط</item>
     </string-array>
     <string-array name="night_theme_labels">
-        <item>Black</item>
-        <item>Dark</item>
+        <item>أسود</item>
+        <item>غامق</item>
     </string-array>
 </resources>

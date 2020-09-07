@@ -164,11 +164,11 @@
     <string name="time_quantity_months">%.1f mes.</string>
     <string name="time_quantity_years">%.1f let</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Izgrajevanje intenzivnega kompleta &#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Izgradi</string>
     <string name="empty_cram_label">Prazen</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Praznjenje intenzivnega kompleta &#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Seja učenja po meri</string>
     <string name="custom_study_deck_exists">Najprej preimenujte obstoječi komplet za učenje po meri.</string>
     <string name="empty_deck">Ta komplet je prazen</string>

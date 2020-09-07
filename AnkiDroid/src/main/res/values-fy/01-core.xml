@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Stampset herbouwe&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Op \'e nij opbouwe</string>
     <string name="empty_cram_label">Leech</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Stampset legen&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Oanpaste stúdzjesessy</string>
     <string name="custom_study_deck_exists">Hernoem de besteande stúdzjeset earst</string>
     <string name="empty_deck">This deck is empty</string>

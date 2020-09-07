@@ -149,11 +149,11 @@
     <string name="time_quantity_months">%.1f tháng</string>
     <string name="time_quantity_years">%.1f năm</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Đang dựng lại bộ thẻ ôn thi&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Dựng lại</string>
     <string name="empty_cram_label">Dọn trống</string>
     <string name="create_subdeck">Tạo bộ thẻ phụ</string>
-    <string name="empty_cram_deck">Đang dọn trống bộ thẻ ôn thi&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Phiên học tuỳ chọn</string>
     <string name="custom_study_deck_exists">Đổi tên bộ thẻ học tuỳ chọn hiện hữu trước nhất</string>
     <string name="empty_deck">Bộ thẻ này rỗng</string>

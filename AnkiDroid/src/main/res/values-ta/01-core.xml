@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f மோ</string>
     <string name="time_quantity_years">%.1f ஆண்டு</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">மீளக் cram கட்டு...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">மீண்டும்</string>
     <string name="empty_cram_label">காலி</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Cram கட்டு காலிசெய்வதால்...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">தனிப்பயன் ஆய்வு கூட்டம்</string>
     <string name="custom_study_deck_exists">தற்போதுள்ள விருப்ப ஆய்வு கட்டு முதலில் மறுபெயரிடு</string>
     <string name="empty_deck">இந்த கட்டு காலியாக உள்ளது</string>

@@ -149,11 +149,11 @@
     <string name="time_quantity_months">%.1fヶ月</string>
     <string name="time_quantity_years">%.1f年</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">フィルターデッキを再構築しています...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">再構築</string>
     <string name="empty_cram_label">空にする</string>
     <string name="create_subdeck">サブデッキを作成</string>
-    <string name="empty_cram_deck">カードを元のデッキへ戻しています...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">カスタム学習セッション</string>
     <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
     <string name="empty_deck">このデッキにはカードがありません</string>

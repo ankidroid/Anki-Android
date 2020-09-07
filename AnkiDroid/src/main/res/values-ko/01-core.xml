@@ -149,11 +149,11 @@
     <string name="time_quantity_months">%.1f 월</string>
     <string name="time_quantity_years">%.1f 년</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">벼락치기 덱을 다시 섞는 중입니다.\n잠시만 기다려 주세요...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">재생성</string>
     <string name="empty_cram_label">비우기</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">벼락치기 덱을 비우는 중입니다.\n잠시만 기다려 주세요...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">맞춤 학습 세션</string>
     <string name="custom_study_deck_exists">기존의 맞춤 학습 덱의 이름을 먼저 변경하세요.</string>
     <string name="empty_deck">이 카드 묶음은 비어있습니다.</string>

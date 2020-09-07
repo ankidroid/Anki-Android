@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f ay</string>
     <string name="time_quantity_years">%.1f yıl</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">İnekleme destesi yeniden oluşturuluyor.\nLütfen bekleyin...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Yeniden Oluştur</string>
     <string name="empty_cram_label">Boş</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">İnekleme destesi boşaltılıyor.\nLütfen bekleyin...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
     <string name="custom_study_deck_exists">Lütfen mevcut özelleştirilmiş çalışma destesini yeniden adlandırın.</string>
     <string name="empty_deck">Bu deste boş</string>

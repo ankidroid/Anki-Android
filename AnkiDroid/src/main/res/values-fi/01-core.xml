@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f kk</string>
     <string name="time_quantity_years">%.1f v</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Kasataan pänttäyspakkaa&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Rakenna uudelleen</string>
     <string name="empty_cram_label">Tyhjä</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Tyhjennetään pänttäyspakkaa&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Mukautettu istunto</string>
     <string name="custom_study_deck_exists">Nimeä olemassa oleva mukautettu pakka ensin</string>
     <string name="empty_deck">Tämä pakka on tyhjä</string>

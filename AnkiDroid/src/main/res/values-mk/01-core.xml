@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Обнова на натрупaните deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Обнова</string>
     <string name="empty_cram_label">Празно</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Празни натрупани deck&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Прилагодена студиска сесија</string>
     <string name="custom_study_deck_exists">Прво преименувајте ја постоечката прилагодена студија на deck</string>
     <string name="empty_deck">Овој deck е празен</string>
