@@ -164,11 +164,11 @@
     <string name="time_quantity_months">%.1f mėn</string>
     <string name="time_quantity_years">%.1f m</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Atkuriamas mokymosi mintinai rinkinys&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Atkurti</string>
     <string name="empty_cram_label">Išvalyti</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Išvalomas mokymosi mintinai rinkinys&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Individualus mokymosi seansas</string>
     <string name="custom_study_deck_exists">Prašome pirmiausiai pervadinti esamą individualaus mokymosi rinkinį</string>
     <string name="empty_deck">Šis rinkinys yra tuščias</string>

@@ -155,11 +155,11 @@ mga natitirang minuto</item>
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Itayo muli ang cram deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Muling itayo</string>
     <string name="empty_cram_label">Walang laman</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Tinatanggal ang mga laman ng cram deck&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">I-custom ang study session</string>
     <string name="custom_study_deck_exists">Baguhin muna ang pangalan ng existing custom study deck</string>
     <string name="empty_deck">Ang deck na ito ay walang laman</string>

@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f ամիս</string>
     <string name="time_quantity_years">%.1f տարի</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Վերակառուցվում է սովորելու կապուկը&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Վերակառուցել</string>
     <string name="empty_cram_label">Դատարկ</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Դատարկվում է սովորելու կապուկը&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Ուսուցման լրացուցիչ աշխատաշրջան</string>
     <string name="custom_study_deck_exists">Սկզբում վերանվանել լրացուցիչ ուսուցման առկա կապուկը</string>
     <string name="empty_deck">Այս կապուկը դատարկ է</string>

@@ -149,11 +149,11 @@
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Membina semula menjejalkan dek&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Rebuild</string>
     <string name="empty_cram_label">Empty</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Mengosongkan menjejalkan dek&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Adat belajar sesi</string>
     <string name="custom_study_deck_exists">Menamakan ada adat belajar dek pertama</string>
     <string name="empty_deck">Dek ini adalah kosong</string>

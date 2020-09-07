@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f me</string>
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Ricrea</string>
     <string name="empty_cram_label">Svuota</string>
     <string name="create_subdeck">Crea sottomazzo</string>
-    <string name="empty_cram_deck">Svuoto mazzo per lo studio focalizzato.\nAttendi...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
     <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
     <string name="empty_deck">Questo mazzo è vuoto</string>

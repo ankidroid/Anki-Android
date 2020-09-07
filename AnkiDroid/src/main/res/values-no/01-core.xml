@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f må</string>
     <string name="time_quantity_years">%.1f år</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Bygger om pugge-kortstokk.\nVennligst vent...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Gjenoppbygg</string>
     <string name="empty_cram_label">Tøm</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Tømmer pugge-kortstokken.\nVennligst vent...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Tilpasset studiesesjon</string>
     <string name="custom_study_deck_exists">Gi den eksisterende tilpassede studiestokken nytt navn først</string>
     <string name="empty_deck">Denne kortstokken er tom</string>

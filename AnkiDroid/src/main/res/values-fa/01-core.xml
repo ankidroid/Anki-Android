@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f ماه</string>
     <string name="time_quantity_years">%.1f سال</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">درحال بازسازی دسته کارت آزمون.\nلطفا صبر کنید...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">بازسازی</string>
     <string name="empty_cram_label">خالی</string>
     <string name="create_subdeck">ایجاد زیردسته</string>
-    <string name="empty_cram_deck">در حال خالی کردن دسته مطالعه فشرده .\nلطفا صبر کنید...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
     <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
     <string name="empty_deck">این دسته خالی است</string>

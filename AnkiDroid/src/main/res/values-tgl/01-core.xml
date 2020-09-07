@@ -164,11 +164,11 @@ Pinagaralang %1$d mga baraha %2$s ngayong araw</item>
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Isinasaayos muli ang cram deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Isinasaayos</string>
     <string name="empty_cram_label">Walang laman</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Tinatanggal ang laman ng cram deck&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Pinasadyang sesyon ng pagaaral</string>
     <string name="custom_study_deck_exists">Palitan muna ang pangalan ng pinasadyang paaaral ng deck</string>
     <string name="empty_deck">Walang laman ang deck na ito</string>

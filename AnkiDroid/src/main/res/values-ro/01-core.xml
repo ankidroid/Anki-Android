@@ -159,11 +159,11 @@
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Reconstruire pachet plin. \n Va rugam aşteptaţi...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Reconstruieste</string>
     <string name="empty_cram_label">Goleste</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Golire pachet. \n Va rugam asteptati aşteptaţi...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Sesiune de studiu personalizata</string>
     <string name="custom_study_deck_exists">Vă rugăm să redenumiţi mai inati pachetul de Studiu Personalizat .</string>
     <string name="empty_deck">This deck is empty</string>

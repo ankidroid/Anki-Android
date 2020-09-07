@@ -149,11 +149,11 @@
     <string name="time_quantity_months">%.1f月</string>
     <string name="time_quantity_years">%.1f年</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">重建强记模式牌组。\n请稍等&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">重建</string>
     <string name="empty_cram_label">清空</string>
     <string name="create_subdeck">创建子牌组</string>
-    <string name="empty_cram_deck">清空强记模式牌组。\n请稍等&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">自定义学习的进程</string>
     <string name="custom_study_deck_exists">请先重命名现有的自定义学习牌组。</string>
     <string name="empty_deck">此列表为空</string>

@@ -164,11 +164,11 @@
     <string name="time_quantity_months">%.1f мес</string>
     <string name="time_quantity_years">%.1f гадоў</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Ідзе перабудова калоды для завучвання&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Перабудаваць</string>
     <string name="empty_cram_label">Ачысціць</string>
     <string name="create_subdeck">Стварыць падкалоду</string>
-    <string name="empty_cram_deck">Ачыстка калоды для завучвання&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Спецыяльная навучальная сесія</string>
     <string name="custom_study_deck_exists">Спачатку дайце новую назву бягучай спецыяльнай калодзе</string>
     <string name="empty_deck">Гэта калода пустая</string>

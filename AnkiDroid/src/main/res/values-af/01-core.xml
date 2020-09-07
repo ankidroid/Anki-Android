@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f ma</string>
     <string name="time_quantity_years">%.1f ja</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Herbou cram kaartpak&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Herbou</string>
     <string name="empty_cram_label">Maak leeg</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Maak cram kaartpak leeg&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Pasmaak studie sessie</string>
     <string name="custom_study_deck_exists">Hernoem die bestaande pasmaak kaartpak eers</string>
     <string name="empty_deck">Hierdie pak is leeg</string>

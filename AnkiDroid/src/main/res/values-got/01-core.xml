@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f men</string>
     <string name="time_quantity_years">%.1f jer</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Aftra gatimrjand fulla wikon&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Gatimrei aftra</string>
     <string name="empty_cram_label">Laus</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Lausjand fulla wikon&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Anþara laiseinasaisjo</string>
     <string name="custom_study_deck_exists">Gif þata frumist niujata namo du wisandon laiseinawikon</string>
     <string name="empty_deck">This deck is empty</string>

@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f মাস</string>
     <string name="time_quantity_years">%.1f বছর</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">ক্রাম ডেক পুনঃতৈরি করা হচ্ছে&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">নতুন করে তৈরি করো</string>
     <string name="empty_cram_label">খালি</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">ক্রাম ডেক ফাঁকা করা হচ্ছে&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">নিজস্ব গবেষণা অধিবেশন</string>
     <string name="custom_study_deck_exists">বর্তমান স্বনির্ধারিত গবেষণা ডেক প্রথম পুনঃনামকরণ করুন</string>
     <string name="empty_deck">এই ডেক ফাঁকা।</string>

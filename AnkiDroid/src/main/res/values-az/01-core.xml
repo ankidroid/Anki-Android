@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f ay</string>
     <string name="time_quantity_years">%.1f il</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Yenidən düzəlt</string>
     <string name="empty_cram_label">Boş</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Şəxsi öyrənmə sessiyası</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">This deck is empty</string>

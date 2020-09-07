@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f år</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Genopbygger proppet dæk &#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Genopbyg</string>
     <string name="empty_cram_label">Tøm</string>
     <string name="create_subdeck">Opret underkortsæt</string>
-    <string name="empty_cram_deck">Tømmer terpekortsæt&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">Dette kortsæt er tomt</string>

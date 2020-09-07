@@ -300,6 +300,6 @@
     <string name="about_ankidroid_successfully_copied_debug">已复制调试信息到剪贴板</string>
     <string name="about_ankidroid_error_copy_debug_info">复制调试信息到剪贴板时出错</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
+    <string name="card_viewer_could_not_find_image">加载“%s”失败</string>
+    <string name="card_viewer_could_not_find_image_get_help">帮助</string>
 </resources>

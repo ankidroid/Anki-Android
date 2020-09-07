@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f mês</string>
     <string name="time_quantity_years">%.1f ano</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Reconstruindo baralho de estudo intensivo&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Reconstruir</string>
     <string name="empty_cram_label">Esvaziar</string>
     <string name="create_subdeck">Criar sub-baralho</string>
-    <string name="empty_cram_deck">Esvaziando baralho de estudo intensivo&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
     <string name="custom_study_deck_exists">Por favor renomeie o baralho de estudo personalizado existente primeiro</string>
     <string name="empty_deck">Este baralho está vazio</string>

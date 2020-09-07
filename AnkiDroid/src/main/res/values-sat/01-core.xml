@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f ᱪᱟᱸᱫᱚ</string>
     <string name="time_quantity_years">%.1f ᱥᱮᱨᱢᱟ</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">ᱜᱷᱩᱥᱟᱣ ᱰᱮᱠ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">ᱯᱩᱱᱚᱨᱼᱛᱮᱭᱟᱨ</string>
     <string name="empty_cram_label">ᱵᱟ.ᱱᱩᱜᱟ</string>
     <string name="create_subdeck">ᱥᱚᱵᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
-    <string name="empty_cram_deck">ᱜᱷᱩᱥᱟᱣ ᱰᱮᱨ ᱠᱷᱟᱹᱞᱤ ᱢᱮ...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣᱜ ᱥᱚᱢᱚᱭ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="custom_study_deck_exists">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ ᱰᱮᱠ ᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>

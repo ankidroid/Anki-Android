@@ -164,11 +164,11 @@
     <string name="time_quantity_months">%.1f mc</string>
     <string name="time_quantity_years">%.1f r</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Przebudowywanie talii.\nProszę czekać...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Odbuduj</string>
     <string name="empty_cram_label">Wyczyść</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Czyszczenie talii.\nProszę czekać...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
     <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
     <string name="empty_deck">Ta talia jest pusta</string>

@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f ma</string>
     <string name="time_quantity_years">%.1f jr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Stampset wordt opnieuw opgebouwd.\nEven geduld...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Opnieuw opbouwen</string>
     <string name="empty_cram_label">Leeg</string>
     <string name="create_subdeck">Creëer subleerset</string>
-    <string name="empty_cram_deck">Set om te stampen aan het leegmaken.\n Even geduld alstublieft...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Aangepaste studiesessie</string>
     <string name="custom_study_deck_exists">Gelieve eerst de bestaande aangepaste studieset te hernoemen.</string>
     <string name="empty_deck">Deze leerset is leeg</string>

@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">క్రామ్ డెక్ పునర్నిర్మాణం&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">పునర్నిర్మాణం</string>
     <string name="empty_cram_label">ఖాళీ</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">ఖాళీ క్రామ్ డెక్&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">కస్టమ్ అధ్యయనం సెషన్</string>
     <string name="custom_study_deck_exists">మొదటి సానుకూల అధ్యయనం డెక్ యొక్క పేరు మార్చండి</string>
     <string name="empty_deck">ఈ డెక్ ఖాళీగా ఉంది</string>

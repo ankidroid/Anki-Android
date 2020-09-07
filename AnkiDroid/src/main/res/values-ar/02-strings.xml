@@ -365,6 +365,6 @@
     <string name="about_ankidroid_successfully_copied_debug">نُسِخت معلومات التصحيح إلى الحافظة</string>
     <string name="about_ankidroid_error_copy_debug_info">حدث خطأ عند نسخ معلومات التصحيح إلى الحافظة</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
+    <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
+    <string name="card_viewer_could_not_find_image_get_help">مساعدة</string>
 </resources>
