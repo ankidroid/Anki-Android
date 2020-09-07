@@ -223,7 +223,7 @@ public class Sched extends SchedV2 {
             int nlim = _deckNewLimitSingle(deck);
             int rlim = _deckRevLimitSingle(deck);
             if (!TextUtils.isEmpty(p)) {
-                Integer[] parentLims = lims.get(p);
+                Integer[] parentLims = lims.get(Decks.normalizeName(p));
                 // 'temporary for diagnosis of bug #6383'
                 Assert.that(parentLims != null, "Deck %s is supposed to have parent %s. It has not be found.", deckName, p);
                 nlim = Math.min(nlim, parentLims[0]);
@@ -238,7 +238,7 @@ public class Sched extends SchedV2 {
             // save to list
             data.add(new DeckDueTreeNode(mCol, deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
             // add deck as a parent
-            lims.put(deck.getString("name"), new Integer[]{nlim, rlim});
+            lims.put(Decks.normalizeName(deck.getString("name")), new Integer[]{nlim, rlim});
         }
         return data;
     }
