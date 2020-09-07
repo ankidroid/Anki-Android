@@ -39,8 +39,8 @@ import androidx.annotation.NonNull;
 import androidx.test.core.app.ActivityScenario;
 import timber.log.Timber;
 
-import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
 import static com.ichi2.anki.AbstractFlashcardViewer.RESULT_DEFAULT;
+import static com.ichi2.libanki.Consts.BUTTON_FOUR;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -123,7 +123,7 @@ public class ReviewerTest extends RobolectricTest {
         assertThat(nextTime, not(isEmptyString()));
 
         // Display the next answer
-        reviewer.answerCard(EASE_4);
+        reviewer.answerCard(BUTTON_FOUR);
 
         displayAnswer(reviewer);
 

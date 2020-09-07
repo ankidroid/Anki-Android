@@ -45,6 +45,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.libanki.Consts.BUTTON_TWO;
 import static com.ichi2.libanki.Consts.CARD_TYPE_LRN;
 import static com.ichi2.libanki.Consts.CARD_TYPE_NEW;
 import static com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING;
@@ -129,7 +130,7 @@ public class SchedTest extends RobolectricTest {
         Card toAnswer = sched.getCard();
         assertThat(toAnswer, notNullValue());
 
-        sched.answerCard(toAnswer, AbstractFlashcardViewer.EASE_2); //Good
+        sched.answerCard(toAnswer, BUTTON_TWO); //Good
     }
 
 

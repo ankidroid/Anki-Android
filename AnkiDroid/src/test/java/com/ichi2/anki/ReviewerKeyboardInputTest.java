@@ -28,10 +28,10 @@ import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
 import static com.ibm.icu.impl.Assert.fail;
-import static com.ichi2.anki.AbstractFlashcardViewer.EASE_1;
-import static com.ichi2.anki.AbstractFlashcardViewer.EASE_2;
-import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
-import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
+import static com.ichi2.libanki.Consts.BUTTON_FOUR;
+import static com.ichi2.libanki.Consts.BUTTON_ONE;
+import static com.ichi2.libanki.Consts.BUTTON_THREE;
+import static com.ichi2.libanki.Consts.BUTTON_TWO;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -56,7 +56,7 @@ public class ReviewerKeyboardInputTest {
 
         underTest.handleUnicodeKeyPress('1');
 
-        assertThat(underTest.processedAnswer(), equalTo(EASE_1));
+        assertThat(underTest.processedAnswer(), equalTo(BUTTON_ONE));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ReviewerKeyboardInputTest {
 
         underTest.handleUnicodeKeyPress('2');
 
-        assertThat(underTest.processedAnswer(), equalTo(EASE_2));
+        assertThat(underTest.processedAnswer(), equalTo(BUTTON_TWO));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ReviewerKeyboardInputTest {
 
         underTest.handleUnicodeKeyPress('3');
 
-        assertThat(underTest.processedAnswer(), equalTo(EASE_3));
+        assertThat(underTest.processedAnswer(), equalTo(BUTTON_THREE));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class ReviewerKeyboardInputTest {
 
         underTest.handleUnicodeKeyPress('4');
 
-        assertThat(underTest.processedAnswer(), equalTo(EASE_4));
+        assertThat(underTest.processedAnswer(), equalTo(BUTTON_FOUR));
     }
 
     /** START: DEFAULT IS "GOOD" */
@@ -93,7 +93,7 @@ public class ReviewerKeyboardInputTest {
 
         underTest.handleSpacebar();
 
-        assertThat(underTest.processedAnswer(), equalTo(EASE_3));
+        assertThat(underTest.processedAnswer(), equalTo(BUTTON_THREE));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class ReviewerKeyboardInputTest {
 
         underTest.handleSpacebar();
 
-        assertThat(underTest.processedAnswer(), equalTo(EASE_2));
+        assertThat(underTest.processedAnswer(), equalTo(BUTTON_TWO));
 
     }
 
@@ -112,30 +112,30 @@ public class ReviewerKeyboardInputTest {
 
         underTest.handleSpacebar();
 
-        assertThat(underTest.processedAnswer(), equalTo(EASE_2));
+        assertThat(underTest.processedAnswer(), equalTo(BUTTON_TWO));
     }
 
     /** END: DEFAULT IS "GOOD" */
 
     @Test
     public void gamepadAAnswerFourthButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_A, EASE_4);
+        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_A, BUTTON_FOUR);
     }
 
     @Test
     public void gamepadBAnswersThirdButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_B, EASE_3);
+        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_B, BUTTON_THREE);
     }
 
     @Test
     public void gamepadXAnswersSecondButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_X, EASE_2);
+        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_X, BUTTON_TWO);
     }
 
 
     @Test
     public void gamepadYAnswersFirstButtonOrShowsAnswer() {
-        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_Y, EASE_1);
+        assertGamepadButtonAnswers(KeyEvent.KEYCODE_BUTTON_Y, BUTTON_ONE);
     }
 
     @Test

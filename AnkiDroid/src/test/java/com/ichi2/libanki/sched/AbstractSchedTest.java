@@ -39,10 +39,11 @@ import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 
 import java.util.Arrays;
 
-import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.UNDO;
+import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.nonTaskUndo;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
+import static com.ichi2.libanki.Consts.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
@@ -90,7 +91,7 @@ public class AbstractSchedTest extends RobolectricTest {
         // where the counts are decremented.
         assertThat(countsBeforeUndo, is(new Counts(0, 0, 0)));
 
-        sched.answerCard(cardBeforeUndo, EASE_3);
+        sched.answerCard(cardBeforeUndo, BUTTON_THREE);
 
         waitForTask(UNDO, 5000);
 

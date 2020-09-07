@@ -150,6 +150,11 @@ import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
+
+import static com.ichi2.libanki.Consts.BUTTON_FOUR;
+import static com.ichi2.libanki.Consts.BUTTON_ONE;
+import static com.ichi2.libanki.Consts.BUTTON_THREE;
+import static com.ichi2.libanki.Consts.BUTTON_TWO;
 import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;
@@ -169,11 +174,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      */
     public static final int EDIT_CURRENT_CARD = 0;
     public static final int DECK_OPTIONS = 1;
-
-    public static final int EASE_1 = 1;
-    public static final int EASE_2 = 2;
-    public static final int EASE_3 = 3;
-    public static final int EASE_4 = 4;
 
     /** Maximum time in milliseconds to wait before accepting answer button presses. */
     @VisibleForTesting
@@ -300,7 +300,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private android.text.ClipboardManager mClipboard;
 
     protected Card mCurrentCard;
-    private int mCurrentEase;
+    private @Consts.BUTTON_TYPE int mCurrentEase;
 
     private boolean mButtonHeightSet = false;
 
@@ -439,16 +439,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             int id = view.getId();
             if (id == R.id.flashcard_layout_ease1) {
                 Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
-                answerCard(Consts.BUTTON_ONE);
+                answerCard(BUTTON_ONE);
             } else if (id == R.id.flashcard_layout_ease2) {
                 Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
-                answerCard(Consts.BUTTON_TWO);
+                answerCard(BUTTON_TWO);
             } else if (id == R.id.flashcard_layout_ease3) {
                 Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
-                answerCard(Consts.BUTTON_THREE);
+                answerCard(BUTTON_THREE);
             } else if (id == R.id.flashcard_layout_ease4) {
                 Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
-                answerCard(Consts.BUTTON_FOUR);
+                answerCard(BUTTON_FOUR);
             } else {
                 mCurrentEase = 0;
             }
@@ -1320,15 +1320,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private int getRecommendedEase(boolean easy) {
+    private @Consts.BUTTON_TYPE
+    int getRecommendedEase(boolean easy) {
         try {
             switch (getAnswerButtonCount()) {
                 case 2:
-                    return EASE_2;
+                    return BUTTON_TWO;
                 case 3:
-                    return easy ? EASE_3 : EASE_2;
+                    return easy ? BUTTON_THREE : BUTTON_TWO;
                 case 4:
-                    return easy ? EASE_4 : EASE_3;
+                    return easy ? BUTTON_FOUR : BUTTON_THREE;
                 default:
                     return 0;
             }
@@ -1353,23 +1354,23 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
         // Set the dots appearing below the toolbar
         switch (ease) {
-            case EASE_1:
+            case BUTTON_ONE:
                 mChosenAnswer.setText("\u2022");
                 mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_red_500));
                 break;
-            case EASE_2:
+            case BUTTON_TWO:
                 mChosenAnswer.setText("\u2022\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == Consts.BUTTON_FOUR ?
+                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == BUTTON_FOUR ?
                         R.color.material_blue_grey_600:
                         R.color.material_green_500));
                 break;
-            case EASE_3:
+            case BUTTON_THREE:
                 mChosenAnswer.setText("\u2022\u2022\u2022");
-                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == Consts.BUTTON_FOUR ?
+                mChosenAnswer.setTextColor(ContextCompat.getColor(this, buttonNumber == BUTTON_FOUR ?
                         R.color.material_green_500 :
                         R.color.material_light_blue_500));
                 break;
-            case EASE_4:
+            case BUTTON_FOUR:
                 mChosenAnswer.setText("\u2022\u2022\u2022\u2022");
                 mChosenAnswer.setTextColor(ContextCompat.getColor(this, R.color.material_light_blue_500));
                 break;
@@ -1568,7 +1569,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     /** If a card is displaying the question, flip it, otherwise answer it */
-    private void flipOrAnswerCard(int cardOrdinal) {
+    private void flipOrAnswerCard(@Consts.BUTTON_TYPE int cardOrdinal) {
         if (!sDisplayAnswer) {
             displayCardAnswer();
             return;
@@ -2360,28 +2361,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mFlipCardLayout.setEnabled(true);
 
         switch (mCurrentEase) {
-            case EASE_1:
+            case BUTTON_ONE:
                 mEase1Layout.setClickable(true);
                 mEase2Layout.setEnabled(true);
                 mEase3Layout.setEnabled(true);
                 mEase4Layout.setEnabled(true);
                 break;
 
-            case EASE_2:
+            case BUTTON_TWO:
                 mEase1Layout.setEnabled(true);
                 mEase2Layout.setClickable(true);
                 mEase3Layout.setEnabled(true);
                 mEase4Layout.setEnabled(true);
                 break;
 
-            case EASE_3:
+            case BUTTON_THREE:
                 mEase1Layout.setEnabled(true);
                 mEase2Layout.setEnabled(true);
                 mEase3Layout.setClickable(true);
                 mEase4Layout.setEnabled(true);
                 break;
 
-            case EASE_4:
+            case BUTTON_FOUR:
                 mEase1Layout.setEnabled(true);
                 mEase2Layout.setEnabled(true);
                 mEase3Layout.setEnabled(true);
@@ -2425,28 +2426,28 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mInAnswer = true;
 
         switch (mCurrentEase) {
-            case EASE_1:
+            case BUTTON_ONE:
                 mEase1Layout.setClickable(false);
                 mEase2Layout.setEnabled(false);
                 mEase3Layout.setEnabled(false);
                 mEase4Layout.setEnabled(false);
                 break;
 
-            case EASE_2:
+            case BUTTON_TWO:
                 mEase1Layout.setEnabled(false);
                 mEase2Layout.setClickable(false);
                 mEase3Layout.setEnabled(false);
                 mEase4Layout.setEnabled(false);
                 break;
 
-            case EASE_3:
+            case BUTTON_THREE:
                 mEase1Layout.setEnabled(false);
                 mEase2Layout.setEnabled(false);
                 mEase3Layout.setClickable(false);
                 mEase4Layout.setEnabled(false);
                 break;
 
-            case EASE_4:
+            case BUTTON_FOUR:
                 mEase1Layout.setEnabled(false);
                 mEase2Layout.setEnabled(false);
                 mEase3Layout.setEnabled(false);
@@ -2502,16 +2503,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 displayCardAnswer();
                 return true;
             case COMMAND_FLIP_OR_ANSWER_EASE1:
-                flipOrAnswerCard(EASE_1);
+                flipOrAnswerCard(BUTTON_ONE);
                 return true;
             case COMMAND_FLIP_OR_ANSWER_EASE2:
-                flipOrAnswerCard(EASE_2);
+                flipOrAnswerCard(BUTTON_TWO);
                 return true;
             case COMMAND_FLIP_OR_ANSWER_EASE3:
-                flipOrAnswerCard(EASE_3);
+                flipOrAnswerCard(BUTTON_THREE);
                 return true;
             case COMMAND_FLIP_OR_ANSWER_EASE4:
-                flipOrAnswerCard(EASE_4);
+                flipOrAnswerCard(BUTTON_FOUR);
                 return true;
             case COMMAND_FLIP_OR_ANSWER_RECOMMENDED:
                 flipOrAnswerCard(getRecommendedEase(false));
@@ -2574,13 +2575,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 onFlag(mCurrentCard, FLAG_NONE);
                 return true;
             case COMMAND_ANSWER_FIRST_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_ONE);
+                return answerCardIfVisible(BUTTON_ONE);
             case COMMAND_ANSWER_SECOND_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_TWO);
+                return answerCardIfVisible(BUTTON_TWO);
             case COMMAND_ANSWER_THIRD_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_THREE);
+                return answerCardIfVisible(BUTTON_THREE);
             case COMMAND_ANSWER_FOURTH_BUTTON:
-                return answerCardIfVisible(Consts.BUTTON_FOUR);
+                return answerCardIfVisible(BUTTON_FOUR);
             case COMMAND_ANSWER_RECOMMENDED:
                 return answerCardIfVisible(getRecommendedEase(false));
             case COMMAND_PAGE_UP:
@@ -2657,19 +2658,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void performClickWithVisualFeedback(int ease) {
+    protected void performClickWithVisualFeedback(@Consts.BUTTON_TYPE int ease) {
         // Delay could potentially be lower - testing with 20 left a visible "click"
         switch (ease) {
-            case EASE_1:
+            case BUTTON_ONE:
                 performClickWithVisualFeedback(mEase1Layout);
                 break;
-            case EASE_2:
+            case BUTTON_TWO:
                 performClickWithVisualFeedback(mEase2Layout);
                 break;
-            case EASE_3:
+            case BUTTON_THREE:
                 performClickWithVisualFeedback(mEase3Layout);
                 break;
-            case EASE_4:
+            case BUTTON_FOUR:
                 performClickWithVisualFeedback(mEase4Layout);
                 break;
         }
@@ -3333,16 +3334,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     }
                     return true;
                 case WebViewSignalParserUtils.ANSWER_ORDINAL_1:
-                    flipOrAnswerCard(EASE_1);
+                    flipOrAnswerCard(BUTTON_ONE);
                     return true;
                 case WebViewSignalParserUtils.ANSWER_ORDINAL_2:
-                    flipOrAnswerCard(EASE_2);
+                    flipOrAnswerCard(BUTTON_TWO);
                     return true;
                 case WebViewSignalParserUtils.ANSWER_ORDINAL_3:
-                    flipOrAnswerCard(EASE_3);
+                    flipOrAnswerCard(BUTTON_THREE);
                     return true;
                 case WebViewSignalParserUtils.ANSWER_ORDINAL_4:
-                    flipOrAnswerCard(EASE_4);
+                    flipOrAnswerCard(BUTTON_FOUR);
                     return true;
                 default:
                     //We know it was a signal, but forgot a case in the case statement.
