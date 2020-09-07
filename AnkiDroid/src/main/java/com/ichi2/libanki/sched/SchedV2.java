@@ -99,10 +99,6 @@ public class SchedV2 extends AbstractSched {
     protected int mRevCount;
 
     private int mNewCardModulus;
-    /** Next time the queue is reset, takes into account that this card is in the reviewer and so should not be added
-     * to queue. I.e. that is mCurrentCard but should not be discarded by reset.
-     * */
-    protected Card mCardNotToFetch = null;
 
     protected double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
