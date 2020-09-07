@@ -42,7 +42,7 @@ public class CardBrowserContextMenu extends SystemContextMenu {
 
     @Override
     protected boolean getDefaultEnabledStatus() {
-        return true;
+        return false;
     }
 
     @NonNull
