@@ -750,10 +750,8 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected SharedPreferences restorePreferences() {
-        super.restorePreferences();
+        SharedPreferences preferences = super.restorePreferences();
         this.mProcessor.setup();
-        //Is this line necessary? Can we not use the return value from the call to super?
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) > 0;
         mActionButtons.setup(preferences);
