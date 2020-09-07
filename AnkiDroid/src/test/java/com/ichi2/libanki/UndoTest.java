@@ -20,6 +20,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assume.assumeThat;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE.*;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -66,7 +67,7 @@ public class UndoTest extends RobolectricTest {
         col.reset();
         assertEquals("add", col.undoName(getTargetContext().getResources()));
         Card c = col.getSched().getCard();
-        col.getSched().answerCard(c, 2);
+        col.getSched().answerCard(c, BUTTON_TWO);
         assertEquals("Review", col.undoName(getTargetContext().getResources()));
     }
 
@@ -87,7 +88,7 @@ public class UndoTest extends RobolectricTest {
         assertEquals(new Counts(1, 0, 0), col.getSched().counts());
         Card c = col.getSched().getCard();
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
-        col.getSched().answerCard(c, 3);
+        col.getSched().answerCard(c, BUTTON_THREE);
         assertEquals(1001, c.getLeft());
         assertEquals(new Counts(0, 1, 0), col.getSched().counts());
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
@@ -107,9 +108,9 @@ public class UndoTest extends RobolectricTest {
         col.reset();
         assertEquals(new Counts(2, 0, 0), col.getSched().counts());
         c = col.getSched().getCard();
-        col.getSched().answerCard(c, 3);
+        col.getSched().answerCard(c, BUTTON_THREE);
         c = col.getSched().getCard();
-        col.getSched().answerCard(c, 3);
+        col.getSched().answerCard(c, BUTTON_THREE);
         assertEquals(new Counts(0, 2, 0), col.getSched().counts());
         col.undo();
         col.reset();
@@ -119,7 +120,7 @@ public class UndoTest extends RobolectricTest {
         assertEquals(new Counts(2, 0, 0), col.getSched().counts());
         // performing a normal op will clear the review queue
         c = col.getSched().getCard();
-        col.getSched().answerCard(c, 3);
+        col.getSched().answerCard(c, BUTTON_THREE);
         assertEquals(Collection.DismissType.REVIEW, col.undoType());
         col.save("foo");
         // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid

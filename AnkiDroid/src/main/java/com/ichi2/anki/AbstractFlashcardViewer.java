@@ -151,10 +151,8 @@ import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
-import static com.ichi2.libanki.Consts.BUTTON_FOUR;
-import static com.ichi2.libanki.Consts.BUTTON_ONE;
-import static com.ichi2.libanki.Consts.BUTTON_THREE;
-import static com.ichi2.libanki.Consts.BUTTON_TWO;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE.*;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE;
 import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;
@@ -300,7 +298,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private android.text.ClipboardManager mClipboard;
 
     protected Card mCurrentCard;
-    private @Consts.BUTTON_TYPE int mCurrentEase;
+    @Nullable private BUTTON_TYPE mCurrentEase;
 
     private boolean mButtonHeightSet = false;
 
@@ -450,7 +448,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
                 answerCard(BUTTON_FOUR);
             } else {
-                mCurrentEase = 0;
+                mCurrentEase = null;
             }
         }
     };
@@ -856,8 +854,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected int mPrefWaitQuestionSecond;
 
 
-    protected int getAnswerButtonCount() {
-        return getCol().getSched().answerButtons(mCurrentCard);
+    protected @NonNull BUTTON_TYPE getGreaterAnswerButton() {
+        return getCol().getSched().greatestAnswerButton(mCurrentCard);
     }
 
 
@@ -1320,36 +1318,36 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private @Consts.BUTTON_TYPE
-    int getRecommendedEase(boolean easy) {
+    @Nullable
+    BUTTON_TYPE getRecommendedEase(boolean easy) {
         try {
-            switch (getAnswerButtonCount()) {
-                case 2:
+            switch (getGreaterAnswerButton()) {
+                case BUTTON_TWO:
                     return BUTTON_TWO;
-                case 3:
+                case BUTTON_THREE:
                     return easy ? BUTTON_THREE : BUTTON_TWO;
-                case 4:
+                case BUTTON_FOUR:
                     return easy ? BUTTON_FOUR : BUTTON_THREE;
                 default:
-                    return 0;
+                    return null;
             }
         } catch (RuntimeException e) {
             AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-getRecommendedEase");
             closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
-            return 0;
+            return null;
         }
     }
 
 
-    protected void answerCard(@Consts.BUTTON_TYPE int ease) {
+    protected void answerCard(@NonNull BUTTON_TYPE ease) {
         if (mInAnswer) {
             return;
         }
         mIsSelecting = false;
         hideLookupButton();
-        int buttonNumber = getCol().getSched().answerButtons(mCurrentCard);
+        @NonNull BUTTON_TYPE buttonNumber = getCol().getSched().greatestAnswerButton(mCurrentCard);
         // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
-        if (buttonNumber < ease) {
+        if (ease.isGreaterThan(buttonNumber)) {
             return;
         }
         // Set the dots appearing below the toolbar
@@ -1569,7 +1567,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     /** If a card is displaying the question, flip it, otherwise answer it */
-    private void flipOrAnswerCard(@Consts.BUTTON_TYPE int cardOrdinal) {
+    private void flipOrAnswerCard(@Nullable BUTTON_TYPE cardOrdinal) {
+        // Can theoretically be null because of getRecommendedEase
         if (!sDisplayAnswer) {
             displayCardAnswer();
             return;
@@ -2360,7 +2359,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mCardFrame.setEnabled(true);
         mFlipCardLayout.setEnabled(true);
 
-        switch (mCurrentEase) {
+        if (mCurrentEase == null) {
+            mEase1Layout.setEnabled(true);
+            mEase2Layout.setEnabled(true);
+            mEase3Layout.setEnabled(true);
+            mEase4Layout.setEnabled(true);
+        } else {
+            switch (mCurrentEase) {
             case BUTTON_ONE:
                 mEase1Layout.setClickable(true);
                 mEase2Layout.setEnabled(true);
@@ -2390,11 +2395,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 break;
 
             default:
-                mEase1Layout.setEnabled(true);
-                mEase2Layout.setEnabled(true);
-                mEase3Layout.setEnabled(true);
-                mEase4Layout.setEnabled(true);
-                break;
+                throw new RuntimeException("Unknown button");
+            }
         }
 
         if (mPrefWhiteboard && mWhiteboard != null) {
@@ -2425,7 +2427,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mTouchLayer.setVisibility(View.INVISIBLE);
         mInAnswer = true;
 
-        switch (mCurrentEase) {
+        if (mCurrentEase == null) {
+            mEase1Layout.setEnabled(false);
+            mEase2Layout.setEnabled(false);
+            mEase3Layout.setEnabled(false);
+            mEase4Layout.setEnabled(false);
+        } else {
+            switch (mCurrentEase) {
             case BUTTON_ONE:
                 mEase1Layout.setClickable(false);
                 mEase2Layout.setEnabled(false);
@@ -2455,11 +2463,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 break;
 
             default:
-                mEase1Layout.setEnabled(false);
-                mEase2Layout.setEnabled(false);
-                mEase3Layout.setEnabled(false);
-                mEase4Layout.setEnabled(false);
-                break;
+                throw new RuntimeException("Unknown button");
+            }
         }
 
         if (mPrefWhiteboard && mWhiteboard != null) {
@@ -2649,7 +2654,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-    private boolean answerCardIfVisible(@Consts.BUTTON_TYPE int ease) {
+    private boolean answerCardIfVisible(@Nullable BUTTON_TYPE ease) {
+        // Can theoretically be null because of getRecommendedEase
         if (!sDisplayAnswer) {
             return false;
         }
@@ -2658,8 +2664,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void performClickWithVisualFeedback(@Consts.BUTTON_TYPE int ease) {
+    protected void performClickWithVisualFeedback(@Nullable BUTTON_TYPE ease) {
+        // Can theoretically be null because of getRecommendedEase
         // Delay could potentially be lower - testing with 20 left a visible "click"
+        if (ease == null) {
+            return;
+        }
         switch (ease) {
             case BUTTON_ONE:
                 performClickWithVisualFeedback(mEase1Layout);
@@ -3613,7 +3623,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     @VisibleForTesting
     void loadInitialCard() {
         CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+                new TaskData());
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {

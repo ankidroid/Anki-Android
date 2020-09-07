@@ -85,6 +85,7 @@ import java.util.Set;
 
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
 
@@ -374,10 +375,10 @@ public class CardContentProvider extends ContentProvider {
                     if (currentCard == null) {
                         break;
                     }
-                    int buttonCount = col.getSched().answerButtons(currentCard);
+                    @NonNull BUTTON_TYPE buttonCount = col.getSched().greatestAnswerButton(currentCard);
                     JSONArray buttonTexts = new JSONArray();
-                    for (int i = 0; i < buttonCount; i++) {
-                        buttonTexts.put(col.getSched().nextIvlStr(mContext, currentCard, i + 1));
+                    for (BUTTON_TYPE button : buttonCount.buttonsAtMostThis()) {
+                        buttonTexts.put(col.getSched().nextIvlStr(mContext, currentCard, button));
                     }
                     addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns);
                 }
@@ -640,7 +641,7 @@ public class CardContentProvider extends ContentProvider {
                 Set<Map.Entry<String, Object>> valueSet = values.valueSet();
                 int cardOrd = -1;
                 long noteID = -1;
-                int ease = -1;
+                @Nullable BUTTON_TYPE ease = null;
                 long timeTaken = -1;
                 int bury = -1;
                 int suspend = -1;
@@ -655,7 +656,7 @@ public class CardContentProvider extends ContentProvider {
                             cardOrd = values.getAsInteger(key);
                             break;
                         case FlashCardsContract.ReviewInfo.EASE:
-                            ease = values.getAsInteger(key);
+                            ease = BUTTON_TYPE.fromInt(values.getAsInteger(key));
                             break;
                         case FlashCardsContract.ReviewInfo.TIME_TAKEN:
                             timeTaken = values.getAsLong(key);
@@ -1249,7 +1250,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void addReviewInfoToCursor(Card currentCard, JSONArray nextReviewTimesJson, int buttonCount,MatrixCursor rv, Collection col, String[] columns) {
+    private void addReviewInfoToCursor(Card currentCard, JSONArray nextReviewTimesJson, @NonNull BUTTON_TYPE buttonCount, MatrixCursor rv, Collection col, String[] columns) {
         MatrixCursor.RowBuilder rb = rv.newRow();
         for (String column : columns) {
             switch (column) {
@@ -1274,7 +1275,7 @@ public class CardContentProvider extends ContentProvider {
         }
     }
 
-    private void answerCard(Collection col, AbstractSched sched, Card cardToAnswer, @Consts.BUTTON_TYPE int ease, long timeTaken) {
+    private void answerCard(Collection col, AbstractSched sched, Card cardToAnswer, @NonNull BUTTON_TYPE ease, long timeTaken) {
         try {
             DB db = col.getDb();
             db.getDatabase().beginTransaction();

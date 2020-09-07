@@ -58,6 +58,9 @@ import timber.log.Timber;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE.*;
+
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
@@ -83,7 +86,7 @@ public class Sched extends SchedV2 {
     }
 
     @Override
-    public void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    public void answerCard(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         mCol.log();
         mCol.markReview(card);
         discardCurrentCard();
@@ -159,21 +162,21 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    public int answerButtons(@NonNull Card card) {
+    public @NonNull BUTTON_TYPE greatestAnswerButton(@NonNull Card card) {
         if (card.getODue() != 0) {
             // normal review in dyn deck?
             if (card.getODid() != 0 && card.getQueue() == Consts.QUEUE_TYPE_REV) {
-                return 4;
+                return BUTTON_FOUR;
             }
             JSONObject conf = _lrnConf(card);
             if (card.getType() == Consts.CARD_TYPE_NEW || card.getType() == Consts.CARD_TYPE_LRN || conf.getJSONArray("delays").length() > 1) {
-                return 3;
+                return BUTTON_THREE;
             }
-            return 2;
+            return BUTTON_TWO;
         } else if (card.getQueue() == Consts.QUEUE_TYPE_REV) {
-            return 4;
+            return BUTTON_FOUR;
         } else {
-            return 3;
+            return BUTTON_THREE;
         }
     }
 
@@ -404,7 +407,7 @@ public class Sched extends SchedV2 {
      * @param ease 1=no, 2=yes, 3=remove
      */
     @Override
-    protected void _answerLrnCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected void _answerLrnCard(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         JSONObject conf = _lrnConf(card);
         @Consts.CARD_TYPE int type;
         if (card.getODid() != 0 && !card.getWasNew()) {
@@ -418,16 +421,16 @@ public class Sched extends SchedV2 {
         // lrnCount was decremented once when card was fetched
         int lastLeft = card.getLeft();
         // immediate graduate?
-        if (ease == Consts.BUTTON_THREE) {
+        if (ease == BUTTON_THREE) {
             _rescheduleAsRev(card, conf, true);
             leaving = true;
             // graduation time?
-        } else if (ease == Consts.BUTTON_TWO && (card.getLeft() % 1000) - 1 <= 0) {
+        } else if (ease == BUTTON_TWO && (card.getLeft() % 1000) - 1 <= 0) {
             _rescheduleAsRev(card, conf, false);
             leaving = true;
         } else {
             // one step towards graduation
-            if (ease == Consts.BUTTON_TWO) {
+            if (ease == BUTTON_TWO) {
                 // decrement real left count and recalculate left today
                 int left = (card.getLeft() % 1000) - 1;
                 card.setLeft(_leftToday(conf.getJSONArray("delays"), left) * 1000 + left);
@@ -477,7 +480,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected @NonNull JSONObject _lrnConf(@NonNull Card card) {
+    protected JSONObject _lrnConf(@NonNull Card card) {
         if (card.getType() == Consts.CARD_TYPE_REV) {
             return _lapseConf(card);
         } else {
@@ -751,9 +754,9 @@ public class Sched extends SchedV2 {
      */
 
     @Override
-    protected void _answerRevCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected void _answerRevCard(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         int delay = 0;
-        if (ease == Consts.BUTTON_ONE) {
+        if (ease == BUTTON_ONE) {
             delay = _rescheduleLapse(card);
         } else {
             _rescheduleRev(card, ease);
@@ -812,13 +815,13 @@ public class Sched extends SchedV2 {
     }
 
 
-    private void _rescheduleRev(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    private void _rescheduleRev(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         // update interval
         card.setLastIvl(card.getIvl());
         if (_resched(card)) {
             _updateRevIvl(card, ease);
             // then the rest
-            card.setFactor(Math.max(1300, card.getFactor() + FACTOR_ADDITION_VALUES[ease - 2]));
+            card.setFactor(Math.max(1300, card.getFactor() + FACTOR_ADDITION_VALUES[ease.getValue() - 2]));
             card.setDue(mToday + card.getIvl());
         } else {
             card.setDue(card.getODue());
@@ -839,7 +842,7 @@ public class Sched extends SchedV2 {
     /**
      * Ideal next interval for CARD, given EASE.
      */
-    private int _nextRevIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    private int _nextRevIvl(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         long delay = _daysLate(card);
         int interval = 0;
         JSONObject conf = _revConf(card);
@@ -847,11 +850,11 @@ public class Sched extends SchedV2 {
         int ivl2 = _constrainedIvl((int)((card.getIvl() + delay/4) * 1.2), conf, card.getIvl());
         int ivl3 = _constrainedIvl((int)((card.getIvl() + delay/2) * fct), conf, ivl2);
         int ivl4 = _constrainedIvl((int)((card.getIvl() + delay) * fct * conf.getDouble("ease4")), conf, ivl3);
-        if (ease == Consts.BUTTON_TWO) {
+        if (ease == BUTTON_TWO) {
             interval = ivl2;
-        } else if (ease == Consts.BUTTON_THREE) {
+        } else if (ease == BUTTON_THREE) {
             interval = ivl3;
-        } else if (ease == Consts.BUTTON_FOUR) {
+        } else if (ease == BUTTON_FOUR) {
             interval = ivl4;
         }
         // interval capped?
@@ -868,7 +871,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected void _updateRevIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected void _updateRevIvl(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         try {
             int idealIvl = _nextRevIvl(card, ease);
             JSONObject conf = _revConf(card);
@@ -1152,10 +1155,10 @@ public class Sched extends SchedV2 {
      * Return the next interval for CARD, in seconds.
      */
     @Override
-    protected long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected long nextIvl(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
             return _nextLrnIvl(card, ease);
-        } else if (ease == Consts.BUTTON_ONE) {
+        } else if (ease == BUTTON_ONE) {
             // lapsed
             JSONObject conf = _lapseConf(card);
             if (conf.getJSONArray("delays").length() > 0) {
@@ -1170,16 +1173,16 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    protected long _nextLrnIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected long _nextLrnIvl(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         // this isn't easily extracted from the learn code
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             card.setLeft(_startingLeft(card));
         }
         JSONObject conf = _lrnConf(card);
-        if (ease == Consts.BUTTON_ONE) {
+        if (ease == BUTTON_ONE) {
             // fail
             return _delayForGrade(conf, conf.getJSONArray("delays").length());
-        } else if (ease == Consts.BUTTON_THREE) {
+        } else if (ease == BUTTON_THREE) {
             // early removal
             if (!_resched(card)) {
                 return 0;
@@ -1425,7 +1428,7 @@ public class Sched extends SchedV2 {
     /** The button to press on a new card to answer "good".*/
     @Override
     @VisibleForTesting
-    public @Consts.BUTTON_TYPE int getGoodNewButton() {
-        return Consts.BUTTON_TWO;
+    public @NonNull BUTTON_TYPE getGoodNewButton() {
+        return BUTTON_TWO;
     }
 }

@@ -4,16 +4,20 @@ package com.ichi2.async;
 import android.content.Context;
 
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 
 import java.util.List;
 
 import static com.ichi2.anki.CardBrowser.CardCache;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE;
+
 
 public class TaskData {
     private Card mCard;
     private Note mNote;
     private int mInteger;
+    private BUTTON_TYPE mButton;
     private String mMsg;
     private boolean mBool = false;
     private List<CardCache> mCards;
@@ -22,6 +26,9 @@ public class TaskData {
     private int mType;
     private Object[] mObjects;
 
+
+    public TaskData() {
+    }
 
     public TaskData(Object[] obj) {
         mObjects = obj;
@@ -67,6 +74,11 @@ public class TaskData {
     public TaskData(Card card, int integer) {
         mCard = card;
         mInteger = integer;
+    }
+
+    public TaskData(Card card, BUTTON_TYPE integer) {
+        mCard = card;
+        mButton = integer;
     }
 
 
@@ -200,6 +212,11 @@ public class TaskData {
 
     public Object[] getObjArray() {
         return mObjects;
+    }
+
+
+    public BUTTON_TYPE getButton() {
+        return mButton;
     }
 
 

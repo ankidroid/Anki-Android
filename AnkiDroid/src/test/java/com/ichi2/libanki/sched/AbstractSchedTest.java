@@ -40,8 +40,8 @@ import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 import java.util.Arrays;
 
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.nonTaskUndo;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.nonTaskUndo;
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static com.ichi2.libanki.Consts.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -50,6 +50,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE.*;
 
 // Note: These tests can't be run individually but can from the class-level
 // gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.sched.AbstractSchedTest.*"
@@ -176,7 +177,7 @@ public class AbstractSchedTest extends RobolectricTest {
             assertEquals(new Counts(nbNote * 2 - i, 0, 0), sched.counts(card));
             assertEquals(notes[i].firstCard().getId(), card.getId());
             assertEquals(Consts.QUEUE_TYPE_NEW, card.getQueue());
-            sched.answerCard(card, sched.answerButtons(card));
+            sched.answerCard(card, sched.greatestAnswerButton(card));
         }
 
         Card card = sched.getCard();
@@ -264,7 +265,7 @@ public class AbstractSchedTest extends RobolectricTest {
             col.reset();
             for (int i = 0; i < 3; i++) {
                 Card card = sched.getCard();
-                sched.answerCard(card, sched.answerButtons(card));
+                sched.answerCard(card, sched.greatestAnswerButton(card));
             }
             assertNewCountsIs("All cards from C are reviewed. Still 4 cards to review in D, but only two available because of A's limit.", 2, 2, 0, 2);
 
@@ -394,7 +395,7 @@ mw.col.sched.extendLimits(1, 0)
         Card card = sched.getCard();
         sched.setCurrentCard(card);
         sched.preloadNextCard();
-        sched.answerCard(card, Consts.BUTTON_THREE);
+        sched.answerCard(card, BUTTON_THREE);
         card = sched.getCard();
         sched.setCurrentCard(card);
         AnkiAssert.assertDoesNotThrow(sched::preloadNextCard);

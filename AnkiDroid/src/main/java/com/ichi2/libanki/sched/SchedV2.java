@@ -66,6 +66,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Consts.BUTTON_TYPE;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE.*;
 import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
@@ -243,7 +245,7 @@ public class SchedV2 extends AbstractSched {
      * Bury siblings if required by the options
      * Overriden
      *  */
-    public void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    public void answerCard(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         mCol.log();
         discardCurrentCard();
         mCol.markReview(card);
@@ -258,7 +260,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void _answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    public void _answerCard(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         if (_previewingCard(card)) {
             _answerCardPreview(card, ease);
             return;
@@ -294,13 +296,13 @@ public class SchedV2 extends AbstractSched {
 
     // note: when adding revlog entries in the future, make sure undo
     // code deletes the entries
-    public void _answerCardPreview(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
-        if (ease == Consts.BUTTON_ONE) {
+    public void _answerCardPreview(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
+        if (ease == BUTTON_ONE) {
             // Repeat after delay
             card.setQueue(Consts.QUEUE_TYPE_PREVIEW);
             card.setDue(getTime().intTime() + _previewDelay(card));
             mLrnCount += 1;
-        } else if (ease == Consts.BUTTON_TWO) {
+        } else if (ease == BUTTON_TWO) {
             // Restore original card state and remove from filtered deck
             _restorePreviewCard(card);
             _removeFromFiltered(card);
@@ -364,12 +366,12 @@ public class SchedV2 extends AbstractSched {
 
     /** Number of buttons to show in the reviewer for `card`.
      * Overridden */
-    public int answerButtons(@NonNull Card card) {
+    public @NonNull BUTTON_TYPE greatestAnswerButton(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
         if (card.getODid() != 0 && !conf.getBoolean("resched")) {
-            return 2;
+            return BUTTON_TWO;
         }
-        return 4;
+        return BUTTON_FOUR;
     }
 
 
@@ -1144,7 +1146,7 @@ public class SchedV2 extends AbstractSched {
 
 
     // Overriden
-    protected void _answerLrnCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected void _answerLrnCard(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         JSONObject conf = _lrnConf(card);
         @Consts.CARD_TYPE int type;
         if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
@@ -1158,11 +1160,11 @@ public class SchedV2 extends AbstractSched {
         boolean leaving = false;
 
         // immediate graduate?
-        if (ease == Consts.BUTTON_FOUR) {
+        if (ease == BUTTON_FOUR) {
             _rescheduleAsRev(card, conf, true);
             leaving = true;
         // next step?
-        } else if (ease == Consts.BUTTON_THREE) {
+        } else if (ease == BUTTON_THREE) {
             // graduation time?
             if ((card.getLeft() % 1000) - 1 <= 0) {
                 _rescheduleAsRev(card, conf, false);
@@ -1170,7 +1172,7 @@ public class SchedV2 extends AbstractSched {
             } else {
                 _moveToNextStep(card, conf);
             }
-        } else if (ease == Consts.BUTTON_TWO) {
+        } else if (ease == BUTTON_TWO) {
             _repeatStep(card, conf);
         } else {
             // move back to first step
@@ -1397,14 +1399,14 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected void _logLrn(@NonNull Card card, @Consts.BUTTON_TYPE int ease, @NonNull JSONObject conf, boolean leaving, @Consts.REVLOG_TYPE int type, int lastLeft) {
+    protected void _logLrn(@NonNull Card card, @NonNull BUTTON_TYPE ease, @NonNull JSONObject conf, boolean leaving, @Consts.REVLOG_TYPE int type, int lastLeft) {
         int lastIvl = -(_delayForGrade(conf, lastLeft));
         int ivl = leaving ? card.getIvl() : -(_delayForGrade(conf, card.getLeft()));
         log(card.getId(), mCol.usn(), ease, ivl, lastIvl, card.getFactor(), card.timeTaken(), type);
     }
 
 
-    protected void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
+    protected void log(long id, int usn, BUTTON_TYPE ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
                     getTime().intTimeMS(), id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
@@ -1619,11 +1621,11 @@ public class SchedV2 extends AbstractSched {
      */
 
     // Overridden: v1 does not deal with early
-    protected void _answerRevCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected void _answerRevCard(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         int delay = 0;
         boolean early = card.getODid() != 0 && (card.getODue() > mToday);
         int type = early ? 3 : 1;
-        if (ease == Consts.BUTTON_ONE) {
+        if (ease == BUTTON_ONE) {
             delay = _rescheduleLapse(card);
         } else {
             _rescheduleRev(card, ease, early);
@@ -1662,7 +1664,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected void _rescheduleRev(@NonNull Card card, @Consts.BUTTON_TYPE int ease, boolean early) {
+    protected void _rescheduleRev(@NonNull Card card, @NonNull BUTTON_TYPE ease, boolean early) {
         // update interval
         card.setLastIvl(card.getIvl());
         if (early) {
@@ -1672,7 +1674,7 @@ public class SchedV2 extends AbstractSched {
         }
 
         // then the rest
-        card.setFactor(Math.max(1300, card.getFactor() + FACTOR_ADDITION_VALUES[ease - 2]));
+        card.setFactor(Math.max(1300, card.getFactor() + FACTOR_ADDITION_VALUES[ease.getValue() - 2]));
         card.setDue(mToday + card.getIvl());
 
         // card leaves filtered deck
@@ -1680,7 +1682,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected void _logRev(@NonNull Card card, @Consts.BUTTON_TYPE int ease, int delay, int type) {
+    protected void _logRev(@NonNull Card card, @NonNull BUTTON_TYPE ease, int delay, int type) {
         log(card.getId(), mCol.usn(), ease, ((delay != 0) ? (-delay) : card.getIvl()), card.getLastIvl(),
                 card.getFactor(), card.timeTaken(), type);
     }
@@ -1694,7 +1696,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Next interval for CARD, given EASE.
      */
-    protected int _nextRevIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease, boolean fuzz) {
+    protected int _nextRevIvl(@NonNull Card card, @NonNull BUTTON_TYPE ease, boolean fuzz) {
         long delay = _daysLate(card);
         JSONObject conf = _revConf(card);
         double fct = card.getFactor() / 1000.0;
@@ -1707,12 +1709,12 @@ public class SchedV2 extends AbstractSched {
         }
 
         int ivl2 = _constrainedIvl(card.getIvl() * hardFactor, conf, hardMin, fuzz);
-        if (ease == Consts.BUTTON_TWO) {
+        if (ease == BUTTON_TWO) {
             return ivl2;
         }
 
         int ivl3 = _constrainedIvl((card.getIvl() + delay / 2) * fct, conf, ivl2, fuzz);
-        if (ease == Consts.BUTTON_THREE) {
+        if (ease == BUTTON_THREE) {
             return ivl3;
         }
 
@@ -1763,29 +1765,29 @@ public class SchedV2 extends AbstractSched {
     /**
      * Number of days later than scheduled.
      */
-    protected long _daysLate(Card card) {
+    protected long _daysLate(@NonNull Card card) {
         long due = card.getODid() != 0 ? card.getODue() : card.getDue();
         return Math.max(0, mToday - due);
     }
 
 
     // Overriden
-    protected void _updateRevIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected void _updateRevIvl(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         card.setIvl(_nextRevIvl(card, ease, true));
     }
 
 
-    private void _updateEarlyRevIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    private void _updateEarlyRevIvl(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         card.setIvl(_earlyReviewIvl(card, ease));
     }
 
 
     /** next interval for card when answered early+correctly */
-    private int _earlyReviewIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    private int _earlyReviewIvl(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         if (card.getODid() == 0 || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
             throw new RuntimeException("Unexpected card parameters");
         }
-        if (ease <= 1) {
+        if (ease == null || ease == BUTTON_ONE) {
             throw new RuntimeException("Ease must be greater than 1");
         }
 
@@ -1798,12 +1800,12 @@ public class SchedV2 extends AbstractSched {
         double minNewIvl = 1;
 
         double factor;
-        if (ease == Consts.BUTTON_TWO)  {
+        if (ease == BUTTON_TWO)  {
             factor = conf.optDouble("hardFactor", 1.2);
             // hard cards shouldn't have their interval decreased by more than 50%
             // of the normal factor
             minNewIvl = factor / 2;
-        } else if (ease == 3) {
+        } else if (ease == BUTTON_THREE) {
             factor = card.getFactor() / 1000.0;
         } else { // ease == 4
             factor = card.getFactor() / 1000.0;
@@ -2321,7 +2323,7 @@ public class SchedV2 extends AbstractSched {
      * @param ease The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
-    public @NonNull String nextIvlStr(@NonNull Context context, @NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    public @NonNull String nextIvlStr(@NonNull Context context, @NonNull Card card, @NonNull BUTTON_TYPE ease) {
         long ivl = nextIvl(card, ease);
         if (ivl == 0) {
             return context.getString(R.string.sched_end);
@@ -2338,10 +2340,10 @@ public class SchedV2 extends AbstractSched {
      * Return the next interval for CARD, in seconds.
      */
     // Overriden
-    protected long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected @NonNull long nextIvl(@NonNull Card card, @NonNull BUTTON_TYPE ease) {
         // preview mode?
         if (_previewingCard(card)) {
-            if (ease == Consts.BUTTON_ONE) {
+            if (ease == BUTTON_ONE) {
                 return _previewDelay(card);
             }
             return 0;
@@ -2349,7 +2351,7 @@ public class SchedV2 extends AbstractSched {
         // (re)learning?
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
             return _nextLrnIvl(card, ease);
-        } else if (ease == Consts.BUTTON_ONE) {
+        } else if (ease == BUTTON_ONE) {
             // lapse
             JSONObject conf = _lapseConf(card);
             if (conf.getJSONArray("delays").length() > 0) {
@@ -2370,17 +2372,17 @@ public class SchedV2 extends AbstractSched {
 
     // this isn't easily extracted from the learn code
     // Overriden
-    protected long _nextLrnIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected long _nextLrnIvl(@NonNull Card card, BUTTON_TYPE ease) {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             card.setLeft(_startingLeft(card));
         }
         JSONObject conf = _lrnConf(card);
-        if (ease == Consts.BUTTON_ONE) {
+        if (ease == BUTTON_ONE) {
             // fail
             return _delayForGrade(conf, conf.getJSONArray("delays").length());
-        } else if (ease == Consts.BUTTON_TWO) {
+        } else if (ease == BUTTON_TWO) {
             return _delayForRepeatingGrade(conf, card.getLeft());
-        } else if (ease == Consts.BUTTON_FOUR) {
+        } else if (ease == BUTTON_FOUR) {
             return _graduatingIvl(card, conf, true, false) * SECONDS_PER_DAY;
         } else { // ease == 3
             int left = card.getLeft() % 1000 - 1;
@@ -2778,14 +2780,14 @@ public class SchedV2 extends AbstractSched {
 
         _moveManuallyBuried();
         _resetSuspendedLearning();
-        _remapLearningAnswers("ease=ease-1 where ease in (" + Consts.BUTTON_THREE + "," + Consts.BUTTON_FOUR + ")");
+        _remapLearningAnswers("ease=ease-1 where ease in (" + BUTTON_THREE + "," + BUTTON_FOUR + ")");
     }
 
 
     public void moveToV2() {
         _emptyAllFiltered();
         _removeAllFromLearning(1);
-        _remapLearningAnswers("ease=ease+1 where ease in (" + Consts.BUTTON_TWO + "," + Consts.BUTTON_THREE + ")");
+        _remapLearningAnswers("ease=ease+1 where ease in (" + BUTTON_TWO + "," + BUTTON_THREE + ")");
     }
 
 
@@ -3115,8 +3117,8 @@ public class SchedV2 extends AbstractSched {
 
     @Override
     @VisibleForTesting
-    public @Consts.BUTTON_TYPE int getGoodNewButton() {
-        return Consts.BUTTON_THREE;
+    public @NonNull BUTTON_TYPE getGoodNewButton() {
+        return BUTTON_THREE;
     }
 
 }

@@ -21,6 +21,7 @@ import android.view.KeyEvent;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 
 import org.junit.Test;
 
@@ -28,10 +29,7 @@ import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
 import static com.ibm.icu.impl.Assert.fail;
-import static com.ichi2.libanki.Consts.BUTTON_FOUR;
-import static com.ichi2.libanki.Consts.BUTTON_ONE;
-import static com.ichi2.libanki.Consts.BUTTON_THREE;
-import static com.ichi2.libanki.Consts.BUTTON_TWO;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -89,7 +87,7 @@ public class ReviewerKeyboardInputTest {
     /** START: DEFAULT IS "GOOD" */
     @Test
     public void spaceAnswersThirdButtonWhenFourButtonsShowing() {
-        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(4);
+        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(BUTTON_FOUR);
 
         underTest.handleSpacebar();
 
@@ -98,7 +96,7 @@ public class ReviewerKeyboardInputTest {
 
     @Test
     public void spaceAnswersSecondButtonWhenThreeButtonsShowing() {
-        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(3);
+        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(BUTTON_THREE);
 
         underTest.handleSpacebar();
 
@@ -108,7 +106,7 @@ public class ReviewerKeyboardInputTest {
 
     @Test
     public void spaceAnswersSecondButtonWhenTwoButtonsShowing() {
-        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(2);
+        KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(BUTTON_TWO);
 
         underTest.handleSpacebar();
 
@@ -242,7 +240,7 @@ public class ReviewerKeyboardInputTest {
     }
 
 
-    private void assertGamepadButtonAnswers(int keycodeButton, int ease) {
+    private void assertGamepadButtonAnswers(int keycodeButton, Consts.BUTTON_TYPE ease) {
         KeyboardInputTestReviewer underTest = KeyboardInputTestReviewer.displayingQuestion();
         assertThat("Assume: Initially should not display answer", !underTest.didDisplayAnswer());
 
@@ -262,8 +260,8 @@ public class ReviewerKeyboardInputTest {
 
         private boolean mDisplayAnswer = false;
         private boolean mFocusTextField = false;
-        private Integer mAnswered = null;
-        private int mAnswerButtonCount = 4;
+        private Consts.BUTTON_TYPE mAnswered = null;
+        private Consts.BUTTON_TYPE mGreatestAnswerButton = BUTTON_FOUR;
         private boolean mEditedCard;
         private boolean mMarkedCard;
         private Collection.DismissType mDismissType;
@@ -382,18 +380,18 @@ public class ReviewerKeyboardInputTest {
 
 
         @Override
-        protected int getAnswerButtonCount() {
-            return this.mAnswerButtonCount;
+        protected Consts.BUTTON_TYPE getGreaterAnswerButton() {
+            return this.mGreatestAnswerButton;
         }
 
 
         @Override
-        protected void answerCard(int ease) {
+        protected void answerCard(Consts.BUTTON_TYPE ease) {
             mAnswered = ease;
         }
 
 
-        public int processedAnswer() {
+        public Consts.BUTTON_TYPE processedAnswer() {
             if(mAnswered == null) {
                 fail("No card was answered");
             }
@@ -401,8 +399,8 @@ public class ReviewerKeyboardInputTest {
         }
 
 
-        public KeyboardInputTestReviewer withButtons(int answerButtonCount) {
-            mAnswerButtonCount = answerButtonCount;
+        public KeyboardInputTestReviewer withButtons(Consts.BUTTON_TYPE answerButtonCount) {
+            mGreatestAnswerButton = answerButtonCount;
             return this;
         }
 
@@ -491,7 +489,7 @@ public class ReviewerKeyboardInputTest {
         }
 
         @Override
-        protected void performClickWithVisualFeedback(int ease) {
+        protected void performClickWithVisualFeedback(Consts.BUTTON_TYPE ease) {
             answerCard(ease);
         }
     }

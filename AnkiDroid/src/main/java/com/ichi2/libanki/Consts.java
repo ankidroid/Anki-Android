@@ -126,13 +126,56 @@ public class Consts {
     public static final int LEECH_TAGONLY = 1;
 
     // Buttons
-    public static final int BUTTON_ONE = 1;
-    public static final int BUTTON_TWO = 2;
-    public static final int BUTTON_THREE = 3;
-    public static final int BUTTON_FOUR = 4;
-    @Retention(SOURCE)
-    @IntDef({BUTTON_ONE, BUTTON_TWO, BUTTON_THREE, BUTTON_FOUR})
-    public @interface BUTTON_TYPE {}
+    public enum BUTTON_TYPE{
+        BUTTON_ONE(1),
+        BUTTON_TWO(2),
+        BUTTON_THREE(3),
+        BUTTON_FOUR(4);
+
+
+        int mNb;
+
+        BUTTON_TYPE(int nb) {
+            mNb = nb;
+        }
+
+        public int getValue() {
+            return mNb;
+        }
+
+        public static BUTTON_TYPE[] allButtons = new BUTTON_TYPE[] {BUTTON_ONE, BUTTON_TWO, BUTTON_THREE, BUTTON_FOUR};
+
+        /** This buttons and the smaller button.
+         * If we know the biggest button to show to user is `button`, then we show all buttons of `button.buttons_at_most_this`*/
+        public BUTTON_TYPE[] buttonsAtMostThis() {
+            BUTTON_TYPE[] buttons = new BUTTON_TYPE[mNb];
+            for (int i = 0; i < mNb - 1; i++) {
+                buttons[i] = allButtons[i];
+            }
+            return buttons;
+        }
+
+        /** The button, given its value*/
+        public static BUTTON_TYPE fromInt(int button_nb) {
+            return allButtons[button_nb - 1];
+        }
+
+        /** Check whether current button is better than `other`.
+         * For example `button.isGreaterThan(BUTTON_ONE)` checks whether the user selected something
+         * better than "again".*/
+        public boolean isGreaterThan(BUTTON_TYPE other) {
+            if (other == null) { // Some methods used to consider an invalid button as 0
+                return true;
+            }
+            return mNb > other.mNb;
+        }
+
+        /* This allow to use the element directly in sql queries, as it will be transformed into the integral value*/
+        @Override
+        public String toString() {
+            return Integer.toString(mNb);
+        }
+    }
 
     // Revlog types
     // They are the same as Card Type except for CRAM. So one type may switch from one to other type

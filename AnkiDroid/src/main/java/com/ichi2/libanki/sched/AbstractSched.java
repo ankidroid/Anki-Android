@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE;
 
 import androidx.annotation.NonNull;
 
@@ -80,10 +81,9 @@ public abstract class AbstractSched {
      * Remove from filtered if required.
      * Remove the siblings for the queue for same day spacing
      * Bury siblings if required by the options
-     *
      * @param card The card answered
      * @param ease The button pressed by the user*/
-    public abstract void answerCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease);
+    public abstract void answerCard(@NonNull Card card, @NonNull BUTTON_TYPE ease);
 
     /**
      * @return Number of new, rev and lrn card to review in selected deck. Sum of elements of counts.*/
@@ -142,7 +142,7 @@ public abstract class AbstractSched {
     /**
      * @param card A card in a queue allowing review.
      * @return Number of buttons to show in the reviewer for `card`.*/
-    public abstract int answerButtons(@NonNull Card card);
+    public abstract @NonNull BUTTON_TYPE greatestAnswerButton(@NonNull Card card);
 
     /**
      * Unbury all buried cards in all decks
@@ -263,7 +263,7 @@ public abstract class AbstractSched {
      * @param ease The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
-    public abstract @NonNull String nextIvlStr(@NonNull Context context, @NonNull Card card, @Consts.BUTTON_TYPE int ease);
+    public abstract @NonNull String nextIvlStr(@NonNull Context context, @NonNull Card card, @NonNull BUTTON_TYPE ease);
 
     /**
      * @param card A card
@@ -271,7 +271,7 @@ public abstract class AbstractSched {
      * @return the next interval for CARD, in seconds if ease is pressed.
      */
     // In this abstract class for testing purpose only
-    protected abstract long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease);
+    protected abstract long nextIvl(@NonNull Card card, @NonNull BUTTON_TYPE ease);
 
     /**
      * @param ids Id of cards to suspend
@@ -511,5 +511,5 @@ public abstract class AbstractSched {
 
     /** @return The button to press to enter "good" on a new card. */
     @VisibleForTesting
-    public abstract @Consts.BUTTON_TYPE int getGoodNewButton();
+    public abstract @NonNull BUTTON_TYPE getGoodNewButton();
 }

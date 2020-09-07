@@ -873,10 +873,10 @@ public class FlashCardsContract {
      * <td>{@link #EASE}</td>
      * <td>write-only</td>
      * <td>The ease of the card. Used when answering the card. One of: <br>
-     *          com.ichi2.libanki.Consts.BUTTON_ONE<br>
-     *          com.ichi2.libanki.Consts.BUTTON_TWO<br>
-     *          com.ichi2.libanki.Consts.BUTTON_THREE<br>
-     *          com.ichi2.libanki.Consts.BUTTON_FOUR
+     *          com.ichi2.libanki.Consts.BUTTON_TYPE.BUTTON_ONE<br>
+     *          com.ichi2.libanki.Consts.BUTTON_TYPE.BUTTON_TWO<br>
+     *          com.ichi2.libanki.Consts.BUTTON_TYPE.BUTTON_THREE<br>
+     *          com.ichi2.libanki.Consts.BUTTON_TYPE.BUTTON_FOUR
      * </td>
      * </tr>
      * <tr>
@@ -911,7 +911,7 @@ public class FlashCardsContract {
      *    ContentValues values = new ContentValues();
      *    long noteId = 123456789; //&lt;-- insert real note id here
      *    int cardOrd = 0;   //&lt;-- insert real card ord here
-     *    int ease = Consts.BUTTON_THREE; //&lt;-- insert real ease here
+     *    int ease = BUTTON_THREE; //&lt;-- insert real ease here
      *    long timeTaken = System.currentTimeMillis() - cardStartTime; //&lt;-- insert real time taken here
      *
      *    values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);

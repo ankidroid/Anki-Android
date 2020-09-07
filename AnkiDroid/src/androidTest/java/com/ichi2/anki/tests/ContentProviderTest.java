@@ -59,8 +59,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ichi2.libanki.Consts.BUTTON_FOUR;
-import static com.ichi2.libanki.Consts.BUTTON_THREE;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE.*;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -878,12 +878,12 @@ public class ContentProviderTest extends InstrumentedTest {
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
         int cardOrd = card.getOrd();
-        @Consts.BUTTON_TYPE int earlyGraduatingEase = (schedVersion == 1) ? BUTTON_THREE : BUTTON_FOUR;
+        BUTTON_TYPE earlyGraduatingEase = (schedVersion == 1) ? BUTTON_THREE : BUTTON_FOUR;
         long timeTaken = 5000; // 5 seconds
 
         values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
         values.put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd);
-        values.put(FlashCardsContract.ReviewInfo.EASE, earlyGraduatingEase);
+        values.put(FlashCardsContract.ReviewInfo.EASE, earlyGraduatingEase.getValue());
         values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
         int updateCount = cr.update(reviewInfoUri, values, null, null);
         assertEquals("Check if update returns 1", 1, updateCount);

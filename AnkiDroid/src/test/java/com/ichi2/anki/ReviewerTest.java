@@ -40,7 +40,8 @@ import androidx.test.core.app.ActivityScenario;
 import timber.log.Timber;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.RESULT_DEFAULT;
-import static com.ichi2.libanki.Consts.BUTTON_FOUR;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE.BUTTON_FOUR;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE.BUTTON_THREE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -117,7 +118,7 @@ public class ReviewerTest extends RobolectricTest {
 
         // The answer needs to be displayed to be able to get the time.
         displayAnswer(reviewer);
-        assertThat("4 buttons should be displayed", reviewer.getAnswerButtonCount(), is(4));
+        assertThat("4 buttons should be displayed", reviewer.getGreaterAnswerButton(), is(BUTTON_FOUR));
 
         String nextTime = javaScriptFunction.ankiGetNextTime4();
         assertThat(nextTime, not(isEmptyString()));
@@ -128,7 +129,7 @@ public class ReviewerTest extends RobolectricTest {
         displayAnswer(reviewer);
 
         if (schedVersion == 1) {
-            assertThat("The 4th button should not be visible", reviewer.getAnswerButtonCount(), is(3));
+            assertThat("The 4th button should not be visible", reviewer.getGreaterAnswerButton(), is(BUTTON_THREE));
             String learnTime = javaScriptFunction.ankiGetNextTime4();
             assertThat("If the 4th button is not visible, there should be no time4 in JS", learnTime, isEmptyString());
         }

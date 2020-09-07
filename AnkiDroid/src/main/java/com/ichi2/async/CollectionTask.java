@@ -85,6 +85,7 @@ import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
 import static com.ichi2.libanki.Collection.DismissType.BURY_NOTE;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
 import static com.ichi2.libanki.Undoable.*;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
@@ -572,12 +573,13 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private TaskData doInBackgroundAnswerCard(TaskData param) {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
-        Card oldCard = param.getCard();
-        @Consts.BUTTON_TYPE int ease = param.getInt();
+        @Nullable Card oldCard = param.getCard();
+        @Nullable BUTTON_TYPE ease = param.getButton();
         Timber.i(oldCard != null ? "Answering card" : "Obtaining card");
         try {
             col.getDb().executeInTransaction(() -> {
                 if (oldCard != null) {
+                    // In this case, ease should be non null
                     Timber.i("Answering card %d", oldCard.getId());
                     sched.answerCard(oldCard, ease);
                 }

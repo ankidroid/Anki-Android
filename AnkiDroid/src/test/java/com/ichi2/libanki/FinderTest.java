@@ -86,7 +86,7 @@ public class FinderTest extends RobolectricTest {
 
     @NonNull
     private Card burySiblings(SchedV2 sched, Card toManuallyBury) {
-        sched.answerCard(toManuallyBury, 1);
+        sched.answerCard(toManuallyBury, Consts.BUTTON_TYPE.BUTTON_ONE);
         Card siblingBuried = new Note(getCol(), toManuallyBury.getNid()).cards().get(1);
         assertThat(siblingBuried.getQueue(), is(Consts.QUEUE_TYPE_SIBLING_BURIED));
         return siblingBuried;
@@ -299,11 +299,11 @@ public class FinderTest extends RobolectricTest {
             assertEquals(0, col.findCards("rated:1:1").size());
             assertEquals(0, col.findCards("rated:1:2").size());
             c = col.getSched().getCard();
-            col.getSched().answerCard(c, 2);
+            col.getSched().answerCard(c, Consts.BUTTON_TYPE.BUTTON_TWO);
             assertEquals(0, col.findCards("rated:1:1").size());
             assertEquals(1, col.findCards("rated:1:2").size());
             c = col.getSched().getCard();
-            col.getSched().answerCard(c, 1);
+            col.getSched().answerCard(c, Consts.BUTTON_TYPE.BUTTON_ONE);
             assertEquals(1, col.findCards("rated:1:1").size());
             assertEquals(1, col.findCards("rated:1:2").size());
             assertEquals(2, col.findCards("rated:1").size());

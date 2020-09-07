@@ -89,6 +89,8 @@ import timber.log.Timber;
 import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.libanki.Consts.BUTTON_TYPE.*;
+
 import com.ichi2.async.TaskData;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
@@ -284,7 +286,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         getCol().startTimebox();
         CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+                new TaskData());
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -753,16 +755,16 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected void performReload() {
         getCol().getSched().deferReset();
         CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+                new TaskData());
     }
 
 
     @Override
     protected void displayAnswerBottomBar() {
         super.displayAnswerBottomBar();
-        int buttonCount;
+        @NonNull Consts.BUTTON_TYPE greatestAnswerButton;
         try {
-            buttonCount = mSched.answerButtons(mCurrentCard);
+            greatestAnswerButton = mSched.greatestAnswerButton(mCurrentCard);
         } catch (RuntimeException e) {
             AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-showEaseButtons");
             closeReviewer(DeckPicker.RESULT_DB_ERROR, true);
@@ -795,8 +797,8 @@ public class Reviewer extends AbstractFlashcardViewer {
         mEase1Layout.setVisibility(View.VISIBLE);
         mEase1Layout.setBackgroundResource(background[0]);
         mEase4Layout.setBackgroundResource(background[3]);
-        switch (buttonCount) {
-            case 2:
+        switch (greatestAnswerButton) {
+            case BUTTON_TWO:
                 // Ease 2 is "good"
                 mEase2Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.setBackgroundResource(background[2]);
@@ -805,7 +807,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                 mNext2.setTextColor(textColor[2]);
                 mEase2Layout.requestFocus();
                 break;
-            case 3:
+            case BUTTON_THREE:
                 // Ease 2 is good
                 mEase2Layout.setVisibility(View.VISIBLE);
                 mEase2Layout.setBackgroundResource(background[2]);
@@ -842,13 +844,13 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            mNext1.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_ONE));
-            mNext2.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_TWO));
-            if (buttonCount > 2) {
-                mNext3.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_THREE));
+            mNext1.setText(mSched.nextIvlStr(this, mCurrentCard, BUTTON_ONE));
+            mNext2.setText(mSched.nextIvlStr(this, mCurrentCard, BUTTON_TWO));
+            if (greatestAnswerButton.isGreaterThan(BUTTON_TWO)) {
+                mNext3.setText(mSched.nextIvlStr(this, mCurrentCard, BUTTON_THREE));
             }
-            if (buttonCount > 3) {
-                mNext4.setText(mSched.nextIvlStr(this, mCurrentCard, Consts.BUTTON_FOUR));
+            if (greatestAnswerButton.isGreaterThan(BUTTON_THREE)) {
+                mNext4.setText(mSched.nextIvlStr(this, mCurrentCard, BUTTON_FOUR));
             }
         }
     }
