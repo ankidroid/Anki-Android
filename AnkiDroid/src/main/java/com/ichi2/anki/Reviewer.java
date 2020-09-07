@@ -28,18 +28,23 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ActionProvider;
@@ -61,6 +66,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.Permissions;
@@ -85,6 +91,26 @@ public class Reviewer extends AbstractFlashcardViewer {
     private static final int ADD_NOTE = 12;
     private static final int REQUEST_AUDIO_PERMISSION = 0;
     private LinearLayout colorPalette;
+
+    // TODO: Consider extracting to ViewModel
+    // Card counts
+    private SpannableString newCount;
+    private SpannableString lrnCount;
+    private SpannableString revCount;
+
+    private TextView mTextBarNew;
+    private TextView mTextBarLearn;
+    private TextView mTextBarReview;
+
+    private boolean mPrefHideDueCount;
+
+    // ETA
+    private int eta;
+    private boolean mPrefShowETA;
+
+
+    // Preferences from the collection
+    private boolean mShowRemainingCardCount;
 
     private ActionButtons mActionButtons = new ActionButtons(this);
 
@@ -751,11 +777,54 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected SharedPreferences restorePreferences() {
         SharedPreferences preferences = super.restorePreferences();
+        mPrefHideDueCount = preferences.getBoolean("hideDueCount", false);
+        mPrefShowETA = preferences.getBoolean("showETA", true);
         this.mProcessor.setup();
         mBlackWhiteboard = preferences.getBoolean("blackWhiteboard", true);
         mPrefFullscreenReview = Integer.parseInt(preferences.getString("fullscreenMode", "0")) > 0;
         mActionButtons.setup(preferences);
         return preferences;
+    }
+
+    @Override
+    protected void updateScreenCounts() {
+        if (mCurrentCard == null) return;
+        ActionBar actionBar = getSupportActionBar();
+        int[] counts = mSched.counts(mCurrentCard);
+
+        if (actionBar != null) {
+            if (mPrefShowETA) {
+                eta = mSched.eta(counts, false);
+                actionBar.setSubtitle(Utils.remainingTime(AnkiDroidApp.getInstance(), eta * 60));
+            }
+        }
+
+
+        newCount = new SpannableString(String.valueOf(counts[0]));
+        lrnCount = new SpannableString(String.valueOf(counts[1]));
+        revCount = new SpannableString(String.valueOf(counts[2]));
+        if (mPrefHideDueCount) {
+            revCount = new SpannableString("???");
+        }
+
+        switch (mSched.countIdx(mCurrentCard)) {
+            case Consts.CARD_TYPE_NEW:
+                newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
+                break;
+            case Consts.CARD_TYPE_LRN:
+                lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
+                break;
+            case Consts.CARD_TYPE_REV:
+                revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
+                break;
+            default:
+                Timber.w("Unknown card type %s", mSched.countIdx(mCurrentCard));
+                break;
+        }
+
+        mTextBarNew.setText(newCount);
+        mTextBarLearn.setText(lrnCount);
+        mTextBarReview.setText(revCount);
     }
 
     @Override
@@ -775,6 +844,31 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
+    protected void initLayout() {
+        mTextBarNew = (TextView) findViewById(R.id.new_number);
+        mTextBarLearn = (TextView) findViewById(R.id.learn_number);
+        mTextBarReview = (TextView) findViewById(R.id.review_number);
+
+        super.initLayout();
+
+        if (!mShowRemainingCardCount) {
+            mTextBarNew.setVisibility(View.GONE);
+            mTextBarLearn.setVisibility(View.GONE);
+            mTextBarReview.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void switchTopBarVisibility(int visible) {
+        super.switchTopBarVisibility(visible);
+        if (mShowRemainingCardCount) {
+            mTextBarNew.setVisibility(visible);
+            mTextBarLearn.setVisibility(visible);
+            mTextBarReview.setVisibility(visible);
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
 
@@ -791,6 +885,16 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mPrefWhiteboard) {
             setWhiteboardVisibility(mShowWhiteboard);
         }
+        if (mShowRemainingCardCount) {
+            mTextBarNew.setVisibility(View.VISIBLE);
+            mTextBarLearn.setVisibility(View.VISIBLE);
+            mTextBarReview.setVisibility(View.VISIBLE);
+        }
+    }
+
+    protected void restoreCollectionPreferences() {
+        super.restoreCollectionPreferences();
+        mShowRemainingCardCount = getCol().getConf().getBoolean("dueCounts");
     }
 
     @Override
@@ -1056,6 +1160,36 @@ public class Reviewer extends AbstractFlashcardViewer {
                 default:
                     return false;
             }
+        }
+    }
+
+    public ReviewerJavaScriptFunction javaScriptFunction() {
+        return new ReviewerJavaScriptFunction();
+    }
+
+    public class ReviewerJavaScriptFunction extends JavaScriptFunction {
+        @JavascriptInterface
+        @Override
+        public String ankiGetNewCardCount() {
+            return newCount.toString();
+        }
+
+        @JavascriptInterface
+        @Override
+        public String ankiGetLrnCardCount() {
+            return lrnCount.toString();
+        }
+
+        @JavascriptInterface
+        @Override
+        public String ankiGetRevCardCount() {
+            return revCount.toString();
+        }
+
+        @JavascriptInterface
+        @Override
+        public int ankiGetETA() {
+            return eta;
         }
     }
 }
