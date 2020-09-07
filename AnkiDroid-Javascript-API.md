@@ -7,6 +7,10 @@ This api allow deck developer to add functionality to cards that can call native
 <br>[AbstractFlashcardViewer.java](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/java/com/ichi2/anki/AbstractFlashcardViewer.java#L3404)
 <br>[card.js](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/assets/scripts/card.js#L78)
 
+## API return values
+
+In all cases where an API defined below will return a value, it is possible the values are effectively "undefined" because they don't make sense in the context. A specific example is that an "ETA" for study time does not make sense in the Previewer. In these cases the return value will always be *type-safe* for use in following code to protect against javascript programming errors, but you should always check the return values themselves to ensure they make sense. In those cases, the "default" return values you will receive are "unknown" for string, -1 for number, and false for boolean. Arrays and Objects will be empty ([] and {} respectively). 
+
 ## Initialize 
 If api is not initialized, then Calling functions ```markCard``` ```toggleFlag``` will not work. Initialize js api using ```AnkiDroidJS.init()```
 
