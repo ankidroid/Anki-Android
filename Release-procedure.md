@@ -135,6 +135,7 @@ There is a new way to publish, using GitHub Actions
 1. Edit `AnkiDroid/build.gradle` to switch the version from alphaNN to `beta0`, [like this](https://github.com/ankidroid/Anki-Android/commit/7925e065ede4312ec795819a44fa9bea9cf12ce3) (the release script will handle taking it from `0` to `1` on the first run)
 1. Push the changes (for example if you are making `release-2.14` - `git push --set-upstream origin release-2.13`)
 1. Now follow the "Publishing new versions" section here, but select the new branch you just pushed
+1. The first beta actually goes to the Google Play Store alpha testing group. Later (after the first beta survives alpha testing and you manually promote to beta) when you want to publish it automatically to the beta channel, you need to change the appropriate line to be beta instead of alpha: https://github.com/ankidroid/Anki-Android/blob/aa61add0360596ca3e0cbf967a652496aee1be49/AnkiDroid/build.gradle#L183
 
 ### Publishing new versions
 
