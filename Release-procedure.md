@@ -128,6 +128,14 @@ There is a new way to publish, using GitHub Actions
 1. Make a PR for the resulting changes - https://github.com/ankidroid/Anki-Android/compare/i18n_sync?expand=1
 1. Have someone review and approve the PR and merge it to master
 
+### Cutting a new release branch
+
+1. Checkout the main branch and verify everything is working with a `./gradlew clean jacocoTestReport`
+1. Make the branch, for example if you want `release-2.14` you do a `git co -b release-2.14`
+1. Edit `AnkiDroid/build.gradle` to switch the version from alphaNN to `beta0`, [like this](https://github.com/ankidroid/Anki-Android/commit/7925e065ede4312ec795819a44fa9bea9cf12ce3) (the release script will handle taking it from `0` to `1` on the first run)
+1. Push the changes (for example if you are making `release-2.14` - `git push --set-upstream origin release-2.13`)
+1. Now follow the "Publishing new versions" section here, but select the new branch you just pushed
+
 ### Publishing new versions
 
 Note: This is for alpha only right now. It will be extended for the betas as a next step
