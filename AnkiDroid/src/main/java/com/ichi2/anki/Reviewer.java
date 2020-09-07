@@ -68,6 +68,7 @@ import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Collection.DismissType;

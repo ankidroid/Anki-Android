@@ -70,6 +70,7 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.TaskManager;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;

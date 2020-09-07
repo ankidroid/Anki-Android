@@ -22,20 +22,20 @@ public class BackgroundTaskManager extends TaskManager {
      */
     private CollectionTask mLatestInstance;
 
-    protected void setLatestInstance(CollectionTask task) {
+    protected void setLatestInstance_(CollectionTask task) {
         mLatestInstance = task;
     }
 
-    protected void addTasks(CollectionTask task) {
+    protected void addTasks_(CollectionTask task) {
         mTasks.add(task);
     }
 
-    protected boolean removeTask(CollectionTask task) {
+    protected boolean removeTask_(CollectionTask task) {
         return mTasks.remove(task);
     }
 
     /** Cancel all tasks of type taskType*/
-    public void cancelAllTasks(CollectionTask.TASK_TYPE taskType) {
+    public void cancelAllTasks_(CollectionTask.TASK_TYPE taskType) {
         int count = 0;
         // safeCancel modifies sTasks, so iterate over a concrete copy
         for (CollectionTask task: new ArrayList<>(mTasks)) {
@@ -51,7 +51,7 @@ public class BackgroundTaskManager extends TaskManager {
         }
     }
 
-    public CollectionTask launchCollectionTask(CollectionTask.TASK_TYPE type, @Nullable TaskListener listener, TaskData param) {
+    public CollectionTask launchCollectionTask_(CollectionTask.TASK_TYPE type, @Nullable TaskListener listener, TaskData param) {
         // Start new task
         CollectionTask newTask = new CollectionTask(type, listener, mLatestInstance);
         newTask.execute(param);
@@ -63,7 +63,7 @@ public class BackgroundTaskManager extends TaskManager {
      * @param timeout timeout in seconds
      * @return whether or not the previous task was successful or not
      */
-    public boolean waitToFinish(Integer timeout) {
+    public boolean waitToFinish_(Integer timeout) {
         try {
             if ((mLatestInstance != null) && (mLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
                 Timber.d("CollectionTask: waiting for task %s to finish...", mLatestInstance.getType());
@@ -82,7 +82,7 @@ public class BackgroundTaskManager extends TaskManager {
     }
 
     /** Cancel the current task only if it's of type taskType */
-    public void cancelCurrentlyExecutingTask() {
+    public void cancelCurrentlyExecutingTask_() {
         CollectionTask latestInstance = mLatestInstance;
         if (latestInstance != null) {
             if (latestInstance.safeCancel()) {
@@ -91,7 +91,7 @@ public class BackgroundTaskManager extends TaskManager {
         };
     }
 
-    public void publishProgress(CollectionTask ct, TaskData value) {
+    public void publishProgress_(CollectionTask ct, TaskData value) {
         ct.publishProgress(value);
     }
 }

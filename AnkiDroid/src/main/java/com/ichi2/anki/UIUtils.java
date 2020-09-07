@@ -18,6 +18,7 @@ import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.utils.Time;
 
 import static com.ichi2.async.CollectionTask.TASK_TYPE.SAVE_COLLECTION;

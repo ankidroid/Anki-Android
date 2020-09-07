@@ -14,13 +14,30 @@ import timber.log.Timber;
 
 public abstract class TaskManager {
 
-
-    protected abstract void addTasks(CollectionTask task);
-    protected abstract boolean removeTask(CollectionTask task);
-    public abstract void cancelAllTasks(CollectionTask.TASK_TYPE taskType);
+    private static final TaskManager sTaskManager = new BackgroundTaskManager();
 
 
-    protected abstract void setLatestInstance(CollectionTask task);
+    protected static void addTasks(CollectionTask task){
+        sTaskManager.addTasks_(task);
+    }
+    protected abstract void addTasks_(CollectionTask task);
+
+    protected static boolean removeTask(CollectionTask task) {
+        return sTaskManager.removeTask_(task);
+    }
+
+    protected abstract boolean removeTask_(CollectionTask task);
+
+    public static void cancelAllTasks(CollectionTask.TASK_TYPE taskType) {
+        sTaskManager.cancelAllTasks_(taskType);
+    }
+
+    public abstract void cancelAllTasks_(CollectionTask.TASK_TYPE taskType);
+
+    protected static void setLatestInstance(CollectionTask task){
+        sTaskManager.setLatestInstance_(task);
+    }
+    protected abstract void setLatestInstance_(CollectionTask task);
 
     /**
      * Starts a new {@link CollectionTask}, with no listener
@@ -79,20 +96,33 @@ public abstract class TaskManager {
      * @param param to pass to the task
      * @return the newly created task
      */
-    public abstract CollectionTask launchCollectionTask(CollectionTask.TASK_TYPE type, @Nullable TaskListener listener, TaskData param);
+    public static CollectionTask launchCollectionTask(CollectionTask.TASK_TYPE type, @Nullable TaskListener listener, TaskData param) {
+        return sTaskManager.launchCollectionTask_(type, listener, param);
+    }
+    public abstract CollectionTask launchCollectionTask_(CollectionTask.TASK_TYPE type, @Nullable TaskListener listener, TaskData param);
 
 
     /**
      * Block the current thread until the currently running CollectionTask instance (if any) has finished.
      */
-    public static void waitToFinish() {
-        waitToFinish(null);
+    public static boolean waitToFinish(){
+        return waitToFinish(null);
     }
 
-    public abstract boolean waitToFinish(Integer timeout);
+    /**
+     * Block the current thread until the currently running CollectionTask instance (if any) has finished.
+     */
+    public static boolean waitToFinish(Integer timeout){
+        return sTaskManager.waitToFinish_(timeout);
+    }
+
+    public abstract boolean waitToFinish_(Integer timeout);
 
     /** Cancel the current task only if it's of type taskType */
-    public abstract void cancelCurrentlyExecutingTask();
+    public static void cancelCurrentlyExecutingTask() {
+        sTaskManager.cancelCurrentlyExecutingTask_();
+    }
+    public abstract void cancelCurrentlyExecutingTask_();
 
     public static ProgressCallback progressCallback(CollectionTask task, Resources res) {
         return new ProgressCallback(task, res);
@@ -130,5 +160,8 @@ public abstract class TaskManager {
     }
 
     // Here so that progress can be published differently depending on the manager.
-    public abstract void publishProgress(CollectionTask ct, TaskData value);
+    public static void publishProgress(CollectionTask ct, TaskData value) {
+        sTaskManager.publishProgress_(ct, value);
+    }
+    public abstract void publishProgress_(CollectionTask ct, TaskData value);
 }
