@@ -331,13 +331,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             case R.id.action_rebuild:
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                        getResources().getString(R.string.rebuild_cram_deck), true);
+                        getResources().getString(R.string.rebuild_filtered_deck), true);
                 CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
                 return true;
             case R.id.action_empty:
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
                 mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                        getResources().getString(R.string.empty_cram_deck), false);
+                        getResources().getString(R.string.empty_filtered_deck), false);
                 CollectionTask.launchCollectionTask(EMPTY_CRAM, getCollectionTaskListener(true));
                 return true;
             case R.id.action_rename:
@@ -457,7 +457,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     deck.remove("empty");
                 }
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                            getResources().getString(R.string.rebuild_cram_deck), true);
+                            getResources().getString(R.string.rebuild_filtered_deck), true);
                     CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
             } else {
                 CollectionTask.waitToFinish();
