@@ -133,7 +133,7 @@ public class ImportUtils {
                     return ImportResult.fromErrorString(context.getResources().getString(R.string.import_error_not_apkg_extension, filename));
                 }
             } else {
-                return ImportResult.fromSuccess(); // TODO: This was previously implicit, and is incorrect.
+                return ImportResult.fromErrorString(context.getResources().getString(R.string.import_error_unhandled_scheme, intent.getData()));
             }
         }
 
