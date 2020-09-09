@@ -355,12 +355,12 @@ public class AnkiDroidApp extends MultiDexApplication {
     }
 
 
-    public static void sendExceptionReport(Throwable e, String origin, String additionalInfo) {
+    public static void sendExceptionReport(Throwable e, String origin, @Nullable String additionalInfo) {
         sendExceptionReport(e, origin, additionalInfo, false);
     }
 
 
-    public static void sendExceptionReport(Throwable e, String origin, String additionalInfo, boolean onlyIfSilent) {
+    public static void sendExceptionReport(Throwable e, String origin, @Nullable String additionalInfo, boolean onlyIfSilent) {
         UsageAnalytics.sendAnalyticsException(e, false);
 
         if (onlyIfSilent) {
