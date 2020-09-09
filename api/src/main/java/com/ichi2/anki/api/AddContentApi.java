@@ -39,8 +39,8 @@ import com.ichi2.anki.FlashCardsContract.Model;
 import com.ichi2.anki.FlashCardsContract.Note;
 import com.ichi2.anki.FlashCardsContract.AnkiMedia;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -199,7 +199,7 @@ public final class AddContentApi {
      *          if unsuccessful.
      */
     public @Nullable String addMediaFromUri(
-            @NotNull Uri fileUri, @NotNull String preferredName, @NotNull String mimeType
+            @NonNull Uri fileUri, @NonNull String preferredName, @NonNull String mimeType
     ) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(AnkiMedia.FILE_URI, fileUri.toString());
@@ -218,7 +218,7 @@ public final class AddContentApi {
 
     }
 
-    private @Nullable String formatMediaName(@NotNull String fname, @NotNull String mimeType) {
+    private @Nullable String formatMediaName(@NonNull String fname, @NonNull String mimeType) {
         String formatted_fname;
         if (mimeType.equals("audio")) {
             formatted_fname = String.format("[sound:%s]", fname.substring(1)); // first character in the path is "/"

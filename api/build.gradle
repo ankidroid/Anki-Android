@@ -50,7 +50,7 @@ apply from: "../lint.gradle"
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'org.jetbrains:annotations:15.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.6.2'
     testImplementation 'org.robolectric:robolectric:4.3.1'
 

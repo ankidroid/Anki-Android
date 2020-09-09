@@ -9,7 +9,6 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.TimeUtils;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,7 +41,7 @@ public class FileUtil {
      * @return  the internal file after copying the data across.
      * @throws IOException
      */
-    @NotNull
+    @NonNull
     public static File internalizeUri(
             Uri uri, @Nullable String filePath, File internalFile, ContentResolver contentResolver
     ) throws IOException {
