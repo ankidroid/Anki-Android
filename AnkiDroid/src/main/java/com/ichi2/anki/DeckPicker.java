@@ -839,9 +839,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // The collection path was inaccessible on startup so just close the activity and let user restart
             finishWithoutAnimation();
         } else if ((requestCode == PICK_APKG_FILE) && (resultCode == RESULT_OK)) {
-            String errorMessage = ImportUtils.handleFileImport(this, intent);
-            if (errorMessage != null) {
-                ImportUtils.showImportUnsuccessfulDialog(this, errorMessage, false);
+            ImportUtils.ImportResult importResult = ImportUtils.handleFileImport(this, intent);
+            if (!importResult.isSuccess()) {
+                ImportUtils.showImportUnsuccessfulDialog(this, importResult.getHumanReadableMessage(), false);
             }
         } else if ((requestCode == PICK_EXPORT_FILE) && (resultCode == RESULT_OK)) {
             if (exportToProvider(intent, true)) {
