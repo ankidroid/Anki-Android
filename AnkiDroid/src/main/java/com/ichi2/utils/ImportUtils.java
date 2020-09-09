@@ -178,11 +178,11 @@ public class ImportUtils {
                     return ImportResult.fromErrorString(errorMessage);
                 }
 
-                errorMessage = validateZipFile(context, tempOutDir);
-                if (errorMessage != null) {
+                ImportResult validateZipResult = validateZipFile(context, tempOutDir);
+                if (validateZipResult != null) {
                     //noinspection ResultOfMethodCallIgnored
                     new File(tempOutDir).delete();
-                    return ImportResult.fromErrorString(errorMessage);
+                    return validateZipResult;
                 }
 
                 sendShowImportFileDialogMsg(tempOutDir);
@@ -190,15 +190,15 @@ public class ImportUtils {
             }
         }
 
-
-        protected String validateZipFile(Context context, String filePath) {
+        @Nullable
+        protected ImportResult validateZipFile(Context ctx, String filePath) {
             File file = new File(filePath);
             ZipFile zf = null;
             try {
                 zf = new ZipFile(file);
             } catch (Exception e) {
                 Timber.w(e, "Failed to validate zip");
-                return context.getString(R.string.import_log_failed_unzip, e.getLocalizedMessage());
+                return ImportResult.fromInvalidZip(ctx, file, e);
             } finally {
                 if (zf != null) {
                     try {
@@ -414,6 +414,20 @@ public class ImportUtils {
         public static ImportResult fromSuccess() {
             return new ImportResult(null);
         }
+
+
+        public static ImportResult fromInvalidZip(Context ctx, File file, Exception e) {
+            return fromErrorString(getInvalidZipException(ctx, file, e));
+        }
+
+
+        private static String getInvalidZipException(Context ctx, @SuppressWarnings( {"unused", "RedundantSuppression"}) File file, Exception e) {
+            // If we don't have a good string, send a silent exception that we can better handle this in the future
+            // 7050 for example - tell the user explicitly that the file is corrupt and they should re-download it.
+            AnkiDroidApp.sendExceptionReport(e, "Import - invalid zip", "improve UI message here", true);
+            return ctx.getString(R.string.import_log_failed_unzip, e.getLocalizedMessage());
+        }
+
 
         public boolean isSuccess() {
             return mMessage == null;
