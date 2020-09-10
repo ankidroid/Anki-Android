@@ -172,11 +172,13 @@
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
+    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">컬렉션을 대체하는 중...</string>
     <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">일정 포함</string>

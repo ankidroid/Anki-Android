@@ -94,6 +94,7 @@
     <string name="sync_overwrite_error">Ihre aktuelle Sammlung konnte durch die heruntergeladene Datei nicht überschrieben werden</string>
     <string name="sync_connection_error">Verbindung nach Wartezeit abgebrochen. Entweder gibt es Probleme mit Ihrer Internetverbindung oder Sie haben eine sehr große Datei in Ihrem Medienordner.</string>
     <string name="sync_write_access_error">Die heruntergeladene Datei konnte nicht auf der SD-Karte gespeichert werden. Entweder ist diese schreibgeschützt eingehängt oder verfügt nicht über genügend freien Speicherplatz.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Löschungen werden synchronisiert &#8230;</string>
     <string name="sync_small_objects_message">Synchronisiere kleine Objekte&#8230;</string>
     <string name="sync_finish_message">Synchronisation wird abgeschlossen &#8230;</string>

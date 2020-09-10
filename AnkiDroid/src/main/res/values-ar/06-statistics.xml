@@ -45,7 +45,7 @@
     <string name="statistics_suspended_and_buried">معلقة+مدفونة</string>
     <string name="statistics_relearn">إعادة التعلم</string>
     <string name="statistics_learn">تعلم</string>
-    <string name="statistics_cram">تركيز</string>
+    <string name="statistics_cram">دراسة مستعجلة</string>
     <string name="stats_cards">بطاقات</string>
     <string name="stats_cards_intervals">بطاقات لها الفاصل الزمني المعطى</string>
     <string name="stats_cumulative_cards">بطاقات تراكمية</string>
@@ -84,9 +84,9 @@
     <string name="stats_overview_time_per_day_studydays">معدل أيام الدراسة: &lt;b&gt;%1$.1f&lt;/b&gt; دقيقة/يوم</string>
     <string name="stats_overview_time_per_day_all">إذا درست كل يوم: &lt;b&gt;%1$.1f&lt;/b&gt; دقيقة/يوم</string>
     <string name="stats_overview_average_answer_time">معدل أيام الدراسة: &lt;b&gt;%1$.1f&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; بطاقة/دقيقة)</string>
-    <string name="stats_overview_new_cards_per_day">معدل: &lt;b&gt;%1$.1f&lt;/b&gt; دقيقة/يوم</string>
+    <string name="stats_overview_new_cards_per_day">معدل: &lt;b&gt;%1$.1f&lt;/b&gt; بطاقة/يوم</string>
     <string name="stats_overview_total_new_cards">إجمالي: &lt;b&gt;%1$d&lt;/b&gt; بطاقة</string>
-    <string name="stats_overview_average_interval">"معدل الفاصل الزمني: "</string>
+    <string name="stats_overview_average_interval">"الفاصل الزمني المتوسط: "</string>
     <string name="stats_overview_longest_interval">"أطول فاصل زمني: "</string>
     <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; عام</string>
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; شهر</string>

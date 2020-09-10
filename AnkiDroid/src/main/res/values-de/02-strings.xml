@@ -175,11 +175,13 @@
     <string name="import_log_file_cache_cleared">Fehler beim Importieren der Datei. Wahrscheinlich wird der Cache während der Verarbeitung gelöscht.\nBitte versuchen Sie es erneut</string>
     <string name="import_succeeded_but_check_database">Der Datenimport war erfolgreich, jedoch ist bei der anschließenden Bereinigung ein Fehler aufgetreten. Hauptursache: %s</string>
     <string name="import_error_unhandled_request">Importanfrage kann nicht verarbeitet werden</string>
+    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_exception">Paket konnte nicht importiert werden\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dateiname »%s« muss auf .apkg oder .colpkg enden</string>
     <string name="import_error_load_imported_database">Anki-Datenbank-Platzhalter (.anki2) werden noch nicht unterstützt. Bitte lesen Sie das Handbuch für entsprechende Anweisungen.</string>
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() konnte nicht durchführt werden (evtl. mangelnder Speicherplatz)</string>
+    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">Sammlung wird ersetzt &#8230;</string>
     <string name="import_interrupted">Import unterbrochen</string>
     <string name="export_include_schedule">Zeitabstände einbeziehen</string>

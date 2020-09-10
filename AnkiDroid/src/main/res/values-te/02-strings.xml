@@ -175,11 +175,13 @@
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">ఎంచుకున్న ఫైల్ AnkiDroid ద్వారా స్వయంచాలకంగా దిగుమతి కాలేదు. మాన్యువల్గా ఫైళ్లను ఎలా దిగుమతి చేయాలో యూజర్ మాన్యువల్ చూడండి: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
+    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">సేకరణను భర్తీ చేస్తోంది&#8230;</string>
     <string name="import_interrupted">Import interrupted</string>
     <string name="export_include_schedule">షెడ్యూల్ను జోడించండి</string>

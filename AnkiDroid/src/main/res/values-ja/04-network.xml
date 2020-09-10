@@ -94,6 +94,7 @@
     <string name="sync_overwrite_error">ダウンロードしたファイルで、使用中のコレクションを上書きすることができませんでした。</string>
     <string name="sync_connection_error">接続がタイムアウトしました。インターネット接続に問題があるか、メディア用フォルダー内に非常に大きなファイルがあります。</string>
     <string name="sync_write_access_error">SDカードにダウンロードしたファイルを保存できませんでした。SDカードは読み取り専用か、または、十分な空き容量がありません。</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">データの削除を同期しています...</string>
     <string name="sync_small_objects_message">小さなオブジェクトを同期しています...</string>
     <string name="sync_finish_message">同期を終了しています...</string>
