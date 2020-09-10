@@ -116,9 +116,7 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
-import com.ichi2.libanki.sched.DeckDueTreeNode;
-import com.ichi2.libanki.utils.SystemTime;
-import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
@@ -1854,6 +1852,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         dialogMessage = res.getString(R.string.sync_media_error_check);
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_MEDIA_SYNC_ERROR,
                                 joinSyncMessages(dialogMessage, syncMessage));
+                    } else if ("customSyncServerUrl".equals(resultType)) {
+                        String url = result.length > 1 && result[1] instanceof CustomSyncServerUrlException
+                                ? ((CustomSyncServerUrlException)result[1]).getUrl() : "unknown";
+                        dialogMessage = res.getString(R.string.sync_error_invalid_sync_server, url);
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
                     } else {
                         if (result.length > 1 && result[1] instanceof Integer) {
                             int code = (Integer) result[1];
