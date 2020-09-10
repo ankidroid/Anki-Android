@@ -175,11 +175,13 @@
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_unhandled_request">आयात अनुरोध संसाधित करने में असमर्थ</string>
+    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_exception">पैकेज आयात करने में विफल \n\n%s</string>
     <string name="import_error_not_apkg_extension">फ़ाइल नाम \"%s\" में .apkg या .colpkg एक्सटेंशन नहीं है</string>
     <string name="import_error_load_imported_database">अन्कि डाटाबेस (.anki2) प्रतिस्थापन अभीतक सहारा नहीं दिया जाता हैं । कृपया पुस्तिका प्रतिस्थापन के शिक्षण के लिये देखिये ।</string>
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
+    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">संग्रह की जगह.. ।</string>
     <string name="import_interrupted">आयात बाधित हुआ</string>
     <string name="export_include_schedule">शेड्यूलिंग शामिल करें</string>
