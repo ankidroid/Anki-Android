@@ -20,7 +20,7 @@ import android.os.Build;
 import android.webkit.URLUtil;
 import android.webkit.WebResourceRequest;
 
-import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import java.util.function.Consumer;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
@@ -67,7 +67,7 @@ public class MissingImageHandler {
 
         try {
             String filename = URLUtil.guessFileName(url, null, null);
-            mOnFailure.consume(filename);
+            mOnFailure.accept(filename);
             mNumberOfMissingImages++;
         } catch (Exception e) {
             Timber.w(e, "Failed to notify UI of media failure");

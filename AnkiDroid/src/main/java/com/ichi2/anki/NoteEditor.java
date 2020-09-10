@@ -92,7 +92,6 @@ import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DeckComparator;
-import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.widget.WidgetStatus;
 
@@ -108,6 +107,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
@@ -1047,7 +1047,7 @@ public class NoteEditor extends AnkiActivity {
         intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR);
         intent.putExtra(EXTRA_DID, mCurrentDid);
         //mutate event with additional properties
-        intentEnricher.consume(intent);
+        intentEnricher.accept(intent);
         startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
     }
 

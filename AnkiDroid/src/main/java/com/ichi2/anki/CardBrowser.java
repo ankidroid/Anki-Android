@@ -100,6 +100,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
@@ -1106,7 +1107,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 Timber.i("CardBrowser:: Reschedule button pressed");
 
                 long[] selectedCardIds = getSelectedCardIds();
-                FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
+                Consumer<Integer> consumer = newDays ->
                     CollectionTask.launchCollectionTask(DISMISS_MULTI,
                         rescheduleCardHandler(),
                         new TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays}));

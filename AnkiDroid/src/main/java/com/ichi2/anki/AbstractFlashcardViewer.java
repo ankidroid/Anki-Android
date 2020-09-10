@@ -119,8 +119,6 @@ import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DiffEngine;
-import com.ichi2.utils.FunctionalInterfaces.Consumer;
-import com.ichi2.utils.FunctionalInterfaces.Function;
 
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
@@ -142,6 +140,8 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -521,7 +521,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     //This is intentionally package-private as it removes the need for synthetic accessors
     void processCardAction(Consumer<WebView> cardConsumer) {
         processCardFunction(cardWebView -> {
-            cardConsumer.consume(cardWebView);
+            cardConsumer.accept(cardWebView);
             return true;
         });
     }

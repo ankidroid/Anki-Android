@@ -62,11 +62,11 @@ import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.themes.Themes;
-import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
 
 import java.lang.ref.WeakReference;
+import java.util.function.Consumer;
 
 import timber.log.Timber;
 
