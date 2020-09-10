@@ -29,6 +29,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Locale;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipInputStream;
 
 import androidx.annotation.CheckResult;
@@ -422,8 +423,16 @@ public class ImportUtils {
 
 
         private static String getInvalidZipException(Context ctx, @SuppressWarnings( {"unused", "RedundantSuppression"}) File file, Exception e) {
+            // This occurs when there is random corruption in a zip file
+            if (e instanceof IOException && "central directory is empty, can't expand corrupt archive.".equals(e.getMessage())) {
+                return ctx.getString(R.string.import_error_corrupt_zip, e.getLocalizedMessage());
+            }
+            // 7050 - this occurs when a file is truncated at the end (partial download/corrupt).
+            if (e instanceof ZipException && "archive is not a ZIP archive".equals(e.getMessage())) {
+                return ctx.getString(R.string.import_error_corrupt_zip, e.getLocalizedMessage());
+            }
+
             // If we don't have a good string, send a silent exception that we can better handle this in the future
-            // 7050 for example - tell the user explicitly that the file is corrupt and they should re-download it.
             AnkiDroidApp.sendExceptionReport(e, "Import - invalid zip", "improve UI message here", true);
             return ctx.getString(R.string.import_log_failed_unzip, e.getLocalizedMessage());
         }
