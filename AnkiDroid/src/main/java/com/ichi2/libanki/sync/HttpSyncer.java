@@ -58,6 +58,7 @@ import java.util.zip.GZIPOutputStream;
 import javax.net.ssl.SSLException;
 
 import androidx.annotation.Nullable;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -224,7 +225,7 @@ public class HttpSyncer {
             String url = Uri.parse(syncURL()).buildUpon().appendPath(method).toString();
 
             Request.Builder requestBuilder = new Request.Builder();
-            requestBuilder.url(url);
+            requestBuilder.url(parseUrl(url));
 
             requestBuilder.post(new CountingFileRequestBody(tmpFileBuffer, ANKI_POST_TYPE.toString(), num -> {
                 bytesSent += num;
@@ -256,6 +257,20 @@ public class HttpSyncer {
         } finally {
             if (tmpFileBuffer != null && tmpFileBuffer.exists()) {
                 tmpFileBuffer.delete();
+            }
+        }
+    }
+
+
+    private HttpUrl parseUrl(String url) {
+        // #5843 - show better exception if the URL is invalid
+        try {
+            return HttpUrl.get(url);
+        } catch (IllegalArgumentException ex) {
+            if (isUsingCustomSyncServer(AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()))) {
+                throw new CustomSyncServerUrlException(url, ex);
+            } else {
+                throw ex;
             }
         }
     }
