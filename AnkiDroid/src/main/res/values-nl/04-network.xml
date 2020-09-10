@@ -94,6 +94,7 @@
     <string name="sync_overwrite_error">Je huidige collectie kan niet worden overschreven door het gedownloade bestand.</string>
     <string name="sync_connection_error">Verbinding time-out. Je internetverbinding ondervindt problemen of je hebt een erg groot bestand in je mediamap.</string>
     <string name="sync_write_access_error">Het gedownloade bestand kon niet worden opgeslagen op de sd-kaart. Ofwel de sd-kaart is als alleen-lezen aangesloten of er is onvoldoende ruimte.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Verwijderde objecten synchroniseren...</string>
     <string name="sync_small_objects_message">Kleine objecten synchroniseren...</string>
     <string name="sync_finish_message">Synchronisatie afsluiten...</string>

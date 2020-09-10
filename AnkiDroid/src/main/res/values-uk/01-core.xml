@@ -79,8 +79,8 @@
         <item quantity="many">залишилося %d діб %d</item>
         <item quantity="other">залишилося %d доби %d</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Колекція порожня</string>
+    <string name="no_cards_placeholder_description">Почніть додавати картки\nвикористовуючи значок +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Сьогодні вивчена %1$d карта за %2$s</item>
@@ -91,7 +91,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Введіть відповідь</string>
     <string name="show_answer">Показати відповідь</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Приховати відповідь</string>
     <string name="ease_button_again">Знову</string>
     <string name="ease_button_hard">Важко</string>
     <string name="ease_button_good">Добре</string>

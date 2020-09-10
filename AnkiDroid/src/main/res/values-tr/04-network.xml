@@ -94,6 +94,7 @@
     <string name="sync_overwrite_error">Geçerli koleksiyonunuz indirilen dosya tarafından üzerine yazılamadı.</string>
     <string name="sync_connection_error">Bağlantı zaman aşımına uğradı. Internet bağlantı sorunları yaşıyorsunuz ya da medya klasörünüzde çok büyük bir dosya var .</string>
     <string name="sync_write_access_error">İndirilen dosya sd karta kaydedilemedi. Ya sd kartınız salt okunur takılmış ya da yeterli boşluk yok.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Silinenler eşitleniyor...</string>
     <string name="sync_small_objects_message">Küçük nesneler eşitleniyor...</string>
     <string name="sync_finish_message">Eşitleme bitiriliyor...</string>

@@ -181,11 +181,13 @@
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_unhandled_request">Не атрымалася апрацаваць запыт на імпарт</string>
+    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_exception">Не атрымалася імпартаваць пакет\n\n%s</string>
     <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да кіраўніцтва карыстальніка для таго, каб імпартаваць файлы ўручную: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() не спрацавала (мажліва няма месца)</string>
+    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">Замена калекцыі&#8230;</string>
     <string name="import_interrupted">Імпарт перарваны</string>
     <string name="export_include_schedule">Разам з раскладам</string>

@@ -94,6 +94,7 @@
     <string name="sync_overwrite_error">Текущая коллекция не может быть перезаписана загруженным файлом</string>
     <string name="sync_connection_error">Время ожидания истекло. У вас или проблемы с подключением к интернету, или очень большие медиафайлы.</string>
     <string name="sync_write_access_error">Загруженный файл не может быть сохранён в хранилище: оно переполнено или доступно только для чтения.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Синхронизируются удалённые&#8230;</string>
     <string name="sync_small_objects_message">Синхронизируются малые объекты&#8230;</string>
     <string name="sync_finish_message">Синхронизация заканчивается&#8230;</string>

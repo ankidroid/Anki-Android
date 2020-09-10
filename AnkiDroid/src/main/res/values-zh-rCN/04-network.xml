@@ -94,6 +94,7 @@
     <string name="sync_overwrite_error">您当前的集合不能被下载文件覆盖。</string>
     <string name="sync_connection_error">连接超时。可能是您的网络连接出了问题，或者您的媒体文件夹中有非常大的文件。</string>
     <string name="sync_write_access_error">无法将已下载的文件保存到SD卡。可能因为您的SD卡挂载为只读或者是空间不足。</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">删除&#8230;&#8230;</string>
     <string name="sync_small_objects_message">同步小对象&#8230;&#8230;</string>
     <string name="sync_finish_message">正在完成同步...</string>
