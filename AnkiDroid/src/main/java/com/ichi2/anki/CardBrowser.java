@@ -1401,7 +1401,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 sb.append("("); // Only if we really have selected tags
             }
-            sb.append("tag:").append(tag).append(" ");
+            // 7070: quote tags so brackets are properly escaped
+            sb.append("tag:").append("'").append(tag).append("'").append(" ");
             i++;
         }
         if (i > 0) {
@@ -2502,5 +2503,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
         throw new IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId));
+    }
+
+
+    @VisibleForTesting
+    void filterByTag(String... tags) {
+        filterByTag(Arrays.asList(tags), 0);
     }
 }
