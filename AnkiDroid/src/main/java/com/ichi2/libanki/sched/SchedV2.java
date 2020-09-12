@@ -719,14 +719,6 @@ public class SchedV2 extends AbstractSched {
      * New cards **************************************************************** *******************************
      */
 
-    /** Same as _resetNew, but assume discardCard is currently in the reviewer and so don't conunt it.*/
-    protected void _resetNew(@Nullable Card discardCard) {
-        _resetNew();
-        if (discardCard != null && discardCard.getQueue() == Consts.QUEUE_TYPE_NEW) {
-            mNewCount--;
-        }
-    }
-
     protected void _resetNewCount() {
         mNewCount = _walkingCount((Deck g) -> _deckNewLimitSingle(g),
                                   (long did, int lim) -> _cntFnNew(did, lim));
@@ -836,7 +828,7 @@ public class SchedV2 extends AbstractSched {
         // if we didn't get a card, since the count is non-zero, we
         // need to check again for any cards that were removed
         // from the queue but not buried
-        _resetNew(mCurrentCard);
+        _resetNew();
         return _fillNew(true);
     }
 
@@ -1518,15 +1510,6 @@ public class SchedV2 extends AbstractSched {
                                         mToday, lim);
     }
 
-
-    /** Same as _resetRev, but assume discardCard is currently in the reviewer and so don't conunt it.*/
-    protected void _resetRev(@Nullable Card discardCard) {
-        _resetRev();
-        if (discardCard != null && discardCard.getQueue() == Consts.QUEUE_TYPE_REV) {
-            mRevCount--;
-        }
-    }
-
     // Overriden: V1 uses _walkingCount
     protected void _resetRevCount() {
         int lim = _currentRevLimit();
@@ -1598,7 +1581,7 @@ public class SchedV2 extends AbstractSched {
         // since we didn't get a card and the count is non-zero, we
         // need to check again for any cards that were removed from
         // the queue but not buried
-        _resetRev(mCurrentCard);
+        _resetRev();
         return _fillRev(true);
     }
 
