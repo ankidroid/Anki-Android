@@ -65,6 +65,9 @@ public class HtmlColors {
                                 0xff - Integer.parseInt(m2.group(2)),
                                 0xff - Integer.parseInt(m2.group(3)));
                     }
+                } else {
+                    // nameToHex lowercases invalid input - reverse this.
+                    color = m1.group(2);
                 }
             } catch (NumberFormatException e) {
                 // shouldn't happen but ignore anyway
