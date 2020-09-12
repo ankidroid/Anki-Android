@@ -283,6 +283,18 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("Activity should be cancelled as it did nothing", shadowActivity.getResultCode(), is(Activity.RESULT_CANCELED));
     }
 
+    @Test
+    public void tagWithBracketsDisplaysProperly() {
+        Note n = addNoteUsingBasicModel("Hello", "World");
+        n.addTag("sketchy::(1)");
+        n.flush();
+
+        CardBrowser b = getBrowserWithNoNewCards();
+        b.filterByTag("sketchy::(1)");
+
+        assertThat("tagged card should be returned", b.getCardCount(), is(1));
+    }
+
 
     private void flagCardForNote(Note n, int flag) {
         Card c = n.firstCard();
