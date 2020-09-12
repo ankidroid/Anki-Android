@@ -27,6 +27,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONArray;
 
 import org.junit.Before;
@@ -376,5 +377,25 @@ mw.col.sched.extendLimits(1, 0)
 
         boolean hasMatch = decks.all().stream().anyMatch(x -> name.equals(x.getString("name")));
         assertThat(String.format("Deck %s should exist", name), hasMatch, is(true));
+    }
+
+
+
+    @Test
+    public void regression_7066() {
+        Collection col = getCol();
+        DeckConfig dconf = col.getDecks().getConf(1);
+        dconf.getJSONObject("new").put("bury", true);
+        AbstractSched sched = col.getSched();
+        addNoteUsingBasicAndReversedModel("foo", "bar");
+        addNoteUsingBasicModel("plop", "foo");
+        col.reset();
+        Card card = sched.getCard();
+        sched.setCurrentCard(card);
+        sched.preloadNextCard();
+        sched.answerCard(card, Consts.BUTTON_THREE);
+        card = sched.getCard();
+        sched.setCurrentCard(card);
+        AnkiAssert.assertDoesNotThrow(() -> sched.preloadNextCard());
     }
 }
