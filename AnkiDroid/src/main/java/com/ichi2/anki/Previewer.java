@@ -203,7 +203,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
     // we don't want the Activity title to be changed.
     @Override
-    protected void updateScreenCounts() { /* do nothing */ }
+    protected void updateActionBar() { /* do nothing */ }
 
 
     @Override
