@@ -935,7 +935,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // Initialize dictionary lookup feature
         Lookup.initialize(this);
 
-        updateScreenCounts();
+        updateActionBar();
         supportInvalidateOptionsMenu();
     }
 
@@ -966,7 +966,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.setContext(new WeakReference<Activity>(this));
         // Reset the activity title
         setTitle();
-        updateScreenCounts();
+        updateActionBar();
         selectNavigationItem(-1);
     }
 
@@ -1823,7 +1823,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     private void updateForNewCard() {
-        updateScreenCounts();
+        updateActionBar();
 
         // Clean answer field
         if (typeAnswer()) {
@@ -1836,7 +1836,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected void updateScreenCounts() {
+    protected void updateActionBar() {
         if (mCurrentCard == null) return;
         ActionBar actionBar = getSupportActionBar();
 
