@@ -522,6 +522,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     Intent i = Preferences.getPreferenceSubscreenIntent(this, "com.ichi2.anki.prefs.advanced");
                     startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE);
                     Toast.makeText(this, R.string.directory_inaccessible, Toast.LENGTH_LONG).show();
+                } else if (isFutureAnkiDroidVersion()) {
+                    Timber.i("Displaying database versioning");
+                    showDatabaseErrorDialog(DatabaseErrorDialog.INCOMPATIBLE_DB_VERSION);
                 } else {
                     Timber.i("Displaying database error");
                     showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED);
@@ -531,6 +534,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
+
+
+    private boolean isFutureAnkiDroidVersion() {
+        try {
+            return CollectionHelper.isFutureAnkiDroidVersion(this);
+        } catch (Exception e) {
+            Timber.w(e, "Could not determine if future AnkiDroid version - assuming not");
+            return false;
+        }
+    }
+
 
     // throws doesn't seem to be checked by the compiler - consider it to be documentation
     private boolean applyDeckPickerBackground(View view) throws OutOfMemoryError {
