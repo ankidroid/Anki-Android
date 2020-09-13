@@ -21,6 +21,7 @@ import android.content.Context;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 
+import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
@@ -44,6 +45,16 @@ public class Storage {
         return Collection(context, path, false, false);
     }
 
+    /** Helper method for when the collection can't be opened */
+    public static int getDatabaseVersion(String path) throws UnknownDatabaseVersionException {
+        try {
+            DB db = new DB(path);
+            return db.queryScalar("SELECT ver FROM col");
+        } catch (Exception e) {
+            Timber.w(e, "Can't open database");
+            throw new UnknownDatabaseVersionException(e);
+        }
+    }
 
     public static Collection Collection(Context context, String path, boolean server, boolean log) {
         return Collection(context, path, server, log, new SystemTime());

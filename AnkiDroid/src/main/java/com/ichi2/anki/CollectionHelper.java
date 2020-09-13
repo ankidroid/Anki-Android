@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
+import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.preferences.PreferenceExtensions;
@@ -38,6 +39,8 @@ import java.io.IOException;
 
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
+
+import static com.ichi2.libanki.Consts.SCHEMA_VERSION;
 
 /**
  * Singleton which opens, stores, and closes the reference to the Collection.
@@ -371,6 +374,22 @@ public class CollectionHelper {
      */
     public static void loadCollectionComplete(Collection col) {
         col.getModels();
+    }
+
+    public static boolean isFutureAnkiDroidVersion(Context context) throws UnknownDatabaseVersionException {
+        int databaseVersion = getDatabaseVersion(context);
+        return databaseVersion > SCHEMA_VERSION;
+    }
+
+
+    public static int getDatabaseVersion(Context context) throws UnknownDatabaseVersionException {
+        try {
+            Collection col = getInstance().mCollection;
+            return col.queryVer();
+        } catch (Exception e) {
+            Timber.w(e, "Failed to query version");
+            return Storage.getDatabaseVersion(getCollectionPath(context));
+        }
     }
 
 }

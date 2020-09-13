@@ -33,6 +33,7 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.exception.NoSuchDeckException;
+import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
@@ -2138,6 +2139,14 @@ public class Collection {
     @CheckResult
     public List<Long> filterToValidCards(long[] cards) {
         return getDb().queryLongList("select id from cards where id in " + Utils.ids2str(cards));
+    }
+
+    public int queryVer() throws UnknownDatabaseVersionException {
+        try {
+            return getDb().queryScalar("select ver from col");
+        } catch (Exception e) {
+            throw new UnknownDatabaseVersionException(e);
+        }
     }
 
     //This duplicates _loadScheduler (but returns the value and sets the report limit).
