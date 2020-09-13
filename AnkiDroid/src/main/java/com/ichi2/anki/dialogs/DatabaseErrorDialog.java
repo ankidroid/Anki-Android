@@ -13,12 +13,15 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.libanki.Consts;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.utils.UiUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
@@ -38,6 +41,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_FULL_SYNC_FROM_SERVER = 8;
     /** If the database is locked, all we can do is reset the app */
     public static final int DIALOG_DB_LOCKED = 9;
+    /** If the datbase is at a version higher than what we can currently handle */
+    public static final int INCOMPATIBLE_DB_VERSION = 10;
 
     // public flag which lets us distinguish between inaccessible and corrupt database
     public static boolean databaseCorruptFlag = false;
@@ -209,7 +214,6 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                     }
                     builder.title(res.getString(R.string.backup_restore_select_title))
                             .negativeText(res.getString(R.string.dialog_cancel))
-                            .onNegative((inner_dialog, which) -> dismissAllDialogFragments())
                             .items(dates)
                             .itemsCallbackSingleChoice(dates.length,
                                     (materialDialog, view, which, charSequence) -> {
@@ -298,6 +302,31 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         .onPositive((inner_dialog, which) -> exit())
                         .show();
             }
+            case INCOMPATIBLE_DB_VERSION: {
+                List<Integer> values = new ArrayList<>();
+                CharSequence[] options = new CharSequence[] { UiUtil.makeBold(res.getString(R.string.backup_restore)), UiUtil.makeBold(res.getString(R.string.backup_full_sync_from_server)) };
+                values.add(0);
+                values.add(1);
+                return builder
+                        .cancelable(false)
+                        .content(getMessage())
+                        .iconAttr(R.attr.dialogErrorIcon)
+                        .positiveText(res.getString(R.string.close))
+                        .onPositive((inner_dialog, which) -> exit())
+                        .items(options)
+                       // .itemsColor(ContextCompat.getColor(requireContext(), R.color.material_grey_500))
+                        .itemsCallback((dialog, itemView, position, text) -> {
+                            switch (values.get(position)) {
+                                case 0:
+                                    ((DeckPicker) getActivity()).showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP);
+                                    break;
+                                case 1:
+                                    ((DeckPicker) getActivity()).showDatabaseErrorDialog(DIALOG_FULL_SYNC_FROM_SERVER);
+                                    break;
+                            }
+                        })
+                        .show();
+            }
             default:
                 return null;
         }
@@ -337,6 +366,14 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.backup_full_sync_from_server_question);
             case DIALOG_DB_LOCKED:
                 return res().getString(R.string.database_locked_summary);
+            case INCOMPATIBLE_DB_VERSION:
+                int databaseVersion = -1;
+                try {
+                    databaseVersion = CollectionHelper.getDatabaseVersion(requireContext());
+                } catch (Exception e) {
+                    Timber.w(e, "Failed to get database version, using -1");
+                }
+                return res().getString(R.string.incompatible_database_version_summary, Consts.SCHEMA_VERSION, databaseVersion);
             default:
                 return getArguments().getString("dialogMessage");
         }
@@ -362,6 +399,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.backup_full_sync_from_server);
             case DIALOG_DB_LOCKED:
                 return res().getString(R.string.database_locked_title);
+            case INCOMPATIBLE_DB_VERSION:
+                return res().getString(R.string.incompatible_database_version_title);
             case DIALOG_DB_ERROR:
             default:
                 return res().getString(R.string.answering_error_title);
