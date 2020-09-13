@@ -56,6 +56,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static java.lang.Math.min;
@@ -124,7 +125,7 @@ public class Media {
             return;
         }
         // media directory
-        mDir = col.getPath().replaceFirst("\\.anki2$", ".media");
+        mDir = getCollectionMediaPath(col.getPath());
         File fd = new File(mDir);
         if (!fd.exists()) {
             if (!fd.mkdir()) {
@@ -133,6 +134,12 @@ public class Media {
         }
         // change database
         connect();
+    }
+
+
+    @NonNull
+    public static String getCollectionMediaPath(String collectionPath) {
+        return collectionPath.replaceFirst("\\.anki2$", ".media");
     }
 
 
