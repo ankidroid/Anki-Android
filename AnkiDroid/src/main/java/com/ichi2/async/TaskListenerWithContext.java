@@ -14,11 +14,12 @@ public abstract class TaskListenerWithContext<CTX> extends TaskListener {
 
 
     final public void onPreExecute() {
+        onBeforePreExecute();
         CTX context = mContext.get();
         if (context != null) {
             actualOnPreExecute(context);
         }
-    };
+    }
 
 
     final public void onProgressUpdate(TaskData value) {
@@ -45,6 +46,7 @@ public abstract class TaskListenerWithContext<CTX> extends TaskListener {
 
 
     final public void onPostExecute(TaskData result) {
+        onBeforePostExecute(result);
         CTX context = mContext.get();
         if (context != null) {
             actualOnPostExecute(context, result);
@@ -71,5 +73,13 @@ public abstract class TaskListenerWithContext<CTX> extends TaskListener {
     /** Assumes context exists. */
     public void actualOnCancelled(@NonNull CTX context) {
         // most implementations do nothing with this, provide them a default implementation
+    }
+
+
+    protected void onBeforePreExecute() {
+    }
+
+
+    protected void onBeforePostExecute(TaskData result) {
     }
 }

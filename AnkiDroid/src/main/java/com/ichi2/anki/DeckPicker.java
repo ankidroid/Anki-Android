@@ -108,6 +108,7 @@ import com.ichi2.async.Connection.Payload;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
+import com.ichi2.async.WakeLockTaskListener;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
@@ -289,9 +290,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     };
 
         private final ImportAddListener mImportAddListener = new ImportAddListener(this);
-    private static class ImportAddListener extends TaskListenerWithContext<DeckPicker> {
+    private static class ImportAddListener extends WakeLockTaskListener<DeckPicker> {
         public ImportAddListener(DeckPicker deckPicker) {
-            super(deckPicker);
+            super(deckPicker, "DeckPickerImportDeck");
         }
 
         @Override
