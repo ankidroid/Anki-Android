@@ -788,6 +788,11 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void updateActionBar() {
+        super.updateActionBar();
+        updateScreenCounts();
+    }
+
+    protected void updateScreenCounts() {
         if (mCurrentCard == null) return;
         super.updateActionBar();
         ActionBar actionBar = getSupportActionBar();

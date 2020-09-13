@@ -201,11 +201,6 @@ public class Previewer extends AbstractFlashcardViewer {
     }
 
 
-    // we don't want the Activity title to be changed.
-    @Override
-    protected void updateActionBar() { /* do nothing */ }
-
-
     @Override
     public boolean executeCommand(int which) {
         /* do nothing */
