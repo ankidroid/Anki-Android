@@ -22,6 +22,7 @@
 <lint>
     <issue id="NewApi" severity="fatal" />
     <issue id="InlinedApi" severity="fatal" />
+    <issue id="MissingSuperCall" severity="fatal" />
     <issue id="StringFormatCount" severity="fatal" />
     <issue id="StringFormatMatches" severity="fatal" />
     <issue id="StringFormatInvalid" severity="fatal" />
@@ -80,7 +81,6 @@
     <issue id="ButtonOrder" severity="ignore" />
     <issue id="ButtonStyle" severity="ignore" />
     <issue id="ByteOrderMark" severity="ignore" />
-    <issue id="MissingSuperCall" severity="ignore" />
     <issue id="AdapterViewChildren" severity="ignore" />
     <issue id="ScrollViewCount" severity="ignore" />
     <issue id="PermissionImpliesUnsupportedChromeOsHardware" severity="ignore" />
