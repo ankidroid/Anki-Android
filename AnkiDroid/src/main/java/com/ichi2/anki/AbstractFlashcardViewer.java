@@ -52,9 +52,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.net.ConnectivityManagerCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
-import android.text.SpannableString;
+
 import android.text.TextUtils;
-import android.text.style.UnderlineSpan;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -1837,6 +1836,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void updateActionBar() {
+        updateDeckName();
+    }
+
+    protected void updateDeckName() {
         if (mCurrentCard == null) return;
         ActionBar actionBar = getSupportActionBar();
 
