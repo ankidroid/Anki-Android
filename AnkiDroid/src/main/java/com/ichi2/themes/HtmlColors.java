@@ -21,9 +21,9 @@ public class HtmlColors {
                 sColorsMap.put(fColorsRawList[i].toLowerCase(Locale.US), fColorsRawList[i+1].toLowerCase(Locale.US));
             }
         }
-        name = name.toLowerCase(Locale.US);
-        if (sColorsMap.containsKey(name)) {
-            return sColorsMap.get(name);
+        String normalisedName = name.toLowerCase(Locale.US);
+        if (sColorsMap.containsKey(normalisedName)) {
+            return sColorsMap.get(normalisedName);
         }
         return name;
     }
@@ -65,9 +65,6 @@ public class HtmlColors {
                                 0xff - Integer.parseInt(m2.group(2)),
                                 0xff - Integer.parseInt(m2.group(3)));
                     }
-                } else {
-                    // nameToHex lowercases invalid input - reverse this.
-                    color = m1.group(2);
                 }
             } catch (NumberFormatException e) {
                 // shouldn't happen but ignore anyway
