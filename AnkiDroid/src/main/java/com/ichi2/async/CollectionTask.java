@@ -32,9 +32,9 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
+import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Undoable;
-import com.ichi2.libanki.Undoable.*;
 import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.AnkiPackageExporter;
@@ -338,7 +338,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
-        if (mType != TASK_TYPE.REPAIR_COLLECTION && CollectionHelper.getInstance().getColSafe(mContext) == null) {
+        if (mType != TASK_TYPE.REPAIR_COLLECTION && mType != TASK_TYPE.IMPORT_REPLACE && CollectionHelper.getInstance().getColSafe(mContext) == null) {
             Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", mType);
             return null;
         }
@@ -1384,12 +1384,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundImportReplace(TaskData param) {
         Timber.d("doInBackgroundImportReplace");
-        Collection col = getCol();
         String path = param.getString();
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
 
         // extract the deck from the zip file
-        String colPath = col.getPath();
+        String colPath = CollectionHelper.getCollectionPath(mContext);
         File dir = new File(new File(colPath).getParentFile(), "tmpzip");
         if (dir.exists()) {
             BackupManager.removeDir(dir);
@@ -1443,11 +1442,12 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
         publishProgress(new TaskData(res.getString(R.string.importing_collection)));
-        if (col != null) {
+
+        if (hasValidCol()) {
             // unload collection and trigger a backup
             CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
             CollectionHelper.getInstance().lockCollection();
-            BackupManager.performBackupInBackground(colPath, true, col.getTime());
+            BackupManager.performBackupInBackground(colPath, true, CollectionHelper.getInstance().getTimeSafe(mContext));
         }
         // overwrite collection
         File f = new File(colFile);
@@ -1480,7 +1480,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 jr.endObject();
                 jr.close();
             }
-            String mediaDir = col.getMedia().dir();
+            String mediaDir = Media.getCollectionMediaPath(colPath);
             int total = nameToNum.size();
             int i = 0;
             for (Map.Entry<String, String> entry : nameToNum.entrySet()) {
@@ -1937,6 +1937,16 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             if (task != null) {
                 task.doProgress(value);
             }
+        }
+    }
+
+    /** Whether col is readable */
+    private boolean hasValidCol() {
+        try {
+            getCol();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
