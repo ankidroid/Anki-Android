@@ -229,7 +229,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
-    protected boolean mSafeDisplay;
     // Android WebView
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
@@ -1639,7 +1638,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Runnable after = () -> mFlipCardLayout.setVisibility(View.GONE);
 
         // hide "Show Answer" button
-        if (mSafeDisplay) {
+        if (animationDisabled()) {
             after.run();
         } else {
             mEaseButtonsLayout.setAlpha(0);
@@ -1664,7 +1663,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         boolean easeButtonsVisible = mEaseButtonsLayout.getVisibility() == View.VISIBLE;
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
-        if (mSafeDisplay || !easeButtonsVisible) {
+        if (animationDisabled() || !easeButtonsVisible) {
             after.run();
         } else {
             mEaseButtonsLayout.setAlpha(1);
@@ -1743,7 +1742,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
-        mSafeDisplay = preferences.getBoolean("safeDisplay", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
