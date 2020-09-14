@@ -164,11 +164,11 @@
     <string name="time_quantity_months">%.1f міс</string>
     <string name="time_quantity_years">%.1f р</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Перебудова фільтрованої колоди&#8230;</string>
     <string name="rebuild_cram_label">Перебудувати</string>
     <string name="empty_cram_label">Порожньо</string>
     <string name="create_subdeck">Створити підколоду</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">Очищення фільтрованої колоди&#8230;</string>
     <string name="custom_study_deck_name">Додаткове навчання</string>
     <string name="custom_study_deck_exists">Спочатку перейменуйте колоду додаткового навчання</string>
     <string name="empty_deck">Ця колода порожня</string>
