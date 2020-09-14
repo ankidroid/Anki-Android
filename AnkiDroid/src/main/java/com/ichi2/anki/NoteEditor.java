@@ -94,6 +94,7 @@ import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.NamedJSONComparator;
+import com.ichi2.utils.NoteFieldDecorator;
 import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONArray;
@@ -1498,6 +1499,29 @@ public class NoteEditor extends AnkiActivity {
 
         // Listen for changes in the first field so we can re-check duplicate status.
         editText.addTextChangedListener(new EditFieldTextWatcher(index));
+        if (index == 0) {
+            editText.setOnFocusChangeListener((v, hasFocus) -> {
+                try {
+                    if (hasFocus) {
+                        // we only want to decorate when we lose focus
+                        return;
+                    }
+                    String[] currentFieldStrings = getCurrentFieldStrings();
+                    if (currentFieldStrings.length != 2 || currentFieldStrings[1].length() > 0) {
+                        // we only decorate on 2-field cards while second field is still empty
+                        return;
+                    }
+                    String firstField = currentFieldStrings[0];
+                    String decoratedText = NoteFieldDecorator.aplicaHuevo(firstField);
+                    if (!decoratedText.equals(firstField)) {
+                        // we only apply the decoration if it is actually different from the first field
+                        setFieldValueFromUi(1, decoratedText);
+                    }
+                } catch (Exception e) {
+                    Timber.w(e, "Unable to decorate text field");
+                }
+            });
+        }
         editText.setEnabled(enabled);
     }
 
