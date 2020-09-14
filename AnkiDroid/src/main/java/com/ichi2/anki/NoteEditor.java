@@ -92,6 +92,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DeckComparator;
+import com.ichi2.utils.EasterEggs;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.widget.WidgetStatus;
@@ -828,6 +829,7 @@ public class NoteEditor extends AnkiActivity {
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<>();
         }
+        EasterEggs.onSaveNote(this);
         // treat add new note and edit existing note independently
         if (mAddNote) {
             //Different from libAnki, block if there are no cloze deletions.
@@ -1578,7 +1580,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private String getFieldsText() {
+    public String getFieldsText() {
         String[] fields = new String[mEditFields.size()];
         for (int i = 0; i < mEditFields.size(); i++) {
             fields[i] = getCurrentFieldText(i);
