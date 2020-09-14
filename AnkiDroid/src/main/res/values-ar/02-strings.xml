@@ -47,14 +47,14 @@
     <string name="CardEditorCardDeck">رزمة البطاقة:</string>
     <string name="CardEditorNoteDeck">الرزمة:</string>
     <string name="CardEditorModel">النوع:</string>
-    <string name="CardEditorTags">السمات: %1$s</string>
+    <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
-    <string name="tag_name">اسم السمة</string>
-    <string name="add_new_filter_tags">إضافة/فلترة السمات</string>
-    <string name="add_tag">إضافة سمة</string>
-    <string name="check_all_tags">تحديد/إلغاء تحديد كل السمات</string>
-    <string name="filter_tags">فلترة السمات</string>
-    <string name="no_tags">لم تضف أي سمات بعد</string>
+    <string name="tag_name">اسم الوسم</string>
+    <string name="add_new_filter_tags">إضافة/فلترة الوسوم</string>
+    <string name="add_tag">إضافة وسم</string>
+    <string name="check_all_tags">تحديد/إلغاء تحديد كل الوسوم</string>
+    <string name="filter_tags">فلترة الوسوم</string>
+    <string name="no_tags">لم تضف أي وسوم بعد</string>
     <string name="sdcard_missing_message">أوقف تخزين USB للوصول إلى رزمك</string>
     <string name="updated_version">تم التحديث إلى الإصدار: %s</string>
     <!-- Reviewer.java -->
@@ -88,7 +88,7 @@
         <item>رزمة</item>
         <item>ملحوظة</item>
         <item>سؤال</item>
-        <item>سمات</item>
+        <item>وسوم</item>
         <item>سقطات</item>
         <item>مراجعات</item>
         <item>الفاصل الزمني</item>
@@ -105,7 +105,7 @@
     <string name="custom_study_review_ahead">المراجعة مبكرًا</string>
     <string name="custom_study_random_selection">ادرس مجموعة بطاقات عشوائية</string>
     <string name="custom_study_preview_new">معاينة البطاقات الجديدة</string>
-    <string name="custom_study_limit_tags">قصر على سمات معينة</string>
+    <string name="custom_study_limit_tags">قصر على وسوم معينة</string>
     <!-- Card editor -->
     <string name="cardeditor_title_add_note">إضافة ملحوظة</string>
     <string name="cardeditor_title_edit_card">تحرير الملحوظة</string>
@@ -187,13 +187,13 @@
     <string name="import_log_file_cache_cleared">حدث خطأ عند استيراد الملف. يحتمل أن يكون بسبب مسح ذاكرة الكاش عند المعالجة.\nحاول مجددًا</string>
     <string name="import_succeeded_but_check_database">نجح استيراد البيانات لكن فشل تنظيف ما بعد الاستيراد. استخدم ميزة فحص قاعدة البيانات لاحقًا. السبب: %s</string>
     <string name="import_error_unhandled_request">تعذرت معالجة طلب الاستيراد</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">ملف apkg تالف. الرجاء حذفه وتحميله مجددًا.\n\nالسبب: %s</string>
     <string name="import_error_exception">فشل استيراد الحزمة\n\n%s</string>
     <string name="import_error_not_apkg_extension">لا يحتوي اسم الملف “%s” على لاحقة .apkg أو .colpkg</string>
     <string name="import_error_load_imported_database">استبدالات قاعدة بيانات أنكي (.anki2) غير مدعومة. الرجاء الاطلاع على الدليل لتعليمات الاستبدال.</string>
     <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة أنكيدرويد. الرجاء الاطلاع على دليل المستخدم لكيفية استيراد ملفات أنكي يدويًا: \n%s</string>
     <string name="import_error_copy_file_to_cache">فشلت copyFileToCache() (ربما بسبب نفاذ مساحة التخزين)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_unhandled_scheme">استيراد غير معالج من: “%s”</string>
     <string name="import_replacing">يجري استبدال المجموعة&#8230;</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
     <string name="export_include_schedule">تضمين معلومات الجدولة</string>
@@ -228,7 +228,7 @@
     <string name="sched_unbury_action">لرؤيتها انقر «نكش» في القائمة</string>
     <string name="sched_has_buried">تم تأجيل بعض البطاقات المدفونة أو ذات الصلة حتى الغد</string>
     <string name="tag_editor_add_feedback">انقر “%2$s” لتأكيد إضافة “%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">تم تحديد السمة الموجودة “%1$s”</string>
+    <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود “%1$s”</string>
     <string name="lookup_hint">بعد نسخ النص، انقر في أي مكان على البطاقة لعرض أيقونة البحث</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">

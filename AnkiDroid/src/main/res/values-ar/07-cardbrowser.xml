@@ -66,8 +66,8 @@
     <string name="card_browser_suspended_cards">البطاقات المعلقة/غير المعلقة</string>
     <string name="card_browser_show_marked">فلترة البطاقات المعلمة</string>
     <string name="card_browser_show_suspended">فلترة البطاقات المعلقة</string>
-    <string name="card_browser_search_by_tag">فلترة حسب السمة</string>
-    <string name="card_browser_tags_shown">سمات: %1$s</string>
+    <string name="card_browser_search_by_tag">فلترة حسب الوسم</string>
+    <string name="card_browser_tags_shown">الوسوم: %1$s</string>
     <string name="card_browser_list_my_searches">عبارات البحث الخاصة بي</string>
     <string name="card_browser_list_my_searches_save">احفظ عبارة البحث</string>
     <string name="card_browser_list_my_searches_title">اختر عبارة بحث محفوظة</string>

@@ -51,8 +51,8 @@
     <string name="pref_cat_whiteboard">السبورة</string>
     <string name="pref_cat_automatic_display">إظهار الجواب تلقائيًا</string>
     <string name="pref_cat_appearance">المظهر</string>
-    <string name="pref_cat_appearance_summ">تغيير الثيمات والخط الافتراضي</string>
-    <string name="pref_cat_themes">الثيمات</string>
+    <string name="pref_cat_appearance_summ">تغيير السمات والخط الافتراضي</string>
+    <string name="pref_cat_themes">السمات</string>
     <string name="pref_cat_fonts">الخطوط</string>
     <string name="pref_cat_gestures">الإيماءات</string>
     <string name="pref_cat_gestures_summ">استخدم النقرات والسحب بدلًا من الأزرار</string>
@@ -125,8 +125,8 @@
     <string name="automatic_sync_choice_summ">مزامنة تلقائية عند بدء/إغلاق التطبيق إذا مضى على المزامنة الأخيرة        أكثر من 10 دقائق.</string>
     <string name="sync_status_badge">عرض حالة المزامنة</string>
     <string name="sync_status_badge_summ">تغيير زر المزامنة المعروض عندما يكون من الممكن رفع التغييرات</string>
-    <string name="day_theme">ثيمة النهار</string>
-    <string name="night_theme">ثيمة الليل</string>
+    <string name="day_theme">سمة النهار</string>
+    <string name="night_theme">سمة الليل</string>
     <string name="default_font">الخط الافتراضي</string>
     <string name="override_font">قابلية تطبيق الخط الافتراضي</string>
     <string name="language">اللغة</string>
@@ -207,7 +207,7 @@
     <string name="custom_sync_server_media_url_invalid">رابط مزامنة الوسائط غير صالح</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">ستؤثر التغييرات في خيارات مجموعة الرزم على عدة رزم. إذا كنت ترغب في تغيير الرزمة الحالية فقط، أضف مجموعة خيارات جديدة أولًا.</string>
-    <string name="studyoptions_limit_select_tags">اختيار سمات</string>
+    <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
     <!-- Deck configurations -->
     <string name="deck_conf_deck_description">وصف الرزمة (ينطبق على الرزمة الحالية فقط)</string>
     <string name="deck_conf_group">مجموعة الخيارات</string>
