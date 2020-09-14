@@ -175,14 +175,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mBtnCamera.setText(gtxt(R.string.multimedia_editor_image_field_editing_photo));
         mBtnCamera.setOnClickListener(v -> captureImage(context));
 
-        if (!Permissions.canUseCamera(context)) {
-            mBtnCamera.setVisibility(View.INVISIBLE);
-        }
-
-        // Some hardware has no camera or reports yes but has zero (e.g., cheap devices, and Chromebook emulator)
-        if ((!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA) &&
-                !context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) ||
-                (CompatHelper.getCompat().getCameraCount() < 1)) {
+        if (!canUseCamera(context)) {
             mBtnCamera.setVisibility(View.INVISIBLE);
         }
 
@@ -194,6 +187,26 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mCropButton, ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+
+    private boolean canUseCamera(Context context) {
+        if (!Permissions.canUseCamera(context)) {
+            return false;
+        }
+
+        PackageManager pm = context.getPackageManager();
+
+        if ((!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) && !pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT))) {
+            return false;
+        }
+
+        // Some hardware has no camera or reports yes but has zero (e.g., cheap devices, and Chromebook emulator)
+        if (CompatHelper.getCompat().getCameraCount() < 1) {
+            return false;
+        }
+
+        return true;
     }
 
 
