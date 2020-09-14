@@ -54,6 +54,7 @@ import org.robolectric.shadows.ShadowLog;
 
 import java.util.ArrayList;
 
+import androidx.annotation.Nullable;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
 import timber.log.Timber;
@@ -287,7 +288,14 @@ public class RobolectricTest {
     }
 
 
+
+
     protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
+        waitForTask(taskType, null, timeoutMs);
+    }
+
+
+    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, @Nullable TaskData data, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
         TaskListener listener = new TaskListener() {
             @Override
@@ -298,13 +306,18 @@ public class RobolectricTest {
 
             @Override
             public void onPostExecute(TaskData result) {
+
+                if (result == null || !result.getBoolean()) {
+                    throw new IllegalArgumentException("Task failed");
+                }
                 completed[0] = true;
                 synchronized (RobolectricTest.this) {
                     RobolectricTest.this.notify();
                 }
             }
         };
-        CollectionTask.launchCollectionTask(taskType, listener);
+        CollectionTask.launchCollectionTask(taskType, listener, data);
+
 
         wait(timeoutMs);
 
