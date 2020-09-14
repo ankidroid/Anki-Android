@@ -85,7 +85,13 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((resultCode != Activity.RESULT_CANCELED) && (requestCode == ACTIVITY_SELECT_AUDIO_CLIP)) {
-            handleAudioSelection(data);
+            try {
+                handleAudioSelection(data);
+            } catch (Exception e) {
+                AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:unhandled");
+                UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
+                        AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
+            }
         }
     }
 
@@ -131,6 +137,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
             Timber.d("audio clip picker file path is: %s", clipCopy.getAbsolutePath());
         } catch (Exception e) {
             Timber.e(e, "Could not create temporary audio file. ");
+            AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:tempFile");
             UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
                     AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
             return;
@@ -147,6 +154,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
             mTvAudioClip.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             Timber.e(e, "Unable to copy audio file from ContentProvider");
+            AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:copyFromProvider");
             UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
                     AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
         }
