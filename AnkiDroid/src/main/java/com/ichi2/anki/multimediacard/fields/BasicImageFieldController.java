@@ -173,43 +173,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         Button mBtnCamera = new Button(mActivity);
         mBtnCamera.setText(gtxt(R.string.multimedia_editor_image_field_editing_photo));
-        mBtnCamera.setOnClickListener(v -> {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File image;
-            try {
-                saveImageForRevert();
-
-                // Create a new image for the camera result to land in, clear the URI
-                image = createNewCacheFile();
-                Uri imageUri = getUriForFile(image);
-                mViewModel = new ImageViewModel(image.getPath(), imageUri);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-
-                // Until Android API21 (maybe 22) you must manually handle permissions for image capture w/FileProvider
-                // This can be removed once minSDK is >= 22
-                // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
-                if (CompatHelper.getSdkVersion() <= Build.VERSION_CODES.LOLLIPOP) {
-                    cameraIntent.setClipData(ClipData.newRawUri("", imageUri));
-                    cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                }
-
-                if (cameraIntent.resolveActivity(context.getPackageManager()) == null) {
-                    Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent");
-                    showSomethingWentWrong();
-                    onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null);
-                    return;
-                }
-                try {
-                    mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
-                } catch (Exception e) {
-                    Timber.w(e, "Unable to take picture");
-                    showSomethingWentWrong();
-                    onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null);
-                }
-            } catch (IOException e) {
-                Timber.w(e, "mBtnCamera::onClickListener() unable to prepare file and launch camera");
-            }
-        });
+        mBtnCamera.setOnClickListener(v -> captureImage(context));
 
         if (!Permissions.canUseCamera(context)) {
             mBtnCamera.setVisibility(View.INVISIBLE);
@@ -230,6 +194,45 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         layout.addView(mBtnGallery, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mBtnCamera, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.addView(mCropButton, ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+
+    private void captureImage(Context context) {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File image;
+        try {
+            saveImageForRevert();
+
+            // Create a new image for the camera result to land in, clear the URI
+            image = createNewCacheFile();
+            Uri imageUri = getUriForFile(image);
+            mViewModel = new ImageViewModel(image.getPath(), imageUri);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
+            // Until Android API21 (maybe 22) you must manually handle permissions for image capture w/FileProvider
+            // This can be removed once minSDK is >= 22
+            // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
+            if (CompatHelper.getSdkVersion() <= Build.VERSION_CODES.LOLLIPOP) {
+                cameraIntent.setClipData(ClipData.newRawUri("", imageUri));
+                cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+
+            if (cameraIntent.resolveActivity(context.getPackageManager()) == null) {
+                Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent");
+                showSomethingWentWrong();
+                onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null);
+                return;
+            }
+            try {
+                mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
+            } catch (Exception e) {
+                Timber.w(e, "Unable to take picture");
+                showSomethingWentWrong();
+                onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null);
+            }
+        } catch (IOException e) {
+            Timber.w(e, "mBtnCamera::onClickListener() unable to prepare file and launch camera");
+        }
     }
 
 
