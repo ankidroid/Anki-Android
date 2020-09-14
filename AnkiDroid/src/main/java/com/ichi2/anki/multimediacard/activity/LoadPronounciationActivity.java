@@ -39,6 +39,7 @@ import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus;
 import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.async.Connection;
+import com.ichi2.utils.AdaptionUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -85,6 +86,11 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (AdaptionUtil.isUserATestClient()) {
+            finishCancel();
+            return;
+        }
 
         if (savedInstanceState != null) {
             boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
