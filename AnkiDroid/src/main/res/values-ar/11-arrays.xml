@@ -50,7 +50,7 @@
         <item>الإجابة بأفضل مما أوصي به</item>
         <item>تراجع</item>
         <item>تحرير الملحوظة</item>
-        <item>إضافة سمة إلى الملحوظة</item>
+        <item>إضافة وسم إلى الملحوظة</item>
         <item>تعليم الملحوظة</item>
         <item>بحث عن التعبير</item>
         <item>دفن البطاقة</item>
@@ -70,7 +70,7 @@
     </string-array>
     <string-array name="leech_action_labels">
         <item>علق البطاقة</item>
-        <item>إضافة سمة فقط</item>
+        <item>إضافة وسم فقط</item>
     </string-array>
     <string-array name="new_order_labels">
         <item>البطاقات الجديدة في ترتيب عشوائي</item>
