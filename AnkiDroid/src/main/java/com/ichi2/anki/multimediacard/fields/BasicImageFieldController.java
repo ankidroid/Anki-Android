@@ -58,7 +58,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.utils.BitmapUtil;
@@ -544,9 +543,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
         Timber.d("setPreviewImage path %s has size %d", f.getAbsolutePath(), f.length());
         b = ExifUtil.rotateFromCamera(f, b);
+        onValidImage(b, Formatter.formatFileSize(mActivity, f.length()));
+    }
+
+
+    private void onValidImage(Bitmap b, String fileSize) {
         mImagePreview.setImageBitmap(b);
         mImageFileSize.setVisibility(View.VISIBLE);
-        mImageFileSize.setText(Formatter.formatFileSize(mActivity, f.length()));
+        mImageFileSize.setText(fileSize);
         mCropButton.setVisibility(View.VISIBLE);
     }
 
