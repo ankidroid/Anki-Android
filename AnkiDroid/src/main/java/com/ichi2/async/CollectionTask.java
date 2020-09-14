@@ -50,6 +50,7 @@ import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -1445,9 +1446,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         if (hasValidCol()) {
             // unload collection and trigger a backup
+            Time time = CollectionHelper.getInstance().getTimeSafe(mContext);
             CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
             CollectionHelper.getInstance().lockCollection();
-            BackupManager.performBackupInBackground(colPath, true, CollectionHelper.getInstance().getTimeSafe(mContext));
+            BackupManager.performBackupInBackground(colPath, true, time);
         }
         // overwrite collection
         File f = new File(colFile);
