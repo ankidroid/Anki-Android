@@ -373,6 +373,7 @@ public class ReviewerTest extends RobolectricTest {
         Long didA = decks.id("A");
         decks.select(didA);
         Reviewer reviewer = startReviewer();
+        waitForAsyncTasksToComplete();
         assertThat(reviewer.getSupportActionBar().getTitle(), is("B"));
     }
 
