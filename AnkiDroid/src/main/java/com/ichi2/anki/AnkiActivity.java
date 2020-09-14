@@ -160,7 +160,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     public boolean animationDisabled() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-        return preferences.getBoolean("eInkDisplay", false);
+        return preferences.getBoolean("safeDisplay", false);
     }
 
 
