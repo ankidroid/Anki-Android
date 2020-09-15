@@ -132,8 +132,8 @@
     <string name="custom_study_ahead">راجع مبكرًا بـ س يوم:</string>
     <string name="custom_study_random">اختر س بطاقة من الرزمة عشوائيًا:</string>
     <string name="custom_study_preview">عاين البطاقات الجديدة المضافة في آخر س يوم:</string>
-    <string name="custom_study_rebuild_deck_corrupt">تعذر إعادة بناء رزمة الدراسة المخصصة</string>
-    <string name="rebuild_custom_study_deck">تجري إعادة بناء رزمة الدراسة المخصصة&#8230;</string>
+    <string name="custom_study_rebuild_deck_corrupt">تعذرت إعادة إنشاء رزمة الدراسة المخصصة</string>
+    <string name="rebuild_custom_study_deck">تجري إعادة إنشاء رزمة الدراسة المخصصة&#8230;</string>
     <string name="importing_collection">يجري استيراد المجموعة&#8230;</string>
     <string name="import_media_count">يجري استيراد ملفات الوسائط %1$d&#8230;</string>
     <string name="import_progress">• استيراد الملحوظات: %1$d%%\n• استيراد البطاقات: %2$d%%\n• بعد المعالجة: %3$d%%</string>
