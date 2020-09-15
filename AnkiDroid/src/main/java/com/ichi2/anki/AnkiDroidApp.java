@@ -218,6 +218,7 @@ public class AnkiDroidApp extends MultiDexApplication {
      * On application creation.
      */
     @Override
+    @SuppressWarnings("deprecation")
     public void onCreate() {
         super.onCreate();
         Timber.d("Startup - Application Start");
