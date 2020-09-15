@@ -409,10 +409,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         String imagePath = internalizedPick.getAbsolutePath();
         mViewModel = new ImageViewModel(imagePath, getUriForFile(internalizedPick));
-        mField.setHasTemporaryMedia(true);
+        setTemporaryMedia(imagePath);
 
         Timber.i("handleSelectImageIntent() Decoded image: '%s'", imagePath);
-        mField.setImagePath(imagePath);
     }
 
     private @Nullable File internalizeUri(Uri uri) {
@@ -602,8 +601,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         String imagePath = image.getPath();
         Uri imageUri = Uri.fromFile(image);
         mViewModel = new ImageViewModel(imagePath, imageUri);
-        mField.setImagePath(imagePath);
-        mField.setHasTemporaryMedia(true);
+        setTemporaryMedia(imagePath);
         Timber.d("requestCrop()  destination image has path/uri %s/%s", mViewModel.mImagePath, mViewModel.mImageUri);
 
         // This is basically a "magic" recipe to get the system to crop, gleaned from StackOverflow etc
@@ -622,6 +620,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             showSomethingWentWrong();
             onActivityResult(ACTIVITY_CROP_PICTURE, Activity.RESULT_CANCELED, null);
         }
+    }
+
+
+    private void setTemporaryMedia(String imagePath) {
+        mField.setImagePath(imagePath);
+        mField.setHasTemporaryMedia(true);
     }
 
 
