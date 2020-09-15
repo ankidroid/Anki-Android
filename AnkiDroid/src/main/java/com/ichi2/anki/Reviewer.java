@@ -922,6 +922,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
+    @SuppressWarnings("deprecation")
     protected final Handler mFullScreenHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

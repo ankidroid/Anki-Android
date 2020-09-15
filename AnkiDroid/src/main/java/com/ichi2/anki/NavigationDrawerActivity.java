@@ -68,6 +68,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     private Runnable pendingRunnable;
 
     // Navigation drawer initialisation
+    @SuppressWarnings("deprecation")
     protected void initNavigationDrawer(View mainView) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
         mDrawerLayout = mainView.findViewById(R.id.drawer_layout);

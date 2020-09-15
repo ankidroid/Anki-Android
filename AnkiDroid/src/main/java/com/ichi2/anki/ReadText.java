@@ -90,6 +90,7 @@ public class ReadText {
      * @param ord  The card template ordinal
      * @param qa   The card question or card answer
      */
+    @SuppressWarnings("deprecation")
     public static void selectTts(String text, long did, int ord, Sound.SoundSide qa) {
         //TODO: Consolidate with ReadText.readCardSide
         mTextToSpeak = text;
