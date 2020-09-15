@@ -25,11 +25,14 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import android.graphics.Rect;
 import android.os.StatFs;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -224,5 +227,16 @@ public class CompatV16 implements Compat {
     @SuppressWarnings("deprecation")
     public long getVersionCode(PackageInfo pInfo) {
         return pInfo.versionCode;
+    }
+
+    // Until API30 get bounds from Display
+    @Override
+    @SuppressWarnings("deprecation")
+    public Rect getWindowBounds() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        Context context = AnkiDroidApp.getInstance().getApplicationContext();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        wm.getDefaultDisplay().getMetrics(metrics);
+        return new Rect(0, metrics.heightPixels, metrics.widthPixels, 0);
     }
 }

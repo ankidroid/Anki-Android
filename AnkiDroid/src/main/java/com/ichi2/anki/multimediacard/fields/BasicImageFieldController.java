@@ -29,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -106,12 +107,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
     private int getMaxImageSize() {
-        DisplayMetrics metrics = getDisplayMetrics();
-
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
-
-        return (int) Math.min(height * 0.4, width * 0.6);
+        Rect maxRect = CompatHelper.getCompat().getWindowBounds();
+        return (int) Math.min(maxRect.top * 0.4, maxRect.right * 0.6);
     }
 
     public void loadInstanceState(Bundle savedInstanceState) {
@@ -271,10 +268,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private void drawUIComponents(Context context) {
         mImagePreview = new ImageView(mActivity);
 
-        DisplayMetrics metrics = getDisplayMetrics();
-
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
+        Rect maxRect = CompatHelper.getCompat().getWindowBounds();
+        int height = maxRect.top;
+        int width = maxRect.right;
 
 
         mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -305,15 +301,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private String gtxt(int id) {
         return mActivity.getText(id).toString();
-    }
-
-
-    private DisplayMetrics getDisplayMetrics() {
-        if (mMetrics == null) {
-            mMetrics = new DisplayMetrics();
-            mActivity.getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
-        }
-        return mMetrics;
     }
 
 

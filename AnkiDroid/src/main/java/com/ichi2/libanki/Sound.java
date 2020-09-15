@@ -20,6 +20,7 @@ package com.ichi2.libanki;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaMetadataRetriever;
@@ -36,6 +37,7 @@ import android.widget.VideoView;
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.ReadText;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
@@ -364,16 +366,11 @@ public class Sound {
     }
 
     private static void configureVideo(VideoView videoView, int videoWidth, int videoHeight) {
-        // get the display
-        Context context = AnkiDroidApp.getInstance().getApplicationContext();
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
         // adjust the size of the video so it fits on the screen
         float videoProportion = (float) videoWidth / (float) videoHeight;
-        Point point = new Point();
-        display.getSize(point);
-        int screenWidth = point.x;
-        int screenHeight = point.y;
+        Rect screenBounds = CompatHelper.getCompat().getWindowBounds();
+        int screenWidth = screenBounds.right;
+        int screenHeight = screenBounds.top;
         float screenProportion = (float) screenWidth / (float) screenHeight;
         android.view.ViewGroup.LayoutParams lp = videoView.getLayoutParams();
 

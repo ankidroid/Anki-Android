@@ -30,6 +30,7 @@ import android.graphics.Point;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import android.graphics.Rect;
 import android.os.Environment;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -38,6 +39,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
@@ -263,8 +265,8 @@ public class Whiteboard extends View {
 
     private void createBitmap() {
         // To fix issue #1336, just make the whiteboard big and square.
-        final Point p = getDisplayDimenions();
-        int bitmapSize = Math.max(p.x, p.y);
+        final Rect p = CompatHelper.getCompat().getWindowBounds();
+        int bitmapSize = Math.max(p.right, p.top);
         createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888);
     }
 
@@ -363,14 +365,6 @@ public class Whiteboard extends View {
             return true;
         }
         return false;
-    }
-
-    private static Point getDisplayDimenions() {
-        Display display = ((WindowManager) AnkiDroidApp.getInstance().getApplicationContext().
-                getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-        return point;
     }
 
 

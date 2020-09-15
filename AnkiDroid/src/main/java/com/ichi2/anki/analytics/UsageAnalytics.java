@@ -19,6 +19,7 @@ package com.ichi2.anki.analytics;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Build;
 import android.view.Display;
 import android.view.WindowManager;
@@ -32,6 +33,7 @@ import com.brsanthu.googleanalytics.request.EventHit;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.R;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.WebViewDebugging;
 
 import org.acra.ACRA;
@@ -312,11 +314,8 @@ public class UsageAnalytics {
 
             // Are we running on really large screens or small screens? Send raw screen size
             try {
-                WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-                Display display = wm.getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-                this.screenResolution(size.x + "x" + size.y);
+                Rect screenSize = CompatHelper.getCompat().getWindowBounds();
+                this.screenResolution(screenSize.right + "x" + screenSize.top);
             } catch (RuntimeException e) {
                 // nothing much to do here, it means we couldn't get WindowManager
             }

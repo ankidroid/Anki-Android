@@ -18,9 +18,11 @@ package com.ichi2.compat;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.graphics.Rect;
 import android.os.StatFs;
 import android.speech.tts.TextToSpeech;
 import android.text.Spanned;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebSettings;
@@ -88,5 +90,7 @@ public interface Compat {
     Object initTtsParams();
     int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId);
     long getVersionCode(PackageInfo pInfo);
+
+    Rect getWindowBounds();
 }
 
