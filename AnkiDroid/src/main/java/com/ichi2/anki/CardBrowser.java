@@ -224,6 +224,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private long mOldCardId = 0;
     private int mOldCardTopOffset = 0;
     private boolean mShouldRestoreScroll = false;
+    private boolean mPostAutoScroll = false;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -738,6 +739,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 data.putExtra("reloadRequired", true);
             }
             closeCardBrowser(RESULT_OK, data);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mPostAutoScroll) {
+            mPostAutoScroll = false;
         }
     }
 
@@ -1767,6 +1776,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void autoScrollTo(int newPosition) {
         mCardsListView.setSelectionFromTop(newPosition, mOldCardTopOffset);
+        mPostAutoScroll = true;
     }
 
     private int calculateTopOffset(int cardPosition) {
@@ -1947,7 +1957,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
                 boolean lastLoaded = cards.get(lastVisibleItem - 1).isLoaded();
                 if (!firstLoaded || !lastLoaded) {
-                    showProgressBar();
+                    if (!mPostAutoScroll) {
+                        showProgressBar();
+                    }
                     // Also start rendering the items on the screen every 300ms while scrolling
                     long currentTime = SystemClock.elapsedRealtime ();
                     if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
@@ -1964,6 +1976,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onScrollStateChanged(AbsListView listView, int scrollState) {
             // TODO: Try change to RecyclerView as currently gets stuck a lot when using scrollbar on right of ListView
             // Start rendering the question & answer every time the user stops scrolling
+            if (mPostAutoScroll) {
+                mPostAutoScroll = false;
+            }
             if (scrollState == SCROLL_STATE_IDLE) {
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
