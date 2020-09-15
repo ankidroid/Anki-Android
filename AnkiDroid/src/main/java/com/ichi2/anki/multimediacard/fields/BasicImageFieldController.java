@@ -495,7 +495,6 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             //#5513 - if we can't decode a bitmap, leave the image alone
             //And display a warning to push users to compress manually.
             Timber.w("rotateAndCompress() unable to decode file %s", imagePath);
-            mImageFileSizeWarning.setVisibility(View.VISIBLE);
             return false;
         }
 
@@ -661,6 +660,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private boolean rotateAndCompress() {
         if (!rotateAndCompress(mViewModel.mImagePath)) {
+            mImageFileSizeWarning.setVisibility(View.VISIBLE);
             revertToPreviousImage();
             showSomethingWentWrong();
             return false;
