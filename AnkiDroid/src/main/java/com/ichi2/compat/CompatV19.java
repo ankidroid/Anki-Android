@@ -39,7 +39,9 @@ public class CompatV19 extends CompatV18 implements Compat {
     private static final int ANIMATION_DURATION = 200;
     private static final float TRANSPARENCY = 0.90f;
 
+    // Until API30 we use SystemUiVisibility and change listener
     @Override
+    @SuppressWarnings("deprecation")
     public void setFullScreen(final AbstractFlashcardViewer a) {
         // Set appropriate flags to enable Sticky Immersive mode.
         a.getWindow().getDecorView().setSystemUiVisibility(
@@ -57,43 +59,40 @@ public class CompatV19 extends CompatV18 implements Compat {
         CompatHelper.getCompat().setStatusBarColor(a.getWindow(), Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
         View decorView = a.getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener
-                (new View.OnSystemUiVisibilityChangeListener() {
-                    @Override
-                    public void onSystemUiVisibilityChange(int flags) {
-                        final View toolbar = a.findViewById(R.id.toolbar);
-                        final View answerButtons = a.findViewById(R.id.answer_options_layout);
-                        final View topbar = a.findViewById(R.id.top_bar);
-                        if (toolbar == null || topbar == null || answerButtons == null) {
-                            return;
+                (flags -> {
+                    final View toolbar = a.findViewById(R.id.toolbar);
+                    final View answerButtons = a.findViewById(R.id.answer_options_layout);
+                    final View topbar = a.findViewById(R.id.top_bar);
+                    if (toolbar == null || topbar == null || answerButtons == null) {
+                        return;
+                    }
+                    // Note that system bars will only be "visible" if none of the
+                    // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                    boolean visible = (flags & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+                    Timber.d("System UI visibility change. Visible: %b", visible);
+                    if (visible) {
+                        showViewWithAnimation(toolbar);
+                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                            showViewWithAnimation(topbar);
+                            showViewWithAnimation(answerButtons);
                         }
-                        // Note that system bars will only be "visible" if none of the
-                        // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-                        boolean visible = (flags & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
-                        Timber.d("System UI visibility change. Visible: %b", visible);
-                        if (visible) {
-                            showViewWithAnimation(toolbar);
-                            if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
-                                showViewWithAnimation(topbar);
-                                showViewWithAnimation(answerButtons);
-                            }
-                        } else {
-                            hideViewWithAnimation(toolbar);
-                            if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
-                                hideViewWithAnimation(topbar);
-                                hideViewWithAnimation(answerButtons);
-                            }
+                    } else {
+                        hideViewWithAnimation(toolbar);
+                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                            hideViewWithAnimation(topbar);
+                            hideViewWithAnimation(answerButtons);
                         }
                     }
                 });
     }
 
-    private void showViewWithAnimation(final View view) {
+    protected void showViewWithAnimation(final View view) {
         view.setAlpha(0.0f);
         view.setVisibility(View.VISIBLE);
         view.animate().alpha(TRANSPARENCY).setDuration(ANIMATION_DURATION).setListener(null);
     }
 
-    private void hideViewWithAnimation(final View view) {
+    protected void hideViewWithAnimation(final View view) {
         view.animate()
                 .alpha(0f)
                 .setDuration(ANIMATION_DURATION)
@@ -106,6 +105,7 @@ public class CompatV19 extends CompatV18 implements Compat {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean isImmersiveSystemUiVisible(AnkiActivity activity) {
         return (activity.getWindow().getDecorView().getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
     }
