@@ -467,6 +467,7 @@ public class SchedV2 extends AbstractSched {
     }
 
     // Overridden
+    @SuppressWarnings("deprecation")
     public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CollectionTask collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();

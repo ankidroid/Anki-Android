@@ -207,6 +207,7 @@ public class Sched extends SchedV2 {
      * Returns [deckname, did, rev, lrn, new]
      */
     @Override
+    @SuppressWarnings("deprecation")
     public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CollectionTask collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();

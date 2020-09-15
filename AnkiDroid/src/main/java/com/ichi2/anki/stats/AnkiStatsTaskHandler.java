@@ -17,7 +17,6 @@ package com.ichi2.anki.stats;
 
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
@@ -62,23 +61,27 @@ public class AnkiStatsTaskHandler {
         return sInstance;
     }
 
+    @SuppressWarnings("deprecation")
     public CreateChartTask createChart(Stats.ChartType chartType, View... views){
         CreateChartTask createChartTask = new CreateChartTask(chartType);
         createChartTask.execute(views);
         return createChartTask;
     }
+    @SuppressWarnings("deprecation")
     public CreateStatisticsOverview createStatisticsOverview(View... views){
         CreateStatisticsOverview createChartTask = new CreateStatisticsOverview();
         createChartTask.execute(views);
         return createChartTask;
     }
+    @SuppressWarnings("deprecation")
     public static DeckPreviewStatistics createReviewSummaryStatistics(Collection col, TextView view){
         DeckPreviewStatistics deckPreviewStatistics = new DeckPreviewStatistics();
         deckPreviewStatistics.execute(col, view);
         return deckPreviewStatistics;
     }
 
-    private class CreateChartTask extends AsyncTask<View, Void, PlotSheet>{
+    @SuppressWarnings("deprecation")
+    private class CreateChartTask extends android.os.AsyncTask<View, Void, PlotSheet>{
         private ChartView mImageView;
         private ProgressBar mProgressBar;
 
@@ -129,7 +132,8 @@ public class AnkiStatsTaskHandler {
         }
     }
 
-    private class CreateStatisticsOverview extends AsyncTask<View, Void, String>{
+    @SuppressWarnings("deprecation")
+    private class CreateStatisticsOverview extends android.os.AsyncTask<View, Void, String>{
         private WebView mWebView;
         private ProgressBar mProgressBar;
 
@@ -183,7 +187,8 @@ public class AnkiStatsTaskHandler {
         }
     }
 
-    private static class DeckPreviewStatistics extends AsyncTask<Object, Void, String> {
+    @SuppressWarnings("deprecation")
+    private static class DeckPreviewStatistics extends android.os.AsyncTask<Object, Void, String> {
         private TextView mTextView;
 
         private boolean mIsRunning = false;

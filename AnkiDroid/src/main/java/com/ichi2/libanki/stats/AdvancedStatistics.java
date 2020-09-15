@@ -1025,7 +1025,7 @@ public class AdvancedStatistics {
         private final int computeNDays;
         private final double computeMaxError;
         private final int simulateNIterations;
-        private final Collection<Time> mCol;
+        private final Collection mCol;
 
         public Settings(Context context) {
             SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context);

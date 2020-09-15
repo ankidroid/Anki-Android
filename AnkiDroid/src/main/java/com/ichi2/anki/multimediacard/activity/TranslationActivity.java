@@ -23,7 +23,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.fragment.app.FragmentActivity;
 import android.view.Menu;
@@ -177,7 +176,8 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         return true;
     }
 
-    private class BackgroundPost extends AsyncTask<Void, Void, String> {
+    @SuppressWarnings("deprecation")
+    private class BackgroundPost extends android.os.AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... params) {

@@ -30,6 +30,7 @@ import static org.hamcrest.Matchers.notNullValue;
 @RunWith(AndroidJUnit4.class)
 public abstract class AbstractCollectionTaskTest extends RobolectricTest {
 
+    @SuppressWarnings("deprecation")
     protected TaskData execute(CollectionTask.TASK_TYPE taskType) {
         CollectionTask task = CollectionTask.launchCollectionTask(taskType);
         try {

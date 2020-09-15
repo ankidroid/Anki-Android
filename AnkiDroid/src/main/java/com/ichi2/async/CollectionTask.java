@@ -20,7 +20,6 @@ package com.ichi2.async;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.AsyncTask;
 
 import com.google.gson.stream.JsonReader;
 import com.ichi2.anki.AnkiDroidApp;
@@ -203,6 +202,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * @param param to pass to the task
      * @return the newly created task
      */
+    @SuppressWarnings("deprecation")
     public static CollectionTask launchCollectionTask(TASK_TYPE type, @Nullable TaskListener listener, TaskData param) {
         // Start new task
         CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
@@ -223,9 +223,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * @param timeout timeout in seconds
      * @return whether or not the previous task was successful or not
      */
+    @SuppressWarnings("deprecation")
     public static boolean waitToFinish(Integer timeout) {
         try {
-            if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+            if ((sLatestInstance != null) && (sLatestInstance.getStatus() != android.os.AsyncTask.Status.FINISHED)) {
                 Timber.d("CollectionTask: waiting for task %s to finish...", sLatestInstance.mType);
                 if (timeout != null) {
                     sLatestInstance.get(timeout, TimeUnit.SECONDS);
@@ -243,9 +244,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     /** Cancel the current task.
      * @return whether cancelling did occur.*/
+    @SuppressWarnings("deprecation")
     public boolean safeCancel() {
         try {
-            if (getStatus() != AsyncTask.Status.FINISHED) {
+            if (getStatus() != android.os.AsyncTask.Status.FINISHED) {
                 return cancel(true);
             }
         } catch (Exception e) {
@@ -314,10 +316,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
     // This method and those that are called here are executed in a new thread
+    @SuppressWarnings("deprecation")
     protected TaskData actualDoInBackground(TaskData param) {
         super.doInBackground(param);
         // Wait for previous thread (if any) to finish before continuing
-        if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
+        if (mPreviousTask != null && mPreviousTask.getStatus() != android.os.AsyncTask.Status.FINISHED) {
             Timber.d("Waiting for %s to finish before starting %s", mPreviousTask.mType, mType);
             try {
                 mPreviousTask.get();
@@ -506,6 +509,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
+    @SuppressWarnings("deprecation")
     private TaskData doInBackgroundAddNote(TaskData param) {
         Timber.d("doInBackgroundAddNote");
         Note note = param.getNote();
@@ -528,6 +532,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
+    @SuppressWarnings("deprecation")
     private TaskData doInBackgroundUpdateNote(TaskData param) {
         Timber.d("doInBackgroundUpdateNote");
         // Save the note
@@ -571,6 +576,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
+    @SuppressWarnings("deprecation")
     private TaskData doInBackgroundAnswerCard(TaskData param) {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
@@ -699,6 +705,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
+    @SuppressWarnings("deprecation")
     private TaskData doInBackgroundDismissNote(TaskData param) {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
@@ -924,6 +931,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
     }
 
+    @SuppressWarnings("deprecation")
     private TaskData doInBackgroundDismissNotes(TaskData param) {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
@@ -1133,6 +1141,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         return new TaskData(true, cards);
     }
 
+    @SuppressWarnings("deprecation")
     private Card[] deepCopyCardArray(Card[] originals) throws CancellationException {
         Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
         Card[] copies = new Card[originals.length];
@@ -1168,6 +1177,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         return card;
     }
 
+    @SuppressWarnings("deprecation")
     private TaskData doInBackgroundUndo() {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
@@ -1189,6 +1199,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
+    @SuppressWarnings("deprecation")
     private TaskData doInBackgroundSearchCards(TaskData param) {
         Timber.d("doInBackgroundSearchCards");
         Collection col = getCol();
@@ -1228,6 +1239,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
+    @SuppressWarnings("deprecation")
     private TaskData doInBackgroundRenderBrowserQA(TaskData param) {
         //TODO: Convert this to accept the following to make thread-safe:
         //(Range<Position>, Function<Position, BrowserCard>)
@@ -1383,6 +1395,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
+    @SuppressWarnings("deprecation")
     private TaskData doInBackgroundImportReplace(TaskData param) {
         Timber.d("doInBackgroundImportReplace");
         String path = param.getString();
@@ -1728,13 +1741,14 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    /*
+    /**
      * Async task for the ModelBrowser Class
      * Returns an ArrayList of all models alphabetically ordered and the number of notes
      * associated with each model.
      *
      * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
      */
+    @SuppressWarnings("deprecation")
     private TaskData doInBackgroundCountModels(){
         Timber.d("doInBackgroundLoadModels");
         Collection col = getCol();
@@ -1874,6 +1888,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * Goes through selected cards and checks selected and marked attribute
      * @return If there are unselected cards, if there are unmarked cards
      */
+    @SuppressWarnings("deprecation")
     public @Nullable TaskData doInBackgroundCheckCardSelection(TaskData param) {
         Object[] objects = param.getObjArray();
         Set<CardBrowser.CardCache> checkedCards = (Set<CardBrowser.CardCache>) objects[0];
@@ -1953,6 +1968,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
+    @SuppressWarnings("deprecation")
     public void doProgress(TaskData value) {
         publishProgress(value);
     }

@@ -17,7 +17,6 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -48,7 +47,6 @@ import com.ichi2.libanki.Deck;
 import com.ichi2.ui.SlidingTabLayout;
 
 import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -391,6 +389,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     /**
      * A chart fragment containing a ChartView.
      */
+    @SuppressWarnings("deprecation")
     public static class ChartFragment extends StatisticFragment {
 
         private ChartView mChart;
@@ -400,7 +399,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         private int mSectionNumber;
         private Stats.AxisType mType  = Stats.AxisType.TYPE_MONTH;
         private boolean mIsCreated = false;
-        private AsyncTask mCreateChartTask;
+        private android.os.AsyncTask mCreateChartTask;
 
         public ChartFragment() {
             super();
@@ -504,6 +503,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
 
         @Override
+        @SuppressWarnings("deprecation")
         public void checkAndUpdate() {
             //System.err.println("<<<<<<<checkAndUpdate" + mSectionNumber);
             if (!mIsCreated) {
@@ -556,13 +556,14 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         }
     }
 
+    @SuppressWarnings("deprecation")
     public static class OverviewStatisticsFragment extends StatisticFragment {
 
         private WebView mWebView;
         private ProgressBar mProgressBar;
         private Stats.AxisType mType  = Stats.AxisType.TYPE_MONTH;
         private boolean mIsCreated = false;
-        private AsyncTask mCreateStatisticsOverviewTask;
+        private android.os.AsyncTask mCreateStatisticsOverviewTask;
 
         public OverviewStatisticsFragment() {
             super();

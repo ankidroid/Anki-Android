@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -137,6 +136,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     /**
      * @param v Start of the story.
      */
+    @SuppressWarnings("deprecation")
     protected void onLoadPronunciation(View v) {
         if(!Connection.isOnline()) {
             showToast(gtxt(R.string.network_no_connection));
@@ -176,7 +176,8 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
      * @author zaur This class is used two times. First time from Beolingus it requests a page with the word
      *         translation. Second time it loads a page with the link to mp3 pronunciation file.
      */
-    private class BackgroundPost extends AsyncTask<Void, Void, String> {
+    @SuppressWarnings("deprecation")
+    private class BackgroundPost extends android.os.AsyncTask<Void, Void, String> {
 
         private String mAddress;
 
@@ -229,7 +230,8 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     /**
      * @author zaur This is to load finally the MP3 file with pronunciation.
      */
-    private class DownloadFileTask extends AsyncTask<Void, Void, String> {
+    @SuppressWarnings("deprecation")
+    private class DownloadFileTask extends android.os.AsyncTask<Void, Void, String> {
 
         private String mAddress;
 
@@ -253,6 +255,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     }
 
 
+    @SuppressWarnings("deprecation")
     protected void processPostFinished(BackgroundPost post, String result) {
 
         if (mStopped) {
@@ -432,8 +435,9 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     }
 
 
+    @SuppressWarnings("deprecation")
     private void stopAllTasks() {
-        AsyncTask<?, ?, ?> t;
+        android.os.AsyncTask<?, ?, ?> t;
         t = mPostTranslation;
         TaskOperations.stopTaskGracefully(t);
         t = mPostPronunciation;

@@ -95,6 +95,7 @@ public class Finder {
     }
 
     @CheckResult
+    @SuppressWarnings("deprecation")
     private List<Long> _findCards(String query, Object _order, CollectionTask task) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);

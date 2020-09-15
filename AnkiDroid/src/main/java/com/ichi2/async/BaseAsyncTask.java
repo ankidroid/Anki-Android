@@ -16,14 +16,13 @@
 
 package com.ichi2.async;
 
-import android.os.AsyncTask;
-
 import com.ichi2.utils.MethodLogger;
 import com.ichi2.utils.Threads;
 
 import static com.ichi2.anki.AnkiDroidApp.sendExceptionReport;
 
-public class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
+@SuppressWarnings("deprecation")
+public class BaseAsyncTask<Params, Progress, Result> extends android.os.AsyncTask<Params, Progress, Result> {
 
     /** Set this to {@code true} to enable detailed debugging for this class. */
     private static final boolean DEBUG = false;

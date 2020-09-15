@@ -21,7 +21,6 @@ package com.ichi2.async;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.os.PowerManager;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -81,6 +80,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 AnkiDroidApp.getAppResources().getString(R.string.app_name) + ":Connection");
     }
 
+    @SuppressWarnings("deprecation")
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
 
         if (!isOnline()) {
@@ -90,7 +90,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
 
         try {
-            if ((sInstance != null) && (sInstance.getStatus() != AsyncTask.Status.FINISHED)) {
+            if ((sInstance != null) && (sInstance.getStatus() != android.os.AsyncTask.Status.FINISHED)) {
                 sInstance.get();
             }
         } catch (Exception e) {
@@ -490,16 +490,19 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
+    @SuppressWarnings("deprecation")
     public void publishProgress(int id) {
         super.publishProgress(id);
     }
 
 
+    @SuppressWarnings("deprecation")
     public void publishProgress(String message) {
         super.publishProgress(message);
     }
 
 
+    @SuppressWarnings("deprecation")
     public void publishProgress(int id, long up, long down) {
         super.publishProgress(id, up, down);
     }
@@ -553,6 +556,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
     }
 
+    @SuppressWarnings("deprecation")
     public synchronized static void cancel() {
         Timber.d("Cancelled Connection task");
         sInstance.cancel(true);
