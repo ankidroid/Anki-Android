@@ -568,13 +568,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private void handleTakePictureResult() {
         Timber.d("handleTakePictureResult");
-        if (!rotateAndCompress(mViewModel.mImagePath)) {
+        if (!rotateAndCompress()) {
             Timber.i("handleTakePictureResult appears to have an invalid picture");
-            revertToPreviousImage();
-            showSomethingWentWrong();
             return;
         };
-        mField.setHasTemporaryMedia(true);
         showCropDialog(mActivity.getString(R.string.crop_image), null);
     }
 
@@ -650,14 +647,22 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     private void handleCropResult() {
         Timber.d("handleCropResult");
-        if (!rotateAndCompress(mViewModel.mImagePath)) {
+        if (!rotateAndCompress()) {
             Timber.i("handleCropResult() appears to have an invalid file, reverting");
-            revertToPreviousImage();
-            showSomethingWentWrong();
             return;
         }
         Timber.d("handleCropResult() = image path now %s", mField.getImagePath());
+    }
+
+
+    private boolean rotateAndCompress() {
+        if (!rotateAndCompress(mViewModel.mImagePath)) {
+            revertToPreviousImage();
+            showSomethingWentWrong();
+            return false;
+        }
         mField.setHasTemporaryMedia(true);
+        return true;
     }
 
 
