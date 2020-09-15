@@ -38,7 +38,6 @@ import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -46,7 +45,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.AssumptionViolatedException;
 import org.junit.Before;
-import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowDialog;
@@ -60,7 +58,6 @@ import androidx.test.core.app.ApplicationProvider;
 import timber.log.Timber;
 
 import static android.os.Looper.getMainLooper;
-import static com.ichi2.anki.UIUtils.getDayStart;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.robolectric.Shadows.shadowOf;
 

@@ -62,6 +62,7 @@
         android:usesCleartextTraffic="true"
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
         >
         <activity
             android:name="com.ichi2.anki.IntentHandler"
