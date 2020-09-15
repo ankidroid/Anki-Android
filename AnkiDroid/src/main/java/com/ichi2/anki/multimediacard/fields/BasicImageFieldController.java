@@ -160,7 +160,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         mCropButton = new Button(mActivity);
         mCropButton.setText(gtxt(R.string.crop_button));
-        mCropButton.setOnClickListener(v -> requestCrop());
+        mCropButton.setOnClickListener(v -> mViewModel = requestCrop(mViewModel));
         mCropButton.setVisibility(View.INVISIBLE);
 
         Button mBtnGallery = new Button(mActivity);
@@ -173,7 +173,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         Button mBtnCamera = new Button(mActivity);
         mBtnCamera.setText(gtxt(R.string.multimedia_editor_image_field_editing_photo));
-        mBtnCamera.setOnClickListener(v -> captureImage(context));
+        mBtnCamera.setOnClickListener(v -> mViewModel = captureImage(context));
 
         if (!canUseCamera(context)) {
             mBtnCamera.setVisibility(View.INVISIBLE);
@@ -210,16 +210,17 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private void captureImage(Context context) {
+    private ImageViewModel captureImage(Context context) {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File image;
+        ImageViewModel toReturn = mViewModel;
         try {
             saveImageForRevert();
 
             // Create a new image for the camera result to land in, clear the URI
             image = createNewCacheFile();
             Uri imageUri = getUriForFile(image);
-            mViewModel = new ImageViewModel(image.getPath(), imageUri);
+            toReturn = new ImageViewModel(image.getPath(), imageUri);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 
             // Until Android API21 (maybe 22) you must manually handle permissions for image capture w/FileProvider
@@ -234,7 +235,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent");
                 showSomethingWentWrong();
                 onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null);
-                return;
+                return toReturn;
             }
             try {
                 mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
@@ -246,6 +247,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         } catch (IOException e) {
             Timber.w(e, "mBtnCamera::onClickListener() unable to prepare file and launch camera");
         }
+        return toReturn;
+
     }
 
 
@@ -402,6 +405,10 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         File internalizedPick = internalizeUri(selectedImage);
         if (internalizedPick == null) {
+            String urlImagePath = getImageInfoFromUri(mActivity, selectedImage).first;
+            mViewModel = new ImageViewModel(urlImagePath, selectedImage);
+            mField.setImagePath(urlImagePath);
+            mField.setHasTemporaryMedia(false);
             Timber.w("handleSelectImageIntent() unable to internalize image from Uri %s", selectedImage);
             showSomethingWentWrong();
             return;
@@ -576,12 +583,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     /**
      * Invoke system crop function
+     * @param mViewModel
+     * @return
      */
-    private void requestCrop() {
-
+    private ImageViewModel requestCrop(ImageViewModel mViewModel) {
+        ImageViewModel ret = mViewModel;
         if (!mViewModel.isValid()) {
             Timber.w("requestCrop() but mImagePath or mImageUri is null");
-            return;
+            return ret;
         }
         Timber.d("photoCrop() with path/uri %s/%s", mViewModel.mImagePath, mViewModel.mImageUri);
 
@@ -592,16 +601,16 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         } catch (IOException e) {
             Timber.w(e, "requestCrop() unable to create new file to drop crop results into");
             showSomethingWentWrong();
-            return;
+            return ret;
         }
 
         saveImageForRevert();
         // This must be the file URL it will not work with a content URI
         String imagePath = image.getPath();
         Uri imageUri = Uri.fromFile(image);
-        mViewModel = new ImageViewModel(imagePath, imageUri);
+        ret = new ImageViewModel(imagePath, imageUri);
         setTemporaryMedia(imagePath);
-        Timber.d("requestCrop()  destination image has path/uri %s/%s", mViewModel.mImagePath, mViewModel.mImageUri);
+        Timber.d("requestCrop()  destination image has path/uri %s/%s", ret.mImagePath, ret.mImageUri);
 
         // This is basically a "magic" recipe to get the system to crop, gleaned from StackOverflow etc
         // Intent intent = new Intent(Intent.ACTION_EDIT);  // edit (vs crop) would be even better, but it fails differently and needs lots of testing
@@ -619,6 +628,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             showSomethingWentWrong();
             onActivityResult(ACTIVITY_CROP_PICTURE, Activity.RESULT_CANCELED, null);
         }
+        return ret;
     }
 
 
@@ -638,7 +648,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 .content(content)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_no)
-                .onPositive((dialog, which) -> requestCrop());
+                .onPositive((dialog, which) -> requestCrop(mViewModel));
 
         if (negativeCallBack != null) {
             builder.onNegative(negativeCallBack);
@@ -706,11 +716,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         Uri uri = data.getData();
         if (uri == null) {
             UIUtils.showThemedToast(context, context.getString(R.string.select_image_failed), false);
-            return null;
         }
-        mViewModel = new ImageViewModel(getImageInfoFromUri(context, uri).first, uri);
-        mField.setImagePath(mViewModel.mImagePath);
-        mField.setHasTemporaryMedia(false);
         return uri;
     }
 
