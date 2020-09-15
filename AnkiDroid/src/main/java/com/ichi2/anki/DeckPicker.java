@@ -1023,6 +1023,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 openCardBrowser();
                 break;
 
+            case KeyEvent.KEYCODE_Y:
+                Timber.i("Sync from keypress");
+                sync();
+                break;
+
             default:
                 break;
         }

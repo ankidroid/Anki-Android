@@ -696,6 +696,13 @@ public class NoteEditor extends AnkiActivity {
 
                 }
             }
+            case KeyEvent.KEYCODE_P: {
+                if (event.isCtrlPressed()) {
+                    Timber.i("Ctrl+P: Preview Pressed");
+                    performPreview();
+                }
+                break;
+            }
             default:
                 break;
         }
