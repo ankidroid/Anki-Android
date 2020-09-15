@@ -585,16 +585,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     /**
      * Invoke system crop function
-     * @param mViewModel
-     * @return
      */
-    private ImageViewModel requestCrop(ImageViewModel mViewModel) {
-        ImageViewModel ret = mViewModel;
-        if (!mViewModel.isValid()) {
+    private ImageViewModel requestCrop(ImageViewModel viewModel) {
+        ImageViewModel ret = viewModel;
+        if (!ret.isValid()) {
             Timber.w("requestCrop() but mImagePath or mImageUri is null");
             return ret;
         }
-        Timber.d("photoCrop() with path/uri %s/%s", mViewModel.mImagePath, mViewModel.mImageUri);
+        Timber.d("photoCrop() with path/uri %s/%s", ret.mImagePath, ret.mImageUri);
 
         // Pre-create a file in our cache for the cropping application to put results in
         File image;
@@ -610,7 +608,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         // This must be the file URL it will not work with a content URI
         String imagePath = image.getPath();
         Uri imageUri = Uri.fromFile(image);
-        ret = mViewModel.beforeCrop(imagePath, imageUri);
+        ret = viewModel.beforeCrop(imagePath, imageUri);
         setTemporaryMedia(imagePath);
         Timber.d("requestCrop()  destination image has path/uri %s/%s", ret.mImagePath, ret.mImageUri);
 
