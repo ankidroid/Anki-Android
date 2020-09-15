@@ -80,6 +80,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -103,6 +104,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
 
     @Override
+    @SuppressWarnings("deprecation")
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Resources res = getResources();
 

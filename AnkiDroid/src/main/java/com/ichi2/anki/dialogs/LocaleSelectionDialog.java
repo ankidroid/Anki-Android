@@ -86,6 +86,7 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
 
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof Activity) {
@@ -103,6 +104,7 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
 
     @NonNull
     @Override
+    @SuppressWarnings("deprecation")
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Activity activity = requireActivity();
 
