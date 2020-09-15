@@ -34,7 +34,10 @@ public class DiffEngineTest {
     public void testSimpleDiff() {
         DiffEngine diffEngine = new DiffEngine();
         String[] diffs = diffEngine.diffedHtmlStrings("typed", "correct");
-        String[] expectedDiffs = { "<span class=\"typeBad\">correct</span>", "<span class=\"typeMissed\">typed</span>" };
+        String[] expectedDiffs = {
+                "<span class=\"typeBad\">corr</span><span class=\"typeGood\">e</span><span class=\"typeBad\">ct</span>",
+                "<span class=\"typeMissed\">typ</span><span class=\"typeGood\">e</span><span class=\"typeMissed\">d</span>"
+        };
         assertArrayEquals("Diff results were unexpected", expectedDiffs, diffs);
     }
 }
