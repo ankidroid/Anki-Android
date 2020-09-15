@@ -18,18 +18,15 @@ package com.ichi2.utils;
 
 import android.text.Html;
 
-import com.github.difflib.text.DiffRow;
-import com.github.difflib.text.DiffRowGenerator;
-
-import java.util.Arrays;
-import java.util.List;
-
+import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch;
 
 /**
  * Functions for diff, match and patch. Computes the difference between two texts to create a patch. Applies the patch
  * onto another text, allowing for errors.
  */
 public class DiffEngine {
+
+    private DiffMatchPatch diffMatchPatch = new DiffMatchPatch();
 
 
     /**
@@ -42,30 +39,17 @@ public class DiffEngine {
     public String[] diffedHtmlStrings(String typed, String correct) {
         StringBuilder prettyTyped = new StringBuilder();
         StringBuilder prettyCorrect = new StringBuilder();
-
-        DiffRowGenerator generator = DiffRowGenerator.create()
-                .reportLinesUnchanged(true)
-                .build();
-
-        List<DiffRow> diffRows = generator.generateDiffRows(
-                Arrays.asList(typed.split("\\s+")),
-                Arrays.asList(correct.split("\\s+")));
-
-        for (DiffRow aDiff : diffRows) {
-            switch (aDiff.getTag()) {
-                case CHANGE:
-                    prettyTyped.append(wrapBad(aDiff.getNewLine()));
-                    prettyCorrect.append(wrapMissing(aDiff.getOldLine()));
-                    break;
+        for (DiffMatchPatch.Diff aDiff : diffMatchPatch.diffMain(typed, correct)) {
+            switch (aDiff.operation) {
                 case INSERT:
-                    prettyTyped.append(wrapBad(aDiff.getOldLine()));
+                    prettyTyped.append(wrapBad(aDiff.text));
                     break;
                 case DELETE:
-                    prettyCorrect.append(wrapMissing(aDiff.getOldLine()));
+                    prettyCorrect.append(wrapMissing(aDiff.text));
                     break;
                 case EQUAL:
-                    prettyTyped.append(wrapGood(aDiff.getOldLine()));
-                    prettyCorrect.append(wrapGood(aDiff.getOldLine()));
+                    prettyTyped.append(wrapGood(aDiff.text));
+                    prettyCorrect.append(wrapGood(aDiff.text));
                     break;
             }
         }
