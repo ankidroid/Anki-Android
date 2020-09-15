@@ -92,5 +92,6 @@ public interface Compat {
     long getVersionCode(PackageInfo pInfo);
 
     Rect getWindowBounds();
+    void hideStatusBars(Window w);
 }
 

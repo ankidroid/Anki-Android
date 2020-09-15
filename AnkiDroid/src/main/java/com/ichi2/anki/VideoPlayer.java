@@ -1,4 +1,5 @@
 package com.ichi2.anki;
+import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Sound;
 
 import android.app.Activity;
@@ -41,8 +42,7 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
         setContentView(R.layout.video_player);
         mPath = getIntent().getStringExtra("path");
         Timber.i("Video Player intent had path: %s", mPath);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);        
+        CompatHelper.getCompat().hideStatusBars(getWindow());
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mVideoView = findViewById(R.id.video_surface);
         mVideoView.getHolder().addCallback(this);

@@ -19,7 +19,9 @@ package com.ichi2.compat;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Rect;
-import android.view.Display;
+import android.view.Window;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 import android.view.WindowManager;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -32,5 +34,13 @@ public class CompatV30 extends CompatV28 implements Compat {
     public Rect getWindowBounds() {
         WindowManager wm = (WindowManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         return wm.getCurrentWindowMetrics().getBounds();
+    }
+
+    @Override
+    public void hideStatusBars(Window w) {
+        WindowInsetsController insets = w.getInsetsController();
+        if (insets != null) {
+            insets.hide(WindowInsets.Type.statusBars());
+        }
     }
 }

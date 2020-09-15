@@ -84,12 +84,19 @@ public class CompatV16 implements Compat {
     protected static final int FULLSCREEN_ALL_GONE = 2;
     @Override
     public void setFullScreen(AbstractFlashcardViewer a) {
-        a.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        hideStatusBars(a.getWindow());
         final int fullscreenMode = Integer.parseInt(AnkiDroidApp.getSharedPrefs(a).getString("fullscreenMode", "0"));
         if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
             final View answerButtons = a.findViewById(R.id.answer_options_layout);
             answerButtons.setVisibility(View.GONE);
         }
+    }
+
+    // Status bar hiding until API30 is via Window.LayoutParams on Window
+    @Override
+    @SuppressWarnings("deprecation")
+    public void hideStatusBars(Window w) {
+        w.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     // NOTE: we can't use android.R.attr.selectableItemBackground until API 21
