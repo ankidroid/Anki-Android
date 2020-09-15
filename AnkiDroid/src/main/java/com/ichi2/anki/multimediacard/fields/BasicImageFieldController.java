@@ -124,6 +124,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mPreviousImageUri = savedInstanceState.getParcelable("mPreviousImageUri");
     }
 
+    @Override
     public Bundle saveInstanceState() {
         Timber.d("saveInstanceState");
         Bundle savedInstanceState = new Bundle();
@@ -279,14 +280,13 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     private void drawUIComponents(Context context) {
-        mImagePreview = new ImageView(mActivity);
-
         DisplayMetrics metrics = getDisplayMetrics();
 
         int height = metrics.heightPixels;
         int width = metrics.widthPixels;
 
 
+        mImagePreview = new ImageView(mActivity);
         mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         mImagePreview.setAdjustViewBounds(true);
 
@@ -328,7 +328,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // All image modification methods come through here - this ensures that the state is consistent
+
         Timber.d("onActivityResult()");
         if (resultCode != Activity.RESULT_OK) {
             Timber.d("Activity was not successful");
@@ -490,7 +492,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      *
      * @return true if successful, false indicates the current image is likely not usable, revert if possible
      */
-    private boolean rotateAndCompress(String imagePath) {
+    private boolean rotateAndCompress(String imagePath, ImageViewModel imageViewModel) {
         Timber.d("rotateAndCompress() on %s", imagePath);
         // Set the rotation of the camera image and save as png
         File f = new File(imagePath);
@@ -515,7 +517,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 Timber.w("rotateAndCompress() delete of pre-compressed image failed %s", imagePath);
             }
             imagePath = outFile.getAbsolutePath();
-            mViewModel = new ImageViewModel(imagePath, getUriForFile(outFile));
+            mViewModel = imageViewModel.rotateAndCompressTo(imagePath, getUriForFile(outFile));
             mField.setImagePath(imagePath);
             Timber.d("rotateAndCompress out path %s has size %d", imagePath, outFile.length());
         } catch (FileNotFoundException e) {
@@ -535,7 +537,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private void setPreviewImage(String imagePath, int maxsize) {
+    private void setPreviewImage(@Nullable String imagePath, int maxsize) {
         if (imagePath != null && !"".equals(imagePath)) {
             File f = new File(imagePath);
             setImagePreview(f, maxsize);
@@ -608,7 +610,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         // This must be the file URL it will not work with a content URI
         String imagePath = image.getPath();
         Uri imageUri = Uri.fromFile(image);
-        ret = new ImageViewModel(imagePath, imageUri);
+        ret = mViewModel.beforeCrop(imagePath, imageUri);
         setTemporaryMedia(imagePath);
         Timber.d("requestCrop()  destination image has path/uri %s/%s", ret.mImagePath, ret.mImageUri);
 
@@ -669,7 +671,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     private boolean rotateAndCompress() {
-        if (!rotateAndCompress(mViewModel.mImagePath)) {
+        if (!rotateAndCompress(mViewModel.mImagePath, mViewModel)) {
             mImageFileSizeWarning.setVisibility(View.VISIBLE);
             revertToPreviousImage();
             showSomethingWentWrong();
@@ -839,6 +841,16 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                     Timber.i("revertToPreviousImage() had existing image, but delete failed");
                 }
             }
+        }
+
+
+        public ImageViewModel beforeCrop(String imagePath, Uri imageUri) {
+            return new ImageViewModel(imagePath, imageUri);
+        }
+
+
+        public ImageViewModel rotateAndCompressTo(String imagePath, Uri uri) {
+            return new ImageViewModel(imagePath, uri);
         }
     }
 }
