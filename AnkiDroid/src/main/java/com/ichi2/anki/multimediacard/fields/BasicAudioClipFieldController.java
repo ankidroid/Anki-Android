@@ -85,22 +85,33 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((resultCode != Activity.RESULT_CANCELED) && (requestCode == ACTIVITY_SELECT_AUDIO_CLIP)) {
+            try {
+                handleAudioSelection(data);
+            } catch (Exception e) {
+                AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:unhandled");
+                UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
+                        AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
+            }
+        }
+    }
 
-            Uri selectedClip = data.getData();
 
-            // Get information about the selected document
-            String[] queryColumns = { MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.MIME_TYPE };
-            Cursor cursor = mActivity.getContentResolver().query(selectedClip, queryColumns, null, null, null);
+    private void handleAudioSelection(Intent data) {
+        Uri selectedClip = data.getData();
 
+        // Get information about the selected document
+        String[] queryColumns = { MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.MIME_TYPE };
+        String[] audioClipFullNameParts;
+        try (Cursor cursor = mActivity.getContentResolver().query(selectedClip, queryColumns, null, null, null)) {
             if (cursor == null) {
-                 UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
-                         AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
+                UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
+                        AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
                 return;
             }
 
             cursor.moveToFirst();
             String audioClipFullName = cursor.getString(0);
-            String[] audioClipFullNameParts = audioClipFullName.split("\\.");
+            audioClipFullNameParts = audioClipFullName.split("\\.");
             if (audioClipFullNameParts.length < 2) {
                 try {
                     Timber.i("Audio clip name does not have extension, using second half of mime type");
@@ -115,38 +126,40 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
                     return;
                 }
             }
-            cursor.close();
+        }
 
-            // We may receive documents we can't access directly, we have to copy to a temp file
-            File clipCopy;
-            try {
-                clipCopy = File.createTempFile("ankidroid_audioclip_" + audioClipFullNameParts[0],
-                        "." + audioClipFullNameParts[1],
-                        storingDirectory);
-                Timber.d("audio clip picker file path is: %s", clipCopy.getAbsolutePath());
-            } catch (Exception e) {
-                Timber.e(e, "Could not create temporary audio file. ");
-                UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
-                        AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
-                return;
-            }
+        // We may receive documents we can't access directly, we have to copy to a temp file
+        File clipCopy;
+        try {
+            clipCopy = File.createTempFile("ankidroid_audioclip_" + audioClipFullNameParts[0],
+                    "." + audioClipFullNameParts[1],
+                    storingDirectory);
+            Timber.d("audio clip picker file path is: %s", clipCopy.getAbsolutePath());
+        } catch (Exception e) {
+            Timber.e(e, "Could not create temporary audio file. ");
+            AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:tempFile");
+            UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
+                    AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
+            return;
+        }
 
-            // Copy file contents into new temp file. Possibly check file size first and warn if large?
-            try (InputStream inputStream = mActivity.getContentResolver().openInputStream(selectedClip)) {
-                CompatHelper.getCompat().copyFile(inputStream, clipCopy.getAbsolutePath());
+        // Copy file contents into new temp file. Possibly check file size first and warn if large?
+        try (InputStream inputStream = mActivity.getContentResolver().openInputStream(selectedClip)) {
+            CompatHelper.getCompat().copyFile(inputStream, clipCopy.getAbsolutePath());
 
-                // If everything worked, hand off the information
-                mField.setHasTemporaryMedia(true);
-                mField.setAudioPath(clipCopy.getAbsolutePath());
-                mTvAudioClip.setText(mField.getFormattedValue());
-                mTvAudioClip.setVisibility(View.VISIBLE);
-            } catch (Exception e) {
-                Timber.e(e, "Unable to copy audio file from ContentProvider");
-                UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
-                        AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
-            }
+            // If everything worked, hand off the information
+            mField.setHasTemporaryMedia(true);
+            mField.setAudioPath(clipCopy.getAbsolutePath());
+            mTvAudioClip.setText(mField.getFormattedValue());
+            mTvAudioClip.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            Timber.e(e, "Unable to copy audio file from ContentProvider");
+            AnkiDroidApp.sendExceptionReport(e, "handleAudioSelection:copyFromProvider");
+            UIUtils.showThemedToast(AnkiDroidApp.getInstance().getApplicationContext(),
+                    AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true);
         }
     }
+
 
     @Override
     public void onDone() { /* nothing */ }
