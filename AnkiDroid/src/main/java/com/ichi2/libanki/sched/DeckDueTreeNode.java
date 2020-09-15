@@ -118,6 +118,6 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
     }
 
     public boolean knownToHaveRep() {
-        return mRevCount > 0 || mNewCount > 0 || mNewCount > 0;
+        return mRevCount > 0 || mNewCount > 0 || mLrnCount > 0;
     }
 }
