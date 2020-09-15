@@ -220,6 +220,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static String PERSISTENT_STATE_FILE = "DeckPickerState";
     private static String LAST_DECK_ID_KEY = "lastDeckId";
 
+    public static final int CARD_NOT_AVAILABLE = -1;
+    private long mOldCardId = 0;
+    private int mOldCardTopOffset = 0;
+    private boolean mShouldRestoreScroll = false;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -633,6 +637,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     // load up the card selected on the list
                     long clickedCardId = getCards().get(position).getId();
                     openNoteEditorForCard(clickedCardId);
+                    mOldCardId = clickedCardId;
+                    mOldCardTopOffset = calculateTopOffset(position);
                 }
             }
         });
@@ -1195,9 +1201,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
-        if (requestCode == EDIT_CARD &&  data != null && data.getBooleanExtra("reloadRequired", false)) {
-            // if reloadRequired flag was sent from note editor then reload card list
+        if (requestCode == EDIT_CARD &&  data != null &&
+                (data.getBooleanExtra("reloadRequired", false) ||
+                        data.getBooleanExtra("noteChanged", false))) {
+            // if reloadRequired or noteChanged flag was sent from note editor then reload card list
             searchCards();
+            mShouldRestoreScroll = true;
             // in use by reviewer?
             if (getReviewerCardId() == mCurrentCardId) {
                 mReloadRequired = true;
@@ -1705,6 +1714,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 updateList();
                 handleSearchResult();
             }
+            if (mShouldRestoreScroll) {
+                mShouldRestoreScroll = false;
+                int newPosition = getNewPositionOfSelectedCard();
+                boolean isRestorePossible = (newPosition != CARD_NOT_AVAILABLE);
+                if (isRestorePossible) {
+                    autoScrollTo(newPosition);
+                }
+            }
             updatePreviewMenuItem();
             hideProgressBar();
         }
@@ -1747,6 +1764,28 @@ public class CardBrowser extends NavigationDrawerActivity implements
             hideProgressBar();
         }
     };
+
+    private void autoScrollTo(int newPosition) {
+        mCardsListView.setSelectionFromTop(newPosition, mOldCardTopOffset);
+    }
+
+    private int calculateTopOffset(int cardPosition) {
+        int firstVisiblePosition = mCardsListView.getFirstVisiblePosition();
+        View v = mCardsListView.getChildAt(cardPosition - firstVisiblePosition);
+        return (v == null) ? 0 : v.getTop();
+    }
+
+    private int getNewPositionOfSelectedCard() {
+        if (mCards == null) {
+            return CARD_NOT_AVAILABLE;
+        }
+        for (CardCache card : mCards) {
+            if (card.getId() == mOldCardId) {
+                return card.mPosition;
+            }
+        }
+        return CARD_NOT_AVAILABLE;
+    }
 
     public boolean hasSelectedAllDecks() {
         Long lastDeckId = getLastDeckId();
