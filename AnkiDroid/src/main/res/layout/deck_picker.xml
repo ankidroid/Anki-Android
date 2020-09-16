@@ -38,6 +38,7 @@
                         android:fastScrollEnabled="true"
                         android:focusable="true"
                         android:paddingBottom="72dp"
+                        android:layout_above="@id/today_stats_text_view"
                         android:scrollbars="vertical" />
 
                     <TextView
