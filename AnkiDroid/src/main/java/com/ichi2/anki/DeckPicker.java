@@ -262,12 +262,30 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (mActionsMenu != null && mActionsMenu.isExpanded()) {
             mActionsMenu.collapse();
         }
-        handleDeckSelection(deckId, dontSkipStudyOptions);
-        if (mFragmented || !CompatHelper.isLollipop()) {
-            // Calling notifyDataSetChanged() will update the color of the selected deck.
-            // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
-            mDeckListAdapter.notifyDataSetChanged();
+        if (!colIsOpen()) {
+            displayFailedToOpenDeck(deckId);
+            return;
         }
+        try {
+            handleDeckSelection(deckId, dontSkipStudyOptions);
+            if (mFragmented || !CompatHelper.isLollipop()) {
+                // Calling notifyDataSetChanged() will update the color of the selected deck.
+                // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
+                mDeckListAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            AnkiDroidApp.sendExceptionReport(e, "deckPicker::onDeckClick", Long.toString(deckId));
+            displayFailedToOpenDeck(deckId);
+        }
+    }
+
+
+    private void displayFailedToOpenDeck(long deckId) {
+        // #6208 - if the click is accepted before the sync completes, we get a failure.
+        // We use the Deck ID as the deck likely doesn't exist any more.
+        String message = getString(R.string.deck_picker_failed_deck_load, Long.toString(deckId));
+        UIUtils.showThemedToast(this, message, false);
+        Timber.w(message);
     }
 
 
