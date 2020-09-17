@@ -10,6 +10,8 @@ import com.ichi2.anki.AbstractFlashcardViewer.JavaScriptFunction;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.reviewer.ActionButtonStatus;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.async.BackgroundTaskManager;
+import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -91,6 +93,8 @@ public class ReviewerTest extends RobolectricTest {
 
     @Test
     public void verifyNormalStartup() {
+        // Need to use standard task manager otherwise it is not a normal startup
+        TaskManager.setManager(new BackgroundTaskManager());
         try (ActivityScenario<Reviewer> scenario = ActivityScenario.launch(Reviewer.class)) {
             scenario.onActivity(reviewer -> assertNotNull("Collection should be non-null", reviewer.getCol()));
         }
@@ -98,6 +102,8 @@ public class ReviewerTest extends RobolectricTest {
 
     @Test
     public void exitCommandWorksAfterControlsAreBlocked() {
+        // Need to use standard task manager otherwise it is not detected as control block (?)
+        TaskManager.setManager(new BackgroundTaskManager());
         ensureCollectionLoadIsSynchronous();
         try (ActivityScenario<Reviewer> scenario = ActivityScenario.launch(Reviewer.class)) {
             scenario.onActivity(reviewer -> {
