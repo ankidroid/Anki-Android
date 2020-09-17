@@ -886,6 +886,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 plugins.removePreference(doubleScrolling);
             }
         }
+
+        if (AdaptionUtil.canUseContextMenu()) {
+            PreferenceCategory workarounds = (PreferenceCategory) screen.findPreference("category_workarounds");
+            if (workarounds != null) {
+                CheckBoxPreference miuiClipboardHack = (CheckBoxPreference) screen.findPreference("enableMIUIClipboardHack");
+                workarounds.removePreference(miuiClipboardHack);
+            }
+        }
     }
 
 
