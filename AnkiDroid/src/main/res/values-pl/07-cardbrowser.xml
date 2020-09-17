@@ -85,8 +85,8 @@
         <item>Bez sortowania (szybciej)</item>
         <item>Wg pola wyszukiwania</item>
         <item>Wg utworzenia</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Wg czasu edycji notatek</item>
+        <item>Wg czasu edycji kart</item>
         <item>Według czasu powtórki</item>
         <item>Wg przerw</item>
         <item>Wg łatwości</item>
@@ -97,11 +97,11 @@
     <string name="card_browser_select_none">Anuluj wybór</string>
     <string name="card_browser_edit_note">Edytuj notatkę</string>
     <string name="card_browser_interval_new_card">(nowa)</string>
-    <string name="card_browser_ease_new_card">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
+    <string name="card_browser_ease_new_card">(nowe)</string>
+    <string name="card_browser_due_filtered_card">(filtrowane)</string>
     <string name="card_browser_interval_learning_card">(uczona)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_note_editor_error">Błąd otwierania edytora notatek</string>
+    <string name="card_browser_no_cards_in_deck">Nie znaleziono kart w talii „%s”</string>
+    <string name="card_browser_search_all_decks">Szukaj w wszystkich taliach</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
 </resources>
