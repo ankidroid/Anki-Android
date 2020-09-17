@@ -283,4 +283,6 @@
     <string name="analytics_dialog_title">Ajude a tornar o AnkiDroid melhor!</string>
     <string name="analytics_title">Compartilhar funções de uso</string>
     <string name="analytics_summ">Você pode contribuir para AnkiDroid ajudando a equipe de desenvolvimento a ver quais recursos as pessoas usam</string>
+    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
+    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
 </resources>

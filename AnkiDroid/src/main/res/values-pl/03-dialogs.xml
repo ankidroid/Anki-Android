@@ -41,7 +41,7 @@
     <string name="check_db_title">Sprawdź bazę danych</string>
     <string name="check_db_warning">To może zająć dużo czasu.</string>
     <string name="check_db_acknowledge">Baza danych sprawdzona</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">Baza danych sprawdzona i zoptymalizowana.\nZmniejszono rozmiar o %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
     <string name="delete_deck_default_deck">Domyślna talia nie może zostać usunięta</string>
     <string name="delete_deck_title">Skasuj talię</string>
@@ -83,16 +83,16 @@
     <!-- Reschedule Card Dialog -->
     <string name="reschedule_card_dialog_title">Ponownie ustal czas dla karty</string>
     <plurals name="reschedule_cards_dialog_title">
-        <item quantity="one">Zaktualizuj harmonogram kart</item>
+        <item quantity="one">Ponownie ustal czas dla karty</item>
         <item quantity="few">Zaktualizuj harmonogram kart</item>
-        <item quantity="many">Zaktualizuj harmonogram kart</item>
+        <item quantity="many">Ponownie ustal czas dla kart</item>
         <item quantity="other">Reschedule cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
+        <item quantity="one">Aktualny interwał: %d dzień</item>
         <item quantity="few">Current interval: %d days</item>
         <item quantity="many">Current interval: %d days</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="other">Aktualny interwał: %d dni</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Ustaw ponowne pokazanie się na x dni:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
