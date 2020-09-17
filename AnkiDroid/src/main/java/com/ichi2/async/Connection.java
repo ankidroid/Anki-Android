@@ -302,15 +302,22 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
     }
 
+    /**
+     * In the payload, success means that the sync did occur correctly and that a change did occur.
+     * So success can be false without error, if no change occurred at all.*/
     private Payload doInBackgroundSync(Payload data) {
         sIsCancellable = true;
         Timber.d("doInBackgroundSync()");
         // Block execution until any previous background task finishes, or timeout after 5s
         boolean ok = CollectionTask.waitToFinish(5);
 
+        // Unique key allowing to identify the user to AnkiWeb without password
         String hkey = (String) data.data[0];
+        // Whether media should be synced too
         boolean media = (Boolean) data.data[1];
+        // If normal sync can't occur, what to do
         ConflictResolution conflictResolution = (ConflictResolution) data.data[2];
+        // A number AnkiWeb told us to send back. Probably to choose the best server for the user
         HostNum hostNum = (HostNum) data.data[3];
         // Use safe version that catches exceptions so that full sync is still possible
         Collection col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance());
@@ -469,6 +476,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 }
             }
             if (noChanges && (!media || noMediaChanges)) {
+                // This means that there is no change at all, neither media nor collection. Not that there was an error.
                 data.success = false;
                 data.result = new Object[] { "noChanges" };
                 return data;
