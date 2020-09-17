@@ -45,7 +45,7 @@
             android:layout_gravity="start|center_vertical"
             android:padding="12dp"
             android:focusable="true"
-            android:background="@drawable/item_background_light_selectable_borderless"
+            android:background="?attr/hardButtonRef"
             app:srcCompat="@drawable/ic_baseline_chevron_left_24"
             app:tint="?attr/hardButtonTextColor" />
 
@@ -56,7 +56,7 @@
             android:layout_gravity="end|center_vertical"
             android:padding="12dp"
             android:focusable="true"
-            android:background="@drawable/item_background_light_selectable_borderless"
+            android:background="?attr/hardButtonRef"
             app:srcCompat="@drawable/ic_baseline_chevron_right_24"
             app:tint="?attr/hardButtonTextColor" />
     </FrameLayout>
