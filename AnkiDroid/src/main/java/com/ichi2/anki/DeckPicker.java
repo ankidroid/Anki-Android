@@ -244,36 +244,32 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private final OnClickListener mDeckClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            long deckId = (long) v.getTag();
-            Timber.i("DeckPicker:: Selected deck with id %d", deckId);
-            if (mActionsMenu != null && mActionsMenu.isExpanded()) {
-                mActionsMenu.collapse();
-            }
-            handleDeckSelection(deckId, false);
-            if (mFragmented || !CompatHelper.isLollipop()) {
-                // Calling notifyDataSetChanged() will update the color of the selected deck.
-                // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
-                mDeckListAdapter.notifyDataSetChanged();
-            }
+            onDeckClick(v, false);
         }
     };
 
     private final OnClickListener mCountsClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            long deckId = (long) v.getTag();
-            Timber.i("DeckPicker:: Selected deck with id %d", deckId);
-            if (mActionsMenu != null && mActionsMenu.isExpanded()) {
-                mActionsMenu.collapse();
-            }
-            handleDeckSelection(deckId, true);
-            if (mFragmented || !CompatHelper.isLollipop()) {
-                // Calling notifyDataSetChanged() will update the color of the selected deck.
-                // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
-                mDeckListAdapter.notifyDataSetChanged();
-            }
+            onDeckClick(v, true);
         }
     };
+
+
+    private void onDeckClick(View v, boolean dontSkipStudyOptions) {
+        long deckId = (long) v.getTag();
+        Timber.i("DeckPicker:: Selected deck with id %d", deckId);
+        if (mActionsMenu != null && mActionsMenu.isExpanded()) {
+            mActionsMenu.collapse();
+        }
+        handleDeckSelection(deckId, dontSkipStudyOptions);
+        if (mFragmented || !CompatHelper.isLollipop()) {
+            // Calling notifyDataSetChanged() will update the color of the selected deck.
+            // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
+            mDeckListAdapter.notifyDataSetChanged();
+        }
+    }
+
 
     private final View.OnLongClickListener mDeckLongClickListener = new View.OnLongClickListener() {
         @Override
