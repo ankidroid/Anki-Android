@@ -927,9 +927,12 @@ public class Reviewer extends AbstractFlashcardViewer {
     protected void updateScreenCounts() {
         if (mCurrentCard == null) return;
         super.updateActionBar();
-        ActionBar actionBar = getSupportActionBar();
         Counts counts = mSched.counts(mCurrentCard);
+        setCounts(counts);
+    }
 
+    private void setCounts(Counts counts){
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             if (mPrefShowETA) {
                 eta = mSched.eta(counts, false);
