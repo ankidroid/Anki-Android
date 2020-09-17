@@ -703,11 +703,21 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Set correct label and background resource for each button
         // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
-        final int[] background = Themes.getResFromAttr(this, new int [] {
-                R.attr.againButtonRef,
-                R.attr.hardButtonRef,
-                R.attr.goodButtonRef,
-                R.attr.easyButtonRef});
+        int[] backgroundIds;
+        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+            backgroundIds = new int [] {
+                    R.attr.againButtonRippleRef,
+                    R.attr.hardButtonRippleRef,
+                    R.attr.goodButtonRippleRef,
+                    R.attr.easyButtonRippleRef};
+        } else {
+            backgroundIds = new int [] {
+                    R.attr.againButtonRef,
+                    R.attr.hardButtonRef,
+                    R.attr.goodButtonRef,
+                    R.attr.easyButtonRef};
+        }
+        final int[] background = Themes.getResFromAttr(this, backgroundIds);
         final int[] textColor = Themes.getColorFromAttr(this, new int [] {
                 R.attr.againButtonTextColor,
                 R.attr.hardButtonTextColor,

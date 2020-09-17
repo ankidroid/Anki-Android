@@ -56,11 +56,17 @@
     <attr name="learnCountColor" format="color"/>
     <attr name="reviewCountColor" format="color"/>
     <attr name="zeroCountColor" format="color"/>
-    <!-- Reviewer button colors -->
-    <attr name="againButtonRef" format= "reference"/>
-    <attr name="hardButtonRef" format= "reference"/>
-    <attr name="goodButtonRef" format= "reference"/>
-    <attr name="easyButtonRef" format= "reference"/>
+    <!-- Reviewer button backgrounds -->
+    <attr name="againButtonRef" format="reference"/>
+    <attr name="hardButtonRef" format="reference"/>
+    <attr name="goodButtonRef" format="reference"/>
+    <attr name="easyButtonRef" format="reference"/>
+    <!-- Same thing but with ripples -->
+    <attr name="againButtonRippleRef" format="reference"/>
+    <attr name="hardButtonRippleRef" format="reference"/>
+    <attr name="goodButtonRippleRef" format="reference"/>
+    <attr name="easyButtonRippleRef" format="reference"/>
+    <!-- Reviewer button text colors-->
     <attr name="answerButtonTextColor" format="color"/>
     <attr name="againButtonTextColor" format="color"/>
     <attr name="hardButtonTextColor" format="color"/>
