@@ -9,6 +9,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 
 import androidx.annotation.Nullable;
@@ -30,7 +31,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
         void showSyncErrorDialog(int dialogType, String message);
         void loginToSyncServer();
         void sync();
-        void sync(String conflict);
+        void sync(Connection.ConflictResolution conflict);
         Collection getCol();
         void mediaCheck();
         void dismissAllDialogFragments();
@@ -101,7 +102,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
-                            activity.sync("upload");
+                            activity.sync(Connection.ConflictResolution.FULL_UPLOAD);
                             dismissAllDialogFragments();
                         })
                         .show();
@@ -112,7 +113,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
-                            activity.sync("download");
+                            activity.sync(Connection.ConflictResolution.FULL_DOWNLOAD);
                             dismissAllDialogFragments();
                         })
                         .show();
@@ -133,7 +134,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                 return builder.positiveText(res().getString(R.string.dialog_positive_overwrite))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
-                            ((SyncErrorDialogListener) getActivity()).sync("upload");
+                            ((SyncErrorDialogListener) getActivity()).sync(Connection.ConflictResolution.FULL_UPLOAD);
                             dismissAllDialogFragments();
                         })
                         .show();
@@ -143,7 +144,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                 return builder.positiveText(res().getString(R.string.dialog_positive_overwrite))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
-                            ((SyncErrorDialogListener) getActivity()).sync("download");
+                            ((SyncErrorDialogListener) getActivity()).sync(Connection.ConflictResolution.FULL_DOWNLOAD);
                             dismissAllDialogFragments();
                         })
                         .show();
