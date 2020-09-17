@@ -1920,6 +1920,19 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         }
     }
 
+    public static class ReviewerCount extends Task<Void, Counts> {
+        private final Card card;
+
+        public ReviewerCount(Card card) {
+            this.card = card;
+        }
+
+        protected Counts task(Collection col, ProgressSenderAndCancelListener<Void> collectionTask) {
+            return col.getSched().counts(card);
+        }
+
+    }
+
     /**
      * Goes through selected cards and checks selected and marked attribute
      * @return If there are unselected cards, if there are unmarked cards

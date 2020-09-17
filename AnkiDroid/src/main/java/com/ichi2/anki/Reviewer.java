@@ -72,6 +72,7 @@ import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround;
 import com.ichi2.anki.reviewer.ActionButtons;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
@@ -924,11 +925,29 @@ public class Reviewer extends AbstractFlashcardViewer {
         updateScreenCounts();
     }
 
+    private CountHandler countHandler() {
+        return new CountHandler(this);
+    }
+
+    private static class CountHandler extends TaskListenerWithContext<Reviewer, Void, Counts> {
+        public CountHandler(Reviewer reviewer) {
+            super(reviewer);
+        }
+
+        @Override
+        public void actualOnPreExecute(@NonNull Reviewer context) {
+        }
+
+        @Override
+        public void actualOnPostExecute(@NonNull Reviewer reviewer, Counts counts) {
+            reviewer.setCounts(counts);
+        }
+    }
+
     protected void updateScreenCounts() {
         if (mCurrentCard == null) return;
         super.updateActionBar();
-        Counts counts = mSched.counts(mCurrentCard);
-        setCounts(counts);
+        TaskManager.launchCollectionTask(new CollectionTask.ReviewerCount(mCurrentCard), countHandler());
     }
 
     private void setCounts(Counts counts){
