@@ -139,6 +139,8 @@ import java.util.TreeMap;
 import timber.log.Timber;
 
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
+
 import com.ichi2.async.TaskData;
 
 public class DeckPicker extends NavigationDrawerActivity implements
@@ -1627,11 +1629,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /**
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required.
-     *
-     * @param syncConflictResolution Either "upload" or "download", depending on the user's choice.
      */
     @Override
-    public void sync(String syncConflictResolution) {
+    public void sync(Connection.ConflictResolution syncConflictResolution) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String hkey = preferences.getString("hkey", "");
         if (hkey.length() == 0) {
@@ -1818,7 +1818,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     } else if ("fullSync".equals(resultType)) {
                         if (getCol().isEmpty()) {
                             // don't prompt user to resolve sync conflict if local collection empty
-                            sync("download");
+                            sync(FULL_DOWNLOAD);
                             // TODO: Also do reverse check to see if AnkiWeb collection is empty if Anki Desktop
                             // implements it
                         } else {
@@ -1898,20 +1898,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     // Note: Do not log this data. May contain user email.
                     String message = res.getString(R.string.sync_database_acknowledge) + "\n\n" + data.data[2];
                     showSimpleMessageDialog(message);
-                } else if (data.data.length > 0 && data.data[0] instanceof String
-                        && ((String) data.data[0]).length() > 0) {
+                } else if (data.data.length > 0 && data.data[0] instanceof Connection.ConflictResolution) {
                     // A full sync occurred
-                    String dataString = (String) data.data[0];
+                    Connection.ConflictResolution dataString = (Connection.ConflictResolution) data.data[0];
                     switch (dataString) {
-                        case "upload":
+                        case FULL_UPLOAD:
                             Timber.i("Full Upload Completed");
                             showSyncLogMessage(R.string.sync_log_uploading_message, syncMessage);
                             break;
-                        case "download":
+                        case FULL_DOWNLOAD:
                             Timber.i("Full Download Completed");
                             showSyncLogMessage(R.string.sync_log_downloading_message, syncMessage);
                             break;
-                        default:
+                        default: // should not be possible
                             Timber.i("Full Sync Completed (Unknown Direction)");
                             showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
                             break;
