@@ -35,6 +35,8 @@ public class FieldEditText extends AppCompatEditText {
     private String mName;
     private int mOrd;
     private Drawable mOrigBackground;
+    @Nullable
+    private TextSelectionListener mSelectionChangeListener;
 
 
     public FieldEditText(Context context) {
@@ -118,6 +120,19 @@ public class FieldEditText extends AppCompatEditText {
     }
 
 
+    @Override
+    protected void onSelectionChanged(int selStart, int selEnd) {
+        if (mSelectionChangeListener != null) {
+            try {
+                mSelectionChangeListener.onSelectionChanged(selStart, selEnd);
+            } catch (Exception e) {
+                Timber.w(e, "mSelectionChangeListener");
+            }
+        }
+        super.onSelectionChanged(selStart, selEnd);
+    }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setHintLocale(@NonNull Locale locale) {
@@ -138,5 +153,13 @@ public class FieldEditText extends AppCompatEditText {
      */
     public void setDefaultStyle() {
         setBackgroundDrawable(mOrigBackground);
+    }
+
+    public void setSelectionChangeListener(TextSelectionListener listener) {
+        this.mSelectionChangeListener = listener;
+    }
+
+    public interface TextSelectionListener {
+        void onSelectionChanged(int selStart, int selEnd);
     }
 }
