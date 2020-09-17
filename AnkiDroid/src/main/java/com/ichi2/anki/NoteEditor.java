@@ -21,6 +21,8 @@ package com.ichi2.anki;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -110,8 +112,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
+
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
@@ -1326,6 +1330,7 @@ public class NoteEditor extends AnkiActivity {
         if (!"".equals(customFont)) {
             mCustomTypeface = AnkiFont.getTypeface(this, customFont);
         }
+        ClipboardManager clipboard = ContextCompat.getSystemService(this, ClipboardManager.class);
 
         for (int i = 0; i < fields.length; i++) {
             View edit_line_view = getLayoutInflater().inflate(R.layout.card_multimedia_editline, mFieldsLayoutContainer, false);
@@ -1339,7 +1344,7 @@ public class NoteEditor extends AnkiActivity {
                 newTextbox.setCustomInsertionActionModeCallback(actionModeCallback);
             }
 
-            initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode);
+            initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode, clipboard);
 
             TextView label = newTextbox.getLabel();
             label.setPadding((int) UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
@@ -1488,13 +1493,36 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void initFieldEditText(FieldEditText editText, final int index, String[] values, Typeface customTypeface, boolean enabled) {
+    private void initFieldEditText(FieldEditText editText, final int index, String[] values, Typeface customTypeface, boolean enabled, @Nullable ClipboardManager clipboard) {
         String name = values[0];
         String content = values[1];
         Locale hintLocale = getHintLocaleForField(name);
         editText.init(index, name, content, hintLocale);
         if (customTypeface != null) {
             editText.setTypeface(customTypeface);
+        }
+
+        // HACK: To be removed after #7124
+        // Additional cloze icon using GBoard Clipboard function for MIUI users
+        if (clipboard != null && !AdaptionUtil.canUseContextMenu() && AnkiDroidApp.getSharedPrefs(this).getBoolean("enableMIUIClipboardHack", true)) {
+            editText.setSelectionChangeListener((selStart, selEnd) -> {
+                if (!isClozeType()) {
+                    return;
+                }
+
+                Editable text = editText.getText();
+                // only display if one or more characters is selected
+                if (selStart == selEnd || text == null) {
+                    return;
+                }
+
+                int start = Math.min(selStart, selEnd);
+                int end = Math.max(selStart, selEnd);
+
+                String nextCloze = previewNextClozeDeletion(start, end, text);
+                ClipData clip = ClipData.newPlainText("", nextCloze);
+                clipboard.setPrimaryClip(clip);
+            });
         }
 
         // Listen for changes in the first field so we can re-check duplicate status.
@@ -2066,6 +2094,19 @@ public class NoteEditor extends AnkiActivity {
         textBox.setText(String.format("%s%s%s}}%s", beforeText, clozeOpenBracket, selectedText, afterText));
         int clozeOpenSize = clozeOpenBracket.length();
         textBox.setSelection(start + clozeOpenSize, end + clozeOpenSize);
+    }
+
+    @NonNull
+    private String previewNextClozeDeletion(int start, int end, CharSequence text) {
+        // TODO: Code Duplication with the above
+
+        CharSequence selectedText = text.subSequence(start, end);
+        int nextClozeIndex = getNextClozeIndex();
+        nextClozeIndex = Math.max(1, nextClozeIndex);
+
+
+        // Update text field with updated text and selection
+        return String.format("{{c%s::%s}}", nextClozeIndex, selectedText);
     }
 
 
