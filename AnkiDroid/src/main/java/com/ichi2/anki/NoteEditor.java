@@ -2000,7 +2000,8 @@ public class NoteEditor extends AnkiActivity {
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                menu.add(Menu.NONE, mSetLanguageId, 1, R.string.note_editor_set_field_language);
+                // This should be after "Paste as Plain Text"
+                menu.add(Menu.NONE, mSetLanguageId, 99, R.string.note_editor_set_field_language);
             }
 
 
