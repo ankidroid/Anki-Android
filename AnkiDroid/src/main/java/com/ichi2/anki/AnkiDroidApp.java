@@ -209,6 +209,10 @@ public class AnkiDroidApp extends MultiDexApplication {
         //possible since API 17, only supported way since API 25
         //for API < 17 we update the configuration directly
         super.attachBaseContext(updateContextWithLanguage(base));
+
+        // DO NOT INIT A WEBVIEW HERE (Moving Analytics to this method)
+        // Crashes only on a Physical API 19 Device - #7135
+        // After we move past API 19, we're good to go.
     }
 
     /**
