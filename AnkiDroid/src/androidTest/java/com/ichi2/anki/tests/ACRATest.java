@@ -58,7 +58,6 @@ public class ACRATest {
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
         mApp = (AnkiDroidApp) instrumentation.getTargetContext().getApplicationContext();
         // Note: attachBaseContext can't be called twice as we're using the same instance between all tests.
-        mApp.initializeLoggingAndCrashReporting();
         mApp.onCreate();
     }
 
