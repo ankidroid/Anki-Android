@@ -136,7 +136,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     /** List of cards in the browser.
     * When the list is changed, the position member of its elements should get changed.*/
-    private List<CardCache> mCards;
+    @NonNull
+    private List<CardCache> mCards = new ArrayList<>();
     private ArrayList<Deck> mDropDownDecks;
     private ListView mCardsListView;
     private SearchView mSearchView;
