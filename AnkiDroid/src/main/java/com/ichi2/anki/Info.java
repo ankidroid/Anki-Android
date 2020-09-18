@@ -63,6 +63,11 @@ public class Info extends AnkiActivity {
         WebView webView;
 
         mType = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
+        // If the page crashes, we do not want to display it again (#7135 maybe)
+        if (mType == TYPE_NEW_VERSION) {
+            AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
+                    .putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+        }
 
         setContentView(R.layout.info);
         final View mainView = findViewById(android.R.id.content);
@@ -95,12 +100,6 @@ public class Info extends AnkiActivity {
                 return;
             }
             setResult(RESULT_OK);
-            switch (mType) {
-                case TYPE_NEW_VERSION:
-                    AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                            .putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
-                    break;
-            }
             finishWithAnimation();
         });
 
