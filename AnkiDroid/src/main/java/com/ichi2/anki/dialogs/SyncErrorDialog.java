@@ -1,12 +1,17 @@
 
 package com.ichi2.anki.dialogs;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
+
+import androidx.annotation.Nullable;
 
 public class SyncErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_USER_NOT_LOGGED_IN_SYNC = 0;
@@ -18,6 +23,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL = 7;
     public static final int DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE = 8;
     public static final int DIALOG_MEDIA_SYNC_ERROR = 9;
+    public static final int DIALOG_SYNC_CORRUPT_COLLECTION = 10;
 
     public interface SyncErrorDialogListener {
         void showSyncErrorDialog(int dialogType);
@@ -151,6 +157,15 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                         })
                         .show();
             }
+            case DIALOG_SYNC_CORRUPT_COLLECTION: {
+                return
+                        builder.positiveText(R.string.dialog_ok)
+                        .neutralText(R.string.sync_corrupt_collection_get_help)
+                        .onNeutral((dialog, which) -> ((AnkiActivity)(requireActivity())).openUrl(Uri.parse(getString(R.string.repair_deck))))
+                        .cancelable(false)
+                        .show();
+
+            }
             default:
                 return null;
         }
@@ -186,7 +201,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
         }
     }
 
-
+    @Nullable
     private String getMessage() {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
@@ -203,6 +218,13 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.sync_conflict_local_confirm);
             case DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE:
                 return res().getString(R.string.sync_conflict_remote_confirm);
+            case DIALOG_SYNC_CORRUPT_COLLECTION: {
+                String syncMessage = getArguments().getString("dialogMessage");
+                String repairUrl = getString(R.string.repair_deck);
+                String dialogMessage = getString(R.string.sync_corrupt_database, repairUrl);
+                return DeckPicker.joinSyncMessages(dialogMessage, syncMessage);
+            }
+
             default:
                 return getArguments().getString("dialogMessage");
         }
