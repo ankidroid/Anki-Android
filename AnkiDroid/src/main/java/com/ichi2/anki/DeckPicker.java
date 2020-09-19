@@ -262,11 +262,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (mActionsMenu != null && mActionsMenu.isExpanded()) {
             mActionsMenu.collapse();
         }
-        if (!colIsOpen()) {
-            displayFailedToOpenDeck(deckId);
-            return;
-        }
+
+        boolean collectionIsOpen = false;
         try {
+            collectionIsOpen = colIsOpen();
             handleDeckSelection(deckId, dontSkipStudyOptions);
             if (mFragmented || !CompatHelper.isLollipop()) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
@@ -274,7 +273,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 mDeckListAdapter.notifyDataSetChanged();
             }
         } catch (Exception e) {
-            AnkiDroidApp.sendExceptionReport(e, "deckPicker::onDeckClick", Long.toString(deckId));
+            // Maybe later don't report if collectionIsOpen is false?
+            String info = deckId + " colOpen:" + collectionIsOpen;
+            AnkiDroidApp.sendExceptionReport(e, "deckPicker::onDeckClick", info);
             displayFailedToOpenDeck(deckId);
         }
     }
