@@ -2203,8 +2203,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Reset the schedule so that we get the counts for the currently selected deck
         mFocusedDeck = did;
         // Get some info about the deck to handle special cases
-        int pos = mDeckListAdapter.findDeckPosition(did);
-        AbstractDeckTreeNode deckDueTreeNode = mDeckListAdapter.getDeckList().get(pos);
+        AbstractDeckTreeNode deckDueTreeNode = mDeckListAdapter.getNodeByDid(did);
         if (!deckDueTreeNode.shouldDisplayCounts() || deckDueTreeNode.knownToHaveRep()) {
             // If we don't yet have numbers, we trust the user that they knows what they opens, tries to open it.
             // If there is nothing to review, it'll come back to deck picker.
