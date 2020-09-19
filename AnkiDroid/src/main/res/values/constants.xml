@@ -146,7 +146,7 @@
     <string name="link_faq_tts">https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking</string>
     <string name="link_faq_missing_media" tools:ignore="Typos">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
-    <string name="repair_deck">http://ankisrs.net/docs/manual.html#corrupt-collections</string>
+    <string name="repair_deck">https://docs.ankiweb.net/#/files?id=corrupt-collections</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
     <string name="register_url">https://ankiweb.net/account/register</string>
     <string name="changelog_url">https://docs.ankidroid.org/changelog.html</string>
