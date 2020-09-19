@@ -211,7 +211,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
-    private List<AbstractDeckTreeNode> mDueTree;
+    @VisibleForTesting
+    public List<AbstractDeckTreeNode> mDueTree;
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
