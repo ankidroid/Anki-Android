@@ -281,6 +281,6 @@
     <string name="analytics_dialog_title">帮助让 AnkiDroid 更好！</string>
     <string name="analytics_title">分享功能使用</string>
     <string name="analytics_summ">您可以通过帮助开发团队了解用户使用哪些功能来帮助 AnkiDroid</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="enable_miui_keyboard_hack">“粘贴”以插入创建填空</string>
+    <string name="enable_miui_keyboard_hack_summ">在注释编辑器中，“粘贴”将把选中的文本变成完形填空</string>
 </resources>

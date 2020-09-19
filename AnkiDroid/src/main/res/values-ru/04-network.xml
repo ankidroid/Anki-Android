@@ -116,6 +116,8 @@
     <string name="sync_media_db_error">Не удалось синхронизировать медиафайлы, потому что текущая база данных повреждена. Запустите проверку медиафайлов.</string>
     <string name="sync_media_error">Ошибка при синхронизации медиафайлов</string>
     <string name="sync_media_error_check">Ошибка при синхронизации медиафайлов. Выберите \"Проверку медиафайлов\".</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Локальную</string>
     <string name="sync_sanity_remote">Удалённую</string>
     <string name="force_full_sync_title">Выполнить полную синхронизацию</string>
@@ -133,4 +135,6 @@
     <string name="sync_menu_title">Синхронизация</string>
     <string name="sync_menu_title_full_sync">Синхронизация (полная)</string>
     <string name="sync_menu_title_no_account">Синхронизация (при входе)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Help</string>
 </resources>
