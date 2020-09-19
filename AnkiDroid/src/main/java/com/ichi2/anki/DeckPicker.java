@@ -1391,7 +1391,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /**
      *  Show simple error dialog with just the message and OK button. Reload the activity when dialog closed.
      */
-    private void showSyncErrorMessage(String message) {
+    private void showSyncErrorMessage(@Nullable String message) {
         String title = getResources().getString(R.string.sync_error);
         showSimpleMessageDialog(title, message, true);
     }
@@ -1812,9 +1812,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
                         }
                     } else if ("dbError".equals(resultType) || "basicCheckFailed".equals(resultType)) {
-                        String repairUrl = res.getString(R.string.repair_deck);
-                        dialogMessage = res.getString(R.string.sync_corrupt_database, repairUrl);
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage);
                     } else if ("overwriteError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_overwrite_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
@@ -1962,8 +1960,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         return msg;
     }
 
-
-    private String joinSyncMessages(String dialogMessage, String syncMessage) {
+    @Nullable
+    public static String joinSyncMessages(@Nullable String dialogMessage, @Nullable  String syncMessage) {
         // If both strings have text, separate them by a new line, otherwise return whichever has text
         if (!TextUtils.isEmpty(dialogMessage) && !TextUtils.isEmpty(syncMessage)) {
             return dialogMessage + "\n\n" + syncMessage;
