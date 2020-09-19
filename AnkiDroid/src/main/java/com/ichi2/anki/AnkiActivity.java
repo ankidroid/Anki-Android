@@ -363,7 +363,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
     }
 
-    protected void openUrl(Uri url) {
+    public void openUrl(Uri url) {
         //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
         //display the toast
         if (!AdaptionUtil.hasWebBrowser(this)) {
@@ -477,7 +477,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         showAsyncDialogFragment(newFragment);
     }
 
-    protected void showSimpleMessageDialog(String title, String message, boolean reload) {
+    protected void showSimpleMessageDialog(String title, @Nullable String message, boolean reload) {
         AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(title, message, reload);
         showAsyncDialogFragment(newFragment);
     }
