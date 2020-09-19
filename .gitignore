@@ -47,6 +47,7 @@ Thumbs.db
 
 # IDEA/Android Studio Ignore exceptions - this lets you share things you specifically want all team members to use
 !/.idea/codeStyles/
+!.idea/saveactions_settings.xml
 
 # Crowdin files
 ankidroid.zip

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+    <component name="SaveActionSettings">
+        <option name="actions">
+            <set>
+                <option value="activate" />
+                <option value="activateOnBatch" />
+                <option value="noActionIfCompileErrors" />
+                <option value="organizeImports" />
+                <option value="reformatChangedCode" />
+                <option value="rearrange" />
+                <option value="fieldCanBeFinal" />
+                <option value="localCanBeFinal" />
+                <option value="localCanBeFinalExceptImplicit" />
+                <option value="methodMayBeStatic" />
+                <option value="missingOverrideAnnotation" />
+                <option value="useBlocks" />
+                <option value="unnecessaryThis" />
+                <option value="finalPrivateMethod" />
+                <option value="unnecessaryFinalOnLocalVariableOrParameter" />
+                <option value="explicitTypeCanBeDiamond" />
+                <option value="unnecessarySemicolon" />
+                <option value="accessCanBeTightened" />
+            </set>
+        </option>
+        <option name="configurationPath"
+                value="" />
+    </component>
+</project>
