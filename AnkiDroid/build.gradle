@@ -41,8 +41,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21400106
-        versionName="2.14alpha6"
+        versionCode=21400107
+        versionName="2.14alpha7"
         minSdkVersion 16
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 28
