@@ -1811,7 +1811,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             // If can't be resolved then automatically then show conflict resolution dialog
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
                         }
-                    } else if ("dbError".equals(resultType) || "basicCheckFailed".equals(resultType)) {
+                    } else if ("basicCheckFailed".equals(resultType)) {
+                        dialogMessage = res.getString(R.string.sync_basic_check_failed, res.getString(R.string.check_db));
+                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                    } else if ("dbError".equals(resultType)) {
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage);
                     } else if ("overwriteError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_overwrite_error);
