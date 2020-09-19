@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Change `android-studio` by a command which
+# run android-studio on your device
+
+android-studio format -r AnkiDroid/src/
+
+git diff --exit-code
+exit $?
