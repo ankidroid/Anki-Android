@@ -22,6 +22,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -42,6 +44,7 @@ import com.ichi2.utils.AdaptionUtil;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+import static com.ichi2.libanki.sync.Syncer.ConnectionResultType.*;
 
 public class MyAccount extends AnkiActivity {
     private final static int STATE_LOG_IN  = 1;
@@ -262,9 +265,9 @@ public class MyAccount extends AnkiActivity {
                     UIUtils.showSimpleSnackbar(MyAccount.this, R.string.invalid_username_password, true);
                 } else {
                     String message = getResources().getString(R.string.connection_error_message);
-                    Object[] result = (Object [])data.result;
-                    if (result != null && result.length > 1 && result[1] instanceof Exception) {
-                        showSimpleMessageDialog(message, ((Exception)result[1]).getLocalizedMessage(), false);
+                    Object[] result = data.result;
+                    if (result.length > 0 && result[0] instanceof Exception) {
+                        showSimpleMessageDialog(message, ((Exception)result[0]).getLocalizedMessage(), false);
                     } else {
                         UIUtils.showSimpleSnackbar(MyAccount.this, message, false);
                     }

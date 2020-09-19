@@ -22,6 +22,7 @@ package com.ichi2.libanki.sync;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
@@ -376,12 +377,12 @@ public class HttpSyncer {
     }
 
 
-    public Object[] download() throws UnknownHttpResponseException {
+    public Pair<Syncer.ConnectionResultType, Object[]> download() throws UnknownHttpResponseException {
         return null;
     }
 
 
-    public Object[] upload() throws UnknownHttpResponseException {
+    public Pair<Syncer.ConnectionResultType, Object[]> upload() throws UnknownHttpResponseException {
         return null;
     }
 

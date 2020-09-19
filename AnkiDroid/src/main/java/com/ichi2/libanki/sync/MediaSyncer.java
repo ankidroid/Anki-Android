@@ -42,6 +42,9 @@ import java.util.zip.ZipFile;
 
 import timber.log.Timber;
 
+import static com.ichi2.libanki.sync.Syncer.ConnectionResultType;
+import static com.ichi2.libanki.sync.Syncer.ConnectionResultType.*;
+
 /**
  * About conflicts:
  * - to minimize data loss, if both sides are marked for sending and one
@@ -81,7 +84,7 @@ public class MediaSyncer {
     }
 
 
-    public String sync() throws UnknownHttpResponseException, MediaSyncException {
+    public Pair<ConnectionResultType, Object> sync() throws UnknownHttpResponseException, MediaSyncException {
             // check if there have been any changes
             // If we haven't built the media db yet, do so on this sync. See note at the top
             // of this class about this difference to the original.
@@ -91,7 +94,7 @@ public class MediaSyncer {
                 try {
                     mCol.getMedia().findChanges();
                 } catch (SQLException ignored) {
-                    return "corruptMediaDB";
+                    return new Pair<>(CORRUPT, null);
                 }
             }
 
@@ -100,7 +103,7 @@ public class MediaSyncer {
             JSONObject ret = mServer.begin();
             int srvUsn = ret.getInt("usn");
             if ((lastUsn == srvUsn) && !(mCol.getMedia().haveDirty())) {
-                return "noChanges";
+                return new Pair<>(NO_CHANGES, null);
             }
             // loop through and process changes from server
             mCol.log("last local usn is " + lastUsn);
@@ -109,7 +112,7 @@ public class MediaSyncer {
                 // Allow cancellation (note: media sync has no finish command, so just throw)
                 if (Connection.getIsCancelled()) {
                     Timber.i("Sync was cancelled");
-                    throw new RuntimeException("UserAbortedSync");
+                    throw new RuntimeException(USER_ABORTED_SYNC.toString());
                 }
                 JSONArray data = mServer.mediaChanges(lastUsn);
                 mCol.log("mediaChanges resp count: ", data.length());
@@ -123,7 +126,7 @@ public class MediaSyncer {
                     // Allow cancellation (note: media sync has no finish command, so just throw)
                     if (Connection.getIsCancelled()) {
                         Timber.i("Sync was cancelled");
-                        throw new RuntimeException("UserAbortedSync");
+                        throw new RuntimeException(USER_ABORTED_SYNC.toString());
                     }
                     String fname = data.getJSONArray(i).getString(0);
                     int rusn = data.getJSONArray(i).getInt(1);
@@ -225,10 +228,10 @@ public class MediaSyncer {
             int lcnt = mCol.getMedia().mediacount();
             String sRet = mServer.mediaSanity(lcnt);
             if ("OK".equals(sRet)) {
-                return "OK";
+                return new Pair<>(OK, null);
             } else {
                 mCol.getMedia().forceResync();
-                return sRet;
+                return new Pair<>(ARBITRARY_STRING, sRet);
         }
     }
 

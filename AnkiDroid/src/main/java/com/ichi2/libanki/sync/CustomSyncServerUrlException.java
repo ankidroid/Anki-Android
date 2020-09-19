@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki.sync;
 
+import static com.ichi2.libanki.sync.Syncer.ConnectionResultType.CUSTOM_SYNC_SERVER_URL;
+
 public class CustomSyncServerUrlException extends RuntimeException {
     private final String mUrl;
 
@@ -34,7 +36,7 @@ public class CustomSyncServerUrlException extends RuntimeException {
     @Override
     public String getLocalizedMessage() {
         // Janky. Connection uses this as a string to return, which is switched on to determine the message in DeckPicker
-        return "customSyncServerUrl";
+        return CUSTOM_SYNC_SERVER_URL.toString();
     }
 
 

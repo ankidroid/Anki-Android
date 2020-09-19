@@ -66,6 +66,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -151,6 +152,8 @@ import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 
 import com.ichi2.async.TaskData;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+
+import static com.ichi2.libanki.sync.Syncer.ConnectionResultType;
 
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
