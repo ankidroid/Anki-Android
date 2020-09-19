@@ -74,7 +74,7 @@
                 android:defaultValue="true"
                 android:key="enableMIUIClipboardHack"
                 android:summary="@string/enable_miui_keyboard_hack_summ"
-                android:title="@string/enable_miui_keyboard_hack_summ" />
+                android:title="@string/enable_miui_keyboard_hack" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_plugins"
