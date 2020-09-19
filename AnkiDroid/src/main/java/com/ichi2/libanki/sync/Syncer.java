@@ -52,6 +52,7 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import okhttp3.Response;
 import timber.log.Timber;
+import static com.ichi2.libanki.sync.Syncer.ConnectionResultType.*;
 
 import static com.ichi2.utils.CollectionUtils.addAll;
 
@@ -93,12 +94,56 @@ public class Syncer {
 
 
     /** Returns 'noChanges', 'fullSync', 'success', etc */
-    public Object[] sync() throws UnknownHttpResponseException {
+    public Pair<ConnectionResultType, Object> sync() throws UnknownHttpResponseException {
         return sync(null);
     }
 
+    public enum ConnectionResultType {
+        BAD_AUTH("badAuth"),
+        NO_CHANGES("noChanges"),
+        CLOCK_OFF("clockOff"),
+        FULL_SYNC("fullSync"),
+        DB_ERROR("dbError"),
+        BASIC_CHECK_FAILED("basicCheckFailed"),
+        OVERWRITE_ERROR("overwriteError"),
+        REMOTE_DB_ERROR("remoteDbError"),
+        SD_ACCESS_ERROR("sdAccessError"),
+        FINISH_ERROR("finishError"),
+        IO_EXCEPTION("IOException"),
+        GENERIC_ERROR("genericError"),
+        OUT_OF_MEMORY_ERROR("outOfMemoryError"),
+        SANITY_CHECK_ERROR("sanityCheckError"),
+        SERVER_ABORT("serverAbort"),
+        MEDIA_SYNC_SERVER_ERROR("mediaSyncServerError"),
+        CUSTOM_SYNC_SERVER_URL("customSyncServerUrl"),
+        USER_ABORTED_SYNC("userAbortedSync"),
+        SUCCESS("success"),
+        ARBITRARY_STRING("arbitraryString"), // arbitrary error message received from sync
 
-    public Object[] sync(Connection con) throws UnknownHttpResponseException {
+        MEDIA_SANITY_FAILED("sanityFailed"),
+        CORRUPT("corrupt"),
+        OK("OK"),
+
+        // The next three ones are the only that can be returned during login
+        UPGRADE_REQUIRED("upgradeRequired"),
+        CONNECTION_ERROR("connectionError"),
+        ERROR("error");
+
+        private final String mMessage;
+
+
+        ConnectionResultType(String mMessage) {
+            this.mMessage = mMessage;
+        }
+
+
+        public String toString() {
+            return mMessage;
+        }
+    }
+
+
+    public Pair<ConnectionResultType, Object> sync(Connection con) throws UnknownHttpResponseException {
         mSyncMsg = "";
         // if the deck has any pending changes, flush them first and bump mod time
         mCol.getSched()._updateCutoff();
@@ -110,7 +155,7 @@ public class Syncer {
         }
         int returntype = ret.code();
         if (returntype == 403) {
-            return new Object[] { "badAuth" };
+            return new Pair<>(BAD_AUTH, null);
         }
         try {
             mCol.getDb().getDatabase().beginTransaction();
@@ -121,7 +166,7 @@ public class Syncer {
                 mSyncMsg = rMeta.getString("msg");
                 if (!rMeta.getBoolean("cont")) {
                     // Don't add syncMsg; it can be fetched by UI code using the accessor
-                    return new Object[] { "serverAbort" };
+                    return new Pair<> (SERVER_ABORT, null);
                 } else {
                     // don't abort, but ui should show messages after sync finishes
                     // and require confirmation if it's non-empty
@@ -144,22 +189,22 @@ public class Syncer {
                 long diff = Math.abs(rts - lts);
                 if (diff > 300) {
                     mCol.log("clock off");
-                    return new Object[] { "clockOff", diff };
+                    return new Pair<> (CLOCK_OFF, new Object[] {diff});
                 }
                 if (lMod == rMod) {
                     Timber.i("Sync: no changes - returning");
                     mCol.log("no changes");
-                    return new Object[] { "noChanges" };
+                    return new Pair<>( NO_CHANGES , null);
                 } else if (lscm != rscm) {
                     Timber.i("Sync: full sync necessary - returning");
                     mCol.log("schema diff");
-                    return new Object[] { "fullSync" };
+                    return new Pair<>( FULL_SYNC , null);
                 }
                 mLNewer = lMod > rMod;
                 // step 1.5: check collection is valid
                 if (!mCol.basicCheck()) {
                     mCol.log("basic check");
-                    return new Object[] { "basicCheckFailed" };
+                    return new Pair<>( BASIC_CHECK_FAILED , null);
                 }
                 throwExceptionIfCancelled(con);
                 // step 2: deletions
@@ -234,7 +279,7 @@ public class Syncer {
                 Timber.i("Sync: sending finish command");
                 long mod = mServer.finish();
                 if (mod == 0) {
-                    return new Object[] { "finishError" };
+                    return new Pair<>( FINISH_ERROR , null);
                 }
                 Timber.i("Sync: finishing");
                 finish(mod);
@@ -248,12 +293,12 @@ public class Syncer {
             throw new RuntimeException(e);
         } catch (OutOfMemoryError e) {
             AnkiDroidApp.sendExceptionReport(e, "Syncer-sync");
-            return new Object[] { "OutOfMemoryError" };
+            return new Pair<>( OUT_OF_MEMORY_ERROR , null);
         } catch (IOException e) {
             AnkiDroidApp.sendExceptionReport(e, "Syncer-sync");
-            return new Object[] { "IOException" };
+            return new Pair<>( IO_EXCEPTION , null);
         }
-        return new Object[] { "success" };
+        return new Pair<>( SUCCESS , null);
     }
 
 
@@ -270,11 +315,11 @@ public class Syncer {
     }
 
     @NonNull
-    protected Object[] sanityCheckError(JSONObject c, JSONObject sanity) {
+    protected Pair<ConnectionResultType, Object> sanityCheckError(JSONObject c, JSONObject sanity) {
         mCol.log("sanity check failed", c, sanity);
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.SYNC, "sanityCheckError");
         _forceFullSync();
-        return new Object[] { "sanityCheckError", null };
+        return new Pair<> (SANITY_CHECK_ERROR, null);
     }
 
     private void _forceFullSync() {
@@ -887,7 +932,7 @@ public class Syncer {
                 mServer.abort();
             } catch (UnknownHttpResponseException ignored) {
             }
-            throw new RuntimeException("UserAbortedSync");
+            throw new RuntimeException(USER_ABORTED_SYNC.toString());
         }
     }
 

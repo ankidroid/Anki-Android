@@ -23,6 +23,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.PowerManager;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -49,8 +50,9 @@ import androidx.annotation.Nullable;
 import okhttp3.Response;
 import timber.log.Timber;
 
-import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
-import static com.ichi2.async.Connection.ConflictResolution.FULL_UPLOAD;
+import static com.ichi2.libanki.sync.Syncer.ConnectionResultType;
+import static com.ichi2.libanki.sync.Syncer.ConnectionResultType.*;
+import static com.ichi2.async.Connection.ConflictResolution.*;
 
 public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
 
@@ -226,7 +228,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             ret = server.hostKey(username, password);
         } catch (UnknownHttpResponseException e) {
             data.success = false;
-            data.result = new Object[] { "error", e.getResponseCode(), e.getMessage() };
+            data.resultType = ERROR;
+            data.result = new Object[]{e.getResponseCode(), e.getMessage() };
             return data;
         } catch (Exception e2) {
             // Ask user to report all bugs which aren't timeout errors
@@ -234,7 +237,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 AnkiDroidApp.sendExceptionReport(e2, "doInBackgroundLogin");
             }
             data.success = false;
-            data.result = new Object[] {"connectionError", e2};
+            data.resultType = CONNECTION_ERROR;
+            data.result = new Object[] {e2};
             return data;
         }
         String hostkey = null;
@@ -327,7 +331,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 colCorruptFullSync = true;
             } else {
                 data.success = false;
-                data.result = new Object[] { "genericError" };
+                data.resultType = GENERIC_ERROR;
                 return data;
             }
         }
@@ -341,19 +345,19 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             if (conflictResolution == null) {
                 Timber.i("Sync - starting sync");
                 publishProgress(R.string.sync_prepare_syncing);
-                Object[] ret = client.sync(this);
+                Pair<ConnectionResultType, Object> ret = client.sync(this);
                 data.message = client.getSyncMsg();
                 if (ret == null) {
                     data.success = false;
-                    data.result = new Object[] { "genericError" };
+                    data.resultType = GENERIC_ERROR;
                     return data;
                 }
-                String retCode = (String) ret[0];
-                if (!"noChanges".equals(retCode) && !"success".equals(retCode)) {
+                if (NO_CHANGES != ret.first && SUCCESS != ret.first) {
                     data.success = false;
-                    data.result = ret;
+                    data.resultType = ret.first;
+                    data.result = new Object[]{ret.second};
                     // Check if there was a sanity check error
-                    if ("sanityCheckError".equals(retCode)) {
+                    if (SANITY_CHECK_ERROR == ret.first) {
                         // Force full sync next time
                         col.modSchemaNoCheck();
                         col.save();
@@ -361,7 +365,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     return data;
                 }
                 // save and note success state
-                if ("noChanges".equals(retCode)) {
+                if (NO_CHANGES == ret.first) {
                     // publishProgress(R.string.sync_no_changes_message);
                     noChanges = true;
                 }
@@ -370,7 +374,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     // Disable sync cancellation for full-sync
                     sIsCancellable = false;
                     server = new FullSyncer(col, hkey, this, hostNum);
-                    Object[] ret;
+                    Pair<ConnectionResultType, Object[]> ret;
                     switch (conflictResolution) {
                     case FULL_UPLOAD:
                         Timber.i("Sync - fullsync - upload collection");
@@ -379,12 +383,13 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         col.reopen();
                         if (ret == null) {
                             data.success = false;
-                            data.result = new Object[] { "genericError" };
+                            data.resultType = GENERIC_ERROR;
                             return data;
                         }
-                        if (!ret[0].equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
+                        if (ret.first == ARBITRARY_STRING && !ret.second[0].equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
                             data.success = false;
-                            data.result = ret;
+                            data.resultType = ret.first;
+                            data.result = ret.second;
                             return data;
                         }
                         break;
@@ -395,17 +400,18 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                         if (ret == null) {
                             Timber.w("Sync - fullsync - unknown error");
                             data.success = false;
-                            data.result = new Object[] { "genericError" };
+                            data.resultType = GENERIC_ERROR;
                             return data;
                         }
-                        if ("success".equals(ret[0])) {
+                        if (SUCCESS == ret.first) {
                             data.success = true;
                             col.reopen();
                         }
-                        if (!"success".equals(ret[0])) {
+                        if (SUCCESS != ret.first) {
                             Timber.w("Sync - fullsync - download failed");
                             data.success = false;
-                            data.result = ret;
+                            data.resultType = ret.first;
+                            data.result = ret.second;
                             if (!colCorruptFullSync) {
                                 col.reopen();
                             }
@@ -417,17 +423,20 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 } catch (OutOfMemoryError e) {
                     AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
-                    data.result = new Object[] { "OutOfMemoryError" };
+                    data.resultType = OUT_OF_MEMORY_ERROR;
                     return data;
                 } catch (RuntimeException e) {
                     if (timeoutOccurred(e)) {
-                        data.result = new Object[] {"connectionError", e};
-                    } else if ("UserAbortedSync".equals(e.getMessage())) {
-                        data.result = new Object[] {"UserAbortedSync", e};
+                        data.resultType = CONNECTION_ERROR;
+                    } else if (USER_ABORTED_SYNC.toString().equals(e.getMessage())) {
+                        data.resultType = USER_ABORTED_SYNC;
+                    } else if (CUSTOM_SYNC_SERVER_URL.toString().equals(e.getMessage())) {
+                        data.resultType = CUSTOM_SYNC_SERVER_URL;
                     } else {
                         AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
-                        data.result = new Object[] {"IOException", e};
+                        data.resultType = IO_EXCEPTION;
                     }
+                    data.result = new Object[]{e};
                     data.success = false;
                     return data;
                 }
@@ -444,22 +453,22 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             if (media) {
                 server = new RemoteMediaServer(col, hkey, this, hostNum);
                 MediaSyncer mediaClient = new MediaSyncer(col, (RemoteMediaServer) server, this);
-                String ret;
+                Pair<ConnectionResultType, Object> ret;
                 try {
                     Timber.i("Sync - Performing media sync");
                     ret = mediaClient.sync();
-                    if (ret == null) {
+                    if (ret == null || ret.first == null) {
                         mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
                     } else {
                         if ("corruptMediaDB".equals(ret)) {
                             mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_db_error);
                             noMediaChanges = true;
                         }
-                        if ("noChanges".equals(ret)) {
+                        if (NO_CHANGES == ret.first) {
                             publishProgress(R.string.sync_media_no_changes);
                             noMediaChanges = true;
                         }
-                        if ("sanityFailed".equals(ret)) {
+                        if (MEDIA_SANITY_FAILED == ret.first) {
                             mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_sanity_failed);
                         } else {
                             publishProgress(R.string.sync_media_success);
@@ -467,9 +476,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     }
                 } catch (RuntimeException e) {
                     if (timeoutOccurred(e)) {
-                        data.result = new Object[] {"connectionError", e};
-                    } else if ("UserAbortedSync".equals(e.getMessage())) {
-                        data.result = new Object[] {"UserAbortedSync", e};
+                        data.resultType = CONNECTION_ERROR;
+                        data.result = new Object[]{e};
+                    } else if (USER_ABORTED_SYNC.toString().equals(e.getMessage())) {
+                        data.resultType = USER_ABORTED_SYNC;
+                        data.result = new Object[]{e};
                     }
                     mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage();
                 }
@@ -477,7 +488,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             if (noChanges && (!media || noMediaChanges)) {
                 // This means that there is no change at all, neither media nor collection. Not that there was an error.
                 data.success = false;
-                data.result = new Object[] { "noChanges" };
+                data.resultType = NO_CHANGES;
             } else {
                 data.success = true;
                 data.data = new Object[] { conflictResolution, col, mediaError };
@@ -486,7 +497,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         } catch (MediaSyncException e) {
             Timber.e("Media sync rejected by server");
             data.success = false;
-            data.result = new Object[] {"mediaSyncServerError", e};
+            data.resultType = MEDIA_SYNC_SERVER_ERROR;
+            data.result = new Object[]{e};
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
             return data;
         } catch (UnknownHttpResponseException e) {
@@ -494,7 +506,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             data.success = false;
             int code = e.getResponseCode();
             String msg = e.getLocalizedMessage();
-            data.result = new Object[] { "error", code , msg };
+            data.resultType = ERROR;
+            data.result = new Object[] {code , msg};
             return data;
         } catch (Exception e) {
             // Global error catcher.
@@ -502,11 +515,17 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Timber.e(e, "doInBackgroundSync error");
             data.success = false;
             if (timeoutOccurred(e)) {
-                data.result = new Object[]{"connectionError", e};
-            } else if ("UserAbortedSync".equals(e.getMessage())) {
-                data.result = new Object[] {"UserAbortedSync", e};
+                data.resultType = CONNECTION_ERROR;
+                data.result = new Object[]{e};
+            } else if (USER_ABORTED_SYNC.toString().equals(e.getMessage())) {
+                data.resultType = USER_ABORTED_SYNC;
+                data.result = new Object[]{e};
+            } else if (CUSTOM_SYNC_SERVER_URL.toString().equals(e.getMessage())) {
+                data.resultType = CUSTOM_SYNC_SERVER_URL;
+                data.result = new Object[]{e};
             } else {
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
+                data.resultType = ARBITRARY_STRING;
                 data.result = new Object[] {e.getLocalizedMessage(), e};
             }
             return data;
@@ -570,7 +589,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     public static class Payload {
         private int taskType;
         public Object[] data;
-        public Object result;
+        public ConnectionResultType resultType;
+        public Object[] result;
         public boolean success;
         public int returnType;
         public Exception exception;
