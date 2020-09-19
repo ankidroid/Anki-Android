@@ -168,6 +168,11 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public AbstractDeckTreeNode getNodeByDid(long did) {
+        int pos = findDeckPosition(did);
+        return getDeckList().get(pos);
+    }
+
 
     @NonNull
     @Override
@@ -348,7 +353,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
     }
 
-    public List<AbstractDeckTreeNode> getDeckList() {
+    private List<AbstractDeckTreeNode> getDeckList() {
         return mDeckList;
     }
 }
