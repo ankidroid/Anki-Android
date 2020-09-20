@@ -66,16 +66,13 @@ public class Syncer {
 
     private Collection mCol;
     private HttpSyncer mServer;
-    private long mRMod;
     //private long mRScm;
     private int mMaxUsn;
 
     private HostNum mHostNum;
-    private long mLMod;
     //private long mLScm;
     private int mMinUsn;
     private boolean mLNewer;
-    private JSONObject mRChg;
     private String mSyncMsg;
 
     private LinkedList<String> mTablesLeft;
@@ -126,14 +123,14 @@ public class Syncer {
                 throwExceptionIfCancelled(con);
                 long rscm = rMeta.getLong("scm");
                 int rts = rMeta.getInt("ts");
-                mRMod = rMeta.getLong("mod");
+                long rMod = rMeta.getLong("mod");
                 mMaxUsn = rMeta.getInt("usn");
                 // skip uname, AnkiDroid already stores and shows it
                 trySetHostNum(rMeta);
                 Timber.i("Sync: building local meta data");
                 JSONObject lMeta = meta();
                 mCol.log("lmeta", lMeta);
-                mLMod = lMeta.getLong("mod");
+                long lMod = lMeta.getLong("mod");
                 mMinUsn = lMeta.getInt("usn");
                 long lscm = lMeta.getLong("scm");
                 int lts = lMeta.getInt("ts");
@@ -143,7 +140,7 @@ public class Syncer {
                     mCol.log("clock off");
                     return new Object[] { "clockOff", diff };
                 }
-                if (mLMod == mRMod) {
+                if (lMod == rMod) {
                     Timber.i("Sync: no changes - returning");
                     mCol.log("no changes");
                     return new Object[] { "noChanges" };
@@ -152,7 +149,7 @@ public class Syncer {
                     mCol.log("schema diff");
                     return new Object[] { "fullSync" };
                 }
-                mLNewer = mLMod > mRMod;
+                mLNewer = lMod > rMod;
                 // step 1.5: check collection is valid
                 if (!mCol.basicCheck()) {
                     mCol.log("basic check");
@@ -310,10 +307,9 @@ public class Syncer {
 
 
     public JSONObject applyChanges(JSONObject changes) throws UnexpectedSchemaChange {
-        mRChg = changes;
         JSONObject lchg = changes();
         // merge our side before returning
-        mergeChanges(lchg, mRChg);
+        mergeChanges(lchg, changes);
         return lchg;
     }
 
