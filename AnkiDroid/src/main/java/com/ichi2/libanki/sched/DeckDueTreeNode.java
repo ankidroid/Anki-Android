@@ -83,7 +83,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
     @Override
     public int hashCode() {
         int childrenHash = getChildren() == null ? 0 : getChildren().hashCode();
-        return getFullDeckName().hashCode() + mRevCount + mLrnCount + mNewCount + (int) (childrenHash ^ (childrenHash >>> 32));
+        return getFullDeckName().hashCode() + mRevCount + mLrnCount + mNewCount + childrenHash;
     }
 
 
