@@ -239,8 +239,8 @@ public class RobolectricTest {
 
     protected String addNonClozeModel(String name, String[] fields, String qfmt, String afmt) {
         Model model = getCol().getModels().newModel(name);
-        for (int i = 0; i < fields.length; i++) {
-            addField(model, fields[i]);
+        for (String field : fields) {
+            addField(model, field);
         }
         model.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, qfmt);
         model.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, afmt);

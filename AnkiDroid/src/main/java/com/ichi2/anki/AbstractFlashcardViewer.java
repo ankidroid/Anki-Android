@@ -3674,8 +3674,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mCardSuppliedApiVersion = "";
         mCardSuppliedDeveloperContact = "";
 
-        for (int i = 0; i < mApiList.length; i++) {
-            mJsApiListMap.put(mApiList[i], false);
+        for (String api : mApiList) {
+            mJsApiListMap.put(api, false);
         }
     }
 
@@ -3695,8 +3695,8 @@ see card.js for available functions
 
         // if supplied api version match then enable api
         private void enableJsApi() {
-            for (int i = 0; i < mApiList.length; i++) {
-                mJsApiListMap.put(mApiList[i], true);
+            for (String api : mApiList) {
+                mJsApiListMap.put(api, true);
             }
         }
 

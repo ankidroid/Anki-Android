@@ -912,8 +912,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undoing action of type %s on %d cards", getDismissType(), cards_copied.length);
-            for (int i = 0; i < cards_copied.length; i++) {
-                Card card = cards_copied[i];
+            for (Card card : cards_copied) {
                 card.flush(false);
             }
             // /* card schedule change undone, reset and get

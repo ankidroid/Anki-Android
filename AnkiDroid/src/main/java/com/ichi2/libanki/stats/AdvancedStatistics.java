@@ -1221,8 +1221,8 @@ public class AdvancedStatistics {
             s.append(System.getProperty("line.separator"));
 
             for (int[] aMatrix : matrix) {
-                for (int j = 0; j < aMatrix.length; j++) {
-                    s.append(String.format(format, aMatrix[j]));
+                for (int i : aMatrix) {
+                    s.append(String.format(format, i));
                 }
                 s.append(System.getProperty("line.separator"));
             }
