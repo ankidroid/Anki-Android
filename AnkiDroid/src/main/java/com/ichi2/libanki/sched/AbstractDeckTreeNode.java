@@ -191,4 +191,6 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
         return false;
     }
 
+
+    public abstract T withChildren(List<T> children);
 }

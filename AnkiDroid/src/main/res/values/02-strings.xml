@@ -329,4 +329,5 @@
 
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
+    <string name="search_decks">Search decks</string>
 </resources>
