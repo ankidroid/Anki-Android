@@ -862,7 +862,7 @@ public class Media {
             // serialization step. Instead of a list of tuples, we use JSONArrays of JSONArrays.
             JSONArray meta = new JSONArray();
             int sz = 0;
-            byte buffer[] = new byte[2048];
+            byte[] buffer = new byte[2048];
             cur = mDb.getDatabase().query(
                     "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT, null);
 
