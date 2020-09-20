@@ -331,7 +331,7 @@ public class Collection {
 
     public String loadColumn(String columnName) {
         int pos = 1;
-        StringBuffer buf = new StringBuffer("");
+        StringBuilder buf = new StringBuilder("");
 
         while (true) {
             try (Cursor cursor = mDb.query("SELECT substr(" + columnName + ", ?, ?) FROM col",
