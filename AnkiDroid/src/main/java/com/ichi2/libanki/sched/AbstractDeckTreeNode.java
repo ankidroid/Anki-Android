@@ -142,7 +142,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
     @Override
     public int hashCode() {
         int childrenHash = mChildren == null ? 0 : mChildren.hashCode();
-        return getFullDeckName().hashCode() + (int) (childrenHash ^ (childrenHash >>> 32));
+        return getFullDeckName().hashCode() + childrenHash;
     }
 
 
