@@ -54,6 +54,9 @@ import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
+
+import static com.ichi2.libanki.sched.Counts.Queue.*;
+import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -126,12 +129,11 @@ public class Sched extends SchedV2 {
     }
 
 
-    @NonNull
     @Override
-    public Counts counts(@NonNull Card card) {
+    public @NonNull Counts counts(@NonNull Card card) {
         Counts counts = counts();
-        int idx = countIdx(card);
-        if (idx == 1) {
+        Counts.Queue idx = countIdx(card);
+        if (idx == LRN) {
             counts.addLrn(card.getLeft() / 1000);
         } else {
             counts.changeCount(idx, 1);
@@ -141,11 +143,18 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    public int countIdx(@NonNull Card card) {
-        if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
-            return Consts.QUEUE_TYPE_LRN;
+    public Queue countIdx(@NonNull Card card) {
+        switch (card.getQueue()) {
+            case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
+            case Consts.QUEUE_TYPE_LRN:
+                return LRN;
+            case Consts.QUEUE_TYPE_NEW:
+                return NEW;
+            case Consts.QUEUE_TYPE_REV:
+                return REV;
+            default:
+                throw new RuntimeException("Index " + card.getQueue() + " does not exists.");
         }
-        return card.getQueue();
     }
 
 

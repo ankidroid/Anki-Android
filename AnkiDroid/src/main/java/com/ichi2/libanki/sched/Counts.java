@@ -1,10 +1,7 @@
 package com.ichi2.libanki.sched;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 
@@ -12,6 +9,10 @@ import androidx.annotation.NonNull;
  * Represents the three counts shown in deck picker and reviewer. Semantically more meaningful than int[]
  */
 public class Counts {
+    public enum Queue {
+        NEW, LRN, REV;
+    }
+
     private int mNew;
     private int mLrn;
     private int mRev;
@@ -38,15 +39,18 @@ public class Counts {
         return mRev;
     }
 
-    public void changeCount(int index, int number) {
+    /**
+     * @param index Queue in which it elements are added
+     * @param number How much to add. */
+    public void changeCount(@NonNull Queue index, int number) {
         switch (index) {
-            case 0:
+            case NEW:
                 mNew += number;
                 break;
-            case 1:
+            case LRN:
                 mLrn += number;
                 break;
-            case 2:
+            case REV:
                 mRev += number;
                 break;
             default:

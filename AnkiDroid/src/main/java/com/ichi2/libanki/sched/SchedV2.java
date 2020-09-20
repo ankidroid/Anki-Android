@@ -69,6 +69,8 @@ import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
+import static com.ichi2.libanki.sched.Counts.Queue.*;
+import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -312,8 +314,7 @@ public class SchedV2 extends AbstractSched {
 
 
     /** new count, lrn count, rev count.  */
-    @NonNull
-    public Counts counts() {
+    public @NonNull Counts counts() {
         if (!mHaveCounts) {
             resetCounts();
         }
@@ -326,10 +327,9 @@ public class SchedV2 extends AbstractSched {
      * number we actually want.
      * Overridden: left / 1000 in V1
      */
-    @NonNull
-    public Counts counts(@NonNull Card card) {
+    public @NonNull Counts counts(@NonNull Card card) {
         Counts counts = counts();
-        int idx = countIdx(card);
+        Queue idx = countIdx(card);
         counts.changeCount(idx, 1);
         return counts;
     }
@@ -344,14 +344,23 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /** Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.
-     * Overidden: V1 does not have preview*/
-    @Consts.CARD_QUEUE
-    public int countIdx(@NonNull Card card) {
-        if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.getQueue() == Consts.QUEUE_TYPE_PREVIEW) {
-            return Consts.QUEUE_TYPE_LRN;
+    /**
+     * Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.
+     * Overidden: V1 does not have preview
+     */
+    public Queue countIdx(@NonNull Card card) {
+        switch (card.getQueue()) {
+            case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
+            case Consts.QUEUE_TYPE_LRN:
+            case Consts.QUEUE_TYPE_PREVIEW:
+                return LRN;
+            case Consts.QUEUE_TYPE_NEW:
+                return NEW;
+            case Consts.QUEUE_TYPE_REV:
+                return REV;
+            default:
+                throw new RuntimeException("Index " + card.getQueue() + " does not exists.");
         }
-        return card.getQueue();
     }
 
 

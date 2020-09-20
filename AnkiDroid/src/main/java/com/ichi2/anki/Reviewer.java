@@ -825,13 +825,13 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
         switch (mSched.countIdx(mCurrentCard)) {
-            case Consts.CARD_TYPE_NEW:
+            case NEW:
                 newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
                 break;
-            case Consts.CARD_TYPE_LRN:
+            case LRN:
                 lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
                 break;
-            case Consts.CARD_TYPE_REV:
+            case REV:
                 revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
                 break;
             default:

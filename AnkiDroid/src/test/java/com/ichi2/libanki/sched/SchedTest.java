@@ -79,6 +79,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeThat;
 import static org.junit.Assume.assumeTrue;
 
+import static com.ichi2.libanki.sched.Counts.Queue.*;
+
 @RunWith(AndroidJUnit4.class)
 public class SchedTest extends RobolectricTest {
 
@@ -199,7 +201,7 @@ public class SchedTest extends RobolectricTest {
     public void test_new_v1() throws Exception {
         Collection col = getColV1();
         col.reset();
-        assertEquals(0, col.getSched().newDue());
+        assertEquals(0, col.getSched().newCount());
         // add a note
         Note note = col.newNote();
         note.setItem("Front", "one");
@@ -1074,14 +1076,14 @@ public class SchedTest extends RobolectricTest {
         Card c = col.getSched().getCard();
         // counter's been decremented but idx indicates 1
         assertEquals(new Counts(0, 0, 0), col.getSched().counts());
-        assertEquals(0, col.getSched().countIdx(c));
+        assertEquals(NEW, col.getSched().countIdx(c));
         // answer to move to learn queue
         col.getSched().answerCard(c, 1);
         assertEquals(new Counts(0, 2, 0), col.getSched().counts());
         // fetching again will decrement the count
         c = col.getSched().getCard();
         assertEquals(new Counts(0, 0, 0), col.getSched().counts());
-        assertEquals(1, col.getSched().countIdx(c));
+        assertEquals(LRN, col.getSched().countIdx(c));
         // answering should add it back again
         col.getSched().answerCard(c, 1);
         assertEquals(new Counts(0, 2, 0), col.getSched().counts());
