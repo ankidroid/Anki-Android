@@ -337,9 +337,9 @@ public class CardContentProvider extends ContentProvider {
                             String value = "?".equals(keyAndValue[1].trim()) ? selectionArgs[selectionArgIndex++] :
                                     keyAndValue[1];
                             if ("limit".equals(keyAndValue[0].trim())) {
-                                limit = Integer.valueOf(value);
+                                limit = Integer.parseInt(value);
                             } else if ("deckID".equals(keyAndValue[0].trim())) {
-                                deckIdOfTemporarilySelectedDeck = Long.valueOf(value);
+                                deckIdOfTemporarilySelectedDeck = Long.parseLong(value);
                                 if(!selectDeckWithCheck(col, deckIdOfTemporarilySelectedDeck)){
                                     return rv; //if the provided deckID is wrong, return empty cursor.
                                 }
@@ -742,7 +742,7 @@ public class CardContentProvider extends ContentProvider {
             String deckIdStr = uri.getQueryParameter(FlashCardsContract.Note.DECK_ID_QUERY_PARAM);
             if (deckIdStr != null) {
                 try {
-                    long deckId = Long.valueOf(deckIdStr);
+                    long deckId = Long.parseLong(deckIdStr);
                     return bulkInsertNotes(values, deckId);
                 } catch (NumberFormatException e) {
                     Timber.d("Invalid %s: %s", FlashCardsContract.Note.DECK_ID_QUERY_PARAM, deckIdStr);
