@@ -210,8 +210,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // JS api list enable/disable status
     private HashMap<String, Boolean> mJsApiListMap = new HashMap<String, Boolean>();
 
-    private boolean isInFullscreen;
-
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -884,8 +882,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected boolean isFullscreen() {
-        isInFullscreen = !getSupportActionBar().isShowing();
-        return isInFullscreen;
+        return !getSupportActionBar().isShowing();
     }
 
     @ Override
