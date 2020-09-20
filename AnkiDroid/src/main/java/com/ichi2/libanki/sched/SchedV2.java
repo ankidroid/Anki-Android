@@ -313,11 +313,11 @@ public class SchedV2 extends AbstractSched {
 
     /** new count, lrn count, rev count.  */
     @NonNull
-    public int[] counts() {
+    public Counts counts() {
         if (!mHaveCounts) {
             resetCounts();
         }
-        return new int[] {mNewCount, mLrnCount, mRevCount};
+        return new Counts (mNewCount, mLrnCount, mRevCount);
     }
 
 
@@ -327,10 +327,10 @@ public class SchedV2 extends AbstractSched {
      * Overridden: left / 1000 in V1
      */
     @NonNull
-    public int[] counts(@NonNull Card card) {
-        int[] counts = counts();
+    public Counts counts(@NonNull Card card) {
+        Counts counts = counts();
         int idx = countIdx(card);
-        counts[idx] += 1;
+        counts.changeCount(idx, 1);
         return counts;
     }
 
@@ -2855,7 +2855,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public int eta(int[] counts) {
+    public int eta(Counts counts) {
         return eta(counts, true);
     }
 
@@ -2878,7 +2878,7 @@ public class SchedV2 extends AbstractSched {
      * @param reload Force rebuild of estimator rates using the revlog.
      */
     // Overridden because of the different queues in SchedV1 and V2
-    public int eta(int[] counts, boolean reload) {
+    public int eta(Counts counts, boolean reload) {
         double newRate;
         double newTime;
         double revRate;
@@ -2945,17 +2945,17 @@ public class SchedV2 extends AbstractSched {
         }
 
         // Calculate the total time for each queue based on the historical average duration per rep
-        double newTotal = newTime * counts[0];
-        double relrnTotal = relrnTime * counts[1];
-        double revTotal = revTime * counts[2];
+        double newTotal = newTime * counts.getNew();
+        double relrnTotal = relrnTime * counts.getLrn();
+        double revTotal = revTime * counts.getRev();
 
         // Now we have to predict how many additional relrn cards are going to be generated while reviewing the above
         // queues, and how many relrn cards *those* reps will generate (and so on, until 0).
 
         // Every queue has a failure rate, and each failure will become a relrn
-        int toRelrn = counts[0]; // Assume every new card becomes 1 relrn
-        toRelrn += Math.ceil((1 - relrnRate) * counts[1]);
-        toRelrn += Math.ceil((1 - revRate) * counts[2]);
+        int toRelrn = counts.getNew(); // Assume every new card becomes 1 relrn
+        toRelrn += Math.ceil((1 - relrnRate) * counts.getLrn());
+        toRelrn += Math.ceil((1 - revRate) * counts.getRev());
 
         // Use the accuracy rate of the relrn queue to estimate how many reps we will end up with if the cards
         // currently in relrn continue to fail at that rate. Loop through the failures of the failures until we end up

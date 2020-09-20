@@ -50,6 +50,7 @@ import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 
+import com.ichi2.libanki.sched.Counts;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
@@ -1332,10 +1333,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 // reset actually required because of counts, which is used in getCollectionTaskListener
                 sched.resetCounts();
             }
-            int[] counts = sched.counts();
+            Counts counts = sched.counts();
             int totalNewCount = sched.totalNewForCurrentDeck();
             int totalCount = sched.cardCount();
-            return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount,
+            return new TaskData(new Object[]{counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
                     totalCount, sched.eta(counts)});
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");

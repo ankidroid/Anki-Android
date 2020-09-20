@@ -1106,7 +1106,7 @@ public class CardContentProvider extends ContentProvider {
                 } else if (column.equals(FlashCardsContract.Model.NOTE_COUNT)) {
                     rb.add(models.useCount(jsonObject));
                 } else {
-                    throw new UnsupportedOperationException("Column \"" + column + "\" is unknown");
+                    throw new UnsupportedOperationException("Queue \"" + column + "\" is unknown");
                 }
             }
         } catch (JSONException e) {
@@ -1146,7 +1146,7 @@ public class CardContentProvider extends ContentProvider {
             }else if (column.equals(FlashCardsContract.Card.ANSWER_PURE)) {
                 rb.add(currentCard.getPureAnswer());
             } else {
-                throw new UnsupportedOperationException("Column \"" + column + "\" is unknown");
+                throw new UnsupportedOperationException("Queue \"" + column + "\" is unknown");
             }
         }
     }
@@ -1165,7 +1165,7 @@ public class CardContentProvider extends ContentProvider {
             } else if (column.equals(FlashCardsContract.ReviewInfo.MEDIA_FILES)) {
                 rb.add(new JSONArray(col.getMedia().filesInStr(currentCard.note().getMid(), currentCard.q()+currentCard.a())));
             } else {
-                throw new UnsupportedOperationException("Column \"" + column + "\" is unknown");
+                throw new UnsupportedOperationException("Queue \"" + column + "\" is unknown");
             }
         }
     }

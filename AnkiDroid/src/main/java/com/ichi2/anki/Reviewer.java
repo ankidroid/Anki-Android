@@ -67,6 +67,7 @@ import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.sched.Counts;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.Permissions;
@@ -806,7 +807,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         if (mCurrentCard == null) return;
         super.updateActionBar();
         ActionBar actionBar = getSupportActionBar();
-        int[] counts = mSched.counts(mCurrentCard);
+        Counts counts = mSched.counts(mCurrentCard);
 
         if (actionBar != null) {
             if (mPrefShowETA) {
@@ -816,9 +817,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
 
-        newCount = new SpannableString(String.valueOf(counts[0]));
-        lrnCount = new SpannableString(String.valueOf(counts[1]));
-        revCount = new SpannableString(String.valueOf(counts[2]));
+        newCount = new SpannableString(String.valueOf(counts.getNew()));
+        lrnCount = new SpannableString(String.valueOf(counts.getLrn()));
+        revCount = new SpannableString(String.valueOf(counts.getRev()));
         if (mPrefHideDueCount) {
             revCount = new SpannableString("???");
         }

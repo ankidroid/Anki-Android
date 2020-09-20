@@ -1,6 +1,7 @@
 package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.libanki.sched.Counts;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -83,18 +84,18 @@ public class UndoTest extends RobolectricTest {
 
          */
         // answer
-        assertArrayEquals(new int[] {1, 0, 0}, col.getSched().counts());
+        assertEquals(new Counts(1, 0, 0), col.getSched().counts());
         Card c = col.getSched().getCard();
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
         col.getSched().answerCard(c, 3);
         assertEquals(1001, c.getLeft());
-        assertArrayEquals(new int[] {0, 1, 0}, col.getSched().counts());
+        assertEquals(new Counts(0, 1, 0), col.getSched().counts());
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         // undo
         assertNotNull(col.undoType());
         col.undo();
         col.reset();
-        assertArrayEquals(new int[] {1, 0, 0}, col.getSched().counts());
+        assertEquals(new Counts(1, 0, 0), col.getSched().counts());
         c.load();
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
         assertNotEquals(1001, c.getLeft());
@@ -104,18 +105,18 @@ public class UndoTest extends RobolectricTest {
         note.setItem("Front", "two");
         col.addNote(note);
         col.reset();
-        assertArrayEquals(new int[] {2, 0, 0}, col.getSched().counts());
+        assertEquals(new Counts(2, 0, 0), col.getSched().counts());
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 3);
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 3);
-        assertArrayEquals(new int[] {0, 2, 0}, col.getSched().counts());
+        assertEquals(new Counts(0, 2, 0), col.getSched().counts());
         col.undo();
         col.reset();
-        assertArrayEquals(new int[] {1, 1, 0}, col.getSched().counts());
+        assertEquals(new Counts(1, 1, 0), col.getSched().counts());
         col.undo();
         col.reset();
-        assertArrayEquals(new int[] {2, 0, 0}, col.getSched().counts());
+        assertEquals(new Counts(2, 0, 0), col.getSched().counts());
         // performing a normal op will clear the review queue
         c = col.getSched().getCard();
         col.getSched().answerCard(c, 3);
