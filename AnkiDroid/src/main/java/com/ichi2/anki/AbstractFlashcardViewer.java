@@ -1637,6 +1637,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected void displayAnswerBottomBar() {
+        mFlipCardLayout.setClickable(false);
         mEaseButtonsLayout.setVisibility(View.VISIBLE);
 
         Runnable after = () -> mFlipCardLayout.setVisibility(View.GONE);
@@ -1645,8 +1646,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (animationDisabled()) {
             after.run();
         } else {
-            mEaseButtonsLayout.setAlpha(0);
-            mEaseButtonsLayout.animate().alpha(1).setDuration(mShortAnimDuration).withEndAction(after);
+            mFlipCardLayout.setAlpha(1);
+            mFlipCardLayout.animate().alpha(0).setDuration(mShortAnimDuration).withEndAction(after);
         }
     }
 
@@ -1665,13 +1666,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         };
 
         boolean easeButtonsVisible = mEaseButtonsLayout.getVisibility() == View.VISIBLE;
+        mFlipCardLayout.setClickable(true);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
         if (animationDisabled() || !easeButtonsVisible) {
             after.run();
         } else {
-            mEaseButtonsLayout.setAlpha(1);
-            mEaseButtonsLayout.animate().alpha(0).setDuration(mShortAnimDuration).withEndAction(after);
+            mFlipCardLayout.setAlpha(0);
+            mFlipCardLayout.animate().alpha(1).setDuration(mShortAnimDuration).withEndAction(after);
         }
 
         focusAnswerCompletionField();
