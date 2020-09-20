@@ -293,29 +293,29 @@ public class Sched extends SchedV2 {
     protected @NonNull CardQueue<? extends Card.Cache>[] _fillNextCard() {
         // learning card due?
         if (_preloadLrnCard(false)) {
-            return new CardQueue[]{mLrnQueue};
+            return new CardQueue<?>[]{mLrnQueue};
         }
         // new first, or time for one?
         if (_timeForNewCard()) {
             if (_fillNew()) {
-                return new CardQueue[]{mLrnQueue, mNewQueue};
+                return new CardQueue<?>[]{mLrnQueue, mNewQueue};
             }
         }
         // Card due for review?
         if (_fillRev()) {
-            return new CardQueue[]{mLrnQueue, mRevQueue};
+            return new CardQueue<?>[]{mLrnQueue, mRevQueue};
         }
         // day learning card due?
         if (_fillLrnDay()) {
-            return new CardQueue[]{mLrnQueue, mLrnDayQueue};
+            return new CardQueue<?>[]{mLrnQueue, mLrnDayQueue};
         }
         // New cards left?
         if (_fillNew()) {
-            return new CardQueue[]{mLrnQueue, mNewQueue};
+            return new CardQueue<?>[]{mLrnQueue, mNewQueue};
         }
         // collapse or finish
         if (_preloadLrnCard(true)) {
-            return new CardQueue[]{mLrnQueue};
+            return new CardQueue<?>[]{mLrnQueue};
         }
         return new CardQueue[]{};
     }
