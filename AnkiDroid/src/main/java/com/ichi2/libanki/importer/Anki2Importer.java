@@ -71,13 +71,6 @@ public class Anki2Importer extends Importer {
 
     private Map<String, Object[]> mNotes;
 
-    /**
-     * Since we can't use a tuple as a key in Java, we resort to indexing twice with nested maps.
-     * Python: (guid, ord) -> cid
-     * Java: guid -> ord -> cid
-     */
-    @SuppressWarnings("PMD.SingularField")
-    private Map<String, Map<Integer, Long>> mCards;
     private Map<Long, Long> mDecks;
     private Map<Long, Long> mModelMap;
     private Map<String, String> mChangedGuids;
@@ -516,7 +509,12 @@ public class Anki2Importer extends Importer {
             }
         }
         // build map of guid -> (ord -> cid) and used id cache
-        mCards = new HashMap<>();
+        /**
+         * Since we can't use a tuple as a key in Java, we resort to indexing twice with nested maps.
+         * Python: (guid, ord) -> cid
+         * Java: guid -> ord -> cid
+         */
+        Map<String, Map<Integer, Long>> mCards = new HashMap<>();
         Map<Long, Boolean> existing = new HashMap<>();
         Cursor cur = null;
         try {
