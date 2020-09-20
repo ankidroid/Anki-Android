@@ -137,7 +137,7 @@ public class CardTest extends RobolectricTest {
         tmpls.getJSONObject(0).put("qfmt", "{{A}}{{B}}{{C}}");
         // ensure first card is always generated,
         // because at last one card is generated
-        JSONObject tmpl = models.newTemplate("AND_OR");
+        JSONObject tmpl = Models.newTemplate("AND_OR");
         tmpl.put("qfmt", "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}");
         models.addTemplate(model, tmpl);
 
@@ -195,7 +195,7 @@ public class CardTest extends RobolectricTest {
         // ensure first card is always generated,
         // because at last one card is generated
         tmpls.getJSONObject(0).put("qfmt", "{{AddIfEmpty}}{{Front}}{{First}}");
-        JSONObject tmpl = models.newTemplate("NOT");
+        JSONObject tmpl = Models.newTemplate("NOT");
         tmpl.put("qfmt", "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    ");
 
         models.addTemplate(model, tmpl);

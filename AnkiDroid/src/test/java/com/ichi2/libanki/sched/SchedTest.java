@@ -1032,11 +1032,11 @@ public class SchedTest extends RobolectricTest {
         // add two more templates and set second active
         Model m = col.getModels().current();
         Models mm = col.getModels();
-        JSONObject t = mm.newTemplate("Reverse");
+        JSONObject t = Models.newTemplate("Reverse");
         t.put("qfmt", "{{Back}}");
         t.put("afmt", "{{Front}}");
         mm.addTemplateModChanged(m, t);
-        t = mm.newTemplate("f2");
+        t = Models.newTemplate("f2");
         t.put("qfmt", "{{Front}}");
         t.put("afmt", "{{Back}}");
         mm.addTemplateModChanged(m, t);

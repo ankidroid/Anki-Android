@@ -910,7 +910,7 @@ public class CardContentProvider extends ContentProvider {
                     }
                     // Add some empty card templates
                     for (int idx = 0; idx < numCards; idx++) {
-                        JSONObject t = mm.newTemplate("Card " + (idx+1));
+                        JSONObject t = Models.newTemplate("Card " + (idx+1));
                         t.put("qfmt",String.format("{{%s}}", allFields[0]));
                         String answerField = allFields[0];
                         if (allFields.length > 1) {
@@ -965,7 +965,7 @@ public class CardContentProvider extends ContentProvider {
                 String bqfmt = values.getAsString(CardTemplate.BROWSER_QUESTION_FORMAT);
                 String bafmt = values.getAsString(CardTemplate.BROWSER_ANSWER_FORMAT);
                 try {
-                    JSONObject t = models.newTemplate(name);
+                    JSONObject t = Models.newTemplate(name);
                     t.put("qfmt", qfmt);
                     t.put("afmt", afmt);
                     t.put("bqfmt", bqfmt);
