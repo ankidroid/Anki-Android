@@ -214,7 +214,7 @@ public class CompatV16 implements Compat {
     @Override
     @SuppressWarnings("deprecation")
     public int speak(TextToSpeech tts, String text, int queueMode, Object ttsParams, String utteranceId) {
-        HashMap<String, String> params = (HashMap) ttsParams;
+        HashMap<String, String> params = (HashMap<String, String>) ttsParams;
         params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
         return tts.speak(text, queueMode, params);
     }

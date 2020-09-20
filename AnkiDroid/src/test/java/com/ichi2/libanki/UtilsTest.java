@@ -40,7 +40,7 @@ public class UtilsTest {
         try {
             File file = new File(resource.toURI());
             ZipFile zipFile = new ZipFile(file);
-            Enumeration zipEntries = zipFile.getEntries();
+            Enumeration<ZipArchiveEntry> zipEntries = zipFile.getEntries();
             while (zipEntries.hasMoreElements()) {
                 ZipArchiveEntry ze2 = (ZipArchiveEntry) zipEntries.nextElement();
                 Utils.unzipFiles(zipFile, "/tmp", new String[]{ze2.getName()}, null);

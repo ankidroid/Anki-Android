@@ -73,9 +73,9 @@ import static org.robolectric.Shadows.shadowOf;
 
 public class RobolectricTest {
 
-    private final ArrayList<ActivityController> controllersForCleanup = new ArrayList<>();
+    private final ArrayList<ActivityController<?>> controllersForCleanup = new ArrayList<>();
 
-    protected void saveControllerForCleanup(ActivityController controller) {
+    protected void saveControllerForCleanup(ActivityController<?> controller) {
         controllersForCleanup.add(controller);
     }
 
@@ -114,7 +114,7 @@ public class RobolectricTest {
     public void tearDown() {
 
         // If you don't clean up your ActivityControllers you will get OOM errors
-        for (ActivityController controller : controllersForCleanup) {
+        for (ActivityController<?> controller : controllersForCleanup) {
             Timber.d("Calling destroy on controller %s", controller.get().toString());
             try {
                 controller.destroy();

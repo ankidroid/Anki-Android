@@ -138,9 +138,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preference_headers, target);
-        Iterator iterator = target.iterator();
+        Iterator<Header> iterator = target.iterator();
         while (iterator.hasNext()) {
-            Header header = (Header)iterator.next();
+            Header header = iterator.next();
             if ((header.titleRes == R.string.pref_cat_advanced) && AdaptionUtil.isRestrictedLearningDevice()){
                 iterator.remove();
             }
