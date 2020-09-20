@@ -75,7 +75,6 @@ public class Whiteboard extends View {
 
     private boolean mSecondFingerWithinTapTolerance;
     private boolean mCurrentlyDrawing = false;
-    private boolean mInvertedColors;
     private boolean mMonochrome;
     private boolean mUndoModeActive = false;
     private final int foregroundColor;
@@ -84,11 +83,10 @@ public class Whiteboard extends View {
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
-        mInvertedColors = inverted;
         mMonochrome = monochrome;
 
 
-        if (!mInvertedColors) {
+        if (!inverted) {
             if (mMonochrome) {
                 foregroundColor = Color.BLACK;
             } else {
