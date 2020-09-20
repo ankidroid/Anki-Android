@@ -304,7 +304,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private boolean mButtonHeightSet = false;
 
-    private int mShowChosenAnswerLength = 2000;
+    private static final int sShowChosenAnswerLength = 2000;
 
     /**
      * A record of the last time the "show answer" or ease buttons were pressed. We keep track
@@ -1375,7 +1375,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // remove chosen answer hint after a while
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
-        mTimerHandler.postDelayed(removeChosenAnswerText, mShowChosenAnswerLength);
+        mTimerHandler.postDelayed(removeChosenAnswerText, sShowChosenAnswerLength);
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
