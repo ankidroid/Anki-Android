@@ -65,7 +65,7 @@ public class StdModels {
                 fm = mm.newField(backName);
                 mm.addFieldInNewModel(m, fm);
                 String cardOneName = AnkiDroidApp.getAppResources().getString(R.string.card_one_name);
-                JSONObject t = mm.newTemplate(cardOneName);
+                JSONObject t = Models.newTemplate(cardOneName);
                 t.put("qfmt", "{{" + frontName + "}}");
                 t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{" + backName + "}}");
                 mm.addTemplateInNewModel(m, t);
@@ -91,7 +91,7 @@ public class StdModels {
         String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
         String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
         String cardTwoName = AnkiDroidApp.getAppResources().getString(R.string.card_two_name);
-        JSONObject t = mm.newTemplate(cardTwoName);
+        JSONObject t = Models.newTemplate(cardTwoName);
         t.put("qfmt", "{{" + backName + "}}");
         t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{"+frontName+"}}");
         mm.addTemplateInNewModel(m, t);
@@ -122,7 +122,7 @@ public class StdModels {
         fm = mm.newField(fieldExtraName);
         mm.addFieldInNewModel(m, fm);
         String cardTypeClozeName = AnkiDroidApp.getAppResources().getString(R.string.card_cloze_name);
-        JSONObject t = mm.newTemplate(cardTypeClozeName);
+        JSONObject t = Models.newTemplate(cardTypeClozeName);
         String fmt = "{{cloze:" + txt + "}}";
         m.put("css", m.getString("css") + ".cloze {" + "font-weight: bold;" + "color: blue;" + "}");
         t.put("qfmt", fmt);

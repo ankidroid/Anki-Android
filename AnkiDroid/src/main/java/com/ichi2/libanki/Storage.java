@@ -258,7 +258,7 @@ public class Storage {
         JSONArray newTmpls = new JSONArray();
         newTmpls.put(tmpls.getJSONObject(0));
         m.put("tmpls", newTmpls);
-        col.getModels()._updateTemplOrds(m);
+        Models._updateTemplOrds(m);
         col.getModels().save(m);
 
     }
