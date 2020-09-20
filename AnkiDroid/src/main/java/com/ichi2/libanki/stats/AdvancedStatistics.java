@@ -1181,7 +1181,7 @@ public class AdvancedStatistics {
             int m = matrix.length;
             int n = matrix[0].length;
 
-            int transpose[][] = new int[n][m];
+            int[][] transpose = new int[n][m];
 
             int c, d;
             for ( c = 0 ; c < m ; c++ )
@@ -1201,7 +1201,7 @@ public class AdvancedStatistics {
             int m = matrix.length;
             int n = matrix[0].length;
 
-            double transpose[][] = new double[n][m];
+            double[][] transpose = new double[n][m];
 
             int c, d;
             for ( c = 0 ; c < m ; c++ )
