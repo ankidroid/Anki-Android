@@ -439,11 +439,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         // DEFECT #5973: Does not handle Google Drive downloads
         try {
             if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
-                Cursor cursor = null;
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                try {
-                    cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                try (Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null)) {
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     String imgPathString = cursor.getString(columnIndex);
@@ -465,10 +463,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     } else {
                         backgroundImage.setChecked(false);
                         UIUtils.showThemedToast(this, getString(R.string.image_max_size_allowed, 10), false);
-                    }
-                } finally {
-                    if (cursor != null) {
-                        cursor.close();
                     }
                 }
             } else {
