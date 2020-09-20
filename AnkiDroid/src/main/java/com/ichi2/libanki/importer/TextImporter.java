@@ -35,7 +35,6 @@ public class TextImporter extends NoteImporter {
     private boolean mNeedDelimiter = true;
     String mPatterns = "\t|,;:";
 
-    private final Object lines;
     private FileObj fileobj;
     private char delimiter;
     private String[] tagsToAdd;
@@ -49,7 +48,6 @@ public class TextImporter extends NoteImporter {
 
     public TextImporter(Collection col, String file) {
         super(col, file);
-        lines = null;
         fileobj = null;
         delimiter = '\0';
         tagsToAdd = new String[0];
