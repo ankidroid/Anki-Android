@@ -181,13 +181,13 @@
     <string name="import_log_file_cache_cleared">Ошибка при импорте файла: скорее всего, был очищен кеш. Попробуйте снова</string>
     <string name="import_succeeded_but_check_database">Импорт данных удался, но очистка — нет. Выполните проверку базы данных. Главная причина: %s</string>
     <string name="import_error_unhandled_request">Не удаётся обработать запрос на импорт</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">Файл apkg повреждён.Удалите и повторно загрузите его.\n\nПервопричина: %s</string>
     <string name="import_error_exception">Не удалось импортировать пакет\n\n%s</string>
     <string name="import_error_not_apkg_extension">У файла “%s” должно быть расширение .apkg или .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы данных Anki (.anki2) пока не поддерживается. Смотрите руководство для инструкций по замене.</string>
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() не удалось. Возможно недостаточно места</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_unhandled_scheme">Необработанный импорт из «%s»</string>
     <string name="import_replacing">Коллекция заменяется&#8230;</string>
     <string name="import_interrupted">Импорт прерван</string>
     <string name="export_include_schedule">Вместе с расписанием</string>
@@ -343,5 +343,5 @@
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
     <string name="card_viewer_could_not_find_image_get_help">Помощь</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
+    <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
 </resources>
