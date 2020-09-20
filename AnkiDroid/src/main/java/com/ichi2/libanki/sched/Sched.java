@@ -66,8 +66,6 @@ public class Sched extends SchedV2 {
     // Not in libanki
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
 
-    private final @NonNull String mName = "std";
-
     // Queues
     private @NonNull LinkedList<Long> mRevDids = new LinkedList<>();
 
@@ -1266,7 +1264,7 @@ public class Sched extends SchedV2 {
     /* Need to override. Otherwise it get SchedV2.mName variable*/
     @Override
     public String getName() {
-        return mName;
+        return "std";
     }
 
     /**
