@@ -20,6 +20,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.webkit.WebResourceRequest;
 
+import com.ichi2.utils.FunctionalInterfaces;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,57 +54,74 @@ public class MissingImageHandlerTest {
         // couldn't get Config(minSDK) to work, as that produced multiple test calls.
         assumeThat("Can't be executed < API 21", Build.VERSION.SDK_INT, greaterThanOrEqualTo(Build.VERSION_CODES.LOLLIPOP));
         mFileNames = new ArrayList<>();
-        mSut = new MissingImageHandler((f) -> {
+        mSut = new MissingImageHandler();
+    }
+
+
+    @NonNull
+    private FunctionalInterfaces.Consumer<String> defaultHandler() {
+        return (f) -> {
             mTimesCalled++;
             mFileNames.add(f);
-        });
+        };
     }
+
 
     @Test
     public void firstTimeOnNewCardSends() {
-        mSut.processFailure(getValidRequest("example.jpg"));
+        processFailure(getValidRequest("example.jpg"));
         assertThat(mTimesCalled, is(1));
         assertThat(mFileNames, contains("example.jpg"));
     }
 
     @Test
     public void twoCallsOnSameSideCallsOnce() {
-        mSut.processFailure(getValidRequest("example.jpg"));
-        mSut.processFailure(getValidRequest("example2.jpg"));
+        processFailure(getValidRequest("example.jpg"));
+        processFailure(getValidRequest("example2.jpg"));
         assertThat(mTimesCalled, is(1));
         assertThat(mFileNames, contains("example.jpg"));
     }
 
     @Test
     public void callAfterFlipIsShown() {
-        mSut.processFailure(getValidRequest("example.jpg"));
+        processFailure(getValidRequest("example.jpg"));
         mSut.onCardSideChange();
-        mSut.processFailure(getValidRequest("example2.jpg"));
+        processFailure(getValidRequest("example2.jpg"));
         assertThat(mTimesCalled, is(2));
         assertThat(mFileNames, contains("example.jpg", "example2.jpg"));
     }
 
     @Test
     public void thirdCallIsIgnored() {
-        mSut.processFailure(getValidRequest("example.jpg"));
+        processFailure(getValidRequest("example.jpg"));
         mSut.onCardSideChange();
-        mSut.processFailure(getValidRequest("example2.jpg"));
+        processFailure(getValidRequest("example2.jpg"));
         mSut.onCardSideChange();
-        mSut.processFailure(getValidRequest("example3.jpg"));
+        processFailure(getValidRequest("example3.jpg"));
         assertThat(mTimesCalled, is(2));
         assertThat(mFileNames, contains("example.jpg", "example2.jpg"));
     }
 
     @Test
     public void invalidRequestIsIgnored() {
-        mSut.processFailure(getInvalidRequest("example.jpg"));
+        WebResourceRequest invalidRequest = getInvalidRequest("example.jpg");
+        processFailure(invalidRequest);
         assertThat(mTimesCalled, is(0));
     }
 
+
+    private void processFailure(WebResourceRequest invalidRequest) {
+        processFailure(invalidRequest, defaultHandler());
+    }
+
+    private void processFailure(WebResourceRequest invalidRequest, FunctionalInterfaces.Consumer<String> consumer) {
+        mSut.processFailure(invalidRequest, consumer);
+    }
+
+
     @Test
     public void uiFailureDoesNotCrash() {
-        MissingImageHandler sut = new MissingImageHandler((f) -> { throw new RuntimeException("expected"); });
-        sut.processFailure(getValidRequest("example.jpg"));
+        processFailure(getValidRequest("example.jpg"), (f) -> { throw new RuntimeException("expected"); });
         assertThat("Irrelevant assert to stop lint warnings", mTimesCalled, is(0));
     }
 
