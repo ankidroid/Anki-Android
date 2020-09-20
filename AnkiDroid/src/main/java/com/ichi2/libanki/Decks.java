@@ -902,13 +902,13 @@ public class Decks {
                 save(deck);
             }
 
-            if (deckName.indexOf("::::") != -1) {
+            if (deckName.contains("::::")) {
                 Timber.i("fix deck with missing sections %s", deck.getString("name"));
                 mNameMap.remove(deckName, deck);
                 do {
                     deckName = deck.getString("name").replace("::::", "::blank::");
                     // We may need to iterate, in order to replace "::::::" and adding to "blank" in it.
-                } while (deckName.indexOf("::::") != -1);
+                } while (deckName.contains("::::"));
                 deck.put("name", deckName);
                 mNameMap.add(deck);
                 save(deck);
