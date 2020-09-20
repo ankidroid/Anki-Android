@@ -173,6 +173,7 @@ public class HttpSyncer {
     }
 
     /** Note: Return value must be closed */
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     private Response req(String method, InputStream fobj, int comp, JSONObject registerData) throws UnknownHttpResponseException {
         File tmpFileBuffer = null;
         try {
@@ -305,6 +306,7 @@ public class HttpSyncer {
     }
 
 
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     public String stream2String(InputStream stream, int maxSize) {
         BufferedReader rd;
         try {
@@ -452,6 +454,7 @@ public class HttpSyncer {
     }
 
 
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     public static ByteArrayInputStream getInputStream(String string) {
         try {
             return new ByteArrayInputStream(string.getBytes("UTF-8"));

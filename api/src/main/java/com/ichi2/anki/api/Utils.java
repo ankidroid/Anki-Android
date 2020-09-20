@@ -64,6 +64,7 @@ class Utils {
         return tags.trim().split("\\s+");
     }
 
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     static Long fieldChecksum(String data) {
         data = stripHTMLMedia(data);
         try {
