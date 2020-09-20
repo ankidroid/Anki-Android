@@ -259,7 +259,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                         }
                         case CUSTOM_STUDY_PREVIEW: {
                             createCustomStudySession(new JSONArray(), new Object[] {"is:new added:" +
-                                    Integer.toString(n), Consts.DYN_MAX_SIZE, Consts.DYN_OLDEST}, false);
+                                    n, Consts.DYN_MAX_SIZE, Consts.DYN_OLDEST}, false);
                             break;
                         }
                         default:

@@ -264,7 +264,7 @@ public class BackupManager {
         int i = 1;
         while (movedFile.exists()) {
             movedFile = new File(getBrokenDirectory(colFile.getParentFile()), movedFilename.replace(".anki2",
-                    "-" + Integer.toString(i) + ".anki2"));
+                    "-" + i + ".anki2"));
             i++;
         }
         movedFilename = movedFile.getName();

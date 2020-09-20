@@ -746,7 +746,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
             if (mTypeFont != null && !TextUtils.isEmpty(mTypeFont) && mTypeSize > 0) {
                 sb.append("style=\"font-family: '").append(mTypeFont).append("'; font-size: ")
-                        .append(Integer.toString(mTypeSize)).append("px;\" ");
+                        .append(mTypeSize).append("px;\" ");
             }
             sb.append(">\n</center>\n");
         } else {
