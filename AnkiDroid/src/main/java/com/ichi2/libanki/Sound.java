@@ -100,8 +100,10 @@ public class Sound {
         }
         public int getInt() {
             return mInt;
-        };
-    };
+        }
+    }
+
+
 
     /**
      * Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true.

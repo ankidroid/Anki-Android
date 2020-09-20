@@ -1489,7 +1489,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         protected void actualOnValidPostExecute(CardBrowser browser, TaskData result) {
             browser.hideProgressBar();
         }
-    };
+    }
+
 
     private ChangeDeckHandler changeDeckHandler() {
         return new ChangeDeckHandler(this);
@@ -1522,7 +1523,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
             }, browser.mCardsListView, null);
         }
-    };
+    }
+
 
     @CheckResult
     private static String formatQA(String text, Context context) {
@@ -1617,12 +1619,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
-    };
+    }
+
 
     private FlagCardHandler flagCardHandler(){
         return new FlagCardHandler(this);
     }
-    private static class FlagCardHandler extends SuspendCardHandler{public FlagCardHandler(CardBrowser browser) {super(browser);}};
+    private static class FlagCardHandler extends SuspendCardHandler{public FlagCardHandler(CardBrowser browser) {super(browser);}}
+
 
     private MarkCardHandler markCardHandler() {
         return new MarkCardHandler(this);
@@ -1639,7 +1643,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
-    };
+    }
+
+
 
     private DeleteNoteHandler mDeleteNoteHandler = new DeleteNoteHandler(this);
     private static class DeleteNoteHandler extends ListenerWithProgressBarCloseOnFalse {
@@ -1675,7 +1681,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }, browser.mCardsListView, null);
             browser.searchCards();
         }
-    };
+    }
+
+
 
     private final UndoHandler mUndoHandler = new UndoHandler(this);
     private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse {
@@ -1694,7 +1702,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             browser.updatePreviewMenuItem();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
-    };
+    }
+
+
 
     private final SearchCardsHandler mSearchCardsHandler = new SearchCardsHandler(this);
     private class SearchCardsHandler extends ListenerWithProgressBar {
@@ -1750,7 +1760,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             super.actualOnCancelled(browser);
             hideProgressBar();
         }
-    };
+    }
+
 
     public boolean hasSelectedAllDecks() {
         Long lastDeckId = getLastDeckId();
@@ -1833,7 +1844,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void actualOnCancelled(@NonNull CardBrowser browser) {
             browser.hideProgressBar();
         }
-    };
+    }
+
+
 
     private final CheckSelectedCardsHandler mCheckSelectedCardsHandler = new CheckSelectedCardsHandler(this);
     private static class CheckSelectedCardsHandler extends ListenerWithProgressBar {

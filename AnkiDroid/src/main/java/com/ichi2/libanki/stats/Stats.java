@@ -252,7 +252,8 @@ public class Stats {
         return new Pair<>(cardCount, (double)cardCount / (double) periodDays);
     }
 
-    private enum DeckAgeType { ADD, REVIEW };
+    private enum DeckAgeType { ADD, REVIEW }
+
 
     private long _deckAge(DeckAgeType by) {
         String lim = _revlogLimit();

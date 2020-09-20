@@ -221,7 +221,7 @@ public abstract class AbstractSched {
     public enum UnburyType {
         ALL,
         MANUAL,
-        SIBLINGS;
+        SIBLINGS
     }
     public abstract void unburyCardsForDeck(@NonNull UnburyType type);
     public abstract void unburyCardsForDeck(long did);

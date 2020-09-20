@@ -665,9 +665,9 @@ public class AdvancedStatistics {
 
             singleReviewOutcome = new ReviewOutcome(null, 0);
 
-            long t0 = time.intTimeMS();;
+            long t0 = time.intTimeMS();
             calculateCumProbabilitiesForNewEasePerCurrentEase();
-            long t1 = time.intTimeMS();;
+            long t1 = time.intTimeMS();
 
             Timber.d("Calculating probability distributions took: " + (t1 - t0) + " ms");
 
