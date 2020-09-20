@@ -118,9 +118,6 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
         private int dueCardsCount;
 
 
-        /** The cached estimated reviewing time. */
-        private int eta;
-
         public void doUpdate(Context context) {
             AppWidgetManager.getInstance(context)
                     .updateAppWidget(new ComponentName(context, AnkiDroidWidgetSmall.class), buildUpdate(context, true));
@@ -180,7 +177,8 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                     // Compute the total number of cards due.
                     int[] counts = WidgetStatus.fetchSmall(context);
                     dueCardsCount = counts[0];
-                    eta = counts[1];
+                    /** The cached estimated reviewing time. */
+                    int eta = counts[1];
                     if (dueCardsCount <= 0) {
                         if (dueCardsCount == 0) {
                             updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE);
