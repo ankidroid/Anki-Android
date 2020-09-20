@@ -129,16 +129,15 @@ public abstract class AbstractSched {
     public abstract @NonNull Counts counts(@NonNull Card card);
 
     /**
-     * @param card A Card which is in a mode allowing review. I.e. neither suspended nor buried.
-     * @return Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.*/
-    @Consts.CARD_QUEUE
-    public abstract int countIdx(@NonNull Card card);
-
-    /**
      * @param days A number of day
      * @return counts over next DAYS. Includes today.
      */
     public abstract int dueForecast(int days);
+
+    /**
+     * @param card A Card which is in a mode allowing review. I.e. neither suspended nor buried.
+     * @return Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.*/
+    public abstract Counts.Queue countIdx(@NonNull Card card);
 
     /**
      * @param card A card in a queue allowing review.

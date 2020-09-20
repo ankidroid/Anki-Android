@@ -80,6 +80,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeThat;
 import static org.junit.Assume.assumeTrue;
 import static org.junit.platform.commons.util.CollectionUtils.getOnlyElement;
+import static com.ichi2.libanki.sched.Counts.Queue.*;
 
 @RunWith(AndroidJUnit4.class)
 public class SchedV2Test extends RobolectricTest {
@@ -1159,14 +1160,14 @@ public class SchedV2Test extends RobolectricTest {
         Card c = col.getSched().getCard();
         // counter's been decremented but idx indicates 1
         assertEquals(new Counts(0, 0, 0), col.getSched().counts());
-        assertEquals(0, col.getSched().countIdx(c));
+        assertEquals(NEW, col.getSched().countIdx(c));
         // answer to move to learn queue
         col.getSched().answerCard(c, 1);
         assertEquals(new Counts(0, 1, 0), col.getSched().counts());
         // fetching again will decrement the count
         c = col.getSched().getCard();
         assertEquals(new Counts(0, 0, 0), col.getSched().counts());
-        assertEquals(1, col.getSched().countIdx(c));
+        assertEquals(LRN, col.getSched().countIdx(c));
         // answering should add it back again
         col.getSched().answerCard(c, 1);
         assertEquals(new Counts(0, 1, 0), col.getSched().counts());
