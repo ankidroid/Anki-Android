@@ -82,7 +82,6 @@ public class SchedV2 extends AbstractSched {
     public static final int RESCHEDULE_FACTOR = Consts.STARTING_FACTOR;
 
     private final String mName = "std2";
-    private boolean mHaveCustomStudy = true;
 
     protected int mQueueLimit;
     protected int mReportLimit;
@@ -2231,15 +2230,11 @@ public class SchedV2 extends AbstractSched {
         }
         if (haveBuried()) {
             String now;
-            if (mHaveCustomStudy) {
-                now = " " + context.getString(R.string.sched_unbury_action);
-            } else {
-                now = "";
-            }
+            now = " " + context.getString(R.string.sched_unbury_action);
             sb.append("\n\n");
             sb.append("" + context.getString(R.string.sched_has_buried) + now);
         }
-        if (mHaveCustomStudy && mCol.getDecks().current().getInt("dyn") == 0) {
+        if (mCol.getDecks().current().getInt("dyn") == 0) {
             sb.append("\n\n");
             sb.append(context.getString(R.string.studyoptions_congrats_custom));
         }
