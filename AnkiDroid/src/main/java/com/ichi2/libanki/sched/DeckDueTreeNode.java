@@ -120,4 +120,20 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
     public boolean knownToHaveRep() {
         return mRevCount > 0 || mNewCount > 0 || mLrnCount > 0;
     }
+
+
+    @Override
+    public DeckDueTreeNode withChildren(List<DeckDueTreeNode> children) {
+        Collection col = getCol();
+        String name = getFullDeckName();
+        long did = getDid();
+        DeckDueTreeNode node = new DeckDueTreeNode(col, name, did, mRevCount, mLrnCount, mNewCount);
+        // We've already calculated the counts, don't bother doing it again, just set the variable.
+        node.setChildrenSuper(children);
+        return node;
+    }
+
+    private void setChildrenSuper(List<DeckDueTreeNode> children) {
+        super.setChildren(children, false);
+    }
 }

@@ -49,6 +49,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -59,6 +60,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -70,6 +72,7 @@ import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -229,6 +232,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     /** If we have accepted the "We will show you permissions" dialog, don't show it again on activity rebirth */
     private boolean mClosedWelcomeMessage;
+
+    private SearchView mToolbarSearchView;
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -675,6 +680,24 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Timber.w(e, "Error Displaying Sync Badge");
         }
 
+        MenuItem toolbarSearchItem = menu.findItem(R.id.deck_picker_action_filter);
+        mToolbarSearchView = (SearchView) toolbarSearchItem.getActionView();
+
+        mToolbarSearchView.setQueryHint(getString(R.string.search_decks));
+        mToolbarSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mToolbarSearchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Filterable adapter = (Filterable) mRecyclerView.getAdapter();
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -1028,6 +1051,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (mToolbarSearchView != null && mToolbarSearchView.hasFocus()) {
+            Timber.d("Skipping keypress: search action bar is focused");
+            return true;
+        }
+
         switch(keyCode) {
 
             case KeyEvent.KEYCODE_A:
@@ -2379,15 +2407,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
 
+        CharSequence currentFilter = mToolbarSearchView != null ? mToolbarSearchView.getQuery() : null;
+
         if (isEmpty) {
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setSubtitle(null);
+            }
+            if (mToolbarSearchView != null) {
+                mDeckListAdapter.getFilter().filter(currentFilter);
             }
             // We're done here
             return;
         }
 
-        mDeckListAdapter.buildDeckList(mDueTree, getCol());
+
+        mDeckListAdapter.buildDeckList(mDueTree, getCol(), currentFilter);
 
         // Set the "x due in y minutes" subtitle
         try {
