@@ -1839,27 +1839,24 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    // Note: The original returns an integer result. We return List<Long> with that number to satisfy the
-    // interface requirements. The result isn't used anywhere so this isn't a problem.
     // Overridden, because upstream implements exactly the same method in two different way for unknown reason
-    public @Nullable List<Long> rebuildDyn(long did) {
+    public void rebuildDyn(long did) {
         if (did == 0) {
             did = mCol.getDecks().selected();
         }
         Deck deck = mCol.getDecks().get(did);
         if (deck.getInt("dyn") == 0) {
             Timber.e("error: deck is not a filtered deck");
-            return null;
+            return;
         }
         // move any existing cards back first, then fill
         emptyDyn(did);
         int cnt = _fillDyn(deck);
         if (cnt == 0) {
-            return null;
+            return;
         }
         // and change to our new deck
         mCol.getDecks().select(did);
-        return Collections.singletonList((long)cnt);
     }
 
 

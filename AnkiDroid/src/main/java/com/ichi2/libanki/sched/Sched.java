@@ -901,24 +901,23 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    public List<Long> rebuildDyn(long did) {
+    public void rebuildDyn(long did) {
         if (did == 0) {
             did = mCol.getDecks().selected();
         }
         Deck deck = mCol.getDecks().get(did);
         if (deck.getInt("dyn") == 0) {
             Timber.e("error: deck is not a filtered deck");
-            return null;
+            return;
         }
         // move any existing cards back first, then fill
         emptyDyn(did);
         List<Long> ids = _fillDyn(deck);
         if (ids.isEmpty()) {
-            return null;
+            return;
         }
         // and change to our new deck
         mCol.getDecks().select(did);
-        return ids;
     }
 
 
