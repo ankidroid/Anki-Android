@@ -378,7 +378,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private CardMarker mCardMarker;
 
     /** Handle providing help for "Image Not Found" */
-    private MissingImageHandler mMissingImageHandler = new MissingImageHandler(this::displayCouldNotFindImageSnackbar);
+    private static MissingImageHandler mMissingImageHandler = new MissingImageHandler();
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -3196,14 +3196,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             super.onReceivedError(view, request, error);
-            mMissingImageHandler.processFailure(request);
+            mMissingImageHandler.processFailure(request, AbstractFlashcardViewer.this::displayCouldNotFindImageSnackbar);
         }
 
 
         @Override
         public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
             super.onReceivedHttpError(view, request, errorResponse);
-            mMissingImageHandler.processFailure(request);
+            mMissingImageHandler.processFailure(request, AbstractFlashcardViewer.this::displayCouldNotFindImageSnackbar);
         }
 
 
