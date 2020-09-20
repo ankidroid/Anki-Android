@@ -67,10 +67,6 @@ public class Sched extends SchedV2 {
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
 
     private final @NonNull String mName = "std";
-    private final boolean mSpreadRev = true;
-
-
-
 
     // Queues
     private @NonNull LinkedList<Long> mRevDids = new LinkedList<>();
@@ -881,9 +877,7 @@ public class Sched extends SchedV2 {
 
     @SuppressWarnings("PMD.UnusedFormalParameter") // it's unused upstream as well
     private int _adjRevIvl(@NonNull Card card, int idealIvl) {
-        if (mSpreadRev) {
-            idealIvl = _fuzzedIvl(idealIvl);
-        }
+        idealIvl = _fuzzedIvl(idealIvl);
         return idealIvl;
     }
 
