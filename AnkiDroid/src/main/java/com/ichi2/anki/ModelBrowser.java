@@ -84,7 +84,6 @@ public class ModelBrowser extends AnkiActivity {
     private ModelBrowserContextMenu mContextMenu;
 
     private ArrayList<String> mNewModelNames;
-    private ArrayList<String> mNewModelLabels;
 
 
     // ----------------------------------------------------------------------------
@@ -311,30 +310,30 @@ public class ModelBrowser extends AnkiActivity {
         String clone = getResources().getString(R.string.model_browser_add_clone);
 
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
-        mNewModelLabels = new ArrayList<>();
+        ArrayList<String> newModelLabels = new ArrayList<>();
         ArrayList<String> existingModelsNames = new ArrayList<>();
 
         //Used to fetch model names
         mNewModelNames = new ArrayList<>();
         for (StdModels StdModels: StdModels.stdModels) {
             String defaultName = StdModels.getDefaultName();
-            mNewModelLabels.add(String.format(add, defaultName));
+            newModelLabels.add(String.format(add, defaultName));
             mNewModelNames.add(defaultName);
         }
 
-        final int numStdModels = mNewModelLabels.size();
+        final int numStdModels = newModelLabels.size();
 
         if (mModels != null) {
             for (Model model : mModels) {
                 String name = model.getString("name");
-                mNewModelLabels.add(String.format(clone, name));
+                newModelLabels.add(String.format(clone, name));
                 mNewModelNames.add(name);
                 existingModelsNames.add(name);
             }
         }
 
         final Spinner addSelectionSpinner = new Spinner(this);
-        ArrayAdapter<String> mNewModelAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item, mNewModelLabels);
+        ArrayAdapter<String> mNewModelAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item, newModelLabels);
 
         addSelectionSpinner.setAdapter(mNewModelAdapter);
 
