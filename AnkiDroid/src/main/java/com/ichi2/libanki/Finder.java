@@ -999,7 +999,7 @@ public class Finder {
                     continue;
                 }
                 if (!vals.containsKey(val)) {
-                    vals.put(val, new ArrayList<Long>());
+                    vals.put(val, new ArrayList<>());
                 }
                 vals.get(val).add(nid);
                 if (vals.get(val).size() == 2) {

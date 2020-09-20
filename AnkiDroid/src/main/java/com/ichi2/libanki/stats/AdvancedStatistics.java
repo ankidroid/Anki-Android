@@ -832,7 +832,7 @@ public class AdvancedStatistics {
 
     public static class TodayStats {
 
-        private final Map<Long, Integer> nLearnedPerDeckId = new HashMap<Long, Integer>();
+        private final Map<Long, Integer> nLearnedPerDeckId = new HashMap<>();
 
         public TodayStats(SupportSQLiteDatabase db, long dayStartCutoff) {
 
