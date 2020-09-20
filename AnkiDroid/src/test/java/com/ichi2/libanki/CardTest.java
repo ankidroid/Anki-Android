@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -34,7 +35,7 @@ public class CardTest extends RobolectricTest {
         long cid = note.cards().get(0).getId();
         col.reset();
         col.getSched().answerCard(col.getSched().getCard(), 2);
-        col.remCards(Arrays.asList(cid));
+        col.remCards(Collections.singletonList(cid));
         assertEquals(0, col.cardCount());
         assertEquals(0, col.noteCount());
         assertEquals(0, col.getDb().queryScalar("select count() from notes"));

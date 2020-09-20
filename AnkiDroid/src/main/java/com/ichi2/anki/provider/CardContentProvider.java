@@ -61,6 +61,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -402,7 +403,7 @@ public class CardContentProvider extends ContentProvider {
                 String name = col.getDecks().name(id);
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
-                JSONArray counts = new JSONArray(Arrays.asList(col.getSched().counts()));
+                JSONArray counts = new JSONArray(Collections.singletonList(col.getSched().counts()));
                 addDeckToCursor(id, name, counts,rv, col, columns);
                 return rv;
             }
