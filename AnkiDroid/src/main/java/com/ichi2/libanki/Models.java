@@ -1162,7 +1162,7 @@ public class Models {
      */
 
     public void beforeUpload() {
-        boolean changed = Utils.markAsUploaded(all());;
+        boolean changed = Utils.markAsUploaded(all());
         if (changed) {
             save();
         }

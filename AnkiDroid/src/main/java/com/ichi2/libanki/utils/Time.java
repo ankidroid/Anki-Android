@@ -36,7 +36,8 @@ public abstract class Time {
     /**The time in integer seconds. */
     public long intTime() {
         return intTimeMS() / 1000L;
-    };
+    }
+
 
     public abstract long intTimeMS();
 

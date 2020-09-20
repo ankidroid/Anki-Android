@@ -2649,7 +2649,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 deckPicker.loadStudyOptionsFragment(false);
             }
         }
-    };
+    }
+
 
     public void rebuildFiltered() {
         getCol().getDecks().select(mContextMenuDid);

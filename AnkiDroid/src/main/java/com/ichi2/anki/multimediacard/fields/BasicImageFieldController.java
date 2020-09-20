@@ -566,7 +566,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             revertToPreviousImage();
             showSomethingWentWrong();
             return;
-        };
+        }
         mField.setHasTemporaryMedia(true);
         showCropDialog(mActivity.getString(R.string.crop_image), null);
     }
