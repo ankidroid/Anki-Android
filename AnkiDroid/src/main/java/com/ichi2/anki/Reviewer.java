@@ -286,7 +286,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
-        mSched.setContext(new WeakReference<Activity>(this));
+        mSched.setContext(new WeakReference<>(this));
 
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {

@@ -65,7 +65,7 @@ public class ApiUtilsTest {
 
     @Test
     public void joinTagsShouldReturnEmptyStringWhenSetIsEmpty() {
-        assertEquals("", Utils.joinTags(new HashSet<String>()));
+        assertEquals("", Utils.joinTags(new HashSet<>()));
     }
 
     @Test

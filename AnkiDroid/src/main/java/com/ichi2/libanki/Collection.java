@@ -747,7 +747,7 @@ public class Collection {
 
                 // existing cards
                 if (!have.containsKey(nid)) {
-                    have.put(nid, new HashMap<Integer, Long>());
+                    have.put(nid, new HashMap<>());
                 }
                 have.get(nid).put(ord, id);
                 // if in a filtered deck, add new cards to original deck
@@ -1286,7 +1286,7 @@ public class Collection {
         }
         long elapsed = getTime().intTime() - mStartTime;
         if (elapsed > mConf.getLong("timeLim")) {
-            return new Pair<Integer, Integer> (mConf.getInt("timeLim"), mSched.getReps() - mStartReps);
+            return new Pair<>(mConf.getInt("timeLim"), mSched.getReps() - mStartReps);
         }
         return null;
     }

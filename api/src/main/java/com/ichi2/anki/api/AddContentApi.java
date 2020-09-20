@@ -707,7 +707,7 @@ public final class AddContentApi {
                 String key = keys.get(i);
                 csums.add(Utils.fieldChecksum(key));
                 if (!keyToIndexesMap.containsKey(key)) {    // Use a list as some keys could potentially be duplicated
-                    keyToIndexesMap.put(key, new ArrayList<Integer>());
+                    keyToIndexesMap.put(key, new ArrayList<>());
                 }
                 keyToIndexesMap.get(key).add(i);
             }

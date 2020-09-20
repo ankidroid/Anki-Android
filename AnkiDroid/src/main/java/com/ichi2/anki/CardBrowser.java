@@ -1204,7 +1204,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         builderSingle.setTitle(getString(R.string.move_all_to_deck));
 
         //WARNING: changeDeck depends on this index, so any changes should be reflected there.
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item);
         for (Deck deck : getValidDecksForChangeDeck()) {
             try {
                 arrayAdapter.add(deck.getString("name"));
@@ -1290,7 +1290,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void showTagsDialog() {
         TagsDialog dialog = TagsDialog.newInstance(
-                TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<String>(), new ArrayList<>(getCol().getTags().all()));
+                TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<>(), new ArrayList<>(getCol().getTags().all()));
         dialog.setTagsDialogListener(this::filterByTag);
         showDialogFragment(dialog);
     }
@@ -1631,7 +1631,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         long reviewerCardId = getReviewerCardId();
         List<CardCache> oldMCards = getCards();
         Map<Long, Integer> idToPos = getPositionMap(oldMCards);
-        Set<Long> idToRemove = new HashSet<Long>();
+        Set<Long> idToRemove = new HashSet<>();
         for (Long cardId : cardsIds) {
             if (cardId == reviewerCardId) {
                 mReloadRequired = true;
