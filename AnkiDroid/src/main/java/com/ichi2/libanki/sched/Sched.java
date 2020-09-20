@@ -220,8 +220,8 @@ public class Sched extends SchedV2 {
             String deckName = deck.getString("name");
             String p = Decks.parent(deckName);
             // new
-            int nlim = _deckNewLimitSingle(deck);
-            int rlim = _deckRevLimitSingle(deck);
+            int nlim = _deckNewLimitSingle(deck, false);
+            int rlim = _deckRevLimitSingle(deck, false);
             if (!TextUtils.isEmpty(p)) {
                 Integer[] parentLims = lims.get(Decks.normalizeName(p));
                 // 'temporary for diagnosis of bug #6383'
@@ -606,8 +606,12 @@ public class Sched extends SchedV2 {
      * Reviews ****************************************************************** *****************************
      */
 
-    protected int _deckRevLimit(long did) {
-        return _deckNewLimit(did, d -> _deckRevLimitSingle(d));
+    /**
+     *
+     * @param considerCurrentCard Whether current card should be conted if it is in this deck
+     */
+    protected int _deckRevLimit(long did, boolean considerCurrentCard) {
+        return _deckNewLimit(did, d -> _deckRevLimitSingle(d, considerCurrentCard), considerCurrentCard);
     }
 
     /**
@@ -617,16 +621,17 @@ public class Sched extends SchedV2 {
      * plus the number of extra cards to see today in deck d, a parent or a descendant.
      *
      * Limits of its ancestors are not applied.  Current card is treated the same way as other cards.
+     * @param considerCurrentCard Whether current card should be conted if it is in this deck
      * */
     @Override
-    protected int _deckRevLimitSingle(@NonNull Deck d) {
+    protected int _deckRevLimitSingle(@NonNull Deck d, boolean considerCurrentCard) {
         if (d.getInt("dyn") != 0) {
             return mReportLimit;
         }
         long did = d.getLong("id");
         DeckConfig c = mCol.getDecks().confForDid(did);
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
-        if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_REV, did)) {
+        if (considerCurrentCard && currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_REV, did)) {
             lim--;
         }
         // The counts shown in the reviewer does not consider the current card. E.g. if it indicates 6 rev card, it means, 6 rev card including current card will be seen today.
@@ -644,7 +649,7 @@ public class Sched extends SchedV2 {
 
     @Override
     protected void _resetRevCount() {
-        mRevCount = _walkingCount(d -> _deckRevLimitSingle(d),
+        mRevCount = _walkingCount(d -> _deckRevLimitSingle(d, true),
                                   (did, lim) -> _cntFnRev(did, lim));
     }
 
@@ -677,7 +682,7 @@ public class Sched extends SchedV2 {
         SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         while (!mRevDids.isEmpty()) {
             long did = mRevDids.getFirst();
-            int lim = Math.min(mQueueLimit, _deckRevLimit(did));
+            int lim = Math.min(mQueueLimit, _deckRevLimit(did, false));
             Cursor cur = null;
             if (lim != 0) {
                 mRevQueue.clear();

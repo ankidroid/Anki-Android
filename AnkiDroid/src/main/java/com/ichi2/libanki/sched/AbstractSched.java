@@ -135,8 +135,6 @@ public abstract class AbstractSched {
     public abstract @NonNull List<DeckTreeNode> quickDeckDueTree();
     /** New count for a single deck. */
     public abstract int _newForDeck(long did, int lim);
-    /** Limit for deck without parent limits. */
-    public abstract int _deckNewLimitSingle(Deck g);
     public abstract int totalNewForCurrentDeck();
     public abstract int totalRevForCurrentDeck();
     public abstract @NonNull Pair<Integer, Integer> _fuzzIvlRange(int ivl);
