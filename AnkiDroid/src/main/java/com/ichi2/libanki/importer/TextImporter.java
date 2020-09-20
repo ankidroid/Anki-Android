@@ -42,8 +42,6 @@ public class TextImporter extends NoteImporter {
 
     private CsvDialect dialect;
     private int numFields;
-    // appears unused
-    private int mIgnored;
 
 
     private boolean mFirstLineWasTags;
@@ -100,7 +98,6 @@ public class TextImporter extends NoteImporter {
             log.add(getString(R.string.csv_importer_error_exception, e));
         }
         mLog = log;
-        mIgnored = ignored;
         fileobj.close();
         return notes;
     }
