@@ -40,7 +40,6 @@ import timber.log.Timber;
 public final class WidgetStatus {
 
     private static boolean sSmallWidgetEnabled = false;
-    private static boolean sNotificationEnabled = false;
     private static AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
 
 
@@ -58,9 +57,9 @@ public final class WidgetStatus {
     public static void update(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false);
-        sNotificationEnabled = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000;
+        boolean notificationEnabled = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000;
         boolean canExecuteTask = ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED));
-        if ((sSmallWidgetEnabled || sNotificationEnabled) && canExecuteTask) {
+        if ((sSmallWidgetEnabled || notificationEnabled) && canExecuteTask) {
             Timber.d("WidgetStatus.update(): updating");
             sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
             sUpdateDeckStatusAsyncTask.execute(context);
