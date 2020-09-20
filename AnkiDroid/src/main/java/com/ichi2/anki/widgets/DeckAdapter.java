@@ -45,6 +45,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
 import com.ichi2.utils.FilterResultsUtils;
+import com.ichi2.libanki.sched.Counts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -348,7 +349,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
     @Nullable
     public Integer getEta() {
         if (mNumbersComputed) {
-            return mCol.getSched().eta(new int[] {mNew, mLrn, mRev});
+            return mCol.getSched().eta(new Counts(mNew, mLrn, mRev));
         } else {
             return null;
         }

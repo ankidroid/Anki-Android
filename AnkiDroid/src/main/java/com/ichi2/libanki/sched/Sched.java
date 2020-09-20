@@ -128,13 +128,13 @@ public class Sched extends SchedV2 {
 
     @NonNull
     @Override
-    public int[] counts(@NonNull Card card) {
-        int[] counts = counts();
+    public Counts counts(@NonNull Card card) {
+        Counts counts = counts();
         int idx = countIdx(card);
         if (idx == 1) {
-            counts[1] += card.getLeft() / 1000;
+            counts.addLrn(card.getLeft() / 1000);
         } else {
-            counts[idx] += 1;
+            counts.changeCount(idx, 1);
         }
         return counts;
     }
@@ -1291,7 +1291,7 @@ public class Sched extends SchedV2 {
      * @param reload Force rebuild of estimator rates using the revlog.
      */
     @Override
-    public int eta(@NonNull int[] counts, boolean reload) {
+    public int eta(@NonNull Counts counts, boolean reload) {
         double newRate;
         double newTime;
         double revRate;
@@ -1358,17 +1358,17 @@ public class Sched extends SchedV2 {
         }
 
         // Calculate the total time for each queue based on the historical average duration per rep
-        double newTotal = newTime * counts[0];
-        double relrnTotal = relrnTime * counts[1];
-        double revTotal = revTime * counts[2];
+        double newTotal = newTime * counts.getNew();
+        double relrnTotal = relrnTime * counts.getLrn();
+        double revTotal = revTime * counts.getRev();
 
         // Now we have to predict how many additional relrn cards are going to be generated while reviewing the above
         // queues, and how many relrn cards *those* reps will generate (and so on, until 0).
 
         // Every queue has a failure rate, and each failure will become a relrn
-        int toRelrn = counts[0]; // Assume every new card becomes 1 relrn
-        toRelrn += Math.ceil((1 - relrnRate) * counts[1]);
-        toRelrn += Math.ceil((1 - revRate) * counts[2]);
+        int toRelrn = counts.getNew(); // Assume every new card becomes 1 relrn
+        toRelrn += Math.ceil((1 - relrnRate) * counts.getLrn());
+        toRelrn += Math.ceil((1 - revRate) * counts.getRev());
 
         // Use the accuracy rate of the relrn queue to estimate how many reps we will end up with if the cards
         // currently in relrn continue to fail at that rate. Loop through the failures of the failures until we end up

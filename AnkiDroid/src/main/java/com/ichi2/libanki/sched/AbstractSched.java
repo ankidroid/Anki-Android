@@ -88,11 +88,7 @@ public abstract class AbstractSched {
     /**
      * @return Number of new, rev and lrn card to review in selected deck. Sum of elements of counts.*/
     public int count() {
-        int s = 0;
-        for (int c: counts()) {
-            s += c;
-        }
-        return s;
+        return counts().count();
     }
 
     /**
@@ -107,30 +103,30 @@ public abstract class AbstractSched {
      */
     // TODO: consider counting the card currently in the reviewer, this would simplify the code greatly
     // We almost never want to consider the card in the reviewer differently, and a lot of code is added to correct this.
-    public abstract @NonNull int[] counts();
+    public abstract @NonNull Counts counts();
 
     /** @return Number of new card in selected decks. Recompute it if we reseted.
      */
     public int newCount() {
         // We need to actually recompute the three elements, because we potentially need to deal with undid card
         // in any deck where it may be
-        return counts()[0];
+        return counts().getNew();
     }
 
     /** @return Number of lrn card in selected decks. Recompute it if we reseted.*/
     public int lrnCount() {
-        return counts()[1];
+        return counts().getLrn();
     }
 
     /** @return Number of rev card in selected decks. Recompute it if we reseted.*/
     public int revCount() {
-        return counts()[2];
+        return counts().getRev();
     }
 
     /**
      * @param card A card that should be added to the count result.
      * @return same array as counts(), apart that Card is added*/
-    public abstract @NonNull int[] counts(Card card);
+    public abstract @NonNull Counts counts(@NonNull Card card);
 
     /**
      * @param card A Card which is in a mode allowing review. I.e. neither suspended nor buried.
@@ -433,10 +429,10 @@ public abstract class AbstractSched {
      * @param counts An array of [new, lrn, rev] counts from the scheduler's counts() method.
      * @param reload Force rebuild of estimator rates using the revlog.
      */
-    public abstract int eta(int[] counts, boolean reload);
+    public abstract int eta(Counts counts, boolean reload);
 
     /** Same as above and force reload.*/
-    public abstract int eta(int[] counts);
+    public abstract int eta(Counts counts);
 
     /**
      * @param contextReference An activity on which a message can be shown. Does not force the activity to remains in memory
