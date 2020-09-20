@@ -304,7 +304,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private boolean mButtonHeightSet = false;
 
-    private boolean mConfigurationChanged = false;
     private int mShowChosenAnswerLength = 2000;
 
     /**
@@ -2200,9 +2199,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
         fillFlashcard();
 
-        if (!mConfigurationChanged) {
-            playSounds(false); // Play sounds if appropriate
-        }
+        playSounds(false); // Play sounds if appropriate
     }
 
     /**
