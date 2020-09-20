@@ -91,7 +91,7 @@
         <item>Wg przerw</item>
         <item>Wg łatwości</item>
         <item>Wg powtórek</item>
-        <item>Według pomyłek</item>
+        <item>Wg pomyłek</item>
     </string-array>
     <string name="card_browser_select_all">Zaznacz wszystko</string>
     <string name="card_browser_select_none">Anuluj wybór</string>
@@ -103,5 +103,5 @@
     <string name="card_browser_note_editor_error">Błąd otwierania edytora notatek</string>
     <string name="card_browser_no_cards_in_deck">Nie znaleziono kart w talii „%s”</string>
     <string name="card_browser_search_all_decks">Szukaj w wszystkich taliach</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_unknown_deck_name">Nieznany</string>
 </resources>
