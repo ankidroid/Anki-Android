@@ -644,7 +644,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     ListPreference listpref = (ListPreference) screen.findPreference("minimumCardsDueForNotification");
                     if (listpref != null) {
                         updateNotificationPreference(listpref);
-                        if (Integer.valueOf(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
+                        if (Integer.parseInt(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
                             BootService.scheduleNotification(getCol().getTime(), this);
                         } else {
                             PendingIntent intent = PendingIntent.getBroadcast(this, 0,

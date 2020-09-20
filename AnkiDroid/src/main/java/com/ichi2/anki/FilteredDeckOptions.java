@@ -274,25 +274,25 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
         @Override
         public boolean getBoolean(String key, boolean defValue) {
-            return Boolean.valueOf(this.getString(key, Boolean.toString(defValue)));
+            return Boolean.parseBoolean(this.getString(key, Boolean.toString(defValue)));
         }
 
 
         @Override
         public float getFloat(String key, float defValue) {
-            return Float.valueOf(this.getString(key, Float.toString(defValue)));
+            return Float.parseFloat(this.getString(key, Float.toString(defValue)));
         }
 
 
         @Override
         public int getInt(String key, int defValue) {
-            return Integer.valueOf(this.getString(key, Integer.toString(defValue)));
+            return Integer.parseInt(this.getString(key, Integer.toString(defValue)));
         }
 
 
         @Override
         public long getLong(String key, long defValue) {
-            return Long.valueOf(this.getString(key, Long.toString(defValue)));
+            return Long.parseLong(this.getString(key, Long.toString(defValue)));
         }
 
 

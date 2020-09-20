@@ -606,7 +606,7 @@ public class Anki2Importer extends Importer {
                     card[8] = (Long) card[8] - aheadBy;
                 }
                 // odue needs updating too
-                if (((Long) card[14]).longValue() != 0) {
+                if ((Long) card[14] != 0) {
                     card[14] = (Long) card[14] - aheadBy;
                 }
                 // if odid true, convert card from filtered to normal

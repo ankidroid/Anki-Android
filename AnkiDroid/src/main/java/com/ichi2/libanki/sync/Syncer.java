@@ -880,7 +880,7 @@ public class Syncer {
     private void mergeNotes(JSONArray notes) {
         for (Object[] n : newerRows(notes, "notes", 4)) {
             mCol.getDb().execute("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?,?)", n);
-            mCol.updateFieldCache(new long[]{Long.valueOf(((Number) n[0]).longValue())});
+            mCol.updateFieldCache(new long[]{((Number) n[0]).longValue()});
         }
     }
 

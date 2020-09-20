@@ -910,7 +910,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void flagTask (int flag) {
         CollectionTask.launchCollectionTask(DISMISS_MULTI,
                                 flagCardHandler(),
-                                new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, new Integer (flag)}));
+                                new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, flag}));
     }
 
     @Override

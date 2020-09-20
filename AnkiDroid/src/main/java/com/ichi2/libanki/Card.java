@@ -189,7 +189,7 @@ public class Card implements Cloneable {
         //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
         //}
-        assert (mDue < Long.valueOf("4294967296"));
+        assert (mDue < Long.parseLong("4294967296"));
         mCol.getDb().execute(
                 "insert or replace into cards values " +
                 "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -223,7 +223,7 @@ public class Card implements Cloneable {
         //if ((mQueue == Consts.QUEUE_TYPE_REV && mODue != 0) && !mCol.getDecks().isDyn(mDid)) {
             // TODO: runHook("odueInvalid");
         //}
-        assert (mDue < Long.valueOf("4294967296"));
+        assert (mDue < Long.parseLong("4294967296"));
 
         ContentValues values = new ContentValues();
         values.put("mod", mMod);
