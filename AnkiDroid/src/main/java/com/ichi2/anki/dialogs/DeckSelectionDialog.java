@@ -34,6 +34,7 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -251,7 +252,6 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
             protected FilterResults performFiltering(CharSequence constraint) {
                 mFilteredDecks.clear();
                 ArrayList<SelectableDeck> allDecks = DecksArrayAdapter.this.mAllDecksList;
-                final FilterResults filterResults = new FilterResults();
                 if (constraint.length() == 0) {
                     mFilteredDecks.addAll(allDecks);
                 } else {
@@ -263,9 +263,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                     }
                 }
 
-                filterResults.values = mFilteredDecks;
-                filterResults.count = mFilteredDecks.size();
-                return filterResults;
+                return FilterResultsUtils.fromCollection(mFilteredDecks);
             }
 
             @Override

@@ -27,10 +27,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.TreeSet;
 
 public class TagsDialog extends AnalyticsDialogFragment {
@@ -346,7 +346,6 @@ public class TagsDialog extends AnalyticsDialogFragment {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 mFilteredTags.clear();
-                final FilterResults filterResults = new FilterResults();
                 if (constraint.length() == 0) {
                     mFilteredTags.addAll(mAllTags);
                 } else {
@@ -358,9 +357,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                     }
                 }
 
-                filterResults.values = mFilteredTags;
-                filterResults.count = mFilteredTags.size();
-                return filterResults;
+                return FilterResultsUtils.fromCollection(mFilteredTags);
             }
 
             @Override
