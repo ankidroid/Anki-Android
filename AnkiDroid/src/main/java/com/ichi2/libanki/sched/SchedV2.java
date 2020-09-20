@@ -81,8 +81,6 @@ public class SchedV2 extends AbstractSched {
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
     public static final int RESCHEDULE_FACTOR = Consts.STARTING_FACTOR;
 
-    private final String mName = "std2";
-
     protected int mQueueLimit;
     protected int mReportLimit;
     private int mDynReportLimit;
@@ -2809,7 +2807,7 @@ public class SchedV2 extends AbstractSched {
 
 
     public String getName() {
-        return mName;
+        return "std2";
     }
 
 
