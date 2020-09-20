@@ -638,7 +638,7 @@ public class Decks {
     }
 
 
-    private static final HashMap<String, String[]> pathCache = new HashMap();
+    private static final HashMap<String, String[]> pathCache = new HashMap<>();
     public static String[] path(String name) {
         if (!pathCache.containsKey(name)) {
             pathCache.put(name, name.split("::", -1));
@@ -1149,7 +1149,7 @@ public class Decks {
     }
 
 
-    private static final HashMap<String, String> sParentCache = new HashMap();
+    private static final HashMap<String, String> sParentCache = new HashMap<>();
     public static String parent(String deckName) {
         // method parent, from sched's method deckDueList in python
         if (!sParentCache.containsKey(deckName)) {

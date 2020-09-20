@@ -40,18 +40,18 @@ public class ActionBarOverflow {
     @VisibleForTesting
     static void setupMethods(PrivateMethodAccessor accessor) {
         //Note: Multiple of these can succeed.
-        Pair<Class, Method> nativeImpl = accessor.getPrivateMethod(NATIVE_CLASS, "isActionButton");
+        Pair<Class<?>, Method> nativeImpl = accessor.getPrivateMethod(NATIVE_CLASS, "isActionButton");
         sNativeClassRef = nativeImpl.first;
         sNativeIsActionButton = nativeImpl.second;
 
-        Pair<Class, Method> androidXImpl =  accessor.getPrivateMethod(ANDROIDX_CLASS, "isActionButton");
+        Pair<Class<?>, Method> androidXImpl =  accessor.getPrivateMethod(ANDROIDX_CLASS, "isActionButton");
         sAndroidXClassRef = androidXImpl.first;
         sAndroidXIsActionButton = androidXImpl.second;
     }
 
 
     @CheckResult
-    private static Pair<Class, Method> getPrivateMethodHandleSystemErrors(String className, String methodName) {
+    private static Pair<Class<?>, Method> getPrivateMethodHandleSystemErrors(String className, String methodName) {
         Method action = null;
         Class<?> menuItemImpl = null;
         try {
@@ -101,7 +101,7 @@ public class ActionBarOverflow {
     @VisibleForTesting
     @FunctionalInterface
     interface PrivateMethodAccessor {
-        Pair<Class, Method> getPrivateMethod(String className, String methodName);
+        Pair<Class<?>, Method> getPrivateMethod(String className, String methodName);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -113,7 +113,7 @@ public class ActionBarOverflow {
 
     @CheckResult
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    static Pair<Class, Method> getPrivateMethodOnlyHandleExceptions(String className, String methodName) {
+    static Pair<Class<?>, Method> getPrivateMethodOnlyHandleExceptions(String className, String methodName) {
         Method action = null;
         Class<?> menuItemImpl = null;
         try {
