@@ -1016,10 +1016,6 @@ public class Media {
      */
     public boolean needScan() {
         long mod = mDb.queryLongScalar("select dirMod from meta");
-        if (mod == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return mod == 0;
     }
 }

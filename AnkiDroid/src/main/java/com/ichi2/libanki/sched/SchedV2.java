@@ -1075,10 +1075,8 @@ public class SchedV2 extends AbstractSched {
             if (collapse) {
                 cutoff += mCol.getConf().getInt("collapseTime");
             }
-            if (mLrnQueue.getFirstDue() < cutoff) {
-                return true;
-                // mLrnCount -= 1; see decrementCounts()
-            }
+            // mLrnCount -= 1; see decrementCounts()
+            return mLrnQueue.getFirstDue() < cutoff;
         }
         return false;
     }
