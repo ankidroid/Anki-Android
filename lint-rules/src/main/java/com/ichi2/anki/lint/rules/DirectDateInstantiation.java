@@ -10,7 +10,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.ichi2.anki.lint.utils.Constants;
 import com.ichi2.anki.lint.utils.LintUtils;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiType;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

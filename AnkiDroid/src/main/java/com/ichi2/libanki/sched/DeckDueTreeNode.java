@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 /**
  * Holds the data for a single node (row) in the deck due tree (the user-visible list

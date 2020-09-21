@@ -44,7 +44,6 @@ package com.ichi2.utils;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.Iterator;
 
 import androidx.annotation.NonNull;
 

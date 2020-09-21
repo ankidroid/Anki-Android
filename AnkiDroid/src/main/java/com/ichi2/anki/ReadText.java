@@ -22,8 +22,8 @@ import android.net.Uri;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-import android.view.View;
 
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 

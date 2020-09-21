@@ -36,7 +36,6 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import timber.log.Timber;

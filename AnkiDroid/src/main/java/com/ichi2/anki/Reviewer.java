@@ -86,7 +86,6 @@ import java.lang.ref.WeakReference;
 import timber.log.Timber;
 
 import static com.ichi2.anki.reviewer.CardMarker.*;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;

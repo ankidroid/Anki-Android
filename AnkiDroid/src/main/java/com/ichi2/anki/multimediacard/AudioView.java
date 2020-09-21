@@ -33,10 +33,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
-import com.ichi2.anki.Reviewer;
-import com.ichi2.libanki.Collection;
 import com.ichi2.anki.UIUtils;
 import java.io.File;
 import java.io.IOException;
