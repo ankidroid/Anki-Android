@@ -692,8 +692,29 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     return true;
                 }
             }
+            case KeyEvent.KEYCODE_K: {
+                if (event.isCtrlPressed()) {
+                    Timber.i("Ctrl+K: Toggle Mark");
+                    toggleMark();
+                    return true;
+                }
+            }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /** All the notes of the selected cards will be marked
+     * If one or more card is unmarked, all will be marked,
+     * otherwise, they will be unmarked */
+    private void toggleMark() {
+        if (!hasSelectedCards()) {
+            Timber.i("Not marking cards - nothing selected");
+            return;
+        }
+
+        CollectionTask.launchCollectionTask(DISMISS_MULTI,
+                markCardHandler(),
+                new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.MARK_NOTE_MULTI}));
     }
 
 
@@ -1042,9 +1063,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_mark_card:
-                CollectionTask.launchCollectionTask(DISMISS_MULTI,
-                        markCardHandler(),
-                        new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.MARK_NOTE_MULTI}));
+                toggleMark();
 
                 return true;
 
