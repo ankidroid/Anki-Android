@@ -122,30 +122,23 @@ public class ReadText {
 
             builder.title(res.getString(R.string.select_locale_title))
                     .items(items)
-                    .itemsCallback(new MaterialDialog.ListCallback() {
-                        @Override
-                        public void onSelection(MaterialDialog materialDialog, View view, int which,
-                                                CharSequence charSequence) {
-                            String locale = dialogIds.get(which);
-                            Timber.d("ReadText.selectTts() user chose locale '%s'", locale);
-                            if (!locale.equals(NO_TTS)) {
-                                speak(mTextToSpeak, locale, TextToSpeech.QUEUE_FLUSH);
-                            }
-                            MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
+                    .itemsCallback((materialDialog, view, which, charSequence) -> {
+                        String locale = dialogIds.get(which);
+                        Timber.d("ReadText.selectTts() user chose locale '%s'", locale);
+                        if (!locale.equals(NO_TTS)) {
+                            speak(mTextToSpeak, locale, TextToSpeech.QUEUE_FLUSH);
                         }
+                        MetaDB.storeLanguage(mReviewer.get(), mDid, mOrd, mQuestionAnswer, locale);
                     });
         }
         // Show the dialog after short delay so that user gets a chance to preview the card
         final Handler handler = new Handler();
         final int delay = 500;
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    builder.build().show();
-                } catch (WindowManager.BadTokenException e) {
-                    Timber.w("Activity invalidated before TTS language dialog could display");
-                }
+        handler.postDelayed(() -> {
+            try {
+                builder.build().show();
+            } catch (WindowManager.BadTokenException e) {
+                Timber.w("Activity invalidated before TTS language dialog could display");
             }
         }, delay);
     }
@@ -278,50 +271,47 @@ public class ReadText {
         // Store weak reference to Activity to prevent memory leak
         mReviewer = new WeakReference<>(context);
         // Create new TTS object and setup its onInit Listener
-        mTts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    // build list of available languages
-                    buildAvailableLanguages();
-                    if (availableTtsLocales.size() > 0) {
-                        // notify the reviewer that TTS has been initialized
-                        Timber.d("TTS initialized and available languages found");
-                        ((AbstractFlashcardViewer) mReviewer.get()).ttsInitialized();
-                    } else {
-                        Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
-                        Timber.w("TTS initialized but no available languages found");
-                    }
-                    mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
-                        @Override
-                        public void onDone(String arg0) {
-                            if (ReadText.sTextQueue.size() > 0) {
-                                String[] text = ReadText.sTextQueue.remove(0);
-                                ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
-                            }
-                            listener.onDone();
-                        }
-                        @Override
-                        @Deprecated
-                        public void onError(String utteranceId) {
-                            Timber.v("Andoid TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
-
-                            final Uri helpUrl = Uri.parse(mReviewer.get().getString(R.string.link_faq_tts));
-                            final AnkiActivity ankiActivity = (AnkiActivity) mReviewer.get();
-                            ankiActivity.mayOpenUrl(helpUrl);
-                            UIUtils.showSnackbar(ankiActivity, R.string.no_tts_available_message, false, R.string.help,
-                                    v -> openTtsHelpUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
-                                    new Snackbar.Callback());
-                        }
-                        @Override
-                        public void onStart(String arg0) {
-                            // no nothing
-                        }
-                    });
+        mTts = new TextToSpeech(context, status -> {
+            if (status == TextToSpeech.SUCCESS) {
+                // build list of available languages
+                buildAvailableLanguages();
+                if (availableTtsLocales.size() > 0) {
+                    // notify the reviewer that TTS has been initialized
+                    Timber.d("TTS initialized and available languages found");
+                    ((AbstractFlashcardViewer) mReviewer.get()).ttsInitialized();
                 } else {
                     Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
-                    Timber.w("TTS not successfully initialized");
+                    Timber.w("TTS initialized but no available languages found");
                 }
+                mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                    @Override
+                    public void onDone(String arg0) {
+                        if (ReadText.sTextQueue.size() > 0) {
+                            String[] text = ReadText.sTextQueue.remove(0);
+                            ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
+                        }
+                        listener.onDone();
+                    }
+                    @Override
+                    @Deprecated
+                    public void onError(String utteranceId) {
+                        Timber.v("Andoid TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.");
+
+                        final Uri helpUrl = Uri.parse(mReviewer.get().getString(R.string.link_faq_tts));
+                        final AnkiActivity ankiActivity = (AnkiActivity) mReviewer.get();
+                        ankiActivity.mayOpenUrl(helpUrl);
+                        UIUtils.showSnackbar(ankiActivity, R.string.no_tts_available_message, false, R.string.help,
+                                v -> openTtsHelpUrl(helpUrl), ankiActivity.findViewById(R.id.root_layout),
+                                new Snackbar.Callback());
+                    }
+                    @Override
+                    public void onStart(String arg0) {
+                        // no nothing
+                    }
+                });
+            } else {
+                Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message), Toast.LENGTH_LONG).show();
+                Timber.w("TTS not successfully initialized");
             }
         });
         // Show toast that it's getting initialized, as it can take a while before the sound plays the first time

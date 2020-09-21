@@ -715,12 +715,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             String msg = String.format(res.getQuantityString(R.plurals.card_template_editor_confirm_delete,
                             numAffectedCards), numAffectedCards, tmpl.optString("name"));
             d.setArgs(msg);
-            Runnable confirm = new Runnable() {
-                @Override
-                public void run() {
-                    deleteTemplateWithCheck(tmpl, model);
-                }
-            };
+            Runnable confirm = () -> deleteTemplateWithCheck(tmpl, model);
             d.setConfirm(confirm);
             mTemplateEditor.showDialogFragment(d);
         }

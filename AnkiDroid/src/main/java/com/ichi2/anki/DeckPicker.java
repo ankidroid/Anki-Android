@@ -249,19 +249,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    private final OnClickListener mDeckClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onDeckClick(v, false);
-        }
-    };
+    private final OnClickListener mDeckClickListener = v -> onDeckClick(v, false);
 
-    private final OnClickListener mCountsClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onDeckClick(v, true);
-        }
-    };
+    private final OnClickListener mCountsClickListener = v -> onDeckClick(v, true);
 
 
     private void onDeckClick(View v, boolean dontSkipStudyOptions) {

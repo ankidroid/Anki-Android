@@ -110,15 +110,11 @@ public class Lookup {
                 new MaterialDialog.Builder(mContext)
                         .title("\"" + mLookupText + "\" nachschlagen")
                         .items(items)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
-                            @Override
-                            public void onSelection(MaterialDialog materialDialog, View view,
-                                    int item, CharSequence charSequence) {
-                                String language = itemValues[item].toString();
-                                storeLanguage(language, MetaDB.LANGUAGES_QA_UNDEFINED);
-                                lookupLeo(language, mLookupText);
-                                mLookupText = "";
-                            }
+                        .itemsCallback((materialDialog, view, item, charSequence) -> {
+                            String language1 = itemValues[item].toString();
+                            storeLanguage(language1, MetaDB.LANGUAGES_QA_UNDEFINED);
+                            lookupLeo(language1, mLookupText);
+                            mLookupText = "";
                         })
                         .build().show();
                 return true;
