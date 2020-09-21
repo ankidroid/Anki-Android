@@ -117,6 +117,7 @@ import com.ichi2.libanki.template.Template;
 import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
@@ -657,7 +658,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             // set the correct mark/unmark icon on action bar
             refreshActionBar();
+            focusDefaultLayout();
+        }
+    }
+
+
+    private void focusDefaultLayout() {
+        if (!AndroidUiUtils.isRunningOnTv(this)) {
             findViewById(R.id.root_layout).requestFocus();
+        } else {
+            View flip = findViewById(R.id.answer_options_layout);
+            if (flip == null) {
+                return;
+            }
+            Timber.d("Requesting focus for flip button");
+            flip.requestFocus();
         }
     }
 
@@ -1542,7 +1557,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     @SuppressLint("SetJavaScriptEnabled") // they request we review carefully because of XSS security, we have
-    private WebView createWebView() {
+    protected WebView createWebView() {
         WebView webView = new MyWebView(this);
         webView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
         webView.getSettings().setDisplayZoomControls(false);

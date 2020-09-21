@@ -36,6 +36,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -68,6 +69,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
@@ -181,6 +183,15 @@ public class Reviewer extends AbstractFlashcardViewer {
         return actualValue;
     }
 
+
+    @Override
+    protected WebView createWebView() {
+        WebView ret = super.createWebView();
+        if (AndroidUiUtils.isRunningOnTv(this)) {
+            ret.setFocusable(false);
+        }
+        return ret;
+    }
 
     @Override
     protected boolean shouldDisplayMark() {
@@ -665,7 +676,34 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return mProcessor.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
+        if (mProcessor.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)) {
+            return true;
+        }
+
+        if (!AndroidUiUtils.isRunningOnTv(this)) {
+            return false;
+        }
+
+        // Process DPAD Up/Down to focus the TV Controls
+        if (keyCode != KeyEvent.KEYCODE_DPAD_DOWN && keyCode != KeyEvent.KEYCODE_DPAD_UP) {
+            return false;
+        }
+
+        // HACK: This shouldn't be required, as the navigation should handle this.
+        if (isDrawerOpen()) {
+            return false;
+        }
+
+
+        View view = keyCode == KeyEvent.KEYCODE_DPAD_UP ? findViewById(R.id.tv_nav_view) : findViewById(R.id.answer_options_layout);
+        // HACK: We should be performing this in the base class, or allowing the view to be focused by the keyboard.
+        // I couldn't get either to work
+        if (view == null) {
+            return false;
+        }
+
+        view.requestFocus();
+        return true;
     }
 
     @Override
