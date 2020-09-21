@@ -980,8 +980,7 @@ public class Media {
      * function and have delegated its job to the caller of this class.
      */
     public static int indexOfFname(Pattern p) {
-        int fnameIdx = p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
-        return fnameIdx;
+        return p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
     }
 
 

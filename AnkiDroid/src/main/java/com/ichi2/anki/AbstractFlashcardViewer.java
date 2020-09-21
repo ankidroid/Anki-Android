@@ -1151,8 +1151,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Get the did of the parent deck (ignoring any subdecks)
     protected long getParentDid() {
-        long deckID = getCol().getDecks().selected();
-        return deckID;
+        return getCol().getDecks().selected();
     }
 
     private void redrawCard() {
@@ -3217,8 +3216,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (url.startsWith("playsound:")) {
                 // Send a message that will be handled on the UI thread.
                 Message msg = Message.obtain();
-                String soundPath = url.replaceFirst("playsound:", "");
-                msg.obj = soundPath;
+                msg.obj = url.replaceFirst("playsound:", "");
                 mHandler.sendMessage(msg);
                 return true;
             }

@@ -12,8 +12,7 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 
 public class DeckPickerAnalyticsOptInDialog extends AnalyticsDialogFragment {
     public static DeckPickerAnalyticsOptInDialog newInstance() {
-        DeckPickerAnalyticsOptInDialog f = new DeckPickerAnalyticsOptInDialog();
-        return f;
+        return new DeckPickerAnalyticsOptInDialog();
     }
 
     @Override
