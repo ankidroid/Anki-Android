@@ -630,7 +630,7 @@ public class AdvancedStatistics {
         //TODO: should we determine these per deck or over decks?
         //Per deck means less data, but tuned to deck.
         //Over decks means more data, but not tuned to deck.
-        private final String queryBaseNew =
+        private static final String queryBaseNew =
                 "select "
                         +   "count() as N, "
                         +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
@@ -639,7 +639,7 @@ public class AdvancedStatistics {
                         +	  "sum(case when ease=3 then 1 else 0 end) as easy "
                         + "from revlog ";
 
-        private final String queryBaseYoungMature =
+        private static final String queryBaseYoungMature =
                 "select "
                         +   "count() as N, "
                         +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
@@ -648,15 +648,15 @@ public class AdvancedStatistics {
                         +	  "sum(case when ease=4 then 1 else 0 end) as easy "
                         + "from revlog ";
 
-        private final String queryNew =
+        private static final String queryNew =
                 queryBaseNew
                         + "where type=" + CARD_TYPE_NEW + ";";
 
-        private final String queryYoung =
+        private static final String queryYoung =
                 queryBaseYoungMature
                         + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl < 21;";
 
-        private final String queryMature =
+        private static final String queryMature =
                 queryBaseYoungMature
                         + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl >= 21;";
 
