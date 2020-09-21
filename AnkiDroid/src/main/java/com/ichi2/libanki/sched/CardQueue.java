@@ -46,6 +46,7 @@ abstract class CardQueue<T extends Card.Cache> {
         mQueue.clear();
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isEmpty() {
         return mQueue.isEmpty();
     }

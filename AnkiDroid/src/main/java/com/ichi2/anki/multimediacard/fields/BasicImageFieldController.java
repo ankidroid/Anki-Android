@@ -482,6 +482,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      *
      * @return true if successful, false indicates the current image is likely not usable, revert if possible
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean rotateAndCompress() {
         Timber.d("rotateAndCompress() on %s", mImagePath);
         // Set the rotation of the camera image and save as png

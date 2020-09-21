@@ -159,6 +159,7 @@ public class UsageAnalytics {
     /**
      * Determine whether we are disabled or not
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private static boolean getOptIn() {
         Timber.d("getOptIn() status: %s", sOptIn);
         return sOptIn;

@@ -10,10 +10,12 @@ import androidx.core.content.ContextCompat;
 public class Permissions {
     private Permissions() { }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean canUseCamera(@NonNull Context context) {
         return hasPermission(context, Manifest.permission.CAMERA);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean canRecordAudio(@NonNull Context context) {
         return hasPermission(context, Manifest.permission.RECORD_AUDIO);
     }

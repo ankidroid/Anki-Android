@@ -1364,6 +1364,7 @@ public class Collection {
     /*
      * Basic integrity check for syncing. True if ok.
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean basicCheck() {
         // cards without notes
         if (mDb.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1") > 0) {
@@ -2034,6 +2035,7 @@ public class Collection {
     }
 
     /** Check if this collection is valid. */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean validCollection() {
     	//TODO: more validation code
     	return getModels().validateModel();
