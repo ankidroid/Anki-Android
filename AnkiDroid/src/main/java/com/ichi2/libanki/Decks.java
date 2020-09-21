@@ -316,12 +316,9 @@ public class Decks {
         long id;
         Deck g = new Deck(type);
         g.put("name", name);
-        while (true) {
+        do {
             id = mCol.getTime().intTimeMS();
-            if (!mDecks.containsKey(id)) {
-                break;
-            }
-        }
+        } while (mDecks.containsKey(id));
         g.put("id", id);
         mDecks.put(id, g);
         save(g);
@@ -728,12 +725,9 @@ public class Decks {
         DeckConfig c;
         long id;
         c = new DeckConfig(cloneFrom);
-        while (true) {
+        do {
             id = mCol.getTime().intTimeMS();
-            if (!mDconf.containsKey(id)) {
-                break;
-            }
-        }
+        } while (mDconf.containsKey(id));
         c.put("id", id);
         c.put("name", name);
         mDconf.put(id, c);
