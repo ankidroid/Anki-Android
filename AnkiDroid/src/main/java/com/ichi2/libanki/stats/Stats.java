@@ -1304,7 +1304,6 @@ public class Stats {
         mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended_and_buried};
         mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended_and_buried };
         mType = type;
-        ArrayList<double[]> list = new ArrayList<>();
         double[] pieData;
         Cursor cur = null;
         String query = "select " +
@@ -1351,7 +1350,7 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return list.size() > 0;
+        return false;
     }
 
     /**
