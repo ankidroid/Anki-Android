@@ -41,6 +41,7 @@ import androidx.appcompat.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -663,6 +664,21 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } else {
             selectDeckById(getCol().getDecks().selected());
         }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_A: {
+                if (event.isCtrlPressed()) {
+                    Timber.i("Ctrl+A - Select All");
+                    onSelectAll();
+                    return true;
+                }
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 
