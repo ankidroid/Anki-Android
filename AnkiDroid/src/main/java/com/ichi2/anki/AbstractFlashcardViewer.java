@@ -1498,16 +1498,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         mLookUpIcon = findViewById(R.id.lookup_button);
         mLookUpIcon.setVisibility(View.GONE);
-        mLookUpIcon.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                Timber.i("AbstractFlashcardViewer:: Lookup button pressed");
-                if (clipboardHasText()) {
-                    lookUp();
-                }
+        mLookUpIcon.setOnClickListener(arg0 -> {
+            Timber.i("AbstractFlashcardViewer:: Lookup button pressed");
+            if (clipboardHasText()) {
+                lookUp();
             }
-
         });
         initControls();
 
@@ -1703,26 +1698,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
         mAnswerField.setVisibility(typeAnswer() ? View.VISIBLE : View.GONE);
-        mAnswerField.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    displayCardAnswer();
-                    return true;
-                }
-                return false;
+        mAnswerField.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                displayCardAnswer();
+                return true;
             }
+            return false;
         });
-        mAnswerField.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)) {
-                    displayCardAnswer();
-                    return true;
-                }
-                return false;
+        mAnswerField.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_UP &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)) {
+                displayCardAnswer();
+                return true;
             }
+            return false;
         });
     }
 
@@ -1914,14 +1903,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // Stop and highlight the timer if it reaches the time limit.
         getTheme().resolveAttribute(R.attr.maxTimerColor, typedValue, true);
         final int limit = mCurrentCard.timeLimit();
-        mCardTimer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                long elapsed = SystemClock.elapsedRealtime() - chronometer.getBase();
-                if (elapsed >= limit) {
-                    chronometer.setTextColor(typedValue.data);
-                    chronometer.stop();
-                }
+        mCardTimer.setOnChronometerTickListener(chronometer -> {
+            long elapsed = SystemClock.elapsedRealtime() - chronometer.getBase();
+            if (elapsed >= limit) {
+                chronometer.setTextColor(typedValue.data);
+                chronometer.stop();
             }
         });
     }
@@ -2771,18 +2757,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
         private final Handler scrollHandler = new Handler();
-        private final Runnable scrollXRunnable = new Runnable() {
-            @Override
-            public void run() {
-                mIsXScrolling = false;
-            }
-        };
-        private final Runnable scrollYRunnable = new Runnable() {
-            @Override
-            public void run() {
-                mIsYScrolling = false;
-            }
-        };
+        private final Runnable scrollXRunnable = () -> mIsXScrolling = false;
+        private final Runnable scrollYRunnable = () -> mIsYScrolling = false;
 
     }
 

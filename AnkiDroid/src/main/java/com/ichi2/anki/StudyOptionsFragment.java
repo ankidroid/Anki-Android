@@ -401,12 +401,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             // Set the back button listener
             if (!mFragmented) {
                 mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-                mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                    }
-                });
+                mToolbar.setNavigationOnClickListener(v -> ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.RIGHT));
             }
         } catch (IllegalStateException e) {
             if (!CollectionHelper.getInstance().colIsOpen()) {
@@ -642,25 +637,17 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                             // a thread was previously made -- interrupt it
                             mFullNewCountThread.interrupt();
                         }
-                        mFullNewCountThread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Collection collection = getCol();
-                                // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
-                                String query = "SELECT count(*) FROM cards WHERE did IN " +
-                                        Utils.ids2str(collection.getDecks().active()) +
-                                        " AND queue = " + Consts.QUEUE_TYPE_NEW;
-                                final int fullNewCount = collection.getDb().queryScalar(query);
-                                if (fullNewCount > 0) {
-                                    Runnable setNewTotalText = new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            mTextNewTotal.setText(String.valueOf(fullNewCount));
-                                        }
-                                    };
-                                    if (!Thread.currentThread().isInterrupted()) {
-                                        mTextNewTotal.post(setNewTotalText);
-                                    }
+                        mFullNewCountThread = new Thread(() -> {
+                            Collection collection = getCol();
+                            // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
+                            String query = "SELECT count(*) FROM cards WHERE did IN " +
+                                    Utils.ids2str(collection.getDecks().active()) +
+                                    " AND queue = " + Consts.QUEUE_TYPE_NEW;
+                            final int fullNewCount = collection.getDb().queryScalar(query);
+                            if (fullNewCount > 0) {
+                                Runnable setNewTotalText = () -> mTextNewTotal.setText(String.valueOf(fullNewCount));
+                                if (!Thread.currentThread().isInterrupted()) {
+                                    mTextNewTotal.post(setNewTotalText);
                                 }
                             }
                         });

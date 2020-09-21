@@ -57,31 +57,28 @@ public class CompatV19 extends CompatV18 implements Compat {
         CompatHelper.getCompat().setStatusBarColor(a.getWindow(), Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
         View decorView = a.getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener
-                (new View.OnSystemUiVisibilityChangeListener() {
-                    @Override
-                    public void onSystemUiVisibilityChange(int flags) {
-                        final View toolbar = a.findViewById(R.id.toolbar);
-                        final View answerButtons = a.findViewById(R.id.answer_options_layout);
-                        final View topbar = a.findViewById(R.id.top_bar);
-                        if (toolbar == null || topbar == null || answerButtons == null) {
-                            return;
+                (flags -> {
+                    final View toolbar = a.findViewById(R.id.toolbar);
+                    final View answerButtons = a.findViewById(R.id.answer_options_layout);
+                    final View topbar = a.findViewById(R.id.top_bar);
+                    if (toolbar == null || topbar == null || answerButtons == null) {
+                        return;
+                    }
+                    // Note that system bars will only be "visible" if none of the
+                    // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                    boolean visible = (flags & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+                    Timber.d("System UI visibility change. Visible: %b", visible);
+                    if (visible) {
+                        showViewWithAnimation(toolbar);
+                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                            showViewWithAnimation(topbar);
+                            showViewWithAnimation(answerButtons);
                         }
-                        // Note that system bars will only be "visible" if none of the
-                        // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-                        boolean visible = (flags & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
-                        Timber.d("System UI visibility change. Visible: %b", visible);
-                        if (visible) {
-                            showViewWithAnimation(toolbar);
-                            if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
-                                showViewWithAnimation(topbar);
-                                showViewWithAnimation(answerButtons);
-                            }
-                        } else {
-                            hideViewWithAnimation(toolbar);
-                            if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
-                                hideViewWithAnimation(topbar);
-                                hideViewWithAnimation(answerButtons);
-                            }
+                    } else {
+                        hideViewWithAnimation(toolbar);
+                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                            hideViewWithAnimation(topbar);
+                            hideViewWithAnimation(answerButtons);
                         }
                     }
                 });

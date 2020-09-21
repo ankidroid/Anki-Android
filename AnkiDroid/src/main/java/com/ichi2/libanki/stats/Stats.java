@@ -991,13 +991,10 @@ public class Stats {
             data[0] = hour;
             list.set(i, data);
         }
-        Collections.sort(list, new Comparator<double[]>() {
-            @Override
-            public int compare(double[] s1, double[] s2) {
-                if (s1[0] < s2[0]) return -1;
-                if (s1[0] > s2[0]) return 1;
-                return 0;
-            }
+        Collections.sort(list, (s1, s2) -> {
+            if (s1[0] < s2[0]) return -1;
+            if (s1[0] > s2[0]) return 1;
+            return 0;
         });
 
         mSeriesList = new double[4][list.size()];

@@ -108,12 +108,9 @@ public class DialogHandler extends Handler {
         } else if (msg.what == MSG_SHOW_FORCE_FULL_SYNC_DIALOG) {
             // Confirmation dialog for forcing full sync
             ConfirmationDialog dialog = new ConfirmationDialog ();
-            Runnable confirm = new Runnable() {
-                @Override
-                public void run() {
-                    // Bypass the check once the user confirms
-                    CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance()).modSchemaNoCheck();
-                }
+            Runnable confirm = () -> {
+                // Bypass the check once the user confirms
+                CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance()).modSchemaNoCheck();
             };
             dialog.setConfirm(confirm);
             dialog.setArgs(msgData.getString("message"));
