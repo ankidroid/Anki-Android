@@ -296,7 +296,7 @@ public class Note implements Cloneable {
         // find any matching csums and compare
         for (String flds : mCol.getDb().queryStringList(
                 "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
-                csum, (mId != 0 ? mId : 0), mMid)) {
+                csum, (mId), mMid)) {
             if (Utils.stripHTMLMedia(
                     Utils.splitFields(flds)[0]).equals(Utils.stripHTMLMedia(mFields[0]))) {
                 return DupeOrEmpty.DUPE;
