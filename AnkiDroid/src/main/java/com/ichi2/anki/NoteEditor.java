@@ -1627,7 +1627,7 @@ public class NoteEditor extends AnkiActivity {
         // 1 is empty, 2 is dupe, null is neither.
         Note.DupeOrEmpty dupeCode = mEditorNote.dupeOrEmpty();
         // Change bottom line color of text field
-        if (dupeCode != null && dupeCode == Note.DupeOrEmpty.DUPE) {
+        if (dupeCode == Note.DupeOrEmpty.DUPE) {
             field.setDupeStyle();
         } else {
             field.setDefaultStyle();

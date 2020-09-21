@@ -153,7 +153,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
      */
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof AbstractDeckTreeNode)) {
+        if (!(object instanceof AbstractDeckTreeNode)) {
             return false;
         }
         AbstractDeckTreeNode tree = (AbstractDeckTreeNode) object;

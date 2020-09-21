@@ -94,7 +94,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
      */
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof DeckDueTreeNode)) {
+        if (!(object instanceof DeckDueTreeNode)) {
             return false;
         }
         DeckDueTreeNode tree = (DeckDueTreeNode) object;
