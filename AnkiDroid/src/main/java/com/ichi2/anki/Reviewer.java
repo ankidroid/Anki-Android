@@ -18,11 +18,13 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,6 +47,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -545,6 +548,9 @@ public class Reviewer extends AbstractFlashcardViewer {
     public boolean onCreateOptionsMenu(Menu menu) {
         // NOTE: This is called every time a new question is shown via invalidate options menu
         getMenuInflater().inflate(R.menu.reviewer, menu);
+
+        displayIconsOnTv(menu);
+
         mActionButtons.setCustomButtonsStatus(menu);
         int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         MenuItem markCardIcon = menu.findItem(R.id.action_mark_card);
@@ -675,6 +681,42 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
+    @SuppressLint("RestrictedApi") // setIconTintList
+    private void displayIconsOnTv(Menu menu) {
+        try {
+            if (AndroidUiUtils.isRunningOnTv(this) && menu instanceof MenuBuilder) {
+                MenuBuilder m = (MenuBuilder) menu;
+                m.setOptionalIconsVisible(true);
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                for (int i = 0; i < menu.size(); i++) {
+                    MenuItem m = menu.getItem(i);
+
+                    if (m == null || isFlagResource(m.getItemId())) {
+                        continue;
+                    }
+
+                    int color = Themes.getColorFromAttr(this, R.attr.navDrawerItemColor);
+                    m.setIconTintList(ColorStateList.valueOf(color));
+
+                }
+            }
+
+        } catch (Exception e) {
+            Timber.w(e, "Failed to display icons");
+        } catch (Error e) {
+            Timber.w(e, "Failed to display icons");
+        }
+    }
+
+
+    private boolean isFlagResource(int itemId) {
+        return itemId == R.id.action_flag_four
+                || itemId == R.id.action_flag_three
+                || itemId == R.id.action_flag_two
+                || itemId == R.id.action_flag_one;
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (mProcessor.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)) {
