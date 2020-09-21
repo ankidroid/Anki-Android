@@ -10,12 +10,15 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.anki.analytics.UsageAnalytics;
 
+import androidx.annotation.NonNull;
+
 public class DeckPickerAnalyticsOptInDialog extends AnalyticsDialogFragment {
     public static DeckPickerAnalyticsOptInDialog newInstance() {
         DeckPickerAnalyticsOptInDialog f = new DeckPickerAnalyticsOptInDialog();
         return f;
     }
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

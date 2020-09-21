@@ -589,7 +589,7 @@ public class ModelBrowser extends AnkiActivity {
         }
 
         @Override
-        public String toString() {
+        public @NonNull String toString() {
             return getName();
         }
     }
@@ -603,6 +603,7 @@ public class ModelBrowser extends AnkiActivity {
             super(context, R.layout.model_browser_list_item, R.id.model_list_item_1, items);
         }
 
+        @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             DisplayPair item = getItem(position);

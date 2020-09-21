@@ -63,7 +63,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
     }
 
     @Override
-    public String toString() {
+    public @NonNull String toString() {
         StringBuffer buf = new StringBuffer();
         toString(buf);
         return buf.toString();

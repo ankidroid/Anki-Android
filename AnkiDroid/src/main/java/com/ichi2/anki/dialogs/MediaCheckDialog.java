@@ -10,6 +10,8 @@ import com.ichi2.anki.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 public class MediaCheckDialog extends AsyncDialogFragment {
     public static final int DIALOG_CONFIRM_MEDIA_CHECK = 0;
     public static final int DIALOG_MEDIA_CHECK_RESULTS = 1;
@@ -44,6 +46,7 @@ public class MediaCheckDialog extends AsyncDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

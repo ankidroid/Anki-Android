@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
@@ -110,8 +111,8 @@ public class DB {
     public static class SupportSQLiteOpenHelperCallback extends SupportSQLiteOpenHelper.Callback {
 
         protected SupportSQLiteOpenHelperCallback(int version) { super(version); }
-        public void onCreate(SupportSQLiteDatabase db) {/* do nothing */ }
-        public void onUpgrade(SupportSQLiteDatabase db, int oldVersion, int newVersion) { /* do nothing */ }
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {/* do nothing */ }
+        public void onUpgrade(@NonNull SupportSQLiteDatabase db, int oldVersion, int newVersion) { /* do nothing */ }
 
 
         /** Send error message, but do not call super() which would delete the database */

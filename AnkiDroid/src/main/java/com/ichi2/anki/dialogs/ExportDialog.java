@@ -49,6 +49,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

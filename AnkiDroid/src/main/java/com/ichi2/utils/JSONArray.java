@@ -46,6 +46,8 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 
+import androidx.annotation.NonNull;
+
 public class JSONArray extends org.json.JSONArray {
     public JSONArray() {
         super();
@@ -276,7 +278,7 @@ public class JSONArray extends org.json.JSONArray {
         }
     }
 
-    public String toString(int indentSpaces) {
+    public @NonNull String toString(int indentSpaces) {
         try {
             return super.toString(indentSpaces);
         } catch (org.json.JSONException e) {

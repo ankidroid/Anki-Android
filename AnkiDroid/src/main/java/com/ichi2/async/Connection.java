@@ -45,6 +45,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import okhttp3.Response;
 import timber.log.Timber;
@@ -291,13 +292,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         FULL_UPLOAD("upload");
 
         // Useful for path /download and /upload
-        @Nullable private String mString;
-        ConflictResolution(String string) {
+        @NonNull private String mString;
+        ConflictResolution(@NonNull String string) {
             mString = string;
         }
 
-        @Nullable
-        public String toString() {
+        public @NonNull String toString() {
             return mString;
         }
     }

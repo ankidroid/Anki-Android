@@ -12,6 +12,7 @@ import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class SyncErrorDialog extends AsyncDialogFragment {
@@ -54,6 +55,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -25,6 +25,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
@@ -383,7 +385,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);

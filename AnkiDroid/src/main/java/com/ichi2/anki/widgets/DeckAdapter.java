@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -168,8 +169,9 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     }
 
 
+    @NonNull
     @Override
-    public DeckAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DeckAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = mLayoutInflater.inflate(R.layout.deck_item, parent, false);
         return new ViewHolder(v);
     }

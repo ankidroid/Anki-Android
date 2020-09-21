@@ -10,12 +10,15 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
+import androidx.annotation.NonNull;
+
 public class DeckPickerBackupNoSpaceLeftDialog extends AnalyticsDialogFragment {
     public static DeckPickerBackupNoSpaceLeftDialog newInstance() {
         DeckPickerBackupNoSpaceLeftDialog f = new DeckPickerBackupNoSpaceLeftDialog();
         return f;        
     }
     
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

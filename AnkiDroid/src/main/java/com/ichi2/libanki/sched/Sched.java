@@ -132,6 +132,7 @@ public class Sched extends SchedV2 {
     }
 
 
+    @NonNull
     @Override
     public int[] counts(@NonNull Card card) {
         int[] counts = counts();
@@ -1270,6 +1271,7 @@ public class Sched extends SchedV2 {
     }
 
     /* Need to override. Otherwise it get SchedV2.mName variable*/
+    @NonNull
     @Override
     public String getName() {
         return mName;
