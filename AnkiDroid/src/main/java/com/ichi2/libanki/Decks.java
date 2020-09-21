@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -627,7 +628,7 @@ public class Decks {
         }
 
         for (int i = 0; i < ancestorDeckPath.length; i++) {
-            if (ancestorDeckPath[i] != descendantDeckPath[i]) {
+            if (! Utils.equals(ancestorDeckPath[i], descendantDeckPath[i])) {
                 return false;
             }
         }
