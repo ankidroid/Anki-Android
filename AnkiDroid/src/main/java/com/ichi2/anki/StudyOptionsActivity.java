@@ -28,6 +28,8 @@ import com.ichi2.widget.WidgetStatus;
 
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
+
 public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsListener,
         CustomStudyDialog.CustomStudyListener {
 
@@ -90,7 +92,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     private void closeStudyOptions(int result) {
         // mCompat.invalidateOptionsMenu(this);
         setResult(result);
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(RIGHT);
     }
 
 

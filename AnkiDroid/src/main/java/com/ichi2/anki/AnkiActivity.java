@@ -50,6 +50,9 @@ import com.ichi2.utils.AndroidUiUtils;
 
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
+
 public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener {
 
     public final int SIMPLE_NOTIFICATION_ID = 0;
@@ -221,7 +224,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    public void startActivityWithAnimation(Intent intent, int animation) {
+    public void startActivityWithAnimation(Intent intent, Direction animation) {
         enableIntentAnimation(intent);
         super.startActivity(intent);
         enableActivityAnimation(animation);
@@ -246,7 +249,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    public void startActivityForResultWithAnimation(Intent intent, int requestCode, int animation) {
+    public void startActivityForResultWithAnimation(Intent intent, int requestCode, Direction animation) {
         enableIntentAnimation(intent);
         startActivityForResult(intent, requestCode);
         enableActivityAnimation(animation);
@@ -267,8 +270,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    public void finishWithAnimation(int animation) {
-        Timber.i("finishWithAnimation %d", animation);
+    public void finishWithAnimation(Direction animation) {
+        Timber.i("finishWithAnimation %s", animation);
         super.finish();
         enableActivityAnimation(animation);
     }
@@ -298,7 +301,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     /** Finish Activity using FADE animation **/
     public static void finishActivityWithFade(Activity activity) {
         activity.finish();
-        ActivityTransitionAnimation.slide(activity, ActivityTransitionAnimation.UP);
+        ActivityTransitionAnimation.slide(activity, UP);
     }
 
 
@@ -308,7 +311,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     private void disableActivityAnimation() {
-        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+        ActivityTransitionAnimation.slide(this, NONE);
     }
 
 
@@ -319,7 +322,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    private void enableActivityAnimation(int animation) {
+    private void enableActivityAnimation(Direction animation) {
         if (animationDisabled()) {
             disableActivityAnimation();
         } else {
@@ -346,7 +349,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
                 Intent deckPicker = new Intent(this, DeckPicker.class);
                 deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
                 deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
+                startActivityWithAnimation(deckPicker, LEFT);
             }
         });
     }

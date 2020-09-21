@@ -95,6 +95,8 @@ import androidx.annotation.VisibleForTesting;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+
 interface PreferenceContext {
     void addPreferencesFromResource(int preferencesResId);
     PreferenceScreen getPreferenceScreen();
@@ -947,7 +949,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     private void closePreferences() {
         finish();
-        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+        ActivityTransitionAnimation.slide(this, FADE);
         if (getCol() != null && getCol().getDb()!= null) {
             getCol().save();
         }

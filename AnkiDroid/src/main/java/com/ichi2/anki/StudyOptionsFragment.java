@@ -53,6 +53,7 @@ import com.ichi2.utils.HtmlUtils;
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
 
@@ -152,7 +153,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         Intent i = new Intent(getActivity(), FilteredDeckOptions.class);
         i.putExtra("defaultConfig", defaultConfig);
         getActivity().startActivityForResult(i, DECK_OPTIONS);
-        ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
+        ActivityTransitionAnimation.slide(getActivity(), FADE);
     }
 
 
@@ -222,7 +223,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         if (!mFragmented && a != null) {
             a.setResult(result);
             a.finish();
-            ActivityTransitionAnimation.slide(a, ActivityTransitionAnimation.RIGHT);
+            ActivityTransitionAnimation.slide(a, RIGHT);
         } else if (a == null) {
             // getActivity() can return null if reference to fragment lingers after parent activity has been closed,
             // which is particularly relevant when using AsyncTasks.
@@ -246,7 +247,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
     private void animateLeft() {
-        ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.LEFT);
+        ActivityTransitionAnimation.slide(getActivity(), LEFT);
     }
 
 
@@ -315,7 +316,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 } else {
                     Intent i = new Intent(getActivity(), DeckOptions.class);
                     getActivity().startActivityForResult(i, DECK_OPTIONS);
-                    ActivityTransitionAnimation.slide(getActivity(), ActivityTransitionAnimation.FADE);
+                    ActivityTransitionAnimation.slide(getActivity(), FADE);
                 }
                 return true;
             case R.id.action_custom_study:
@@ -401,7 +402,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             // Set the back button listener
             if (!mFragmented) {
                 mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-                mToolbar.setNavigationOnClickListener(v -> ((AnkiActivity) getActivity()).finishWithAnimation(ActivityTransitionAnimation.RIGHT));
+                mToolbar.setNavigationOnClickListener(v -> ((AnkiActivity) getActivity()).finishWithAnimation(RIGHT));
             }
         } catch (IllegalStateException e) {
             if (!CollectionHelper.getInstance().colIsOpen()) {

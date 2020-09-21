@@ -108,6 +108,7 @@ import com.ichi2.async.TaskData;
 
 import static com.ichi2.anki.CardBrowser.Column.*;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener {
@@ -735,7 +736,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         Intent editCard = new Intent(this, NoteEditor.class);
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT);
         editCard.putExtra(NoteEditor.EXTRA_CARD_ID, sCardBrowserCard.getId());
-        startActivityForResultWithAnimation(editCard, EDIT_CARD, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(editCard, EDIT_CARD, LEFT);
         //#6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
         endMultiSelectMode();
     }
@@ -901,7 +902,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         deckPicker.setAction(Intent.ACTION_MAIN);
         deckPicker.addCategory(Intent.CATEGORY_LAUNCHER);
         deckPicker.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.FADE);
+        startActivityWithAnimation(deckPicker, FADE);
         AnkiActivity.finishActivityWithFade(this);
         finishActivityWithFade(this);
         this.setResult(RESULT_CANCELED);
@@ -1222,7 +1223,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void addNoteFromCardBrowser() {
         Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
-        startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(intent, ADD_NOTE, LEFT);
     }
 
 
@@ -1958,7 +1959,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void closeCardBrowser(int result, Intent data) {
         // Set result and finish
         setResult(result, data);
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(RIGHT);
     }
 
     /**

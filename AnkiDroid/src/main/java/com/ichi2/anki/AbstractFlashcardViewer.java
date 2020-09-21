@@ -154,6 +154,7 @@ import com.ichi2.async.TaskData;
 import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity implements ReviewerUi, CommandProcessor {
@@ -1258,7 +1259,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Intent editCard = new Intent(AbstractFlashcardViewer.this, NoteEditor.class);
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
         sEditorCard = mCurrentCard;
-        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, LEFT);
         return true;
     }
 
@@ -1798,7 +1799,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Intent deckPicker = new Intent(this, DeckPicker.class);
             deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
             deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
+            startActivityWithAnimation(deckPicker, LEFT);
         }
     }
 
@@ -2730,7 +2731,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (saveDeck) {
             UIUtils.saveCollectionInBackground();
         }
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(RIGHT);
     }
 
 

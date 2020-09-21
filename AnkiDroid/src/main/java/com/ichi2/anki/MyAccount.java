@@ -41,6 +41,8 @@ import com.ichi2.utils.AdaptionUtil;
 
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+
 public class MyAccount extends AnkiActivity {
     private final static int STATE_LOG_IN  = 1;
     private final static int STATE_LOGGED_IN = 2;
@@ -251,7 +253,7 @@ public class MyAccount extends AnkiActivity {
                 Intent i = MyAccount.this.getIntent();
                 if (i.hasExtra("notLoggedIn") && i.getExtras().getBoolean("notLoggedIn", false)) {
                     MyAccount.this.setResult(RESULT_OK, i);
-                    finishWithAnimation(ActivityTransitionAnimation.FADE);
+                    finishWithAnimation(FADE);
                 } else {
                     // Show logged view
                     mUsernameLoggedIn.setText((String) data.data[0]);
@@ -285,7 +287,7 @@ public class MyAccount extends AnkiActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             Timber.i("MyAccount - onBackPressed()");
-            finishWithAnimation(ActivityTransitionAnimation.FADE);
+            finishWithAnimation(FADE);
             return true;
         }
         return super.onKeyDown(keyCode, event);

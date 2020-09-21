@@ -43,6 +43,7 @@ import androidx.drawerlayout.widget.ClosableDrawerLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import timber.log.Timber;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
 public abstract class NavigationDrawerActivity extends AnkiActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -276,7 +277,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
      */
     protected void onNavigationPressed() {
         if (mNavButtonGoesBack) {
-            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+            finishWithAnimation(RIGHT);
         } else {
             openDrawer();
         }
@@ -300,7 +301,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                     Timber.i("Navigating to decks");
                     Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
                     deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
-                    startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.RIGHT);
+                    startActivityWithAnimation(deckPicker, RIGHT);
                     break;
                 }
                 case R.id.nav_browser:
@@ -310,7 +311,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 case R.id.nav_stats: {
                     Timber.i("Navigating to stats");
                     Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
-                    startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, ActivityTransitionAnimation.LEFT);
+                    startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, LEFT);
                     break;
                 }
                 case R.id.nav_night_mode:
@@ -322,7 +323,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                     mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
                     // Remember the theme we started with so we can restart the Activity if it changes
                     mOldTheme = Themes.getCurrentTheme(getApplicationContext());
-                    startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
+                    startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, FADE);
                     break;
                 case R.id.nav_help:
                     Timber.i("Navigating to help");
@@ -347,7 +348,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         if (currentCardId != null) {
             intent.putExtra("currentCard", currentCardId);
         }
-        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, LEFT);
     }
 
     // Override this to specify a specific card id
