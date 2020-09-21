@@ -1832,7 +1832,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Object[] result = (Object[]) data.result;
                 if (result[0] instanceof String) {
                     String resultType = (String) result[0];
-                    if ("badAuth".equals(resultType)) {
+                    switch (resultType) {
+                    case "badAuth":
                         // delete old auth information
                         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
                         Editor editor = preferences.edit();
@@ -1841,26 +1842,29 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         editor.apply();
                         // then show not logged in dialog
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
-                    } else if ("noChanges".equals(resultType)) {
+                        break;
+                    case "noChanges":
                         SyncStatus.markSyncCompleted();
                         // show no changes message, use false flag so we don't show "sync error" as the Dialog title
                         showSyncLogMessage(R.string.sync_no_changes_message, "");
-                    } else if ("clockOff".equals(resultType)) {
+                        break;
+                    case "clockOff":
                         long diff = (Long) result[1];
                         if (diff >= 86100) {
                             // The difference if more than a day minus 5 minutes acceptable by ankiweb error
                             dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff,
-                                    res.getString(R.string.sync_log_clocks_unsynchronized_date));
+                                                          res.getString(R.string.sync_log_clocks_unsynchronized_date));
                         } else if (Math.abs((diff % 3600.0) - 1800.0) >= 1500.0) {
                             // The difference would be within limit if we adjusted the time by few hours
                             // It doesn't work for all timezones, but it covers most and it's a guess anyway
                             dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff,
-                                    res.getString(R.string.sync_log_clocks_unsynchronized_tz));
+                                                          res.getString(R.string.sync_log_clocks_unsynchronized_tz));
                         } else {
                             dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff, "");
                         }
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("fullSync".equals(resultType)) {
+                        break;
+                    case "fullSync":
                         if (getCol().isEmpty()) {
                             // don't prompt user to resolve sync conflict if local collection empty
                             sync(FULL_DOWNLOAD);
@@ -1870,60 +1874,75 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             // If can't be resolved then automatically then show conflict resolution dialog
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
                         }
-                    } else if ("basicCheckFailed".equals(resultType)) {
+                        break;
+                    case "basicCheckFailed":
                         dialogMessage = res.getString(R.string.sync_basic_check_failed, res.getString(R.string.check_db));
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("dbError".equals(resultType)) {
+                        break;
+                    case "dbError":
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage);
-                    } else if ("overwriteError".equals(resultType)) {
+                        break;
+                    case "overwriteError":
                         dialogMessage = res.getString(R.string.sync_overwrite_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("remoteDbError".equals(resultType)) {
+                        break;
+                    case "remoteDbError":
                         dialogMessage = res.getString(R.string.sync_remote_db_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("sdAccessError".equals(resultType)) {
+                        break;
+                    case "sdAccessError":
                         dialogMessage = res.getString(R.string.sync_write_access_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("finishError".equals(resultType)) {
+                        break;
+                    case "finishError":
                         dialogMessage = res.getString(R.string.sync_log_finish_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("connectionError".equals(resultType)) {
+                        break;
+                    case "connectionError":
                         dialogMessage = res.getString(R.string.sync_connection_error);
                         if (result.length >= 1 && result[1] instanceof Exception) {
-                            dialogMessage += "\n\n" + ((Exception)result[1]).getLocalizedMessage();
+                            dialogMessage += "\n\n" + ((Exception) result[1]).getLocalizedMessage();
                         }
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("IOException".equals(resultType)) {
+                        break;
+                    case "IOException":
                         handleDbError();
-                    } else if ("genericError".equals(resultType)) {
+                        break;
+                    case "genericError":
                         dialogMessage = res.getString(R.string.sync_generic_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("OutOfMemoryError".equals(resultType)) {
+                        break;
+                    case "OutOfMemoryError":
                         dialogMessage = res.getString(R.string.error_insufficient_memory);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("sanityCheckError".equals(resultType)) {
+                        break;
+                    case "sanityCheckError":
                         dialogMessage = res.getString(R.string.sync_sanity_failed);
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
-                                joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("serverAbort".equals(resultType)) {
+                                            joinSyncMessages(dialogMessage, syncMessage));
+                        break;
+                    case "serverAbort":
                         // syncMsg has already been set above, no need to fetch it here.
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("mediaSyncServerError".equals(resultType)) {
+                        break;
+                    case "mediaSyncServerError":
                         dialogMessage = res.getString(R.string.sync_media_error_check);
                         showSyncErrorDialog(SyncErrorDialog.DIALOG_MEDIA_SYNC_ERROR,
-                                joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("customSyncServerUrl".equals(resultType)) {
+                                            joinSyncMessages(dialogMessage, syncMessage));
+                        break;
+                    case "customSyncServerUrl":
                         String url = result.length > 1 && result[1] instanceof CustomSyncServerUrlException
-                                ? ((CustomSyncServerUrlException)result[1]).getUrl() : "unknown";
+                            ? ((CustomSyncServerUrlException) result[1]).getUrl() : "unknown";
                         dialogMessage = res.getString(R.string.sync_error_invalid_sync_server, url);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else {
+                        break;
+                    default:
                         if (result.length > 1 && result[1] instanceof Integer) {
                             int code = (Integer) result[1];
                             dialogMessage = rewriteError(code);
                             if (dialogMessage == null) {
                                 dialogMessage = res.getString(R.string.sync_log_error_specific,
-                                        Integer.toString(code), result[2]);
+                                                              Integer.toString(code), result[2]);
                             }
                         } else if (result[0] instanceof String) {
                             dialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(-1), result[0]);
@@ -1931,6 +1950,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             dialogMessage = res.getString(R.string.sync_generic_error);
                         }
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                        break;
                     }
                 } else {
                     dialogMessage = res.getString(R.string.sync_generic_error);
@@ -1948,18 +1968,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     // A full sync occurred
                     Connection.ConflictResolution dataString = (Connection.ConflictResolution) data.data[0];
                     switch (dataString) {
-                        case FULL_UPLOAD:
-                            Timber.i("Full Upload Completed");
-                            showSyncLogMessage(R.string.sync_log_uploading_message, syncMessage);
-                            break;
-                        case FULL_DOWNLOAD:
-                            Timber.i("Full Download Completed");
-                            showSyncLogMessage(R.string.sync_log_downloading_message, syncMessage);
-                            break;
-                        default: // should not be possible
-                            Timber.i("Full Sync Completed (Unknown Direction)");
-                            showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
-                            break;
+                    case FULL_UPLOAD:
+                        Timber.i("Full Upload Completed");
+                        showSyncLogMessage(R.string.sync_log_uploading_message, syncMessage);
+                        break;
+                    case FULL_DOWNLOAD:
+                        Timber.i("Full Download Completed");
+                        showSyncLogMessage(R.string.sync_log_downloading_message, syncMessage);
+                        break;
+                    default: // should not be possible
+                        Timber.i("Full Sync Completed (Unknown Direction)");
+                        showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
+                        break;
                     }
                 } else {
                     Timber.i("Regular sync completed successfully");

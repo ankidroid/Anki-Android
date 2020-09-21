@@ -630,19 +630,25 @@ public class CardContentProvider extends ContentProvider {
                 int suspend = -1;
                 for (Map.Entry<String, Object> entry : valueSet) {
                     String key = entry.getKey();
-
-                    if (key.equals(FlashCardsContract.ReviewInfo.NOTE_ID)) {
-                        noteID = values.getAsLong(key);
-                    } else if (key.equals(FlashCardsContract.ReviewInfo.CARD_ORD)) {
-                        cardOrd = values.getAsInteger(key);
-                    } else if (key.equals(FlashCardsContract.ReviewInfo.EASE)) {
-                        ease = values.getAsInteger(key);
-                    }else if (key.equals(FlashCardsContract.ReviewInfo.TIME_TAKEN)) {
-                        timeTaken = values.getAsLong(key);
-                    } else if (key.equals(FlashCardsContract.ReviewInfo.BURY)) {
-                        bury = values.getAsInteger(key);
-                    } else if (key.equals(FlashCardsContract.ReviewInfo.SUSPEND)) {
-                        suspend = values.getAsInteger(key);
+                    switch (key) {
+                        case FlashCardsContract.ReviewInfo.NOTE_ID:
+                            noteID = values.getAsLong(key);
+                            break;
+                        case FlashCardsContract.ReviewInfo.CARD_ORD:
+                            cardOrd = values.getAsInteger(key);
+                            break;
+                        case FlashCardsContract.ReviewInfo.EASE:
+                            ease = values.getAsInteger(key);
+                            break;
+                        case FlashCardsContract.ReviewInfo.TIME_TAKEN:
+                            timeTaken = values.getAsLong(key);
+                            break;
+                        case FlashCardsContract.ReviewInfo.BURY:
+                            bury = values.getAsInteger(key);
+                            break;
+                        case FlashCardsContract.ReviewInfo.SUSPEND:
+                            suspend = values.getAsInteger(key);
+                            break;
                     }
                 }
                 if (cardOrd != -1 && noteID != -1) {
@@ -1072,35 +1078,46 @@ public class CardContentProvider extends ContentProvider {
         MatrixCursor.RowBuilder rb = rv.newRow();
         try {
             for (String column : columns) {
-                if (column.equals(FlashCardsContract.Model._ID)) {
+                switch (column) {
+                case FlashCardsContract.Model._ID:
                     rb.add(modelId);
-                } else if (column.equals(FlashCardsContract.Model.NAME)) {
+                    break;
+                case FlashCardsContract.Model.NAME:
                     rb.add(jsonObject.getString("name"));
-                } else if (column.equals(FlashCardsContract.Model.FIELD_NAMES)) {
+                    break;
+                case FlashCardsContract.Model.FIELD_NAMES:
                     JSONArray flds = jsonObject.getJSONArray("flds");
                     String[] allFlds = new String[flds.length()];
                     for (int idx = 0; idx < flds.length(); idx++) {
                         allFlds[idx] = flds.getJSONObject(idx).optString("name", "");
                     }
                     rb.add(Utils.joinFields(allFlds));
-                } else if (column.equals(FlashCardsContract.Model.NUM_CARDS)) {
+                    break;
+                case FlashCardsContract.Model.NUM_CARDS:
                     rb.add(jsonObject.getJSONArray("tmpls").length());
-                } else if (column.equals(FlashCardsContract.Model.CSS)) {
+                    break;
+                case FlashCardsContract.Model.CSS:
                     rb.add(jsonObject.getString("css"));
-                } else if (column.equals(FlashCardsContract.Model.DECK_ID)) {
+                    break;
+                case FlashCardsContract.Model.DECK_ID:
                     //#6378 - Anki Desktop changed schema temporarily to allow null
                     rb.add(jsonObject.optLong("did", Consts.DEFAULT_DECK_ID));
-                } else if (column.equals(FlashCardsContract.Model.SORT_FIELD_INDEX)) {
+                    break;
+                case FlashCardsContract.Model.SORT_FIELD_INDEX:
                     rb.add(jsonObject.getLong("sortf"));
-                } else if (column.equals(FlashCardsContract.Model.TYPE)) {
+                    break;
+                case FlashCardsContract.Model.TYPE:
                     rb.add(jsonObject.getLong("type"));
-                } else if (column.equals(FlashCardsContract.Model.LATEX_POST)) {
+                    break;
+                case FlashCardsContract.Model.LATEX_POST:
                     rb.add(jsonObject.getString("latexPost"));
-                } else if (column.equals(FlashCardsContract.Model.LATEX_PRE)) {
+                    break;
+                case FlashCardsContract.Model.LATEX_PRE:
                     rb.add(jsonObject.getString("latexPre"));
-                } else if (column.equals(FlashCardsContract.Model.NOTE_COUNT)) {
+                    break;
+                case FlashCardsContract.Model.NOTE_COUNT:
                     rb.add(models.useCount(jsonObject));
-                } else {
+                default:
                     throw new UnsupportedOperationException("Queue \"" + column + "\" is unknown");
                 }
             }
@@ -1122,44 +1139,60 @@ public class CardContentProvider extends ContentProvider {
 
         MatrixCursor.RowBuilder rb = rv.newRow();
         for (String column : columns) {
-            if (column.equals(FlashCardsContract.Card.NOTE_ID)) {
+            switch(column) {
+            case FlashCardsContract.Card.NOTE_ID:
                 rb.add(currentCard.note().getId());
-            } else if (column.equals(FlashCardsContract.Card.CARD_ORD)) {
+                break;
+            case FlashCardsContract.Card.CARD_ORD:
                 rb.add(currentCard.getOrd());
-            } else if (column.equals(FlashCardsContract.Card.CARD_NAME)) {
+                break;
+            case FlashCardsContract.Card.CARD_NAME:
                 rb.add(cardName);
-            } else if (column.equals(FlashCardsContract.Card.DECK_ID)) {
+                break;
+            case FlashCardsContract.Card.DECK_ID:
                 rb.add(currentCard.getDid());
-            } else if (column.equals(FlashCardsContract.Card.QUESTION)) {
+                break;
+            case FlashCardsContract.Card.QUESTION:
                 rb.add(question);
-            } else if (column.equals(FlashCardsContract.Card.ANSWER)) {
+                break;
+            case FlashCardsContract.Card.ANSWER:
                 rb.add(answer);
-            } else if (column.equals(FlashCardsContract.Card.QUESTION_SIMPLE)) {
+                break;
+            case FlashCardsContract.Card.QUESTION_SIMPLE:
                 rb.add(currentCard.qSimple());
-            } else if (column.equals(FlashCardsContract.Card.ANSWER_SIMPLE)) {
+                break;
+            case FlashCardsContract.Card.ANSWER_SIMPLE:
                 rb.add(currentCard._getQA(false).get("a"));
-            }else if (column.equals(FlashCardsContract.Card.ANSWER_PURE)) {
+                break;
+            case FlashCardsContract.Card.ANSWER_PURE:
                 rb.add(currentCard.getPureAnswer());
-            } else {
+                break;
+            default:
                 throw new UnsupportedOperationException("Queue \"" + column + "\" is unknown");
             }
+            }
         }
-    }
 
     private void addReviewInfoToCursor(Card currentCard, JSONArray nextReviewTimesJson, int buttonCount,MatrixCursor rv, Collection col, String[] columns) {
         MatrixCursor.RowBuilder rb = rv.newRow();
         for (String column : columns) {
-            if (column.equals(FlashCardsContract.Card.NOTE_ID)) {
+            switch(column) {
+            case FlashCardsContract.Card.NOTE_ID:
                 rb.add(currentCard.note().getId());
-            } else if (column.equals(FlashCardsContract.ReviewInfo.CARD_ORD)) {
+                break;
+            case FlashCardsContract.ReviewInfo.CARD_ORD:
                 rb.add(currentCard.getOrd());
-            } else if (column.equals(FlashCardsContract.ReviewInfo.BUTTON_COUNT)) {
+                break;
+            case FlashCardsContract.ReviewInfo.BUTTON_COUNT:
                 rb.add(buttonCount);
-            } else if (column.equals(FlashCardsContract.ReviewInfo.NEXT_REVIEW_TIMES)) {
+                break;
+            case FlashCardsContract.ReviewInfo.NEXT_REVIEW_TIMES:
                 rb.add(nextReviewTimesJson.toString());
-            } else if (column.equals(FlashCardsContract.ReviewInfo.MEDIA_FILES)) {
+                break;
+            case FlashCardsContract.ReviewInfo.MEDIA_FILES:
                 rb.add(new JSONArray(col.getMedia().filesInStr(currentCard.note().getMid(), currentCard.q()+currentCard.a())));
-            } else {
+                break;
+            default:
                 throw new UnsupportedOperationException("Queue \"" + column + "\" is unknown");
             }
         }
@@ -1210,27 +1243,37 @@ public class CardContentProvider extends ContentProvider {
         try {
             MatrixCursor.RowBuilder rb = rv.newRow();
             for (String column : columns) {
-                if (column.equals(CardTemplate._ID)) {
-                    rb.add(id);
-                } else if (column.equals(CardTemplate.MODEL_ID)) {
-                    rb.add(model.getLong("id"));
-                } else if (column.equals(CardTemplate.ORD)) {
-                    rb.add(tmpl.getInt("ord"));
-                } else if (column.equals(CardTemplate.NAME)) {
-                    rb.add(tmpl.getString("name"));
-                } else if (column.equals(CardTemplate.QUESTION_FORMAT)) {
-                    rb.add(tmpl.getString("qfmt"));
-                } else if (column.equals(CardTemplate.ANSWER_FORMAT)) {
-                    rb.add(tmpl.getString("afmt"));
-                } else if (column.equals(CardTemplate.BROWSER_QUESTION_FORMAT)) {
-                    rb.add(tmpl.getString("bqfmt"));
-                } else if (column.equals(CardTemplate.BROWSER_ANSWER_FORMAT)) {
-                    rb.add(tmpl.getString("bafmt"));
-                } else if (column.equals(CardTemplate.CARD_COUNT)) {
-                    rb.add(models.tmplUseCount(model, tmpl.getInt("ord")));
-                } else {
-                    throw new UnsupportedOperationException("Support for column \"" + column +
-                            "\" is not implemented");
+                switch (column) {
+                    case CardTemplate._ID:
+                        rb.add(id);
+                        break;
+                    case CardTemplate.MODEL_ID:
+                        rb.add(model.getLong("id"));
+                        break;
+                    case CardTemplate.ORD:
+                        rb.add(tmpl.getInt("ord"));
+                        break;
+                    case CardTemplate.NAME:
+                        rb.add(tmpl.getString("name"));
+                        break;
+                    case CardTemplate.QUESTION_FORMAT:
+                        rb.add(tmpl.getString("qfmt"));
+                        break;
+                    case CardTemplate.ANSWER_FORMAT:
+                        rb.add(tmpl.getString("afmt"));
+                        break;
+                    case CardTemplate.BROWSER_QUESTION_FORMAT:
+                        rb.add(tmpl.getString("bqfmt"));
+                        break;
+                    case CardTemplate.BROWSER_ANSWER_FORMAT:
+                        rb.add(tmpl.getString("bafmt"));
+                        break;
+                    case CardTemplate.CARD_COUNT:
+                        rb.add(models.tmplUseCount(model, tmpl.getInt("ord")));
+                        break;
+                    default:
+                        throw new UnsupportedOperationException("Support for column \"" + column +
+                                "\" is not implemented");
                 }
             }
         } catch (JSONException e) {
@@ -1242,20 +1285,27 @@ public class CardContentProvider extends ContentProvider {
     private void addDeckToCursor(long id, String name, JSONArray deckCounts, MatrixCursor rv, Collection col, String[] columns) {
         MatrixCursor.RowBuilder rb = rv.newRow();
         for (String column : columns) {
-            if (column.equals(FlashCardsContract.Deck.DECK_NAME)) {
-                rb.add(name);
-            }else if (column.equals(FlashCardsContract.Deck.DECK_ID)) {
-                rb.add(id);
-            }else if (column.equals(FlashCardsContract.Deck.DECK_COUNTS)) {
-                rb.add(deckCounts);
-            }else if (column.equals(FlashCardsContract.Deck.OPTIONS)) {
-                String config = col.getDecks().confForDid(id).toString();
-                rb.add(config);
-            }else if (column.equals(FlashCardsContract.Deck.DECK_DYN)) {
-                rb.add(col.getDecks().isDyn(id));
-            }else if (column.equals(FlashCardsContract.Deck.DECK_DESC)) {
-                String desc = col.getDecks().getActualDescription();
-                rb.add(desc);
+            switch (column) {
+                case FlashCardsContract.Deck.DECK_NAME:
+                    rb.add(name);
+                    break;
+                case FlashCardsContract.Deck.DECK_ID:
+                    rb.add(id);
+                    break;
+                case FlashCardsContract.Deck.DECK_COUNTS:
+                    rb.add(deckCounts);
+                    break;
+                case FlashCardsContract.Deck.OPTIONS:
+                    String config = col.getDecks().confForDid(id).toString();
+                    rb.add(config);
+                    break;
+                case FlashCardsContract.Deck.DECK_DYN:
+                    rb.add(col.getDecks().isDyn(id));
+                    break;
+                case FlashCardsContract.Deck.DECK_DESC:
+                    String desc = col.getDecks().getActualDescription();
+                    rb.add(desc);
+                    break;
             }
         }
     }

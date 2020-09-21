@@ -299,35 +299,50 @@ public class Finder {
                 String[] spl = token.split(":", 2);
                 String cmd = spl[0].toLowerCase(Locale.US);
                 String val = spl[1];
-                
-                if ("added".equals(cmd)) {
+
+                switch (cmd) {
+                case "added":
                     s.add(_findAdded(val));
-                } else if ("card".equals(cmd)) {
+                    break;
+                case "card":
                     s.add(_findTemplate(val));
-                } else if ("deck".equals(cmd)) {
+                    break;
+                case "deck":
                     s.add(_findDeck(val));
-                } else if ("flag".equals(cmd)) {
+                    break;
+                case "flag":
                     s.add(_findFlag(val));
-                } else if ("mid".equals(cmd)) {
+                    break;
+                case "mid":
                     s.add(_findMid(val));
-                } else if ("nid".equals(cmd)) {
+                    break;
+                case "nid":
                     s.add(_findNids(val));
-                } else if ("cid".equals(cmd)) {
+                    break;
+                case "cid":
                     s.add(_findCids(val));
-                } else if ("note".equals(cmd)) {
+                    break;
+                case "note":
                     s.add(_findModel(val));
-                } else if ("prop".equals(cmd)) {
+                    break;
+                case "prop":
                     s.add(_findProp(val));
-                } else if ("rated".equals(cmd)) {
+                    break;
+                case "rated":
                     s.add(_findRated(val));
-                } else if ("tag".equals(cmd)) {
+                    break;
+                case "tag":
                     s.add(_findTag(val, args));
-                } else if ("dupe".equals(cmd)) {
+                    break;
+                case "dupe":
                     s.add(_findDupes(val));
-                } else if ("is".equals(cmd)) {
+                    break;
+                case "is":
                     s.add(_findCardState(val));
-                } else {
+                    break;
+                default:
                     s.add(_findField(cmd, val));
+                    break;
                 }
             // normal text search
             } else {
