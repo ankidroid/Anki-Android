@@ -21,7 +21,6 @@ package com.ichi2.anki;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -1186,19 +1185,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
-        builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                changeDeck(which);
-            }
-        });
+        builderSingle.setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss());
+        builderSingle.setAdapter(arrayAdapter, (dialog, which) -> changeDeck(which));
         builderSingle.show();
     }
 
