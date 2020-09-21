@@ -114,6 +114,7 @@ public class CsvReaderIterator implements Iterator<List<String>> {
         this.numeric_field = 0;
     }
 
+    //noinspection ControlFlowStatementWithoutBraces
     private int parse_process_char(char c) {
         CsvDialect dialect = this.reader.dialect;
 
@@ -147,7 +148,8 @@ public class CsvReaderIterator implements Iterator<List<String>> {
                     /* possible escaped character */
                     this.state = ESCAPED_CHAR;
                 }
-                else if (c == ' ' && dialect.mSkipInitialSpace)
+                else
+                    if (c == ' ' && dialect.mSkipInitialSpace)
                     /* ignore space at start of field */
                     ;
                 else if (c == dialect.mDelimiter) {
