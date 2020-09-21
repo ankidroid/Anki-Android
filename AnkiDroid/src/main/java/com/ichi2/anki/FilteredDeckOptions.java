@@ -55,6 +55,8 @@ import java.util.Set;
 
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+
 /**
  * Preferences for the current deck.
  */
@@ -426,7 +428,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             }
         }
         finish();
-        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+        ActivityTransitionAnimation.slide(this, FADE);
     }
 
 

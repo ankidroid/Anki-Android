@@ -42,6 +42,8 @@ import org.acra.util.Installation;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
+
 /**
  * Shows an about box, which is a small HTML page.
  */
@@ -206,7 +208,7 @@ public class Info extends AnkiActivity {
 
 
     private void finishWithAnimation() {
-        finishWithAnimation(ActivityTransitionAnimation.LEFT);
+        finishWithAnimation(LEFT);
     }
 
 

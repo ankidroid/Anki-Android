@@ -89,6 +89,7 @@ import static com.ichi2.anki.reviewer.CardMarker.*;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
 public class Reviewer extends AbstractFlashcardViewer {
@@ -161,7 +162,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         if (FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser(getIntent(), this)) {
             this.setResult(RESULT_CANCELED);
-            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+            finishWithAnimation(RIGHT);
             return;
         }
 
@@ -418,7 +419,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
             case R.id.action_open_deck_options:
                 Intent i = new Intent(this, DeckOptions.class);
-                startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.FADE);
+                startActivityForResultWithAnimation(i, DECK_OPTIONS, FADE);
                 break;
 
             case R.id.action_select_tts:
@@ -542,7 +543,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     private void addNote() {
         Intent intent = new Intent(this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD);
-        startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(intent, ADD_NOTE, LEFT);
     }
 
 

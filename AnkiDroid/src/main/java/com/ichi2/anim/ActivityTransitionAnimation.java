@@ -1,4 +1,3 @@
-
 package com.ichi2.anim;
 
 import android.annotation.TargetApi;
@@ -6,18 +5,11 @@ import android.app.Activity;
 
 import com.ichi2.anki.R;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+
 public class ActivityTransitionAnimation {
-    public static final int LEFT = 0;
-    public static final int RIGHT = 1;
-    public static final int FADE = 2;
-    public static final int UP = 3;
-    public static final int DOWN = 4;
-    public static final int DIALOG_EXIT = 5;
-    public static final int NONE = 6;
-
-
     @TargetApi(5)
-    public static void slide(Activity activity, int direction) {
+    public static void slide(Activity activity, Direction direction) {
         if (direction == LEFT) {
             activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
         } else if (direction == RIGHT) {
@@ -33,5 +25,16 @@ public class ActivityTransitionAnimation {
         } else if (direction == NONE) {
             activity.overridePendingTransition(R.anim.none, R.anim.none);
         }
+    }
+
+
+    public enum Direction {
+        LEFT,
+        RIGHT,
+        FADE,
+        UP,
+        DOWN,
+        DIALOG_EXIT,
+        NONE;
     }
 }

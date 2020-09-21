@@ -72,6 +72,7 @@ import java.util.regex.Pattern;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import timber.log.Timber;
 import com.ichi2.async.TaskData;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
 /**
@@ -208,7 +209,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                     // Clear the edited model from any cache files, and clear it from this objects memory to discard changes
                     TemporaryModel.clearTempModelFiles();
                     mTempModel = null;
-                    finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+                    finishWithAnimation(RIGHT);
                 })
                 .build();
         discardDialog.show();
@@ -504,7 +505,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                         tempModel.saveToDatabase(saveModelAndExitHandler());
                     } else {
                         Timber.d("CardTemplateEditor:: model has not changed, exiting");
-                        mTemplateEditor.finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+                        mTemplateEditor.finishWithAnimation(RIGHT);
                     }
 
                     return true;
@@ -688,7 +689,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 }
                 templateFragment.mTemplateEditor.mTempModel = null;
                 if (result.getBoolean()) {
-                    templateFragment.mTemplateEditor.finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+                    templateFragment.mTemplateEditor.finishWithAnimation(RIGHT);
                 } else {
                     Timber.w("CardTemplateFragment:: save model task failed: %s", result.getString());
                     UIUtils.showThemedToast(templateFragment.mTemplateEditor, templateFragment.getString(R.string.card_template_editor_save_error, result.getString()), false);

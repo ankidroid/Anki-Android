@@ -53,6 +53,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import timber.log.Timber;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
@@ -273,7 +275,7 @@ public class ModelBrowser extends AnkiActivity {
                 Intent noteOpenIntent = new Intent(ModelBrowser.this, ModelFieldEditor.class);
                 noteOpenIntent.putExtra("title", mModelDisplayList.get(position).getName());
                 noteOpenIntent.putExtra("noteTypeID", noteTypeID);
-                startActivityForResultWithAnimation(noteOpenIntent, 0, ActivityTransitionAnimation.LEFT);
+                startActivityForResultWithAnimation(noteOpenIntent, 0, LEFT);
             }
         });
 
@@ -488,7 +490,7 @@ public class ModelBrowser extends AnkiActivity {
     private void openTemplateEditor() {
         Intent intent = new Intent(this, CardTemplateEditor.class);
         intent.putExtra("modelId", mCurrentID);
-        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, LEFT);
     }
 
     // ----------------------------------------------------------------------------

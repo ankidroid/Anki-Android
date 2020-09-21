@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
+
 /**
  * The card template previewer intent must supply one or more cards to show and the index in the list from where
  * to begin showing them. Special rules are applied if the list size is 1 (i.e., no scrolling
@@ -107,7 +109,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         Timber.d("CardTemplatePreviewer:: closeCardTemplatePreviewer()");
         setResult(RESULT_OK);
         TemporaryModel.clearTempModelFiles();
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(RIGHT);
     }
 
 
@@ -121,7 +123,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     @Override
     protected void performReload() {
         // This should not happen.
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(RIGHT);
     }
 
 

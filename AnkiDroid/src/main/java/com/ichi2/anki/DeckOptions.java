@@ -74,6 +74,8 @@ import java.util.TreeMap;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 
 import com.ichi2.async.TaskData;
@@ -744,7 +746,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             setResult(RESULT_CANCELED);
         }
         finish();
-        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+        ActivityTransitionAnimation.slide(this, FADE);
     }
 
 

@@ -120,7 +120,8 @@ import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
-import com.ichi2.async.TaskData;
+import com.ichi2.async.TaskData;import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -1067,7 +1068,7 @@ public class NoteEditor extends AnkiActivity {
         intent.putExtra(EXTRA_DID, mCurrentDid);
         //mutate event with additional properties
         intentEnricher.consume(intent);
-        startActivityForResultWithAnimation(intent, REQUEST_ADD, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_ADD, LEFT);
     }
 
 
@@ -1171,9 +1172,9 @@ public class NoteEditor extends AnkiActivity {
         // ensure there are no orphans from possible edit previews
         TemporaryModel.clearTempModelFiles();
         if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
-            finishWithAnimation(ActivityTransitionAnimation.NONE);
+            finishWithAnimation(NONE);
         } else {
-            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+            finishWithAnimation(RIGHT);
         }
     }
 
@@ -1207,7 +1208,7 @@ public class NoteEditor extends AnkiActivity {
             intent.putExtra("ordId", mCurrentEditedCard.getOrd());
             Timber.d("showCardTemplateEditor() with ord %s", mCurrentEditedCard.getOrd());
         }
-        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, LEFT);
     }
 
 

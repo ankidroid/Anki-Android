@@ -145,6 +145,7 @@ import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 
 import com.ichi2.async.TaskData;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,
@@ -804,7 +805,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             case R.id.action_model_browser_open: {
                 Timber.i("DeckPicker:: Model browser button pressed");
                 Intent noteTypeBrowser = new Intent(this, ModelBrowser.class);
-                startActivityForResultWithAnimation(noteTypeBrowser, 0, ActivityTransitionAnimation.LEFT);
+                startActivityForResultWithAnimation(noteTypeBrowser, 0, LEFT);
                 return true;
             }
             case R.id.action_restore_backup:
@@ -1037,7 +1038,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void finishWithAnimation() {
-        super.finishWithAnimation(ActivityTransitionAnimation.DOWN);
+        super.finishWithAnimation(DOWN);
     }
 
     @Override
@@ -1125,7 +1126,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void addNote() {
         Intent intent = new Intent(DeckPicker.this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
-        startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(intent, ADD_NOTE, LEFT);
     }
 
 
@@ -1264,7 +1265,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
                     if (skip != 0) {
                         startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION,
-                                ActivityTransitionAnimation.LEFT);
+                                LEFT);
                     } else {
                         startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION);
                     }
@@ -2038,7 +2039,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     public void loginToSyncServer() {
         Intent myAccount = new Intent(this, MyAccount.class);
         myAccount.putExtra("notLoggedIn", true);
-        startActivityForResultWithAnimation(myAccount, LOG_IN_FOR_SYNC, ActivityTransitionAnimation.FADE);
+        startActivityForResultWithAnimation(myAccount, LOG_IN_FOR_SYNC, FADE);
     }
 
 
@@ -2216,7 +2217,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Intent intent = new Intent();
             intent.putExtra("withDeckOptions", withDeckOptions);
             intent.setClass(this, StudyOptionsActivity.class);
-            startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, ActivityTransitionAnimation.LEFT);
+            startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, LEFT);
         }
     }
 
@@ -2505,12 +2506,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // open cram options if filtered deck
             Intent i = new Intent(DeckPicker.this, FilteredDeckOptions.class);
             i.putExtra("did", mContextMenuDid);
-            startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
+            startActivityWithAnimation(i, FADE);
         } else {
             // otherwise open regular options
             Intent i = new Intent(DeckPicker.this, DeckOptions.class);
             i.putExtra("did", mContextMenuDid);
-            startActivityWithAnimation(i, ActivityTransitionAnimation.FADE);
+            startActivityWithAnimation(i, FADE);
         }
     }
 
@@ -2724,7 +2725,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void openReviewer() {
         Intent reviewer = new Intent(this, Reviewer.class);
-        startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, LEFT);
     }
 
     @Override
