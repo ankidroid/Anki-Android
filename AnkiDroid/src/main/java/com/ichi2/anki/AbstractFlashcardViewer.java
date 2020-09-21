@@ -3606,11 +3606,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             } else if (mVersionSupplied.lessThan(mVersionCurrent)) {
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.update_js_api_version, mCardSuppliedDeveloperContact), false);
 
-                if (mVersionSupplied.greaterThanOrEqualTo(Version.valueOf(sMinimumJsApiVersion))) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return mVersionSupplied.greaterThanOrEqualTo(Version.valueOf(sMinimumJsApiVersion));
             } else {
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.valid_js_api_version, mCardSuppliedDeveloperContact), false);
                 return false;
