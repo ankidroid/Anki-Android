@@ -421,12 +421,7 @@ public class ModelBrowser extends AnkiActivity {
                     dismissContextMenu();
                 }
             };
-            Runnable cancel = new Runnable() {
-                @Override
-                public void run() {
-                    dismissContextMenu();
-                }
-            };
+            Runnable cancel = this::dismissContextMenu;
 
             try {
                 col.modSchema();
