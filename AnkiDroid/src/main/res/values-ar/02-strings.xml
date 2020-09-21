@@ -371,4 +371,5 @@
     <string name="card_viewer_could_not_find_image_get_help">مساعدة</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">فشل تحميل رزمة ‘%s’</string>
+    <string name="search_decks">Search decks</string>
 </resources>
