@@ -668,6 +668,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // NOTE: These are all active when typing in the search - doesn't matter as all need CTRL
+
         switch (keyCode) {
             /* Ctrl+A - Select All */
             case KeyEvent.KEYCODE_A: {
