@@ -1288,8 +1288,7 @@ public class SchedV2 extends AbstractSched {
         } else {
             delay2 = delay1 * 2;
         }
-        int avg = (delay1 + Math.max(delay1, delay2)) / 2;
-        return avg;
+        return (delay1 + Math.max(delay1, delay2)) / 2;
     }
 
 
@@ -1663,8 +1662,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private int _lapseIvl(@NonNull Card card, @NonNull JSONObject conf) {
-        int ivl = Math.max(1, Math.max(conf.getInt("minInt"), (int)(card.getIvl() * conf.getDouble("mult"))));
-        return ivl;
+        return Math.max(1, Math.max(conf.getInt("minInt"), (int)(card.getIvl() * conf.getDouble("mult"))));
     }
 
 
@@ -1722,9 +1720,8 @@ public class SchedV2 extends AbstractSched {
             return ivl3;
         }
 
-        int ivl4 = _constrainedIvl((
+        return _constrainedIvl((
                                     (card.getIvl() + delay) * fct * conf.getDouble("ease4")), conf, ivl3, fuzz);
-        return ivl4;
     }
 
     protected int _fuzzedIvl(int ivl) {

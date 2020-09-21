@@ -1047,9 +1047,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             return false;
         }
         // Whether there exists a sibling which is neither susbended nor buried
-        boolean bury = getCol().getDb().queryScalar("select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+        return getCol().getDb().queryScalar("select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
                 mCurrentCard.getNid(), mCurrentCard.getId()) == 1;
-        return bury;
     }
 
     /**

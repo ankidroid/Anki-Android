@@ -10,8 +10,7 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
 public class DeckPickerNoSpaceLeftDialog extends AnalyticsDialogFragment {
     public static DeckPickerNoSpaceLeftDialog newInstance() {
-        DeckPickerNoSpaceLeftDialog f = new DeckPickerNoSpaceLeftDialog();
-        return f;
+        return new DeckPickerNoSpaceLeftDialog();
     }
     
     @Override
