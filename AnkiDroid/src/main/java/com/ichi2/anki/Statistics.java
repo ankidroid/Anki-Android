@@ -19,6 +19,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -282,7 +284,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         //this is called when mSectionsPagerAdapter.notifyDataSetChanged() is called, so checkAndUpdate() here
         //works best for updating all tabs
         @Override
-        public int getItemPosition(Object object) {
+        public int getItemPosition(@NonNull Object object) {
             if (object instanceof StatisticFragment) {
                 ((StatisticFragment) object).checkAndUpdate();
             }
@@ -290,6 +292,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             return super.getItemPosition(object);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             Fragment item = StatisticFragment.newInstance(position);

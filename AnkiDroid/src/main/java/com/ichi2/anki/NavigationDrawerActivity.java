@@ -22,6 +22,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -191,7 +193,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         if (mDrawerToggle != null) {

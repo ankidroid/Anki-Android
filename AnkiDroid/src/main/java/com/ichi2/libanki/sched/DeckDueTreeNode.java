@@ -33,7 +33,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
     }
 
     @Override
-    public String toString() {
+    public @NonNull String toString() {
         return String.format(Locale.US, "%s, %d, %d, %d, %d, %s",
                              getFullDeckName(), getDid(), mRevCount, mLrnCount, mNewCount, getChildren());
     }

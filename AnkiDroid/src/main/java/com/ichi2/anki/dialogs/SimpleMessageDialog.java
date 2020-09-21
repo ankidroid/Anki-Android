@@ -7,6 +7,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class SimpleMessageDialog extends AsyncDialogFragment {
@@ -32,6 +33,7 @@ public class SimpleMessageDialog extends AsyncDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         // FIXME this should be super.onCreateDialog(Bundle), no?

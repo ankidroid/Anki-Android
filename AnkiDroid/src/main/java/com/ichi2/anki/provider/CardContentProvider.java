@@ -32,6 +32,8 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -163,7 +165,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         // Find out what data the user is requesting
         int match = sUriMatcher.match(uri);
 
@@ -212,7 +214,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String order) {
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String order) {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("query", uri);
         }
@@ -422,7 +424,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         if (!hasReadWritePermission() && shouldEnforceUpdateSecurity(uri)) {
             throwSecurityException("update", uri);
         }
@@ -693,7 +695,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         if (!hasReadWritePermission()) {
             throwSecurityException("delete", uri);
         }
@@ -730,7 +732,7 @@ public class CardContentProvider extends ContentProvider {
      * @return number of notes added (does not include existing notes that were updated)
      */
     @Override
-    public int bulkInsert(Uri uri, ContentValues[] values) {
+    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("bulkInsert", uri);
         }
@@ -832,7 +834,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("insert", uri);
         }

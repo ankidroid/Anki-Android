@@ -15,6 +15,8 @@ package com.ichi2.compat.customtabs;
 
 
 import android.content.ComponentName;
+
+import androidx.annotation.NonNull;
 import androidx.browser.customtabs.CustomTabsClient;
 import androidx.browser.customtabs.CustomTabsServiceConnection;
 
@@ -33,7 +35,7 @@ public class ServiceConnection extends CustomTabsServiceConnection {
     }
 
     @Override
-    public void onCustomTabsServiceConnected(ComponentName name, CustomTabsClient client) {
+    public void onCustomTabsServiceConnected(@NonNull ComponentName name, @NonNull CustomTabsClient client) {
         ServiceConnectionCallback connectionCallback = mConnectionCallback.get();
         if (connectionCallback != null) connectionCallback.onServiceConnected(client);
     }

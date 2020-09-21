@@ -901,7 +901,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.length == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 invalidateOptionsMenu();
@@ -947,7 +947,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putLong("mContextMenuDid", mContextMenuDid);
         savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage);

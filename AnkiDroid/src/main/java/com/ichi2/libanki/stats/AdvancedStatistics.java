@@ -40,6 +40,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
+import androidx.annotation.NonNull;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
@@ -401,7 +402,7 @@ public class AdvancedStatistics {
         private long id;
 
         @Override
-        public String toString() {
+        public @NonNull String toString() {
             return "Card [ivl=" + ivl + ", factor=" + factor + ", due=" + due + ", correct=" + correct + ", id="
                     + id + "]";
         }
@@ -1479,7 +1480,7 @@ public class AdvancedStatistics {
         }
 
         @Override
-        public String toString() {
+        public @NonNull String toString() {
             return "ReviewOutcome{" +
                     "card=" + card +
                     ", prob=" + prob +

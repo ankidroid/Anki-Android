@@ -312,6 +312,7 @@ public class SchedV2 extends AbstractSched {
 
 
     /** new count, lrn count, rev count.  */
+    @NonNull
     public int[] counts() {
         if (!mHaveCounts) {
             resetCounts();
@@ -325,6 +326,7 @@ public class SchedV2 extends AbstractSched {
      * number we actually want.
      * Overridden: left / 1000 in V1
      */
+    @NonNull
     public int[] counts(@NonNull Card card) {
         int[] counts = counts();
         int idx = countIdx(card);
@@ -2404,6 +2406,7 @@ public class SchedV2 extends AbstractSched {
      *
      * Overriden: in V1, queue becomes type.
      */
+    @NonNull
     protected String _restoreQueueSnippet() {
         return "queue = (case when type in (" + Consts.CARD_TYPE_LRN + "," + Consts.CARD_TYPE_RELEARNING + ") then\n" +
                 "  (case when (case when odue then odue else due end) > 1000000000 then 1 else " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " end)\n" +
@@ -2709,7 +2712,7 @@ public class SchedV2 extends AbstractSched {
         maybeRandomizeDeck(null);
     }
 
-    public void maybeRandomizeDeck(Long did) {
+    public void maybeRandomizeDeck(@NonNull Long did) {
         if (did == null) {
             did = mCol.getDecks().selected();
         }
@@ -2807,6 +2810,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @NonNull
     public String getName() {
         return "std2";
     }

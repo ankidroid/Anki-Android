@@ -3,6 +3,8 @@ package com.ichi2.anki.dialogs;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -35,6 +37,7 @@ import com.ichi2.anki.R;
             mCancel = cancel;
         }
 
+        @NonNull
         @Override
         public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);

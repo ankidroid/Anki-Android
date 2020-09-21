@@ -53,6 +53,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 
 public class JSONObject extends org.json.JSONObject implements Iterable<String> {
 
@@ -147,6 +148,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         Iters on the keys. (Similar to iteration in Python's
         dictionnary.
     */
+    @NonNull
     public Iterator<String> iterator() {
         return keys();
     }

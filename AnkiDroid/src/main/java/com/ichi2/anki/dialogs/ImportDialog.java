@@ -16,6 +16,7 @@ import java.io.File;
 import java.net.URLDecoder;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class ImportDialog extends AsyncDialogFragment {
@@ -51,6 +52,7 @@ public class ImportDialog extends AsyncDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

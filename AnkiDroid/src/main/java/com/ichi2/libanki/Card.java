@@ -619,7 +619,7 @@ public class Card implements Cloneable {
     public static final Set<String> SKIP_PRINT = new HashSet<>(Arrays.asList("SKIP_PRINT", "$assertionsDisabled", "TYPE_LRN",
             "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"));
 
-    public String toString() {
+    public @NonNull String toString() {
         List<String> members = new ArrayList<>();
         for (Field f : this.getClass().getDeclaredFields()) {
             try {
@@ -755,7 +755,7 @@ public class Card implements Cloneable {
         @Nullable
         private Card mCard;
 
-        public Cache(Collection col, long id) {
+        public Cache(@NonNull Collection col, long id) {
             mCol = col;
             mId = id;
         }

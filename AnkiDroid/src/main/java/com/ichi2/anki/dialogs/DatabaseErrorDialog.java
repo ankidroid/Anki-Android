@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class DatabaseErrorDialog extends AsyncDialogFragment {
@@ -56,6 +57,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

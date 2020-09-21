@@ -102,6 +102,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Resources res = getResources();
@@ -293,6 +294,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             });
         }
 
+        @NonNull
         @Override
         public TagsArrayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,int viewType) {
             View v = LayoutInflater.from(parent.getContext())

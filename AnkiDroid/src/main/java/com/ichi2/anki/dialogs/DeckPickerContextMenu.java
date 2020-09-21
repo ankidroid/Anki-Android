@@ -32,6 +32,7 @@ import com.ichi2.libanki.Collection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class DeckPickerContextMenu extends AnalyticsDialogFragment {
@@ -58,6 +59,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
