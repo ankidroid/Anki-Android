@@ -1938,14 +1938,12 @@ public class SchedV2 extends AbstractSched {
             case Consts.DYN_REVADDED:
                 t = "n.id desc";
                 break;
-            case Consts.DYN_DUE:
-                t = "c.due";
-                break;
             case Consts.DYN_DUEPRIORITY:
                 t = String.format(Locale.US,
                         "(case when queue=" + Consts.QUEUE_TYPE_REV + " and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 100000+due end)",
                         mToday, mToday);
                 break;
+            case Consts.DYN_DUE:
             default:
                 // if we don't understand the term, default to due order
                 t = "c.due";
@@ -2990,13 +2988,12 @@ public class SchedV2 extends AbstractSched {
             mNewCount--;
             break;
         case Consts.QUEUE_TYPE_LRN:
-            mLrnCount --; // -= discardCard.getLeft() / 1000; in sched v1
+        case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
+            mLrnCount --;
+            // In the case of QUEUE_TYPE_LRN, it is -= discardCard.getLeft() / 1000; in sched v1
             break;
         case Consts.QUEUE_TYPE_REV:
             mRevCount--;
-            break;
-        case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
-            mLrnCount--;
             break;
         }
     }

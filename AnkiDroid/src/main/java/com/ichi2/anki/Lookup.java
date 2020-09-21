@@ -42,9 +42,6 @@ public class Lookup {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
         mDictionary = Integer.parseInt(preferences.getString("dictionary", Integer.toString(DICTIONARY_NONE)));
         switch (mDictionary) {
-            case DICTIONARY_NONE:
-                mIsDictionaryAvailable = false;
-                break;
             case DICTIONARY_AEDICT:
                 mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
@@ -68,6 +65,7 @@ public class Lookup {
                 mDictionaryAction = "com.ngc.fora.action.LOOKUP";
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
                 break;
+            case DICTIONARY_NONE:
             default:
                 mIsDictionaryAvailable = false;
                 break;

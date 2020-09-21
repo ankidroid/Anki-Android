@@ -176,6 +176,7 @@ public class CardContentProvider extends ContentProvider {
             case NOTES_ID:
                 return FlashCardsContract.Note.CONTENT_ITEM_TYPE;
             case NOTES_ID_CARDS:
+            case MODELS_ID_EMPTY_CARDS:
                 return FlashCardsContract.Card.CONTENT_TYPE;
             case NOTES_ID_CARDS_ORD:
                 return FlashCardsContract.Card.CONTENT_ITEM_TYPE;
@@ -183,8 +184,6 @@ public class CardContentProvider extends ContentProvider {
                 return FlashCardsContract.Model.CONTENT_TYPE;
             case MODELS_ID:
                 return FlashCardsContract.Model.CONTENT_ITEM_TYPE;
-            case MODELS_ID_EMPTY_CARDS:
-                return FlashCardsContract.Card.CONTENT_TYPE;
             case MODELS_ID_TEMPLATES:
                 return FlashCardsContract.CardTemplate.CONTENT_TYPE;
             case MODELS_ID_TEMPLATES_ID:
@@ -192,10 +191,8 @@ public class CardContentProvider extends ContentProvider {
             case SCHEDULE:
                 return FlashCardsContract.ReviewInfo.CONTENT_TYPE;
             case DECKS:
-                return FlashCardsContract.Deck.CONTENT_TYPE;
-            case DECKS_ID:
-                return FlashCardsContract.Deck.CONTENT_TYPE;
             case DECK_SELECTED:
+            case DECKS_ID:
                 return FlashCardsContract.Deck.CONTENT_TYPE;
             default:
                 // Unknown URI type
@@ -878,8 +875,6 @@ public class CardContentProvider extends ContentProvider {
                 // Note ID is generated automatically by libanki
                 throw new IllegalArgumentException("Not possible to insert note with specific ID");
             case NOTES_ID_CARDS:
-                // Cards are generated automatically by libanki
-                throw new IllegalArgumentException("Not possible to insert cards directly (only through NOTES)");
             case NOTES_ID_CARDS_ORD:
                 // Cards are generated automatically by libanki
                 throw new IllegalArgumentException("Not possible to insert cards directly (only through NOTES)");
