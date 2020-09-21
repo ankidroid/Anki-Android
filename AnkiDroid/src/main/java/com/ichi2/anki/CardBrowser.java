@@ -670,10 +670,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
+            /* Ctrl+A - Select All */
             case KeyEvent.KEYCODE_A: {
                 if (event.isCtrlPressed()) {
                     Timber.i("Ctrl+A - Select All");
                     onSelectAll();
+                    return true;
+                }
+            }
+            case KeyEvent.KEYCODE_E: {
+                // Ctrl+Shift+E: Export (TODO)
+                if (event.isCtrlPressed()) {
+                    Timber.i("Ctrl+E: Add Note");
+                    addNoteFromCardBrowser();
                     return true;
                 }
             }
@@ -945,9 +954,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 endMultiSelectMode();
                 return true;
             case R.id.action_add_note_from_card_browser: {
-                Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
-                intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
-                startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
+                addNoteFromCardBrowser();
                 return true;
             }
 
@@ -1177,6 +1184,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+
+    private void addNoteFromCardBrowser() {
+        Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
+        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
+        startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
     }
 
 
