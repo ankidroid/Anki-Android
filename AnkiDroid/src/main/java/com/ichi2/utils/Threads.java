@@ -42,7 +42,7 @@ public class Threads {
         /**
          * Checks that it is called from the right thread and fails otherwise.
          */
-        public void checkThread();
+        void checkThread();
     }
 
 

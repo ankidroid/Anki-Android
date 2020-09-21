@@ -72,16 +72,16 @@ public interface IField extends Serializable {
      * @param hasTemporaryMedia True if the media is temporary, False if it is existing media.
      * @return
      */
-    public void setHasTemporaryMedia(boolean hasTemporaryMedia);
+    void setHasTemporaryMedia(boolean hasTemporaryMedia);
 
 
-    public boolean hasTemporaryMedia();
+    boolean hasTemporaryMedia();
 
 
-    public String getName();
+    String getName();
 
 
-    public void setName(String name);
+    void setName(String name);
 
 
     /**
@@ -90,7 +90,7 @@ public interface IField extends Serializable {
      * 
      * @return
      */
-    public String getFormattedValue();
+    String getFormattedValue();
 
 
     /**
