@@ -686,6 +686,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     return true;
                 }
             }
+            case KeyEvent.KEYCODE_D: {
+                if (event.isCtrlPressed()) {
+                    Timber.i("Ctrl+D: Change Deck");
+                    showChangeDeckDialog();
+                    return true;
+                }
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -1051,34 +1058,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_change_deck: {
-                AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-                builderSingle.setTitle(getString(R.string.move_all_to_deck));
-
-                //WARNING: changeDeck depends on this index, so any changes should be reflected there.
-                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
-                for (Deck deck : getValidDecksForChangeDeck()) {
-                    try {
-                        arrayAdapter.add(deck.getString("name"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        changeDeck(which);
-                    }
-                });
-                builderSingle.show();
-
+                showChangeDeckDialog();
                 return true;
             }
 
@@ -1184,6 +1164,42 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+
+    private void showChangeDeckDialog() {
+        if (!hasSelectedCards()) {
+            Timber.i("Not showing Change Deck - No Cards");
+            return;
+        }
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle(getString(R.string.move_all_to_deck));
+
+        //WARNING: changeDeck depends on this index, so any changes should be reflected there.
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
+        for (Deck deck : getValidDecksForChangeDeck()) {
+            try {
+                arrayAdapter.add(deck.getString("name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                changeDeck(which);
+            }
+        });
+        builderSingle.show();
     }
 
 
