@@ -811,7 +811,7 @@ public class FlashCardsContract {
      * </table>
      *
      *
-     * <p>
+     * <p></p>
      * <pre>
      *
      * <code>Uri scheduled_cards_uri = FlashCardsContract.ReviewInfo.CONTENT_URI;
@@ -904,6 +904,7 @@ public class FlashCardsContract {
      *
      * <p>
      * Answering a card can be done as shown in this example. Don't set BURY/SUSPEND when answering a card.
+     * </p>
      * <pre>
      *    <code>ContentResolver cr = getContentResolver();
      *    Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
@@ -920,10 +921,11 @@ public class FlashCardsContract {
      *    cr.update(reviewInfoUri, values, null, null);
      *    </code>
      * </pre>
-     * </p>
+     *
      *
      * <p>
      * Burying or suspending a card can be done this way. Don't set EASE/TIME_TAKEN when burying/suspending a card
+     * </p>
      * <pre>
      *    <code>
      *    ContentResolver cr = getContentResolver();
@@ -944,7 +946,6 @@ public class FlashCardsContract {
      *    int updateCount = cr.update(reviewInfoUri, values, null, null);
      *    </code>
      * </pre>
-     * </p>
      */
     public static class ReviewInfo {
 
