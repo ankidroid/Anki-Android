@@ -10,20 +10,27 @@ import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 public class ActivityTransitionAnimation {
     @TargetApi(5)
     public static void slide(Activity activity, Direction direction) {
-        if (direction == LEFT) {
+        switch (direction) {
+        case LEFT:
             activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
-        } else if (direction == RIGHT) {
+            break;
+        case RIGHT:
             activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
-        } else if (direction == FADE) {
+            break;
+        case FADE:
             activity.overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
-        } else if (direction == UP) {
+            break;
+        case UP:
             activity.overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out);
-        } else if (direction == DOWN) {
-            // this is the default animation, we shouldn't try to override it
-        } else if (direction == DIALOG_EXIT) {
+            break;
+        case DIALOG_EXIT:
             activity.overridePendingTransition(R.anim.none, R.anim.dialog_exit);
-        } else if (direction == NONE) {
+            break;
+        case NONE:
             activity.overridePendingTransition(R.anim.none, R.anim.none);
+            break;
+        default: //DOWN:
+            // this is the default animation, we shouldn't try to override it
         }
     }
 
