@@ -1064,4 +1064,18 @@ public class Utils {
         }
         return changed;
     }
+
+
+    /**
+     * @param left An object of type T
+     * @param right An object of type T
+     * @param <T> A type on which equals can be called
+     * @return Whether both objects are equal.
+     */
+    // Similar as Objets.equals. So deprecated starting at API Level 19 where this methods exists.
+    public static <T> boolean equals(@Nullable T left, @Nullable T right) {
+        //noinspection EqualsReplaceableByObjectsCall
+        return left == right || (left != null && left.equals(right));
+    }
+
 }

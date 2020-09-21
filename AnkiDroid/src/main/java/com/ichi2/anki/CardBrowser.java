@@ -879,7 +879,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // In that case we already fill in the search.
         Intent intent = getIntent();
         Compat compat = CompatHelper.getCompat();
-        if (intent.getAction() == compat.ACTION_PROCESS_TEXT) {
+        if (compat.ACTION_PROCESS_TEXT.equals(intent.getAction())) {
             CharSequence search = intent.getCharSequenceExtra(compat.EXTRA_PROCESS_TEXT);
             if (search != null && search.length() != 0) {
                 Timber.i("CardBrowser :: Called with search intent: %s", search.toString());
