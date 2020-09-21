@@ -346,8 +346,6 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_LOAD_FAILED:
                 return res().getString(R.string.open_collection_failed_title);
-            case DIALOG_DB_ERROR:
-                return res().getString(R.string.answering_error_title);
             case DIALOG_ERROR_HANDLING:
                 return res().getString(R.string.error_handling_title);
             case DIALOG_REPAIR_COLLECTION:
@@ -364,6 +362,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.backup_full_sync_from_server);
             case DIALOG_DB_LOCKED:
                 return res().getString(R.string.database_locked_title);
+            case DIALOG_DB_ERROR:
             default:
                 return res().getString(R.string.answering_error_title);
         }        

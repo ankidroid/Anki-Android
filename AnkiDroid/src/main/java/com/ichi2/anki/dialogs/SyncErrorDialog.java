@@ -212,11 +212,9 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             case DIALOG_SYNC_CONFLICT_RESOLUTION:
                 return res().getString(R.string.sync_conflict_message);
             case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL:
-                return res().getString(R.string.sync_conflict_local_confirm);
-            case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE:
-                return res().getString(R.string.sync_conflict_remote_confirm);
             case DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL:
                 return res().getString(R.string.sync_conflict_local_confirm);
+            case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE:
             case DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE:
                 return res().getString(R.string.sync_conflict_remote_confirm);
             case DIALOG_SYNC_CORRUPT_COLLECTION: {
