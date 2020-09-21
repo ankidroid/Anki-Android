@@ -344,4 +344,5 @@
     <string name="card_viewer_could_not_find_image_get_help">Помощь</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
+    <string name="search_decks">Search decks</string>
 </resources>

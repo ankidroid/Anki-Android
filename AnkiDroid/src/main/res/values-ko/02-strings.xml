@@ -58,25 +58,26 @@
     <string name="sdcard_missing_message">현재 SD카드가 USB 저장소로 사용되고 있어 사용이 불가능합니다. 덱에 접근하려면 USB 연결을 해제하세요.</string>
     <string name="updated_version">버전 %s로 업데이트됨</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">칠판 저장</string>
     <string name="enable_whiteboard">화이트보드 활성화</string>
     <string name="disable_whiteboard">화이트보드 비활성화</string>
     <string name="show_whiteboard">화이트 보드 보이기</string>
     <string name="hide_whiteboard">화이트 보드 숨기기</string>
     <string name="clear_whiteboard">화이트 보드 지우기</string>
     <string name="replay_audio">오디오 다시 재생</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="toggle_mic_tool_bar">발음 들어보기</string>
     <string name="leech_suspend_notification">카드가 거머리로 표시 및 비활성화됨</string>
     <string name="leech_notification">거머리로 표시된 카드</string>
     <string name="corrupt_font">손상된 글꼴 파일 %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_unknown">알수없는 오류</string>
+    <string name="webview_crash_unknwon_detailed">WebView의 내부적인 오류입니다.</string>
+    <string name="webview_crash_oom">메모리 부족</string>
+    <string name="webview_crash_oom_details">WebView이 시스템에 의해 강제종료 되었습니다. 보통 용랑이 큰 사진, 음성, 글꼴 등 미디어 파일 때문에 메모리가 부족해서 이런 일이 생길 수 있습니다.</string>
+    <string name="webview_crash_nonfatal">WebView 렌더러가 다음 이유 때문에 강제종료되었습니다: %s</string>
+    <string name="webview_crash_fatal">중대 오류: WebView 렌더러가 다음 이유 때문에 강제종료되었습니다: %s</string>
+    <string name="webview_crash_loop_dialog_title">WebView 렌더링이 실패했습니다.</string>
+    <string name="webview_crash_loop_dialog_content">WebView가 \'%1$s\' 카드를 렌더링하지 못했습니다.
+%2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>질문</item>
@@ -91,9 +92,9 @@
         <item>태그</item>
         <item>오답 횟수</item>
         <item>복습</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
+        <item>시간 간격</item>
+        <item>수월함</item>
+        <item>예정</item>
         <item>Card Modified</item>
         <item>Created</item>
         <item>Note Modified</item>
@@ -308,4 +309,5 @@ Context | Request Context    </string>
     <string name="card_viewer_could_not_find_image_get_help">Help</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
+    <string name="search_decks">Search decks</string>
 </resources>
