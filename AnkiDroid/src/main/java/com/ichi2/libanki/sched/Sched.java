@@ -1103,7 +1103,7 @@ public class Sched extends SchedV2 {
         mToday = (int) ((getTime().intTime() - mCol.getCrt()) / SECONDS_PER_DAY);
         // end of day cutoff
         mDayCutoff = mCol.getCrt() + ((mToday + 1) * SECONDS_PER_DAY);
-        if (oldToday != mToday) {
+        if (!mToday.equals(oldToday)) {
             mCol.log(mToday, mDayCutoff);
         }
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
