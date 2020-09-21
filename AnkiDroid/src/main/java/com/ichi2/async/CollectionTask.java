@@ -118,6 +118,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         CONF_SET_SUBDECKS,
         RENDER_BROWSER_QA,
         CHECK_MEDIA,
+        DELETE_MEDIA,
         COUNT_MODELS,
         DELETE_MODEL,
         DELETE_FIELD,
@@ -388,6 +389,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
             case DELETE_DECK:
                 doInBackgroundDeleteDeck(param);
+                break;
+
+            case DELETE_MEDIA:
+                doInBackgroundDeleteMedia(param);
                 break;
 
             case REBUILD_CRAM:
@@ -1644,6 +1649,17 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         List<List<String>> result = col.getMedia().check();
         return new TaskData(0, new Object[]{result}, true);
     }
+
+    
+    private void doInBackgroundDeleteMedia(TaskData param) {
+        Object[] objects = param.getObjArray();
+        List<String> unused = (List<String>)objects[0];
+        com.ichi2.libanki.Media m = getCol().getMedia();
+        for (String fname : unused) {
+            m.removeFile(fname);
+        }
+    }
+
 
     /**
      * Handles everything for a model change at once - template add / deletes as well as content updates

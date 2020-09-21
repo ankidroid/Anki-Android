@@ -138,6 +138,9 @@
     <string name="check_media_delete_unused">Delete unused</string>
     <string name="check_media_deleted">Files deleted: %d</string>
 
+    <string name="delete_media_message">Deleting media…</string>
+    <string name="delete_media_result_title">Deletion result</string>
+
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">All cards</string>
     <string name="tags_dialog_option_new_cards">New</string>
