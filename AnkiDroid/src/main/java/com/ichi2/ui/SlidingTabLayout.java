@@ -229,7 +229,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
  
     private void scrollToTab(int tabIndex, int positionOffset) {
         final int tabStripChildCount = mTabStrip.getChildCount();
-        if (tabStripChildCount == 0 || tabIndex < 0 || tabIndex >= tabStripChildCount) {
+        if (tabIndex < 0 || tabIndex >= tabStripChildCount) {
             return;
         }
  
@@ -252,7 +252,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             int tabStripChildCount = mTabStrip.getChildCount();
-            if ((tabStripChildCount == 0) || (position < 0) || (position >= tabStripChildCount)) {
+            if ((position < 0) || (position >= tabStripChildCount)) {
                 return;
             }
  
