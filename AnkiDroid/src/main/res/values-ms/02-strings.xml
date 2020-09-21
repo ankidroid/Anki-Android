@@ -306,4 +306,5 @@
     <string name="card_viewer_could_not_find_image_get_help">Help</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
+    <string name="search_decks">Search decks</string>
 </resources>

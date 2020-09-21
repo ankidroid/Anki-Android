@@ -345,4 +345,5 @@
     <string name="card_viewer_could_not_find_image_get_help">Pomoc</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nie udało się załadować talii: %s</string>
+    <string name="search_decks">Search decks</string>
 </resources>

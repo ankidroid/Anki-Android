@@ -319,4 +319,5 @@
     <string name="card_viewer_could_not_find_image_get_help">Ajuda</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Falha ao carregar o baralho ‘%s\'</string>
+    <string name="search_decks">Search decks</string>
 </resources>
