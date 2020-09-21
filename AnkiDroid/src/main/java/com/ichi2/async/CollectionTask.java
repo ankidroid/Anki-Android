@@ -50,6 +50,7 @@ import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -779,9 +780,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         private final Card[] cards;
         private final boolean[] originalSuspended;
 
-
-        public UndoSuspendCardMulti(Card[] cards, boolean[] originalSuspended) {
-            super(Collection.DismissType.SUSPEND_CARD_MULTI);
+        /** @param hasUnsuspended  whether there were any unsuspended card (in which card the action was "Suspend",
+         *                          otherwise the action was "Unsuspend")  */
+        public UndoSuspendCardMulti(Card[] cards, boolean[] originalSuspended,
+                                    boolean hasUnsuspended) {
+            super((hasUnsuspended) ? Collection.DismissType.SUSPEND_CARD_MULTI: Collection.DismissType.UNSUSPEND_CARD_MULTI);
             this.cards = cards;
             this.originalSuspended = originalSuspended;
         }
@@ -882,9 +885,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         private final List<Note> originalMarked;
         private final List<Note> originalUnmarked;
 
-
-        public UndoMarkNoteMulti(List<Note> originalMarked, List<Note> originalUnmarked) {
-            super(Collection.DismissType.MARK_NOTE_MULTI);
+        /** @param hasUnmarked whether there were any unmarked card (in which card the action was "mark",
+         *                      otherwise the action was "Unmark")  */
+        public UndoMarkNoteMulti(List<Note> originalMarked, List<Note> originalUnmarked, boolean hasUnmarked) {
+            super((hasUnmarked) ? Collection.DismissType.MARK_NOTE_MULTI : Collection.DismissType.UNMARK_NOTE_MULTI);
             this.originalMarked = originalMarked;
             this.originalUnmarked = originalUnmarked;
         }
@@ -963,7 +967,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                             sched.unsuspendCards(cids);
                         }
 
-                        Undoable suspendCardMulti = new UndoSuspendCardMulti(cards, originalSuspended);
+                        Undoable suspendCardMulti = new UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended);
                         // mark undo for all at once
                         col.markUndo(suspendCardMulti);
 
@@ -998,9 +1002,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                                 originalUnmarked.add(n);
                         }
 
-                        CardUtils.markAll(new ArrayList<>(notes), !originalUnmarked.isEmpty());
+                        boolean hasUnmarked = !originalUnmarked.isEmpty();
+                        CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
 
-                        Undoable markNoteMulti = new UndoMarkNoteMulti(originalMarked, originalUnmarked);
+                        Undoable markNoteMulti = new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked);
                         // mark undo for all at once
                         col.markUndo(markNoteMulti);
 
@@ -1445,9 +1450,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         if (hasValidCol()) {
             // unload collection and trigger a backup
+            Time time = CollectionHelper.getInstance().getTimeSafe(mContext);
             CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
             CollectionHelper.getInstance().lockCollection();
-            BackupManager.performBackupInBackground(colPath, true, CollectionHelper.getInstance().getTimeSafe(mContext));
+            BackupManager.performBackupInBackground(colPath, true, time);
         }
         // overwrite collection
         File f = new File(colFile);

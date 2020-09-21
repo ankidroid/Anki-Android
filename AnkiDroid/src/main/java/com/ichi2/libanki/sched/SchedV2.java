@@ -81,9 +81,6 @@ public class SchedV2 extends AbstractSched {
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
     public static final int RESCHEDULE_FACTOR = Consts.STARTING_FACTOR;
 
-    private final String mName = "std2";
-    private boolean mHaveCustomStudy = true;
-
     protected int mQueueLimit;
     protected int mReportLimit;
     private int mDynReportLimit;
@@ -339,11 +336,6 @@ public class SchedV2 extends AbstractSched {
     /**
      * Return counts over next DAYS. Includes today.
      */
-    public int dueForecast() {
-        return dueForecast(7);
-    }
-
-
     public int dueForecast(int days) {
         // TODO:...
         return 0;
@@ -481,7 +473,7 @@ public class SchedV2 extends AbstractSched {
             String deckName = deck.getString("name");
             String p = Decks.parent(deckName);
             // new
-            int nlim = _deckNewLimitSingle(deck);
+            int nlim = _deckNewLimitSingle(deck, false);
             Integer plim = null;
             if (!TextUtils.isEmpty(p)) {
                 Integer[] parentLims = lims.get(Decks.normalizeName(p));
@@ -495,7 +487,7 @@ public class SchedV2 extends AbstractSched {
             // learning
             int lrn = _lrnForDeck(deck.getLong("id"));
             // reviews
-            int rlim = _deckRevLimitSingle(deck, plim);
+            int rlim = _deckRevLimitSingle(deck, plim, false);
             int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
             // save to list
             deckNodes.add(new DeckDueTreeNode(mCol, deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
@@ -720,7 +712,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     protected void _resetNewCount() {
-        mNewCount = _walkingCount((Deck g) -> _deckNewLimitSingle(g),
+        mNewCount = _walkingCount((Deck g) -> _deckNewLimitSingle(g, true),
                                   (long did, int lim) -> _cntFnNew(did, lim));
     }
 
@@ -789,7 +781,7 @@ public class SchedV2 extends AbstractSched {
         }
         while (!mNewDids.isEmpty()) {
             long did = mNewDids.getFirst();
-            int lim = Math.min(mQueueLimit, _deckNewLimit(did));
+            int lim = Math.min(mQueueLimit, _deckNewLimit(did, true));
             Cursor cur = null;
             if (lim != 0) {
                 mNewQueue.clear();
@@ -878,14 +870,23 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected int _deckNewLimit(long did) {
-        return _deckNewLimit(did, null);
+    /**
+     *
+     * @param considerCurrentCard Whether current card should be counted if it is in this deck
+     */
+    protected int _deckNewLimit(long did, boolean considerCurrentCard) {
+        return _deckNewLimit(did, null, considerCurrentCard);
     }
 
 
-    protected int _deckNewLimit(long did, LimitMethod fn) {
+
+    /**
+     *
+     * @param considerCurrentCard Whether current card should be counted if it is in this deck
+     */
+    protected int _deckNewLimit(long did, LimitMethod fn, boolean considerCurrentCard) {
         if (fn == null) {
-            fn = (g -> _deckNewLimitSingle(g));
+            fn = (g -> _deckNewLimitSingle(g, considerCurrentCard));
         }
         @NonNull List<Deck> decks = mCol.getDecks().parents(did);
         decks.add(mCol.getDecks().get(did));
@@ -921,9 +922,10 @@ public class SchedV2 extends AbstractSched {
      * minus the number of new cards seen today in deck d or a descendant
      * plus the number of extra new cards to see today in deck d, a parent or a descendant.
      *
-     * Limits of its ancestors are not applied, current card is not treated differently.
+     * Limits of its ancestors are not applied.
+     * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
-    public int _deckNewLimitSingle(@NonNull Deck g) {
+    public int _deckNewLimitSingle(@NonNull Deck g, boolean considerCurrentCard) {
         if (g.getInt("dyn") != 0) {
             return mDynReportLimit;
         }
@@ -932,7 +934,7 @@ public class SchedV2 extends AbstractSched {
         int lim = Math.max(0, c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1));
         // The counts shown in the reviewer does not consider the current card. E.g. if it indicates 6 new card, it means, 6 new card including current card will be seen today.
         // So currentCard does not have to be taken into consideration in this method
-        if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_NEW, did)) {
+        if (considerCurrentCard && currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_NEW, did)) {
             lim--;
         }
         return lim;
@@ -1443,10 +1445,11 @@ public class SchedV2 extends AbstractSched {
      * plus the number of extra cards to see today in this deck, a parent or a descendant.
      *
      * Respects the limits of its ancestor. Current card is treated the same way as other cards.
+     * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
-    private int _currentRevLimit() {
+    private int _currentRevLimit(boolean considerCurrentCard) {
         Deck d = mCol.getDecks().get(mCol.getDecks().selected(), false);
-        return _deckRevLimitSingle(d);
+        return _deckRevLimitSingle(d, considerCurrentCard);
     }
 
     /**
@@ -1457,9 +1460,10 @@ public class SchedV2 extends AbstractSched {
      *
      * Respects the limits of its ancestor
      * Overridden: V1 does not consider parents limit
+     * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
-    protected int _deckRevLimitSingle(@Nullable Deck d) {
-        return _deckRevLimitSingle(d, null);
+    protected int _deckRevLimitSingle(@Nullable Deck d, boolean considerCurrentCard) {
+        return _deckRevLimitSingle(d, null, considerCurrentCard);
     }
 
 
@@ -1470,8 +1474,10 @@ public class SchedV2 extends AbstractSched {
      * plus the number of extra cards to see today in deck d, a parent or a descendant.
      *
      * Respects the limits of its ancestor, either given as parentLimit, or through direct computation.
+     * @param parentLimit Limit of the parent, this is an upper bound on the limit of this deck
+     * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
-    private int _deckRevLimitSingle(@Nullable Deck d, Integer parentLimit) {
+    private int _deckRevLimitSingle(@Nullable Deck d, Integer parentLimit, boolean considerCurrentCard) {
         // invalid deck selected?
         if (d == null) {
             return 0;
@@ -1484,7 +1490,7 @@ public class SchedV2 extends AbstractSched {
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
         // The counts shown in the reviewer does not consider the current card. E.g. if it indicates 6 rev card, it means, 6 rev card including current card will be seen today.
         // So currentCard does not have to be taken into consideration in this method
-        if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_REV, did)) {
+        if (considerCurrentCard && currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_REV, did)) {
             lim--;
         }
 
@@ -1495,7 +1501,7 @@ public class SchedV2 extends AbstractSched {
         } else {
             for (@NonNull Deck parent : mCol.getDecks().parents(did)) {
                 // pass in dummy parentLimit so we don't do parent lookup again
-                lim = Math.min(lim, _deckRevLimitSingle(parent, lim));
+                lim = Math.min(lim, _deckRevLimitSingle(parent, lim, considerCurrentCard));
             }
             return lim;
         }
@@ -1512,7 +1518,7 @@ public class SchedV2 extends AbstractSched {
 
     // Overriden: V1 uses _walkingCount
     protected void _resetRevCount() {
-        int lim = _currentRevLimit();
+        int lim = _currentRevLimit(true);
         mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND id != ? LIMIT ?)",
                                              mToday, currentCardId(), lim);
     }
@@ -1541,7 +1547,7 @@ public class SchedV2 extends AbstractSched {
         if (mRevCount == 0) {
             return false;
         }
-        int lim = Math.min(mQueueLimit, _currentRevLimit());
+        int lim = Math.min(mQueueLimit, _currentRevLimit(true));
         if (lim != 0) {
             Cursor cur = null;
             mRevQueue.clear();
@@ -1713,7 +1719,7 @@ public class SchedV2 extends AbstractSched {
         return ivl4;
     }
 
-    protected int _fuzzedIvl(int ivl) {
+    public int _fuzzedIvl(int ivl) {
         Pair<Integer, Integer> minMax = _fuzzIvlRange(ivl);
         // Anki's python uses random.randint(a, b) which returns x in [a, b] while the eq Random().nextInt(a, b)
         // returns x in [0, b-a), hence the +1 diff with libanki
@@ -1820,32 +1826,29 @@ public class SchedV2 extends AbstractSched {
      */
 
     /** Rebuild a dynamic deck. */
-    public void rebuildDyn() {
+    protected void rebuildDyn() {
         rebuildDyn(0);
     }
 
 
-    // Note: The original returns an integer result. We return List<Long> with that number to satisfy the
-    // interface requirements. The result isn't used anywhere so this isn't a problem.
     // Overridden, because upstream implements exactly the same method in two different way for unknown reason
-    public @Nullable List<Long> rebuildDyn(long did) {
+    public void rebuildDyn(long did) {
         if (did == 0) {
             did = mCol.getDecks().selected();
         }
         Deck deck = mCol.getDecks().get(did);
         if (deck.getInt("dyn") == 0) {
             Timber.e("error: deck is not a filtered deck");
-            return null;
+            return;
         }
         // move any existing cards back first, then fill
         emptyDyn(did);
         int cnt = _fillDyn(deck);
         if (cnt == 0) {
-            return null;
+            return;
         }
         // and change to our new deck
         mCol.getDecks().select(did);
-        return Collections.singletonList((long)cnt);
     }
 
 
@@ -2231,15 +2234,11 @@ public class SchedV2 extends AbstractSched {
         }
         if (haveBuried()) {
             String now;
-            if (mHaveCustomStudy) {
-                now = " " + context.getString(R.string.sched_unbury_action);
-            } else {
-                now = "";
-            }
+            now = " " + context.getString(R.string.sched_unbury_action);
             sb.append("\n\n");
             sb.append("" + context.getString(R.string.sched_has_buried) + now);
         }
-        if (mHaveCustomStudy && mCol.getDecks().current().getInt("dyn") == 0) {
+        if (mCol.getDecks().current().getInt("dyn") == 0) {
             sb.append("\n\n");
             sb.append(context.getString(R.string.studyoptions_congrats_custom));
         }
@@ -2344,7 +2343,7 @@ public class SchedV2 extends AbstractSched {
      * Return the next interval for CARD, in seconds.
      */
     // Overriden
-    public long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         // preview mode?
         if (_previewingCard(card)) {
             if (ease == Consts.BUTTON_ONE) {
@@ -2814,7 +2813,7 @@ public class SchedV2 extends AbstractSched {
 
 
     public String getName() {
-        return mName;
+        return "std2";
     }
 
 

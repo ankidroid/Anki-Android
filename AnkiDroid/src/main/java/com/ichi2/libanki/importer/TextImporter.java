@@ -35,15 +35,12 @@ public class TextImporter extends NoteImporter {
     private boolean mNeedDelimiter = true;
     String mPatterns = "\t|,;:";
 
-    private final Object lines;
     private FileObj fileobj;
     private char delimiter;
     private String[] tagsToAdd;
 
     private CsvDialect dialect;
     private int numFields;
-    // appears unused
-    private int mIgnored;
 
 
     private boolean mFirstLineWasTags;
@@ -51,7 +48,6 @@ public class TextImporter extends NoteImporter {
 
     public TextImporter(Collection col, String file) {
         super(col, file);
-        lines = null;
         fileobj = null;
         delimiter = '\0';
         tagsToAdd = new String[0];
@@ -100,7 +96,6 @@ public class TextImporter extends NoteImporter {
             log.add(getString(R.string.csv_importer_error_exception, e));
         }
         mLog = log;
-        mIgnored = ignored;
         fileobj.close();
         return notes;
     }

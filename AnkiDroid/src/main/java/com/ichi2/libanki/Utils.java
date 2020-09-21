@@ -566,6 +566,7 @@ public class Utils {
      * @param data the string to generate hash from
      * @return A string of length 40 containing the hexadecimal representation of the MD5 checksum of data.
      */
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     public static String checksum(String data) {
         String result = "";
         if (data != null) {

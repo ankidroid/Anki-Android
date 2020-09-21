@@ -112,7 +112,7 @@
     <string name="rebuild_custom_study_deck">Обнова на прилагодената студија на deck&#8230;</string>
     <string name="importing_collection">Внесување колекција&#8230;</string>
     <string name="import_media_count">Внесување на медиумски датотеки %1$d%%&#8230;</string>
-    <string name="import_progress">Внесување на белешки: %1$d%%\n• Внесување картички: %2$d%%\n• Пост-обработка: %3$d%%</string>
+    <string name="import_progress">• Внесување на белешки: %1$d%%\n• Внесување картички: %2$d%%\n• Пост-обработка: %3$d%%</string>
     <string name="import_update_details">Ажурирани %1$d од %2$d постоечки белешки.</string>
     <string name="import_update_ignored">Некои ажурирања беа игнорирани бидејќи типот на белешка се променил</string>
     <string name="import_complete_count">Увезени картички: %d</string>

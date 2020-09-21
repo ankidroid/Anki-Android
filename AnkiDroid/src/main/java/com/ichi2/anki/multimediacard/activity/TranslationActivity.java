@@ -46,6 +46,7 @@ import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.AdaptionUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -89,6 +90,11 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (AdaptionUtil.isUserATestClient()) {
+            finishCancel();
+            return;
+        }
 
         if (savedInstanceState != null) {
             boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);

@@ -313,7 +313,7 @@ public class MetaDB {
             cur = mMetaDb.rawQuery("SELECT _id FROM whiteboardState" + " WHERE did  = " + did, null);
             if (cur.moveToNext()) {
                 mMetaDb.execSQL("UPDATE whiteboardState " + "SET did = " + did + ", " + "state="
-                        + Integer.toString(state) + " " + "WHERE _id=" + cur.getString(0) + ";");
+                        + state + " " + "WHERE _id=" + cur.getString(0) + ";");
                 Timber.d("Store whiteboard state (%d) for deck %d", state, did);
             } else {
                 mMetaDb.execSQL("INSERT INTO whiteboardState (did, state) VALUES (?, ?)", new Object[] { did, state });
@@ -363,7 +363,7 @@ public class MetaDB {
             cur = mMetaDb.rawQuery("SELECT _id FROM whiteboardState" + " WHERE did  = " + did, null);
             if (cur.moveToNext()) {
                 mMetaDb.execSQL("UPDATE whiteboardState " + "SET did = " + did + ", " + "visible="
-                        + Integer.toString(isVisibleState) + " " + "WHERE _id=" + cur.getString(0) + ";");
+                        + isVisibleState + " " + "WHERE _id=" + cur.getString(0) + ";");
                 Timber.d("Store whiteboard visibility (%d) for deck %d", isVisibleState, did);
             } else {
                 mMetaDb.execSQL("INSERT INTO whiteboardState (did, visible) VALUES (?, ?)", new Object[] { did, isVisibleState });
@@ -416,7 +416,7 @@ public class MetaDB {
             cur = mMetaDb.rawQuery("SELECT _id FROM customDictionary" + " WHERE did = " + did, null);
             if (cur.moveToNext()) {
                 mMetaDb.execSQL("UPDATE customDictionary " + "SET did = " + did + ", " + "dictionary="
-                        + Integer.toString(dictionary) + " " + "WHERE _id=" + cur.getString(0) + ";");
+                        + dictionary + " " + "WHERE _id=" + cur.getString(0) + ";");
                 Timber.i("MetaDB:: Store custom dictionary (%d) for deck %d", dictionary, did);
             } else {
                 mMetaDb.execSQL("INSERT INTO customDictionary (did, dictionary) VALUES (?, ?)", new Object[] { did,

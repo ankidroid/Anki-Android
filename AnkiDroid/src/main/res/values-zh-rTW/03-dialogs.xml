@@ -106,7 +106,7 @@
     <string name="rebuild_custom_study_deck">重建自訂學習的牌組。\n請稍後...</string>
     <string name="importing_collection">匯入收藏中&#8230;</string>
     <string name="import_media_count">匯入媒體檔案 %1$d%%\n 請稍後......</string>
-    <string name="import_progress">正在匯入筆記: %1$d%%\n• 正在匯入卡片: %2$d%%\n• 正在後期處理: %3$d%%</string>
+    <string name="import_progress">• 正在匯入筆記: %1$d%%\n• 正在匯入卡片: %2$d%%\n• 正在後期處理: %3$d%%</string>
     <string name="import_update_details">現有筆記%2$d條，已更新%1$d條。</string>
     <string name="import_update_ignored">忽略了某些更新，因為這些筆記的類型已改變</string>
     <string name="import_complete_count">卡片已匯入：%d</string>

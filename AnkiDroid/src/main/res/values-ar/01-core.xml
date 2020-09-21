@@ -174,8 +174,8 @@
     <string name="time_quantity_months">%.1f ش</string>
     <string name="time_quantity_years">%.1f ع</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">إعادة بناء الرزمة المفلترة&#8230;</string>
-    <string name="rebuild_cram_label">إعادة بناء</string>
+    <string name="rebuild_filtered_deck">إعادة إنشاء الرزمة المفلترة&#8230;</string>
+    <string name="rebuild_cram_label">إعادة إنشاء</string>
     <string name="empty_cram_label">إفراغ</string>
     <string name="create_subdeck">إنشاء رزمة فرعية</string>
     <string name="empty_filtered_deck">إفراغ الرزمة المفلترة&#8230;</string>

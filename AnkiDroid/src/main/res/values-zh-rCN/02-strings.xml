@@ -304,4 +304,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">加载“%s”失败</string>
     <string name="card_viewer_could_not_find_image_get_help">帮助</string>
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">加载牌组“%s”失败</string>
 </resources>

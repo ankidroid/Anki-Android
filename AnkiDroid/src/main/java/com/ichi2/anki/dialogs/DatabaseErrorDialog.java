@@ -13,6 +13,7 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.async.Connection;
 import com.ichi2.libanki.utils.Time;
 
 import java.io.File;
@@ -282,7 +283,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         .positiveText(res.getString(R.string.dialog_positive_overwrite))
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .onPositive((inner_dialog, which) -> {
-                            ((DeckPicker) getActivity()).sync("download");
+                            ((DeckPicker) getActivity()).sync(Connection.ConflictResolution.FULL_DOWNLOAD);
                             dismissAllDialogFragments();
                         })
                         .show();

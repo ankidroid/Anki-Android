@@ -21,7 +21,6 @@ package com.ichi2.anki;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -41,6 +40,7 @@ import androidx.appcompat.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -136,7 +136,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     /** List of cards in the browser.
     * When the list is changed, the position member of its elements should get changed.*/
-    private List<CardCache> mCards;
+    @NonNull
+    private List<CardCache> mCards = new ArrayList<>();
     private ArrayList<Deck> mDropDownDecks;
     private ListView mCardsListView;
     private SearchView mSearchView;
@@ -665,6 +666,67 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // NOTE: These are all active when typing in the search - doesn't matter as all need CTRL
+
+        switch (keyCode) {
+            /* Ctrl+A - Select All */
+            case KeyEvent.KEYCODE_A: {
+                if (event.isCtrlPressed()) {
+                    Timber.i("Ctrl+A - Select All");
+                    onSelectAll();
+                    return true;
+                }
+            }
+            case KeyEvent.KEYCODE_E: {
+                // Ctrl+Shift+E: Export (TODO)
+                if (event.isCtrlPressed()) {
+                    Timber.i("Ctrl+E: Add Note");
+                    addNoteFromCardBrowser();
+                    return true;
+                }
+            }
+            case KeyEvent.KEYCODE_D: {
+                if (event.isCtrlPressed()) {
+                    Timber.i("Ctrl+D: Change Deck");
+                    showChangeDeckDialog();
+                    return true;
+                }
+            }
+            case KeyEvent.KEYCODE_K: {
+                if (event.isCtrlPressed()) {
+                    Timber.i("Ctrl+K: Toggle Mark");
+                    toggleMark();
+                    return true;
+                }
+            }
+            case KeyEvent.KEYCODE_R: {
+                if (event.isCtrlPressed() && event.isAltPressed()) {
+                    Timber.i("Ctrl+Alt+R - Reschedule");
+                    rescheduleSelectedCards();
+                    return true;
+                }
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    /** All the notes of the selected cards will be marked
+     * If one or more card is unmarked, all will be marked,
+     * otherwise, they will be unmarked */
+    private void toggleMark() {
+        if (!hasSelectedCards()) {
+            Timber.i("Not marking cards - nothing selected");
+            return;
+        }
+
+        CollectionTask.launchCollectionTask(DISMISS_MULTI,
+                markCardHandler(),
+                new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.MARK_NOTE_MULTI}));
+    }
+
+
     private void selectAllDecks() {
         selectDropDownItem(0);
     }
@@ -909,7 +971,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void flagTask (int flag) {
         CollectionTask.launchCollectionTask(DISMISS_MULTI,
                                 flagCardHandler(),
-                                new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, new Integer (flag)}));
+                                new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, flag}));
     }
 
     @Override
@@ -928,9 +990,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 endMultiSelectMode();
                 return true;
             case R.id.action_add_note_from_card_browser: {
-                Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
-                intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
-                startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
+                addNoteFromCardBrowser();
                 return true;
             }
 
@@ -1012,9 +1072,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_mark_card:
-                CollectionTask.launchCollectionTask(DISMISS_MULTI,
-                        markCardHandler(),
-                        new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.MARK_NOTE_MULTI}));
+                toggleMark();
 
                 return true;
 
@@ -1027,34 +1085,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_change_deck: {
-                AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-                builderSingle.setTitle(getString(R.string.move_all_to_deck));
-
-                //WARNING: changeDeck depends on this index, so any changes should be reflected there.
-                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
-                for (Deck deck : getValidDecksForChangeDeck()) {
-                    try {
-                        arrayAdapter.add(deck.getString("name"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        changeDeck(which);
-                    }
-                });
-                builderSingle.show();
-
+                showChangeDeckDialog();
                 return true;
             }
 
@@ -1104,24 +1135,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             case R.id.action_reschedule_cards: {
                 Timber.i("CardBrowser:: Reschedule button pressed");
-
-                long[] selectedCardIds = getSelectedCardIds();
-                FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
-                    CollectionTask.launchCollectionTask(DISMISS_MULTI,
-                        rescheduleCardHandler(),
-                        new TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays}));
-
-                RescheduleDialog rescheduleDialog;
-                if (selectedCardIds.length == 1) {
-                    long cardId = selectedCardIds[0];
-                    Card selected = getCol().getCard(cardId);
-                    rescheduleDialog = RescheduleDialog.rescheduleSingleCard(getResources(), selected, consumer);
-                } else {
-                    rescheduleDialog = RescheduleDialog.rescheduleMultipleCards(getResources(),
-                            consumer,
-                            selectedCardIds.length);
-                }
-                showDialogFragment(rescheduleDialog);
+                rescheduleSelectedCards();
                 return true;
             }
             case R.id.action_reposition_cards: {
@@ -1160,6 +1174,64 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+
+    private void rescheduleSelectedCards() {
+        if (!hasSelectedCards()) {
+            Timber.i("Attempted reschedule - no cards selected");
+            return;
+        }
+
+        long[] selectedCardIds = getSelectedCardIds();
+        FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
+            CollectionTask.launchCollectionTask(DISMISS_MULTI,
+                rescheduleCardHandler(),
+                new TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays}));
+
+        RescheduleDialog rescheduleDialog;
+        if (selectedCardIds.length == 1) {
+            long cardId = selectedCardIds[0];
+            Card selected = getCol().getCard(cardId);
+            rescheduleDialog = RescheduleDialog.rescheduleSingleCard(getResources(), selected, consumer);
+        } else {
+            rescheduleDialog = RescheduleDialog.rescheduleMultipleCards(getResources(),
+                    consumer,
+                    selectedCardIds.length);
+        }
+        showDialogFragment(rescheduleDialog);
+    }
+
+
+    private void showChangeDeckDialog() {
+        if (!hasSelectedCards()) {
+            Timber.i("Not showing Change Deck - No Cards");
+            return;
+        }
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle(getString(R.string.move_all_to_deck));
+
+        //WARNING: changeDeck depends on this index, so any changes should be reflected there.
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_deck_item);
+        for (Deck deck : getValidDecksForChangeDeck()) {
+            try {
+                arrayAdapter.add(deck.getString("name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        builderSingle.setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss());
+        builderSingle.setAdapter(arrayAdapter, (dialog, which) -> changeDeck(which));
+        builderSingle.show();
+    }
+
+
+    private void addNoteFromCardBrowser() {
+        Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
+        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
+        startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
     }
 
 
@@ -1488,7 +1560,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         protected void actualOnValidPostExecute(CardBrowser browser, TaskData result) {
             browser.hideProgressBar();
         }
-    };
+    }
+
 
     private ChangeDeckHandler changeDeckHandler() {
         return new ChangeDeckHandler(this);
@@ -1521,7 +1594,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
             }, browser.mCardsListView, null);
         }
-    };
+    }
+
 
     @CheckResult
     private static String formatQA(String text, Context context) {
@@ -1616,12 +1690,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
-    };
+    }
+
 
     private FlagCardHandler flagCardHandler(){
         return new FlagCardHandler(this);
     }
-    private static class FlagCardHandler extends SuspendCardHandler{public FlagCardHandler(CardBrowser browser) {super(browser);}};
+    private static class FlagCardHandler extends SuspendCardHandler{public FlagCardHandler(CardBrowser browser) {super(browser);}}
+
 
     private MarkCardHandler markCardHandler() {
         return new MarkCardHandler(this);
@@ -1638,7 +1714,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
-    };
+    }
+
+
 
     private DeleteNoteHandler mDeleteNoteHandler = new DeleteNoteHandler(this);
     private static class DeleteNoteHandler extends ListenerWithProgressBarCloseOnFalse {
@@ -1674,7 +1752,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }, browser.mCardsListView, null);
             browser.searchCards();
         }
-    };
+    }
+
+
 
     private final UndoHandler mUndoHandler = new UndoHandler(this);
     private static class UndoHandler extends ListenerWithProgressBarCloseOnFalse {
@@ -1693,7 +1773,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
             browser.updatePreviewMenuItem();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
-    };
+    }
+
+
 
     private final SearchCardsHandler mSearchCardsHandler = new SearchCardsHandler(this);
     private class SearchCardsHandler extends ListenerWithProgressBar {
@@ -1749,7 +1831,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             super.actualOnCancelled(browser);
             hideProgressBar();
         }
-    };
+    }
+
 
     public boolean hasSelectedAllDecks() {
         Long lastDeckId = getLastDeckId();
@@ -1832,7 +1915,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void actualOnCancelled(@NonNull CardBrowser browser) {
             browser.hideProgressBar();
         }
-    };
+    }
+
+
 
     private final CheckSelectedCardsHandler mCheckSelectedCardsHandler = new CheckSelectedCardsHandler(this);
     private static class CheckSelectedCardsHandler extends ListenerWithProgressBar {

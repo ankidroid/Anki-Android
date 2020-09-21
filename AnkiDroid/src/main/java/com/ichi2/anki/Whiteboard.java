@@ -75,8 +75,6 @@ public class Whiteboard extends View {
 
     private boolean mSecondFingerWithinTapTolerance;
     private boolean mCurrentlyDrawing = false;
-    private boolean mInvertedColors;
-    private boolean mMonochrome;
     private boolean mUndoModeActive = false;
     private final int foregroundColor;
     private final LinearLayout mColorPalette;
@@ -84,18 +82,16 @@ public class Whiteboard extends View {
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
-        mInvertedColors = inverted;
-        mMonochrome = monochrome;
 
 
-        if (!mInvertedColors) {
-            if (mMonochrome) {
+        if (!inverted) {
+            if (monochrome) {
                 foregroundColor = Color.BLACK;
             } else {
                 foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color);
             }
         } else {
-            if (mMonochrome) {
+            if (monochrome) {
                 foregroundColor = Color.WHITE;
             } else {
                 foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color_inv);

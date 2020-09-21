@@ -89,6 +89,11 @@ public class MyAccount extends AnkiActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (AdaptionUtil.isUserATestClient()) {
+            finishWithoutAnimation();
+            return;
+        }
+
         mayOpenUrl(Uri.parse(getResources().getString(R.string.register_url)));
         initAllContentViews();
 

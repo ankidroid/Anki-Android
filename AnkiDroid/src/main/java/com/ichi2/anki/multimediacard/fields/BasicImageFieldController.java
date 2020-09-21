@@ -492,6 +492,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      *
      * @return true if successful, false indicates the current image is likely not usable, revert if possible
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean rotateAndCompress(String imagePath, ImageViewModel imageViewModel) {
         Timber.d("rotateAndCompress() on %s", imagePath);
         // Set the rotation of the camera image and save as png
@@ -578,7 +579,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         if (!rotateAndCompress()) {
             Timber.i("handleTakePictureResult appears to have an invalid picture");
             return;
-        };
+        }
         showCropDialog(mActivity.getString(R.string.crop_image), null);
     }
 

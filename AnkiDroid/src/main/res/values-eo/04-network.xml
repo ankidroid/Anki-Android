@@ -116,6 +116,8 @@
     <string name="sync_media_db_error">Fiaskis samtempigi aŭdvidaĵojn, ĉar la nuna datumbazo estas koruptita. Estas konsilinde kontroli aŭdvidaĵojn.</string>
     <string name="sync_media_error">Eraro dum samtempigado de aŭdvidaĵoj</string>
     <string name="sync_media_error_check">Eraro dum samtempigado de aŭdvidaĵoj. Kontrolo de aŭdvidaĵoj estas konsilinda.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Loka</string>
     <string name="sync_sanity_remote">Fora</string>
     <string name="force_full_sync_title">Devigi plenan samtempigadon</string>
@@ -133,4 +135,6 @@
     <string name="sync_menu_title">Samtempigo</string>
     <string name="sync_menu_title_full_sync">Samtempigo (plena)</string>
     <string name="sync_menu_title_no_account">Samtempigo (ensaluto)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Help</string>
 </resources>

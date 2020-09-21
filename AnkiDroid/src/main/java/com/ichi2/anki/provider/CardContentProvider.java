@@ -61,6 +61,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -336,9 +337,9 @@ public class CardContentProvider extends ContentProvider {
                             String value = "?".equals(keyAndValue[1].trim()) ? selectionArgs[selectionArgIndex++] :
                                     keyAndValue[1];
                             if ("limit".equals(keyAndValue[0].trim())) {
-                                limit = Integer.valueOf(value);
+                                limit = Integer.parseInt(value);
                             } else if ("deckID".equals(keyAndValue[0].trim())) {
-                                deckIdOfTemporarilySelectedDeck = Long.valueOf(value);
+                                deckIdOfTemporarilySelectedDeck = Long.parseLong(value);
                                 if(!selectDeckWithCheck(col, deckIdOfTemporarilySelectedDeck)){
                                     return rv; //if the provided deckID is wrong, return empty cursor.
                                 }
@@ -402,7 +403,7 @@ public class CardContentProvider extends ContentProvider {
                 String name = col.getDecks().name(id);
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
-                JSONArray counts = new JSONArray(Arrays.asList(col.getSched().counts()));
+                JSONArray counts = new JSONArray(Collections.singletonList(col.getSched().counts()));
                 addDeckToCursor(id, name, counts,rv, col, columns);
                 return rv;
             }
@@ -741,7 +742,7 @@ public class CardContentProvider extends ContentProvider {
             String deckIdStr = uri.getQueryParameter(FlashCardsContract.Note.DECK_ID_QUERY_PARAM);
             if (deckIdStr != null) {
                 try {
-                    long deckId = Long.valueOf(deckIdStr);
+                    long deckId = Long.parseLong(deckIdStr);
                     return bulkInsertNotes(values, deckId);
                 } catch (NumberFormatException e) {
                     Timber.d("Invalid %s: %s", FlashCardsContract.Note.DECK_ID_QUERY_PARAM, deckIdStr);
@@ -909,7 +910,7 @@ public class CardContentProvider extends ContentProvider {
                     }
                     // Add some empty card templates
                     for (int idx = 0; idx < numCards; idx++) {
-                        JSONObject t = mm.newTemplate("Card " + (idx+1));
+                        JSONObject t = Models.newTemplate("Card " + (idx+1));
                         t.put("qfmt",String.format("{{%s}}", allFields[0]));
                         String answerField = allFields[0];
                         if (allFields.length > 1) {
@@ -964,7 +965,7 @@ public class CardContentProvider extends ContentProvider {
                 String bqfmt = values.getAsString(CardTemplate.BROWSER_QUESTION_FORMAT);
                 String bafmt = values.getAsString(CardTemplate.BROWSER_ANSWER_FORMAT);
                 try {
-                    JSONObject t = models.newTemplate(name);
+                    JSONObject t = Models.newTemplate(name);
                     t.put("qfmt", qfmt);
                     t.put("afmt", afmt);
                     t.put("bqfmt", bqfmt);
@@ -1343,6 +1344,7 @@ public class CardContentProvider extends ContentProvider {
         return String.format(format, getClass().getSimpleName(), methodName, path, getCallingPackageSafe());
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean hasReadWritePermission() {
         if (BuildConfig.DEBUG) {    // Allow self-calling of the provider only in debug builds (e.g. for unit tests)
             return mContext.checkCallingOrSelfPermission(READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED;

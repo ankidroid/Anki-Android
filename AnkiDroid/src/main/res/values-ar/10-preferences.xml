@@ -291,4 +291,6 @@
     <string name="analytics_dialog_title">ساعد في تحسين أنكيدرويد!</string>
     <string name="analytics_title">مشاركة بيانات استخدام الميزات</string>
     <string name="analytics_summ">تستطيع المساهمة في أنكيدرويد من خلال مساعدة فريق التطوير على معرفة الميزات التي يستخدمها الناس</string>
+    <string name="enable_miui_keyboard_hack">«لصق» لتضمين عبارة ملء فراغات</string>
+    <string name="enable_miui_keyboard_hack_summ">في محرر الملحوظات، «لصق» يحول النص المحدد إلى عبارة ملء فراغات</string>
 </resources>

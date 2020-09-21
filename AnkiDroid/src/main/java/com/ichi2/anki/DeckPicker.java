@@ -139,6 +139,8 @@ import java.util.TreeMap;
 import timber.log.Timber;
 
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
+
 import com.ichi2.async.TaskData;
 
 public class DeckPicker extends NavigationDrawerActivity implements
@@ -209,7 +211,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
-    private List<AbstractDeckTreeNode> mDueTree;
+    @VisibleForTesting
+    public List<AbstractDeckTreeNode> mDueTree;
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -244,36 +247,51 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private final OnClickListener mDeckClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            long deckId = (long) v.getTag();
-            Timber.i("DeckPicker:: Selected deck with id %d", deckId);
-            if (mActionsMenu != null && mActionsMenu.isExpanded()) {
-                mActionsMenu.collapse();
-            }
-            handleDeckSelection(deckId, false);
-            if (mFragmented || !CompatHelper.isLollipop()) {
-                // Calling notifyDataSetChanged() will update the color of the selected deck.
-                // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
-                mDeckListAdapter.notifyDataSetChanged();
-            }
+            onDeckClick(v, false);
         }
     };
 
     private final OnClickListener mCountsClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            long deckId = (long) v.getTag();
-            Timber.i("DeckPicker:: Selected deck with id %d", deckId);
-            if (mActionsMenu != null && mActionsMenu.isExpanded()) {
-                mActionsMenu.collapse();
-            }
-            handleDeckSelection(deckId, true);
+            onDeckClick(v, true);
+        }
+    };
+
+
+    private void onDeckClick(View v, boolean dontSkipStudyOptions) {
+        long deckId = (long) v.getTag();
+        Timber.i("DeckPicker:: Selected deck with id %d", deckId);
+        if (mActionsMenu != null && mActionsMenu.isExpanded()) {
+            mActionsMenu.collapse();
+        }
+
+        boolean collectionIsOpen = false;
+        try {
+            collectionIsOpen = colIsOpen();
+            handleDeckSelection(deckId, dontSkipStudyOptions);
             if (mFragmented || !CompatHelper.isLollipop()) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
                 // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
                 mDeckListAdapter.notifyDataSetChanged();
             }
+        } catch (Exception e) {
+            // Maybe later don't report if collectionIsOpen is false?
+            String info = deckId + " colOpen:" + collectionIsOpen;
+            AnkiDroidApp.sendExceptionReport(e, "deckPicker::onDeckClick", info);
+            displayFailedToOpenDeck(deckId);
         }
-    };
+    }
+
+
+    private void displayFailedToOpenDeck(long deckId) {
+        // #6208 - if the click is accepted before the sync completes, we get a failure.
+        // We use the Deck ID as the deck likely doesn't exist any more.
+        String message = getString(R.string.deck_picker_failed_deck_load, Long.toString(deckId));
+        UIUtils.showThemedToast(this, message, false);
+        Timber.w(message);
+    }
+
 
     private final View.OnLongClickListener mDeckLongClickListener = new View.OnLongClickListener() {
         @Override
@@ -1023,6 +1041,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 openCardBrowser();
                 break;
 
+            case KeyEvent.KEYCODE_Y:
+                Timber.i("Sync from keypress");
+                sync();
+                break;
+
             default:
                 break;
         }
@@ -1391,7 +1414,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /**
      *  Show simple error dialog with just the message and OK button. Reload the activity when dialog closed.
      */
-    private void showSyncErrorMessage(String message) {
+    private void showSyncErrorMessage(@Nullable String message) {
         String title = getResources().getString(R.string.sync_error);
         showSimpleMessageDialog(title, message, true);
     }
@@ -1613,11 +1636,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
     /**
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required.
-     *
-     * @param syncConflictResolution Either "upload" or "download", depending on the user's choice.
      */
     @Override
-    public void sync(String syncConflictResolution) {
+    public void sync(Connection.ConflictResolution syncConflictResolution) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         String hkey = preferences.getString("hkey", "");
         if (hkey.length() == 0) {
@@ -1804,17 +1825,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     } else if ("fullSync".equals(resultType)) {
                         if (getCol().isEmpty()) {
                             // don't prompt user to resolve sync conflict if local collection empty
-                            sync("download");
+                            sync(FULL_DOWNLOAD);
                             // TODO: Also do reverse check to see if AnkiWeb collection is empty if Anki Desktop
                             // implements it
                         } else {
                             // If can't be resolved then automatically then show conflict resolution dialog
                             showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
                         }
-                    } else if ("dbError".equals(resultType) || "basicCheckFailed".equals(resultType)) {
-                        String repairUrl = res.getString(R.string.repair_deck);
-                        dialogMessage = res.getString(R.string.sync_corrupt_database, repairUrl);
+                    } else if ("basicCheckFailed".equals(resultType)) {
+                        dialogMessage = res.getString(R.string.sync_basic_check_failed, res.getString(R.string.check_db));
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                    } else if ("dbError".equals(resultType)) {
+                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage);
                     } else if ("overwriteError".equals(resultType)) {
                         dialogMessage = res.getString(R.string.sync_overwrite_error);
                         showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
@@ -1884,20 +1906,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     // Note: Do not log this data. May contain user email.
                     String message = res.getString(R.string.sync_database_acknowledge) + "\n\n" + data.data[2];
                     showSimpleMessageDialog(message);
-                } else if (data.data.length > 0 && data.data[0] instanceof String
-                        && ((String) data.data[0]).length() > 0) {
+                } else if (data.data.length > 0 && data.data[0] instanceof Connection.ConflictResolution) {
                     // A full sync occurred
-                    String dataString = (String) data.data[0];
+                    Connection.ConflictResolution dataString = (Connection.ConflictResolution) data.data[0];
                     switch (dataString) {
-                        case "upload":
+                        case FULL_UPLOAD:
                             Timber.i("Full Upload Completed");
                             showSyncLogMessage(R.string.sync_log_uploading_message, syncMessage);
                             break;
-                        case "download":
+                        case FULL_DOWNLOAD:
                             Timber.i("Full Download Completed");
                             showSyncLogMessage(R.string.sync_log_downloading_message, syncMessage);
                             break;
-                        default:
+                        default: // should not be possible
                             Timber.i("Full Sync Completed (Unknown Direction)");
                             showSyncLogMessage(R.string.sync_database_acknowledge, syncMessage);
                             break;
@@ -1962,8 +1983,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         return msg;
     }
 
-
-    private String joinSyncMessages(String dialogMessage, String syncMessage) {
+    @Nullable
+    public static String joinSyncMessages(@Nullable String dialogMessage, @Nullable  String syncMessage) {
         // If both strings have text, separate them by a new line, otherwise return whichever has text
         if (!TextUtils.isEmpty(dialogMessage) && !TextUtils.isEmpty(syncMessage)) {
             return dialogMessage + "\n\n" + syncMessage;
@@ -2328,13 +2349,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Check if default deck is the only available and there are no cards
         boolean isEmpty = mDueTree.size() == 1 && mDueTree.get(0).getDid() == 1 && getCol().isEmpty();
 
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        boolean safeDisplay = prefs.getBoolean("safeDisplay", false);
-
-        if (safeDisplay) {
+        if (animationDisabled()) {
             mDeckPickerContent.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
             mNoDecksPlaceholder.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
-
         } else {
             float translation = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8,
                     getResources().getDisplayMetrics());
@@ -2633,7 +2650,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 deckPicker.loadStudyOptionsFragment(false);
             }
         }
-    };
+    }
+
 
     public void rebuildFiltered() {
         getCol().getDecks().select(mContextMenuDid);

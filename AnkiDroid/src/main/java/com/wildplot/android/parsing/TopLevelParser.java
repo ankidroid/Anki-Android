@@ -175,6 +175,7 @@ public class TopLevelParser implements Function2D, Function3D, Cloneable {
     }
 
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean stringHasValidBrackets(String string) {
         int finalBracketCheck = string.replaceAll("\\(", "").length() - string.replaceAll("\\)", "").length();
         if (finalBracketCheck != 0) {

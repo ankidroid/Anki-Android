@@ -210,8 +210,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // JS api list enable/disable status
     private HashMap<String, Boolean> mJsApiListMap = new HashMap<String, Boolean>();
 
-    private boolean isInFullscreen;
-
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -229,7 +227,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mDoubleScrolling;
     private boolean mScrollingButtons;
     private boolean mGesturesEnabled;
-    protected boolean mSafeDisplay;
     // Android WebView
     protected boolean mSpeakText;
     protected boolean mDisableClipboard = false;
@@ -307,8 +304,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private boolean mButtonHeightSet = false;
 
-    private boolean mConfigurationChanged = false;
-    private int mShowChosenAnswerLength = 2000;
+    private static final int sShowChosenAnswerLength = 2000;
 
     /**
      * A record of the last time the "show answer" or ease buttons were pressed. We keep track
@@ -379,7 +375,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private CardMarker mCardMarker;
 
     /** Handle providing help for "Image Not Found" */
-    private MissingImageHandler mMissingImageHandler = new MissingImageHandler(this::displayCouldNotFindImageSnackbar);
+    private static MissingImageHandler mMissingImageHandler = new MissingImageHandler();
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -633,8 +629,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             Resources res = getResources();
             Pair<Integer, Integer> elapsed = getCol().timeboxReached();
             if (elapsed != null) {
-                int nCards = elapsed.second.intValue();
-                int nMins = elapsed.first.intValue() / 60;
+                int nCards = elapsed.second;
+                int nMins = elapsed.first / 60;
                 String mins = res.getQuantityString(R.plurals.in_minutes, nMins, nMins);
                 String timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins);
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, timeboxMessage, true);
@@ -747,7 +743,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
             if (mTypeFont != null && !TextUtils.isEmpty(mTypeFont) && mTypeSize > 0) {
                 sb.append("style=\"font-family: '").append(mTypeFont).append("'; font-size: ")
-                        .append(Integer.toString(mTypeSize)).append("px;\" ");
+                        .append(mTypeSize).append("px;\" ");
             }
             sb.append(">\n</center>\n");
         } else {
@@ -885,8 +881,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected boolean isFullscreen() {
-        isInFullscreen = !getSupportActionBar().isShowing();
-        return isInFullscreen;
+        return !getSupportActionBar().isShowing();
     }
 
     @ Override
@@ -1380,7 +1375,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // remove chosen answer hint after a while
         mTimerHandler.removeCallbacks(removeChosenAnswerText);
-        mTimerHandler.postDelayed(removeChosenAnswerText, mShowChosenAnswerLength);
+        mTimerHandler.postDelayed(removeChosenAnswerText, sShowChosenAnswerLength);
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
@@ -1472,6 +1467,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         Button mFlipCard = (Button) findViewById(R.id.flip_card);
         mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
+
+        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+            mFlipCard.setBackgroundResource(Themes.getResFromAttr(this, R.attr.hardButtonRippleRef));
+        }
 
         if (!mButtonHeightSet && mRelativeButtonSize != 100) {
             ViewGroup.LayoutParams params = mFlipCardLayout.getLayoutParams();
@@ -1634,16 +1633,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected void displayAnswerBottomBar() {
+        mFlipCardLayout.setClickable(false);
         mEaseButtonsLayout.setVisibility(View.VISIBLE);
 
         Runnable after = () -> mFlipCardLayout.setVisibility(View.GONE);
 
         // hide "Show Answer" button
-        if (mSafeDisplay) {
+        if (animationDisabled()) {
             after.run();
         } else {
-            mEaseButtonsLayout.setAlpha(0);
-            mEaseButtonsLayout.animate().alpha(1).setDuration(mShortAnimDuration).withEndAction(after);
+            mFlipCardLayout.setAlpha(1);
+            mFlipCardLayout.animate().alpha(0).setDuration(mShortAnimDuration).withEndAction(after);
         }
     }
 
@@ -1662,13 +1662,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         };
 
         boolean easeButtonsVisible = mEaseButtonsLayout.getVisibility() == View.VISIBLE;
+        mFlipCardLayout.setClickable(true);
         mFlipCardLayout.setVisibility(View.VISIBLE);
 
-        if (mSafeDisplay || !easeButtonsVisible) {
+        if (animationDisabled() || !easeButtonsVisible) {
             after.run();
         } else {
-            mEaseButtonsLayout.setAlpha(1);
-            mEaseButtonsLayout.animate().alpha(0).setDuration(mShortAnimDuration).withEndAction(after);
+            mFlipCardLayout.setAlpha(0);
+            mFlipCardLayout.animate().alpha(1).setDuration(mShortAnimDuration).withEndAction(after);
         }
 
         focusAnswerCompletionField();
@@ -1743,7 +1744,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mScrollingButtons = preferences.getBoolean("scrolling_buttons", false);
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false);
         mPrefShowTopbar = preferences.getBoolean("showTopbar", true);
-        mSafeDisplay = preferences.getBoolean("safeDisplay", false);
 
         mGesturesEnabled = AnkiDroidApp.initiateGestures(preferences);
         mLinkOverridesTouchGesture = preferences.getBoolean("linkOverridesTouchGesture", false);
@@ -1934,37 +1934,40 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         jsApiInit();
     }
 
-    protected void displayCardQuestion(boolean reload) {
-        Timber.d("displayCardQuestion()");
-        sDisplayAnswer = false;
-        this.mMissingImageHandler.onCardSideChange();
-
-        setInterface();
-
-        String question;
-        String displayString = "";
+    /** String, as it will be displayed in the web viewer. Sound/video removed, image escaped...
+     Or warning if required*/
+    private String displayString(boolean reload) {
         if (mCurrentCard.isEmpty()) {
-            displayString = getResources().getString(R.string.empty_card_warning);
+            return getResources().getString(R.string.empty_card_warning);
         } else {
-            question = mCurrentCard.q(reload);
+            String question = mCurrentCard.q(reload);
             question = getCol().getMedia().escapeImages(question);
             question = typeAnsQuestionFilter(question);
 
             Timber.v("question: '%s'", question);
-            // Show text entry based on if the user wants to write the answer
-            if (typeAnswer()) {
-                mAnswerField.setVisibility(View.VISIBLE);
-            } else {
-                mAnswerField.setVisibility(View.GONE);
-            }
 
-            displayString = CardAppearance.enrichWithQADiv(question, false);
-
-            //if (mSpeakText) {
-            // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
-            // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
-            //}
+            return CardAppearance.enrichWithQADiv(question, false);
         }
+    }
+
+    protected void displayCardQuestion(boolean reload) {
+        Timber.d("displayCardQuestion()");
+        sDisplayAnswer = false;
+
+        setInterface();
+
+        String displayString = displayString(reload);
+        if (!mCurrentCard.isEmpty() && typeAnswer()) {
+            // Show text entry based on if the user wants to write the answer
+            mAnswerField.setVisibility(View.VISIBLE);
+        } else {
+            mAnswerField.setVisibility(View.GONE);
+        }
+
+        //if (mSpeakText) {
+        // ReadText.setLanguageInformation(Model.getModel(DeckManager.getMainDeck(),
+        // mCurrentCard.getCardModelId(), false).getId(), mCurrentCard.getCardModelId());
+        //}
 
         updateCard(displayString);
         hideEaseButtons();
@@ -2198,9 +2201,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
         fillFlashcard();
 
-        if (!mConfigurationChanged) {
-            playSounds(false); // Play sounds if appropriate
-        }
+        playSounds(false); // Play sounds if appropriate
     }
 
     /**
@@ -2788,7 +2789,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     class MyGestureDetector extends SimpleOnGestureListener {
         //Android design spec for the size of the status bar.
-        private final int NO_GESTURE_BORDER_DIP = 24;
+        private static final int NO_GESTURE_BORDER_DIP = 24;
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -3192,14 +3193,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             super.onReceivedError(view, request, error);
-            mMissingImageHandler.processFailure(request);
+            mMissingImageHandler.processFailure(request, AbstractFlashcardViewer.this::displayCouldNotFindImageSnackbar);
         }
 
 
         @Override
         public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
             super.onReceivedHttpError(view, request, errorResponse);
-            mMissingImageHandler.processFailure(request);
+            mMissingImageHandler.processFailure(request, AbstractFlashcardViewer.this::displayCouldNotFindImageSnackbar);
         }
 
 

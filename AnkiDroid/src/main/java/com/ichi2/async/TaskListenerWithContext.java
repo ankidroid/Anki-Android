@@ -18,7 +18,7 @@ public abstract class TaskListenerWithContext<CTX> extends TaskListener {
         if (context != null) {
             actualOnPreExecute(context);
         }
-    };
+    }
 
 
     final public void onProgressUpdate(TaskData value) {

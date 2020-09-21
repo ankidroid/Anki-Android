@@ -149,12 +149,14 @@ public class Collection {
         BURY_CARD(R.string.undo_action_bury_card),
         BURY_NOTE(R.string.undo_action_bury_note),
         SUSPEND_CARD(R.string.undo_action_suspend_card),
-        SUSPEND_CARD_MULTI(R.string.card_browser_toggle_suspend_card),
+        SUSPEND_CARD_MULTI(R.string.card_browser_suspend_card),
+        UNSUSPEND_CARD_MULTI(R.string.card_browser_unsuspend_card),
         SUSPEND_NOTE(R.string.undo_action_suspend_note),
         DELETE_NOTE(R.string.undo_action_delete),
         DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
         CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
-        MARK_NOTE_MULTI(R.string.card_browser_toggle_mark_card),
+        MARK_NOTE_MULTI(R.string.card_browser_mark_card),
+        UNMARK_NOTE_MULTI(R.string.card_browser_unmark_card),
         FLAG(R.string.card_browser_flag),
         REPOSITION_CARDS(R.string.undo_action_reposition_card),
         RESCHEDULE_CARDS(R.string.undo_action_reschedule_card),
@@ -331,7 +333,7 @@ public class Collection {
 
     public String loadColumn(String columnName) {
         int pos = 1;
-        StringBuffer buf = new StringBuffer("");
+        StringBuilder buf = new StringBuilder("");
 
         while (true) {
             try (Cursor cursor = mDb.query("SELECT substr(" + columnName + ", ?, ?) FROM col",
@@ -1362,6 +1364,7 @@ public class Collection {
     /*
      * Basic integrity check for syncing. True if ok.
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean basicCheck() {
         // cards without notes
         if (mDb.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1") > 0) {
@@ -2032,6 +2035,7 @@ public class Collection {
     }
 
     /** Check if this collection is valid. */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean validCollection() {
     	//TODO: more validation code
     	return getModels().validateModel();

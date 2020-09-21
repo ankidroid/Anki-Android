@@ -42,9 +42,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,13 +71,6 @@ public class Anki2Importer extends Importer {
 
     private Map<String, Object[]> mNotes;
 
-    /**
-     * Since we can't use a tuple as a key in Java, we resort to indexing twice with nested maps.
-     * Python: (guid, ord) -> cid
-     * Java: guid -> ord -> cid
-     */
-    @SuppressWarnings("PMD.SingularField")
-    private Map<String, Map<Integer, Long>> mCards;
     private Map<Long, Long> mDecks;
     private Map<Long, Long> mModelMap;
     private Map<String, String> mChangedGuids;
@@ -196,7 +191,7 @@ public class Anki2Importer extends Importer {
     private void _importNotes() {
         // build guid -> (id,mod,mid) hash & map of existing note ids
         mNotes = new HashMap<>();
-        Map<Long, Boolean> existing = new HashMap<>();
+        Set<Long> existing = new HashSet<>();
         Cursor cur = null;
         try {
             cur = mDst.getDb().getDatabase().query("select id, guid, mod, mid from notes", null);
@@ -206,7 +201,7 @@ public class Anki2Importer extends Importer {
                 long mod = cur.getLong(2);
                 long mid = cur.getLong(3);
                 mNotes.put(guid, new Object[] { id, mod, mid });
-                existing.put(id, true);
+                existing.add(id);
             }
         } finally {
             if (cur != null) {
@@ -250,10 +245,10 @@ public class Anki2Importer extends Importer {
                 boolean shouldAdd = _uniquifyNote(note);
                 if (shouldAdd) {
                     // ensure id is unique
-                    while (existing.containsKey(note[0])) {
+                    while (existing.contains(note[0])) {
                         note[0] = ((Long) note[0]) + 999;
                     }
-                    existing.put((Long) note[0], true);
+                    existing.add((Long) note[0]);
                     // bump usn
                     note[4] = usn;
                     // update media references in case of dupes
@@ -514,7 +509,12 @@ public class Anki2Importer extends Importer {
             }
         }
         // build map of guid -> (ord -> cid) and used id cache
-        mCards = new HashMap<>();
+        /**
+         * Since we can't use a tuple as a key in Java, we resort to indexing twice with nested maps.
+         * Python: (guid, ord) -> cid
+         * Java: guid -> ord -> cid
+         */
+        Map<String, Map<Integer, Long>> mCards = new HashMap<>();
         Map<Long, Boolean> existing = new HashMap<>();
         Cursor cur = null;
         try {
@@ -604,7 +604,7 @@ public class Anki2Importer extends Importer {
                     card[8] = (Long) card[8] - aheadBy;
                 }
                 // odue needs updating too
-                if (((Long) card[14]).longValue() != 0) {
+                if ((Long) card[14] != 0) {
                     card[14] = (Long) card[14] - aheadBy;
                 }
                 // if odid true, convert card from filtered to normal

@@ -40,6 +40,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -88,7 +89,7 @@ public class SchedV2Test extends RobolectricTest {
         DeckDueTreeNode caz = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW", 1, 0, 0, 0);
         caz.setChildren(new ArrayList<>(), addRev);
         DeckDueTreeNode ca = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv::abcdefgh", 1, 0, 0, 0);
-        ca.setChildren(Arrays.asList(caz), addRev);
+        ca.setChildren(Collections.singletonList(caz), addRev);
         DeckDueTreeNode ci = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv::INSBGDS", 1, 0, 0, 0);
         ci.setChildren(new ArrayList<>(), addRev);
         DeckDueTreeNode c = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv", 1, 0, 0, 0);
@@ -1116,11 +1117,11 @@ public class SchedV2Test extends RobolectricTest {
         // add two more templates and set second active
         Model m = col.getModels().current();
         Models mm = col.getModels();
-        JSONObject t = mm.newTemplate("Reverse");
+        JSONObject t = Models.newTemplate("Reverse");
         t.put("qfmt", "{{Back}}");
         t.put("afmt", "{{Front}}");
         mm.addTemplateModChanged(m, t);
-        t = mm.newTemplate("f2");
+        t = Models.newTemplate("f2");
         t.put("qfmt", "{{Front}}");
         t.put("afmt", "{{Back}}");
         mm.addTemplateModChanged(m, t);
