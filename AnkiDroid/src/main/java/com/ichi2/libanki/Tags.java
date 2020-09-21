@@ -238,7 +238,6 @@ public class Tags {
             t = t.replace("*", "%");
             lim.append(l).append("like '% ").append(t).append(" %'");
         }
-        List<Long> nids = new ArrayList<>();
         ArrayList<Object[]> res = new ArrayList<>();
         try (Cursor cur = mCol
                 .getDb()
@@ -247,12 +246,10 @@ public class Tags {
                         " and (" + lim + ")", null)) {
             if (add) {
                 while (cur.moveToNext()) {
-                    nids.add(cur.getLong(0));
                     res.add(new Object[] { addToStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(), cur.getLong(0) });
                 }
             } else {
                 while (cur.moveToNext()) {
-                    nids.add(cur.getLong(0));
                     res.add(new Object[] { remFromStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(),
                             cur.getLong(0) });
                 }
