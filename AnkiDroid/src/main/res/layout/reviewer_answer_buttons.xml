@@ -70,6 +70,7 @@
             android:id="@+id/ease_buttons"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <LinearLayout
