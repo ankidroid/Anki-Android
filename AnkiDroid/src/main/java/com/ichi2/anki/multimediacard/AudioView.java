@@ -342,14 +342,10 @@ public class AudioView extends LinearLayout {
 
 
         public void update() {
-            switch (mStatus) {
-                case RECORDING:
-                    setEnabled(false);
-                    break;
-
-                default:
-                    setEnabled(true);
-                    break;
+            if (mStatus == Status.RECORDING) {
+                setEnabled(false);
+            } else {
+                setEnabled(true);
             }
             // It doesn't need to update itself on any other state changes
         }

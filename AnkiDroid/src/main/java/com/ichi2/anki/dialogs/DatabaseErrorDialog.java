@@ -370,19 +370,13 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
 
     @Override
     public String getNotificationMessage() {
-        switch (getArguments().getInt("dialogType")) {
-            default:
-                return getMessage();
-        }
+        return getMessage();
     }
 
 
     @Override
     public String getNotificationTitle() {
-        switch (getArguments().getInt("dialogType")) {
-            default:
-                return res().getString(R.string.answering_error_title);
-        }
+        return res().getString(R.string.answering_error_title);
     }
 
 

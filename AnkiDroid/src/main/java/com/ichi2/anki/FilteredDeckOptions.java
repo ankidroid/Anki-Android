@@ -390,10 +390,9 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                closeDeckOptions();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            closeDeckOptions();
+            return true;
         }
         return false;
     }

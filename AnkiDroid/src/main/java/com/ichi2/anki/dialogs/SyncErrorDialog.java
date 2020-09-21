@@ -194,12 +194,10 @@ public class SyncErrorDialog extends AsyncDialogFragment {
      */
     @Override
     public String getNotificationTitle() {
-        switch (getArguments().getInt("dialogType")) {
-            case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-                return res().getString(R.string.sync_error);
-            default:
-                return getTitle();
+        if (getArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
+            return res().getString(R.string.sync_error);
         }
+        return getTitle();
     }
 
     @Nullable
@@ -239,12 +237,10 @@ public class SyncErrorDialog extends AsyncDialogFragment {
      */
     @Override
     public String getNotificationMessage() {
-        switch (getArguments().getInt("dialogType")) {
-            case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-                return res().getString(R.string.not_logged_in_title);
-            default:
-                return getMessage();
+        if (getArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
+            return res().getString(R.string.not_logged_in_title);
         }
+        return getMessage();
     }
 
     @Override
