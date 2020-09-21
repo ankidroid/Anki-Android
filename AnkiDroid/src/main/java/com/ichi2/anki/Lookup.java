@@ -99,7 +99,7 @@ public class Lookup {
                 String language = getLanguage(MetaDB.LANGUAGES_QA_UNDEFINED);
                 if (language.length() > 0) {
                     for (CharSequence itemValue : itemValues) {
-                        if (language.equals(itemValue)) {
+                        if (language.contentEquals(itemValue)) {
                             lookupLeo(language, mLookupText);
                             mLookupText = "";
                             return true;
