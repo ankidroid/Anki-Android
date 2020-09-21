@@ -2795,7 +2795,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     class MyGestureDetector extends SimpleOnGestureListener {
         //Android design spec for the size of the status bar.
-        private final int NO_GESTURE_BORDER_DIP = 24;
+        private static final int NO_GESTURE_BORDER_DIP = 24;
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
