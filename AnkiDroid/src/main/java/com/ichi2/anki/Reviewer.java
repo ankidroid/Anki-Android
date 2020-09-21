@@ -45,7 +45,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.app.ActionBar;
@@ -560,27 +563,30 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         markCardIcon.getIcon().mutate().setAlpha(alpha);
 
-        MenuItem flag_icon = menu.findItem(R.id.action_flag);
-        if (mCurrentCard != null) {
-            switch (mCurrentCard.userFlag()) {
-            case 1:
-                flag_icon.setIcon(R.drawable.ic_flag_red);
-                break;
-            case 2:
-                flag_icon.setIcon(R.drawable.ic_flag_orange);
-                break;
-            case 3:
-                flag_icon.setIcon(R.drawable.ic_flag_green);
-                break;
-            case 4:
-                flag_icon.setIcon(R.drawable.ic_flag_blue);
-                break;
-            default:
-                flag_icon.setIcon(R.drawable.ic_flag_transparent);
-                break;
+        // 1643 - currently null on a TV
+        @Nullable MenuItem flag_icon = menu.findItem(R.id.action_flag);
+        if (flag_icon != null) {
+            if (mCurrentCard != null) {
+                switch (mCurrentCard.userFlag()) {
+                    case 1:
+                        flag_icon.setIcon(R.drawable.ic_flag_red);
+                        break;
+                    case 2:
+                        flag_icon.setIcon(R.drawable.ic_flag_orange);
+                        break;
+                    case 3:
+                        flag_icon.setIcon(R.drawable.ic_flag_green);
+                        break;
+                    case 4:
+                        flag_icon.setIcon(R.drawable.ic_flag_blue);
+                        break;
+                    default:
+                        flag_icon.setIcon(R.drawable.ic_flag_transparent);
+                        break;
+                }
             }
+            flag_icon.getIcon().mutate().setAlpha(alpha);
         }
-        flag_icon.getIcon().mutate().setAlpha(alpha);
 
         // Undo button
         @DrawableRes int undoIconId;
@@ -655,8 +661,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Setup bury / suspend providers
         MenuItem suspend_icon = menu.findItem(R.id.action_suspend);
         MenuItem bury_icon = menu.findItem(R.id.action_bury);
-        MenuItemCompat.setActionProvider(suspend_icon, new SuspendProvider(this));
-        MenuItemCompat.setActionProvider(bury_icon, new BuryProvider(this));
+
+        setupSubMenu(menu, R.id.action_suspend, new SuspendProvider(this));
+        setupSubMenu(menu, R.id.action_bury, new BuryProvider(this));
         if (suspendNoteAvailable()) {
             suspend_icon.setIcon(R.drawable.ic_action_suspend_dropdown);
             suspend_icon.setTitle(R.string.menu_suspend);
@@ -675,7 +682,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         bury_icon.getIcon().mutate().setAlpha(alpha);
         suspend_icon.getIcon().mutate().setAlpha(alpha);
 
-        MenuItemCompat.setActionProvider(menu.findItem(R.id.action_schedule), new ScheduleProvider(this));
+        setupSubMenu(menu, R.id.action_schedule, new ScheduleProvider(this));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -757,6 +764,29 @@ public class Reviewer extends AbstractFlashcardViewer {
             return true;
         }
         return super.onKeyUp(keyCode, event);
+    }
+
+
+    private <T extends ActionProvider & SubMenuProvider> void setupSubMenu(Menu menu, @IdRes int parentMenu, T subMenuProvider) {
+        if (!AndroidUiUtils.isRunningOnTv(this)) {
+            MenuItemCompat.setActionProvider(menu.findItem(parentMenu), subMenuProvider);
+            return;
+        }
+
+        // Don't do anything if the menu is hidden (bury for example)
+        if (!subMenuProvider.hasSubMenu()) {
+            return;
+        }
+
+        // 7227 - If we're running on a TV, then we can't show submenus until AOSP is fixed
+        menu.removeItem(parentMenu);
+        int count = menu.size();
+        // move the menu to the bottom of the page
+        getMenuInflater().inflate(subMenuProvider.getSubMenu(), menu);
+        for (int i = 0; i < menu.size() - count; i++) {
+            MenuItem item = menu.getItem(count + i);
+            item.setOnMenuItemClickListener(subMenuProvider);
+        }
     }
 
 
@@ -1134,7 +1164,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     /**
      * Inner class which implements the submenu for the Suspend button
      */
-    class SuspendProvider extends ActionProvider implements MenuItem.OnMenuItemClickListener {
+    class SuspendProvider extends ActionProvider implements SubMenuProvider {
         public SuspendProvider(Context context) {
             super(context);
         }
@@ -1144,6 +1174,13 @@ public class Reviewer extends AbstractFlashcardViewer {
             return null;  // Just return null for a simple dropdown menu
         }
 
+
+        @Override
+        public int getSubMenu() {
+            return R.menu.reviewer_suspend;
+        }
+
+
         @Override
         public boolean hasSubMenu() {
             return suspendNoteAvailable();
@@ -1152,7 +1189,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         @Override
         public void onPrepareSubMenu(SubMenu subMenu) {
             subMenu.clear();
-            getMenuInflater().inflate(R.menu.reviewer_suspend, subMenu);
+            getMenuInflater().inflate(getSubMenu(), subMenu);
             for (int i = 0; i < subMenu.size(); i++) {
                 subMenu.getItem(i).setOnMenuItemClickListener(this);
             }
@@ -1176,7 +1213,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     /**
      * Inner class which implements the submenu for the Bury button
      */
-    class BuryProvider extends ActionProvider implements MenuItem.OnMenuItemClickListener {
+    class BuryProvider extends ActionProvider implements SubMenuProvider {
         public BuryProvider(Context context) {
             super(context);
         }
@@ -1186,6 +1223,13 @@ public class Reviewer extends AbstractFlashcardViewer {
             return null;    // Just return null for a simple dropdown menu
         }
 
+
+        @Override
+        public int getSubMenu() {
+            return R.menu.reviewer_bury;
+        }
+
+
         @Override
         public boolean hasSubMenu() {
             return buryNoteAvailable();
@@ -1194,7 +1238,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         @Override
         public void onPrepareSubMenu(SubMenu subMenu) {
             subMenu.clear();
-            getMenuInflater().inflate(R.menu.reviewer_bury, subMenu);
+            getMenuInflater().inflate(getSubMenu(), subMenu);
             for (int i = 0; i < subMenu.size(); i++) {
                 subMenu.getItem(i).setOnMenuItemClickListener(this);
             }
@@ -1219,7 +1263,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     /**
      * Inner class which implements the submenu for the Schedule button
      */
-    class ScheduleProvider extends ActionProvider implements MenuItem.OnMenuItemClickListener {
+    class ScheduleProvider extends ActionProvider implements SubMenuProvider {
         public ScheduleProvider(Context context) {
             super(context);
         }
@@ -1237,7 +1281,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         @Override
         public void onPrepareSubMenu(SubMenu subMenu) {
             subMenu.clear();
-            getMenuInflater().inflate(R.menu.reviewer_schedule, subMenu);
+            getMenuInflater().inflate(getSubMenu(), subMenu);
             for (int i = 0; i < subMenu.size(); i++) {
                 subMenu.getItem(i).setOnMenuItemClickListener(this);
             }
@@ -1256,6 +1300,17 @@ public class Reviewer extends AbstractFlashcardViewer {
                     return false;
             }
         }
+
+
+        @Override
+        public int getSubMenu() {
+            return R.menu.reviewer_schedule;
+        }
+    }
+
+    private interface SubMenuProvider extends MenuItem.OnMenuItemClickListener {
+        @MenuRes int getSubMenu();
+        boolean hasSubMenu();
     }
 
     public ReviewerJavaScriptFunction javaScriptFunction() {
