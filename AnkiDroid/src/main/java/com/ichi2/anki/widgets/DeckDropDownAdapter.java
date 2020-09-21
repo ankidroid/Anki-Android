@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public final class DeckDropDownAdapter extends BaseAdapter {
 
     public interface SubtitleListener {
-        public String getSubtitleText();
+        String getSubtitleText();
     }
 
     private Context context;
