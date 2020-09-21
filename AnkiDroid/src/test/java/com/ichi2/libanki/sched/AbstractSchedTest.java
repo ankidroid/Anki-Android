@@ -396,6 +396,6 @@ mw.col.sched.extendLimits(1, 0)
         sched.answerCard(card, Consts.BUTTON_THREE);
         card = sched.getCard();
         sched.setCurrentCard(card);
-        AnkiAssert.assertDoesNotThrow(() -> sched.preloadNextCard());
+        AnkiAssert.assertDoesNotThrow(sched::preloadNextCard);
     }
 }
