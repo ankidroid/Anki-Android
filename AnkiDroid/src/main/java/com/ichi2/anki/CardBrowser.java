@@ -2491,7 +2491,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return mInMultiSelectMode;
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting()
     long cardCount() {
         return mCards.size();
     }
