@@ -67,15 +67,11 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
-        switch (item.getItemId()) {
-
-            case android.R.id.home:
-                closeStudyOptions();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            closeStudyOptions();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 

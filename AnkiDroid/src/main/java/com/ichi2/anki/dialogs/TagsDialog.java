@@ -131,16 +131,13 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mSelectedOption = mOptionsGroup.getCheckedRadioButtonId();
         mOptionsGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> mSelectedOption = checkedId);
 
-        switch (mType) {
-            case TYPE_ADD_TAG:
-                mDialogTitle = getResources().getString(R.string.card_details_tags);
-                mOptionsGroup.setVisibility(View.GONE);
-                mPositiveText = getString(R.string.dialog_ok);
-                break;
-            default:
-                mDialogTitle = getResources().getString(R.string.studyoptions_limit_select_tags);
-                mPositiveText = getString(R.string.select);
-                break;
+        if (mType == TYPE_ADD_TAG) {
+            mDialogTitle = getResources().getString(R.string.card_details_tags);
+            mOptionsGroup.setVisibility(View.GONE);
+            mPositiveText = getString(R.string.dialog_ok);
+        } else {
+            mDialogTitle = getResources().getString(R.string.studyoptions_limit_select_tags);
+            mPositiveText = getString(R.string.select);
         }
 
         adjustToolbar(tagsDialogView);
@@ -235,13 +232,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
             return true;
         });
 
-        switch (mType) {
-            case TYPE_ADD_TAG:
-                mToolbarSearchView.setQueryHint(getString(R.string.add_new_filter_tags));
-                break;
-            default:
-                mToolbarAddItem.setVisible(false);
-                break;
+        if (mType == TYPE_ADD_TAG) {
+            mToolbarSearchView.setQueryHint(getString(R.string.add_new_filter_tags));
+        } else {
+            mToolbarAddItem.setVisible(false);
         }
     }
 

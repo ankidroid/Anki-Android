@@ -152,14 +152,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                onBackPressed();
-                return true;
-            }
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -260,17 +257,13 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_P: {
-                if (event.isCtrlPressed()) {
-                    CardTemplateFragment currentFragment = getCurrentFragment();
-                    if (currentFragment != null) {
-                        currentFragment.performPreview();
-                    }
+        if (keyCode == KeyEvent.KEYCODE_P) {
+            if (event.isCtrlPressed()) {
+                CardTemplateFragment currentFragment = getCurrentFragment();
+                if (currentFragment != null) {
+                    currentFragment.performPreview();
                 }
-                break;
             }
-
         }
 
         return super.onKeyUp(keyCode, event);
