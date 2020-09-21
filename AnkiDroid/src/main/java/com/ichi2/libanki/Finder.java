@@ -24,7 +24,6 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
-import com.ichi2.anki.CardBrowser;
 import com.ichi2.async.CollectionTask;
 
 import com.ichi2.libanki.Deck;
@@ -47,7 +46,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
-import timber.log.Timber;
 
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 

@@ -14,9 +14,7 @@ import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Utils;
 import com.ichi2.anki.analytics.UsageAnalytics;
-import com.ichi2.libanki.utils.SystemTime;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

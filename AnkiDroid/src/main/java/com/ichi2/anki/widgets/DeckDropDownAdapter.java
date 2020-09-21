@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.ichi2.anki.R;
 
 import com.ichi2.libanki.Deck;
-import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 

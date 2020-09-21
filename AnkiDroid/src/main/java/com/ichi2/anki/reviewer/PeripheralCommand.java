@@ -18,8 +18,6 @@ package com.ichi2.anki.reviewer;
 
 import android.view.KeyEvent;
 
-import com.ichi2.anki.cardviewer.ViewerCommand.ViewerCommandDef;
-
 import java.util.ArrayList;
 import java.util.List;
 

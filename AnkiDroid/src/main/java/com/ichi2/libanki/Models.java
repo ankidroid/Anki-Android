@@ -26,7 +26,6 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.JSONArray;

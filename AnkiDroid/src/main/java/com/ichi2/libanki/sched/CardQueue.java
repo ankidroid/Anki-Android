@@ -4,7 +4,6 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;

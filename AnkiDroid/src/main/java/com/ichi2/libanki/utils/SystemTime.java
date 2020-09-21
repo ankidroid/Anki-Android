@@ -16,12 +16,6 @@
 
 package com.ichi2.libanki.utils;
 
-import com.ichi2.libanki.Utils;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 public class SystemTime extends Time {
 
     public SystemTime() {
