@@ -523,11 +523,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
 
 
     private void closeActivity(int reason) {
-        if (reason == NORMAL_EXIT) {
-            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-        } else {
-            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-        }
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
 
 
