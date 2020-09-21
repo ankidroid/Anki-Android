@@ -1574,14 +1574,31 @@ public class DeckPicker extends NavigationDrawerActivity implements
         CollectionTask.launchCollectionTask(CHECK_MEDIA, listener);
     }
 
+    private MediaDeleteListener mediaDeleteListener() {
+        return new MediaDeleteListener(this);
+    }
+    private static class MediaDeleteListener extends TaskListenerWithContext<DeckPicker> {
+        public MediaDeleteListener (DeckPicker deckPicker) {
+            super(deckPicker);
+        }
 
+        @Override
+        public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
+                    deckPicker.getResources().getString(R.string.delete_media_message), false);
+        }
+
+        @Override
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+            if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
+                deckPicker.mProgressDialog.dismiss();
+            }
+        }
+    }
     @Override
     public void deleteUnused(List<String> unused) {
-        com.ichi2.libanki.Media m = getCol().getMedia();
-        for (String fname : unused) {
-            m.removeFile(fname);
-        }
-        showSimpleMessageDialog(String.format(getResources().getString(R.string.check_media_deleted), unused.size()));
+        TaskListener listener = mediaDeleteListener();
+        CollectionTask.launchCollectionTask(DELETE_MEDIA, listener, new TaskData(new Object[] {unused}));
     }
 
 
