@@ -3576,9 +3576,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         snackTextView.setMaxLines(3);
 
         snackbar.setActionTextColor(Color.MAGENTA)
-                .setAction(getString(R.string.reviewer_invalid_api_version_visit_documentation), view -> {
-                    openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki"));
-                });
+                .setAction(getString(R.string.reviewer_invalid_api_version_visit_documentation), view -> openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki")));
 
         snackbar.show();
     }

@@ -707,9 +707,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                                 throw new RuntimeException(e2);
                             }
                         });
-                        builder.onNegative((dialog, which) -> {
-                            ((CheckBoxPreference) pref).setChecked(true);
-                        });
+                        builder.onNegative((dialog, which) -> ((CheckBoxPreference) pref).setChecked(true));
                         builder.positiveText(R.string.dialog_ok);
                         builder.negativeText(R.string.dialog_cancel);
                         builder.show();
@@ -728,9 +726,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             throw new RuntimeException(e2);
                         }
                     });
-                    builder.onNegative((dialog, which) -> {
-                        ((CheckBoxPreference) pref).setChecked(false);
-                    });
+                    builder.onNegative((dialog, which) -> ((CheckBoxPreference) pref).setChecked(false));
                     builder.positiveText(R.string.dialog_ok);
                     builder.negativeText(R.string.dialog_cancel);
                     builder.show();
