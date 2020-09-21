@@ -2,7 +2,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
@@ -26,6 +25,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -39,13 +40,13 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.AndroidUiUtils;
 
 import timber.log.Timber;
 
@@ -174,6 +175,18 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
         super.setContentView(view);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // We can't access the icons yet on a TV, so show them all in the menu
+        if (AndroidUiUtils.isRunningOnTv(this)) {
+            for (int i = 0; i < menu.size(); i++) {
+                menu.getItem(i).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            }
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
 
 
     @Override

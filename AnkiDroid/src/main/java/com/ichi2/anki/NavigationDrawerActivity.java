@@ -30,6 +30,8 @@ import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -387,11 +389,43 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         activity.finishWithoutAnimation();
     }
 
+
+    public void toggleDrawer() {
+        if (!isDrawerOpen()) {
+            openDrawer();
+        } else {
+            closeDrawer();
+        }
+    }
+
+
     private void openDrawer() {
         mDrawerLayout.openDrawer(GravityCompat.START, animationEnabled());
     }
 
     private void closeDrawer() {
         mDrawerLayout.closeDrawer(GravityCompat.START, animationEnabled());
+    }
+
+
+    public void focusNavigation() {
+        // mNavigationView.getMenu().getItem(0).setChecked(true);
+        selectNavigationItem(R.id.nav_decks);
+        mNavigationView.requestFocus();
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (!isDrawerOpen()) {
+            return super.onKeyDown(keyCode, event);
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+            closeDrawer();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

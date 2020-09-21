@@ -71,12 +71,15 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:visibility="gone"
+            android:focusable="false"
             android:orientation="horizontal">
 
             <LinearLayout
                 style="@style/FooterButton"
                 android:background="?attr/againButtonRef"
                 android:id="@+id/flashcard_layout_ease1"
+                android:nextFocusRight="@id/flashcard_layout_ease2"
+                android:nextFocusLeft="@id/flashcard_layout_ease4"
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
@@ -97,6 +100,8 @@
                 style="@style/FooterButton"
                 android:background="?attr/hardButtonRef"
                 android:id="@+id/flashcard_layout_ease2"
+                android:nextFocusRight="@id/flashcard_layout_ease3"
+                android:nextFocusLeft="@id/flashcard_layout_ease1"
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
@@ -117,6 +122,8 @@
                 style="@style/FooterButton"
                 android:background="?attr/goodButtonRef"
                 android:id="@+id/flashcard_layout_ease3"
+                android:nextFocusRight="@id/flashcard_layout_ease4"
+                android:nextFocusLeft="@id/flashcard_layout_ease2"
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
@@ -137,6 +144,8 @@
                 style="@style/FooterButton"
                 android:background="?attr/easyButtonRef"
                 android:id="@+id/flashcard_layout_ease4"
+                android:nextFocusRight="@id/flashcard_layout_ease1"
+                android:nextFocusLeft="@id/flashcard_layout_ease3"
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
@@ -159,10 +168,12 @@
             android:layout_width="fill_parent"
             android:layout_height="@dimen/touch_target"
             android:orientation="vertical"
+            android:focusable="true"
             tools:visibility="gone">
 
             <Button
                 style="@style/FooterButton"
+                android:duplicateParentState="true"
                 android:background="?attr/hardButtonRef"
                 android:id="@+id/flip_card"
                 android:layout_width="fill_parent"
