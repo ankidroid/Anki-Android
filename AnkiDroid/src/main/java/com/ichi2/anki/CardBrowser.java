@@ -699,6 +699,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     return true;
                 }
             }
+            case KeyEvent.KEYCODE_R: {
+                if (event.isCtrlPressed() && event.isAltPressed()) {
+                    Timber.i("Ctrl+Alt+R - Reschedule");
+                    rescheduleSelectedCards();
+                    return true;
+                }
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -1126,24 +1133,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             case R.id.action_reschedule_cards: {
                 Timber.i("CardBrowser:: Reschedule button pressed");
-
-                long[] selectedCardIds = getSelectedCardIds();
-                FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
-                    CollectionTask.launchCollectionTask(DISMISS_MULTI,
-                        rescheduleCardHandler(),
-                        new TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays}));
-
-                RescheduleDialog rescheduleDialog;
-                if (selectedCardIds.length == 1) {
-                    long cardId = selectedCardIds[0];
-                    Card selected = getCol().getCard(cardId);
-                    rescheduleDialog = RescheduleDialog.rescheduleSingleCard(getResources(), selected, consumer);
-                } else {
-                    rescheduleDialog = RescheduleDialog.rescheduleMultipleCards(getResources(),
-                            consumer,
-                            selectedCardIds.length);
-                }
-                showDialogFragment(rescheduleDialog);
+                rescheduleSelectedCards();
                 return true;
             }
             case R.id.action_reposition_cards: {
@@ -1182,6 +1172,32 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+
+    private void rescheduleSelectedCards() {
+        if (!hasSelectedCards()) {
+            Timber.i("Attempted reschedule - no cards selected");
+            return;
+        }
+
+        long[] selectedCardIds = getSelectedCardIds();
+        FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
+            CollectionTask.launchCollectionTask(DISMISS_MULTI,
+                rescheduleCardHandler(),
+                new TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays}));
+
+        RescheduleDialog rescheduleDialog;
+        if (selectedCardIds.length == 1) {
+            long cardId = selectedCardIds[0];
+            Card selected = getCol().getCard(cardId);
+            rescheduleDialog = RescheduleDialog.rescheduleSingleCard(getResources(), selected, consumer);
+        } else {
+            rescheduleDialog = RescheduleDialog.rescheduleMultipleCards(getResources(),
+                    consumer,
+                    selectedCardIds.length);
+        }
+        showDialogFragment(rescheduleDialog);
     }
 
 
