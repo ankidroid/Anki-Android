@@ -80,7 +80,6 @@ public class Anki2Importer extends Importer {
     private Map<String, Map<Integer, Long>> mCards;
     private Map<Long, Long> mDecks;
     private Map<Long, Long> mModelMap;
-    private Map<String, String> mChangedGuids;
     private Map<String, Boolean> mIgnoredGuids;
 
     private int mDupes;
@@ -215,9 +214,6 @@ public class Anki2Importer extends Importer {
                 cur.close();
             }
         }
-        // we may need to rewrite the guid if the model schemas don't match,
-        // so we need to keep track of the changes for the card import stage
-        mChangedGuids = new HashMap<>();
         // we ignore updates to changed schemas. we need to note the ignored
         // guids, so we avoid importing invalid cards
         mIgnoredGuids = new HashMap<>();
@@ -569,9 +565,6 @@ public class Anki2Importer extends Importer {
                         cur.getInt(13), cur.getInt(14), cur.getInt(15), cur.getLong(16),
                         cur.getLong(17), cur.getInt(18), cur.getString(19) };
                 String guid = (String) card[0];
-                if (mChangedGuids.containsKey(guid)) {
-                    guid = mChangedGuids.get(guid);
-                }
                 if (mIgnoredGuids.containsKey(guid)) {
                     continue;
                 }
