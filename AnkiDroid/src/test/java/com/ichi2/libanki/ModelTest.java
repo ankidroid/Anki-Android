@@ -323,14 +323,13 @@ public class ModelTest extends RobolectricTest {
         Collection col = getCol();
         Model cloze = col.getModels().byName("Cloze");
         // enable second template and add a note
-        Model m = col.getModels().current();
+        Model basic = col.getModels().current();
         Models mm = col.getModels();
         JSONObject t = Models.newTemplate("Reverse");
         t.put("qfmt", "{{Back}}");
         t.put("afmt", "{{Front}}");
-        mm.addTemplateModChanged(m, t);
-        mm.save(m);
-        Model basic = m;
+        mm.addTemplateModChanged(basic, t);
+        mm.save(basic);
         Note note = col.newNote();
         note.setItem("Front", "note");
         note.setItem("Back", "b123");
