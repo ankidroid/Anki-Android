@@ -42,7 +42,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 
-import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
@@ -54,9 +53,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -2132,7 +2129,7 @@ public class SchedV2 extends AbstractSched {
     public void _updateCutoff() {
         int oldToday = mToday == null ? 0 : mToday;
         // days since col created
-        mToday = _daysSinceCreation();
+        mToday = daysSinceCreation();
         // end of day cutoff
         mDayCutoff = _dayCutoff();
         if (oldToday != mToday) {
@@ -2170,8 +2167,8 @@ public class SchedV2 extends AbstractSched {
         return date.getTimeInMillis() / 1000;
     }
 
-
-    private int _daysSinceCreation() {
+    @Override
+    public int daysSinceCreation() {
         Calendar c = mCol.crtCalendar();
         c.set(Calendar.HOUR, mCol.getConf().optInt("rollover", 4));
         c.set(Calendar.MINUTE, 0);

@@ -55,6 +55,11 @@ public enum SyncStatus {
             return SyncStatus.BADGE_DISABLED;
         }
 
+        // Don't annoy new users with syncing.
+        if (isNewUser(col)) {
+            return SyncStatus.NO_CHANGES;
+        }
+
         if (!isLoggedIn()) {
             return SyncStatus.NO_ACCOUNT;
         }
@@ -68,6 +73,11 @@ public enum SyncStatus {
         } else {
             return SyncStatus.NO_CHANGES;
         }
+    }
+
+
+    private static boolean isNewUser(Collection col) {
+        return col.getSched().daysSinceCreation() < 10;
     }
 
 
