@@ -669,6 +669,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean rotateAndCompress() {
         if (!rotateAndCompress(mViewModel.mImagePath, mViewModel)) {
             mImageFileSizeWarning.setVisibility(View.VISIBLE);
@@ -816,6 +817,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             savedInstanceState.putParcelable("mImageUri", mImageUri);
         }
 
+        @SuppressWarnings("BooleanMethodIsAlwaysInverted")
         public boolean isValid() {
             return mImagePath != null && mImageUri != null;
         }
