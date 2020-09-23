@@ -66,7 +66,7 @@ public class ChessFilter {
         if (!AnkiDroidApp.getSharedPrefs(context).getBoolean("convertFenText", false)) {
             return text;
         }
-        Boolean showBlack = false;
+        boolean showBlack = false;
         Matcher mf = fFenPattern.matcher(text);
         StringBuffer sb = new StringBuffer();
         while (mf.find()) {

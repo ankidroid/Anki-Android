@@ -587,7 +587,7 @@ public class CardContentProvider extends ContentProvider {
                 }
                 // Update the model
                 try {
-                    Integer templateOrd = Integer.parseInt(uri.getLastPathSegment());
+                    int templateOrd = Integer.parseInt(uri.getLastPathSegment());
                     Model existingModel = col.getModels().get(getModelIdFromUri(uri, col));
                     JSONArray templates = existingModel.getJSONArray("tmpls");
                     JSONObject template = templates.getJSONObject(templateOrd);
@@ -981,7 +981,7 @@ public class CardContentProvider extends ContentProvider {
                 throw new IllegalArgumentException("Not possible to insert template with specific ORD");
             case MODELS_ID_FIELDS: {
                 Models models = col.getModels();
-                Long mid = getModelIdFromUri(uri, col);
+                long mid = getModelIdFromUri(uri, col);
                 Model existingModel = models.get(mid);
                 if (existingModel == null) {
                     throw new IllegalArgumentException("model missing: " + mid);
@@ -1325,7 +1325,7 @@ public class CardContentProvider extends ContentProvider {
 
     private JSONObject getTemplateFromUri(Uri uri, Collection col) throws JSONException {
         JSONObject model = col.getModels().get(getModelIdFromUri(uri, col));
-        Integer ord = Integer.parseInt(uri.getLastPathSegment());
+        int ord = Integer.parseInt(uri.getLastPathSegment());
         return model.getJSONArray("tmpls").getJSONObject(ord);
     }
 
