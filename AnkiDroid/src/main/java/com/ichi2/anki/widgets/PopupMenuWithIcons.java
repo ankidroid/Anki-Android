@@ -28,7 +28,7 @@ public class PopupMenuWithIcons extends PopupMenu {
                         break;
                     }
                 }
-            } catch (Exception e) {}        
+            } catch (Exception ignored) {}
         }
     }
 }

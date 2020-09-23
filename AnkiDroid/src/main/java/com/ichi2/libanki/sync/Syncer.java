@@ -909,7 +909,7 @@ public class Syncer {
             publishProgress(con, R.string.sync_cancelled);
             try {
                 mServer.abort();
-            } catch (UnknownHttpResponseException e) {
+            } catch (UnknownHttpResponseException ignored) {
             }
             throw new RuntimeException("UserAbortedSync");
         }
