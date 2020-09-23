@@ -2412,10 +2412,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    @VisibleForTesting
-    /** *
+    /**
      * @param quick Whether we expect the control to come back quickly
      */
+    @VisibleForTesting
     protected void blockControls(boolean quick) {
         if (quick) {
             mControlBlocked = ControlBlock.QUICK;
