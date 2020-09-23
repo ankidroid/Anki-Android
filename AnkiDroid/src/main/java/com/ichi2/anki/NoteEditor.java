@@ -199,7 +199,7 @@ public class NoteEditor extends AnkiActivity {
 
     private Note mEditorNote;
     @Nullable
-    /** Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
+    /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
     private Card mCurrentEditedCard;
     private ArrayList<String> mSelectedTags;
     private long mCurrentDid;

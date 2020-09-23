@@ -13,12 +13,12 @@ import java.io.File;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
-@AutoService(ReportInteraction.class)
 /**
  * This ACRA Extension sends an analytics hit during crash handling while ACRA is enabled.
  * Questions answered: "Number of ACRA reports sent", "ACRA vs Analytics count differences"
  * See <a href="https://github.com/ACRA/acra/wiki/Custom-Extensions">Custom Extensions</a>
  */
+@AutoService(ReportInteraction.class)
 public class AcraAnalyticsInteraction implements ReportInteraction {
 
 

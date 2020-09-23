@@ -175,7 +175,7 @@ public class DecksTest extends RobolectricTest {
         assertThrows(DeckRenameException.class, () -> col.getDecks().rename(child, "FILTERED::child"));
     }
 
-    /** TODO: maybe implement. We don't drag and drop here anyway, so buggy implementation is okay
+    /* TODO: maybe implement. We don't drag and drop here anyway, so buggy implementation is okay
      @Test public void test_renameForDragAndDrop() throws DeckRenameException {
      // TODO: upstream does not return "default", remove it
      Collection col = getCol();

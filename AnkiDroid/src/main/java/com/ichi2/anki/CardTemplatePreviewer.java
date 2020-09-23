@@ -304,7 +304,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
 
         @Override
-        /** if we have an unsaved note saved, use it instead of a collection lookup */
+        /* if we have an unsaved note saved, use it instead of a collection lookup */
         public Note note(boolean reload) {
             if (mNote != null) {
                 return mNote;
@@ -313,8 +313,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
 
-        @Override
         /** if we have an unsaved note saved, use it instead of a collection lookup */
+        @Override
         public Note note() {
             if (mNote != null) {
                 return mNote;
@@ -329,8 +329,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
 
-        @Override
         /** if we have an unsaved note, never return empty */
+        @Override
         public boolean isEmpty() {
             if (mNote != null) {
                 return false;
@@ -339,8 +339,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
 
-        @Override
         /** Override the method that fetches the model so we can render unsaved models */
+        @Override
         public Model model() {
             if (mEditedModel != null) {
                 return mEditedModel;
