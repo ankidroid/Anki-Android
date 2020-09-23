@@ -1150,7 +1150,7 @@ public class Models {
         }
         if (ords.isEmpty() && allowEmpty) {
             // empty clozes use first ord
-            return new ArrayList<>(Arrays.asList(new Integer[]{0}));
+            return new ArrayList<>(Arrays.asList(0));
         }
         return new ArrayList<>(ords);
     }
