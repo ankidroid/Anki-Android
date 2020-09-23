@@ -592,7 +592,6 @@ public class SchedTest extends RobolectricTest {
     @Ignore("disabled in commit anki@3069729776990980f34c25be66410e947e9d51a2")
     public void test_overdue_lapseV1() throws Exception {
         // disabled in commit anki@3069729776990980f34c25be66410e947e9d51a2
-        return;
         /*
           Collection col = getColV1();
           // add a note
