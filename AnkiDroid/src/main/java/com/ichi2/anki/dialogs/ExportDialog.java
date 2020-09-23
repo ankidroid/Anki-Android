@@ -54,7 +54,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
-        final Long did = getArguments().getLong("did", -1L);
+        final long did = getArguments().getLong("did", -1L);
         Integer[] checked;
         if (did != -1L) {
             mIncludeSched = false;

@@ -695,7 +695,7 @@ public class Media {
             while (cur.moveToNext()) {
                 String name = cur.getString(0);
                 String csum = cur.getString(1);
-                Long mod = cur.getLong(2);
+                long mod = cur.getLong(2);
                 cache.put(name, new Object[] { csum, mod, false });
             }
         } catch (SQLException e) {
