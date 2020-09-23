@@ -38,14 +38,19 @@ public class PeripheralCommand {
 
     private final @ViewerCommandDef int mCommand;
 
+    private final ModifierKeys modifierKeys;
+
+
     private PeripheralCommand(int keyCode, @ViewerCommandDef int command, @NonNull CardSide side) {
         this.mKeyCode = keyCode;
         this.mUnicodeCharacter = null;
         this.mCommand = command;
         this.mCardSide = side;
+        this.modifierKeys = ModifierKeys.none();
     }
 
-    private PeripheralCommand(@Nullable Character unicodeCharacter, @ViewerCommandDef int command, @NonNull CardSide side) {
+    private PeripheralCommand(@Nullable Character unicodeCharacter, @ViewerCommandDef int command, @NonNull CardSide side, ModifierKeys modifierKeys) {
+        this.modifierKeys = modifierKeys;
         this.mKeyCode = null;
         this.mUnicodeCharacter = unicodeCharacter;
         this.mCommand = command;
@@ -73,9 +78,12 @@ public class PeripheralCommand {
     }
 
     public static PeripheralCommand unicode(char unicodeChar, @ViewerCommandDef int command, CardSide side) {
-        return new PeripheralCommand((Character) unicodeChar, command, side);
+        return unicode(unicodeChar, command, side, ModifierKeys.none());
     }
 
+    private static PeripheralCommand unicode(char unicodeChar, @ViewerCommandDef int command, CardSide side, ModifierKeys modifierKeys) {
+        return new PeripheralCommand((Character) unicodeChar, command, side, modifierKeys);
+    }
 
     public static PeripheralCommand keyCode(int keyCode, @ViewerCommandDef int command, CardSide side) {
         return new PeripheralCommand(keyCode, command, side);
@@ -110,13 +118,53 @@ public class PeripheralCommand {
         ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_F5, COMMAND_PLAY_MEDIA, CardSide.BOTH));
         ret.add(PeripheralCommand.unicode('z', COMMAND_UNDO, CardSide.BOTH));
 
+        ret.add(PeripheralCommand.unicode('1', COMMAND_TOGGLE_FLAG_RED, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(PeripheralCommand.unicode('2', COMMAND_TOGGLE_FLAG_ORANGE, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(PeripheralCommand.unicode('3', COMMAND_TOGGLE_FLAG_GREEN, CardSide.BOTH, ModifierKeys.ctrl()));
+        ret.add(PeripheralCommand.unicode('4', COMMAND_TOGGLE_FLAG_BLUE, CardSide.BOTH, ModifierKeys.ctrl()));
+
         return ret;
     }
+
+
+    public boolean matchesModifier(KeyEvent event) {
+        return modifierKeys.matches(event);
+    }
+
 
     private enum CardSide {
         NONE,
         QUESTION,
         ANSWER,
         BOTH
+    }
+
+
+    public static class ModifierKeys {
+        private final boolean mShift;
+        private final boolean mCtrl;
+        private final boolean mAlt;
+
+
+        public ModifierKeys(boolean shift, boolean ctrl, boolean alt) {
+            this.mShift = shift;
+            this.mCtrl = ctrl;
+            this.mAlt = alt;
+        }
+
+
+        public static ModifierKeys none() {
+            return new ModifierKeys(false, false, false);
+        }
+
+        public static ModifierKeys ctrl() {
+            return new ModifierKeys(false, true, false);
+        }
+
+
+        public boolean matches(KeyEvent event) {
+            // return false if Ctrl+1 is pressed and 1 is expected
+            return mShift == event.isShiftPressed() && mCtrl == event.isCtrlPressed() && mAlt == event.isAltPressed();
+        }
     }
 }
