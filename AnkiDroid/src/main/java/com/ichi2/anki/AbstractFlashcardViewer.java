@@ -2881,11 +2881,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (onSingleTap()) {
                 return true;
             }
-            return executeTouchCommand(e);
+            executeTouchCommand(e);
+            return false;
         }
 
 
-        protected boolean executeTouchCommand(@NonNull MotionEvent e) {
+        protected void executeTouchCommand(@NonNull MotionEvent e) {
             if (mGesturesEnabled && !mIsSelecting) {
                 int height = mTouchLayer.getHeight();
                 int width = mTouchLayer.getWidth();
@@ -2898,7 +2899,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             mIsSelecting = false;
             showLookupButtonIfNeeded();
-            return false;
         }
 
 
@@ -2949,7 +2949,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        protected boolean executeTouchCommand(@NonNull MotionEvent downEvent) {
+        protected void executeTouchCommand(@NonNull MotionEvent downEvent) {
             downEvent.setAction(MotionEvent.ACTION_DOWN);
             MotionEvent upEvent = MotionEvent.obtainNoHistory(downEvent);
             upEvent.setAction(MotionEvent.ACTION_UP);
@@ -2967,7 +2967,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 cardWebView.dispatchTouchEvent(downEvent);
                 cardWebView.dispatchTouchEvent(upEvent);
             });
-            return false;
         }
 
 
