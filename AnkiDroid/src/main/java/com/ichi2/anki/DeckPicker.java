@@ -2583,7 +2583,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         // Otherwise we show a warning and require confirmation
         String msg;
-        String deckName = "\'" + getCol().getDecks().name(did) + "\'";
+        String deckName = "'" + getCol().getDecks().name(did) + "'";
         boolean isDyn = getCol().getDecks().isDyn(did);
         if (isDyn) {
             msg = res.getString(R.string.delete_cram_deck_message, deckName);
