@@ -702,7 +702,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
         String fld = m.group(1);
         // if it's a cloze, extract data
-        if (fld.startsWith("cloze:", 0)) {
+        if (fld.startsWith("cloze:")) {
             // get field and cloze position
             clozeIdx = mCurrentCard.getOrd() + 1;
             fld = fld.split(":")[1];
