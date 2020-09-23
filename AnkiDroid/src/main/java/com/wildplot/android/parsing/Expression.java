@@ -70,7 +70,7 @@ public class Expression implements TreeElement {
                     continue;
                 }
 
-                String rightSubString = expressionString.substring(i + 1, expressionString.length());
+                String rightSubString = expressionString.substring(i + 1);
                 if (!TopLevelParser.stringHasValidBrackets(rightSubString)) {
                     continue;
                 }

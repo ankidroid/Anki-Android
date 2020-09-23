@@ -69,7 +69,7 @@ public class Term implements TreeElement {
                     continue;
                 }
 
-                String rightSubString = termString.substring(i + 1, termString.length());
+                String rightSubString = termString.substring(i + 1);
                 if (!TopLevelParser.stringHasValidBrackets(rightSubString)) {
                     continue;
                 }

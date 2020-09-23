@@ -54,7 +54,7 @@ public class TopLevelParser implements Function2D, Function3D, Cloneable {
         int equalPosition = expressionString.indexOf("=");
         if (equalPosition >= 1) {
             String leftStatement = expressionString.substring(0, equalPosition);
-            this.expressionString = expressionString.substring(equalPosition + 1, expressionString.length());
+            this.expressionString = expressionString.substring(equalPosition + 1);
             int commaPos = leftStatement.indexOf(",");
             int leftBracketPos = leftStatement.indexOf("(");
             int rightBracketPos = leftStatement.indexOf(")");
