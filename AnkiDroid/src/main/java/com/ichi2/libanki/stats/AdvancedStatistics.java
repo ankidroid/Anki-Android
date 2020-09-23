@@ -558,7 +558,7 @@ public class AdvancedStatistics {
 
     }
 
-    private class CardIterator {
+    private static class CardIterator {
 
         private Cursor cur;
 
@@ -866,7 +866,7 @@ public class AdvancedStatistics {
         }
     }
 
-    public class NewCardSimulator {
+    public static class NewCardSimulator {
 
         private int nAddedToday;
         private int tAdd;
@@ -1457,7 +1457,7 @@ public class AdvancedStatistics {
      * A review results in the state of the card (card interval) being changed.
      * A ReviewOutcome bundles the probability of the outcome and the card with changed state.
      */
-    private class ReviewOutcome {
+    private static class ReviewOutcome {
         private Card card;
         private double prob;
 
