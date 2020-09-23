@@ -254,9 +254,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             } else {
                 feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag);
             }
-            if (!mCurrentTags.contains(tag)) {
-                mCurrentTags.add(tag);
-            }
+            mCurrentTags.add(tag);
             mTagsArrayAdapter.notifyDataSetChanged();
             // Show a snackbar to let the user know the tag was added successfully
             UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,
@@ -307,7 +305,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 String tag = ctv.getText().toString();
                 if (ctv.isChecked() && !mCurrentTags.contains(tag)) {
                     mCurrentTags.add(tag);
-                } else if (!ctv.isChecked() && mCurrentTags.contains(tag)) {
+                } else if (!ctv.isChecked()) {
                     mCurrentTags.remove(tag);
                 }
             });
