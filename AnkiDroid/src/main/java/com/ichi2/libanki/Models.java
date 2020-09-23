@@ -1145,9 +1145,7 @@ public class Models {
                 ords.add(Integer.parseInt(mm.group(1)) - 1);
             }
         }
-        if (ords.contains(-1)) {
-            ords.remove(-1);
-        }
+        ords.remove(-1);
         if (ords.isEmpty() && allowEmpty) {
             // empty clozes use first ord
             return new ArrayList<>(Arrays.asList(0));
