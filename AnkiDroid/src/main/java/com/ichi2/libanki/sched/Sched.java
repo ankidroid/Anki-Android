@@ -1385,7 +1385,7 @@ public class Sched extends SchedV2 {
 
         // Cap the lower end of the success rate to ensure the loop ends (it could be 0 if no revlog history, or
         // negative for other reasons). 5% seems reasonable to ensure the loop doesn't iterate too much.
-        relrnRate = relrnRate < 0.05 ? 0.05 : relrnRate;
+        relrnRate = Math.max(relrnRate, 0.05);
         int futureReps = 0;
         do {
             // Truncation ensures the failure rate always decreases
