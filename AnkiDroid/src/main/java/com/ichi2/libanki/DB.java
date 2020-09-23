@@ -403,16 +403,24 @@ public class DB {
                 Timber.w("Not in a transaction. Cannot mark transaction successful.");
             }
         } finally {
-            if (getDatabase().inTransaction()) {
-                try {
-                    getDatabase().endTransaction();
-                } catch (Exception e) {
-                    // endTransaction throws about invalid transaction even when you check first!
-                    Timber.w(e);
-                }
-            } else {
-                Timber.w("Not in a transaction. Cannot end transaction.");
+            safeEndInTransaction(getDatabase());
+        }
+    }
+
+    public static void safeEndInTransaction(DB database) {
+        safeEndInTransaction(database.getDatabase());
+    }
+
+    public static void safeEndInTransaction(SupportSQLiteDatabase database) {
+        if (database.inTransaction()) {
+            try {
+                database.endTransaction();
+            } catch (Exception e) {
+                // endTransaction throws about invalid transaction even when you check first!
+                Timber.w(e);
             }
+        } else {
+            Timber.w("Not in a transaction. Cannot end transaction.");
         }
     }
 }

@@ -826,7 +826,7 @@ public class CardContentProvider extends ContentProvider {
             sqldb.setTransactionSuccessful();
             return result;
         } finally {
-            sqldb.endTransaction();
+            DB.safeEndInTransaction(sqldb);
         }
     }
 
@@ -1178,7 +1178,7 @@ public class CardContentProvider extends ContentProvider {
                 }
                 db.getDatabase().setTransactionSuccessful();
             } finally {
-                db.getDatabase().endTransaction();
+                DB.safeEndInTransaction(db);
             }
         } catch (RuntimeException e) {
             Timber.e(e, "answerCard - RuntimeException on answering card");

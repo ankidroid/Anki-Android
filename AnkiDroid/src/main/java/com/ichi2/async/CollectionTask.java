@@ -1108,7 +1108,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 }
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
-                col.getDb().getDatabase().endTransaction();
+                DB.safeEndInTransaction(col.getDb());
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
@@ -1701,11 +1701,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot mark transaction successful.");
             }
         } finally {
-            if (col.getDb().getDatabase().inTransaction()) {
-                col.getDb().getDatabase().endTransaction();
-            } else {
-                Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot end transaction.");
-            }
+            DB.safeEndInTransaction(col.getDb());
         }
         return new TaskData(true);
     }

@@ -433,9 +433,7 @@ public class Collection {
                 if (save) {
                     mDb.executeInTransaction(this::save);
                 } else {
-                    if (db.inTransaction()) {
-                        db.endTransaction();
-                    }
+                    DB.safeEndInTransaction(db);
                 }
             } catch (RuntimeException e) {
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");

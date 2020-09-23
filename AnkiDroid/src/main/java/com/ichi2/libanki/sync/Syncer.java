@@ -25,6 +25,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Collection;
@@ -237,7 +238,7 @@ public class Syncer {
                 publishProgress(con, R.string.sync_writing_db);
                 mCol.getDb().getDatabase().setTransactionSuccessful();
             } finally {
-                mCol.getDb().getDatabase().endTransaction();
+                DB.safeEndInTransaction(mCol.getDb());
             }
         } catch (IllegalStateException e) {
             throw new RuntimeException(e);
