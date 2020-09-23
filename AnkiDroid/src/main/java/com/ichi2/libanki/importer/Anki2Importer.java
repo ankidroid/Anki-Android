@@ -25,6 +25,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
@@ -155,12 +156,8 @@ public class Anki2Importer extends Importer {
             throw err;
         } finally {
             // endTransaction throws about invalid transaction even when you check first!
-            if (mDst.getDb().getDatabase().inTransaction()) {
-                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
-            }
-            if (mDst.getMedia().getDb().getDatabase().inTransaction()) {
-                try { mDst.getMedia().getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
-            }
+            DB.safeEndInTransaction(mDst.getDb());
+            DB.safeEndInTransaction(mDst.getMedia().getDb());
         }
         Timber.i("Performing vacuum/analyze");
         try {
@@ -342,9 +339,7 @@ public class Anki2Importer extends Importer {
             if (cur != null) {
                 cur.close();
             }
-            if (mDst.getDb().getDatabase().inTransaction()) {
-                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
-            }
+            DB.safeEndInTransaction(mDst.getDb());
         }
 
         long[] das = Utils.collection2Array(dirty);
@@ -667,9 +662,7 @@ public class Anki2Importer extends Importer {
             if (cur != null) {
                 cur.close();
             }
-            if (mDst.getDb().getDatabase().inTransaction()) {
-                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
-            }
+            DB.safeEndInTransaction(mDst.getDb());
         }
     }
 
