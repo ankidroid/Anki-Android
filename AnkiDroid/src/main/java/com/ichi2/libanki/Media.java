@@ -225,9 +225,9 @@ public class Media {
     }
 
 
-    /**
-     * Adding media
-     * ***********************************************************
+    /*
+      Adding media
+      ***********************************************************
      */
 
     /**
@@ -412,9 +412,9 @@ public class Media {
     }
 
 
-    /**
-     * Rebuilding DB
-     * ***********************************************************
+    /*
+      Rebuilding DB
+      ***********************************************************
      */
 
     /**
@@ -574,7 +574,7 @@ public class Media {
     }
 
     private String _cleanLongFilename(String fname) {
-        /** a fairly safe limit that should work on typical windows
+        /* a fairly safe limit that should work on typical windows
          paths and on eCryptfs partitions, even with a duplicate
          suffix appended */
         int namemax = 136;
@@ -605,9 +605,9 @@ public class Media {
         return fname;
     }
 
-    /**
-     * Tracking changes
-     * ***********************************************************
+    /*
+      Tracking changes
+      ***********************************************************
      */
 
     /**
@@ -827,7 +827,7 @@ public class Media {
     }
 
 
-    /**
+    /*
      * Media syncing: zips
      * ***********************************************************
      */

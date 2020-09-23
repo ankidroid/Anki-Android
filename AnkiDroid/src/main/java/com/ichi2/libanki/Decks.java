@@ -676,9 +676,9 @@ public class Decks {
     }
 
 
-    /**
-     * Deck configurations
-     * ***********************************************************
+    /*
+      Deck configurations
+      ***********************************************************
      */
 
 
@@ -874,10 +874,10 @@ public class Decks {
         for (Deck deck: decks) {
             String deckName = deck.getString("name");
 
-            /** With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for
-             * compatibility while we wait for rust.  It should be executed before other changes, because both "FOO "
-             * and "FOO" will be renamed to the same name, and so this will need to be renamed again in case of
-             * duplicate.*/
+            /* With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for
+              compatibility while we wait for rust.  It should be executed before other changes, because both "FOO "
+              and "FOO" will be renamed to the same name, and so this will need to be renamed again in case of
+              duplicate.*/
             String strippedName = strip(deckName);
             if (!deckName.equals(strippedName)) {
                 mNameMap.remove(deckName, deck);
@@ -940,9 +940,9 @@ public class Decks {
     }
 
 
-    /**
-     * Deck selection
-     * ***********************************************************
+    /*
+      Deck selection
+      ***********************************************************
      */
 
 
@@ -1103,9 +1103,9 @@ public class Decks {
     }
 
 
-    /**
-     * Dynamic decks
-     ***************************************************************/
+    /*
+      Dynamic decks
+     */
 
 
     /**

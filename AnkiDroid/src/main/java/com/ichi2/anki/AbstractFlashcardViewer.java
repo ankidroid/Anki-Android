@@ -3318,7 +3318,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     //#5811 - The WebView could be focused via mouse. Allow components to return focus to Android.
                     focusAnswerCompletionField();
                     return true;
-                /**
+                /*
                  *  Call displayCardAnswer() and answerCard() from anki deck template using javascript
                  *  See card.js in assets/scripts folder
                  */

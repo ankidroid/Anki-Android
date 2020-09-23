@@ -380,13 +380,13 @@ public class Anki2Importer extends Importer {
 		return false;
     }
 
-    /**
-     * Models
-     * ***********************************************************
-     * Models in the two decks may share an ID but not a schema, so we need to
-     * compare the field & template signature rather than just rely on ID. If
-     * the schemas don't match, we increment the mid and try again, creating a
-     * new model if necessary.
+    /*
+      Models
+      ***********************************************************
+      Models in the two decks may share an ID but not a schema, so we need to
+      compare the field & template signature rather than just rely on ID. If
+      the schemas don't match, we increment the mid and try again, creating a
+      new model if necessary.
      */
 
     /** Prepare index of schema hashes. */
@@ -436,7 +436,7 @@ public class Anki2Importer extends Importer {
     }
 
 
-    /**
+    /*
      * Decks
      * ***********************************************************
      */
@@ -505,7 +505,7 @@ public class Anki2Importer extends Importer {
             }
         }
         // build map of guid -> (ord -> cid) and used id cache
-        /**
+        /*
          * Since we can't use a tuple as a key in Java, we resort to indexing twice with nested maps.
          * Python: (guid, ord) -> cid
          * Java: guid -> ord -> cid

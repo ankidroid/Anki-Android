@@ -277,14 +277,14 @@ public class Utils {
         }
     }
 
-    /**
+    /*
      * Locale
      * ***********************************************************************************************
      */
 
 
-    /**
-     * HTML
+    /*
+    * HTML
      * ***********************************************************************************************
      */
 
@@ -364,7 +364,7 @@ public class Utils {
         return sb.toString();
     }
 
-    /**
+    /*
      * IDs
      * ***********************************************************************************************
      */
@@ -447,8 +447,8 @@ public class Utils {
     }
 
 
-    /** LIBANKI: not in libanki */
-    /** Transform a collection of Long into an array of Long */
+    /** LIBANKI: not in libanki
+     *  Transform a collection of Long into an array of Long */
     public static long[] collection2Array(java.util.Collection<Long> list) {
         long[] ar = new long[list.size()];
         int i = 0;
@@ -554,7 +554,7 @@ public class Utils {
         return fields.split("\\x1f", -1);
     }
 
-    /**
+    /*
      * Checksums
      * ***********************************************************************************************
      */
@@ -648,7 +648,7 @@ public class Utils {
     }
 
 
-    /**
+    /*
      *  Tempo files
      * ***********************************************************************************************
      */
