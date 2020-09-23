@@ -41,7 +41,7 @@ import java.util.ArrayList;
 public class CardTemplatePreviewerTest extends RobolectricTest {
 
     @Test
-    public void testPreviewUnsavedTemplate() throws Exception {
+    public void testPreviewUnsavedTemplate() {
 
         String modelName = "Basic";
         Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
@@ -111,7 +111,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }
 
-    private Card getSavedCard(Model model, int ordinal) throws Exception {
+    private Card getSavedCard(Model model, int ordinal) {
         Note n = getCol().newNote(model);
         ArrayList<String> fieldNames = Models.fieldNames(model);
         for (int i = 0; i < fieldNames.size(); i++) {

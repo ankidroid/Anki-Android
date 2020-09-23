@@ -193,7 +193,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void ensureDeckTree() throws Exception {
+    public void ensureDeckTree() {
         for (String deckName : TEST_DECKS) {
             addDeck(deckName);
         }
@@ -728,7 +728,7 @@ public class SchedV2Test extends RobolectricTest {
 
     @Test
     @Ignore("Disabled upstream")
-    public void test_overdue_lapseV2() throws Exception {
+    public void test_overdue_lapseV2() {
         // disabled in commit 3069729776990980f34c25be66410e947e9d51a2
         return;
         /* Upstream does not execute it

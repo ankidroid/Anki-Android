@@ -186,7 +186,7 @@ public class ReviewerTest extends RobolectricTest {
     }
 
     @Test
-    public synchronized void testMultipleCards() throws ConfirmModSchemaException, InterruptedException {
+    public synchronized void testMultipleCards() throws ConfirmModSchemaException {
         addNoteWithThreeCards();
         Collection col = getCol();
         JSONObject nw = col.getDecks().confForDid(1).getJSONObject("new");

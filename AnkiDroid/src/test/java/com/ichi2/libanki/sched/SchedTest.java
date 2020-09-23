@@ -590,7 +590,7 @@ public class SchedTest extends RobolectricTest {
 
     @Test
     @Ignore("disabled in commit anki@3069729776990980f34c25be66410e947e9d51a2")
-    public void test_overdue_lapseV1() throws Exception {
+    public void test_overdue_lapseV1() {
         // disabled in commit anki@3069729776990980f34c25be66410e947e9d51a2
         return;
         /*
