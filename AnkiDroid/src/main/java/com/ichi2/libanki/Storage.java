@@ -192,8 +192,8 @@ public class Storage {
                         if (order >= 5) {
                             order -= 1;
                         }
-                        JSONArray terms = new JSONArray(Arrays.asList(new Object[] { d.getString("search"),
-                                d.getInt("limit"), order }));
+                        JSONArray terms = new JSONArray(Arrays.asList(d.getString("search"),
+                                d.getInt("limit"), order));
                         d.put("terms", new JSONArray());
                         d.getJSONArray("terms").put(0, terms);
                         d.remove("search");

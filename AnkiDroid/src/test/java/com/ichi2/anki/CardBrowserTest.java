@@ -360,7 +360,7 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
     private void removeCardFromCollection(Long cardId) {
-        getCol().remCards(Arrays.asList(new Long[] {cardId}));
+        getCol().remCards(Arrays.asList(cardId));
     }
 
     @CheckReturnValue
