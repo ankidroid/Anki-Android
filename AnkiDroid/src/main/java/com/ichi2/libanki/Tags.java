@@ -52,8 +52,8 @@ public class Tags {
 
     private static final Pattern sCanonify = Pattern.compile("[\"']");
 
-    private Collection mCol;
-    private TreeMap<String, Integer> mTags = new TreeMap<>();
+    private final Collection mCol;
+    private final TreeMap<String, Integer> mTags = new TreeMap<>();
     private boolean mChanged;
 
 

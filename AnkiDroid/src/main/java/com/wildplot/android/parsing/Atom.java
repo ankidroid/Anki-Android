@@ -18,7 +18,7 @@ package com.wildplot.android.parsing;
 import com.wildplot.android.parsing.AtomTypes.*;
 
 public class Atom implements TreeElement {
-    private TopLevelParser parser;
+    private final TopLevelParser parser;
 
 
 

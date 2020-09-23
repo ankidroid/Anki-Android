@@ -119,7 +119,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     }
 
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
-    private MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, item, charSequence) -> {
+    private final MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, item, charSequence) -> {
         switch (view.getId()) {
             case CONTEXT_MENU_DELETE_DECK:
                 Timber.i("Delete deck selected");

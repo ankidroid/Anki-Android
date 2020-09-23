@@ -30,13 +30,13 @@ public class BarGraph implements Drawable, Legendable {
     private String mName = "";
     private boolean mNameIsSet = false;
 
-    private PlotSheet plotSheet;
+    private final PlotSheet plotSheet;
 
-    private double[][] points;
+    private final double[][] points;
 
-    private double size;
+    private final double size;
 
-    private ColorWrap color;
+    private final ColorWrap color;
 
     private ColorWrap fillColor;
 

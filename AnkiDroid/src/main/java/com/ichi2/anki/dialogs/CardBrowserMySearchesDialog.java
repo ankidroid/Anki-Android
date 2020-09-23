@@ -21,8 +21,8 @@ import timber.log.Timber;
 
 public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
 
-    public static int CARD_BROWSER_MY_SEARCHES_TYPE_LIST = 0; //list searches dialog
-    public static int CARD_BROWSER_MY_SEARCHES_TYPE_SAVE = 1; //save searches dialog
+    public static final int CARD_BROWSER_MY_SEARCHES_TYPE_LIST = 0; //list searches dialog
+    public static final int CARD_BROWSER_MY_SEARCHES_TYPE_SAVE = 1; //save searches dialog
 
     private static MySearchesDialogListener mMySearchesDialogListener;
 

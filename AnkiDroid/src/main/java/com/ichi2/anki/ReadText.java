@@ -44,16 +44,16 @@ import timber.log.Timber;
 
 public class ReadText {
     private static TextToSpeech mTts;
-    private static ArrayList<Locale> availableTtsLocales = new ArrayList<>();
+    private static final ArrayList<Locale> availableTtsLocales = new ArrayList<>();
     private static String mTextToSpeak;
     private static WeakReference<Context> mReviewer;
     private static long mDid;
     private static int mOrd;
     private static Sound.SoundSide mQuestionAnswer;
     public static final String NO_TTS = "0";
-    public static ArrayList<String[]> sTextQueue = new ArrayList<>();
-    private static Compat compat = CompatHelper.getCompat();
-    private static Object mTtsParams = compat.initTtsParams();
+    public static final ArrayList<String[]> sTextQueue = new ArrayList<>();
+    private static final Compat compat = CompatHelper.getCompat();
+    private static final Object mTtsParams = compat.initTtsParams();
 
     public static Sound.SoundSide getmQuestionAnswer() {
         return mQuestionAnswer;

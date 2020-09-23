@@ -17,8 +17,8 @@ import static org.mockito.ArgumentMatchers.eq;
 //Unknown issue: @CheckResult should provide warnings on this class when return value is unused, but doesn't.
 public class PreferenceExtensionsTest {
 
-    private static Supplier<String> UNUSED_SUPPLIER = () -> { throw new UnexpectedException();};
-    private static Supplier<String> EXCEPTION_SUPPLIER = () -> { throw new ExpectedException();};
+    private static final Supplier<String> UNUSED_SUPPLIER = () -> { throw new UnexpectedException();};
+    private static final Supplier<String> EXCEPTION_SUPPLIER = () -> { throw new ExpectedException();};
 
     private static final String VALID_KEY = "VALID";
     private static final String VALID_RESULT = "WAS VALID KEY";

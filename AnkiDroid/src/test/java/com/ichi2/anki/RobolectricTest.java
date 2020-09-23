@@ -66,7 +66,7 @@ import static org.robolectric.Shadows.shadowOf;
 
 public class RobolectricTest {
 
-    private ArrayList<ActivityController> controllersForCleanup = new ArrayList<>();
+    private final ArrayList<ActivityController> controllersForCleanup = new ArrayList<>();
 
     protected void saveControllerForCleanup(ActivityController controller) {
         controllersForCleanup.add(controller);

@@ -17,7 +17,7 @@ package com.wildplot.android.parsing;
 
 
 public class Term implements TreeElement {
-    private TopLevelParser parser;
+    private final TopLevelParser parser;
 
 
 

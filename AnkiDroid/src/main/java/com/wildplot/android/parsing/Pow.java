@@ -17,7 +17,7 @@ package com.wildplot.android.parsing;
 
 
 public class Pow implements TreeElement {
-    private TopLevelParser parser;
+    private final TopLevelParser parser;
 
 
     public enum PowType {ATOM, ATOM_POW_FACTOR, ATOM_SQRT_FACTOR, INVALID}

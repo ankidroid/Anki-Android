@@ -121,23 +121,23 @@ public class Reviewer extends AbstractFlashcardViewer {
     // Preferences from the collection
     private boolean mShowRemainingCardCount;
 
-    private ActionButtons mActionButtons = new ActionButtons(this);
+    private final ActionButtons mActionButtons = new ActionButtons(this);
 
 
-    private TaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
+    private final TaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reschedule_cards_dialog_acknowledge;
         }
     };
 
-    private TaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
+    private final TaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reset_cards_dialog_acknowledge;
         }
     };
 
     @VisibleForTesting
-    protected PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
+    protected final PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
     abstract class ScheduleCollectionTaskListener extends NextCardHandler {

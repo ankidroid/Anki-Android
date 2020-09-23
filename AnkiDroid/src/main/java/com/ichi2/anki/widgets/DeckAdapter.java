@@ -56,20 +56,20 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
     /* Make the selected deck roughly half transparent if there is a background */
     public static final double SELECTED_DECK_ALPHA_AGAINST_BACKGROUND = 0.45;
 
-    private LayoutInflater mLayoutInflater;
-    private List<AbstractDeckTreeNode> mDeckList;
+    private final LayoutInflater mLayoutInflater;
+    private final List<AbstractDeckTreeNode> mDeckList;
     /** A subset of mDeckList (currently displayed) */
-    private List<AbstractDeckTreeNode> mCurrentDeckList = new ArrayList<>();
-    private int mZeroCountColor;
-    private int mNewCountColor;
-    private int mLearnCountColor;
-    private int mReviewCountColor;
-    private int mRowCurrentDrawable;
-    private int mDeckNameDefaultColor;
-    private int mDeckNameDynColor;
-    private Drawable mExpandImage;
-    private Drawable mCollapseImage;
-    private Drawable mNoExpander = new ColorDrawable(Color.TRANSPARENT);
+    private final List<AbstractDeckTreeNode> mCurrentDeckList = new ArrayList<>();
+    private final int mZeroCountColor;
+    private final int mNewCountColor;
+    private final int mLearnCountColor;
+    private final int mReviewCountColor;
+    private final int mRowCurrentDrawable;
+    private final int mDeckNameDefaultColor;
+    private final int mDeckNameDynColor;
+    private final Drawable mExpandImage;
+    private final Drawable mCollapseImage;
+    private final Drawable mNoExpander = new ColorDrawable(Color.TRANSPARENT);
 
     // Listeners
     private View.OnClickListener mDeckClickListener;
@@ -93,12 +93,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
 
     // ViewHolder class to save inflated views for recycling
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public RelativeLayout deckLayout;
-        public LinearLayout countsLayout;
-        public ImageButton deckExpander;
-        public ImageButton indentView;
-        public TextView deckName;
-        public TextView deckNew, deckLearn, deckRev;
+        public final RelativeLayout deckLayout;
+        public final LinearLayout countsLayout;
+        public final ImageButton deckExpander;
+        public final ImageButton indentView;
+        public final TextView deckName;
+        public final TextView deckNew;
+        public final TextView deckLearn;
+        public final TextView deckRev;
 
         public ViewHolder(View v) {
             super(v);
@@ -376,7 +378,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
 
 
     private class DeckFilter extends Filter {
-        private ArrayList<AbstractDeckTreeNode> mFilteredDecks = new ArrayList<>();
+        private final ArrayList<AbstractDeckTreeNode> mFilteredDecks = new ArrayList<>();
         private DeckFilter() {
             super();
         }

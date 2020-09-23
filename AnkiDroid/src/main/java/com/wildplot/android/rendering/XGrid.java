@@ -34,17 +34,17 @@ public class XGrid implements Drawable {
     /**
      * the Sheet the grid lines will be drawn onto
      */
-    private PlotSheet plotSheet;
+    private final PlotSheet plotSheet;
 
     /**
      * start point for relative positioning of grid
      */
-    private double ticStart;
+    private final double ticStart;
 
     /**
      * the space between two grid lines
      */
-    private double tic;
+    private final double tic;
 
     /**
      * maximal distance from x axis the grid will be drawn

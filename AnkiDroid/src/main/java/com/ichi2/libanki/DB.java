@@ -57,7 +57,7 @@ public class DB {
     /**
      * The collection, which is actually an SQLite database.
      */
-    private SupportSQLiteDatabase mDatabase;
+    private final SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
 
     /**

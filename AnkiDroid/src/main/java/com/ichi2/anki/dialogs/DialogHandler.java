@@ -61,7 +61,7 @@ public class DialogHandler extends Handler {
     };
 
 
-    WeakReference<AnkiActivity> mActivity;
+    final WeakReference<AnkiActivity> mActivity;
     private static Message sStoredMessage;
     
     public DialogHandler(AnkiActivity activity) {

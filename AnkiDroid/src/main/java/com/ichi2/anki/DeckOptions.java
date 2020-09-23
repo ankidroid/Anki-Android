@@ -92,10 +92,10 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     public class DeckPreferenceHack implements SharedPreferences {
 
-        private Map<String, String> mValues = new HashMap<>();
-        private Map<String, String> mSummaries = new HashMap<>();
+        private final Map<String, String> mValues = new HashMap<>();
+        private final Map<String, String> mSummaries = new HashMap<>();
         private MaterialDialog mProgressDialog;
-        private List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
+        private final List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
 
 
         private DeckPreferenceHack() {

@@ -59,12 +59,12 @@ public class Sound {
     /**
      * Pattern used to identify the markers for sound files
      */
-    public static Pattern sSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
+    public static final Pattern sSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
 
     /**
      * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)
      */
-    private static Pattern sUriPattern = Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$");
+    private static final Pattern sUriPattern = Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$");
 
     /**
      * Media player used to play the sounds
@@ -108,7 +108,7 @@ public class Sound {
     /**
      * Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true.
      */
-    private HashMap<SoundSide, ArrayList<String>> mSoundPaths = new HashMap<>();
+    private final HashMap<SoundSide, ArrayList<String>> mSoundPaths = new HashMap<>();
 
 
     /**
@@ -119,7 +119,7 @@ public class Sound {
     /**
      * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
      */
-    private static AudioManager.OnAudioFocusChangeListener afChangeListener = focusChange -> {
+    private static final AudioManager.OnAudioFocusChangeListener afChangeListener = focusChange -> {
     };
 
 

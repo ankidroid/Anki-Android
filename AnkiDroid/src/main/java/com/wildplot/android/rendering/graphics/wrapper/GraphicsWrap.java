@@ -27,8 +27,8 @@ import android.graphics.Typeface;
  * @author Michael Goldbach
  */
 public class GraphicsWrap {
-    private Canvas canvas;
-    private Paint paint;
+    private final Canvas canvas;
+    private final Paint paint;
 
 
     public GraphicsWrap(Canvas canvas, Paint paint) {

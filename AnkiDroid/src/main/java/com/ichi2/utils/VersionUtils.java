@@ -15,7 +15,7 @@ import timber.log.Timber;
  */
 public class VersionUtils {
 
-    private static Compat compat = CompatHelper.getCompat();
+    private static final Compat compat = CompatHelper.getCompat();
 
     /**
      * Get package name as defined in the manifest.

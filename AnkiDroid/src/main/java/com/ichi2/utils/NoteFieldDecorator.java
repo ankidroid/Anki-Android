@@ -20,9 +20,9 @@ import java.util.Random;
 
 public class NoteFieldDecorator {
 
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
-    private static String[] huevoDecorations = {
+    private static final String[] huevoDecorations = {
             "\uD83D\uDC8C",
             "\uD83D\uDE3B",
             "\uD83D\uDC96",
@@ -36,7 +36,7 @@ public class NoteFieldDecorator {
             "\uD83D\uDE0D"
     };
 
-    private static String[] huevoOpciones = {
+    private static final String[] huevoOpciones = {
             "qnr",
             "gvzenr",
             "aboantb",

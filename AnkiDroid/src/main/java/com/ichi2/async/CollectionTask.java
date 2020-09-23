@@ -1915,8 +1915,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * Helper class for allowing inner function to publish progress of an AsyncTask.
      */
     public static class ProgressCallback {
-        private Resources res;
-        private CollectionTask task;
+        private final Resources res;
+        private final CollectionTask task;
 
 
         public ProgressCallback(CollectionTask task, Resources res) {

@@ -22,8 +22,8 @@ public final class DeckDropDownAdapter extends BaseAdapter {
         String getSubtitleText();
     }
 
-    private Context context;
-    private ArrayList<Deck> decks;
+    private final Context context;
+    private final ArrayList<Deck> decks;
 
     public DeckDropDownAdapter(Context context, ArrayList<Deck> decks) {
         this.context = context;

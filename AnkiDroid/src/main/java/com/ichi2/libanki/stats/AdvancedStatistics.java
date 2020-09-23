@@ -527,11 +527,11 @@ public class AdvancedStatistics {
      */
     private static class Deck {
 
-        private long did;
+        private final long did;
 
-        private int newPerDay;
-        private int revPerDay;
-        private int initialFactor;
+        private final int newPerDay;
+        private final int revPerDay;
+        private final int initialFactor;
 
         public Deck(long did, int newPerDay, int revPerDay, int initialFactor) {
             this.did = did;
@@ -560,10 +560,10 @@ public class AdvancedStatistics {
 
     private static class CardIterator {
 
-        private Cursor cur;
+        private final Cursor cur;
 
         private final int today;
-        private Deck deck;
+        private final Deck deck;
 
         public CardIterator(SupportSQLiteDatabase db, int today, Deck deck) {
 
@@ -767,7 +767,7 @@ public class AdvancedStatistics {
             return 3;
         }
 
-        private ReviewOutcome singleReviewOutcome;
+        private final ReviewOutcome singleReviewOutcome;
         public ReviewOutcome simSingleReview(Card c){
 
             @Consts.CARD_TYPE int type = c.getType();
@@ -832,7 +832,7 @@ public class AdvancedStatistics {
 
     public static class TodayStats {
 
-        private Map<Long, Integer> nLearnedPerDeckId = new HashMap<Long, Integer>();
+        private final Map<Long, Integer> nLearnedPerDeckId = new HashMap<Long, Integer>();
 
         public TodayStats(SupportSQLiteDatabase db, long dayStartCutoff) {
 
@@ -1525,14 +1525,14 @@ public class AdvancedStatistics {
         /**
          * Deck-specific settings
          */
-        private Deck deck;
+        private final Deck deck;
 
         /**
          * State of the card before current review.
          * Needed to schedule current review but with different outcome and to update statistics.
          */
         private Card card = new Card(0, 0, 0, 0, 0, 0);
-        private Card prevCard = new Card(0, 0, 0, 0, 0, 0);
+        private final Card prevCard = new Card(0, 0, 0, 0, 0, 0);
 
         /**
          * State of the card after current review.

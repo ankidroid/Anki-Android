@@ -51,7 +51,7 @@ public class NoteImporter extends Importer {
     @Nullable
     private List<String> mMapping;
     @Nullable
-    private String mTagModified ;
+    private final String mTagModified ;
 
 
     private final Model mModel;
@@ -464,19 +464,19 @@ public class NoteImporter extends Importer {
 
     /** A temporary object storing fields and attributes. */
     public static class ForeignNote {
-        public List<String> mFields = new ArrayList<>();
-        public List<String> mTags = new ArrayList<>();
+        public final List<String> mFields = new ArrayList<>();
+        public final List<String> mTags = new ArrayList<>();
         public Object deck = new Object();
-        public Map<Integer, ForeignCard> cards = new HashMap<>();
+        public final Map<Integer, ForeignCard> cards = new HashMap<>();
         public String fieldsStr = "";
     }
 
     public static class ForeignCard {
-        public long mDue = 0;
-        public int mIvl = 1;
-        public int mFactor = Consts.STARTING_FACTOR;
-        public int mReps = 0;
-        public int mLapses = 0;
+        public final long mDue = 0;
+        public final int mIvl = 1;
+        public final int mFactor = Consts.STARTING_FACTOR;
+        public final int mReps = 0;
+        public final int mLapses = 0;
     }
 
     private static class Triple {

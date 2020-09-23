@@ -34,7 +34,7 @@ public class PieChart implements Drawable, Legendable {
 
     private String mName = "";
     private boolean mNameIsSet = false;
-    private double[] mPercent;
+    private final double[] mPercent;
     private double mSum;
 
 

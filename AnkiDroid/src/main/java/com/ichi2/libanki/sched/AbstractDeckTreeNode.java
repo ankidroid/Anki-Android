@@ -25,7 +25,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
     private final String mName;
     private final String[] mNameComponents;
     private final Collection mCol;
-    private long mDid;
+    private final long mDid;
     @Nullable
     private List<T> mChildren = null;
 

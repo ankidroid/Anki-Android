@@ -17,7 +17,7 @@ package com.wildplot.android.parsing;
 
 
 public class Factor implements TreeElement {
-    private TopLevelParser parser;
+    private final TopLevelParser parser;
 
 
 

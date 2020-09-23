@@ -208,7 +208,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private TextView mActionBarTitle;
     private boolean mReloadRequired = false;
     private boolean mInMultiSelectMode = false;
-    private Set<CardCache> mCheckedCards = Collections.synchronizedSet(new LinkedHashSet<>());
+    private final Set<CardCache> mCheckedCards = Collections.synchronizedSet(new LinkedHashSet<>());
     private int mLastSelectedPosition;
     @Nullable
     private Menu mActionBarMenu;
@@ -218,8 +218,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     // Values related to persistent state data
     private static final long ALL_DECKS_ID = 0L;
-    private static String PERSISTENT_STATE_FILE = "DeckPickerState";
-    private static String LAST_DECK_ID_KEY = "lastDeckId";
+    private static final String PERSISTENT_STATE_FILE = "DeckPickerState";
+    private static final String LAST_DECK_ID_KEY = "lastDeckId";
 
 
     /**
@@ -227,7 +227,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private MaterialDialog.ListCallbackSingleChoice mOrderDialogListener =
+    private final MaterialDialog.ListCallbackSingleChoice mOrderDialogListener =
             new MaterialDialog.ListCallbackSingleChoice() {
         @Override
         public boolean onSelection(MaterialDialog materialDialog, View view, int which,
@@ -332,7 +332,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private CardBrowserMySearchesDialog.MySearchesDialogListener mMySearchesDialogListener =
+    private final CardBrowserMySearchesDialog.MySearchesDialogListener mMySearchesDialogListener =
             new CardBrowserMySearchesDialog.MySearchesDialogListener() {
         @Override
         public void onSelection(String searchName) {
@@ -1704,7 +1704,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
 
-    private DeleteNoteHandler mDeleteNoteHandler = new DeleteNoteHandler(this);
+    private final DeleteNoteHandler mDeleteNoteHandler = new DeleteNoteHandler(this);
     private static class DeleteNoteHandler extends ListenerWithProgressBarCloseOnFalse {
         public DeleteNoteHandler(CardBrowser browser) {
             super(browser);
@@ -2010,7 +2010,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         private float mOriginalTextSize = -1.0f;
         private final int mFontSizeScalePcent;
         private Typeface mCustomTypeface = null;
-        private LayoutInflater mInflater;
+        private final LayoutInflater mInflater;
 
         public MultiColumnListAdapter(Context context, int resource, Column[] from, int[] to,
                                       int fontSizeScalePcent, String customFont) {
@@ -2196,7 +2196,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public static class CardCache extends Card.Cache {
         private boolean mLoaded = false;
         private Pair<String, String> mQa = null;
-        private int mPosition;
+        private final int mPosition;
 
         public CardCache(long id, Collection col, int position) {
             super(col, id);

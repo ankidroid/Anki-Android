@@ -57,7 +57,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     /** The name of the parent class (Reviewer) */
     private final String mActivityName;
 
-    private DialogHandler mHandler = new DialogHandler(this);
+    private final DialogHandler mHandler = new DialogHandler(this);
 
     // custom tabs
     private CustomTabActivityHelper mCustomTabActivityHelper;

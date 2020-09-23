@@ -220,7 +220,7 @@ public class MyAccount extends AnkiActivity {
     /**
      * Listeners
      */
-    Connection.TaskListener loginListener = new Connection.TaskListener() {
+    final Connection.TaskListener loginListener = new Connection.TaskListener() {
 
         @Override
         public void onProgressUpdate(Object... values) {

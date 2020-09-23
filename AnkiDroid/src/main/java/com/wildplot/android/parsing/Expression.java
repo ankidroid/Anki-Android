@@ -17,7 +17,7 @@ package com.wildplot.android.parsing;
 
 
 public class Expression implements TreeElement {
-    private TopLevelParser parser;
+    private final TopLevelParser parser;
 
 
 

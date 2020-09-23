@@ -74,8 +74,8 @@ public class PeripheralKeymap {
     }
 
     private static class KeyMap {
-        public HashMap<Integer, List<Integer>> mKeyCodeToCommand = new HashMap<>();
-        public HashMap<Integer, List<Integer>> mUnicodeToCommand = new HashMap<>();
+        public final HashMap<Integer, List<Integer>> mKeyCodeToCommand = new HashMap<>();
+        public final HashMap<Integer, List<Integer>> mUnicodeToCommand = new HashMap<>();
         private final CommandProcessor mProcessor;
 
         private KeyMap(CommandProcessor commandProcessor) {

@@ -178,7 +178,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
     public class DecksArrayAdapter extends RecyclerView.Adapter<DecksArrayAdapter.ViewHolder> implements Filterable {
         public class ViewHolder extends RecyclerView.ViewHolder {
-            private TextView mDeckTextView;
+            private final TextView mDeckTextView;
             public ViewHolder(@NonNull TextView ctv) {
                 super(ctv);
                 mDeckTextView = ctv;
@@ -242,7 +242,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
         /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
         private class DecksFilter extends Filter {
-            private ArrayList<SelectableDeck> mFilteredDecks;
+            private final ArrayList<SelectableDeck> mFilteredDecks;
             protected DecksFilter() {
                 super();
                 mFilteredDecks = new ArrayList<>();

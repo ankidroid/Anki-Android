@@ -35,14 +35,14 @@ public abstract class Importer {
     protected boolean mNeedDelimiter = false;
     protected String mFile;
     protected List<String> mLog;
-    protected Collection mCol;
+    protected final Collection mCol;
     protected int mTotal;
 
     private long mTs;
     protected Collection mDst;
     protected Collection mSrc;
 
-    protected Context mContext;
+    protected final Context mContext;
     protected CollectionTask.ProgressCallback mProgress;
 
     public Importer(Collection col, String file) {

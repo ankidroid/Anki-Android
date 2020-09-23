@@ -239,7 +239,7 @@ public class Previewer extends AbstractFlashcardViewer {
     }
 
 
-    private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
+    private final View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (view.getId() == R.id.preview_previous_flashcard) {
@@ -253,7 +253,7 @@ public class Previewer extends AbstractFlashcardViewer {
         }
     };
 
-    private View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
+    private final View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (mShowingAnswer) {

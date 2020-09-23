@@ -35,7 +35,7 @@ public class YAxis implements Drawable {
 
     private boolean isOnRightSide = false;
 
-    private boolean isLog = false;
+    private final boolean isLog = false;
 
     /**
      * offset to move axis left or right
@@ -49,30 +49,30 @@ public class YAxis implements Drawable {
     /**
      * Format that is used to print numbers under markers
      */
-    private DecimalFormat df = new DecimalFormat("##0.0#");
-    private DecimalFormat dfScience = new DecimalFormat("0.0###E0");
-    private DecimalFormat dfInteger = new DecimalFormat("#.#");
+    private final DecimalFormat df = new DecimalFormat("##0.0#");
+    private final DecimalFormat dfScience = new DecimalFormat("0.0###E0");
+    private final DecimalFormat dfInteger = new DecimalFormat("#.#");
 
     private boolean isScientific = false;
     /**
      * the PlotSheet object the x-axis is drawn onto
      */
-    private PlotSheet plotSheet;
+    private final PlotSheet plotSheet;
 
     /**
      * the start of x-axis marker, used for relative alignment of further marks
      */
-    private double ticStart;
+    private final double ticStart;
 
     /**
      * the space between two marks
      */
-    private double tic;
+    private final double tic;
 
     /**
      * the space between two minor marks
      */
-    private double minorTic;
+    private final double minorTic;
 
     /**
      * start of drawn x-axis
@@ -97,7 +97,7 @@ public class YAxis implements Drawable {
     /**
      * length of a marker in pixel, length is only for one side
      */
-    private float markerLength = 5;
+    private final float markerLength = 5;
 
     private boolean isOnFrame = false;
 

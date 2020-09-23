@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNull;
 @RunWith(RobolectricTestRunner.class)
 public class ApiUtilsTest {
 
-    private static String delimiter = "\u001F";
+    private static final String delimiter = "\u001F";
 
     @Test
     public void joinFieldsShouldJoinWhenListIsValid() {
