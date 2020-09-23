@@ -170,7 +170,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             selectDeckFromExtra();
         }
 
-        colorPalette = (LinearLayout) findViewById(R.id.whiteboard_pen_color);
+        colorPalette = findViewById(R.id.whiteboard_pen_color);
 
         startLoadingCollection();
     }
@@ -974,9 +974,9 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void initLayout() {
-        mTextBarNew = (TextView) findViewById(R.id.new_number);
-        mTextBarLearn = (TextView) findViewById(R.id.learn_number);
-        mTextBarReview = (TextView) findViewById(R.id.review_number);
+        mTextBarNew = findViewById(R.id.new_number);
+        mTextBarLearn = findViewById(R.id.learn_number);
+        mTextBarReview = findViewById(R.id.review_number);
 
         super.initLayout();
 

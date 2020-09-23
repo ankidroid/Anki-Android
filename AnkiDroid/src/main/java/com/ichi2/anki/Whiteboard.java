@@ -111,14 +111,14 @@ public class Whiteboard extends View {
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
         // selecting pen color to draw
-        mColorPalette = (LinearLayout) cardViewer.findViewById(R.id.whiteboard_pen_color);
+        mColorPalette = cardViewer.findViewById(R.id.whiteboard_pen_color);
 
-        ((Button) cardViewer.findViewById(R.id.pen_color_white)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_black)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_red)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_green)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_blue)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_yellow)).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_white).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_black).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_red).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_yellow).setOnClickListener(this::onClick);
     }
 
 

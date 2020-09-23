@@ -330,7 +330,7 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
                 .create().start().resume().visible();
         saveControllerForCleanup((multimediaController));
 
-        NonAbstractFlashcardViewer viewer = (NonAbstractFlashcardViewer) multimediaController.get();
+        NonAbstractFlashcardViewer viewer = multimediaController.get();
         viewer.onCollectionLoaded(getCol());
         viewer.loadInitialCard();
         // Without this, AbstractFlashcardViewer.mCard is still null, and RobolectricTest.tearDown executes before

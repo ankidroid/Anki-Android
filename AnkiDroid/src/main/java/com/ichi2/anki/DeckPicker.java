@@ -503,7 +503,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mActionsMenu.findViewById(R.id.fab_expand_menu_button).setContentDescription(getString(R.string.menu_add));
         configureFloatingActionsMenu();
 
-        mReviewSummaryTextView = (TextView) findViewById(R.id.today_stats_text_view);
+        mReviewSummaryTextView = findViewById(R.id.today_stats_text_view);
 
         Timber.i("colOpen: %b", colOpen);
         if (colOpen) {

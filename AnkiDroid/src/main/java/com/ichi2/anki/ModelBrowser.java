@@ -180,7 +180,7 @@ public class ModelBrowser extends AnkiActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.model_browser);
-        mModelListView = (ListView) findViewById(R.id.note_type_browser_list);
+        mModelListView = findViewById(R.id.note_type_browser_list);
         enableToolbar();
         mActionBar = getSupportActionBar();
         startLoadingCollection();
@@ -601,8 +601,8 @@ public class ModelBrowser extends AnkiActivity {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.model_browser_list_item, parent, false);
             }
 
-            TextView tvName = (TextView) convertView.findViewById(R.id.model_list_item_1);
-            TextView tvHome = (TextView) convertView.findViewById(R.id.model_list_item_2);
+            TextView tvName = convertView.findViewById(R.id.model_list_item_1);
+            TextView tvHome = convertView.findViewById(R.id.model_list_item_2);
 
             int count = item.getCount();
 

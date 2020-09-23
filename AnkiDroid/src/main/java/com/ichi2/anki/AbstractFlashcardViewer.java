@@ -1426,17 +1426,17 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     // Set the content view to the one provided and initialize accessors.
     @SuppressWarnings("deprecation") // Tracked separately as #5023 on github for clipboard
     protected void initLayout() {
-        FrameLayout mCardContainer = (FrameLayout) findViewById(R.id.flashcard_frame);
+        FrameLayout mCardContainer = findViewById(R.id.flashcard_frame);
 
-        mTopBarLayout = (RelativeLayout) findViewById(R.id.top_bar);
+        mTopBarLayout = findViewById(R.id.top_bar);
 
         ImageView mark = mTopBarLayout.findViewById(R.id.mark_icon);
         ImageView flag = mTopBarLayout.findViewById(R.id.flag_icon);
         mCardMarker = new CardMarker(mark, flag);
 
-        mCardFrame = (FrameLayout) findViewById(R.id.flashcard);
+        mCardFrame = findViewById(R.id.flashcard);
         mCardFrameParent = (ViewGroup) mCardFrame.getParent();
-        mTouchLayer = (FrameLayout) findViewById(R.id.touch_layer);
+        mTouchLayer = findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
         if (!mDisableClipboard) {
             mClipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -1477,8 +1477,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mNext4.setVisibility(View.GONE);
         }
 
-        Button mFlipCard = (Button) findViewById(R.id.flip_card);
-        mFlipCardLayout = (LinearLayout) findViewById(R.id.flashcard_layout_flip);
+        Button mFlipCard = findViewById(R.id.flip_card);
+        mFlipCardLayout = findViewById(R.id.flashcard_layout_flip);
         mFlipCardLayout.setOnClickListener(mFlipCardListener);
 
         if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
@@ -1504,11 +1504,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mPreviewNextCard = findViewById(R.id.preview_next_flashcard);
         mPreviewToggleAnswerText = findViewById(R.id.preview_flip_flashcard);
 
-        mCardTimer = (Chronometer) findViewById(R.id.card_time);
+        mCardTimer = findViewById(R.id.card_time);
 
-        mChosenAnswer = (TextView) findViewById(R.id.choosen_answer);
+        mChosenAnswer = findViewById(R.id.choosen_answer);
 
-        mAnswerField = (EditText) findViewById(R.id.answer_field);
+        mAnswerField = findViewById(R.id.answer_field);
 
         mLookUpIcon = findViewById(R.id.lookup_button);
         mLookUpIcon.setVisibility(View.GONE);
@@ -1525,7 +1525,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 getString(R.string.answer_buttons_position_preference),
                 "bottom"
         );
-        LinearLayout answerArea = (LinearLayout) findViewById(R.id.bottom_area_layout);
+        LinearLayout answerArea = findViewById(R.id.bottom_area_layout);
         RelativeLayout.LayoutParams answerAreaParams = (RelativeLayout.LayoutParams) answerArea.getLayoutParams();
         RelativeLayout.LayoutParams cardContainerParams = (RelativeLayout.LayoutParams) mCardContainer.getLayoutParams();
 

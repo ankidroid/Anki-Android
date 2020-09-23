@@ -98,7 +98,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         mDropDownDecks = getCol().getDecks().allSorted();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        mActionBarSpinner = (Spinner) findViewById(R.id.toolbar_spinner);
+        mActionBarSpinner = findViewById(R.id.toolbar_spinner);
         mActionBarSpinner.setAdapter(new DeckDropDownAdapter(this, mDropDownDecks));
         mActionBarSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -121,10 +121,10 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(8);
-        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        slidingTabLayout = findViewById(R.id.sliding_tabs);
         slidingTabLayout.setViewPager(mViewPager);
 
         // Dirty way to get text size from a TextView with current style, change if possible
@@ -417,7 +417,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             //int sectionNumber = 0;
             //System.err.println("sectionNumber: " + mSectionNumber);
             View rootView = inflater.inflate(R.layout.fragment_anki_stats, container, false);
-            mChart = (ChartView) rootView.findViewById(R.id.image_view_chart);
+            mChart = rootView.findViewById(R.id.image_view_chart);
             if (mChart == null) {
                 Timber.d("mChart null!");
             } else {
@@ -426,7 +426,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
             //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-            mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_stats);
+            mProgressBar = rootView.findViewById(R.id.progress_bar_stats);
 
             mProgressBar.setVisibility(View.VISIBLE);
             //mChart.setVisibility(View.GONE);
@@ -584,7 +584,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 getActivity().finish();
                 return rootView;
             }
-            mWebView = (WebView) rootView.findViewById(R.id.web_view_stats);
+            mWebView = rootView.findViewById(R.id.web_view_stats);
             if (mWebView == null) {
                 Timber.d("mChart null!");
             } else {
@@ -595,7 +595,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
             //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-            mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_stats_overview);
+            mProgressBar = rootView.findViewById(R.id.progress_bar_stats_overview);
 
             mProgressBar.setVisibility(View.VISIBLE);
             //mChart.setVisibility(View.GONE);

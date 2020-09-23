@@ -364,9 +364,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return mainView;
             }
             // Load EditText Views
-            mFront = ((EditText) mainView.findViewById(R.id.front_edit));
-            mCss = ((EditText) mainView.findViewById(R.id.styling_edit));
-            mBack = ((EditText) mainView.findViewById(R.id.back_edit));
+            mFront = mainView.findViewById(R.id.front_edit);
+            mCss = mainView.findViewById(R.id.styling_edit);
+            mBack = mainView.findViewById(R.id.back_edit);
             // Set EditText content
             mFront.setText(template.getString("qfmt"));
             mCss.setText(tempModel.getCss());

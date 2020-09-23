@@ -187,9 +187,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         Resources res = getActivity().getResources();
         // Show input dialog for an individual custom study dialog
         View v = getActivity().getLayoutInflater().inflate(R.layout.styled_custom_study_details_dialog, null);
-        TextView textView1 = (TextView) v.findViewById(R.id.custom_study_details_text1);
-        TextView textView2 = (TextView) v.findViewById(R.id.custom_study_details_text2);
-        final EditText mEditText = (EditText) v.findViewById(R.id.custom_study_details_edittext2);
+        TextView textView1 = v.findViewById(R.id.custom_study_details_text1);
+        TextView textView2 = v.findViewById(R.id.custom_study_details_text2);
+        final EditText mEditText = v.findViewById(R.id.custom_study_details_edittext2);
         // Set the text
         textView1.setText(getText1());
         textView2.setText(getText2());

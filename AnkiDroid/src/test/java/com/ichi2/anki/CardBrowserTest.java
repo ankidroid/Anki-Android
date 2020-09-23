@@ -356,7 +356,7 @@ public class CardBrowserTest extends RobolectricTest {
         ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
                 .create().start().resume().visible();
         saveControllerForCleanup(multimediaController);
-        return (CardBrowser) multimediaController.get();
+        return multimediaController.get();
     }
 
     private void removeCardFromCollection(Long cardId) {
@@ -368,6 +368,6 @@ public class CardBrowserTest extends RobolectricTest {
         ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
                 .create().start().resume().visible();
         saveControllerForCleanup(multimediaController);
-        return (CardBrowser) multimediaController.get();
+        return multimediaController.get();
     }
 }

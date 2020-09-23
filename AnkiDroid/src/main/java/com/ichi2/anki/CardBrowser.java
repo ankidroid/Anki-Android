@@ -504,7 +504,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         // Load reference to action bar title
-        mActionBarTitle = (TextView) findViewById(R.id.toolbar_title);
+        mActionBarTitle = findViewById(R.id.toolbar_title);
 
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = getCol().getDecks().allSorted();
@@ -513,7 +513,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (mActionBar != null) {
             mActionBar.setDisplayShowTitleEnabled(false);
         }
-        mActionBarSpinner = (Spinner) findViewById(R.id.toolbar_spinner);
+        mActionBarSpinner = findViewById(R.id.toolbar_spinner);
         mActionBarSpinner.setAdapter(mDropDownAdapter);
         mActionBarSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -546,9 +546,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mOrderAsc = Upgrade.upgradeJSONIfNecessary(getCol(), getCol().getConf(), "sortBackwards", false);
 
         mCards = new ArrayList<>();
-        mCardsListView = (ListView) findViewById(R.id.card_browser_list);
+        mCardsListView = findViewById(R.id.card_browser_list);
         // Create a spinner for column1
-        Spinner cardsColumn1Spinner = (Spinner) findViewById(R.id.browser_column1_spinner);
+        Spinner cardsColumn1Spinner = findViewById(R.id.browser_column1_spinner);
         ArrayAdapter<CharSequence> column1Adapter = ArrayAdapter.createFromResource(this,
                 R.array.browser_column1_headings, android.R.layout.simple_spinner_item);
         column1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -576,7 +576,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         // Load default value for column2 selection
         mColumn2Index = AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt("cardBrowserColumn2", 0);
         // Setup the column 2 heading as a spinner so that users can easily change the column type
-        Spinner cardsColumn2Spinner = (Spinner) findViewById(R.id.browser_column2_spinner);
+        Spinner cardsColumn2Spinner = findViewById(R.id.browser_column2_spinner);
         ArrayAdapter<CharSequence> column2Adapter = ArrayAdapter.createFromResource(this,
                 R.array.browser_column2_headings, android.R.layout.simple_spinner_item);
         column2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -622,10 +622,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         cardsColumn2Spinner.setSelection(mColumn2Index);
 
 
-        mCardsListView.setOnItemClickListener((ListView.OnItemClickListener) (parent, view, position, id) -> {
+        mCardsListView.setOnItemClickListener((parent, view, position, id) -> {
             if (mInMultiSelectMode) {
                 // click on whole cell triggers select
-                CheckBox cb = (CheckBox) view.findViewById(R.id.card_checkbox);
+                CheckBox cb = view.findViewById(R.id.card_checkbox);
                 cb.toggle();
                 onCheck(position, view);
             } else {
@@ -634,12 +634,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 openNoteEditorForCard(clickedCardId);
             }
         });
-        mCardsListView.setOnItemLongClickListener((ListView.OnItemLongClickListener) (adapterView, view, position, id) -> {
+        mCardsListView.setOnItemLongClickListener((adapterView, view, position, id) -> {
             mLastSelectedPosition = position;
             loadMultiSelectMode();
 
             // click on whole cell triggers select
-            CheckBox cb = (CheckBox) view.findViewById(R.id.card_checkbox);
+            CheckBox cb = view.findViewById(R.id.card_checkbox);
             cb.toggle();
             onCheck(position, view);
             recenterListView(view);
@@ -2059,7 +2059,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             final int backgroundColor = Themes.getColorFromAttr(CardBrowser.this, card.getColor());
             v.setBackgroundColor(backgroundColor);
             // setup checkbox to change color in multi-select mode
-            final CheckBox checkBox = (CheckBox) v.findViewById(R.id.card_checkbox);
+            final CheckBox checkBox = v.findViewById(R.id.card_checkbox);
             // if in multi-select mode, be sure to show the checkboxes
             if(mInMultiSelectMode) {
                 checkBox.setVisibility(View.VISIBLE);
@@ -2128,7 +2128,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private void onCheck(int position, View cell) {
-        CheckBox checkBox = (CheckBox) cell.findViewById(R.id.card_checkbox);
+        CheckBox checkBox = cell.findViewById(R.id.card_checkbox);
         CardCache card = getCards().get(position);
 
         if (checkBox.isChecked()) {
