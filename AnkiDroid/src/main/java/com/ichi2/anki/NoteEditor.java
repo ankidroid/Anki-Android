@@ -975,6 +975,13 @@ public class NoteEditor extends AnkiActivity {
 
 
     @Override
+    protected void onResume() {
+        dismissAllDialogFragments(); // dismiss "tags" as it may have been attached after onPause is called
+        super.onResume();
+    }
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mUnmountReceiver != null) {
