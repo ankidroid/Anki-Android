@@ -230,7 +230,7 @@ To look at the HTML & JavaScript live you can use [Chrome WebView Remote debuggi
 * Ensure that AnkiDroid's **HTML/Javascript debugging** is enabled.
 * Open the reviewer with the card you want to inspect
 * [Enable USB Debugging](https://developer.android.com/studio/debug/dev-options) via the Android System Menu
-* Use USB to connect your PC and phone
+* Connect your PC and phone via USB cable
 * Using Chrome on the same PC, browse to: `chrome://inspect` and you should see the WebView on your phone/emulator. 
 * Click `Inspect` for that WebView and you'll get a full Chrome remote debugging console.
 
