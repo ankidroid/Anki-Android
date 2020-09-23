@@ -45,7 +45,7 @@ public class CsvReaderIterator implements Iterator<List<String>> {
 
     private final static int field_size = 5000;
     // These were modified from a bare array and size to a StringBuilder
-    private char[] field = new char[field_size];
+    private final char[] field = new char[field_size];
 
 
     public CsvReaderIterator(@NonNull CsvReader reader) {

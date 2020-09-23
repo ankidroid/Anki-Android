@@ -45,13 +45,13 @@ public class XAxis implements Drawable {
     /**
      * Format that is used to print numbers under markers
      */
-    private DecimalFormat df = new DecimalFormat("##0.0#");
+    private final DecimalFormat df = new DecimalFormat("##0.0#");
 
     /**
      * format for very big or small values
      */
-    private DecimalFormat dfScience = new DecimalFormat("0.0##E0");
-    private DecimalFormat dfInteger = new DecimalFormat("#.#");
+    private final DecimalFormat dfScience = new DecimalFormat("0.0##E0");
+    private final DecimalFormat dfInteger = new DecimalFormat("#.#");
     /**
      * is set to true if scientifiv format (e.g. 1E-3) should be used
      */
@@ -60,22 +60,22 @@ public class XAxis implements Drawable {
     /**
      * the PlotSheet object the x-axis is drawn onto
      */
-    private PlotSheet plotSheet;
+    private final PlotSheet plotSheet;
 
     /**
      * the start of x-axis marker, used for relative alignment of further marks
      */
-    private double ticStart;
+    private final double ticStart;
 
     /**
      * the space between two marks
      */
-    private double tic;
+    private final double tic;
 
     /**
      * the space between two minor marks
      */
-    private double minorTic;
+    private final double minorTic;
 
     /**
      * the estimated size between two major tics in auto tic mode
@@ -95,7 +95,7 @@ public class XAxis implements Drawable {
     /**
      * true if the marker should be drawn into the direction above the axis
      */
-    private boolean markOnUpside = true;
+    private final boolean markOnUpside = true;
 
     /**
      * true if the marker should be drawn into the direction under the axis
@@ -105,7 +105,7 @@ public class XAxis implements Drawable {
     /**
      * length of a marker in pixel, length is only for one side
      */
-    private float markerLength = 5;
+    private final float markerLength = 5;
 
     /**
      * true if this  axis is drawn onto the frame

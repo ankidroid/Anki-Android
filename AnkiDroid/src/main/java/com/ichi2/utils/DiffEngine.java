@@ -26,7 +26,7 @@ import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch;
  */
 public class DiffEngine {
 
-    private DiffMatchPatch diffMatchPatch = new DiffMatchPatch();
+    private final DiffMatchPatch diffMatchPatch = new DiffMatchPatch();
 
 
     /**

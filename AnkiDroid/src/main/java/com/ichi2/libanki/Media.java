@@ -111,10 +111,10 @@ public class Media {
      */
     private static final Pattern fImgRegExpU = Pattern.compile("(?i)(<img[^>]* src=(?!['\\\"])([^ >]+)[^>]*?>)");
 
-    public static List<Pattern> mRegexps =  Arrays.asList(fSoundRegexps, fImgRegExpQ, fImgRegExpU);
+    public static final List<Pattern> mRegexps =  Arrays.asList(fSoundRegexps, fImgRegExpQ, fImgRegExpU);
 
-    private Collection mCol;
-    private String mDir;
+    private final Collection mCol;
+    private final String mDir;
     private DB mDb;
 
 

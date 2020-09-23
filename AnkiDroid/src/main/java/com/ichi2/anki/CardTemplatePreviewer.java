@@ -189,7 +189,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     }
 
 
-    private View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
+    private final View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (mShowingAnswer) {

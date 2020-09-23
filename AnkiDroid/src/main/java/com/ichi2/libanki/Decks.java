@@ -138,7 +138,7 @@ public class Decks {
             +"}";
 
 
-    private Collection mCol;
+    private final Collection mCol;
     private HashMap<Long, Deck> mDecks;
     private HashMap<Long, DeckConfig> mDconf;
     // Never access mNameMap directly. Uses byName
@@ -636,7 +636,7 @@ public class Decks {
     }
 
 
-    private static HashMap<String, String[]> pathCache = new HashMap();
+    private static final HashMap<String, String[]> pathCache = new HashMap();
     public static String[] path(String name) {
         if (!pathCache.containsKey(name)) {
             pathCache.put(name, name.split("::", -1));
@@ -1127,7 +1127,7 @@ public class Decks {
      * utils methods
      * **************************************
      */
-    private static HashMap<String, String> normalized = new HashMap<String, String>();
+    private static final HashMap<String, String> normalized = new HashMap<String, String>();
     public static String normalizeName(String name) {
         if (!normalized.containsKey(name)) {
             normalized.put(name, Normalizer.normalize(name, Normalizer.Form.NFC).toLowerCase());
@@ -1150,7 +1150,7 @@ public class Decks {
     }
 
 
-    private static HashMap<String, String> sParentCache = new HashMap();
+    private static final HashMap<String, String> sParentCache = new HashMap();
     public static String parent(String deckName) {
         // method parent, from sched's method deckDueList in python
         if (!sParentCache.containsKey(deckName)) {

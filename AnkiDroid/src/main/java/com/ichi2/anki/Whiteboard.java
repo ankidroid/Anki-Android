@@ -56,13 +56,13 @@ public class Whiteboard extends View {
 
     private static final float TOUCH_TOLERANCE = 4;
 
-    private Paint mPaint;
-    private UndoStack mUndo = new UndoStack();
+    private final Paint mPaint;
+    private final UndoStack mUndo = new UndoStack();
     private Bitmap mBitmap;
     private Canvas mCanvas;
-    private Path mPath;
-    private Paint mBitmapPaint;
-    private WeakReference<AbstractFlashcardViewer> mCardViewer;
+    private final Path mPath;
+    private final Paint mBitmapPaint;
+    private final WeakReference<AbstractFlashcardViewer> mCardViewer;
 
     private float mX;
     private float mY;

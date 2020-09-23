@@ -92,15 +92,15 @@ import static com.ichi2.libanki.Collection.DismissType.REVIEW;
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt","PMD.ExcessiveMethodLength"})
 public class Collection {
 
-    private Context mContext;
+    private final Context mContext;
 
     private DB mDb;
     private boolean mServer;
     //private double mLastSave;
-    private Media mMedia;
-    private Decks mDecks;
+    private final Media mMedia;
+    private final Decks mDecks;
     private Models mModels;
-    private Tags mTags;
+    private final Tags mTags;
 
     private AbstractSched mSched;
 
@@ -119,7 +119,7 @@ public class Collection {
 
     private LinkedList<Undoable> mUndo;
 
-    private String mPath;
+    private final String mPath;
     private boolean mDebugLog;
     private PrintWriter mLogHnd;
 
@@ -162,7 +162,7 @@ public class Collection {
         RESCHEDULE_CARDS(R.string.undo_action_reschedule_card),
         RESET_CARDS(R.string.undo_action_reset_card);
 
-        public int undoNameId;
+        public final int undoNameId;
 
         DismissType(int undoNameId) {
             this.undoNameId = undoNameId;
@@ -2163,7 +2163,7 @@ public class Collection {
 
     public static class CheckDatabaseResult {
         private final List<String> mProblems = new ArrayList<>();
-        private long mOldSize;
+        private final long mOldSize;
         private int mFixedCardsWithNoHomeDeckCount;
         private long mNewSize;
         /** When the database was locked */

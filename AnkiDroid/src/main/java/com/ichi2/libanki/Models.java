@@ -97,7 +97,7 @@ public class Models {
     // private static final Pattern sModelPattern = Pattern.compile("%\\(modelTags\\)s");
     // private static final Pattern sTemplPattern = Pattern.compile("%\\(cardModel\\)s");
 
-    private Collection mCol;
+    private final Collection mCol;
     private boolean mChanged;
     private HashMap<Long, Model> mModels;
 
@@ -546,7 +546,7 @@ public class Models {
     }
 
     static class TransformFieldDelete implements TransformFieldVisitor {
-        private int idx;
+        private final int idx;
 
 
         public TransformFieldDelete(int _idx) {
@@ -598,8 +598,8 @@ public class Models {
     }
 
     static class TransformFieldMove implements TransformFieldVisitor {
-        private int idx;
-        private int oldidx;
+        private final int idx;
+        private final int oldidx;
 
 
         public TransformFieldMove(int _idx, int _oldidx) {

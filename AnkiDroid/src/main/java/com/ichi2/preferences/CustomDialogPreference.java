@@ -28,7 +28,7 @@ import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.R;
 
 public class CustomDialogPreference extends DialogPreference implements DialogInterface.OnClickListener {
-    private Context mContext;
+    private final Context mContext;
 
 
     public CustomDialogPreference(Context context, AttributeSet attrs) {

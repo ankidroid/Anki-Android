@@ -10,11 +10,11 @@ public class StdModels {
     /** Essentially, the default name. As a resource, so that it can
      * be localized later. */
     @StringRes
-    private int defaultName;
+    private final int defaultName;
     /**
      * Funtion creating the standard model. Needs to be a funtion to take the local language into account.
      */
-    private CreateStdModels fun;
+    private final CreateStdModels fun;
 
     interface CreateStdModels {
         Model create(Models mm, String name);
@@ -132,7 +132,7 @@ public class StdModels {
     },
         R.string.cloze_model_name);
 
-    public static StdModels[] stdModels =
+    public static final StdModels[] stdModels =
     {
         basicModel,
         basicTypingModel,

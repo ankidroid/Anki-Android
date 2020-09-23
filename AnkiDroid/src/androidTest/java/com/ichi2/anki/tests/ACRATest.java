@@ -48,7 +48,7 @@ public class ACRATest {
 
     private AnkiDroidApp mApp = null;
 
-    private String[] debugLogcatArguments = { "-t", "300", "-v", "long", "ACRA:S"};
+    private final String[] debugLogcatArguments = { "-t", "300", "-v", "long", "ACRA:S"};
     //private String[] prodLogcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" };
 
 

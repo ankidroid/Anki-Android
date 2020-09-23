@@ -65,8 +65,8 @@ public class Anki2Importer extends Importer {
 
     private static final int MEDIAPICKLIMIT = 1024;
 
-    private String mDeckPrefix;
-    private boolean mAllowUpdate;
+    private final String mDeckPrefix;
+    private final boolean mAllowUpdate;
     private boolean mDupeOnSchemaChange;
 
     private Map<String, Object[]> mNotes;

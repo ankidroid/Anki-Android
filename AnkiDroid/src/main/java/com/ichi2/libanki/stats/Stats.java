@@ -54,8 +54,8 @@ public class Stats {
         TYPE_YEAR(365, R.string.stats_period_year),
         TYPE_LIFE(-1, R.string.stats_period_lifetime);
 
-        public int days;
-        public int descriptionId;
+        public final int days;
+        public final int descriptionId;
         AxisType(int dayss, int descriptionId) {
             this.days = dayss;
             this.descriptionId = descriptionId;
@@ -65,9 +65,9 @@ public class Stats {
     public enum ChartType {FORECAST, REVIEW_COUNT, REVIEW_TIME,
         INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES, OTHER}
 
-    private Collection mCol;
-    private boolean mWholeCollection;
-    private long mDeckId;
+    private final Collection mCol;
+    private final boolean mWholeCollection;
+    private final long mDeckId;
     private boolean mDynamicAxis = false;
     private double[][] mSeriesList;
 

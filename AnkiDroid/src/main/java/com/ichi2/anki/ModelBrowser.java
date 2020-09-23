@@ -156,7 +156,7 @@ public class ModelBrowser extends AnkiActivity {
     /*
      * Listens to long hold context menu for main list items
      */
-    private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
+    private final MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
         @Override
         public void onSelection(MaterialDialog materialDialog, View view, int selection, CharSequence charSequence) {
             switch (selection) {
@@ -566,8 +566,8 @@ public class ModelBrowser extends AnkiActivity {
      * along with the name.
      */
     public static class DisplayPair {
-        private String name;
-        private int count;
+        private final String name;
+        private final int count;
 
         public DisplayPair(String name, int count) {
             this.name = name;

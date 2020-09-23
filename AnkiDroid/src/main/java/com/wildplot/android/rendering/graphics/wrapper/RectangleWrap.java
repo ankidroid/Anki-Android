@@ -18,8 +18,8 @@ package com.wildplot.android.rendering.graphics.wrapper;
 import android.graphics.Rect;
 
 public class RectangleWrap {
-    public int x;
-    public int y;
+    public final int x;
+    public final int y;
     public int width;
     public int height;
 

@@ -34,11 +34,11 @@ public class Lines implements Drawable, Legendable {
     private String mName = "";
     private boolean mNameIsSet = false;
 
-    private PlotSheet plotSheet;
+    private final PlotSheet plotSheet;
 
-    private double[][] pointList;
+    private final double[][] pointList;
 
-    private ColorWrap color;
+    private final ColorWrap color;
 
     private float size;
 

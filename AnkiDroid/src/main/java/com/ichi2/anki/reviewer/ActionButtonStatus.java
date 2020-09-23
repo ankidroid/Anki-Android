@@ -22,7 +22,7 @@ public class ActionButtonStatus {
      * Custom button allocation
      */
     @NonNull
-    protected Map<Integer, Integer> mCustomButtons = new HashMap<>();
+    protected final Map<Integer, Integer> mCustomButtons = new HashMap<>();
     private final ReviewerUi mReviewerUi;
 
     public static final int SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER;

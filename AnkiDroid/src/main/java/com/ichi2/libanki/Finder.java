@@ -58,7 +58,7 @@ public class Finder {
     private static final Pattern fNidsPattern = Pattern.compile("[^0-9,]");
     private static final Pattern fMidPattern = Pattern.compile("[^0-9]");
 
-    private Collection mCol;
+    private final Collection mCol;
 
 
     public Finder(Collection col) {

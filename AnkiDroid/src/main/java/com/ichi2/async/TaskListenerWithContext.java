@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 /** Similar to task listener, but if the context disappear, no action are executed.
  * We ensure that the context can't disappear during the execution of the methods. */
 public abstract class TaskListenerWithContext<CTX> extends TaskListener {
-    private WeakReference<CTX> mContext;
+    private final WeakReference<CTX> mContext;
     protected TaskListenerWithContext(CTX context) {
         mContext = new WeakReference<>(context);
     }

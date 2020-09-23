@@ -34,7 +34,7 @@ public class DirectCalendarInstanceUsage extends Detector implements SourceCodeS
     static final String DESCRIPTION = "Use the collection's getTime() method instead of directly creating Calendar instances";
     private static final String EXPLANATION = "Manually creating Calendar instances means time cannot be controlled " +
             "during testing. Calendar instances must be obtained through the collection's getTime() method";
-    private static Implementation implementation = new Implementation(DirectCalendarInstanceUsage.class, Scope.JAVA_FILE_SCOPE);
+    private static final Implementation implementation = new Implementation(DirectCalendarInstanceUsage.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
             DESCRIPTION,

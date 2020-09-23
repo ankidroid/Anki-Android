@@ -22,11 +22,11 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class TopLevelParser implements Function2D, Function3D, Cloneable {
-    private HashMap<String, TopLevelParser> parserRegister;
-    private HashMap<String, Double> varMap = new HashMap<>();
+    private final HashMap<String, TopLevelParser> parserRegister;
+    private final HashMap<String, Double> varMap = new HashMap<>();
     private double x = 0.0, y = 0.0;
-    private Expression expression;
-    private boolean isValid;
+    private final Expression expression;
+    private final boolean isValid;
     private String expressionString;
     private String xName = "x", yName = "y";
 

@@ -17,7 +17,7 @@ package com.wildplot.android.rendering.graphics.wrapper;
 
 public class ColorWrap {
     //android.graphics.Color
-    private int colorValue;
+    private final int colorValue;
     public static final ColorWrap red = new ColorWrap(android.graphics.Color.RED);
     public static final ColorWrap RED = new ColorWrap(android.graphics.Color.RED);
 

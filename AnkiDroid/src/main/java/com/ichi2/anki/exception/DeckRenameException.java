@@ -10,7 +10,7 @@ public class DeckRenameException extends Exception {
     public static final int ALREADY_EXISTS = 0;
     public static final int FILTERED_NOSUBDEKCS = 1;
 
-    private int mErrorCode;
+    private final int mErrorCode;
 
     public DeckRenameException(int errorCode) {
         super();

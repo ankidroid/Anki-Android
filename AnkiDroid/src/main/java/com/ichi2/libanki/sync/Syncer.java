@@ -64,12 +64,12 @@ public class Syncer {
     /** The libAnki value of `sched.mReportLimit` */
     private static final int SYNC_SCHEDULER_REPORT_LIMIT = 1000;
 
-    private Collection mCol;
-    private HttpSyncer mServer;
+    private final Collection mCol;
+    private final HttpSyncer mServer;
     //private long mRScm;
     private int mMaxUsn;
 
-    private HostNum mHostNum;
+    private final HostNum mHostNum;
     //private long mLScm;
     private int mMinUsn;
     private boolean mLNewer;

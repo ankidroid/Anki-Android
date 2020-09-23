@@ -124,7 +124,7 @@ public class ContentProviderTest extends InstrumentedTest {
     /* initialCapacity set to expected value when the test is written.
      * Should create no problem if we forget to change it when more tests are added.
      */
-    private List<Long> mTestDeckIds = new ArrayList<>(TEST_DECKS.length + 1);
+    private final List<Long> mTestDeckIds = new ArrayList<>(TEST_DECKS.length + 1);
     private ArrayList<Uri> mCreatedNotes;
     private long mModelId = 0;
     private String[] mDummyFields = new String[1];

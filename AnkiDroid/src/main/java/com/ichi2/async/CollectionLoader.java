@@ -11,8 +11,8 @@ import com.ichi2.libanki.Collection;
 import timber.log.Timber;
 
 public final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
-    private LifecycleOwner mLifecycleOwner;
-    private Callback mCallback;
+    private final LifecycleOwner mLifecycleOwner;
+    private final Callback mCallback;
 
     public interface Callback {
         void execute(Collection col);

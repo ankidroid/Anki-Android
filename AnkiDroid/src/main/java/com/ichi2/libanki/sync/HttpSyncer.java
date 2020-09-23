@@ -81,8 +81,8 @@ public class HttpSyncer {
 
     public static final String ANKIWEB_STATUS_OK = "OK";
 
-    public volatile AtomicLong bytesSent = new AtomicLong();
-    public volatile AtomicLong bytesReceived = new AtomicLong();
+    public final AtomicLong bytesSent = new AtomicLong();
+    public final AtomicLong bytesReceived = new AtomicLong();
     public volatile long mNextSendS = 1024;
     public volatile long mNextSendR = 1024;
 
@@ -90,9 +90,9 @@ public class HttpSyncer {
      * Synchronization.
      */
 
-    protected String mHKey;
+    protected final String mHKey;
     protected String mSKey;
-    protected Connection mCon;
+    protected final Connection mCon;
     protected Map<String, Object> mPostVars;
     private volatile OkHttpClient mHttpClient;
     private final HostNum mHostNum;
@@ -399,7 +399,7 @@ public class HttpSyncer {
     public class ProgressByteEntity extends AbstractHttpEntity {
 
         private InputStream mInputStream;
-        private long mLength;
+        private final long mLength;
 
 
         public ProgressByteEntity(File file) {

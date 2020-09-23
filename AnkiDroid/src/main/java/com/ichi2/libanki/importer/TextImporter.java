@@ -33,7 +33,7 @@ import timber.log.Timber;
 public class TextImporter extends NoteImporter {
 
     private boolean mNeedDelimiter = true;
-    String mPatterns = "\t|,;:";
+    final String mPatterns = "\t|,;:";
 
     private FileObj fileobj;
     private char delimiter;

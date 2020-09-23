@@ -36,7 +36,7 @@ public class InconsistentAnnotationUsage extends ImportStatementDetector impleme
     static final String DESCRIPTION = "Use androidx.annotation.NonNull and androidx.annotation.Nullable. See explanation for IDE-level fix";
     private static final String EXPLANATION = "AnkiDroid uses androidx nullability annotations over JetBrains for nullability. " +
             "The annotations library can be specified in Settings - Inspections - @NotNull/@Nullable problems";
-    private static Implementation implementation = new Implementation(InconsistentAnnotationUsage.class, Scope.JAVA_FILE_SCOPE);
+    private static final Implementation implementation = new Implementation(InconsistentAnnotationUsage.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
             DESCRIPTION,

@@ -57,9 +57,9 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
     private static final String BUNDLE_KEY_SHUT_OFF = "key.multimedia.shut.off";
     // Must be passed in
-    public static String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
+    public static final String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
     // Passed out as a result
-    public static String EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path";
+    public static final String EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path";
 
     String mSource;
 

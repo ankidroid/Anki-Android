@@ -22,7 +22,7 @@ import android.view.KeyCharacterMap;
 
 public class CompatHelper {
     private static CompatHelper sInstance;
-    private Compat mCompat;
+    private final Compat mCompat;
 
 
     private CompatHelper() {

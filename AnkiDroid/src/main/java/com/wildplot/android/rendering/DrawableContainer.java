@@ -23,9 +23,9 @@ import java.util.Vector;
 
 public class DrawableContainer implements Drawable {
 
-    private Vector<Drawable> drawableVector = new Vector<>();
-    private boolean isOnFrame;
-    private boolean isCritical;
+    private final Vector<Drawable> drawableVector = new Vector<>();
+    private final boolean isOnFrame;
+    private final boolean isCritical;
 
 
     public DrawableContainer(boolean isOnFrame, boolean isCritical) {

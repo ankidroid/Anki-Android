@@ -112,7 +112,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     /**
      * Callbacks for UI events
      */
-    private View.OnClickListener mButtonClickListener = v -> {
+    private final View.OnClickListener mButtonClickListener = v -> {
         if (v.getId() == R.id.studyoptions_start) {
             Timber.i("StudyOptionsFragment:: start study button pressed");
             if (mCurrentContentView != CONTENT_CONGRATS) {
@@ -288,7 +288,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         parent.addView(newView);
     }
 
-    private TaskListener undoListener = new TaskListener() {
+    private final TaskListener undoListener = new TaskListener() {
         @Override
         public void onPreExecute() {
 

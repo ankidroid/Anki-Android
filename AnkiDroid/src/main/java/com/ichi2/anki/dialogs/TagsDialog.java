@@ -270,14 +270,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
         public class ViewHolder extends RecyclerView.ViewHolder {
-            private CheckedTextView mTagItemCheckedTextView;
+            private final CheckedTextView mTagItemCheckedTextView;
             public ViewHolder(CheckedTextView ctv) {
                 super(ctv);
                 mTagItemCheckedTextView = ctv;
             }
         }
 
-        public ArrayList<String> mTagsList;
+        public final ArrayList<String> mTagsList;
 
         public  TagsArrayAdapter() {
             mTagsList = new ArrayList<>();
@@ -333,7 +333,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
         private class TagsFilter extends Filter {
-            private ArrayList<String> mFilteredTags;
+            private final ArrayList<String> mFilteredTags;
             private TagsFilter() {
                 super();
                 mFilteredTags = new ArrayList<>();

@@ -192,7 +192,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private LinearLayoutManager mRecyclerViewLayoutManager;
     private DeckAdapter mDeckListAdapter;
     private FloatingActionsMenu mActionsMenu;
-    private Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
+    private final Snackbar.Callback mSnackbarShowHideCallback = new Snackbar.Callback();
 
     private LinearLayout mNoDecksPlaceholder;
 
@@ -1673,7 +1673,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private Connection.TaskListener mSyncListener = new Connection.CancellableTaskListener() {
+    private final Connection.TaskListener mSyncListener = new Connection.CancellableTaskListener() {
         private String currentMessage;
         private long countUp;
         private long countDown;

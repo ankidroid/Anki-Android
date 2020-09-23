@@ -83,9 +83,9 @@ public class SchedV2 extends AbstractSched {
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
     public static final int RESCHEDULE_FACTOR = Consts.STARTING_FACTOR;
 
-    protected int mQueueLimit;
+    protected final int mQueueLimit;
     protected int mReportLimit;
-    private int mDynReportLimit;
+    private final int mDynReportLimit;
     protected int mReps;
     protected boolean mHaveQueues;
     protected boolean mHaveCounts;
