@@ -2982,8 +2982,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                     return true;
                 }
 
-                WebView card = (WebView) webViewAsView;
-                HitTestResult result = card.getHitTestResult();
+                WebView cardWebView = (WebView) webViewAsView;
+                HitTestResult result;
+                try {
+                    result = cardWebView.getHitTestResult();
+                } catch (Exception e) {
+                    Timber.w(e, "Cannot obtain HitTest result");
+                    return true;
+                }
 
                 if (isLinkClick(result)) {
                     Timber.v("Detected link click - ignoring gesture dispatch");
