@@ -687,7 +687,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
 
-    @SuppressLint("RestrictedApi") // setIconTintList
+    @SuppressLint("RestrictedApi") // setOptionalIconsVisible
     private void displayIconsOnTv(Menu menu) {
         if (!AndroidUiUtils.isRunningOnTv(this)) {
             return;
@@ -708,8 +708,7 @@ public class Reviewer extends AbstractFlashcardViewer {
                     }
 
                     int color = Themes.getColorFromAttr(this, R.attr.navDrawerItemColor);
-                    m.setIconTintList(ColorStateList.valueOf(color));
-
+                    MenuItemCompat.setIconTintList(m, ColorStateList.valueOf(color));
                 }
             }
 
