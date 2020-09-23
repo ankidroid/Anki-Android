@@ -2539,7 +2539,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         List<Long> cardIds = new ArrayList<>();
         for (CardCache card : mCheckedCards) {
             long id = card.getId();
-            cardIds.add(Objects.requireNonNull(id));
+            cardIds.add(id);
         }
         return cardIds;
     }
@@ -2555,7 +2555,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public CardCache getPropertiesForCardId(long cardId) {
         for (CardCache props : mCards) {
-            long id = Objects.requireNonNull(props.getId());
+            long id = props.getId();
             if (id == cardId) {
                 return props;
             }
