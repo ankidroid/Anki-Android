@@ -339,7 +339,8 @@ public class Reviewer extends AbstractFlashcardViewer {
             showTagsDialog();
         } else if (itemId == R.id.action_edit) {
             Timber.i("Reviewer:: Edit note button pressed");
-            return editCard();
+            editCard();
+            return true;
         } else if (itemId == R.id.action_bury) {
             Timber.i("Reviewer:: Bury button pressed");
             if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
