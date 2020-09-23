@@ -513,13 +513,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         try {
             DB db = col.getDb();
-            db.getDatabase().beginTransaction();
-            try {
-                publishProgress(new TaskData(col.addNote(note)));
-                db.getDatabase().setTransactionSuccessful();
-            } finally {
-                db.getDatabase().endTransaction();
-            }
+            db.executeInTransaction(() -> {
+                int value = col.addNote(note);
+                publishProgress(new TaskData(value));
+            });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote");
@@ -539,8 +536,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         boolean fromReviewer = param.getBoolean();
 
         try {
-            col.getDb().getDatabase().beginTransaction();
-            try {
+            col.getDb().executeInTransaction(() -> {
                 // TODO: undo integration
                 editNote.flush();
                 // flush card too, in case, did has been changed
@@ -559,10 +555,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 } else {
                     publishProgress(new TaskData(editCard, editNote.stringTags()));
                 }
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                col.getDb().getDatabase().endTransaction();
-            }
+            });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
@@ -577,26 +570,20 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         AbstractSched sched = col.getSched();
         Card oldCard = param.getCard();
         @Consts.BUTTON_TYPE int ease = param.getInt();
-        Card newCard = null;
         Timber.i(oldCard != null ? "Answering card" : "Obtaining card");
         try {
-            DB db = col.getDb();
-            db.getDatabase().beginTransaction();
-            try {
+            col.getDb().executeInTransaction(() -> {
                 if (oldCard != null) {
                     Timber.i("Answering card %d", oldCard.getId());
                     sched.answerCard(oldCard, ease);
                 }
-                newCard = sched.getCard();
+                Card newCard = sched.getCard();
                 if (newCard != null) {
                     // render cards before locking database
                     newCard._getQA(true);
                 }
                 publishProgress(new TaskData(newCard));
-                db.getDatabase().setTransactionSuccessful();
-            } finally {
-                db.getDatabase().endTransaction();
-            }
+            });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
@@ -708,8 +695,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection.DismissType type = (Collection.DismissType) data[1];
         Note note = card.note();
         try {
-            col.getDb().getDatabase().beginTransaction();
-            try {
+            col.getDb().executeInTransaction(() -> {
                 sched.deferReset();
                 switch (type) {
                     case BURY_CARD:
@@ -763,10 +749,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 }
                 // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
                 publishProgress(new TaskData(col.getSched().getCard(), 0));
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                col.getDb().getDatabase().endTransaction();
-            }
+            });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", type);
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote");
@@ -1176,14 +1159,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         AbstractSched sched = col.getSched();
         try {
-            col.getDb().getDatabase().beginTransaction();
-            try {
+            col.getDb().executeInTransaction(() -> {
                 Card card = nonTaskUndo(col);
                 publishProgress(new TaskData(card, 0));
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                col.getDb().getDatabase().endTransaction();
-            }
+            });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");

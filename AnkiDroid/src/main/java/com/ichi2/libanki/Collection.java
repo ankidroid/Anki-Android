@@ -431,13 +431,7 @@ public class Collection {
             try {
                 SupportSQLiteDatabase db = mDb.getDatabase();
                 if (save) {
-                    db.beginTransaction();
-                    try {
-                        save();
-                        db.setTransactionSuccessful();
-                    } finally {
-                        db.endTransaction();
-                    }
+                    mDb.executeInTransaction(this::save);
                 } else {
                     if (db.inTransaction()) {
                         db.endTransaction();
