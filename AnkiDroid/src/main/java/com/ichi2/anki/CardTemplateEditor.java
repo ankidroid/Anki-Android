@@ -490,7 +490,8 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 displayDeckOverrideDialog(col, tempModel);
                 return true;
             } else if (itemId == R.id.action_preview) {
-                return performPreview();
+                performPreview();
+                return true;
             } else if (itemId == R.id.action_confirm) {
                 Timber.i("CardTemplateEditor:: Save model button pressed");
                 if (modelHasChanged()) {
@@ -519,7 +520,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
-        private boolean performPreview() {
+        private void performPreview() {
             Collection col = mTemplateEditor.getCol();
             TemporaryModel tempModel = mTemplateEditor.getTempModel();
             Timber.i("CardTemplateEditor:: Preview on tab %s", mTemplateEditor.mViewPager.getCurrentItem());
@@ -540,7 +541,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             tempModel.setEditedModelFileName(TemporaryModel.saveTempModel(mTemplateEditor, tempModel.getModel()));
             i.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModel.getEditedModelFileName());
             startActivityForResult(i, REQUEST_PREVIEWER);
-            return true;
         }
 
 
