@@ -925,30 +925,30 @@ public class Media {
      * This method closes the file before it returns.
      */
     public int addFilesFromZip(ZipFile z) throws IOException {
-    try {
+        try {
             List<Object[]> media = new ArrayList<>();
             // get meta info first
             JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
             // then loop through all files
             int cnt = 0;
             for (ZipEntry i : Collections.list(z.entries())) {
-                if ("_meta".equals(i.getName())) {
-                    // ignore previously-retrieved meta
+                String fileName = i.getName();
+                if ("_meta".equals(fileName)) {
+                     // ignore previously-retrieved meta
                     continue;
-                } else {
-                    String name = meta.getString(i.getName());
-                    // normalize name for platform
-                    name = Utils.nfcNormalized(name);
-                    // save file
-                    String destPath = dir().concat(File.separator).concat(name);
-                    try (InputStream zipInputStream = z.getInputStream(i)) {
-                        Utils.writeToFile(zipInputStream, destPath);
-                    }
-                    String csum = Utils.fileChecksum(destPath);
-                    // update db
-                    media.add(new Object[] {name, csum, _mtime(destPath), 0});
-                    cnt += 1;
                 }
+                String name = meta.getString(fileName);
+                // normalize name for platform
+                name = Utils.nfcNormalized(name);
+                // save file
+                String destPath = dir().concat(File.separator).concat(name);
+                try (InputStream zipInputStream = z.getInputStream(i)) {
+                    Utils.writeToFile(zipInputStream, destPath);
+                }
+                String csum = Utils.fileChecksum(destPath);
+                // update db
+                media.add(new Object[] {name, csum, _mtime(destPath), 0});
+                cnt += 1;
             }
             if (media.size() > 0) {
                 mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
