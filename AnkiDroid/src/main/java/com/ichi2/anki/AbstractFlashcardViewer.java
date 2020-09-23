@@ -1239,16 +1239,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected boolean editCard() {
+    protected void editCard() {
         if (mCurrentCard == null) {
             // This should never occurs. It means the review button was pressed while there is no more card in the reviewer.
-            return true;
+            return;
         }
         Intent editCard = new Intent(AbstractFlashcardViewer.this, NoteEditor.class);
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER);
         sEditorCard = mCurrentCard;
         startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, LEFT);
-        return true;
     }
 
 

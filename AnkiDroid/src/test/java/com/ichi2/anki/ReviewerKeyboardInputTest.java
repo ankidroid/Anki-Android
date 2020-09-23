@@ -450,9 +450,8 @@ public class ReviewerKeyboardInputTest {
         }
 
         @Override
-        protected boolean editCard() {
+        protected void editCard() {
             mEditedCard = true;
-            return true;
         }
 
         @Override
