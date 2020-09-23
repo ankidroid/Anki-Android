@@ -114,7 +114,7 @@ public class Models {
     // private Decks mDeck;
     // private DB mDb;
     //
-    /** Map for compiled Mustache Templates */
+    //** Map for compiled Mustache Templates */
     //private Map<String, Template> mCmpldTemplateMap = new HashMap<>();
 
 
@@ -226,9 +226,9 @@ public class Models {
         }
     }
 
-    /**
-     * Retrieving and creating models
-     * ***********************************************************************************************
+    /*
+      Retrieving and creating models
+      ***********************************************************************************************
      */
 
     /**
@@ -380,8 +380,8 @@ public class Models {
     }
 
 
-    /**
-     * Tools ***********************************************************************************************
+    /*
+      Tools ***********************************************************************************************
      */
 
     /** Note ids for M */
@@ -408,8 +408,8 @@ public class Models {
         return mCol.getDb().queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?", m.getLong("id"), ord);
     }
 
-    /**
-     * Copying ***********************************************************************************************
+    /*
+      Copying ***********************************************************************************************
      */
 
     /** Copy, save and return. */
@@ -864,8 +864,8 @@ public class Models {
     }
 
 
-    /**
-     * Model changing ***********************************************************************************************
+    /*
+      Model changing ***********************************************************************************************
      */
 
     /**
@@ -968,8 +968,8 @@ public class Models {
         mCol.remCards(deleted);
     }
 
-    /**
-     * Schema hash ***********************************************************************************************
+    /*
+      Schema hash ***********************************************************************************************
      */
 
     /** Return a hash of the schema, to see if models are compatible. */

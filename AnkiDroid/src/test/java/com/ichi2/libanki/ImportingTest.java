@@ -14,9 +14,9 @@ public class ImportingTest extends RobolectricTest {
         // A test should occurs in the file, otherwise travis rejects. This remains here until we can uncomment the real tests.
     }
 
-    /*****************
-     ** Importing    *
-     *****************/
+    /****************
+     Importing    *
+     */
     /*
       private void clear_tempfile(tf) {
       ;

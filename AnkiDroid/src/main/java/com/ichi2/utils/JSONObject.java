@@ -42,11 +42,11 @@
 
 package com.ichi2.utils;
 
-/**
- * Each method similar to the methods in JSONObjects. Name changed to add a ,
- * and it throws JSONException instead of JSONException.
- * Furthermore, it returns JSONObject and JSONArray
- *
+/*
+  Each method similar to the methods in JSONObjects. Name changed to add a ,
+  and it throws JSONException instead of JSONException.
+  Furthermore, it returns JSONObject and JSONArray
+
  */
 
 import java.util.Iterator;

@@ -93,7 +93,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * Registering and fetching tags
      * ***********************************************************
      */
@@ -189,7 +189,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * Bulk addition/removal from notes
      * ***********************************************************
      */
@@ -265,7 +265,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * String-based utilities
      * ***********************************************************
      */
@@ -329,7 +329,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * List-based utilities
      * ***********************************************************
      */

@@ -177,7 +177,7 @@ public class AnkiDroidWidgetSmall extends AppWidgetProvider {
                     // Compute the total number of cards due.
                     int[] counts = WidgetStatus.fetchSmall(context);
                     dueCardsCount = counts[0];
-                    /** The cached estimated reviewing time. */
+                    /* The cached estimated reviewing time. */
                     int eta = counts[1];
                     if (dueCardsCount <= 0) {
                         if (dueCardsCount == 0) {
