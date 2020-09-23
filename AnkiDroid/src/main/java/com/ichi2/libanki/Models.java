@@ -1232,14 +1232,6 @@ public class Models {
     }
 
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return "";
-    }
-
-
     public HashMap<Long, Model> getModels() {
         return mModels;
     }
