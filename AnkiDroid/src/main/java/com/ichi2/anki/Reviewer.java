@@ -689,8 +689,12 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @SuppressLint("RestrictedApi") // setIconTintList
     private void displayIconsOnTv(Menu menu) {
+        if (!AndroidUiUtils.isRunningOnTv(this)) {
+            return;
+        }
+
         try {
-            if (AndroidUiUtils.isRunningOnTv(this) && menu instanceof MenuBuilder) {
+            if (menu instanceof MenuBuilder) {
                 MenuBuilder m = (MenuBuilder) menu;
                 m.setOptionalIconsVisible(true);
             }
