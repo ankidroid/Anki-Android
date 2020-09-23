@@ -97,6 +97,8 @@ public class PeripheralCommand {
         ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_SPACE, COMMAND_ANSWER_RECOMMENDED, CardSide.ANSWER));
         ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_ENTER, COMMAND_ANSWER_RECOMMENDED, CardSide.ANSWER));
         ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, COMMAND_ANSWER_RECOMMENDED, CardSide.ANSWER));
+        // See: 1643 - Unsure if this will work - nothing came through on the emulator.
+        ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_DPAD_CENTER, COMMAND_FLIP_OR_ANSWER_RECOMMENDED, CardSide.BOTH));
 
         ret.add(PeripheralCommand.unicode('e', COMMAND_EDIT, CardSide.BOTH));
         ret.add(PeripheralCommand.unicode('*', COMMAND_MARK, CardSide.BOTH));
