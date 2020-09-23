@@ -294,8 +294,8 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            Fragment item = StatisticFragment.newInstance(position);
-            ((StatisticFragment) item).checkAndUpdate();
+            StatisticFragment item = StatisticFragment.newInstance(position);
+            item.checkAndUpdate();
             return item;
         }
 
