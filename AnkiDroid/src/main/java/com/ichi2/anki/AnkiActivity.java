@@ -352,7 +352,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
     public void showProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        ProgressBar progressBar = findViewById(R.id.progress_bar);
         if (progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
         }
@@ -360,7 +360,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     public void hideProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        ProgressBar progressBar = findViewById(R.id.progress_bar);
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }

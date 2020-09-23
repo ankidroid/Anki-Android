@@ -54,7 +54,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
 
         ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
         saveControllerForCleanup((previewerController));
-        TestCardTemplatePreviewer testCardTemplatePreviewer = (TestCardTemplatePreviewer) previewerController.get();
+        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
         Assert.assertTrue("model change did not show up?",
                 testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).q().contains("PREVIEWER_TEST") &&
                         testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).a().contains("PREVIEWER_TEST"));
@@ -65,7 +65,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         previewerController.pause().stop().destroy();
         previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class).create(outBundle).start().resume().visible();
         saveControllerForCleanup(previewerController);
-        testCardTemplatePreviewer = (TestCardTemplatePreviewer) previewerController.get();
+        testCardTemplatePreviewer = previewerController.get();
         Assert.assertTrue("model change not preserved in lifecycle??",
                 testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).q().contains("PREVIEWER_TEST") &&
                         testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).a().contains("PREVIEWER_TEST"));
@@ -101,7 +101,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         previewerController.pause().stop().destroy();
         previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class).create(outBundle).start().resume().visible();
         saveControllerForCleanup((previewerController));
-        TestCardTemplatePreviewer testCardTemplatePreviewer = (TestCardTemplatePreviewer) previewerController.get();
+        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
 
         // Make sure we can click
         Assert.assertFalse("Showing the answer already?", testCardTemplatePreviewer.getShowingAnswer());
