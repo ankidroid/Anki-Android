@@ -2879,14 +2879,15 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 int width = mTouchLayer.getWidth();
                 float posX = e.getX();
                 float posY = e.getY();
+                boolean gestureIsRight = posY > height * (1 - posX / width);
                 if (posX > posY / height * width) {
-                    if (posY > height * (1 - posX / width)) {
+                    if (gestureIsRight) {
                         executeCommand(mGestureTapRight);
                     } else {
                         executeCommand(mGestureTapTop);
                     }
                 } else {
-                    if (posY > height * (1 - posX / width)) {
+                    if (gestureIsRight) {
                         executeCommand(mGestureTapBottom);
                     } else {
                         executeCommand(mGestureTapLeft);
