@@ -421,7 +421,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
             Runtime runtime = Runtime.getRuntime();
             try {
                 runtime.exec(deleteCmd);
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
         }
         return media;
