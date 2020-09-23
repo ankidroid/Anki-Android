@@ -368,13 +368,7 @@ public class DB {
 
     public void executeMany(String sql, List<Object[]> list) {
         mMod = true;
-        mDatabase.beginTransaction();
-        try {
-            executeManyNoTransaction(sql, list);
-            mDatabase.setTransactionSuccessful();
-        } finally {
-            mDatabase.endTransaction();
-        }
+        executeInTransaction(() -> executeManyNoTransaction(sql, list));
     }
 
     /** Use this executeMany version with external transaction management */
@@ -390,5 +384,35 @@ public class DB {
      */
     public String getPath() {
         return mDatabase.getPath();
+    }
+
+
+    public void executeInTransaction(Runnable r) {
+        // Ported from code which started the transaction outside the try..finally
+        getDatabase().beginTransaction();
+        try {
+            r.run();
+            if (getDatabase().inTransaction()) {
+                try {
+                    getDatabase().setTransactionSuccessful();
+                } catch (Exception e) {
+                    // Unsure if this can happen - copied the structure from endTransaction()
+                    Timber.w(e);
+                }
+            } else {
+                Timber.w("Not in a transaction. Cannot mark transaction successful.");
+            }
+        } finally {
+            if (getDatabase().inTransaction()) {
+                try {
+                    getDatabase().endTransaction();
+                } catch (Exception e) {
+                    // endTransaction throws about invalid transaction even when you check first!
+                    Timber.w(e);
+                }
+            } else {
+                Timber.w("Not in a transaction. Cannot end transaction.");
+            }
+        }
     }
 }

@@ -1190,9 +1190,7 @@ public class CardContentProvider extends ContentProvider {
 
     private void buryOrSuspendCard(Collection col, AbstractSched sched, Card card, boolean bury) {
         try {
-            DB db = col.getDb();
-            db.getDatabase().beginTransaction();
-            try {
+            col.getDb().executeInTransaction(() -> {
                 if (card != null) {
                     if(bury) {
                         // bury
@@ -1202,10 +1200,7 @@ public class CardContentProvider extends ContentProvider {
                         sched.suspendCards(new long[] {card.getId()});
                     }
                 }
-                db.getDatabase().setTransactionSuccessful();
-            } finally {
-                db.getDatabase().endTransaction();
-            }
+            });
         } catch (RuntimeException e) {
             Timber.e(e, "buryOrSuspendCard - RuntimeException on burying or suspending card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundBurySuspendCard");
