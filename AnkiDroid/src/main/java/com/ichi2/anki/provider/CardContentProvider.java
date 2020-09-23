@@ -1183,7 +1183,6 @@ public class CardContentProvider extends ContentProvider {
         } catch (RuntimeException e) {
             Timber.e(e, "answerCard - RuntimeException on answering card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
-            return;
         }
     }
 
@@ -1209,7 +1208,6 @@ public class CardContentProvider extends ContentProvider {
         } catch (RuntimeException e) {
             Timber.e(e, "buryOrSuspendCard - RuntimeException on burying or suspending card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundBurySuspendCard");
-            return;
         }
     }
 

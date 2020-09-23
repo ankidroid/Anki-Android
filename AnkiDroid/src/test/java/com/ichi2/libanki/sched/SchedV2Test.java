@@ -730,7 +730,6 @@ public class SchedV2Test extends RobolectricTest {
     @Ignore("Disabled upstream")
     public void test_overdue_lapseV2() throws Exception {
         // disabled in commit 3069729776990980f34c25be66410e947e9d51a2
-        return;
         /* Upstream does not execute it
            Collection col = getColV2()  // pylint: disable=unreachable
            // add a note
