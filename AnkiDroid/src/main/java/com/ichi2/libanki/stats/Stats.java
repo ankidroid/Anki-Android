@@ -1192,7 +1192,7 @@ public class Stats {
     /**
      * Card Types
      */
-    public boolean calculateCardTypes(AxisType type) {
+    public void calculateCardTypes(AxisType type) {
         mTitle = R.string.title_activity_template_editor;
         mBackwards = false;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
@@ -1239,7 +1239,6 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return false;
     }
 
     /**
