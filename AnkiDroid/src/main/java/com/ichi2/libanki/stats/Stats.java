@@ -992,9 +992,7 @@ public class Stats {
             list.set(i, data);
         }
         Collections.sort(list, (s1, s2) -> {
-            if (s1[0] < s2[0]) return -1;
-            if (s1[0] > s2[0]) return 1;
-            return 0;
+            return Double.compare(s1[0], s2[0]);
         });
 
         mSeriesList = new double[4][list.size()];
