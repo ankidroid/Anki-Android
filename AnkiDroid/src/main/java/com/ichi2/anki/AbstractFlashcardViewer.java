@@ -1267,13 +1267,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private boolean lookUp() {
+    private void lookUp() {
         mLookUpIcon.setVisibility(View.GONE);
         mIsSelecting = false;
         if (Lookup.lookUp(clipboardGetText().toString())) {
             clipboardSetText("");
         }
-        return true;
     }
 
 
