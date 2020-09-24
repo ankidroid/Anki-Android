@@ -189,7 +189,7 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">Pakeičiama kolekcija&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Įtraukti mokymosi laiko planavimą</string>
     <string name="export_include_media">Įtraukti laikmenas</string>
     <string name="confirm_apkg_export">Eksportuoti rinkinį kaip „Anki“ paketą?</string>

@@ -180,7 +180,7 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">Đang thay thế bộ sưu tập&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Gồm cả việc lên lịch</string>
     <string name="export_include_media">Gồm cả các tệp đa phương tiện</string>
     <string name="confirm_apkg_export">Kết xuất bộ sưu tập thành gói Anki?</string>

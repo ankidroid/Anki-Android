@@ -164,11 +164,11 @@
     <string name="time_quantity_months">%.1f měsíců</string>
     <string name="time_quantity_years">%.1f roků</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Obnovuje se filtrovaný balíček&#8230;</string>
     <string name="rebuild_cram_label">Znovu sestavit</string>
     <string name="empty_cram_label">Vyprázdnit</string>
     <string name="create_subdeck">Vytvořit podřízený balíček</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">Vyprazdňuje se filtrovaný balíček&#8230;</string>
     <string name="custom_study_deck_name">Dodatečné procvičování</string>
     <string name="custom_study_deck_exists">Nejdříve přejmenujte stávající balíček vlastního učení</string>
     <string name="empty_deck">Tento balíček je prázdný</string>

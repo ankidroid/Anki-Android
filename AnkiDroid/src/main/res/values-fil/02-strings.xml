@@ -183,7 +183,7 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">Pinapalitan ang koleksyon&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Isama ang pag-iiskedyul</string>
     <string name="export_include_media">Isama ang media</string>
     <string name="confirm_apkg_export">Export collection as Anki package?</string>
