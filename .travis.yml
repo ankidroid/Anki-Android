@@ -161,3 +161,5 @@ notifications:
   email:
     - github@mikehardy.net
 
+git:
+  depth: false
