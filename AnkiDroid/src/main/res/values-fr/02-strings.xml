@@ -319,5 +319,5 @@
     <string name="card_viewer_could_not_find_image_get_help">Aide</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossible de charger le paquet « %s »</string>
-    <string name="search_decks">Search decks</string>
+    <string name="search_decks">Rechercher dans les paquets</string>
 </resources>
