@@ -48,6 +48,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
+
+import static com.ichi2.libanki.Models.AllowEmpty.FALSE;
+import static com.ichi2.libanki.Models.AllowEmpty.ONLY_CLOZE;
+import static com.ichi2.libanki.Models.AllowEmpty.TRUE;
 import static com.ichi2.libanki.Utils.trimArray;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -999,7 +1003,7 @@ public class Models {
 
 
     /**
-     * @param m A model
+     * @param m A note type
      * @param ord a card type number of this model
      * @param sfld Fields of a note of this model. (Not trimmed)
      * @return Whether this card is empty
@@ -1022,30 +1026,63 @@ public class Models {
 
 
     /**
+     * Whether to allow empty note to generate a card. When importing a deck, this is useful to be able to correct it. When doing "check card" it avoids to delete empty note.
+     * By default, it is allowed for cloze type but not for standard type.
+     */
+    public enum AllowEmpty {
+        TRUE,
+        FALSE,
+        ONLY_CLOZE;
+
+        /**
+         * @param allowEmpty a Boolean representing whether empty note should be allowed. Null is understood as default
+         * @return AllowEmpty similar to the boolean
+         */
+        public static @NonNull AllowEmpty fromBoolean(@Nullable Boolean allowEmpty) {
+            if (allowEmpty == null) {
+                return Models.AllowEmpty.ONLY_CLOZE;
+            } else if (allowEmpty == true) {
+                return Models.AllowEmpty.TRUE;
+            } else {
+                return Models.AllowEmpty.FALSE;
+            }
+        }
+    }
+
+    /**
      * @param m A model
      * @param sfld Fields of a note
      * @param nodes Nodes used for parsing the variaous templates. Null for cloze
+     * @param allowEmpty whether to always return an ord, even if all cards are actually empty
      * @return The index of the cards that are generated. For cloze cards, if no card is generated, then {0} */
-    public static ArrayList<Integer> availOrds(Model m, String[] sfld, List<ParsedNode> nodes) {
+    public static ArrayList<Integer> availOrds(Model m, String[] sfld, List<ParsedNode> nodes, @NonNull AllowEmpty allowEmpty) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
-            return _availClozeOrds(m, sfld);
+            return _availClozeOrds(m, sfld, allowEmpty == TRUE || allowEmpty == ONLY_CLOZE);
         }
-        return _availStandardOrds(m, sfld, nodes);
+        return _availStandardOrds(m, sfld, nodes, allowEmpty == TRUE);
     }
 
     public static ArrayList<Integer> availOrds(Model m, String[] sfld) {
+        return availOrds(m, sfld, ONLY_CLOZE);
+    }
+
+    public static ArrayList<Integer> availOrds(Model m, String[] sfld, @NonNull AllowEmpty allowEmpty) {
         if (m.isCloze()) {
-            return _availClozeOrds(m, sfld);
+            return _availClozeOrds(m, sfld, allowEmpty == TRUE || allowEmpty == ONLY_CLOZE);
         }
-        return _availStandardOrds(m, sfld);
+        return _availStandardOrds(m, sfld, allowEmpty == TRUE);
     }
 
     public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld) {
-        return _availStandardOrds(m, sfld, m.parsedNodes());
+        return _availStandardOrds(m, sfld, false);
+    }
+
+    public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld, boolean allowEmpty) {
+        return _availStandardOrds(m, sfld, m.parsedNodes(), allowEmpty);
     }
 
     /** Given a joined field string and a standard note type, return available template ordinals */
-    public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld, List<ParsedNode> nodes) {
+    public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld, List<ParsedNode> nodes, boolean allowEmpty) {
         Set<String> nonEmptyFields = m.nonEmptyFields(sfld);
         ArrayList<Integer> avail = new ArrayList<>(nodes.size());
         for (int i = 0 ; i < nodes.size(); i++) {
@@ -1053,6 +1090,11 @@ public class Models {
             if (node != null && !node.template_is_empty(nonEmptyFields)) {
                 avail.add(i);
             }
+        }
+        if (allowEmpty && avail.isEmpty()) {
+            /* According to anki documentation:
+            When adding/importing, if a normal note doesn’t generate any cards, Anki will now add a blank card 1 instead of refusing to add the note. */
+            avail.add(0);
         }
         return avail;
     }
