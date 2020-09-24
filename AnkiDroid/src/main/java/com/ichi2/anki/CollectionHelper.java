@@ -68,9 +68,11 @@ public class CollectionHelper {
     }
 
     public synchronized void lockCollection() {
+        Timber.i("Locked Collection - Collection Loading should fail");
         mCollectionLocked = true;
     }
     public synchronized void unlockCollection() {
+        Timber.i("Unlocked Collection");
         mCollectionLocked = false;
     }
     public synchronized boolean isCollectionLocked() {

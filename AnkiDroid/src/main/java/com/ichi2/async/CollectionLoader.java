@@ -38,7 +38,9 @@ public final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
         // load collection
         try {
             Timber.d("CollectionLoader accessing collection");
-            return CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance().getApplicationContext());
+            Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance().getApplicationContext());
+            Timber.i("CollectionLoader obtained collection");
+            return col;
         } catch (RuntimeException e) {
             Timber.e(e, "loadInBackground - RuntimeException on opening collection");
             AnkiDroidApp.sendExceptionReport(e, "CollectionLoader.loadInBackground");
