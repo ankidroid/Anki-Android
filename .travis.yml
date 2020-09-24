@@ -1,4 +1,3 @@
-sudo: true
 language: bash
 # ignored on non-linux platforms, but bionic is required for nested virtualization
 dist: bionic
