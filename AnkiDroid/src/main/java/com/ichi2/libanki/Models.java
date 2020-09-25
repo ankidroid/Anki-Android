@@ -1051,7 +1051,11 @@ public class Models {
     }
 
 
-    /** Given a joined field string, return available template ordinals */
+    /**
+     * @param m A note type
+     * @param sfld The fields of a note of type m. (Assume the size of the array is the number of fields)
+     * @return The indexes (in increasing order) of cards that should be generated according to req rules. If it is a
+     * cloze type, at least one ord will be return.*/
     public ArrayList<Integer> availOrds(Model m, String[] sfld) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
             return _availClozeOrds(m, sfld);
@@ -1101,11 +1105,22 @@ public class Models {
     }
 
 
+    /**
+     * @param m A note type with cloze
+     * @param sflds The fields of a note of type m. (Assume the size of the array is the number of fields)
+     * @return The indexes (in increasing order) of cards that should be generated according to req rules.
+     */
     public ArrayList<Integer> _availClozeOrds(Model m, String[] sflds) {
         return _availClozeOrds(m, sflds, true);
     }
 
 
+    /**
+     * @param m A note type with cloze
+     * @param sflds The fields of a note of type m. (Assume the size of the array is the number of fields)
+     * @param allowEmpty Whether we allow to generate at least one card even if they are all empty
+     * @return The indexes (in increasing order) of cards that should be generated according to req rules.
+     * If empty is not allowed, it will contains ord 1.*/
     public ArrayList<Integer> _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
         Set<Integer> ords = new HashSet<>();
