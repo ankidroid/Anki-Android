@@ -869,9 +869,6 @@ public class Collection {
                 cms.add(tmpls.getJSONObject(i));
             }
 	    }
-	    if (cms.isEmpty()) {
-	        return new ArrayList<>();
-	    }
 	    List<Card> cards = new ArrayList<>();
 	    for (JSONObject template : cms) {
 	        cards.add(_newCard(note, template, 1, did, false));
