@@ -79,6 +79,7 @@ import timber.log.Timber;
 import com.ichi2.async.TaskData;
 
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
+import static com.ichi2.libanki.Collection.Previewing.*;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -839,6 +840,11 @@ public class Collection {
         return rem;
     }
 
+    public enum Previewing {
+        ADD,
+        EDIT,
+        MODELS
+    }
 
 	/**
 	 * Return cards of a note, without saving them
@@ -848,26 +854,29 @@ public class Collection {
      *             2 - when previewing in models dialog, all templates
      * @return list of cards
 	 */
-	public List<Card> previewCards(Note note, @Consts.CARD_TYPE int type) {
+	public List<Card> previewCards(Note note, Previewing type) {
         int did = 0;
         return previewCards(note, type, did);
     }
 
-    public List<Card> previewCards(Note note, @Consts.CARD_TYPE int type, int did) {
-	    ArrayList<JSONObject> cms = null;
-	    if (type == Consts.CARD_TYPE_NEW) {
-	        cms = findTemplates(note);
-	    } else if (type == Consts.CARD_TYPE_LRN) {
-	        cms = new ArrayList<>();
-	        for (Card c : note.cards()) {
-	            cms.add(c.template());
-	        }
-	    } else {
-	        cms = new ArrayList<>();
-            JSONArray tmpls = note.model().getJSONArray("tmpls");
-            for (int i = 0; i < tmpls.length(); ++i) {
-                cms.add(tmpls.getJSONObject(i));
-            }
+    public List<Card> previewCards(Note note, Previewing type, int did) {
+	    ArrayList<JSONObject> cms;
+	    switch (type) {
+            case ADD:
+    	        cms = findTemplates(note);
+    	        break;
+            case EDIT:
+    	        cms = new ArrayList<>();
+	            for (Card c : note.cards()) {
+	                cms.add(c.template());
+	            }
+	            break;
+            default: // MODELS
+    	        cms = new ArrayList<>();
+                JSONArray tmpls = note.model().getJSONArray("tmpls");
+                for (int i = 0; i < tmpls.length(); ++i) {
+                    cms.add(tmpls.getJSONObject(i));
+                }
 	    }
 	    List<Card> cards = new ArrayList<>();
 	    for (JSONObject template : cms) {
@@ -876,7 +885,7 @@ public class Collection {
 	    return cards;
 	}
     public List<Card> previewCards(Note note) {
-        return previewCards(note, Consts.CARD_TYPE_NEW);
+        return previewCards(note, ADD);
     }
 
     /**
