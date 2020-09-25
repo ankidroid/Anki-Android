@@ -353,6 +353,7 @@ public class Card implements Cloneable {
 
 
     public boolean isEmpty() {
+        // TODO: optimize. Checking all cards to deal with this only card is inefficient
         ArrayList<Integer> ords = mCol.getModels().availOrds(model(), note().getFields());
         return !ords.contains(mOrd);
     }

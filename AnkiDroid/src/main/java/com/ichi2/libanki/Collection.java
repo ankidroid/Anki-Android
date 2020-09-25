@@ -641,6 +641,7 @@ public class Collection {
     public int addNote(Note note) {
         // check we have card models available, then save
         ArrayList<JSONObject> cms = findTemplates(note);
+        // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
         if (cms.size() == 0) {
             return 0;
         }
@@ -684,6 +685,7 @@ public class Collection {
      */
 
     /**
+     * @param note A note
      * @return (active), non-empty templates.
      */
     public ArrayList<JSONObject> findTemplates(Note note) {
