@@ -46,6 +46,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
+import static com.ichi2.libanki.Utils.trimArray;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
@@ -1053,11 +1054,7 @@ public class Models {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
             return _availClozeOrds(m, sfld);
         }
-        int nbField = sfld.length;
-        String[] fields = new String[nbField];
-        for (int i = 0; i < nbField; i++) {
-            fields[i] = sfld[i].trim();
-        }
+        String[] fields = trimArray(sfld);
         ArrayList<Integer> avail = new ArrayList<>();
         JSONArray reqArray = m.getJSONArray("req");
         templates: for (int i = 0; i < reqArray.length(); i++) {
