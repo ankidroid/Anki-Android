@@ -25,7 +25,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 import android.util.Log;
 
@@ -50,7 +49,6 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -129,9 +127,6 @@ public class ContentProviderTest extends InstrumentedTest {
     private long mModelId = 0;
     private String[] mDummyFields = new String[1];
 
-    private Collection getCol() {
-        return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
-    }
     /**
      * Initially create one note for each model.
      */
@@ -250,7 +245,7 @@ public class ContentProviderTest extends InstrumentedTest {
     @Test
     public void testInsertAndRemoveNote() {
         // Get required objects for test
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         // Add the note
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Note.MID, mModelId);
@@ -285,7 +280,7 @@ public class ContentProviderTest extends InstrumentedTest {
     @Test
     public void testInsertTemplate() throws Exception {
         // Get required objects for test
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         Collection col = getCol();
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
@@ -323,7 +318,7 @@ public class ContentProviderTest extends InstrumentedTest {
     @Test
     public void testInsertField() throws Exception {
         // Get required objects for test
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         Collection col = getCol();
         Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
@@ -353,7 +348,7 @@ public class ContentProviderTest extends InstrumentedTest {
     @Test
     public void testQueryDirectSqlQuery() {
         // search for correct mid
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         Cursor cursor = cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, String.format("mid=%d", mModelId), null, null);
         assertNotNull(cursor);
         try {
@@ -379,7 +374,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testQueryNoteIds() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         // Query all available notes
         final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null);
         assertNotNull(allNotesCursor);
@@ -416,7 +411,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testQueryNotesProjection() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         // Query all available notes
         for (int i = 0; i < FlashCardsContract.Note.DEFAULT_PROJECTION.length; i++) {
             String[] projection = removeFromProjection(FlashCardsContract.Note.DEFAULT_PROJECTION, i);
@@ -453,7 +448,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testUpdateNoteFields() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         ContentValues cv = new ContentValues();
         // Change the fields so that the first field is now "newTestValue"
         String[] dummyFields2 = mDummyFields.clone();
@@ -480,7 +475,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testInsertAndUpdateModel() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         ContentValues cv = new ContentValues();
         // Insert a new model
         cv.put(FlashCardsContract.Model.NAME, TEST_MODEL_NAME);
@@ -547,7 +542,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testQueryAllModels() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         // Query all available models
         final Cursor allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
         assertNotNull(allModels);
@@ -582,7 +577,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testMoveCardsToOtherDeck() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         // Query all available notes
         final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null);
         assertNotNull(allNotesCursor);
@@ -625,7 +620,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testQueryCurrentModel() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         Uri uri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, FlashCardsContract.Model.CURRENT_MODEL_ID);
         final Cursor modelCursor = cr.query(uri, null, null, null, null);
         assertNotNull(modelCursor);
@@ -646,7 +641,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testUnsupportedOperations() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         ContentValues dummyValues = new ContentValues();
         Uri[] updateUris = {
                 // Can't update most tables in bulk -- only via ID
@@ -731,7 +726,7 @@ public class ContentProviderTest extends InstrumentedTest {
         Collection col = getCol();
         Decks decks = col.getDecks();
 
-        Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver()
+        Cursor decksCursor = getContentResolver()
                 .query(FlashCardsContract.Deck.CONTENT_ALL_URI, FlashCardsContract.Deck.DEFAULT_PROJECTION, null, null, null);
 
         assertNotNull(decksCursor);
@@ -759,7 +754,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
         long deckId = mTestDeckIds.get(0);
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
-        try (Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(deckUri, null, null, null, null)) {
+        try (Cursor decksCursor = getContentResolver().query(deckUri, null, null, null, null)) {
             if (decksCursor == null || !decksCursor.moveToFirst()) {
                 fail("No deck received. Should have delivered deck with id " + deckId);
             } else {
@@ -781,7 +776,7 @@ public class ContentProviderTest extends InstrumentedTest {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
 
-        Cursor reviewInfoCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(
+        Cursor reviewInfoCursor = getContentResolver().query(
                 FlashCardsContract.ReviewInfo.CONTENT_URI, null, null, null, null);
         assertNotNull(reviewInfoCursor);
         assertEquals("Check that we actually received one card", 1, reviewInfoCursor.getCount());
@@ -816,7 +811,7 @@ public class ContentProviderTest extends InstrumentedTest {
         long selectedDeckBeforeTest = col.getDecks().selected();
         col.getDecks().select(1); //select Default deck
 
-        Cursor reviewInfoCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(
+        Cursor reviewInfoCursor = getContentResolver().query(
                 FlashCardsContract.ReviewInfo.CONTENT_URI, null, deckSelector, deckArguments, null);
         assertNotNull(reviewInfoCursor);
         assertEquals("Check that we actually received one card", 1, reviewInfoCursor.getCount());
@@ -849,7 +844,7 @@ public class ContentProviderTest extends InstrumentedTest {
     @Test
     public void testSetSelectedDeck(){
         long deckId = mTestDeckIds.get(0);
-        ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        ContentResolver cr = getContentResolver();
         Uri selectDeckUri = FlashCardsContract.Deck.CONTENT_SELECTED_URI;
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Deck.DECK_ID, deckId);
@@ -876,7 +871,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // the card starts out being new
         assertEquals("card is initial new", Consts.CARD_TYPE_NEW, card.getQueue());
 
-        ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        ContentResolver cr = getContentResolver();
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
@@ -924,7 +919,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
         // bury it through the API
         // -----------------------
-        ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        ContentResolver cr = getContentResolver();
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
@@ -970,7 +965,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
         // suspend it through the API
         // --------------------------
-        ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        ContentResolver cr = getContentResolver();
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
@@ -1021,7 +1016,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // -----------
         String tag2 = "mynewtag";
 
-        ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        ContentResolver cr = getContentResolver();
         Uri updateNoteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Note.TAGS, TEST_TAG + " " + tag2);
@@ -1049,7 +1044,7 @@ public class ContentProviderTest extends InstrumentedTest {
          col.getModels().all().get(0).put("did", JSONObject.NULL);
          col.save();
 
-         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+         final ContentResolver cr = getContentResolver();
          // Query all available models
          final Cursor allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
          assertNotNull(allModels);
@@ -1059,4 +1054,8 @@ public class ContentProviderTest extends InstrumentedTest {
          CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
          return getCol();
      }
+
+    protected ContentResolver getContentResolver() {
+        return getTestContext().getContentResolver();
+    }
 }

@@ -24,10 +24,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import androidx.test.platform.app.InstrumentationRegistry;
-
 @RunWith(Parameterized.class)
-public class LayoutValidationTest {
+public class LayoutValidationTest extends InstrumentedTest {
 
     @Parameterized.Parameter
     public int mResourceId;
@@ -63,7 +61,7 @@ public class LayoutValidationTest {
     public void ensureLayout() throws Exception {
         // This should be fine to run on a device - but WebViews may be instantiated.
 
-        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Context targetContext = getTestContext();
         Themes.setTheme(targetContext);
         LayoutInflater li = LayoutInflater.from(targetContext);
         ViewGroup root = new LinearLayout(targetContext);
