@@ -1046,6 +1046,33 @@ public class Models {
 
 
     /**
+     * @param m A model
+     * @param ord a card type number of this model
+     * @param sfld Fields of a note of this model. (Not trimmed)
+     * @return Whether this card is empty
+     */
+    public static boolean emptyCard(Model m, int ord, String[] sfld) {
+        if (m.getInt("type") == Consts.MODEL_CLOZE) {
+            // For cloze, getting the list of cloze numbes is linear in the size of the template
+            // So computing the full list is almost as efficient as checking for a particular number
+            return !_availClozeOrds(m, sfld, false).contains(ord);
+        }
+        return emptyStandardCard(m.getJSONArray("req").getJSONArray(ord), sfld);
+    }
+
+    /**
+     * @param sr The requirement telling whether a card should be generated.
+     * @param sfld The vector of fields of a note. (Not trimmed)
+     * @return Whether the standard card is empty
+     */
+    public static boolean emptyStandardCard(JSONArray sr, String[] sfld) {
+        String[] fields = trimArray(sfld);
+        String type = sr.getString(1);
+        JSONArray req = sr.getJSONArray(2);
+        return emptyStandardCard(type, req, fields);
+    }
+
+    /**
      * @param type Whether the rules to generate this card is is any, all, none
      * @param req The fields that must be fill (all), or that suffices (any) to generate the card
      * @param trimmedFields the field of a note. Fields are assumed to be trimmed
