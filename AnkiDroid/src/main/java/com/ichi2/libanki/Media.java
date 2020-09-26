@@ -93,7 +93,7 @@ public class Media {
      * Group 1 = Contents of [sound:] tag <br>
      * Group 2 = "fname"
      */
-    private static final Pattern fSoundRegexps = Pattern.compile("(?i)(\\[sound:([^]]+)\\])");
+    private static final Pattern fSoundRegexps = Pattern.compile("(?i)(\\[sound:([^]]+)])");
 
     // src element quoted case
     /**
@@ -102,14 +102,14 @@ public class Media {
      * Group 3 = "fname" <br>
      * Group 4 = Backreference to "str" (i.e., same type of quote character)
      */
-    private static final Pattern fImgRegExpQ = Pattern.compile("(?i)(<img[^>]* src=([\\\"'])([^>]+?)(\\2)[^>]*>)");
+    private static final Pattern fImgRegExpQ = Pattern.compile("(?i)(<img[^>]* src=([\"'])([^>]+?)(\\2)[^>]*>)");
 
     // unquoted case
     /**
      * Group 1 = Contents of <img> tag <br>
      * Group 2 = "fname"
      */
-    private static final Pattern fImgRegExpU = Pattern.compile("(?i)(<img[^>]* src=(?!['\\\"])([^ >]+)[^>]*?>)");
+    private static final Pattern fImgRegExpU = Pattern.compile("(?i)(<img[^>]* src=(?!['\"])([^ >]+)[^>]*?>)");
 
     public static final List<Pattern> mRegexps =  Arrays.asList(fSoundRegexps, fImgRegExpQ, fImgRegExpU);
 
@@ -338,6 +338,7 @@ public class Media {
 
     private List<String> _expandClozes(String string) {
         Set<String> ords = new TreeSet<>();
+        @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
         Matcher m = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}").matcher(string);
         while (m.find()) {
             ords.add(m.group(1));

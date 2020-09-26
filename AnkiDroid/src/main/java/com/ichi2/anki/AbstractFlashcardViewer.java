@@ -183,7 +183,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected static final int INITIAL_HIDE_DELAY = 200;
 
     // Type answer patterns
-    private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)\\]\\]");
+    private static final Pattern sTypeAnsPat = Pattern.compile("\\[\\[type:(.+?)]]");
 
     /** to be sent to and from the card editor */
     private static Card sEditorCard;
@@ -824,6 +824,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      */
 
     private String contentForCloze(String txt, int idx) {
+        @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
         Pattern re = Pattern.compile("\\{\\{c" + idx + "::(.+?)\\}\\}");
         Matcher m = re.matcher(txt);
         Set<String> matches = new LinkedHashSet<>();

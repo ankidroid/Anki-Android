@@ -239,6 +239,7 @@ public class Storage {
         // convert first template
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
         for (String type : new String[] { "qfmt", "afmt" }) {
+            //noinspection RegExpRedundantEscape            // In Android, } should be escaped
             t.put(type, t.getString(type).replaceAll("\\{\\{cloze:1:(.+?)\\}\\}", "{{cloze:$1}}"));
         }
         t.put("name", "Cloze");

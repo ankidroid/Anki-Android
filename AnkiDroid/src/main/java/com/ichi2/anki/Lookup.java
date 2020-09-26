@@ -80,7 +80,7 @@ public class Lookup {
             return false;
         }
         // clear text from leading and closing dots, commas, brackets etc.
-        text = text.trim().replaceAll("[,;:\\s\\(\\[\\)\\]\\.]*$", "").replaceAll("^[,;:\\s\\(\\[\\)\\]\\.]*", "");
+        text = text.trim().replaceAll("[,;:\\s(\\[)\\].]*$", "").replaceAll("^[,;:\\s(\\[)\\].]*", "");
         switch (mDictionary) {
             case DICTIONARY_NONE:
                 return false;

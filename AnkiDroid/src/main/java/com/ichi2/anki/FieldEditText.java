@@ -105,7 +105,7 @@ public class FieldEditText extends AppCompatEditText {
         if (content == null) {
             content = "";
         } else {
-            content = content.replaceAll("<br(\\s*\\/*)>", NEW_LINE);
+            content = content.replaceAll("<br(\\s*/*)>", NEW_LINE);
         }
         setText(content);
         setContentDescription(name);
