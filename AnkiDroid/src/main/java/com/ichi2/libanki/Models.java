@@ -1046,10 +1046,44 @@ public class Models {
 
 
     /**
-     * @param m A note type
-     * @param sfld The fields of a note of type m. (Assume the size of the array is the number of fields)
-     * @return The indexes (in increasing order) of cards that should be generated according to req rules. If it is a
-     * cloze type, at least one ord will be return.*/
+     * @param type Whether the rules to generate this card is is any, all, none
+     * @param req The fields that must be fill (all), or that suffices (any) to generate the card
+     * @param trimmedFields the field of a note. Fields are assumed to be trimmed
+     * @return Whether the card is empty
+     */
+    public static boolean emptyStandardCard(String type, JSONArray req, String[] trimmedFields) {
+        switch (type) {
+        case REQ_NONE:
+            // unsatisfiable template
+            return true;
+        case REQ_ALL:
+            // AND requirement?
+            for (int j = 0; j < req.length(); j++) {
+                int idx = req.getInt(j);
+                if (trimmedFields[idx] == null || trimmedFields[idx].length() == 0) {
+                    // missing and was required
+                    return true;
+                }
+            }
+            return false;
+        case REQ_ANY:
+            // OR requirement?
+            for (int j = 0; j < req.length(); j++) {
+                int idx = req.getInt(j);
+                if (trimmedFields[idx] != null && trimmedFields[idx].length() != 0) {
+                    // missing and was required
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param m A model
+     * @param sfld Fields of a note
+     * @return The index of the cards that are generated. For cloze cards, if no card is generated, then {0} */
     public static ArrayList<Integer> availOrds(Model m, String[] sfld) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
             return _availClozeOrds(m, sfld);
@@ -1068,33 +1102,9 @@ public class Models {
             int ord = sr.getInt(0);
             String type = sr.getString(1);
             JSONArray req = sr.getJSONArray(2);
-
-            switch (type) {
-                case REQ_NONE:
-                    // unsatisfiable template
-                    continue;
-                case REQ_ALL:
-                    // AND requirement?
-                    for (int j = 0; j < req.length(); j++) {
-                        int idx = req.getInt(j);
-                        if (fields[idx] == null || fields[idx].length() == 0) {
-                            // missing and was required
-                            continue templates;
-                        }
-                    }
-                    avail.add(ord);
-                    continue;
-                case REQ_ANY:
-                    // OR requirement?
-                    for (int j = 0; j < req.length(); j++) {
-                        int idx = req.getInt(j);
-                        if (fields[idx] != null && fields[idx].length() != 0) {
-                            // Present and suffices to generate the card
-                            avail.add(ord);
-                            continue templates;
-                        }
-                    }
-                }
+            if (!emptyStandardCard(type, req, fields)) {
+                avail.add(ord);
+            }
         }
         return avail;
     }
