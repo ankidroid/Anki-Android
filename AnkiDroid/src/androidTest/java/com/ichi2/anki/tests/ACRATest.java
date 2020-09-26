@@ -1,12 +1,10 @@
 package com.ichi2.anki.tests;
 
 import android.Manifest;
-import android.app.Instrumentation;
 import android.content.SharedPreferences;
 
 import androidx.annotation.StringRes;
 import androidx.test.annotation.UiThreadTest;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -41,7 +39,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
-public class ACRATest {
+public class ACRATest extends InstrumentedTest {
 
     @Rule public GrantPermissionRule mRuntimePermissionRule =
             GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -55,8 +53,7 @@ public class ACRATest {
     @Before
     @UiThreadTest
     public void setUp() {
-        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        mApp = (AnkiDroidApp) instrumentation.getTargetContext().getApplicationContext();
+        mApp = (AnkiDroidApp) getTestContext().getApplicationContext();
         // Note: attachBaseContext can't be called twice as we're using the same instance between all tests.
         mApp.onCreate();
     }
@@ -87,11 +84,11 @@ public class ACRATest {
 
     private void verifyDebugACRAPreferences() {
         assertTrue("ACRA was not disabled correctly",
-                AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext())
+                getSharedPrefs()
                         .getBoolean(ACRA.PREF_DISABLE_ACRA, true));
         assertEquals("ACRA feedback was not turned off correctly",
                 AnkiDroidApp.FEEDBACK_REPORT_NEVER,
-                AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext())
+                getSharedPrefs()
                         .getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "undefined"));
     }
 
@@ -141,28 +138,28 @@ public class ACRATest {
         crash.setStackTrace(trace);
 
         // one send should work
-        CrashReportData crashData = new CrashReportDataFactory(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+        CrashReportData crashData = new CrashReportDataFactory(getTestContext(),
                 AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build()).createCrashData(new ReportBuilder().exception(crash));
 
         assertTrue(new LimitingReportAdministrator().shouldSendReport(
-                InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                getTestContext(),
                 AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build(),
                 crashData)
         );
 
         // A second send should not work
         assertFalse(new LimitingReportAdministrator().shouldSendReport(
-                InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                getTestContext(),
                 AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build(),
                 crashData)
         );
 
         // Now let's clear data
-        AnkiDroidApp.deleteACRALimiterData(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        AnkiDroidApp.deleteACRALimiterData(getTestContext());
 
         // A third send should work again
         assertTrue(new LimitingReportAdministrator().shouldSendReport(
-                InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                getTestContext(),
                 AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build(),
                 crashData)
         );
@@ -259,17 +256,22 @@ public class ACRATest {
 
     private void verifyACRANotDisabled() {
         assertFalse("ACRA was not enabled correctly",
-                AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()).getBoolean(ACRA.PREF_DISABLE_ACRA, false));
+                getSharedPrefs().getBoolean(ACRA.PREF_DISABLE_ACRA, false));
     }
 
 
     private void setAcraConfig(String production) throws Exception {
-        setAcraConfig(production, AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()));
+        setAcraConfig(production, getSharedPrefs());
     }
 
 
     private void setReportConfig(String feedbackReportAsk) {
-        AnkiDroidApp.getSharedPrefs(InstrumentationRegistry.getInstrumentation().getTargetContext()).edit()
+        getSharedPrefs().edit()
                 .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, feedbackReportAsk).commit();
+    }
+
+
+    private SharedPreferences getSharedPrefs() {
+        return AnkiDroidApp.getSharedPrefs(getTestContext());
     }
 }

@@ -2,7 +2,7 @@ package com.ichi2.anki.tests.libanki;
 
 import android.os.Build;
 
-import com.ichi2.anki.tests.Shared;
+import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
@@ -15,19 +15,18 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class ModelTest {
+public class ModelTest extends InstrumentedTest {
 
     private Collection testCol;
 
     @Before
     public void setUp() throws IOException {
-        testCol = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        testCol = getEmptyCol();
     }
 
     @After
