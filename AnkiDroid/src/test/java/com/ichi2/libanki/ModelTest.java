@@ -460,7 +460,6 @@ public class ModelTest extends RobolectricTest {
     }
 
     @Test
-    @Ignore("Handled in next commit")
     public void regression_test_pipe() {
         Collection col = getCol();
         Models mm = col.getModels();
