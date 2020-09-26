@@ -143,9 +143,9 @@ public class CardAppearance {
         // NB: Comment seems incorrect
         // Replace each <br> with 15 spaces, each <hr> with 30 spaces, then
         // remove all html tags and spaces
-        String realContent = htmlContent.replaceAll("\\<br.*?\\>", " ");
-        realContent = realContent.replaceAll("\\<hr.*?\\>", " ");
-        realContent = realContent.replaceAll("\\<.*?\\>", "");
+        String realContent = htmlContent.replaceAll("<br.*?>", " ");
+        realContent = realContent.replaceAll("<hr.*?>", " ");
+        realContent = realContent.replaceAll("<.*?>", "");
         realContent = realContent.replaceAll("&nbsp;", " ");
         return Math.max(DYNAMIC_FONT_MIN_SIZE, DYNAMIC_FONT_MAX_SIZE - realContent.length() / DYNAMIC_FONT_FACTOR);
     }

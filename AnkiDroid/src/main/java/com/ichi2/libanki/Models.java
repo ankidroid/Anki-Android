@@ -49,8 +49,10 @@ import androidx.annotation.NonNull;
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
 public class Models {
+    @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
     private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{[^}]*?cloze:(?:[^}]?:)*(.+?)\\}\\}");
     private static final Pattern fClozePattern2 = Pattern.compile("<%cloze:(.+?)%>");
+    @SuppressWarnings("RegExpRedundantEscape")
     private static final Pattern fClozeOrdPattern = Pattern.compile("(?si)\\{\\{c(\\d+)::.+?\\}\\}");
 
     public static final String defaultModel =

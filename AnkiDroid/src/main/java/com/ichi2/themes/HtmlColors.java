@@ -12,6 +12,7 @@ public class HtmlColors {
     private static final Pattern fShortHexColorPattern = Pattern.compile("^#([0-9a-f])([0-9a-f])([0-9a-f])$", Pattern.CASE_INSENSITIVE);
     private static final Pattern fLongHexColorPattern = Pattern.compile("^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$", Pattern.CASE_INSENSITIVE);
     private static final Pattern fRgbColorPattern = Pattern.compile("^rgb\\(([0-9]+)\\s*,\\s*([0-9]+)\\s*,\\s*([0-9]+)\\)$", Pattern.CASE_INSENSITIVE);
+    @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
     private static final Pattern fClozeStylePattern = Pattern.compile("(.cloze\\s*\\{[^}]*color:\\s*#)[0-9a-f]{6}(;[^}]*\\})", Pattern.CASE_INSENSITIVE);
 
     public static String nameToHex(String name) {

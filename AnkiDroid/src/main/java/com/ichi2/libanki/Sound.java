@@ -59,7 +59,7 @@ public class Sound {
     /**
      * Pattern used to identify the markers for sound files
      */
-    public static final Pattern sSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
+    public static final Pattern sSoundPattern = Pattern.compile("\\[sound:([^\\[\\]]*)]");
 
     /**
      * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)

@@ -34,7 +34,7 @@ class Utils {
     private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
-    private static final Pattern imgPattern = Pattern.compile("<img src=[\\\"']?([^\\\"'>]+)[\\\"']? ?/?>");
+    private static final Pattern imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
 
 
