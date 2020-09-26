@@ -1074,4 +1074,17 @@ public class Utils {
         return left == right || (left != null && left.equals(right));
     }
 
+    /**
+     * @param sflds Some fields
+     * @return Array with the same elements, trimmed
+     */
+    public static @NonNull String[] trimArray(@NonNull String[] sflds) {
+        int nbField = sflds.length;
+        String[] fields = new String[nbField];
+        for (int i = 0; i < nbField; i++) {
+            fields[i] = sflds[i].trim();
+        }
+        return fields;
+    }
+
 }
