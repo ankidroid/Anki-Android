@@ -5,6 +5,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -18,6 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import static com.ichi2.libanki.Consts.MODEL_CLOZE;
 import static com.ichi2.libanki.Utils.stripHTML;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertArrayEquals;
@@ -455,5 +457,19 @@ public class ModelTest extends RobolectricTest {
         assertTrue(Arrays.asList(new String[] {"any", "all"}).contains(r.getString(1)));
         // TODO: Port anki@4e33775ed4346ef136ece6ef5efec5ba46057c6b
         assertEquals(new JSONArray("[0]"), r.getJSONArray(2));
+    }
+
+    @Test
+    @Ignore("Handled in next commit")
+    public void regression_test_pipe() {
+        Collection col = getCol();
+        Models mm = col.getModels();
+        Model basic = mm.byName("Basic");
+        JSONObject template = basic.getJSONArray("tmpls").getJSONObject(0);
+        template.put("qfmt", "{{|Front}}{{Front}}{{/Front}}{{Front}}");
+        mm.save(basic, true);
+        Note note = addNoteUsingBasicModel("foo", "bar");
+        Card c = note.cards().get(0);
+        assertThat(c.q(), containsString("unknown field"));
     }
 }
