@@ -1619,6 +1619,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
+            int deletedFiles = result.getInt();
+            deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.delete_media_result_title),
+                    deckPicker.getResources().getQuantityString(R.plurals.delete_media_result_message, deletedFiles, deletedFiles));
         }
     }
     @Override

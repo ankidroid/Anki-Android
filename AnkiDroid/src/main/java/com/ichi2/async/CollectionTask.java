@@ -392,8 +392,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 break;
 
             case DELETE_MEDIA:
-                doInBackgroundDeleteMedia(param);
-                break;
+                return doInBackgroundDeleteMedia(param);
 
             case REBUILD_CRAM:
                 return doInBackgroundRebuildCram();
@@ -1650,14 +1649,15 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         return new TaskData(0, new Object[]{result}, true);
     }
 
-    
-    private void doInBackgroundDeleteMedia(TaskData param) {
+
+    private TaskData doInBackgroundDeleteMedia(TaskData param) {
         Object[] objects = param.getObjArray();
         List<String> unused = (List<String>)objects[0];
         com.ichi2.libanki.Media m = getCol().getMedia();
         for (String fname : unused) {
             m.removeFile(fname);
         }
+        return new TaskData(unused.size());
     }
 
 
