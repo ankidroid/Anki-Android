@@ -2638,4 +2638,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     void filterByTag(String... tags) {
         filterByTag(Arrays.asList(tags), 0);
     }
+
+    @VisibleForTesting
+    void replaceSelectionWith(int[] positions) {
+        mCheckedCards.clear();
+        checkedCardsAtPositions(positions);
+    }
 }
