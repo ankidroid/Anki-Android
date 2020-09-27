@@ -98,7 +98,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -137,7 +136,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /** List of cards in the browser.
     * When the list is changed, the position member of its elements should get changed.*/
     @NonNull
-    private List<CardCache> mCards = new ArrayList<>();
+    private CardCollection mCards = new CardCollection();
     private ArrayList<Deck> mDropDownDecks;
     private ListView mCardsListView;
     private SearchView mSearchView;
@@ -251,7 +250,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else if (which != CARD_ORDER_NONE) {
                 mOrderAsc = !mOrderAsc;
                 getCol().getConf().put("sortBackwards", mOrderAsc);
-                Collections.reverse(mCards);
+                mCards.reverse();
                 updateList();
             }
             return true;
@@ -545,7 +544,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         //conf saved may still have this bug.
         mOrderAsc = Upgrade.upgradeJSONIfNecessary(getCol(), getCol().getConf(), "sortBackwards", false);
 
-        mCards = new ArrayList<>();
+        mCards.reset();
         mCardsListView = findViewById(R.id.card_browser_list);
         // Create a spinner for column1
         Spinner cardsColumn1Spinner = findViewById(R.id.browser_column1_spinner);
@@ -1357,7 +1356,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         if (colIsOpen() && mCardsAdapter!= null) {
             // clear the existing card list
-            mCards = new ArrayList<>();
+            mCards.reset();
             mCardsAdapter.notifyDataSetChanged();
             //  estimate maximum number of cards that could be visible (assuming worst-case minimum row height of 20dp)
             int numCardsToRender = (int) Math.ceil(mCardsListView.getHeight()/
@@ -1393,7 +1392,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private static Map<Long, Integer> getPositionMap(List<CardCache> list) {
+    private static Map<Long, Integer> getPositionMap(CardCollection list) {
         Map<Long, Integer> positions = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
             positions.put(list.get(i).getId(), i);
@@ -1518,7 +1517,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * @param updatedCardTags Mapping note id -> updated tags
      */
     private void updateCardsInList(List<Card> cards, Map<Long, String> updatedCardTags) {
-        List<CardCache> cardList = getCards();
+        CardCollection cardList = getCards();
         Map<Long, Integer> idToPos = getPositionMap(cardList);
         for (Card c : cards) {
             // get position in the mCards search results HashMap
@@ -1629,7 +1628,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     private void removeNotesView(java.util.Collection<Long> cardsIds, boolean reorderCards) {
         long reviewerCardId = getReviewerCardId();
-        List<CardCache> oldMCards = getCards();
+        CardCollection oldMCards = getCards();
         Map<Long, Integer> idToPos = getPositionMap(oldMCards);
         Set<Long> idToRemove = new HashSet<>();
         for (Long cardId : cardsIds) {
@@ -1648,7 +1647,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 newMCards.add(new CardCache(card, pos++));
             }
         }
-        mCards = newMCards;
+        mCards.replaceWith(newMCards);
 
         if (reorderCards) {
             //Suboptimal from a UX perspective, we should reorder
@@ -1767,7 +1766,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         public void actualOnPostExecute(@NonNull CardBrowser browser, TaskData result) {
             if (result != null) {
-                mCards = result.getCards();
+                mCards.replaceWith(result.getCards());
                 updateList();
                 handleSearchResult();
             }
@@ -1969,7 +1968,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
             int lastVisibleItem = firstVisibleItem + visibleItemCount;
-            List<CardCache> cards = getCards();
+            CardCollection cards = getCards();
             // List is never cleared, only reset to a new list. So it's safe here.
             int size = cards.size();
             if ((size > 0) && (firstVisibleItem < size) && ((lastVisibleItem - 1) < size)) {
@@ -1984,7 +1983,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         mLastRenderStart = currentTime;
                         CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
                         CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                                new TaskData(new Object[]{cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index}));
+                                renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards));
                     }
                 }
             }
@@ -1998,10 +1997,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
                 CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                        new TaskData(new Object[]{getCards(), startIdx - 5, 2 * numVisible + 5, mColumn1Index, mColumn2Index}));
+                        renderBrowserQAParams(startIdx - 5, 2 * numVisible + 5, getCards()));
             }
         }
     }
+
+
+    @NonNull
+    protected TaskData renderBrowserQAParams(int firstVisibleItem, int visibleItemCount, CardCollection cards) {
+        return new TaskData(new Object[] {cards.unsafeGetWrapped(), firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index});
+    }
+
 
     private final class MultiColumnListAdapter extends BaseAdapter {
         private final int mResource;
@@ -2141,7 +2147,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private void onSelectAll() {
-        mCheckedCards.addAll(mCards);
+        mCheckedCards.addAll(mCards.unsafeGetWrapped());
         onSelectionChanged();
     }
 
@@ -2178,10 +2184,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private List<CardCache> getCards() {
-        if (mCards == null) {
-            mCards = new ArrayList<>();
-        }
+    private CardCollection getCards() {
+        mCards.ensureValidValue();
         return mCards;
     }
 
@@ -2191,6 +2195,58 @@ public class CardBrowser extends NavigationDrawerActivity implements
             l[i] = mCards.get(i).getId();
         }
         return l;
+    }
+
+    // This could be better: use a wrapper class PositionAware<T> to store the position so it's
+    // no longer a responsibility of CardCache and we can guarantee it's consistent just by using this collection
+    /** A position-aware collection to ensure consistency between the position of items and the collection */
+    public static class CardCollection implements Iterable<CardCache> {
+        private static List<CardCache> mWrapped = new ArrayList<>();
+
+        public int size() {
+            return mWrapped.size();
+        }
+
+        public CardCache get(int index) {
+            return mWrapped.get(index);
+        }
+
+
+        public void reset() {
+            mWrapped = new ArrayList<>();
+        }
+
+
+        public void replaceWith(List<CardCache> value) {
+            mWrapped = value;
+        }
+
+        public void reverse() {
+            Collections.reverse(mWrapped);
+        }
+
+
+        @NonNull
+        @Override
+        public Iterator<CardCache> iterator() {
+            return mWrapped.iterator();
+        }
+
+        public java.util.Collection<CardCache> unsafeGetWrapped() {
+            return mWrapped;
+        }
+
+
+        public void ensureValidValue() {
+            if (mWrapped == null) {
+                reset();
+            }
+        }
+
+
+        public void clear() {
+            mWrapped.clear();
+        }
     }
 
     public static class CardCache extends Card.Cache {
@@ -2489,13 +2545,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     void rerenderAllCards() {
         CollectionTask.launchCollectionTask(RENDER_BROWSER_QA, mRenderQAHandler,
-                new TaskData(new Object[]{getCards(), 0, mCards.size()-1, mColumn1Index, mColumn2Index}));
+                renderBrowserQAParams(0, mCards.size()-1, getCards()));
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     long[] getCardIds() {
-        @SuppressWarnings("unchecked")
-        CardCache[] cardsCopy = mCards.toArray(new CardCache[0]);
+        CardCache[] cardsCopy = mCards.unsafeGetWrapped().toArray(new CardCache[0]);
         long[] ret = new long[cardsCopy.length];
         for (int i = 0; i < cardsCopy.length; i++) {
             ret[i] = cardsCopy[i].getId();
