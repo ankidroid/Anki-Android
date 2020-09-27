@@ -2992,7 +2992,10 @@ public class SchedV2 extends AbstractSched {
             mNewCount--;
             break;
         case Consts.QUEUE_TYPE_LRN:
-            mLrnCount --; // -= discardCard.getLeft() / 1000; in sched v1
+        case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
+        case Consts.QUEUE_TYPE_PREVIEW:
+            mLrnCount --;
+            // In the case of QUEUE_TYPE_LRN, it is -= discardCard.getLeft() / 1000; in sched v1
             break;
         case Consts.QUEUE_TYPE_REV:
             mRevCount--;
