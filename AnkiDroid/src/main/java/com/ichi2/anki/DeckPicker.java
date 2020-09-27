@@ -74,6 +74,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -2778,14 +2779,24 @@ public class DeckPicker extends NavigationDrawerActivity implements
         return new HandleEmptyCardListener(this);
     }
     private static class HandleEmptyCardListener extends TaskListenerWithContext<DeckPicker> {
+        private final int mNumberOfCards;
+
         public HandleEmptyCardListener(DeckPicker deckPicker) {
             super(deckPicker);
+            mNumberOfCards = deckPicker.getCol().cardCount();
         }
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
-            deckPicker.mProgressDialog = StyledProgressDialog.show(deckPicker, "",
-                    deckPicker.getResources().getString(R.string.emtpy_cards_finding), false);
+            deckPicker.mProgressDialog = new MaterialDialog.Builder(deckPicker)
+                    .progress(false, mNumberOfCards)
+                    .title(R.string.emtpy_cards_finding)
+                    .show();
+        }
+
+        @Override
+        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, @NonNull TaskData progress) {
+            deckPicker.mProgressDialog.incrementProgress(progress.getInt());
         }
 
         @Override

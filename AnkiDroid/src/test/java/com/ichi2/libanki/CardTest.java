@@ -78,7 +78,7 @@ public class CardTest extends RobolectricTest {
         t = m.getJSONArray("tmpls").getJSONObject(1);
         t.put("qfmt", "{{Back}}");
         mm.save(m, true);
-        List<Long> rep = col.emptyCids();
+        List<Long> rep = col.emptyCids(null);
         col.remCards(rep);
         assertEquals(1, note.numberOfCards());
         // if we add to the note, a card should be automatically generated
