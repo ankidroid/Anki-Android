@@ -3064,7 +3064,7 @@ public class SchedV2 extends AbstractSched {
         // restore any siblings
         mCol.getDb().execute("update cards set queue=type,mod=?,usn=? where queue=" + Consts.QUEUE_TYPE_SIBLING_BURIED + " and nid=?", getTime().intTime(), mCol.usn(), oldCardData.getNid());
         // and finally, update daily count
-        @Consts.CARD_QUEUE int n = oldCardData.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ? Consts.QUEUE_TYPE_LRN : oldCardData.getQueue();
+        @Consts.CARD_QUEUE int n = (oldCardData.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || oldCardData.getQueue() == Consts.QUEUE_TYPE_PREVIEW) ? Consts.QUEUE_TYPE_LRN : oldCardData.getQueue();
         String type = (new String[]{"new", "lrn", "rev"})[n];
         _updateStats(oldCardData, type, -1);
         decrReps();
