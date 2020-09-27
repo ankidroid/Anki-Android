@@ -295,6 +295,35 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("tagged card should be returned", b.getCardCount(), is(1));
     }
 
+    @Test
+    @Ignore("7286")
+    public void previewWorksAfterSort() {
+        // #7286
+        long cid1 = addNoteUsingBasicModel("Hello", "World").cards().get(0).getId();
+        long cid2 = addNoteUsingBasicModel("Hello2", "World2").cards().get(0).getId();
+
+        CardBrowser b = getBrowserWithNoNewCards();
+
+        assertThat(b.getPropertiesForCardId(cid1).getPosition(), is(0));
+        assertThat(b.getPropertiesForCardId(cid2).getPosition(), is(1));
+
+        b.checkedCardsAtPositions(new int[] { 0 });
+        Intent previewIntent = b.getPreviewIntent();
+        assertThat("before: index", previewIntent.getIntExtra("index", -100), is(0));
+        assertThat("before: cards", previewIntent.getLongArrayExtra("cardList"), is(new long[] { cid1, cid2 }));
+
+        // reverse
+        b.changeCardOrder(1);
+
+        assertThat(b.getPropertiesForCardId(cid1).getPosition(), is(1));
+        assertThat(b.getPropertiesForCardId(cid2).getPosition(), is(0));
+
+        b.replaceSelectionWith(new int[] { 0 });
+        Intent intentAfterReverse = b.getPreviewIntent();
+        assertThat("after: index", intentAfterReverse.getIntExtra("index", -100), is(0));
+        assertThat("after: cards", intentAfterReverse.getLongArrayExtra("cardList"), is(new long[] { cid2, cid1 }));
+    }
+
 
     private void flagCardForNote(Note n, int flag) {
         Card c = n.firstCard();
