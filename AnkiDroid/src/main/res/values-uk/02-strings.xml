@@ -344,6 +344,6 @@
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
     <string name="card_viewer_could_not_find_image_get_help">Довідка</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
+    <string name="deck_picker_failed_deck_load">Не вдалося завантажити колоду «%s»</string>
+    <string name="search_decks">Шукати колоди</string>
 </resources>
