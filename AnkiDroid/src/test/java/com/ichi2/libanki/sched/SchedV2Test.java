@@ -25,6 +25,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
@@ -59,6 +60,7 @@ import static com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED;
 import static com.ichi2.libanki.Consts.STARTING_FACTOR;
 import static com.ichi2.libanki.DecksTest.TEST_DECKS;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static com.ichi2.testutils.AnkiAssert.checkRevIvl;
 import static com.ichi2.testutils.AnkiAssert.without_unicode_isolation;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -1621,5 +1623,30 @@ public class SchedV2Test extends RobolectricTest {
 
         long ivl = col.getDb().queryLongScalar("select ivl from revlog");
         assertEquals((long) (-5.5 * 60), ivl);
+    }
+
+    @Test
+    @Ignore("https://github.com/ankidroid/Anki-Android/issues/7285")
+    public void regression_test_preview() throws Exception {
+        Collection col = getColV2();
+        Decks decks = col.getDecks();
+        AbstractSched sched = col.getSched();
+        addNoteUsingBasicModel("foo", "bar");
+        long did = decks.newDyn("test");
+        Deck deck = decks.get(did);
+        deck.put("resched", false);
+        sched.rebuildDyn(did);
+        col.reset();
+        Card card;
+        for(int i = 0; i < 3; i++) {
+            card = sched.getCard();
+            assertNotNull(card);
+            sched.answerCard(card, Consts.BUTTON_ONE);
+        }
+        assertEquals(1, sched.lrnCount());
+        card = sched.getCard();
+        assertEquals(1, sched.counts(card).getLrn());
+        sched.answerCard(card, Consts.BUTTON_ONE);
+        assertDoesNotThrow(col::undo);
     }
 }
