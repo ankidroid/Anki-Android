@@ -25,6 +25,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -215,6 +216,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private boolean mActivityPaused = false;
 
     private String mExportFileName;
+
+    @Nullable private CollectionTask mEmptyCardTask = null;
 
     @VisibleForTesting
     public List<AbstractDeckTreeNode> mDueTree;
@@ -2773,7 +2776,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        CollectionTask.launchCollectionTask(FIND_EMPTY_CARDS, handlerEmptyCardListener());
+        mEmptyCardTask = CollectionTask.launchCollectionTask(FIND_EMPTY_CARDS, handlerEmptyCardListener());
     }
     private HandleEmptyCardListener handlerEmptyCardListener() {
         return new HandleEmptyCardListener(this);
@@ -2788,10 +2791,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
+            DialogInterface.OnCancelListener onCancel = (dialogInterface) -> {
+                CollectionTask mEmptyCardTask = deckPicker.mEmptyCardTask;
+                if (mEmptyCardTask != null) {
+                    mEmptyCardTask.safeCancel();
+                }};
             deckPicker.mProgressDialog = new MaterialDialog.Builder(deckPicker)
                     .progress(false, mNumberOfCards)
                     .title(R.string.emtpy_cards_finding)
+                    .cancelable(true)
                     .show();
+            deckPicker.mProgressDialog.setOnCancelListener(onCancel);
         }
 
         @Override
@@ -2800,7 +2810,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnCancelled(@NonNull DeckPicker deckPicker) {
+            deckPicker.mEmptyCardTask = null;
+        }
+
+        /**
+         * @param deckPicker
+         * @param result Null if it is cancelled (in this case we should not have called this method) or a list of cids
+         */
+        @Override
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, @Nullable TaskData result) {
+            deckPicker.mEmptyCardTask = null;
+            if (result == null) {
+                return;
+            }
             final List<Long> cids = (List<Long>) result.getObjArray()[0];
             if (cids.size() == 0) {
                 deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.empty_cards_none));
