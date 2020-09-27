@@ -226,36 +226,37 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     private BroadcastReceiver mUnmountReceiver = null;
 
-    private MaterialDialog.ListCallbackSingleChoice mOrderDialogListener =
-            new MaterialDialog.ListCallbackSingleChoice() {
-        @Override
-        public boolean onSelection(MaterialDialog materialDialog, View view, int which,
-                CharSequence charSequence) {
-            if (which != mOrder) {
-                mOrder = which;
-                mOrderAsc = false;
-                if (mOrder == 0) {
-                    getCol().getConf().put("sortType", fSortTypes[1]);
-                    AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                            .putBoolean("cardBrowserNoSorting", true)
-                            .commit();
-                } else {
-                    getCol().getConf().put("sortType", fSortTypes[mOrder]);
-                    AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                            .putBoolean("cardBrowserNoSorting", false)
-                            .commit();
-                }
-                getCol().getConf().put("sortBackwards", mOrderAsc);
-                searchCards();
-            } else if (which != CARD_ORDER_NONE) {
-                mOrderAsc = !mOrderAsc;
-                getCol().getConf().put("sortBackwards", mOrderAsc);
-                mCards.reverse();
-                updateList();
+    private final MaterialDialog.ListCallbackSingleChoice mOrderDialogListener =
+            (materialDialog, view, which, charSequence) -> {
+                changeCardOrder(which);
+                return true;
+            };
+
+
+    protected void changeCardOrder(int which) {
+        if (which != mOrder) {
+            mOrder = which;
+            mOrderAsc = false;
+            if (mOrder == 0) {
+                getCol().getConf().put("sortType", fSortTypes[1]);
+                AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                        .putBoolean("cardBrowserNoSorting", true)
+                        .commit();
+            } else {
+                getCol().getConf().put("sortType", fSortTypes[mOrder]);
+                AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                        .putBoolean("cardBrowserNoSorting", false)
+                        .commit();
             }
-            return true;
+            getCol().getConf().put("sortBackwards", mOrderAsc);
+            searchCards();
+        } else if (which != CARD_ORDER_NONE) {
+            mOrderAsc = !mOrderAsc;
+            getCol().getConf().put("sortBackwards", mOrderAsc);
+            mCards.reverse();
+            updateList();
         }
-    };
+    }
 
 
     private RepositionCardHandler repositionCardHandler() {
@@ -1071,18 +1072,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_preview: {
-                Intent previewer = new Intent(CardBrowser.this, Previewer.class);
-                if (mInMultiSelectMode && checkedCardCount() > 1) {
-                    // Multiple cards have been explicitly selected, so preview only those cards
-                    previewer.putExtra("index", 0);
-                    previewer.putExtra("cardList", getSelectedCardIds());
-                } else {
-                    // Preview all cards, starting from the one that is currently selected
-                    int startIndex = mCheckedCards.isEmpty() ? 0 : mCheckedCards.iterator().next().getPosition();
-                    previewer.putExtra("index", startIndex);
-                    previewer.putExtra("cardList", getAllCardIds());
-                }
-                startActivityForResultWithoutAnimation(previewer, PREVIEW_CARDS);
+                onPreview();
                 return true;
             }
 
@@ -1160,6 +1150,88 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+
+    protected void onPreview() {
+        Intent previewer = getPreviewIntent();
+        startActivityForResultWithoutAnimation(previewer, PREVIEW_CARDS);
+    }
+
+
+    @NonNull
+    @VisibleForTesting
+    Intent getPreviewIntent() {
+        Intent previewer = new Intent(CardBrowser.this, Previewer.class);
+        if (mInMultiSelectMode && checkedCardCount() > 1) {
+            // Multiple cards have been explicitly selected, so preview only those cards
+            previewer.putExtra("index", 0);
+            previewer.putExtra("cardList", getSelectedCardIds());
+        } else {
+            // Preview all cards, starting from the one that is currently selected
+            int startIndex = mCheckedCards.isEmpty() ? 0 : mCheckedCards.iterator().next().getPosition();
+            previewer.putExtra("index", startIndex);
+            previewer.putExtra("cardList", getAllCardIds());
+        }
+        return previewer;
+    }
+
+
+    private void rescheduleSelectedCards() {
+        if (!hasSelectedCards()) {
+            Timber.i("Attempted reschedule - no cards selected");
+            return;
+        }
+
+        long[] selectedCardIds = getSelectedCardIds();
+        FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
+            CollectionTask.launchCollectionTask(DISMISS_MULTI,
+                rescheduleCardHandler(),
+                new TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays}));
+
+        RescheduleDialog rescheduleDialog;
+        if (selectedCardIds.length == 1) {
+            long cardId = selectedCardIds[0];
+            Card selected = getCol().getCard(cardId);
+            rescheduleDialog = RescheduleDialog.rescheduleSingleCard(getResources(), selected, consumer);
+        } else {
+            rescheduleDialog = RescheduleDialog.rescheduleMultipleCards(getResources(),
+                    consumer,
+                    selectedCardIds.length);
+        }
+        showDialogFragment(rescheduleDialog);
+    }
+
+
+    private void showChangeDeckDialog() {
+        if (!hasSelectedCards()) {
+            Timber.i("Not showing Change Deck - No Cards");
+            return;
+        }
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle(getString(R.string.move_all_to_deck));
+
+        //WARNING: changeDeck depends on this index, so any changes should be reflected there.
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item);
+        for (Deck deck : getValidDecksForChangeDeck()) {
+            try {
+                arrayAdapter.add(deck.getString("name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        builderSingle.setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss());
+        builderSingle.setAdapter(arrayAdapter, (dialog, which) -> changeDeck(which));
+        builderSingle.show();
+    }
+
+
+    private void addNoteFromCardBrowser() {
+        Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
+        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
+        startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.LEFT);
     }
 
 
