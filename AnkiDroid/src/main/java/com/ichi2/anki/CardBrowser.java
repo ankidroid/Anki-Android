@@ -136,7 +136,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /** List of cards in the browser.
     * When the list is changed, the position member of its elements should get changed.*/
     @NonNull
-    private CardCollection mCards = new CardCollection();
+    private CardCollection<CardCache> mCards = new CardCollection<>();
     private ArrayList<Deck> mDropDownDecks;
     private ListView mCardsListView;
     private SearchView mSearchView;
@@ -1406,7 +1406,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private static Map<Long, Integer> getPositionMap(CardCollection list) {
+    private static Map<Long, Integer> getPositionMap(CardCollection<CardCache> list) {
         Map<Long, Integer> positions = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
             positions.put(list.get(i).getId(), i);
@@ -1531,7 +1531,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * @param updatedCardTags Mapping note id -> updated tags
      */
     private void updateCardsInList(List<Card> cards, Map<Long, String> updatedCardTags) {
-        CardCollection cardList = getCards();
+        CardCollection<CardCache> cardList = getCards();
         Map<Long, Integer> idToPos = getPositionMap(cardList);
         for (Card c : cards) {
             // get position in the mCards search results HashMap
@@ -1642,7 +1642,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     private void removeNotesView(java.util.Collection<Long> cardsIds, boolean reorderCards) {
         long reviewerCardId = getReviewerCardId();
-        CardCollection oldMCards = getCards();
+        CardCollection<CardCache> oldMCards = getCards();
         Map<Long, Integer> idToPos = getPositionMap(oldMCards);
         Set<Long> idToRemove = new HashSet<>();
         for (Long cardId : cardsIds) {
@@ -1982,7 +1982,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
             int lastVisibleItem = firstVisibleItem + visibleItemCount;
-            CardCollection cards = getCards();
+            CardCollection<CardCache> cards = getCards();
             // List is never cleared, only reset to a new list. So it's safe here.
             int size = cards.size();
             if ((size > 0) && (firstVisibleItem < size) && ((lastVisibleItem - 1) < size)) {
@@ -2018,7 +2018,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     @NonNull
-    protected TaskData renderBrowserQAParams(int firstVisibleItem, int visibleItemCount, CardCollection cards) {
+    protected TaskData renderBrowserQAParams(int firstVisibleItem, int visibleItemCount, CardCollection<CardCache> cards) {
         return new TaskData(new Object[] {cards.unsafeGetWrapped(), firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index});
     }
 
@@ -2198,7 +2198,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    private CardCollection getCards() {
+    private CardCollection<CardCache> getCards() {
         mCards.ensureValidValue();
         return mCards;
     }
@@ -2214,14 +2214,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
     // This could be better: use a wrapper class PositionAware<T> to store the position so it's
     // no longer a responsibility of CardCache and we can guarantee it's consistent just by using this collection
     /** A position-aware collection to ensure consistency between the position of items and the collection */
-    public static class CardCollection implements Iterable<CardCache> {
-        private static List<CardCache> mWrapped = new ArrayList<>();
+    public static class CardCollection<T extends PositionAware> implements Iterable<T> {
+        private List<T> mWrapped = new ArrayList<>();
 
         public int size() {
             return mWrapped.size();
         }
 
-        public CardCache get(int index) {
+        public T get(int index) {
             return mWrapped.get(index);
         }
 
@@ -2231,22 +2231,26 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
 
-        public void replaceWith(List<CardCache> value) {
+        public void replaceWith(List<T> value) {
             mWrapped = value;
         }
 
         public void reverse() {
             Collections.reverse(mWrapped);
+            int position = 0;
+            for (int i = 0; i < mWrapped.size(); i++) {
+                mWrapped.get(i).setPosition(position++);
+            }
         }
 
 
         @NonNull
         @Override
-        public Iterator<CardCache> iterator() {
+        public Iterator<T> iterator() {
             return mWrapped.iterator();
         }
 
-        public java.util.Collection<CardCache> unsafeGetWrapped() {
+        public java.util.Collection<T> unsafeGetWrapped() {
             return mWrapped;
         }
 
@@ -2263,10 +2267,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
-    public static class CardCache extends Card.Cache {
+    @VisibleForTesting
+    interface PositionAware {
+        int getPosition();
+        void setPosition(int value);
+    }
+
+    public static class CardCache extends Card.Cache implements PositionAware {
         private boolean mLoaded = false;
         private Pair<String, String> mQa = null;
-        private final int mPosition;
+        private int mPosition;
 
         public CardCache(long id, Collection col, int position) {
             super(col, id);
@@ -2283,6 +2293,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public int getPosition() {
             return mPosition;
         }
+
+
+        @Override
+        public void setPosition(int value) {
+            mPosition = value;
+        }
+
 
         /** clear all values except ID.*/
         public void reload() {
