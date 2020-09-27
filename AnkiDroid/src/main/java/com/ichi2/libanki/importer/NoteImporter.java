@@ -10,7 +10,6 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.utils.StringUtils;
 import com.ichi2.utils.Assert;
 import com.ichi2.utils.HtmlUtils;
@@ -165,7 +164,7 @@ public class NoteImporter extends Importer {
 
         HashMap<String, Boolean> firsts = new HashMap<>();
         int fld0index = mMapping.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
-        mFMap = Models.fieldMap(mModel);
+        mFMap = mModel.fieldMap();
         mNextId = mCol.getTime().timestampID(mCol.getDb(), "notes");
         // loop through the notes
         List<Object[]> updates = new ArrayList<>();

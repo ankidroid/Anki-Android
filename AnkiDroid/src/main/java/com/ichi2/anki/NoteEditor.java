@@ -83,7 +83,6 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Note.ClozeUtils;
@@ -1582,7 +1581,7 @@ public class NoteEditor extends AnkiActivity {
     private JSONObject getFieldByName(String name) {
         Pair<Integer, JSONObject> pair;
         try {
-            pair = Models.fieldMap(this.getCurrentlySelectedModel()).get(name);
+            pair = this.getCurrentlySelectedModel().fieldMap().get(name);
         } catch (Exception e) {
             Timber.w("Failed to obtain field '%s'", name);
             return null;
@@ -1809,7 +1808,7 @@ public class NoteEditor extends AnkiActivity {
     private void updateFieldsFromMap(Model newModel) {
         // Get the field map for new model and old fields list
         String [][] oldFields = mEditorNote.items();
-        Map<String, Pair<Integer, JSONObject>> fMapNew = Models.fieldMap(newModel);
+        Map<String, Pair<Integer, JSONObject>> fMapNew = newModel.fieldMap();
         // Build array of label/values to provide to field EditText views
         String[][] fields = new String[fMapNew.size()][2];
         for (String fname : fMapNew.keySet()) {

@@ -45,8 +45,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.annotation.NonNull;
-
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
@@ -432,19 +430,6 @@ public class Models {
         JSONObject f = new JSONObject(defaultField);
         f.put("name", name);
         return f;
-    }
-
-
-    /** "Mapping of field name -> (ord, field). */
-    @NonNull
-    public static Map<String, Pair<Integer, JSONObject>> fieldMap(@NonNull Model m) {
-        JSONArray flds = m.getJSONArray("flds");
-        // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-        Map<String, Pair<Integer, JSONObject>> result = new HashMap<>();
-        for (JSONObject f: flds.jsonObjectIterable()) {
-            result.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
-        }
-        return result;
     }
 
 
@@ -1107,7 +1092,7 @@ public class Models {
 
 
     public ArrayList<Integer> _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
-        Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
+        Map<String, Pair<Integer, JSONObject>> map = m.fieldMap();
         Set<Integer> ords = new HashSet<>();
         List<String> matches = new ArrayList<>();
         final String question_template = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
