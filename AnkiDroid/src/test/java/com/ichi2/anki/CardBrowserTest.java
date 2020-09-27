@@ -296,7 +296,6 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
     @Test
-    @Ignore("7286")
     public void previewWorksAfterSort() {
         // #7286
         long cid1 = addNoteUsingBasicModel("Hello", "World").cards().get(0).getId();
