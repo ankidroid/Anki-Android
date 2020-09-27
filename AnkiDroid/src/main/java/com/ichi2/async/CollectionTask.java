@@ -1854,7 +1854,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     public TaskData doInBackGroundFindEmptyCards(TaskData param) {
         Collection col = getCol();
-        List<Long> cids = col.emptyCids();
+        List<Long> cids = col.emptyCids(this);
         return new TaskData(new Object[] { cids});
     }
 

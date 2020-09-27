@@ -31,7 +31,9 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSender;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.hooks.ChessFilter;
@@ -720,12 +722,20 @@ public class Collection {
 	    return genCards(Utils.collection2Array(nids));
 	}
 
+    public ArrayList<Long> genCards(List<Long> nids, @Nullable ProgressSender<TaskData> task) {
+       return genCards(Utils.collection2Array(nids), task);
+    }
+
+    public ArrayList<Long> genCards(long[] nids) {
+       return genCards(nids, null);
+    }
 
     /**
      * @param nids All ids of nodes of a note type
+     * @param task Task to check for cancellation and update number of card processed
      * @return Cards that should be removed because they should not be generated
      */
-    public ArrayList<Long> genCards(long[] nids) {
+    public ArrayList<Long> genCards(long[] nids, @Nullable ProgressSender<TaskData> task) {
         // build map of (nid,ord) so we don't create dupes
         String snids = Utils.ids2str(nids);
         // For each note, indicates ords of cards it contains
@@ -794,6 +804,9 @@ public class Collection {
                 String flds = cur.getString(2);
                 Model model = getModels().get(mid);
                 ArrayList<Integer> avail = getModels().availOrds(model, Utils.splitFields(flds));
+                if (task != null) {
+                    task.doProgress(new TaskData(avail.size()));
+                }
                 Long did = dids.get(nid);
                 // use sibling due if there is one, else use a new id
                 long due;
@@ -1018,10 +1031,10 @@ public class Collection {
     }
 
 
-    public List<Long> emptyCids() {
+    public List<Long> emptyCids(@Nullable CollectionTask task) {
         List<Long> rem = new ArrayList<>();
         for (Model m : getModels().all()) {
-            rem.addAll(genCards(getModels().nids(m)));
+            rem.addAll(genCards(getModels().nids(m), task));
         }
         return rem;
     }
