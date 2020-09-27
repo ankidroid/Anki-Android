@@ -722,7 +722,7 @@ public class Collection {
 	    return genCards(Utils.collection2Array(nids));
 	}
 
-    public ArrayList<Long> genCards(List<Long> nids, @Nullable ProgressSender<TaskData> task) {
+    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(List<Long> nids, @Nullable T task) {
        return genCards(Utils.collection2Array(nids), task);
     }
 
@@ -735,7 +735,7 @@ public class Collection {
      * @param task Task to check for cancellation and update number of card processed
      * @return Cards that should be removed because they should not be generated
      */
-    public ArrayList<Long> genCards(long[] nids, @Nullable ProgressSender<TaskData> task) {
+    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(long[] nids, @Nullable T task) {
         // build map of (nid,ord) so we don't create dupes
         String snids = Utils.ids2str(nids);
         // For each note, indicates ords of cards it contains
@@ -748,6 +748,10 @@ public class Collection {
         try {
             cur = mDb.getDatabase().query("select id, nid, ord, did, due, odue, odid, type from cards where nid in " + snids, null);
             while (cur.moveToNext()) {
+                if (task != null && task.isCancelled()) {
+                    Timber.v("Empty card cancelled");
+                    return null;
+                }
                 long id = cur.getLong(0);
                 long nid = cur.getLong(1);
                 int ord = cur.getInt(2);
@@ -799,6 +803,10 @@ public class Collection {
         try {
             cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
             while (cur.moveToNext()) {
+                if (task != null && task.isCancelled()) {
+                    Timber.v("Empty card cancelled");
+                    return null;
+                }
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
                 String flds = cur.getString(2);
