@@ -1229,8 +1229,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
     private TaskData doInBackgroundRenderBrowserQA(TaskData param) {
-        //TODO: Convert this to accept the following to make thread-safe:
-        //(Range<Position>, Function<Position, BrowserCard>)
         Timber.d("doInBackgroundRenderBrowserQA");
         Collection col = getCol();
         List<CardBrowser.CardCache> cards = (List<CardBrowser.CardCache>) param.getObjArray()[0];

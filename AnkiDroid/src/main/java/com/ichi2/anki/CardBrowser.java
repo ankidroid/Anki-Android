@@ -238,6 +238,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             mOrder = which;
             mOrderAsc = false;
             if (mOrder == 0) {
+                // if the sort value in the card browser was changed, then perform a new search
                 getCol().getConf().put("sortType", fSortTypes[1]);
                 AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
                         .putBoolean("cardBrowserNoSorting", true)
@@ -251,6 +252,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             getCol().getConf().put("sortBackwards", mOrderAsc);
             searchCards();
         } else if (which != CARD_ORDER_NONE) {
+            // if the same element is selected again, reverse the order
             mOrderAsc = !mOrderAsc;
             getCol().getConf().put("sortBackwards", mOrderAsc);
             mCards.reverse();
