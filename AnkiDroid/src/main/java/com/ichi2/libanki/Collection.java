@@ -719,11 +719,20 @@ public class Collection {
 	public ArrayList<Long> genCards(List<Long> nids) {
 	    return genCards(Utils.collection2Array(nids));
 	}
+
+
+    /**
+     * @param nids All ids of nodes of a note type
+     * @return Cards that should be removed because they should not be generated
+     */
     public ArrayList<Long> genCards(long[] nids) {
         // build map of (nid,ord) so we don't create dupes
         String snids = Utils.ids2str(nids);
+        // For each note, indicates ords of cards it contains
         HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>();
+        // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
         HashMap<Long, Long> dids = new HashMap<>();
+        // For each note, an arbitrary due of one of its due card processed, if any exists
         HashMap<Long, Long> dues = new HashMap<>();
         Cursor cur = null;
         try {
