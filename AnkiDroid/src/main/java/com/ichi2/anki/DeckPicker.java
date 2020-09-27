@@ -2802,6 +2802,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     .cancelable(true)
                     .show();
             deckPicker.mProgressDialog.setOnCancelListener(onCancel);
+            deckPicker.mProgressDialog.setCanceledOnTouchOutside(false);
         }
 
         @Override
