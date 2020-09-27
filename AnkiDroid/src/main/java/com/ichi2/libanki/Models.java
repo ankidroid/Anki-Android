@@ -437,7 +437,7 @@ public class Models {
 
     /** "Mapping of field name -> (ord, field). */
     @NonNull
-    public static Map<String, Pair<Integer, JSONObject>> fieldMap(@NonNull JSONObject m) {
+    public static Map<String, Pair<Integer, JSONObject>> fieldMap(@NonNull Model m) {
         JSONArray flds = m.getJSONArray("flds");
         // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
         Map<String, Pair<Integer, JSONObject>> result = new HashMap<>();
