@@ -188,15 +188,18 @@ public class Models {
      * @param templates flag which (when true) re-generates the cards for each note which uses the model
      */
     public void save(Model m, boolean templates) {
-        if (m != null && m.has("id")) {
-            m.put("mod", mCol.getTime().intTime());
-            m.put("usn", mCol.usn());
-            // TODO: fix empty id problem on _updaterequired (needed for model adding)
-            if (!isModelNew(m)) {
-                _updateRequired(m);
-            }
-            if (templates) {
-                _syncTemplates(m);
+        if (m != null) {
+            m.reset();
+            if (m.has("id")) {
+                m.put("mod", mCol.getTime().intTime());
+                m.put("usn", mCol.usn());
+                // TODO: fix empty id problem on _updaterequired (needed for model adding)
+                if (!isModelNew(m)) {
+                    _updateRequired(m);
+                }
+                if (templates) {
+                    _syncTemplates(m);
+                }
             }
         }
         mChanged = true;

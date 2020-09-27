@@ -12,6 +12,8 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 
 public class Model extends JSONObject {
+    private Map<String, Pair<Integer, JSONObject>> mFieldMap;
+
     public Model() {
         super();
     }
@@ -24,18 +26,24 @@ public class Model extends JSONObject {
         super(json);
     }
 
+    /** Empty cache. Should be called when the model is saved in the collection. */
+    protected void reset() {
+        mFieldMap = null;
+    }
 
-    /** 
+    /**
      * @return Mapping of field name -> (ord, field)*/
     @NonNull
-    public Map<String, Pair<Integer, JSONObject>> fieldMap() {
-        JSONArray flds = getJSONArray("flds");
-        // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-        Map<String, Pair<Integer, JSONObject>> result = new HashMap<>();
-        for (JSONObject f: flds.jsonObjectIterable()) {
-            result.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
+    public synchronized Map<String, Pair<Integer, JSONObject>> fieldMap() {
+        if (mFieldMap == null) {
+            JSONArray flds = getJSONArray("flds");
+            // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
+            mFieldMap = new HashMap<>();
+            for (JSONObject f: flds.jsonObjectIterable()) {
+                mFieldMap.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
+            }
         }
-        return result;
+        return mFieldMap;
     }
 
 
