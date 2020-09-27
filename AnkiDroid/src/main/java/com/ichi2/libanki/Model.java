@@ -20,6 +20,7 @@ public class Model extends JSONObject {
     private static final Pattern fClozePattern2 = Pattern.compile("<%cloze:(.+?)%>");
 
     private Map<String, Pair<Integer, JSONObject>> mFieldMap;
+    private java.util.Collection<String> mFieldWithCloze;
 
     public Model() {
         super();
@@ -36,6 +37,7 @@ public class Model extends JSONObject {
     /** Empty cache. Should be called when the model is saved in the collection. */
     protected void reset() {
         mFieldMap = null;
+        mFieldWithCloze = null;
     }
 
     /**
@@ -55,17 +57,19 @@ public class Model extends JSONObject {
 
     /** Name of the fields which may contain cloze number */
     public java.util.Collection<String> getNamesOfFieldsContainingCloze() {
-        java.util.Collection<String> matches = new ArrayList<>();
-        final String question_template = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
-        Matcher mm = fClozePattern1.matcher(question_template);
-        while (mm.find()) {
-            matches.add(mm.group(1));
+        if (mFieldWithCloze == null) {
+            mFieldWithCloze = new ArrayList<>();
+            final String question_template = getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
+            Matcher mm = fClozePattern1.matcher(question_template);
+            while (mm.find()) {
+                mFieldWithCloze.add(mm.group(1));
+            }
+            mm = fClozePattern2.matcher(question_template);
+            while (mm.find()) {
+                mFieldWithCloze.add(mm.group(1));
+            }
         }
-        mm = fClozePattern2.matcher(question_template);
-        while (mm.find()) {
-            matches.add(mm.group(1));
-        }
-        return matches;
+        return mFieldWithCloze;
     }
 
     @Override
