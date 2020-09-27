@@ -1093,11 +1093,9 @@ public class Models {
         return _availClozeOrds(m, sflds, true);
     }
 
-
-    public ArrayList<Integer> _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
-        Map<String, Pair<Integer, JSONObject>> map = m.fieldMap();
-        Set<Integer> ords = new HashSet<>();
-        List<String> matches = new ArrayList<>();
+    /** Name of the fields which may contain cloze number */
+    private java.util.Collection<String> getNamesOfFieldsContainingCloze(Model m) {
+        java.util.Collection<String> matches = new ArrayList<>();
         final String question_template = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
         Matcher mm = fClozePattern1.matcher(question_template);
         while (mm.find()) {
@@ -1107,12 +1105,19 @@ public class Models {
         while (mm.find()) {
             matches.add(mm.group(1));
         }
-        for (String fname : matches) {
+        return matches;
+    }
+
+    public ArrayList<Integer> _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
+        Map<String, Pair<Integer, JSONObject>> map = m.fieldMap();
+        Set<Integer> ords = new HashSet<>();
+        java.util.Collection<String> fieldsWithCloze = getNamesOfFieldsContainingCloze(m);
+        for (String fname : fieldsWithCloze) {
             if (!map.containsKey(fname)) {
                 continue;
             }
             int ord = map.get(fname).first;
-            mm = fClozeOrdPattern.matcher(sflds[ord]);
+            Matcher mm = fClozeOrdPattern.matcher(sflds[ord]);
             while (mm.find()) {
                 ords.add(Integer.parseInt(mm.group(1)) - 1);
             }
