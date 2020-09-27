@@ -1626,8 +1626,8 @@ public class SchedV2Test extends RobolectricTest {
     }
 
     @Test
-    @Ignore("https://github.com/ankidroid/Anki-Android/issues/7285")
     public void regression_test_preview() throws Exception {
+        //"https://github.com/ankidroid/Anki-Android/issues/7285"
         Collection col = getColV2();
         Decks decks = col.getDecks();
         AbstractSched sched = col.getSched();
