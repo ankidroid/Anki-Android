@@ -227,35 +227,36 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private BroadcastReceiver mUnmountReceiver = null;
 
     private final MaterialDialog.ListCallbackSingleChoice mOrderDialogListener =
-            new MaterialDialog.ListCallbackSingleChoice() {
-        @Override
-        public boolean onSelection(MaterialDialog materialDialog, View view, int which,
-                CharSequence charSequence) {
-            if (which != mOrder) {
-                mOrder = which;
-                mOrderAsc = false;
-                if (mOrder == 0) {
-                    getCol().getConf().put("sortType", fSortTypes[1]);
-                    AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                            .putBoolean("cardBrowserNoSorting", true)
-                            .commit();
-                } else {
-                    getCol().getConf().put("sortType", fSortTypes[mOrder]);
-                    AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
-                            .putBoolean("cardBrowserNoSorting", false)
-                            .commit();
-                }
-                getCol().getConf().put("sortBackwards", mOrderAsc);
-                searchCards();
-            } else if (which != CARD_ORDER_NONE) {
-                mOrderAsc = !mOrderAsc;
-                getCol().getConf().put("sortBackwards", mOrderAsc);
-                mCards.reverse();
-                updateList();
+            (materialDialog, view, which, charSequence) -> {
+                changeCardOrder(which);
+                return true;
+            };
+
+
+    protected void changeCardOrder(int which) {
+        if (which != mOrder) {
+            mOrder = which;
+            mOrderAsc = false;
+            if (mOrder == 0) {
+                getCol().getConf().put("sortType", fSortTypes[1]);
+                AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                        .putBoolean("cardBrowserNoSorting", true)
+                        .commit();
+            } else {
+                getCol().getConf().put("sortType", fSortTypes[mOrder]);
+                AnkiDroidApp.getSharedPrefs(getBaseContext()).edit()
+                        .putBoolean("cardBrowserNoSorting", false)
+                        .commit();
             }
-            return true;
+            getCol().getConf().put("sortBackwards", mOrderAsc);
+            searchCards();
+        } else if (which != CARD_ORDER_NONE) {
+            mOrderAsc = !mOrderAsc;
+            getCol().getConf().put("sortBackwards", mOrderAsc);
+            mCards.reverse();
+            updateList();
         }
-    };
+    }
 
 
     private RepositionCardHandler repositionCardHandler() {
@@ -1092,18 +1093,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return true;
 
             case R.id.action_preview: {
-                Intent previewer = new Intent(CardBrowser.this, Previewer.class);
-                if (mInMultiSelectMode && checkedCardCount() > 1) {
-                    // Multiple cards have been explicitly selected, so preview only those cards
-                    previewer.putExtra("index", 0);
-                    previewer.putExtra("cardList", getSelectedCardIds());
-                } else {
-                    // Preview all cards, starting from the one that is currently selected
-                    int startIndex = mCheckedCards.isEmpty() ? 0 : mCheckedCards.iterator().next().getPosition();
-                    previewer.putExtra("index", startIndex);
-                    previewer.putExtra("cardList", getAllCardIds());
-                }
-                startActivityForResultWithoutAnimation(previewer, PREVIEW_CARDS);
+                onPreview();
                 return true;
             }
 
@@ -1164,6 +1154,30 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+
+    protected void onPreview() {
+        Intent previewer = getPreviewIntent();
+        startActivityForResultWithoutAnimation(previewer, PREVIEW_CARDS);
+    }
+
+
+    @NonNull
+    @VisibleForTesting
+    Intent getPreviewIntent() {
+        Intent previewer = new Intent(CardBrowser.this, Previewer.class);
+        if (mInMultiSelectMode && checkedCardCount() > 1) {
+            // Multiple cards have been explicitly selected, so preview only those cards
+            previewer.putExtra("index", 0);
+            previewer.putExtra("cardList", getSelectedCardIds());
+        } else {
+            // Preview all cards, starting from the one that is currently selected
+            int startIndex = mCheckedCards.isEmpty() ? 0 : mCheckedCards.iterator().next().getPosition();
+            previewer.putExtra("index", startIndex);
+            previewer.putExtra("cardList", getAllCardIds());
+        }
+        return previewer;
     }
 
 
