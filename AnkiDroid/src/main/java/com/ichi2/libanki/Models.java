@@ -1093,26 +1093,10 @@ public class Models {
         return _availClozeOrds(m, sflds, true);
     }
 
-    /** Name of the fields which may contain cloze number */
-    private java.util.Collection<String> getNamesOfFieldsContainingCloze(Model m) {
-        java.util.Collection<String> matches = new ArrayList<>();
-        final String question_template = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
-        Matcher mm = fClozePattern1.matcher(question_template);
-        while (mm.find()) {
-            matches.add(mm.group(1));
-        }
-        mm = fClozePattern2.matcher(question_template);
-        while (mm.find()) {
-            matches.add(mm.group(1));
-        }
-        return matches;
-    }
-
     public ArrayList<Integer> _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
         Map<String, Pair<Integer, JSONObject>> map = m.fieldMap();
         Set<Integer> ords = new HashSet<>();
-        java.util.Collection<String> fieldsWithCloze = getNamesOfFieldsContainingCloze(m);
-        for (String fname : fieldsWithCloze) {
+        for (String fname : m.getNamesOfFieldsContainingCloze()) {
             if (!map.containsKey(fname)) {
                 continue;
             }
