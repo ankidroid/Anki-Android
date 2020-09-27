@@ -1798,7 +1798,7 @@ public class NoteEditor extends AnkiActivity {
     /**
      * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
      */
-    private void updateFieldsFromMap(JSONObject newModel) {
+    private void updateFieldsFromMap(Model newModel) {
         // Get the field map for new model and old fields list
         String [][] oldFields = mEditorNote.items();
         Map<String, Pair<Integer, JSONObject>> fMapNew = Models.fieldMap(newModel);
@@ -1902,7 +1902,7 @@ public class NoteEditor extends AnkiActivity {
             // Get the current model
             long noteModelId = mCurrentEditedCard.model().getLong("id");
             // Get new model
-            JSONObject newModel = getCol().getModels().get(mAllModelIds.get(pos));
+            Model newModel = getCol().getModels().get(mAllModelIds.get(pos));
             if (newModel == null || newModel.getJSONArray("tmpls") == null) {
                 Timber.w("newModel %s not found", mAllModelIds.get(pos));
                 return;
