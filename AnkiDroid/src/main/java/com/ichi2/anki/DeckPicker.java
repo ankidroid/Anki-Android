@@ -2789,13 +2789,24 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mNumberOfCards = deckPicker.getCol().cardCount();
         }
 
+        private void confirmCancel(@NonNull DeckPicker deckPicker, @NonNull CollectionTask task) {
+            new MaterialDialog.Builder(deckPicker)
+                    .content(R.string.confirm_cancel)
+                    .positiveText(deckPicker.getResources().getString(R.string.yes))
+                    .negativeText(deckPicker.getResources().getString(R.string.no))
+                    .onNegative((x, y) -> actualOnPreExecute(deckPicker))
+                    .onPositive((x, y) -> task.safeCancel()).show()
+                    ;
+        }
+
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
             DialogInterface.OnCancelListener onCancel = (dialogInterface) -> {
                 CollectionTask mEmptyCardTask = deckPicker.mEmptyCardTask;
                 if (mEmptyCardTask != null) {
-                    mEmptyCardTask.safeCancel();
+                    confirmCancel(deckPicker, mEmptyCardTask);
                 }};
+            
             deckPicker.mProgressDialog = new MaterialDialog.Builder(deckPicker)
                     .progress(false, mNumberOfCards)
                     .title(R.string.emtpy_cards_finding)
