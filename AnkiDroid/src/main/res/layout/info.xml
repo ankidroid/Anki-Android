@@ -51,18 +51,16 @@
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/debug_info"
+                android:id="@+id/left_button"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:visibility="gone" />
+                android:layout_weight="1" />
 
             <Button
-                android:id="@+id/market"
+                android:id="@+id/right_button"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:text="@string/dialog_continue"/>
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
