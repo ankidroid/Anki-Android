@@ -84,28 +84,13 @@ public class Info extends AnkiActivity {
             }
         });
 
-        Button marketButton = findViewById(R.id.market);
-        marketButton.setOnClickListener(arg0 -> {
-            if (mType == TYPE_ABOUT) {
-                final String intentUri = getString(
-                        CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
-                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(intentUri));
-                final PackageManager packageManager = getPackageManager();
-                if (intent.resolveActivity(packageManager) != null) {
-                    startActivityWithoutAnimation(intent);
-                } else {
-                    final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
-                    UIUtils.showThemedToast(Info.this, errorMsg, true);
-                }
-                return;
-            }
-            setResult(RESULT_OK);
-            finishWithAnimation();
-        });
+        Button marketButton = findViewById(R.id.left_button);
+        marketButton.setText(R.string.info_rate);
+        marketButton.setOnClickListener(arg0 -> openMarketUrl());
 
         StringBuilder sb = new StringBuilder();
         switch (mType) {
-            case TYPE_ABOUT:
+            case TYPE_ABOUT: {
                 String[] content = res.getStringArray(R.array.about_content);
 
                 // Apply theme colours.
@@ -135,21 +120,42 @@ public class Info extends AnkiActivity {
                                 res.getString(R.string.link_source))).append("<br/><br/>");
                 sb.append("</body></html>");
                 webView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
-                ((Button) findViewById(R.id.market)).setText(res.getString(R.string.info_rate));
-                Button debugCopy = (findViewById(R.id.debug_info));
+                Button debugCopy = (findViewById(R.id.right_button));
                 debugCopy.setText(res.getString(R.string.feedback_copy_debug));
-                debugCopy.setVisibility(View.VISIBLE);
                 debugCopy.setOnClickListener(v -> copyDebugInfo());
                 break;
-
-            case TYPE_NEW_VERSION:
+            }
+            case TYPE_NEW_VERSION: {
+                Button continueButton = (findViewById(R.id.right_button));
+                continueButton.setText(res.getString(R.string.dialog_continue));
+                continueButton.setOnClickListener((arg) -> close());
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 webView.loadUrl("file:///android_asset/changelog.html");
                 break;
-
+            }
             default:
                 finishWithoutAnimation();
                 break;
+        }
+    }
+
+
+    private void close() {
+        setResult(RESULT_OK);
+        finishWithAnimation();
+    }
+
+
+    private void openMarketUrl() {
+        final String intentUri = getString(
+                CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
+        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(intentUri));
+        final PackageManager packageManager = getPackageManager();
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivityWithoutAnimation(intent);
+        } else {
+            final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
+            UIUtils.showThemedToast(Info.this, errorMsg, true);
         }
     }
 
