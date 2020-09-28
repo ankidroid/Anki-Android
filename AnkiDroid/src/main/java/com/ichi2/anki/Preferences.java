@@ -346,6 +346,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     analyticsDebugMode.setTitle("Switch Analytics to dev mode");
                     analyticsDebugMode.setSummary("Touch here to use Analytics dev tag and 100% sample rate");
                     analyticsDebugMode.setOnPreferenceClickListener(preference -> {
+                        if (UsageAnalytics.isEnabled()) {
+                            UIUtils.showThemedToast(this, "Analytics set to dev mode", true);
+                        } else {
+                            UIUtils.showThemedToast(this, "Done! Enable Analytics in 'General' settings to use.", true);
+                        }
                         UsageAnalytics.setDevMode();
                         return true;
                     });
