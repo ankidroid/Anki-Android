@@ -348,4 +348,10 @@ public class UsageAnalytics {
             return this;
         }
     }
+
+
+
+    public static class Category {
+        public static final String SYNC = "Sync";
+    }
 }
