@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import okhttp3.Response;
 import timber.log.Timber;
 
@@ -224,8 +225,7 @@ public class Syncer {
                 JSONObject c = sanityCheck();
                 JSONObject sanity = mServer.sanityCheck2(c);
                 if (sanity == null || !"ok".equals(sanity.optString("status", "bad"))) {
-                    mCol.log("sanity check failed", c, sanity);
-                    return _forceFullSync();
+                    return sanityCheckError(c, sanity);
                 }
                 // finalize
                 publishProgress(con, R.string.sync_finish_message);
@@ -267,12 +267,17 @@ public class Syncer {
         }
     }
 
+    @NonNull
+    protected Object[] sanityCheckError(JSONObject c, JSONObject sanity) {
+        mCol.log("sanity check failed", c, sanity);
+        _forceFullSync();
+        return new Object[] { "sanityCheckError", null };
+    }
 
-    private Object[] _forceFullSync() {
+    private void _forceFullSync() {
         // roll back and force full sync
         mCol.modSchemaNoCheck();
         mCol.save();
-        return new Object[] { "sanityCheckError", null };
     }
 
     private void publishProgress(Connection con, int id) {
