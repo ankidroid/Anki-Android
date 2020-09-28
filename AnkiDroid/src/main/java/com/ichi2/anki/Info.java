@@ -39,6 +39,7 @@ import com.ichi2.utils.VersionUtils;
 
 import org.acra.util.Installation;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 /**
@@ -85,8 +86,12 @@ public class Info extends AnkiActivity {
         });
 
         Button marketButton = findViewById(R.id.left_button);
-        marketButton.setText(R.string.info_rate);
-        marketButton.setOnClickListener(arg0 -> openMarketUrl());
+        if (canOpenMarketUri()) {
+            marketButton.setText(R.string.info_rate);
+            marketButton.setOnClickListener(arg0 -> openMarketUrl());
+        } else {
+            marketButton.setVisibility(View.GONE);
+        }
 
         StringBuilder sb = new StringBuilder();
         switch (mType) {
@@ -146,14 +151,42 @@ public class Info extends AnkiActivity {
     }
 
 
-    private void openMarketUrl() {
+    private boolean canOpenMarketUri() {
+        try {
+            return canOpenMarketUri(getMarketIntent());
+        } catch (Exception e) {
+            Timber.w(e);
+            return false;
+        }
+    }
+
+    private boolean canOpenMarketUri(Intent intent) {
+        try {
+            final PackageManager packageManager = getPackageManager();
+            return intent.resolveActivity(packageManager) != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    @NonNull
+    private Intent getMarketIntent() {
         final String intentUri = getString(
                 CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
-        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(intentUri));
-        final PackageManager packageManager = getPackageManager();
-        if (intent.resolveActivity(packageManager) != null) {
-            startActivityWithoutAnimation(intent);
-        } else {
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(intentUri));
+    }
+
+    private void openMarketUrl() {
+        try {
+            final Intent intent = getMarketIntent();
+            if (canOpenMarketUri(intent)) {
+                startActivityWithoutAnimation(intent);
+            } else {
+                final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
+                UIUtils.showThemedToast(Info.this, errorMsg, true);
+            }
+        } catch (Exception e) {
             final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
             UIUtils.showThemedToast(Info.this, errorMsg, true);
         }
