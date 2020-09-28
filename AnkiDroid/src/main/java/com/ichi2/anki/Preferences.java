@@ -381,6 +381,15 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     });
                     screen.addPreference(lockDbPreference);
                 }
+                if (BuildConfig.DEBUG) {
+                    Timber.i("Debug mode, adding show changelog");
+                    Preference changelogPreference = new Preference(this);
+                    changelogPreference.setTitle("Open Changelog");
+                    Intent infoIntent = new Intent(this, Info.class);
+                    infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
+                    changelogPreference.setIntent(infoIntent);
+                    screen.addPreference(changelogPreference);
+                }
                 // Force full sync option
                 ConfirmationPreference fullSyncPreference = (ConfirmationPreference)screen.findPreference("force_full_sync");
                 fullSyncPreference.setDialogMessage(R.string.force_full_sync_summary);
