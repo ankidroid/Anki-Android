@@ -350,6 +350,11 @@ public class UsageAnalytics {
         }
     }
 
+    public static boolean isEnabled() {
+        SharedPreferences userPrefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        return userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false);
+    }
+
 
 
     public static class Category {
