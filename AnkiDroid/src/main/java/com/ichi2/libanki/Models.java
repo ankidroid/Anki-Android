@@ -1070,39 +1070,43 @@ public class Models {
             String type = sr.getString(1);
             JSONArray req = sr.getJSONArray(2);
 
-            if (REQ_NONE.equals(type)) {
-                // unsatisfiable template
-                continue;
-            } else if (REQ_ALL.equals(type)) {
-                // AND requirement?
-                boolean ok = true;
-                for (int j = 0; j < req.length(); j++) {
-                    int idx = req.getInt(j);
-                    if (fields[idx] == null || fields[idx].length() == 0) {
-                        // missing and was required
-                        ok = false;
-                        break;
-                    }
-                }
-                if (!ok) {
+            boolean ok;
+            switch (type) {
+                case REQ_NONE:
+                    // unsatisfiable template
                     continue;
-                }
-            } else if (REQ_ANY.equals(type)) {
-                // OR requirement?
-                boolean ok = false;
-                for (int j = 0; j < req.length(); j++) {
-                    int idx = req.getInt(j);
-                    if (fields[idx] != null && fields[idx].length() != 0) {
-                        // missing and was required
-                        ok = true;
-                        break;
+                case REQ_ALL:
+                    // AND requirement?
+                    ok = true;
+                    for (int j = 0; j < req.length(); j++) {
+                        int idx = req.getInt(j);
+                        if (fields[idx] == null || fields[idx].length() == 0) {
+                            // missing and was required
+                            ok = false;
+                            break;
+                        }
                     }
+                    if (!ok) {
+                        continue;
+                    }
+                    break;
+                case REQ_ANY:
+                    // OR requirement?
+                    ok = false;
+                    for (int j = 0; j < req.length(); j++) {
+                        int idx = req.getInt(j);
+                        if (fields[idx] != null && fields[idx].length() != 0) {
+                            // missing and was required
+                            ok = true;
+                            break;
+                        }
+                    }
+                    if (!ok) {
+                        continue;
+                    }
+                    break;
                 }
-                if (!ok) {
-                    continue;
-                }
-            }
-            avail.add(ord);
+                avail.add(ord);
         }
         return avail;
     }
