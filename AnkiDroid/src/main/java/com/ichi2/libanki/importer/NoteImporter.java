@@ -98,8 +98,8 @@ public class NoteImporter extends Importer {
     public void initMapping() {
         List<String> flds = new ArrayList<>();
         JSONArray array = mModel.getJSONArray("flds");
-        for (int i = 0; i < array.length(); i++) {
-            flds.add(array.getJSONObject(i).getString("name"));
+        for (JSONObject fld: array.jsonObjectIterable()) {
+            flds.add(fld.getString("name"));
         }
         // truncate to provided count
         flds = flds.subList(0, Math.min(flds.size(), fields()));

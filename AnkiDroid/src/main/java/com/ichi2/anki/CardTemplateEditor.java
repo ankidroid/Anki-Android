@@ -751,8 +751,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         private void deleteTemplate(JSONObject tmpl, Model model) {
             JSONArray oldTemplates = model.getJSONArray("tmpls");
             JSONArray newTemplates = new JSONArray();
-            for (int i = 0; i < oldTemplates.length(); i++) {
-                JSONObject possibleMatch = oldTemplates.getJSONObject(i);
+            for (JSONObject possibleMatch: oldTemplates.jsonObjectIterable()) {
                 if (possibleMatch.getInt("ord") != tmpl.getInt("ord")) {
                     newTemplates.put(possibleMatch);
                 } else {
@@ -853,8 +852,8 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 name = "Card " + n;
                 // Cycle through all templates checking if new name exists
                 boolean exists = false;
-                for (int i = 0; i < templates.length(); i++) {
-                    exists = exists || name.equals(templates.getJSONObject(i).getString("name"));
+                for (JSONObject template: templates.jsonObjectIterable()) {
+                    exists = exists || name.equals(template.getString("name"));
                 }
                 if (!exists) {
                     break;

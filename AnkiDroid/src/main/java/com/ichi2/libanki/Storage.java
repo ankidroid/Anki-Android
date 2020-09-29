@@ -162,8 +162,7 @@ public class Storage {
                 for (Model m : col.getModels().all()) {
                     m.put("css", new JSONObject(Models.defaultModel).getString("css"));
                     JSONArray ar = m.getJSONArray("tmpls");
-                    for (int i = 0; i < ar.length(); i++) {
-                        JSONObject t = ar.getJSONObject(i);
+                    for (JSONObject t: ar.jsonObjectIterable()) {
                         if (!t.has("css")) {
                             continue;
                         }
@@ -230,8 +229,7 @@ public class Storage {
                 }
                 for (Model m : col.getModels().all()) {
                     JSONArray tmpls = m.getJSONArray("tmpls");
-                    for (int ti = 0; ti < tmpls.length(); ++ti) {
-                        JSONObject t = tmpls.getJSONObject(ti);
+                    for (JSONObject t: tmpls.jsonObjectIterable()) {
                         t.put("bqfmt", "");
                         t.put("bafmt", "");
                     }
@@ -257,8 +255,7 @@ public class Storage {
         // delete non-cloze cards for the model
         JSONArray tmpls = m.getJSONArray("tmpls");
         ArrayList<JSONObject> rem = new ArrayList<>();
-        for (int i = 1; i < tmpls.length(); i++) {
-            JSONObject ta = tmpls.getJSONObject(i);
+        for (JSONObject ta: tmpls.jsonObjectIterable()) {
             if (!ta.getString("afmt").contains("{{cloze:")) {
                 rem.add(ta);
             }

@@ -164,8 +164,7 @@ public class Models {
         JSONObject modelarray = new JSONObject(json);
         JSONArray ids = modelarray.names();
         if (ids != null) {
-            for (int i = 0; i < ids.length(); i++) {
-                String id = ids.getString(i);
+            for (String id: ids.stringIterable()) {
                 Model o = new Model(modelarray.getJSONObject(id));
                 mModels.put(o.getLong("id"), o);
             }
@@ -442,8 +441,7 @@ public class Models {
         JSONArray flds = m.getJSONArray("flds");
         // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
         Map<String, Pair<Integer, JSONObject>> result = new HashMap<>();
-        for (int i = 0; i < flds.length(); i++) {
-            JSONObject f = flds.getJSONObject(i);
+        for (JSONObject f: flds.jsonObjectIterable()) {
             result.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
         }
         return result;
@@ -453,8 +451,8 @@ public class Models {
     public static ArrayList<String> fieldNames(Model m) {
         JSONArray flds = m.getJSONArray("flds");
         ArrayList<String> names = new ArrayList<>();
-        for (int i = 0; i < flds.length(); i++) {
-            names.add(flds.getJSONObject(i).getString("name"));
+        for (JSONObject fld: flds.jsonObjectIterable()) {
+            names.add(fld.getString("name"));
         }
         return names;
 
@@ -632,8 +630,7 @@ public class Models {
         String repl = "{{$1$2" + newName + "}}";
 
         JSONArray tmpls = m.getJSONArray("tmpls");
-        for (int i = 0; i < tmpls.length(); ++i) {
-            JSONObject t = tmpls.getJSONObject(i);
+        for (JSONObject t: tmpls.jsonObjectIterable()) {
             for (String fmt : new String[] { "qfmt", "afmt" }) {
                 if (!"".equals(newName)) {
                     t.put(fmt, t.getString(fmt).replaceAll(pat, repl));
@@ -973,12 +970,11 @@ public class Models {
     public String scmhash(Model m) {
         String s = "";
         JSONArray flds = m.getJSONArray("flds");
-        for (int i = 0; i < flds.length(); ++i) {
-            s += flds.getJSONObject(i).getString("name");
+        for (JSONObject fld: flds.jsonObjectIterable()) {
+            s += fld.getString("name");
         }
         JSONArray tmpls = m.getJSONArray("tmpls");
-        for (int i = 0; i < tmpls.length(); ++i) {
-            JSONObject t = tmpls.getJSONObject(i);
+        for (JSONObject t: tmpls.jsonObjectIterable()) {
             s += t.getString("name");
         }
         return Utils.checksum(s);
@@ -998,12 +994,11 @@ public class Models {
         JSONArray req = new JSONArray();
         ArrayList<String> flds = new ArrayList<>();
         JSONArray fields = m.getJSONArray("flds");
-        for (int i = 0; i < fields.length(); i++) {
-            flds.add(fields.getJSONObject(i).getString("name"));
+        for (JSONObject field: fields.jsonObjectIterable()) {
+            flds.add(field.getString("name"));
         }
         JSONArray templates = m.getJSONArray("tmpls");
-        for (int i = 0; i < templates.length(); i++) {
-            JSONObject t = templates.getJSONObject(i);
+        for (JSONObject t: templates.jsonObjectIterable()) {
             Object[] ret = _reqForTemplate(m, flds, t);
             JSONArray r = new JSONArray();
             r.put(t.getInt("ord"));
@@ -1176,8 +1171,7 @@ public class Models {
         for (Model m : mModels.values()) {
             JSONArray templates = m.getJSONArray("tmpls");
             HashMap<Integer, String> names = new HashMap<>();
-            for (int i = 0; i < templates.length(); i++) {
-                JSONObject t = templates.getJSONObject(i);
+            for (JSONObject t: templates.jsonObjectIterable()) {
                 names.put(t.getInt("ord"), t.getString("name"));
             }
             result.put(m.getLong("id"), names);

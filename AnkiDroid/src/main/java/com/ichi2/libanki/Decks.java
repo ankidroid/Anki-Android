@@ -223,8 +223,7 @@ public class Decks {
         mDconf = new HashMap<>();
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
-        for (int i = 0; i < ids.length(); i++) {
-            String id = ids.getString(i);
+        for (String id: ids.stringIterable()) {
             Deck o = new Deck(decksarray.getJSONObject(id));
             long longId = Long.parseLong(id);
             mDecks.put(longId, o);
@@ -232,9 +231,10 @@ public class Decks {
         mNameMap = NameMap.constructor(mDecks.values());
         JSONObject confarray = new JSONObject(dconf);
         ids = confarray.names();
-        for (int i = 0; ids != null && i < ids.length(); i++) {
-            String id = ids.getString(i);
-            mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id)));
+        if (ids != null) {
+            for (String id : ids.stringIterable()) {
+                mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id)));
+            }
         }
         mChanged = false;
     }
@@ -951,8 +951,8 @@ public class Decks {
     public LinkedList<Long> active() {
         JSONArray activeDecks = mCol.getConf().getJSONArray("activeDecks");
         LinkedList<Long> result = new LinkedList<>();
-        for (int i = 0; i < activeDecks.length(); i++) {
-            result.add(activeDecks.getLong(i));
+        for (Long l: activeDecks.longIterable()) {
+            result.add(l);
         }
         return result;
     }

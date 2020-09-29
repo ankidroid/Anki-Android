@@ -696,8 +696,7 @@ public class Collection {
         JSONArray tmpls;
         if (model.getInt("type") == Consts.MODEL_STD) {
             tmpls = model.getJSONArray("tmpls");
-            for (int i = 0; i < tmpls.length(); i++) {
-                JSONObject t = tmpls.getJSONObject(i);
+            for (JSONObject t : tmpls.jsonObjectIterable()) {
                 if (avail.contains(t.getInt("ord"))) {
                     ok.add(t);
                 }
@@ -875,8 +874,8 @@ public class Collection {
             default: // MODELS
     	        cms = new ArrayList<>();
                 JSONArray tmpls = note.model().getJSONArray("tmpls");
-                for (int i = 0; i < tmpls.length(); ++i) {
-                    cms.add(tmpls.getJSONObject(i));
+                for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
+                    cms.add(tmpl);
                 }
 	    }
 	    List<Card> cards = new ArrayList<>();
@@ -1844,8 +1843,8 @@ public class Collection {
         if (m.getInt("type") == Consts.MODEL_STD) {
             ArrayList<Integer> ords = new ArrayList<>();
             JSONArray tmpls = m.getJSONArray("tmpls");
-            for (int t = 0; t < tmpls.length(); t++) {
-                ords.add(tmpls.getJSONObject(t).getInt("ord"));
+            for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
+                ords.add(tmpl.getInt("ord"));
             }
             // cards with invalid ordinal
             ArrayList<Long> ids = mDb.queryLongList(

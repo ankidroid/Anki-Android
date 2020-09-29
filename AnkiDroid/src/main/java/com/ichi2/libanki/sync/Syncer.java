@@ -667,8 +667,8 @@ public class Syncer {
         mCol.remCards(Utils.jsonArrayToLongList(graves.getJSONArray("cards")), false);
         // and decks
         JSONArray decks = graves.getJSONArray("decks");
-        for (int i = 0; i < decks.length(); i++) {
-            mCol.getDecks().rem(decks.getLong(i), false, false);
+        for (Long did: decks.longIterable()) {
+            mCol.getDecks().rem(did, false, false);
         }
         mCol.setServer(wasServer);
     }
@@ -700,8 +700,8 @@ public class Syncer {
 
 
     private void mergeModels(JSONArray rchg) throws UnexpectedSchemaChange {
-        for (int i = 0; i < rchg.length(); i++) {
-            Model r = new Model(rchg.getJSONObject(i));
+        for (JSONObject model: rchg.jsonObjectIterable()) {
+            Model r = new Model(model);
             Model l = mCol.getModels().get(r.getLong("id"));
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
@@ -768,8 +768,8 @@ public class Syncer {
 
     private void mergeDecks(JSONArray rchg) {
         JSONArray decks = rchg.getJSONArray(0);
-        for (int i = 0; i < decks.length(); i++) {
-            Deck r = new Deck(decks.getJSONObject(i));
+        for (JSONObject deck: decks.jsonObjectIterable()) {
+            Deck r = new Deck(deck);
             Deck l = mCol.getDecks().get(r.getLong("id"), false);
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
@@ -777,8 +777,8 @@ public class Syncer {
             }
         }
         JSONArray confs = rchg.getJSONArray(1);
-        for (int i = 0; i < confs.length(); i++) {
-            DeckConfig r = new DeckConfig(confs.getJSONObject(i));
+        for (JSONObject deckConfig: confs.jsonObjectIterable()) {
+            DeckConfig r = new DeckConfig(deckConfig);
             DeckConfig l = mCol.getDecks().getConf(r.getLong("id"));
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
@@ -816,8 +816,8 @@ public class Syncer {
 
     private void mergeTags(JSONArray tags) {
         ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i < tags.length(); i++) {
-            list.add(tags.getString(i));
+        for (String tag: tags.stringIterable()) {
+            list.add(tag);
         }
         mCol.getTags().register(list, mMaxUsn);
     }
@@ -828,10 +828,10 @@ public class Syncer {
      */
 
     private void mergeRevlog(JSONArray logs) {
-        for (int i = 0; i < logs.length(); i++) {
+        for (JSONArray log: logs.jsonArrayIterable()) {
             try {
                 mCol.getDb().execute("INSERT OR IGNORE INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
-                        Utils.jsonArray2Objects(logs.getJSONArray(i)));
+                        Utils.jsonArray2Objects(log));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -863,8 +863,7 @@ public class Syncer {
             }
         }
         ArrayList<Object[]> update = new ArrayList<>();
-        for (int i = 0; i < data.length(); i++) {
-            JSONArray r = data.getJSONArray(i);
+        for (JSONArray r: data.jsonArrayIterable()) {
             if (!lmods.containsKey(r.getLong(0)) || lmods.get(r.getLong(0)) < r.getLong(modIdx)) {
                 update.add(Utils.jsonArray2Objects(r));
             }

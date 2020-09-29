@@ -240,8 +240,8 @@ class AnkiExporter extends Exporter {
         }
         JSONArray keys = media.names();
         if (keys != null) {
-            for (int i = 0; i < keys.length(); i++) {
-                mMediaFiles.add(keys.getString(i));
+            for (String key: keys.stringIterable()) {
+                mMediaFiles.add(key);
             }
         }
         Timber.d("Cleanup");
@@ -274,8 +274,7 @@ class AnkiExporter extends Exporter {
         }
         // If not there then check the templates
         JSONArray tmpls = model.getJSONArray("tmpls");
-        for (int idx = 0; idx < tmpls.length(); idx++) {
-            JSONObject tmpl = tmpls.getJSONObject(idx);
+        for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
             if (tmpl.getString("qfmt").contains(fname) || tmpl.getString("afmt").contains(fname)) {
                 return true;
             }

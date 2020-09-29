@@ -44,6 +44,7 @@ package com.ichi2.utils;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.Iterator;
 
 import androidx.annotation.NonNull;
 
@@ -298,5 +299,81 @@ public class JSONArray extends org.json.JSONArray {
             }
         }
         return clone;
+    }
+
+    public Iterable<JSONArray> jsonArrayIterable() {
+        return this::jsonArrayIterator;
+    }
+    public Iterator<JSONArray> jsonArrayIterator() {
+        return new Iterator<JSONArray>() {
+            private int index = 0;
+            @Override
+            public boolean hasNext() {
+                return index < length();
+            }
+
+
+            @Override
+            public JSONArray next() {
+                return getJSONArray(index++);
+            }
+        };
+    }
+
+    public Iterable<JSONObject> jsonObjectIterable() {
+        return this::jsonObjectIterator;
+    }
+    public Iterator<JSONObject> jsonObjectIterator() {
+        return new Iterator<JSONObject>() {
+            private int index = 0;
+            @Override
+            public boolean hasNext() {
+                return index < length();
+            }
+
+
+            @Override
+            public JSONObject next() {
+                return getJSONObject(index++);
+            }
+        };
+    }
+
+    public Iterable<String> stringIterable() {
+        return this::stringIterator;
+    }
+    public Iterator<String> stringIterator() {
+        return new Iterator<String>() {
+            private int index = 0;
+            @Override
+            public boolean hasNext() {
+                return index < length();
+            }
+
+
+            @Override
+            public String next() {
+                return getString(index++);
+            }
+        };
+    }
+
+    public Iterable<Long> longIterable() {
+        return this::longIterator;
+    }
+    public Iterator<Long> longIterator() {
+        return new Iterator<Long>() {
+            private int index = 0;
+            @Override
+            public boolean hasNext() {
+                return index < length();
+            }
+
+
+            @Override
+            public Long next() {
+                return getLong(index++);
+            }
+        };
     }
 }
