@@ -388,7 +388,7 @@ public class NoteImporter extends Importer {
             }
         }
         note.fieldsStr = joinFields(fields);
-        ArrayList<Integer> ords = mCol.getModels().availOrds(mModel, fields);
+        ArrayList<Integer> ords = Models.availOrds(mModel, fields);
         if (ords.isEmpty()) {
             mEmptyNotes = true;
             return false;
