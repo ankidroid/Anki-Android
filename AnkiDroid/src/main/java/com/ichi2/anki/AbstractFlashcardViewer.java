@@ -1653,17 +1653,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void hideEaseButtons() {
-        Runnable after = () -> {
-            mEaseButtonsLayout.setVisibility(View.GONE);
-            mEase1Layout.setVisibility(View.GONE);
-            mEase2Layout.setVisibility(View.GONE);
-            mEase3Layout.setVisibility(View.GONE);
-            mEase4Layout.setVisibility(View.GONE);
-            mNext1.setText("");
-            mNext2.setText("");
-            mNext3.setText("");
-            mNext4.setText("");
-        };
+        Runnable after = () -> actualHideEaseButtons();
 
         boolean easeButtonsVisible = mEaseButtonsLayout.getVisibility() == View.VISIBLE;
         mFlipCardLayout.setClickable(true);
@@ -1678,6 +1668,20 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         focusAnswerCompletionField();
     }
+
+
+    private void actualHideEaseButtons() {
+        mEaseButtonsLayout.setVisibility(View.GONE);
+        mEase1Layout.setVisibility(View.GONE);
+        mEase2Layout.setVisibility(View.GONE);
+        mEase3Layout.setVisibility(View.GONE);
+        mEase4Layout.setVisibility(View.GONE);
+        mNext1.setText("");
+        mNext2.setText("");
+        mNext3.setText("");
+        mNext4.setText("");
+    }
+
 
     /**
      * Focuses the appropriate field for an answer
@@ -2025,6 +2029,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void displayCardAnswer() {
+        // #7294 Required in case the animation end action does not fire:
+        actualHideEaseButtons();
         Timber.d("displayCardAnswer()");
         mMissingImageHandler.onCardSideChange();
 
