@@ -151,8 +151,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                         if (i > 0) {
                             JSONObject presetValues = new JSONObject(dynExamples[i]);
                             JSONArray ar = presetValues.names();
-                            for (int j = 0; j < ar.length(); j++) {
-                                String name = ar.getString(j);
+                            for (String name: ar.stringIterable()) {
                                 if ("steps".equals(name)) {
                                     mUpdate.put("stepsOn", true);
                                 }

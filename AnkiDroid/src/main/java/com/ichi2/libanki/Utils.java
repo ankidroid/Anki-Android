@@ -511,8 +511,8 @@ public class Utils {
 
     public static List<Long> jsonArrayToLongList(JSONArray jsonArray) throws JSONException {
         List<Long> ar = new ArrayList<>(jsonArray.length());
-        for (int i = 0; i < jsonArray.length(); i++) {
-            ar.add(jsonArray.getLong(i));
+        for (Long l: jsonArray.longIterable()) {
+            ar.add(l);
         }
         return ar;
     }

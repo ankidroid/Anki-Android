@@ -95,8 +95,8 @@ public class StepsPreference extends android.preference.EditTextPreference {
             return null;
         } else {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < stepsAr.length(); i++) {
-                sb.append(stepsAr.getString(i)).append(" ");
+            for (String step: stepsAr.stringIterable()) {
+                sb.append(step).append(" ");
             }
             return sb.toString().trim();
         }
@@ -111,8 +111,8 @@ public class StepsPreference extends android.preference.EditTextPreference {
      */
     public static String convertFromJSON(JSONArray a) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < a.length(); i++) {
-            sb.append(a.getString(i)).append(" ");
+        for (String s: a.stringIterable()) {
+            sb.append(s).append(" ");
         }
         return sb.toString().trim();
     }

@@ -1861,8 +1861,7 @@ public class SchedV2 extends AbstractSched {
         int total = 0;
         List<Long> ids;
         JSONArray terms = deck.getJSONArray("terms");
-        for (int i = 0; i < terms.length(); i++) {
-            JSONArray term = terms.getJSONArray(i);
+        for (JSONArray term: terms.jsonArrayIterable()) {
             String search = term.getString(0);
             int limit = term.getInt(1);
             int order = term.getInt(2);
