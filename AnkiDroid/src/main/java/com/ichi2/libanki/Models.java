@@ -1063,36 +1063,30 @@ public class Models {
         }
         ArrayList<Integer> avail = new ArrayList<>();
         JSONArray reqArray = m.getJSONArray("req");
-        for (int i = 0; i < reqArray.length(); i++) {
+        templates: for (int i = 0; i < reqArray.length(); i++) {
             JSONArray sr = reqArray.getJSONArray(i);
 
             int ord = sr.getInt(0);
             String type = sr.getString(1);
             JSONArray req = sr.getJSONArray(2);
 
-            boolean ok;
             switch (type) {
                 case REQ_NONE:
                     // unsatisfiable template
                     continue;
                 case REQ_ALL:
                     // AND requirement?
-                    ok = true;
                     for (int j = 0; j < req.length(); j++) {
                         int idx = req.getInt(j);
                         if (fields[idx] == null || fields[idx].length() == 0) {
                             // missing and was required
-                            ok = false;
-                            break;
+                            continue templates;
                         }
-                    }
-                    if (!ok) {
-                        continue;
                     }
                     break;
                 case REQ_ANY:
                     // OR requirement?
-                    ok = false;
+                    boolean ok = false;
                     for (int j = 0; j < req.length(); j++) {
                         int idx = req.getInt(j);
                         if (fields[idx] != null && fields[idx].length() != 0) {
