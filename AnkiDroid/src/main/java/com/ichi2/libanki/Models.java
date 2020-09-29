@@ -1054,6 +1054,11 @@ public class Models {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
             return _availClozeOrds(m, sfld);
         }
+        return _availStandardOrds(m, sfld);
+    }
+
+    /** Given a joined field string and a standard note type, return available template ordinals */
+    public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld) {
         String[] fields = trimArray(sfld);
         ArrayList<Integer> avail = new ArrayList<>();
         JSONArray reqArray = m.getJSONArray("req");
