@@ -157,8 +157,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
 
         mFieldLabels = new ArrayList<>();
         mNoteFields = mMod.getJSONArray("flds");
-        for (int i = 0; i < mNoteFields.length(); i++) {
-            JSONObject o = mNoteFields.getJSONObject(i);
+        for (JSONObject o: mNoteFields.jsonObjectIterable()) {
             mFieldLabels.add(o.getString("name"));
         }
     }

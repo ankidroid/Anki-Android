@@ -696,8 +696,7 @@ public class Finder {
         List<String> lims = new ArrayList<>();
         for (JSONObject m : mCol.getModels().all()) {
             JSONArray tmpls = m.getJSONArray("tmpls");
-            for (int ti = 0; ti < tmpls.length(); ++ti) {
-                JSONObject t = tmpls.getJSONObject(ti);
+            for (JSONObject t: tmpls.jsonObjectIterable()) {
                 String templateName = t.getString("name");
                 Normalizer.normalize(templateName, Normalizer.Form.NFC);
                 if (templateName.equalsIgnoreCase(val)) {
@@ -743,8 +742,7 @@ public class Finder {
         Map<Long, Object[]> mods = new HashMap<>();
         for (JSONObject m : mCol.getModels().all()) {
             JSONArray flds = m.getJSONArray("flds");
-            for (int fi = 0; fi < flds.length(); ++fi) {
-                JSONObject f = flds.getJSONObject(fi);
+            for (JSONObject f: flds.jsonObjectIterable()) {
                 String fieldName = f.getString("name");
                 fieldName = Normalizer.normalize(fieldName, Normalizer.Form.NFC);
                 if (fieldName.equalsIgnoreCase(field)) {
@@ -869,8 +867,7 @@ public class Finder {
         if (field != null) {
             for (JSONObject m : col.getModels().all()) {
                 JSONArray flds = m.getJSONArray("flds");
-                for (int fi = 0; fi < flds.length(); ++fi) {
-                    JSONObject f = flds.getJSONObject(fi);
+                for (JSONObject f: flds.jsonObjectIterable()) {
                     if (f.getString("name").equalsIgnoreCase(field)) {
                         mmap.put(m.getLong("id"), f.getInt("ord"));
                     }
@@ -942,8 +939,7 @@ public class Finder {
         List<String> names = new ArrayList<>();
         for (JSONObject m : col.getModels().all()) {
             JSONArray flds = m.getJSONArray("flds");
-            for (int fi = 0; fi < flds.length(); ++fi) {
-                JSONObject f = flds.getJSONObject(fi);
+            for (JSONObject f: flds.jsonObjectIterable()) {
                 if (!fields.contains(f.getString("name").toLowerCase(Locale.US))) {
                     names.add(f.getString("name"));
                     fields.add(f.getString("name").toLowerCase(Locale.US));

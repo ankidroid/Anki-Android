@@ -699,25 +699,25 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (!m.find()) {
             return;
         }
-        String fld = m.group(1);
+        String fldTag = m.group(1);
         // if it's a cloze, extract data
-        if (fld.startsWith("cloze:")) {
+        if (fldTag.startsWith("cloze:")) {
             // get field and cloze position
             clozeIdx = mCurrentCard.getOrd() + 1;
-            fld = fld.split(":")[1];
+            fldTag = fldTag.split(":")[1];
         }
         // loop through fields for a match
         JSONArray flds = mCurrentCard.model().getJSONArray("flds");
-        for (int i = 0; i < flds.length(); i++) {
-            String name = flds.getJSONObject(i).getString("name");
-            if (name.equals(fld)) {
+        for (JSONObject fld: flds.jsonObjectIterable()) {
+            String name = fld.getString("name");
+            if (name.equals(fldTag)) {
                 mTypeCorrect = mCurrentCard.note().getItem(name);
                 if (clozeIdx != 0) {
                     // narrow to cloze
                     mTypeCorrect = contentForCloze(mTypeCorrect, clozeIdx);
                 }
-                mTypeFont = flds.getJSONObject(i).getString("font");
-                mTypeSize = flds.getJSONObject(i).getInt("size");
+                mTypeFont = fld.getString("font");
+                mTypeSize = fld.getInt("size");
                 break;
             }
         }
@@ -725,7 +725,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (clozeIdx != 0) {
                 mTypeWarning = getResources().getString(R.string.empty_card_warning);
             } else {
-                mTypeWarning = getResources().getString(R.string.unknown_type_field_warning, fld);
+                mTypeWarning = getResources().getString(R.string.unknown_type_field_warning, fldTag);
             }
         } else if ("".equals(mTypeCorrect)) {
             mTypeCorrect = null;
