@@ -171,15 +171,15 @@
     <string name="check_media_no_unused_missing">لم يُعثَر على ملفات غير مستخدمة أو مفقودة</string>
     <string name="check_media_db_updated">أعيد بناء قاعدة بيانات الوسائط</string>
     <string name="check_media_delete_unused">حذف غير المستخدمة</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">جار حذف الوسائط&#8230;</string>
+    <string name="delete_media_result_title">نتيجة الحذف</string>
     <plurals name="delete_media_result_message">
-        <item quantity="zero">%d files deleted</item>
-        <item quantity="one">%d file deleted</item>
-        <item quantity="two">%d files deleted</item>
-        <item quantity="few">%d files deleted</item>
-        <item quantity="many">%d files deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="zero">حُذِف %d ملف</item>
+        <item quantity="one">حُذِف %d ملف</item>
+        <item quantity="two">حُذِف %d ملف</item>
+        <item quantity="few">حُذِف %d ملفات</item>
+        <item quantity="many">حُذِف %d ملفًا</item>
+        <item quantity="other">حُذِف %d ملف</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">كل البطاقات</string>
