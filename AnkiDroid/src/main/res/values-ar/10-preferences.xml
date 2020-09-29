@@ -76,7 +76,7 @@
     <string name="reset_languages_question">إعادة تعيين كافة تعيينات اللغة؟</string>
     <string name="reset_confirmation">تمت إعادة تعيين كل الإعدادات</string>
     <string name="card_zoom">تكبير البطاقة</string>
-    <string name="image_zoom">تكبير الصورة</string>
+    <string name="image_zoom">تكبير الصور</string>
     <string name="button_size">حجم زر الإجابة</string>
     <string name="card_browser_font_size">نسبة تضخيم حجم خط متصفح البطاقات</string>
     <string name="card_browser_hide_media">عرض أسماء الملفات في متصفح البطاقات</string>
