@@ -854,7 +854,10 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 // Cycle through all templates checking if new name exists
                 boolean exists = false;
                 for (int i = 0; i < templates.length(); i++) {
-                    exists = exists || name.equals(templates.getJSONObject(i).getString("name"));
+                    if (name.equals(templates.getJSONObject(i).getString("name"))) {
+                        exists = true;
+                        break;
+                    }
                 }
                 if (!exists) {
                     break;
