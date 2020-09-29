@@ -1083,24 +1083,19 @@ public class Models {
                             continue templates;
                         }
                     }
-                    break;
+                    avail.add(ord);
+                    continue;
                 case REQ_ANY:
                     // OR requirement?
-                    boolean ok = false;
                     for (int j = 0; j < req.length(); j++) {
                         int idx = req.getInt(j);
                         if (fields[idx] != null && fields[idx].length() != 0) {
                             // missing and was required
-                            ok = true;
-                            break;
+                            avail.add(ord);
+                            continue templates;
                         }
                     }
-                    if (!ok) {
-                        continue;
-                    }
-                    break;
                 }
-                avail.add(ord);
         }
         return avail;
     }
