@@ -23,6 +23,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Pair;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -49,6 +50,12 @@ import androidx.annotation.NonNull;
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
 public class Models {
+    @VisibleForTesting
+    public static final String REQ_NONE = "none";
+    @VisibleForTesting
+    public static final String REQ_ANY = "any";
+    @VisibleForTesting
+    public static final String REQ_ALL = "all";
     @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
     private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{[^}]*?cloze:(?:[^}]?:)*(.+?)\\}\\}");
     private static final Pattern fClozePattern2 = Pattern.compile("<%cloze:(.+?)%>");
@@ -1031,9 +1038,9 @@ public class Models {
         String empty = mCol._renderQA(1L, m, 1L, ord, "", b, 0).get("q");
         // if full and empty are the same, the template is invalid and there is no way to satisfy it
         if (full.equals(empty)) {
-            return new Object[] { "none", new JSONArray(), new JSONArray() };
+            return new Object[] { REQ_NONE, new JSONArray(), new JSONArray() };
         }
-        String type = "all";
+        String type = REQ_ALL;
         JSONArray req = new JSONArray();
         for (int i = 0; i < flds.size(); i++) {
             a[i] = "";
@@ -1047,7 +1054,7 @@ public class Models {
             return new Object[] { type, req };
         }
         // if there are no required fields, switch to any mode
-        type = "any";
+        type = REQ_ANY;
         req = new JSONArray();
         for (int i = 0; i < flds.size(); i++) {
             b[i] = "1";
@@ -1080,10 +1087,10 @@ public class Models {
             String type = sr.getString(1);
             JSONArray req = sr.getJSONArray(2);
 
-            if ("none".equals(type)) {
+            if (REQ_NONE.equals(type)) {
                 // unsatisfiable template
                 continue;
-            } else if ("all".equals(type)) {
+            } else if (REQ_ALL.equals(type)) {
                 // AND requirement?
                 boolean ok = true;
                 for (int j = 0; j < req.length(); j++) {
@@ -1097,7 +1104,7 @@ public class Models {
                 if (!ok) {
                     continue;
                 }
-            } else if ("any".equals(type)) {
+            } else if (REQ_ANY.equals(type)) {
                 // OR requirement?
                 boolean ok = false;
                 for (int j = 0; j < req.length(); j++) {

@@ -17,6 +17,8 @@ import java.util.Map;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.libanki.Consts.MODEL_CLOZE;
+import static com.ichi2.libanki.Models.REQ_ALL;
+import static com.ichi2.libanki.Models.REQ_ANY;
 import static com.ichi2.libanki.Utils.stripHTML;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -427,7 +429,7 @@ public class ModelTest extends RobolectricTest {
         reqSize(basic);
         JSONArray r = basic.getJSONArray("req").getJSONArray(0);
         assertEquals(0, r.getInt(0));
-        assertTrue(Arrays.asList(new String[] {"any", "all"}).contains(r.getString(1)));
+        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
         assertEquals(1, r.getJSONArray(2).length());
         assertEquals(0, r.getJSONArray(2).getInt(0));
 
@@ -435,7 +437,7 @@ public class ModelTest extends RobolectricTest {
         reqSize(opt);
 
         r = opt.getJSONArray("req").getJSONArray(0);
-        assertTrue(Arrays.asList(new String[] {"any", "all"}).contains(r.getString(1)));
+        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
         assertEquals(1, r.getJSONArray(2).length());
         assertEquals(0, r.getJSONArray(2).getInt(0));
 
@@ -454,7 +456,7 @@ public class ModelTest extends RobolectricTest {
         opt = mm.byName("Basic (type in the answer)");
         reqSize(opt);
         r = opt.getJSONArray("req").getJSONArray(0);
-        assertTrue(Arrays.asList(new String[] {"any", "all"}).contains(r.getString(1)));
+        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
         // TODO: Port anki@4e33775ed4346ef136ece6ef5efec5ba46057c6b
         assertEquals(new JSONArray("[0]"), r.getJSONArray(2));
     }
