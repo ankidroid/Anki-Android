@@ -3000,9 +3000,6 @@ public class SchedV2 extends AbstractSched {
         case Consts.QUEUE_TYPE_REV:
             mRevCount--;
             break;
-        case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
-            mLrnCount--;
-            break;
         }
     }
 

@@ -1645,7 +1645,7 @@ public class SchedV2Test extends RobolectricTest {
         }
         assertEquals(1, sched.lrnCount());
         card = sched.getCard();
-        assertEquals(1, sched.counts(card).getLrn());
+        assertEquals(1, sched.counts(card)[1]);
         sched.answerCard(card, Consts.BUTTON_ONE);
         assertDoesNotThrow(col::undo);
     }
