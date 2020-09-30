@@ -76,9 +76,10 @@ public class Card implements Cloneable {
     public static final int TYPE_REV = 2;
 
     private Collection mCol;
+    // When timer was started, in MS
     private long mTimerStarted;
 
-    // Not in LibAnki. Record time spent reviewing in order to restore when resuming.
+    // Not in LibAnki. Record time spent reviewing in MS in order to restore when resuming.
     private long mElapsedTime;
 
     // BEGIN SQL table entries
@@ -328,7 +329,7 @@ public class Card implements Cloneable {
 
 
     public void startTimer() {
-        mTimerStarted = getCol().getTime().intTime();
+        mTimerStarted = getCol().getTime().intTimeMS();
     }
 
 
@@ -346,7 +347,7 @@ public class Card implements Cloneable {
      */
     public int timeTaken() {
         // Indeed an int. Difference between two big numbers is still small.
-        int total = (int) ((getCol().getTime().intTime() - mTimerStarted) * 1000);
+        int total = (int) (getCol().getTime().intTimeMS() - mTimerStarted);
         return Math.min(total, timeLimit());
     }
 
@@ -389,7 +390,7 @@ public class Card implements Cloneable {
      * method when the session resumes to start counting review time again.
      */
     public void stopTimer() {
-        mElapsedTime = getCol().getTime().intTime() - mTimerStarted;
+        mElapsedTime = getCol().getTime().intTimeMS() - mTimerStarted;
     }
 
 
@@ -402,9 +403,13 @@ public class Card implements Cloneable {
      * or the result of timeTaken() will be wrong.
      */
     public void resumeTimer() {
-        mTimerStarted = getCol().getTime().intTime() - mElapsedTime;
+        mTimerStarted = getCol().getTime().intTimeMS() - mElapsedTime;
     }
 
+
+    /**
+     * @param timeStarted Time in MS when timer was started
+     */
     public void setTimerStarted(long timeStarted){ mTimerStarted = timeStarted; }
 
     public long getId() {
