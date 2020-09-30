@@ -697,7 +697,7 @@ public class SchedTest extends RobolectricTest {
         assertEquals(4 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 3));
         col.getSched().answerCard(c, 2);
         // normal graduation is tomorrow
-        assertEquals(1 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 2));
+        assertEquals(SECONDS_PER_DAY, col.getSched().nextIvl(c, 2));
         assertEquals(4 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 3));
         // lapsed cards
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -717,7 +717,7 @@ public class SchedTest extends RobolectricTest {
         // or 1 day if relearn is false
         conf.getJSONObject("lapse").put("delays", new JSONArray(new double[] {}));
         col.getDecks().save(conf);
-        assertEquals(1 * SECONDS_PER_DAY, col.getSched().nextIvl(c, 1));
+        assertEquals(SECONDS_PER_DAY, col.getSched().nextIvl(c, 1));
         // (* 100 1.2 SECONDS_PER_DAY)10368000.0
         assertEquals(10368000, col.getSched().nextIvl(c, 2));
         // (* 100 2.5 SECONDS_PER_DAY)21600000.0
