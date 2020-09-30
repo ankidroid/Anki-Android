@@ -1401,7 +1401,7 @@ public class SchedV2 extends AbstractSched {
     protected void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
         try {
             mCol.getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
-                    getTime().intTime() * 1000, id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
+                    getTime().intTimeMS(), id, usn, ease, ivl, lastIvl, factor, timeTaken, type);
         } catch (SQLiteConstraintException e) {
             try {
                 Thread.sleep(10);

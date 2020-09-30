@@ -20,6 +20,7 @@ package com.ichi2.libanki.sched;
 import android.database.Cursor;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
+import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
@@ -30,8 +31,7 @@ import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.sched.DeckDueTreeNode;
+import com.ichi2.testutils.MutableTime;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -178,6 +178,22 @@ public class SchedTest extends RobolectricTest {
         List<DeckDueTreeNode> tree = sched.deckDueTree();
         Assert.assertEquals("Tree has not the expected structure", SchedV2Test.expectedTree(getCol(), false), tree);
 
+    }
+
+    @Test
+    public void testRevLogValues() {
+        MutableTime time = new MutableTime(1596540139123L, 10);
+        Collection col =  CollectionHelper.getInstance().getCol(getTargetContext(), time);
+        addNoteUsingBasicModel("Hello", "World");
+
+        AbstractSched sched = col.getSched();
+        Card c = sched.getCard();
+        time.setFrozen(true);
+        long currentTime = time.getInternalTimeMs();
+        sched.answerCard(c, 1);
+
+        long timeAnswered = col.getDb().queryLongScalar("select id from revlog");
+        assertThat(timeAnswered, is(currentTime));
     }
 
 
