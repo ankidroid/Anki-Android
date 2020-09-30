@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
  */
 public class Counts {
     public enum Queue {
-        NEW, LRN, REV;
+        NEW, LRN, REV
     }
 
     private int mNew;
