@@ -728,3 +728,12 @@ Constant|uppercase, using underscore to separate words|SOME_CONSTANT|some_consta
 Method|verbs, mixed case, starting with lowercase|getName()|get_name()
 String key|lowercase, using underscore to separate words|good_example_key|badExampleKey
 XML element identifier|lowercase, using underscore to separate words|good_id_example|badIdExample
+
+
+# References
+* [1] Code Complete, Steve McConnel - Microsoft Press
+* [2] Clean Code, Robert C. Martin - Prentice Hall
+* [3] Java Coding Style Guide, Achut Reddy - Sun Microsystems, Inc. http://cs.bilgi.edu.tr/pages/standards%5Fproject/java%5FCodingStyle.pdf
+* [4] Java Code Conventions http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html
+* [5] Android Code Style Guidelines for Contributors http://source.android.com/source/code-style.html
+* [6] Coding Standards for Java from Geosoft http://geosoft.no/development/javastyle.html
