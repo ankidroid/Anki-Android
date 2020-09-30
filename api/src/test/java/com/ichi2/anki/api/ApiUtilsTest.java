@@ -26,7 +26,7 @@ public class ApiUtilsTest {
 
     @Test
     public void joinFieldsShouldJoinWhenListIsValid() {
-        String fieldList[] = {"A", "B", "C"};
+        String[] fieldList = {"A", "B", "C"};
         assertEquals("A" + delimiter + "B" + delimiter + "C", Utils.joinFields(fieldList));
     }
 
@@ -38,7 +38,7 @@ public class ApiUtilsTest {
     @Test
     public void splitFieldsShouldSplitRightWhenStringIsValid() {
         String fieldList = "A" + delimiter + "B" + delimiter + "C";
-        String output[] = Utils.splitFields(fieldList);
+        String[] output = Utils.splitFields(fieldList);
         assertEquals("A", output[0]);
         assertEquals("B", output[1]);
         assertEquals("C", output[2]);
