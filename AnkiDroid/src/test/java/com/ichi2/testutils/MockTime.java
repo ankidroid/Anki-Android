@@ -44,6 +44,10 @@ public class MockTime extends Time {
         return mTime;
     }
 
+    protected long getTime() {
+        return mTime;
+    }
+
     /** Add ms milisecond*/
     public void addMs(long ms) {
         mTime += ms;
