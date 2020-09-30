@@ -153,11 +153,13 @@ public class ExampleActivity extends Activity {
 * `testMethod_specificCase1`
 * `testMethod_specificCase2`
 
+```java
 void testIsDistinguishable_protanopia() {
     ColorMatcher colorMatcher = new ColorMatcher(PROTANOPIA)
     assertFalse(colorMatcher.isDistinguishable(Color.RED, Color.BLACK))
     assertTrue(colorMatcher.isDistinguishable(Color.X, Color.Y))
 }
+```
 # Layout Techniques
 ## Length Line
 ### File content must be kept within 120 columns.
@@ -459,15 +461,15 @@ If one function calls another, they should be vertically close, and the caller s
 #### Conceptual Affinity
 Methods that perform similar tasks or have similar naming should be vertically close.
 ### Method modifiers should be given in the following order:
-* access modifier: public, protected or private
-* abstract
-* static
-* final
-* transient
-* volatile
-* synchronized
-* native
-* strictfp
+1. access modifier: public, protected or private
+1. abstract
+1. static
+1. final
+1. transient
+1. volatile
+1. synchronized
+1. native
+1. strictfp
 
 * `public static double square(double a); `// NOT: <DEL>static public double square(double a);</del>
 # Miscellaneous
