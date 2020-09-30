@@ -729,6 +729,52 @@ Method|verbs, mixed case, starting with lowercase|getName()|get_name()
 String key|lowercase, using underscore to separate words|good_example_key|badExampleKey
 XML element identifier|lowercase, using underscore to separate words|good_id_example|badIdExample
 
+## Line length
+120 characters
+## Indentation
+### Normal: 4 spaces with no tabs
+Wrapping lines: 8 spaces with no tabs
+Braces style
+1TBS braces style: class declarations, method declarations, block statements
+## White spaces
+### Before and after: operators
+### Before: opening brace
+### After: Java reserved words, commas, semicolons in for statements, any comment identifier
+## Blank lines
+### 3 blank lines:
+Between sections of a source file
+Between class and interface definitions
+### 2 blank lines:
+Between methods
+### 1 blank line:
+Between local variables in a method and its first statement
+Before a block or single-line comment
+Between logical sections inside a method
+## File organization
+Copyright/ID comment
+package declaration
+import statements
+## Class organization
+Class/Interface documentation
+class or interface statement
+Class (static) variables in the order public, protected, package (no access modifier), private
+Instance variables in the order public, protected, package (no access modifier), private
+Constructors
+Methods
+Inner classes
+## Android components organization
+Component documentation
+class statement
+Class (static) variables in the order public, protected, package (no access modifier), private
+Instance variables in the order public, protected, package (no access modifier), private
+Constructors
+Lifecycle methods (ordered following the natural lifecycle, from creation to destruction)
+Other methods
+Inner classes
+## Order of imports
+Android imports, third parties imports (alphabetically), Java imports (java and javax)
+## Order of method modifiers
+public protected private abstract static final transient volatile synchronized native strictfp
 
 # References
 * [1] Code Complete, Steve McConnel - Microsoft Press
