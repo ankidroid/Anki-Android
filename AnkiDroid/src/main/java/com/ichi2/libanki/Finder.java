@@ -246,11 +246,10 @@ public class Finder {
                 // if it was to be negated then we can just ignore it
                 if (isnot) {
                     isnot = false;
-                    return;
                 } else {
                     bad = true;
-                    return;
                 }
+                return;
             } else if ("skip".equals(txt)) {
                 return;
             }

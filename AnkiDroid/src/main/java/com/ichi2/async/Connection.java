@@ -479,12 +479,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 // This means that there is no change at all, neither media nor collection. Not that there was an error.
                 data.success = false;
                 data.result = new Object[] { "noChanges" };
-                return data;
             } else {
                 data.success = true;
                 data.data = new Object[] { conflictResolution, col, mediaError };
-                return data;
             }
+            return data;
         } catch (MediaSyncException e) {
             Timber.e("Media sync rejected by server");
             data.success = false;
