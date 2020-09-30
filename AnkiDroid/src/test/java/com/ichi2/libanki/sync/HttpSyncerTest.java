@@ -32,8 +32,8 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 public class HttpSyncerTest {
-    private static String sCustomServerWithNoFormatting = "https://sync.example.com/";
-    private static String sCustomServerWithFormatting   = "https://sync%s.example.com/";
+    private static final String sCustomServerWithNoFormatting = "https://sync.example.com/";
+    private static final String sCustomServerWithFormatting   = "https://sync%s.example.com/";
     private static final String sDefaultUrlNoHostNum    = "https://sync.ankiweb.net/sync/";
     private static final String sDefaultUrlWithHostNum  = "https://sync1.ankiweb.net/sync/";
 

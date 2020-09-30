@@ -159,7 +159,14 @@
     <string name="check_media_no_unused_missing">Не знойдзена адсутных альбо не выкарстоўваемых файлаў.</string>
     <string name="check_media_db_updated">База даных з медыяфайлаламі перабудавана</string>
     <string name="check_media_delete_unused">Выдаліць, якія не выкарыстоўваюцца</string>
-    <string name="check_media_deleted">Выдалена файлаў: %d</string>
+    <string name="delete_media_message">Deleting media&#8230;</string>
+    <string name="delete_media_result_title">Deletion result</string>
+    <plurals name="delete_media_result_message">
+        <item quantity="one">%d file deleted</item>
+        <item quantity="few">%d files deleted</item>
+        <item quantity="many">%d files deleted</item>
+        <item quantity="other">%d files deleted</item>
+    </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Усе карткі</string>
     <string name="tags_dialog_option_new_cards">Новыя</string>

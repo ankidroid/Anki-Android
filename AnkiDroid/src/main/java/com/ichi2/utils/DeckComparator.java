@@ -1,6 +1,5 @@
 package com.ichi2.utils;
 
-import com.ichi2.libanki.Deck;
 import com.ichi2.utils.DeckNameComparator;
 import com.ichi2.utils.JSONObject;
 

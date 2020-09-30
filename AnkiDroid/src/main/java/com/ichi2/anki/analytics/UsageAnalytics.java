@@ -159,6 +159,7 @@ public class UsageAnalytics {
     /**
      * Determine whether we are disabled or not
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private static boolean getOptIn() {
         Timber.d("getOptIn() status: %s", sOptIn);
         return sOptIn;
@@ -347,5 +348,16 @@ public class UsageAnalytics {
 
             return this;
         }
+    }
+
+    public static boolean isEnabled() {
+        SharedPreferences userPrefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        return userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false);
+    }
+
+
+
+    public static class Category {
+        public static final String SYNC = "Sync";
     }
 }

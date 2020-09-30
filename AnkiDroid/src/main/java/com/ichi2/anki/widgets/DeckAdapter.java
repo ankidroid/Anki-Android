@@ -22,12 +22,17 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -39,29 +44,32 @@ import com.ichi2.libanki.Collection;
 
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
-import com.ichi2.libanki.sched.DeckDueTreeNode;
-import com.ichi2.libanki.sched.DeckTreeNode;
+import com.ichi2.utils.FilterResultsUtils;
+import com.ichi2.libanki.sched.Counts;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
+public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> implements Filterable {
 
     /* Make the selected deck roughly half transparent if there is a background */
     public static final double SELECTED_DECK_ALPHA_AGAINST_BACKGROUND = 0.45;
 
-    private LayoutInflater mLayoutInflater;
-    private List<AbstractDeckTreeNode> mDeckList;
-    private int mZeroCountColor;
-    private int mNewCountColor;
-    private int mLearnCountColor;
-    private int mReviewCountColor;
-    private int mRowCurrentDrawable;
-    private int mDeckNameDefaultColor;
-    private int mDeckNameDynColor;
-    private Drawable mExpandImage;
-    private Drawable mCollapseImage;
-    private Drawable mNoExpander = new ColorDrawable(Color.TRANSPARENT);
+    private final LayoutInflater mLayoutInflater;
+    private final List<AbstractDeckTreeNode> mDeckList;
+    /** A subset of mDeckList (currently displayed) */
+    private final List<AbstractDeckTreeNode> mCurrentDeckList = new ArrayList<>();
+    private final int mZeroCountColor;
+    private final int mNewCountColor;
+    private final int mLearnCountColor;
+    private final int mReviewCountColor;
+    private final int mRowCurrentDrawable;
+    private final int mDeckNameDefaultColor;
+    private final int mDeckNameDynColor;
+    private final Drawable mExpandImage;
+    private final Drawable mCollapseImage;
+    private final Drawable mNoExpander = new ColorDrawable(Color.TRANSPARENT);
 
     // Listeners
     private View.OnClickListener mDeckClickListener;
@@ -85,12 +93,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     // ViewHolder class to save inflated views for recycling
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public RelativeLayout deckLayout;
-        public LinearLayout countsLayout;
-        public ImageButton deckExpander;
-        public ImageButton indentView;
-        public TextView deckName;
-        public TextView deckNew, deckLearn, deckRev;
+        public final RelativeLayout deckLayout;
+        public final LinearLayout countsLayout;
+        public final ImageButton deckExpander;
+        public final ImageButton indentView;
+        public final TextView deckName;
+        public final TextView deckNew;
+        public final TextView deckLearn;
+        public final TextView deckRev;
 
         public ViewHolder(View v) {
             super(v);
@@ -156,20 +166,29 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     /**
      * Consume a list of {@link AbstractDeckTreeNode}s to render a new deck list.
+     * @param filter The string to filter the deck by
      */
-    public void buildDeckList(List<AbstractDeckTreeNode> nodes, Collection col) {
+    public void buildDeckList(List<AbstractDeckTreeNode> nodes, Collection col, @Nullable CharSequence filter) {
         mCol = col;
         mDeckList.clear();
+        mCurrentDeckList.clear();
         mNew = mLrn = mRev = 0;
         mNumbersComputed = true;
         mHasSubdecks = false;
         processNodes(nodes);
-        notifyDataSetChanged();
+        // Filtering performs notifyDataSetChanged after the async work is complete
+        getFilter().filter(filter);
+    }
+
+    public AbstractDeckTreeNode getNodeByDid(long did) {
+        int pos = findDeckPosition(did);
+        return getDeckList().get(pos);
     }
 
 
+    @NonNull
     @Override
-    public DeckAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DeckAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = mLayoutInflater.inflate(R.layout.deck_item, parent, false);
         return new ViewHolder(v);
     }
@@ -178,7 +197,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Update views for this node
-        AbstractDeckTreeNode node = mDeckList.get(position);
+        AbstractDeckTreeNode node = mCurrentDeckList.get(position);
         // Set the expander icon and padding according to whether or not there are any subdecks
         RelativeLayout deckLayout = holder.deckLayout;
         int rightPadding = (int) deckLayout.getResources().getDimension(R.dimen.deck_picker_right_padding);
@@ -253,7 +272,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mDeckList.size();
+        return mCurrentDeckList.size();
     }
 
 
@@ -292,6 +311,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 }
             }
             mDeckList.add(node);
+            mCurrentDeckList.add(node);
 
             // Add this node's counts to the totals if it's a parent deck
             if (node.getDepth() == 0) {
@@ -314,8 +334,8 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
      * An invalid deck ID will return position 0.
      */
     public int findDeckPosition(long did) {
-        for (int i = 0; i < mDeckList.size(); i++) {
-            if (mDeckList.get(i).getDid() == did) {
+        for (int i = 0; i < mCurrentDeckList.size(); i++) {
+            if (mCurrentDeckList.get(i).getDid() == did) {
                 return i;
             }
         }
@@ -331,7 +351,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     @Nullable
     public Integer getEta() {
         if (mNumbersComputed) {
-            return mCol.getSched().eta(new int[] {mNew, mLrn, mRev});
+            return mCol.getSched().eta(new Counts(mNew, mLrn, mRev));
         } else {
             return null;
         }
@@ -346,7 +366,86 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
     }
 
-    public List<AbstractDeckTreeNode> getDeckList() {
-        return mDeckList;
+    private List<AbstractDeckTreeNode> getDeckList() {
+        return mCurrentDeckList;
+    }
+
+
+    @Override
+    public Filter getFilter() {
+        return new DeckFilter();
+    }
+
+
+    private class DeckFilter extends Filter {
+        private final ArrayList<AbstractDeckTreeNode> mFilteredDecks = new ArrayList<>();
+        private DeckFilter() {
+            super();
+        }
+
+        private List<AbstractDeckTreeNode> getAllDecks() {
+            return mDeckList;
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            mFilteredDecks.clear();
+
+            List<AbstractDeckTreeNode> allDecks = getAllDecks();
+            if (TextUtils.isEmpty(constraint)) {
+                mFilteredDecks.addAll(allDecks);
+            } else {
+                final String filterPattern = constraint.toString().toLowerCase().trim();
+                List<AbstractDeckTreeNode> filteredDecks = filterDecks(filterPattern, allDecks);
+                mFilteredDecks.addAll(filteredDecks);
+            }
+
+            return FilterResultsUtils.fromCollection(mFilteredDecks);
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mCurrentDeckList.clear();
+            mCurrentDeckList.addAll(mFilteredDecks);
+            notifyDataSetChanged();
+        }
+
+
+        private List<AbstractDeckTreeNode> filterDecks(String filterPattern, List<AbstractDeckTreeNode> allDecks) {
+            ArrayList<AbstractDeckTreeNode> ret = new ArrayList<>();
+            for (AbstractDeckTreeNode tag : allDecks) {
+                AbstractDeckTreeNode node = filterDeckInternal(filterPattern, tag);
+                if (node != null) {
+                    ret.add(node);
+                }
+            }
+            return ret;
+        }
+
+        @Nullable
+        private <T extends AbstractDeckTreeNode<T>> T filterDeckInternal(String filterPattern, T root) {
+
+            // If a deck contains the string, then all its children are valid
+            if (containsFilterString(filterPattern, root)) {
+                return root;
+            }
+
+            List<T> ret = new ArrayList<>();
+            for (T child : root.getChildren()) {
+                T returned = filterDeckInternal(filterPattern, child);
+                if (returned != null) {
+                    ret.add(returned);
+                }
+            }
+
+            // If any of a deck's children contains the search string, then the deck is valid
+            return ret.isEmpty() ? null : root.withChildren(ret);
+        }
+
+
+        private <T extends AbstractDeckTreeNode<T>> boolean containsFilterString(String filterPattern, T root) {
+            String deckName = root.getFullDeckName();
+            return deckName.toLowerCase().contains(filterPattern) || deckName.toLowerCase(Locale.US).contains(filterPattern);
+        }
     }
 }

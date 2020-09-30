@@ -94,6 +94,7 @@
     <string name="sync_overwrite_error">Бягучая калекцыя не можа быць перазапісана спампаваным файлам</string>
     <string name="sync_connection_error">Час чакання злучэння мінуў. Магчыма, што зараз у вас праблемы з падлучэннем да інтэрнэту або ў папцы змешчаны вельмі вялікі медыяфайл.</string>
     <string name="sync_write_access_error">Спампаваны файл не можа быць захаваны на SD-картку. Магчыма, што яна знаходзіцца ў рэжыме толькі чытанне або на ёй не дастаткова вольнага месца.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Сінхранізацыя выдалення&#8230;</string>
     <string name="sync_small_objects_message">Сінхранізацыя невялікіх аб\'ектаў&#8230;</string>
     <string name="sync_finish_message">Завяршэнне сінхранізацыі&#8230;</string>
@@ -115,6 +116,8 @@
     <string name="sync_media_db_error">Не атрымалася сінхранізаваць медыа, бо база дадзеных пашкоджана. Раім запусціць праверку медыа.</string>
     <string name="sync_media_error">Памылка сінхранізацыі даных медыя</string>
     <string name="sync_media_error_check">Памылка падчас сінхранізацыі медыяфайлаў. Пажадана праверыць медыяфайлы.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Лакальна</string>
     <string name="sync_sanity_remote">Выдалена</string>
     <string name="force_full_sync_title">Выканаць поўную сінхранізацыю</string>
@@ -132,4 +135,6 @@
     <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Help</string>
 </resources>

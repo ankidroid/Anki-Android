@@ -42,11 +42,11 @@ public class AnkiStatsTaskHandler {
 
     private static AnkiStatsTaskHandler sInstance;
 
-    private Collection mCollectionData;
+    private final Collection mCollectionData;
     private float mStandardTextSize = 10f;
     private Stats.AxisType mStatType = Stats.AxisType.TYPE_MONTH;
     private long mDeckId;
-    private static Lock sLock = new ReentrantLock();
+    private static final Lock sLock = new ReentrantLock();
 
 
     public AnkiStatsTaskHandler(Collection collection){
@@ -83,7 +83,7 @@ public class AnkiStatsTaskHandler {
         private ProgressBar mProgressBar;
 
         private boolean mIsRunning = false;
-        private Stats.ChartType mChartType;
+        private final Stats.ChartType mChartType;
 
         public CreateChartTask(Stats.ChartType chartType){
             super();

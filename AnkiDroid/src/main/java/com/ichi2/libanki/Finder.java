@@ -24,7 +24,6 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
-import com.ichi2.anki.CardBrowser;
 import com.ichi2.async.CollectionTask;
 
 import com.ichi2.libanki.Deck;
@@ -47,7 +46,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
-import timber.log.Timber;
 
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
@@ -58,7 +56,7 @@ public class Finder {
     private static final Pattern fNidsPattern = Pattern.compile("[^0-9,]");
     private static final Pattern fMidPattern = Pattern.compile("[^0-9]");
 
-    private Collection mCol;
+    private final Collection mCol;
 
 
     public Finder(Collection col) {
@@ -222,9 +220,9 @@ public class Finder {
     }
 
 
-    /**
-     * Query building
-     * ***********************************************************
+    /*
+      Query building
+      ***********************************************************
      */
 
     /**
@@ -794,9 +792,9 @@ public class Finder {
     }
 
 
-    /**
-     * Find and replace
-     * ***********************************************************
+    /*
+      Find and replace
+      ***********************************************************
      */
 
     /**
@@ -1001,7 +999,7 @@ public class Finder {
                     continue;
                 }
                 if (!vals.containsKey(val)) {
-                    vals.put(val, new ArrayList<Long>());
+                    vals.put(val, new ArrayList<>());
                 }
                 vals.get(val).add(nid);
                 if (vals.get(val).size() == 2) {

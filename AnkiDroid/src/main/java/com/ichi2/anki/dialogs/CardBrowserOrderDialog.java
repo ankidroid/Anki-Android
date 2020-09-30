@@ -10,6 +10,8 @@ import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+
 public class CardBrowserOrderDialog extends AnalyticsDialogFragment {
 
     private static MaterialDialog.ListCallbackSingleChoice mOrderDialogListener;
@@ -27,6 +29,7 @@ public class CardBrowserOrderDialog extends AnalyticsDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

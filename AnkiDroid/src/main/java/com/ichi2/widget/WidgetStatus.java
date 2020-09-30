@@ -28,6 +28,7 @@ import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.async.BaseAsyncTask;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.sched.Counts;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
 
 import java.util.List;
@@ -40,7 +41,6 @@ import timber.log.Timber;
 public final class WidgetStatus {
 
     private static boolean sSmallWidgetEnabled = false;
-    private static boolean sNotificationEnabled = false;
     private static AsyncTask<Context, Void, Context> sUpdateDeckStatusAsyncTask;
 
 
@@ -58,9 +58,9 @@ public final class WidgetStatus {
     public static void update(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false);
-        sNotificationEnabled = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000;
+        boolean notificationEnabled = Integer.parseInt(preferences.getString("minimumCardsDueForNotification", "1000001")) < 1000000;
         boolean canExecuteTask = ((sUpdateDeckStatusAsyncTask == null) || (sUpdateDeckStatusAsyncTask.getStatus() == AsyncTask.Status.FINISHED));
-        if ((sSmallWidgetEnabled || sNotificationEnabled) && canExecuteTask) {
+        if ((sSmallWidgetEnabled || notificationEnabled) && canExecuteTask) {
             Timber.d("WidgetStatus.update(): updating");
             sUpdateDeckStatusAsyncTask = new UpdateDeckStatusAsyncTask();
             sUpdateDeckStatusAsyncTask.execute(context);
@@ -118,7 +118,7 @@ public final class WidgetStatus {
 
 
         private void updateCounts(Context context) {
-            int[] total = {0, 0, 0};
+            Counts total = new Counts();
             Collection col = CollectionHelper.getInstance().getCol(context);
             // Ensure queues are reset if we cross over to the next day.
             col.getSched()._checkDay();
@@ -126,13 +126,12 @@ public final class WidgetStatus {
             // Only count the top-level decks in the total
             List<DeckDueTreeNode> nodes = col.getSched().deckDueTree();
             for (DeckDueTreeNode node : nodes) {
-                total[0] += node.getNewCount();
-                total[1] += node.getLrnCount();
-                total[2] += node.getRevCount();
+                total.addNew(node.getNewCount());
+                total.addLrn(node.getLrnCount());
+                total.addRev(node.getRevCount());
             }
-            int due = total[0] + total[1] + total[2];
             int eta = col.getSched().eta(total, false);
-            sSmallWidgetStatus = new Pair<>(due, eta);
+            sSmallWidgetStatus = new Pair<>(total.count(), eta);
         }
     }
 }

@@ -43,7 +43,7 @@
     <string name="enabled">مفعل</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general">AnkiDroid</string>
-    <string name="pref_cat_general_summ">اعدادات عامة</string>
+    <string name="pref_cat_general_summ">إعدادات عامة</string>
     <string name="pref_cat_reviewing">مراجعة</string>
     <string name="pref_cat_reviewing_summ">إعدادات المراجعة غير المحصورة برزمة محددة</string>
     <string name="pref_cat_reviewer_behaviour">السلوك</string>
@@ -51,10 +51,10 @@
     <string name="pref_cat_whiteboard">السبورة</string>
     <string name="pref_cat_automatic_display">إظهار الجواب تلقائيًا</string>
     <string name="pref_cat_appearance">المظهر</string>
-    <string name="pref_cat_appearance_summ">تغيير الثيمات والخط الافتراضي</string>
+    <string name="pref_cat_appearance_summ">تغيير السمات والخط الافتراضي</string>
     <string name="pref_cat_themes">السمات</string>
     <string name="pref_cat_fonts">الخطوط</string>
-    <string name="pref_cat_gestures">الحركات</string>
+    <string name="pref_cat_gestures">الإيماءات</string>
     <string name="pref_cat_gestures_summ">استخدم النقرات والسحب بدلًا من الأزرار</string>
     <string name="pref_cat_actions">الإجراءات</string>
     <string name="pref_cat_advanced">خيارات متقدمة</string>
@@ -68,7 +68,7 @@
     <string name="whiteboard_stroke_width">عرض الخط</string>
     <string name="whiteboard_black">خط أسود</string>
     <string name="whiteboard_black_summ">يستخدم ذاكرة أقل، إلا إذا كان في الوضع الليلي</string>
-    <string name="use_input_tag">أدخل الجواب في البطاقة</string>
+    <string name="use_input_tag">إدخال الجواب في البطاقة</string>
     <string name="use_input_tag_summ">استخدام مربع إدخال نصي داخل البطاقة لكتابة الجواب</string>
     <string name="dictionary">قاموس البحث</string>
     <string name="reset_languages">إعادة تعيين اللغات</string>
@@ -76,7 +76,7 @@
     <string name="reset_languages_question">إعادة تعيين كافة تعيينات اللغة؟</string>
     <string name="reset_confirmation">تمت إعادة تعيين كل الإعدادات</string>
     <string name="card_zoom">تكبير البطاقة</string>
-    <string name="image_zoom">تكبير الصورة</string>
+    <string name="image_zoom">تكبير الصور</string>
     <string name="button_size">حجم زر الإجابة</string>
     <string name="card_browser_font_size">نسبة تضخيم حجم خط متصفح البطاقات</string>
     <string name="card_browser_hide_media">عرض أسماء الملفات في متصفح البطاقات</string>
@@ -117,7 +117,7 @@
     <string name="tts">تحويل النص إلى كلام</string>
     <string name="tts_summ">يقرأ السؤال والجواب إذا لم يكن هناك ملف صوتي</string>
     <string name="sync_fetch_missing_media">جلب الوسائط أثناء المزامنة</string>
-    <string name="sync_fetch_missing_media_summ">جلب الوسائط المفقودة تلقائيًا عند المزامنة.</string>
+    <string name="sync_fetch_missing_media_summ">جلب الوسائط المفقودة تلقائيًا عند المزامنة</string>
     <string name="sync_account">حساب أنكي ويب</string>
     <string name="sync_account_summ_logged_out">لست مسجلًا الدخول</string>
     <string name="sync_account_summ_logged_in">%s</string>
@@ -125,11 +125,11 @@
     <string name="automatic_sync_choice_summ">مزامنة تلقائية عند بدء/إغلاق التطبيق إذا مضى على المزامنة الأخيرة        أكثر من 10 دقائق.</string>
     <string name="sync_status_badge">عرض حالة المزامنة</string>
     <string name="sync_status_badge_summ">تغيير زر المزامنة المعروض عندما يكون من الممكن رفع التغييرات</string>
-    <string name="day_theme">ثيمة النهار</string>
-    <string name="night_theme">ثيمة الليل</string>
+    <string name="day_theme">سمة النهار</string>
+    <string name="night_theme">سمة الليل</string>
     <string name="default_font">الخط الافتراضي</string>
     <string name="override_font">قابلية تطبيق الخط الافتراضي</string>
-    <string name="language">لغة</string>
+    <string name="language">اللغة</string>
     <string name="language_system">لغة النظام</string>
     <string name="notification_pref">التنبيهات</string>
     <string name="notification_pref_title">نبّهني عند</string>
@@ -207,7 +207,7 @@
     <string name="custom_sync_server_media_url_invalid">رابط مزامنة الوسائط غير صالح</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">ستؤثر التغييرات في خيارات مجموعة الرزم على عدة رزم. إذا كنت ترغب في تغيير الرزمة الحالية فقط، أضف مجموعة خيارات جديدة أولًا.</string>
-    <string name="studyoptions_limit_select_tags">اختيار سمات</string>
+    <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
     <!-- Deck configurations -->
     <string name="deck_conf_deck_description">وصف الرزمة (ينطبق على الرزمة الحالية فقط)</string>
     <string name="deck_conf_group">مجموعة الخيارات</string>
@@ -291,4 +291,6 @@
     <string name="analytics_dialog_title">ساعد في تحسين أنكيدرويد!</string>
     <string name="analytics_title">مشاركة بيانات استخدام الميزات</string>
     <string name="analytics_summ">تستطيع المساهمة في أنكيدرويد من خلال مساعدة فريق التطوير على معرفة الميزات التي يستخدمها الناس</string>
+    <string name="enable_miui_keyboard_hack">«لصق» لتضمين عبارة ملء فراغات</string>
+    <string name="enable_miui_keyboard_hack_summ">في محرر الملحوظات، «لصق» يحول النص المحدد إلى عبارة ملء فراغات</string>
 </resources>

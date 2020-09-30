@@ -94,6 +94,7 @@
     <string name="sync_overwrite_error">所下載的檔案無法覆蓋你當前的收藏</string>
     <string name="sync_connection_error">連線逾時。可能是你的網路連線有問題，或是你的媒體資料夾內有很大的檔案。</string>
     <string name="sync_write_access_error">下載的檔案無法儲存到 SD 記憶卡。你的 SD 記憶卡裝載為唯讀，或者沒有足夠的空間。</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">同步刪除...</string>
     <string name="sync_small_objects_message">同步小物件...</string>
     <string name="sync_finish_message">完成同步...</string>
@@ -115,6 +116,8 @@
     <string name="sync_media_db_error">媒體同步失敗，當前資料庫已損毀。建議執行媒體檢查。</string>
     <string name="sync_media_error">同步媒體資料時出錯</string>
     <string name="sync_media_error_check">同步媒體檔時發生錯誤。建議進行一次媒體檢查。</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">本機</string>
     <string name="sync_sanity_remote">遠端</string>
     <string name="force_full_sync_title">強制完整同步</string>
@@ -132,4 +135,6 @@
     <string name="sync_menu_title">同步</string>
     <string name="sync_menu_title_full_sync">同步(完整)</string>
     <string name="sync_menu_title_no_account">同步(登入)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Help</string>
 </resources>

@@ -16,7 +16,16 @@
  ****************************************************************************************/
 
 package com.ichi2.anki.tests;
+import android.content.Context;
 import android.os.Build;
+
+import com.ichi2.anki.CollectionHelper;
+import com.ichi2.libanki.Collection;
+
+import java.io.File;
+import java.io.IOException;
+
+import androidx.test.platform.app.InstrumentationRegistry;
 
 public abstract class InstrumentedTest {
 
@@ -42,5 +51,26 @@ public abstract class InstrumentedTest {
                 || Build.PRODUCT.contains("vbox86p")
                 || Build.PRODUCT.contains("emulator")
                 || Build.PRODUCT.contains("simulator");
+    }
+
+    protected Collection getCol() {
+        return CollectionHelper.getInstance().getCol(getTestContext());
+    }
+
+    protected Collection getEmptyCol() throws IOException {
+        return Shared.getEmptyCol(getTestContext());
+    }
+
+    /**
+     * @return A File object pointing to a directory in which temporary test files can be placed. The directory is
+     *         emptied on every invocation of this method so it is suitable to use at the start of each test.
+     *         Only add files (and not subdirectories) to this directory.
+     */
+    protected File getTestDir() {
+        return Shared.getTestDir(getTestContext());
+    }
+
+    protected Context getTestContext() {
+        return InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 }

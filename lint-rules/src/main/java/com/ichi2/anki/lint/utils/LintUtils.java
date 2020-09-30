@@ -19,6 +19,7 @@ public class LintUtils {
      * @param allowedClasses  the list of classes where the checks should be ignored
      * @return true if this is a class where the checks should not be applied, false otherwise
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isAnAllowedClass(List<UClass> classes, String... allowedClasses) {
         boolean isInAllowedClass = false;
         for (int i = 0; i < classes.size(); i++) {

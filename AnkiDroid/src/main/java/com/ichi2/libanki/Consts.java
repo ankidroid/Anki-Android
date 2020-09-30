@@ -16,7 +16,6 @@
 
 package com.ichi2.libanki;
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy.*;
 
 import androidx.annotation.IntDef;
 

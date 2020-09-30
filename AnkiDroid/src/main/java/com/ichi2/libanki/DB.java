@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
@@ -56,7 +57,7 @@ public class DB {
     /**
      * The collection, which is actually an SQLite database.
      */
-    private SupportSQLiteDatabase mDatabase;
+    private final SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
 
     /**
@@ -110,8 +111,8 @@ public class DB {
     public static class SupportSQLiteOpenHelperCallback extends SupportSQLiteOpenHelper.Callback {
 
         protected SupportSQLiteOpenHelperCallback(int version) { super(version); }
-        public void onCreate(SupportSQLiteDatabase db) {/* do nothing */ }
-        public void onUpgrade(SupportSQLiteDatabase db, int oldVersion, int newVersion) { /* do nothing */ }
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {/* do nothing */ }
+        public void onUpgrade(@NonNull SupportSQLiteDatabase db, int oldVersion, int newVersion) { /* do nothing */ }
 
 
         /** Send error message, but do not call super() which would delete the database */
@@ -367,13 +368,7 @@ public class DB {
 
     public void executeMany(String sql, List<Object[]> list) {
         mMod = true;
-        mDatabase.beginTransaction();
-        try {
-            executeManyNoTransaction(sql, list);
-            mDatabase.setTransactionSuccessful();
-        } finally {
-            mDatabase.endTransaction();
-        }
+        executeInTransaction(() -> executeManyNoTransaction(sql, list));
     }
 
     /** Use this executeMany version with external transaction management */
@@ -389,5 +384,43 @@ public class DB {
      */
     public String getPath() {
         return mDatabase.getPath();
+    }
+
+
+    public void executeInTransaction(Runnable r) {
+        // Ported from code which started the transaction outside the try..finally
+        getDatabase().beginTransaction();
+        try {
+            r.run();
+            if (getDatabase().inTransaction()) {
+                try {
+                    getDatabase().setTransactionSuccessful();
+                } catch (Exception e) {
+                    // Unsure if this can happen - copied the structure from endTransaction()
+                    Timber.w(e);
+                }
+            } else {
+                Timber.w("Not in a transaction. Cannot mark transaction successful.");
+            }
+        } finally {
+            safeEndInTransaction(getDatabase());
+        }
+    }
+
+    public static void safeEndInTransaction(DB database) {
+        safeEndInTransaction(database.getDatabase());
+    }
+
+    public static void safeEndInTransaction(SupportSQLiteDatabase database) {
+        if (database.inTransaction()) {
+            try {
+                database.endTransaction();
+            } catch (Exception e) {
+                // endTransaction throws about invalid transaction even when you check first!
+                Timber.w(e);
+            }
+        } else {
+            Timber.w("Not in a transaction. Cannot end transaction.");
+        }
     }
 }

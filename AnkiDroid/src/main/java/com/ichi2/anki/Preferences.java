@@ -20,7 +20,6 @@
 
 package com.ichi2.anki;
 
-import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -32,7 +31,9 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -78,10 +79,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
-import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -93,6 +92,7 @@ import java.util.TreeMap;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import timber.log.Timber;
 
 interface PreferenceContext {
@@ -118,7 +118,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     private static final int RESULT_LOAD_IMG = 111;
     private CheckBoxPreference backgroundImage;
-    private static long fileLength;
+
+
     // ----------------------------------------------------------------------------
     // Overridden methods
     // ----------------------------------------------------------------------------
@@ -159,10 +160,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
         return false;
     }
@@ -199,6 +199,24 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     mCategory.removePreference(mCheckBoxPref_Vibrate);
                     mCategory.removePreference(mCheckBoxPref_Blink);
                 }
+                try {
+                    // This works on an API 19 emulator
+                    // use icon= once we're past API 21
+                    // ----
+                    // android.content.res.Resources$NotFoundException: File res/drawable/ic_language_black_24dp.xml
+                    // from drawable resource ID #0x7f0800d7. If the resource you are trying to use is a vector
+                    // resource, you may be referencing it in an unsupported way.
+                    // See AppCompatDelegate.setCompatVectorFromResourcesEnabled() for more info.
+                    Drawable languageIcon = VectorDrawableCompat.create(
+                            getResources(),
+                            R.drawable.ic_language_black_24dp,
+                            getTheme());
+
+                    screen.findPreference("language").setIcon(languageIcon);
+                } catch (Exception e) {
+                    Timber.w(e, "Failed to set language icon");
+                }
+
 
                 // Build languages
                 initializeLanguageDialog(screen);
@@ -346,6 +364,11 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     analyticsDebugMode.setTitle("Switch Analytics to dev mode");
                     analyticsDebugMode.setSummary("Touch here to use Analytics dev tag and 100% sample rate");
                     analyticsDebugMode.setOnPreferenceClickListener(preference -> {
+                        if (UsageAnalytics.isEnabled()) {
+                            UIUtils.showThemedToast(this, "Analytics set to dev mode", true);
+                        } else {
+                            UIUtils.showThemedToast(this, "Done! Enable Analytics in 'General' settings to use.", true);
+                        }
                         UsageAnalytics.setDevMode();
                         return true;
                     });
@@ -362,6 +385,15 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                         return true;
                     });
                     screen.addPreference(lockDbPreference);
+                }
+                if (BuildConfig.DEBUG) {
+                    Timber.i("Debug mode, adding show changelog");
+                    Preference changelogPreference = new Preference(this);
+                    changelogPreference.setTitle("Open Changelog");
+                    Intent infoIntent = new Intent(this, Info.class);
+                    infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION);
+                    changelogPreference.setIntent(infoIntent);
+                    screen.addPreference(changelogPreference);
                 }
                 // Force full sync option
                 ConfirmationPreference fullSyncPreference = (ConfirmationPreference)screen.findPreference("force_full_sync");
@@ -438,18 +470,16 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         // DEFECT #5973: Does not handle Google Drive downloads
         try {
             if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
-                Cursor cursor = null;
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                try {
-                    cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                try (Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null)) {
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     String imgPathString = cursor.getString(columnIndex);
                     File sourceFile = new File(imgPathString);
 
                     // file size in MB
-                    fileLength = sourceFile.length() / (1024 * 1024);
+                    long fileLength = sourceFile.length() / (1024 * 1024);
 
                     String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                     String imageName = "DeckPickerBackground.png";
@@ -464,10 +494,6 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     } else {
                         backgroundImage.setChecked(false);
                         UIUtils.showThemedToast(this, getString(R.string.image_max_size_allowed, 10), false);
-                    }
-                } finally {
-                    if (cursor != null) {
-                        cursor.close();
                     }
                 }
             } else {
@@ -644,7 +670,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     ListPreference listpref = (ListPreference) screen.findPreference("minimumCardsDueForNotification");
                     if (listpref != null) {
                         updateNotificationPreference(listpref);
-                        if (Integer.valueOf(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
+                        if (Integer.parseInt(listpref.getValue()) < PENDING_NOTIFICATIONS_ONLY) {
                             BootService.scheduleNotification(getCol().getTime(), this);
                         } else {
                             PendingIntent intent = PendingIntent.getBroadcast(this, 0,
@@ -713,9 +739,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                                 throw new RuntimeException(e2);
                             }
                         });
-                        builder.onNegative((dialog, which) -> {
-                            ((CheckBoxPreference) pref).setChecked(true);
-                        });
+                        builder.onNegative((dialog, which) -> ((CheckBoxPreference) pref).setChecked(true));
                         builder.positiveText(R.string.dialog_ok);
                         builder.negativeText(R.string.dialog_cancel);
                         builder.show();
@@ -734,9 +758,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                             throw new RuntimeException(e2);
                         }
                     });
-                    builder.onNegative((dialog, which) -> {
-                        ((CheckBoxPreference) pref).setChecked(false);
-                    });
+                    builder.onNegative((dialog, which) -> ((CheckBoxPreference) pref).setChecked(false));
                     builder.positiveText(R.string.dialog_ok);
                     builder.negativeText(R.string.dialog_cancel);
                     builder.show();
@@ -884,6 +906,14 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             CheckBoxPreference doubleScrolling = (CheckBoxPreference) screen.findPreference("double_scrolling");
             if (doubleScrolling != null && plugins != null) {
                 plugins.removePreference(doubleScrolling);
+            }
+        }
+
+        if (AdaptionUtil.canUseContextMenu()) {
+            PreferenceCategory workarounds = (PreferenceCategory) screen.findPreference("category_workarounds");
+            if (workarounds != null) {
+                CheckBoxPreference miuiClipboardHack = (CheckBoxPreference) screen.findPreference("enableMIUIClipboardHack");
+                workarounds.removePreference(miuiClipboardHack);
             }
         }
     }

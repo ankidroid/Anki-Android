@@ -94,6 +94,7 @@
     <string name="sync_overwrite_error">Текущая коллекция не может быть перезаписана загруженным файлом</string>
     <string name="sync_connection_error">Время ожидания истекло. У вас или проблемы с подключением к интернету, или очень большие медиафайлы.</string>
     <string name="sync_write_access_error">Загруженный файл не может быть сохранён в хранилище: оно переполнено или доступно только для чтения.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Синхронизируются удалённые&#8230;</string>
     <string name="sync_small_objects_message">Синхронизируются малые объекты&#8230;</string>
     <string name="sync_finish_message">Синхронизация заканчивается&#8230;</string>
@@ -115,6 +116,8 @@
     <string name="sync_media_db_error">Не удалось синхронизировать медиафайлы, потому что текущая база данных повреждена. Запустите проверку медиафайлов.</string>
     <string name="sync_media_error">Ошибка при синхронизации медиафайлов</string>
     <string name="sync_media_error_check">Ошибка при синхронизации медиафайлов. Выберите \"Проверку медиафайлов\".</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Запустите «%s» перед синхронизацией</string>
     <string name="sync_sanity_local">Локальную</string>
     <string name="sync_sanity_remote">Удалённую</string>
     <string name="force_full_sync_title">Выполнить полную синхронизацию</string>
@@ -132,4 +135,6 @@
     <string name="sync_menu_title">Синхронизация</string>
     <string name="sync_menu_title_full_sync">Синхронизация (полная)</string>
     <string name="sync_menu_title_no_account">Синхронизация (при входе)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Помощь</string>
 </resources>

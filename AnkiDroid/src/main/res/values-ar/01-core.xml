@@ -57,8 +57,8 @@
     <string name="study_more">ادرس أكثر</string>
     <plurals name="deckpicker_title">
         <item quantity="zero">%1$d بطاقة مستحقة (%2$s)</item>
-        <item quantity="one">بطاقة واحدة مستحقة (%2$s)</item>
-        <item quantity="two">%1$d بطاقتان مستحقتان (%2$s)</item>
+        <item quantity="one">%1$d بطاقة مستحقة (%2$s)</item>
+        <item quantity="two">%1$d بطاقة مستحقة (%2$s)</item>
         <item quantity="few">%1$d بطاقات مستحقة (%2$s)</item>
         <item quantity="many">%1$d بطاقة مستحقة (%2$s)</item>
         <item quantity="other">%1$d بطاقة مستحقة (%2$s)</item>
@@ -72,12 +72,12 @@
         <item quantity="other">%d دقيقة متبقية</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="zero">باقي %d ساعة</item>
-        <item quantity="one">باقي ساعة</item>
-        <item quantity="two">باقي ساعتين</item>
-        <item quantity="few">باقي %d ساعات</item>
-        <item quantity="many">باقي %d ساعة</item>
-        <item quantity="other">باقي %d ساعة</item>
+        <item quantity="zero">تبقى %d ساعة و%d دقيقة</item>
+        <item quantity="one">تبقى %d ساعة و%d دقيقة</item>
+        <item quantity="two">تبقى %d ساعة و%d دقيقة</item>
+        <item quantity="few">تبقى %d ساعات و%d دقيقة</item>
+        <item quantity="many">تبقى %d ساعة و%d دقيقة</item>
+        <item quantity="other">تبقى %d ساعة و%d دقيقة</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
         <item quantity="zero">تبقى %d يوم و%d ساعة</item>
@@ -110,8 +110,8 @@
     <string name="menu_import">استيراد</string>
     <string name="undo">تراجع</string>
     <string name="undo_action_review">آخر مراجعة</string>
-    <string name="undo_action_bury_card">ادفن البطاقة</string>
-    <string name="undo_action_bury_note">ادفن الملحوظة</string>
+    <string name="undo_action_bury_card">دفن البطاقة</string>
+    <string name="undo_action_bury_note">دفن الملحوظة</string>
     <string name="undo_action_suspend_card">تعليق البطاقة</string>
     <string name="undo_action_suspend_note">تعليق الملحوظة</string>
     <string name="undo_action_delete">حذف الملحوظة</string>
@@ -126,8 +126,8 @@
     <string name="menu_add">إضافة</string>
     <string name="menu_add_note">إضافة ملحوظة</string>
     <string name="menu_my_account">حساب المزامنة</string>
-    <string name="menu_dismiss_note">اخفِ / احذف</string>
-    <string name="menu_bury_card">ادفن البطاقة</string>
+    <string name="menu_dismiss_note">إخفاء / حذف</string>
+    <string name="menu_bury_card">دفن البطاقة</string>
     <string name="menu_bury_note">دفن الملحوظة</string>
     <string name="menu_suspend_card">تعليق البطاقة</string>
     <string name="menu_suspend_note">تعليق الملحوظة</string>
@@ -135,18 +135,18 @@
     <string name="menu_suspend">تعليق</string>
     <string name="menu_delete_note">حذف الملحوظة</string>
     <string name="menu_flag">مؤشر</string>
-    <string name="menu_flag_card">أشر على البطاقة</string>
+    <string name="menu_flag_card">تأشير البطاقة</string>
     <string name="menu_flag_card_zero">لا مؤشر</string>
     <string name="menu_flag_card_one">مؤشر أحمر</string>
     <string name="menu_flag_card_two">مؤشر برتقالي</string>
     <string name="menu_flag_card_three">مؤشر أخضر</string>
     <string name="menu_flag_card_four">مؤشر أزرق</string>
-    <string name="menu_edit_tags">تعديل السمات</string>
+    <string name="menu_edit_tags">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>
-    <string name="menu_select">تحديد نص</string>
+    <string name="menu_select">تحديد النص</string>
     <string name="menu_search">البحث في %1$s</string>
-    <string name="menu_mark_note">علِّم الملحوظة</string>
-    <string name="menu_unmark_note">الغِ تعليم الملحوظة</string>
+    <string name="menu_mark_note">تعليم الملحوظة</string>
+    <string name="menu_unmark_note">إلغاء تعليم الملحوظة</string>
     <string name="menu_toggle_mic_tool_bar">تحقق من النطق</string>
     <string name="new_deck">إنشاء رزمة</string>
     <string name="create">إنشاء</string>
@@ -165,26 +165,26 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d ثانية</string>
-    <string name="time_quantity_minutes">%d دقيقة</string>
+    <string name="time_quantity_seconds">%d ث</string>
+    <string name="time_quantity_minutes">%d د</string>
     <string name="time_quantity_hours_minutes">%1$d س %2$d د</string>
-    <string name="time_quantity_hours">%d ساعة</string>
-    <string name="time_quantity_days">%d يوم</string>
+    <string name="time_quantity_hours">%d س</string>
+    <string name="time_quantity_days">%d ي</string>
     <string name="time_quantity_days_hours">%1$d ي %2$d س</string>
-    <string name="time_quantity_months">%.1f شهر</string>
-    <string name="time_quantity_years">%.1f سنة</string>
+    <string name="time_quantity_months">%.1f ش</string>
+    <string name="time_quantity_years">%.1f ع</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label">إعادة بناء</string>
+    <string name="rebuild_filtered_deck">إعادة إنشاء الرزمة المفلترة&#8230;</string>
+    <string name="rebuild_cram_label">إعادة إنشاء</string>
     <string name="empty_cram_label">إفراغ</string>
     <string name="create_subdeck">إنشاء رزمة فرعية</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">إفراغ الرزمة المفلترة&#8230;</string>
     <string name="custom_study_deck_name">جلسة دراسة مخصصة</string>
     <string name="custom_study_deck_exists">أعد تسمية رزمة الدراسة المخصصة الموجودة أولًا</string>
     <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
     <string name="studyoptions_empty">هذه الرزمة فارغة. اضغط زر + لإضافة محتوى جديد.</string>
-    <string name="studyoptions_limit_reached">وصلت إلى حد الدراسة اليومي</string>
+    <string name="studyoptions_limit_reached">بلغت حد الدراسة اليومي</string>
     <string name="studyoptions_empty_schedule">لا توجد بطاقات مُجَدْوَلة للدراسة</string>
     <string name="studyoptions_congrats_finished">تهانينا! لقد انتهيت لهذا الوقت.</string>
     <string name="studyoptions_congrats_more_rev">لقد بلغت حد المراجعة اليومي، لكن ما زالت هناك بطاقات تنتظر المراجعة. تستطيع رفع الحد في الخيارات.</string>
@@ -197,7 +197,7 @@
     <string name="cancel_sync_confirm">هل تود إلغاء المزامنة؟</string>
     <string name="continue_sync">واصِل المزامنة</string>
     <string name="sync_cancelled">أُلغِيت المزامنة</string>
-    <string name="sync_cancel_message">إلغاء&#8230;\nقد يستغرق الامر بعض الوقت.</string>
+    <string name="sync_cancel_message">إلغاء&#8230;\nقد يستغرق الأمر بعض الوقت.</string>
     <string name="export">تصدير</string>
     <string name="export_collection">تصدير المجموعة</string>
     <string name="export_deck">تصدير الرزمة</string>
@@ -213,9 +213,9 @@
     <string name="card_template_editor_cant_delete">يلزم نوع بطاقة واحد على الأقل</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="zero">حذف نوع البطاقة \"%2$s\"، والبطاقات %1$d؟</item>
-        <item quantity="one">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والبطاقة الواحدة المتعلقة به؟</item>
-        <item quantity="two">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والبطاقتين المتعلقتين به؟</item>
-        <item quantity="few">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقات المتعلقات به؟</item>
+        <item quantity="one">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
+        <item quantity="two">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
+        <item quantity="few">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقات المتعلقة به؟</item>
         <item quantity="many">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
         <item quantity="other">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
     </plurals>

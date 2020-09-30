@@ -21,6 +21,8 @@ package com.ichi2.anki;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -94,6 +96,7 @@ import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.NamedJSONComparator;
+import com.ichi2.utils.NoteFieldDecorator;
 import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONArray;
@@ -109,8 +112,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
+
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
@@ -194,7 +199,7 @@ public class NoteEditor extends AnkiActivity {
 
     private Note mEditorNote;
     @Nullable
-    /** Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
+    /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
     private Card mCurrentEditedCard;
     private ArrayList<String> mSelectedTags;
     private long mCurrentDid;
@@ -696,6 +701,13 @@ public class NoteEditor extends AnkiActivity {
 
                 }
             }
+            case KeyEvent.KEYCODE_P: {
+                if (event.isCtrlPressed()) {
+                    Timber.i("Ctrl+P: Preview Pressed");
+                    performPreview();
+                }
+                break;
+            }
             default:
                 break;
         }
@@ -859,7 +871,7 @@ public class NoteEditor extends AnkiActivity {
             final Model oldModel = (mCurrentEditedCard == null) ? null : mCurrentEditedCard.model();
             if (!newModel.equals(oldModel)) {
                 mReloadRequired = true;
-                if (mModelChangeCardMap.size() < mEditorNote.numberOfCards() || mModelChangeCardMap.containsKey(null)) {
+                if (mModelChangeCardMap.size() < mEditorNote.numberOfCards() || mModelChangeCardMap.containsValue(null)) {
                     // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
                     ConfirmationDialog dialog = new ConfirmationDialog ();
                     dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing));
@@ -959,6 +971,13 @@ public class NoteEditor extends AnkiActivity {
     protected void onPause() {
         dismissAllDialogFragments(); //remove the "field language" as it can't be reshown without a field reference
         super.onPause();
+    }
+
+
+    @Override
+    protected void onResume() {
+        dismissAllDialogFragments(); // dismiss "tags" as it may have been attached after onPause is called
+        super.onResume();
     }
 
 
@@ -1325,6 +1344,7 @@ public class NoteEditor extends AnkiActivity {
         if (!"".equals(customFont)) {
             mCustomTypeface = AnkiFont.getTypeface(this, customFont);
         }
+        ClipboardManager clipboard = ContextCompat.getSystemService(this, ClipboardManager.class);
 
         for (int i = 0; i < fields.length; i++) {
             View edit_line_view = getLayoutInflater().inflate(R.layout.card_multimedia_editline, mFieldsLayoutContainer, false);
@@ -1338,7 +1358,7 @@ public class NoteEditor extends AnkiActivity {
                 newTextbox.setCustomInsertionActionModeCallback(actionModeCallback);
             }
 
-            initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode);
+            initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode, clipboard);
 
             TextView label = newTextbox.getLabel();
             label.setPadding((int) UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
@@ -1487,7 +1507,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void initFieldEditText(FieldEditText editText, final int index, String[] values, Typeface customTypeface, boolean enabled) {
+    private void initFieldEditText(FieldEditText editText, final int index, String[] values, Typeface customTypeface, boolean enabled, @Nullable ClipboardManager clipboard) {
         String name = values[0];
         String content = values[1];
         Locale hintLocale = getHintLocaleForField(name);
@@ -1496,8 +1516,54 @@ public class NoteEditor extends AnkiActivity {
             editText.setTypeface(customTypeface);
         }
 
+        // HACK: To be removed after #7124
+        // Additional cloze icon using GBoard Clipboard function for MIUI users
+        if (clipboard != null && !AdaptionUtil.canUseContextMenu() && AnkiDroidApp.getSharedPrefs(this).getBoolean("enableMIUIClipboardHack", true)) {
+            editText.setSelectionChangeListener((selStart, selEnd) -> {
+                if (!isClozeType()) {
+                    return;
+                }
+
+                Editable text = editText.getText();
+                // only display if one or more characters is selected
+                if (selStart == selEnd || text == null) {
+                    return;
+                }
+
+                int start = Math.min(selStart, selEnd);
+                int end = Math.max(selStart, selEnd);
+
+                String nextCloze = previewNextClozeDeletion(start, end, text);
+                ClipData clip = ClipData.newPlainText("", nextCloze);
+                clipboard.setPrimaryClip(clip);
+            });
+        }
+
         // Listen for changes in the first field so we can re-check duplicate status.
         editText.addTextChangedListener(new EditFieldTextWatcher(index));
+        if (index == 0) {
+            editText.setOnFocusChangeListener((v, hasFocus) -> {
+                try {
+                    if (hasFocus) {
+                        // we only want to decorate when we lose focus
+                        return;
+                    }
+                    String[] currentFieldStrings = getCurrentFieldStrings();
+                    if (currentFieldStrings.length != 2 || currentFieldStrings[1].length() > 0) {
+                        // we only decorate on 2-field cards while second field is still empty
+                        return;
+                    }
+                    String firstField = currentFieldStrings[0];
+                    String decoratedText = NoteFieldDecorator.aplicaHuevo(firstField);
+                    if (!decoratedText.equals(firstField)) {
+                        // we only apply the decoration if it is actually different from the first field
+                        setFieldValueFromUi(1, decoratedText);
+                    }
+                } catch (Exception e) {
+                    Timber.w(e, "Unable to decorate text field");
+                }
+            });
+        }
         editText.setEnabled(enabled);
     }
 
@@ -1568,7 +1634,7 @@ public class NoteEditor extends AnkiActivity {
         // 1 is empty, 2 is dupe, null is neither.
         Note.DupeOrEmpty dupeCode = mEditorNote.dupeOrEmpty();
         // Change bottom line color of text field
-        if (dupeCode != null && dupeCode == Note.DupeOrEmpty.DUPE) {
+        if (dupeCode == Note.DupeOrEmpty.DUPE) {
             field.setDupeStyle();
         } else {
             field.setDefaultStyle();
@@ -1948,7 +2014,8 @@ public class NoteEditor extends AnkiActivity {
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                menu.add(Menu.NONE, mSetLanguageId, 1, R.string.note_editor_set_field_language);
+                // This should be after "Paste as Plain Text"
+                menu.add(Menu.NONE, mSetLanguageId, 99, R.string.note_editor_set_field_language);
             }
 
 
@@ -2042,6 +2109,19 @@ public class NoteEditor extends AnkiActivity {
         textBox.setText(String.format("%s%s%s}}%s", beforeText, clozeOpenBracket, selectedText, afterText));
         int clozeOpenSize = clozeOpenBracket.length();
         textBox.setSelection(start + clozeOpenSize, end + clozeOpenSize);
+    }
+
+    @NonNull
+    private String previewNextClozeDeletion(int start, int end, CharSequence text) {
+        // TODO: Code Duplication with the above
+
+        CharSequence selectedText = text.subSequence(start, end);
+        int nextClozeIndex = getNextClozeIndex();
+        nextClozeIndex = Math.max(1, nextClozeIndex);
+
+
+        // Update text field with updated text and selection
+        return String.format("{{c%s::%s}}", nextClozeIndex, selectedText);
     }
 
 

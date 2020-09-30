@@ -175,11 +175,13 @@
     <string name="import_log_file_cache_cleared">Erreur lors de l\'importation du fichier, il est probable que le cache soit effacé pendant le traitement.\nVeuillez réessayer</string>
     <string name="import_succeeded_but_check_database">L\'importation de données a réussi, mais le nettoyage après l\'importation a échoué. Exécutez la vérification de la base de données plus tard. Cause racine : %s</string>
     <string name="import_error_unhandled_request">Impossible de traiter la demande d\'importation</string>
+    <string name="import_error_corrupt_zip">Le fichier APKG est corrompu. Veuillez le supprimer et le retélécharger.\n\nRaison racine : %s</string>
     <string name="import_error_exception">Impossible d\'importer le paquet\n\n%s</string>
     <string name="import_error_not_apkg_extension">Le nom de fichier « %s » n\'a pas d\'extension .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Les remplacements de la base de données Anki (.anki2) ne sont pas pris en charge. Veuillez voir le guide d’utilisation pour les instructions de remplacement.</string>
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() a échoué (peut être un manque d\'espace de stockage)</string>
+    <string name="import_error_unhandled_scheme">Importation non gérée depuis : « %s »</string>
     <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
     <string name="import_interrupted">Importation interrompue</string>
     <string name="export_include_schedule">Inclure la planification</string>
@@ -315,4 +317,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Impossible de charger « %s »</string>
     <string name="card_viewer_could_not_find_image_get_help">Aide</string>
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">Impossible de charger le paquet « %s »</string>
+    <string name="search_decks">Rechercher dans les paquets</string>
 </resources>

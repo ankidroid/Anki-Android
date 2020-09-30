@@ -49,11 +49,12 @@ public class ExportDialog extends AnalyticsDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
-        final Long did = getArguments().getLong("did", -1L);
+        final long did = getArguments().getLong("did", -1L);
         Integer[] checked;
         if (did != -1L) {
             mIncludeSched = false;
@@ -74,39 +75,27 @@ public class ExportDialog extends AnalyticsDialogFragment {
                 .items(items)
                 .alwaysCallMultiChoiceCallback()
                 .itemsCallbackMultiChoice(checked,
-                        new MaterialDialog.ListCallbackMultiChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog materialDialog,
-                                                       Integer[] integers, CharSequence[] charSequences) {
-                                mIncludeMedia = false;
-                                mIncludeSched = false;
-                                for (Integer integer : integers) {
-                                    switch (integer) {
-                                        case INCLUDE_SCHED:
-                                            mIncludeSched = true;
-                                            break;
-                                        case INCLUDE_MEDIA:
-                                            mIncludeMedia = true;
-                                            break;
-                                    }
+                        (materialDialog, integers, charSequences) -> {
+                            mIncludeMedia = false;
+                            mIncludeSched = false;
+                            for (Integer integer : integers) {
+                                switch (integer) {
+                                    case INCLUDE_SCHED:
+                                        mIncludeSched = true;
+                                        break;
+                                    case INCLUDE_MEDIA:
+                                        mIncludeMedia = true;
+                                        break;
                                 }
-                                return true;
                             }
+                            return true;
                         })
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        ((ExportDialogListener) getActivity())
-                                .exportApkg(null, did != -1L ? did : null, mIncludeSched, mIncludeMedia);
-                        dismissAllDialogFragments();
-                    }
+                .onPositive((dialog, which) -> {
+                    ((ExportDialogListener) getActivity())
+                            .exportApkg(null, did != -1L ? did : null, mIncludeSched, mIncludeMedia);
+                    dismissAllDialogFragments();
                 })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dismissAllDialogFragments();
-                    }
-                });
+                .onNegative((dialog, which) -> dismissAllDialogFragments());
         return builder.show();
     }
 

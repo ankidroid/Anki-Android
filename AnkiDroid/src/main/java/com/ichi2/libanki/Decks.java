@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -137,7 +138,7 @@ public class Decks {
             +"}";
 
 
-    private Collection mCol;
+    private final Collection mCol;
     private HashMap<Long, Deck> mDecks;
     private HashMap<Long, DeckConfig> mDconf;
     // Never access mNameMap directly. Uses byName
@@ -316,12 +317,9 @@ public class Decks {
         long id;
         Deck g = new Deck(type);
         g.put("name", name);
-        while (true) {
+        do {
             id = mCol.getTime().intTimeMS();
-            if (!mDecks.containsKey(id)) {
-                break;
-            }
-        }
+        } while (mDecks.containsKey(id));
         g.put("id", id);
         mDecks.put(id, g);
         save(g);
@@ -630,7 +628,7 @@ public class Decks {
         }
 
         for (int i = 0; i < ancestorDeckPath.length; i++) {
-            if (ancestorDeckPath[i] != descendantDeckPath[i]) {
+            if (! Utils.equals(ancestorDeckPath[i], descendantDeckPath[i])) {
                 return false;
             }
         }
@@ -638,7 +636,7 @@ public class Decks {
     }
 
 
-    private static HashMap<String, String[]> pathCache = new HashMap();
+    private static final HashMap<String, String[]> pathCache = new HashMap();
     public static String[] path(String name) {
         if (!pathCache.containsKey(name)) {
             pathCache.put(name, name.split("::", -1));
@@ -678,9 +676,9 @@ public class Decks {
     }
 
 
-    /**
-     * Deck configurations
-     * ***********************************************************
+    /*
+      Deck configurations
+      ***********************************************************
      */
 
 
@@ -728,12 +726,9 @@ public class Decks {
         DeckConfig c;
         long id;
         c = new DeckConfig(cloneFrom);
-        while (true) {
+        do {
             id = mCol.getTime().intTimeMS();
-            if (!mDconf.containsKey(id)) {
-                break;
-            }
-        }
+        } while (mDconf.containsKey(id));
         c.put("id", id);
         c.put("name", name);
         mDconf.put(id, c);
@@ -879,10 +874,10 @@ public class Decks {
         for (Deck deck: decks) {
             String deckName = deck.getString("name");
 
-            /** With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for
-             * compatibility while we wait for rust.  It should be executed before other changes, because both "FOO "
-             * and "FOO" will be renamed to the same name, and so this will need to be renamed again in case of
-             * duplicate.*/
+            /* With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for
+              compatibility while we wait for rust.  It should be executed before other changes, because both "FOO "
+              and "FOO" will be renamed to the same name, and so this will need to be renamed again in case of
+              duplicate.*/
             String strippedName = strip(deckName);
             if (!deckName.equals(strippedName)) {
                 mNameMap.remove(deckName, deck);
@@ -902,13 +897,13 @@ public class Decks {
                 save(deck);
             }
 
-            if (deckName.indexOf("::::") != -1) {
+            if (deckName.contains("::::")) {
                 Timber.i("fix deck with missing sections %s", deck.getString("name"));
                 mNameMap.remove(deckName, deck);
                 do {
                     deckName = deck.getString("name").replace("::::", "::blank::");
                     // We may need to iterate, in order to replace "::::::" and adding to "blank" in it.
-                } while (deckName.indexOf("::::") != -1);
+                } while (deckName.contains("::::"));
                 deck.put("name", deckName);
                 mNameMap.add(deck);
                 save(deck);
@@ -945,9 +940,9 @@ public class Decks {
     }
 
 
-    /**
-     * Deck selection
-     * ***********************************************************
+    /*
+      Deck selection
+      ***********************************************************
      */
 
 
@@ -1108,9 +1103,9 @@ public class Decks {
     }
 
 
-    /**
-     * Dynamic decks
-     ***************************************************************/
+    /*
+      Dynamic decks
+     */
 
 
     /**
@@ -1132,7 +1127,7 @@ public class Decks {
      * utils methods
      * **************************************
      */
-    private static HashMap<String, String> normalized = new HashMap<String, String>();
+    private static final HashMap<String, String> normalized = new HashMap<>();
     public static String normalizeName(String name) {
         if (!normalized.containsKey(name)) {
             normalized.put(name, Normalizer.normalize(name, Normalizer.Form.NFC).toLowerCase());
@@ -1155,7 +1150,7 @@ public class Decks {
     }
 
 
-    private static HashMap<String, String> sParentCache = new HashMap();
+    private static final HashMap<String, String> sParentCache = new HashMap();
     public static String parent(String deckName) {
         // method parent, from sched's method deckDueList in python
         if (!sParentCache.containsKey(deckName)) {

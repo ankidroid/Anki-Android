@@ -26,8 +26,8 @@ import java.util.regex.Pattern;
 public class VariableAtom implements TreeElement {
 
     private Atom.AtomType atomType = Atom.AtomType.NUMBER;
-    private TopLevelParser parser;
-    private String varName;
+    private final TopLevelParser parser;
+    private final String varName;
 
 
     public VariableAtom(String factorString, TopLevelParser parser) {

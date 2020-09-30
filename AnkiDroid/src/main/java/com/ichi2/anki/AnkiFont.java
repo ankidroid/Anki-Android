@@ -20,14 +20,14 @@ import java.util.Set;
 import timber.log.Timber;
 
 public class AnkiFont {
-    private String mName;
-    private String mFamily;
-    private List<String> mAttributes;
-    private String mPath;
+    private final String mName;
+    private final String mFamily;
+    private final List<String> mAttributes;
+    private final String mPath;
     private Boolean mIsDefault;
     private Boolean mIsOverride;
     private static final String fAssetPathPrefix = "/android_asset/fonts/";
-    private static Set<String> corruptFonts = new HashSet<>();
+    private static final Set<String> corruptFonts = new HashSet<>();
 
 
     private AnkiFont(String name, String family, List<String> attributes, String path) {

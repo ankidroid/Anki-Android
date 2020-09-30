@@ -102,7 +102,7 @@
         <item quantity="other">%d карточек перепланированы</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Новая карточка перепланирована и стала повторяемой. Чтобы изменить номер карточки в очереди, используйте «Переместить карточку»</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Планировщик учитывает, что карточка была перепланирована (лёгкость установлена на %d%%)</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Планировщик учтёт, что карточка была перепланирована (лёгкость установлена на %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Для импорта выберите колоду в файловом менеджере или посетите страницу about:downloads</string>
     <string name="answering_error_title">Ошибка в базе данных</string>
     <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибка в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
@@ -159,7 +159,14 @@
     <string name="check_media_no_unused_missing">Неиспользуемые и отсутствующие файлы не найдены.</string>
     <string name="check_media_db_updated">База данных медиафайлов перестроена</string>
     <string name="check_media_delete_unused">Удалить неиспользуемые</string>
-    <string name="check_media_deleted">Удалено файлов: %d</string>
+    <string name="delete_media_message">Deleting media&#8230;</string>
+    <string name="delete_media_result_title">Deletion result</string>
+    <plurals name="delete_media_result_message">
+        <item quantity="one">%d file deleted</item>
+        <item quantity="few">%d files deleted</item>
+        <item quantity="many">%d files deleted</item>
+        <item quantity="other">%d files deleted</item>
+    </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Все карточки</string>
     <string name="tags_dialog_option_new_cards">Новые</string>
@@ -215,7 +222,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Не удалось установить напоминания</string>
     <string name="boot_service_too_many_notifications">Запланировано слишком много напоминаний. Некоторые из них не будут показаны</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
+    <string name="locale_selection_dialog_title">Выбор языка подсказок</string>
     <string name="locale_selection_dialog_summary">Некоторые многоязычные клавиатуры, например GBoard, могут переключать языка при редактировании текста\n\nПожалуйста, запросите функцию «setImeHintLocales» у разработчика клавиатуры, если клавиатура не переключает язык.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">

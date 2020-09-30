@@ -89,6 +89,11 @@ public class MyAccount extends AnkiActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (AdaptionUtil.isUserATestClient()) {
+            finishWithoutAnimation();
+            return;
+        }
+
         mayOpenUrl(Uri.parse(getResources().getString(R.string.register_url)));
         initAllContentViews();
 
@@ -215,7 +220,7 @@ public class MyAccount extends AnkiActivity {
     /**
      * Listeners
      */
-    Connection.TaskListener loginListener = new Connection.TaskListener() {
+    final Connection.TaskListener loginListener = new Connection.TaskListener() {
 
         @Override
         public void onProgressUpdate(Object... values) {

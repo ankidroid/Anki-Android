@@ -14,9 +14,7 @@ import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Utils;
 import com.ichi2.anki.analytics.UsageAnalytics;
-import com.ichi2.libanki.utils.SystemTime;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -61,7 +59,7 @@ public class DialogHandler extends Handler {
     };
 
 
-    WeakReference<AnkiActivity> mActivity;
+    final WeakReference<AnkiActivity> mActivity;
     private static Message sStoredMessage;
     
     public DialogHandler(AnkiActivity activity) {
@@ -108,12 +106,9 @@ public class DialogHandler extends Handler {
         } else if (msg.what == MSG_SHOW_FORCE_FULL_SYNC_DIALOG) {
             // Confirmation dialog for forcing full sync
             ConfirmationDialog dialog = new ConfirmationDialog ();
-            Runnable confirm = new Runnable() {
-                @Override
-                public void run() {
-                    // Bypass the check once the user confirms
-                    CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance()).modSchemaNoCheck();
-                }
+            Runnable confirm = () -> {
+                // Bypass the check once the user confirms
+                CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance()).modSchemaNoCheck();
             };
             dialog.setConfirm(confirm);
             dialog.setArgs(msgData.getString("message"));

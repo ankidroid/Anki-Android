@@ -71,8 +71,8 @@
         <item quantity="one">%d día %d restante</item>
         <item quantity="other">%d días %d restantes</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Esta colección está vacía</string>
+    <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Has estudiado %1$d tarjeta en %2$s hoy</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Escribir respuesta</string>
     <string name="show_answer">Mostrar respuesta</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Ocultar respuesta</string>
     <string name="ease_button_again">Otra vez</string>
     <string name="ease_button_hard">Difícil</string>
     <string name="ease_button_good">Bien</string>
@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f mes</string>
     <string name="time_quantity_years">%.1f año</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Reconstruyendo mazo filtrado</string>
     <string name="rebuild_cram_label">Reconstruir</string>
     <string name="empty_cram_label">Vaciar</string>
     <string name="create_subdeck">Crear submazo</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">Vaciando mazo filtrado</string>
     <string name="custom_study_deck_name">Sesión de estudio personalizado</string>
     <string name="custom_study_deck_exists">Renombra el mazo de estudio personalizado primero</string>
     <string name="empty_deck">Este mazo está vacío</string>
@@ -189,7 +189,7 @@
     <string name="card_template_editor_styling">Estilo</string>
     <string name="card_template_editor_menu_delete">Eliminar</string>
     <string name="card_template_editor_menu_card_browser_appearance">Apariencia del Navegador de Tarjetas</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">Anulación de mazo</string>
     <string name="card_template_editor_cant_delete">Se requiere al menos un tipo de tarjeta</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">¿Eliminar el tipo de tarjeta \'%2$s\' y su %1$d tarjeta?</item>
@@ -207,5 +207,5 @@
     <!-- Context Menu -->
     <string name="card_browser_label">Navegador de la tarjeta</string>
     <string name="card_browser_context_menu">Navegador de la tarjeta</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Tarjeta Anki</string>
 </resources>

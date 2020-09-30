@@ -22,11 +22,11 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class TopLevelParser implements Function2D, Function3D, Cloneable {
-    private HashMap<String, TopLevelParser> parserRegister;
-    private HashMap<String, Double> varMap = new HashMap<>();
+    private final HashMap<String, TopLevelParser> parserRegister;
+    private final HashMap<String, Double> varMap = new HashMap<>();
     private double x = 0.0, y = 0.0;
-    private Expression expression;
-    private boolean isValid;
+    private final Expression expression;
+    private final boolean isValid;
     private String expressionString;
     private String xName = "x", yName = "y";
 
@@ -54,7 +54,7 @@ public class TopLevelParser implements Function2D, Function3D, Cloneable {
         int equalPosition = expressionString.indexOf("=");
         if (equalPosition >= 1) {
             String leftStatement = expressionString.substring(0, equalPosition);
-            this.expressionString = expressionString.substring(equalPosition + 1, expressionString.length());
+            this.expressionString = expressionString.substring(equalPosition + 1);
             int commaPos = leftStatement.indexOf(",");
             int leftBracketPos = leftStatement.indexOf("(");
             int rightBracketPos = leftStatement.indexOf(")");
@@ -175,6 +175,7 @@ public class TopLevelParser implements Function2D, Function3D, Cloneable {
     }
 
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean stringHasValidBrackets(String string) {
         int finalBracketCheck = string.replaceAll("\\(", "").length() - string.replaceAll("\\)", "").length();
         if (finalBracketCheck != 0) {

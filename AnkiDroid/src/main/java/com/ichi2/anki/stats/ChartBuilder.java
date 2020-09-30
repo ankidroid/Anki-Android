@@ -42,9 +42,9 @@ public class ChartBuilder {
     private static final double Y_AXIS_STRETCH_FACTOR = 1.05;
 
     private final Stats.ChartType mChartType;
-    private long mDeckId;
-    private ChartView mChartView;
-    private Collection mCollectionData;
+    private final long mDeckId;
+    private final ChartView mChartView;
+    private final Collection mCollectionData;
 
     int mMaxCards = 0;
     private boolean mBackwards;

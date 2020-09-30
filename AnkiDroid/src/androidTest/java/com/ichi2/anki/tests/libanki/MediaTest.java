@@ -16,11 +16,10 @@
 package com.ichi2.anki.tests.libanki;
 
 import android.Manifest;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
 import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.tests.Shared;
+import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Note;
@@ -52,7 +51,7 @@ import static org.junit.Assert.assertTrue;
  */
 @SuppressWarnings("deprecation")
 @RunWith(androidx.test.runner.AndroidJUnit4.class)
-public class MediaTest {
+public class MediaTest extends InstrumentedTest {
 
     private Collection testCol;
 
@@ -62,7 +61,7 @@ public class MediaTest {
 
     @Before
     public void setUp() throws IOException {
-        testCol = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        testCol = getEmptyCol();
     }
 
     @After
@@ -73,7 +72,7 @@ public class MediaTest {
     @Test
     public void testAdd() throws IOException {
         // open new empty collection
-        File dir = Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        File dir = getTestDir();
         BackupManager.removeDir(dir);
         assertTrue(dir.mkdirs());
         File path = new File(dir, "foo.jpg");
@@ -153,7 +152,7 @@ public class MediaTest {
         // create a media dir
         testCol.getMedia().dir();
         // Put a file into it
-        File file = new File(Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext()), "fake.png");
+        File file = new File(getTestDir(), "fake.png");
         assertTrue(file.createNewFile());
         testCol.getMedia().addFile(file);
         // add a note which references it
@@ -199,7 +198,7 @@ public class MediaTest {
         assertEquals(0, added(testCol).size());
         assertEquals(0, removed(testCol).size());
         // add a file
-        File dir = Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        File dir = getTestDir();
         File path = new File(dir, "foo.jpg");
         FileOutputStream os;
         os = new FileOutputStream(path, false);

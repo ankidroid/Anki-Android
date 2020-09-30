@@ -71,8 +71,8 @@
         <item quantity="one">%d Tag %d verbleibt</item>
         <item quantity="other">%d Tage %d verbleiben</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Sammlung ist leer</string>
+    <string name="no_cards_placeholder_description">Fügen Sie Karten \nmit dem + -Symbol hinzu.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Sie haben heute %1$d Karte in %2$s gelernt</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Antwort eingeben</string>
     <string name="show_answer">Antwort anzeigen</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Antwort ausblenden</string>
     <string name="ease_button_again">Nochmal</string>
     <string name="ease_button_hard">Schwer</string>
     <string name="ease_button_good">Gut</string>
@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f Mo</string>
     <string name="time_quantity_years">%.1f Jr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Wiederherstellung des gefilterten Stapels&#8230;</string>
     <string name="rebuild_cram_label">Neu aufbauen</string>
     <string name="empty_cram_label">Leeren</string>
     <string name="create_subdeck">Unterstapel erstellen</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">Löschen des gefilterten Stapels&#8230;</string>
     <string name="custom_study_deck_name">Benutzerdefinierte Sitzung</string>
     <string name="custom_study_deck_exists">Bitte benennen Sie zunächst den existierenden Stapel »Benutzerdefinierte Sitzung« um</string>
     <string name="empty_deck">Dieser Stapel ist leer</string>
@@ -189,7 +189,7 @@
     <string name="card_template_editor_styling">Stil</string>
     <string name="card_template_editor_menu_delete">Löschen</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aussehen der Kartenübersicht</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">Stapel überschreiben</string>
     <string name="card_template_editor_cant_delete">Mindestens ein Kartentyp wird benötigt.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Kartentyp »%2$s« und seine %1$d Karte löschen?</item>
@@ -207,5 +207,5 @@
     <!-- Context Menu -->
     <string name="card_browser_label">Kartenübersicht</string>
     <string name="card_browser_context_menu">Kartenübersicht</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Anki-Karte</string>
 </resources>

@@ -43,9 +43,9 @@ public class CsvReaderIterator implements Iterator<List<String>> {
     private List<String> fields;
     private int numeric_field;
 
+    private final static int field_size = 5000;
     // These were modified from a bare array and size to a StringBuilder
-    private char[] field = new char[5000];
-    private int field_size = 5000;
+    private final char[] field = new char[field_size];
 
 
     public CsvReaderIterator(@NonNull CsvReader reader) {
@@ -100,7 +100,7 @@ public class CsvReaderIterator implements Iterator<List<String>> {
 //                    _csvstate_global->field_limit);
 //            return -1;
 //        }
-        if (this.field_len == this.field_size)
+        if (this.field_len == field_size)
             return -1;
         this.field[this.field_len++] = c;
         return 0;
@@ -114,6 +114,7 @@ public class CsvReaderIterator implements Iterator<List<String>> {
         this.numeric_field = 0;
     }
 
+    //noinspection ControlFlowStatementWithoutBraces
     private int parse_process_char(char c) {
         CsvDialect dialect = this.reader.dialect;
 
@@ -147,7 +148,8 @@ public class CsvReaderIterator implements Iterator<List<String>> {
                     /* possible escaped character */
                     this.state = ESCAPED_CHAR;
                 }
-                else if (c == ' ' && dialect.mSkipInitialSpace)
+                else
+                    if (c == ' ' && dialect.mSkipInitialSpace)
                     /* ignore space at start of field */
                     ;
                 else if (c == dialect.mDelimiter) {

@@ -283,6 +283,46 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("Activity should be cancelled as it did nothing", shadowActivity.getResultCode(), is(Activity.RESULT_CANCELED));
     }
 
+    @Test
+    public void tagWithBracketsDisplaysProperly() {
+        Note n = addNoteUsingBasicModel("Hello", "World");
+        n.addTag("sketchy::(1)");
+        n.flush();
+
+        CardBrowser b = getBrowserWithNoNewCards();
+        b.filterByTag("sketchy::(1)");
+
+        assertThat("tagged card should be returned", b.getCardCount(), is(1));
+    }
+
+    @Test
+    public void previewWorksAfterSort() {
+        // #7286
+        long cid1 = addNoteUsingBasicModel("Hello", "World").cards().get(0).getId();
+        long cid2 = addNoteUsingBasicModel("Hello2", "World2").cards().get(0).getId();
+
+        CardBrowser b = getBrowserWithNoNewCards();
+
+        assertThat(b.getPropertiesForCardId(cid1).getPosition(), is(0));
+        assertThat(b.getPropertiesForCardId(cid2).getPosition(), is(1));
+
+        b.checkedCardsAtPositions(new int[] { 0 });
+        Intent previewIntent = b.getPreviewIntent();
+        assertThat("before: index", previewIntent.getIntExtra("index", -100), is(0));
+        assertThat("before: cards", previewIntent.getLongArrayExtra("cardList"), is(new long[] { cid1, cid2 }));
+
+        // reverse
+        b.changeCardOrder(1);
+
+        assertThat(b.getPropertiesForCardId(cid1).getPosition(), is(1));
+        assertThat(b.getPropertiesForCardId(cid2).getPosition(), is(0));
+
+        b.replaceSelectionWith(new int[] { 0 });
+        Intent intentAfterReverse = b.getPreviewIntent();
+        assertThat("after: index", intentAfterReverse.getIntExtra("index", -100), is(0));
+        assertThat("after: cards", intentAfterReverse.getLongArrayExtra("cardList"), is(new long[] { cid2, cid1 }));
+    }
+
 
     private void flagCardForNote(Note n, int flag) {
         Card c = n.firstCard();
@@ -344,11 +384,11 @@ public class CardBrowserTest extends RobolectricTest {
         ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
                 .create().start().resume().visible();
         saveControllerForCleanup(multimediaController);
-        return (CardBrowser) multimediaController.get();
+        return multimediaController.get();
     }
 
     private void removeCardFromCollection(Long cardId) {
-        getCol().remCards(Arrays.asList(new Long[] {cardId}));
+        getCol().remCards(Arrays.asList(cardId));
     }
 
     @CheckReturnValue
@@ -356,6 +396,6 @@ public class CardBrowserTest extends RobolectricTest {
         ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
                 .create().start().resume().visible();
         saveControllerForCleanup(multimediaController);
-        return (CardBrowser) multimediaController.get();
+        return multimediaController.get();
     }
 }

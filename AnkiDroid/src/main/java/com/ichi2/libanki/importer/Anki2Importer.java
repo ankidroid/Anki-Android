@@ -25,6 +25,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
@@ -42,9 +43,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,22 +66,14 @@ public class Anki2Importer extends Importer {
 
     private static final int MEDIAPICKLIMIT = 1024;
 
-    private String mDeckPrefix;
-    private boolean mAllowUpdate;
+    private final String mDeckPrefix;
+    private final boolean mAllowUpdate;
     private boolean mDupeOnSchemaChange;
 
     private Map<String, Object[]> mNotes;
 
-    /**
-     * Since we can't use a tuple as a key in Java, we resort to indexing twice with nested maps.
-     * Python: (guid, ord) -> cid
-     * Java: guid -> ord -> cid
-     */
-    @SuppressWarnings("PMD.SingularField")
-    private Map<String, Map<Integer, Long>> mCards;
     private Map<Long, Long> mDecks;
     private Map<Long, Long> mModelMap;
-    private Map<String, String> mChangedGuids;
     private Map<String, Boolean> mIgnoredGuids;
 
     private int mDupes;
@@ -161,12 +156,8 @@ public class Anki2Importer extends Importer {
             throw err;
         } finally {
             // endTransaction throws about invalid transaction even when you check first!
-            if (mDst.getDb().getDatabase().inTransaction()) {
-                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
-            }
-            if (mDst.getMedia().getDb().getDatabase().inTransaction()) {
-                try { mDst.getMedia().getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
-            }
+            DB.safeEndInTransaction(mDst.getDb());
+            DB.safeEndInTransaction(mDst.getMedia().getDb());
         }
         Timber.i("Performing vacuum/analyze");
         try {
@@ -196,7 +187,7 @@ public class Anki2Importer extends Importer {
     private void _importNotes() {
         // build guid -> (id,mod,mid) hash & map of existing note ids
         mNotes = new HashMap<>();
-        Map<Long, Boolean> existing = new HashMap<>();
+        Set<Long> existing = new HashSet<>();
         Cursor cur = null;
         try {
             cur = mDst.getDb().getDatabase().query("select id, guid, mod, mid from notes", null);
@@ -206,16 +197,13 @@ public class Anki2Importer extends Importer {
                 long mod = cur.getLong(2);
                 long mid = cur.getLong(3);
                 mNotes.put(guid, new Object[] { id, mod, mid });
-                existing.put(id, true);
+                existing.add(id);
             }
         } finally {
             if (cur != null) {
                 cur.close();
             }
         }
-        // we may need to rewrite the guid if the model schemas don't match,
-        // so we need to keep track of the changes for the card import stage
-        mChangedGuids = new HashMap<>();
         // we ignore updates to changed schemas. we need to note the ignored
         // guids, so we avoid importing invalid cards
         mIgnoredGuids = new HashMap<>();
@@ -250,10 +238,10 @@ public class Anki2Importer extends Importer {
                 boolean shouldAdd = _uniquifyNote(note);
                 if (shouldAdd) {
                     // ensure id is unique
-                    while (existing.containsKey(note[0])) {
+                    while (existing.contains(note[0])) {
                         note[0] = ((Long) note[0]) + 999;
                     }
-                    existing.put((Long) note[0], true);
+                    existing.add((Long) note[0]);
                     // bump usn
                     note[4] = usn;
                     // update media references in case of dupes
@@ -351,9 +339,7 @@ public class Anki2Importer extends Importer {
             if (cur != null) {
                 cur.close();
             }
-            if (mDst.getDb().getDatabase().inTransaction()) {
-                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
-            }
+            DB.safeEndInTransaction(mDst.getDb());
         }
 
         long[] das = Utils.collection2Array(dirty);
@@ -389,13 +375,13 @@ public class Anki2Importer extends Importer {
 		return false;
     }
 
-    /**
-     * Models
-     * ***********************************************************
-     * Models in the two decks may share an ID but not a schema, so we need to
-     * compare the field & template signature rather than just rely on ID. If
-     * the schemas don't match, we increment the mid and try again, creating a
-     * new model if necessary.
+    /*
+      Models
+      ***********************************************************
+      Models in the two decks may share an ID but not a schema, so we need to
+      compare the field & template signature rather than just rely on ID. If
+      the schemas don't match, we increment the mid and try again, creating a
+      new model if necessary.
      */
 
     /** Prepare index of schema hashes. */
@@ -445,7 +431,7 @@ public class Anki2Importer extends Importer {
     }
 
 
-    /**
+    /*
      * Decks
      * ***********************************************************
      */
@@ -514,7 +500,12 @@ public class Anki2Importer extends Importer {
             }
         }
         // build map of guid -> (ord -> cid) and used id cache
-        mCards = new HashMap<>();
+        /*
+         * Since we can't use a tuple as a key in Java, we resort to indexing twice with nested maps.
+         * Python: (guid, ord) -> cid
+         * Java: guid -> ord -> cid
+         */
+        Map<String, Map<Integer, Long>> mCards = new HashMap<>();
         Map<Long, Boolean> existing = new HashMap<>();
         Cursor cur = null;
         try {
@@ -567,9 +558,6 @@ public class Anki2Importer extends Importer {
                         cur.getInt(13), cur.getInt(14), cur.getInt(15), cur.getLong(16),
                         cur.getLong(17), cur.getInt(18), cur.getString(19) };
                 String guid = (String) card[0];
-                if (mChangedGuids.containsKey(guid)) {
-                    guid = mChangedGuids.get(guid);
-                }
                 if (mIgnoredGuids.containsKey(guid)) {
                     continue;
                 }
@@ -604,7 +592,7 @@ public class Anki2Importer extends Importer {
                     card[8] = (Long) card[8] - aheadBy;
                 }
                 // odue needs updating too
-                if (((Long) card[14]).longValue() != 0) {
+                if ((Long) card[14] != 0) {
                     card[14] = (Long) card[14] - aheadBy;
                 }
                 // if odid true, convert card from filtered to normal
@@ -674,9 +662,7 @@ public class Anki2Importer extends Importer {
             if (cur != null) {
                 cur.close();
             }
-            if (mDst.getDb().getDatabase().inTransaction()) {
-                try { mDst.getDb().getDatabase().endTransaction(); } catch (Exception e) { Timber.w(e); }
-            }
+            DB.safeEndInTransaction(mDst.getDb());
         }
     }
 

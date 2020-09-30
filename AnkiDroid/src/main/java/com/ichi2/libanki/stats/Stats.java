@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Vector;
 
@@ -54,8 +53,8 @@ public class Stats {
         TYPE_YEAR(365, R.string.stats_period_year),
         TYPE_LIFE(-1, R.string.stats_period_lifetime);
 
-        public int days;
-        public int descriptionId;
+        public final int days;
+        public final int descriptionId;
         AxisType(int dayss, int descriptionId) {
             this.days = dayss;
             this.descriptionId = descriptionId;
@@ -65,9 +64,9 @@ public class Stats {
     public enum ChartType {FORECAST, REVIEW_COUNT, REVIEW_TIME,
         INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES, OTHER}
 
-    private Collection mCol;
-    private boolean mWholeCollection;
-    private long mDeckId;
+    private final Collection mCol;
+    private final boolean mWholeCollection;
+    private final long mDeckId;
     private boolean mDynamicAxis = false;
     private double[][] mSeriesList;
 
@@ -252,7 +251,8 @@ public class Stats {
         return new Pair<>(cardCount, (double)cardCount / (double) periodDays);
     }
 
-    private enum DeckAgeType { ADD, REVIEW };
+    private enum DeckAgeType { ADD, REVIEW }
+
 
     private long _deckAge(DeckAgeType by) {
         String lim = _revlogLimit();
@@ -902,8 +902,8 @@ public class Stats {
         }
         mFirstElement = 0;
         mMaxElements = list.size() - 1;
-        mAverage = Utils.timeSpan(context, (long) Math.round(avg * SECONDS_PER_DAY));
-        mLongest = Utils.timeSpan(context, (long) Math.round(max_ * SECONDS_PER_DAY));
+        mAverage = Utils.timeSpan(context, Math.round(avg * SECONDS_PER_DAY));
+        mLongest = Utils.timeSpan(context, Math.round(max_ * SECONDS_PER_DAY));
 
         //some adjustments to not crash the chartbuilding with emtpy data
         if (mMaxElements == 0) {
@@ -990,13 +990,8 @@ public class Stats {
             data[0] = hour;
             list.set(i, data);
         }
-        Collections.sort(list, new Comparator<double[]>() {
-            @Override
-            public int compare(double[] s1, double[] s2) {
-                if (s1[0] < s2[0]) return -1;
-                if (s1[0] > s2[0]) return 1;
-                return 0;
-            }
+        Collections.sort(list, (s1, s2) -> {
+            return Double.compare(s1[0], s2[0]);
         });
 
         mSeriesList = new double[4][list.size()];
@@ -1303,7 +1298,6 @@ public class Stats {
         mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended_and_buried};
         mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended_and_buried };
         mType = type;
-        ArrayList<double[]> list = new ArrayList<>();
         double[] pieData;
         Cursor cur = null;
         String query = "select " +
@@ -1350,7 +1344,7 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return list.size() > 0;
+        return false;
     }
 
     /**

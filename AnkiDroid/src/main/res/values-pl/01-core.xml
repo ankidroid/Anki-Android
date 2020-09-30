@@ -79,8 +79,8 @@
         <item quantity="many">%d days %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Kolekcja jest pusta</string>
+    <string name="no_cards_placeholder_description">Zacznij dodawać karty używając przycisku +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Przejrzano dziś %1$d kartę w %2$s</item>
@@ -91,7 +91,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Podaj odpowiedź</string>
     <string name="show_answer">Pokaż odpowiedź</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Ukryj odpowiedź</string>
     <string name="ease_button_again">Powtórz</string>
     <string name="ease_button_hard">Trudna</string>
     <string name="ease_button_good">Dobra</string>
@@ -131,13 +131,13 @@
     <string name="menu_flag_card_two">Pomarańczowa flaga</string>
     <string name="menu_flag_card_three">Zielona flaga</string>
     <string name="menu_flag_card_four">Niebieska flaga</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_edit_tags">Edytuj etykiety</string>
     <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
     <string name="menu_select">Zaznacz tekst</string>
     <string name="menu_search">Wyszukiwanie w %1$s</string>
     <string name="menu_mark_note">Wyróżnij notatkę</string>
     <string name="menu_unmark_note">Cofnij wyróżnienie notatki</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Sprawdź wymowę</string>
     <string name="new_deck">Stwórz talię</string>
     <string name="create">Utwórz</string>
     <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
@@ -147,7 +147,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Proszę przyznać AnkiDroid uprawnienie \"Pamięć\" by kontynuować</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -157,22 +157,22 @@
     -->
     <string name="time_quantity_seconds">%d s</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d h %2$d min</string>
     <string name="time_quantity_hours">%d g</string>
     <string name="time_quantity_days">%d dni</string>
     <string name="time_quantity_days_hours">%1$d d %2$d h</string>
     <string name="time_quantity_months">%.1f mc</string>
     <string name="time_quantity_years">%.1f r</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Przebudowa filtrowanej talii&#8230;</string>
     <string name="rebuild_cram_label">Odbuduj</string>
     <string name="empty_cram_label">Wyczyść</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="create_subdeck">Utwórz sub-talie</string>
+    <string name="empty_filtered_deck">Opróżnienie filtrowanej talii&#8230;</string>
     <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
     <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
     <string name="empty_deck">Ta talia jest pusta</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_empty">Talia jest pusta. Wybierz przycisk + żeby dodać karty.</string>
     <string name="studyoptions_limit_reached">Dzienny limit nauki został osiągnięty</string>
     <string name="studyoptions_empty_schedule">Nie ma zaplanowanych kart do nauki</string>
@@ -198,7 +198,7 @@
     <string name="card_template_editor_back">Szablon tylny</string>
     <string name="card_template_editor_styling">Styl</string>
     <string name="card_template_editor_menu_delete">Usuń</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Wygląd przeglądarki kart</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Wymagany jest przynajmniej jeden typ karty.</string>
     <plurals name="card_template_editor_confirm_delete">
@@ -208,16 +208,16 @@
         <item quantity="other">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
     </plurals>
     <string name="invalid_template">Karta nie mogła zostać wygenerowana</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">Usunięcie tego typu karty spowodowałoby usunięcie przynajmniej jednej notatki. Proszę najpierw utworzyć i zapisać nowy typ karty.</string>
+    <string name="card_template_editor_save_error">Nie można zapisać zmian szablonu karty: %s</string>
     <string name="template_for_current_card_deleted">Typ karty dla aktualnej karty został usunięty</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Wygląd przeglądarki</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Odczyt i zapis do bazy danych AnkiDroid</string>
     <string name="read_write_permission_description">dostęp do istniejących notatek, kart, typów notatek i talii, a także tworzenia istniejących</string>
     <!-- Context Menu -->
     <string name="card_browser_label">Przeglądarka kart</string>
     <string name="card_browser_context_menu">Przeglądarka kart</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Karta Anki</string>
 </resources>

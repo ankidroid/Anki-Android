@@ -76,5 +76,5 @@ public class StudyOptionsFragmentTest {
         assertEquals("a\na", result.toString());
     }
 
-    /** end #5188 */
+    /* end #5188 */
 }

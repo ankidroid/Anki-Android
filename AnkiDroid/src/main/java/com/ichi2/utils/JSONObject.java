@@ -42,15 +42,18 @@
 
 package com.ichi2.utils;
 
-/**
- * Each method similar to the methods in JSONObjects. Name changed to add a ,
- * and it throws JSONException instead of JSONException.
- * Furthermore, it returns JSONObject and JSONArray
- *
+/*
+  Each method similar to the methods in JSONObjects. Name changed to add a ,
+  and it throws JSONException instead of JSONException.
+  Furthermore, it returns JSONObject and JSONArray
+
  */
 
 import java.util.Iterator;
 import java.util.Map;
+
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 
 public class JSONObject extends org.json.JSONObject implements Iterable<String> {
 
@@ -145,6 +148,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         Iters on the keys. (Similar to iteration in Python's
         dictionnary.
     */
+    @NonNull
     public Iterator<String> iterator() {
         return keys();
     }
@@ -162,7 +166,6 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
      * @return Exactly the same object, with a different type.
      */
     public static JSONObject objectToObject(org.json.JSONObject obj){
-        Assert.that(obj == null || (obj instanceof JSONObject), "Object %s should have been an instance of our JSONObject.", obj);
         return (JSONObject) obj;
     }
 
@@ -229,6 +232,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public Object get(String name) {
         try {
             return super.get(name);
@@ -237,6 +241,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public boolean getBoolean(String name) {
         try {
             return super.getBoolean(name);
@@ -245,6 +250,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public double getDouble(String name) {
         try {
             return super.getDouble(name);
@@ -253,6 +259,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public int getInt(String name) {
         try {
             return super.getInt(name);
@@ -261,6 +268,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public long getLong(String name) {
         try {
             return super.getLong(name);
@@ -269,6 +277,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public String getString(String name) {
         try {
             return super.getString(name);
@@ -277,6 +286,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public JSONArray getJSONArray(String name) {
         try {
             return JSONArray.arrayToArray(super.getJSONArray(name));
@@ -285,6 +295,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public JSONObject getJSONObject(String name) {
         try {
             return objectToObject(super.getJSONObject(name));
@@ -293,6 +304,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public JSONArray toJSONArray(JSONArray names) {
         try {
             return JSONArray.arrayToArray(super.toJSONArray(names));
@@ -301,6 +313,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public static String numberToString(Number number) {
         try {
             return org.json.JSONObject.numberToString(number);
@@ -309,6 +322,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public JSONArray names() {
         org.json.JSONArray ar = super.names();
         if (ar == null) {
@@ -318,14 +332,17 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
     }
 
+    @CheckResult
     public JSONArray optJSONArray(String name) {
         return JSONArray.arrayToArray(super.optJSONArray(name));
     }
 
+    @CheckResult
     public JSONObject optJSONObject(String name) {
         return JSONObject.objectToObject(super.optJSONObject(name));
     }
 
+    @CheckResult
     public JSONObject deepClone() {
         JSONObject clone = new JSONObject();
         deepClonedInto(clone);
@@ -340,6 +357,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         j.deepClonedInto(t);
         ```
         in order to obtain a deep clone of `j` of type ```T```. */
+    @CheckResult
     protected <T extends JSONObject> T deepClonedInto(T clone) {
         for (String key: this) {
             if (get(key) instanceof JSONObject) {

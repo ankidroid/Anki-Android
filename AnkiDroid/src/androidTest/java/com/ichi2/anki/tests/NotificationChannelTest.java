@@ -22,7 +22,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 
 import androidx.test.annotation.UiThreadTest;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -42,7 +41,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
-public class NotificationChannelTest {
+public class NotificationChannelTest extends InstrumentedTest {
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule =
@@ -55,7 +54,7 @@ public class NotificationChannelTest {
     @Before
     @UiThreadTest
     public void setUp() {
-        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Context targetContext = getTestContext();
         ((AnkiDroidApp)targetContext.getApplicationContext()).onCreate();
         mCurrentAPI = CompatHelper.getSdkVersion();
         mTargetAPI = targetContext.getApplicationInfo().targetSdkVersion;

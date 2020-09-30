@@ -23,8 +23,10 @@ import android.database.SQLException;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Collection;
@@ -46,6 +48,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import okhttp3.Response;
 import timber.log.Timber;
 
@@ -64,18 +67,15 @@ public class Syncer {
     /** The libAnki value of `sched.mReportLimit` */
     private static final int SYNC_SCHEDULER_REPORT_LIMIT = 1000;
 
-    private Collection mCol;
-    private HttpSyncer mServer;
-    private long mRMod;
+    private final Collection mCol;
+    private final HttpSyncer mServer;
     //private long mRScm;
     private int mMaxUsn;
 
-    private HostNum mHostNum;
-    private long mLMod;
+    private final HostNum mHostNum;
     //private long mLScm;
     private int mMinUsn;
     private boolean mLNewer;
-    private JSONObject mRChg;
     private String mSyncMsg;
 
     private LinkedList<String> mTablesLeft;
@@ -126,14 +126,14 @@ public class Syncer {
                 throwExceptionIfCancelled(con);
                 long rscm = rMeta.getLong("scm");
                 int rts = rMeta.getInt("ts");
-                mRMod = rMeta.getLong("mod");
+                long rMod = rMeta.getLong("mod");
                 mMaxUsn = rMeta.getInt("usn");
                 // skip uname, AnkiDroid already stores and shows it
                 trySetHostNum(rMeta);
                 Timber.i("Sync: building local meta data");
                 JSONObject lMeta = meta();
                 mCol.log("lmeta", lMeta);
-                mLMod = lMeta.getLong("mod");
+                long lMod = lMeta.getLong("mod");
                 mMinUsn = lMeta.getInt("usn");
                 long lscm = lMeta.getLong("scm");
                 int lts = lMeta.getInt("ts");
@@ -143,7 +143,7 @@ public class Syncer {
                     mCol.log("clock off");
                     return new Object[] { "clockOff", diff };
                 }
-                if (mLMod == mRMod) {
+                if (lMod == rMod) {
                     Timber.i("Sync: no changes - returning");
                     mCol.log("no changes");
                     return new Object[] { "noChanges" };
@@ -152,7 +152,7 @@ public class Syncer {
                     mCol.log("schema diff");
                     return new Object[] { "fullSync" };
                 }
-                mLNewer = mLMod > mRMod;
+                mLNewer = lMod > rMod;
                 // step 1.5: check collection is valid
                 if (!mCol.basicCheck()) {
                     mCol.log("basic check");
@@ -224,8 +224,7 @@ public class Syncer {
                 JSONObject c = sanityCheck();
                 JSONObject sanity = mServer.sanityCheck2(c);
                 if (sanity == null || !"ok".equals(sanity.optString("status", "bad"))) {
-                    mCol.log("sanity check failed", c, sanity);
-                    return _forceFullSync();
+                    return sanityCheckError(c, sanity);
                 }
                 // finalize
                 publishProgress(con, R.string.sync_finish_message);
@@ -240,7 +239,7 @@ public class Syncer {
                 publishProgress(con, R.string.sync_writing_db);
                 mCol.getDb().getDatabase().setTransactionSuccessful();
             } finally {
-                mCol.getDb().getDatabase().endTransaction();
+                DB.safeEndInTransaction(mCol.getDb());
             }
         } catch (IllegalStateException e) {
             throw new RuntimeException(e);
@@ -267,12 +266,18 @@ public class Syncer {
         }
     }
 
+    @NonNull
+    protected Object[] sanityCheckError(JSONObject c, JSONObject sanity) {
+        mCol.log("sanity check failed", c, sanity);
+        UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.SYNC, "sanityCheckError");
+        _forceFullSync();
+        return new Object[] { "sanityCheckError", null };
+    }
 
-    private Object[] _forceFullSync() {
+    private void _forceFullSync() {
         // roll back and force full sync
         mCol.modSchemaNoCheck();
         mCol.save();
-        return new Object[] { "sanityCheckError", null };
     }
 
     private void publishProgress(Connection con, int id) {
@@ -310,10 +315,9 @@ public class Syncer {
 
 
     public JSONObject applyChanges(JSONObject changes) throws UnexpectedSchemaChange {
-        mRChg = changes;
         JSONObject lchg = changes();
         // merge our side before returning
-        mergeChanges(lchg, mRChg);
+        mergeChanges(lchg, changes);
         return lchg;
     }
 
@@ -880,7 +884,7 @@ public class Syncer {
     private void mergeNotes(JSONArray notes) {
         for (Object[] n : newerRows(notes, "notes", 4)) {
             mCol.getDb().execute("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?,?)", n);
-            mCol.updateFieldCache(new long[]{Long.valueOf(((Number) n[0]).longValue())});
+            mCol.updateFieldCache(new long[]{((Number) n[0]).longValue()});
         }
     }
 
@@ -913,7 +917,7 @@ public class Syncer {
             publishProgress(con, R.string.sync_cancelled);
             try {
                 mServer.abort();
-            } catch (UnknownHttpResponseException e) {
+            } catch (UnknownHttpResponseException ignored) {
             }
             throw new RuntimeException("UserAbortedSync");
         }

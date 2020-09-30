@@ -17,7 +17,7 @@ package com.wildplot.android.parsing;
 
 
 public class Pow implements TreeElement {
-    private TopLevelParser parser;
+    private final TopLevelParser parser;
 
 
     public enum PowType {ATOM, ATOM_POW_FACTOR, ATOM_SQRT_FACTOR, INVALID}
@@ -65,7 +65,7 @@ public class Pow implements TreeElement {
         int opPos = powString.indexOf("^");
         if (opPos > 0) {
             String leftAtomString = powString.substring(0, opPos);
-            String rightFactorString = powString.substring(opPos + 1, powString.length());
+            String rightFactorString = powString.substring(opPos + 1);
             if (!TopLevelParser.stringHasValidBrackets(leftAtomString) || !TopLevelParser.stringHasValidBrackets(rightFactorString)) {
                 return false;
             }
@@ -91,7 +91,7 @@ public class Pow implements TreeElement {
         int opPos = powString.indexOf("**");
         if (opPos > 0) {
             String leftAtomString = powString.substring(0, opPos);
-            String rightFactorString = powString.substring(opPos + 2, powString.length());
+            String rightFactorString = powString.substring(opPos + 2);
             if (!TopLevelParser.stringHasValidBrackets(leftAtomString) || !TopLevelParser.stringHasValidBrackets(rightFactorString)) {
                 return false;
             }

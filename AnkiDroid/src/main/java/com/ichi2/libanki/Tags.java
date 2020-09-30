@@ -52,8 +52,8 @@ public class Tags {
 
     private static final Pattern sCanonify = Pattern.compile("[\"']");
 
-    private Collection mCol;
-    private TreeMap<String, Integer> mTags = new TreeMap<>();
+    private final Collection mCol;
+    private final TreeMap<String, Integer> mTags = new TreeMap<>();
     private boolean mChanged;
 
 
@@ -93,7 +93,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * Registering and fetching tags
      * ***********************************************************
      */
@@ -189,7 +189,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * Bulk addition/removal from notes
      * ***********************************************************
      */
@@ -238,7 +238,6 @@ public class Tags {
             t = t.replace("*", "%");
             lim.append(l).append("like '% ").append(t).append(" %'");
         }
-        List<Long> nids = new ArrayList<>();
         ArrayList<Object[]> res = new ArrayList<>();
         try (Cursor cur = mCol
                 .getDb()
@@ -247,12 +246,10 @@ public class Tags {
                         " and (" + lim + ")", null)) {
             if (add) {
                 while (cur.moveToNext()) {
-                    nids.add(cur.getLong(0));
                     res.add(new Object[] { addToStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(), cur.getLong(0) });
                 }
             } else {
                 while (cur.moveToNext()) {
-                    nids.add(cur.getLong(0));
                     res.add(new Object[] { remFromStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(),
                             cur.getLong(0) });
                 }
@@ -268,7 +265,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * String-based utilities
      * ***********************************************************
      */
@@ -332,7 +329,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * List-based utilities
      * ***********************************************************
      */

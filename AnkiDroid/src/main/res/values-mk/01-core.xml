@@ -64,15 +64,15 @@
         <item quantity="other">останаа %d минути</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
+        <item quantity="one">%d саат %d останат</item>
         <item quantity="other">%d hours %d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
+        <item quantity="one">%d ден %d останат</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Колекција е празна</string>
+    <string name="no_cards_placeholder_description">Почни да додаваш карит\nкористи + знакчето.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Студирал %1$d картичка во %2$s денес</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Внеси одговор</string>
     <string name="show_answer">Покажи одговор</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">сокри одговор</string>
     <string name="ease_button_again">Пак</string>
     <string name="ease_button_hard">Тешко</string>
     <string name="ease_button_good">Добро</string>
@@ -95,12 +95,12 @@
     <string name="undo_action_suspend_card">суспендирање на картичка</string>
     <string name="undo_action_suspend_note">суспендирање на картичка</string>
     <string name="undo_action_delete">бриши белешка</string>
-    <string name="undo_action_delete_multi">delete notes</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_delete_multi">бриши белешка</string>
+    <string name="undo_action_change_deck_multi">смени шпил</string>
+    <string name="undo_action_reschedule_card">презакажи</string>
+    <string name="undo_action_reset_card">Избриши го напредокот</string>
+    <string name="undo_action_reposition_card">премести</string>
+    <string name="move_all_to_deck">Премести сите во шпил</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Преименувај палубата</string>
     <string name="menu_add">Додави</string>
@@ -114,20 +114,20 @@
     <string name="menu_bury">Погребете</string>
     <string name="menu_suspend">Суспендирај</string>
     <string name="menu_delete_note">Бриши белешка</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
+    <string name="menu_flag">Знаме</string>
+    <string name="menu_flag_card">Постави знаме на карта</string>
+    <string name="menu_flag_card_zero">Без знаме</string>
+    <string name="menu_flag_card_one">Црвено знаме</string>
+    <string name="menu_flag_card_two">Портокалово знаме</string>
+    <string name="menu_flag_card_three">Зелено знаме</string>
+    <string name="menu_flag_card_four">Плаво знаме</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Навистина избришете ја оваа белешка и сите нејзини картички?\n%s</string>
     <string name="menu_select">Изберете текст</string>
     <string name="menu_search">Пребарување во %1$s</string>
     <string name="menu_mark_note">Означите белешка</string>
     <string name="menu_unmark_note">Отштиклирај ја белешката</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Провери изговор</string>
     <string name="new_deck">Креирајте deck</string>
     <string name="create">Креирај</string>
     <string name="new_dynamic_deck">Креирајте филтер на deck</string>
@@ -137,7 +137,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">Бе замолуваме да доделите на AnkiDroid ‘Storage’ дозвола</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -157,12 +157,12 @@
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Обнова</string>
     <string name="empty_cram_label">Празно</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">Направи подшпил</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Прилагодена студиска сесија</string>
     <string name="custom_study_deck_exists">Прво преименувајте ја постоечката прилагодена студија на deck</string>
     <string name="empty_deck">Овој deck е празен</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="invalid_deck_name">Невалидно име за шпил</string>
     <string name="studyoptions_empty">Овој deck е празен. Притиснете го копчето + за да додадете нова содржина.</string>
     <string name="studyoptions_limit_reached">Достигнато дневно ниво на студирање</string>
     <string name="studyoptions_empty_schedule">Нема картички за планирано учење</string>
@@ -188,7 +188,7 @@
     <string name="card_template_editor_back">Заден образец</string>
     <string name="card_template_editor_styling">Стајлинг</string>
     <string name="card_template_editor_menu_delete">Избришете</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Изглед на пребарувач на карти</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Барем еден тип на картичка е потребен</string>
     <plurals name="card_template_editor_confirm_delete">
@@ -200,12 +200,12 @@
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Изглед на пребарувач</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читајте и пишувајте на базата на податоци на AnkiDroid</string>
     <string name="read_write_permission_description">да пристапите до постоечките белешки, картички, типови белешки и decks, како и креирање нови</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_label">Пребарувач на карти</string>
+    <string name="card_browser_context_menu">Пребарувач на карти</string>
+    <string name="context_menu_anki_card_label">Анки карта</string>
 </resources>

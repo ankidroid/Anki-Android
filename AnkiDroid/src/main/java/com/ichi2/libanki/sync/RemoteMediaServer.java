@@ -46,7 +46,7 @@ import timber.log.Timber;
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
 public class RemoteMediaServer extends HttpSyncer {
 
-    private Collection mCol;
+    private final Collection mCol;
 
 
     public RemoteMediaServer(Collection col, String hkey, Connection con, HostNum hostNum) {

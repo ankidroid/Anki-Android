@@ -17,6 +17,7 @@
 package com.ichi2.utils;
 
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +38,7 @@ public class AdaptionUtil {
     private static boolean sIsRestrictedLearningDevice = false;
     private static boolean sHasRunWebBrowserCheck = false;
     private static boolean sHasWebBrowser = true;
+    private static Boolean sIsRunningMiUI = null;
 
     public static boolean hasWebBrowser(Context context) {
         if (sHasRunWebBrowserCheck) {
@@ -120,5 +122,35 @@ public class AdaptionUtil {
             sHasRunRestrictedLearningDeviceCheck = true;
         }
         return sIsRestrictedLearningDevice;
+    }
+
+    public static boolean canUseContextMenu() {
+        return !isRunningMiui();
+    }
+
+    private static boolean isRunningMiui() {
+        if (sIsRunningMiUI == null) {
+            sIsRunningMiUI = queryIsMiui();
+        }
+        return sIsRunningMiUI;
+    }
+
+    // https://stackoverflow.com/questions/47610456/how-to-detect-miui-rom-programmatically-in-android
+    private static boolean isIntentResolved(Context ctx, Intent intent) {
+        return (intent != null && ctx.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null);
+    }
+
+    private static boolean queryIsMiui() {
+        Context ctx = AnkiDroidApp.getInstance();
+        return isIntentResolved(ctx, new Intent("miui.intent.action.OP_AUTO_START").addCategory(Intent.CATEGORY_DEFAULT))
+                || isIntentResolved(ctx, new Intent().setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity")))
+                || isIntentResolved(ctx, new Intent("miui.intent.action.POWER_HIDE_MODE_APP_LIST").addCategory(Intent.CATEGORY_DEFAULT))
+                || isIntentResolved(ctx, new Intent().setComponent(new ComponentName("com.miui.securitycenter", "com.miui.powercenter.PowerSettings")));
+    }
+
+
+    @SuppressWarnings( {"unused", "RedundantSuppression"})
+    public static boolean shouldCurrentUserBuyDifferentPhone() {
+        return isRunningMiui();
     }
 }

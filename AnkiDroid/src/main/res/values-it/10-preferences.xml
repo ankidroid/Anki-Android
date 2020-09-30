@@ -249,7 +249,7 @@
     <string name="deck_conf_replayq">Riproduci la domanda</string>
     <string name="deck_conf_replayq_summ">Quando viene mostrata la risposta, riproduci l\'audio sia della domanda che della risposta</string>
     <string name="deck_conf_manage">Gestione gruppi</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Aggiungi e cambia gruppi di opzioni</string>
     <string name="deck_conf_current_group">Gruppo corrente</string>
     <string name="deck_conf_rename">Rinomina</string>
     <string name="deck_conf_reset">Ripristina le impostazioni predefinite</string>
@@ -283,4 +283,6 @@
     <string name="analytics_dialog_title">Aiuta a migliorare AnkiDroid!</string>
     <string name="analytics_title">Condividi l\'utilizzo delle funzionalità</string>
     <string name="analytics_summ">Puoi contribuire ad AnkiDroid aiutando il team di sviluppo a vedere quali funzioni usano le persone</string>
+    <string name="enable_miui_keyboard_hack">«Incolla» per inserire l\'eliminazione del cloze</string>
+    <string name="enable_miui_keyboard_hack_summ">Nell\'editore di note, «Incolla» trasformerà il testo selezionato in un cloze</string>
 </resources>

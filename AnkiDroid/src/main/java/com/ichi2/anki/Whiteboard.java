@@ -38,7 +38,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 
@@ -56,13 +55,13 @@ public class Whiteboard extends View {
 
     private static final float TOUCH_TOLERANCE = 4;
 
-    private Paint mPaint;
-    private UndoStack mUndo = new UndoStack();
+    private final Paint mPaint;
+    private final UndoStack mUndo = new UndoStack();
     private Bitmap mBitmap;
     private Canvas mCanvas;
-    private Path mPath;
-    private Paint mBitmapPaint;
-    private WeakReference<AbstractFlashcardViewer> mCardViewer;
+    private final Path mPath;
+    private final Paint mBitmapPaint;
+    private final WeakReference<AbstractFlashcardViewer> mCardViewer;
 
     private float mX;
     private float mY;
@@ -75,8 +74,6 @@ public class Whiteboard extends View {
 
     private boolean mSecondFingerWithinTapTolerance;
     private boolean mCurrentlyDrawing = false;
-    private boolean mInvertedColors;
-    private boolean mMonochrome;
     private boolean mUndoModeActive = false;
     private final int foregroundColor;
     private final LinearLayout mColorPalette;
@@ -84,18 +81,16 @@ public class Whiteboard extends View {
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
-        mInvertedColors = inverted;
-        mMonochrome = monochrome;
 
 
-        if (!mInvertedColors) {
-            if (mMonochrome) {
+        if (!inverted) {
+            if (monochrome) {
                 foregroundColor = Color.BLACK;
             } else {
                 foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color);
             }
         } else {
-            if (mMonochrome) {
+            if (monochrome) {
                 foregroundColor = Color.WHITE;
             } else {
                 foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color_inv);
@@ -116,14 +111,14 @@ public class Whiteboard extends View {
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
         // selecting pen color to draw
-        mColorPalette = (LinearLayout) cardViewer.findViewById(R.id.whiteboard_pen_color);
+        mColorPalette = cardViewer.findViewById(R.id.whiteboard_pen_color);
 
-        ((Button) cardViewer.findViewById(R.id.pen_color_white)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_black)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_red)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_green)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_blue)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_yellow)).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_white).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_black).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_red).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_yellow).setOnClickListener(this::onClick);
     }
 
 

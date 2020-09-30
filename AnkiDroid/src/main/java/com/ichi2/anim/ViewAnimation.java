@@ -63,8 +63,7 @@ public class ViewAnimation {
 
 
     public static Animation fade(int type, int duration, int offset) {
-        float startValue = type;
-        Animation animation = new AlphaAnimation(startValue, 1.0f - startValue);
+        Animation animation = new AlphaAnimation((float) type, 1.0f - (float) type);
         animation.setDuration(duration);
         if (type == FADE_IN) {
             animation.setZAdjustment(Animation.ZORDER_TOP);

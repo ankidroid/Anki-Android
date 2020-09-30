@@ -45,16 +45,16 @@
     <string name="drawer_close">إغلاق القائمة</string>
     <string name="CardEditorLaterMessage">حفظ المعلومات لوقت لاحق</string>
     <string name="CardEditorCardDeck">رزمة البطاقة:</string>
-    <string name="CardEditorNoteDeck">رزمة:</string>
+    <string name="CardEditorNoteDeck">الرزمة:</string>
     <string name="CardEditorModel">النوع:</string>
-    <string name="CardEditorTags">سمات: %1$s</string>
+    <string name="CardEditorTags">الوسوم: %1$s</string>
     <string name="CardEditorCards">البطاقات: %1$s</string>
-    <string name="tag_name">اسم السمة</string>
-    <string name="add_new_filter_tags">إضافة/فلترة السمات</string>
-    <string name="add_tag">إضافة سمة</string>
-    <string name="check_all_tags">تحديد/إلغاء تحديد كل السمات</string>
-    <string name="filter_tags">فلترة السمات</string>
-    <string name="no_tags">لم تضف أي سمات بعد</string>
+    <string name="tag_name">اسم الوسم</string>
+    <string name="add_new_filter_tags">إضافة/فلترة الوسوم</string>
+    <string name="add_tag">إضافة وسم</string>
+    <string name="check_all_tags">تحديد/إلغاء تحديد كل الوسوم</string>
+    <string name="filter_tags">فلترة الوسوم</string>
+    <string name="no_tags">لم تضف أي وسوم بعد</string>
     <string name="sdcard_missing_message">أوقف تخزين USB للوصول إلى رزمك</string>
     <string name="updated_version">تم التحديث إلى الإصدار: %s</string>
     <!-- Reviewer.java -->
@@ -83,12 +83,12 @@
         <item>حقل الفرز</item>
     </string-array>
     <string-array name="browser_column2_headings">
-        <item>الجواب</item>
+        <item>جواب</item>
         <item>بطاقة</item>
         <item>رزمة</item>
         <item>ملحوظة</item>
         <item>سؤال</item>
-        <item>سمات</item>
+        <item>وسوم</item>
         <item>سقطات</item>
         <item>مراجعات</item>
         <item>الفاصل الزمني</item>
@@ -101,14 +101,14 @@
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">تعديل الحد اليومي للبطاقات الجديدة</string>
     <string name="custom_study_increase_review_limit">تعديل الحد اليومي لبطاقات المراجعة</string>
-    <string name="custom_study_review_forgotten">مراجعة بطاقات المنسيّة</string>
+    <string name="custom_study_review_forgotten">مراجعة البطاقات المنسيّة</string>
     <string name="custom_study_review_ahead">المراجعة مبكرًا</string>
     <string name="custom_study_random_selection">ادرس مجموعة بطاقات عشوائية</string>
     <string name="custom_study_preview_new">معاينة البطاقات الجديدة</string>
-    <string name="custom_study_limit_tags">قصر على سمات معينة</string>
+    <string name="custom_study_limit_tags">قصر على وسوم معينة</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">أضف ملحوظة</string>
-    <string name="cardeditor_title_edit_card">حرر الملحوظة</string>
+    <string name="cardeditor_title_add_note">إضافة ملحوظة</string>
+    <string name="cardeditor_title_edit_card">تحرير الملحوظة</string>
     <string name="discard_unsaved_changes">هل أنت متأكد من الإغلاق وخسران المدخلات الحالية؟</string>
     <string name="note_editor_no_cards_created">لم تُنشَأ أي بطاقات. الرجاء تعبئة مزيد من الحقول</string>
     <string name="note_editor_no_first_field">الحقل الأول فارغ</string>
@@ -118,12 +118,12 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">تعمل عبارات ملء الفراغات في نوع ملحوظة ملء فراغات فقط.</string>
     <string name="saving_facts">حفظ الملحوظة</string>
     <string name="saving_model">حفظ نوع الملحوظة</string>
-    <string name="add">أضف</string>
+    <string name="add">إضافة</string>
     <string name="save">حفظ</string>
-    <string name="close">أغلق</string>
-    <string name="select">حدد</string>
-    <string name="saving_changes">يجري حفظ التغييرات...</string>
-    <string name="reordering_cards">تجري إعادة ترتيب البطاقات&#8230;</string>
+    <string name="close">إغلاق</string>
+    <string name="select">تحديد</string>
+    <string name="saving_changes">حفظ التغييرات...</string>
+    <string name="reordering_cards">إعادة ترتيب البطاقات&#8230;</string>
     <string name="field_remapping">%1$s (من “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">البطاقات غير المُوزعة ستُحذف. إذا لم يتبقَّ لملحوظة أي بطاقة، ستُحذف. هل أنت متأكد من الاستمرار؟</string>
     <plurals name="timebox_reached">
@@ -149,11 +149,11 @@
     <string name="note_editor_copy_note">نسخ الملحوظة</string>
     <string name="card_editor_copy_card">نسخ البطاقة</string>
     <string name="card_editor_reposition_card">تغيير الموضع</string>
-    <string name="card_editor_reset_card">أعد تعيين التقدم</string>
+    <string name="card_editor_reset_card">إعادة تعيين التقدم</string>
     <string name="card_editor_reschedule_card">إعادة الجدولة</string>
     <string name="card_editor_preview_card">معاينة</string>
     <string name="error_insufficient_memory">العملية غير ممكنة نظرًا للذاكرة غير الكافية في جهازك</string>
-    <string name="rename">أعد التسمية</string>
+    <string name="rename">إعادة التسمية</string>
     <string name="default_conf_delete_error">لا يمكن إزالة مجموعة الخيارات الافتراضية</string>
     <plurals name="factadder_cards_added">
         <item quantity="zero">أضيفت %d بطاقة</item>
@@ -163,17 +163,17 @@
         <item quantity="many">أضيفت %d بطاقة</item>
         <item quantity="other">أضيفت %d بطاقة</item>
     </plurals>
-    <string name="help_title">تعليمات</string>
+    <string name="help_title">مساعدة</string>
     <string name="check_db">فحص قاعدة البيانات</string>
     <string name="check_media">فحص الوسائط</string>
     <string name="empty_cards">بطاقات فارغة</string>
-    <string name="check_db_message">فحص قاعدة البيانات.\nالرجاء الانتظار...</string>
+    <string name="check_db_message">فحص قاعدة البيانات&#8230;</string>
     <string name="empty_card_warning">هذه البطاقة فارغة. استخدم خيار «بطاقات فارغة» من القائمة في شاشة قائمة الرزم.</string>
     <string name="unknown_type_field_warning">إدخال الجواب: حقل غير معروف %s</string>
     <string name="delete_deck">يجري حذف الرزمة...</string>
     <string name="show_hint">إظهار %s</string>
     <string name="info_rate">قيم أنكيدرويد</string>
-    <string name="col_load_failed">فشل تحميل المجموعة-\nاضغط تراجع لإغلاق أنكيدرويد.</string>
+    <string name="col_load_failed">فشل تحميل المجموعة.\nاضغط تراجع لإغلاق أنكيدرويد.</string>
     <string name="import_title">استيراد</string>
     <string name="import_select_title">اختر ملفًا لاستيراده</string>
     <string name="import_message_add">إضافة</string>
@@ -185,17 +185,19 @@
     <string name="import_log_failed_validate">فشل التحقق من صحة ملف apkg</string>
     <string name="import_log_insufficient_space">لا توجد مساحة كافية لفك ضغط الحزمة. تحتاج %1$d، لكن المتوفر %2$d</string>
     <string name="import_log_file_cache_cleared">حدث خطأ عند استيراد الملف. يحتمل أن يكون بسبب مسح ذاكرة الكاش عند المعالجة.\nحاول مجددًا</string>
-    <string name="import_succeeded_but_check_database">نجح استيراد البيانات لكن فشل تنظيف ما بعد الاستيراد. استخدم ميزة فحص قاعدة البيانات لاحقًا. المسبب: %s</string>
+    <string name="import_succeeded_but_check_database">نجح استيراد البيانات لكن فشل تنظيف ما بعد الاستيراد. استخدم ميزة فحص قاعدة البيانات لاحقًا. السبب: %s</string>
     <string name="import_error_unhandled_request">تعذرت معالجة طلب الاستيراد</string>
+    <string name="import_error_corrupt_zip">ملف apkg تالف. الرجاء حذفه وتحميله مجددًا.\n\nالسبب: %s</string>
     <string name="import_error_exception">فشل استيراد الحزمة\n\n%s</string>
     <string name="import_error_not_apkg_extension">لا يحتوي اسم الملف “%s” على لاحقة .apkg أو .colpkg</string>
     <string name="import_error_load_imported_database">استبدالات قاعدة بيانات أنكي (.anki2) غير مدعومة. الرجاء الاطلاع على الدليل لتعليمات الاستبدال.</string>
     <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة أنكيدرويد. الرجاء الاطلاع على دليل المستخدم لكيفية استيراد ملفات أنكي يدويًا: \n%s</string>
     <string name="import_error_copy_file_to_cache">فشلت copyFileToCache() (ربما بسبب نفاذ مساحة التخزين)</string>
+    <string name="import_error_unhandled_scheme">استيراد غير معالج من: “%s”</string>
     <string name="import_replacing">يجري استبدال المجموعة&#8230;</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
-    <string name="export_include_schedule">اشمل معلومات الجدولة</string>
-    <string name="export_include_media">اشمل الوسائط</string>
+    <string name="export_include_schedule">تضمين معلومات الجدولة</string>
+    <string name="export_include_media">تضمين الوسائط</string>
     <string name="confirm_apkg_export">هل تريد تصدير المجموعة كحزمة أنكي؟</string>
     <string name="confirm_apkg_export_deck">هل تريد تصدير “%s” كملف apkg؟</string>
     <string name="export_in_progress">يجري تصدير ملف حزمة أنكي&#8230;</string>
@@ -226,7 +228,7 @@
     <string name="sched_unbury_action">لرؤيتها انقر «نكش» في القائمة</string>
     <string name="sched_has_buried">تم تأجيل بعض البطاقات المدفونة أو ذات الصلة حتى الغد</string>
     <string name="tag_editor_add_feedback">انقر “%2$s” لتأكيد إضافة “%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">تم تحديد السمة الموجودة “%1$s”</string>
+    <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود “%1$s”</string>
     <string name="lookup_hint">بعد نسخ النص، انقر في أي مكان على البطاقة لعرض أيقونة البحث</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
@@ -234,7 +236,7 @@
         <item quantity="one">%s ثانية</item>
         <item quantity="two">%s ثانية</item>
         <item quantity="few">%s ثواني</item>
-        <item quantity="many">%s ثواني</item>
+        <item quantity="many">%s ثانية</item>
         <item quantity="other">%s ثانية</item>
     </plurals>
     <plurals name="time_span_minutes">
@@ -367,4 +369,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
     <string name="card_viewer_could_not_find_image_get_help">مساعدة</string>
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">فشل تحميل رزمة ‘%s’</string>
+    <string name="search_decks">بحث في الرزم</string>
 </resources>

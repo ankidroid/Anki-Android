@@ -249,7 +249,7 @@
     <string name="deck_conf_replayq">Repetir pergunta</string>
     <string name="deck_conf_replayq_summ">Quando a resposta for mostrada, reproduzir novamente os áudios de pergunta e de resposta</string>
     <string name="deck_conf_manage">Gerenciamento de grupos</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Adicionar e mudar opções de grupos</string>
     <string name="deck_conf_current_group">Grupo atual</string>
     <string name="deck_conf_rename">Renomear</string>
     <string name="deck_conf_reset">Restaurar padrões</string>
@@ -283,4 +283,6 @@
     <string name="analytics_dialog_title">Ajude a tornar o AnkiDroid melhor!</string>
     <string name="analytics_title">Compartilhar funções de uso</string>
     <string name="analytics_summ">Você pode contribuir para AnkiDroid ajudando a equipe de desenvolvimento a ver quais recursos as pessoas usam</string>
+    <string name="enable_miui_keyboard_hack">\'Colar\' para inserir uma omissão de palavras</string>
+    <string name="enable_miui_keyboard_hack_summ">No Editor de Notas, \'Colar\' vai transformar o texto selecionado em uma omissão de palavras</string>
 </resources>

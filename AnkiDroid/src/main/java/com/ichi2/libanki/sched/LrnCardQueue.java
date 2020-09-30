@@ -1,7 +1,5 @@
 package com.ichi2.libanki.sched;
 
-import com.ichi2.libanki.Collection;
-
 import java.util.Collections;
 
 class LrnCardQueue extends CardQueue<LrnCard> {

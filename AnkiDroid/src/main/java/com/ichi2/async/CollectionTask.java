@@ -32,9 +32,9 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
+import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Undoable;
-import com.ichi2.libanki.Undoable.*;
 import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.AnkiPackageExporter;
@@ -50,6 +50,8 @@ import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 
+import com.ichi2.libanki.sched.Counts;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -116,6 +118,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         CONF_SET_SUBDECKS,
         RENDER_BROWSER_QA,
         CHECK_MEDIA,
+        DELETE_MEDIA,
         COUNT_MODELS,
         DELETE_MODEL,
         DELETE_FIELD,
@@ -338,7 +341,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
-        if (mType != TASK_TYPE.REPAIR_COLLECTION && CollectionHelper.getInstance().getColSafe(mContext) == null) {
+        if (mType != TASK_TYPE.REPAIR_COLLECTION && mType != TASK_TYPE.IMPORT_REPLACE && CollectionHelper.getInstance().getColSafe(mContext) == null) {
             Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", mType);
             return null;
         }
@@ -387,6 +390,9 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             case DELETE_DECK:
                 doInBackgroundDeleteDeck(param);
                 break;
+
+            case DELETE_MEDIA:
+                return doInBackgroundDeleteMedia(param);
 
             case REBUILD_CRAM:
                 return doInBackgroundRebuildCram();
@@ -511,13 +517,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         try {
             DB db = col.getDb();
-            db.getDatabase().beginTransaction();
-            try {
-                publishProgress(new TaskData(col.addNote(note)));
-                db.getDatabase().setTransactionSuccessful();
-            } finally {
-                db.getDatabase().endTransaction();
-            }
+            db.executeInTransaction(() -> {
+                int value = col.addNote(note);
+                publishProgress(new TaskData(value));
+            });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote");
@@ -537,8 +540,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         boolean fromReviewer = param.getBoolean();
 
         try {
-            col.getDb().getDatabase().beginTransaction();
-            try {
+            col.getDb().executeInTransaction(() -> {
                 // TODO: undo integration
                 editNote.flush();
                 // flush card too, in case, did has been changed
@@ -557,10 +559,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 } else {
                     publishProgress(new TaskData(editCard, editNote.stringTags()));
                 }
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                col.getDb().getDatabase().endTransaction();
-            }
+            });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote");
@@ -575,26 +574,20 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         AbstractSched sched = col.getSched();
         Card oldCard = param.getCard();
         @Consts.BUTTON_TYPE int ease = param.getInt();
-        Card newCard = null;
         Timber.i(oldCard != null ? "Answering card" : "Obtaining card");
         try {
-            DB db = col.getDb();
-            db.getDatabase().beginTransaction();
-            try {
+            col.getDb().executeInTransaction(() -> {
                 if (oldCard != null) {
                     Timber.i("Answering card %d", oldCard.getId());
                     sched.answerCard(oldCard, ease);
                 }
-                newCard = sched.getCard();
+                Card newCard = sched.getCard();
                 if (newCard != null) {
                     // render cards before locking database
                     newCard._getQA(true);
                 }
                 publishProgress(new TaskData(newCard));
-                db.getDatabase().setTransactionSuccessful();
-            } finally {
-                db.getDatabase().endTransaction();
-            }
+            });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
@@ -706,8 +699,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection.DismissType type = (Collection.DismissType) data[1];
         Note note = card.note();
         try {
-            col.getDb().getDatabase().beginTransaction();
-            try {
+            col.getDb().executeInTransaction(() -> {
                 sched.deferReset();
                 switch (type) {
                     case BURY_CARD:
@@ -761,10 +753,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 }
                 // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
                 publishProgress(new TaskData(col.getSched().getCard(), 0));
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                col.getDb().getDatabase().endTransaction();
-            }
+            });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", type);
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote");
@@ -779,9 +768,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         private final Card[] cards;
         private final boolean[] originalSuspended;
 
-
-        public UndoSuspendCardMulti(Card[] cards, boolean[] originalSuspended) {
-            super(Collection.DismissType.SUSPEND_CARD_MULTI);
+        /** @param hasUnsuspended  whether there were any unsuspended card (in which card the action was "Suspend",
+         *                          otherwise the action was "Unsuspend")  */
+        public UndoSuspendCardMulti(Card[] cards, boolean[] originalSuspended,
+                                    boolean hasUnsuspended) {
+            super((hasUnsuspended) ? Collection.DismissType.SUSPEND_CARD_MULTI: Collection.DismissType.UNSUSPEND_CARD_MULTI);
             this.cards = cards;
             this.originalSuspended = originalSuspended;
         }
@@ -882,9 +873,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         private final List<Note> originalMarked;
         private final List<Note> originalUnmarked;
 
-
-        public UndoMarkNoteMulti(List<Note> originalMarked, List<Note> originalUnmarked) {
-            super(Collection.DismissType.MARK_NOTE_MULTI);
+        /** @param hasUnmarked whether there were any unmarked card (in which card the action was "mark",
+         *                      otherwise the action was "Unmark")  */
+        public UndoMarkNoteMulti(List<Note> originalMarked, List<Note> originalUnmarked, boolean hasUnmarked) {
+            super((hasUnmarked) ? Collection.DismissType.MARK_NOTE_MULTI : Collection.DismissType.UNMARK_NOTE_MULTI);
             this.originalMarked = originalMarked;
             this.originalUnmarked = originalUnmarked;
         }
@@ -911,8 +903,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undoing action of type %s on %d cards", getDismissType(), cards_copied.length);
-            for (int i = 0; i < cards_copied.length; i++) {
-                Card card = cards_copied[i];
+            for (Card card : cards_copied) {
                 card.flush(false);
             }
             // /* card schedule change undone, reset and get
@@ -963,7 +954,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                             sched.unsuspendCards(cids);
                         }
 
-                        Undoable suspendCardMulti = new UndoSuspendCardMulti(cards, originalSuspended);
+                        Undoable suspendCardMulti = new UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended);
                         // mark undo for all at once
                         col.markUndo(suspendCardMulti);
 
@@ -998,9 +989,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                                 originalUnmarked.add(n);
                         }
 
-                        CardUtils.markAll(new ArrayList<>(notes), !originalUnmarked.isEmpty());
+                        boolean hasUnmarked = !originalUnmarked.isEmpty();
+                        CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
 
-                        Undoable markNoteMulti = new UndoMarkNoteMulti(originalMarked, originalUnmarked);
+                        Undoable markNoteMulti = new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked);
                         // mark undo for all at once
                         col.markUndo(markNoteMulti);
 
@@ -1120,7 +1112,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 }
                 col.getDb().getDatabase().setTransactionSuccessful();
             } finally {
-                col.getDb().getDatabase().endTransaction();
+                DB.safeEndInTransaction(col.getDb());
             }
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card");
@@ -1171,14 +1163,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         AbstractSched sched = col.getSched();
         try {
-            col.getDb().getDatabase().beginTransaction();
-            try {
+            col.getDb().executeInTransaction(() -> {
                 Card card = nonTaskUndo(col);
                 publishProgress(new TaskData(card, 0));
-                col.getDb().getDatabase().setTransactionSuccessful();
-            } finally {
-                col.getDb().getDatabase().endTransaction();
-            }
+            });
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing");
             AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo");
@@ -1228,8 +1216,6 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
     private TaskData doInBackgroundRenderBrowserQA(TaskData param) {
-        //TODO: Convert this to accept the following to make thread-safe:
-        //(Range<Position>, Function<Position, BrowserCard>)
         Timber.d("doInBackgroundRenderBrowserQA");
         Collection col = getCol();
         List<CardBrowser.CardCache> cards = (List<CardBrowser.CardCache>) param.getObjArray()[0];
@@ -1328,10 +1314,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 // reset actually required because of counts, which is used in getCollectionTaskListener
                 sched.resetCounts();
             }
-            int[] counts = sched.counts();
+            Counts counts = sched.counts();
             int totalNewCount = sched.totalNewForCurrentDeck();
             int totalCount = sched.cardCount();
-            return new TaskData(new Object[]{counts[0], counts[1], counts[2], totalNewCount,
+            return new TaskData(new Object[]{counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
                     totalCount, sched.eta(counts)});
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred");
@@ -1384,12 +1370,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundImportReplace(TaskData param) {
         Timber.d("doInBackgroundImportReplace");
-        Collection col = getCol();
         String path = param.getString();
         Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
 
         // extract the deck from the zip file
-        String colPath = col.getPath();
+        String colPath = CollectionHelper.getCollectionPath(mContext);
         File dir = new File(new File(colPath).getParentFile(), "tmpzip");
         if (dir.exists()) {
             BackupManager.removeDir(dir);
@@ -1443,11 +1428,13 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
 
         publishProgress(new TaskData(res.getString(R.string.importing_collection)));
-        if (col != null) {
+
+        if (hasValidCol()) {
             // unload collection and trigger a backup
+            Time time = CollectionHelper.getInstance().getTimeSafe(mContext);
             CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
             CollectionHelper.getInstance().lockCollection();
-            BackupManager.performBackupInBackground(colPath, true, col.getTime());
+            BackupManager.performBackupInBackground(colPath, true, time);
         }
         // overwrite collection
         File f = new File(colFile);
@@ -1480,7 +1467,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 jr.endObject();
                 jr.close();
             }
-            String mediaDir = col.getMedia().dir();
+            String mediaDir = Media.getCollectionMediaPath(colPath);
             int total = nameToNum.size();
             int i = 0;
             for (Map.Entry<String, String> entry : nameToNum.entrySet()) {
@@ -1660,6 +1647,18 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         return new TaskData(0, new Object[]{result}, true);
     }
 
+
+    private TaskData doInBackgroundDeleteMedia(TaskData param) {
+        Object[] objects = param.getObjArray();
+        List<String> unused = (List<String>)objects[0];
+        com.ichi2.libanki.Media m = getCol().getMedia();
+        for (String fname : unused) {
+            m.removeFile(fname);
+        }
+        return new TaskData(unused.size());
+    }
+
+
     /**
      * Handles everything for a model change at once - template add / deletes as well as content updates
      */
@@ -1716,11 +1715,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot mark transaction successful.");
             }
         } finally {
-            if (col.getDb().getDatabase().inTransaction()) {
-                col.getDb().getDatabase().endTransaction();
-            } else {
-                Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot end transaction.");
-            }
+            DB.safeEndInTransaction(col.getDb());
         }
         return new TaskData(true);
     }
@@ -1739,12 +1734,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         ArrayList<Model> models = col.getModels().all();
         ArrayList<Integer> cardCount = new ArrayList<>();
-        Collections.sort(models, new Comparator<JSONObject>() {
-            @Override
-            public int compare(JSONObject a, JSONObject b) {
-                return a.getString("name").compareTo(b.getString("name"));
-            }
-        });
+        Collections.sort(models, (Comparator<JSONObject>) (a, b) -> a.getString("name").compareTo(b.getString("name")));
 
         for (Model n : models) {
             if (isCancelled()) {
@@ -1914,8 +1904,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      * Helper class for allowing inner function to publish progress of an AsyncTask.
      */
     public static class ProgressCallback {
-        private Resources res;
-        private CollectionTask task;
+        private final Resources res;
+        private final CollectionTask task;
 
 
         public ProgressCallback(CollectionTask task, Resources res) {
@@ -1937,6 +1927,16 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             if (task != null) {
                 task.doProgress(value);
             }
+        }
+    }
+
+    /** Whether col is readable */
+    private boolean hasValidCol() {
+        try {
+            getCol();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 

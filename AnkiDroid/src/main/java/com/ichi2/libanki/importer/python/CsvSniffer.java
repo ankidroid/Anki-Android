@@ -375,8 +375,8 @@ public class CsvSniffer {
 
 
     private static class Tuple {
-        public int first;
-        public int second;
+        public final int first;
+        public final int second;
 
 
         public Tuple(Integer key, Integer value) {
@@ -415,8 +415,8 @@ public class CsvSniffer {
     }
 
     protected static class GuessQuoteAndDelimiter extends Guess {
-        public char quotechar;
-        public boolean doublequote;
+        public final char quotechar;
+        public final boolean doublequote;
 
 
         public GuessQuoteAndDelimiter(char quotechar, boolean doublequote, char delimiter, boolean skipinitialspace) {
@@ -433,8 +433,8 @@ public class CsvSniffer {
     }
 
     protected static class Guess {
-        public char delimiter;
-        public boolean skipinitialspace;
+        public final char delimiter;
+        public final boolean skipinitialspace;
 
 
         public Guess(char delimiter, boolean skipinitialspace) {

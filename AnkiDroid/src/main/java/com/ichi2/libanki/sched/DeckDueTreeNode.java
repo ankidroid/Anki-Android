@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 /**
  * Holds the data for a single node (row) in the deck due tree (the user-visible list
@@ -33,7 +32,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
     }
 
     @Override
-    public String toString() {
+    public @NonNull String toString() {
         return String.format(Locale.US, "%s, %d, %d, %d, %d, %s",
                              getFullDeckName(), getDid(), mRevCount, mLrnCount, mNewCount, getChildren());
     }
@@ -83,7 +82,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
     @Override
     public int hashCode() {
         int childrenHash = getChildren() == null ? 0 : getChildren().hashCode();
-        return getFullDeckName().hashCode() + mRevCount + mLrnCount + mNewCount + (int) (childrenHash ^ (childrenHash >>> 32));
+        return getFullDeckName().hashCode() + mRevCount + mLrnCount + mNewCount + childrenHash;
     }
 
 
@@ -94,7 +93,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
      */
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof DeckDueTreeNode)) {
+        if (!(object instanceof DeckDueTreeNode)) {
             return false;
         }
         DeckDueTreeNode tree = (DeckDueTreeNode) object;
@@ -118,6 +117,22 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
     }
 
     public boolean knownToHaveRep() {
-        return mRevCount > 0 || mNewCount > 0 || mNewCount > 0;
+        return mRevCount > 0 || mNewCount > 0 || mLrnCount > 0;
+    }
+
+
+    @Override
+    public DeckDueTreeNode withChildren(List<DeckDueTreeNode> children) {
+        Collection col = getCol();
+        String name = getFullDeckName();
+        long did = getDid();
+        DeckDueTreeNode node = new DeckDueTreeNode(col, name, did, mRevCount, mLrnCount, mNewCount);
+        // We've already calculated the counts, don't bother doing it again, just set the variable.
+        node.setChildrenSuper(children);
+        return node;
+    }
+
+    private void setChildrenSuper(List<DeckDueTreeNode> children) {
+        super.setChildren(children, false);
     }
 }

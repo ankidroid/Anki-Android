@@ -3,12 +3,11 @@ package com.ichi2.async;
 
 import android.content.Context;
 
-import com.ichi2.anki.CardBrowser;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
 
 import java.util.List;
-import java.util.Map;
+
 import static com.ichi2.anki.CardBrowser.CardCache;
 
 public class TaskData {

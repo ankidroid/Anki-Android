@@ -94,6 +94,7 @@
     <string name="sync_overwrite_error">Koleksimu saat ini tidak dapat ditimpa oleh berkas yang diunduh</string>
     <string name="sync_connection_error">Koneksi gagal. Antara koneksi internetmu bermasalah, atau kamu memiliki berkas yang sangat besar di folder mediamu.</string>
     <string name="sync_write_access_error">Berkas yang diunduh tidak dapat disimpan ke kartu SD. Mungkin kartu memori terpasang hanya bisa dibaca atau ruang tidak cukup.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Sinkronisasi deletasi kloza(titik-titik)&#8230;</string>
     <string name="sync_small_objects_message">Menyinkronkan objek kecil&#8230;</string>
     <string name="sync_finish_message">Menyelesaikan sinkronisasi&#8230;</string>
@@ -115,6 +116,8 @@
     <string name="sync_media_db_error">Sinkronisasi media gagal karena basisdata sekarang korup. Disarankan memeriksa media.</string>
     <string name="sync_media_error">Galat menyinkronkan data media</string>
     <string name="sync_media_error_check">Galat saat menyinkronkan media. Pemeriksaan media disarankan.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Jarak jauh</string>
     <string name="force_full_sync_title">Paksa sinkronisasi penuh</string>
@@ -132,4 +135,6 @@
     <string name="sync_menu_title">Sinkronisasi</string>
     <string name="sync_menu_title_full_sync">Sinkronisasi (penuh)</string>
     <string name="sync_menu_title_no_account">Sinkronisasi (masuk)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Help</string>
 </resources>

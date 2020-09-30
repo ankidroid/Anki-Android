@@ -49,7 +49,7 @@
     <string name="studyoptions_due_today">За данас:</string>
     <string name="studyoptions_new_total">Укупно нових картица:</string>
     <string name="studyoptions_total_cards">Укупно картица:</string>
-    <string name="studyoptions_eta">Процењено време (мин):</string>
+    <string name="studyoptions_eta">Очекивано време (мин):</string>
     <string name="studyoptions_start">Започни учење</string>
     <!-- DeckPicker.java -->
     <string name="expand">Прошири</string>
@@ -66,13 +66,13 @@
         <item quantity="other">%d минута остало</item>
     </plurals>
     <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
+        <item quantity="one">%d сати %d преостало</item>
         <item quantity="few">%d hours %d left</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="other">%d сати %d преостало</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="few">%d days %d left</item>
+        <item quantity="one">Остао је још %d дан</item>
+        <item quantity="few">Остало је још %d дана</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>

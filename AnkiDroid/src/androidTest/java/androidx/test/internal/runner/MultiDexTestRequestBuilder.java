@@ -31,7 +31,7 @@ import androidx.annotation.VisibleForTesting;
  * This is in androidx to override package-level functions
  * */
 public class MultiDexTestRequestBuilder extends TestRequestBuilder {
-    private Context mContext;
+    private final Context mContext;
 
     public MultiDexTestRequestBuilder(Instrumentation instr, Bundle arguments) {
         super(instr, arguments);

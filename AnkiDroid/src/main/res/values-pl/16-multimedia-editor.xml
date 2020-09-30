@@ -112,7 +112,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Nagranie nie powiodło się</string>
     <string name="multimedia_editor_audio_view_playing_failed">Odtwarzanie dźwięku nie powiodło się</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">Nie udało się utworzyć paska  narzędzi nagrywania</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text">Pole edycji</string>
     <string name="title_activity_translation">Tłumaczenie</string>
@@ -120,9 +120,9 @@
     <!-- Network failure -->
     <string name="network_no_connection">Brak połączenia</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="crop_image">Czy chcesz przyciąć ten obraz?</string>
+    <string name="crop_button">Przytnij obraz</string>
+    <string name="save_dialog_content">Aktualny rozmiar obrazu: %sMB. Domyślny limit rozmiaru obrazu to 1 MB. Czy chcesz przyciąć obraz?</string>
+    <string name="select_image_failed">"Wybieranie obrazu nie powiodło się, spróbuj ponownie"</string>
+    <string name="activity_result_unexpected">Aplikacja zwróciła nieoczekiwaną wartość. Może być konieczne użycie innej aplikacji</string>
 </resources>

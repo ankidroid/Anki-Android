@@ -6,7 +6,6 @@ import com.android.tools.lint.detector.api.Implementation;
 import com.android.tools.lint.detector.api.Issue;
 import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.Severity;
 import com.android.tools.lint.detector.api.SourceCodeScanner;
 import com.google.common.annotations.VisibleForTesting;
 import com.ichi2.anki.lint.utils.Constants;
@@ -33,7 +32,7 @@ public class DirectSystemCurrentTimeMillisUsage extends Detector implements Sour
     static final String DESCRIPTION = "Use the collection's getTime() method instead of System.currentTimeMillis()";
     private static final String EXPLANATION = "Using time directly means time values cannot be controlled during testing. " +
             "Time values like System.currentTimeMillis() must be obtained through the Time obtained from a Collection";
-    private static Implementation implementation = new Implementation(DirectSystemCurrentTimeMillisUsage.class, Scope.JAVA_FILE_SCOPE);
+    private static final Implementation implementation = new Implementation(DirectSystemCurrentTimeMillisUsage.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
             DESCRIPTION,

@@ -19,6 +19,7 @@
 package com.ichi2.anki;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import android.view.View;
 
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Utils;
+import com.ichi2.themes.Themes;
 
 import java.util.HashSet;
 import java.util.List;
@@ -127,18 +129,23 @@ public class Previewer extends AbstractFlashcardViewer {
 
         mPreviewPrevCard.setOnClickListener(mSelectScrollHandler);
         mPreviewNextCard.setOnClickListener(mSelectScrollHandler);
+
+        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+            int resId = Themes.getResFromAttr(this, R.attr.hardButtonRippleRef);
+            mPreviewButtonsLayout.setBackgroundResource(resId);
+            mPreviewPrevCard.setBackgroundResource(R.drawable.item_background_light_selectable_borderless);
+            mPreviewNextCard.setBackgroundResource(R.drawable.item_background_light_selectable_borderless);
+        }
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-                editCard();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.action_edit) {
+            editCard();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -201,11 +208,6 @@ public class Previewer extends AbstractFlashcardViewer {
     }
 
 
-    // we don't want the Activity title to be changed.
-    @Override
-    protected void updateScreenCounts() { /* do nothing */ }
-
-
     @Override
     public boolean executeCommand(int which) {
         /* do nothing */
@@ -237,7 +239,7 @@ public class Previewer extends AbstractFlashcardViewer {
     }
 
 
-    private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
+    private final View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (view.getId() == R.id.preview_previous_flashcard) {
@@ -251,7 +253,7 @@ public class Previewer extends AbstractFlashcardViewer {
         }
     };
 
-    private View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
+    private final View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (mShowingAnswer) {
@@ -263,6 +265,8 @@ public class Previewer extends AbstractFlashcardViewer {
     };
 
     private void updateButtonsState() {
+        mPreviewToggleAnswerText.setText(mShowingAnswer ? R.string.hide_answer : R.string.show_answer);
+
         // If we are in single-card mode, we show the "Show Answer" button on the question side
         // and hide navigation buttons.
         if (mCardList.length == 1) {
@@ -270,8 +274,6 @@ public class Previewer extends AbstractFlashcardViewer {
             mPreviewNextCard.setVisibility(View.GONE);
             return;
         }
-
-        mPreviewToggleAnswerText.setText(mShowingAnswer ? R.string.hide_answer : R.string.show_answer);
 
         boolean prevBtnDisabled = mIndex <= 0;
         boolean nextBtnDisabled = mIndex >= mCardList.length - 1;

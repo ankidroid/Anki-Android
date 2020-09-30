@@ -9,6 +9,7 @@ import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.ImportUtils;
+import com.ichi2.utils.ImportUtils.ImportResult;
 import com.ichi2.utils.Permissions;
 
 import androidx.annotation.CheckResult;
@@ -119,9 +120,9 @@ public class IntentHandler extends Activity {
 
     private void handleFileImport(Intent intent, Intent reloadIntent, String action) {
         Timber.i("Handling file import");
-        String errorMessage = ImportUtils.handleFileImport(this, intent);
+        ImportResult importResult = ImportUtils.handleFileImport(this, intent);
         // Start DeckPicker if we correctly processed ACTION_VIEW
-        if (errorMessage == null) {
+        if (importResult.isSuccess()) {
             Timber.d("onCreate() import successful");
             reloadIntent.setAction(action);
             reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -130,8 +131,7 @@ public class IntentHandler extends Activity {
         } else {
             Timber.i("File import failed");
             // Don't import the file if it didn't load properly or doesn't have apkg extension
-            //Themes.showThemedToast(this, getResources().getString(R.string.import_log_no_apkg), true);
-            ImportUtils.showImportUnsuccessfulDialog(this, errorMessage, true);
+            ImportUtils.showImportUnsuccessfulDialog(this, importResult.getHumanReadableMessage(), true);
         }
     }
 

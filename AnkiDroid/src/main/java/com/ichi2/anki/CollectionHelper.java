@@ -46,8 +46,6 @@ public class CollectionHelper {
 
     // Collection instance belonging to sInstance
     private Collection mCollection;
-    // Path to collection, cached for the reopenCollection() method
-    private String mPath;
     // Name of anki2 file
     public static final String COLLECTION_FILENAME = "collection.anki2";
 
@@ -70,9 +68,11 @@ public class CollectionHelper {
     }
 
     public synchronized void lockCollection() {
+        Timber.i("Locked Collection - Collection Loading should fail");
         mCollectionLocked = true;
     }
     public synchronized void unlockCollection() {
+        Timber.i("Unlocked Collection");
         mCollectionLocked = false;
     }
     public synchronized boolean isCollectionLocked() {
@@ -103,8 +103,13 @@ public class CollectionHelper {
      * @return instance of the Collection
      */
     public synchronized Collection getCol(Context context) {
+        if (colIsOpen()) {
+            return mCollection;
+        }
         return getCol(context, new SystemTime());
     }
+
+    @VisibleForTesting
     public synchronized Collection getCol(Context context, @NonNull Time time) {
         // Open collection
         if (!colIsOpen()) {
@@ -112,7 +117,7 @@ public class CollectionHelper {
             // Check that the directory has been created and initialized
             try {
                 initializeAnkiDroidDirectory(getParentDirectory(path));
-                mPath = path;
+                // Path to collection, cached for the reopenCollection() method
             } catch (StorageAccessException e) {
                 Timber.e(e, "Could not initialize AnkiDroid directory");
                 return null;

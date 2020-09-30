@@ -33,6 +33,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,7 +51,6 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -151,14 +151,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                onBackPressed();
-                return true;
-            }
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -256,6 +253,33 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
     }
 
 
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_P) {
+            if (event.isCtrlPressed()) {
+                CardTemplateFragment currentFragment = getCurrentFragment();
+                if (currentFragment != null) {
+                    currentFragment.performPreview();
+                }
+            }
+        }
+
+        return super.onKeyUp(keyCode, event);
+    }
+
+
+    @Nullable
+    private CardTemplateFragment getCurrentFragment() {
+        try {
+            return (CardTemplateFragment) getSupportFragmentManager().findFragmentByTag("f" + mViewPager.getCurrentItem());
+        } catch (Exception e) {
+            Timber.w("Failed to get current fragment");
+            return null;
+        }
+    }
+
+
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
@@ -340,9 +364,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return mainView;
             }
             // Load EditText Views
-            mFront = ((EditText) mainView.findViewById(R.id.front_edit));
-            mCss = ((EditText) mainView.findViewById(R.id.styling_edit));
-            mBack = ((EditText) mainView.findViewById(R.id.back_edit));
+            mFront = mainView.findViewById(R.id.front_edit);
+            mCss = mainView.findViewById(R.id.styling_edit);
+            mBack = mainView.findViewById(R.id.back_edit);
             // Set EditText content
             mFront.setText(template.getString("qfmt"));
             mCss.setText(tempModel.getCss());
@@ -464,25 +488,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                     return true;
                 }
                 case R.id.action_preview: {
-                    Timber.i("CardTemplateEditor:: Preview on tab %s", mTemplateEditor.mViewPager.getCurrentItem());
-                    // Create intent for the previewer and add some arguments
-                    Intent i = new Intent(mTemplateEditor, CardTemplatePreviewer.class);
-                    int ordinal = mTemplateEditor.mViewPager.getCurrentItem();
-                    long noteId = getArguments().getLong("noteId");
-                    i.putExtra("ordinal", ordinal);
-
-                    // If we have a card for this position, send it, otherwise an empty cardlist signals to show a blank
-                    if (noteId != -1L) {
-                        List<Long> cids = col.getNote(noteId).cids();
-                        if (ordinal < cids.size()) {
-                            i.putExtra("cardList", new long[] { cids.get(ordinal) });
-                        }
-                    }
-                    // Save the model and pass the filename if updated
-                    tempModel.setEditedModelFileName(TemporaryModel.saveTempModel(mTemplateEditor, tempModel.getModel()));
-                    i.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModel.getEditedModelFileName());
-                    startActivityForResult(i, REQUEST_PREVIEWER);
-                    return true;
+                    return performPreview();
                 }
                 case R.id.action_confirm:
                     Timber.i("CardTemplateEditor:: Save model button pressed");
@@ -508,6 +514,31 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 default:
                     return super.onOptionsItemSelected(item);
             }
+        }
+
+
+        private boolean performPreview() {
+            Collection col = mTemplateEditor.getCol();
+            TemporaryModel tempModel = mTemplateEditor.getTempModel();
+            Timber.i("CardTemplateEditor:: Preview on tab %s", mTemplateEditor.mViewPager.getCurrentItem());
+            // Create intent for the previewer and add some arguments
+            Intent i = new Intent(mTemplateEditor, CardTemplatePreviewer.class);
+            int ordinal = mTemplateEditor.mViewPager.getCurrentItem();
+            long noteId = getArguments().getLong("noteId");
+            i.putExtra("ordinal", ordinal);
+
+            // If we have a card for this position, send it, otherwise an empty cardlist signals to show a blank
+            if (noteId != -1L) {
+                List<Long> cids = col.getNote(noteId).cids();
+                if (ordinal < cids.size()) {
+                    i.putExtra("cardList", new long[] { cids.get(ordinal) });
+                }
+            }
+            // Save the model and pass the filename if updated
+            tempModel.setEditedModelFileName(TemporaryModel.saveTempModel(mTemplateEditor, tempModel.getModel()));
+            i.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModel.getEditedModelFileName());
+            startActivityForResult(i, REQUEST_PREVIEWER);
+            return true;
         }
 
 
@@ -683,12 +714,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             String msg = String.format(res.getQuantityString(R.plurals.card_template_editor_confirm_delete,
                             numAffectedCards), numAffectedCards, tmpl.optString("name"));
             d.setArgs(msg);
-            Runnable confirm = new Runnable() {
-                @Override
-                public void run() {
-                    deleteTemplateWithCheck(tmpl, model);
-                }
-            };
+            Runnable confirm = () -> deleteTemplateWithCheck(tmpl, model);
             d.setConfirm(confirm);
             mTemplateEditor.showDialogFragment(d);
         }
@@ -824,7 +850,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             // If the starting point for name already exists, iteratively increase n until we find a unique name
             while (true) {
                 // Get new name
-                name = "Card " + Integer.toString(n);
+                name = "Card " + n;
                 // Cycle through all templates checking if new name exists
                 boolean exists = false;
                 for (int i = 0; i < templates.length(); i++) {

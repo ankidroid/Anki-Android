@@ -56,7 +56,7 @@ public class MediaTest extends RobolectricTest {
         assertEquals("<img src=\"foo%20bar.jpg\">", col.getMedia().escapeImages("<img src=\"foo bar.jpg\">"));
     }
 
-    /** TODO: file
+    /* TODO: file
      @Test public void test_deckIntegration(){
      Collection col = getCol();
      // create a media dir

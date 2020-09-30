@@ -22,13 +22,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +39,9 @@ import android.view.View;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
+import androidx.drawerlayout.widget.ClosableDrawerLayout;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import timber.log.Timber;
 
 
@@ -94,7 +99,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         View actionLayout = mNavigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
         mNightModeSwitch = actionLayout.findViewById(R.id.switch_compat);
         mNightModeSwitch.setChecked(preferences.getBoolean(NIGHT_MODE_PREFERENCE, false));
-        mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> { applyNightMode(isChecked); });
+        mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> applyNightMode(isChecked));
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0) {
@@ -103,10 +108,15 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 super.onDrawerClosed(drawerView);
                 supportInvalidateOptionsMenu();
 
-                if (pendingRunnable != null) {
-                    new Handler().post(pendingRunnable);
-                    pendingRunnable = null;
-                }
+                // If animations are disabled, this is executed before onNavigationItemSelected is called
+                // PERF: May be able to reduce this delay
+                new Handler().postDelayed(() -> {
+                    if (pendingRunnable != null) {
+                        new Handler().post(pendingRunnable);
+                        pendingRunnable = null;
+                    }
+                }, 100);
+
             }
 
 
@@ -116,7 +126,12 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 supportInvalidateOptionsMenu();
             }
         };
-
+        if (mDrawerLayout instanceof ClosableDrawerLayout) {
+            ((ClosableDrawerLayout) mDrawerLayout).setAnimationEnabled(animationEnabled());
+        } else {
+            Timber.w("Unexpected Drawer layout - could not modify navigation animation");
+        }
+        mDrawerToggle.setDrawerSlideAnimationEnabled(animationEnabled());
         mDrawerLayout.addDrawerListener(mDrawerToggle);
     }
 
@@ -180,7 +195,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         if (mDrawerToggle != null) {
@@ -249,7 +264,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public void onBackPressed() {
         if (isDrawerOpen()) {
             Timber.i("Back key pressed");
-            mDrawerLayout.closeDrawers();
+            closeDrawer();
         } else {
             super.onBackPressed();
         }
@@ -263,7 +278,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         if (mNavButtonGoesBack) {
             finishWithAnimation(ActivityTransitionAnimation.RIGHT);
         } else {
-            mDrawerLayout.openDrawer(GravityCompat.START);
+            openDrawer();
         }
     }
 
@@ -322,7 +337,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             }
         };
 
-        mDrawerLayout.closeDrawers();
+        closeDrawer();
         return true;
     }
 
@@ -372,5 +387,45 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         stackBuilder.addNextIntentWithParentStack(intent);
         stackBuilder.startActivities(new Bundle());
         activity.finishWithoutAnimation();
+    }
+
+
+    public void toggleDrawer() {
+        if (!isDrawerOpen()) {
+            openDrawer();
+        } else {
+            closeDrawer();
+        }
+    }
+
+
+    private void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START, animationEnabled());
+    }
+
+    private void closeDrawer() {
+        mDrawerLayout.closeDrawer(GravityCompat.START, animationEnabled());
+    }
+
+
+    public void focusNavigation() {
+        // mNavigationView.getMenu().getItem(0).setChecked(true);
+        selectNavigationItem(R.id.nav_decks);
+        mNavigationView.requestFocus();
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (!isDrawerOpen()) {
+            return super.onKeyDown(keyCode, event);
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+            closeDrawer();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

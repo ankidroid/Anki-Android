@@ -24,8 +24,8 @@ import java.util.Vector;
  * The informations are the drawables for this plotsheet and the x and y limitations
  */
 public class MultiScreenPart {
-    private double[] xRange;
-    private double[] yRange;
+    private final double[] xRange;
+    private final double[] yRange;
     private Vector<Drawable> drawables = new Vector<>();
 
 

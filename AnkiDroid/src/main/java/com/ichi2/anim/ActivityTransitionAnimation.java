@@ -7,13 +7,13 @@ import android.app.Activity;
 import com.ichi2.anki.R;
 
 public class ActivityTransitionAnimation {
-    public static int LEFT = 0;
-    public static int RIGHT = 1;
-    public static int FADE = 2;
-    public static int UP = 3;
-    public static int DOWN = 4;
-    public static int DIALOG_EXIT = 5;
-    public static int NONE = 6;
+    public static final int LEFT = 0;
+    public static final int RIGHT = 1;
+    public static final int FADE = 2;
+    public static final int UP = 3;
+    public static final int DOWN = 4;
+    public static final int DIALOG_EXIT = 5;
+    public static final int NONE = 6;
 
 
     @TargetApi(5)

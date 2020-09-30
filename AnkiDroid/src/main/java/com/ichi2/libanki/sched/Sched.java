@@ -33,7 +33,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 
-import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
@@ -54,6 +53,9 @@ import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
+
+import static com.ichi2.libanki.sched.Counts.Queue.*;
+import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -65,12 +67,6 @@ public class Sched extends SchedV2 {
 
     // Not in libanki
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
-
-    private final @NonNull String mName = "std";
-    private final boolean mSpreadRev = true;
-
-
-
 
     // Queues
     private @NonNull LinkedList<Long> mRevDids = new LinkedList<>();
@@ -133,24 +129,31 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    public int[] counts(@NonNull Card card) {
-        int[] counts = counts();
-        int idx = countIdx(card);
-        if (idx == 1) {
-            counts[1] += card.getLeft() / 1000;
+    public @NonNull Counts counts(@NonNull Card card) {
+        Counts counts = counts();
+        Counts.Queue idx = countIdx(card);
+        if (idx == LRN) {
+            counts.addLrn(card.getLeft() / 1000);
         } else {
-            counts[idx] += 1;
+            counts.changeCount(idx, 1);
         }
         return counts;
     }
 
 
     @Override
-    public int countIdx(@NonNull Card card) {
-        if (card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
-            return Consts.QUEUE_TYPE_LRN;
+    public Queue countIdx(@NonNull Card card) {
+        switch (card.getQueue()) {
+            case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
+            case Consts.QUEUE_TYPE_LRN:
+                return LRN;
+            case Consts.QUEUE_TYPE_NEW:
+                return NEW;
+            case Consts.QUEUE_TYPE_REV:
+                return REV;
+            default:
+                throw new RuntimeException("Index " + card.getQueue() + " does not exists.");
         }
-        return card.getQueue();
     }
 
 
@@ -198,8 +201,8 @@ public class Sched extends SchedV2 {
                 getTime().intTime(), mCol.usn());
     }
 
-    /**
-     * Deck list **************************************************************** *******************************
+    /*
+      Deck list **************************************************************** *******************************
      */
 
 
@@ -220,8 +223,8 @@ public class Sched extends SchedV2 {
             String deckName = deck.getString("name");
             String p = Decks.parent(deckName);
             // new
-            int nlim = _deckNewLimitSingle(deck);
-            int rlim = _deckRevLimitSingle(deck);
+            int nlim = _deckNewLimitSingle(deck, false);
+            int rlim = _deckRevLimitSingle(deck, false);
             if (!TextUtils.isEmpty(p)) {
                 Integer[] parentLims = lims.get(Decks.normalizeName(p));
                 // 'temporary for diagnosis of bug #6383'
@@ -244,9 +247,9 @@ public class Sched extends SchedV2 {
     }
 
 
-    /**
-     * Getting the next card ****************************************************
-     * *******************************************
+    /*
+      Getting the next card ****************************************************
+      *******************************************
      */
 
     /**
@@ -602,12 +605,16 @@ public class Sched extends SchedV2 {
     }
 
 
-    /**
-     * Reviews ****************************************************************** *****************************
+    /*
+      Reviews ****************************************************************** *****************************
      */
 
-    protected int _deckRevLimit(long did) {
-        return _deckNewLimit(did, d -> _deckRevLimitSingle(d));
+    /**
+     *
+     * @param considerCurrentCard Whether current card should be conted if it is in this deck
+     */
+    protected int _deckRevLimit(long did, boolean considerCurrentCard) {
+        return _deckNewLimit(did, d -> _deckRevLimitSingle(d, considerCurrentCard), considerCurrentCard);
     }
 
     /**
@@ -617,16 +624,17 @@ public class Sched extends SchedV2 {
      * plus the number of extra cards to see today in deck d, a parent or a descendant.
      *
      * Limits of its ancestors are not applied.  Current card is treated the same way as other cards.
+     * @param considerCurrentCard Whether current card should be conted if it is in this deck
      * */
     @Override
-    protected int _deckRevLimitSingle(@NonNull Deck d) {
+    protected int _deckRevLimitSingle(@NonNull Deck d, boolean considerCurrentCard) {
         if (d.getInt("dyn") != 0) {
             return mReportLimit;
         }
         long did = d.getLong("id");
         DeckConfig c = mCol.getDecks().confForDid(did);
         int lim = Math.max(0, c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1));
-        if (currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_REV, did)) {
+        if (considerCurrentCard && currentCardIsInQueueWithDeck(Consts.QUEUE_TYPE_REV, did)) {
             lim--;
         }
         // The counts shown in the reviewer does not consider the current card. E.g. if it indicates 6 rev card, it means, 6 rev card including current card will be seen today.
@@ -644,7 +652,7 @@ public class Sched extends SchedV2 {
 
     @Override
     protected void _resetRevCount() {
-        mRevCount = _walkingCount(d -> _deckRevLimitSingle(d),
+        mRevCount = _walkingCount(d -> _deckRevLimitSingle(d, true),
                                   (did, lim) -> _cntFnRev(did, lim));
     }
 
@@ -677,7 +685,7 @@ public class Sched extends SchedV2 {
         SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         while (!mRevDids.isEmpty()) {
             long did = mRevDids.getFirst();
-            int lim = Math.min(mQueueLimit, _deckRevLimit(did));
+            int lim = Math.min(mQueueLimit, _deckRevLimit(did, false));
             Cursor cur = null;
             if (lim != 0) {
                 mRevQueue.clear();
@@ -731,7 +739,7 @@ public class Sched extends SchedV2 {
         // Since we didn't get a card and the count is non-zero, we
         // need to check again for any cards that were removed from
         // the queue but not buried
-        _resetRev(mCurrentCard);
+        _resetRev();
         return _fillRev(true);
     }
 
@@ -823,9 +831,9 @@ public class Sched extends SchedV2 {
     }
 
 
-    /**
-     * Interval management ******************************************************
-     * *****************************************
+    /*
+      Interval management ******************************************************
+      *****************************************
      */
 
     /**
@@ -876,9 +884,7 @@ public class Sched extends SchedV2 {
 
     @SuppressWarnings("PMD.UnusedFormalParameter") // it's unused upstream as well
     private int _adjRevIvl(@NonNull Card card, int idealIvl) {
-        if (mSpreadRev) {
-            idealIvl = _fuzzedIvl(idealIvl);
-        }
+        idealIvl = _fuzzedIvl(idealIvl);
         return idealIvl;
     }
 
@@ -896,24 +902,23 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    public List<Long> rebuildDyn(long did) {
+    public void rebuildDyn(long did) {
         if (did == 0) {
             did = mCol.getDecks().selected();
         }
         Deck deck = mCol.getDecks().get(did);
         if (deck.getInt("dyn") == 0) {
             Timber.e("error: deck is not a filtered deck");
-            return null;
+            return;
         }
         // move any existing cards back first, then fill
         emptyDyn(did);
         List<Long> ids = _fillDyn(deck);
         if (ids.isEmpty()) {
-            return null;
+            return;
         }
         // and change to our new deck
         mCol.getDecks().select(did);
-        return ids;
     }
 
 
@@ -986,8 +991,8 @@ public class Sched extends SchedV2 {
     }
 
 
-    /**
-     * Leeches ****************************************************************** *****************************
+    /*
+      Leeches ****************************************************************** *****************************
      */
 
     /** Leech handler. True if card was a leech. */
@@ -1106,7 +1111,7 @@ public class Sched extends SchedV2 {
         mToday = (int) ((getTime().intTime() - mCol.getCrt()) / SECONDS_PER_DAY);
         // end of day cutoff
         mDayCutoff = mCol.getCrt() + ((mToday + 1) * SECONDS_PER_DAY);
-        if (oldToday != mToday) {
+        if (!mToday.equals(oldToday)) {
             mCol.log(mToday, mDayCutoff);
         }
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
@@ -1142,16 +1147,16 @@ public class Sched extends SchedV2 {
     }
 
 
-    /**
-     * Next time reports ********************************************************
-     * ***************************************
+    /*
+      Next time reports ********************************************************
+      ***************************************
      */
 
     /**
      * Return the next interval for CARD, in seconds.
      */
     @Override
-    public long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    protected long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
             return _nextLrnIvl(card, ease);
         } else if (ease == Consts.BUTTON_ONE) {
@@ -1199,8 +1204,8 @@ public class Sched extends SchedV2 {
     }
 
 
-    /**
-     * Suspending *************************************************************** ********************************
+    /*
+      Suspending *************************************************************** ********************************
      */
 
     /**
@@ -1266,13 +1271,14 @@ public class Sched extends SchedV2 {
     }
 
     /* Need to override. Otherwise it get SchedV2.mName variable*/
+    @NonNull
     @Override
     public String getName() {
-        return mName;
+        return "std";
     }
 
-    /**
-     * Counts
+    /*
+      Counts
      */
 
     /**
@@ -1293,7 +1299,7 @@ public class Sched extends SchedV2 {
      * @param reload Force rebuild of estimator rates using the revlog.
      */
     @Override
-    public int eta(@NonNull int[] counts, boolean reload) {
+    public int eta(@NonNull Counts counts, boolean reload) {
         double newRate;
         double newTime;
         double revRate;
@@ -1360,17 +1366,17 @@ public class Sched extends SchedV2 {
         }
 
         // Calculate the total time for each queue based on the historical average duration per rep
-        double newTotal = newTime * counts[0];
-        double relrnTotal = relrnTime * counts[1];
-        double revTotal = revTime * counts[2];
+        double newTotal = newTime * counts.getNew();
+        double relrnTotal = relrnTime * counts.getLrn();
+        double revTotal = revTime * counts.getRev();
 
         // Now we have to predict how many additional relrn cards are going to be generated while reviewing the above
         // queues, and how many relrn cards *those* reps will generate (and so on, until 0).
 
         // Every queue has a failure rate, and each failure will become a relrn
-        int toRelrn = counts[0]; // Assume every new card becomes 1 relrn
-        toRelrn += Math.ceil((1 - relrnRate) * counts[1]);
-        toRelrn += Math.ceil((1 - revRate) * counts[2]);
+        int toRelrn = counts.getNew(); // Assume every new card becomes 1 relrn
+        toRelrn += Math.ceil((1 - relrnRate) * counts.getLrn());
+        toRelrn += Math.ceil((1 - revRate) * counts.getRev());
 
         // Use the accuracy rate of the relrn queue to estimate how many reps we will end up with if the cards
         // currently in relrn continue to fail at that rate. Loop through the failures of the failures until we end up
@@ -1378,7 +1384,7 @@ public class Sched extends SchedV2 {
 
         // Cap the lower end of the success rate to ensure the loop ends (it could be 0 if no revlog history, or
         // negative for other reasons). 5% seems reasonable to ensure the loop doesn't iterate too much.
-        relrnRate = relrnRate < 0.05 ? 0.05 : relrnRate;
+        relrnRate = Math.max(relrnRate, 0.05);
         int futureReps = 0;
         do {
             // Truncation ensures the failure rate always decreases

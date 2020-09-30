@@ -71,7 +71,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     private ModelEditorContextMenu mContextMenu;
     private EditText mFieldNameInput;
 
-    private Runnable mConfirmDialogCancel = () -> dismissContextMenu();
+    private final Runnable mConfirmDialogCancel = () -> dismissContextMenu();
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -523,14 +523,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
 
 
     private void closeActivity(int reason) {
-        switch (reason) {
-            case NORMAL_EXIT:
-                finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                break;
-            default:
-                finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                break;
-        }
+        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
     }
 
 
@@ -540,7 +533,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     }
 
 
-    private MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, selection, charSequence) -> {
+    private final MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, selection, charSequence) -> {
         switch (selection) {
             case ModelEditorContextMenu.SORT_FIELD:
                 sortByField();

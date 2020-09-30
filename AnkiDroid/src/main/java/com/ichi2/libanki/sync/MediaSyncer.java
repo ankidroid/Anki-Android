@@ -68,11 +68,11 @@ import timber.log.Timber;
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
 public class MediaSyncer {
-    private Collection mCol;
-    private RemoteMediaServer mServer;
+    private final Collection mCol;
+    private final RemoteMediaServer mServer;
     private int mDownloadCount;
     // Needed to update progress to UI
-    private Connection mCon;
+    private final Connection mCon;
 
     public MediaSyncer(Collection col, RemoteMediaServer server, Connection con) {
         mCol = col;

@@ -44,7 +44,8 @@ package com.ichi2.utils;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.Iterator;
+
+import androidx.annotation.NonNull;
 
 public class JSONArray extends org.json.JSONArray {
     public JSONArray() {
@@ -71,7 +72,6 @@ public class JSONArray extends org.json.JSONArray {
      * @return the same element as input. But considered as a JSONArray.
      */
     public static JSONArray arrayToArray(org.json.JSONArray ar){
-        Assert.that(ar == null || ar instanceof JSONArray, "Object %s should have been an instance of our JSONArray.", ar);
         return (JSONArray) ar;
     }
 
@@ -276,7 +276,7 @@ public class JSONArray extends org.json.JSONArray {
         }
     }
 
-    public String toString(int indentSpaces) {
+    public @NonNull String toString(int indentSpaces) {
         try {
             return super.toString(indentSpaces);
         } catch (org.json.JSONException e) {

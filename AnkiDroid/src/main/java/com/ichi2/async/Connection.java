@@ -45,8 +45,13 @@ import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import okhttp3.Response;
 import timber.log.Timber;
+
+import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
+import static com.ichi2.async.Connection.ConflictResolution.FULL_UPLOAD;
 
 public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
 
@@ -282,23 +287,44 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 msg.contains("TimeoutException");
     }
 
+    public enum ConflictResolution {
+        FULL_DOWNLOAD("download"),
+        FULL_UPLOAD("upload");
 
+        // Useful for path /download and /upload
+        @NonNull private final String mString;
+        ConflictResolution(@NonNull String string) {
+            mString = string;
+        }
+
+        public @NonNull String toString() {
+            return mString;
+        }
+    }
+
+    /**
+     * In the payload, success means that the sync did occur correctly and that a change did occur.
+     * So success can be false without error, if no change occurred at all.*/
     private Payload doInBackgroundSync(Payload data) {
         sIsCancellable = true;
         Timber.d("doInBackgroundSync()");
         // Block execution until any previous background task finishes, or timeout after 5s
         boolean ok = CollectionTask.waitToFinish(5);
 
+        // Unique key allowing to identify the user to AnkiWeb without password
         String hkey = (String) data.data[0];
+        // Whether media should be synced too
         boolean media = (Boolean) data.data[1];
-        String conflictResolution = (String) data.data[2];
+        // If normal sync can't occur, what to do
+        ConflictResolution conflictResolution = (ConflictResolution) data.data[2];
+        // A number AnkiWeb told us to send back. Probably to choose the best server for the user
         HostNum hostNum = (HostNum) data.data[3];
         // Use safe version that catches exceptions so that full sync is still possible
         Collection col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance());
 
         boolean colCorruptFullSync = false;
         if (!CollectionHelper.getInstance().colIsOpen() || !ok) {
-            if (conflictResolution != null && "download".equals(conflictResolution)) {
+            if (FULL_DOWNLOAD == conflictResolution) {
                 colCorruptFullSync = true;
             } else {
                 data.success = false;
@@ -345,10 +371,12 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     // Disable sync cancellation for full-sync
                     sIsCancellable = false;
                     server = new FullSyncer(col, hkey, this, hostNum);
-                    if ("upload".equals(conflictResolution)) {
+                    Object[] ret;
+                    switch (conflictResolution) {
+                    case FULL_UPLOAD:
                         Timber.i("Sync - fullsync - upload collection");
                         publishProgress(R.string.sync_preparing_full_sync_message);
-                        Object[] ret = server.upload();
+                        ret = server.upload();
                         col.reopen();
                         if (ret == null) {
                             data.success = false;
@@ -360,10 +388,11 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                             data.result = ret;
                             return data;
                         }
-                    } else if ("download".equals(conflictResolution)) {
+                        break;
+                    case FULL_DOWNLOAD:
                         Timber.i("Sync - fullsync - download collection");
                         publishProgress(R.string.sync_downloading_message);
-                        Object[] ret = server.download();
+                        ret = server.download();
                         if (ret == null) {
                             Timber.w("Sync - fullsync - unknown error");
                             data.success = false;
@@ -383,6 +412,8 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                             }
                             return data;
                         }
+                        break;
+                    default:
                     }
                 } catch (OutOfMemoryError e) {
                     AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
@@ -445,6 +476,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 }
             }
             if (noChanges && (!media || noMediaChanges)) {
+                // This means that there is no change at all, neither media nor collection. Not that there was an error.
                 data.success = false;
                 data.result = new Object[] { "noChanges" };
                 return data;

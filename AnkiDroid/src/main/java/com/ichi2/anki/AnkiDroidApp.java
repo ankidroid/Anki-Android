@@ -31,7 +31,6 @@ import android.os.LocaleList;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.util.Log;
@@ -206,13 +205,14 @@ public class AnkiDroidApp extends MultiDexApplication {
 
     @Override
     protected void attachBaseContext(Context base) {
-        // update base context with preferred app language before attach
-        // possible since API 17, only supported way since API 25
-        // for API < 17 we update the configuration directly
+        //update base context with preferred app language before attach
+        //possible since API 17, only supported way since API 25
+        //for API < 17 we update the configuration directly
         super.attachBaseContext(updateContextWithLanguage(base));
 
-        sInstance = this;
-        initializeLoggingAndCrashReporting();
+        // DO NOT INIT A WEBVIEW HERE (Moving Analytics to this method)
+        // Crashes only on a Physical API 19 Device - #7135
+        // After we move past API 19, we're good to go.
     }
 
     /**
@@ -221,10 +221,47 @@ public class AnkiDroidApp extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (sInstance != null) {
+            Timber.i("onCreate() called multiple times");
+            //5887 - fix crash.
+            if (sInstance.getResources() == null) {
+                Timber.w("Skipping re-initialisation - no resources. Maybe uninstalling app?");
+                return;
+            }
+        }
+        sInstance = this;
+        // Get preferences
+        SharedPreferences preferences = getSharedPrefs(this);
+
+        // Setup logging and crash reporting
+        acraCoreConfigBuilder = new CoreConfigurationBuilder(this);
+        if (BuildConfig.DEBUG) {
+            // Enable verbose error logging and do method tracing to put the Class name as log tag
+            Timber.plant(new DebugTree());
+
+            setDebugACRAConfig(preferences);
+        } else {
+            Timber.plant(new ProductionCrashReportingTree());
+            setProductionACRAConfig(preferences);
+        }
+        Timber.tag(TAG);
+
         Timber.d("Startup - Application Start");
-        if (getResources() == null) {
-            Timber.w("Skipping re-initialisation - no resources. Maybe uninstalling app?");
-            return;
+
+        // The ACRA process needs a WebView for optimal UsageAnalytics values but it can't have the same data directory.
+        // Analytics falls back to a sensible default if this is not set.
+        if (ACRA.isACRASenderServiceProcess() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            try {
+                WebViewDebugging.setDataDirectorySuffix("acra");
+            } catch (Exception e) {
+                Timber.w(e, "Failed to set WebView data directory");
+            }
+        }
+
+        // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
+        UsageAnalytics.initialize(this);
+        if (BuildConfig.DEBUG) {
+            UsageAnalytics.setDryRun(true);
         }
 
         //Stop after analytics and logging are initialised.
@@ -280,42 +317,6 @@ public class AnkiDroidApp extends MultiDexApplication {
     }
 
 
-    @VisibleForTesting
-    public void initializeLoggingAndCrashReporting() {
-        // Get preferences
-        SharedPreferences preferences = getSharedPrefs(this);
-
-        // Setup logging and crash reporting
-        acraCoreConfigBuilder = new CoreConfigurationBuilder(this);
-        if (BuildConfig.DEBUG) {
-            // Enable verbose error logging and do method tracing to put the Class name as log tag
-            Timber.plant(new DebugTree());
-
-            setDebugACRAConfig(preferences);
-        } else {
-            Timber.plant(new ProductionCrashReportingTree());
-            setProductionACRAConfig(preferences);
-        }
-        Timber.tag(TAG);
-
-        // The ACRA process needs a WebView for optimal UsageAnalytics values but it can't have the same data directory.
-        // Analytics falls back to a sensible default if this is not set.
-        if (ACRA.isACRASenderServiceProcess() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            try {
-                WebViewDebugging.setDataDirectorySuffix("acra");
-            } catch (Exception e) {
-                Timber.w(e, "Failed to set WebView data directory");
-            }
-        }
-
-        // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
-        UsageAnalytics.initialize(this);
-        if (BuildConfig.DEBUG) {
-            UsageAnalytics.setDryRun(true);
-        }
-    }
-
-
     /**
      * Convenience method for accessing Shared preferences
      *
@@ -355,12 +356,12 @@ public class AnkiDroidApp extends MultiDexApplication {
     }
 
 
-    public static void sendExceptionReport(Throwable e, String origin, String additionalInfo) {
+    public static void sendExceptionReport(Throwable e, String origin, @Nullable String additionalInfo) {
         sendExceptionReport(e, origin, additionalInfo, false);
     }
 
 
-    public static void sendExceptionReport(Throwable e, String origin, String additionalInfo, boolean onlyIfSilent) {
+    public static void sendExceptionReport(Throwable e, String origin, @Nullable String additionalInfo, boolean onlyIfSilent) {
         UsageAnalytics.sendAnalyticsException(e, false);
 
         if (onlyIfSilent) {

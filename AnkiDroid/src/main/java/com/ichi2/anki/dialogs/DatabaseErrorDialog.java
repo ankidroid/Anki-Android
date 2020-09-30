@@ -13,12 +13,14 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.async.Connection;
 import com.ichi2.libanki.utils.Time;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class DatabaseErrorDialog extends AsyncDialogFragment {
@@ -55,6 +57,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -282,7 +285,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         .positiveText(res.getString(R.string.dialog_positive_overwrite))
                         .negativeText(res.getString(R.string.dialog_cancel))
                         .onPositive((inner_dialog, which) -> {
-                            ((DeckPicker) getActivity()).sync("download");
+                            ((DeckPicker) getActivity()).sync(Connection.ConflictResolution.FULL_DOWNLOAD);
                             dismissAllDialogFragments();
                         })
                         .show();
@@ -343,8 +346,6 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_LOAD_FAILED:
                 return res().getString(R.string.open_collection_failed_title);
-            case DIALOG_DB_ERROR:
-                return res().getString(R.string.answering_error_title);
             case DIALOG_ERROR_HANDLING:
                 return res().getString(R.string.error_handling_title);
             case DIALOG_REPAIR_COLLECTION:
@@ -361,6 +362,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.backup_full_sync_from_server);
             case DIALOG_DB_LOCKED:
                 return res().getString(R.string.database_locked_title);
+            case DIALOG_DB_ERROR:
             default:
                 return res().getString(R.string.answering_error_title);
         }        
@@ -369,19 +371,13 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
 
     @Override
     public String getNotificationMessage() {
-        switch (getArguments().getInt("dialogType")) {
-            default:
-                return getMessage();
-        }
+        return getMessage();
     }
 
 
     @Override
     public String getNotificationTitle() {
-        switch (getArguments().getInt("dialogType")) {
-            default:
-                return res().getString(R.string.answering_error_title);
-        }
+        return res().getString(R.string.answering_error_title);
     }
 
 

@@ -44,7 +44,7 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import timber.log.Timber;
 
 class Exporter {
-    protected Collection mCol;
+    protected final Collection mCol;
     protected Long mDid;
     protected int mCount;
 
@@ -82,7 +82,7 @@ class AnkiExporter extends Exporter {
     protected boolean mIncludeMedia;
     private Collection mSrc;
     String mMediaDir;
-    ArrayList<String> mMediaFiles = new ArrayList<>();
+    final ArrayList<String> mMediaFiles = new ArrayList<>();
     boolean _v2sched;
 
 
@@ -421,7 +421,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
             Runtime runtime = Runtime.getRuntime();
             try {
                 runtime.exec(deleteCmd);
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
         }
         return media;

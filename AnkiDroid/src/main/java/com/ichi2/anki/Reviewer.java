@@ -18,11 +18,13 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,14 +38,19 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -67,7 +74,9 @@ import com.ichi2.libanki.Collection.DismissType;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.sched.Counts;
 import com.ichi2.themes.Themes;
+import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
@@ -77,7 +86,6 @@ import java.lang.ref.WeakReference;
 import timber.log.Timber;
 
 import static com.ichi2.anki.reviewer.CardMarker.*;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
 import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
@@ -112,23 +120,23 @@ public class Reviewer extends AbstractFlashcardViewer {
     // Preferences from the collection
     private boolean mShowRemainingCardCount;
 
-    private ActionButtons mActionButtons = new ActionButtons(this);
+    private final ActionButtons mActionButtons = new ActionButtons(this);
 
 
-    private TaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
+    private final TaskListener mRescheduleCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reschedule_cards_dialog_acknowledge;
         }
     };
 
-    private TaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
+    private final TaskListener mResetProgressCardHandler = new ScheduleCollectionTaskListener() {
         protected int getToastResourceId() {
             return R.plurals.reset_cards_dialog_acknowledge;
         }
     };
 
     @VisibleForTesting
-    protected PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
+    protected final PeripheralKeymap mProcessor = new PeripheralKeymap(this, this);
 
     /** We need to listen for and handle reschedules / resets very similarly */
     abstract class ScheduleCollectionTaskListener extends NextCardHandler {
@@ -162,7 +170,7 @@ public class Reviewer extends AbstractFlashcardViewer {
             selectDeckFromExtra();
         }
 
-        colorPalette = (LinearLayout) findViewById(R.id.whiteboard_pen_color);
+        colorPalette = findViewById(R.id.whiteboard_pen_color);
 
         startLoadingCollection();
     }
@@ -181,6 +189,15 @@ public class Reviewer extends AbstractFlashcardViewer {
         return actualValue;
     }
 
+
+    @Override
+    protected WebView createWebView() {
+        WebView ret = super.createWebView();
+        if (AndroidUiUtils.isRunningOnTv(this)) {
+            ret.setFocusable(false);
+        }
+        return ret;
+    }
 
     @Override
     protected boolean shouldDisplayMark() {
@@ -269,7 +286,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
-        mSched.setContext(new WeakReference<Activity>(this));
+        mSched.setContext(new WeakReference<>(this));
 
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {
@@ -533,6 +550,9 @@ public class Reviewer extends AbstractFlashcardViewer {
     public boolean onCreateOptionsMenu(Menu menu) {
         // NOTE: This is called every time a new question is shown via invalidate options menu
         getMenuInflater().inflate(R.menu.reviewer, menu);
+
+        displayIconsOnTv(menu);
+
         mActionButtons.setCustomButtonsStatus(menu);
         int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
         MenuItem markCardIcon = menu.findItem(R.id.action_mark_card);
@@ -543,27 +563,30 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
         markCardIcon.getIcon().mutate().setAlpha(alpha);
 
-        MenuItem flag_icon = menu.findItem(R.id.action_flag);
-        if (mCurrentCard != null) {
-            switch (mCurrentCard.userFlag()) {
-            case 1:
-                flag_icon.setIcon(R.drawable.ic_flag_red);
-                break;
-            case 2:
-                flag_icon.setIcon(R.drawable.ic_flag_orange);
-                break;
-            case 3:
-                flag_icon.setIcon(R.drawable.ic_flag_green);
-                break;
-            case 4:
-                flag_icon.setIcon(R.drawable.ic_flag_blue);
-                break;
-            default:
-                flag_icon.setIcon(R.drawable.ic_flag_transparent);
-                break;
+        // 1643 - currently null on a TV
+        @Nullable MenuItem flag_icon = menu.findItem(R.id.action_flag);
+        if (flag_icon != null) {
+            if (mCurrentCard != null) {
+                switch (mCurrentCard.userFlag()) {
+                    case 1:
+                        flag_icon.setIcon(R.drawable.ic_flag_red);
+                        break;
+                    case 2:
+                        flag_icon.setIcon(R.drawable.ic_flag_orange);
+                        break;
+                    case 3:
+                        flag_icon.setIcon(R.drawable.ic_flag_green);
+                        break;
+                    case 4:
+                        flag_icon.setIcon(R.drawable.ic_flag_blue);
+                        break;
+                    default:
+                        flag_icon.setIcon(R.drawable.ic_flag_transparent);
+                        break;
+                }
             }
+            flag_icon.getIcon().mutate().setAlpha(alpha);
         }
-        flag_icon.getIcon().mutate().setAlpha(alpha);
 
         // Undo button
         @DrawableRes int undoIconId;
@@ -638,8 +661,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Setup bury / suspend providers
         MenuItem suspend_icon = menu.findItem(R.id.action_suspend);
         MenuItem bury_icon = menu.findItem(R.id.action_bury);
-        MenuItemCompat.setActionProvider(suspend_icon, new SuspendProvider(this));
-        MenuItemCompat.setActionProvider(bury_icon, new BuryProvider(this));
+
+        setupSubMenu(menu, R.id.action_suspend, new SuspendProvider(this));
+        setupSubMenu(menu, R.id.action_bury, new BuryProvider(this));
         if (suspendNoteAvailable()) {
             suspend_icon.setIcon(R.drawable.ic_action_suspend_dropdown);
             suspend_icon.setTitle(R.string.menu_suspend);
@@ -658,14 +682,80 @@ public class Reviewer extends AbstractFlashcardViewer {
         bury_icon.getIcon().mutate().setAlpha(alpha);
         suspend_icon.getIcon().mutate().setAlpha(alpha);
 
-        MenuItemCompat.setActionProvider(menu.findItem(R.id.action_schedule), new ScheduleProvider(this));
+        setupSubMenu(menu, R.id.action_schedule, new ScheduleProvider(this));
         return super.onCreateOptionsMenu(menu);
     }
 
 
+    @SuppressLint("RestrictedApi") // setOptionalIconsVisible
+    private void displayIconsOnTv(Menu menu) {
+        if (!AndroidUiUtils.isRunningOnTv(this)) {
+            return;
+        }
+
+        try {
+            if (menu instanceof MenuBuilder) {
+                MenuBuilder m = (MenuBuilder) menu;
+                m.setOptionalIconsVisible(true);
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                for (int i = 0; i < menu.size(); i++) {
+                    MenuItem m = menu.getItem(i);
+
+                    if (m == null || isFlagResource(m.getItemId())) {
+                        continue;
+                    }
+
+                    int color = Themes.getColorFromAttr(this, R.attr.navDrawerItemColor);
+                    MenuItemCompat.setIconTintList(m, ColorStateList.valueOf(color));
+                }
+            }
+
+        } catch (Exception e) {
+            Timber.w(e, "Failed to display icons");
+        } catch (Error e) {
+            Timber.w(e, "Failed to display icons");
+        }
+    }
+
+
+    private boolean isFlagResource(int itemId) {
+        return itemId == R.id.action_flag_four
+                || itemId == R.id.action_flag_three
+                || itemId == R.id.action_flag_two
+                || itemId == R.id.action_flag_one;
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return mProcessor.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
+        if (mProcessor.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)) {
+            return true;
+        }
+
+        if (!AndroidUiUtils.isRunningOnTv(this)) {
+            return false;
+        }
+
+        // Process DPAD Up/Down to focus the TV Controls
+        if (keyCode != KeyEvent.KEYCODE_DPAD_DOWN && keyCode != KeyEvent.KEYCODE_DPAD_UP) {
+            return false;
+        }
+
+        // HACK: This shouldn't be required, as the navigation should handle this.
+        if (isDrawerOpen()) {
+            return false;
+        }
+
+
+        View view = keyCode == KeyEvent.KEYCODE_DPAD_UP ? findViewById(R.id.tv_nav_view) : findViewById(R.id.answer_options_layout);
+        // HACK: We should be performing this in the base class, or allowing the view to be focused by the keyboard.
+        // I couldn't get either to work
+        if (view == null) {
+            return false;
+        }
+
+        view.requestFocus();
+        return true;
     }
 
     @Override
@@ -677,6 +767,29 @@ public class Reviewer extends AbstractFlashcardViewer {
             return true;
         }
         return super.onKeyUp(keyCode, event);
+    }
+
+
+    private <T extends ActionProvider & SubMenuProvider> void setupSubMenu(Menu menu, @IdRes int parentMenu, T subMenuProvider) {
+        if (!AndroidUiUtils.isRunningOnTv(this)) {
+            MenuItemCompat.setActionProvider(menu.findItem(parentMenu), subMenuProvider);
+            return;
+        }
+
+        // Don't do anything if the menu is hidden (bury for example)
+        if (!subMenuProvider.hasSubMenu()) {
+            return;
+        }
+
+        // 7227 - If we're running on a TV, then we can't show submenus until AOSP is fixed
+        menu.removeItem(parentMenu);
+        int count = menu.size();
+        // move the menu to the bottom of the page
+        getMenuInflater().inflate(subMenuProvider.getSubMenu(), menu);
+        for (int i = 0; i < menu.size() - count; i++) {
+            MenuItem item = menu.getItem(count + i);
+            item.setOnMenuItemClickListener(subMenuProvider);
+        }
     }
 
 
@@ -703,11 +816,21 @@ public class Reviewer extends AbstractFlashcardViewer {
         // Set correct label and background resource for each button
         // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
-        final int[] background = Themes.getResFromAttr(this, new int [] {
-                R.attr.againButtonRef,
-                R.attr.hardButtonRef,
-                R.attr.goodButtonRef,
-                R.attr.easyButtonRef});
+        int[] backgroundIds;
+        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+            backgroundIds = new int [] {
+                    R.attr.againButtonRippleRef,
+                    R.attr.hardButtonRippleRef,
+                    R.attr.goodButtonRippleRef,
+                    R.attr.easyButtonRippleRef};
+        } else {
+            backgroundIds = new int [] {
+                    R.attr.againButtonRef,
+                    R.attr.hardButtonRef,
+                    R.attr.goodButtonRef,
+                    R.attr.easyButtonRef};
+        }
+        final int[] background = Themes.getResFromAttr(this, backgroundIds);
         final int[] textColor = Themes.getColorFromAttr(this, new int [] {
                 R.attr.againButtonTextColor,
                 R.attr.hardButtonTextColor,
@@ -787,10 +910,16 @@ public class Reviewer extends AbstractFlashcardViewer {
     }
 
     @Override
+    protected void updateActionBar() {
+        super.updateActionBar();
+        updateScreenCounts();
+    }
+
     protected void updateScreenCounts() {
         if (mCurrentCard == null) return;
+        super.updateActionBar();
         ActionBar actionBar = getSupportActionBar();
-        int[] counts = mSched.counts(mCurrentCard);
+        Counts counts = mSched.counts(mCurrentCard);
 
         if (actionBar != null) {
             if (mPrefShowETA) {
@@ -800,21 +929,21 @@ public class Reviewer extends AbstractFlashcardViewer {
         }
 
 
-        newCount = new SpannableString(String.valueOf(counts[0]));
-        lrnCount = new SpannableString(String.valueOf(counts[1]));
-        revCount = new SpannableString(String.valueOf(counts[2]));
+        newCount = new SpannableString(String.valueOf(counts.getNew()));
+        lrnCount = new SpannableString(String.valueOf(counts.getLrn()));
+        revCount = new SpannableString(String.valueOf(counts.getRev()));
         if (mPrefHideDueCount) {
             revCount = new SpannableString("???");
         }
 
         switch (mSched.countIdx(mCurrentCard)) {
-            case Consts.CARD_TYPE_NEW:
+            case NEW:
                 newCount.setSpan(new UnderlineSpan(), 0, newCount.length(), 0);
                 break;
-            case Consts.CARD_TYPE_LRN:
+            case LRN:
                 lrnCount.setSpan(new UnderlineSpan(), 0, lrnCount.length(), 0);
                 break;
-            case Consts.CARD_TYPE_REV:
+            case REV:
                 revCount.setSpan(new UnderlineSpan(), 0, revCount.length(), 0);
                 break;
             default:
@@ -845,9 +974,9 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void initLayout() {
-        mTextBarNew = (TextView) findViewById(R.id.new_number);
-        mTextBarLearn = (TextView) findViewById(R.id.learn_number);
-        mTextBarReview = (TextView) findViewById(R.id.review_number);
+        mTextBarNew = findViewById(R.id.new_number);
+        mTextBarLearn = findViewById(R.id.learn_number);
+        mTextBarReview = findViewById(R.id.review_number);
 
         super.initLayout();
 
@@ -1031,15 +1160,14 @@ public class Reviewer extends AbstractFlashcardViewer {
             return false;
         }
         // Whether there exists a sibling which is neither susbended nor buried
-        boolean bury = getCol().getDb().queryScalar("select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+        return getCol().getDb().queryScalar("select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
                 mCurrentCard.getNid(), mCurrentCard.getId()) == 1;
-        return bury;
     }
 
     /**
      * Inner class which implements the submenu for the Suspend button
      */
-    class SuspendProvider extends ActionProvider implements MenuItem.OnMenuItemClickListener {
+    class SuspendProvider extends ActionProvider implements SubMenuProvider {
         public SuspendProvider(Context context) {
             super(context);
         }
@@ -1049,6 +1177,13 @@ public class Reviewer extends AbstractFlashcardViewer {
             return null;  // Just return null for a simple dropdown menu
         }
 
+
+        @Override
+        public int getSubMenu() {
+            return R.menu.reviewer_suspend;
+        }
+
+
         @Override
         public boolean hasSubMenu() {
             return suspendNoteAvailable();
@@ -1057,7 +1192,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         @Override
         public void onPrepareSubMenu(SubMenu subMenu) {
             subMenu.clear();
-            getMenuInflater().inflate(R.menu.reviewer_suspend, subMenu);
+            getMenuInflater().inflate(getSubMenu(), subMenu);
             for (int i = 0; i < subMenu.size(); i++) {
                 subMenu.getItem(i).setOnMenuItemClickListener(this);
             }
@@ -1081,7 +1216,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     /**
      * Inner class which implements the submenu for the Bury button
      */
-    class BuryProvider extends ActionProvider implements MenuItem.OnMenuItemClickListener {
+    class BuryProvider extends ActionProvider implements SubMenuProvider {
         public BuryProvider(Context context) {
             super(context);
         }
@@ -1091,6 +1226,13 @@ public class Reviewer extends AbstractFlashcardViewer {
             return null;    // Just return null for a simple dropdown menu
         }
 
+
+        @Override
+        public int getSubMenu() {
+            return R.menu.reviewer_bury;
+        }
+
+
         @Override
         public boolean hasSubMenu() {
             return buryNoteAvailable();
@@ -1099,7 +1241,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         @Override
         public void onPrepareSubMenu(SubMenu subMenu) {
             subMenu.clear();
-            getMenuInflater().inflate(R.menu.reviewer_bury, subMenu);
+            getMenuInflater().inflate(getSubMenu(), subMenu);
             for (int i = 0; i < subMenu.size(); i++) {
                 subMenu.getItem(i).setOnMenuItemClickListener(this);
             }
@@ -1124,7 +1266,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     /**
      * Inner class which implements the submenu for the Schedule button
      */
-    class ScheduleProvider extends ActionProvider implements MenuItem.OnMenuItemClickListener {
+    class ScheduleProvider extends ActionProvider implements SubMenuProvider {
         public ScheduleProvider(Context context) {
             super(context);
         }
@@ -1142,7 +1284,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         @Override
         public void onPrepareSubMenu(SubMenu subMenu) {
             subMenu.clear();
-            getMenuInflater().inflate(R.menu.reviewer_schedule, subMenu);
+            getMenuInflater().inflate(getSubMenu(), subMenu);
             for (int i = 0; i < subMenu.size(); i++) {
                 subMenu.getItem(i).setOnMenuItemClickListener(this);
             }
@@ -1161,6 +1303,17 @@ public class Reviewer extends AbstractFlashcardViewer {
                     return false;
             }
         }
+
+
+        @Override
+        public int getSubMenu() {
+            return R.menu.reviewer_schedule;
+        }
+    }
+
+    private interface SubMenuProvider extends MenuItem.OnMenuItemClickListener {
+        @MenuRes int getSubMenu();
+        boolean hasSubMenu();
     }
 
     public ReviewerJavaScriptFunction javaScriptFunction() {

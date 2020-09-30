@@ -23,10 +23,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Pair;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
 
 import com.ichi2.utils.JSONArray;
@@ -50,8 +50,16 @@ import androidx.annotation.NonNull;
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
 public class Models {
+    @VisibleForTesting
+    public static final String REQ_NONE = "none";
+    @VisibleForTesting
+    public static final String REQ_ANY = "any";
+    @VisibleForTesting
+    public static final String REQ_ALL = "all";
+    @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
     private static final Pattern fClozePattern1 = Pattern.compile("\\{\\{[^}]*?cloze:(?:[^}]?:)*(.+?)\\}\\}");
     private static final Pattern fClozePattern2 = Pattern.compile("<%cloze:(.+?)%>");
+    @SuppressWarnings("RegExpRedundantEscape")
     private static final Pattern fClozeOrdPattern = Pattern.compile("(?si)\\{\\{c(\\d+)::.+?\\}\\}");
 
     public static final String defaultModel =
@@ -97,13 +105,12 @@ public class Models {
     // private static final Pattern sModelPattern = Pattern.compile("%\\(modelTags\\)s");
     // private static final Pattern sTemplPattern = Pattern.compile("%\\(cardModel\\)s");
 
-    private Collection mCol;
+    private final Collection mCol;
     private boolean mChanged;
     private HashMap<Long, Model> mModels;
 
     // BEGIN SQL table entries
     private int mId;
-    private String mName = "";
     //private long mCrt = mCol.getTime().intTime();
     //private long mMod = mCol.getTime().intTime();
     //private JSONObject mConf;
@@ -115,7 +122,7 @@ public class Models {
     // private Decks mDeck;
     // private DB mDb;
     //
-    /** Map for compiled Mustache Templates */
+    //** Map for compiled Mustache Templates */
     //private Map<String, Template> mCmpldTemplateMap = new HashMap<>();
 
 
@@ -227,9 +234,9 @@ public class Models {
         }
     }
 
-    /**
-     * Retrieving and creating models
-     * ***********************************************************************************************
+    /*
+      Retrieving and creating models
+      ***********************************************************************************************
      */
 
     /**
@@ -381,8 +388,8 @@ public class Models {
     }
 
 
-    /**
-     * Tools ***********************************************************************************************
+    /*
+      Tools ***********************************************************************************************
      */
 
     /** Note ids for M */
@@ -409,8 +416,8 @@ public class Models {
         return mCol.getDb().queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?", m.getLong("id"), ord);
     }
 
-    /**
-     * Copying ***********************************************************************************************
+    /*
+      Copying ***********************************************************************************************
      */
 
     /** Copy, save and return. */
@@ -547,7 +554,7 @@ public class Models {
     }
 
     static class TransformFieldDelete implements TransformFieldVisitor {
-        private int idx;
+        private final int idx;
 
 
         public TransformFieldDelete(int _idx) {
@@ -599,8 +606,8 @@ public class Models {
     }
 
     static class TransformFieldMove implements TransformFieldVisitor {
-        private int idx;
-        private int oldidx;
+        private final int idx;
+        private final int oldidx;
 
 
         public TransformFieldMove(int _idx, int _oldidx) {
@@ -654,7 +661,7 @@ public class Models {
     }
 
     interface TransformFieldVisitor {
-        public String[] transform(String[] fields);
+        String[] transform(String[] fields);
     }
 
 
@@ -865,8 +872,8 @@ public class Models {
     }
 
 
-    /**
-     * Model changing ***********************************************************************************************
+    /*
+      Model changing ***********************************************************************************************
      */
 
     /**
@@ -969,8 +976,8 @@ public class Models {
         mCol.remCards(deleted);
     }
 
-    /**
-     * Schema hash ***********************************************************************************************
+    /*
+      Schema hash ***********************************************************************************************
      */
 
     /** Return a hash of the schema, to see if models are compatible. */
@@ -1031,9 +1038,9 @@ public class Models {
         String empty = mCol._renderQA(1L, m, 1L, ord, "", b, 0).get("q");
         // if full and empty are the same, the template is invalid and there is no way to satisfy it
         if (full.equals(empty)) {
-            return new Object[] { "none", new JSONArray(), new JSONArray() };
+            return new Object[] { REQ_NONE, new JSONArray(), new JSONArray() };
         }
-        String type = "all";
+        String type = REQ_ALL;
         JSONArray req = new JSONArray();
         for (int i = 0; i < flds.size(); i++) {
             a[i] = "";
@@ -1047,7 +1054,7 @@ public class Models {
             return new Object[] { type, req };
         }
         // if there are no required fields, switch to any mode
-        type = "any";
+        type = REQ_ANY;
         req = new JSONArray();
         for (int i = 0; i < flds.size(); i++) {
             b[i] = "1";
@@ -1080,10 +1087,10 @@ public class Models {
             String type = sr.getString(1);
             JSONArray req = sr.getJSONArray(2);
 
-            if ("none".equals(type)) {
+            if (REQ_NONE.equals(type)) {
                 // unsatisfiable template
                 continue;
-            } else if ("all".equals(type)) {
+            } else if (REQ_ALL.equals(type)) {
                 // AND requirement?
                 boolean ok = true;
                 for (int j = 0; j < req.length(); j++) {
@@ -1097,7 +1104,7 @@ public class Models {
                 if (!ok) {
                     continue;
                 }
-            } else if ("any".equals(type)) {
+            } else if (REQ_ANY.equals(type)) {
                 // OR requirement?
                 boolean ok = false;
                 for (int j = 0; j < req.length(); j++) {
@@ -1146,12 +1153,10 @@ public class Models {
                 ords.add(Integer.parseInt(mm.group(1)) - 1);
             }
         }
-        if (ords.contains(-1)) {
-            ords.remove(-1);
-        }
+        ords.remove(-1);
         if (ords.isEmpty() && allowEmpty) {
             // empty clozes use first ord
-            return new ArrayList<>(Arrays.asList(new Integer[]{0}));
+            return new ArrayList<>(Arrays.asList(0));
         }
         return new ArrayList<>(ords);
     }
@@ -1162,7 +1167,7 @@ public class Models {
      */
 
     public void beforeUpload() {
-        boolean changed = Utils.markAsUploaded(all());;
+        boolean changed = Utils.markAsUploaded(all());
         if (changed) {
             save();
         }
@@ -1207,7 +1212,7 @@ public class Models {
      * @return the name
      */
     public String getName() {
-        return mName;
+        return "";
     }
 
 
