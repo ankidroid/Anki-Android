@@ -116,6 +116,8 @@
     <string name="sync_media_db_error">Mediensynchronisation konnte nicht durchgeführt werden, da die aktuelle Datenbank beschädigt ist. Eine Medienprüfung wird empfohlen.</string>
     <string name="sync_media_error">Fehler beim Synchronisieren der Mediendaten</string>
     <string name="sync_media_error_check">Fehler bei der Mediensynchronisation. Eine Überprüfung der Medien wird empfohlen.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Bitte führen Sie »%s« vor der Synchronisierung aus</string>
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Remote</string>
     <string name="force_full_sync_title">Vollsynchronisation erzwingen</string>
@@ -130,7 +132,9 @@
     <string name="sync_error_502_maintenance">AnkiWeb wird gerade gewartet. Bitte versuchen Sie es in ein paar Minuten erneut.</string>
     <string name="sync_error_504_gateway_timeout">Fehler 504: Zeitüberschreitung.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
+    <string name="sync_menu_title">Synchronisieren</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Hilfe</string>
 </resources>

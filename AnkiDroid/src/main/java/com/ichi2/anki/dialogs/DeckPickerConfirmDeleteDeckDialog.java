@@ -10,6 +10,8 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
+import androidx.annotation.NonNull;
+
 public class DeckPickerConfirmDeleteDeckDialog extends AnalyticsDialogFragment {
     public static DeckPickerConfirmDeleteDeckDialog newInstance(String dialogMessage) {
         DeckPickerConfirmDeleteDeckDialog f = new DeckPickerConfirmDeleteDeckDialog();
@@ -20,6 +22,7 @@ public class DeckPickerConfirmDeleteDeckDialog extends AnalyticsDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

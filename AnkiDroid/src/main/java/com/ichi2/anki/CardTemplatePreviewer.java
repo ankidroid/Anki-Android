@@ -16,6 +16,7 @@
 
 package com.ichi2.anki;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -26,6 +27,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.NoteUtils;
+import com.ichi2.themes.Themes;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
@@ -33,6 +35,8 @@ import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 import timber.log.Timber;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
 
 /**
  * The card template previewer intent must supply one or more cards to show and the index in the list from where
@@ -105,7 +109,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         Timber.d("CardTemplatePreviewer:: closeCardTemplatePreviewer()");
         setResult(RESULT_OK);
         TemporaryModel.clearTempModelFiles();
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(RIGHT);
     }
 
 
@@ -119,7 +123,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     @Override
     protected void performReload() {
         // This should not happen.
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(RIGHT);
     }
 
 
@@ -149,6 +153,13 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
         mPreviewPrevCard.setVisibility(View.GONE);
         mPreviewNextCard.setVisibility(View.GONE);
+
+        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+            int resId = Themes.getResFromAttr(this, R.attr.hardButtonRippleRef);
+            mPreviewButtonsLayout.setBackgroundResource(resId);
+            mPreviewPrevCard.setBackgroundResource(resId);
+            mPreviewNextCard.setBackgroundResource(resId);
+        }
     }
 
 
@@ -180,7 +191,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     }
 
 
-    private View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
+    private final View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (mShowingAnswer) {
@@ -295,7 +306,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
 
         @Override
-        /** if we have an unsaved note saved, use it instead of a collection lookup */
+        /* if we have an unsaved note saved, use it instead of a collection lookup */
         public Note note(boolean reload) {
             if (mNote != null) {
                 return mNote;
@@ -304,8 +315,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
 
-        @Override
         /** if we have an unsaved note saved, use it instead of a collection lookup */
+        @Override
         public Note note() {
             if (mNote != null) {
                 return mNote;
@@ -320,8 +331,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
 
-        @Override
         /** if we have an unsaved note, never return empty */
+        @Override
         public boolean isEmpty() {
             if (mNote != null) {
                 return false;
@@ -330,8 +341,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
 
-        @Override
         /** Override the method that fetches the model so we can render unsaved models */
+        @Override
         public Model model() {
             if (mEditedModel != null) {
                 return mEditedModel;

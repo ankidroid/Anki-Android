@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 public class FunctionXAtom implements TreeElement {
     private Atom.AtomType atomType = Atom.AtomType.FUNCTION_X;
-    private TopLevelParser parser;
+    private final TopLevelParser parser;
     private Expression expression;
     private String funcName;
 

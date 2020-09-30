@@ -116,6 +116,8 @@
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
     <string name="sync_media_error">Грешка во синхронизирањето на медиумските податоци</string>
     <string name="sync_media_error_check">Грешка при синхронизирање на медиумот. Се препорачува проверка на медиумите.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Локален</string>
     <string name="sync_sanity_remote">Оддалечено</string>
     <string name="force_full_sync_title">Присилена целосна синхронизација</string>
@@ -133,4 +135,6 @@
     <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Help</string>
 </resources>

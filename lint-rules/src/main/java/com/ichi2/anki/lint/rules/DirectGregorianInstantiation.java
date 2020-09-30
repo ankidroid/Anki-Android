@@ -6,7 +6,6 @@ import com.android.tools.lint.detector.api.Implementation;
 import com.android.tools.lint.detector.api.Issue;
 import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.Severity;
 import com.android.tools.lint.detector.api.SourceCodeScanner;
 import com.google.common.annotations.VisibleForTesting;
 import com.ichi2.anki.lint.utils.Constants;
@@ -18,7 +17,6 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.uast.UCallExpression;
 import org.jetbrains.uast.UClass;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -35,7 +33,7 @@ public class DirectGregorianInstantiation extends Detector implements SourceCode
     static final String DESCRIPTION = "Use the collection's getTime() method instead of directly creating GregorianCalendar instances";
     private static final String EXPLANATION = "Creating GregorianCalendar instances directly is not allowed, as it " +
             "prevents control of time during testing. Use the collection's getTime() method instead";
-    private static Implementation implementation = new Implementation(DirectGregorianInstantiation.class, Scope.JAVA_FILE_SCOPE);
+    private static final Implementation implementation = new Implementation(DirectGregorianInstantiation.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
             DESCRIPTION,

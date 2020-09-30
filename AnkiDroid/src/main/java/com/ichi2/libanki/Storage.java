@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -192,8 +191,8 @@ public class Storage {
                         if (order >= 5) {
                             order -= 1;
                         }
-                        JSONArray terms = new JSONArray(Arrays.asList(new Object[] { d.getString("search"),
-                                d.getInt("limit"), order }));
+                        JSONArray terms = new JSONArray(Arrays.asList(d.getString("search"),
+                                d.getInt("limit"), order));
                         d.put("terms", new JSONArray());
                         d.getJSONArray("terms").put(0, terms);
                         d.remove("search");
@@ -240,6 +239,7 @@ public class Storage {
         // convert first template
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
         for (String type : new String[] { "qfmt", "afmt" }) {
+            //noinspection RegExpRedundantEscape            // In Android, } should be escaped
             t.put(type, t.getString(type).replaceAll("\\{\\{cloze:1:(.+?)\\}\\}", "{{cloze:$1}}"));
         }
         t.put("name", "Cloze");
@@ -258,7 +258,7 @@ public class Storage {
         JSONArray newTmpls = new JSONArray();
         newTmpls.put(tmpls.getJSONObject(0));
         m.put("tmpls", newTmpls);
-        col.getModels()._updateTemplOrds(m);
+        Models._updateTemplOrds(m);
         col.getModels().save(m);
 
     }

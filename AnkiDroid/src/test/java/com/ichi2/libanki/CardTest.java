@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -34,7 +35,7 @@ public class CardTest extends RobolectricTest {
         long cid = note.cards().get(0).getId();
         col.reset();
         col.getSched().answerCard(col.getSched().getCard(), 2);
-        col.remCards(Arrays.asList(cid));
+        col.remCards(Collections.singletonList(cid));
         assertEquals(0, col.cardCount());
         assertEquals(0, col.noteCount());
         assertEquals(0, col.getDb().queryScalar("select count() from notes"));
@@ -136,7 +137,7 @@ public class CardTest extends RobolectricTest {
         tmpls.getJSONObject(0).put("qfmt", "{{A}}{{B}}{{C}}");
         // ensure first card is always generated,
         // because at last one card is generated
-        JSONObject tmpl = models.newTemplate("AND_OR");
+        JSONObject tmpl = Models.newTemplate("AND_OR");
         tmpl.put("qfmt", "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}");
         models.addTemplate(model, tmpl);
 
@@ -194,7 +195,7 @@ public class CardTest extends RobolectricTest {
         // ensure first card is always generated,
         // because at last one card is generated
         tmpls.getJSONObject(0).put("qfmt", "{{AddIfEmpty}}{{Front}}{{First}}");
-        JSONObject tmpl = models.newTemplate("NOT");
+        JSONObject tmpl = Models.newTemplate("NOT");
         tmpl.put("qfmt", "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    ");
 
         models.addTemplate(model, tmpl);

@@ -35,6 +35,8 @@ public class FieldEditText extends AppCompatEditText {
     private String mName;
     private int mOrd;
     private Drawable mOrigBackground;
+    @Nullable
+    private TextSelectionListener mSelectionChangeListener;
 
 
     public FieldEditText(Context context) {
@@ -103,7 +105,7 @@ public class FieldEditText extends AppCompatEditText {
         if (content == null) {
             content = "";
         } else {
-            content = content.replaceAll("<br(\\s*\\/*)>", NEW_LINE);
+            content = content.replaceAll("<br(\\s*/*)>", NEW_LINE);
         }
         setText(content);
         setContentDescription(name);
@@ -115,6 +117,19 @@ public class FieldEditText extends AppCompatEditText {
         // Fixes bug where new instances of this object have wrong colors, probably
         // from some reuse mechanic in Android.
         setDefaultStyle();
+    }
+
+
+    @Override
+    protected void onSelectionChanged(int selStart, int selEnd) {
+        if (mSelectionChangeListener != null) {
+            try {
+                mSelectionChangeListener.onSelectionChanged(selStart, selEnd);
+            } catch (Exception e) {
+                Timber.w(e, "mSelectionChangeListener");
+            }
+        }
+        super.onSelectionChanged(selStart, selEnd);
     }
 
 
@@ -138,5 +153,13 @@ public class FieldEditText extends AppCompatEditText {
      */
     public void setDefaultStyle() {
         setBackgroundDrawable(mOrigBackground);
+    }
+
+    public void setSelectionChangeListener(TextSelectionListener listener) {
+        this.mSelectionChangeListener = listener;
+    }
+
+    public interface TextSelectionListener {
+        void onSelectionChanged(int selStart, int selEnd);
     }
 }

@@ -58,25 +58,25 @@
     <string name="sdcard_missing_message">Karta SD jest niedostępna, ponieważ jest ona używana jako pamięć masowa USB. Odłącz USB, aby uzyskać dostęp do Twoich talii.</string>
     <string name="updated_version">Zaktualizowano do wersji %s</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Zapisz tablicę</string>
     <string name="enable_whiteboard">Włącz tablicę</string>
     <string name="disable_whiteboard">Wyłącz tablicę</string>
     <string name="show_whiteboard">Pokaż tablicę</string>
     <string name="hide_whiteboard">Ukryj tablicę</string>
     <string name="clear_whiteboard">Wyczyść tablicę</string>
     <string name="replay_audio">Odtwórz dźwięk</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
+    <string name="toggle_mic_tool_bar">Sprawdź wymowę</string>
     <string name="leech_suspend_notification">Karta oznaczona jako pijawka i zawieszona</string>
     <string name="leech_notification">Karta oznaczona jako pijawka</string>
     <string name="corrupt_font">Uszkodzony plik czcionki %s</string>
     <string name="webview_crash_unknown">Nieznany błąd</string>
     <string name="webview_crash_unknwon_detailed">To było spowodowane przez wewnętrzny błąd w WebView</string>
     <string name="webview_crash_oom">Brak pamięci</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_oom_details">Proces WebView został zakończony przez system. Zwykle dzieje się tak, gdy zabraknie pamięci, często z powodu dużych czcionek lub mediów.</string>
+    <string name="webview_crash_nonfatal">Awaria renderowania WebView. Przyczyna: %s</string>
+    <string name="webview_crash_fatal">Błąd krytyczny: awaria renderowania WebView. Przyczyna: %s</string>
+    <string name="webview_crash_loop_dialog_title">Błąd renderowania WebView systemu</string>
+    <string name="webview_crash_loop_dialog_content">System WebView nie potrafił wyrenderować karty \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Pytanie</item>
@@ -94,13 +94,13 @@
         <item>Przerwa</item>
         <item>Łatwość</item>
         <item>Do przejrzenia</item>
-        <item>Card Modified</item>
+        <item>Zmodyfikowano kartę</item>
         <item>Stworzona</item>
-        <item>Note Modified</item>
+        <item>Zmodyfikowano notatkę</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Zmień dzisiejszy limit nowych kart</string>
+    <string name="custom_study_increase_review_limit">Zmień dzisiejszy limit przeglądanych kart</string>
     <string name="custom_study_review_forgotten">Przejrzyj zapomniane karty</string>
     <string name="custom_study_review_ahead">Przejrzyj z wyprzedzeniem</string>
     <string name="custom_study_random_selection">Ucz się losowo wybranych kart</string>
@@ -112,10 +112,10 @@
     <string name="discard_unsaved_changes">Zamknąć i utracić bieżący wkład?</string>
     <string name="note_editor_no_cards_created">Nie stworzono żadnych kart. Wypełnij więcej pól.</string>
     <string name="note_editor_no_first_field">Pierwsze pole jest puste</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_set_field_language">Set field language</string>
+    <string name="note_editor_no_cloze_delations">Ten typ notatki musi zawierać luki do wypełnienia</string>
+    <string name="note_editor_set_field_language">Ustaw język tego pola</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Luki do wypełnienia będą działały tylko w typie notatki \"luka\"</string>
     <string name="saving_facts">Zapisywanie notatki</string>
     <string name="saving_model">Zapis typu notatki</string>
     <string name="add">Dodaj</string>
@@ -174,17 +174,17 @@
     <string name="import_message_replace_confirm">Istniejąca kolekcja zostanie usunięta i zastąpiona danymi z pliku %s. Czy na pewno?</string>
     <string name="import_message_add_confirm">Dodać \"%s\" do kolekcji? To może trwać bardzo długo</string>
     <string name="import_log_no_apkg">To nie jest prawidłowy plik pakietu Anki</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
+    <string name="import_log_failed_unzip">Nie udało się rozpakować apkg: %s</string>
+    <string name="import_log_failed_copy_to">Nie udało się skopiować apkg do %s</string>
+    <string name="import_log_failed_validate">Walidacja apkg zakończona niepowodzeniem</string>
+    <string name="import_log_insufficient_space">Nie ma wystarczającej ilości miejsca aby rozpakować pakiet. Potrzebne %1$d, dostępne %2$d</string>
+    <string name="import_log_file_cache_cleared">Błąd importowania pliku, prawdopodobnie spowodowane czyszczeniem pamięci podręcznej podczas przetwarzania.\nSpróbuj ponownie</string>
+    <string name="import_succeeded_but_check_database">Importowanie danych zakończone powodzeniem, ale czyszczenie po imporcie nie powiodło się. Uruchom sprawdzanie bazy danych. Przyczyna: %s</string>
     <string name="import_error_unhandled_request">Nie udało się przetworzyć żądania importu</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">Plik apkg jest uszkodzony. Należy spróbować pobrać go ponownie.\n\nPrzyczyna: %s</string>
     <string name="import_error_exception">Nie udało się zaimportować pakietu\n\n%s</string>
     <string name="import_error_not_apkg_extension">Nazwa pliku \"%s\" nie ma rozszerzenia .apkg lub .colpkg</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_error_load_imported_database">Pliki bazy danych Anki (.anki2) nie są jeszcze obsługiwane. W podręczniku możesz przeczytać o alternatywnych możliwościach importu</string>
     <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
@@ -293,7 +293,7 @@
     <string name="background_image_title">Tło</string>
     <string name="choose_an_image">Wybierz obraz</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
+    <string name="restore_default">Przywróć domyślne</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
@@ -304,43 +304,46 @@
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
+    <string name="note_importer_error_empty_first_field">Pierwsze pole puste: %s</string>
     <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Dodano duplikat w pierwszym polu: %s</string>
     <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_error_empty_notes">Jedna lub więcej notatek nie została zaimportowana, ponieważ nie wygenerowały żadnych kart. Może się tak zdarzyć, gdy pola kart są puste lub gdy w pliku tekstowym zawartość nie jest przypisana do odpowiedniego pola</string>
+    <string name="csv_importer_error_invalid_field_count">„%1$s” posiada %2$d pól, oczekiwano %3$d</string>
+    <string name="csv_importer_error_exception">Przerwano: %s</string>
+    <string name="user_is_a_robot">Wykryto automatyczny test. Jeśli jesteś człowiekiem, skontaktuj się z pomocą techniczną AnkiDroid</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="few">%d notes added</item>
-        <item quantity="many">%d notes added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d notatka dodana</item>
+        <item quantity="few">%d notatki dodano</item>
+        <item quantity="many">%d notatek dodano</item>
+        <item quantity="other">%d notatek dodano</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="few">%d notes updated</item>
-        <item quantity="many">%d notes updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d notatka zaktualizowana</item>
+        <item quantity="few">%d notatki zaktualizowane</item>
+        <item quantity="many">%d notatek zaktualizowano</item>
+        <item quantity="other">%d notatek zaktualizowano</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="few">%d notes unchanged</item>
-        <item quantity="many">%d notes unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d notatka niezmieniona</item>
+        <item quantity="few">%d notatki niezmienione</item>
+        <item quantity="many">%d notatek niezmienionych</item>
+        <item quantity="other">%d notatek niezmienionych</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">Ta karta używa funkcji nieobsługiwanych przez AnkiDroid. Skontaktuj się z deweloperem %1$s lub sprawdź wiki. %2$s</string>
+    <string name="invalid_json_data">Karta zwiera nieprawidłowe dane. %s</string>
+    <string name="valid_js_api_version">Nieprawidłowa wersja AnkiDroid JS API. Skontaktuj się z deweloperem %s lub sprawdź wiki</string>
+    <string name="update_js_api_version">Dostępna aktualizacja AnkiDroid JS API. Skontaktuj się z deweloperem %s lub sprawdź wiki</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Pokaż</string>
+    <string name="anki_js_error_code">(Kod błędu: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">Skopiowano informacje debugowania do schowka</string>
+    <string name="about_ankidroid_error_copy_debug_info">Błąd kopiowania informacji debugowania do schowka</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
+    <string name="card_viewer_could_not_find_image">Błąd zawartości karty, nie udało się załadować: %s</string>
+    <string name="card_viewer_could_not_find_image_get_help">Pomoc</string>
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">Nie udało się załadować talii: %s</string>
+    <string name="search_decks">Search decks</string>
 </resources>

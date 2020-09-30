@@ -33,15 +33,13 @@ public class MissingImageHandler {
 
     private int mNumberOfMissingImages = 0;
     private boolean mHasExecuted = false;
-    @NonNull
-    private Consumer<String> mOnFailure;
 
 
-    public MissingImageHandler(@NonNull Consumer<String> onFailure) {
-        mOnFailure = onFailure;
+    public MissingImageHandler() {
+
     }
 
-    public void processFailure(WebResourceRequest request) {
+    public void processFailure(WebResourceRequest request, @NonNull Consumer<String> onFailure) {
         // We do not want this to trigger more than once on the same side of the card as the UI will flicker.
         if (request == null || mHasExecuted) {
             return;
@@ -67,7 +65,7 @@ public class MissingImageHandler {
 
         try {
             String filename = URLUtil.guessFileName(url, null, null);
-            mOnFailure.consume(filename);
+            onFailure.consume(filename);
             mNumberOfMissingImages++;
         } catch (Exception e) {
             Timber.w(e, "Failed to notify UI of media failure");

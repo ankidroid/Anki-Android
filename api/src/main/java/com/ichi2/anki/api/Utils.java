@@ -34,7 +34,7 @@ class Utils {
     private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
-    private static final Pattern imgPattern = Pattern.compile("<img src=[\\\"']?([^\\\"'>]+)[\\\"']? ?/?>");
+    private static final Pattern imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
 
 
@@ -64,6 +64,7 @@ class Utils {
         return tags.trim().split("\\s+");
     }
 
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     static Long fieldChecksum(String data) {
         data = stripHTMLMedia(data);
         try {

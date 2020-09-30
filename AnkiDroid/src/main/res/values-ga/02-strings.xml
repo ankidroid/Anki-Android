@@ -192,7 +192,7 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">Replacing collection&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Include scheduling</string>
     <string name="export_include_media">Include media</string>
     <string name="confirm_apkg_export">Export collection as Anki package?</string>
@@ -354,6 +354,9 @@
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_could_not_find_image_get_help">Help</string>
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
+    <string name="search_decks">Search decks</string>
 </resources>

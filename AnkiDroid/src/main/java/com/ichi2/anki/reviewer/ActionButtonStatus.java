@@ -22,7 +22,7 @@ public class ActionButtonStatus {
      * Custom button allocation
      */
     @NonNull
-    protected Map<Integer, Integer> mCustomButtons = new HashMap<>();
+    protected final Map<Integer, Integer> mCustomButtons = new HashMap<>();
     private final ReviewerUi mReviewerUi;
 
     public static final int SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER;
@@ -76,6 +76,12 @@ public class ActionButtonStatus {
         for(int itemId : mCustomButtons.keySet()) {
             if (mCustomButtons.get(itemId) != MENU_DISABLED) {
                 MenuItem item = menu.findItem(itemId);
+                if (item == null) {
+                    // Happens with TV - removing flag icon
+                    Timber.w("Could not find Menu Item %d", itemId);
+                    continue;
+                }
+
                 item.setShowAsAction(mCustomButtons.get(itemId));
                 Drawable icon = item.getIcon();
                 item.setEnabled(!mReviewerUi.isControlBlocked());

@@ -25,7 +25,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
     private final String mName;
     private final String[] mNameComponents;
     private final Collection mCol;
-    private long mDid;
+    private final long mDid;
     @Nullable
     private List<T> mChildren = null;
 
@@ -63,7 +63,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
     }
 
     @Override
-    public String toString() {
+    public @NonNull String toString() {
         StringBuffer buf = new StringBuffer();
         toString(buf);
         return buf.toString();
@@ -142,7 +142,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
     @Override
     public int hashCode() {
         int childrenHash = mChildren == null ? 0 : mChildren.hashCode();
-        return getFullDeckName().hashCode() + (int) (childrenHash ^ (childrenHash >>> 32));
+        return getFullDeckName().hashCode() + childrenHash;
     }
 
 
@@ -153,7 +153,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
      */
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof AbstractDeckTreeNode)) {
+        if (!(object instanceof AbstractDeckTreeNode)) {
             return false;
         }
         AbstractDeckTreeNode tree = (AbstractDeckTreeNode) object;
@@ -191,4 +191,6 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
         return false;
     }
 
+
+    public abstract T withChildren(List<T> children);
 }

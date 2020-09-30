@@ -112,7 +112,7 @@
     <string name="rebuild_custom_study_deck">కస్టమ్ అధ్యయనం డెక్ పునర్నిర్మాణం&#8230;</string>
     <string name="importing_collection">సేకరణను దిగుమతి చేస్తోంది&#8230;</string>
     <string name="import_media_count">మీడియా ఫైళ్ళు ను దిగుమతి చేస్తున్నాయి %1$d%%&#8230;</string>
-    <string name="import_progress">దిగుమతి గమనికలు:%1$d%%\n •దిగుమతి కార్డులు:%2$d%%\n • పోస్ట్ ప్రాసెసింగ్:%3$d%%</string>
+    <string name="import_progress">• దిగుమతి గమనికలు:%1$d%%\n• దిగుమతి కార్డులు:%2$d%%\n• పోస్ట్ ప్రాసెసింగ్:%3$d%%</string>
     <string name="import_update_details">%2$d ప్రస్తుత గమనికలు %1$d ను నవీకరించారు.</string>
     <string name="import_update_ignored">కొన్ని నవీకరించబడింది విస్మరించబడిన గమనిక రకం మార్చబడింది ఎందుకంటే</string>
     <string name="import_complete_count">దిగుమతి చేసిన కార్డులు:%d</string>
@@ -147,7 +147,12 @@
     <string name="check_media_no_unused_missing">ఉపయోగించని లేదా తప్పిపోయిన ఫైల్లు కనుగొనబడలేదు</string>
     <string name="check_media_db_updated">మీడియా డేటాబేస్ పునర్నిర్మించబడింది</string>
     <string name="check_media_delete_unused">ఉపయోగించనిది తొలగించండి</string>
-    <string name="check_media_deleted">తొలగించిన ఫైళ్ళు: %d</string>
+    <string name="delete_media_message">Deleting media&#8230;</string>
+    <string name="delete_media_result_title">Deletion result</string>
+    <plurals name="delete_media_result_message">
+        <item quantity="one">%d file deleted</item>
+        <item quantity="other">%d files deleted</item>
+    </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">అన్ని కార్డులు</string>
     <string name="tags_dialog_option_new_cards">కొత్త</string>

@@ -34,8 +34,8 @@ import static org.hamcrest.Matchers.is;
 @RunWith(AndroidJUnit4.class)
 public class RemoteMediaServerTest {
     //COULD_BE_BETTER: We currently fail on a trailing flash in these variables.
-    private static String sCustomServerWithNoFormatting = "https://sync.example.com/msync";
-    private static String sCustomServerWithFormatting   = "https://sync%s.example.com/msync";
+    private static final String sCustomServerWithNoFormatting = "https://sync.example.com/msync";
+    private static final String sCustomServerWithFormatting   = "https://sync%s.example.com/msync";
     private static final String sDefaultUrlNoHostNum    = "https://sync.ankiweb.net/msync/";
     private static final String sDefaultUrlWithHostNum  = "https://sync1.ankiweb.net/msync/";
 

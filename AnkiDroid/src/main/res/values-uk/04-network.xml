@@ -94,7 +94,7 @@
     <string name="sync_overwrite_error">Ваша поточна колекція не може бути заміщена завантаженим файлом.</string>
     <string name="sync_connection_error">Вичерпано час підключення. Або у вас є проблема з підключенням до Інтернету, або у вас дуже великий файл у папці медіа.</string>
     <string name="sync_write_access_error">Не можливо зберегти завантажений файл на карту пам’яті. Вона встановлена лише для читання або на ній мало місця.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">Користувальницький сервер для синхронізації в розширених налаштуваннях є некоректним (%s). Будь ласка, введіть дійсний сервер, або вимкніть налаштування.</string>
     <string name="sync_deletions_message">Синхронізація видаленого...</string>
     <string name="sync_small_objects_message">Синхронізація малих об’єктів...</string>
     <string name="sync_finish_message">Завершення синхронізації...</string>
@@ -116,6 +116,8 @@
     <string name="sync_media_db_error">Помилка медіа синхронізації, оскільки поточна база даних пошкоджена. Рекомендується перевірка медіа.</string>
     <string name="sync_media_error">Помилка синхронізації даних медіа.</string>
     <string name="sync_media_error_check">Помилка під час синхронізації медіа. Рекомендується перевірка медіа.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Будь ласка, виконайте «%s» перед синхронізацією</string>
     <string name="sync_sanity_local">Локально</string>
     <string name="sync_sanity_remote">Віддалено</string>
     <string name="force_full_sync_title">Змусити повню синхронізацію</string>
@@ -133,4 +135,6 @@
     <string name="sync_menu_title">Синхронізація</string>
     <string name="sync_menu_title_full_sync">Синхронізація (повна)</string>
     <string name="sync_menu_title_no_account">Синхронізація (логін)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Довідка</string>
 </resources>

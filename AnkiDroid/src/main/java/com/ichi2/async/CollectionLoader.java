@@ -11,8 +11,8 @@ import com.ichi2.libanki.Collection;
 import timber.log.Timber;
 
 public final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
-    private LifecycleOwner mLifecycleOwner;
-    private Callback mCallback;
+    private final LifecycleOwner mLifecycleOwner;
+    private final Callback mCallback;
 
     public interface Callback {
         void execute(Collection col);
@@ -38,7 +38,9 @@ public final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
         // load collection
         try {
             Timber.d("CollectionLoader accessing collection");
-            return CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance().getApplicationContext());
+            Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance().getApplicationContext());
+            Timber.i("CollectionLoader obtained collection");
+            return col;
         } catch (RuntimeException e) {
             Timber.e(e, "loadInBackground - RuntimeException on opening collection");
             AnkiDroidApp.sendExceptionReport(e, "CollectionLoader.loadInBackground");

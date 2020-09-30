@@ -5,7 +5,6 @@ import com.android.tools.lint.detector.api.Implementation;
 import com.android.tools.lint.detector.api.Issue;
 import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.Severity;
 import com.android.tools.lint.detector.api.SourceCodeScanner;
 import com.google.common.annotations.VisibleForTesting;
 import com.ichi2.anki.lint.utils.Constants;
@@ -35,7 +34,7 @@ public class DirectSystemTimeInstantiation extends Detector implements SourceCod
     static final String DESCRIPTION = "Use the collection's getTime() method instead of instantiating SystemTime";
     private static final String EXPLANATION = "Creating SystemTime instances directly means time cannot be controlled during" +
             " testing, so it is not allowed. Use the collection's getTime() method instead";
-    private static Implementation implementation = new Implementation(DirectSystemTimeInstantiation.class, Scope.JAVA_FILE_SCOPE);
+    private static final Implementation implementation = new Implementation(DirectSystemTimeInstantiation.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
             DESCRIPTION,

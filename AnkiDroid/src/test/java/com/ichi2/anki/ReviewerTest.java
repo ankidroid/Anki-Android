@@ -1,3 +1,4 @@
+
 package com.ichi2.anki;
 
 import android.content.Intent;
@@ -12,6 +13,8 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
@@ -183,7 +186,7 @@ public class ReviewerTest extends RobolectricTest {
     }
 
     @Test
-    public synchronized void testMultipleCards() throws ConfirmModSchemaException, InterruptedException {
+    public synchronized void testMultipleCards() throws ConfirmModSchemaException {
         addNoteWithThreeCards();
         Collection col = getCol();
         JSONObject nw = col.getDecks().confForDid(1).getJSONObject("new");
@@ -356,5 +359,23 @@ public class ReviewerTest extends RobolectricTest {
             return visibleButtons;
         }
     }
+
+    @Test
+    public void baseDeckName() {
+        Collection col = getCol();
+        Models models = col.getModels();
+
+        Decks decks = col.getDecks();
+        Long didAb = decks.id("A::B");
+        Model basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name));
+        basic.put("did", didAb);
+        addNoteUsingBasicModel("foo", "bar");
+        Long didA = decks.id("A");
+        decks.select(didA);
+        Reviewer reviewer = startReviewer();
+        waitForAsyncTasksToComplete();
+        assertThat(reviewer.getSupportActionBar().getTitle(), is("B"));
+    }
+
 }
 

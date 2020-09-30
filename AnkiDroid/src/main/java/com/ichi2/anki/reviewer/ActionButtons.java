@@ -13,12 +13,12 @@ import timber.log.Timber;
 
 public class ActionButtons
 {
-    private ActionButtonStatus mActionButtonStatus;
+    private final ActionButtonStatus mActionButtonStatus;
 
     @IdRes
-    public static int RES_FLAG = R.id.action_flag;
+    public static final int RES_FLAG = R.id.action_flag;
     @IdRes
-    public static int RES_MARK = R.id.action_mark_card;
+    public static final int RES_MARK = R.id.action_mark_card;
 
     private Menu mMenu;
 

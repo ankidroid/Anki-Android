@@ -10,7 +10,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.ichi2.anki.lint.utils.Constants;
 import com.ichi2.anki.lint.utils.LintUtils;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiType;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,7 +32,7 @@ public class DirectDateInstantiation extends Detector implements SourceCodeScann
     static final String DESCRIPTION = "Use the collection's getTime() method instead of directly instantiating Date";
     private static final String EXPLANATION = "Creating Date instances directly means dates cannot be controlled during" +
             " testing, so it is not allowed. Use the collection's getTime() method instead";
-    private static Implementation implementation = new Implementation(DirectDateInstantiation.class, Scope.JAVA_FILE_SCOPE);
+    private static final Implementation implementation = new Implementation(DirectDateInstantiation.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
             DESCRIPTION,

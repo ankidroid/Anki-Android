@@ -39,6 +39,7 @@ import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus;
 import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.async.Connection;
+import com.ichi2.utils.AdaptionUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -56,9 +57,9 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
     private static final String BUNDLE_KEY_SHUT_OFF = "key.multimedia.shut.off";
     // Must be passed in
-    public static String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
+    public static final String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
     // Passed out as a result
-    public static String EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path";
+    public static final String EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path";
 
     String mSource;
 
@@ -85,6 +86,11 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (AdaptionUtil.isUserATestClient()) {
+            finishCancel();
+            return;
+        }
 
         if (savedInstanceState != null) {
             boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);

@@ -30,12 +30,9 @@ import timber.log.Timber;
 
 public class StyledProgressDialog extends Dialog {
 
-    private Context mContext;
-
 
     public StyledProgressDialog(Context context) {
         super(context);
-        mContext = context;
     }
 
 

@@ -55,6 +55,8 @@ import java.util.Set;
 
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+
 /**
  * Preferences for the current deck.
  */
@@ -68,7 +70,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     private BroadcastReceiver mUnmountReceiver = null;
 
     // TODO: not anymore used in libanki?
-    private String[] dynExamples = new String[] { null,
+    private final String[] dynExamples = new String[] { null,
             "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
             "{'search'=\"added:1\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
             "{'search'=\"rated:1:1\", 'order'=4}",
@@ -79,8 +81,8 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
     public class DeckPreferenceHack implements SharedPreferences {
 
-        private Map<String, String> mValues = new HashMap<>();
-        private Map<String, String> mSummaries = new HashMap<>();
+        private final Map<String, String> mValues = new HashMap<>();
+        private final Map<String, String> mSummaries = new HashMap<>();
 
 
         public DeckPreferenceHack() {
@@ -274,25 +276,25 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
         @Override
         public boolean getBoolean(String key, boolean defValue) {
-            return Boolean.valueOf(this.getString(key, Boolean.toString(defValue)));
+            return Boolean.parseBoolean(this.getString(key, Boolean.toString(defValue)));
         }
 
 
         @Override
         public float getFloat(String key, float defValue) {
-            return Float.valueOf(this.getString(key, Float.toString(defValue)));
+            return Float.parseFloat(this.getString(key, Float.toString(defValue)));
         }
 
 
         @Override
         public int getInt(String key, int defValue) {
-            return Integer.valueOf(this.getString(key, Integer.toString(defValue)));
+            return Integer.parseInt(this.getString(key, Integer.toString(defValue)));
         }
 
 
         @Override
         public long getLong(String key, long defValue) {
-            return Long.valueOf(this.getString(key, Long.toString(defValue)));
+            return Long.parseLong(this.getString(key, Long.toString(defValue)));
         }
 
 
@@ -305,7 +307,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             return mValues.get(key);
         }
 
-        public List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
+        public final List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
 
 
         @Override
@@ -390,10 +392,9 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                closeDeckOptions();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            closeDeckOptions();
+            return true;
         }
         return false;
     }
@@ -427,7 +428,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             }
         }
         finish();
-        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+        ActivityTransitionAnimation.slide(this, FADE);
     }
 
 

@@ -55,8 +55,8 @@ public final class TtsParser {
      * Snippet of text accompanied by its locale code (if known).
      */
     public static final class LocalisedText {
-        private String mText;
-        private String mLocaleCode;
+        private final String mText;
+        private final String mLocaleCode;
 
         /**
          * Construct an object representing a snippet of text in an unknown locale.

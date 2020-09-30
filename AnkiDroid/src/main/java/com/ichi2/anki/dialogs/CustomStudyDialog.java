@@ -156,7 +156,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                                  */
                                 long currentDeck = getArguments().getLong("did");
                                 TagsDialog dialogFragment = TagsDialog.newInstance(
-                                        TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
+                                        TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<>(),
                                         new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
                                 dialogFragment.setTagsDialogListener(CustomStudyDialog.this::customStudyFromTags);
                                 activity.showDialogFragment(dialogFragment);
@@ -187,9 +187,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         Resources res = getActivity().getResources();
         // Show input dialog for an individual custom study dialog
         View v = getActivity().getLayoutInflater().inflate(R.layout.styled_custom_study_details_dialog, null);
-        TextView textView1 = (TextView) v.findViewById(R.id.custom_study_details_text1);
-        TextView textView2 = (TextView) v.findViewById(R.id.custom_study_details_text2);
-        final EditText mEditText = (EditText) v.findViewById(R.id.custom_study_details_edittext2);
+        TextView textView1 = v.findViewById(R.id.custom_study_details_text1);
+        TextView textView2 = v.findViewById(R.id.custom_study_details_text2);
+        final EditText mEditText = v.findViewById(R.id.custom_study_details_edittext2);
         // Set the text
         textView1.setText(getText1());
         textView2.setText(getText2());
@@ -259,7 +259,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                         }
                         case CUSTOM_STUDY_PREVIEW: {
                             createCustomStudySession(new JSONArray(), new Object[] {"is:new added:" +
-                                    Integer.toString(n), Consts.DYN_MAX_SIZE, Consts.DYN_OLDEST}, false);
+                                    n, Consts.DYN_MAX_SIZE, Consts.DYN_OLDEST}, false);
                             break;
                         }
                         default:

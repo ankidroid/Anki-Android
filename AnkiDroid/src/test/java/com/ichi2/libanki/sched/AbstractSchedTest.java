@@ -27,6 +27,7 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONArray;
 
 import org.junit.Before;
@@ -84,16 +85,16 @@ public class AbstractSchedTest extends RobolectricTest {
         col.reset();
 
         Card cardBeforeUndo = sched.getCard();
-        int[] countsBeforeUndo = sched.counts();
+        Counts countsBeforeUndo = sched.counts();
         // Not shown in the UI, but there is a state where the card has been removed from the queue, but not answered
         // where the counts are decremented.
-        assertThat(countsBeforeUndo, is(new int[] { 0, 0, 0 }));
+        assertThat(countsBeforeUndo, is(new Counts(0, 0, 0)));
 
         sched.answerCard(cardBeforeUndo, EASE_3);
 
         waitForTask(UNDO, 5000);
 
-        int[] countsAfterUndo = sched.counts();
+        Counts countsAfterUndo = sched.counts();
 
         assertThat("Counts after an undo should be the same as before an undo", countsAfterUndo, is(countsBeforeUndo));
     }
@@ -116,13 +117,13 @@ public class AbstractSchedTest extends RobolectricTest {
         assertThat(sched.newCount(), is(10));
         Card card = sched.getCard();
         assertThat(sched.newCount(), is(9));
-        assertThat(sched.counts(card)[0], is(10));
+        assertThat(sched.counts(card).getNew(), is(10));
         sched.answerCard(card, sched.getGoodNewButton());
         sched.getCard();
         nonTaskUndo(col);
         card.load();
         assertThat(sched.newCount(), is(9));
-        assertThat(sched.counts(card)[0], is(10));
+        assertThat(sched.counts(card).getNew(), is(10));
     }
 
     @Test
@@ -171,7 +172,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
         for (int i = 0; i < nbNote; i++) {
             Card card = sched.getCard();
-            assertArrayEquals(new int[] {nbNote * 2 - i, 0, 0}, sched.counts(card));
+            assertEquals(new Counts(nbNote * 2 - i, 0, 0), sched.counts(card));
             assertEquals(notes[i].firstCard().getId(), card.getId());
             assertEquals(Consts.QUEUE_TYPE_NEW, card.getQueue());
             sched.answerCard(card, sched.answerButtons(card));
@@ -310,7 +311,7 @@ mw.col.sched.extendLimits(1, 0)
 
         Card card = sched.getCard();
         assertNotNull(card);
-        assertArrayEquals(new int[]{1, 0, 0}, sched.counts(card));
+        assertEquals(new Counts(1, 0, 0), sched.counts(card));
         if (preload) {
             sched.preloadNextCard();
         }
@@ -319,7 +320,7 @@ mw.col.sched.extendLimits(1, 0)
 
         card = sched.getCard();
         assertNotNull(card);
-        assertArrayEquals(new int[]{0, (schedVersion == 1) ? 3 : 1, 0}, sched.counts(card));
+        assertEquals(new Counts(0, (schedVersion == 1) ? 3 : 1, 0), sched.counts(card));
         if (preload) {
             sched.preloadNextCard();
         }
@@ -329,7 +330,7 @@ mw.col.sched.extendLimits(1, 0)
 
         card = sched.getCard();
         assertNotNull(card);
-        assertArrayEquals(new int[]{0, (schedVersion == 1) ? 2 : 1, 0}, sched.counts(card));
+        assertEquals(new Counts(0, (schedVersion == 1) ? 2 : 1, 0), sched.counts(card));
         if (preload) {
             sched.preloadNextCard();
         }
@@ -338,7 +339,7 @@ mw.col.sched.extendLimits(1, 0)
 
         card = nonTaskUndo(col);
         assertNotNull(card);
-        assertArrayEquals(new int[]{0, (schedVersion == 1) ? 3 : 1, 0}, sched.counts(card));
+        assertEquals(new Counts(0, (schedVersion == 1) ? 3 : 1, 0), sched.counts(card));
         sched.count();
         if (preload) {
             sched.preloadNextCard();
@@ -351,7 +352,7 @@ mw.col.sched.extendLimits(1, 0)
         if (preload) {
             sched.preloadNextCard();
         }
-        assertArrayEquals(new int[]{0, (schedVersion == 1) ? 2 : 1, 0}, sched.counts(card));
+        assertEquals(new Counts(0, (schedVersion == 1) ? 2 : 1, 0), sched.counts(card));
 
         assertNotNull(card);
     }
@@ -376,5 +377,25 @@ mw.col.sched.extendLimits(1, 0)
 
         boolean hasMatch = decks.all().stream().anyMatch(x -> name.equals(x.getString("name")));
         assertThat(String.format("Deck %s should exist", name), hasMatch, is(true));
+    }
+
+
+
+    @Test
+    public void regression_7066() {
+        Collection col = getCol();
+        DeckConfig dconf = col.getDecks().getConf(1);
+        dconf.getJSONObject("new").put("bury", true);
+        AbstractSched sched = col.getSched();
+        addNoteUsingBasicAndReversedModel("foo", "bar");
+        addNoteUsingBasicModel("plop", "foo");
+        col.reset();
+        Card card = sched.getCard();
+        sched.setCurrentCard(card);
+        sched.preloadNextCard();
+        sched.answerCard(card, Consts.BUTTON_THREE);
+        card = sched.getCard();
+        sched.setCurrentCard(card);
+        AnkiAssert.assertDoesNotThrow(sched::preloadNextCard);
     }
 }

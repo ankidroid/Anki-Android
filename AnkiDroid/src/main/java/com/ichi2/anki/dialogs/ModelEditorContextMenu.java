@@ -8,6 +8,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 public class ModelEditorContextMenu extends AnalyticsDialogFragment {
@@ -33,6 +34,7 @@ public class ModelEditorContextMenu extends AnalyticsDialogFragment {
         return n;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

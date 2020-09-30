@@ -116,6 +116,8 @@
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
     <string name="sync_media_error">미디어 데이터 동기화 에러.</string>
     <string name="sync_media_error_check">미디어 동기화 도중 오류가 발생했습니다. 미디어 점검을 하는 것이 좋습니다.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">장치</string>
     <string name="sync_sanity_remote">서버</string>
     <string name="force_full_sync_title">강제로 전체 동기화</string>
@@ -133,4 +135,6 @@
     <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Help</string>
 </resources>

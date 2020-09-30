@@ -112,7 +112,7 @@
     <string name="rebuild_custom_study_deck">Bygger om anpassad studiekortlek.\nVar god dröj...</string>
     <string name="importing_collection">Importerar samling.\nVar god dröj&#8230;</string>
     <string name="import_media_count">Importerar mediafiler %1$d%%\nVar god dröj&#8230;</string>
-    <string name="import_progress">Importerar noter: %1$d%%\n• Importerar kort: %2$d%%\n• Efterbearbetning: %3$d%%</string>
+    <string name="import_progress">• Importerar noter: %1$d%%\n• Importerar kort: %2$d%%\n• Efterbearbetning: %3$d%%</string>
     <string name="import_update_details">Uppdaterade %1$d av %2$d existerande noter.</string>
     <string name="import_update_ignored">Vissa uppdateringar ignorerades eftersom not-typen har ändrats</string>
     <string name="import_complete_count">Kort importerade: %d</string>
@@ -147,7 +147,12 @@
     <string name="check_media_no_unused_missing">Inga oanvända eller saknade filer upptäckta.</string>
     <string name="check_media_db_updated">Mediadatabasen återskapad.</string>
     <string name="check_media_delete_unused">Radera oanvända</string>
-    <string name="check_media_deleted">Filer raderade: %d</string>
+    <string name="delete_media_message">Deleting media&#8230;</string>
+    <string name="delete_media_result_title">Deletion result</string>
+    <plurals name="delete_media_result_message">
+        <item quantity="one">%d file deleted</item>
+        <item quantity="other">%d files deleted</item>
+    </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Alla kort</string>
     <string name="tags_dialog_option_new_cards">Ny</string>

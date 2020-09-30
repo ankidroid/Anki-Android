@@ -40,6 +40,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
+import androidx.annotation.NonNull;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
@@ -401,7 +402,7 @@ public class AdvancedStatistics {
         private long id;
 
         @Override
-        public String toString() {
+        public @NonNull String toString() {
             return "Card [ivl=" + ivl + ", factor=" + factor + ", due=" + due + ", correct=" + correct + ", id="
                     + id + "]";
         }
@@ -526,11 +527,11 @@ public class AdvancedStatistics {
      */
     private static class Deck {
 
-        private long did;
+        private final long did;
 
-        private int newPerDay;
-        private int revPerDay;
-        private int initialFactor;
+        private final int newPerDay;
+        private final int revPerDay;
+        private final int initialFactor;
 
         public Deck(long did, int newPerDay, int revPerDay, int initialFactor) {
             this.did = did;
@@ -557,12 +558,12 @@ public class AdvancedStatistics {
 
     }
 
-    private class CardIterator {
+    private static class CardIterator {
 
-        private Cursor cur;
+        private final Cursor cur;
 
         private final int today;
-        private Deck deck;
+        private final Deck deck;
 
         public CardIterator(SupportSQLiteDatabase db, int today, Deck deck) {
 
@@ -630,7 +631,7 @@ public class AdvancedStatistics {
         //TODO: should we determine these per deck or over decks?
         //Per deck means less data, but tuned to deck.
         //Over decks means more data, but not tuned to deck.
-        private final String queryBaseNew =
+        private static final String queryBaseNew =
                 "select "
                         +   "count() as N, "
                         +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
@@ -639,7 +640,7 @@ public class AdvancedStatistics {
                         +	  "sum(case when ease=3 then 1 else 0 end) as easy "
                         + "from revlog ";
 
-        private final String queryBaseYoungMature =
+        private static final String queryBaseYoungMature =
                 "select "
                         +   "count() as N, "
                         +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
@@ -648,15 +649,15 @@ public class AdvancedStatistics {
                         +	  "sum(case when ease=4 then 1 else 0 end) as easy "
                         + "from revlog ";
 
-        private final String queryNew =
+        private static final String queryNew =
                 queryBaseNew
                         + "where type=" + CARD_TYPE_NEW + ";";
 
-        private final String queryYoung =
+        private static final String queryYoung =
                 queryBaseYoungMature
                         + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl < 21;";
 
-        private final String queryMature =
+        private static final String queryMature =
                 queryBaseYoungMature
                         + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl >= 21;";
 
@@ -665,9 +666,9 @@ public class AdvancedStatistics {
 
             singleReviewOutcome = new ReviewOutcome(null, 0);
 
-            long t0 = time.intTimeMS();;
+            long t0 = time.intTimeMS();
             calculateCumProbabilitiesForNewEasePerCurrentEase();
-            long t1 = time.intTimeMS();;
+            long t1 = time.intTimeMS();
 
             Timber.d("Calculating probability distributions took: " + (t1 - t0) + " ms");
 
@@ -766,7 +767,7 @@ public class AdvancedStatistics {
             return 3;
         }
 
-        private ReviewOutcome singleReviewOutcome;
+        private final ReviewOutcome singleReviewOutcome;
         public ReviewOutcome simSingleReview(Card c){
 
             @Consts.CARD_TYPE int type = c.getType();
@@ -831,7 +832,7 @@ public class AdvancedStatistics {
 
     public static class TodayStats {
 
-        private Map<Long, Integer> nLearnedPerDeckId = new HashMap<Long, Integer>();
+        private final Map<Long, Integer> nLearnedPerDeckId = new HashMap<>();
 
         public TodayStats(SupportSQLiteDatabase db, long dayStartCutoff) {
 
@@ -865,7 +866,7 @@ public class AdvancedStatistics {
         }
     }
 
-    public class NewCardSimulator {
+    public static class NewCardSimulator {
 
         private int nAddedToday;
         private int tAdd;
@@ -1181,7 +1182,7 @@ public class AdvancedStatistics {
             int m = matrix.length;
             int n = matrix[0].length;
 
-            int transpose[][] = new int[n][m];
+            int[][] transpose = new int[n][m];
 
             int c, d;
             for ( c = 0 ; c < m ; c++ )
@@ -1201,7 +1202,7 @@ public class AdvancedStatistics {
             int m = matrix.length;
             int n = matrix[0].length;
 
-            double transpose[][] = new double[n][m];
+            double[][] transpose = new double[n][m];
 
             int c, d;
             for ( c = 0 ; c < m ; c++ )
@@ -1221,8 +1222,8 @@ public class AdvancedStatistics {
             s.append(System.getProperty("line.separator"));
 
             for (int[] aMatrix : matrix) {
-                for (int j = 0; j < aMatrix.length; j++) {
-                    s.append(String.format(format, aMatrix[j]));
+                for (int i : aMatrix) {
+                    s.append(String.format(format, i));
                 }
                 s.append(System.getProperty("line.separator"));
             }
@@ -1456,7 +1457,7 @@ public class AdvancedStatistics {
      * A review results in the state of the card (card interval) being changed.
      * A ReviewOutcome bundles the probability of the outcome and the card with changed state.
      */
-    private class ReviewOutcome {
+    private static class ReviewOutcome {
         private Card card;
         private double prob;
 
@@ -1479,7 +1480,7 @@ public class AdvancedStatistics {
         }
 
         @Override
-        public String toString() {
+        public @NonNull String toString() {
             return "ReviewOutcome{" +
                     "card=" + card +
                     ", prob=" + prob +
@@ -1524,14 +1525,14 @@ public class AdvancedStatistics {
         /**
          * Deck-specific settings
          */
-        private Deck deck;
+        private final Deck deck;
 
         /**
          * State of the card before current review.
          * Needed to schedule current review but with different outcome and to update statistics.
          */
         private Card card = new Card(0, 0, 0, 0, 0, 0);
-        private Card prevCard = new Card(0, 0, 0, 0, 0, 0);
+        private final Card prevCard = new Card(0, 0, 0, 0, 0, 0);
 
         /**
          * State of the card after current review.

@@ -45,7 +45,7 @@
             android:layout_gravity="start|center_vertical"
             android:padding="12dp"
             android:focusable="true"
-            android:background="@drawable/item_background_light_selectable_borderless"
+            android:background="?attr/hardButtonRef"
             app:srcCompat="@drawable/ic_baseline_chevron_left_24"
             app:tint="?attr/hardButtonTextColor" />
 
@@ -56,7 +56,7 @@
             android:layout_gravity="end|center_vertical"
             android:padding="12dp"
             android:focusable="true"
-            android:background="@drawable/item_background_light_selectable_borderless"
+            android:background="?attr/hardButtonRef"
             app:srcCompat="@drawable/ic_baseline_chevron_right_24"
             app:tint="?attr/hardButtonTextColor" />
     </FrameLayout>
@@ -67,34 +67,18 @@
         android:layout_height="fill_parent">
 
         <LinearLayout
-            android:id="@+id/flashcard_layout_flip"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/touch_target"
-            android:orientation="vertical">
-
-            <Button
-                style="@style/FooterButton"
-                android:background="?attr/hardButtonRef"
-                android:id="@+id/flip_card"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:clickable="false"
-                android:text="@string/show_answer"
-                android:textColor="?attr/answerButtonTextColor" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/ease_buttons"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="horizontal"
             android:visibility="gone"
-            tools:visibility="visible">
+            android:focusable="false"
+            android:orientation="horizontal">
 
             <LinearLayout
                 style="@style/FooterButton"
                 android:background="?attr/againButtonRef"
                 android:id="@+id/flashcard_layout_ease1"
+                android:nextFocusRight="@id/flashcard_layout_ease2"
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
@@ -115,6 +99,8 @@
                 style="@style/FooterButton"
                 android:background="?attr/hardButtonRef"
                 android:id="@+id/flashcard_layout_ease2"
+                android:nextFocusRight="@id/flashcard_layout_ease3"
+                android:nextFocusLeft="@id/flashcard_layout_ease1"
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
@@ -135,6 +121,8 @@
                 style="@style/FooterButton"
                 android:background="?attr/goodButtonRef"
                 android:id="@+id/flashcard_layout_ease3"
+                android:nextFocusRight="@id/flashcard_layout_ease4"
+                android:nextFocusLeft="@id/flashcard_layout_ease2"
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
@@ -155,6 +143,7 @@
                 style="@style/FooterButton"
                 android:background="?attr/easyButtonRef"
                 android:id="@+id/flashcard_layout_ease4"
+                android:nextFocusLeft="@id/flashcard_layout_ease3"
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
@@ -170,6 +159,26 @@
                     android:text="@string/ease_button_easy"
                     style="@style/EasyButtonEaseStyle" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/flashcard_layout_flip"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/touch_target"
+            android:orientation="vertical"
+            android:focusable="true"
+            tools:visibility="gone">
+
+            <Button
+                style="@style/FooterButton"
+                android:duplicateParentState="true"
+                android:background="?attr/hardButtonRef"
+                android:id="@+id/flip_card"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:clickable="false"
+                android:text="@string/show_answer"
+                android:textColor="?attr/answerButtonTextColor" />
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

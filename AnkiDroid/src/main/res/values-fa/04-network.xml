@@ -116,6 +116,8 @@
     <string name="sync_media_db_error">همگام‌سازی رسانه انجام نشد چون دیتابیس فعلی خراب است. انجام بررسی رسانه را به شما پیشنهاد می‌کنیم.</string>
     <string name="sync_media_error">خطا در همگام سازی اطلاعات رسانه.</string>
     <string name="sync_media_error_check">خطا در همگام سازی رسانه. توصیه می شود رسانه را بررسی کنید.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">محلی</string>
     <string name="sync_sanity_remote">از راه دور</string>
     <string name="force_full_sync_title">اجبار به همگام سازی کامل</string>
@@ -133,4 +135,6 @@
     <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Help</string>
 </resources>

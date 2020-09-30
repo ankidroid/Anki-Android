@@ -6,7 +6,6 @@ import com.android.tools.lint.detector.api.Implementation;
 import com.android.tools.lint.detector.api.Issue;
 import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.Severity;
 import com.android.tools.lint.detector.api.SourceCodeScanner;
 import com.google.common.annotations.VisibleForTesting;
 import com.ichi2.anki.lint.utils.Constants;
@@ -34,7 +33,7 @@ public class DirectCalendarInstanceUsage extends Detector implements SourceCodeS
     static final String DESCRIPTION = "Use the collection's getTime() method instead of directly creating Calendar instances";
     private static final String EXPLANATION = "Manually creating Calendar instances means time cannot be controlled " +
             "during testing. Calendar instances must be obtained through the collection's getTime() method";
-    private static Implementation implementation = new Implementation(DirectCalendarInstanceUsage.class, Scope.JAVA_FILE_SCOPE);
+    private static final Implementation implementation = new Implementation(DirectCalendarInstanceUsage.class, Scope.JAVA_FILE_SCOPE);
     public static final Issue ISSUE = Issue.create(
             ID,
             DESCRIPTION,

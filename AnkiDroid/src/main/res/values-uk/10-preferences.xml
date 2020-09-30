@@ -254,7 +254,7 @@
     <string name="deck_conf_replayq">Відтворити питання</string>
     <string name="deck_conf_replayq_summ">Після показу відповіді відтворити аудіо питання і відповіді</string>
     <string name="deck_conf_manage">Управління групами</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Додати і змінити налаштування груп</string>
     <string name="deck_conf_current_group">Поточна група</string>
     <string name="deck_conf_rename">Перейменувати</string>
     <string name="deck_conf_reset">Відновити типові</string>
@@ -290,4 +290,6 @@
     <string name="analytics_dialog_title">Допоможіть зробити AnkiDroid краще!</string>
     <string name="analytics_title">Поділитися інформацією про використання функцій</string>
     <string name="analytics_summ">Ви можете зробити свій внесок до AnkiDroid, допомагаючи команді розробників побачити, які функції використовують люди</string>
+    <string name="enable_miui_keyboard_hack">«Вставити» для завдання з пропусками</string>
+    <string name="enable_miui_keyboard_hack_summ">В редакторі записів «Вставити» перетворить виділений текст в завдання з пропусками</string>
 </resources>

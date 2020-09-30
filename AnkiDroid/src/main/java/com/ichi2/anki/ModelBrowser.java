@@ -43,7 +43,6 @@ import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
@@ -54,6 +53,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import timber.log.Timber;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 
@@ -84,7 +85,6 @@ public class ModelBrowser extends AnkiActivity {
     private ModelBrowserContextMenu mContextMenu;
 
     private ArrayList<String> mNewModelNames;
-    private ArrayList<String> mNewModelLabels;
 
 
     // ----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ public class ModelBrowser extends AnkiActivity {
     /*
      * Listens to long hold context menu for main list items
      */
-    private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
+    private final MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
         @Override
         public void onSelection(MaterialDialog materialDialog, View view, int selection, CharSequence charSequence) {
             switch (selection) {
@@ -182,7 +182,7 @@ public class ModelBrowser extends AnkiActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.model_browser);
-        mModelListView = (ListView) findViewById(R.id.note_type_browser_list);
+        mModelListView = findViewById(R.id.note_type_browser_list);
         enableToolbar();
         mActionBar = getSupportActionBar();
         startLoadingCollection();
@@ -275,7 +275,7 @@ public class ModelBrowser extends AnkiActivity {
                 Intent noteOpenIntent = new Intent(ModelBrowser.this, ModelFieldEditor.class);
                 noteOpenIntent.putExtra("title", mModelDisplayList.get(position).getName());
                 noteOpenIntent.putExtra("noteTypeID", noteTypeID);
-                startActivityForResultWithAnimation(noteOpenIntent, 0, ActivityTransitionAnimation.LEFT);
+                startActivityForResultWithAnimation(noteOpenIntent, 0, LEFT);
             }
         });
 
@@ -311,30 +311,30 @@ public class ModelBrowser extends AnkiActivity {
         String clone = getResources().getString(R.string.model_browser_add_clone);
 
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
-        mNewModelLabels = new ArrayList<>();
+        ArrayList<String> newModelLabels = new ArrayList<>();
         ArrayList<String> existingModelsNames = new ArrayList<>();
 
         //Used to fetch model names
         mNewModelNames = new ArrayList<>();
         for (StdModels StdModels: StdModels.stdModels) {
             String defaultName = StdModels.getDefaultName();
-            mNewModelLabels.add(String.format(add, defaultName));
+            newModelLabels.add(String.format(add, defaultName));
             mNewModelNames.add(defaultName);
         }
 
-        final int numStdModels = mNewModelLabels.size();
+        final int numStdModels = newModelLabels.size();
 
         if (mModels != null) {
             for (Model model : mModels) {
                 String name = model.getString("name");
-                mNewModelLabels.add(String.format(clone, name));
+                newModelLabels.add(String.format(clone, name));
                 mNewModelNames.add(name);
                 existingModelsNames.add(name);
             }
         }
 
         final Spinner addSelectionSpinner = new Spinner(this);
-        ArrayAdapter<String> mNewModelAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item, mNewModelLabels);
+        ArrayAdapter<String> mNewModelAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item, newModelLabels);
 
         addSelectionSpinner.setAdapter(mNewModelAdapter);
 
@@ -413,20 +413,11 @@ public class ModelBrowser extends AnkiActivity {
                 @Override
                 public void run() {
                     col.modSchemaNoCheck();
-                    try {
-                        deleteModel();
-                    } catch (ConfirmModSchemaException e) {
-                        //This should never be reached because modSchema() didn't throw an exception
-                    }
+                    deleteModel();
                     dismissContextMenu();
                 }
             };
-            Runnable cancel = new Runnable() {
-                @Override
-                public void run() {
-                    dismissContextMenu();
-                }
-            };
+            Runnable cancel = this::dismissContextMenu;
 
             try {
                 col.modSchema();
@@ -499,7 +490,7 @@ public class ModelBrowser extends AnkiActivity {
     private void openTemplateEditor() {
         Intent intent = new Intent(this, CardTemplateEditor.class);
         intent.putExtra("modelId", mCurrentID);
-        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_TEMPLATE_EDIT, LEFT);
     }
 
     // ----------------------------------------------------------------------------
@@ -525,7 +516,7 @@ public class ModelBrowser extends AnkiActivity {
     /*
      * Deletes the currently selected model
      */
-    private void deleteModel() throws ConfirmModSchemaException {
+    private void deleteModel() {
         CollectionTask.launchCollectionTask(DELETE_MODEL, deleteModelHandler(),
                 new TaskData(mCurrentID));
         mModels.remove(mModelListPosition);
@@ -572,8 +563,8 @@ public class ModelBrowser extends AnkiActivity {
      * along with the name.
      */
     public static class DisplayPair {
-        private String name;
-        private int count;
+        private final String name;
+        private final int count;
 
         public DisplayPair(String name, int count) {
             this.name = name;
@@ -589,7 +580,7 @@ public class ModelBrowser extends AnkiActivity {
         }
 
         @Override
-        public String toString() {
+        public @NonNull String toString() {
             return getName();
         }
     }
@@ -603,6 +594,7 @@ public class ModelBrowser extends AnkiActivity {
             super(context, R.layout.model_browser_list_item, R.id.model_list_item_1, items);
         }
 
+        @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             DisplayPair item = getItem(position);
@@ -611,8 +603,8 @@ public class ModelBrowser extends AnkiActivity {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.model_browser_list_item, parent, false);
             }
 
-            TextView tvName = (TextView) convertView.findViewById(R.id.model_list_item_1);
-            TextView tvHome = (TextView) convertView.findViewById(R.id.model_list_item_2);
+            TextView tvName = convertView.findViewById(R.id.model_list_item_1);
+            TextView tvHome = convertView.findViewById(R.id.model_list_item_2);
 
             int count = item.getCount();
 

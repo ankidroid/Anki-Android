@@ -7,6 +7,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.sched.AbstractSched;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.LooperMode;
@@ -152,5 +157,24 @@ public class DeckPickerTest extends RobolectricTest {
             });
         }
         verify(editor, never()).remove(UPGRADE_VERSION_KEY);
+    }
+
+    @Test
+    public void limitAppliedAfterReview() {
+        Collection col = getCol();
+        AbstractSched sched = col.getSched();
+        Deck deck = col.getDecks().get(1);
+        DeckConfig dconf = col.getDecks().getConf(1);
+        dconf.getJSONObject("new").put("perDay", 10);
+        for (int i = 0; i < 11; i++) {
+            addNoteUsingBasicModel("Which card is this ?", Integer.toString(i));
+        }
+        // This set a card as current card
+        sched.getCard();
+        try (ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class)) {
+            scenario.onActivity(deckPicker -> {
+                assertEquals(10, deckPicker.mDueTree.get(0).getNewCount());
+            });
+        }
     }
 }

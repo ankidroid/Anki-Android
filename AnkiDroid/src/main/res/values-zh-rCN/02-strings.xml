@@ -172,13 +172,13 @@
     <string name="import_log_file_cache_cleared">导入文件错误，可能处理期间的缓存清理造成的。\n请再次尝试</string>
     <string name="import_succeeded_but_check_database">数据导入成功，但导入后的清理失败。稍后运行检查数据库。根原因：%s</string>
     <string name="import_error_unhandled_request">无法处理导入请求</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">apkg 文件已损坏。请删除并重新下载。\n\n根原因：%s</string>
     <string name="import_error_exception">无法导入软件包\n\n%s</string>
     <string name="import_error_not_apkg_extension">\"%s\" 并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() 失败（可能存储空间不足）</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_unhandled_scheme">未处理的导入来自：“%s”</string>
     <string name="import_replacing">正在导入牌组集合&#8230;</string>
     <string name="import_interrupted">导入中断</string>
     <string name="export_include_schedule">包括学习进度</string>
@@ -304,4 +304,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">加载“%s”失败</string>
     <string name="card_viewer_could_not_find_image_get_help">帮助</string>
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">加载牌组“%s”失败</string>
+    <string name="search_decks">搜索牌组</string>
 </resources>

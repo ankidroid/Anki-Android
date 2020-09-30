@@ -56,6 +56,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static java.lang.Math.min;
@@ -92,7 +93,7 @@ public class Media {
      * Group 1 = Contents of [sound:] tag <br>
      * Group 2 = "fname"
      */
-    private static final Pattern fSoundRegexps = Pattern.compile("(?i)(\\[sound:([^]]+)\\])");
+    private static final Pattern fSoundRegexps = Pattern.compile("(?i)(\\[sound:([^]]+)])");
 
     // src element quoted case
     /**
@@ -101,19 +102,19 @@ public class Media {
      * Group 3 = "fname" <br>
      * Group 4 = Backreference to "str" (i.e., same type of quote character)
      */
-    private static final Pattern fImgRegExpQ = Pattern.compile("(?i)(<img[^>]* src=([\\\"'])([^>]+?)(\\2)[^>]*>)");
+    private static final Pattern fImgRegExpQ = Pattern.compile("(?i)(<img[^>]* src=([\"'])([^>]+?)(\\2)[^>]*>)");
 
     // unquoted case
     /**
      * Group 1 = Contents of <img> tag <br>
      * Group 2 = "fname"
      */
-    private static final Pattern fImgRegExpU = Pattern.compile("(?i)(<img[^>]* src=(?!['\\\"])([^ >]+)[^>]*?>)");
+    private static final Pattern fImgRegExpU = Pattern.compile("(?i)(<img[^>]* src=(?!['\"])([^ >]+)[^>]*?>)");
 
-    public static List<Pattern> mRegexps =  Arrays.asList(fSoundRegexps, fImgRegExpQ, fImgRegExpU);
+    public static final List<Pattern> mRegexps =  Arrays.asList(fSoundRegexps, fImgRegExpQ, fImgRegExpU);
 
-    private Collection mCol;
-    private String mDir;
+    private final Collection mCol;
+    private final String mDir;
     private DB mDb;
 
 
@@ -124,7 +125,7 @@ public class Media {
             return;
         }
         // media directory
-        mDir = col.getPath().replaceFirst("\\.anki2$", ".media");
+        mDir = getCollectionMediaPath(col.getPath());
         File fd = new File(mDir);
         if (!fd.exists()) {
             if (!fd.mkdir()) {
@@ -133,6 +134,12 @@ public class Media {
         }
         // change database
         connect();
+    }
+
+
+    @NonNull
+    public static String getCollectionMediaPath(String collectionPath) {
+        return collectionPath.replaceFirst("\\.anki2$", ".media");
     }
 
 
@@ -218,9 +225,9 @@ public class Media {
     }
 
 
-    /**
-     * Adding media
-     * ***********************************************************
+    /*
+      Adding media
+      ***********************************************************
      */
 
     /**
@@ -331,6 +338,7 @@ public class Media {
 
     private List<String> _expandClozes(String string) {
         Set<String> ords = new TreeSet<>();
+        @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
         Matcher m = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}").matcher(string);
         while (m.find()) {
             ords.add(m.group(1));
@@ -405,9 +413,9 @@ public class Media {
     }
 
 
-    /**
-     * Rebuilding DB
-     * ***********************************************************
+    /*
+      Rebuilding DB
+      ***********************************************************
      */
 
     /**
@@ -567,7 +575,7 @@ public class Media {
     }
 
     private String _cleanLongFilename(String fname) {
-        /** a fairly safe limit that should work on typical windows
+        /* a fairly safe limit that should work on typical windows
          paths and on eCryptfs partitions, even with a duplicate
          suffix appended */
         int namemax = 136;
@@ -598,9 +606,9 @@ public class Media {
         return fname;
     }
 
-    /**
-     * Tracking changes
-     * ***********************************************************
+    /*
+      Tracking changes
+      ***********************************************************
      */
 
     /**
@@ -688,7 +696,7 @@ public class Media {
             while (cur.moveToNext()) {
                 String name = cur.getString(0);
                 String csum = cur.getString(1);
-                Long mod = cur.getLong(2);
+                long mod = cur.getLong(2);
                 cache.put(name, new Object[] { csum, mod, false });
             }
         } catch (SQLException e) {
@@ -820,7 +828,7 @@ public class Media {
     }
 
 
-    /**
+    /*
      * Media syncing: zips
      * ***********************************************************
      */
@@ -855,7 +863,7 @@ public class Media {
             // serialization step. Instead of a list of tuples, we use JSONArrays of JSONArrays.
             JSONArray meta = new JSONArray();
             int sz = 0;
-            byte buffer[] = new byte[2048];
+            byte[] buffer = new byte[2048];
             cur = mDb.getDatabase().query(
                     "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT, null);
 
@@ -918,30 +926,30 @@ public class Media {
      * This method closes the file before it returns.
      */
     public int addFilesFromZip(ZipFile z) throws IOException {
-    try {
+        try {
             List<Object[]> media = new ArrayList<>();
             // get meta info first
             JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
             // then loop through all files
             int cnt = 0;
             for (ZipEntry i : Collections.list(z.entries())) {
-                if ("_meta".equals(i.getName())) {
-                    // ignore previously-retrieved meta
+                String fileName = i.getName();
+                if ("_meta".equals(fileName)) {
+                     // ignore previously-retrieved meta
                     continue;
-                } else {
-                    String name = meta.getString(i.getName());
-                    // normalize name for platform
-                    name = Utils.nfcNormalized(name);
-                    // save file
-                    String destPath = dir().concat(File.separator).concat(name);
-                    try (InputStream zipInputStream = z.getInputStream(i)) {
-                        Utils.writeToFile(zipInputStream, destPath);
-                    }
-                    String csum = Utils.fileChecksum(destPath);
-                    // update db
-                    media.add(new Object[] {name, csum, _mtime(destPath), 0});
-                    cnt += 1;
                 }
+                String name = meta.getString(fileName);
+                // normalize name for platform
+                name = Utils.nfcNormalized(name);
+                // save file
+                String destPath = dir().concat(File.separator).concat(name);
+                try (InputStream zipInputStream = z.getInputStream(i)) {
+                    Utils.writeToFile(zipInputStream, destPath);
+                }
+                String csum = Utils.fileChecksum(destPath);
+                // update db
+                media.add(new Object[] {name, csum, _mtime(destPath), 0});
+                cnt += 1;
             }
             if (media.size() > 0) {
                 mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
@@ -973,8 +981,7 @@ public class Media {
      * function and have delegated its job to the caller of this class.
      */
     public static int indexOfFname(Pattern p) {
-        int fnameIdx = p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
-        return fnameIdx;
+        return p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
     }
 
 
@@ -1009,10 +1016,6 @@ public class Media {
      */
     public boolean needScan() {
         long mod = mDb.queryLongScalar("select dirMod from meta");
-        if (mod == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return mod == 0;
     }
 }

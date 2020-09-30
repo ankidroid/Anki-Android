@@ -53,22 +53,16 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
 import java.text.Normalizer;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
@@ -108,8 +102,8 @@ public class Utils {
     private static final Pattern stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
-    private static final Pattern imgPattern = Pattern.compile("(?i)<img[^>]+src=[\\\"']?([^\\\"'>]+)[\\\"']?[^>]*>");
-    private static final Pattern soundPattern = Pattern.compile("(?i)\\[sound:([^]]+)\\]");
+    private static final Pattern imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>");
+    private static final Pattern soundPattern = Pattern.compile("(?i)\\[sound:([^]]+)]");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
 
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -277,14 +271,14 @@ public class Utils {
         }
     }
 
-    /**
+    /*
      * Locale
      * ***********************************************************************************************
      */
 
 
-    /**
-     * HTML
+    /*
+    * HTML
      * ***********************************************************************************************
      */
 
@@ -364,7 +358,7 @@ public class Utils {
         return sb.toString();
     }
 
-    /**
+    /*
      * IDs
      * ***********************************************************************************************
      */
@@ -447,8 +441,8 @@ public class Utils {
     }
 
 
-    /** LIBANKI: not in libanki */
-    /** Transform a collection of Long into an array of Long */
+    /** LIBANKI: not in libanki
+     *  Transform a collection of Long into an array of Long */
     public static long[] collection2Array(java.util.Collection<Long> list) {
         long[] ar = new long[list.size()];
         int i = 0;
@@ -554,7 +548,7 @@ public class Utils {
         return fields.split("\\x1f", -1);
     }
 
-    /**
+    /*
      * Checksums
      * ***********************************************************************************************
      */
@@ -566,6 +560,7 @@ public class Utils {
      * @param data the string to generate hash from
      * @return A string of length 40 containing the hexadecimal representation of the MD5 checksum of data.
      */
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     public static String checksum(String data) {
         String result = "";
         if (data != null) {
@@ -647,7 +642,7 @@ public class Utils {
     }
 
 
-    /**
+    /*
      *  Tempo files
      * ***********************************************************************************************
      */
@@ -1063,4 +1058,18 @@ public class Utils {
         }
         return changed;
     }
+
+
+    /**
+     * @param left An object of type T
+     * @param right An object of type T
+     * @param <T> A type on which equals can be called
+     * @return Whether both objects are equal.
+     */
+    // Similar as Objets.equals. So deprecated starting at API Level 19 where this methods exists.
+    public static <T> boolean equals(@Nullable T left, @Nullable T right) {
+        //noinspection EqualsReplaceableByObjectsCall
+        return left == right || (left != null && left.equals(right));
+    }
+
 }

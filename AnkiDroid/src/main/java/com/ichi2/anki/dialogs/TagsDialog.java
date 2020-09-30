@@ -27,10 +27,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.TreeSet;
 
 public class TagsDialog extends AnalyticsDialogFragment {
@@ -102,6 +102,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Resources res = getResources();
@@ -131,16 +132,13 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mSelectedOption = mOptionsGroup.getCheckedRadioButtonId();
         mOptionsGroup.setOnCheckedChangeListener((radioGroup, checkedId) -> mSelectedOption = checkedId);
 
-        switch (mType) {
-            case TYPE_ADD_TAG:
-                mDialogTitle = getResources().getString(R.string.card_details_tags);
-                mOptionsGroup.setVisibility(View.GONE);
-                mPositiveText = getString(R.string.dialog_ok);
-                break;
-            default:
-                mDialogTitle = getResources().getString(R.string.studyoptions_limit_select_tags);
-                mPositiveText = getString(R.string.select);
-                break;
+        if (mType == TYPE_ADD_TAG) {
+            mDialogTitle = getResources().getString(R.string.card_details_tags);
+            mOptionsGroup.setVisibility(View.GONE);
+            mPositiveText = getString(R.string.dialog_ok);
+        } else {
+            mDialogTitle = getResources().getString(R.string.studyoptions_limit_select_tags);
+            mPositiveText = getString(R.string.select);
         }
 
         adjustToolbar(tagsDialogView);
@@ -235,13 +233,10 @@ public class TagsDialog extends AnalyticsDialogFragment {
             return true;
         });
 
-        switch (mType) {
-            case TYPE_ADD_TAG:
-                mToolbarSearchView.setQueryHint(getString(R.string.add_new_filter_tags));
-                break;
-            default:
-                mToolbarAddItem.setVisible(false);
-                break;
+        if (mType == TYPE_ADD_TAG) {
+            mToolbarSearchView.setQueryHint(getString(R.string.add_new_filter_tags));
+        } else {
+            mToolbarAddItem.setVisible(false);
         }
     }
 
@@ -259,9 +254,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             } else {
                 feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag);
             }
-            if (!mCurrentTags.contains(tag)) {
-                mCurrentTags.add(tag);
-            }
+            mCurrentTags.add(tag);
             mTagsArrayAdapter.notifyDataSetChanged();
             // Show a snackbar to let the user know the tag was added successfully
             UIUtils.showSnackbar(getActivity(), feedbackText, false, -1, null,
@@ -275,14 +268,14 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
     public class TagsArrayAdapter extends  RecyclerView.Adapter<TagsArrayAdapter.ViewHolder> implements Filterable{
         public class ViewHolder extends RecyclerView.ViewHolder {
-            private CheckedTextView mTagItemCheckedTextView;
+            private final CheckedTextView mTagItemCheckedTextView;
             public ViewHolder(CheckedTextView ctv) {
                 super(ctv);
                 mTagItemCheckedTextView = ctv;
             }
         }
 
-        public ArrayList<String> mTagsList;
+        public final ArrayList<String> mTagsList;
 
         public  TagsArrayAdapter() {
             mTagsList = new ArrayList<>();
@@ -299,6 +292,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             });
         }
 
+        @NonNull
         @Override
         public TagsArrayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,int viewType) {
             View v = LayoutInflater.from(parent.getContext())
@@ -311,7 +305,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 String tag = ctv.getText().toString();
                 if (ctv.isChecked() && !mCurrentTags.contains(tag)) {
                     mCurrentTags.add(tag);
-                } else if (!ctv.isChecked() && mCurrentTags.contains(tag)) {
+                } else if (!ctv.isChecked()) {
                     mCurrentTags.remove(tag);
                 }
             });
@@ -337,7 +331,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
         private class TagsFilter extends Filter {
-            private ArrayList<String> mFilteredTags;
+            private final ArrayList<String> mFilteredTags;
             private TagsFilter() {
                 super();
                 mFilteredTags = new ArrayList<>();
@@ -346,7 +340,6 @@ public class TagsDialog extends AnalyticsDialogFragment {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 mFilteredTags.clear();
-                final FilterResults filterResults = new FilterResults();
                 if (constraint.length() == 0) {
                     mFilteredTags.addAll(mAllTags);
                 } else {
@@ -358,9 +351,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                     }
                 }
 
-                filterResults.values = mFilteredTags;
-                filterResults.count = mFilteredTags.size();
-                return filterResults;
+                return FilterResultsUtils.fromCollection(mFilteredTags);
             }
 
             @Override

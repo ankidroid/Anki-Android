@@ -94,7 +94,7 @@
     <string name="sync_overwrite_error">La tua collezione corrente non ha potuto essere sovrascritta con il file scaricato.</string>
     <string name="sync_connection_error">Connessione scaduta. Ci sono problemi con la connessione internet oppure hai un file molto grande nella tua cartella dei media.</string>
     <string name="sync_write_access_error">Il file scaricato non ha potuto essere salvato sulla scheda SD. O la tua scheda SD è montata in sola lettura, o non c\'è spazio sufficiente.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">Il server di sincronizzazione personalizzato in Impostazioni avanzate non è valido (%s). Inserire un server valido o disabilitare l\'impostazione.</string>
     <string name="sync_deletions_message">Sincronizzazione eliminazioni...</string>
     <string name="sync_small_objects_message">Sincronizzazione piccoli oggetti...</string>
     <string name="sync_finish_message">Completamento sincronizzazione...</string>
@@ -116,6 +116,8 @@
     <string name="sync_media_db_error">Sincronizzazione media non riuscita perché la banca dati corrente è corrotta. Si raccomanda un controllo multimediale.</string>
     <string name="sync_media_error">Errore di sincronizzazione dei dati multimediali.</string>
     <string name="sync_media_error_check">Errore durante la sincronizzazione di media. Si raccomanda un controllo del media.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Si prega di eseguire «%s» prima di sincronizzare</string>
     <string name="sync_sanity_local">Locale</string>
     <string name="sync_sanity_remote">Remoto</string>
     <string name="force_full_sync_title">Forza sincronizzazione completa</string>
@@ -133,4 +135,6 @@
     <string name="sync_menu_title">Sincronizza</string>
     <string name="sync_menu_title_full_sync">Sincronizza (tutto)</string>
     <string name="sync_menu_title_no_account">Sincronizza (login)</string>
+    <!-- An option on a message box to open the "corrupt collection" webpage -->
+    <string name="sync_corrupt_collection_get_help">Aiuto</string>
 </resources>

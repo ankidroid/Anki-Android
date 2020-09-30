@@ -62,19 +62,19 @@ public class Template {
     private static final String sCtag = Pattern.quote("}}");
 
     // The regular expression used to find a #section
-    private static final Pattern sSection_re = Pattern.compile(sOtag + "[#|^]([^}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
+    private static final Pattern sSection_re = Pattern.compile(sOtag + "[#^]([^}]*)" + sCtag + "(.+?)" + sOtag + "/\\1" + sCtag, Pattern.MULTILINE | Pattern.DOTALL);
 
     // The regular expression used to find a tag.
     private static final Pattern sTag_re = Pattern.compile(sOtag + "([#=&!>{])?(.+?)\\1?" + sCtag + "+");
 
     // MathJax opening delimiters
-    private static String[] sMathJaxOpenings = {"\\(", "\\["};
+    private static final String[] sMathJaxOpenings = {"\\(", "\\["};
 
     // MathJax closing delimiters
-    private static String[] sMathJaxClosings = {"\\)", "\\]"};
+    private static final String[] sMathJaxClosings = {"\\)", "\\]"};
 
-    private String mTemplate;
-    private Map<String, String> mContext;
+    private final String mTemplate;
+    private final Map<String, String> mContext;
 
 
     private static @Nullable String get_or_attr(Map<String, String> obj, String name) {

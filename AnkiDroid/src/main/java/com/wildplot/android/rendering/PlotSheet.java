@@ -77,16 +77,16 @@ public class PlotSheet implements Drawable {
     /**
      * screen that is currently rendered
      */
-    private int currentScreen = 0;
+    private final int currentScreen = 0;
 
     /**
      * the ploting screens, screen 0 is the only one in single mode
      */
-    private Vector<MultiScreenPart> screenParts = new Vector<>();
+    private final Vector<MultiScreenPart> screenParts = new Vector<>();
 
     //Use LinkedHashMap so that the legend items will be displayed in the order
     //in which they were added
-    private Map<String, ColorWrap> mLegendMap = new LinkedHashMap<>();
+    private final Map<String, ColorWrap> mLegendMap = new LinkedHashMap<>();
     private boolean mDrawablesPrepared = false;
 
 

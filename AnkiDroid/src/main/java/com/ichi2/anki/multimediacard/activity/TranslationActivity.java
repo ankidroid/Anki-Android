@@ -25,6 +25,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
@@ -46,6 +48,7 @@ import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Utils;
+import com.ichi2.utils.AdaptionUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -89,6 +92,11 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (AdaptionUtil.isUserATestClient()) {
+            finishCancel();
+            return;
+        }
 
         if (savedInstanceState != null) {
             boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
@@ -377,7 +385,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);

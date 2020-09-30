@@ -48,7 +48,7 @@ public class Shared {
      */
     public static class ViewItemWaitingInstruction extends Instruction {
 
-        private int viewId;
+        private final int viewId;
 
 
         public  String getDescription() {

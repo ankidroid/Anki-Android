@@ -54,7 +54,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -80,6 +79,7 @@ import timber.log.Timber;
 import com.ichi2.async.TaskData;
 
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
+import static com.ichi2.libanki.Collection.Previewing.*;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -92,15 +92,15 @@ import static com.ichi2.libanki.Collection.DismissType.REVIEW;
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt","PMD.ExcessiveMethodLength"})
 public class Collection {
 
-    private Context mContext;
+    private final Context mContext;
 
     private DB mDb;
     private boolean mServer;
     //private double mLastSave;
-    private Media mMedia;
-    private Decks mDecks;
+    private final Media mMedia;
+    private final Decks mDecks;
     private Models mModels;
-    private Tags mTags;
+    private final Tags mTags;
 
     private AbstractSched mSched;
 
@@ -119,7 +119,7 @@ public class Collection {
 
     private LinkedList<Undoable> mUndo;
 
-    private String mPath;
+    private final String mPath;
     private boolean mDebugLog;
     private PrintWriter mLogHnd;
 
@@ -149,18 +149,20 @@ public class Collection {
         BURY_CARD(R.string.undo_action_bury_card),
         BURY_NOTE(R.string.undo_action_bury_note),
         SUSPEND_CARD(R.string.undo_action_suspend_card),
-        SUSPEND_CARD_MULTI(R.string.card_browser_toggle_suspend_card),
+        SUSPEND_CARD_MULTI(R.string.card_browser_suspend_card),
+        UNSUSPEND_CARD_MULTI(R.string.card_browser_unsuspend_card),
         SUSPEND_NOTE(R.string.undo_action_suspend_note),
         DELETE_NOTE(R.string.undo_action_delete),
         DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
         CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
-        MARK_NOTE_MULTI(R.string.card_browser_toggle_mark_card),
+        MARK_NOTE_MULTI(R.string.card_browser_mark_card),
+        UNMARK_NOTE_MULTI(R.string.card_browser_unmark_card),
         FLAG(R.string.card_browser_flag),
         REPOSITION_CARDS(R.string.undo_action_reposition_card),
         RESCHEDULE_CARDS(R.string.undo_action_reschedule_card),
         RESET_CARDS(R.string.undo_action_reset_card);
 
-        public int undoNameId;
+        public final int undoNameId;
 
         DismissType(int undoNameId) {
             this.undoNameId = undoNameId;
@@ -199,9 +201,8 @@ public class Collection {
 
 
     public String name() {
-        String n = (new File(mPath)).getName().replace(".anki2", "");
         // TODO:
-        return n;
+        return (new File(mPath)).getName().replace(".anki2", "");
     }
 
 
@@ -331,7 +332,7 @@ public class Collection {
 
     public String loadColumn(String columnName) {
         int pos = 1;
-        StringBuffer buf = new StringBuffer("");
+        StringBuilder buf = new StringBuilder();
 
         while (true) {
             try (Cursor cursor = mDb.query("SELECT substr(" + columnName + ", ?, ?) FROM col",
@@ -431,17 +432,9 @@ public class Collection {
             try {
                 SupportSQLiteDatabase db = mDb.getDatabase();
                 if (save) {
-                    db.beginTransaction();
-                    try {
-                        save();
-                        db.setTransactionSuccessful();
-                    } finally {
-                        db.endTransaction();
-                    }
+                    mDb.executeInTransaction(this::save);
                 } else {
-                    if (db.inTransaction()) {
-                        db.endTransaction();
-                    }
+                    DB.safeEndInTransaction(db);
                 }
             } catch (RuntimeException e) {
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
@@ -683,8 +676,8 @@ public class Collection {
     }
 
 
-    /**
-     * Card creation ************************************************************ ***********************************
+    /*
+      Card creation ************************************************************ ***********************************
      */
 
     /**
@@ -747,7 +740,7 @@ public class Collection {
 
                 // existing cards
                 if (!have.containsKey(nid)) {
-                    have.put(nid, new HashMap<Integer, Long>());
+                    have.put(nid, new HashMap<>());
                 }
                 have.get(nid).put(ord, id);
                 // if in a filtered deck, add new cards to original deck
@@ -847,6 +840,11 @@ public class Collection {
         return rem;
     }
 
+    public enum Previewing {
+        ADD,
+        EDIT,
+        MODELS
+    }
 
 	/**
 	 * Return cards of a note, without saving them
@@ -856,29 +854,29 @@ public class Collection {
      *             2 - when previewing in models dialog, all templates
      * @return list of cards
 	 */
-	public List<Card> previewCards(Note note, @Consts.CARD_TYPE int type) {
+	public List<Card> previewCards(Note note, Previewing type) {
         int did = 0;
         return previewCards(note, type, did);
     }
 
-    public List<Card> previewCards(Note note, @Consts.CARD_TYPE int type, int did) {
-	    ArrayList<JSONObject> cms = null;
-	    if (type == Consts.CARD_TYPE_NEW) {
-	        cms = findTemplates(note);
-	    } else if (type == Consts.CARD_TYPE_LRN) {
-	        cms = new ArrayList<>();
-	        for (Card c : note.cards()) {
-	            cms.add(c.template());
-	        }
-	    } else {
-	        cms = new ArrayList<>();
-            JSONArray tmpls = note.model().getJSONArray("tmpls");
-            for (int i = 0; i < tmpls.length(); ++i) {
-                cms.add(tmpls.getJSONObject(i));
-            }
-	    }
-	    if (cms.isEmpty()) {
-	        return new ArrayList<>();
+    public List<Card> previewCards(Note note, Previewing type, int did) {
+	    ArrayList<JSONObject> cms;
+	    switch (type) {
+            case ADD:
+    	        cms = findTemplates(note);
+    	        break;
+            case EDIT:
+    	        cms = new ArrayList<>();
+	            for (Card c : note.cards()) {
+	                cms.add(c.template());
+	            }
+	            break;
+            default: // MODELS
+    	        cms = new ArrayList<>();
+                JSONArray tmpls = note.model().getJSONArray("tmpls");
+                for (int i = 0; i < tmpls.length(); ++i) {
+                    cms.add(tmpls.getJSONObject(i));
+                }
 	    }
 	    List<Card> cards = new ArrayList<>();
 	    for (JSONObject template : cms) {
@@ -887,7 +885,7 @@ public class Collection {
 	    return cards;
 	}
     public List<Card> previewCards(Note note) {
-        return previewCards(note, Consts.CARD_TYPE_NEW);
+        return previewCards(note, ADD);
     }
 
     /**
@@ -1082,8 +1080,8 @@ public class Collection {
     }
 
 
-    /**
-     * Q/A generation *********************************************************** ************************************
+    /*
+      Q/A generation *********************************************************** ************************************
      */
 
     /**
@@ -1189,8 +1187,8 @@ public class Collection {
 		return "flag"+flag;
 	}
 
-    /**
-     * Finding cards ************************************************************ ***********************************
+    /*
+      Finding cards ************************************************************ ***********************************
      */
 
     /** Return a list of card ids */
@@ -1249,8 +1247,8 @@ public class Collection {
     }
 
 
-    /**
-     * Stats ******************************************************************** ***************************
+    /*
+      Stats ******************************************************************** ***************************
      */
 
     // cardstats
@@ -1286,7 +1284,7 @@ public class Collection {
         }
         long elapsed = getTime().intTime() - mStartTime;
         if (elapsed > mConf.getLong("timeLim")) {
-            return new Pair<Integer, Integer> (mConf.getInt("timeLim"), mSched.getReps() - mStartReps);
+            return new Pair<>(mConf.getInt("timeLim"), mSched.getReps() - mStartReps);
         }
         return null;
     }
@@ -1362,6 +1360,7 @@ public class Collection {
     /*
      * Basic integrity check for syncing. True if ok.
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean basicCheck() {
         // cards without notes
         if (mDb.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1") > 0) {
@@ -1897,9 +1896,9 @@ public class Collection {
     }
 
 
-    /**
-     * Logging
-     * ***********************************************************
+    /*
+      Logging
+      ***********************************************************
      */
 
     /**
@@ -2032,6 +2031,7 @@ public class Collection {
     }
 
     /** Check if this collection is valid. */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean validCollection() {
     	//TODO: more validation code
     	return getModels().validateModel();
@@ -2160,7 +2160,7 @@ public class Collection {
 
     public static class CheckDatabaseResult {
         private final List<String> mProblems = new ArrayList<>();
-        private long mOldSize;
+        private final long mOldSize;
         private int mFixedCardsWithNoHomeDeckCount;
         private long mNewSize;
         /** When the database was locked */

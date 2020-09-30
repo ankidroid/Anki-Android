@@ -32,6 +32,7 @@ import com.ichi2.libanki.Collection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class DeckPickerContextMenu extends AnalyticsDialogFragment {
@@ -58,6 +59,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,64 +119,60 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     }
 
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
-    private MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
-        @Override
-        public void onSelection(MaterialDialog materialDialog, View view, int item,
-                CharSequence charSequence) {
-            switch (view.getId()) {
-                case CONTEXT_MENU_DELETE_DECK:
-                    Timber.i("Delete deck selected");
-                    ((DeckPicker) getActivity()).confirmDeckDeletion();
-                    break;
+    private final MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, item, charSequence) -> {
+        switch (view.getId()) {
+            case CONTEXT_MENU_DELETE_DECK:
+                Timber.i("Delete deck selected");
+                ((DeckPicker) getActivity()).confirmDeckDeletion();
+                break;
 
-                case CONTEXT_MENU_DECK_OPTIONS:
-                    Timber.i("Open deck options selected");
-                    ((DeckPicker) getActivity()).showContextMenuDeckOptions();
-                    ((AnkiActivity) getActivity()).dismissAllDialogFragments();
-                    break;
-                case CONTEXT_MENU_CUSTOM_STUDY: {
-                    Timber.i("Custom study option selected");
-                    long did = getArguments().getLong("did");
-                    CustomStudyDialog d = CustomStudyDialog.newInstance(
-                            CustomStudyDialog.CONTEXT_MENU_STANDARD, did);
-                    ((AnkiActivity) getActivity()).showDialogFragment(d);
-                    break;
-                }
-                case CONTEXT_MENU_RENAME_DECK:
-                    Timber.i("Rename deck selected");
-                    ((DeckPicker) getActivity()).renameDeckDialog();
-                    break;
+            case CONTEXT_MENU_DECK_OPTIONS:
+                Timber.i("Open deck options selected");
+                ((DeckPicker) getActivity()).showContextMenuDeckOptions();
+                ((AnkiActivity) getActivity()).dismissAllDialogFragments();
+                break;
+            case CONTEXT_MENU_CUSTOM_STUDY: {
+                Timber.i("Custom study option selected");
+                long did = getArguments().getLong("did");
+                CustomStudyDialog d = CustomStudyDialog.newInstance(
+                        CustomStudyDialog.CONTEXT_MENU_STANDARD, did);
+                ((AnkiActivity) getActivity()).showDialogFragment(d);
+                break;
+            }
+            case CONTEXT_MENU_RENAME_DECK:
+                Timber.i("Rename deck selected");
+                ((DeckPicker) getActivity()).renameDeckDialog();
+                break;
 
-                case CONTEXT_MENU_EXPORT_DECK:
-                    Timber.i("Export deck selected");
-                    ((DeckPicker) getActivity()).showContextMenuExportDialog();
-                    break;
+            case CONTEXT_MENU_EXPORT_DECK:
+                Timber.i("Export deck selected");
+                ((DeckPicker) getActivity()).showContextMenuExportDialog();
+                break;
 
-                case CONTEXT_MENU_UNBURY: {
-                    Timber.i("Unbury deck selected");
-                    Collection col = CollectionHelper.getInstance().getCol(getContext());
-                    col.getSched().unburyCardsForDeck(getArguments().getLong("did"));
-                    ((StudyOptionsFragment.StudyOptionsListener) getActivity()).onRequireDeckListUpdate();
-                    ((AnkiActivity) getActivity()).dismissAllDialogFragments();
-                    break;
-                }
-                case CONTEXT_MENU_CUSTOM_STUDY_REBUILD: {
-                    Timber.i("Empty deck selected");
-                    ((DeckPicker) getActivity()).rebuildFiltered();
-                    ((AnkiActivity) getActivity()).dismissAllDialogFragments();
-                    break;
-                }
-                case CONTEXT_MENU_CUSTOM_STUDY_EMPTY: {
-                    Timber.i("Empty deck selected");
-                    ((DeckPicker) getActivity()).emptyFiltered();
-                    ((AnkiActivity) getActivity()).dismissAllDialogFragments();
-                    break;
-                }
-                case CONTEXT_MENU_CREATE_SUBDECK: {
-                    Timber.i("Create Subdeck selected");
-                    ((DeckPicker) getActivity()).createSubdeckDialog();
-                    break;
-                }
+            case CONTEXT_MENU_UNBURY: {
+                Timber.i("Unbury deck selected");
+                Collection col = CollectionHelper.getInstance().getCol(getContext());
+                col.getSched().unburyCardsForDeck(getArguments().getLong("did"));
+                ((StudyOptionsFragment.StudyOptionsListener) getActivity()).onRequireDeckListUpdate();
+                ((AnkiActivity) getActivity()).dismissAllDialogFragments();
+                break;
+            }
+            case CONTEXT_MENU_CUSTOM_STUDY_REBUILD: {
+                Timber.i("Empty deck selected");
+                ((DeckPicker) getActivity()).rebuildFiltered();
+                ((AnkiActivity) getActivity()).dismissAllDialogFragments();
+                break;
+            }
+            case CONTEXT_MENU_CUSTOM_STUDY_EMPTY: {
+                Timber.i("Empty deck selected");
+                ((DeckPicker) getActivity()).emptyFiltered();
+                ((AnkiActivity) getActivity()).dismissAllDialogFragments();
+                break;
+            }
+            case CONTEXT_MENU_CREATE_SUBDECK: {
+                Timber.i("Create Subdeck selected");
+                ((DeckPicker) getActivity()).createSubdeckDialog();
+                break;
             }
         }
     };

@@ -39,7 +39,10 @@ import com.ichi2.utils.VersionUtils;
 
 import org.acra.util.Installation;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
 
 /**
  * Shows an about box, which is a small HTML page.
@@ -63,6 +66,11 @@ public class Info extends AnkiActivity {
         WebView webView;
 
         mType = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
+        // If the page crashes, we do not want to display it again (#7135 maybe)
+        if (mType == TYPE_NEW_VERSION) {
+            AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
+                    .putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+        }
 
         setContentView(R.layout.info);
         final View mainView = findViewById(android.R.id.content);
@@ -79,34 +87,17 @@ public class Info extends AnkiActivity {
             }
         });
 
-        Button marketButton = findViewById(R.id.market);
-        marketButton.setOnClickListener(arg0 -> {
-            if (mType == TYPE_ABOUT) {
-                final String intentUri = getString(
-                        CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
-                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(intentUri));
-                final PackageManager packageManager = getPackageManager();
-                if (intent.resolveActivity(packageManager) != null) {
-                    startActivityWithoutAnimation(intent);
-                } else {
-                    final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
-                    UIUtils.showThemedToast(Info.this, errorMsg, true);
-                }
-                return;
-            }
-            setResult(RESULT_OK);
-            switch (mType) {
-                case TYPE_NEW_VERSION:
-                    AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                            .putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
-                    break;
-            }
-            finishWithAnimation();
-        });
+        Button marketButton = findViewById(R.id.left_button);
+        if (canOpenMarketUri()) {
+            marketButton.setText(R.string.info_rate);
+            marketButton.setOnClickListener(arg0 -> openMarketUrl());
+        } else {
+            marketButton.setVisibility(View.GONE);
+        }
 
         StringBuilder sb = new StringBuilder();
         switch (mType) {
-            case TYPE_ABOUT:
+            case TYPE_ABOUT: {
                 String[] content = res.getStringArray(R.array.about_content);
 
                 // Apply theme colours.
@@ -136,21 +127,70 @@ public class Info extends AnkiActivity {
                                 res.getString(R.string.link_source))).append("<br/><br/>");
                 sb.append("</body></html>");
                 webView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
-                ((Button) findViewById(R.id.market)).setText(res.getString(R.string.info_rate));
-                Button debugCopy = (findViewById(R.id.debug_info));
+                Button debugCopy = (findViewById(R.id.right_button));
                 debugCopy.setText(res.getString(R.string.feedback_copy_debug));
-                debugCopy.setVisibility(View.VISIBLE);
                 debugCopy.setOnClickListener(v -> copyDebugInfo());
                 break;
-
-            case TYPE_NEW_VERSION:
+            }
+            case TYPE_NEW_VERSION: {
+                Button continueButton = (findViewById(R.id.right_button));
+                continueButton.setText(res.getString(R.string.dialog_continue));
+                continueButton.setOnClickListener((arg) -> close());
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 webView.loadUrl("file:///android_asset/changelog.html");
                 break;
-
+            }
             default:
                 finishWithoutAnimation();
                 break;
+        }
+    }
+
+
+    private void close() {
+        setResult(RESULT_OK);
+        finishWithAnimation();
+    }
+
+
+    private boolean canOpenMarketUri() {
+        try {
+            return canOpenMarketUri(getMarketIntent());
+        } catch (Exception e) {
+            Timber.w(e);
+            return false;
+        }
+    }
+
+    private boolean canOpenMarketUri(Intent intent) {
+        try {
+            final PackageManager packageManager = getPackageManager();
+            return intent.resolveActivity(packageManager) != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    @NonNull
+    private Intent getMarketIntent() {
+        final String intentUri = getString(
+                CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(intentUri));
+    }
+
+    private void openMarketUrl() {
+        try {
+            final Intent intent = getMarketIntent();
+            if (canOpenMarketUri(intent)) {
+                startActivityWithoutAnimation(intent);
+            } else {
+                final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
+                UIUtils.showThemedToast(Info.this, errorMsg, true);
+            }
+        } catch (Exception e) {
+            final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
+            UIUtils.showThemedToast(Info.this, errorMsg, true);
         }
     }
 
@@ -168,7 +208,7 @@ public class Info extends AnkiActivity {
 
 
     private void finishWithAnimation() {
-        finishWithAnimation(ActivityTransitionAnimation.LEFT);
+        finishWithAnimation(LEFT);
     }
 
 
