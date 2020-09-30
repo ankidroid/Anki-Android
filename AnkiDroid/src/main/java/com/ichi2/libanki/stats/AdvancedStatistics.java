@@ -614,7 +614,7 @@ public class AdvancedStatistics {
      * If the review outcome is not specified by the caller, the review outcome will be sampled randomly from the probability distribution
      * and the probability will be 1.
      */
-    private class EaseClassifier {
+    private static class EaseClassifier {
 
         private final Random random;
 
