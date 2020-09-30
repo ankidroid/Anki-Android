@@ -1,5 +1,6 @@
 package com.ichi2.anki.lint.rules;
 
+import org.intellij.lang.annotations.Language;
 import org.junit.Test;
 
 import static com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create;
@@ -8,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 public class DirectCalendarInstanceUsageTest {
 
+    @Language("JAVA")
     private final String stubCalendar = "                                   \n" +
             "package java.util;                                             \n" +
             "                                                               \n" +
@@ -18,6 +20,7 @@ public class DirectCalendarInstanceUsageTest {
             "    }                                                          \n" +
             "}                                                              \n";
 
+    @Language("JAVA")
     private final String javaFileToBeTested = "                             \n" +
             "package com.ichi2.anki.lint.rules;                             \n" +
             "                                                               \n" +
@@ -30,6 +33,7 @@ public class DirectCalendarInstanceUsageTest {
             "        c.clear();                                             \n" +
             "    }                                                          \n" +
             "}                                                              \n";
+    @Language("JAVA")
     private final String javaFileWithTime = "                               \n" +
             "package com.ichi2.anki.lint.rules;                             \n" +
             "                                                               \n" +

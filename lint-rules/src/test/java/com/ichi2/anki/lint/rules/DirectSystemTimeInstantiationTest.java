@@ -1,5 +1,6 @@
 package com.ichi2.anki.lint.rules;
 
+import org.intellij.lang.annotations.Language;
 import org.junit.Test;
 
 import static com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create;
@@ -7,12 +8,14 @@ import static com.android.tools.lint.checks.infrastructure.TestLintTask.lint;
 import static org.junit.Assert.assertTrue;
 
 public class DirectSystemTimeInstantiationTest {
+    @Language("JAVA")
     private final String stubTime = "                         \n" +
             "package com.ichi2.libanki.utils;                 \n" +
             "                                                 \n" +
             "public abstract class Time {                     \n" +
             "                                                 \n" +
             "}                                                \n";
+    @Language("JAVA")
     private final String stubSystemTime = "                   \n" +
             "package com.ichi2.libanki.utils;                 \n" +
             "                                                 \n" +
@@ -22,6 +25,7 @@ public class DirectSystemTimeInstantiationTest {
             "    }                                            \n" +
             "                                                 \n" +
             "}                                                \n";
+    @Language("JAVA")
     private final String javaFileToBeTested = "               \n" +
             "package com.ichi2.anki.lint.rules;               \n" +
             "                                                 \n" +
@@ -33,6 +37,7 @@ public class DirectSystemTimeInstantiationTest {
             "        SystemTime st = new SystemTime();        \n" +
             "    }                                            \n" +
             "}                                                \n";
+    @Language("JAVA")
     private final String javaFileWithStorage = "              \n" +
             "package com.ichi2.anki.lint.rules;               \n" +
             "                                                 \n" +
@@ -44,6 +49,7 @@ public class DirectSystemTimeInstantiationTest {
             "        SystemTime st = new SystemTime();        \n" +
             "    }                                            \n" +
             "}                                                \n";
+    @Language("JAVA")
     private final String javaFileWithCollectionHelper = "     \n" +
             "package com.ichi2.anki.lint.rules;               \n" +
             "                                                 \n" +

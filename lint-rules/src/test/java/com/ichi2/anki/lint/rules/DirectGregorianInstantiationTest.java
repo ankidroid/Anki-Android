@@ -1,5 +1,6 @@
 package com.ichi2.anki.lint.rules;
 
+import org.intellij.lang.annotations.Language;
 import org.junit.Test;
 
 import static com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create;
@@ -8,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 public class DirectGregorianInstantiationTest {
 
+    @Language("JAVA")
     private final String stubZoned = "                                      \n" +
             "package java.time;                                             \n" +
             "                                                               \n" +
@@ -18,6 +20,7 @@ public class DirectGregorianInstantiationTest {
             "                                                               \n" +
             "     }                                                         \n" +
             "}                                                              \n";
+    @Language("JAVA")
     private final String stubGregorian = "                                  \n" +
             "package java.util;                                             \n" +
             "                                                               \n" +
@@ -34,6 +37,7 @@ public class DirectGregorianInstantiationTest {
             "    }                                                          \n" +
             "}                                                              \n";
 
+    @Language("JAVA")
     private final String javaFileWithFromCall = "                           \n" +
             "package com.ichi2.anki.lint.rules;                             \n" +
             "                                                               \n" +
@@ -45,6 +49,7 @@ public class DirectGregorianInstantiationTest {
             "        GregorianCalendar gc = GregorianCalendar.from(null);   \n" +
             "    }                                                          \n" +
             "}                                                              \n";
+    @Language("JAVA")
     private final String javaFileWithConstructorInvocation = "              \n" +
             "package com.ichi2.anki.lint.rules;                             \n" +
             "                                                               \n" +
@@ -56,6 +61,7 @@ public class DirectGregorianInstantiationTest {
             "        GregorianCalendar gc = new GregorianCalendar();        \n" +
             "    }                                                          \n" +
             "}                                                              \n";
+    @Language("JAVA")
     private final String javaFileWithTime = "                               \n" +
             "package com.ichi2.anki.lint.rules;                             \n" +
             "                                                               \n" +

@@ -2,6 +2,7 @@ package com.ichi2.anki.lint.rules;
 
 import com.android.tools.lint.checks.infrastructure.TestFiles;
 
+import org.intellij.lang.annotations.Language;
 import org.junit.Test;
 
 import static com.android.tools.lint.checks.infrastructure.TestFiles.xml;
@@ -9,6 +10,7 @@ import static com.android.tools.lint.checks.infrastructure.TestLintTask.lint;
 
 public class DuplicateTextInPreferencesXmlTest {
 
+    @Language("XML")
     private final String invalidXmlFile = "" +
             "<PreferenceScreen xmlns:android=\"http://schemas.android.com/apk/res/android\"" +
             "    xmlns:app=\"http://arbitrary.app.namespace/com.ichi2.anki\"" +
@@ -26,6 +28,7 @@ public class DuplicateTextInPreferencesXmlTest {
             "            android:summary=\"@string/force_full_sync_summary\" />             " +
             "</PreferenceScreen>";
 
+    @Language("XML")
     private final String validXmlFile = "" +
             "<PreferenceScreen xmlns:android=\"http://schemas.android.com/apk/res/android\"" +
             "    xmlns:app=\"http://arbitrary.app.namespace/com.ichi2.anki\"" +
