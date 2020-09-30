@@ -192,8 +192,7 @@ public final class AddContentApi {
      *
      *
      * @param fileUri   Uri for the file to be added, required.
-     * @param preferredName String that will be added to the beginning of the file name in the
-     *                      media collection, required.
+     * @param preferredName String to add to start of filename (do not use a file extension), required.
      * @param mimeType  String indicating the mimeType of the media. Accepts "audio" or "image", required.
      * @return the correctly formatted String for the media file to be placed in the desired field of a Card, or null
      *          if unsuccessful.
