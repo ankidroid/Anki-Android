@@ -1,5 +1,6 @@
 package com.ichi2.anki.lint.rules;
 
+import org.intellij.lang.annotations.Language;
 import org.junit.Test;
 
 import static com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create;
@@ -8,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 public class DirectSystemCurrentTimeMillisUsageTest {
 
+    @Language("JAVA")
     private final String stubSystem = "                                     \n" +
             "package java.lang;                                             \n" +
             "                                                               \n" +
@@ -18,6 +20,7 @@ public class DirectSystemCurrentTimeMillisUsageTest {
             "    }                                                          \n" +
             "}                                                              \n";
 
+    @Language("JAVA")
     private final String javaFileToBeTested = "                             \n" +
             "package com.ichi2.anki.lint.rules;                             \n" +
             "                                                               \n" +
@@ -29,6 +32,7 @@ public class DirectSystemCurrentTimeMillisUsageTest {
             "        long time = System.currentTimeMillis();                \n" +
             "    }                                                          \n" +
             "}                                                              \n";
+    @Language("JAVA")
     private final String javaFileWithSystemTime = "                         \n" +
             "package com.ichi2.anki.lint.rules;                             \n" +
             "                                                               \n" +

@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.lint.rules;
 
+import org.intellij.lang.annotations.Language;
 import org.junit.Test;
 
 import static com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create;
@@ -24,17 +25,20 @@ import static org.junit.Assert.assertTrue;
 
 public class InconsistentAnnotationUsageTest {
 
+    @Language("JAVA")
     private final String mNotNullUsage = "                                  \n" +
             "package java.util;                                             \n" +
             "                                                               \n" +
             "import org.jetbrains.annotations.NotNull;                      \n";
 
+    @Language("JAVA")
     private final String mNullable = "                                      \n" +
             "package java.util;                                             \n" +
             "                                                               \n" +
             "import org.jetbrains.annotations.Nullable;                     \n";
 
     // Should be OK
+    @Language("JAVA")
     private final String mContract = "                                      \n" +
             "package java.util;                                             \n" +
             "                                                               \n" +
