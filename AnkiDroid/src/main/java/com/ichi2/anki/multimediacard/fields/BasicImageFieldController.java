@@ -203,6 +203,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
 
         // Some hardware has no camera or reports yes but has zero (e.g., cheap devices, and Chromebook emulator)
+        //noinspection RedundantIfStatement
         if (CompatHelper.getCompat().getCameraCount() < 1) {
             return false;
         }
