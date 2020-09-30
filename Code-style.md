@@ -51,7 +51,7 @@ TODO
 * `public static final int SOME_CONSTANT = 42;`
 ### Associated constants (final variables) should be prefixed by a common type name.
 * `public static final int COLOR_RED = 1;`
-* `public static final int COLOR_GREEN = 2;`
+* `public static final int COLOR_GREEN = 2;```
 * `public static final int COLOR_BLUE = 3; `
 ### Method names should be verbs in mixed case, with the first letter in lowercase and with the first letter of each internal word capitalized.
 * `getName();`
@@ -59,23 +59,23 @@ TODO
 ### Functions (methods with a return) should be named after what they return and procedures (void methods) after what they do.
 
 ### In a method name, the name of the object is implicit and should be avoided.
-* `employee.getName();  // NOT: employee.getEmployeeName();`
+* `employee.getName();`// NOT: <del>employee.getEmployeeName();</del>
 ### Negated boolean variable names must be avoided.
-* `boolean isLoaded;  // NOT: boolean isNotLoaded;`
-* `boolean isError;   // NOT: boolean isNotError;`
+* `boolean isLoaded;`// NOT: boolean isNotLoaded;`
+* `boolean isError;`// NOT:<DEL> boolean isNotError;</del>
 ### Abbreviations in names should be avoided.
-* `computeAverage();               // NOT: compAvg();`
-* `ActionEvent event;              // NOT: ActionEvent e;`
-* `catch (Exception exception) {   // NOT: catch (Exception e) {`
+* `computeAverage();`// NOT:<DEL> compAvg();</del>
+* `ActionEvent event;`// NOT:<DEL> ActionEvent e;</del>
+* `catch (Exception exception) {`// NOT:<DEL> catch (Exception e) {</del>
 ### Abbreviations and acronyms should not be uppercase when used in a name.
-* `getCustomerId();     // NOT: getCustomerID();`
-* `exportHtmlSource();  // NOT: exportHTMLSource(); `
+* `getCustomerId();`// NOT:<DEL> getCustomerID();</del>
+* `exportHtmlSource();`// NOT:<DEL> exportHTMLSource(); </del>
 ### Generic variables should have the same name as their type.
-* `void setView(View view);        // NOT: void setView(View v);`
-* `                                // NOT: void setView(View aView);`
+* `void setView(View view);`// NOT:<DEL> void setView(View v);</del>
+* ``// NOT:<DEL> void setView(View aView);</del>
                               
-* `void close(Database database);  // NOT: void close(Database db);`
-* `                                // NOT: void close(Database sqliteDB);`
+* `void close(Database database);`// NOT:<DEL> void close(Database db);</del>
+* // NOT:<DEL> void close(Database sqliteDB);</del>
 ### The terms get/set must be used where a class attribute is accessed directly.
 * `author.getName();`
 * `author.setName(name);`
@@ -135,7 +135,7 @@ class MySingletonClass {
 ```
 ## Specific Naming Conventions
 ### String key resources must be all lowercase using underscore to separate words.
-* `<string name="good_example_key">Example value</string>   // NOT: <string name="badExampleKey">Example value</string>`
+* `<string name="good_example_key">Example value</string>  `// NOT:<DEL> <string name="badExampleKey">Example value</string></del>
 ### XML elements identifiers must be all lowercase using underscore to separate words.
 ```xml
 <TextView android:id="@+id/good_id_example"              // NOT: <TextView android:id="@+id/badIdExample"
@@ -211,17 +211,17 @@ if (condition)
 * After commas.
 * After semicolons in for statements.
 * After any comment identifier.
-* `a = (b + c) * d; // NOT: a=(b+c)*d`
+* `a = (b + c) * d;`// NOT: <DEL>a=(b+c)*d</del>
 
-* `if (true) {  // NOT: if (true){`
+* `if (true) { `// NOT: <DEL>if (true){</del>
 
-* `while (true) {   // NOT: while(true) {`
+* `while (true) {  `// NOT: <DEL>while(true) {</del>
 
-* `doSomething(a, b, c, d);  // NOT: doSomething(a,b,c,d);`
+* `doSomething(a, b, c, d); `// NOT: <DEL>doSomething(a,b,c,d);</del>
 
-* `for (i = 0; i < 10; i++) {  // NOT: for(i=0;i<10;i++){`
+* `for (i = 0; i < 10; i++) { `// NOT: <DEL>for(i=0;i<10;i++){</del>
 
-* `// This is a comment  // NOT: //This is a comment`
+* `// This is a comment `// NOT: <DEL>//This is a comment</del>
 
 ```java
 /**                   // NOT: /**
@@ -384,8 +384,8 @@ public double computeLocation(double x, double y, int zone)
 //---------------------
 ```
 ### TODO and FIXME must be written all in capitals and followed by a colon.
-* `// TODO: Calculate the new order             // NOT: // TODO -> Calculate the new order`
-* `// FIXME: Fix the synchronization algorithm  // NOT: fixme: Fix the synchronization algorithm`
+* `// TODO: Calculate the new order            `// NOT: <DEL>// TODO -> Calculate the new order</del>
+* `// FIXME: Fix the synchronization algorithm `// NOT: <DEL>fixme: Fix the synchronization algorithm</del>
 ### The TODO comment should be used to indicate pending tasks, code that is temporary, a short-term solution or good enough but not perfect code.
 ### The FIXME comment should be used to flag something that is bogus and broken.
 # Logging
@@ -469,21 +469,22 @@ Methods that perform similar tasks or have similar naming should be vertically c
 * native
 * strictfp
 
-public static double square(double a);  // NOT: static public double square(double a);
+* `public static double square(double a); `// NOT: <DEL>static public double square(double a);</del>
 # Miscellaneous
 ## General
 ### Each declaration should take up an entire line.
 ```java
-int level;  // NOT: int level, size;
+int level;
 int size;
 ```
+* // NOT: <del> int level, size;</del>
 ### Each statement should take up an entire line.
 ```java
-i++;  // NOT: i++; j++;
+i++;
 j++;
-```
+```// NOT: <del>i++; j++;</del>
 ### Static variables or methods must always be accessed through the class name and never through an instance variable.
-`AClass.classMethod();  // NOT: anObject.classMethod();`
+`AClass.classMethod(); `// NOT: <DEL>anObject.classMethod();</del>
 ### The incompleteness of split lines must be made obvious.
 ```java
 totalSum = a + b + c +
@@ -502,28 +503,29 @@ setText("Long line split" +
 ### Special characters like TAB and page break must be avoided.
 ## Types
 ### Type conversions must always be done explicitly. Never rely on implicit type conversion.
-* `floatValue = (int) intValue;  // NOT: floatValue = intValue;`
+* `floatValue = (int) intValue; `// NOT: <DEL>floatValue = intValue;</del>
 ### Arrays should be declared with their brackets next to the type.
-* `int[] points = new int[20];  // NOT: int points[] = new int[20];`
+* `int[] points = new int[20]; `// NOT: <DEL>int points[] = new int[20];</del>
 ## Variables and Constants
 ### Variables should be initialized where they are declared and they should be declared in the smallest scope possible.
 ### Variables must never have dual meaning.
 ### Floating point variables should always be written with decimal point and at least one decimal.
-* `double total = 0.0;    // NOT: double total = 0; `
-* `double speed = 3.0e8;  // NOT: double speed = 3e8; `
+* `double total = 0.0;   `// NOT: <DEL>double total = 0; </del>
+* `double speed = 3.0e8; `// NOT: <DEL>double speed = 3e8; </del>
 * `double sum; `
 * `sum = (a + b) * 10.0; `
 ### Floating point variables should always be written with a digit before the decimal point.
-* `double probability = 0.5;  // NOT: double probability = .5;`
+* `double probability = 0.5; `// NOT: <DEL>double probability = .5;</del>
 ### Numerical constants (except, in some cases, -1, 0 and 1) should not be coded directly. Use constants instead.
 ```java
 private static final int TEAM_SIZE = 11;
 ...
-Player[] players = new Player[TEAM_SIZE];  // NOT: Player[] players = new Player[11];
+Player[] players = new Player[TEAM_SIZE];
 ```
+* // NOT: <del>Player[] players = new Player[11];</del>
 ## Operators
 ### Embedded assignments must be avoided.
-* `a = b + c;  // NOT: d = (a = b + c) + r;`
+* `a = b + c; `// NOT: <DEL>d = (a = b + c) + r;</del>
 * `d = a + r;`
 ### The assignment operator should not be used in a place where it can be easily confused with the equality operator.
 ```java
@@ -533,9 +535,9 @@ if (c++ = d++) {
 }
 ```
 ### Parenthesis should be used liberally in expressions involving mixed operators in order to make the precedence clear.
-* `if ((a == b) && (c == d))  // NOT: if (a == b && c == d)`
+* `if ((a == b) && (c == d)) `// NOT: <DEL>if (a == b && c == d)</del>
 ### If an expression containing a binary operator appears before the ? in the ternary ?: operator, it should be parenthesized.
-* `(x >= 0) ? x : -x;  // NOT: x >= 0 ? x : -x;`
+* `(x >= 0) ? x : -x; `// NOT: <DEL>x >= 0 ? x : -x;</del>
 ## Conditionals
 ### Complex conditional expressions must be avoided. Introduce temporary boolean variables instead.
 ```java
