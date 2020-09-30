@@ -23,7 +23,7 @@ TODO
 
 # General Recommendations
 
->  Any violation to the guide is allowed if it enhances one of the following, by order of importance (higher levels cannot be sacrificed for lower levels):
+Any violation to the guide is allowed if it enhances one of the following, by order of importance (higher levels cannot be sacrificed for lower levels):
 * Logical Structure
 * Consistency
 * Readability
@@ -714,3 +714,17 @@ try {
     android:orientation="horizontal"                        >
     >	
 ```
+
+# Cheat Sheet
+
+What|Naming Convention|GOOD Examples|BAD Examples
+----|------|------|-----
+Package|lower case|com.company.application.ui|com.company.Application.Ui
+Class|nouns, mixed case, starting with uppercase|AudioSystem|audioSystem
+Variable|mixed case, starting in lowercase|availableWidth|AvailableWidth, available_width
+Non-public, non-static field|mixed case, starting with "m"|mLongVariable|longVariable, LongVariable
+Static field|mixed case, starting with "s"|sSingleton|singleton, staticVariable
+Constant|uppercase, using underscore to separate words|SOME_CONSTANT|some_constant
+Method|verbs, mixed case, starting with lowercase|getName()|get_name()
+String key|lowercase, using underscore to separate words|good_example_key|badExampleKey
+XML element identifier|lowercase, using underscore to separate words|good_id_example|badIdExample
