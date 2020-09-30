@@ -444,7 +444,7 @@ public class MetaDB {
         try {
             cursor = mMetaDb.query("smallWidgetStatus", new String[] { "due", "eta" },
                     null, null, null, null, null);
-            while (cursor.moveToNext()) {
+            if (cursor.moveToNext()) {
                 return new int[]{cursor.getInt(0), cursor.getInt(1)};
             }
         } catch (SQLiteException e) {
