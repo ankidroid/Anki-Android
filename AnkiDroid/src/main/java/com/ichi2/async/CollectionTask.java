@@ -269,7 +269,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             if (latestInstance.safeCancel()) {
                 Timber.i("Cancelled task %s", latestInstance.mType);
             }
-        };
+        }
     }
 
     private Collection getCol() {

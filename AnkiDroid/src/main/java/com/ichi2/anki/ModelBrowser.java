@@ -125,7 +125,8 @@ public class ModelBrowser extends AnkiActivity {
 
             browser.fillModelList();
         }
-    };
+    }
+
 
     /*
      * Displays loading bar when deleting a model loading bar is needed
@@ -152,7 +153,9 @@ public class ModelBrowser extends AnkiActivity {
             browser.hideProgressBar();
             browser.refreshList();
         }
-    };
+    }
+
+
 
     /*
      * Listens to long hold context menu for main list items
