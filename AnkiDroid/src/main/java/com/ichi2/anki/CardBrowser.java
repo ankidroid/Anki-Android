@@ -2346,7 +2346,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public String getColumnHeaderText(Column key) {
             switch (key) {
             case FLAGS:
-                return (new Integer(getCard().userFlag())).toString();
+                return (Integer.valueOf(getCard().userFlag())).toString();
             case SUSPENDED:
                 return getCard().getQueue() == Consts.QUEUE_TYPE_SUSPENDED ? "True": "False";
             case MARKED:
@@ -2471,7 +2471,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public int hashCode() {
-            return new Long(getId()).hashCode();
+            return Long.valueOf(getId()).hashCode();
         }
     }
 

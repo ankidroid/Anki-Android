@@ -825,7 +825,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         android.preference.ListPreference leechActPref = (android.preference.ListPreference) findPreference("lapLeechAct");
         leechActPref.setEntries(R.array.leech_action_labels);
         leechActPref.setEntryValues(R.array.leech_action_values);
-        leechActPref.setValue(mPref.getString("lapLeechAct", new Integer(Consts.LEECH_SUSPEND).toString()));
+        leechActPref.setValue(mPref.getString("lapLeechAct", Integer.toString(Consts.LEECH_SUSPEND)));
     }
 
 
