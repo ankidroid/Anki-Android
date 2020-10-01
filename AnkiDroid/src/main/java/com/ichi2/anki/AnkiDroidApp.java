@@ -548,6 +548,8 @@ public class AnkiDroidApp extends MultiDexApplication {
             return getAppResources().getString(R.string.link_help_ja);
         } else if (isCurrentLanguage("zh")) {
             return getAppResources().getString(R.string.link_help_zh);
+        } else if (isCurrentLanguage("ar")) {
+            return getAppResources().getString(R.string.link_help_ar);
         } else {
             return getAppResources().getString(R.string.link_help);
         }
@@ -564,6 +566,8 @@ public class AnkiDroidApp extends MultiDexApplication {
             return getAppResources().getString(R.string.link_manual_ja);
         } else if (isCurrentLanguage("zh")) {
             return getAppResources().getString(R.string.link_manual_zh);
+        } else if (isCurrentLanguage("ar")) {
+            return getAppResources().getString(R.string.link_manual_ar);
         } else {
             return getAppResources().getString(R.string.link_manual);
         }
