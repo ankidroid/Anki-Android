@@ -28,8 +28,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -160,20 +158,17 @@ public class ModelBrowser extends AnkiActivity {
     /*
      * Listens to long hold context menu for main list items
      */
-    private final MaterialDialog.ListCallback mContextMenuListener = new MaterialDialog.ListCallback() {
-        @Override
-        public void onSelection(MaterialDialog materialDialog, View view, int selection, CharSequence charSequence) {
-            switch (selection) {
-                case ModelBrowserContextMenu.MODEL_DELETE:
-                    deleteModelDialog();
-                    break;
-                case ModelBrowserContextMenu.MODEL_RENAME:
-                    renameModelDialog();
-                    break;
-                case ModelBrowserContextMenu.MODEL_TEMPLATE:
-                    openTemplateEditor();
-                    break;
-            }
+    private final MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, selection, charSequence) -> {
+        switch (selection) {
+            case ModelBrowserContextMenu.MODEL_DELETE:
+                deleteModelDialog();
+                break;
+            case ModelBrowserContextMenu.MODEL_RENAME:
+                renameModelDialog();
+                break;
+            case ModelBrowserContextMenu.MODEL_TEMPLATE:
+                openTemplateEditor();
+                break;
         }
     };
 
@@ -270,27 +265,22 @@ public class ModelBrowser extends AnkiActivity {
         mModelDisplayAdapter = new DisplayPairAdapter(this, mModelDisplayList);
         mModelListView.setAdapter(mModelDisplayAdapter);
 
-        mModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                long noteTypeID = mModelIds.get(position);
-                mModelListPosition = position;
-                Intent noteOpenIntent = new Intent(ModelBrowser.this, ModelFieldEditor.class);
-                noteOpenIntent.putExtra("title", mModelDisplayList.get(position).getName());
-                noteOpenIntent.putExtra("noteTypeID", noteTypeID);
-                startActivityForResultWithAnimation(noteOpenIntent, 0, LEFT);
-            }
+        mModelListView.setOnItemClickListener((parent, view, position, id) -> {
+            long noteTypeID = mModelIds.get(position);
+            mModelListPosition = position;
+            Intent noteOpenIntent = new Intent(ModelBrowser.this, ModelFieldEditor.class);
+            noteOpenIntent.putExtra("title", mModelDisplayList.get(position).getName());
+            noteOpenIntent.putExtra("noteTypeID", noteTypeID);
+            startActivityForResultWithAnimation(noteOpenIntent, 0, LEFT);
         });
 
-        mModelListView.setOnItemLongClickListener(new OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String cardName = mModelDisplayList.get(position).getName();
-                mCurrentID = mModelIds.get(position);
-                mModelListPosition = position;
-                mContextMenu = ModelBrowserContextMenu.newInstance(cardName, mContextMenuListener);
-                showDialogFragment(mContextMenu);
-                return true;
-            }
+        mModelListView.setOnItemLongClickListener((parent, view, position, id) -> {
+            String cardName = mModelDisplayList.get(position).getName();
+            mCurrentID = mModelIds.get(position);
+            mModelListPosition = position;
+            mContextMenu = ModelBrowserContextMenu.newInstance(cardName, mContextMenuListener);
+            showDialogFragment(mContextMenu);
+            return true;
         });
         updateSubtitleText();
     }
@@ -412,13 +402,10 @@ public class ModelBrowser extends AnkiActivity {
      */
     private void deleteModelDialog() {
         if (mModelIds.size() > 1) {
-            Runnable confirm = new Runnable() {
-                @Override
-                public void run() {
-                    col.modSchemaNoCheck();
-                    deleteModel();
-                    dismissContextMenu();
-                }
+            Runnable confirm = () -> {
+                col.modSchemaNoCheck();
+                deleteModel();
+                dismissContextMenu();
             };
             Runnable cancel = this::dismissContextMenu;
 

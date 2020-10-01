@@ -128,46 +128,42 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 .cancelable(true)
                 .itemsIds(listIds)
                 .items(ContextMenuHelper.getValuesFromKeys(getKeyValueMap(), listIds))
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog materialDialog, View view, int which,
-                                            CharSequence charSequence) {
-                        AnkiActivity activity = getAnkiActivity();
-                        switch (view.getId()) {
-                            case DECK_OPTIONS: {
-                                // User asked to permanently change the deck options
-                                Intent i = new Intent(activity, DeckOptions.class);
-                                i.putExtra("did", getArguments().getLong("did"));
-                                getActivity().startActivity(i);
-                                break;
-                            }
-                            case MORE_OPTIONS: {
-                                // User asked to see all custom study options
-                                CustomStudyDialog d = CustomStudyDialog.newInstance(CONTEXT_MENU_STANDARD,
-                                        getArguments().getLong("did"), jumpToReviewer);
-                                activity.showDialogFragment(d);
-                                break;
-                            }
-                            case CUSTOM_STUDY_TAGS: {
-                                /*
-                                 * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
-                                 * number, it is necessary to collect a list of tags. This case handles the creation
-                                 * of that Dialog.
-                                 */
-                                long currentDeck = getArguments().getLong("did");
-                                TagsDialog dialogFragment = TagsDialog.newInstance(
-                                        TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<>(),
-                                        new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
-                                dialogFragment.setTagsDialogListener(CustomStudyDialog.this::customStudyFromTags);
-                                activity.showDialogFragment(dialogFragment);
-                                break;
-                            }
-                            default: {
-                                // User asked for a standard custom study option
-                                CustomStudyDialog d = CustomStudyDialog.newInstance(view.getId(),
-                                        getArguments().getLong("did"), jumpToReviewer);
-                                getAnkiActivity().showDialogFragment(d);
-                            }
+                .itemsCallback((materialDialog, view, which, charSequence) -> {
+                    AnkiActivity activity = getAnkiActivity();
+                    switch (view.getId()) {
+                        case DECK_OPTIONS: {
+                            // User asked to permanently change the deck options
+                            Intent i = new Intent(activity, DeckOptions.class);
+                            i.putExtra("did", getArguments().getLong("did"));
+                            getActivity().startActivity(i);
+                            break;
+                        }
+                        case MORE_OPTIONS: {
+                            // User asked to see all custom study options
+                            CustomStudyDialog d = CustomStudyDialog.newInstance(CONTEXT_MENU_STANDARD,
+                                    getArguments().getLong("did"), jumpToReviewer);
+                            activity.showDialogFragment(d);
+                            break;
+                        }
+                        case CUSTOM_STUDY_TAGS: {
+                            /*
+                             * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
+                             * number, it is necessary to collect a list of tags. This case handles the creation
+                             * of that Dialog.
+                             */
+                            long currentDeck = getArguments().getLong("did");
+                            TagsDialog dialogFragment = TagsDialog.newInstance(
+                                    TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<>(),
+                                    new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
+                            dialogFragment.setTagsDialogListener(CustomStudyDialog.this::customStudyFromTags);
+                            activity.showDialogFragment(dialogFragment);
+                            break;
+                        }
+                        default: {
+                            // User asked for a standard custom study option
+                            CustomStudyDialog d = CustomStudyDialog.newInstance(view.getId(),
+                                    getArguments().getLong("did"), jumpToReviewer);
+                            getAnkiActivity().showDialogFragment(d);
                         }
                     }
                 }).build();

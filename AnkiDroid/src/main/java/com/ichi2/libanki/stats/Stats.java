@@ -990,9 +990,7 @@ public class Stats {
             data[0] = hour;
             list.set(i, data);
         }
-        Collections.sort(list, (s1, s2) -> {
-            return Double.compare(s1[0], s2[0]);
-        });
+        Collections.sort(list, (s1, s2) -> Double.compare(s1[0], s2[0]));
 
         mSeriesList = new double[4][list.size()];
         mPeak = 0.0;
