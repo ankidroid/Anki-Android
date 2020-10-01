@@ -22,9 +22,6 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.format.Formatter;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
@@ -36,6 +33,8 @@ import com.ichi2.utils.FileUtil;
 import java.io.File;
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 

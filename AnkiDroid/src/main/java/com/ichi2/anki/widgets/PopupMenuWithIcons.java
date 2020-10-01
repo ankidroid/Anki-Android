@@ -1,10 +1,12 @@
 package com.ichi2.anki.widgets;
 
+import android.content.Context;
+import android.view.View;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import android.content.Context;
+
 import androidx.appcompat.widget.PopupMenu;
-import android.view.View;
 
 /**
  * A simple little hack to force the icons to display in the PopupMenu

@@ -34,7 +34,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
-
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
@@ -44,18 +43,18 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.AppCompatPreferenceActivity;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -76,9 +75,11 @@ import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-
-import com.ichi2.async.TaskData;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CONF_CHANGE;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CONF_REMOVE;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CONF_RESET;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CONF_SET_SUBDECKS;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.REORDER;
 
 /**
  * Preferences for the current deck.

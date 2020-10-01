@@ -21,13 +21,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.MediaMetadataRetriever;
+import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.MediaStore;
-
 import android.view.Display;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;

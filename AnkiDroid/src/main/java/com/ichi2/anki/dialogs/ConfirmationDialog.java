@@ -4,11 +4,11 @@ package com.ichi2.anki.dialogs;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 
     /**
      * This is a reusable convenience class which makes it easy to show a confirmation dialog as a DialogFragment.

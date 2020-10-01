@@ -21,8 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.DeckPicker;
@@ -31,6 +29,8 @@ import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.widget.WidgetStatus;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 public class NotificationService extends BroadcastReceiver {

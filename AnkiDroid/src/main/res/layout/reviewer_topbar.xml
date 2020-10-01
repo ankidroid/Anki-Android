@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/top_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="9dp"
-        android:paddingRight="10dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="3dp"
-        android:gravity="center_vertical"
-        android:background="?attr/topBarColor">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="9dp"
+    android:paddingRight="10dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="3dp"
+    android:gravity="center_vertical"
+    android:background="?attr/topBarColor">
         <TextView
             android:id="@+id/new_number"
             android:layout_width="wrap_content"

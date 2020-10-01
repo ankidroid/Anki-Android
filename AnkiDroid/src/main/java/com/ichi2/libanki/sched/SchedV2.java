@@ -20,7 +20,6 @@
 package com.ichi2.libanki.sched;
 
 import android.app.Activity;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -36,12 +35,11 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.DeckConfig;
-
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
@@ -65,9 +63,11 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
-import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
-import static com.ichi2.libanki.sched.Counts.Queue.*;
+import static com.ichi2.libanki.sched.AbstractSched.UnburyType.ALL;
 import static com.ichi2.libanki.sched.Counts.Queue;
+import static com.ichi2.libanki.sched.Counts.Queue.LRN;
+import static com.ichi2.libanki.sched.Counts.Queue.NEW;
+import static com.ichi2.libanki.sched.Counts.Queue.REV;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",

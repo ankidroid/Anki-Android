@@ -18,7 +18,9 @@
 package com.ichi2.anki.api;
 
 import android.database.Cursor;
+
 import com.ichi2.anki.FlashCardsContract;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;

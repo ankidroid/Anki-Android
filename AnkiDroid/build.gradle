@@ -1,5 +1,5 @@
-import com.android.ddmlib.DdmPreferences
 import com.android.build.OutputFile
+import com.android.ddmlib.DdmPreferences
 
 plugins {
  // Gradle plugin portal 

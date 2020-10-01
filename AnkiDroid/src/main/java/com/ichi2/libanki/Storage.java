@@ -20,7 +20,6 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;

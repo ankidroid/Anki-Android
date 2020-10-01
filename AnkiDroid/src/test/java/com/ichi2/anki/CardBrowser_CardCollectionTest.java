@@ -20,7 +20,6 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-
 import androidx.annotation.NonNull;
 
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -18,7 +18,6 @@ package com.ichi2.utils;
 
 import android.text.TextUtils;
 
-
 import timber.log.Timber;
 
 /**

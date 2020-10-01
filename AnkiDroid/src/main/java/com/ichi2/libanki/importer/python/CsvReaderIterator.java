@@ -31,8 +31,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
-import static com.ichi2.libanki.importer.python.CsvDialect.Quoting.*;
-import static com.ichi2.libanki.importer.python.CsvReaderIterator.State.*;
+import static com.ichi2.libanki.importer.python.CsvDialect.Quoting.QUOTE_NONE;
+import static com.ichi2.libanki.importer.python.CsvDialect.Quoting.QUOTE_NONNUMERIC;
+import static com.ichi2.libanki.importer.python.CsvReaderIterator.State.AFTER_ESCAPED_CRNL;
+import static com.ichi2.libanki.importer.python.CsvReaderIterator.State.EAT_CRNL;
+import static com.ichi2.libanki.importer.python.CsvReaderIterator.State.ESCAPED_CHAR;
+import static com.ichi2.libanki.importer.python.CsvReaderIterator.State.ESCAPE_IN_QUOTED_FIELD;
+import static com.ichi2.libanki.importer.python.CsvReaderIterator.State.IN_FIELD;
+import static com.ichi2.libanki.importer.python.CsvReaderIterator.State.IN_QUOTED_FIELD;
+import static com.ichi2.libanki.importer.python.CsvReaderIterator.State.QUOTE_IN_QUOTED_FIELD;
+import static com.ichi2.libanki.importer.python.CsvReaderIterator.State.START_FIELD;
+import static com.ichi2.libanki.importer.python.CsvReaderIterator.State.START_RECORD;
 
 public class CsvReaderIterator implements Iterator<List<String>> {
     private final CsvReader reader;

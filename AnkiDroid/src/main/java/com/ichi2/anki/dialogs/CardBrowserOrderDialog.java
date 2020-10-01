@@ -1,14 +1,14 @@
 
 package com.ichi2.anki.dialogs;
 
+import android.app.Dialog;
+import android.content.res.Resources;
+import android.os.Bundle;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CardBrowser;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
-
-import android.app.Dialog;
-import android.content.res.Resources;
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 

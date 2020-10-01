@@ -13,13 +13,11 @@ import static com.ichi2.libanki.Consts.COUNT_REMAINING;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_LRN;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_NEW;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assume.assumeThat;
 
 
 @RunWith(AndroidJUnit4.class)

@@ -16,8 +16,6 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.libanki.Sound;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

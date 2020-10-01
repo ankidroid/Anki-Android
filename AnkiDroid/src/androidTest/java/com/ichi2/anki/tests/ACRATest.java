@@ -3,10 +3,6 @@ package com.ichi2.anki.tests;
 import android.Manifest;
 import android.content.SharedPreferences;
 
-import androidx.annotation.StringRes;
-import androidx.test.annotation.UiThreadTest;
-import androidx.test.rule.GrantPermissionRule;
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
@@ -27,6 +23,9 @@ import org.junit.runner.RunWith;
 
 import java.lang.reflect.Method;
 
+import androidx.annotation.StringRes;
+import androidx.test.annotation.UiThreadTest;
+import androidx.test.rule.GrantPermissionRule;
 import timber.log.Timber;
 
 import static com.ichi2.anki.AnkiDroidApp.FEEDBACK_REPORT_ALWAYS;

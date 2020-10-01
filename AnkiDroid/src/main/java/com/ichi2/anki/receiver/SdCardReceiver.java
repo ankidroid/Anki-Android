@@ -20,7 +20,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.libanki.Collection;
 

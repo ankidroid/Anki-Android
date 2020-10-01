@@ -20,9 +20,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
-
-import timber.log.Timber;
-
 import android.view.View;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
@@ -30,6 +27,8 @@ import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.themes.Themes;
+
+import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 19 */
 @TargetApi(19)

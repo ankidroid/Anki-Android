@@ -23,10 +23,9 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import androidx.annotation.CheckResult;
 
 public class RescheduleDialog extends IntegerDialog {
     private RescheduleDialog() {

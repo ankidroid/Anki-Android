@@ -21,13 +21,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
-import timber.log.Timber;
-
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.IntentHandler;
 import com.ichi2.anki.NotificationChannels;
@@ -38,6 +31,13 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+import timber.log.Timber;
 
 public class ReminderService extends BroadcastReceiver {
 

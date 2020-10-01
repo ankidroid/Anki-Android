@@ -22,11 +22,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
-import com.ichi2.utils.Assert;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
-import com.ichi2.utils.LanguageUtil;
+import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.LanguageUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

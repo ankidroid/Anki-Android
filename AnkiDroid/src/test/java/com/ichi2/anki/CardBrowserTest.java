@@ -9,10 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
-import com.ichi2.utils.JSONObject;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -26,7 +25,6 @@ import org.robolectric.shadows.ShadowApplication;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.CheckReturnValue;

@@ -20,7 +20,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;

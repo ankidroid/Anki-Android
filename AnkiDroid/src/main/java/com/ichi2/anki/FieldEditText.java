@@ -11,18 +11,16 @@ import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import com.ichi2.themes.Themes;
+
 import java.util.Locale;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-
 import androidx.appcompat.widget.AppCompatEditText;
 import timber.log.Timber;
-
-import com.ichi2.themes.Themes;
-
-import java.util.Objects;
 
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
 

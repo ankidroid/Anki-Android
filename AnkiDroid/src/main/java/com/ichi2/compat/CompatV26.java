@@ -23,9 +23,6 @@ import android.content.Context;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -33,6 +30,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 26 */

@@ -21,12 +21,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
 import android.text.TextUtils;
-
 import android.util.Pair;
 
 import com.ichi2.libanki.template.Template;
 import com.ichi2.utils.Assert;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 

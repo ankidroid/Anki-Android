@@ -16,20 +16,20 @@
 
 package com.ichi2.anki;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.os.Bundle;
+
+import com.ichi2.libanki.Model;
+import com.ichi2.utils.JSONObject;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.ichi2.libanki.Model;
-import com.ichi2.utils.JSONObject;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
 import static com.ichi2.anki.TemporaryModel.ChangeType.ADD;

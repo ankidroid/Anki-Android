@@ -1,10 +1,8 @@
 package com.ichi2.anki.tests.libanki;
 
 import android.Manifest;
-import android.os.Build;
 
 import com.ichi2.async.Connection;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.sync.HostNum;
 
 import org.junit.Assert;

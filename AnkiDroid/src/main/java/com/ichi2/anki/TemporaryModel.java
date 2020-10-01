@@ -20,8 +20,12 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
+import com.ichi2.async.TaskListener;
+import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.Model;
+import com.ichi2.utils.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -29,15 +33,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
-import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
-import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.Model;
-import com.ichi2.utils.JSONObject;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.SAVE_MODEL;
 
 
 public class TemporaryModel {

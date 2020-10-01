@@ -27,6 +27,8 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 
+import org.apache.commons.compress.archivers.zip.ZipFile;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,7 +36,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import timber.log.Timber;
 

@@ -8,12 +8,11 @@ import android.view.MenuItem;
 
 import com.ichi2.anki.AbstractFlashcardViewer.JavaScriptFunction;
 import com.ichi2.anki.cardviewer.ViewerCommand;
-import com.ichi2.anki.reviewer.ActionButtonStatus;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.anki.reviewer.ActionButtonStatus;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
@@ -36,13 +35,9 @@ import java.util.List;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
-import java.util.List;
-
 import androidx.test.core.app.ActivityScenario;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
-import static com.ichi2.anki.AbstractFlashcardViewer.EASE_2;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
 import static com.ichi2.anki.AbstractFlashcardViewer.RESULT_DEFAULT;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -52,7 +47,6 @@ import static org.hamcrest.Matchers.isEmptyString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assume.assumeTrue;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
 @LooperMode(LooperMode.Mode.PAUSED)

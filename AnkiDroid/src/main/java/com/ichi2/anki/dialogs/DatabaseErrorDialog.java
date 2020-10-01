@@ -7,7 +7,6 @@ import android.os.Message;
 import android.view.KeyEvent;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-
 import com.ichi2.anki.AnkiActivity;
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;

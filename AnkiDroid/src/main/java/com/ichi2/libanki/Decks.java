@@ -28,7 +28,6 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.libanki.exception.NoSuchDeckException;
-
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.DeckNameComparator;
 import com.ichi2.utils.JSONArray;
@@ -43,7 +42,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 

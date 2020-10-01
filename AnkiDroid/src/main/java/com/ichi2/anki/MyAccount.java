@@ -21,7 +21,6 @@ import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -31,7 +30,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.textfield.TextInputLayout;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
@@ -39,6 +37,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.TextInputEditField;
 import com.ichi2.utils.AdaptionUtil;
 
+import androidx.appcompat.widget.Toolbar;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;

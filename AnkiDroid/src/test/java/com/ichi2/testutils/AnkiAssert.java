@@ -5,13 +5,10 @@ import android.util.Pair;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 
-import androidx.annotation.NonNull;
-import timber.log.Timber;
-
-import org.junit.Assert;
-
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,5 +1,4 @@
 package com.ichi2.anki;
-import com.ichi2.libanki.Sound;
 
 import android.app.Activity;
 import android.content.res.Configuration;
@@ -8,6 +7,8 @@ import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 import android.widget.VideoView;
+
+import com.ichi2.libanki.Sound;
 
 import timber.log.Timber;
 

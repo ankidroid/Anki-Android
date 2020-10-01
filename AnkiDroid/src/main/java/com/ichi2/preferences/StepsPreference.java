@@ -25,7 +25,6 @@ import android.util.AttributeSet;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 

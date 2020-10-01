@@ -1,11 +1,12 @@
 package com.ichi2.anki.tests;
 
 import android.Manifest;
-import androidx.test.rule.GrantPermissionRule;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import androidx.test.rule.GrantPermissionRule;
 
 import static org.junit.Assert.assertNotNull;
 

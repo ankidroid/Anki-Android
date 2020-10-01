@@ -18,6 +18,8 @@ package com.ichi2.libanki;
 
 import com.ichi2.anki.TestUtils;
 
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,8 +29,6 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.Objects;
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 
 public class UtilsTest {
 

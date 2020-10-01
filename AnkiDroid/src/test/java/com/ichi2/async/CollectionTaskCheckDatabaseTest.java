@@ -21,7 +21,7 @@ import com.ichi2.testutils.CollectionUtils;
 
 import org.junit.Test;
 
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CHECK_DATABASE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

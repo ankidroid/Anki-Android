@@ -33,8 +33,8 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
-import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.FilterResultsUtils;
+import com.ichi2.utils.FunctionalInterfaces;
 
 import java.util.ArrayList;
 import java.util.Collections;

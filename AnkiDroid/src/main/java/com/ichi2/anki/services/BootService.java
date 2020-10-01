@@ -15,9 +15,8 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.utils.Time;
-import com.ichi2.utils.Permissions;
-
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.Permissions;
 
 import java.util.Calendar;
 

@@ -18,7 +18,6 @@
 package com.ichi2.libanki;
 
 import android.database.Cursor;
-
 import android.util.Pair;
 
 import com.ichi2.utils.JSONObject;

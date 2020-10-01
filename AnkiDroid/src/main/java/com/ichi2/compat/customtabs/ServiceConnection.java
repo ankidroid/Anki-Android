@@ -16,11 +16,11 @@ package com.ichi2.compat.customtabs;
 
 import android.content.ComponentName;
 
+import java.lang.ref.WeakReference;
+
 import androidx.annotation.NonNull;
 import androidx.browser.customtabs.CustomTabsClient;
 import androidx.browser.customtabs.CustomTabsServiceConnection;
-
-import java.lang.ref.WeakReference;
 
 /**
  * Implementation for the CustomTabsServiceConnection that avoids leaking the

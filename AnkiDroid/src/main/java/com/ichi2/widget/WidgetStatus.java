@@ -20,8 +20,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Pair;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.MetaDB;
@@ -33,6 +31,7 @@ import com.ichi2.libanki.sched.DeckDueTreeNode;
 
 import java.util.List;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import timber.log.Timber;
 
 /**

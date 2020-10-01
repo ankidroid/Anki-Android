@@ -6,14 +6,13 @@ import android.content.res.Resources;
 import android.util.Pair;
 import android.widget.Toast;
 
-
 import com.ichi2.anki.R;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Collection;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -22,8 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
-
-import androidx.annotation.NonNull;
 
 /**
  * In this documentation, I will call "normal use" the fact that between two successive calls to `getCard`, either the

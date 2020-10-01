@@ -41,26 +41,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.provider.Settings;
-
-import com.afollestad.materialdialogs.GravityEnum;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.app.ShareCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -78,10 +58,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.ichi2.anim.ActivityTransitionAnimation;
+import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -106,9 +87,10 @@ import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.anki.widgets.DeckAdapter;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
-import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.compat.CompatHelper;
@@ -124,12 +106,11 @@ import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.ImportUtils;
+import com.ichi2.utils.JSONException;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
-
-import com.ichi2.utils.JSONException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -139,13 +120,42 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ShareCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import timber.log.Timber;
 
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.DOWN;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CHECK_DATABASE;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CHECK_MEDIA;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.DELETE_DECK;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.DELETE_MEDIA;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.EMPTY_CRAM;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.EXPORT_APKG;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.FIND_EMPTY_CARDS;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.IMPORT;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.IMPORT_REPLACE;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.LOAD_COLLECTION_COMPLETE;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.LOAD_DECK_COUNTS;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.LOAD_DECK_QUICK;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.REBUILD_CRAM;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.REPAIR_COLLECTION;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.UNDO;
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
-
-import com.ichi2.async.TaskData;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class DeckPicker extends NavigationDrawerActivity implements
         StudyOptionsListener, SyncErrorDialog.SyncErrorDialogListener, ImportDialog.ImportDialogListener,

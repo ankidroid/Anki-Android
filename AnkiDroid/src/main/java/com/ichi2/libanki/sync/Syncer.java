@@ -20,21 +20,19 @@ package com.ichi2.libanki.sync;
 import android.database.Cursor;
 import android.database.SQLException;
 
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
-import com.ichi2.libanki.DB;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Utils;
-
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;

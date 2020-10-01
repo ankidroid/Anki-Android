@@ -21,10 +21,11 @@ package com.ichi2.themes;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
-import androidx.core.content.ContextCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+
+import androidx.core.content.ContextCompat;
 
 public class Themes {
     public final static int ALPHA_ICON_ENABLED_LIGHT = 255; // 100%

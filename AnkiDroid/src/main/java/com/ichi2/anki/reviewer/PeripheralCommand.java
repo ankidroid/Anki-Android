@@ -24,7 +24,29 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static com.ichi2.anki.cardviewer.ViewerCommand.*;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_FIRST_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_FOURTH_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_RECOMMENDED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_SECOND_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_ANSWER_THIRD_BUTTON;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_BURY_CARD;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_BURY_NOTE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_EDIT;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE3;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE4;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_FLIP_OR_ANSWER_RECOMMENDED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_MARK;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_PLAY_MEDIA;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SUSPEND_CARD;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_SUSPEND_NOTE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_TOGGLE_FLAG_RED;
+import static com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_UNDO;
+import static com.ichi2.anki.cardviewer.ViewerCommand.ViewerCommandDef;
 
 public class PeripheralCommand {
     @Nullable

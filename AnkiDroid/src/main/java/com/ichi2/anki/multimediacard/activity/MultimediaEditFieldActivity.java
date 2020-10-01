@@ -23,11 +23,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.app.ActivityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +47,10 @@ import com.ichi2.utils.Permissions;
 import java.io.File;
 import java.text.DecimalFormat;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ActivityCompat;
 import timber.log.Timber;
 
 public class MultimediaEditFieldActivity extends AnkiActivity

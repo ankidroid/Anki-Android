@@ -23,11 +23,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageButton;
-
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -35,10 +30,14 @@ import android.widget.LinearLayout;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import java.io.File;
-import java.io.IOException;
 import com.ichi2.utils.Permissions;
 
+import java.io.File;
+import java.io.IOException;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 import timber.log.Timber;
 
 // Not designed for visual editing

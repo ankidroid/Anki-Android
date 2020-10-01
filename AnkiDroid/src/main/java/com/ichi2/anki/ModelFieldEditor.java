@@ -18,7 +18,6 @@ package com.ichi2.anki;
 
 import android.os.Build;
 import android.os.Bundle;
-
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,32 +26,34 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.themes.StyledProgressDialog;
-import com.ichi2.widget.WidgetStatus;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.ADD_FIELD;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CHANGE_SORT_FIELD;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.DELETE_FIELD;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.REPOSITION_FIELD;
 
 public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDialog.LocaleSelectionDialogHandler {
 

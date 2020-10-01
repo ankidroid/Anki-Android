@@ -18,14 +18,13 @@ package com.ichi2.anki.multimediacard.fields;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ichi2.anki.AnkiDroidApp;

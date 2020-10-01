@@ -28,8 +28,8 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.utils.Time;
 
 import java.util.ArrayList;

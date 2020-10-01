@@ -29,14 +29,13 @@ import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats.AnswerButtonsOver
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.utils.Time;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 

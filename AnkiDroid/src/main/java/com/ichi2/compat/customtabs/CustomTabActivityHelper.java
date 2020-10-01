@@ -18,6 +18,8 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 
+import java.util.List;
+
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,9 +28,6 @@ import androidx.browser.customtabs.CustomTabsClient;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.browser.customtabs.CustomTabsServiceConnection;
 import androidx.browser.customtabs.CustomTabsSession;
-
-import java.util.List;
-
 import timber.log.Timber;
 
 

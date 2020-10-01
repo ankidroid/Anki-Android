@@ -25,7 +25,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import androidx.test.rule.GrantPermissionRule;
 import android.util.Log;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
@@ -41,12 +40,12 @@ import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.libanki.Utils;
-
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -58,6 +57,8 @@ import org.junit.runners.Parameterized;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.test.rule.GrantPermissionRule;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;

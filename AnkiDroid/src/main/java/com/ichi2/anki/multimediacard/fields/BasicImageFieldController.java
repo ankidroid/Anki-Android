@@ -32,17 +32,10 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.content.ContentResolverCompat;
-import androidx.core.content.FileProvider;
-
 import android.text.TextUtils;
 import android.text.format.Formatter;
-import android.provider.DocumentsContract;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -54,6 +47,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
@@ -64,8 +58,6 @@ import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
 import com.ichi2.utils.Permissions;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -73,6 +65,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.core.content.ContentResolverCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.util.Pair;
 import timber.log.Timber;
 

@@ -38,20 +38,17 @@ import com.ichi2.libanki.sync.MediaSyncer;
 import com.ichi2.libanki.sync.RemoteMediaServer;
 import com.ichi2.libanki.sync.RemoteServer;
 import com.ichi2.libanki.sync.Syncer;
-import com.ichi2.utils.Permissions;
-
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.Permissions;
 
 import java.io.IOException;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import okhttp3.Response;
 import timber.log.Timber;
 
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
-import static com.ichi2.async.Connection.ConflictResolution.FULL_UPLOAD;
 
 public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
 

@@ -21,7 +21,6 @@ package com.ichi2.anki.multimediacard.fields;
 
 import android.content.Context;
 import android.content.Intent;
-
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.R;

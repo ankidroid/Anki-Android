@@ -21,9 +21,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 
-import androidx.test.annotation.UiThreadTest;
-import androidx.test.rule.GrantPermissionRule;
-
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.compat.CompatHelper;
@@ -35,6 +32,8 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import androidx.test.annotation.UiThreadTest;
+import androidx.test.rule.GrantPermissionRule;
 import timber.log.Timber;
 
 import static org.junit.Assert.assertEquals;

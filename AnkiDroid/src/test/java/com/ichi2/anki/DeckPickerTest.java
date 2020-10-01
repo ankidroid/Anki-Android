@@ -1,9 +1,6 @@
 package com.ichi2.anki;
 
 import android.content.Context;
-
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
@@ -18,6 +15,9 @@ import org.robolectric.annotation.LooperMode;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.anki.DeckPicker.UPGRADE_VERSION_KEY;
 import static org.junit.Assert.assertEquals;

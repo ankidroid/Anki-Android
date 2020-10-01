@@ -20,9 +20,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.afollestad.materialdialogs.DialogAction;
+import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Note;
+import com.ichi2.utils.JSONObject;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,10 +35,7 @@ import org.robolectric.annotation.LooperMode;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowIntent;
 
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Note;
-import com.ichi2.utils.JSONObject;
-
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
 import static org.robolectric.Shadows.shadowOf;

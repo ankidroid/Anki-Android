@@ -16,7 +16,6 @@
 package com.ichi2.anki.tests.libanki;
 
 import android.Manifest;
-import androidx.test.rule.GrantPermissionRule;
 
 import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.tests.InstrumentedTest;
@@ -36,6 +35,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.test.rule.GrantPermissionRule;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;

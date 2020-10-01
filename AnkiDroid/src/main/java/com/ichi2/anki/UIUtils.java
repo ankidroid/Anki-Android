@@ -4,23 +4,23 @@ package com.ichi2.anki;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.async.CollectionTask;
-
-import java.util.Calendar;
-
-import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
 import com.ichi2.libanki.utils.Time;
+
+import java.util.Calendar;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import timber.log.Timber;
+
+import static com.ichi2.async.CollectionTask.TASK_TYPE.SAVE_COLLECTION;
 
 public class UIUtils {
 

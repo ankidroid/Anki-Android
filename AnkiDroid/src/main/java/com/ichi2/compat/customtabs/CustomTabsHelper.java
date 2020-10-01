@@ -20,12 +20,13 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import androidx.browser.customtabs.CustomTabsService;
 import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.browser.customtabs.CustomTabsService;
 
 /**
  * Helper class for Custom Tabs.

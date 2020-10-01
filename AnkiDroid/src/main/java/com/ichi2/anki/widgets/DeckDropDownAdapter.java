@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.ichi2.anki.R;
-
 import com.ichi2.libanki.Deck;
 
 import java.util.ArrayList;

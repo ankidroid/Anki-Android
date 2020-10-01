@@ -28,7 +28,6 @@ import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
-
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 

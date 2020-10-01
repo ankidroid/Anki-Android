@@ -28,15 +28,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -58,7 +49,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anim.ActivityTransitionAnimation;
+import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -69,24 +60,24 @@ import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.Deck;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.JSONException;
+import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.Permissions;
 import com.ichi2.widget.WidgetStatus;
-
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,13 +92,39 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.SearchView;
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
 
-import static com.ichi2.anki.CardBrowser.Column.*;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
+import static com.ichi2.anki.CardBrowser.Column.ANSWER;
+import static com.ichi2.anki.CardBrowser.Column.CARD;
+import static com.ichi2.anki.CardBrowser.Column.CHANGED;
+import static com.ichi2.anki.CardBrowser.Column.CREATED;
+import static com.ichi2.anki.CardBrowser.Column.DECK;
+import static com.ichi2.anki.CardBrowser.Column.DUE;
+import static com.ichi2.anki.CardBrowser.Column.EASE;
+import static com.ichi2.anki.CardBrowser.Column.EDITED;
+import static com.ichi2.anki.CardBrowser.Column.INTERVAL;
+import static com.ichi2.anki.CardBrowser.Column.LAPSES;
+import static com.ichi2.anki.CardBrowser.Column.NOTE_TYPE;
+import static com.ichi2.anki.CardBrowser.Column.QUESTION;
+import static com.ichi2.anki.CardBrowser.Column.REVIEWS;
+import static com.ichi2.anki.CardBrowser.Column.SFLD;
+import static com.ichi2.anki.CardBrowser.Column.TAGS;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.CHECK_CARD_SELECTION;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.DISMISS_MULTI;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.RENDER_BROWSER_QA;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.SEARCH_CARDS;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.UNDO;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.UPDATE_NOTE;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener {

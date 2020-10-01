@@ -20,11 +20,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.res.TypedArray;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
 import android.os.StatFs;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
@@ -49,6 +44,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 /** Implementation of {@link Compat} for SDK level 16 */

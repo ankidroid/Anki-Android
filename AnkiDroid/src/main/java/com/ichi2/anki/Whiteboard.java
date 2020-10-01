@@ -27,15 +27,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Point;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
 import android.os.Environment;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.ichi2.libanki.utils.Time;
@@ -46,6 +42,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.Stack;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.

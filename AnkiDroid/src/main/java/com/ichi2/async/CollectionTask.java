@@ -32,30 +32,31 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.TemporaryModel;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
-import com.ichi2.libanki.Media;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Undoable;
-import com.ichi2.libanki.WrongId;
-import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.AnkiPackageExporter;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DB;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Media;
+import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
+import com.ichi2.libanki.Undoable;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.WrongId;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
-
+import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Counts;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
+
+import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -74,7 +75,6 @@ import java.util.TreeMap;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -84,7 +84,7 @@ import timber.log.Timber;
 import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
 import static com.ichi2.libanki.Collection.DismissType.BURY_NOTE;
 import static com.ichi2.libanki.Collection.DismissType.SUSPEND_NOTE;
-import static com.ichi2.libanki.Undoable.*;
+import static com.ichi2.libanki.Undoable.revertToProvidedState;
 
 /**
  * Loading in the background, so that AnkiDroid does not look like frozen.
