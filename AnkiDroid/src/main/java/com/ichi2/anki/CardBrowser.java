@@ -1726,6 +1726,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             super(browser);
         }
 
+        private int mCardsDeleted = -1;
+
         @Override
         public void actualOnPreExecute(@NonNull CardBrowser browser) {
             super.actualOnPreExecute(browser);
@@ -1737,6 +1739,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             Card[] cards = (Card[]) value.getObjArray();
             //we don't need to reorder cards here as we've already deselected all notes,
             browser.removeNotesView(cards, false);
+            mCardsDeleted = cards.length;
         }
 
 
@@ -1746,7 +1749,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             browser.mActionBarTitle.setText(Integer.toString(browser.checkedCardCount()));
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
             // snackbar to offer undo
-            browser.mUndoSnackbar = UIUtils.showSnackbar(browser, browser.getString(R.string.deleted_message), SNACKBAR_DURATION, R.string.undo, v -> CollectionTask.launchCollectionTask(UNDO, browser.mUndoHandler), browser.mCardsListView, null);
+            String deletedMessage = browser.getResources().getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted);
+            browser.mUndoSnackbar = UIUtils.showSnackbar(browser, deletedMessage, SNACKBAR_DURATION, R.string.undo, v -> CollectionTask.launchCollectionTask(UNDO, browser.mUndoHandler), browser.mCardsListView, null);
             browser.searchCards();
         }
     }
