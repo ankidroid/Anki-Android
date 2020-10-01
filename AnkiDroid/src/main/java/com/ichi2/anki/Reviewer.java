@@ -1440,19 +1440,22 @@ public class Reviewer extends AbstractFlashcardViewer {
         @JavascriptInterface
         @Override
         public String ankiGetNewCardCount() {
-            return newCount.toString();
+            /* If counts are not already computed (e.g. after undo) javascript will have to wait until they are
+             computed.  Counts are computed as soon as the question is displayed, so this will return immediately unless
+             javascript request counts so quickly that reviewer had no time to update its numbers. */
+            return Integer.toString(getCol().getSched().counts(mCurrentCard).getNew());
         }
 
         @JavascriptInterface
         @Override
         public String ankiGetLrnCardCount() {
-            return lrnCount.toString();
+            return Integer.toString(getCol().getSched().counts(mCurrentCard).getLrn());
         }
 
         @JavascriptInterface
         @Override
         public String ankiGetRevCardCount() {
-            return revCount.toString();
+            return Integer.toString(getCol().getSched().counts(mCurrentCard).getRev());
         }
 
         @JavascriptInterface
