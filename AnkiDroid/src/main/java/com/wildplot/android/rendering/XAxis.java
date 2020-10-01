@@ -177,7 +177,7 @@ public class XAxis implements Drawable {
 
 
         //arrow
-        float[] arowheadPos = {(plotSheet.getxRange()[1] >= this.end) ? plotSheet.xToGraphic(this.end, field) : plotSheet.xToGraphic(plotSheet.getxRange()[1], field), plotSheet.yToGraphic(yOffset, field)};
+        float[] arowheadPos = {plotSheet.xToGraphic(plotSheet.getxRange()[1] >= this.end ? this.end : plotSheet.getxRange()[1], field), plotSheet.yToGraphic(yOffset, field)};
 
         FontMetricsWrap fm = g.getFontMetrics();
         float fontHeigth = fm.getHeight();
