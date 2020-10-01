@@ -864,8 +864,7 @@ public class SchedV2 extends AbstractSched {
         if (mNewCount == 0) {
             return false;
         }
-        @Consts.NEW_CARD_ORDER int spread;
-        spread = mCol.getConf().getInt("newSpread");
+        @Consts.NEW_CARD_ORDER int spread = mCol.getConf().getInt("newSpread");
         if (spread == Consts.NEW_CARDS_LAST) {
             return false;
         } else if (spread == Consts.NEW_CARDS_FIRST) {
@@ -1015,8 +1014,7 @@ public class SchedV2 extends AbstractSched {
         if (!mLrnQueue.isEmpty()) {
             return true;
         }
-        long cutoff = 0;
-        cutoff = getTime().intTime() + mCol.getConf().getLong("collapseTime");
+        long cutoff = getTime().intTime() + mCol.getConf().getLong("collapseTime");
         Cursor cur = null;
         mLrnQueue.clear();
         try {
@@ -1635,8 +1633,7 @@ public class SchedV2 extends AbstractSched {
 
     // Overriden
     protected int _rescheduleLapse(@NonNull Card card) {
-        JSONObject conf;
-        conf = _lapseConf(card);
+        JSONObject conf = _lapseConf(card);
         card.setLapses(card.getLapses() + 1);
         card.setFactor(Math.max(1300, card.getFactor() - 200));
         int delay;
@@ -1862,9 +1859,8 @@ public class SchedV2 extends AbstractSched {
     private int _fillDyn(Deck deck) {
         int start = -100000;
         int total = 0;
-        JSONArray terms;
         List<Long> ids;
-        terms = deck.getJSONArray("terms");
+        JSONArray terms = deck.getJSONArray("terms");
         for (int i = 0; i < terms.length(); i++) {
             JSONArray term = terms.getJSONArray(i);
             String search = term.getString(0);
@@ -2019,8 +2015,7 @@ public class SchedV2 extends AbstractSched {
     /** Leech handler. True if card was a leech.
         Overridden: in V1, due and did are changed*/
     protected boolean _checkLeech(@NonNull Card card, @NonNull JSONObject conf) {
-        int lf;
-        lf = conf.getInt("leechFails");
+        int lf = conf.getInt("leechFails");
         if (lf == 0) {
             return false;
         }
@@ -2234,8 +2229,7 @@ public class SchedV2 extends AbstractSched {
             sb.append(context.getString(R.string.studyoptions_congrats_more_new));
         }
         if (haveBuried()) {
-            String now;
-            now = " " + context.getString(R.string.sched_unbury_action);
+            String now = " " + context.getString(R.string.sched_unbury_action);
             sb.append("\n\n");
             sb.append("").append(context.getString(R.string.sched_has_buried)).append(now);
         }
@@ -3022,8 +3016,7 @@ public class SchedV2 extends AbstractSched {
 
 
     public boolean leechActionSuspend(@NonNull Card card) {
-        JSONObject conf;
-        conf = _cardConf(card).getJSONObject("lapse");
+        JSONObject conf = _cardConf(card).getJSONObject("lapse");
         return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
     }
 

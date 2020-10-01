@@ -71,9 +71,8 @@ public class CsvReaderIterator implements Iterator<List<String>> {
     }
 
     private int parse_save_field() {
-        String field;
 
-        field = new String(this.field, 0, this.field_len); // ignored field.length
+        String field = new String(this.field, 0, this.field_len); // ignored field.length
 
         this.field_len = 0;
         if (this.numeric_field != 0) {
@@ -296,7 +295,6 @@ public class CsvReaderIterator implements Iterator<List<String>> {
     @Override
     @Nullable
     public List<String> next() {
-        List<String> fields;
         parse_reset();
         do {
             if (!reader.input_iter.hasNext()) {
@@ -330,7 +328,7 @@ public class CsvReaderIterator implements Iterator<List<String>> {
             }
         } while (state != START_RECORD);
 
-        fields = this.fields;
+        List<String> fields = this.fields;
         this.fields = null;
 
         return fields;

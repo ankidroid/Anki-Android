@@ -265,8 +265,7 @@ public class NoteEditor extends AnkiActivity {
                 String[] currentStrings = noteEditor.getCurrentFieldStrings();
                 noteEditor.setNote();
                 // Respect "Remember last input when adding" field option.
-                JSONArray flds;
-                flds = noteEditor.mEditorNote.model().getJSONArray("flds");
+                JSONArray flds = noteEditor.mEditorNote.model().getJSONArray("flds");
                 if (oldNote != null) {
                     for (int fldIdx = 0; fldIdx < flds.length(); fldIdx++) {
                         if (flds.getJSONObject(fldIdx).getBoolean("sticky")) {
@@ -1719,8 +1718,7 @@ public class NoteEditor extends AnkiActivity {
 
     private void setNoteTypePosition() {
         // Set current note type and deck positions in spinners
-        int position;
-        position = mAllModelIds.indexOf(mEditorNote.model().getLong("id"));
+        int position = mAllModelIds.indexOf(mEditorNote.model().getLong("id"));
         // set selection without firing selectionChanged event
         mNoteTypeSpinner.setSelection(position, false);
     }
@@ -1880,8 +1878,7 @@ public class NoteEditor extends AnkiActivity {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             // If a new column was selected then change the key used to map from mCards to the column TextView
             //Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
-            long oldModelId;
-            oldModelId = getCol().getModels().current().getLong("id");
+            long oldModelId = getCol().getModels().current().getLong("id");
             long newId = mAllModelIds.get(pos);
             Timber.i("Changing note type to '%d", newId);
             if (oldModelId != newId) {
@@ -1923,8 +1920,7 @@ public class NoteEditor extends AnkiActivity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             // Get the current model
-            long noteModelId;
-            noteModelId = mCurrentEditedCard.model().getLong("id");
+            long noteModelId = mCurrentEditedCard.model().getLong("id");
             // Get new model
             JSONObject newModel = getCol().getModels().get(mAllModelIds.get(pos));
             if (newModel == null || newModel.getJSONArray("tmpls") == null) {

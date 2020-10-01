@@ -171,35 +171,26 @@ public class AdvancedStatistics {
 
         Collection mCol = CollectionHelper.getInstance().getCol(context);
 
-        double[][] mSeriesList;
-
-        int[] mValueLabels;
-        int[] mColors;
-        int[] mAxisTitles;
         int mMaxCards = 0;
-        int mMaxElements;
-        double mFirstElement;
         double mLastElement = 0;
         int mZeroIndex = 0;
-        double[][] mCumulative;
-        double mMcount;
 
-        mValueLabels = new int[] { R.string.statistics_relearn,
+        int[] mValueLabels = {     R.string.statistics_relearn,
                                    R.string.statistics_mature,
                                    R.string.statistics_young,
                                    R.string.statistics_learn};
-        mColors = new int[] {      R.attr.stats_relearn,
+        int[] mColors = {          R.attr.stats_relearn,
                                    R.attr.stats_mature,
                                    R.attr.stats_young,
                                    R.attr.stats_learn};
 
-        mAxisTitles = new int[] { type.ordinal(), R.string.stats_cards, R.string.stats_cumulative_cards };
+        int[] mAxisTitles = { type.ordinal(), R.string.stats_cards, R.string.stats_cumulative_cards };
 
         PlottableSimulationResult simuationResult = calculateDueAsPlottableSimulationResult(type, mCol, dids);
 
         ArrayList<int[]> dues = simuationResult.getNReviews();
 
-        mSeriesList = new double[REVIEW_TYPE_COUNT_PLUS_1][dues.size()];
+        double[][] mSeriesList = new double[REVIEW_TYPE_COUNT_PLUS_1][dues.size()];
 
         for (int t = 0;t < dues.size(); t++) {
             int[] data = dues.get(t);
@@ -232,7 +223,7 @@ public class AdvancedStatistics {
                 mZeroIndex = t;                     //Because we retrieve dues in the past and we should not cumulate them
             }
         }
-        mMaxElements = dues.size()-1;           //# X values
+        int mMaxElements = dues.size()-1;           //# X values
         switch (type) {
             case TYPE_MONTH:
                 mLastElement = 31;              //X-Axis: Max. value
@@ -242,11 +233,11 @@ public class AdvancedStatistics {
                 break;
             default:
         }
-        mFirstElement = 0;                      //X-Axis: Min. value
+        double mFirstElement = 0;                      //X-Axis: Min. value
 
-        mCumulative = simuationResult.getNInState();                                                          //Day starting at mZeroIndex, Cumulative # cards
+        double[][] mCumulative = simuationResult.getNInState();                                                          //Day starting at mZeroIndex, Cumulative # cards
 
-        mMcount = mCumulative[CARD_TYPE_NEW_PLUS_1][mCumulative[CARD_TYPE_NEW_PLUS_1].length-1] +             //Y-Axis: Max. cumulative value
+        double mMcount = mCumulative[CARD_TYPE_NEW_PLUS_1][mCumulative[CARD_TYPE_NEW_PLUS_1].length-1] +             //Y-Axis: Max. cumulative value
                   mCumulative[CARD_TYPE_YOUNG_PLUS_1][mCumulative[CARD_TYPE_YOUNG_PLUS_1].length-1] +
                   mCumulative[CARD_TYPE_MATURE_PLUS_1][mCumulative[CARD_TYPE_MATURE_PLUS_1].length-1];
 
@@ -571,8 +562,7 @@ public class AdvancedStatistics {
 
             long did = deck.getDid();
 
-            String query;
-            query = "SELECT id, due, ivl, factor, type, reps " +
+            String query = "SELECT id, due, ivl, factor, type, reps " +
                     "FROM cards " +
                     "WHERE did IN (" + did + ") " +
                     "AND queue != " + Consts.QUEUE_TYPE_SUSPENDED + " " +   // ignore suspended cards

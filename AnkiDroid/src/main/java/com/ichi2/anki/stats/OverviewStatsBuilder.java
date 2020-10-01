@@ -297,8 +297,7 @@ public class OverviewStatsBuilder {
         List<int[]> d = new ArrayList<>();
         Cursor cur = null;
         try {
-            String query;
-            query = String.format(Locale.US,
+            String query = String.format(Locale.US,
                     "select (due-%d)/%d as day,\n" +
                     "sum(case when ivl < 21 then 1 else 0 end), -- yng\n" +
                     "sum(case when ivl >= 21 then 1 else 0 end) -- mtr\n" +

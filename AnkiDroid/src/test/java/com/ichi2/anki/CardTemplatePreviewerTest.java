@@ -44,7 +44,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         String modelName = "Basic";
         Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
         JSONObject template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0);
-        template.put("qfmt", template.getString("qfmt").concat("PREVIEWER_TEST"));
+        template.put("qfmt", template.getString("qfmt") + "PREVIEWER_TEST");
         String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), collectionBasicModelOriginal);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath);

@@ -55,7 +55,6 @@ public class Info extends AnkiActivity {
     public static final int TYPE_ABOUT = 0;
     public static final int TYPE_NEW_VERSION = 2;
 
-    private int mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +62,8 @@ public class Info extends AnkiActivity {
         super.onCreate(savedInstanceState);
 
         Resources res = getResources();
-        WebView webView;
 
-        mType = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
+        int mType = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
         // If the page crashes, we do not want to display it again (#7135 maybe)
         if (mType == TYPE_NEW_VERSION) {
             AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
@@ -77,7 +75,7 @@ public class Info extends AnkiActivity {
         enableToolbar(mainView);
 
         setTitle(String.format("%s v%s", VersionUtils.getAppName(), VersionUtils.getPkgVersionName()));
-        webView = findViewById(R.id.info);
+        WebView webView = findViewById(R.id.info);
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 // Hide the progress indicator when the page has finished loaded

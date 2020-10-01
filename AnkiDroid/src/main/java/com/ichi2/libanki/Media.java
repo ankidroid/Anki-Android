@@ -942,7 +942,7 @@ public class Media {
                 // normalize name for platform
                 name = Utils.nfcNormalized(name);
                 // save file
-                String destPath = dir().concat(File.separator).concat(name);
+                String destPath = (dir() + File.separator) + name;
                 try (InputStream zipInputStream = z.getInputStream(i)) {
                     Utils.writeToFile(zipInputStream, destPath);
                 }

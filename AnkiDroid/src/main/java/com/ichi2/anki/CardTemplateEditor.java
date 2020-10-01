@@ -801,11 +801,10 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
          */
         private void addNewTemplate(JSONObject model) {
             // Build new template
-            JSONObject newTemplate;
             int oldPosition = getArguments().getInt("position");
             JSONArray templates = model.getJSONArray("tmpls");
             JSONObject oldTemplate = templates.getJSONObject(oldPosition);
-            newTemplate = Models.newTemplate(newCardName(templates));
+            JSONObject newTemplate = Models.newTemplate(newCardName(templates));
             // Set up question & answer formats
             newTemplate.put("qfmt", oldTemplate.getString("qfmt"));
             newTemplate.put("afmt", oldTemplate.getString("afmt"));

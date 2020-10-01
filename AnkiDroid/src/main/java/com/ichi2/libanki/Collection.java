@@ -918,12 +918,10 @@ public class Collection {
     // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
     public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         long nid = note.getId();
-        int ord = -1;
-        long did;
         card.setNid(nid);
-        ord = template.getInt("ord");
+        int ord = template.getInt("ord");
         card.setOrd(ord);
-        did = mDb.queryScalar("select did from cards where nid = ? and ord = ?", nid, ord);
+        long did = mDb.queryScalar("select did from cards where nid = ? and ord = ?", nid, ord);
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
             did = template.optLong("did", 0);
@@ -1265,9 +1263,7 @@ public class Collection {
 
 
     public long getTimeLimit() {
-        long timebox = 0;
-        timebox = mConf.getLong("timeLim");
-        return timebox;
+        return mConf.getLong("timeLim");
     }
 
 
@@ -1756,9 +1752,9 @@ public class Collection {
     private ArrayList<String> deleteCardsWithMissingNotes(Runnable notifyProgress) {
         Timber.d("deleteCardsWithMissingNotes()");
         ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> ids;// cards with missing notes
         notifyProgress.run();
-        ids = mDb.queryLongList(
+        // cards with missing notes
+        ArrayList<Long> ids = mDb.queryLongList(
                 "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)");
         notifyProgress.run();
         if (ids.size() != 0) {
@@ -1772,10 +1768,9 @@ public class Collection {
     private ArrayList<String> deleteNotesWithMissingCards(Runnable notifyProgress) {
         Timber.d("deleteNotesWithMissingCards()");
         ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> ids;
         notifyProgress.run();
         // delete any notes with missing cards
-        ids = mDb.queryLongList(
+        ArrayList<Long> ids = mDb.queryLongList(
                 "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)");
         notifyProgress.run();
         if (ids.size() != 0) {
@@ -1789,8 +1784,8 @@ public class Collection {
     private ArrayList<String> deleteNotesWithWrongFieldCounts(Runnable notifyProgress, JSONObject m) throws JSONException {
         Timber.d("deleteNotesWithWrongFieldCounts");
         ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> ids;// notes with invalid field counts
-        ids = new ArrayList<>();
+        // notes with invalid field counts
+        ArrayList<Long> ids = new ArrayList<>();
         Cursor cur = null;
         try {
             notifyProgress.run();

@@ -491,8 +491,7 @@ public class Stats {
         ArrayList<int[]> dues = new ArrayList<>();
         Cursor cur = null;
         try {
-            String query;
-            query = "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk
+            String query = "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk
                     + " AS day, " // day
                     + "count(), " // all cards
                     + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards

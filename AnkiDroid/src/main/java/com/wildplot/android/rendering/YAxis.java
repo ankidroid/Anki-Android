@@ -196,7 +196,7 @@ public class YAxis implements Drawable {
         float width = fm.stringWidth(this.name);
         //arrow
 
-        float[] arowheadPos = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(plotSheet.getyRange()[1] >= this.end ? this.end : plotSheet.getyRange()[1], field)};
+        float[] arowheadPos = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(Math.min(plotSheet.getyRange()[1], this.end), field)};
         if (!this.isOnFrame) {
             g.drawLine(arowheadPos[0] - 1, arowheadPos[1] + 1, arowheadPos[0] - 3, arowheadPos[1] + 6);
             g.drawLine(arowheadPos[0] + 1, arowheadPos[1] + 1, arowheadPos[0] + 3, arowheadPos[1] + 6);

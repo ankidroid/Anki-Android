@@ -763,8 +763,7 @@ public class Sched extends SchedV2 {
 
     @Override
     protected int _rescheduleLapse(@NonNull Card card) {
-        JSONObject conf;
-        conf = _lapseConf(card);
+        JSONObject conf = _lapseConf(card);
         card.setLastIvl(card.getIvl());
         if (_resched(card)) {
             card.setLapses(card.getLapses() + 1);
@@ -861,8 +860,7 @@ public class Sched extends SchedV2 {
 
     /** Integer interval after interval factor and prev+1 constraints applied */
     private int _constrainedIvl(int ivl, @NonNull JSONObject conf, double prev) {
-    	double newIvl = ivl;
-    	newIvl = ivl * conf.optDouble("ivlFct",1.0);
+    	double newIvl = ivl * conf.optDouble("ivlFct",1.0);
         return (int) Math.max(newIvl, prev + 1);
     }
 
@@ -923,9 +921,7 @@ public class Sched extends SchedV2 {
 
 
     private List<Long> _fillDyn(@NonNull Deck deck) {
-        JSONArray terms;
-        List<Long> ids;
-        terms = deck.getJSONArray("terms").getJSONArray(0);
+        JSONArray terms = deck.getJSONArray("terms").getJSONArray(0);
         String search = terms.getString(0);
         int limit = terms.getInt(1);
         int order = terms.getInt(2);
@@ -934,7 +930,7 @@ public class Sched extends SchedV2 {
             search = String.format(Locale.US, "(%s)", search);
         }
         search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered -is:learn", search);
-        ids = mCol.findCards(search, orderlimit);
+        List<Long> ids = mCol.findCards(search, orderlimit);
         if (ids.isEmpty()) {
             return ids;
         }
@@ -998,8 +994,7 @@ public class Sched extends SchedV2 {
     /** Leech handler. True if card was a leech. */
     @Override
     protected boolean _checkLeech(@NonNull Card card, @NonNull JSONObject conf) {
-        int lf;
-        lf = conf.getInt("leechFails");
+        int lf = conf.getInt("leechFails");
         if (lf == 0) {
             return false;
         }

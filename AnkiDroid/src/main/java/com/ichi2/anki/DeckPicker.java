@@ -1831,7 +1831,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onPostExecute(Payload data) {
             mPullToSyncWrapper.setRefreshing(false);
             String dialogMessage = "";
-            String syncMessage = "";
             Timber.d("Sync Listener onPostExecute()");
             Resources res = getResources();
             try {
@@ -1842,7 +1841,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Timber.e(e, "Could not dismiss mProgressDialog. The Activity must have been destroyed while the AsyncTask was running");
                 AnkiDroidApp.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog");
             }
-            syncMessage = data.message;
+            String syncMessage = data.message;
             if (!data.success) {
                 Object[] result = (Object[]) data.result;
                 if (result[0] instanceof String) {
@@ -2555,8 +2554,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         exportDeck(mContextMenuDid);
     }
     public void exportDeck(long did) {
-        String msg;
-        msg = getResources().getString(R.string.confirm_apkg_export_deck, getCol().getDecks().get(did).getString("name"));
+        String msg = getResources().getString(R.string.confirm_apkg_export_deck, getCol().getDecks().get(did).getString("name"));
         showDialogFragment(ExportDialog.newInstance(msg, did));
     }
 
