@@ -1013,9 +1013,9 @@ public class Decks {
 
 
     private void gather(HashMap<Long, HashMap> node, List<Long> arr) {
-        for (Long did : node.keySet()) {
-            HashMap child = node.get(did);
-            arr.add(did);
+        for (Map.Entry<Long, HashMap> entry : node.entrySet()) {
+            HashMap child = entry.getValue();
+            arr.add(entry.getKey());
             gather(child, arr);
         }
     }

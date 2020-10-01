@@ -2237,7 +2237,7 @@ public class SchedV2 extends AbstractSched {
             String now;
             now = " " + context.getString(R.string.sched_unbury_action);
             sb.append("\n\n");
-            sb.append("" + context.getString(R.string.sched_has_buried) + now);
+            sb.append("").append(context.getString(R.string.sched_has_buried)).append(now);
         }
         if (mCol.getDecks().current().getInt("dyn") == 0) {
             sb.append("\n\n");

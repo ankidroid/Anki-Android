@@ -182,10 +182,10 @@ public class HttpSyncer {
             StringWriter buf = new StringWriter();
             // post vars
             mPostVars.put("c", comp != 0 ? 1 : 0);
-            for (String key : mPostVars.keySet()) {
+            for (Map.Entry<String, Object> entry : mPostVars.entrySet()) {
                 buf.write(bdry + "\r\n");
-                buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n", key,
-                        mPostVars.get(key)));
+                buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n", entry.getKey(),
+                        entry.getValue()));
             }
             tmpFileBuffer = File.createTempFile("syncer", ".tmp", new File(AnkiDroidApp.getCacheStorageDirectory()));
             FileOutputStream fos = new FileOutputStream(tmpFileBuffer);
