@@ -653,7 +653,7 @@ public class Sched extends SchedV2 {
     @Override
     protected void _resetRevCount() {
         mRevCount = _walkingCount(d -> _deckRevLimitSingle(d, true),
-                                  (did, lim) -> _cntFnRev(did, lim));
+                                  this::_cntFnRev);
     }
 
 

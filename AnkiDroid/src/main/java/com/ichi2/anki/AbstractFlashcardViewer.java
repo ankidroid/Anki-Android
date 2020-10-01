@@ -1658,7 +1658,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     protected void hideEaseButtons() {
-        Runnable after = () -> actualHideEaseButtons();
+        Runnable after = this::actualHideEaseButtons;
 
         boolean easeButtonsVisible = mEaseButtonsLayout.getVisibility() == View.VISIBLE;
         mFlipCardLayout.setClickable(true);

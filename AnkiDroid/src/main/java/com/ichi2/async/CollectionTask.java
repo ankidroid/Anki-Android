@@ -632,7 +632,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             try {
                 // param: syncIgnoresDatabaseModification
                 if (param.getBoolean()) {
-                    SyncStatus.ignoreDatabaseModification(() -> col.save());
+                    SyncStatus.ignoreDatabaseModification(col::save);
                 } else {
                     col.save();
                 }

@@ -1,6 +1,7 @@
 
 package com.ichi2.anki.dialogs;
 
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -77,7 +78,7 @@ public class ImportDialog extends AsyncDialogFragment {
                 if (fileList.size() == 0) {
                     UIUtils.showThemedToast(getActivity(),
                             getResources().getString(R.string.upgrade_import_no_file_found, "'.apkg'"), false);
-                    return builder.showListener(dialog -> dialog.cancel()).show();
+                    return builder.showListener(DialogInterface::cancel).show();
                 } else {
                     String[] tts = new String[fileList.size()];
                     final String[] importValues = new String[fileList.size()];

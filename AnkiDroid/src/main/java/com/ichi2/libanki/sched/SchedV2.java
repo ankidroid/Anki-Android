@@ -721,7 +721,7 @@ public class SchedV2 extends AbstractSched {
 
     protected void _resetNewCount() {
         mNewCount = _walkingCount((Deck g) -> _deckNewLimitSingle(g, true),
-                                  (long did, int lim) -> _cntFnNew(did, lim));
+                                  this::_cntFnNew);
     }
 
 
