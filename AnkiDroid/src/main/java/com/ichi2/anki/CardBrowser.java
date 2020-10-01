@@ -639,13 +639,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 // load up the card selected on the list
                 long clickedCardId = getCards().get(position).getId();
-                mOldCardId = clickedCardId;
-                mOldCardTopOffset = calculateTopOffset(position);
+                saveScrollingState(position);
                 openNoteEditorForCard(clickedCardId);
             }
         });
         mCardsListView.setOnItemLongClickListener((adapterView, view, position, id) -> {
             mLastSelectedPosition = position;
+            saveScrollingState(position);
             loadMultiSelectMode();
 
             // click on whole cell triggers select
@@ -1353,6 +1353,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save current search terms
         savedInstanceState.putString("mSearchTerms", mSearchTerms);
+        savedInstanceState.putLong("mOldCardId", mOldCardId);
+        savedInstanceState.putInt("mOldCardTopOffset", mOldCardTopOffset);
+        savedInstanceState.putBoolean("mShouldRestoreScroll", mShouldRestoreScroll);
+        savedInstanceState.putBoolean("mPostAutoScroll", mPostAutoScroll);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -1360,6 +1364,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mSearchTerms = savedInstanceState.getString("mSearchTerms");
+        mOldCardId = savedInstanceState.getLong("mOldCardId");
+        mOldCardTopOffset = savedInstanceState.getInt("mOldCardTopOffset");
+        mShouldRestoreScroll = savedInstanceState.getBoolean("mShouldRestoreScroll");
+        mPostAutoScroll = savedInstanceState.getBoolean("mPostAutoScroll");
         searchCards();
     }
 
@@ -1855,6 +1863,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
+    private void saveScrollingState(int position) {
+        mOldCardId = getCards().get(position).getId();
+        mOldCardTopOffset = calculateTopOffset(position);
+    }
+
     private void autoScrollTo(int newPosition) {
         mCardsListView.setSelectionFromTop(newPosition, mOldCardTopOffset);
         mPostAutoScroll = true;
@@ -1867,7 +1880,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     private int getNewPositionOfSelectedCard() {
-        if (mCards == null) {
+        if (mCards.size() == 0) {
             return CARD_NOT_AVAILABLE;
         }
         for (CardCache card : mCards) {
