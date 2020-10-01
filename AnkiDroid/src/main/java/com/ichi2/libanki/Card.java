@@ -700,7 +700,7 @@ public class Card implements Cloneable {
         } else if (getQueue() == Consts.QUEUE_TYPE_LRN) {
             date = due;
         } else if (getQueue() == Consts.QUEUE_TYPE_NEW || getType() == Consts.CARD_TYPE_NEW) {
-            return (new Long(due)).toString();
+            return (Long.valueOf(due)).toString();
         } else if (getQueue() == Consts.QUEUE_TYPE_REV || getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || (getType() == Consts.CARD_TYPE_REV && getQueue() < 0)) {
             long time = mCol.getTime().intTime();
             long nbDaySinceCreation = (due - getCol().getSched().getToday());
