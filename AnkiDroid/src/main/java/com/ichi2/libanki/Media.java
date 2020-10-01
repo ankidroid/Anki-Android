@@ -755,9 +755,9 @@ public class Media {
             }
         }
         // look for any entries in the cache that no longer exist on disk
-        for (String fname : cache.keySet()) {
-            if (!((Boolean)cache.get(fname)[2])) {
-                removed.add(fname);
+        for (Map.Entry<String, Object[]> entry : cache.entrySet()) {
+            if (!((Boolean) entry.getValue()[2])) {
+                removed.add(entry.getKey());
             }
         }
         return new Pair<>(added, removed);

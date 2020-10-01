@@ -1098,8 +1098,8 @@ public class Collection {
         // unpack fields and create dict
         Map<String, String> fields = new HashMap<>();
         Map<String, Pair<Integer, JSONObject>> fmap = Models.fieldMap(model);
-        for (String name : fmap.keySet()) {
-            fields.put(name, flist[fmap.get(name).first]);
+        for (Map.Entry<String, Pair<Integer, JSONObject>> entry : fmap.entrySet()) {
+            fields.put(entry.getKey(), flist[entry.getValue().first]);
         }
         int cardNum = ord + 1;
         fields.put("Tags", tags.trim());

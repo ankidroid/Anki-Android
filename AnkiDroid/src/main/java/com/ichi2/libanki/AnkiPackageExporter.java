@@ -173,9 +173,7 @@ class AnkiExporter extends Exporter {
         ArrayList<Long> dids = new ArrayList<>();
         if (mDid != null) {
             dids.add(mDid);
-            for (Long x : mSrc.getDecks().children(mDid).values()) {
-                dids.add(x);
-            }
+            dids.addAll(mSrc.getDecks().children(mDid).values());
         }
         JSONObject dconfs = new JSONObject();
         for (Deck d : mSrc.getDecks().all()) {

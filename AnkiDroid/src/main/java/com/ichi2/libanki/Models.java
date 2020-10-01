@@ -34,6 +34,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -288,11 +289,7 @@ public class Models {
 
     /** get all models */
     public ArrayList<Model> all() {
-        ArrayList<Model> models = new ArrayList<>();
-        for (Model jsonObject : mModels.values()) {
-            models.add(jsonObject);
-        }
-        return models;
+        return new ArrayList<>(mModels.values());
     }
 
 
@@ -910,8 +907,8 @@ public class Models {
                 String[] flds = Utils.splitFields(cur.getString(1));
                 Map<Integer, String> newflds = new HashMap<>();
 
-                for (Integer old : map.keySet()) {
-                    newflds.put(map.get(old), flds[old]);
+                for (Entry<Integer, Integer> entry : map.entrySet()) {
+                    newflds.put(entry.getValue(), flds[entry.getKey()]);
                 }
                 List<String> flds2 = new ArrayList<>();
                 for (int c = 0; c < nfields; ++c) {
@@ -1156,7 +1153,7 @@ public class Models {
         ords.remove(-1);
         if (ords.isEmpty() && allowEmpty) {
             // empty clozes use first ord
-            return new ArrayList<>(Arrays.asList(0));
+            return new ArrayList<>(Collections.singletonList(0));
         }
         return new ArrayList<>(ords);
     }

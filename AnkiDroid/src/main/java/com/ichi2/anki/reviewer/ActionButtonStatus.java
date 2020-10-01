@@ -73,8 +73,9 @@ public class ActionButtonStatus {
 
 
     public void setCustomButtons(Menu menu) {
-        for(int itemId : mCustomButtons.keySet()) {
-            if (mCustomButtons.get(itemId) != MENU_DISABLED) {
+        for(Map.Entry<Integer, Integer> entry : mCustomButtons.entrySet()) {
+            int itemId = entry.getKey();
+            if (entry.getValue() != MENU_DISABLED) {
                 MenuItem item = menu.findItem(itemId);
                 if (item == null) {
                     // Happens with TV - removing flag icon
@@ -82,7 +83,7 @@ public class ActionButtonStatus {
                     continue;
                 }
 
-                item.setShowAsAction(mCustomButtons.get(itemId));
+                item.setShowAsAction(entry.getValue());
                 Drawable icon = item.getIcon();
                 item.setEnabled(!mReviewerUi.isControlBlocked());
                 if (icon != null) {

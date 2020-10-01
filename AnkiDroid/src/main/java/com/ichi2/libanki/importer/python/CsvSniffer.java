@@ -246,8 +246,9 @@ public class CsvSniffer {
                     charFrequency.put(c, metaFrequency);
                 }
             }
-            for (char c : charFrequency.keySet()) {
-                Set<Map.Entry<Integer, Integer>> bareList = charFrequency.get(c).entrySet();
+            for (Map.Entry<Character, Map<Integer, Integer>> e : charFrequency.entrySet()) {
+                char c = e.getKey();
+                Set<Map.Entry<Integer, Integer>> bareList = e.getValue().entrySet();
 
                 List<Tuple> items = new ArrayList<>();
 
