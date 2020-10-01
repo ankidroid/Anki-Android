@@ -1847,105 +1847,125 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 Object[] result = (Object[]) data.result;
                 if (result[0] instanceof String) {
                     String resultType = (String) result[0];
-                    if ("badAuth".equals(resultType)) {
-                        // delete old auth information
-                        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-                        Editor editor = preferences.edit();
-                        editor.putString("username", "");
-                        editor.putString("hkey", "");
-                        editor.apply();
-                        // then show not logged in dialog
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
-                    } else if ("noChanges".equals(resultType)) {
-                        SyncStatus.markSyncCompleted();
-                        // show no changes message, use false flag so we don't show "sync error" as the Dialog title
-                        showSyncLogMessage(R.string.sync_no_changes_message, "");
-                    } else if ("clockOff".equals(resultType)) {
-                        long diff = (Long) result[1];
-                        if (diff >= 86100) {
-                            // The difference if more than a day minus 5 minutes acceptable by ankiweb error
-                            dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff,
-                                    res.getString(R.string.sync_log_clocks_unsynchronized_date));
-                        } else if (Math.abs((diff % 3600.0) - 1800.0) >= 1500.0) {
-                            // The difference would be within limit if we adjusted the time by few hours
-                            // It doesn't work for all timezones, but it covers most and it's a guess anyway
-                            dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff,
-                                    res.getString(R.string.sync_log_clocks_unsynchronized_tz));
-                        } else {
-                            dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff, "");
-                        }
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("fullSync".equals(resultType)) {
-                        if (getCol().isEmpty()) {
-                            // don't prompt user to resolve sync conflict if local collection empty
-                            sync(FULL_DOWNLOAD);
-                            // TODO: Also do reverse check to see if AnkiWeb collection is empty if Anki Desktop
-                            // implements it
-                        } else {
-                            // If can't be resolved then automatically then show conflict resolution dialog
-                            showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
-                        }
-                    } else if ("basicCheckFailed".equals(resultType)) {
-                        dialogMessage = res.getString(R.string.sync_basic_check_failed, res.getString(R.string.check_db));
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("dbError".equals(resultType)) {
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage);
-                    } else if ("overwriteError".equals(resultType)) {
-                        dialogMessage = res.getString(R.string.sync_overwrite_error);
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("remoteDbError".equals(resultType)) {
-                        dialogMessage = res.getString(R.string.sync_remote_db_error);
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("sdAccessError".equals(resultType)) {
-                        dialogMessage = res.getString(R.string.sync_write_access_error);
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("finishError".equals(resultType)) {
-                        dialogMessage = res.getString(R.string.sync_log_finish_error);
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("connectionError".equals(resultType)) {
-                        dialogMessage = res.getString(R.string.sync_connection_error);
-                        if (result.length >= 1 && result[1] instanceof Exception) {
-                            dialogMessage += "\n\n" + ((Exception)result[1]).getLocalizedMessage();
-                        }
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("IOException".equals(resultType)) {
-                        handleDbError();
-                    } else if ("genericError".equals(resultType)) {
-                        dialogMessage = res.getString(R.string.sync_generic_error);
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("OutOfMemoryError".equals(resultType)) {
-                        dialogMessage = res.getString(R.string.error_insufficient_memory);
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("sanityCheckError".equals(resultType)) {
-                        dialogMessage = res.getString(R.string.sync_sanity_failed);
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
-                                joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("serverAbort".equals(resultType)) {
-                        // syncMsg has already been set above, no need to fetch it here.
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("mediaSyncServerError".equals(resultType)) {
-                        dialogMessage = res.getString(R.string.sync_media_error_check);
-                        showSyncErrorDialog(SyncErrorDialog.DIALOG_MEDIA_SYNC_ERROR,
-                                joinSyncMessages(dialogMessage, syncMessage));
-                    } else if ("customSyncServerUrl".equals(resultType)) {
-                        String url = result.length > 1 && result[1] instanceof CustomSyncServerUrlException
-                                ? ((CustomSyncServerUrlException)result[1]).getUrl() : "unknown";
-                        dialogMessage = res.getString(R.string.sync_error_invalid_sync_server, url);
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
-                    } else {
-                        if (result.length > 1 && result[1] instanceof Integer) {
-                            int code = (Integer) result[1];
-                            dialogMessage = rewriteError(code);
-                            if (dialogMessage == null) {
-                                dialogMessage = res.getString(R.string.sync_log_error_specific,
-                                        Integer.toString(code), result[2]);
+                    switch (resultType) {
+                        case "badAuth":
+                            // delete old auth information
+                            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+                            Editor editor = preferences.edit();
+                            editor.putString("username", "");
+                            editor.putString("hkey", "");
+                            editor.apply();
+                            // then show not logged in dialog
+                            showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC);
+                            break;
+                        case "noChanges":
+                            SyncStatus.markSyncCompleted();
+                            // show no changes message, use false flag so we don't show "sync error" as the Dialog title
+                            showSyncLogMessage(R.string.sync_no_changes_message, "");
+                            break;
+                        case "clockOff":
+                            long diff = (Long) result[1];
+                            if (diff >= 86100) {
+                                // The difference if more than a day minus 5 minutes acceptable by ankiweb error
+                                dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff,
+                                        res.getString(R.string.sync_log_clocks_unsynchronized_date));
+                            } else if (Math.abs((diff % 3600.0) - 1800.0) >= 1500.0) {
+                                // The difference would be within limit if we adjusted the time by few hours
+                                // It doesn't work for all timezones, but it covers most and it's a guess anyway
+                                dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff,
+                                        res.getString(R.string.sync_log_clocks_unsynchronized_tz));
+                            } else {
+                                dialogMessage = res.getString(R.string.sync_log_clocks_unsynchronized, diff, "");
                             }
-                        } else if (result[0] instanceof String) {
-                            dialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(-1), result[0]);
-                        } else {
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "fullSync":
+                            if (getCol().isEmpty()) {
+                                // don't prompt user to resolve sync conflict if local collection empty
+                                sync(FULL_DOWNLOAD);
+                                // TODO: Also do reverse check to see if AnkiWeb collection is empty if Anki Desktop
+                                // implements it
+                            } else {
+                                // If can't be resolved then automatically then show conflict resolution dialog
+                                showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION);
+                            }
+                            break;
+                        case "basicCheckFailed":
+                            dialogMessage = res.getString(R.string.sync_basic_check_failed, res.getString(R.string.check_db));
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "dbError":
+                            showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CORRUPT_COLLECTION, syncMessage);
+                            break;
+                        case "overwriteError":
+                            dialogMessage = res.getString(R.string.sync_overwrite_error);
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "remoteDbError":
+                            dialogMessage = res.getString(R.string.sync_remote_db_error);
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "sdAccessError":
+                            dialogMessage = res.getString(R.string.sync_write_access_error);
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "finishError":
+                            dialogMessage = res.getString(R.string.sync_log_finish_error);
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "connectionError":
+                            dialogMessage = res.getString(R.string.sync_connection_error);
+                            if (result.length >= 1 && result[1] instanceof Exception) {
+                                dialogMessage += "\n\n" + ((Exception) result[1]).getLocalizedMessage();
+                            }
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "IOException":
+                            handleDbError();
+                            break;
+                        case "genericError":
                             dialogMessage = res.getString(R.string.sync_generic_error);
-                        }
-                        showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "OutOfMemoryError":
+                            dialogMessage = res.getString(R.string.error_insufficient_memory);
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "sanityCheckError":
+                            dialogMessage = res.getString(R.string.sync_sanity_failed);
+                            showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_SANITY_ERROR,
+                                    joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "serverAbort":
+                            // syncMsg has already been set above, no need to fetch it here.
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "mediaSyncServerError":
+                            dialogMessage = res.getString(R.string.sync_media_error_check);
+                            showSyncErrorDialog(SyncErrorDialog.DIALOG_MEDIA_SYNC_ERROR,
+                                    joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        case "customSyncServerUrl":
+                            String url = result.length > 1 && result[1] instanceof CustomSyncServerUrlException
+                                    ? ((CustomSyncServerUrlException) result[1]).getUrl() : "unknown";
+                            dialogMessage = res.getString(R.string.sync_error_invalid_sync_server, url);
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
+                        default:
+                            if (result.length > 1 && result[1] instanceof Integer) {
+                                int code = (Integer) result[1];
+                                dialogMessage = rewriteError(code);
+                                if (dialogMessage == null) {
+                                    dialogMessage = res.getString(R.string.sync_log_error_specific,
+                                            Integer.toString(code), result[2]);
+                                }
+                            } else if (result[0] instanceof String) {
+                                dialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(-1), result[0]);
+                            } else {
+                                dialogMessage = res.getString(R.string.sync_generic_error);
+                            }
+                            showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage));
+                            break;
                     }
                 } else {
                     dialogMessage = res.getString(R.string.sync_generic_error);
