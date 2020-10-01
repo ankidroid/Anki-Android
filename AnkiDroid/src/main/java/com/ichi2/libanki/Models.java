@@ -309,8 +309,7 @@ public class Models {
 	// not in python. Thus the method has to be renamed.
     public Model newModel(String name) {
         // caller should call save() after modifying
-        Model m;
-        m = new Model(defaultModel);
+        Model m = new Model(defaultModel);
         m.put("name", name);
         m.put("mod", mCol.getTime().intTime());
         m.put("flds", new JSONArray());
@@ -431,8 +430,7 @@ public class Models {
      */
 
     public JSONObject newField(String name) {
-        JSONObject f;
-        f = new JSONObject(defaultField);
+        JSONObject f = new JSONObject(defaultField);
         f.put("name", name);
         return f;
     }
@@ -686,8 +684,7 @@ public class Models {
      */
 
     public static JSONObject newTemplate(String name) {
-        JSONObject t;
-        t = new JSONObject(defaultTemplate);
+        JSONObject t = new JSONObject(defaultTemplate);
         t.put("name", name);
         return t;
     }
@@ -896,12 +893,10 @@ public class Models {
 
     private void _changeNotes(long[] nids, Model newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<>();
-        int nfields;
-        long mid;
-        nfields = newModel.getJSONArray("flds").length();
-        mid = newModel.getLong("id");
+        int nfields = newModel.getJSONArray("flds").length();
+        long mid = newModel.getLong("id");
         try (Cursor cur = mCol.getDb().getDatabase().query(
-                "select id, flds from notes where id in ".concat(Utils.ids2str(nids)), null)) {
+                "select id, flds from notes where id in " + Utils.ids2str(nids), null)) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 String[] flds = Utils.splitFields(cur.getString(1));
@@ -930,15 +925,12 @@ public class Models {
         List<Object[]> d = new ArrayList<>();
         List<Long> deleted = new ArrayList<>();
         Cursor cur = null;
-        int omType;
-        int nmType;
-        int nflds;
-        omType = oldModel.getInt("type");
-        nmType = newModel.getInt("type");
-        nflds = newModel.getJSONArray("tmpls").length();
+        int omType = oldModel.getInt("type");
+        int nmType = newModel.getInt("type");
+        int nflds = newModel.getJSONArray("tmpls").length();
         try {
             cur = mCol.getDb().getDatabase().query(
-                    "select id, ord from cards where nid in ".concat(Utils.ids2str(nids)), null);
+                    "select id, ord from cards where nid in " + Utils.ids2str(nids), null);
             while (cur.moveToNext()) {
                 // if the src model is a cloze, we ignore the map, as the gui doesn't currently
                 // support mapping them
@@ -1005,8 +997,7 @@ public class Models {
         }
         JSONArray req = new JSONArray();
         ArrayList<String> flds = new ArrayList<>();
-        JSONArray fields;
-        fields = m.getJSONArray("flds");
+        JSONArray fields = m.getJSONArray("flds");
         for (int i = 0; i < fields.length(); i++) {
             flds.add(fields.getJSONObject(i).getString("name"));
         }
@@ -1131,8 +1122,7 @@ public class Models {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
         Set<Integer> ords = new HashSet<>();
         List<String> matches = new ArrayList<>();
-        Matcher mm;
-        mm = fClozePattern1.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
+        Matcher mm = fClozePattern1.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
         while (mm.find()) {
             matches.add(mm.group(1));
         }
@@ -1184,8 +1174,7 @@ public class Models {
     public HashMap<Long, HashMap<Integer, String>> getTemplateNames() {
         HashMap<Long, HashMap<Integer, String>> result = new HashMap<>();
         for (Model m : mModels.values()) {
-            JSONArray templates;
-            templates = m.getJSONArray("tmpls");
+            JSONArray templates = m.getJSONArray("tmpls");
             HashMap<Integer, String> names = new HashMap<>();
             for (int i = 0; i < templates.length(); i++) {
                 JSONObject t = templates.getJSONObject(i);

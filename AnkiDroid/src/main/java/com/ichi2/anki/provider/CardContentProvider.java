@@ -403,8 +403,7 @@ public class CardContentProvider extends ContentProvider {
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Deck.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
                 List<DeckDueTreeNode> allDecks = col.getSched().deckDueList();
-                long deckId;
-                deckId = Long.parseLong(uri.getPathSegments().get(1));
+                long deckId = Long.parseLong(uri.getPathSegments().get(1));
                 for (DeckDueTreeNode deck : allDecks) {
                     if(deck.getDid() == deckId){
                         addDeckToCursor(deckId, deck.getFullDeckName(), getDeckCountsFromDueTreeNode(deck), rv, col, columns);
@@ -1398,10 +1397,8 @@ public class CardContentProvider extends ContentProvider {
     }
 
     private Card getCardFromUri(Uri uri, Collection col) {
-        long noteId;
-        int ord;
-        noteId = Long.parseLong(uri.getPathSegments().get(1));
-        ord = Integer.parseInt(uri.getPathSegments().get(3));
+        long noteId = Long.parseLong(uri.getPathSegments().get(1));
+        int ord = Integer.parseInt(uri.getPathSegments().get(3));
         return getCard(noteId, ord, col);
     }
 
@@ -1420,8 +1417,7 @@ public class CardContentProvider extends ContentProvider {
     }
 
     private Note getNoteFromUri(Uri uri, Collection col) {
-        long noteId;
-        noteId = Long.parseLong(uri.getPathSegments().get(1));
+        long noteId = Long.parseLong(uri.getPathSegments().get(1));
         return col.getNote(noteId);
     }
 

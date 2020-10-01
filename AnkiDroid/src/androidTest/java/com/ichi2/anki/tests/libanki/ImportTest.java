@@ -95,8 +95,6 @@ public class ImportTest extends InstrumentedTest {
 
     @Test
     public void testAnki2Mediadupes() throws IOException, JSONException, ImportExportException {
-        List<String> expected;
-        List<String> actual;
 
         // add a note that references a sound
         Note n = testCol.newNote();
@@ -104,8 +102,7 @@ public class ImportTest extends InstrumentedTest {
         long mid = n.model().getLong("id");
         testCol.addNote(n);
         // add that sound to the media folder
-        FileOutputStream os;
-        os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.mp3"), false);
+        FileOutputStream os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.mp3"), false);
         os.write("foo".getBytes());
         os.close();
         testCol.close();
@@ -113,8 +110,8 @@ public class ImportTest extends InstrumentedTest {
         Collection empty = getEmptyCol();
         Importer imp = new Anki2Importer(empty, testCol.getPath());
         imp.run();
-        expected = Collections.singletonList("foo.mp3");
-        actual = Arrays.asList(new File(empty.getMedia().dir()).list());
+        List<String> expected = Collections.singletonList("foo.mp3");
+        List<String> actual = Arrays.asList(new File(empty.getMedia().dir()).list());
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
         // and importing again will not duplicate, as the file content matches
@@ -158,13 +155,11 @@ public class ImportTest extends InstrumentedTest {
 
     @Test
     public void testApkg() throws IOException, ImportExportException {
-        List<String> expected;
-        List<String> actual;
 
         String apkg = Shared.getTestFilePath(getTestContext(), "media.apkg");
         Importer imp = new AnkiPackageImporter(testCol, apkg);
-        expected = Collections.emptyList();
-        actual = Arrays.asList(new File(testCol.getMedia().dir()).list());
+        List<String> expected = Collections.emptyList();
+        List<String> actual = Arrays.asList(new File(testCol.getMedia().dir()).list());
         actual.retainAll(expected);
         assertEquals(actual.size(), expected.size());
         imp.run();
@@ -182,8 +177,7 @@ public class ImportTest extends InstrumentedTest {
         assertEquals(expected.size(), actual.size());
         // but if the local file has different data, it will rename
         testCol.remCards(testCol.getDb().queryLongList("select id from cards"));
-        FileOutputStream os;
-        os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.wav"), false);
+        FileOutputStream os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.wav"), false);
         os.write("xyz".getBytes());
         os.close();
         imp = new AnkiPackageImporter(testCol, apkg);

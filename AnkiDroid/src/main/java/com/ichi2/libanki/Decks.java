@@ -723,9 +723,8 @@ public class Decks {
      * Create a new configuration and return id.
      */
     public long confId(String name, String cloneFrom) {
-        DeckConfig c;
         long id;
-        c = new DeckConfig(cloneFrom);
+        DeckConfig c = new DeckConfig(cloneFrom);
         do {
             id = mCol.getTime().intTimeMS();
         } while (mDconf.containsKey(id));
@@ -999,8 +998,7 @@ public class Decks {
      * need to sort on behalf of select().
      */
     public TreeMap<String, Long> children(long did) {
-        String name;
-        name = get(did).getString("name");
+        String name = get(did).getString("name");
         TreeMap<String, Long> actv = new TreeMap<>();
         for (Deck g : all()) {
             if (g.getString("name").startsWith(name + "::")) {

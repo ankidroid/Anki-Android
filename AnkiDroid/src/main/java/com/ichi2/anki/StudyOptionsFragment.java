@@ -556,10 +556,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     // Reinitialize controls incase changed to filtered deck
                     initAllContentViews(mStudyOptionsView);
                     // Set the deck name
-                    String fullName;
                     Deck deck = getCol().getDecks().current();
                     // Main deck name
-                    fullName = deck.getString("name");
+                    String fullName = deck.getString("name");
                     String[] name = Decks.path(fullName);
                     StringBuilder nameBuilder = new StringBuilder();
                     if (name.length > 0) {

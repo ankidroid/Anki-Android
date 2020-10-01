@@ -49,7 +49,6 @@ public class SeekBarPreference extends android.preference.DialogPreference imple
 
     @Override
     protected View onCreateDialogView() {
-        LinearLayout.LayoutParams params;
         LinearLayout layout = new LinearLayout(mContext);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(6, 6, 6, 6);
@@ -57,7 +56,7 @@ public class SeekBarPreference extends android.preference.DialogPreference imple
         mValueText = new TextView(mContext);
         mValueText.setGravity(Gravity.CENTER_HORIZONTAL);
         mValueText.setTextSize(32);
-        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         layout.addView(mValueText, params);
 
@@ -75,7 +74,7 @@ public class SeekBarPreference extends android.preference.DialogPreference imple
         mSeekBar.setProgress((mValue - mMin) / mInterval);
 
         String t = String.valueOf(mValue);
-        mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));
+        mValueText.setText(mSuffix == null ? t : t + mSuffix);
         return layout;
     }
 
@@ -104,7 +103,7 @@ public class SeekBarPreference extends android.preference.DialogPreference imple
         if (fromTouch) {
             mValue = (value * mInterval) + mMin;
             String t = String.valueOf(mValue);
-            mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));
+            mValueText.setText(mSuffix == null ? t : t + mSuffix);
         }
     }
 

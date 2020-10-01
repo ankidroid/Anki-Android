@@ -433,8 +433,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
 
     private void stopAllTasks() {
-        AsyncTask<?, ?, ?> t;
-        t = mPostTranslation;
+        AsyncTask<?, ?, ?> t = mPostTranslation;
         TaskOperations.stopTaskGracefully(t);
         t = mPostPronunciation;
         TaskOperations.stopTaskGracefully(t);

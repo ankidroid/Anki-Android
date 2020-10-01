@@ -93,7 +93,6 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     protected void onCollectionLoaded(Collection col) {
         Timber.d("onCollectionLoaded()");
         super.onCollectionLoaded(col);
-        SlidingTabLayout slidingTabLayout;
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = getCol().getDecks().allSorted();
         ActionBar actionBar = getSupportActionBar();
@@ -124,7 +123,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         mViewPager = findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(8);
-        slidingTabLayout = findViewById(R.id.sliding_tabs);
+        SlidingTabLayout slidingTabLayout = findViewById(R.id.sliding_tabs);
         slidingTabLayout.setViewPager(mViewPager);
 
         // Dirty way to get text size from a TextView with current style, change if possible

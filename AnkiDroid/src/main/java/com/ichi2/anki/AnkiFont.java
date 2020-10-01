@@ -55,7 +55,7 @@ public class AnkiFont {
         List<String> attributes = new ArrayList<>();
 
         if (fromAssets) {
-            path = fAssetPathPrefix.concat(fontfile.getName());
+            path = fAssetPathPrefix + fontfile.getName();
         }
         Typeface tf = getTypeface(ctx, path);
         if (tf == null) {

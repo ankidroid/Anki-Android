@@ -3570,8 +3570,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         String errorMsg = getString(R.string.anki_js_error_code, errorCode);
 
         View parentLayout = findViewById(android.R.id.content);
-        String snackbarMsg;
-        snackbarMsg = getString(R.string.api_version_developer_contact, mCardSuppliedDeveloperContact, errorMsg);
+        String snackbarMsg = getString(R.string.api_version_developer_contact, mCardSuppliedDeveloperContact, errorMsg);
 
         Snackbar snackbar = Snackbar.make(parentLayout, snackbarMsg, Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();

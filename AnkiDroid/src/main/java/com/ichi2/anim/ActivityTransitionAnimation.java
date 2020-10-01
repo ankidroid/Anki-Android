@@ -42,6 +42,6 @@ public class ActivityTransitionAnimation {
         UP,
         DOWN,
         DIALOG_EXIT,
-        NONE;
+        NONE
     }
 }

@@ -76,8 +76,7 @@ public class MediaTest extends InstrumentedTest {
         BackupManager.removeDir(dir);
         assertTrue(dir.mkdirs());
         File path = new File(dir, "foo.jpg");
-        FileOutputStream os;
-        os = new FileOutputStream(path, false);
+        FileOutputStream os = new FileOutputStream(path, false);
         os.write("hello".getBytes());
         os.close();
         // new file, should preserve name
@@ -96,11 +95,9 @@ public class MediaTest extends InstrumentedTest {
     @Test
     public void testStrings() {
         Long mid = testCol.getModels().getModels().entrySet().iterator().next().getKey();
-        List<String> expected;
-        List<String> actual;
 
-        expected = Collections.emptyList();
-        actual = testCol.getMedia().filesInStr(mid, "aoeu");
+        List<String> expected = Collections.emptyList();
+        List<String> actual = testCol.getMedia().filesInStr(mid, "aoeu");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
@@ -166,16 +163,13 @@ public class MediaTest extends InstrumentedTest {
         f.setField(1, "<img src='fake2.png'>");
         testCol.addNote(f);
         // and add another file which isn't used
-        FileOutputStream os;
-        os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.jpg"), false);
+        FileOutputStream os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.jpg"), false);
         os.write("test".getBytes());
         os.close();
         // check media
         List<List<String>> ret = testCol.getMedia().check();
-        List<String> expected;
-        List<String> actual;
-        expected = Collections.singletonList("fake2.png");
-        actual = ret.get(0);
+        List<String> expected = Collections.singletonList("fake2.png");
+        List<String> actual = ret.get(0);
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
         expected = Collections.singletonList("foo.jpg");
@@ -200,8 +194,7 @@ public class MediaTest extends InstrumentedTest {
         // add a file
         File dir = getTestDir();
         File path = new File(dir, "foo.jpg");
-        FileOutputStream os;
-        os = new FileOutputStream(path, false);
+        FileOutputStream os = new FileOutputStream(path, false);
         os.write("hello".getBytes());
         os.close();
         path = new File(testCol.getMedia().dir(), testCol.getMedia().addFile(path));

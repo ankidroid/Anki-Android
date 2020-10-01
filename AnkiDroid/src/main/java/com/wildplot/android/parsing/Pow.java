@@ -34,9 +34,8 @@ public class Pow implements TreeElement {
             this.powType = PowType.INVALID;
             return;
         }
-        boolean isReady;
 
-        isReady = initAsAtom(powString);
+        boolean isReady = initAsAtom(powString);
         if (!isReady) {
             isReady = initAsAtomPowFactor(powString);
         }
