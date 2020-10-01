@@ -298,35 +298,50 @@ public class Finder {
                 String[] spl = token.split(":", 2);
                 String cmd = spl[0].toLowerCase(Locale.US);
                 String val = spl[1];
-                
-                if ("added".equals(cmd)) {
-                    s.add(_findAdded(val));
-                } else if ("card".equals(cmd)) {
-                    s.add(_findTemplate(val));
-                } else if ("deck".equals(cmd)) {
-                    s.add(_findDeck(val));
-                } else if ("flag".equals(cmd)) {
-                    s.add(_findFlag(val));
-                } else if ("mid".equals(cmd)) {
-                    s.add(_findMid(val));
-                } else if ("nid".equals(cmd)) {
-                    s.add(_findNids(val));
-                } else if ("cid".equals(cmd)) {
-                    s.add(_findCids(val));
-                } else if ("note".equals(cmd)) {
-                    s.add(_findModel(val));
-                } else if ("prop".equals(cmd)) {
-                    s.add(_findProp(val));
-                } else if ("rated".equals(cmd)) {
-                    s.add(_findRated(val));
-                } else if ("tag".equals(cmd)) {
-                    s.add(_findTag(val, args));
-                } else if ("dupe".equals(cmd)) {
-                    s.add(_findDupes(val));
-                } else if ("is".equals(cmd)) {
-                    s.add(_findCardState(val));
-                } else {
-                    s.add(_findField(cmd, val));
+
+                switch (cmd) {
+                    case "added":
+                        s.add(_findAdded(val));
+                        break;
+                    case "card":
+                        s.add(_findTemplate(val));
+                        break;
+                    case "deck":
+                        s.add(_findDeck(val));
+                        break;
+                    case "flag":
+                        s.add(_findFlag(val));
+                        break;
+                    case "mid":
+                        s.add(_findMid(val));
+                        break;
+                    case "nid":
+                        s.add(_findNids(val));
+                        break;
+                    case "cid":
+                        s.add(_findCids(val));
+                        break;
+                    case "note":
+                        s.add(_findModel(val));
+                        break;
+                    case "prop":
+                        s.add(_findProp(val));
+                        break;
+                    case "rated":
+                        s.add(_findRated(val));
+                        break;
+                    case "tag":
+                        s.add(_findTag(val, args));
+                        break;
+                    case "dupe":
+                        s.add(_findDupes(val));
+                        break;
+                    case "is":
+                        s.add(_findCardState(val));
+                        break;
+                    default:
+                        s.add(_findField(cmd, val));
+                        break;
                 }
             // normal text search
             } else {
