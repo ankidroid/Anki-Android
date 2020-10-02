@@ -10,7 +10,6 @@ package com.ichi2.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -20,7 +19,8 @@ import android.widget.TextView;
 
 import com.ichi2.anki.AnkiDroidApp;
 
-public class SeekBarPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+public class SeekBarPreference extends android.preference.DialogPreference implements SeekBar.OnSeekBarChangeListener {
     private static final String androidns = "http://schemas.android.com/apk/res/android";
 
     private SeekBar mSeekBar;
