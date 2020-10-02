@@ -371,4 +371,12 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         }
         return clone;
     }
+
+    public static JSONObject fromMap(Map<String, Boolean> map) {
+        JSONObject ret = new JSONObject();
+        for (Map.Entry<String, Boolean> i : map.entrySet()) {
+            ret.put(i.getKey(), i.getValue());
+        }
+        return ret;
+    }
 }
