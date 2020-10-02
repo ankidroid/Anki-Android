@@ -19,7 +19,6 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.text.format.Formatter;
 
 import androidx.annotation.NonNull;
@@ -232,6 +231,7 @@ public class CollectionHelper {
      * external storage directory.
      * @return the folder path
      */
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     public static String getDefaultAnkiDroidDirectory() {
         return new File(Environment.getExternalStorageDirectory(), "AnkiDroid").getAbsolutePath();
     }
@@ -249,7 +249,7 @@ public class CollectionHelper {
      * @return the absolute path to the AnkiDroid directory.
      */
     public static String getCurrentAnkiDroidDirectory(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         return PreferenceExtensions.getOrSetString(
                 preferences,
                 "deckPath",

@@ -29,10 +29,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
 import android.view.KeyEvent;
@@ -697,6 +693,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     }
 
     @Override
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             closeWithResult();
@@ -714,14 +711,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     }
 
     // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference)
+    public boolean onPreferenceTreeClick(android.preference.PreferenceScreen preferenceScreen, android.preference.Preference preference)
     {
         super.onPreferenceTreeClick(preferenceScreen, preference);
-        if (preference instanceof PreferenceScreen &&
-                ((PreferenceScreen) preference).getDialog() != null) {
-                    ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(
+        if (preference instanceof android.preference.PreferenceScreen &&
+                ((android.preference.PreferenceScreen) preference).getDialog() != null) {
+                    ((android.preference.PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(
                             this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
         }
 
@@ -759,12 +756,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     }
 
 
-    @SuppressWarnings("deprecation") // Tracked as #5019 on github
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     protected void updateSummaries() {
         Resources res = getResources();
         // for all text preferences, set summary as current database value
         for (String key : mPref.mValues.keySet()) {
-            Preference pref = this.findPreference(key);
+            android.preference.Preference pref = this.findPreference(key);
             if ("deckConf".equals(key)) {
                 String groupName = getOptionsGroupName();
                 int count = getOptionsGroupCount();
@@ -777,10 +774,10 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             String value = null;
             if (pref == null) {
                 continue;
-            } else if (pref instanceof CheckBoxPreference) {
+            } else if (pref instanceof android.preference.CheckBoxPreference) {
                 continue;
-            } else if (pref instanceof ListPreference) {
-                ListPreference lp = (ListPreference) pref;
+            } else if (pref instanceof android.preference.ListPreference) {
+                android.preference.ListPreference lp = (android.preference.ListPreference) pref;
                 value = lp.getEntry() != null ? lp.getEntry().toString() : "";
             } else {
                 value = this.mPref.getString(key, "");
@@ -804,9 +801,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     }
 
 
-    @SuppressWarnings("deprecation") // Tracked as #5019 on github
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     protected void buildLists() {
-        ListPreference deckConfPref = (ListPreference) findPreference("deckConf");
+        android.preference.ListPreference deckConfPref = (android.preference.ListPreference) findPreference("deckConf");
         ArrayList<DeckConfig> confs = mCol.getDecks().allConf();
         Collections.sort(confs, NamedJSONComparator.instance);
         String[] confValues = new String[confs.size()];
@@ -820,12 +817,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         deckConfPref.setEntryValues(confValues);
         deckConfPref.setValue(mPref.getString("deckConf", "0"));
 
-        ListPreference newOrderPref = (ListPreference) findPreference("newOrder");
+        android.preference.ListPreference newOrderPref = (android.preference.ListPreference) findPreference("newOrder");
         newOrderPref.setEntries(R.array.new_order_labels);
         newOrderPref.setEntryValues(R.array.new_order_values);
         newOrderPref.setValue(mPref.getString("newOrder", "0"));
 
-        ListPreference leechActPref = (ListPreference) findPreference("lapLeechAct");
+        android.preference.ListPreference leechActPref = (android.preference.ListPreference) findPreference("lapLeechAct");
         leechActPref.setEntries(R.array.leech_action_labels);
         leechActPref.setEntryValues(R.array.leech_action_values);
         leechActPref.setValue(mPref.getString("lapLeechAct", new Integer(Consts.LEECH_SUSPEND).toString()));

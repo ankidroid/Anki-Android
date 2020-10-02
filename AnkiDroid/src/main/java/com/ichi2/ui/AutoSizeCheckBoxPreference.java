@@ -18,7 +18,6 @@ package com.ichi2.ui;
 
 import android.content.Context;
 import android.os.Build;
-import android.preference.CheckBoxPreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,8 @@ import androidx.annotation.RequiresApi;
 
 // extending androidx.preference didn't work:
 // java.lang.ClassCastException: com.ichi2.ui.AutoSizeCheckBoxPreference cannot be cast to android.preference.Preference
-public class AutoSizeCheckBoxPreference extends CheckBoxPreference {
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+public class AutoSizeCheckBoxPreference extends android.preference.CheckBoxPreference {
     @SuppressWarnings("unused")
     public AutoSizeCheckBoxPreference(Context context) {
         super(context);

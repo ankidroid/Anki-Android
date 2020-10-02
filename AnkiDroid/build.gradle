@@ -208,11 +208,11 @@ dependencies {
     // Can possibly remove if upstream PR merges https://github.com/JakeWharton/timber/pull/398
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:20.0.0'
+            force 'org.jetbrains:annotations:20.1.0'
         }
     }
 
-    compileOnly 'org.jetbrains:annotations:20.0.0'
+    compileOnly 'org.jetbrains:annotations:20.1.0'
     compileOnly "com.google.auto.service:auto-service-annotations:1.0-rc7"
     annotationProcessor "com.google.auto.service:auto-service:1.0-rc7"
 
@@ -256,7 +256,7 @@ dependencies {
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.6.2'
-    testImplementation 'org.mockito:mockito-inline:3.5.7'
+    testImplementation 'org.mockito:mockito-inline:3.5.9'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
     testImplementation "org.robolectric:robolectric:4.3.1"

@@ -26,10 +26,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
@@ -391,6 +387,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     }
 
     @Override
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             closeDeckOptions();
@@ -446,14 +443,14 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
         mAllowCommit = false;
         // for all text preferences, set summary as current database value
         for (String key : mPref.mValues.keySet()) {
-            Preference pref = this.findPreference(key);
+            android.preference.Preference pref = this.findPreference(key);
             String value;
             if (pref == null) {
                 continue;
-            } else if (pref instanceof CheckBoxPreference) {
+            } else if (pref instanceof android.preference.CheckBoxPreference) {
                 continue;
-            } else if (pref instanceof ListPreference) {
-                ListPreference lp = (ListPreference) pref;
+            } else if (pref instanceof android.preference.ListPreference) {
+                android.preference.ListPreference lp = (android.preference.ListPreference) pref;
                 CharSequence entry = lp.getEntry();
                 if (entry != null) {
                     value = entry.toString();
@@ -464,8 +461,8 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                 value = this.mPref.getString(key, "");
             }
             // update value for EditTexts
-            if (pref instanceof EditTextPreference) {
-                ((EditTextPreference) pref).setText(value);
+            if (pref instanceof android.preference.EditTextPreference) {
+                ((android.preference.EditTextPreference) pref).setText(value);
             }
             // update summary
             if (!mPref.mSummaries.containsKey(key)) {
@@ -485,7 +482,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
     @SuppressWarnings("deprecation") // Tracked as #5019 on github
     protected void buildLists() {
-        ListPreference newOrderPref = (ListPreference) findPreference("order");
+        android.preference.ListPreference newOrderPref = (android.preference.ListPreference) findPreference("order");
         newOrderPref.setEntries(R.array.cram_deck_conf_order_labels);
         newOrderPref.setEntryValues(R.array.cram_deck_conf_order_values);
         newOrderPref.setValue(mPref.getString("order", "0"));

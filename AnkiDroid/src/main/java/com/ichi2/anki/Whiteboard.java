@@ -260,7 +260,7 @@ public class Whiteboard extends View {
         // To fix issue #1336, just make the whiteboard big and square.
         final Point p = getDisplayDimenions();
         int bitmapSize = Math.max(p.x, p.y);
-        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_4444);
+        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888);
     }
 
     private void drawStart(float x, float y) {
@@ -486,6 +486,7 @@ public class Whiteboard extends View {
         return mCurrentlyDrawing;
     }
 
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     protected String saveWhiteboard(Time time) throws FileNotFoundException {
 
         Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
