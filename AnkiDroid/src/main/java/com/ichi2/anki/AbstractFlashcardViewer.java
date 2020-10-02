@@ -88,7 +88,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
@@ -3684,8 +3683,6 @@ see card.js for available functions
 
     public class JavaScriptFunction {
 
-        private final Gson mGson = new Gson();
-
         // if supplied api version match then enable api
         private void enableJsApi() {
             for (String api : mApiList) {
@@ -3708,13 +3705,13 @@ see card.js for available functions
                         enableJsApi();
                     }
 
-                    apiStatusJson = mGson.toJson(mJsApiListMap);
+                    apiStatusJson = JSONObject.fromMap(mJsApiListMap).toString();
                 }
 
             } catch (JSONException j) {
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, getString(R.string.invalid_json_data, j.getLocalizedMessage()), false);
             }
-            return String.valueOf(apiStatusJson);
+            return apiStatusJson;
         }
 
         // This method and the one belows return "default" values when there is no count nor ETA.
