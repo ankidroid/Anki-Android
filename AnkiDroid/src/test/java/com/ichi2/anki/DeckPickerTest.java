@@ -14,7 +14,6 @@ import com.ichi2.libanki.sched.AbstractSched;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.annotation.LooperMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +28,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-@LooperMode(LooperMode.Mode.PAUSED)
 public class DeckPickerTest extends RobolectricTest {
 
     @Test
@@ -171,8 +169,10 @@ public class DeckPickerTest extends RobolectricTest {
         }
         // This set a card as current card
         sched.getCard();
+        ensureCollectionLoadIsSynchronous();
         try (ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class)) {
             scenario.onActivity(deckPicker -> {
+                advanceRobolectricLooper();
                 assertEquals(10, deckPicker.mDueTree.get(0).getNewCount());
             });
         }
