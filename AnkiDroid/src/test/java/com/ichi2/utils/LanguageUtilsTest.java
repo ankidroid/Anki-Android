@@ -37,6 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isOneOf;
 
 @RunWith(AndroidJUnit4.class)
 @Config(sdk = { Build.VERSION_CODES.JELLY_BEAN,
@@ -116,9 +117,10 @@ public class LanguageUtilsTest extends RobolectricTest {
     public void localeThreeLetterRegionalVariantResolves() {
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
                 LanguageUtil.getLocale("yue-TW").getDisplayName(),
-                is("yue (Taiwan)"));
+                isOneOf("yue (Taiwan)", "Cantonese (Taiwan)"));
+        
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
                 LanguageUtil.getLocale("yue_TW").getDisplayName(),
-                is("yue (Taiwan)"));
+                isOneOf("yue (Taiwan)", "Cantonese (Taiwan)"));
     }
 }
