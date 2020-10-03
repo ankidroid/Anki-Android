@@ -500,6 +500,17 @@ public class MetaDB {
         }
     }
 
+    public static void close() {
+        if (mMetaDb != null) {
+            try {
+                mMetaDb.close();
+            } catch (Exception e) {
+                Timber.w(e, "Failed to close MetaDB");
+            }
+        }
+    }
+
+
     private static class DatabaseUtil {
         private static boolean getScalarBoolean(Cursor cur) {
             if (cur.moveToNext()) {
