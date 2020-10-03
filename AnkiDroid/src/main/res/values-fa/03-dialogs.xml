@@ -192,6 +192,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">دیتابیس قفل است</string>
     <string name="database_locked_summary">نرم‌افزاری دیگر در حال استفاده از دیتابیس آنکی‌دروید است. لطفاً نرم افزار دیگر را ببندید سپس آنکی‌دروید را باز کنید.</string>
+    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">تصویر پس‌زمینه اعمال شد</string>
     <string name="background_image_removed">تصویر پس‌زمینه حذف شد</string>

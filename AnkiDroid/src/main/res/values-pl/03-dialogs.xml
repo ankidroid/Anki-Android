@@ -159,13 +159,13 @@
     <string name="check_media_no_unused_missing">Nie znaleziono nie używanych ani brakujących plików.</string>
     <string name="check_media_db_updated">Baza mediów przebudowana.</string>
     <string name="check_media_delete_unused">Usuń nieużywane</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
+    <string name="delete_media_message">Usuwanie mediów&#8230;</string>
     <string name="delete_media_result_title">Deletion result</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="few">%d files deleted</item>
-        <item quantity="many">%d files deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">Usunięto %d plik</item>
+        <item quantity="few">Usunięto %d pliki</item>
+        <item quantity="many">Usunięto %d plików</item>
+        <item quantity="other">Usunięto %d plików</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Wszystkie karty</string>
@@ -204,6 +204,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Baza danych zablokowana</string>
     <string name="database_locked_summary">Baza danych AnkiDroid jest teraz używana przez inną aplikację. Zamknij drugą aplikację, a następnie ponownie otwórz AnkiDroid.</string>
+    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Ustawiono obraz w tle</string>
     <string name="background_image_removed">Obraz w tle usunięty</string>
