@@ -58,6 +58,8 @@ public class AnalyticsTest {
 
     @Before
     public void setUp() {
+        UsageAnalytics.resetForTests();
+
         MockitoAnnotations.openMocks(this);
 
         when(mMockResources.getBoolean(R.bool.ga_anonymizeIp))
