@@ -71,8 +71,8 @@
         <item quantity="one">%d ᱫᱤᱱ %d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
         <item quantity="other">%d ᱫᱤᱱ %d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">ᱴᱩᱢᱟᱹᱞ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
+    <string name="no_cards_placeholder_description">+ᱟᱭᱠᱚᱱ ᱵᱮᱵᱷᱟᱵᱨ ᱠᱟᱛᱮ\nᱠᱟᱰ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱦᱚᱵ ᱢᱮ ᱾</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">%1$d ᱠᱟᱰ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱰᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
@@ -81,7 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">ᱛᱮᱞᱟ ᱴᱟᱭᱯ ᱢᱮ</string>
     <string name="show_answer">ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">ᱛᱮᱞᱟ ᱩᱠᱩᱭ ᱢᱮ</string>
     <string name="ease_button_again">ᱟᱨᱦᱚᱸ</string>
     <string name="ease_button_hard">ᱠᱚᱰᱟ</string>
     <string name="ease_button_good">ᱵᱮᱥ</string>
@@ -154,11 +154,11 @@
     <string name="time_quantity_months">%.1f ᱪᱟᱸᱫᱚ</string>
     <string name="time_quantity_years">%.1f ᱥᱮᱨᱢᱟ</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱫᱩᱦᱲᱟᱹ ᱛᱮᱭᱟ&#8230;</string>
     <string name="rebuild_cram_label">ᱯᱩᱱᱚᱨᱼᱛᱮᱭᱟᱨ</string>
     <string name="empty_cram_label">ᱵᱟ.ᱱᱩᱜᱟ</string>
     <string name="create_subdeck">ᱥᱚᱵᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱠᱷᱟᱹᱞᱤᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="custom_study_deck_name">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣᱜ ᱥᱚᱢᱚᱭ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="custom_study_deck_exists">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ ᱰᱮᱠ ᱟᱜ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>

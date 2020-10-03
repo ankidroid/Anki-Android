@@ -50,23 +50,23 @@
         <item>Odpowiedź lepsza niż zalecana</item>
         <item>Cofnij</item>
         <item>Edytuj notatkę</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
+        <item>Ustaw tagi</item>
+        <item>Wyróżnij notatkę</item>
         <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
+        <item>Zakop kartę</item>
+        <item>Zawieś kartę</item>
+        <item>Usuń notatkę</item>
+        <item>Odtwarzaj</item>
+        <item>Przerwij naukę</item>
+        <item>Zakop notatkę</item>
+        <item>Zawieś notatkę</item>
+        <item>Włącz/wyłącz czerwoną flagę</item>
+        <item>Włącz/wyłącz pomarańczową flagę</item>
+        <item>Włącz/wyłącz zieloną flagę</item>
+        <item>Włącz/wyłącz niebieską flagę</item>
+        <item>Usuń flagę</item>
+        <item>Przewiń w górę</item>
+        <item>Przewiń w dół</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Zawieś kartę</item>

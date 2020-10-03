@@ -147,11 +147,11 @@
     <string name="check_media_no_unused_missing">Nessun file inutilizzato o mancante trovato.</string>
     <string name="check_media_db_updated">Database media ricostruito.</string>
     <string name="check_media_delete_unused">Elimina inutilizzati</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">Eliminando media&#8230;</string>
+    <string name="delete_media_result_title">Eliminazione risultato</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d file eliminato</item>
+        <item quantity="other">%d file eliminati</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Tutte le carte</string>
@@ -190,6 +190,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Banca dati bloccata</string>
     <string name="database_locked_summary">La banca dati di AnkiDroid è in uso da un\'altra applicazione. Chiudi l\'altra applicazione e riapri AnkiDroid.</string>
+    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Immagine di sfondo applicata</string>
     <string name="background_image_removed">Immagine di sfondo rimossa</string>
