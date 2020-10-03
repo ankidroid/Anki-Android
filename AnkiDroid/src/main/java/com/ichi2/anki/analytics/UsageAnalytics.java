@@ -38,6 +38,7 @@ import org.acra.ACRA;
 import org.acra.util.Installation;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public class UsageAnalytics {
@@ -358,5 +359,10 @@ public class UsageAnalytics {
 
     public static class Category {
         public static final String SYNC = "Sync";
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE) // TOOD: Make this package-protected
+    public static void resetForTests() {
+        sAnalytics = null;
     }
 }
