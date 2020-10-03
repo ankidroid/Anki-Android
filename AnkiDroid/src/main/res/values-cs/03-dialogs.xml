@@ -204,6 +204,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Databáze uzamčena</string>
     <string name="database_locked_summary">Databázi AnkiDroid používá jiná aplikace. Zavřete prosím druhou aplikaci a znovu otevřete AnkiDroid.</string>
+    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Obrázek na pozadí byl použit</string>
     <string name="background_image_removed">Obrázek na pozadí byl odstraněn</string>
