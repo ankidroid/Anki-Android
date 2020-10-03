@@ -38,7 +38,6 @@ import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -46,7 +45,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.AssumptionViolatedException;
 import org.junit.Before;
-import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowDialog;
@@ -63,11 +61,15 @@ import androidx.test.core.app.ApplicationProvider;
 import timber.log.Timber;
 
 import static android.os.Looper.getMainLooper;
-import static com.ichi2.anki.UIUtils.getDayStart;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.robolectric.Shadows.shadowOf;
 
 public class RobolectricTest {
+
+    static {
+        // we need to override java.sql.Time and java.sql.Timestamp
+        System.setSecurityManager(null);
+    }
 
     private final ArrayList<ActivityController> controllersForCleanup = new ArrayList<>();
 
@@ -163,16 +165,22 @@ public class RobolectricTest {
         return dialog.getContentView().getText().toString();
     }
 
-    // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
+    // Robolectric needs a manual advance with the new PAUSED looper mode
     protected void advanceRobolectricLooper() {
+        shadowOf(getMainLooper()).runToEndOfTasks();
         shadowOf(getMainLooper()).idle();
+        shadowOf(getMainLooper()).runToEndOfTasks();
+    }
+    // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
+    protected void advanceRobolectricLooperWithSleep() {
+        advanceRobolectricLooper();
         try { Thread.sleep(500); } catch (Exception e) { Timber.e(e); }
-
+        advanceRobolectricLooper();
     }
 
     /** This can probably be implemented in a better manner */
     protected void waitForAsyncTasksToComplete() {
-        advanceRobolectricLooper();
+        advanceRobolectricLooperWithSleep();
     }
 
 
@@ -226,6 +234,8 @@ public class RobolectricTest {
     protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
         ActivityController<T> controller = Robolectric.buildActivity(clazz, i)
                 .create().start().resume().visible();
+        advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
         saveControllerForCleanup(controller);
         return controller.get();
     }
@@ -305,8 +315,6 @@ public class RobolectricTest {
     }
 
 
-
-
     protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
         waitForTask(taskType, null, timeoutMs);
     }
@@ -334,9 +342,10 @@ public class RobolectricTest {
             }
         };
         CollectionTask.launchCollectionTask(taskType, listener, data);
-
+        advanceRobolectricLooper();
 
         wait(timeoutMs);
+        advanceRobolectricLooper();
 
         if (!completed[0]) {
             throw new IllegalStateException(String.format("Task %s didn't finish in %d ms", taskType, timeoutMs));
@@ -360,7 +369,7 @@ public class RobolectricTest {
      * @see org.junit.matchers.JUnitMatchers
      */
     public <T> void assumeThat(T actual, Matcher<T> matcher) {
-        this.advanceRobolectricLooper();
+        this.advanceRobolectricLooperWithSleep();
         Assume.assumeThat(actual, matcher);
     }
 
@@ -382,7 +391,7 @@ public class RobolectricTest {
      * @see org.junit.matchers.JUnitMatchers
      */
     public <T> void assumeThat(String message, T actual, Matcher<T> matcher) {
-        this.advanceRobolectricLooper();
+        this.advanceRobolectricLooperWithSleep();
         Assume.assumeThat(message, actual, matcher);
     }
 
@@ -396,7 +405,7 @@ public class RobolectricTest {
      * @param message A message to pass to {@link AssumptionViolatedException}.
      */
     public void assumeTrue(String message, boolean b) {
-        this.advanceRobolectricLooper();
+        this.advanceRobolectricLooperWithSleep();
         Assume.assumeTrue(message, b);
     }
 }

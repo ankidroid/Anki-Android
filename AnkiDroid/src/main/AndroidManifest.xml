@@ -66,6 +66,7 @@
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:banner="@drawable/tv_banner"
+        android:requestLegacyExternalStorage="true"
         >
         <activity
             android:name="com.ichi2.anki.IntentHandler"

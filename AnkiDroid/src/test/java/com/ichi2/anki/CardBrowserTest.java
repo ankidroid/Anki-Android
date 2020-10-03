@@ -76,6 +76,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void selectAllIsNotVisibleOnceCalled() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         selectMenuItem(browser, R.id.action_select_all);
+        advanceRobolectricLooper();
         assertThat(browser.isShowingSelectAll(), is(false));
     }
 
@@ -83,13 +84,16 @@ public class CardBrowserTest extends RobolectricTest {
     public void selectNoneIsVisibleOnceSelectAllCalled() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         selectMenuItem(browser, R.id.action_select_all);
+        advanceRobolectricLooper();
         assertThat(browser.isShowingSelectNone(), is(true));
     }
 
     @Test
     public void selectNoneIsVisibleWhenSelectingOne() {
         CardBrowser browser = getBrowserWithMultipleNotes();
+        advanceRobolectricLooperWithSleep();
         selectOneOfManyCards(browser);
+        advanceRobolectricLooperWithSleep();
         assertThat(browser.isShowingSelectNone(), is(true));
     }
 
@@ -129,6 +133,7 @@ public class CardBrowserTest extends RobolectricTest {
         //Sometimes an async operation deletes a card, we clear the data and rerender it to simulate this
         deleteCardAtPosition(browser, 0);
         AnkiAssert.assertDoesNotThrow(browser::rerenderAllCards);
+        advanceRobolectricLooperWithSleep();
         assertThat(browser.cardCount(), equalTo(5L));
     }
 
@@ -222,6 +227,7 @@ public class CardBrowserTest extends RobolectricTest {
         AnkiAssert.assertDoesNotThrow(() -> b.changeDeck(deckPosition));
 
         //assert
+        advanceRobolectricLooperWithSleep();
         for (Long cardId : cardIds) {
             assertThat("Deck should be changed", getCol().getCard(cardId).getDid(), is(deckIdToChangeTo));
         }
@@ -291,6 +297,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         CardBrowser b = getBrowserWithNoNewCards();
         b.filterByTag("sketchy::(1)");
+        advanceRobolectricLooperWithSleep();
 
         assertThat("tagged card should be returned", b.getCardCount(), is(1));
     }
@@ -378,12 +385,15 @@ public class CardBrowserTest extends RobolectricTest {
 
 
     private CardBrowser getBrowserWithNotes(int count) {
+        ensureCollectionLoadIsSynchronous();
         for(int i = 0; i < count; i ++) {
             addNoteUsingBasicModel(Integer.toString(i), "back");
         }
         ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
-                .create().start().resume().visible();
+                .create().start();
+        multimediaController.resume().visible();
         saveControllerForCleanup(multimediaController);
+        advanceRobolectricLooperWithSleep();
         return multimediaController.get();
     }
 
@@ -393,9 +403,12 @@ public class CardBrowserTest extends RobolectricTest {
 
     @CheckReturnValue
     private CardBrowser getBrowserWithNoNewCards() {
+        ensureCollectionLoadIsSynchronous();
         ActivityController<CardBrowser> multimediaController = Robolectric.buildActivity(CardBrowser.class, new Intent())
-                .create().start().resume().visible();
+                .create().start();
+        multimediaController.resume().visible();
         saveControllerForCleanup(multimediaController);
+        advanceRobolectricLooperWithSleep();
         return multimediaController.get();
     }
 }

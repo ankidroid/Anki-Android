@@ -16,8 +16,6 @@
 
 package com.ichi2.anki;
 
-import com.ichi2.libanki.Sound;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -107,11 +105,18 @@ public class ReadTextTest extends RobolectricTest{
     @Test
     public void SaveValue() {
         assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is(""));
-        MetaDB.storeLanguage(getTargetContext(), 1, 1, QUESTION, "French");
+        storeLanguage(1, "French");
         assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is("French"));
-        MetaDB.storeLanguage(getTargetContext(), 1, 1, QUESTION, "German");
+        storeLanguage(1, "German");
         assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is("German"));
-        MetaDB.storeLanguage(getTargetContext(), 2, 1, QUESTION, "English");
+        storeLanguage(2, "English");
         assertThat(MetaDB.getLanguage(getTargetContext(), 2, 1, QUESTION), is("English"));
+    }
+
+
+    protected void storeLanguage(int i, String french) {
+        MetaDB.storeLanguage(getTargetContext(), i, 1, QUESTION, french);
+        advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
     }
 }
