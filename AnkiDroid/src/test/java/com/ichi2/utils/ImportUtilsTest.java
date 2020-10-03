@@ -76,10 +76,8 @@ public class ImportUtilsTest extends RobolectricTest {
 
     private String importValidFile(String fileName) {
         TestFileImporter testFileImporter = new TestFileImporter(fileName);
-
         Intent intent = getValidClipDataUri(fileName);
-        Context mockContext = spy(getTargetContext());
-        testFileImporter.handleFileImport(mockContext, intent);
+        testFileImporter.handleFileImport(getTargetContext(), intent);
         String cacheFileName = testFileImporter.getCacheFileName();
 
         if (cacheFileName == null) {
@@ -89,6 +87,7 @@ public class ImportUtilsTest extends RobolectricTest {
         //COULD_BE_BETTER: Strip off the file path
         return cacheFileName;
     }
+
 
     @Test
     public void collectionApkgIsValid() {
