@@ -134,7 +134,6 @@ public class Info extends AnkiActivity {
                 Button continueButton = (findViewById(R.id.right_button));
                 continueButton.setText(res.getString(R.string.dialog_continue));
                 continueButton.setOnClickListener((arg) -> close());
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 webView.loadUrl("file:///android_asset/changelog.html");
                 break;
             }
