@@ -360,6 +360,17 @@ public class ReadText {
         }
     }
 
+
+    public static void closeForTests() {
+        if (mTts != null) {
+            mTts.shutdown();
+        }
+        mTts = null;
+        MetaDB.close();
+        System.gc();
+    }
+
+
     interface ReadTextListener{
         void onDone();
     }
