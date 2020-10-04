@@ -34,6 +34,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.ui.FixedTextView;
 
 import java.io.File;
 import java.io.InputStream;
@@ -69,7 +70,7 @@ public class BasicAudioClipFieldController extends FieldControllerBase implement
 
         layout.addView(mBtnLibrary, ViewGroup.LayoutParams.MATCH_PARENT);
 
-        mTvAudioClip = new TextView(mActivity);
+        mTvAudioClip = new FixedTextView(mActivity);
         if (mField.getAudioPath() == null) {
             mTvAudioClip.setVisibility(View.GONE);
         } else {

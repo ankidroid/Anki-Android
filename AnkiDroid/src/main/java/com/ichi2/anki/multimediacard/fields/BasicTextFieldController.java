@@ -37,6 +37,7 @@ import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.ui.FixedTextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         createCloneButton(layoutTools, p);
         createClearButton(layoutTools, p);
         // search label
-        TextView mSearchLabel = new TextView(mActivity);
+        TextView mSearchLabel = new FixedTextView(mActivity);
         mSearchLabel.setText(R.string.multimedia_editor_text_field_editing_search_label);
         layout.addView(mSearchLabel);
         // search buttons

@@ -13,11 +13,11 @@
         android:orientation="vertical"
         android:gravity="left|center_vertical"
         android:layout_toLeftOf="@+id/card_browser_my_search_remove_button">
-        <TextView android:id="@+id/card_browser_my_search_name_textview"
+        <com.ichi2.ui.FixedTextView android:id="@+id/card_browser_my_search_name_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"/>
-        <TextView android:id="@+id/card_browser_my_search_terms_textview"
+        <com.ichi2.ui.FixedTextView android:id="@+id/card_browser_my_search_terms_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13sp"/>

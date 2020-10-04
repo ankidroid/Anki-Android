@@ -31,7 +31,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
-                    <TextView
+                    <com.ichi2.ui.FixedTextView
                         android:id="@+id/CardEditorModelText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
-                    <TextView
+                    <com.ichi2.ui.FixedTextView
                         android:id="@+id/CardEditorDeckText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                         android:layout_gravity="center"
                         android:gravity="center" >
 
-                        <TextView
+                        <com.ichi2.ui.FixedTextView
                             android:id="@+id/CardEditorTagText"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                         android:layout_gravity="center"
                         android:gravity="center" >
 
-                        <TextView
+                        <com.ichi2.ui.FixedTextView
                             android:id="@+id/CardEditorCardsText"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"

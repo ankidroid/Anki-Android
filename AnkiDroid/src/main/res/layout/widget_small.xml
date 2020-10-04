@@ -27,7 +27,7 @@
         android:orientation="horizontal"
         android:padding="4dip" >
 
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/widget_due"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:textSize="18sp"
             android:visibility="invisible" />
 
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/widget_eta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

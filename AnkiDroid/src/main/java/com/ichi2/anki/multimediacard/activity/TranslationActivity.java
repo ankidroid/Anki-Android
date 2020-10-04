@@ -48,6 +48,7 @@ import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.async.Connection;
 import com.ichi2.libanki.Utils;
+import com.ichi2.ui.FixedTextView;
 import com.ichi2.utils.AdaptionUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -119,11 +120,11 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
         LinearLayout linearLayout = findViewById(R.id.MainLayoutInTranslationActivity);
 
-        TextView tv = new TextView(this);
+        TextView tv = new FixedTextView(this);
         tv.setText(getText(R.string.multimedia_editor_trans_poweredglosbe));
         linearLayout.addView(tv);
 
-        TextView tvFrom = new TextView(this);
+        TextView tvFrom = new FixedTextView(this);
         tvFrom.setText(getText(R.string.multimedia_editor_trans_from));
         linearLayout.addView(tvFrom);
 
@@ -136,7 +137,7 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         mSpinnerFrom.setAdapter(adapter);
         linearLayout.addView(mSpinnerFrom);
 
-        TextView tvTo = new TextView(this);
+        TextView tvTo = new FixedTextView(this);
         tvTo.setText(getText(R.string.multimedia_editor_trans_to));
         linearLayout.addView(tvTo);
 

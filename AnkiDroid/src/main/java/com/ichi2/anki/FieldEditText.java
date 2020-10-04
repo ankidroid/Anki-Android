@@ -20,6 +20,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import timber.log.Timber;
 
 import com.ichi2.themes.Themes;
+import com.ichi2.ui.FixedTextView;
 
 import java.util.Objects;
 
@@ -81,7 +82,7 @@ public class FieldEditText extends AppCompatEditText {
 
 
     public TextView getLabel() {
-        TextView label = new TextView(this.getContext());
+        TextView label = new FixedTextView(this.getContext());
         label.setText(mName);
         return label;
     }

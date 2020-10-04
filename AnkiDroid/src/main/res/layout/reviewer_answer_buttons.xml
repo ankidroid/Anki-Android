@@ -29,7 +29,7 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/preview_flip_flashcard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,12 +84,12 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
+                <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime1"
                     style="@style/AgainButtonTimeStyle"
                     tools:text="&lt; 10 min" />
 
-                <TextView
+                <com.ichi2.ui.FixedTextView
                     android:id="@+id/ease1"
                     android:text="@string/ease_button_again"
                     style="@style/AgainButtonEaseStyle"/>
@@ -106,12 +106,12 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
+                <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime2"
                     style="@style/HardButtonTimeStyle"
                     tools:text="2 d" />
 
-                <TextView
+                <com.ichi2.ui.FixedTextView
                     android:id="@+id/ease2"
                     android:text="@string/ease_button_hard"
                     style="@style/HardButtonEaseStyle" />
@@ -128,12 +128,12 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
+                <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime3"
                     style="@style/GoodButtonTimeStyle"
                     tools:text="3 d" />
 
-                <TextView
+                <com.ichi2.ui.FixedTextView
                     android:id="@+id/ease3"
                     android:text="@string/ease_button_good"
                     style="@style/GoodButtonEaseStyle"/>
@@ -149,12 +149,12 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
+                <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime4"
                     style="@style/EasyButtonTimeStyle"
                     tools:text="4 d" />
 
-                <TextView
+                <com.ichi2.ui.FixedTextView
                     android:id="@+id/ease4"
                     android:text="@string/ease_button_easy"
                     style="@style/EasyButtonEaseStyle" />

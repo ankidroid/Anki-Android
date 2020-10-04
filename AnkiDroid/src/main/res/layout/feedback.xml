@@ -38,7 +38,7 @@
         android:fadeScrollbars="false"
         android:fillViewport="true" >
 
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:id="@+id/tvFeedbackDisclaimer"

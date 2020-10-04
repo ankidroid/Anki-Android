@@ -41,7 +41,7 @@
                         android:layout_above="@id/today_stats_text_view"
                         android:scrollbars="vertical" />
 
-                    <TextView
+                    <com.ichi2.ui.FixedTextView
                         android:id="@+id/today_stats_text_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                         android:layout_gravity="center_horizontal"
                         app:srcCompat="@drawable/anki_box" />
 
-                    <TextView
+                    <com.ichi2.ui.FixedTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -73,7 +73,7 @@
                         android:text="@string/no_cards_placeholder_title"
                         style="@style/TextAppearance.AppCompat.Medium" />
 
-                    <TextView
+                    <com.ichi2.ui.FixedTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"

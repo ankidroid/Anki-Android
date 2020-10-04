@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingTop="12dp" >
     <!-- Front -->
-    <TextView
+    <com.ichi2.ui.FixedTextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -34,7 +34,7 @@
         </LinearLayout>
     </ScrollView>
     <!-- Styling -->
-    <TextView
+    <com.ichi2.ui.FixedTextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -62,7 +62,7 @@
         </LinearLayout>
     </ScrollView>
     <!-- Back -->
-    <TextView
+    <com.ichi2.ui.FixedTextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

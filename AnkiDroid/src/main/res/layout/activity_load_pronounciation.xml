@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
+    <com.ichi2.ui.FixedTextView
         android:id="@+id/textViewPoweredBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
