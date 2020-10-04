@@ -85,6 +85,7 @@
     <attr name="stats_counts" format="color"/>
     <attr name="stats_unseen" format="color"/>
     <attr name="stats_suspended_and_buried" format="color"/>
+    <attr name="stats_buried" format="color"/>
     <attr name="stats_cumulative" format="color"/>
     <!-- Reviewer other colors -->
     <attr name="topBarColor" format="color"/>
