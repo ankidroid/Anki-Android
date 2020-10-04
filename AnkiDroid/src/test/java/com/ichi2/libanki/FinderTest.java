@@ -19,6 +19,7 @@ package com.ichi2.libanki;
 import android.util.Pair;
 
 import com.ichi2.anki.RobolectricTest;
+import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONObject;
@@ -55,7 +56,7 @@ public class FinderTest extends RobolectricTest {
 
     @Test
     @Config(qualifiers = "en")
-    public void searchForBuriedReturnsManuallyAndSiblingBuried() {
+    public void searchForBuriedReturnsManuallyAndSiblingBuried() throws ConfirmModSchemaException {
         final String searchQuery = "is:buried";
 
         SchedV2 sched = upgradeToSchedV2();  //needs to be first

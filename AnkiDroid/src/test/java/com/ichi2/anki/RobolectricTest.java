@@ -275,10 +275,8 @@ public class RobolectricTest {
     }
 
 
-    protected SchedV2 upgradeToSchedV2() {
-        getCol().getConf().put("schedVer", 2);
-        getCol().setMod();
-        CollectionHelper.getInstance().closeCollection(true, "upgradeToSchedV2");
+    protected SchedV2 upgradeToSchedV2() throws ConfirmModSchemaException {
+        getCol().changeSchedulerVer(2);
 
         AbstractSched sched = getCol().getSched();
         //Sched inherits from schedv2...
