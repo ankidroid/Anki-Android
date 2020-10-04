@@ -57,7 +57,6 @@
     <string name="delete_cards_title">नोट मिटाएँ?</string>
     <string name="delete_card_message">इस नोट के सारे पत्ते मिटाएँ?\nखोज फ़ील्ड: %s</string>
     <string name="delete_card_mult_message">सभी चयनित नोटों के सभी कार्ड हटाएं? \n (केवल चयनित कार्ड नहीं)</string>
-    <string name="deleted_message">नोट हटाए गए</string>
     <string name="changed_deck_message">%s में चले गए</string>
     <string name="card_browser_suspended_cards">अनिलंबित कार्ड</string>
     <string name="card_browser_show_marked">चिह्नित नोटों को छानें</string>
@@ -102,4 +101,8 @@
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="one">%d card deleted</item>
+        <item quantity="other">%d cards deleted</item>
+    </plurals>
 </resources>

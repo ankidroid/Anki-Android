@@ -57,7 +57,6 @@
     <string name="delete_cards_title">Excluir notas?</string>
     <string name="delete_card_message">Excluir todos os cartões desta nota?\nCampo de busca: %s</string>
     <string name="delete_card_mult_message">Excluir todos os cartões de todas as notas selecionadas?\n(Não apenas os cartões selecionados)</string>
-    <string name="deleted_message">Notas excluídas</string>
     <string name="changed_deck_message">Movido para %s</string>
     <string name="card_browser_suspended_cards">cartas suspensas / não suspensas</string>
     <string name="card_browser_show_marked">Filtrar marcadas</string>
@@ -102,4 +101,8 @@
     <string name="card_browser_no_cards_in_deck">Nenhuma carta encontrada no deck ‘%s\'</string>
     <string name="card_browser_search_all_decks">Pesquisar em todos os baralhos</string>
     <string name="card_browser_unknown_deck_name">Desconhecido</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="one">%d card deleted</item>
+        <item quantity="other">%d cards deleted</item>
+    </plurals>
 </resources>

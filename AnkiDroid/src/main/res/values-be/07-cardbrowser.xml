@@ -59,7 +59,6 @@
     <string name="delete_cards_title">Выдаліць нататкі?</string>
     <string name="delete_card_message">Выдаліць усе карткі гэтай нататкі?\nПоле пошука: %s</string>
     <string name="delete_card_mult_message">Выдаліць усе карткі ўсіх выбраных нататак?\n(Не толькі выбраных картак)</string>
-    <string name="deleted_message">Нататак выдалена</string>
     <string name="changed_deck_message">Перамешчана ў %s</string>
     <string name="card_browser_suspended_cards">Адноўлена (прыпынена) картак</string>
     <string name="card_browser_show_marked">Фільтраваць пазначаныя</string>
@@ -104,4 +103,10 @@
     <string name="card_browser_no_cards_in_deck">У калодзе \'%s\' картак не знойдзена</string>
     <string name="card_browser_search_all_decks">Шукаць ва ўсіх калодах</string>
     <string name="card_browser_unknown_deck_name">Невядома</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="one">%d card deleted</item>
+        <item quantity="few">%d cards deleted</item>
+        <item quantity="many">%d cards deleted</item>
+        <item quantity="other">%d cards deleted</item>
+    </plurals>
 </resources>

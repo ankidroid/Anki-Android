@@ -57,7 +57,6 @@
     <string name="delete_cards_title">Elimina note?</string>
     <string name="delete_card_message">Vuoi veramente eliminare tutte le carte di questa nota?\nCampo di ricerca: %s</string>
     <string name="delete_card_mult_message">Elimina tutte le carte di tutte le note selezionate?\n(Non solo le carte selezionate)</string>
-    <string name="deleted_message">Note eliminate</string>
     <string name="changed_deck_message">Spostato in %s</string>
     <string name="card_browser_suspended_cards">carte sospese/riattivate</string>
     <string name="card_browser_show_marked">Filtra contrassegnate</string>
@@ -102,4 +101,8 @@
     <string name="card_browser_no_cards_in_deck">Nessuna carta trovata nel mazzo «%s»</string>
     <string name="card_browser_search_all_decks">Cerca tutti i mazzi</string>
     <string name="card_browser_unknown_deck_name">Sconosciuto</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="one">%d card deleted</item>
+        <item quantity="other">%d cards deleted</item>
+    </plurals>
 </resources>

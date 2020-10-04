@@ -56,7 +56,6 @@
     <string name="delete_cards_title">노트를 삭제할까요?</string>
     <string name="delete_card_message">이 노트에 포함된 모든 카드를 삭제할까요?\n검색창: %s</string>
     <string name="delete_card_mult_message">선택된 모든 노트들의 모든 카드를 삭제할까요?\n(선택된 카드 뿐만 아니라 모든 카드가 삭제됩니다.)</string>
-    <string name="deleted_message">노트가 삭제되었습니다.</string>
     <string name="changed_deck_message">%s로 이동되었습니다.</string>
     <string name="card_browser_suspended_cards">(비)활성화된 카드</string>
     <string name="card_browser_show_marked">표시된 카드 필터링</string>
@@ -101,4 +100,7 @@
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="other">%d cards deleted</item>
+    </plurals>
 </resources>

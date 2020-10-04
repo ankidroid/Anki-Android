@@ -56,7 +56,6 @@
     <string name="delete_cards_title">Hapus catatan?</string>
     <string name="delete_card_message">Hapus semua kartu dari catatan ini?\n Bidang pencarian: %s</string>
     <string name="delete_card_mult_message">Hapus semua kartu dari catatan yang dipilih?\n(tidak hanya kartu yang dipilih)</string>
-    <string name="deleted_message">Catatan dihapus</string>
     <string name="changed_deck_message">Dipindah ke %s</string>
     <string name="card_browser_suspended_cards">kartu (batal)ditangguhkan</string>
     <string name="card_browser_show_marked">Filter ditandai</string>
@@ -101,4 +100,7 @@
     <string name="card_browser_no_cards_in_deck">Tidak ada kartu ditemukan di dek ‘%s’</string>
     <string name="card_browser_search_all_decks">Cari seluruh dek</string>
     <string name="card_browser_unknown_deck_name">Tak diketahui</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="other">%d cards deleted</item>
+    </plurals>
 </resources>

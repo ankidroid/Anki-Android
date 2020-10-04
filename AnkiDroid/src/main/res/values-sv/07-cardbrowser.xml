@@ -57,7 +57,6 @@
     <string name="delete_cards_title">Ta bort not?</string>
     <string name="delete_card_message">Vill du verkligen radera samtliga kort från denna not?\nSökfält: %s</string>
     <string name="delete_card_mult_message">Ta bort alla kort för alla markerade noter?\n(Inte enbart markerade kort)</string>
-    <string name="deleted_message">Not borttagen</string>
     <string name="changed_deck_message">Flyttad till %s</string>
     <string name="card_browser_suspended_cards">(åter-)aktiverade kort</string>
     <string name="card_browser_show_marked">Filtrera markerade</string>
@@ -102,4 +101,8 @@
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="one">%d card deleted</item>
+        <item quantity="other">%d cards deleted</item>
+    </plurals>
 </resources>

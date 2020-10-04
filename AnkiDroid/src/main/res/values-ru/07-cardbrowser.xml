@@ -59,7 +59,6 @@
     <string name="delete_cards_title">Удалить записи?</string>
     <string name="delete_card_message">Удалить все карты этой записи?\nПоле поиска: %s</string>
     <string name="delete_card_mult_message">Удалить все карточки всех выбранных записей?\n(Не только выбранных карточек)</string>
-    <string name="deleted_message">Записи удалены</string>
     <string name="changed_deck_message">Перемещено в %s</string>
     <string name="card_browser_suspended_cards">исключённые карточки</string>
     <string name="card_browser_show_marked">Отфильтровать отмеченные</string>
@@ -104,4 +103,10 @@
     <string name="card_browser_no_cards_in_deck">В колоде «%s» не найдено карточек</string>
     <string name="card_browser_search_all_decks">Искать во всех колодах</string>
     <string name="card_browser_unknown_deck_name">Неизвестно</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="one">%d card deleted</item>
+        <item quantity="few">%d cards deleted</item>
+        <item quantity="many">%d cards deleted</item>
+        <item quantity="other">%d cards deleted</item>
+    </plurals>
 </resources>
