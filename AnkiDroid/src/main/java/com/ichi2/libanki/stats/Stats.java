@@ -1295,8 +1295,8 @@ public class Stats {
         mTitle = R.string.stats_cards_types;
         mBackwards = false;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
-        mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended_and_buried};
-        mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended_and_buried };
+        mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended_and_buried, R.string.statistics_buried};
+        mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended_and_buried, R.attr.stats_buried };
         mType = type;
         double[] pieData;
         Cursor cur = null;
@@ -1304,7 +1304,8 @@ public class Stats {
                 "sum(case when queue=" + Consts.QUEUE_TYPE_REV + " and ivl >= 21 then 1 else 0 end), -- mtr\n" +
                 "sum(case when queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") or (queue=" + Consts.QUEUE_TYPE_REV + " and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
                 "sum(case when queue=" + Consts.QUEUE_TYPE_NEW + " then 1 else 0 end), -- new\n" +
-                "sum(case when queue<0 then 1 else 0 end) -- susp\n" +
+                "sum(case when queue=" + Consts.QUEUE_TYPE_SUSPENDED + " then 1 else 0 end), -- susp\n" +
+                "sum(case when queue in (" + Consts.QUEUE_TYPE_MANUALLY_BURIED + "," + Consts.QUEUE_TYPE_SIBLING_BURIED + ") then 1 else 0 end) -- buried\n" +
                 "from cards where did in " + _limit();
         Timber.d("CardsTypes query: %s", query);
 
@@ -1314,7 +1315,7 @@ public class Stats {
                     .query(query, null);
 
             cur.moveToFirst();
-            pieData = new double[]{ cur.getDouble(0), cur.getDouble(1), cur.getDouble(2), cur.getDouble(3) };
+            pieData = new double[]{ cur.getDouble(0), cur.getDouble(1), cur.getDouble(2), cur.getDouble(3), cur.getDouble(4) };
         } finally {
             if (cur != null && !cur.isClosed()) {
                 cur.close();
@@ -1335,7 +1336,7 @@ public class Stats {
 //            list.add(new double[] { Math.max(12, list.get(list.size() - 1)[0] + 1), 0, 0 });
 //        }
 
-        mSeriesList = new double[1][4];
+        mSeriesList = new double[1][5];
         mSeriesList[0] = pieData;
         mFirstElement = 0.5;
         mLastElement = 9.5;
