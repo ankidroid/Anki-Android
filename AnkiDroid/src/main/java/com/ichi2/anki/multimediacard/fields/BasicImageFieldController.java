@@ -60,6 +60,7 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
+import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
 import com.ichi2.utils.Permissions;
@@ -294,7 +295,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         mImagePreview.setMaxHeight((int) Math.round(height * 0.4));
         mImagePreview.setMaxWidth((int) Math.round(width * 0.6));
 
-        mImageFileSize = new EditText(context);
+        mImageFileSize = new FixedEditText(context);
         mImageFileSize.setMaxWidth((int) Math.round(width * 0.6));
         mImageFileSize.setEnabled(false);
         mImageFileSize.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -303,7 +304,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         //#5513 - Image compression failed, but we'll confuse most users if we tell them that. Instead, just imply that
         //there's an action that they can take.
-        mImageFileSizeWarning = new EditText(context);
+        mImageFileSizeWarning = new FixedEditText(context);
         mImageFileSizeWarning.setMaxWidth((int) Math.round(width * 0.6));
         mImageFileSizeWarning.setEnabled(false);
         mImageFileSizeWarning.setTextColor(Color.parseColor("#FF4500")); //Orange-Red

@@ -37,6 +37,7 @@ import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.ui.FixedEditText;
 import com.ichi2.ui.FixedTextView;
 
 import java.io.File;
@@ -65,7 +66,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
     @Override
     public void createUI(Context context, LinearLayout layout) {
-        mEditText = new EditText(mActivity);
+        mEditText = new FixedEditText(mActivity);
         mEditText.setMinLines(3);
         mEditText.setText(mField.getText());
         layout.addView(mEditText, LayoutParams.MATCH_PARENT);
