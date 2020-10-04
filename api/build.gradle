@@ -9,12 +9,12 @@ repositories {
     jcenter()
 }
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion 14
         //noinspection OldTargetApi
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 11016   // 4th digit: 1=alpha, 2=beta, 3=official
         versionName version
     }
@@ -52,7 +52,7 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.annotation:annotation:1.1.0'
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.6.2'
-    testImplementation 'org.robolectric:robolectric:4.3.1'
+    testImplementation 'org.robolectric:robolectric:4.4'
 
     lintPublish project(":lint-rules")
 }
