@@ -44,6 +44,12 @@ import static org.hamcrest.Matchers.hasSize;
 @RunWith(AndroidJUnit4.class)
 public class AnkiPackageExporterTest extends RobolectricTest {
 
+    @Override
+    protected boolean useInMemoryDatabase() {
+        return false;
+    }
+
+
     @Test
     public void missingFileInDeckExportDoesSkipsFile() throws IOException, ImportExportException {
         // arrange

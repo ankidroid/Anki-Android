@@ -54,7 +54,10 @@ import org.robolectric.shadows.ShadowLog;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.ichi2.utils.InMemorySQLiteOpenHelperFactory;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
 import timber.log.Timber;
@@ -72,13 +75,17 @@ public class RobolectricTest {
         controllersForCleanup.add(controller);
     }
 
+    protected boolean useInMemoryDatabase() {
+        return true;
+    }
+
     @Before
     public void setUp() {
         // If you want to see the Android logging (from Timber), you need to set it up here
         ShadowLog.stream = System.out;
 
         // Robolectric can't handle our default sqlite implementation of requery, it needs the framework
-        DB.setSqliteOpenHelperFactory(new FrameworkSQLiteOpenHelperFactory());
+        DB.setSqliteOpenHelperFactory(getHelperFactory());
 
         //Reset static variable for custom tabs failure.
         CustomTabActivityHelper.resetFailed();
@@ -86,6 +93,18 @@ public class RobolectricTest {
         //See: #6140 - This global ideally shouldn't exist, but it will cause crashes if set.
         DialogHandler.discardMessage();
     }
+
+
+    @NonNull
+    protected SupportSQLiteOpenHelper.Factory getHelperFactory() {
+        if (useInMemoryDatabase()) {
+            Timber.w("Using in-memory database for test. Collection should not be re-opened");
+            return new InMemorySQLiteOpenHelperFactory();
+        } else {
+            return new FrameworkSQLiteOpenHelperFactory();
+        }
+    }
+
 
     @After
     public void tearDown() {
