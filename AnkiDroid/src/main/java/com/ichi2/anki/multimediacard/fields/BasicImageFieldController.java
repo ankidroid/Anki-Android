@@ -62,6 +62,7 @@ import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
+import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.Permissions;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -220,7 +221,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             saveImageForRevert();
 
             // Create a new image for the camera result to land in, clear the URI
-            image = createNewCacheFile();
+            image = createNewCacheImageFile();
             Uri imageUri = getUriForFile(image);
             toReturn = new ImageViewModel(image.getPath(), imageUri);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -269,11 +270,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private File createNewCacheFile() throws IOException {
-        return createNewCacheFile("jpg");
+    private File createNewCacheImageFile() throws IOException {
+        return createNewCacheImageFile("jpg");
     }
 
-    private File createNewCacheFile(@NonNull String extension) throws IOException {
+    private File createNewCacheImageFile(@NonNull String extension) throws IOException {
         String timeStamp = TimeUtils.getTimestamp(mTime);
         File storageDir = new File(mAnkiCacheDirectory);
         return File.createTempFile("img_" + timeStamp, "." + extension, storageDir);
@@ -427,6 +428,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private @Nullable File internalizeUri(Uri uri) {
         File internalFile;
         Pair<String, String> uriFileInfo = getImageInfoFromUri(mActivity, uri);
+        String filePath = uriFileInfo.first;
+        String displayName = uriFileInfo.second;
 
         // Use the display name from the image info to create a new file with correct extension
         if (uriFileInfo.second == null) {
@@ -436,42 +439,20 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
         String uriFileExtension = uriFileInfo.second.substring(uriFileInfo.second.lastIndexOf('.') + 1);
         try {
-            internalFile = createNewCacheFile(uriFileExtension);
+            internalFile = createNewCacheImageFile(uriFileExtension);
         } catch (IOException e) {
             Timber.w(e, "internalizeUri() failed to create new file with extension %s", uriFileExtension);
             showSomethingWentWrong();
             return null;
         }
-
-        // If we got a real file name, do a copy from it
-        InputStream inputStream;
-        if (uriFileInfo.first != null) {
-            Timber.d("internalizeUri() got file path for direct copy from Uri %s", uri);
-            try {
-                inputStream = new FileInputStream(new File(uriFileInfo.first));
-            } catch (FileNotFoundException e) {
-                Timber.w(e, "internalizeUri() unable to open input stream on file %s", uriFileInfo.first);
-                showSomethingWentWrong();
-                return null;
-            }
-        } else {
-            try {
-                inputStream = mActivity.getContentResolver().openInputStream(uri);
-            } catch (Exception e) {
-                Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri);
-                showSomethingWentWrong();
-                return null;
-            }
-        }
-
         try {
-            CompatHelper.getCompat().copyFile(inputStream, internalFile.getAbsolutePath());
+            File returnFile = FileUtil.internalizeUri(uri, filePath, internalFile, mActivity.getContentResolver());
+            Timber.d("internalizeUri successful. Returning internalFile.");
+            return returnFile;
         } catch (Exception e) {
-            Timber.w(e, "internalizeUri() unable to internalize file from Uri %s to File %s", uri, internalFile.getAbsolutePath());
             showSomethingWentWrong();
             return null;
         }
-        return internalFile;
     }
 
 
@@ -511,7 +492,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         FileOutputStream out = null;
         try {
-            File outFile = createNewCacheFile();
+            File outFile = createNewCacheImageFile();
             out = new FileOutputStream(outFile);
             b = ExifUtil.rotateFromCamera(f, b);
             b.compress(Bitmap.CompressFormat.JPEG, 90, out);
@@ -599,7 +580,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         // Pre-create a file in our cache for the cropping application to put results in
         File image;
         try {
-            image = createNewCacheFile();
+            image = createNewCacheImageFile();
         } catch (IOException e) {
             Timber.w(e, "requestCrop() unable to create new file to drop crop results into");
             showSomethingWentWrong();

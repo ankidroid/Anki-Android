@@ -1186,4 +1186,39 @@ public class FlashCardsContract {
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.ichi2.anki.deck";
 
     }
+
+
+
+    /**
+     * For interacting with Anki's media collection.
+     * <p></p>
+     * To insert a file into the media collection use:
+     * <pre>
+     *     <code>
+     *     Uri fileUri = ...; //&lt;-- Use real Uri for media file here
+     *     String preferredName = "my_media_file"; //&lt;-- Use preferred name for inserted media file here
+     *     ContentResolver cr = getContentResolver();
+     *     ContentValues cv = new ContentValues();
+     *     cv.put(AnkiMedia.FILE_URI, fileUri.toString());
+     *     cv.put(AnkiMedia.PREFERRED_NAME, "file_name");
+     *     Uri insertedFile = cr.insert(AnkiMedia.CONTENT_URI, cv);
+     *     </code>
+     * </pre>
+     */
+    public static class AnkiMedia {
+        /**
+         * Content Uri for the MEDIA row of the CardContentProvider
+         */
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "media");
+
+        /**
+         * Uri.toString() which points to the media file that is to be inserted.
+         */
+        public static final String FILE_URI = "file_uri";
+
+        /**
+         * The preferred name for the file that will be inserted/copied into collection.media
+         */
+        public static final String PREFERRED_NAME = "preferred_name";
+    }
 }

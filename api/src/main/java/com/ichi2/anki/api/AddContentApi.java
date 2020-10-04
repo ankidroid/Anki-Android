@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Process;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
@@ -36,7 +37,16 @@ import com.ichi2.anki.FlashCardsContract.CardTemplate;
 import com.ichi2.anki.FlashCardsContract.Deck;
 import com.ichi2.anki.FlashCardsContract.Model;
 import com.ichi2.anki.FlashCardsContract.Note;
+import com.ichi2.anki.FlashCardsContract.AnkiMedia;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -149,6 +159,75 @@ public final class AddContentApi {
             return 0;
         }
         return getCompat().insertNotes(deckId, newNoteValuesList.toArray(new ContentValues[newNoteValuesList.size()]));
+    }
+
+    /**
+     * Add a media file to AnkiDroid's media collection. You would likely supply this uri through a FileProvider, and
+     * then set FLAG_GRANT_READ_URI_PERMISSION using something like:
+     *
+     * <pre>
+     *     <code>
+     *     getContext().grantUriPermission("com.ichi2.anki", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+     *     // Then when file is added, remove the permission
+     *     // add File ...
+     *     getContext().revokePermission(uri, Intent.FLAG_GRAN_READ_URI_PERMISSION)
+     *     </code>
+     * </pre>
+     *
+     * Example usage:
+     *  <pre>
+     *      <code>
+     *      Long modelId = getModelId(); // implementation can be seen in api sample app
+     *      Long deckId = getDeckId(); // as above
+     *      Set&lt;String&gt; tags = getTags(); // as above
+     *      Uri fileUri = ... // this will be returned by a File Picker activity where we select an image file
+     *      String addedImageFileName = mApi.addMediaFromUri(fileUri, "My_Image_File", "image");
+     *
+     *      String[] fields = new String[] {"text on front of card", "text on back of card " + addedImageFileName};
+     *      mApi.addNote(modelId, deckId, fields, tags)
+     *      </code>
+     *  </pre>
+     *
+     *
+     *
+     *
+     * @param fileUri   Uri for the file to be added, required.
+     * @param preferredName String to add to start of filename (do not use a file extension), required.
+     * @param mimeType  String indicating the mimeType of the media. Accepts "audio" or "image", required.
+     * @return the correctly formatted String for the media file to be placed in the desired field of a Card, or null
+     *          if unsuccessful.
+     */
+    public @Nullable String addMediaFromUri(
+            @NonNull Uri fileUri, @NonNull String preferredName, @NonNull String mimeType
+    ) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(AnkiMedia.FILE_URI, fileUri.toString());
+        preferredName = preferredName.replace(" ", "_");
+        contentValues.put(AnkiMedia.PREFERRED_NAME, preferredName);
+
+        try {
+            Uri returnUri = mResolver.insert(AnkiMedia.CONTENT_URI, contentValues);
+            // get the filename from Uri, return [sound:%s] % file.getName()
+            String fname = new File(returnUri.getPath()).toString();
+            String formatted_fname = formatMediaName(fname, mimeType);
+            return formatted_fname;
+        } catch (Exception e){
+            return null;
+        }
+
+    }
+
+    private @Nullable String formatMediaName(@NonNull String fname, @NonNull String mimeType) {
+        String formatted_fname;
+        if (mimeType.equals("audio")) {
+            formatted_fname = String.format("[sound:%s]", fname.substring(1)); // first character in the path is "/"
+        } else if (mimeType.equals("image")) {
+            formatted_fname = String.format("<img src=\"%s\" />", fname.substring(1));
+        } else {
+            // something went wrong
+            formatted_fname = null;
+        }
+        return formatted_fname;
     }
 
 
