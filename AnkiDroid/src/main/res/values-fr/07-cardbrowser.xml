@@ -57,7 +57,6 @@
     <string name="delete_cards_title">Supprimer les notes?</string>
     <string name="delete_card_message">Voulez vous vraiment supprimer toutes les cartes de cette note ?\nChamp de recherche : %s</string>
     <string name="delete_card_mult_message">Supprimer toutes les cartes de toutes les notes sélectionnées? \n (pas seulement les cartes choisies)</string>
-    <string name="deleted_message">Notes supprimées</string>
     <string name="changed_deck_message">Déplacé vers %s</string>
     <string name="card_browser_suspended_cards">Suspendre/Rependre les cartes</string>
     <string name="card_browser_show_marked">Filtrer les notes marquées</string>
@@ -102,4 +101,8 @@
     <string name="card_browser_no_cards_in_deck">Aucune carte trouvée dans le paquet « %s »</string>
     <string name="card_browser_search_all_decks">Rechercher dans tous les paquets</string>
     <string name="card_browser_unknown_deck_name">Inconnu</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="one">%d card deleted</item>
+        <item quantity="other">%d cards deleted</item>
+    </plurals>
 </resources>

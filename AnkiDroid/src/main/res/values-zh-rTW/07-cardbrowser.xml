@@ -56,7 +56,6 @@
     <string name="delete_cards_title">刪除筆記？</string>
     <string name="delete_card_message">你確定要刪除本筆記的所有卡片嗎？\n搜尋欄位：%s</string>
     <string name="delete_card_mult_message">刪除所有選定筆記中的卡片\n(不只選中的卡)</string>
-    <string name="deleted_message">筆記已刪除</string>
     <string name="changed_deck_message">已移動到 %s</string>
     <string name="card_browser_suspended_cards">(取消)擱置的卡片</string>
     <string name="card_browser_show_marked">篩選有標記的卡片</string>
@@ -101,4 +100,7 @@
     <string name="card_browser_no_cards_in_deck">牌組 ‘%s’ 中未找到任何卡片</string>
     <string name="card_browser_search_all_decks">搜尋所有牌組</string>
     <string name="card_browser_unknown_deck_name">未知</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="other">%d cards deleted</item>
+    </plurals>
 </resources>

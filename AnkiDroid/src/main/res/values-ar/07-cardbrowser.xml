@@ -61,7 +61,6 @@
     <string name="delete_cards_title">هل تريد حذف الملحوظات؟</string>
     <string name="delete_card_message">هل تريد حذف كل بطاقات الملحوظة؟\nحقل البحث: %s</string>
     <string name="delete_card_mult_message">هل تريد حذف كل بطاقات الملحوظات المحددة؟\n(ليس فقط البطاقات المحددة)</string>
-    <string name="deleted_message">حُذِفت الملحوظات</string>
     <string name="changed_deck_message">نُقِل إلى %s</string>
     <string name="card_browser_suspended_cards">البطاقات المعلقة/غير المعلقة</string>
     <string name="card_browser_show_marked">فلترة البطاقات المعلمة</string>
@@ -106,4 +105,12 @@
     <string name="card_browser_no_cards_in_deck">لا توجد بطاقات في الرزمة ‘%s’</string>
     <string name="card_browser_search_all_decks">البحث في كل الرزم</string>
     <string name="card_browser_unknown_deck_name">غير معروف</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="zero">%d cards deleted</item>
+        <item quantity="one">%d card deleted</item>
+        <item quantity="two">%d cards deleted</item>
+        <item quantity="few">%d cards deleted</item>
+        <item quantity="many">%d cards deleted</item>
+        <item quantity="other">%d cards deleted</item>
+    </plurals>
 </resources>
