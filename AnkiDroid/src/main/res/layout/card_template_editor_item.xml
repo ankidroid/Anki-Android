@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical" >
-            <EditText
+            <com.ichi2.ui.FixedEditText
                 android:id="@+id/front_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical" >
-            <EditText
+            <com.ichi2.ui.FixedEditText
                 android:id="@+id/styling_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical" >
-            <EditText
+            <com.ichi2.ui.FixedEditText
                 android:id="@+id/back_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

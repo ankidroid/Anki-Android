@@ -45,6 +45,7 @@ import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
+import com.ichi2.ui.FixedEditText;
 import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
@@ -336,7 +337,7 @@ public class ModelBrowser extends AnkiActivity {
                 .positiveText(R.string.dialog_ok)
                 .customView(addSelectionSpinner, true)
                 .onPositive((dialog, which) -> {
-                        mModelNameInput = new EditText(ModelBrowser.this);
+                        mModelNameInput = new FixedEditText(ModelBrowser.this);
                         mModelNameInput.setSingleLine();
                         final boolean isStdModel = addSelectionSpinner.getSelectedItemPosition() < numStdModels;
                         // Try to find a unique model name. Add "clone" if cloning, and random digits if necessary.
@@ -435,7 +436,7 @@ public class ModelBrowser extends AnkiActivity {
      * Displays a confirmation box asking if you want to rename the note type and then renames it if confirmed
      */
     private void renameModelDialog() {
-        mModelNameInput = new EditText(this);
+        mModelNameInput = new FixedEditText(this);
         mModelNameInput.setSingleLine(true);
         mModelNameInput.setText(mModels.get(mModelListPosition).getString("name"));
         mModelNameInput.setSelection(mModelNameInput.getText().length());

@@ -37,6 +37,7 @@ import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.ui.FixedEditText;
 import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONArray;
@@ -172,7 +173,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     * Creates a dialog to create a field
     */
     private void addFieldDialog() {
-        mFieldNameInput = new EditText(this);
+        mFieldNameInput = new FixedEditText(this);
         mFieldNameInput.setSingleLine(true);
 
         new MaterialDialog.Builder(this)
@@ -263,7 +264,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
      * Processing time is constant
      */
     private void renameFieldDialog() {
-        mFieldNameInput = new EditText(this);
+        mFieldNameInput = new FixedEditText(this);
         mFieldNameInput.setSingleLine(true);
         mFieldNameInput.setText(mFieldLabels.get(mCurrentPos));
         mFieldNameInput.setSelection(mFieldNameInput.getText().length());
@@ -314,7 +315,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
      * Processing time is scales with number of items
      */
     private void repositionFieldDialog() {
-        mFieldNameInput = new EditText(this);
+        mFieldNameInput = new FixedEditText(this);
         mFieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);
         new MaterialDialog.Builder(this)
                 .title(String.format(getResources().getString(R.string.model_field_editor_reposition), 1, mFieldLabels.size()))

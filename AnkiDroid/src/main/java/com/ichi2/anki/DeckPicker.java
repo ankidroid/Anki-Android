@@ -123,6 +123,7 @@ import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
+import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
@@ -611,7 +612,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 return;
             }
             mActionsMenu.collapse();
-            mDialogEditText = new EditText(DeckPicker.this);
+            mDialogEditText = new FixedEditText(DeckPicker.this);
             mDialogEditText.setSingleLine(true);
             // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
             new MaterialDialog.Builder(DeckPicker.this)
@@ -772,7 +773,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
             case R.id.action_new_filtered_deck: {
                 Timber.i("DeckPicker:: New filtered deck button pressed");
-                mDialogEditText = new EditText(DeckPicker.this);
+                mDialogEditText = new FixedEditText(DeckPicker.this);
                 ArrayList<String> names = getCol().getDecks().allNames();
                 int n = 1;
                 String name = String.format(Locale.getDefault(), "%s %d", res.getString(R.string.filtered_deck_name), n);
@@ -2566,7 +2567,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void renameDeckDialog(final long did) {
         final Resources res = getResources();
-        mDialogEditText = new EditText(DeckPicker.this);
+        mDialogEditText = new FixedEditText(DeckPicker.this);
         mDialogEditText.setSingleLine();
         final String currentName = getCol().getDecks().name(did);
         mDialogEditText.setText(currentName);
@@ -2823,7 +2824,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void createSubDeckDialog(long did) {
         final Resources res = getResources();
-        mDialogEditText = new EditText(this);
+        mDialogEditText = new FixedEditText(this);
         mDialogEditText.setSingleLine();
         mDialogEditText.setSelection(mDialogEditText.getText().length());
         new MaterialDialog.Builder(DeckPicker.this)
