@@ -47,6 +47,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.stats.Stats;
 import com.ichi2.libanki.Deck;
+import com.ichi2.ui.FixedTextView;
 import com.ichi2.ui.SlidingTabLayout;
 
 import com.ichi2.utils.JSONException;
@@ -127,7 +128,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         slidingTabLayout.setViewPager(mViewPager);
 
         // Dirty way to get text size from a TextView with current style, change if possible
-        float size = new TextView(this).getTextSize();
+        float size = new FixedTextView(this).getTextSize();
         mTaskHandler.setmStandardTextSize(size);
         // Prepare options menu only after loading everything
         supportInvalidateOptionsMenu();

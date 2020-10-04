@@ -53,7 +53,7 @@ public class SeekBarPreference extends android.preference.DialogPreference imple
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(6, 6, 6, 6);
 
-        mValueText = new TextView(mContext);
+        mValueText = new FixedTextView(mContext);
         mValueText.setGravity(Gravity.CENTER_HORIZONTAL);
         mValueText.setTextSize(32);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,

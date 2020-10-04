@@ -56,7 +56,7 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <TextView
+                        <com.ichi2.ui.FixedTextView
                             android:id="@+id/studyoptions_deck_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
 
                                 <TableRow>
 
-                                    <TextView
+                                    <com.ichi2.ui.FixedTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="0dip"
@@ -101,13 +101,13 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content">
 
-                                        <TextView
+                                        <com.ichi2.ui.FixedTextView
                                             android:id="@+id/studyoptions_new"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:textColor="?attr/newCountColor" />
 
-                                        <TextView
+                                        <com.ichi2.ui.FixedTextView
                                             android:id="@+id/studyoptions_lrn"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                                             android:layout_marginStart="5dip"
                                             android:textColor="?attr/learnCountColor" />
 
-                                        <TextView
+                                        <com.ichi2.ui.FixedTextView
                                             android:id="@+id/studyoptions_rev"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -127,14 +127,14 @@
 
                                 <TableRow>
 
-                                    <TextView
+                                    <com.ichi2.ui.FixedTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="0dip"
                                         android:paddingRight="5dip"
                                         android:text="@string/studyoptions_new_total" />
 
-                                    <TextView
+                                    <com.ichi2.ui.FixedTextView
                                         android:id="@+id/studyoptions_total_new"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -143,14 +143,14 @@
 
                                 <TableRow>
 
-                                    <TextView
+                                    <com.ichi2.ui.FixedTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="0dip"
                                         android:paddingRight="5dip"
                                         android:text="@string/studyoptions_total_cards" />
 
-                                    <TextView
+                                    <com.ichi2.ui.FixedTextView
                                         android:id="@+id/studyoptions_total"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -159,14 +159,14 @@
 
                                 <TableRow>
 
-                                    <TextView
+                                    <com.ichi2.ui.FixedTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="0dip"
                                         android:paddingRight="5dip"
                                         android:text="@string/studyoptions_eta" />
 
-                                    <TextView
+                                    <com.ichi2.ui.FixedTextView
                                         android:id="@+id/studyoptions_eta"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
                                 </TableRow>
                             </TableLayout>
                         </LinearLayout>
-                        <TextView
+                        <com.ichi2.ui.FixedTextView
                             android:id="@+id/studyoptions_deck_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:orientation="vertical">
-                    <TextView
+                    <com.ichi2.ui.FixedTextView
                         android:id="@+id/studyoptions_congrats_message"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

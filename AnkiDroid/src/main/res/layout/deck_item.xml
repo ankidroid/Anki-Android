@@ -47,7 +47,7 @@
             android:minWidth="48dp"
             android:padding="12dp"
             android:background="?attr/selectableItemBackgroundBorderless" />
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/deckpicker_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
         android:gravity="right"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true" >
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/deckpicker_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:textSize="14sp"
             tools:text="10" />
 
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/deckpicker_lrn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
             android:textSize="14sp"
             tools:text="42" />
 
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/deckpicker_rev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -6,7 +6,7 @@
 
     <include layout="@layout/tags_dialog_title"
         android:id="@+id/tags_dialog_toolbar"/>
-    <TextView android:id="@+id/tags_dialog_no_tags_textview"
+    <com.ichi2.ui.FixedTextView android:id="@+id/tags_dialog_no_tags_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

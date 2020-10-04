@@ -13,7 +13,7 @@
         app:navigationContentDescription="@string/abc_action_bar_up_description"
         app:navigationIcon="?attr/homeAsUpIndicator">
 
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

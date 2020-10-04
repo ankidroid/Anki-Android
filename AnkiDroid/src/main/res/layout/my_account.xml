@@ -29,7 +29,7 @@
                 <!-- TODO JS choose a standardized padding to use here -->
 
 
-                <!--<TextView-->
+                <!--<com.ichi2.ui.FixedTextView-->
                 <!--android:id="@+id/sign_in"-->
                 <!--android:layout_width="fill_parent"-->
                 <!--android:layout_height="wrap_content"-->
@@ -110,7 +110,7 @@
             >
             <!-- TODO move padding to dimen, when finalized -->
 
-            <TextView
+            <com.ichi2.ui.FixedTextView
                 android:id="@+id/no_account_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
                 android:layout_gravity="center"
                 android:textSize="@dimen/abc_text_size_button_material"
                 android:textStyle="bold"/>
-            <TextView
+            <com.ichi2.ui.FixedTextView
                 android:id="@+id/no_account_not_affiliated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
