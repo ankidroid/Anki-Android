@@ -66,11 +66,6 @@ import static org.robolectric.Shadows.shadowOf;
 
 public class RobolectricTest {
 
-    static {
-        // we need to override java.sql.Time and java.sql.Timestamp
-        System.setSecurityManager(null);
-    }
-
     private final ArrayList<ActivityController> controllersForCleanup = new ArrayList<>();
 
     protected void saveControllerForCleanup(ActivityController controller) {
