@@ -9489,17 +9489,6 @@
 
     <issue
         id="UnusedResources"
-        message="The resource `R.color.stats_suspended_and_buried` appears to be unused"
-        errorLine1="    &lt;color name=&quot;stats_suspended_and_buried&quot;>#ff0&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="28"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
         message="The resource `R.color.material_blue_grey_050` appears to be unused"
         errorLine1="    &lt;color name=&quot;material_blue_grey_050&quot;>#ffeceff1&lt;/color>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
