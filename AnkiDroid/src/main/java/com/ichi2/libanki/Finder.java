@@ -24,6 +24,7 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
+import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
 
 import com.ichi2.libanki.Deck;
@@ -93,7 +94,7 @@ public class Finder {
     }
 
     @CheckResult
-    private List<Long> _findCards(String query, Object _order, CollectionTask task) {
+    private List<Long> _findCards(String query, Object _order, CancelListener task) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
