@@ -691,7 +691,7 @@ public class Collection {
     }
 
 
-    private ArrayList<JSONObject> _tmplsFromOrds(JSONObject model, ArrayList<Integer> avail) {
+    private ArrayList<JSONObject> _tmplsFromOrds(Model model, ArrayList<Integer> avail) {
         ArrayList<JSONObject> ok = new ArrayList<>();
         JSONArray tmpls;
         if (model.getInt("type") == Consts.MODEL_STD) {
