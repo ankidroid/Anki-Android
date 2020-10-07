@@ -1905,10 +1905,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
      */
     public static class ProgressCallback {
         private final Resources res;
-        private final CollectionTask task;
+        private final ProgressSender<TaskData> task;
 
 
-        public ProgressCallback(CollectionTask task, Resources res) {
+        public ProgressCallback(ProgressSender<TaskData> task, Resources res) {
             this.res = res;
             if (res != null) {
                 this.task = task;
@@ -1938,10 +1938,5 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         } catch (Exception e) {
             return false;
         }
-    }
-
-
-    public void doProgress(TaskData value) {
-        publishProgress(value);
     }
 }
