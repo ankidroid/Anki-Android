@@ -32,6 +32,7 @@ import android.text.style.StyleSpan;
 import android.util.Pair;
 
 import com.ichi2.anki.R;
+import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -467,7 +468,7 @@ public class SchedV2 extends AbstractSched {
     }
 
     // Overridden
-    public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CollectionTask collectionTask) {
+    public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         ArrayList<Deck> decks = mCol.getDecks().allSorted();

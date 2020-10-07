@@ -23,7 +23,7 @@ import com.ichi2.utils.Threads;
 
 import static com.ichi2.anki.AnkiDroidApp.sendExceptionReport;
 
-public class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
+public class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> implements CancelListener {
 
     /** Set this to {@code true} to enable detailed debugging for this class. */
     private static final boolean DEBUG = false;
