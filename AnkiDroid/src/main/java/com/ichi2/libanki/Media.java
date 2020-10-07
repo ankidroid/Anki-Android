@@ -303,7 +303,7 @@ public class Media {
      */
     public List<String> filesInStr(Long mid, String string, boolean includeRemote) {
         List<String> l = new ArrayList<>();
-        JSONObject model = mCol.getModels().get(mid);
+        Model model = mCol.getModels().get(mid);
         List<String> strings = new ArrayList<>();
         if (model.getInt("type") == Consts.MODEL_CLOZE && string.contains("{{c")) {
             // if the field has clozes in it, we'll need to expand the
