@@ -971,17 +971,17 @@ public class Models {
 
     /** Return a hash of the schema, to see if models are compatible. */
     public String scmhash(Model m) {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         JSONArray flds = m.getJSONArray("flds");
         for (int i = 0; i < flds.length(); ++i) {
-            s += flds.getJSONObject(i).getString("name");
+            s.append(flds.getJSONObject(i).getString("name"));
         }
         JSONArray tmpls = m.getJSONArray("tmpls");
         for (int i = 0; i < tmpls.length(); ++i) {
             JSONObject t = tmpls.getJSONObject(i);
-            s += t.getString("name");
+            s.append(t.getString("name"));
         }
-        return Utils.checksum(s);
+        return Utils.checksum(s.toString());
     }
 
 
