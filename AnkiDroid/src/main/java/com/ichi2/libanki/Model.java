@@ -55,18 +55,17 @@ public class Model extends JSONObject {
         return mFieldMap;
     }
 
+
     /** Name of the fields which may contain cloze number */
     public java.util.Collection<String> getNamesOfFieldsContainingCloze() {
         if (mFieldWithCloze == null) {
             mFieldWithCloze = new ArrayList<>();
             final String question_template = getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
-            Matcher mm = fClozePattern1.matcher(question_template);
-            while (mm.find()) {
-                mFieldWithCloze.add(mm.group(1));
-            }
-            mm = fClozePattern2.matcher(question_template);
-            while (mm.find()) {
-                mFieldWithCloze.add(mm.group(1));
+            for (Pattern pattern : new Pattern[] {fClozePattern1, fClozePattern2}) {
+                Matcher mm = pattern.matcher(question_template);
+                while (mm.find()) {
+                    mFieldWithCloze.add(mm.group(1));
+                }
             }
         }
         return mFieldWithCloze;
