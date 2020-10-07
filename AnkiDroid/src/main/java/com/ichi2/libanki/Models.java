@@ -1110,11 +1110,12 @@ public class Models {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
         Set<Integer> ords = new HashSet<>();
         List<String> matches = new ArrayList<>();
-        Matcher mm = fClozePattern1.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
+        final String question_template = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
+        Matcher mm = fClozePattern1.matcher(question_template);
         while (mm.find()) {
             matches.add(mm.group(1));
         }
-        mm = fClozePattern2.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
+        mm = fClozePattern2.matcher(question_template);
         while (mm.find()) {
             matches.add(mm.group(1));
         }
