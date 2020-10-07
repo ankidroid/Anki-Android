@@ -185,9 +185,10 @@ public class Anki2Importer extends Importer {
      */
 
     private void _importNotes() {
+        int noteCount = mDst.noteCount();
         // build guid -> (id,mod,mid) hash & map of existing note ids
-        mNotes = new HashMap<>();
-        Set<Long> existing = new HashSet<>();
+        mNotes = new HashMap<>(noteCount);
+        Set<Long> existing = new HashSet<>(noteCount);
         try (Cursor cur = mDst.getDb().getDatabase().query("select id, guid, mod, mid from notes", null)) {
             while (cur.moveToNext()) {
                 long id = cur.getLong(0);
