@@ -188,9 +188,7 @@ public class Anki2Importer extends Importer {
         // build guid -> (id,mod,mid) hash & map of existing note ids
         mNotes = new HashMap<>();
         Set<Long> existing = new HashSet<>();
-        Cursor cur = null;
-        try {
-            cur = mDst.getDb().getDatabase().query("select id, guid, mod, mid from notes", null);
+        try (Cursor cur = mDst.getDb().getDatabase().query("select id, guid, mod, mid from notes", null)) {
             while (cur.moveToNext()) {
                 long id = cur.getLong(0);
                 String guid = cur.getString(1);
@@ -198,10 +196,6 @@ public class Anki2Importer extends Importer {
                 long mid = cur.getLong(3);
                 mNotes.put(guid, new Object[] { id, mod, mid });
                 existing.add(id);
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         // we ignore updates to changed schemas. we need to note the ignored
@@ -220,10 +214,8 @@ public class Anki2Importer extends Importer {
         int usn = mDst.usn();
         int dupes = 0;
         ArrayList<String> dupesIgnored = new ArrayList<>();
-        try {
-            mDst.getDb().getDatabase().beginTransaction();
-            cur = mSrc.getDb().getDatabase().query("select * from notes", null);
-
+        mDst.getDb().getDatabase().beginTransaction();
+        try (Cursor cur = mSrc.getDb().getDatabase().query("select * from notes", null)) {
             // Counters for progress updates
             int total = cur.getCount();
             boolean largeCollection = total > 200;
@@ -336,9 +328,6 @@ public class Anki2Importer extends Importer {
             mDst.getDb().getDatabase().setTransactionSuccessful();
 
         } finally {
-            if (cur != null) {
-                cur.close();
-            }
             DB.safeEndInTransaction(mDst.getDb());
         }
 
