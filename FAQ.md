@@ -45,7 +45,7 @@ From the Anki website:
 
 > People who are only looking for the “flashcards” part and not the “spaced repetition” part are likely to be frustrated by Anki. Spaced repetition is fairly simple on its face, but studying with Anki is different from what most people are used to, and the additional complexity will probably be unwelcome at first.
 
-[Read more here](https://anki.tenderapp.com/kb/anki-ecosystem/can-i-disable-the-scheduling-algorithm)
+[Read more here](https://anki.tenderapp.com/kb/problems/ankis-not-showing-me-all-my-cards)
 
 ### Is there an auto-sync feature?
 Yes, it's disabled by default though so please see the [section in the manual](https://ankidroid.org/docs/manual.html#_ankidroid) about the automatic synchronization preference.
