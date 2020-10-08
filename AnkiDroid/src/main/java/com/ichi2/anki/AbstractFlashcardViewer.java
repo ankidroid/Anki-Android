@@ -534,14 +534,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         @Override
         public void onProgressUpdate(TaskData value) {
-            boolean cardChanged = false;
             if (mCurrentCard != value.getCard()) {
                 /*
                  * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
                  * then we need to display it as a new card, without showing the answer.
                  */
                 sDisplayAnswer = false;
-                cardChanged = true;  // Keep track of that so we can run a bit of new-card code
             }
             mCurrentCard = value.getCard();
             CollectionTask.launchCollectionTask(PRELOAD_NEXT_CARD); // Tasks should always be launched from GUI. So in
@@ -556,15 +554,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 mWhiteboard.clear();
             }
 
+            updateTypeAnswerInfo();
             if (sDisplayAnswer) {
                 mSoundPlayer.resetSounds(); // load sounds from scratch, to expose any edit changes
                 mAnswerSoundsAdded = false; // causes answer sounds to be reloaded
                 generateQuestionSoundList(); // questions must be intentionally regenerated
                 displayCardAnswer();
             } else {
-                if (cardChanged) {
-                    updateTypeAnswerInfo();
-                }
                 displayCardQuestion();
                 mCurrentCard.startTimer();
                 initTimer();
