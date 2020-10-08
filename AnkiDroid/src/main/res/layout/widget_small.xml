@@ -27,7 +27,12 @@
         android:orientation="horizontal"
         android:padding="4dip" >
 
-        <com.ichi2.ui.FixedTextView
+        <!-- 7366: Using FixedTextView breaks the widget
+        Error inflating RemoteViews : android.view.InflateException: Binary XML file line #30:
+        Binary XML file line #30: Error inflating class com.ichi2.ui.FixedTextView
+
+        https://stackoverflow.com/a/6150129/-->
+        <TextView
             android:id="@+id/widget_due"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +43,7 @@
             android:textSize="18sp"
             android:visibility="invisible" />
 
-        <com.ichi2.ui.FixedTextView
+        <TextView
             android:id="@+id/widget_eta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
