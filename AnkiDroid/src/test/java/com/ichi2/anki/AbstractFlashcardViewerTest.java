@@ -6,7 +6,6 @@ import android.content.Intent;
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -321,7 +320,6 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     @Test
-    @Ignore("7363")
     public void testEditingCardChangesTypedAnswer() {
         // 7363
        addNoteUsingBasicTypedModel("Hello", "World");
@@ -345,7 +343,6 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
     }
 
     @Test
-    @Ignore("7363")
     public void testEditingCardChangesTypedAnswerOnDisplayAnswer() {
         // 7363
         addNoteUsingBasicTypedModel("Hello", "World");
