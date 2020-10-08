@@ -285,7 +285,9 @@ public class ReviewerTest extends RobolectricTest {
 
         JSONObject newTemplate = defaultTemplate.deepClone();
         newTemplate.put("ord", tmpls.length());
-        newTemplate.put("name", "Card " + tmpls.length() + 1);
+
+        String card_name = getTargetContext().getString(R.string.card_n_name, tmpls.length() + 1);
+        newTemplate.put("name", card_name);
 
         models.addTemplate(m, newTemplate);
     }
