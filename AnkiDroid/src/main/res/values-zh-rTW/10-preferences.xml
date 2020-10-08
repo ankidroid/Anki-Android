@@ -248,7 +248,7 @@
     <string name="deck_conf_replayq">重播問題</string>
     <string name="deck_conf_replayq_summ">當答案出現時，重播問題與答案的聲音檔</string>
     <string name="deck_conf_manage">管理群組</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">新增和變更設定群組</string>
     <string name="deck_conf_current_group">目前使用的群組</string>
     <string name="deck_conf_rename">重新命名</string>
     <string name="deck_conf_reset">還原預設值</string>
@@ -281,6 +281,6 @@
     <string name="analytics_dialog_title">幫助 AnkiDroid 做得更好！</string>
     <string name="analytics_title">分享功能使用方式</string>
     <string name="analytics_summ">你可以通過幫助開發團隊看看人們在用什麼功能，來為 AnkiDroid 做出貢獻</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="enable_miui_keyboard_hack">\'貼上\' 以插入克漏字測驗</string>
+    <string name="enable_miui_keyboard_hack_summ">在“筆記編輯器”中，“貼上”會將選定的文字轉換為克漏字</string>
 </resources>

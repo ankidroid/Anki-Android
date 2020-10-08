@@ -42,7 +42,8 @@
     <string name="statistics_mature">Trưởng thành</string>
     <string name="statistics_young_and_learn">Young+Learn</string>
     <string name="statistics_unlearned">Chưa xem</string>
-    <string name="statistics_suspended_and_buried">Suspended+Buried</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Học lại</string>
     <string name="statistics_learn">Cần học</string>
     <string name="statistics_cram">Ôn thi</string>

@@ -26,8 +26,7 @@
     <string name="extra_field_name">Tambahan</string>
     <string name="field_to_ask_front_name">Tambah kebalikan</string>
     <!--Card type-->
-    <string name="card_one_name">Kartu 1</string>
-    <string name="card_two_name">Kartu 2</string>
+    <string name="card_n_name">Card %d</string>
     <string name="card_cloze_name">Kloza</string>
     <!--Note type-->
     <string name="basic_model_name">Dasar</string>

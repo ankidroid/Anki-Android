@@ -42,7 +42,8 @@
     <string name="statistics_mature">سررسیده</string>
     <string name="statistics_young_and_learn">موقت + آموزش</string>
     <string name="statistics_unlearned">دیده نشده</string>
-    <string name="statistics_suspended_and_buried">تعلیق شده+ مخفی شده</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">بازآموزی</string>
     <string name="statistics_learn">یادگیری</string>
     <string name="statistics_cram">مطالعه فشرده</string>

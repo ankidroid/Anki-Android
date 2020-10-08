@@ -42,7 +42,8 @@
     <string name="statistics_mature">Dewasa</string>
     <string name="statistics_young_and_learn">Muda + belajar</string>
     <string name="statistics_unlearned">Ghaib</string>
-    <string name="statistics_suspended_and_buried">Digantung + dikebumikan</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Belajar semula</string>
     <string name="statistics_learn">Belajar</string>
     <string name="statistics_cram">Menjejalkan</string>

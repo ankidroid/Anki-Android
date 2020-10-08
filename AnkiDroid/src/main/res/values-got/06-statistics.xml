@@ -42,7 +42,8 @@
     <string name="statistics_mature">Uswahsans</string>
     <string name="statistics_young_and_learn">Young+Learn</string>
     <string name="statistics_unlearned">Unsaiƕan</string>
-    <string name="statistics_suspended_and_buried">Suspended+Buried</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Relearn</string>
     <string name="statistics_learn">Laisjan</string>
     <string name="statistics_cram">Cram</string>

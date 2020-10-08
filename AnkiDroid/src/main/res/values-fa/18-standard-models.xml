@@ -26,8 +26,7 @@
     <string name="extra_field_name">اضافی</string>
     <string name="field_to_ask_front_name">افزودن معکوس کننده</string>
     <!--Card type-->
-    <string name="card_one_name">کارت ۱</string>
-    <string name="card_two_name">کارت ۲</string>
+    <string name="card_n_name">Card %d</string>
     <string name="card_cloze_name">کلوز</string>
     <!--Note type-->
     <string name="basic_model_name">پایه</string>

@@ -172,13 +172,13 @@
     <string name="import_log_file_cache_cleared">匯出檔案錯誤，似乎在處理時發生了清除快取操作。\n請重試</string>
     <string name="import_succeeded_but_check_database">資料匯出成功，但預匯出清理操作失敗。稍後檢查資料庫。根本原因：%s</string>
     <string name="import_error_unhandled_request">無法執行匯入請求</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">此 apkg 檔案已損毀。請刪除它再重新下載\n\n根本原因：%s</string>
     <string name="import_error_exception">無法匯入套件\n\n%s</string>
     <string name="import_error_not_apkg_extension">檔案名“%s”不包含 .apkg 或 .colpkg 副檔名</string>
     <string name="import_error_load_imported_database">Anki 資料庫 (.anki2) 替換還不受支援。請見用戶手冊以查找替換指引。</string>
     <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考使用者手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() 失敗（可能是儲存空間溢出）</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_unhandled_scheme">無法處理來自“%s”的匯入</string>
     <string name="import_replacing">正在匯入牌組集合&#8230;&#8230;</string>
     <string name="import_interrupted">匯入中斷</string>
     <string name="export_include_schedule">包含進度</string>
@@ -302,9 +302,9 @@
     <string name="about_ankidroid_successfully_copied_debug">已經錯誤資訊複製到剪貼簿</string>
     <string name="about_ankidroid_error_copy_debug_info">將錯誤資訊複製到剪貼簿時發生錯誤</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
+    <string name="card_viewer_could_not_find_image">卡片內容錯誤：載入 ‘%s’ 失敗</string>
+    <string name="card_viewer_could_not_find_image_get_help">幫助</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
+    <string name="deck_picker_failed_deck_load">載入牌組 ‘%s’ 失敗</string>
+    <string name="search_decks">搜尋牌組</string>
 </resources>

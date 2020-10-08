@@ -42,7 +42,8 @@
     <string name="statistics_mature">בוגר</string>
     <string name="statistics_young_and_learn">Young+Learn</string>
     <string name="statistics_unlearned">תרם נראה</string>
-    <string name="statistics_suspended_and_buried">מושהים+קבורים</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">ללמוד מחדש</string>
     <string name="statistics_learn">ללמוד</string>
     <string name="statistics_cram">לפטם</string>

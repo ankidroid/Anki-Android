@@ -42,7 +42,8 @@
     <string name="statistics_mature">Zralé</string>
     <string name="statistics_young_and_learn">Mladé a nové</string>
     <string name="statistics_unlearned">Neučené</string>
-    <string name="statistics_suspended_and_buried">Vyřazené a přeskočené</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Znovu učit</string>
     <string name="statistics_learn">Učit se</string>
     <string name="statistics_cram">Šprtat</string>

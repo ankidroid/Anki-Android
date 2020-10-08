@@ -42,7 +42,8 @@
     <string name="statistics_mature">Dewasa</string>
     <string name="statistics_young_and_learn">Muda+Belajar</string>
     <string name="statistics_unlearned">Belum dilihat</string>
-    <string name="statistics_suspended_and_buried">Ditangguhkan + Dipendam</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Belajar ulang</string>
     <string name="statistics_learn">Belajar</string>
     <string name="statistics_cram">Intensif</string>
