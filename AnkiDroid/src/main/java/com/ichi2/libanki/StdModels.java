@@ -64,7 +64,7 @@ public class StdModels {
                 String backName = AnkiDroidApp.getAppResources().getString(R.string.back_field_name);
                 fm = mm.newField(backName);
                 mm.addFieldInNewModel(m, fm);
-                String cardOneName = AnkiDroidApp.getAppResources().getString(R.string.card_one_name);
+                String cardOneName = AnkiDroidApp.getAppResources().getString(R.string.card_n_name, 1);
                 JSONObject t = Models.newTemplate(cardOneName);
                 t.put("qfmt", "{{" + frontName + "}}");
                 t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{" + backName + "}}");
@@ -90,7 +90,7 @@ public class StdModels {
         Model m = basicModel._new(mm, name);
         String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
         String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
-        String cardTwoName = AnkiDroidApp.getAppResources().getString(R.string.card_two_name);
+        String cardTwoName = AnkiDroidApp.getAppResources().getString(R.string.card_n_name, 2);
         JSONObject t = Models.newTemplate(cardTwoName);
         t.put("qfmt", "{{" + backName + "}}");
         t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{"+frontName+"}}");
