@@ -48,6 +48,7 @@ import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.FlashCardsContract;
 import com.ichi2.anki.FlashCardsContract.CardTemplate;
+import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Consts;
@@ -929,7 +930,8 @@ public class CardContentProvider extends ContentProvider {
                     }
                     // Add some empty card templates
                     for (int idx = 0; idx < numCards; idx++) {
-                        JSONObject t = Models.newTemplate("Card " + (idx+1));
+                        String card_name = mContext.getResources().getString(R.string.card_n_name, idx + 1);
+                        JSONObject t = Models.newTemplate(card_name);
                         t.put("qfmt",String.format("{{%s}}", allFields[0]));
                         String answerField = allFields[0];
                         if (allFields.length > 1) {

@@ -849,7 +849,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             // If the starting point for name already exists, iteratively increase n until we find a unique name
             while (true) {
                 // Get new name
-                name = "Card " + n;
+                name = getResources().getString(R.string.card_n_name, n);
                 // Cycle through all templates checking if new name exists
                 boolean exists = false;
                 for (JSONObject template: templates.jsonObjectIterable()) {
