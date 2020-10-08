@@ -26,8 +26,7 @@
     <string name="extra_field_name">Kromaĵo</string>
     <string name="field_to_ask_front_name">Aldoni malan direkton</string>
     <!--Card type-->
-    <string name="card_one_name">Karto 1</string>
-    <string name="card_two_name">Karto 2</string>
+    <string name="card_n_name">Card %d</string>
     <string name="card_cloze_name">Truteksto</string>
     <!--Note type-->
     <string name="basic_model_name">Baza</string>

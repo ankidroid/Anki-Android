@@ -42,7 +42,8 @@
     <string name="statistics_mature">Érett</string>
     <string name="statistics_young_and_learn">Legfrissebb+Tanulás</string>
     <string name="statistics_unlearned">Eddig még nem látott</string>
-    <string name="statistics_suspended_and_buried">Felfüggesztett+Elásott</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Újra tanul</string>
     <string name="statistics_learn">Tanulás</string>
     <string name="statistics_cram">Magolás</string>

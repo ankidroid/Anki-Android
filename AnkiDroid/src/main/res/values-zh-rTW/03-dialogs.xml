@@ -141,10 +141,10 @@
     <string name="check_media_no_unused_missing">沒有發現任何未使用或是遺失的檔案</string>
     <string name="check_media_db_updated">重建媒體資料庫</string>
     <string name="check_media_delete_unused">刪除未使用的</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">刪除媒體中&#8230;</string>
+    <string name="delete_media_result_title">克漏字結果</string>
     <plurals name="delete_media_result_message">
-        <item quantity="other">%d files deleted</item>
+        <item quantity="other">%d 檔案已刪除</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">所有卡片</string>
@@ -183,8 +183,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">資料庫已鎖定</string>
     <string name="database_locked_summary">AnkiDroid 的資料庫正在被其他應用程式使用中。請關閉其他程式再重新開啟 AnkiDroid。</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_title">不相容的資料庫版本</string>
+    <string name="incompatible_database_version_summary">該資料庫比此版本的 AnkiDroid 可以使用的更高。升級 AnkiDroid 或降級資料庫以開啟它\n\n支援的版本：%1$d\n資料庫版本：%2$d\n\n以下還原選項將覆蓋您當前的收藏，通過使用可能相容的資料庫版本：</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">背景圖像已套用</string>
     <string name="background_image_removed">背景圖像已移除</string>

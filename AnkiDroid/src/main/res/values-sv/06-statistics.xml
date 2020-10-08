@@ -42,7 +42,8 @@
     <string name="statistics_mature">Mogna</string>
     <string name="statistics_young_and_learn">Unga+Nya</string>
     <string name="statistics_unlearned">Osedda</string>
-    <string name="statistics_suspended_and_buried">Uteslutna+Dolda</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Studera igen</string>
     <string name="statistics_learn">Nya</string>
     <string name="statistics_cram">Råplugg</string>

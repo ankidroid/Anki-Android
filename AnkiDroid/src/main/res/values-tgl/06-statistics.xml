@@ -42,7 +42,8 @@
     <string name="statistics_mature">Luma</string>
     <string name="statistics_young_and_learn">Bago+Matutunan</string>
     <string name="statistics_unlearned">Hindi pa nakikita</string>
-    <string name="statistics_suspended_and_buried">Suspendido+Nakabaon</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Pagaralang muli</string>
     <string name="statistics_learn">Magaral</string>
     <string name="statistics_cram">Magmadali</string>

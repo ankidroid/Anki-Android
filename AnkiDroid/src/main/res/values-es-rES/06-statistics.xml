@@ -42,7 +42,8 @@
     <string name="statistics_mature">Maduras</string>
     <string name="statistics_young_and_learn">Jovenes+Aprendiendo</string>
     <string name="statistics_unlearned">No vistas</string>
-    <string name="statistics_suspended_and_buried">Suspendidas+Enterradas</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Vueltas a aprender</string>
     <string name="statistics_learn">Aprendidas</string>
     <string name="statistics_cram">Intensivas</string>

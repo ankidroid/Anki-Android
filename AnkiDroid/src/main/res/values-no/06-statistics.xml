@@ -42,7 +42,8 @@
     <string name="statistics_mature">Modne</string>
     <string name="statistics_young_and_learn">Young+Learn</string>
     <string name="statistics_unlearned">Unseen</string>
-    <string name="statistics_suspended_and_buried">Suspended+Buried</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Lær på nytt</string>
     <string name="statistics_learn">Lær</string>
     <string name="statistics_cram">Pugg</string>

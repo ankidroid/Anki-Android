@@ -42,7 +42,8 @@
     <string name="statistics_mature">Heldua</string>
     <string name="statistics_young_and_learn">Young+Learn</string>
     <string name="statistics_unlearned">Ikusi gabea</string>
-    <string name="statistics_suspended_and_buried">Suspended+Buried</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Berrikasi</string>
     <string name="statistics_learn">Ikasi</string>
     <string name="statistics_cram">Cram</string>

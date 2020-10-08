@@ -26,8 +26,7 @@
     <string name="extra_field_name">إضافي</string>
     <string name="field_to_ask_front_name">إضافة بطاقة معكوسة</string>
     <!--Card type-->
-    <string name="card_one_name">البطاقة 1</string>
-    <string name="card_two_name">البطاقة 2</string>
+    <string name="card_n_name">Card %d</string>
     <string name="card_cloze_name">ملء فراغات</string>
     <!--Note type-->
     <string name="basic_model_name">أساسي</string>

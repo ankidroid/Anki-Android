@@ -42,7 +42,8 @@
     <string name="statistics_mature">Anciennes</string>
     <string name="statistics_young_and_learn">Récentes + À apprendre</string>
     <string name="statistics_unlearned">Non vues</string>
-    <string name="statistics_suspended_and_buried">En attente + Cachées</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Réapprentissage</string>
     <string name="statistics_learn">Apprentissage</string>
     <string name="statistics_cram">Bachotage</string>

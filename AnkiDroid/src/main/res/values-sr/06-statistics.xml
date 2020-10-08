@@ -42,7 +42,8 @@
     <string name="statistics_mature">Развијени</string>
     <string name="statistics_young_and_learn">Young+Learn</string>
     <string name="statistics_unlearned">Непрегледане</string>
-    <string name="statistics_suspended_and_buried">Suspended+Buried</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Поновно учење</string>
     <string name="statistics_learn">Учење</string>
     <string name="statistics_cram">Штребање</string>

@@ -42,7 +42,8 @@
     <string name="statistics_mature">Zrele</string>
     <string name="statistics_young_and_learn">Sveže in za učenje</string>
     <string name="statistics_unlearned">Neogledane</string>
-    <string name="statistics_suspended_and_buried">Pridržane in prikrite</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Za pon. učenje</string>
     <string name="statistics_learn">Za učenje</string>
     <string name="statistics_cram">Inten.</string>

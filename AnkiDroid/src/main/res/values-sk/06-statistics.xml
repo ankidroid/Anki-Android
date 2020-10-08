@@ -42,7 +42,8 @@
     <string name="statistics_mature">Zrelé</string>
     <string name="statistics_young_and_learn">Mladé+Novonaučené</string>
     <string name="statistics_unlearned">Neučené</string>
-    <string name="statistics_suspended_and_buried">Pozastavené+Skryté</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Znovunaučené</string>
     <string name="statistics_learn">Novonaučené</string>
     <string name="statistics_cram">Nabiflené</string>

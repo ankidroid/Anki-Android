@@ -42,7 +42,8 @@
     <string name="statistics_mature">Madures</string>
     <string name="statistics_young_and_learn">Joves+Aprenent</string>
     <string name="statistics_unlearned">No vistes</string>
-    <string name="statistics_suspended_and_buried">Suspeses+Enterrades</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Aprendre de nou</string>
     <string name="statistics_learn">Aprendre</string>
     <string name="statistics_cram">Repàs</string>

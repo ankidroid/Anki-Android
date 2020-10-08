@@ -42,7 +42,8 @@
     <string name="statistics_mature">Maljunaj</string>
     <string name="statistics_young_and_learn">Junaj kaj lernataj</string>
     <string name="statistics_unlearned">Novaj</string>
-    <string name="statistics_suspended_and_buried">Kaŝitaj</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Relernendaj</string>
     <string name="statistics_learn">Lernataj</string>
     <string name="statistics_cram">Antaŭlernado</string>

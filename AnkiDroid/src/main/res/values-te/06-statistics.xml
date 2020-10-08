@@ -42,7 +42,8 @@
     <string name="statistics_mature">పరిపక్వ</string>
     <string name="statistics_young_and_learn">వయస్సులో ఉన్నప్పుడు+తెలుసుకోండి</string>
     <string name="statistics_unlearned">చూడబడని</string>
-    <string name="statistics_suspended_and_buried">తాత్కాలికముగా+ఖననం</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">మళ్ళీ తెలుసుకోండి</string>
     <string name="statistics_learn">నేర్చుకొను</string>
     <string name="statistics_cram">క్రామ్</string>

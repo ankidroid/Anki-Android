@@ -42,7 +42,8 @@
     <string name="statistics_mature">Mature</string>
     <string name="statistics_young_and_learn">Young + Matuto</string>
     <string name="statistics_unlearned">Hindi nakikita</string>
-    <string name="statistics_suspended_and_buried">Suspendido + Ibinaon</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Muling matuto</string>
     <string name="statistics_learn">Matuto</string>
     <string name="statistics_cram">Cram</string>

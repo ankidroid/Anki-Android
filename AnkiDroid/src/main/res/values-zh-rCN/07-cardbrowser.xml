@@ -101,6 +101,6 @@
     <string name="card_browser_search_all_decks">搜索全部牌组</string>
     <string name="card_browser_unknown_deck_name">未知</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="other">%d 张卡牌已删除</item>
     </plurals>
 </resources>

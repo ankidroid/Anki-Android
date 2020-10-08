@@ -42,7 +42,8 @@
     <string name="statistics_mature">Senos</string>
     <string name="statistics_young_and_learn">Naujos+tebesimokomos</string>
     <string name="statistics_unlearned">Nematytos</string>
-    <string name="statistics_suspended_and_buried">Atidėtos+paslėptos</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Išmoktos iš naujo</string>
     <string name="statistics_learn">Tebesimokomos</string>
     <string name="statistics_cram">Išmoktos mintinai</string>

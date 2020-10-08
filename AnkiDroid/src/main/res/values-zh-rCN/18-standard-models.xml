@@ -26,8 +26,7 @@
     <string name="extra_field_name">更多</string>
     <string name="field_to_ask_front_name">添加翻转卡片</string>
     <!--Card type-->
-    <string name="card_one_name">卡片 1</string>
-    <string name="card_two_name">卡片 2</string>
+    <string name="card_n_name">Card %d</string>
     <string name="card_cloze_name">完形填空</string>
     <!--Note type-->
     <string name="basic_model_name">基本</string>

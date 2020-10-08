@@ -42,7 +42,8 @@
     <string name="statistics_mature">오래된</string>
     <string name="statistics_young_and_learn">최근+학습</string>
     <string name="statistics_unlearned">본 적 없는</string>
-    <string name="statistics_suspended_and_buried">비활성화+나중에 볼 카드</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">재학습</string>
     <string name="statistics_learn">학습</string>
     <string name="statistics_cram">벼락치기</string>

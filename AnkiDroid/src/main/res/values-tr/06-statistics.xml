@@ -42,7 +42,8 @@
     <string name="statistics_mature">Olgun</string>
     <string name="statistics_young_and_learn">Genç+Öğrenme</string>
     <string name="statistics_unlearned">Görülmemiş</string>
-    <string name="statistics_suspended_and_buried">Askıda+Gömülü</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Yeniden öğrenme</string>
     <string name="statistics_learn">Öğrenme</string>
     <string name="statistics_cram">İnekleme</string>

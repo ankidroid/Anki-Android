@@ -42,7 +42,8 @@
     <string name="statistics_mature">Rijp</string>
     <string name="statistics_young_and_learn">Jong+Leren</string>
     <string name="statistics_unlearned">Nieuw</string>
-    <string name="statistics_suspended_and_buried">Opgeschort+Verborgen</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Opnieuw leren</string>
     <string name="statistics_learn">Leren</string>
     <string name="statistics_cram">Blokken</string>

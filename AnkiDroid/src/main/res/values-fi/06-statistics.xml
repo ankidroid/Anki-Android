@@ -42,7 +42,8 @@
     <string name="statistics_mature">Kypsät</string>
     <string name="statistics_young_and_learn">Young+Learn</string>
     <string name="statistics_unlearned">Näkemättömät</string>
-    <string name="statistics_suspended_and_buried">Suspended+Buried</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Uudelleenopi</string>
     <string name="statistics_learn">Opi</string>
     <string name="statistics_cram">Pänttää</string>

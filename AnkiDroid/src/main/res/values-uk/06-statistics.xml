@@ -42,7 +42,8 @@
     <string name="statistics_mature">Закріплені</string>
     <string name="statistics_young_and_learn">Нові і нещодавні</string>
     <string name="statistics_unlearned">Не переглядані</string>
-    <string name="statistics_suspended_and_buried">Призупинені+Відкладені</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Повторно вчено</string>
     <string name="statistics_learn">Вчено</string>
     <string name="statistics_cram">Зазубрені</string>

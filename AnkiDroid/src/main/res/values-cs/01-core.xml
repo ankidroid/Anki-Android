@@ -194,7 +194,7 @@
     <string name="nothing">Nic</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Typ karet</string>
-    <string name="card_template_editor_front">Šablona lícu</string>
+    <string name="card_template_editor_front">Šablona líce</string>
     <string name="card_template_editor_back">Šablona rubu</string>
     <string name="card_template_editor_styling">Styl</string>
     <string name="card_template_editor_menu_delete">Odstranit</string>

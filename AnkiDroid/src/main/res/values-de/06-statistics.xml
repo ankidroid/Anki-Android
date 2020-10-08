@@ -42,7 +42,8 @@
     <string name="statistics_mature">Alte</string>
     <string name="statistics_young_and_learn">Jung+Lernen</string>
     <string name="statistics_unlearned">Neu</string>
-    <string name="statistics_suspended_and_buried">Ausgeschlossen+Aufgeschoben</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
     <string name="statistics_relearn">Erneut gelernte</string>
     <string name="statistics_learn">Gelernte</string>
     <string name="statistics_cram">Gepaukte</string>
