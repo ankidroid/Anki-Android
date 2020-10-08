@@ -243,6 +243,10 @@ public class RobolectricTest {
         return addNoteUsingModelName("Basic (and reversed card)", front, back);
     }
 
+    protected Note addNoteUsingBasicTypedModel(String front, String back) {
+        return addNoteUsingModelName("Basic (type in the answer)", front, back);
+    }
+
     protected Note addNoteUsingModelName(String name, String... fields) {
         Model model = getCol().getModels().byName(name);
         //PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.

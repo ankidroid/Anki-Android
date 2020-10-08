@@ -1,10 +1,12 @@
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.AnkiAssert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -22,11 +24,11 @@ import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SI
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl;
 
-import static android.os.Looper.getMainLooper;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
-import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
 public class AbstractFlashcardViewerTest extends RobolectricTest {
@@ -316,6 +318,60 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         nafv.handleUrlFromJavascript(url);
 
         assertThat(nafv.getTypedInput(), is("你好%"));
+    }
+
+    @Test
+    @Ignore("7363")
+    public void testEditingCardChangesTypedAnswer() {
+        // 7363
+       addNoteUsingBasicTypedModel("Hello", "World");
+
+        NonAbstractFlashcardViewer nafv = getViewer();
+
+        assertThat(nafv.getCorrectTypedAnswer(), is("World"));
+
+        waitForAsyncTasksToComplete();
+
+        AbstractFlashcardViewer.setEditorCard(nafv.mCurrentCard);
+
+        Note note = nafv.mCurrentCard.note();
+        note.setField(1, "David");
+
+        nafv.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
+
+        waitForAsyncTasksToComplete();
+
+        assertThat(nafv.getCorrectTypedAnswer(), is("David"));
+    }
+
+    @Test
+    @Ignore("7363")
+    public void testEditingCardChangesTypedAnswerOnDisplayAnswer() {
+        // 7363
+        addNoteUsingBasicTypedModel("Hello", "World");
+
+        NonAbstractFlashcardViewer nafv = getViewer();
+
+        assertThat(nafv.getCorrectTypedAnswer(), is("World"));
+
+        nafv.displayCardAnswer();
+
+        assertThat(nafv.getCardContent(), containsString("World"));
+
+        waitForAsyncTasksToComplete();
+
+        AbstractFlashcardViewer.setEditorCard(nafv.mCurrentCard);
+
+        Note note = nafv.mCurrentCard.note();
+        note.setField(1, "David");
+
+        nafv.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
+
+        waitForAsyncTasksToComplete();
+
+        assertThat(nafv.getCorrectTypedAnswer(), is("David"));
+        assertThat(nafv.getCardContent(), not(containsString("World")));
+        assertThat(nafv.getCardContent(), containsString("David"));
     }
 
 
