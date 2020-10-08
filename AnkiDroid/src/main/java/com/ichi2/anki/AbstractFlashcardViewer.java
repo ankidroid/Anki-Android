@@ -3642,6 +3642,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         sEditorCard = card;
     }
 
+    @VisibleForTesting
+    String getCorrectTypedAnswer() {
+        return mTypeCorrect;
+    }
+
+    @VisibleForTesting
+    String getCardContent() {
+        return mCardContent;
+    }
+
     protected void showTagsDialog() {
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mCurrentCard.note().getTags());
