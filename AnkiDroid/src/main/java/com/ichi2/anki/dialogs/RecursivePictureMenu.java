@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -40,6 +41,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+import timber.log.Timber;
 
 /** A Dialog displaying The various options for "Help" in a nested structure */
 public class RecursivePictureMenu extends DialogFragment {
@@ -49,10 +52,11 @@ public class RecursivePictureMenu extends DialogFragment {
     }
 
     @CheckResult
-    public static RecursivePictureMenu createInstance(ArrayList<Item> itemList) {
+    public static RecursivePictureMenu createInstance(ArrayList<Item> itemList, @StringRes int title) {
         RecursivePictureMenu helpDialog = new RecursivePictureMenu();
         Bundle args = new Bundle();
         args.putParcelableArrayList("bundle", itemList);
+        args.putInt("titleRes", title);
         helpDialog.setArguments(args);
         return helpDialog;
     }
@@ -71,7 +75,9 @@ public class RecursivePictureMenu extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         @NonNull
-        final List<Item> items = getArguments().getParcelableArrayList("bundle");
+        final List<Item> items = requireArguments().getParcelableArrayList("bundle");
+        @NonNull
+        final String title = requireContext().getString(requireArguments().getInt("titleRes"));
 
         RecyclerView.Adapter<?> adapter = new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -107,14 +113,37 @@ public class RecursivePictureMenu extends DialogFragment {
 
         MaterialDialog dialog = new MaterialDialog.Builder(requireContext())
                 .adapter(adapter, null)
+                .title(title)
                 .show();
-        
+
+        setMenuBreadcrumbHeader(dialog);
+
         View v = dialog.findViewById(R.id.md_contentRecyclerView);
         v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), 0);
         // DEFECT: There is 9dp of bottom margin which I can't seem to get rid of.
 
         return dialog;
     }
+
+
+    protected void setMenuBreadcrumbHeader(MaterialDialog dialog) {
+        try {
+            View titleFrame = dialog.findViewById(R.id.md_titleFrame);
+            titleFrame.setPadding(10, 22, 10, 10);
+            titleFrame.setOnClickListener((l) -> dismiss());
+
+            View icon = dialog.findViewById(R.id.md_icon);
+            icon.setVisibility(View.VISIBLE);
+            Drawable iconValue = VectorDrawableCompat.create(
+                    getResources(),
+                    R.drawable.ic_menu_back_black_24dp,
+                    requireActivity().getTheme());
+            icon.setBackground(iconValue);
+        } catch (Exception e) {
+            Timber.w(e, "Failed to set Menu title/icon");
+        }
+    }
+
 
     public abstract static class Item implements Parcelable {
 
@@ -133,6 +162,11 @@ public class RecursivePictureMenu extends DialogFragment {
         protected Item(Parcel in) {
             mText = in.readInt();
             mIcon = in.readInt();
+        }
+
+        @StringRes
+        protected int getTitle() {
+            return mText;
         }
 
         @Override
@@ -170,7 +204,8 @@ public class RecursivePictureMenu extends DialogFragment {
 
         @Override
         public void execute(AnkiActivity activity) {
-            DialogFragment nextFragment = RecursivePictureMenu.createInstance(new ArrayList<>(this.getChildren()));
+            ArrayList<Item> children = new ArrayList<>(this.getChildren());
+            DialogFragment nextFragment = RecursivePictureMenu.createInstance(children, getTitle());
             activity.showDialogFragment(nextFragment);
         }
 
