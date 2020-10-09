@@ -107,7 +107,7 @@ public class RecursivePictureMenuTest extends RobolectricTest {
 
     private RecyclerView getRecyclerViewFor(Item... items) {
         ArrayList<Item> itemList = new ArrayList<>(Arrays.asList(items));
-        RecursivePictureMenu menu = RecursivePictureMenu.createInstance(itemList);
+        RecursivePictureMenu menu = RecursivePictureMenu.createInstance(itemList, R.string.help);
 
         mActivity = openDialogFragmentUsingActivity(menu);
 

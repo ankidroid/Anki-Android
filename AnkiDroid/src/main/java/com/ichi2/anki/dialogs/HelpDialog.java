@@ -82,7 +82,7 @@ public class HelpDialog {
             RecursivePictureMenu.removeFrom(itemList, rateAppItem);
         }
 
-        return RecursivePictureMenu.createInstance(itemList);
+        return RecursivePictureMenu.createInstance(itemList, R.string.help);
     }
 
     public static class RateAppItem extends Item implements Parcelable {
