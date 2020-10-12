@@ -1003,11 +1003,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
                                 new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, flag}));
     }
 
-    private void selectionWithFlagTask (int flag) {
-        // Change icon to match color of selected flag.
+    /** Updates flag icon color and cards shown with given color */
+    private void selectionWithFlagTask(int flag) {
         mCurrentFlag = flag;
         invalidateOptionsMenu();
-        // Update mSearchTerms to match selected flag.
         filterByFlag();
     }
 
@@ -1554,9 +1553,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
         searchCards();
     }
 
+
+    /** Updates search terms to only show cards with selected flag. */
     private void filterByFlag() {
         mSearchView.setQuery("", false);
-        mSearchTerms = "flag:" + mCurrentFlag;
+        String flagSearchTerm = "flag:" + mCurrentFlag;
+        if (mSearchTerms.contains("flag:")) {
+            mSearchTerms = mSearchTerms.replaceFirst("flag:.", "flag:" + mCurrentFlag);
+        }
+        else if (!mSearchTerms.isEmpty()) {
+            mSearchTerms = flagSearchTerm + " " + mSearchTerms;
+        } else {
+            mSearchTerms = flagSearchTerm;
+        }
         searchCards();
     }
 
