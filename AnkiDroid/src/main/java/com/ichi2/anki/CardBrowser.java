@@ -1006,6 +1006,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCurrentFlag = flag;
         invalidateOptionsMenu();
         // Update mSearchTerms to match selected flag.
+        filterByFlag();
     }
 
     @Override
@@ -1548,6 +1549,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             sb.append(")"); // Only if we added anything to the tag list
         }
         mSearchTerms = sb.toString();
+        searchCards();
+    }
+
+    private void filterByFlag() {
+        mSearchView.setQuery("", false);
+        mSearchTerms = "flag:" + mCurrentFlag;
         searchCards();
     }
 
