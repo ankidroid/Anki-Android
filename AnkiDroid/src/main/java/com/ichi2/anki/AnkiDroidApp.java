@@ -177,6 +177,10 @@ public class AnkiDroidApp extends MultiDexApplication {
     /** Our ACRA configurations, initialized during onCreate() */
     private CoreConfigurationBuilder acraCoreConfigBuilder;
 
+    /** An exception if the WebView subsystem fails to load */
+    @Nullable
+    private Throwable mWebViewError;
+
 
     @NonNull
     public static InputStream getResourceAsStream(@NonNull String name) {
@@ -278,7 +282,17 @@ public class AnkiDroidApp extends MultiDexApplication {
         NotificationChannels.setup(getApplicationContext());
 
         // Configure WebView to allow file scheme pages to access cookies.
-        CookieManager.setAcceptFileSchemeCookies(true);
+        try {
+            CookieManager.setAcceptFileSchemeCookies(true);
+        } catch (Throwable e) {
+            // 5794: Errors occur if the WebView fails to load
+            // android.webkit.WebViewFactory.MissingWebViewPackageException.MissingWebViewPackageException
+            // Error may be excessive, but I expect a UnsatisfiedLinkError to be possible here.
+            this.mWebViewError = e;
+            sendExceptionReport(e, "setAcceptFileSchemeCookies");
+            Timber.e(e, "setAcceptFileSchemeCookies");
+            return;
+        }
 
         // Prepare Cookies to be synchronized between RAM and permanent storage.
         CompatHelper.getCompat().prepareWebViewCookies(this.getApplicationContext());
@@ -581,6 +595,22 @@ public class AnkiDroidApp extends MultiDexApplication {
     private static boolean isCurrentLanguage(String l) {
         String pref = getSharedPrefs(sInstance).getString(Preferences.LANGUAGE, "");
         return pref.equals(l) || "".equals(pref) && Locale.getDefault().getLanguage().equals(l);
+    }
+
+
+    public static boolean webViewFailedToLoad() {
+        return getInstance().mWebViewError != null;
+    }
+
+
+    @Nullable
+    public static String getWebViewErrorMessage() {
+        Throwable error = getInstance().mWebViewError;
+        if (error == null) {
+            Timber.w("getWebViewExceptionMessage called without webViewFailedToLoad check");
+            return null;
+        }
+        return error.getLocalizedMessage();
     }
 
     /**

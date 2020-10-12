@@ -81,7 +81,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -573,6 +572,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * @return whether or not we were successful
      */
     private boolean firstCollectionOpen() {
+        if (AnkiDroidApp.webViewFailedToLoad()) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.ankidroid_init_failed_webview_title)
+                    .content(getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.getWebViewErrorMessage()))
+                    .positiveText(R.string.close)
+                    .onPositive((d, w) -> exit())
+                    .cancelable(false)
+                    .show();
+            return false;
+        }
         if (Permissions.hasStorageAccessPermission(this)) {
             Timber.i("User has permissions to access collection");
             // Show error dialog if collection could not be opened
