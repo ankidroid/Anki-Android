@@ -829,6 +829,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     // SearchView doesn't support empty queries so we always reset the search when collapsing
                     mSearchTerms = "";
                     mSearchView.setQuery(mSearchTerms, false);
+                    mCurrentFlag = 0;
+                    setFlagColor(menu);
                     searchCards();
                     // invalidate options menu so that disappeared icons would appear again
                     supportInvalidateOptionsMenu();
