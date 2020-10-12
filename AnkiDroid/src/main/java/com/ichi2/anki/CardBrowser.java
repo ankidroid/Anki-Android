@@ -918,8 +918,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     flag_icon.setIcon(R.drawable.ic_flag_transparent);
                     break;
             }
-            // int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
-            // flag_icon.getIcon().mutate().setAlpha(alpha);
         }
     }
 
