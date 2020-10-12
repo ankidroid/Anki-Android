@@ -18,6 +18,7 @@ package com.ichi2.libanki.utils;
 
 import com.ichi2.libanki.DB;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -75,13 +76,15 @@ public abstract class Time {
 
     public static Calendar calendar(long timeInMS) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(timeInMS);
+        Timestamp timestamp = new Timestamp(timeInMS);
+        calendar.setTimeInMillis(timestamp.getTime());
         return calendar;
     }
 
     public static GregorianCalendar gregorianCalendar(long timeInMS) {
         GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTimeInMillis(timeInMS);
+        Timestamp timestamp = new Timestamp(timeInMS);
+        calendar.setTimeInMillis(timestamp.getTime());
         return calendar;
     }
 
