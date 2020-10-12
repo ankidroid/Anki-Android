@@ -67,6 +67,7 @@ import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.receiver.SdCardReceiver;
+import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.widgets.DeckDropDownAdapter;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListenerWithContext;
@@ -144,6 +145,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MultiColumnListAdapter mCardsAdapter;
     private String mSearchTerms;
     private String mRestrictOnDeck;
+    private int mCurrentFlag;
 
     private MenuItem mSearchItem;
     private MenuItem mSaveSearchItem;
@@ -803,7 +805,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         Timber.d("onCreateOptionsMenu()");
         mActionBarMenu = menu;
         if (!mInMultiSelectMode) {
@@ -889,6 +891,37 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        setFlagColor(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void setFlagColor(Menu menu) {
+        @Nullable MenuItem flag_icon = menu.findItem(R.id.action_search_by_flag);
+        if (flag_icon != null) {
+            switch (mCurrentFlag) {
+                case 1:
+                    flag_icon.setIcon(R.drawable.ic_flag_red);
+                    break;
+                case 2:
+                    flag_icon.setIcon(R.drawable.ic_flag_orange);
+                    break;
+                case 3:
+                    flag_icon.setIcon(R.drawable.ic_flag_green);
+                    break;
+                case 4:
+                    flag_icon.setIcon(R.drawable.ic_flag_blue);
+                    break;
+                default:
+                    flag_icon.setIcon(R.drawable.ic_flag_transparent);
+                    break;
+            }
+            // int alpha = (getControlBlocked() != ReviewerUi.ControlBlock.SLOW) ? Themes.ALPHA_ICON_ENABLED_LIGHT : Themes.ALPHA_ICON_DISABLED_LIGHT ;
+            // flag_icon.getIcon().mutate().setAlpha(alpha);
+        }
+    }
+
+    @Override
     protected void onNavigationPressed() {
         if (mInMultiSelectMode) {
             endMultiSelectMode();
@@ -966,6 +999,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         CollectionTask.launchCollectionTask(DISMISS_MULTI,
                                 flagCardHandler(),
                                 new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, flag}));
+    }
+
+    private void selectionWithFlagTask (int flag) {
+        // Change icon to match color of selected flag.
+        mCurrentFlag = flag;
+        invalidateOptionsMenu();
+        // Update mSearchTerms to match selected flag.
     }
 
     @Override
@@ -1051,6 +1091,26 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             case R.id.action_flag_four:
                 flagTask(4);
+                return true;
+
+            case R.id.action_select_flag_zero:
+                selectionWithFlagTask(0);
+                return true;
+
+            case R.id.action_select_flag_one:
+                selectionWithFlagTask(1);
+                return true;
+
+            case R.id.action_select_flag_two:
+                selectionWithFlagTask(2);
+                return true;
+
+            case R.id.action_select_flag_three:
+                selectionWithFlagTask(3);
+                return true;
+
+            case R.id.action_select_flag_four:
+                selectionWithFlagTask(4);
                 return true;
 
             case R.id.action_delete_card:
