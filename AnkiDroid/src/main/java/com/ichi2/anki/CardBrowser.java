@@ -828,8 +828,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     // SearchView doesn't support empty queries so we always reset the search when collapsing
                     mSearchTerms = "";
                     mSearchView.setQuery(mSearchTerms, false);
-                    mCurrentFlag = 0;
-                    setFlagColor(menu);
                     searchCards();
                     // invalidate options menu so that disappeared icons would appear again
                     supportInvalidateOptionsMenu();
@@ -889,35 +887,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         onSelectionChanged();
         updatePreviewMenuItem();
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        setFlagColor(menu);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    private void setFlagColor(Menu menu) {
-        @Nullable MenuItem flag_icon = menu.findItem(R.id.action_search_by_flag);
-        if (flag_icon != null) {
-            switch (mCurrentFlag) {
-                case 1:
-                    flag_icon.setIcon(R.drawable.ic_flag_red);
-                    break;
-                case 2:
-                    flag_icon.setIcon(R.drawable.ic_flag_orange);
-                    break;
-                case 3:
-                    flag_icon.setIcon(R.drawable.ic_flag_green);
-                    break;
-                case 4:
-                    flag_icon.setIcon(R.drawable.ic_flag_blue);
-                    break;
-                default:
-                    flag_icon.setIcon(R.drawable.ic_flag_transparent);
-                    break;
-            }
-        }
     }
 
     @Override
@@ -1003,7 +972,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /** Updates flag icon color and cards shown with given color */
     private void selectionWithFlagTask(int flag) {
         mCurrentFlag = flag;
-        invalidateOptionsMenu();
         filterByFlag();
     }
 
