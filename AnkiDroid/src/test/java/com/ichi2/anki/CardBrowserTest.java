@@ -303,6 +303,24 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
     @Test
+    public void filterByFlagDisplaysProperly() {
+        Note cardWithRedFlag = addNoteUsingBasicModel("Card with red flag", "Reverse");
+        flagCardForNote(cardWithRedFlag, 1);
+
+        Note cardWithGreenFlag = addNoteUsingBasicModel("Card with green flag", "Reverse");
+        flagCardForNote(cardWithGreenFlag, 3);
+
+        Note anotherCardWithRedFlag = addNoteUsingBasicModel("Second card with red flag", "Reverse");
+        flagCardForNote(anotherCardWithRedFlag, 1);
+
+        CardBrowser b = getBrowserWithNoNewCards();
+        b.filterByFlag(1);
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Flagged cards should be returned", b.getCardCount(), is(2));
+    }
+
+    @Test
     public void previewWorksAfterSort() {
         // #7286
         long cid1 = addNoteUsingBasicModel("Hello", "World").cards().get(0).getId();

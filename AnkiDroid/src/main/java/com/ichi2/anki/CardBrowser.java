@@ -1557,7 +1557,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mSearchView.setQuery("", false);
         String flagSearchTerm = "flag:" + mCurrentFlag;
         if (mSearchTerms.contains("flag:")) {
-            mSearchTerms = mSearchTerms.replaceFirst("flag:.", "flag:" + mCurrentFlag);
+            mSearchTerms = mSearchTerms.replaceFirst("flag:.", flagSearchTerm);
         }
         else if (!mSearchTerms.isEmpty()) {
             mSearchTerms = flagSearchTerm + " " + mSearchTerms;
@@ -2736,6 +2736,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting
     void filterByTag(String... tags) {
         filterByTag(Arrays.asList(tags), 0);
+    }
+
+    @VisibleForTesting
+    void filterByFlag(int flag) {
+        mCurrentFlag = flag;
+        filterByFlag();
     }
 
     @VisibleForTesting
