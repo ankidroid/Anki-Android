@@ -371,37 +371,29 @@ public class Whiteboard extends View {
 
     public void onClick(View view) {
 
-        switch (view.getId()) {
-            case R.id.pen_color_white:
-                mPaint.setColor(Color.WHITE);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_black:
-                mPaint.setColor(Color.BLACK);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_red:
-                int redPenColor = ContextCompat.getColor(getContext(), R.color.material_red_500);
-                mPaint.setColor(redPenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_green:
-                int greenPenColor = ContextCompat.getColor(getContext(), R.color.material_green_500);
-                mPaint.setColor(greenPenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_blue:
-                int bluePenColor = ContextCompat.getColor(getContext(), R.color.material_blue_500);
-                mPaint.setColor(bluePenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_yellow:
-                int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
-                mPaint.setColor(yellowPenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            default:
-                break;
+        int id = view.getId();
+        if (id == R.id.pen_color_white) {
+            mPaint.setColor(Color.WHITE);
+            mColorPalette.setVisibility(View.GONE);
+        } else if (id == R.id.pen_color_black) {
+            mPaint.setColor(Color.BLACK);
+            mColorPalette.setVisibility(View.GONE);
+        } else if (id == R.id.pen_color_red) {
+            int redPenColor = ContextCompat.getColor(getContext(), R.color.material_red_500);
+            mPaint.setColor(redPenColor);
+            mColorPalette.setVisibility(View.GONE);
+        } else if (id == R.id.pen_color_green) {
+            int greenPenColor = ContextCompat.getColor(getContext(), R.color.material_green_500);
+            mPaint.setColor(greenPenColor);
+            mColorPalette.setVisibility(View.GONE);
+        } else if (id == R.id.pen_color_blue) {
+            int bluePenColor = ContextCompat.getColor(getContext(), R.color.material_blue_500);
+            mPaint.setColor(bluePenColor);
+            mColorPalette.setVisibility(View.GONE);
+        } else if (id == R.id.pen_color_yellow) {
+            int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
+            mPaint.setColor(yellowPenColor);
+            mColorPalette.setVisibility(View.GONE);
         }
     }
 

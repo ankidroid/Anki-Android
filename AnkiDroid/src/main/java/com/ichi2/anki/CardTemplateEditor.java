@@ -453,68 +453,66 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         public boolean onOptionsItemSelected(MenuItem item) {
             final Collection col = mTemplateEditor.getCol();
             TemporaryModel tempModel = mTemplateEditor.getTempModel();
-            switch (item.getItemId()) {
-                case R.id.action_add:
-                    Timber.i("CardTemplateEditor:: Add template button pressed");
-                    // TODO in Anki Desktop, they have a popup first with "This will create %d cards. Proceed?"
-                    //      AnkiDroid never had this so it isn't a regression but it is a miss for AnkiDesktop parity
-                    addNewTemplateWithCheck(tempModel.getModel());
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_add) {
+                Timber.i("CardTemplateEditor:: Add template button pressed");
+                // TODO in Anki Desktop, they have a popup first with "This will create %d cards. Proceed?"
+                //      AnkiDroid never had this so it isn't a regression but it is a miss for AnkiDesktop parity
+                addNewTemplateWithCheck(tempModel.getModel());
+                return true;
+            } else if (itemId == R.id.action_delete) {
+                Timber.i("CardTemplateEditor:: Delete template button pressed");
+                Resources res = getResources();
+                int ordinal = mTemplateEditor.mViewPager.getCurrentItem();
+                final JSONObject template = tempModel.getTemplate(ordinal);
+                // Don't do anything if only one template
+                if (tempModel.getTemplateCount() < 2) {
+                    mTemplateEditor.showSimpleMessageDialog(res.getString(R.string.card_template_editor_cant_delete));
                     return true;
-                case R.id.action_delete: {
-                    Timber.i("CardTemplateEditor:: Delete template button pressed");
-                    Resources res = getResources();
-                    int ordinal = mTemplateEditor.mViewPager.getCurrentItem();
-                    final JSONObject template = tempModel.getTemplate(ordinal);
-                    // Don't do anything if only one template
-                    if (tempModel.getTemplateCount() < 2) {
-                        mTemplateEditor.showSimpleMessageDialog(res.getString(R.string.card_template_editor_cant_delete));
-                        return true;
-                    }
+                }
 
-                    if (deletionWouldOrphanNote(col, tempModel, ordinal)) {
-                        return true;
-                    }
+                if (deletionWouldOrphanNote(col, tempModel, ordinal)) {
+                    return true;
+                }
 
-                    // Show confirmation dialog
-                    int numAffectedCards = 0;
-                    if (!TemporaryModel.isOrdinalPendingAdd(tempModel, ordinal)) {
-                        Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation");
-                        numAffectedCards = col.getModels().tmplUseCount(tempModel.getModel(), ordinal);
-                    }
-                    confirmDeleteCards(template, tempModel.getModel(), numAffectedCards);
-                    return true;
+                // Show confirmation dialog
+                int numAffectedCards = 0;
+                if (!TemporaryModel.isOrdinalPendingAdd(tempModel, ordinal)) {
+                    Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation");
+                    numAffectedCards = col.getModels().tmplUseCount(tempModel.getModel(), ordinal);
                 }
-                case R.id.action_add_deck_override: {
-                    displayDeckOverrideDialog(col, tempModel);
-                    return true;
-                }
-                case R.id.action_preview: {
-                    return performPreview();
-                }
-                case R.id.action_confirm:
-                    Timber.i("CardTemplateEditor:: Save model button pressed");
-                    if (modelHasChanged()) {
-                        View confirmButton = mTemplateEditor.findViewById(R.id.action_confirm);
-                        if (confirmButton != null) {
-                            if (!confirmButton.isEnabled()) {
-                                Timber.d("CardTemplateEditor::discarding extra click after button disabled");
-                                return true;
-                            }
-                            confirmButton.setEnabled(false);
+                confirmDeleteCards(template, tempModel.getModel(), numAffectedCards);
+                return true;
+            } else if (itemId == R.id.action_add_deck_override) {
+                displayDeckOverrideDialog(col, tempModel);
+                return true;
+            } else if (itemId == R.id.action_preview) {
+                return performPreview();
+            } else if (itemId == R.id.action_confirm) {
+                Timber.i("CardTemplateEditor:: Save model button pressed");
+                if (modelHasChanged()) {
+                    View confirmButton = mTemplateEditor.findViewById(R.id.action_confirm);
+                    if (confirmButton != null) {
+                        if (!confirmButton.isEnabled()) {
+                            Timber.d("CardTemplateEditor::discarding extra click after button disabled");
+                            return true;
                         }
-                        tempModel.saveToDatabase(saveModelAndExitHandler());
-                    } else {
-                        Timber.d("CardTemplateEditor:: model has not changed, exiting");
-                        mTemplateEditor.finishWithAnimation(RIGHT);
+                        confirmButton.setEnabled(false);
                     }
+                    tempModel.saveToDatabase(saveModelAndExitHandler());
+                } else {
+                    Timber.d("CardTemplateEditor:: model has not changed, exiting");
+                    mTemplateEditor.finishWithAnimation(RIGHT);
+                }
 
-                    return true;
-                case R.id.action_card_browser_appearance:
-                    Timber.i("CardTemplateEditor::Card Browser Template button pressed");
-                    launchCardBrowserAppearance(getCurrentTemplate());
-                default:
-                    return super.onOptionsItemSelected(item);
+                return true;
+            } else if (itemId == R.id.action_card_browser_appearance) {
+                Timber.i("CardTemplateEditor::Card Browser Template button pressed");
+                launchCardBrowserAppearance(getCurrentTemplate());
+
+                return super.onOptionsItemSelected(item);
             }
+            return super.onOptionsItemSelected(item);
         }
 
 

@@ -304,55 +304,54 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_undo:
-                Timber.i("StudyOptionsFragment:: Undo button pressed");
-                CollectionTask.launchCollectionTask(UNDO, undoListener);
-                return true;
-            case R.id.action_deck_options:
-                Timber.i("StudyOptionsFragment:: Deck options button pressed");
-                if (getCol().getDecks().isDyn(getCol().getDecks().selected())) {
-                    openFilteredDeckOptions();
-                } else {
-                    Intent i = new Intent(getActivity(), DeckOptions.class);
-                    getActivity().startActivityForResult(i, DECK_OPTIONS);
-                    ActivityTransitionAnimation.slide(getActivity(), FADE);
-                }
-                return true;
-            case R.id.action_custom_study:
-                Timber.i("StudyOptionsFragment:: custom study button pressed");
-                showCustomStudyContextMenu();
-                return true;
-            case R.id.action_unbury:
-                Timber.i("StudyOptionsFragment:: unbury button pressed");
-                getCol().getSched().unburyCardsForDeck();
-                refreshInterfaceAndDecklist(true);
-                item.setVisible(false);
-                return true;
-            case R.id.action_rebuild:
-                Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
-                mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                        getResources().getString(R.string.rebuild_filtered_deck), true);
-                CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
-                return true;
-            case R.id.action_empty:
-                Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
-                mProgressDialog = StyledProgressDialog.show(getActivity(), "",
-                        getResources().getString(R.string.empty_filtered_deck), false);
-                CollectionTask.launchCollectionTask(EMPTY_CRAM, getCollectionTaskListener(true));
-                return true;
-            case R.id.action_rename:
-                ((DeckPicker) getActivity()).renameDeckDialog(getCol().getDecks().selected());
-                return true;
-            case R.id.action_delete:
-                ((DeckPicker) getActivity()).confirmDeckDeletion(getCol().getDecks().selected());
-                return true;
-            case R.id.action_export:
-                ((DeckPicker) getActivity()).exportDeck(getCol().getDecks().selected());
-                return true;
-            default:
-                return false;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_undo) {
+            Timber.i("StudyOptionsFragment:: Undo button pressed");
+            CollectionTask.launchCollectionTask(UNDO, undoListener);
+            return true;
+        } else if (itemId == R.id.action_deck_options) {
+            Timber.i("StudyOptionsFragment:: Deck options button pressed");
+            if (getCol().getDecks().isDyn(getCol().getDecks().selected())) {
+                openFilteredDeckOptions();
+            } else {
+                Intent i = new Intent(getActivity(), DeckOptions.class);
+                getActivity().startActivityForResult(i, DECK_OPTIONS);
+                ActivityTransitionAnimation.slide(getActivity(), FADE);
+            }
+            return true;
+        } else if (itemId == R.id.action_custom_study) {
+            Timber.i("StudyOptionsFragment:: custom study button pressed");
+            showCustomStudyContextMenu();
+            return true;
+        } else if (itemId == R.id.action_unbury) {
+            Timber.i("StudyOptionsFragment:: unbury button pressed");
+            getCol().getSched().unburyCardsForDeck();
+            refreshInterfaceAndDecklist(true);
+            item.setVisible(false);
+            return true;
+        } else if (itemId == R.id.action_rebuild) {
+            Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
+            mProgressDialog = StyledProgressDialog.show(getActivity(), "",
+                    getResources().getString(R.string.rebuild_filtered_deck), true);
+            CollectionTask.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
+            return true;
+        } else if (itemId == R.id.action_empty) {
+            Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
+            mProgressDialog = StyledProgressDialog.show(getActivity(), "",
+                    getResources().getString(R.string.empty_filtered_deck), false);
+            CollectionTask.launchCollectionTask(EMPTY_CRAM, getCollectionTaskListener(true));
+            return true;
+        } else if (itemId == R.id.action_rename) {
+            ((DeckPicker) getActivity()).renameDeckDialog(getCol().getDecks().selected());
+            return true;
+        } else if (itemId == R.id.action_delete) {
+            ((DeckPicker) getActivity()).confirmDeckDeletion(getCol().getDecks().selected());
+            return true;
+        } else if (itemId == R.id.action_export) {
+            ((DeckPicker) getActivity()).exportDeck(getCol().getDecks().selected());
+            return true;
         }
+        return false;
     }
 
     public void configureToolbar() {
