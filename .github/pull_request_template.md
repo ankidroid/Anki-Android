@@ -26,3 +26,4 @@ _Please, go through these checks before submitting the PR._
 - [ ] Your code follows the style of the project (e.g. never omit braces in `if` statements) 
 - [ ] You have commented your code, particularly in hard-to-understand areas
 - [ ] You have performed a self-review of your own code
+- [ ] You provided screenshot of changes visible by the user (in particular, we need screenshot of all new strings ressources)
