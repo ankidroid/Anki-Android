@@ -20,6 +20,7 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ContentUris;
@@ -193,6 +194,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
+    @SuppressLint("UnsupportedChromeOsCameraSystemFeature")
     private boolean canUseCamera(Context context) {
         if (!Permissions.canUseCamera(context)) {
             return false;

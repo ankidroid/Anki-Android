@@ -204,16 +204,15 @@ public class ModelBrowser extends AnkiActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.action_add_new_note_type:
-                addNewNoteTypeDialog();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else if (itemId == R.id.action_add_new_note_type) {
+            addNewNoteTypeDialog();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

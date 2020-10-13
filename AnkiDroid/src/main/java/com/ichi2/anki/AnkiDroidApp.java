@@ -75,6 +75,7 @@ import static timber.log.Timber.DebugTree;
 /**
  * Application class.
  */
+@SuppressLint("NonConstantResourceId") // https://github.com/ACRA/acra/issues/810
 @AcraCore(
         buildConfigClass = org.acra.dialog.BuildConfig.class,
         excludeMatchingSharedPreferencesKeys = {"username","hkey"},
