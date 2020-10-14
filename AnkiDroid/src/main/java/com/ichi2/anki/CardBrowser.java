@@ -144,6 +144,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private MultiColumnListAdapter mCardsAdapter;
     private String mSearchTerms;
     private String mRestrictOnDeck;
+    private int mCurrentFlag;
 
     private MenuItem mSearchItem;
     private MenuItem mSaveSearchItem;
@@ -968,6 +969,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
                                 new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.FLAG, flag}));
     }
 
+    /** Updates flag icon color and cards shown with given color */
+    private void selectionWithFlagTask(int flag) {
+        mCurrentFlag = flag;
+        filterByFlag();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (getDrawerToggle().onOptionsItemSelected(item)) {
@@ -1037,6 +1044,21 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return true;
         } else if (itemId == R.id.action_flag_four) {
             flagTask(4);
+            return true;
+        } else if (itemId == R.id.action_select_flag_zero) {
+            selectionWithFlagTask(0);
+            return true;
+        } else if (itemId == R.id.action_select_flag_one) {
+            selectionWithFlagTask(1);
+            return true;
+        } else if (itemId == R.id.action_select_flag_two) {
+            selectionWithFlagTask(2);
+            return true;
+        } else if (itemId == R.id.action_select_flag_three) {
+            selectionWithFlagTask(3);
+            return true;
+        } else if (itemId == R.id.action_select_flag_four) {
+            selectionWithFlagTask(4);
             return true;
         } else if (itemId == R.id.action_delete_card) {
             if (mInMultiSelectMode) {
@@ -1460,6 +1482,22 @@ public class CardBrowser extends NavigationDrawerActivity implements
             sb.append(")"); // Only if we added anything to the tag list
         }
         mSearchTerms = sb.toString();
+        searchCards();
+    }
+
+
+    /** Updates search terms to only show cards with selected flag. */
+    private void filterByFlag() {
+        mSearchView.setQuery("", false);
+        String flagSearchTerm = "flag:" + mCurrentFlag;
+        if (mSearchTerms.contains("flag:")) {
+            mSearchTerms = mSearchTerms.replaceFirst("flag:.", flagSearchTerm);
+        }
+        else if (!mSearchTerms.isEmpty()) {
+            mSearchTerms = flagSearchTerm + " " + mSearchTerms;
+        } else {
+            mSearchTerms = flagSearchTerm;
+        }
         searchCards();
     }
 
@@ -2632,6 +2670,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting
     void filterByTag(String... tags) {
         filterByTag(Arrays.asList(tags), 0);
+    }
+
+    @VisibleForTesting
+    void filterByFlag(int flag) {
+        mCurrentFlag = flag;
+        filterByFlag();
     }
 
     @VisibleForTesting
