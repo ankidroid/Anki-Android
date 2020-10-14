@@ -222,6 +222,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static final String PERSISTENT_STATE_FILE = "DeckPickerState";
     private static final String LAST_DECK_ID_KEY = "lastDeckId";
 
+    public static final int CARD_NOT_AVAILABLE = -1;
+    private long mOldCardId = 0;
+    private int mOldCardTopOffset = 0;
+    private boolean mShouldRestoreScroll = false;
+    private boolean mPostAutoScroll = false;
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -635,11 +640,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
             } else {
                 // load up the card selected on the list
                 long clickedCardId = getCards().get(position).getId();
+                saveScrollingState(position);
                 openNoteEditorForCard(clickedCardId);
             }
         });
         mCardsListView.setOnItemLongClickListener((adapterView, view, position, id) -> {
             mLastSelectedPosition = position;
+            saveScrollingState(position);
             loadMultiSelectMode();
 
             // click on whole cell triggers select
@@ -792,6 +799,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 data.putExtra("reloadRequired", true);
             }
             closeCardBrowser(RESULT_OK, data);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mPostAutoScroll) {
+            mPostAutoScroll = false;
         }
     }
 
@@ -1273,6 +1288,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                         data.getBooleanExtra("noteChanged", false))) {
             // if reloadRequired or noteChanged flag was sent from note editor then reload card list
             searchCards();
+            mShouldRestoreScroll = true;
             // in use by reviewer?
             if (getReviewerCardId() == mCurrentCardId) {
                 mReloadRequired = true;
@@ -1331,6 +1347,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save current search terms
         savedInstanceState.putString("mSearchTerms", mSearchTerms);
+        savedInstanceState.putLong("mOldCardId", mOldCardId);
+        savedInstanceState.putInt("mOldCardTopOffset", mOldCardTopOffset);
+        savedInstanceState.putBoolean("mShouldRestoreScroll", mShouldRestoreScroll);
+        savedInstanceState.putBoolean("mPostAutoScroll", mPostAutoScroll);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -1338,6 +1358,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mSearchTerms = savedInstanceState.getString("mSearchTerms");
+        mOldCardId = savedInstanceState.getLong("mOldCardId");
+        mOldCardTopOffset = savedInstanceState.getInt("mOldCardTopOffset");
+        mShouldRestoreScroll = savedInstanceState.getBoolean("mShouldRestoreScroll");
+        mPostAutoScroll = savedInstanceState.getBoolean("mPostAutoScroll");
         searchCards();
     }
 
@@ -1801,6 +1825,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 updateList();
                 handleSearchResult();
             }
+            if (mShouldRestoreScroll) {
+                mShouldRestoreScroll = false;
+                int newPosition = getNewPositionOfSelectedCard();
+                boolean isRestorePossible = (newPosition != CARD_NOT_AVAILABLE);
+                if (isRestorePossible) {
+                    autoScrollTo(newPosition);
+                }
+            }
             updatePreviewMenuItem();
             hideProgressBar();
         }
@@ -1844,6 +1876,34 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
     }
 
+
+    private void saveScrollingState(int position) {
+        mOldCardId = getCards().get(position).getId();
+        mOldCardTopOffset = calculateTopOffset(position);
+    }
+
+    private void autoScrollTo(int newPosition) {
+        mCardsListView.setSelectionFromTop(newPosition, mOldCardTopOffset);
+        mPostAutoScroll = true;
+    }
+
+    private int calculateTopOffset(int cardPosition) {
+        int firstVisiblePosition = mCardsListView.getFirstVisiblePosition();
+        View v = mCardsListView.getChildAt(cardPosition - firstVisiblePosition);
+        return (v == null) ? 0 : v.getTop();
+    }
+
+    private int getNewPositionOfSelectedCard() {
+        if (mCards.size() == 0) {
+            return CARD_NOT_AVAILABLE;
+        }
+        for (CardCache card : mCards) {
+            if (card.getId() == mOldCardId) {
+                return card.mPosition;
+            }
+        }
+        return CARD_NOT_AVAILABLE;
+    }
 
     public boolean hasSelectedAllDecks() {
         Long lastDeckId = getLastDeckId();
@@ -2007,7 +2067,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
                 boolean lastLoaded = cards.get(lastVisibleItem - 1).isLoaded();
                 if (!firstLoaded || !lastLoaded) {
-                    showProgressBar();
+                    if (!mPostAutoScroll) {
+                        showProgressBar();
+                    }
                     // Also start rendering the items on the screen every 300ms while scrolling
                     long currentTime = SystemClock.elapsedRealtime ();
                     if ((currentTime - mLastRenderStart > 300 || lastVisibleItem >= totalItemCount)) {
@@ -2024,6 +2086,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         public void onScrollStateChanged(AbsListView listView, int scrollState) {
             // TODO: Try change to RecyclerView as currently gets stuck a lot when using scrollbar on right of ListView
             // Start rendering the question & answer every time the user stops scrolling
+            if (mPostAutoScroll) {
+                mPostAutoScroll = false;
+            }
             if (scrollState == SCROLL_STATE_IDLE) {
                 int startIdx = listView.getFirstVisiblePosition();
                 int numVisible = listView.getLastVisiblePosition() - startIdx;
