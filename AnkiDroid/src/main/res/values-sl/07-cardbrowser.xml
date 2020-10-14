@@ -64,6 +64,7 @@
     <string name="card_browser_show_marked">Filter označen</string>
     <string name="card_browser_show_suspended">Filter pridržan</string>
     <string name="card_browser_search_by_tag">Filtriraj po oznakah</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Oznake: %1$s</string>
     <string name="card_browser_list_my_searches">Moja iskanja</string>
     <string name="card_browser_list_my_searches_save">Shrani iskanje</string>

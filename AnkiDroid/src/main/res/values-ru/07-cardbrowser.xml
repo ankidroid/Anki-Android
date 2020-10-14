@@ -64,6 +64,7 @@
     <string name="card_browser_show_marked">Отфильтровать отмеченные</string>
     <string name="card_browser_show_suspended">Отфильтровать исключённые</string>
     <string name="card_browser_search_by_tag">Отфильтровать по меткам</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Метки: %1$s</string>
     <string name="card_browser_list_my_searches">Мои поисковые запросы</string>
     <string name="card_browser_list_my_searches_save">Сохранить поисковый запрос</string>

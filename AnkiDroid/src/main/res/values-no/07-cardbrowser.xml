@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">Filtrer merkede</string>
     <string name="card_browser_show_suspended">Filtrer suspenderte</string>
     <string name="card_browser_search_by_tag">Filtrer etter emneord</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Emneord: %1$s</string>
     <string name="card_browser_list_my_searches">Mine søk</string>
     <string name="card_browser_list_my_searches_save">Lagre søk</string>

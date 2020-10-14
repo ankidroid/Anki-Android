@@ -61,6 +61,7 @@
     <string name="card_browser_show_marked">篩選有標記的卡片</string>
     <string name="card_browser_show_suspended">篩選出擱置的卡片</string>
     <string name="card_browser_search_by_tag">按標籤篩選</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">標籤：%1$s</string>
     <string name="card_browser_list_my_searches">我的搜尋</string>
     <string name="card_browser_list_my_searches_save">儲存搜尋</string>

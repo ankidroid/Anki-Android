@@ -26,7 +26,7 @@
     <string name="extra_field_name">ᱵᱟᱲᱛᱤ</string>
     <string name="field_to_ask_front_name">\'ᱯᱟᱪᱞᱟᱹ\' ᱥᱮᱞᱫ ᱢᱮ</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">ᱠᱟᱰ%d</string>
     <string name="card_cloze_name">ᱠᱞᱚᱡ</string>
     <!--Note type-->
     <string name="basic_model_name">ᱵᱮᱥᱤᱠ</string>

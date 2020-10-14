@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">Filtrar marcadas</string>
     <string name="card_browser_show_suspended">Filtrar suspendidas</string>
     <string name="card_browser_search_by_tag">Filtrar por etiqueta</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Etiquetas: %1$s</string>
     <string name="card_browser_list_my_searches">Mis búsquedas</string>
     <string name="card_browser_list_my_searches_save">Guardar búsqueda</string>

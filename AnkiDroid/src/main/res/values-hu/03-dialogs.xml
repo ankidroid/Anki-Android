@@ -150,8 +150,8 @@
     <string name="delete_media_message">Deleting media&#8230;</string>
     <string name="delete_media_result_title">Deletion result</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d fájl törölve</item>
+        <item quantity="other">%d fájl törölve</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Minden kártya</string>
@@ -159,6 +159,7 @@
     <string name="tags_dialog_option_due_cards">Esedékes</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Üres kártyák keresése&#8230;</string>
+    <string name="confirm_cancel">Do you want to cancel?</string>
     <string name="empty_cards_none">Nem találtam üres kártyát</string>
     <string name="empty_cards_count">%d darab törlendő kártya</string>
     <string name="empty_cards_deleted">%d darab kártya törölve</string>
@@ -190,8 +191,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Adatbázis zárolva</string>
     <string name="database_locked_summary">Az AnkiDroid adatbázist egy másik alkalmazás használja. Kérjük zárja be ezt az alkalmazást, majd nyissa meg újra az AnkiDroidot.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_title">Nem megfelelő adatbázis verzió</string>
+    <string name="incompatible_database_version_summary">Az adatbázis verziója fejlettebb, mint amit az AnkiDroid ezen verziója támogat. Frissítsd az AnkiDroid-ot vagy válts egy régebbi adatbázis verzióra.\n\nTámogatott verzió: %1$d\nAdatbázis verziója: %2$d\n\nA következő visszaállítási opciók felülírják a jelenlegi gyűjteményt, lehetőleg egy támogatott adatbázis verzióra:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Háttérkép ráillesztve</string>
     <string name="background_image_removed">Háttérkép eltávolítva</string>

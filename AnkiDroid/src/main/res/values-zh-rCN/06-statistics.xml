@@ -42,8 +42,8 @@
     <string name="statistics_mature">熟悉</string>
     <string name="statistics_young_and_learn">有待熟悉/学习</string>
     <string name="statistics_unlearned">未学习</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">已暂停</string>
+    <string name="statistics_buried">已隐藏</string>
     <string name="statistics_relearn">重新学习</string>
     <string name="statistics_learn">学习</string>
     <string name="statistics_cram">强记模式</string>

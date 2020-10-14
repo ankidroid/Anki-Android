@@ -26,7 +26,7 @@
     <string name="extra_field_name">Extra</string>
     <string name="field_to_ask_front_name">Adicionar Cartão Invertido</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">Cartão %d</string>
     <string name="card_cloze_name">Omissão de Lacunas</string>
     <!--Note type-->
     <string name="basic_model_name">Básico</string>

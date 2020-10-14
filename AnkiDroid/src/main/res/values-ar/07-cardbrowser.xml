@@ -66,6 +66,7 @@
     <string name="card_browser_show_marked">فلترة البطاقات المعلمة</string>
     <string name="card_browser_show_suspended">فلترة البطاقات المعلقة</string>
     <string name="card_browser_search_by_tag">فلترة حسب الوسم</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">الوسوم: %1$s</string>
     <string name="card_browser_list_my_searches">عبارات البحث الخاصة بي</string>
     <string name="card_browser_list_my_searches_save">احفظ عبارة البحث</string>
@@ -106,11 +107,11 @@
     <string name="card_browser_search_all_decks">البحث في كل الرزم</string>
     <string name="card_browser_unknown_deck_name">غير معروف</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="zero">%d cards deleted</item>
-        <item quantity="one">%d card deleted</item>
-        <item quantity="two">%d cards deleted</item>
-        <item quantity="few">%d cards deleted</item>
-        <item quantity="many">%d cards deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="zero">حُذِفت %d بطاقة</item>
+        <item quantity="one">حُذِفت %d بطاقة</item>
+        <item quantity="two">حُذِفت %d بطاقة</item>
+        <item quantity="few">حُذِفت %d بطاقات</item>
+        <item quantity="many">حُذِفت %d بطاقة</item>
+        <item quantity="other">حُذِفت %d بطاقة</item>
     </plurals>
 </resources>

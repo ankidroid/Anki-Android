@@ -123,8 +123,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="automatic_sync_choice_summ">ᱟᱭᱩᱨ ᱢᱤᱫ ᱢᱮ ᱡᱚᱫᱤ ᱑᱐ ᱴᱤᱡ ᱠᱷᱚᱱ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤᱮᱫ ᱠᱷᱟᱱ ᱮᱯ ᱮᱛᱚᱦᱚ ᱟᱨ ᱵᱚᱸᱫ ᱢᱟᱲᱟᱝ ᱨᱮ</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">ᱥᱭᱸᱠᱨᱚᱱᱟᱭᱡᱮᱥᱚᱱ ᱥᱴᱟᱴᱟᱹᱥ ᱫᱮᱠᱷᱟᱣ</string>
+    <string name="sync_status_badge_summ">ᱡᱩᱫᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱟᱹᱯᱞᱚᱰ ᱜᱟᱱᱚᱜ ᱠᱷᱟᱱ ᱥᱭᱸᱠ ᱟᱭᱠᱚᱱ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="day_theme">ᱫᱤᱱ ᱛᱟᱞ</string>
     <string name="night_theme">ᱟᱹᱭᱩᱵ ᱛᱟᱞ</string>
     <string name="default_font">ᱢᱩᱞ ᱯᱷᱮᱲᱟᱛ ᱪᱤᱠᱤ</string>
@@ -168,10 +168,10 @@
     <string name="time_limit">ᱥᱚᱢᱚᱭ ᱵᱟᱠᱥᱚ ᱚᱠᱛᱚ ᱥᱤᱢᱟᱹ</string>
     <string name="time_limit_summ">XXX ᱴᱤᱯᱤᱡ</string>
     <string name="day_offset">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱫᱤᱱ ᱮᱛᱦᱚᱵ</string>
-    <string name="day_offset_summ">XXX hours past midnight</string>
-    <string name="sched_ver">Experimental V2 scheduler</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
+    <string name="day_offset_summ">XXX ᱴᱟᱲᱟᱝ ᱢᱟᱲᱟᱝ ᱟᱹᱭᱩᱵ</string>
+    <string name="sched_ver">ᱮᱠᱥᱯᱮᱨᱭᱢᱮᱱᱴᱟᱞ V2 ᱥᱮᱰᱭᱩᱞᱟᱹᱨ</string>
+    <string name="sched_ver_summ">ᱮᱠᱥᱯᱮᱨᱭᱢᱮᱱᱴᱟᱞ ᱥᱮᱰᱭᱩᱞᱟᱹᱨ ᱮᱢᱼᱢᱮ ᱾ ᱢᱟᱲᱟᱝᱟᱜ ᱥᱭᱸᱠ ᱱᱟᱠᱷᱟ ᱛᱮ ᱡᱩᱨ ᱵᱚᱫᱚᱞ ᱢᱮ ᱾</string>
+    <string name="sched_ver_toggle_title">ᱴᱷᱤᱠ</string>
     <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on">Keep screen on</string>

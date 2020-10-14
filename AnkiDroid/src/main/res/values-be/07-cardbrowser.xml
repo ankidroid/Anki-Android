@@ -64,6 +64,7 @@
     <string name="card_browser_show_marked">Фільтраваць пазначаныя</string>
     <string name="card_browser_show_suspended">Фільтраваць прыпыненыя</string>
     <string name="card_browser_search_by_tag">Фільтр па пазнаках</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Пазнакі: %1$s</string>
     <string name="card_browser_list_my_searches">Мае запыты</string>
     <string name="card_browser_list_my_searches_save">Захаваць запыты пошуку</string>

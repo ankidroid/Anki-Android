@@ -64,6 +64,7 @@
     <string name="card_browser_show_marked">סינון לפי סימון</string>
     <string name="card_browser_show_suspended">סינון לפי השהייה</string>
     <string name="card_browser_search_by_tag">סינון לפי תג</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">תגים: %1$s</string>
     <string name="card_browser_list_my_searches">החיפושים שלי</string>
     <string name="card_browser_list_my_searches_save">שמירת חיפוש</string>

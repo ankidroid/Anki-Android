@@ -113,7 +113,7 @@
     <string name="note_editor_no_cards_created">A kártyák nem lettek létrehozva. Kérjük töltsön ki több mezőt</string>
     <string name="note_editor_no_first_field">Az első mező üres</string>
     <string name="note_editor_no_cloze_delations">Ennek a jegyzet típusnak részleges törléseket kell tartalmaznia</string>
-    <string name="note_editor_set_field_language">Set field language</string>
+    <string name="note_editor_set_field_language">Mező nyelvének beállítása</string>
     <string name="note_editor_no_cards_created_all_fields">A jelenlegi jegyzettípus nem hozott létre semmilyen kártyát.\nKérjük válasszon más jegyzettípust, vagy kattintson a \"Kártyákra\" és adjon hozzá egy mezőhelyettesítést</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">A kitöltő törlések csak a kitöltő jegyzet típuson működnek</string>
     <string name="saving_facts">Jegyzet mentése</string>
@@ -175,7 +175,7 @@
     <string name="import_log_file_cache_cleared">Hiba történt a fájl importálása során valószínű a cache törlés során.\n.Kérjük próbálja újra</string>
     <string name="import_succeeded_but_check_database">Adat importálás sikeres, de az import utáni takarítás sikertelen. Futass egy adatbázis ellenőrzést később. Hiba eredete: %s</string>
     <string name="import_error_unhandled_request">Nem sikerült feldolgozni az import folyamat kérést</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">Hibás apkg fájl. Próbáld meg törölni és újra letölteni.\n\nA hiba oka: %s</string>
     <string name="import_error_exception">Nem sikerült importálni a csomagot\n\n%s</string>
     <string name="import_error_not_apkg_extension">A \"%s\" fájlnévnek nincsen .apkg vagy .colpkg kiterjesztése</string>
     <string name="import_error_load_imported_database">Az Anki Adatbázis (.anki2) csere még nem támogatott. Kérjük olvassa el az útmutatót az instrukciókhoz.</string>
@@ -318,6 +318,8 @@
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_could_not_find_image_get_help">Help</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
+    <string name="deck_picker_failed_deck_load">A(z) \'%s\' pakli betöltése nem sikerült</string>
+    <string name="search_decks">Keresés a paklikban</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
 </resources>

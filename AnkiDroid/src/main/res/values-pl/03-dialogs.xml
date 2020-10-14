@@ -102,7 +102,7 @@
         <item quantity="other">%d kart ponownie zaplanowano</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Ponowne zaplanowanie karty spowoduje także zresetowanie poziomu łatwości (zostanie ustawiona na: %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
     <string name="answering_error_title">Błąd bazy danych</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
@@ -173,6 +173,7 @@
     <string name="tags_dialog_option_due_cards">Do przejrzenia</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Wyszukiwanie pustych kart&#8230;</string>
+    <string name="confirm_cancel">Do you want to cancel?</string>
     <string name="empty_cards_none">Brak pustych kart</string>
     <string name="empty_cards_count">Kart do usunięcia: %d</string>
     <string name="empty_cards_deleted">Usuniętych kart: %d</string>
@@ -205,7 +206,7 @@
     <string name="database_locked_title">Baza danych zablokowana</string>
     <string name="database_locked_summary">Baza danych AnkiDroid jest teraz używana przez inną aplikację. Zamknij drugą aplikację, a następnie ponownie otwórz AnkiDroid.</string>
     <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_summary">Baza danych jest wersji wyżej niż najwyższa obsługiwana przez AnkiDroid. Zaktualizuj AnkiDroid lub przywróć poprzednią wersję bazy danych by kontynuować. Obsługiwana wersja: %1$d\nObecna wersja: %2$d\nPoniższe opcje przywracania nadpiszą twoją obecną kolekcję, prawdopodobnie kompatybilną wersją</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Ustawiono obraz w tle</string>
     <string name="background_image_removed">Obraz w tle usunięty</string>

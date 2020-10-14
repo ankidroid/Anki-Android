@@ -64,6 +64,7 @@
     <string name="card_browser_show_marked">Rodyti pažymėtas</string>
     <string name="card_browser_show_suspended">Rodyti atidėtas</string>
     <string name="card_browser_search_by_tag">Rodyti pagal žymą</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Žymos: %1$s</string>
     <string name="card_browser_list_my_searches">Mano paieškos</string>
     <string name="card_browser_list_my_searches_save">Išsaugoti paieška</string>

@@ -117,7 +117,7 @@
     <string name="sync_media_error">Hiba a szinkronizálásnál média adatok.</string>
     <string name="sync_media_error_check">Hiba történt a multimédia fájlok szinkronizálásakor. Javasoljuk a média felülvizsgálatát.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
+    <string name="sync_basic_check_failed">Futtasd az \'%s\' opciót szinkronizálás előtt</string>
     <string name="sync_sanity_local">Helyi</string>
     <string name="sync_sanity_remote">Távoli</string>
     <string name="force_full_sync_title">Teljes szinkronizáció erőltetése</string>
