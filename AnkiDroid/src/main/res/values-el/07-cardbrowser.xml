@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">Δείξε μαρκαρισμένες</string>
     <string name="card_browser_show_suspended">Δείξε ανεσταλμένες</string>
     <string name="card_browser_search_by_tag">Δείξε κατά ετικέτα</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Ετικέτες: %1$s</string>
     <string name="card_browser_list_my_searches">Οι αναζητήσεις μου</string>
     <string name="card_browser_list_my_searches_save">Αποθήκευση αναζήτησης</string>

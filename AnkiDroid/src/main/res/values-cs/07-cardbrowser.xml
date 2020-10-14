@@ -64,6 +64,7 @@
     <string name="card_browser_show_marked">Filtrovat označené</string>
     <string name="card_browser_show_suspended">Filtrovat vyřazené</string>
     <string name="card_browser_search_by_tag">Filtrovat podle štítků</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Štítky: %1$s</string>
     <string name="card_browser_list_my_searches">Moje hledání</string>
     <string name="card_browser_list_my_searches_save">Uložení hledání</string>

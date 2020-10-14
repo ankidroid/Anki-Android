@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">ఫిల్టర్ మార్క్ చేయబడింది</string>
     <string name="card_browser_show_suspended">ఫిల్టర్ సస్పెండ్ చేయబడింది</string>
     <string name="card_browser_search_by_tag">ట్యాగ్ ద్వారా ఫిల్టర్ చేయండి</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">టాగ్లు:%1$s</string>
     <string name="card_browser_list_my_searches">నా శోధనలు</string>
     <string name="card_browser_list_my_searches_save">శోధనను సేవ్ చేయండి</string>

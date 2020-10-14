@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">Megjelöltek szűrése</string>
     <string name="card_browser_show_suspended">Szűrés felfüggesztve</string>
     <string name="card_browser_search_by_tag">Címke szerinti szűrés</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Címkék: %1$s</string>
     <string name="card_browser_list_my_searches">Kereséseim</string>
     <string name="card_browser_list_my_searches_save">Keresés mentése</string>
@@ -102,7 +103,7 @@
     <string name="card_browser_search_all_decks">Összes pakli keresése</string>
     <string name="card_browser_unknown_deck_name">Ismeretlen</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d kártya törölve</item>
+        <item quantity="other">%d kártya törölve</item>
     </plurals>
 </resources>

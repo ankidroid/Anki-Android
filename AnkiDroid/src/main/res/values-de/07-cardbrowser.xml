@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">Markierte herausfiltern</string>
     <string name="card_browser_show_suspended">Nach Ausgeschlossenen filtern</string>
     <string name="card_browser_search_by_tag">Nach Schlagwort filtern</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Schlagworte: %1$s</string>
     <string name="card_browser_list_my_searches">Meine Suchen</string>
     <string name="card_browser_list_my_searches_save">Suche speichern</string>

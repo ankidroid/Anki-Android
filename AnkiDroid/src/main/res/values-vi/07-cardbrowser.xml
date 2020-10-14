@@ -61,6 +61,7 @@
     <string name="card_browser_show_marked">Bộ lọc được đánh dấu</string>
     <string name="card_browser_show_suspended">Bộ lọc bị tạm dừng</string>
     <string name="card_browser_search_by_tag">Lọc bởi từ khóa</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Tags: %1$s</string>
     <string name="card_browser_list_my_searches">My searches</string>
     <string name="card_browser_list_my_searches_save">Save search</string>

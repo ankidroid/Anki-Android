@@ -61,6 +61,7 @@
     <string name="card_browser_show_marked">표시된 카드 필터링</string>
     <string name="card_browser_show_suspended">비활성화된 카드 필터링</string>
     <string name="card_browser_search_by_tag">태그별 필터링</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">태그: %1$s</string>
     <string name="card_browser_list_my_searches">내가 검색한 항목</string>
     <string name="card_browser_list_my_searches_save">검색 항목 저장</string>

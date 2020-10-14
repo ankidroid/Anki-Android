@@ -38,6 +38,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paklik</string>
     <string name="card_browser">Kártya böngésző</string>
@@ -71,8 +73,8 @@
         <item quantity="one">%d nap %d van hátra</item>
         <item quantity="other">%d napok %d vannak hátra</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Üres gyűjtemény</string>
+    <string name="no_cards_placeholder_description">Adj hozzá kártyákat\na + ikon használatával</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Ma %1$d kártyát tanultál %2$s alatt</item>
@@ -81,7 +83,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Válasz begépelése</string>
     <string name="show_answer">Válasz mutatása</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Válasz elrejtése</string>
     <string name="ease_button_again">Újra</string>
     <string name="ease_button_hard">Nehéz</string>
     <string name="ease_button_good">Jó</string>
@@ -154,11 +156,11 @@
     <string name="time_quantity_months">%.1f hónap</string>
     <string name="time_quantity_years">%.1f év</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Szűrt pakli újraépítése</string>
     <string name="rebuild_cram_label">Újraépítés</string>
     <string name="empty_cram_label">Kiürítés</string>
     <string name="create_subdeck">Alcsoportok létrehozása</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">Szűrt pakli kiürítése</string>
     <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
     <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglévő, Egyéni tanulás paklit</string>
     <string name="empty_deck">Ez a pakli üres</string>

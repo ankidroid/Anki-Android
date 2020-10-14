@@ -320,4 +320,6 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossible de charger le paquet « %s »</string>
     <string name="search_decks">Rechercher dans les paquets</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
 </resources>

@@ -61,6 +61,7 @@
     <string name="card_browser_show_marked">Filter ditandai</string>
     <string name="card_browser_show_suspended">Penapis yang digantung</string>
     <string name="card_browser_search_by_tag">Menapis dengan tag</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Tags: %1$s</string>
     <string name="card_browser_list_my_searches">Carian saya</string>
     <string name="card_browser_list_my_searches_save">Simpan pencarian</string>

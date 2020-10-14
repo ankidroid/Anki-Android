@@ -64,6 +64,7 @@
     <string name="card_browser_show_marked">Тільки з зірочокою</string>
     <string name="card_browser_show_suspended">Тільки призупинені</string>
     <string name="card_browser_search_by_tag">Фільтрувати за позначками</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Позначки: %1$s</string>
     <string name="card_browser_list_my_searches">Мої запити</string>
     <string name="card_browser_list_my_searches_save">Зберегти запис</string>

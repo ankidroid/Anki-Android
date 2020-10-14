@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">Filtrera markerade</string>
     <string name="card_browser_show_suspended">Filtrera åsidosatta</string>
     <string name="card_browser_search_by_tag">Filtrera efter etikett</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Etiketter: %1$s</string>
     <string name="card_browser_list_my_searches">Mina sökningar</string>
     <string name="card_browser_list_my_searches_save">Spara sökning</string>

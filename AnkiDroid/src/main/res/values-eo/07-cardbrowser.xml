@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">Filtri markitajn</string>
     <string name="card_browser_show_suspended">Filtri daŭre kaŝitajn</string>
     <string name="card_browser_search_by_tag">Filtri laŭ etikedo</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Etikedoj: %1$s</string>
     <string name="card_browser_list_my_searches">Miaj serĉoj</string>
     <string name="card_browser_list_my_searches_save">Konservi serĉon</string>

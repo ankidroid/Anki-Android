@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">Salain ang mga namarkahan</string>
     <string name="card_browser_show_suspended">Salain ang mga suspendido</string>
     <string name="card_browser_search_by_tag">Salain ayon sa tag</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Mga tag: %1$s</string>
     <string name="card_browser_list_my_searches">Aking mga paghahanap</string>
     <string name="card_browser_list_my_searches_save">I-save ang paghahanap</string>

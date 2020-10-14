@@ -187,6 +187,7 @@
     <string name="tags_dialog_option_due_cards">مستحق</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">يجري البحث عن بطاقات فارغة&#8230;</string>
+    <string name="confirm_cancel">Do you want to cancel?</string>
     <string name="empty_cards_none">لا بطاقات فارغة</string>
     <string name="empty_cards_count">بطاقات ستُحذَف: %d</string>
     <string name="empty_cards_deleted">بطاقات حُذِفت: %d</string>
@@ -218,8 +219,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">تم قفل قاعدة البيانات</string>
     <string name="database_locked_summary">قاعدة بيانات أنكيدرويد قيد الاستخدام من قبل تطبيق آخر. الرجاء إغلاق ذلك التطبيق وفتح أنكيدرويد مجددًا.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_title">إصدار قاعدة بيانات غير متوافق</string>
+    <string name="incompatible_database_version_summary">إن إصدار قاعدة البيانات متقدم بحيث لا يعمل إصدار أنكيدوريد هذا معه. حدّث أنكيدرويد أو خفّض إصدار قاعدة البيانات لفتحها.\n\nالإصدار المدعوم: %1$d\nإصدار قاعدة البيانات: %2$d\n\nخيارات الاسترجاع التالية تستبدل مجموعتك الحالية بإصدار قاعدة بيانات متوافق غالبًا:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">تم تطبيق صورة الخلفية</string>
     <string name="background_image_removed">تمت إزالة صورة الخلفية</string>

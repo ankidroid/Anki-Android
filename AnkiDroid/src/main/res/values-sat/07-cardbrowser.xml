@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱢᱮᱨᱠᱼᱠᱟᱱᱟ</string>
     <string name="card_browser_show_suspended">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱵᱚᱸᱫ ᱜᱤᱰᱤ ᱠᱟᱱᱟ</string>
     <string name="card_browser_search_by_tag">ᱴᱮᱜ ᱛᱮ ᱪᱷᱟᱱᱠᱟᱱᱟ</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">ᱴᱮᱜᱥ: %1$s</string>
     <string name="card_browser_list_my_searches">ᱤᱧᱟᱜ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="card_browser_list_my_searches_save">ᱥᱮᱸᱫᱽᱨᱟ ᱥᱟᱧᱪᱟᱣ</string>

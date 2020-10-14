@@ -42,8 +42,8 @@
     <string name="statistics_mature">Maduro</string>
     <string name="statistics_young_and_learn">Jovem+Apreendido</string>
     <string name="statistics_unlearned">Não visto</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">Suspenso</string>
+    <string name="statistics_buried">Oculto</string>
     <string name="statistics_relearn">Reaprender</string>
     <string name="statistics_learn">Aprender</string>
     <string name="statistics_cram">Cursinho</string>

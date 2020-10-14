@@ -153,7 +153,7 @@
     </plurals>
     <string name="help_title">Ajuda</string>
     <string name="check_db">Verificar banco de dados</string>
-    <string name="check_media">Ver média</string>
+    <string name="check_media">Verificar mídia</string>
     <string name="empty_cards">Cartões vazios</string>
     <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
     <string name="empty_card_warning">Este cartão está vazio. Use a opção \"Cartões vazios\" do menu na tela de listagem de baralhos.</string>
@@ -319,5 +319,7 @@
     <string name="card_viewer_could_not_find_image_get_help">Ajuda</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Falha ao carregar o baralho ‘%s\'</string>
-    <string name="search_decks">Search decks</string>
+    <string name="search_decks">Pesquisar baralhos</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
 </resources>

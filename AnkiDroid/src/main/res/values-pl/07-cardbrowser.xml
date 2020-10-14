@@ -64,6 +64,7 @@
     <string name="card_browser_show_marked">Odfiltruj zaznaczone</string>
     <string name="card_browser_show_suspended">Odfiltruj zawieszone</string>
     <string name="card_browser_search_by_tag">Filtruj po etykiecie</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Etykiety: %1$s</string>
     <string name="card_browser_list_my_searches">Moje wyszukiwania</string>
     <string name="card_browser_list_my_searches_save">Zapisz wyszukiwanie</string>
@@ -104,9 +105,9 @@
     <string name="card_browser_search_all_decks">Szukaj w wszystkich taliach</string>
     <string name="card_browser_unknown_deck_name">Nieznany</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="few">%d cards deleted</item>
-        <item quantity="many">%d cards deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">Usunięto %d kartę</item>
+        <item quantity="few">Usunięto %d karty</item>
+        <item quantity="many">Usunięto %d kart</item>
+        <item quantity="other">Usunięto %d kart</item>
     </plurals>
 </resources>

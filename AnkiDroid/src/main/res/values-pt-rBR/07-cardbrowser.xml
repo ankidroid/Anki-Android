@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">Filtrar marcadas</string>
     <string name="card_browser_show_suspended">Filtrar suspenso</string>
     <string name="card_browser_search_by_tag">Filtrar por tag</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Tags: %1$s</string>
     <string name="card_browser_list_my_searches">Minhas buscas</string>
     <string name="card_browser_list_my_searches_save">Salvar busca</string>
@@ -102,7 +103,7 @@
     <string name="card_browser_search_all_decks">Pesquisar em todos os baralhos</string>
     <string name="card_browser_unknown_deck_name">Desconhecido</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d cartão deletado</item>
+        <item quantity="other">%d cartões deletados</item>
     </plurals>
 </resources>

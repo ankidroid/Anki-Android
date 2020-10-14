@@ -147,11 +147,11 @@
     <string name="check_media_no_unused_missing">Não foram encontrados arquivos não utilizados ou faltantes.</string>
     <string name="check_media_db_updated">Banco de dados de mídia reconstruído.</string>
     <string name="check_media_delete_unused">Excluir não utilizados</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">Excluindo mídia&#8230;</string>
+    <string name="delete_media_result_title">Resultado da exclusão</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d arquivo excluído</item>
+        <item quantity="other">%d arquivos excluídos</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Todos cartões</string>
@@ -159,6 +159,7 @@
     <string name="tags_dialog_option_due_cards">Pendentes</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Buscando cartões vazios&#8230;</string>
+    <string name="confirm_cancel">Do you want to cancel?</string>
     <string name="empty_cards_none">Sem cartões vazios</string>
     <string name="empty_cards_count">Cartões a deletar: %d</string>
     <string name="empty_cards_deleted">Cartões deletados: %d</string>
@@ -190,8 +191,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Banco de dados bloqueado</string>
     <string name="database_locked_summary">O banco de dados do AnkiDroid está em uso por outro aplicativo. Por favor, feche o outro aplicativo e reabra o AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_title">Versão do banco de dados incompatível</string>
+    <string name="incompatible_database_version_summary">O banco de dados é uma versão mais avançada do que esta versão do AnkiDroid pode trabalhar. Atualize o AnkiDroid ou faça o downgrade do banco de dados para abri-lo\n\nVersão Suportada: %1$d\nVersão do banco de dados: %2$d\n\nAs seguintes opções de restauração substituirão sua coleção atual, possivelmente com uma versão compatível do banco de dados:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Imagem de fundo aplicada</string>
     <string name="background_image_removed">Imagem de fundo removida</string>

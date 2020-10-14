@@ -62,6 +62,7 @@
     <string name="card_browser_show_marked">Filteren op gemarkeerd</string>
     <string name="card_browser_show_suspended">Filteren op verwijderd</string>
     <string name="card_browser_search_by_tag">Filteren op tag</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Tags: %1$s</string>
     <string name="card_browser_list_my_searches">Mijn zoekopdrachten</string>
     <string name="card_browser_list_my_searches_save">Bewaar zoekopdracht</string>

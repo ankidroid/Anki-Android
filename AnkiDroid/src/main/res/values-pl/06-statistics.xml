@@ -42,8 +42,8 @@
     <string name="statistics_mature">Dojrzałe</string>
     <string name="statistics_young_and_learn">Młode+Uczone</string>
     <string name="statistics_unlearned">Niewidziane</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">Zawieszone</string>
+    <string name="statistics_buried">Zakopane</string>
     <string name="statistics_relearn">Uczone ponownie</string>
     <string name="statistics_learn">Uczone</string>
     <string name="statistics_cram">Zakuwane</string>

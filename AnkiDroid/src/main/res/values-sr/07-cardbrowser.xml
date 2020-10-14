@@ -63,6 +63,7 @@
     <string name="card_browser_show_marked">Филтер је означен</string>
     <string name="card_browser_show_suspended">Филтер је заустављен</string>
     <string name="card_browser_search_by_tag">Филтрирај по ознаци</string>
+    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_tags_shown">Ознаке: %1$s</string>
     <string name="card_browser_list_my_searches">Моје претраге</string>
     <string name="card_browser_list_my_searches_save">Сачувај претрагу</string>
