@@ -3,7 +3,7 @@ import com.android.build.OutputFile
 
 plugins {
  // Gradle plugin portal 
- id 'com.github.triplet.play' version '2.8.0'
+ id 'com.github.triplet.play' version '3.0.0'
 }
 
 apply plugin: 'com.android.application'
@@ -179,8 +179,8 @@ android {
 }
 
 play {
-    serviceAccountCredentials = file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json")
-    track = 'alpha'
+    serviceAccountCredentials.set(file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json"))
+    track.set('alpha')
 }
 amazon {
     securityProfile = file("${homePath}/src/AnkiDroid-Amazon-Publish-Security-Profile.json")

@@ -81,7 +81,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck;
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -573,6 +572,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
      * @return whether or not we were successful
      */
     private boolean firstCollectionOpen() {
+        if (AnkiDroidApp.webViewFailedToLoad()) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.ankidroid_init_failed_webview_title)
+                    .content(getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.getWebViewErrorMessage()))
+                    .positiveText(R.string.close)
+                    .onPositive((d, w) -> exit())
+                    .cancelable(false)
+                    .show();
+            return false;
+        }
         if (Permissions.hasStorageAccessPermission(this)) {
             Timber.i("User has permissions to access collection");
             // Show error dialog if collection could not be opened
@@ -754,90 +763,77 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
-        switch (item.getItemId()) {
-
-            case R.id.action_undo:
-                Timber.i("DeckPicker:: Undo button pressed");
-                undo();
-                return true;
-
-            case R.id.action_sync:
-                Timber.i("DeckPicker:: Sync button pressed");
-                sync();
-                return true;
-
-            case R.id.action_import:
-                Timber.i("DeckPicker:: Import button pressed");
-                showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
-                return true;
-
-            case R.id.action_new_filtered_deck: {
-                Timber.i("DeckPicker:: New filtered deck button pressed");
-                mDialogEditText = new FixedEditText(DeckPicker.this);
-                ArrayList<String> names = getCol().getDecks().allNames();
-                int n = 1;
-                String name = String.format(Locale.getDefault(), "%s %d", res.getString(R.string.filtered_deck_name), n);
-                while (names.contains(name)) {
-                    n++;
-                    name = String.format(Locale.getDefault(), "%s %d", res.getString(R.string.filtered_deck_name), n);
-                }
-                mDialogEditText.setText(name);
-                // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
-                new MaterialDialog.Builder(DeckPicker.this)
-                        .title(res.getString(R.string.new_deck))
-                        .customView(mDialogEditText, true)
-                        .positiveText(res.getString(R.string.create))
-                        .negativeText(res.getString(R.string.dialog_cancel))
-                        .onPositive((dialog, which) -> {
-                            String filteredDeckName = mDialogEditText.getText().toString();
-                            if (!Decks.isValidDeckName(filteredDeckName)) {
-                                Timber.i("Not creating deck with invalid name '%s'", filteredDeckName);
-                                UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
-                                return;
-                            }
-                            Timber.i("DeckPicker:: Creating filtered deck...");
-                            getCol().getDecks().newDyn(filteredDeckName);
-                            openStudyOptions(true);
-                        })
-                        .show();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_undo) {
+            Timber.i("DeckPicker:: Undo button pressed");
+            undo();
+            return true;
+        } else if (itemId == R.id.action_sync) {
+            Timber.i("DeckPicker:: Sync button pressed");
+            sync();
+            return true;
+        } else if (itemId == R.id.action_import) {
+            Timber.i("DeckPicker:: Import button pressed");
+            showImportDialog(ImportDialog.DIALOG_IMPORT_HINT);
+            return true;
+        } else if (itemId == R.id.action_new_filtered_deck) {
+            Timber.i("DeckPicker:: New filtered deck button pressed");
+            mDialogEditText = new FixedEditText(DeckPicker.this);
+            ArrayList<String> names = getCol().getDecks().allNames();
+            int n = 1;
+            String name = String.format(Locale.getDefault(), "%s %d", res.getString(R.string.filtered_deck_name), n);
+            while (names.contains(name)) {
+                n++;
+                name = String.format(Locale.getDefault(), "%s %d", res.getString(R.string.filtered_deck_name), n);
             }
-            case R.id.action_check_database:
-                Timber.i("DeckPicker:: Check database button pressed");
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK);
-                return true;
-
-            case R.id.action_check_media:
-                Timber.i("DeckPicker:: Check media button pressed");
-                showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK);
-                return true;
-
-            case R.id.action_empty_cards:
-                Timber.i("DeckPicker:: Empty cards button pressed");
-                handleEmptyCards();
-                return true;
-
-            case R.id.action_model_browser_open: {
-                Timber.i("DeckPicker:: Model browser button pressed");
-                Intent noteTypeBrowser = new Intent(this, ModelBrowser.class);
-                startActivityForResultWithAnimation(noteTypeBrowser, 0, LEFT);
-                return true;
-            }
-            case R.id.action_restore_backup:
-                Timber.i("DeckPicker:: Restore from backup button pressed");
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP);
-                return true;
-
-            case R.id.action_export: {
-                Timber.i("DeckPicker:: Export collection button pressed");
-                String msg = getResources().getString(R.string.confirm_apkg_export);
-                showDialogFragment(ExportDialog.newInstance(msg));
-                return true;
-            }
-            default:
-                return super.onOptionsItemSelected(item);
-
+            mDialogEditText.setText(name);
+            // mDialogEditText.setFilters(new InputFilter[] { mDeckNameFilter });
+            new MaterialDialog.Builder(DeckPicker.this)
+                    .title(res.getString(R.string.new_deck))
+                    .customView(mDialogEditText, true)
+                    .positiveText(res.getString(R.string.create))
+                    .negativeText(res.getString(R.string.dialog_cancel))
+                    .onPositive((dialog, which) -> {
+                        String filteredDeckName = mDialogEditText.getText().toString();
+                        if (!Decks.isValidDeckName(filteredDeckName)) {
+                            Timber.i("Not creating deck with invalid name '%s'", filteredDeckName);
+                            UIUtils.showThemedToast(this, getString(R.string.invalid_deck_name), false);
+                            return;
+                        }
+                        Timber.i("DeckPicker:: Creating filtered deck...");
+                        getCol().getDecks().newDyn(filteredDeckName);
+                        openStudyOptions(true);
+                    })
+                    .show();
+            return true;
+        } else if (itemId == R.id.action_check_database) {
+            Timber.i("DeckPicker:: Check database button pressed");
+            showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK);
+            return true;
+        } else if (itemId == R.id.action_check_media) {
+            Timber.i("DeckPicker:: Check media button pressed");
+            showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK);
+            return true;
+        } else if (itemId == R.id.action_empty_cards) {
+            Timber.i("DeckPicker:: Empty cards button pressed");
+            handleEmptyCards();
+            return true;
+        } else if (itemId == R.id.action_model_browser_open) {
+            Timber.i("DeckPicker:: Model browser button pressed");
+            Intent noteTypeBrowser = new Intent(this, ModelBrowser.class);
+            startActivityForResultWithAnimation(noteTypeBrowser, 0, LEFT);
+            return true;
+        } else if (itemId == R.id.action_restore_backup) {
+            Timber.i("DeckPicker:: Restore from backup button pressed");
+            showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP);
+            return true;
+        } else if (itemId == R.id.action_export) {
+            Timber.i("DeckPicker:: Export collection button pressed");
+            String msg = getResources().getString(R.string.confirm_apkg_export);
+            showDialogFragment(ExportDialog.newInstance(msg));
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 

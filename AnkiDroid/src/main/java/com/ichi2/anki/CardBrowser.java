@@ -986,204 +986,171 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (mUndoSnackbar != null && mUndoSnackbar.isShown())
             mUndoSnackbar.dismiss();
 
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                endMultiSelectMode();
-                return true;
-            case R.id.action_add_note_from_card_browser: {
-                addNoteFromCardBrowser();
-                return true;
-            }
-
-            case R.id.action_save_search: {
-                String searchTerms = mSearchView.getQuery().toString();
-                showDialogFragment(CardBrowserMySearchesDialog.newInstance(null, mMySearchesDialogListener,
-                        searchTerms, CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE));
-                return true;
-            }
-
-            case R.id.action_list_my_searches: {
-                JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-                HashMap<String, String> savedFilters = new HashMap<>();
-                if (savedFiltersObj != null) {
-                    Iterator<String> it = savedFiltersObj.keys();
-                    while (it.hasNext()) {
-                        String searchName = it.next();
-                        savedFilters.put(searchName, savedFiltersObj.optString(searchName));
-                    }
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            endMultiSelectMode();
+            return true;
+        } else if (itemId == R.id.action_add_note_from_card_browser) {
+            addNoteFromCardBrowser();
+            return true;
+        } else if (itemId == R.id.action_save_search) {
+            String searchTerms = mSearchView.getQuery().toString();
+            showDialogFragment(CardBrowserMySearchesDialog.newInstance(null, mMySearchesDialogListener,
+                    searchTerms, CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE));
+            return true;
+        } else if (itemId == R.id.action_list_my_searches) {
+            JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
+            HashMap<String, String> savedFilters = new HashMap<>();
+            if (savedFiltersObj != null) {
+                Iterator<String> it = savedFiltersObj.keys();
+                while (it.hasNext()) {
+                    String searchName = it.next();
+                    savedFilters.put(searchName, savedFiltersObj.optString(searchName));
                 }
-                showDialogFragment(CardBrowserMySearchesDialog.newInstance(savedFilters, mMySearchesDialogListener,
-                        "", CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST));
-                return true;
             }
-
-            case R.id.action_sort_by_size:
-                showDialogFragment(CardBrowserOrderDialog
-                        .newInstance(mOrder, mOrderAsc, mOrderDialogListener));
-                return true;
-
-            case R.id.action_show_marked:
-                mSearchTerms = "tag:marked";
-                mSearchView.setQuery("", false);
-                mSearchView.setQueryHint(getResources().getString(R.string.card_browser_show_marked));
-                searchCards();
-                return true;
-
-            case R.id.action_show_suspended:
-                mSearchTerms = "is:suspended";
-                mSearchView.setQuery("", false);
-                mSearchView.setQueryHint(getResources().getString(R.string.card_browser_show_suspended));
-                searchCards();
-                return true;
-
-            case R.id.action_search_by_tag:
-                showTagsDialog();
-                return true;
-
-            case R.id.action_flag_zero:
-                flagTask(0);
-                return true;
-
-            case R.id.action_flag_one:
-                flagTask(1);
-                return true;
-
-            case R.id.action_flag_two:
-                flagTask(2);
-                return true;
-
-            case R.id.action_flag_three:
-                flagTask(3);
-                return true;
-
-            case R.id.action_flag_four:
-                flagTask(4);
-                return true;
-
-            case R.id.action_select_flag_zero:
-                selectionWithFlagTask(0);
-                return true;
-
-            case R.id.action_select_flag_one:
-                selectionWithFlagTask(1);
-                return true;
-
-            case R.id.action_select_flag_two:
-                selectionWithFlagTask(2);
-                return true;
-
-            case R.id.action_select_flag_three:
-                selectionWithFlagTask(3);
-                return true;
-
-            case R.id.action_select_flag_four:
-                selectionWithFlagTask(4);
-                return true;
-
-            case R.id.action_delete_card:
-                if (mInMultiSelectMode) {
-                    CollectionTask.launchCollectionTask(DISMISS_MULTI,
-                            mDeleteNoteHandler,
-                            new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.DELETE_NOTE_MULTI}));
-
-                    mCheckedCards.clear();
-                    endMultiSelectMode();
-                    mCardsAdapter.notifyDataSetChanged();
-                }
-                return true;
-
-            case R.id.action_mark_card:
-                toggleMark();
-
-                return true;
-
-
-            case R.id.action_suspend_card:
+            showDialogFragment(CardBrowserMySearchesDialog.newInstance(savedFilters, mMySearchesDialogListener,
+                    "", CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST));
+            return true;
+        } else if (itemId == R.id.action_sort_by_size) {
+            showDialogFragment(CardBrowserOrderDialog
+                    .newInstance(mOrder, mOrderAsc, mOrderDialogListener));
+            return true;
+        } else if (itemId == R.id.action_show_marked) {
+            mSearchTerms = "tag:marked";
+            mSearchView.setQuery("", false);
+            mSearchView.setQueryHint(getResources().getString(R.string.card_browser_show_marked));
+            searchCards();
+            return true;
+        } else if (itemId == R.id.action_show_suspended) {
+            mSearchTerms = "is:suspended";
+            mSearchView.setQuery("", false);
+            mSearchView.setQueryHint(getResources().getString(R.string.card_browser_show_suspended));
+            searchCards();
+            return true;
+        } else if (itemId == R.id.action_search_by_tag) {
+            showTagsDialog();
+            return true;
+        } else if (itemId == R.id.action_flag_zero) {
+            flagTask(0);
+            return true;
+        } else if (itemId == R.id.action_flag_one) {
+            flagTask(1);
+            return true;
+        } else if (itemId == R.id.action_flag_two) {
+            flagTask(2);
+            return true;
+        } else if (itemId == R.id.action_flag_three) {
+            flagTask(3);
+            return true;
+        } else if (itemId == R.id.action_flag_four) {
+            flagTask(4);
+            return true;
+        } else if (itemId == R.id.action_select_flag_zero) {
+            selectionWithFlagTask(0);
+            return true;
+        } else if (itemId == R.id.action_select_flag_one) {
+            selectionWithFlagTask(1);
+            return true;
+        } else if (itemId == R.id.action_select_flag_two) {
+            selectionWithFlagTask(2);
+            return true;
+        } else if (itemId == R.id.action_select_flag_three) {
+            selectionWithFlagTask(3);
+            return true;
+        } else if (itemId == R.id.action_select_flag_four) {
+            selectionWithFlagTask(4);
+            return true;
+        } else if (itemId == R.id.action_delete_card) {
+            if (mInMultiSelectMode) {
                 CollectionTask.launchCollectionTask(DISMISS_MULTI,
-                        suspendCardHandler(),
-                        new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.SUSPEND_CARD_MULTI}));
+                        mDeleteNoteHandler,
+                        new TaskData(new Object[] {getSelectedCardIds(), Collection.DismissType.DELETE_NOTE_MULTI}));
 
-                return true;
-
-            case R.id.action_change_deck: {
-                showChangeDeckDialog();
-                return true;
+                mCheckedCards.clear();
+                endMultiSelectMode();
+                mCardsAdapter.notifyDataSetChanged();
             }
+            return true;
+        } else if (itemId == R.id.action_mark_card) {
+            toggleMark();
 
-            case R.id.action_undo:
-                if (getCol().undoAvailable()) {
-                    CollectionTask.launchCollectionTask(UNDO, mUndoHandler);
+            return true;
+        } else if (itemId == R.id.action_suspend_card) {
+            CollectionTask.launchCollectionTask(DISMISS_MULTI,
+                    suspendCardHandler(),
+                    new TaskData(new Object[] {getSelectedCardIds(), Collection.DismissType.SUSPEND_CARD_MULTI}));
+
+            return true;
+        } else if (itemId == R.id.action_change_deck) {
+            showChangeDeckDialog();
+            return true;
+        } else if (itemId == R.id.action_undo) {
+            if (getCol().undoAvailable()) {
+                CollectionTask.launchCollectionTask(UNDO, mUndoHandler);
+            }
+            return true;
+        } else if (itemId == R.id.action_select_none) {
+            onSelectNone();
+            return true;
+        } else if (itemId == R.id.action_select_all) {
+            onSelectAll();
+            return true;
+        } else if (itemId == R.id.action_preview) {
+            onPreview();
+            return true;
+        } else if (itemId == R.id.action_reset_cards_progress) {
+            Timber.i("NoteEditor:: Reset progress button pressed");
+            // Show confirmation dialog before resetting card progress
+            ConfirmationDialog dialog = new ConfirmationDialog();
+            String title = getString(R.string.reset_card_dialog_title);
+            String message = getString(R.string.reset_card_dialog_message);
+            dialog.setArgs(title, message);
+            Runnable confirm = () -> {
+                Timber.i("CardBrowser:: ResetProgress button pressed");
+                CollectionTask.launchCollectionTask(DISMISS_MULTI, resetProgressCardHandler(),
+                        new TaskData(new Object[] {getSelectedCardIds(), Collection.DismissType.RESET_CARDS}));
+            };
+            dialog.setConfirm(confirm);
+            showDialogFragment(dialog);
+            return true;
+        } else if (itemId == R.id.action_reschedule_cards) {
+            Timber.i("CardBrowser:: Reschedule button pressed");
+            rescheduleSelectedCards();
+            return true;
+        } else if (itemId == R.id.action_reposition_cards) {
+            Timber.i("CardBrowser:: Reposition button pressed");
+
+            // Only new cards may be repositioned
+            long[] cardIds = getSelectedCardIds();
+            for (long cardId : cardIds) {
+                if (getCol().getCard(cardId).getQueue() != Consts.CARD_TYPE_NEW) {
+                    SimpleMessageDialog dialog = SimpleMessageDialog.newInstance(
+                            getString(R.string.vague_error),
+                            getString(R.string.reposition_card_not_new_error),
+                            false);
+                    showDialogFragment(dialog);
+                    return false;
                 }
-                return true;
-            case R.id.action_select_none:
-                onSelectNone();
-                return true;
-            case R.id.action_select_all:
-                onSelectAll();
-                return true;
-
-            case R.id.action_preview: {
-                onPreview();
-                return true;
             }
 
-            case R.id.action_reset_cards_progress: {
-                Timber.i("NoteEditor:: Reset progress button pressed");
-                // Show confirmation dialog before resetting card progress
-                ConfirmationDialog dialog = new ConfirmationDialog();
-                String title = getString(R.string.reset_card_dialog_title);
-                String message = getString(R.string.reset_card_dialog_message);
-                dialog.setArgs(title, message);
-                Runnable confirm = () -> {
-                    Timber.i("CardBrowser:: ResetProgress button pressed");
-                    CollectionTask.launchCollectionTask(DISMISS_MULTI, resetProgressCardHandler(),
-                            new TaskData(new Object[]{getSelectedCardIds(), Collection.DismissType.RESET_CARDS}));
-                };
-                dialog.setConfirm(confirm);
-                showDialogFragment(dialog);
-                return true;
-            }
-            case R.id.action_reschedule_cards: {
-                Timber.i("CardBrowser:: Reschedule button pressed");
-                rescheduleSelectedCards();
-                return true;
-            }
-            case R.id.action_reposition_cards: {
-                Timber.i("CardBrowser:: Reposition button pressed");
-
-                // Only new cards may be repositioned
-                long[] cardIds = getSelectedCardIds();
-                for (long cardId : cardIds) {
-                    if (getCol().getCard(cardId).getQueue() != Consts.CARD_TYPE_NEW) {
-                        SimpleMessageDialog dialog = SimpleMessageDialog.newInstance(
-                                getString(R.string.vague_error),
-                                getString(R.string.reposition_card_not_new_error),
-                                false);
-                        showDialogFragment(dialog);
-                        return false;
-                    }
-                }
-
-                IntegerDialog repositionDialog = new IntegerDialog();
-                repositionDialog.setArgs(
-                        getString(R.string.reposition_card_dialog_title),
-                        getString(R.string.reposition_card_dialog_message),
-                        5);
-                repositionDialog.setCallbackRunnable(days ->
+            IntegerDialog repositionDialog = new IntegerDialog();
+            repositionDialog.setArgs(
+                    getString(R.string.reposition_card_dialog_title),
+                    getString(R.string.reposition_card_dialog_message),
+                    5);
+            repositionDialog.setCallbackRunnable(days ->
                     CollectionTask.launchCollectionTask(DISMISS_MULTI, repositionCardHandler(),
-                        new TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, days}))
-                );
-                showDialogFragment(repositionDialog);
-                return true;
-            }
-            case R.id.action_edit_note: {
-                openNoteEditorForCurrentlySelectedNote();
-            }
+                            new TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, days}))
+            );
+            showDialogFragment(repositionDialog);
+            return true;
+        } else if (itemId == R.id.action_edit_note) {
+            openNoteEditorForCurrentlySelectedNote();
 
-            default:
-                return super.onOptionsItemSelected(item);
 
+            return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
     }
 
 

@@ -436,26 +436,21 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
             mLastClickTime = SystemClock.elapsedRealtime();
             mTimeoutHandler.removeCallbacks(mShowQuestionTask);
-            switch (view.getId()) {
-                case R.id.flashcard_layout_ease1:
-                    Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
-                    answerCard(Consts.BUTTON_ONE);
-                    break;
-                case R.id.flashcard_layout_ease2:
-                    Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
-                    answerCard(Consts.BUTTON_TWO);
-                    break;
-                case R.id.flashcard_layout_ease3:
-                    Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
-                    answerCard(Consts.BUTTON_THREE);
-                    break;
-                case R.id.flashcard_layout_ease4:
-                    Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
-                    answerCard(Consts.BUTTON_FOUR);
-                    break;
-                default:
-                    mCurrentEase = 0;
-                    break;
+            int id = view.getId();
+            if (id == R.id.flashcard_layout_ease1) {
+                Timber.i("AbstractFlashcardViewer:: EASE_1 pressed");
+                answerCard(Consts.BUTTON_ONE);
+            } else if (id == R.id.flashcard_layout_ease2) {
+                Timber.i("AbstractFlashcardViewer:: EASE_2 pressed");
+                answerCard(Consts.BUTTON_TWO);
+            } else if (id == R.id.flashcard_layout_ease3) {
+                Timber.i("AbstractFlashcardViewer:: EASE_3 pressed");
+                answerCard(Consts.BUTTON_THREE);
+            } else if (id == R.id.flashcard_layout_ease4) {
+                Timber.i("AbstractFlashcardViewer:: EASE_4 pressed");
+                answerCard(Consts.BUTTON_FOUR);
+            } else {
+                mCurrentEase = 0;
             }
         }
     };

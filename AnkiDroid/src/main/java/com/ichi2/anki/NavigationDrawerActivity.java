@@ -296,45 +296,34 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
          */
         pendingRunnable = () -> {
             // Take action if a different item selected
-            switch (item.getItemId()) {
-                case R.id.nav_decks: {
-                    Timber.i("Navigating to decks");
-                    Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
-                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
-                    startActivityWithAnimation(deckPicker, RIGHT);
-                    break;
-                }
-                case R.id.nav_browser:
-                    Timber.i("Navigating to card browser");
-                    openCardBrowser();
-                    break;
-                case R.id.nav_stats: {
-                    Timber.i("Navigating to stats");
-                    Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
-                    startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, LEFT);
-                    break;
-                }
-                case R.id.nav_night_mode:
-                    Timber.i("Toggling Night Mode");
-                    mNightModeSwitch.performClick();
-                    break;
-                case R.id.nav_settings:
-                    Timber.i("Navigating to settings");
-                    mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
-                    // Remember the theme we started with so we can restart the Activity if it changes
-                    mOldTheme = Themes.getCurrentTheme(getApplicationContext());
-                    startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, FADE);
-                    break;
-                case R.id.nav_help:
-                    Timber.i("Navigating to help");
-                    openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
-                    break;
-                case R.id.nav_feedback:
-                    Timber.i("Navigating to feedback");
-                    openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
-                    break;
-                default:
-                    break;
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_decks) {
+                Timber.i("Navigating to decks");
+                Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
+                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
+                startActivityWithAnimation(deckPicker, RIGHT);
+            } else if (itemId == R.id.nav_browser) {
+                Timber.i("Navigating to card browser");
+                openCardBrowser();
+            } else if (itemId == R.id.nav_stats) {
+                Timber.i("Navigating to stats");
+                Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
+                startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, LEFT);
+            } else if (itemId == R.id.nav_night_mode) {
+                Timber.i("Toggling Night Mode");
+                mNightModeSwitch.performClick();
+            } else if (itemId == R.id.nav_settings) {
+                Timber.i("Navigating to settings");
+                mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
+                // Remember the theme we started with so we can restart the Activity if it changes
+                mOldTheme = Themes.getCurrentTheme(getApplicationContext());
+                startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, FADE);
+            } else if (itemId == R.id.nav_help) {
+                Timber.i("Navigating to help");
+                openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
+            } else if (itemId == R.id.nav_feedback) {
+                Timber.i("Navigating to feedback");
+                openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
             }
         };
 

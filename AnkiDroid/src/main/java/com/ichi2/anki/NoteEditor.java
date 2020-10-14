@@ -1015,35 +1015,29 @@ public class NoteEditor extends AnkiActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Timber.i("NoteEditor:: Home button pressed");
-                closeCardEditorWithCheck();
-                return true;
-
-            case R.id.action_preview:
-                Timber.i("NoteEditor:: Preview button pressed");
-                performPreview();
-                return true;
-
-            case R.id.action_save:
-                Timber.i("NoteEditor:: Save note button pressed");
-                saveNote();
-                return true;
-
-            case R.id.action_add_note_from_note_editor:
-                Timber.i("NoteEditor:: Add Note button pressed");
-                addNewNote();
-                return true;
-            case R.id.action_copy_note: {
-                Timber.i("NoteEditor:: Copy Note button pressed");
-                copyNote();
-                return true;
-            }
-            default:
-                return super.onOptionsItemSelected(item);
-
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            Timber.i("NoteEditor:: Home button pressed");
+            closeCardEditorWithCheck();
+            return true;
+        } else if (itemId == R.id.action_preview) {
+            Timber.i("NoteEditor:: Preview button pressed");
+            performPreview();
+            return true;
+        } else if (itemId == R.id.action_save) {
+            Timber.i("NoteEditor:: Save note button pressed");
+            saveNote();
+            return true;
+        } else if (itemId == R.id.action_add_note_from_note_editor) {
+            Timber.i("NoteEditor:: Add Note button pressed");
+            addNewNote();
+            return true;
+        } else if (itemId == R.id.action_copy_note) {
+            Timber.i("NoteEditor:: Copy Note button pressed");
+            copyNote();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -1406,35 +1400,29 @@ public class NoteEditor extends AnkiActivity {
                 }
                 popup.setOnMenuItemClickListener(item -> {
 
-                    switch (item.getItemId()) {
-                        case R.id.menu_multimedia_audio: {
-                            Timber.i("NoteEditor:: Record audio button pressed");
-                            startMultimediaFieldEditorForField(index, new AudioRecordingField());
-                            return true;
-                        }
-                        case R.id.menu_multimedia_audio_clip: {
-                            Timber.i("NoteEditor:: Add audio clip button pressed");
-                            startMultimediaFieldEditorForField(index, new AudioClipField());
-                            return true;
-                        }
-                        case R.id.menu_multimedia_photo: {
-                            Timber.i("NoteEditor:: Add image button pressed");
-                            startMultimediaFieldEditorForField(index, new ImageField());
-                            return true;
-                        }
-                        case R.id.menu_multimedia_text: {
-                            Timber.i("NoteEditor:: Advanced editor button pressed");
-                            startAdvancedTextEditor(index);
-                            return true;
-                        }
-                        case R.id.menu_multimedia_add_cloze: {
-                            Timber.i("NoteEditor:: Insert cloze button pressed");
-                            convertSelectedTextToCloze(index, AddClozeType.INCREMENT_NUMBER);
-                            return true;
-                        }
-                        default:
-                            return false;
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.menu_multimedia_audio) {
+                        Timber.i("NoteEditor:: Record audio button pressed");
+                        startMultimediaFieldEditorForField(index, new AudioRecordingField());
+                        return true;
+                    } else if (itemId == R.id.menu_multimedia_audio_clip) {
+                        Timber.i("NoteEditor:: Add audio clip button pressed");
+                        startMultimediaFieldEditorForField(index, new AudioClipField());
+                        return true;
+                    } else if (itemId == R.id.menu_multimedia_photo) {
+                        Timber.i("NoteEditor:: Add image button pressed");
+                        startMultimediaFieldEditorForField(index, new ImageField());
+                        return true;
+                    } else if (itemId == R.id.menu_multimedia_text) {
+                        Timber.i("NoteEditor:: Advanced editor button pressed");
+                        startAdvancedTextEditor(index);
+                        return true;
+                    } else if (itemId == R.id.menu_multimedia_add_cloze) {
+                        Timber.i("NoteEditor:: Insert cloze button pressed");
+                        convertSelectedTextToCloze(index, AddClozeType.INCREMENT_NUMBER);
+                        return true;
                     }
+                    return false;
                 });
                 if (AdaptionUtil.isRestrictedLearningDevice()) {
                     popup.getMenu().findItem(R.id.menu_multimedia_photo).setVisible(false);
