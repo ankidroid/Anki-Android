@@ -659,16 +659,20 @@ public class Finder {
             ids = dids(mCol.getDecks().id(val, false));
         } else {
             // wildcard
-            ids = new ArrayList<>();
-            val = val.replace("*", ".*");
-            val = val.replace("+", "\\+");
-            for (Deck d : mCol.getDecks().all()) {
-                String deckName = d.getString("name");
-                deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
-                if (deckName.matches("(?i)" + val)) {
-                    for (long id : dids(d.getLong("id"))) {
-                        if (!ids.contains(id)) {
-                            ids.add(id);
+            ids = dids(mCol.getDecks().id(val, false));
+            if (ids == null) {
+                ids = new ArrayList<>();
+                val = val.replace("*", ".*");
+                val = val.replace("+", "\\+");
+
+                for (JSONObject d : mCol.getDecks().all()) {
+                    String deckName = d.getString("name");
+                    deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
+                    if (deckName.matches("(?i)" + val)) {
+                        for (long id : dids(d.getLong("id"))) {
+                            if (!ids.contains(id)) {
+                                ids.add(id);
+                            }
                         }
                     }
                 }
