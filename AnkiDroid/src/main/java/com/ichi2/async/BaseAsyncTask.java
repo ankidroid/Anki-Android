@@ -90,7 +90,7 @@ public class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, P
     }
 
 
-    public void doProgress(Progress value) {
+    public void doProgress(Progress... value) {
         publishProgress(value);
     }
 }

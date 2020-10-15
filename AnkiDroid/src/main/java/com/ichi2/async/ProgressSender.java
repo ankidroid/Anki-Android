@@ -16,7 +16,9 @@
 
 package com.ichi2.async;
 
+import androidx.annotation.NonNull;
+
 @FunctionalInterface
 public interface ProgressSender<T> {
-    void doProgress(T value);
+    void doProgress(@NonNull T... value);
 }
