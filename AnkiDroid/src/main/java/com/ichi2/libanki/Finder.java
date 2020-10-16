@@ -665,7 +665,7 @@ public class Finder {
                 val = val.replace("*", ".*");
                 val = val.replace("+", "\\+");
 
-                for (JSONObject d : mCol.getDecks().all()) {
+                for (Deck d : mCol.getDecks().all()) {
                     String deckName = d.getString("name");
                     deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
                     if (deckName.matches("(?i)" + val)) {
