@@ -419,6 +419,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return ids;
     }
 
+    private boolean canPerformCardInfo() {
+        return checkedCardCount() == 1;
+    }
+
     private boolean canPerformMultiSelectEditNote() {
         //The noteId is not currently available. Only allow if a single card is selected for now.
         return checkedCardCount() == 1;
@@ -966,6 +970,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         //Note: Theoretically should not happen, as this should kick us back to the menu
         mActionBarMenu.findItem(R.id.action_select_none).setVisible(hasSelectedCards());
         mActionBarMenu.findItem(R.id.action_edit_note).setVisible(canPerformMultiSelectEditNote());
+        mActionBarMenu.findItem(R.id.action_view_card_info).setVisible(canPerformCardInfo());
     }
 
 
@@ -1164,6 +1169,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
             return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.action_view_card_info) {
+            long[] selectedCardIds = getSelectedCardIds();
+            if (selectedCardIds.length > 0) {
+                Intent intent = new Intent(this, CardInfo.class);
+                intent.putExtra("cardId", selectedCardIds[0]);
+                startActivityWithAnimation(intent, FADE);
+            }
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

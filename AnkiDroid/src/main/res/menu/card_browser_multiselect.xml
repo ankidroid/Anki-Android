@@ -14,6 +14,11 @@
         android:title="@string/card_browser_delete_card" />
 
     <item
+        android:id="@+id/action_view_card_info"
+        android:icon="@drawable/ic_dialog_info"
+        android:title="Card Info" />
+
+    <item
         ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_flag"
         android:title="@string/menu_flag_card"

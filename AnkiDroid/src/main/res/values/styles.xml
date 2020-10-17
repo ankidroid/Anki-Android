@@ -118,4 +118,11 @@
         <item name="colorButtonNormal">?attr/largeButtonBackgroundColor</item>
         <item name="android:textColor">?attr/largeButtonTextColor</item>
     </style>
+
+    <style name="card_info_data">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
 </resources>
