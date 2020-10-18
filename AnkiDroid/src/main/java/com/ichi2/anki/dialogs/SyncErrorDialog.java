@@ -163,7 +163,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             case DIALOG_SYNC_CORRUPT_COLLECTION: {
                 return
                         builder.positiveText(R.string.dialog_ok)
-                        .neutralText(R.string.sync_corrupt_collection_get_help)
+                        .neutralText(R.string.help)
                         .onNeutral((dialog, which) -> ((AnkiActivity)(requireActivity())).openUrl(Uri.parse(getString(R.string.repair_deck))))
                         .cancelable(false)
                         .show();
