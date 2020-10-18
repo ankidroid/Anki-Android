@@ -1989,7 +1989,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                             break;
                         case FULL_DOWNLOAD:
                             Timber.i("Full Download Completed");
-                            showSyncLogMessage(R.string.sync_log_downloading_message, syncMessage);
+                            showSyncLogMessage(R.string.backup_full_sync_from_server, syncMessage);
                             break;
                         default: // should not be possible
                             Timber.i("Full Sync Completed (Unknown Direction)");
