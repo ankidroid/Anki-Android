@@ -192,7 +192,7 @@
         </activity-alias>
         <activity
             android:name="com.ichi2.anki.CardBrowser"
-            android:label="@string/card_browser_label"
+            android:label="@string/card_browser"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:parentActivityName=".DeckPicker"
