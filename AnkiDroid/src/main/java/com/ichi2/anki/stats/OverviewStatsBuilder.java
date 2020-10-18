@@ -147,7 +147,7 @@ public class OverviewStatsBuilder {
         stringBuilder.append(_subtitle(res.getString(R.string.stats_review_count).toUpperCase()));
         stringBuilder.append(daysStudied);
         stringBuilder.append("<br>");
-        stringBuilder.append(res.getString(R.string.stats_overview_total_reviews, oStats.totalReviews));
+        stringBuilder.append(res.getString(R.string.stats_overview_forecast_total, oStats.totalReviews));
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_reviews_per_day_studydays, oStats.reviewsPerDayOnStudyDays));
         if (!allDaysStudied) {
