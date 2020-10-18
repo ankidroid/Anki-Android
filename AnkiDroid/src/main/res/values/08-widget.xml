@@ -28,8 +28,6 @@
 
     <string name="widget_small">AnkiDroid small</string>
 
-    <string name="widget_small_button">AnkiDroid</string>
-
     <plurals name="widget_cards_due">
         <item quantity="one">%d card due</item>
         <item quantity="other">%d cards due</item>
