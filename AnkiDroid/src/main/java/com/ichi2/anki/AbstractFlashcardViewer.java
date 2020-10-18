@@ -3520,7 +3520,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private void displayCouldNotFindImageSnackbar(String filename) {
         OnClickListener onClickListener = (v) -> openUrl(Uri.parse(getString(R.string.link_faq_missing_media)));
-        showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename), R.string.card_viewer_could_not_find_image_get_help, onClickListener);
+        showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename), R.string.help, onClickListener);
     }
 
 
