@@ -118,7 +118,7 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
     private void showRestoreDefaultDialog() {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
                 .positiveText(R.string.dialog_ok)
-                .negativeText(R.string.cancel)
+                .negativeText(R.string.dialog_cancel)
                 .content(R.string.card_template_browser_appearance_restore_default_dialog)
                 .onPositive((dialog, which) -> restoreDefaultAndClose());
         builder.show();

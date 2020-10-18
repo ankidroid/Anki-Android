@@ -25,7 +25,6 @@
     <string name="sync_error">Sync error</string>
     <string name="vague_error">Error</string>
     <string name="retry">Retry</string>
-    <string name="cancel">Cancel</string>
 
     <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
     <string name="menu_get_shared_decks">Get shared decks</string>

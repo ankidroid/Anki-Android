@@ -1238,7 +1238,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
-        builderSingle.setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss());
+        builderSingle.setNegativeButton(getString(R.string.dialog_cancel), (dialog, which) -> dialog.dismiss());
         builderSingle.setAdapter(arrayAdapter, (dialog, which) -> changeDeck(which));
         builderSingle.show();
     }
