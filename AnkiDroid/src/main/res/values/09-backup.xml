@@ -32,7 +32,6 @@
     <string name="error_handling_options">Options</string>
     <string name="backup_retry_opening">Retry opening</string>
     <string name="backup_error_menu_repair">Repair database</string>
-    <string name="backup_repair_deck">Repair</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Repairing database…</string>
     <string name="backup_error">Error</string>

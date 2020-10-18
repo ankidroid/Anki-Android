@@ -386,7 +386,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_ERROR_HANDLING:
                 return res().getString(R.string.error_handling_title);
             case DIALOG_REPAIR_COLLECTION:
-                return res().getString(R.string.backup_repair_deck);
+                return res().getString(R.string.dialog_positive_repair);
             case DIALOG_RESTORE_BACKUP:
                 return res().getString(R.string.backup_restore);
             case DIALOG_NEW_COLLECTION:
