@@ -237,7 +237,6 @@
     <string name="deck_conf_current_group">Current group</string>
     <string name="deck_conf_rename">Rename</string>
     <string name="deck_conf_reset">Restore defaults</string>
-    <string name="deck_conf_reset_title">Restore defaults</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
     <string name="deck_conf_add">Add</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
