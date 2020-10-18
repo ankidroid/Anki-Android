@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Aranan:</string>
-    <string name="multimedia_editor_text_field_editing_show">Resim</string>
     <string name="multimedia_editor_text_field_editing_say">Telaffuz</string>
     <string name="multimedia_editor_text_field_editing_clear">Temizle</string>
     <string name="multimedia_editor_text_field_editing_clone">Kopyala</string>

@@ -47,7 +47,6 @@
     <string name="settings">การตั้งค่า</string>
     <string name="help">วิธีใช้</string>
     <string name="send_feedback">ส่งคำติชม</string>
-    <string name="studyoptions_title">สำรับทั้งหมด</string>
     <string name="studyoptions_due_today">ภายในวันนี้:</string>
     <string name="studyoptions_new_total">การ์ดใหม่ทั้งหมด:</string>
     <string name="studyoptions_total_cards">การ์ดทั้งหมด:</string>

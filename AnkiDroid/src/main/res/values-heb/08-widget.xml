@@ -46,20 +46,6 @@
         <item quantity="many">%d AnkiDroid cards due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_no_cards_due">No cards due</string>
-    <string name="widget_loading">הווידג׳ט בטעינה&#8230;</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d card due in %2$s</item>
-        <item quantity="two">%1$d cards due in %2$s</item>
-        <item quantity="many">%1$d cards due in %2$s</item>
-        <item quantity="other">%1$d cards due in %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d deck</item>
-        <item quantity="two">%1$d decks</item>
-        <item quantity="many">%1$d decks</item>
-        <item quantity="other">%1$d decks</item>
-    </plurals>
     <string name="widget_small">AnkiDroid קטן</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

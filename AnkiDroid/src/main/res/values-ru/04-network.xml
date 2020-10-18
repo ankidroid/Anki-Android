@@ -45,16 +45,13 @@
     <string name="vague_error">Ошибка</string>
     <string name="retry">Повторить</string>
     <string name="cancel">Отменить</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Условия</a></string>
     <string name="menu_get_shared_decks">Скачать колоды</string>
     <string name="connection_error_message">Произошла ошибка сети</string>
     <string name="not_logged_in_title">Войти в AnkiWeb</string>
     <string name="login_create_account_message">Чтобы использовать синхронизацию, вы должны войти учётную запись, предоставляемую третьей стороной. Вы можете создать запись на следующем шаге.</string>
     <!-- MyAccount.java -->
     <string name="username">Адрес электронной почты</string>
-    <string name="username_repeat">Повторите адрес электронной почты</string>
     <string name="password">Пароль</string>
-    <string name="password_repeat">Повторите пароль</string>
     <string name="log_in">Войти</string>
     <string name="sign_up_description">У вас нет учётной записи AnkiWeb? Она бесплатная!</string>
     <string name="sign_up_not_affiliated">AnkiWeb не аффилирован с AnkiDroid</string>

@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Kopia zapasowa nie została utworzona z powodu braku miejsca na karcie SD. Zwolnij trochę miejsca lub zmniejsz zakres kopi zapasowej</string>
     <string name="sd_space_warning">Na karcie SD zostało mniej niż %d MB wolnego miejsca.\nZwolnij trochę miejsca, aby uniknąć utraty danych.</string>
-    <string name="backup_delete">Usuwanie kopii.\nProszę czekać...</string>
     <string name="backup_restore">Przywróć kopię zapasową</string>
     <string name="backup_new_collection">Nowa kolekcja</string>
     <string name="backup_del_collection">Usuń kolekcje i utworz nową</string>

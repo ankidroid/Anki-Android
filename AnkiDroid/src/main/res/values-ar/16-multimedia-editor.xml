@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">بحث عن:</string>
-    <string name="multimedia_editor_text_field_editing_show">صورة</string>
     <string name="multimedia_editor_text_field_editing_say">نطق</string>
     <string name="multimedia_editor_text_field_editing_clear">مسح</string>
     <string name="multimedia_editor_text_field_editing_clone">نسخ من</string>

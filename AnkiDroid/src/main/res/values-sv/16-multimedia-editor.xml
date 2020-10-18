@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Sök efter:</string>
-    <string name="multimedia_editor_text_field_editing_show">Bild</string>
     <string name="multimedia_editor_text_field_editing_say">Uttal</string>
     <string name="multimedia_editor_text_field_editing_clear">Rensa</string>
     <string name="multimedia_editor_text_field_editing_clone">Klona från</string>

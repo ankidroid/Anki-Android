@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Hanapin ang:</string>
-    <string name="multimedia_editor_text_field_editing_show">Imahe</string>
     <string name="multimedia_editor_text_field_editing_say">Pagbigkas</string>
     <string name="multimedia_editor_text_field_editing_clear">Linisin</string>
     <string name="multimedia_editor_text_field_editing_clone">I-clone mula</string>

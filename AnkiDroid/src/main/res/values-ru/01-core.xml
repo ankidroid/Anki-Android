@@ -47,7 +47,6 @@
     <string name="settings">Настройки</string>
     <string name="help">Помощь</string>
     <string name="send_feedback">Отправить отзыв</string>
-    <string name="studyoptions_title">Обзор колоды</string>
     <string name="studyoptions_due_today">На сегодня:</string>
     <string name="studyoptions_new_total">Всего новых карточек:</string>
     <string name="studyoptions_total_cards">Всего карточек:</string>

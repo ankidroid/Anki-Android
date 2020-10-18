@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Hi ha menys de %d MB d\'espai lliure a la targeta SD.\nAllibereu una mica d\'espai per evitar la pèrdua de dades.</string>
-    <string name="backup_delete">S\'està eliminant les còpies. \nSi us plau, espereu ...</string>
     <string name="backup_restore">Restaura des d\'una còpia de reserva</string>
     <string name="backup_new_collection">Nova col·lecció</string>
     <string name="backup_del_collection">Suprimeix la col·lecció i genera una nova</string>

@@ -50,19 +50,16 @@
     <!--Browser-->
     <string name="model_browser_delete">حذف نوع الملحوظة</string>
     <string name="model_browser_rename">إعادة التسمية</string>
-    <string name="model_browser_options">الخيارات</string>
     <string name="model_browser_template">تحرير البطاقات</string>
     <string name="model_browser_add">إضافة نوع ملحوظة</string>
     <!--Rename-->
     <string name="rename_model">تغيير اسم نوع الملحوظة</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">تلميح لغة لوحة المفاتيح</string>
     <string name="model_field_editor_language_hint_dialog_success_result">تعيين تلميح اللغة إلى %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">تحرير الحقول</string>
     <string name="model_field_editor_add">إضافة حقل</string>
     <string name="model_field_editor_delete">حذف الحقل</string>
-    <string name="model_field_editor_options">خيارات الحقول</string>
     <string name="model_field_editor_rename">تغيير اسم الحقل</string>
     <string name="model_field_editor_language_hint">تعيين تلميح لغة لوحة المفاتيح</string>
     <string name="model_field_editor_reposition_menu">تغيير موضع الحقل</string>

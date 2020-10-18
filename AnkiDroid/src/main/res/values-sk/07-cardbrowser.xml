@@ -48,19 +48,13 @@
     <string name="card_browser_all_decks">Všetky balíčky</string>
     <string name="card_browser_delete_card">Odstrániť poznámky</string>
     <string name="card_browser_suspend_card">Pozastaviť kartičku</string>
-    <string name="card_browser_toggle_suspend_card">(ne)pozastaviť kartičky</string>
     <string name="card_browser_change_deck">Zmeniť balíček</string>
     <string name="card_browser_unsuspend_card">Nepozastaviť kartičky</string>
     <string name="card_browser_mark_card">Označiť poznámky</string>
     <string name="card_browser_flag">Vlajočka</string>
-    <string name="card_browser_toggle_mark_card">(od)značiť poznámky</string>
     <string name="card_browser_unmark_card">Odznačiť poznámky</string>
     <string name="delete_card_title">Vymazať poznámku?</string>
-    <string name="delete_cards_title">Vymazať poznámky?</string>
-    <string name="delete_card_message">Skutočne chcete vymazať všetky kartičky tejto poznámky?\nPole vyhľadávania: %s</string>
-    <string name="delete_card_mult_message">Vymazať všetky kartičky všetkých vybratých poznámok?\n(Nie iba vybraté kartičky)</string>
     <string name="changed_deck_message">Premiestnené do %s</string>
-    <string name="card_browser_suspended_cards">(ne)pozastavené kartičky</string>
     <string name="card_browser_show_marked">Filtrovať označené</string>
     <string name="card_browser_show_suspended">Filtrovať pozastavené</string>
     <string name="card_browser_search_by_tag">Filtrovať podľa štítku</string>
@@ -80,7 +74,6 @@
     <string name="card_details_answer">Odpoveď</string>
     <string name="card_details_due">Na preskúšanie</string>
     <string name="card_details_tags">Štítky</string>
-    <string name="card_browser_filtering_cards">Kartičky sa filtrujú&#8230;\nPre zrušenie stlačte tlačidlo Späť</string>
     <string-array name="card_browser_order_labels">
         <item>Bez triedenia (rýchlejšie)</item>
         <item>Podľa triediaceho poľa</item>

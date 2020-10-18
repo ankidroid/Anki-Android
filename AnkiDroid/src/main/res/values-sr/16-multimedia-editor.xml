@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Тражите:</string>
-    <string name="multimedia_editor_text_field_editing_show">Слика</string>
     <string name="multimedia_editor_text_field_editing_say">Изговор</string>
     <string name="multimedia_editor_text_field_editing_clear">Очисти</string>
     <string name="multimedia_editor_text_field_editing_clone">Исклонирај од</string>

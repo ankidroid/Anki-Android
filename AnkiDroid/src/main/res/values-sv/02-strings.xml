@@ -41,9 +41,6 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Öppna panel</string>
-    <string name="drawer_close">Stäng panel</string>
-    <string name="CardEditorLaterMessage">Sparad information för senare</string>
     <string name="CardEditorCardDeck">Kortlek:</string>
     <string name="CardEditorNoteDeck">Kortlek:</string>
     <string name="CardEditorModel">Typ:</string>
@@ -55,7 +52,6 @@
     <string name="check_all_tags">Markera/avmarkera alla etiketter</string>
     <string name="filter_tags">Filtrera etiketter</string>
     <string name="no_tags">Du har inte lagt till några etiketter än.</string>
-    <string name="sdcard_missing_message">SD-kortet är inte tillgängligt eftersom det används som USB-minne. Koppla ur USB:n för att komma åt din kortlek.</string>
     <string name="updated_version">Uppdaterad till version %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -118,7 +114,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Sparar not</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">Lägg till</string>
     <string name="save">Spara</string>
     <string name="close">Stäng</string>
     <string name="select">Välj</string>
@@ -135,11 +130,9 @@
         <item quantity="one">%1$d minut</item>
         <item quantity="other">%1$d minuter</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Välkommen till AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid-kort</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">Kopiera kort</string>
     <string name="card_editor_reposition_card">Ompositionera</string>
     <string name="card_editor_reset_card">Återställ framsteg</string>
     <string name="card_editor_reschedule_card">Omplanera</string>
@@ -151,7 +144,6 @@
         <item quantity="one">%d kort tillagt</item>
         <item quantity="other">%d kort tillagda</item>
     </plurals>
-    <string name="help_title">Hjälp</string>
     <string name="check_db">Kontrollera databas</string>
     <string name="check_media">Kontrollera media</string>
     <string name="empty_cards">Tomma kort</string>
@@ -161,7 +153,6 @@
     <string name="delete_deck">Tar bort kortlek...\nVänligen vänta.</string>
     <string name="show_hint">Visa %s</string>
     <string name="info_rate">Betygsätt AnkiDroid</string>
-    <string name="col_load_failed">Fel vid inläsning av samling.\nTryck bakåt för att stänga AnkiDroid.</string>
     <string name="import_title">Importera</string>
     <string name="import_select_title">Välj fil att importera</string>
     <string name="import_message_add">Lägg till</string>
@@ -258,8 +249,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fel vid delning av apkg-fil</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2-schemaläggare måste vara aktiverad för att importera denna fil.</string>
-    <string name="import_cannot_with_v2">V2-schemaläggare kan inte importera V1-kortlekar med inkluderad schemaläggning.</string>
     <string name="export_v2_dummy_note">Denna fil kräver en nyare version av Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

@@ -41,9 +41,6 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Drawerê Veke</string>
-    <string name="drawer_close">Drawerê Bigire</string>
-    <string name="CardEditorLaterMessage">Agahî ji bo paşê hat tomarkirin</string>
     <string name="CardEditorCardDeck">Card deck:</string>
     <string name="CardEditorNoteDeck">دەستە:</string>
     <string name="CardEditorModel">جۆر:</string>
@@ -55,7 +52,6 @@
     <string name="check_all_tags">Check/uncheck all tags</string>
     <string name="filter_tags">Nîşanan fîlître bike</string>
     <string name="no_tags">You haven’t added any tags yet</string>
-    <string name="sdcard_missing_message">Switch off USB storage to access your decks</string>
     <string name="updated_version">نوێکرایەوە بۆ وەشانی %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -118,7 +114,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Saving note</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">زیادکردن</string>
     <string name="save">پاشەکەوتکردن</string>
     <string name="close">داخستن</string>
     <string name="select">هەڵبژاردن</string>
@@ -135,11 +130,9 @@
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d خولەک</item>
     </plurals>
-    <string name="studyoptions_welcome_title">بەخێربێیت بۆ AnkiDroid</string>
     <string name="fact_adder_intent_title">کارتی AnkiDroid</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">Kartê kopî bike</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Reset progress</string>
     <string name="card_editor_reschedule_card">Reschedule</string>
@@ -151,7 +144,6 @@
         <item quantity="one">%d کارت زیادکرا</item>
         <item quantity="other">%d کارت زیادکرا</item>
     </plurals>
-    <string name="help_title">یارمەتی</string>
     <string name="check_db">Danegehê kontrol bike</string>
     <string name="check_media">پشکنینی ڕەنگاڵە</string>
     <string name="empty_cards">کارتە بەتاڵەکان</string>
@@ -161,7 +153,6 @@
     <string name="delete_deck">دەستە دەسڕدرێتەوە... </string>
     <string name="show_hint">پیشندانی %s</string>
     <string name="info_rate">Rate AnkiDroid</string>
-    <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
     <string name="import_title">Importing</string>
     <string name="import_select_title">Choose a file to import</string>
     <string name="import_message_add">زیادکردن</string>
@@ -258,8 +249,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error sharing apkg file</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">ئەم پەڕگەیە وەشانێکی نوێتری Anki پێویستە.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Chercher :</string>
-    <string name="multimedia_editor_text_field_editing_show">Image</string>
     <string name="multimedia_editor_text_field_editing_say">Prononciation</string>
     <string name="multimedia_editor_text_field_editing_clear">Effacer</string>
     <string name="multimedia_editor_text_field_editing_clone">Cloner de</string>

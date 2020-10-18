@@ -45,16 +45,13 @@
     <string name="vague_error">Памылка</string>
     <string name="retry">Паўтарыць</string>
     <string name="cancel">Адмяніць</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Умовы выкарыстання</a></string>
     <string name="menu_get_shared_decks">Атрымаць агульнадаступныя калоды</string>
     <string name="connection_error_message">Адбылася памылка сеткі</string>
     <string name="not_logged_in_title">Увайсці ў AnkiWeb</string>
     <string name="login_create_account_message">Вам неабходна аўтарызавацца ў адным з воблачных сэрвісаў, каб скарыстацца гэтым тыпам сінхранізацыі. Вы можаце зарэгістравацца ў воблачным сэрвісе на наступным кроку.</string>
     <!-- MyAccount.java -->
     <string name="username">Электронная пошта</string>
-    <string name="username_repeat">Паўтарыце электронную пошту</string>
     <string name="password">Пароль</string>
-    <string name="password_repeat">Паўтарыце пароль</string>
     <string name="log_in">Увайсці</string>
     <string name="sign_up_description">Няма ўліковага запісу AnkiWeb? Гэта бясплатна!</string>
     <string name="sign_up_not_affiliated">Нататка: AnkiWeb ніяк не звязаны з AnkiDroid</string>

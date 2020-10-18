@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">ᱯᱟᱱᱛᱮ ᱞᱟᱹᱜᱤᱫᱺ</string>
-    <string name="multimedia_editor_text_field_editing_show">ᱪᱤᱛᱟᱹᱨ</string>
     <string name="multimedia_editor_text_field_editing_say">ᱩᱪᱨᱚᱬ</string>
     <string name="multimedia_editor_text_field_editing_clear">ᱥᱟᱯᱷᱟ</string>
     <string name="multimedia_editor_text_field_editing_clone">ᱱᱚᱠᱟᱞ ᱠᱷᱚᱱ</string>

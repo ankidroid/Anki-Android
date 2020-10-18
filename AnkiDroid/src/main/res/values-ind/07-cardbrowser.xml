@@ -45,19 +45,13 @@
     <string name="card_browser_all_decks">Semua dek</string>
     <string name="card_browser_delete_card">Hapus catatan</string>
     <string name="card_browser_suspend_card">Tangguhkan kartu</string>
-    <string name="card_browser_toggle_suspend_card">(batal) tangguhkan kartu</string>
     <string name="card_browser_change_deck">Ganti dek</string>
     <string name="card_browser_unsuspend_card">Batal tangguhkan kartu</string>
     <string name="card_browser_mark_card">Tandai catatan</string>
     <string name="card_browser_flag">Panji</string>
-    <string name="card_browser_toggle_mark_card">(batal)tandai catatan</string>
     <string name="card_browser_unmark_card">Batal tandai catatan</string>
     <string name="delete_card_title">Hapus catatan?</string>
-    <string name="delete_cards_title">Hapus catatan?</string>
-    <string name="delete_card_message">Hapus semua kartu dari catatan ini?\n Bidang pencarian: %s</string>
-    <string name="delete_card_mult_message">Hapus semua kartu dari catatan yang dipilih?\n(tidak hanya kartu yang dipilih)</string>
     <string name="changed_deck_message">Dipindah ke %s</string>
-    <string name="card_browser_suspended_cards">kartu (batal)ditangguhkan</string>
     <string name="card_browser_show_marked">Filter ditandai</string>
     <string name="card_browser_show_suspended">Filter ditangguhkan</string>
     <string name="card_browser_search_by_tag">Filter menurut tag</string>
@@ -77,7 +71,6 @@
     <string name="card_details_answer">Jawaban</string>
     <string name="card_details_due">Jatuh tempo</string>
     <string name="card_details_tags">Tag</string>
-    <string name="card_browser_filtering_cards">Memfilter kartu&#8230; \nTekan tombol kembali untuk membatalkan</string>
     <string-array name="card_browser_order_labels">
         <item>Tidak ada pengurutan (lebih cepat)</item>
         <item>Menurut urutan kolom</item>

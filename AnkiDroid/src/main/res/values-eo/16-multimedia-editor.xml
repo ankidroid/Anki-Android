@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Serĉi:</string>
-    <string name="multimedia_editor_text_field_editing_show">Bildo</string>
     <string name="multimedia_editor_text_field_editing_say">Elparolo</string>
     <string name="multimedia_editor_text_field_editing_clear">Forviŝi</string>
     <string name="multimedia_editor_text_field_editing_clone">Kopii de</string>

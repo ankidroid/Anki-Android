@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">搜尋：</string>
-    <string name="multimedia_editor_text_field_editing_show">圖像</string>
     <string name="multimedia_editor_text_field_editing_say">發音</string>
     <string name="multimedia_editor_text_field_editing_clear">清除 </string>
     <string name="multimedia_editor_text_field_editing_clone">複製自</string>

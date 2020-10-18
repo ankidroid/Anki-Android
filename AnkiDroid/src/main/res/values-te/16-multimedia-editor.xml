@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">దాని కోసం వెతుకు:</string>
-    <string name="multimedia_editor_text_field_editing_show">చిత్రం</string>
     <string name="multimedia_editor_text_field_editing_say">ఉచ్చారణ</string>
     <string name="multimedia_editor_text_field_editing_clear">ప్రశాంతంగా</string>
     <string name="multimedia_editor_text_field_editing_clone">నుండి క్లోన్</string>

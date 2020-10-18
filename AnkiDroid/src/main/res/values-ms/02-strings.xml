@@ -41,9 +41,6 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Buka laci</string>
-    <string name="drawer_close">Close drawer</string>
-    <string name="CardEditorLaterMessage">Menyimpan maklumat untuk nanti</string>
     <string name="CardEditorCardDeck">Dek kad:</string>
     <string name="CardEditorNoteDeck">Dek:</string>
     <string name="CardEditorModel">Jenis:</string>
@@ -55,7 +52,6 @@
     <string name="check_all_tags">Semak/Buang tanda semua tag</string>
     <string name="filter_tags">Filter tags</string>
     <string name="no_tags">Ou tidak berkata apa-apa lagi tag</string>
-    <string name="sdcard_missing_message">Matikan USB penyimpanan untuk mengakses dek anda</string>
     <string name="updated_version">Dikemaskini untuk versi %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -118,7 +114,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Menyimpan Nota</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">Menambah</string>
     <string name="save">Simpan</string>
     <string name="close">Tutup</string>
     <string name="select">Pilih</string>
@@ -133,11 +128,9 @@
     <plurals name="in_minutes">
         <item quantity="other">%1$d minutes</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Selamat datang di AnkiDroid</string>
     <string name="fact_adder_intent_title">Kad AnkiDroid</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">Salin Kad</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Reset progress</string>
     <string name="card_editor_reschedule_card">Reschedule</string>
@@ -148,7 +141,6 @@
     <plurals name="factadder_cards_added">
         <item quantity="other">%d cards added</item>
     </plurals>
-    <string name="help_title">Help</string>
     <string name="check_db">Check database</string>
     <string name="check_media">Check media</string>
     <string name="empty_cards">Empty cards</string>
@@ -158,7 +150,6 @@
     <string name="delete_deck">Deleting deck&#8230;</string>
     <string name="show_hint">Show %s</string>
     <string name="info_rate">Rate AnkiDroid</string>
-    <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
     <string name="import_title">Importing</string>
     <string name="import_select_title">Choose a file to import</string>
     <string name="import_message_add">Add</string>
@@ -248,8 +239,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Ralat perkongsian apkg file</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

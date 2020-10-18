@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Искать:</string>
-    <string name="multimedia_editor_text_field_editing_show">Изображение</string>
     <string name="multimedia_editor_text_field_editing_say">Произношение</string>
     <string name="multimedia_editor_text_field_editing_clear">Очистить</string>
     <string name="multimedia_editor_text_field_editing_clone">Дублировать из</string>

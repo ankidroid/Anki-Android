@@ -48,19 +48,13 @@
     <string name="card_browser_all_decks">Všechny balíčky</string>
     <string name="card_browser_delete_card">Odstranit poznámky</string>
     <string name="card_browser_suspend_card">Vyřadit karty</string>
-    <string name="card_browser_toggle_suspend_card">vyřazení karet</string>
     <string name="card_browser_change_deck">Změnit balíček</string>
     <string name="card_browser_unsuspend_card">Zrušit vyřazení karet</string>
     <string name="card_browser_mark_card">Označit poznámky</string>
     <string name="card_browser_flag">Příznak</string>
-    <string name="card_browser_toggle_mark_card">označení poznámek</string>
     <string name="card_browser_unmark_card">Odznačit poznámky</string>
     <string name="delete_card_title">Odstranit poznámku</string>
-    <string name="delete_cards_title">Odstranit poznámky?</string>
-    <string name="delete_card_message">Opravdu chcete smazat všechny karty této poznámky? \nVyhledávací pole: %s</string>
-    <string name="delete_card_mult_message">Odstranit všechny karty všech vybraných poznámek?\n(Nejen vybrané karty)</string>
     <string name="changed_deck_message">Přesunuto do %s</string>
-    <string name="card_browser_suspended_cards">(ne)vyřazené karty</string>
     <string name="card_browser_show_marked">Filtrovat označené</string>
     <string name="card_browser_show_suspended">Filtrovat vyřazené</string>
     <string name="card_browser_search_by_tag">Filtrovat podle štítků</string>
@@ -80,7 +74,6 @@
     <string name="card_details_answer">Odpověď</string>
     <string name="card_details_due">Opakování</string>
     <string name="card_details_tags">Štítky</string>
-    <string name="card_browser_filtering_cards">Filtrování karet... \nPro zrušení stiskněte tlačítko Zpět</string>
     <string-array name="card_browser_order_labels">
         <item>Žádné třídění (rychlejší)</item>
         <item>Podle pole řazení</item>

@@ -44,16 +44,6 @@
         <item quantity="one">%d AnkiDroid card due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_no_cards_due">Walang mga barahang kinakailangan na sa ngayon</string>
-    <string name="widget_loading">Nilo-load ang widget&#8230;</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d kinakailangan nang baraha sa %2$s</item>
-        <item quantity="other">%1$d kinakailangan nang mga baraha sa %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d deck</item>
-        <item quantity="other">%1$d mga deck</item>
-    </plurals>
     <string name="widget_small">Maliit na AnkiDroid</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

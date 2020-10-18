@@ -44,16 +44,6 @@
         <item quantity="one">%d Cartão pendente no AnkiDroid</item>
         <item quantity="other">%d Cartões pendentes no AnkiDroid</item>
     </plurals>
-    <string name="widget_no_cards_due">Sem cartões pendentes</string>
-    <string name="widget_loading">Carregando widget&#8230;</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d cartão pendente em %2$s</item>
-        <item quantity="other">%1$d cartões pendentes em %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d baralho</item>
-        <item quantity="other">%1$d baralhos</item>
-    </plurals>
     <string name="widget_small">AnkiDroid pequeno</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

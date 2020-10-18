@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Cerca:</string>
-    <string name="multimedia_editor_text_field_editing_show">Immagine</string>
     <string name="multimedia_editor_text_field_editing_say">Pronuncia</string>
     <string name="multimedia_editor_text_field_editing_clear">Cancella</string>
     <string name="multimedia_editor_text_field_editing_clone">Clona da</string>

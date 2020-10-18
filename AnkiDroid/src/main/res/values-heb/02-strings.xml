@@ -41,9 +41,6 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">פתיחת מגירה</string>
-    <string name="drawer_close">סגירת מגירה</string>
-    <string name="CardEditorLaterMessage">שמור מידע עבור מועד מאוחר יותר</string>
     <string name="CardEditorCardDeck">חפיסת קלפים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>
@@ -55,7 +52,6 @@
     <string name="check_all_tags">בחר/בטל את כל התגיות</string>
     <string name="filter_tags">סנן תגיות</string>
     <string name="no_tags">עוד לא הוספת שום תגיות</string>
-    <string name="sdcard_missing_message">נא לכבות אחסון USB כדי לקבל גישה לחפיסות שלך</string>
     <string name="updated_version">עודקן לגירסה %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">שמור לוח</string>
@@ -118,7 +114,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">שמירת הערה</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">הוספה</string>
     <string name="save">שמירה</string>
     <string name="close">סגירה</string>
     <string name="select">בחירה</string>
@@ -139,11 +134,9 @@
         <item quantity="many">%1$d minutes</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
-    <string name="studyoptions_welcome_title">ברוך בואך ל־AnkiDroid</string>
     <string name="fact_adder_intent_title">קלף AnkiDroid</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">העתקת קלף</string>
     <string name="card_editor_reposition_card">מיקום מחדש</string>
     <string name="card_editor_reset_card">איפוס התקדמות</string>
     <string name="card_editor_reschedule_card">תזמן מחדש</string>
@@ -157,7 +150,6 @@
         <item quantity="many">%d כרטיסיות הוספו</item>
         <item quantity="other">%d כרטיסיות הוספו</item>
     </plurals>
-    <string name="help_title">עזרה</string>
     <string name="check_db">בדוק מסד הנתונים</string>
     <string name="check_media">בדוק מדיה</string>
     <string name="empty_cards">כרטסיות ריקות</string>
@@ -167,7 +159,6 @@
     <string name="delete_deck">מוחק חפיסה&#8230;</string>
     <string name="show_hint">הצגת %s</string>
     <string name="info_rate">דירוג AnkiDroid</string>
-    <string name="col_load_failed">טעינת האוסף נכשלה.\nלחץ חזרה לסגירת האפליקצייה.</string>
     <string name="import_title">מתבצע ייבוא</string>
     <string name="import_select_title">נא לבחור קובץ לייבוא</string>
     <string name="import_message_add">הוספה</string>
@@ -278,8 +269,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">שגיאה בשיתוף קובץ apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

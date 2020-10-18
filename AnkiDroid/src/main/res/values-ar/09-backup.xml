@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">لم تُحفظ النسخة الاحتياطية. لم تتبقَّ مساحة كافية على بطاقة SD. قلل من عمق النسخة أو احذف بعض الملفات الأخرى.</string>
     <string name="sd_space_warning">بقي أقل من  %d ميجا في بطاقة التخزين.\nحرر بعض المساحة لتجنب فقدان البيانات.</string>
-    <string name="backup_delete">حذف النسخ الاحتياطية&#8230;</string>
     <string name="backup_restore">استعادة من نسخة احتياطية</string>
     <string name="backup_new_collection">مجموعة جديدة</string>
     <string name="backup_del_collection">حذف المجموعة وإنشاء واحدة جديدة</string>

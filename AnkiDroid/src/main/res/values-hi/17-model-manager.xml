@@ -42,19 +42,16 @@
     <!--Browser-->
     <string name="model_browser_delete">नोट प्रकार मिटाएँ</string>
     <string name="model_browser_rename">नाम बदलें</string>
-    <string name="model_browser_options">विकल्प</string>
     <string name="model_browser_template">पत्ते संपादित करें</string>
     <string name="model_browser_add">नोट प्रकार जोड़ें</string>
     <!--Rename-->
     <string name="rename_model">नोट प्रकार का नाम बदलें</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">फ़ील्ड संपादित करें</string>
     <string name="model_field_editor_add">फ़ील्ड जोड़ें</string>
     <string name="model_field_editor_delete">फ़ील्ड मिटाएँ</string>
-    <string name="model_field_editor_options">फ़ील्ड विकल्प</string>
     <string name="model_field_editor_rename">फ़ील्ड का नाम बदलें</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">फ़ील्ड का स्थान बदलें</string>

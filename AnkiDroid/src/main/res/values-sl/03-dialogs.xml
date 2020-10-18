@@ -81,7 +81,6 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Spremeni urnik kartice</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="two">Reschedule cards</item>
@@ -108,8 +107,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Prijavi napako</string>
     <string name="repair_deck_dialog">Ali res želite popraviti podatkovno zbirko?\n\nPred poizkusom bo v mapi \"%s\" ustvarjena kopija.</string>
-    <string name="intent_add_saved_information">Shranjeni podatki</string>
-    <string name="intent_add_clear_all">Počisti vse</string>
     <string name="intent_aedict_empty">Kategorija \"privzeta\" je prazna</string>
     <string name="intent_aedict_category">Za dodajanje kartic v AnkiDroid odstranite vse kategorija beležnice ali dodajte eno z imenom \"privzeta\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -121,7 +118,6 @@
     <string name="custom_study_random">Naključno izberite x kartic iz kompleta:</string>
     <string name="custom_study_preview">Preglej nove kartice dodane v zadnjih x-ih dneh:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Izgrajevanje kompleta za učenje po meri &#8230;</string>
     <string name="importing_collection">Uvažanje zbirke &#8230;</string>
     <string name="import_media_count">Uvažanje datotek predstavnosti %1$d %% &#8230;</string>
     <string name="import_progress">• Uvažanje zapiskov: %1$d %%\n• Uvažanje kartic: %2$d %%\n• Poobdelava: %3$d %%</string>
@@ -138,7 +134,6 @@
     <string name="dialog_continue">Nadaljuj</string>
     <string name="dialog_positive_create">Ustvari</string>
     <string name="dialog_positive_delete">Izbriši</string>
-    <string name="dialog_positive_disable">Onemogoči</string>
     <string name="dialog_positive_overwrite">Prepiši</string>
     <string name="dialog_positive_remove">Odstrani</string>
     <string name="dialog_positive_repair">Popravi</string>

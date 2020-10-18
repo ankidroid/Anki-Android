@@ -43,14 +43,6 @@
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="other">%d kartu AnkiDroid jatuh tempo</item>
     </plurals>
-    <string name="widget_no_cards_due">Tidak ada kartu jatuh tempo</string>
-    <string name="widget_loading">Memuat gawit&#8230;</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="other">%1$d kartu jatuh tempo dalam %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="other">%1$d dek</item>
-    </plurals>
     <string name="widget_small">AnkiDroid kecil</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

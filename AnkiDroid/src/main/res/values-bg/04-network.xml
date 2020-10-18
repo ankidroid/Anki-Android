@@ -45,16 +45,13 @@
     <string name="vague_error">Грешка</string>
     <string name="retry">Повторен опит</string>
     <string name="cancel">Отказ</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Правила и условия</a></string>
     <string name="menu_get_shared_decks">Вземете споделени тестета</string>
     <string name="connection_error_message">Възникна мрежова грешка.</string>
     <string name="not_logged_in_title">Влезте в AnkiWeb</string>
     <string name="login_create_account_message">Трябва да влезете като трето лице, за да използвате услугата за синхронизиране в облака. Можете да създадете един в следващия етап.</string>
     <!-- MyAccount.java -->
     <string name="username">Email адрес</string>
-    <string name="username_repeat">Повторете email адрес</string>
     <string name="password">Парола</string>
-    <string name="password_repeat">Повторете паролата</string>
     <string name="log_in">Влизане</string>
     <string name="sign_up_description">Нямате AnkiWeb профил? Безплатно е!</string>
     <string name="sign_up_not_affiliated">Забележка: AnkiWeb няма връзка с AnkiDroid</string>

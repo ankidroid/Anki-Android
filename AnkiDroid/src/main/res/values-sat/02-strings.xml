@@ -41,9 +41,6 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ</string>
-    <string name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
-    <string name="CardEditorLaterMessage">ᱠᱷᱚᱵᱚᱨ ᱯᱚᱨᱮ ᱞᱟᱹᱤᱫ ᱨᱩᱠᱷᱤᱭᱟᱹᱣᱠᱟᱱᱟ ᱾</string>
     <string name="CardEditorCardDeck">ᱠᱟᱰ ᱰᱮᱠᱺ</string>
     <string name="CardEditorNoteDeck">ᱰᱮᱠᱺ</string>
     <string name="CardEditorModel">ᱯᱨᱚᱠᱟᱨᱺ</string>
@@ -55,7 +52,6 @@
     <string name="check_all_tags">ᱪᱮᱠ ᱢᱮ/ᱡᱷᱚᱛᱟ ᱴᱮᱜ uncheck ᱢᱮ</string>
     <string name="filter_tags">ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ</string>
     <string name="no_tags">ᱟᱢ ᱴᱮᱜ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱠᱟᱜᱼᱟᱢ</string>
-    <string name="sdcard_missing_message">USB ᱥᱴᱚᱨᱮᱡ ᱵᱚᱸᱫ ᱞᱮᱠᱷᱟᱱ ᱰᱮᱠ ᱚᱠ ᱨᱮ ᱦᱚᱠ ᱮᱢ ᱧᱮᱢ ᱟᱢ</string>
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ </string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
@@ -118,7 +114,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">ᱠᱞᱚᱡ ᱢᱮᱴᱟᱹᱣ ᱫᱚ ᱠᱞᱚᱡ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱮ ᱠᱟᱹᱢᱤ ᱟ</string>
     <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ </string>
     <string name="saving_model">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
-    <string name="add">ᱥᱮᱞᱮᱫ</string>
     <string name="save">ᱥᱟᱝᱪᱚᱣ</string>
     <string name="close">ᱵᱚᱫᱽ</string>
     <string name="select">ᱪᱚᱭᱚᱱ</string>
@@ -135,11 +130,9 @@
         <item quantity="one">%1$d ᱴᱤᱯᱤᱡ</item>
         <item quantity="other">%1$d ᱴᱤᱯᱤᱡ</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Ankidrod ᱛᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ</string>
     <string name="fact_adder_intent_title">AnkiDroid ᱠᱟᱰ</string>
     <string name="note_editor_add_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_copy_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱠᱚᱯᱤ ᱢᱮ</string>
-    <string name="card_editor_copy_card">ᱠᱟᱰ ᱱᱚᱠᱚᱞ ᱢᱮ</string>
     <string name="card_editor_reposition_card">ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱢᱮ</string>
     <string name="card_editor_reset_card">ᱯᱨᱚᱜᱨᱮᱥ ᱨᱤᱥᱮᱴ ᱢᱮ</string>
     <string name="card_editor_reschedule_card">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
@@ -151,7 +144,6 @@
         <item quantity="one">%d ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
     </plurals>
-    <string name="help_title">ᱜᱚᱸᱲᱚᱸ</string>
     <string name="check_db">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ</string>
     <string name="check_media">ᱢᱤᱰᱤᱭᱟ ᱪᱮᱠ ᱢᱮ</string>
     <string name="empty_cards">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰ ᱠᱚ</string>
@@ -161,7 +153,6 @@
     <string name="delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="show_hint">ᱫᱮᱠᱷᱟᱣ %s</string>
     <string name="info_rate">AnkiDroid ᱜᱚᱬᱚᱰ ᱢᱮ</string>
-    <string name="col_load_failed">ᱴᱩᱢᱟᱹᱞ ᱞᱚᱲ ᱦᱩᱲᱟᱜ ᱾\nAnkiDroid ᱵᱚᱸᱫ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱪᱞᱟᱭ ᱢᱮ ᱾</string>
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
     <string name="import_select_title">ᱛᱮᱛ ᱟᱹᱜᱩᱭᱮᱛ ᱞᱟᱹᱜᱤᱫ ᱪᱚᱭᱚᱱ</string>
     <string name="import_message_add">ᱥᱮᱞᱮᱫ</string>
@@ -254,8 +245,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱵᱷᱩᱞ</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱞᱟᱹᱜᱤᱫ V2 scheduler ᱮᱱᱮᱵᱟᱹᱞ ᱢᱮ ᱾</string>
-    <string name="import_cannot_with_v2">V2 scheduler V1 ᱰᱮᱠ ᱚᱠ ᱵᱟᱭ ᱵᱷᱮᱡᱟ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟᱭ ᱥᱮᱰᱭᱩᱞ ᱛᱟᱦᱮᱸ ᱠᱟᱛᱮ ᱦᱚᱸ ᱾</string>
     <string name="export_v2_dummy_note">ᱱᱚᱶᱟ ᱨᱮᱫ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ Anki ᱨᱮᱭᱟᱜ ᱱᱟᱶᱟ ᱵᱷᱚᱨᱥᱚᱱ ᱫᱚᱨᱠᱟᱨ ᱾</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' ᱞᱚᱰ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ ᱾</string>

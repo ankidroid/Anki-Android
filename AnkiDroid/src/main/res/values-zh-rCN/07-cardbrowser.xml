@@ -45,19 +45,13 @@
     <string name="card_browser_all_decks">所有牌组</string>
     <string name="card_browser_delete_card">删除卡牌记录</string>
     <string name="card_browser_suspend_card">搁置卡片</string>
-    <string name="card_browser_toggle_suspend_card">(取消) 搁置卡片</string>
     <string name="card_browser_change_deck">更换牌组</string>
     <string name="card_browser_unsuspend_card">取消擱置卡片</string>
     <string name="card_browser_mark_card">标记笔记</string>
     <string name="card_browser_flag">标志</string>
-    <string name="card_browser_toggle_mark_card">(未标)记的笔记</string>
     <string name="card_browser_unmark_card">未标记的笔记</string>
     <string name="delete_card_title">确认删除笔记？</string>
-    <string name="delete_cards_title">是否删除卡牌记录？</string>
-    <string name="delete_card_message">确认删除此笔记的所有卡片？\n搜索字段：%s</string>
-    <string name="delete_card_mult_message">刪除所有选定笔记中的卡片 \n (不只选中的卡)</string>
     <string name="changed_deck_message">移动至 %s</string>
-    <string name="card_browser_suspended_cards">(取消) 搁置的卡片</string>
     <string name="card_browser_show_marked">筛选已标记卡牌</string>
     <string name="card_browser_show_suspended">筛选已暂停卡牌</string>
     <string name="card_browser_search_by_tag">按标签筛选</string>
@@ -77,7 +71,6 @@
     <string name="card_details_answer">答案</string>
     <string name="card_details_due">到期时间</string>
     <string name="card_details_tags">标签</string>
-    <string name="card_browser_filtering_cards">正在筛选卡牌&#8230; \n按返回键取消</string>
     <string-array name="card_browser_order_labels">
         <item>不排序(更快)</item>
         <item>按字段名称排序</item>

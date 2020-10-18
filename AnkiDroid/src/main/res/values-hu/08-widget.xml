@@ -44,16 +44,6 @@
         <item quantity="one">%d AnkiDroid kártya határideje</item>
         <item quantity="other">%d AnkiDroid kártyák határideje</item>
     </plurals>
-    <string name="widget_no_cards_due">Nincs esedékes kártya</string>
-    <string name="widget_loading">Widget betöltése...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d kártya esedékes %2$s</item>
-        <item quantity="other">%1$d kártya esedékes %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d pakli</item>
-        <item quantity="other">%1$d paklik</item>
-    </plurals>
     <string name="widget_small">AnkiDroid kicsi</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

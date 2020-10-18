@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Axtarılan:</string>
-    <string name="multimedia_editor_text_field_editing_show">Təsvir</string>
     <string name="multimedia_editor_text_field_editing_say">Tələffüz</string>
     <string name="multimedia_editor_text_field_editing_clear">Təmizlə</string>
     <string name="multimedia_editor_text_field_editing_clone">Kopyala</string>

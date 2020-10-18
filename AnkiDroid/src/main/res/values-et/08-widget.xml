@@ -44,16 +44,6 @@
         <item quantity="one">%d AnkiDroid kaardi tõttu</item>
         <item quantity="other">%d AnkiDroid kaardi tõttu</item>
     </plurals>
-    <string name="widget_no_cards_due">Kaardid puuduvad</string>
-    <string name="widget_loading">Vidina laadimine...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d card due in %2$s</item>
-        <item quantity="other">%1$d cards due in %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d deck</item>
-        <item quantity="other">%1$d decks</item>
-    </plurals>
     <string name="widget_small">AnkiDroid Väike</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

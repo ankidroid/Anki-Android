@@ -46,19 +46,13 @@
     <string name="card_browser_all_decks">Tous les jeux de cartes</string>
     <string name="card_browser_delete_card">Supprimer les notes</string>
     <string name="card_browser_suspend_card">Suspendre des cartes</string>
-    <string name="card_browser_toggle_suspend_card">Suspendre/Rependre les cartes</string>
     <string name="card_browser_change_deck">Changer de paquet</string>
     <string name="card_browser_unsuspend_card">Reprendre les cartes</string>
     <string name="card_browser_mark_card">Marquer les notes</string>
     <string name="card_browser_flag">Marquer la carte</string>
-    <string name="card_browser_toggle_mark_card">(dé)marquer les notes</string>
     <string name="card_browser_unmark_card">Démarquer les notes</string>
     <string name="delete_card_title">Supprimer la note ?</string>
-    <string name="delete_cards_title">Supprimer les notes?</string>
-    <string name="delete_card_message">Voulez vous vraiment supprimer toutes les cartes de cette note ?\nChamp de recherche : %s</string>
-    <string name="delete_card_mult_message">Supprimer toutes les cartes de toutes les notes sélectionnées? \n (pas seulement les cartes choisies)</string>
     <string name="changed_deck_message">Déplacé vers %s</string>
-    <string name="card_browser_suspended_cards">Suspendre/Rependre les cartes</string>
     <string name="card_browser_show_marked">Filtrer les notes marquées</string>
     <string name="card_browser_show_suspended">Filtrer les cartes suspendues</string>
     <string name="card_browser_search_by_tag">Filtrer par étiquette</string>
@@ -78,7 +72,6 @@
     <string name="card_details_answer">Réponse</string>
     <string name="card_details_due">Dû</string>
     <string name="card_details_tags">Étiquettes</string>
-    <string name="card_browser_filtering_cards">Filtrage des cartes en cours... \nAppuyez sur le bouton retour pour annuler</string>
     <string-array name="card_browser_order_labels">
         <item>Pas de tri (plus rapide)</item>
         <item>Par champ de tri</item>

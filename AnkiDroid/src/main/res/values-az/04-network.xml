@@ -45,16 +45,13 @@
     <string name="vague_error">Xəta</string>
     <string name="retry">yeniden</string>
     <string name="cancel">Ləğv etmək</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Şərtlər və Qaydalar</a></string>
     <string name="menu_get_shared_decks">Paylaşılan katları alın</string>
     <string name="connection_error_message">Bir səhv baş verdi</string>
     <string name="not_logged_in_title">AnkiWeb-ə daxil olun</string>
     <string name="login_create_account_message">Bulud senkronizasyon xidmətindən istifadə etmək üçün üçüncü tərəf hesabına daxil olmalısınız.Bir sonrakı addımda bir yarada bilərsiniz.</string>
     <!-- MyAccount.java -->
     <string name="username">E-poçt ünvanı</string>
-    <string name="username_repeat">E-poçt ünvanını təkrarlayın</string>
     <string name="password">parol</string>
-    <string name="password_repeat">Parolu təkrarlayın</string>
     <string name="log_in">Daxil olmaq</string>
     <string name="sign_up_description">AnkiWeb hesabınız yoxdur? Bu pulsuzdur!</string>
     <string name="sign_up_not_affiliated">Qeyd: AnkiWeb AnkiDroid ilə əlaqəli deyil</string>

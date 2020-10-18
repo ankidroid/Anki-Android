@@ -50,19 +50,13 @@
     <string name="card_browser_all_decks">كل الرزم</string>
     <string name="card_browser_delete_card">حذف الملحوظات</string>
     <string name="card_browser_suspend_card">تعليق البطاقات</string>
-    <string name="card_browser_toggle_suspend_card">تفعيل/تعليق البطاقات</string>
     <string name="card_browser_change_deck">تغيير الرزمة</string>
     <string name="card_browser_unsuspend_card">تفعيل البطاقات</string>
     <string name="card_browser_mark_card">تعليم الملحوظات</string>
     <string name="card_browser_flag">تأشير</string>
-    <string name="card_browser_toggle_mark_card">وضع/إزالة علامة</string>
     <string name="card_browser_unmark_card">إلغاء تعليم الملحوظات</string>
     <string name="delete_card_title">هل تريد حذف الملحوظة؟</string>
-    <string name="delete_cards_title">هل تريد حذف الملحوظات؟</string>
-    <string name="delete_card_message">هل تريد حذف كل بطاقات الملحوظة؟\nحقل البحث: %s</string>
-    <string name="delete_card_mult_message">هل تريد حذف كل بطاقات الملحوظات المحددة؟\n(ليس فقط البطاقات المحددة)</string>
     <string name="changed_deck_message">نُقِل إلى %s</string>
-    <string name="card_browser_suspended_cards">البطاقات المعلقة/غير المعلقة</string>
     <string name="card_browser_show_marked">فلترة البطاقات المعلمة</string>
     <string name="card_browser_show_suspended">فلترة البطاقات المعلقة</string>
     <string name="card_browser_search_by_tag">فلترة حسب الوسم</string>
@@ -82,7 +76,6 @@
     <string name="card_details_answer">الإجابة</string>
     <string name="card_details_due">ينتظر المراجعة</string>
     <string name="card_details_tags">وسوم</string>
-    <string name="card_browser_filtering_cards">تصفية البطاقات.. \nPress اضغط زر الخلف للإلغاء</string>
     <string-array name="card_browser_order_labels">
         <item>بلا فرز (أسرع)</item>
         <item>حسب حقل الفرز</item>

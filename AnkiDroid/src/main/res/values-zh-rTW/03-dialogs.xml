@@ -72,7 +72,6 @@
         <item quantity="other">%d 卡片已重設</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">重置卡片進度</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">重置卡片</item>
     </plurals>
@@ -90,8 +89,6 @@
     <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的收藏或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>
     <string name="answering_error_report">回報錯誤</string>
     <string name="repair_deck_dialog">你真的想要修復資料庫嗎？\n\n在開始修復之前，會先複製一份備份檔案放置於資料夾\'%s\'中。</string>
-    <string name="intent_add_saved_information">儲存的資料</string>
-    <string name="intent_add_clear_all">全部清除</string>
     <string name="intent_aedict_empty">\'default\'類別是空的</string>
     <string name="intent_aedict_category">若要增加新卡片至 AnkiDroid，刪除所有的記事本類別或新增一個 \'default\' 牌組</string>
     <string name="custom_study_new_total_new">牌組的新卡片：%d</string>
@@ -103,7 +100,6 @@
     <string name="custom_study_random">隨機選擇 x 張卡片，從牌組:</string>
     <string name="custom_study_preview">預覽過去 x 天新增的卡片:</string>
     <string name="custom_study_rebuild_deck_corrupt">無法重構自訂學習牌組</string>
-    <string name="rebuild_custom_study_deck">重建自訂學習的牌組。\n請稍後...</string>
     <string name="importing_collection">匯入收藏中&#8230;</string>
     <string name="import_media_count">匯入媒體檔案 %1$d%%\n 請稍後......</string>
     <string name="import_progress">• 正在匯入筆記: %1$d%%\n• 正在匯入卡片: %2$d%%\n• 正在後期處理: %3$d%%</string>
@@ -120,7 +116,6 @@
     <string name="dialog_continue">繼續</string>
     <string name="dialog_positive_create">新增</string>
     <string name="dialog_positive_delete">刪除</string>
-    <string name="dialog_positive_disable">關閉</string>
     <string name="dialog_positive_overwrite">覆蓋</string>
     <string name="dialog_positive_remove">移除</string>
     <string name="dialog_positive_repair">修復</string>

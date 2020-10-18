@@ -41,9 +41,6 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Apri barra di navigazione</string>
-    <string name="drawer_close">Chiudi barra di navigazione</string>
-    <string name="CardEditorLaterMessage">Informazione salvata per più tardi</string>
     <string name="CardEditorCardDeck">Mazzo:</string>
     <string name="CardEditorNoteDeck">Mazzo:</string>
     <string name="CardEditorModel">Tipo:</string>
@@ -55,7 +52,6 @@
     <string name="check_all_tags">Seleziona/deseleziona tutte le etichette</string>
     <string name="filter_tags">Filtra etichette</string>
     <string name="no_tags">Non hai ancora aggiunto nessuna etichetta.</string>
-    <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
     <string name="updated_version">Aggiornato alla versione %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Salva lavagna</string>
@@ -118,7 +114,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">I cloze deletions funzionano solo sui tipi di nota Cloze</string>
     <string name="saving_facts">Salvataggio nota</string>
     <string name="saving_model">Salvataggio tipo di nota</string>
-    <string name="add">Aggiungi</string>
     <string name="save">Salva</string>
     <string name="close">Chiudi</string>
     <string name="select">Seleziona</string>
@@ -135,11 +130,9 @@
         <item quantity="one">%1$d minuto</item>
         <item quantity="other">%1$d minuti</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Benvenuto in AnkiDroid</string>
     <string name="fact_adder_intent_title">Carta AnkiDroid</string>
     <string name="note_editor_add_note">Aggiungi nota</string>
     <string name="note_editor_copy_note">Copia nota</string>
-    <string name="card_editor_copy_card">Copia carta</string>
     <string name="card_editor_reposition_card">Riposiziona</string>
     <string name="card_editor_reset_card">Reimposta progresso</string>
     <string name="card_editor_reschedule_card">Ripianifica</string>
@@ -151,7 +144,6 @@
         <item quantity="one">%d carta aggiunta</item>
         <item quantity="other">%d carte aggiunte</item>
     </plurals>
-    <string name="help_title">Aiuto</string>
     <string name="check_db">Controlla database</string>
     <string name="check_media">Controlla file multimediali</string>
     <string name="empty_cards">Carte vuote</string>
@@ -161,7 +153,6 @@
     <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
     <string name="show_hint">Mostra %s</string>
     <string name="info_rate">Valuta AnkiDroid</string>
-    <string name="col_load_failed">Caricamento della collezione fallito.\nPremi indietro per chiudere AnkiDroid.</string>
     <string name="import_title">Importazione in corso</string>
     <string name="import_select_title">Scegli un file da importare</string>
     <string name="import_message_add">Aggiungi</string>
@@ -258,8 +249,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Errore nella condivisione del file apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Il pianificatore V2 deve essere abilitato per importare questo file.</string>
-    <string name="import_cannot_with_v2">Il pianificatore V2 non può importare i mazzi V1 con la pianificazione inclusa.</string>
     <string name="export_v2_dummy_note">Questo file richiede una versione più recente di Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Caricamento di %s fallito.</string>

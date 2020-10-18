@@ -45,16 +45,13 @@
     <string name="vague_error">Error</string>
     <string name="retry">Retry</string>
     <string name="cancel">Cancel</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">Rangkaian kesalahan telah terjadi</string>
     <string name="not_logged_in_title">Masuk kepada AnkiWeb</string>
     <string name="login_create_account_message">Anda harus masuk ke pihak ketiga akaun untuk menggunakan awan sync perkhidmatan. Anda boleh membuat satu langkah seterusnya.</string>
     <!-- MyAccount.java -->
     <string name="username">Email address</string>
-    <string name="username_repeat">Repeat email address</string>
     <string name="password">Password</string>
-    <string name="password_repeat">Repeat password</string>
     <string name="log_in">Log in</string>
     <string name="sign_up_description">Tak ada AnkiWeb akaun? Ini percuma!</string>
     <string name="sign_up_not_affiliated">Perhatian: AnkiWeb tidak bergabung dengan apa yang anda perlu lakukan</string>

@@ -42,19 +42,16 @@
     <!--Browser-->
     <string name="model_browser_delete">Qeyd növünü sil</string>
     <string name="model_browser_rename">Yenidən adlandır</string>
-    <string name="model_browser_options">Seçimlər</string>
     <string name="model_browser_template">Kartlara düzəliş et</string>
     <string name="model_browser_add">Qeyd növü əlavə et</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Sahələrə düzəliş et</string>
     <string name="model_field_editor_add">Sahə əlavə et</string>
     <string name="model_field_editor_delete">Sahəni sil</string>
-    <string name="model_field_editor_options">Sahə seçimləri</string>
     <string name="model_field_editor_rename">Sahəni yenidən adlandır</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Sahənin yerini dəyişdir</string>

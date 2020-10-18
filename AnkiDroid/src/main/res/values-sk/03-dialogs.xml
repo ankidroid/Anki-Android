@@ -81,7 +81,6 @@
         <item quantity="other">%d resetovaných kartičiek</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Preplánovať kartičku</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Preplánovať kartičku</item>
         <item quantity="few">Preplánovať kartičky</item>
@@ -108,8 +107,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Nahlásiť chybu</string>
     <string name="repair_deck_dialog">Naozaj chcete skúsiť opraviť databázu?\n\nPred začatím pokusu o opravenie bude vytvorená kópia v podpriečinku \"%s\".</string>
-    <string name="intent_add_saved_information">Uložené dáta</string>
-    <string name="intent_add_clear_all">Vymazať všetko</string>
     <string name="intent_aedict_empty">Kategória \"predvolený\" je prázdna</string>
     <string name="intent_aedict_category">Ak chcete pridať kartičky do AnkiDroid, odstráňte všetky kategórie poznámkového bloku alebo pridajte jednu s názvom \"predvolený\"</string>
     <string name="custom_study_new_total_new">Nové kartičky v balíčku: %d</string>
@@ -121,7 +118,6 @@
     <string name="custom_study_random">Náhodne vybrať x kartičiek z balíčka:</string>
     <string name="custom_study_preview">Ukážka nových kartičiek pridaných za posledných x dní:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nepodarilo sa obnoviť balíček vlastného štúdia</string>
-    <string name="rebuild_custom_study_deck">Obnovujem balíček vlastného štúdia.\nProsím počkajte...</string>
     <string name="importing_collection">Zbierka sa importuje&#8230;</string>
     <string name="import_media_count">Importujú sa mediálne súbory %1$d%%&#8230;</string>
     <string name="import_progress">• Importujú sa poznámky: %1$d%%\n• Importujú sa kartičky: %2$d%%\n• Spracované: %3$d%%</string>
@@ -138,7 +134,6 @@
     <string name="dialog_continue">Pokračovať</string>
     <string name="dialog_positive_create">Vytvoriť</string>
     <string name="dialog_positive_delete">Vymazať</string>
-    <string name="dialog_positive_disable">Zakázať</string>
     <string name="dialog_positive_overwrite">Prepísať</string>
     <string name="dialog_positive_remove">Odstrániť</string>
     <string name="dialog_positive_repair">Opraviť</string>

@@ -45,16 +45,13 @@
     <string name="vague_error">Lỗi</string>
     <string name="retry">Thử lại</string>
     <string name="cancel">Huỷ bỏ</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Điều khoản và điều kiện</a></string>
     <string name="menu_get_shared_decks">Nhận các bộ thẻ đã chia sẻ</string>
     <string name="connection_error_message">Đã xảy ra lỗi mạng</string>
     <string name="not_logged_in_title">Đăng nhập AnkiWeb</string>
     <string name="login_create_account_message">Bạn phải đăng nhập tài khoản bên thứ ba để dùng dịch vụ đồng bộ đám mây. Bạn có thể tạo mới ở bước tiếp theo.</string>
     <!-- MyAccount.java -->
     <string name="username">Địa chỉ email</string>
-    <string name="username_repeat">Lặp lại địa chỉ email</string>
     <string name="password">Mật khẩu</string>
-    <string name="password_repeat">Lặp lại mật khẩu</string>
     <string name="log_in">Đăng nhập</string>
     <string name="sign_up_description">Không có tài khoản AnkiWeb? Nó miễn phí đấy!</string>
     <string name="sign_up_not_affiliated">Lưu ý: AnkiWeb không liên quan gì đến AnkiDroid</string>
