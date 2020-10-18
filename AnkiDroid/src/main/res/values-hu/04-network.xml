@@ -45,16 +45,13 @@
     <string name="vague_error">Hiba</string>
     <string name="retry">Újra</string>
     <string name="cancel">Mégse</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Feltételek és kikötések</a></string>
     <string name="menu_get_shared_decks">Megosztott paklik</string>
     <string name="connection_error_message">Hálózati hiba történt.</string>
     <string name="not_logged_in_title">Bejelentkezés az AnkiWebre</string>
     <string name="login_create_account_message">A cloud sync használatához be kell jelentkezned egy felhasználói fiókkal. A következő lépésben létrehozhatsz egyet.</string>
     <!-- MyAccount.java -->
     <string name="username">Email cím</string>
-    <string name="username_repeat">Ismételje meg az e-mail címet</string>
     <string name="password">Jelszó</string>
-    <string name="password_repeat">Jelszó mégegyszer</string>
     <string name="log_in">Bejelentkezés</string>
     <string name="sign_up_description">Nincs AnkiWeb fiókod? Ingyenes, meg minden!</string>
     <string name="sign_up_not_affiliated">Az AnkiWeb nem áll kapcsolatban az AnkiDroiddal</string>

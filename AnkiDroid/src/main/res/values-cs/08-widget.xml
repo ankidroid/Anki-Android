@@ -46,20 +46,6 @@
         <item quantity="many">%d AnkiDroid karty ke zkoušení</item>
         <item quantity="other">%d AnkiDroid karet ke zkoušení</item>
     </plurals>
-    <string name="widget_no_cards_due">Žádné karty k zopakování</string>
-    <string name="widget_loading">Načítám Widget...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d karta za %2$s</item>
-        <item quantity="few">%1$d karty za %2$s</item>
-        <item quantity="many">%1$d karty za %2$s</item>
-        <item quantity="other">%1$d karet za %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d balíček</item>
-        <item quantity="few">%1$d balíčky</item>
-        <item quantity="many">%1$d balíčku</item>
-        <item quantity="other">%1$d balíčků</item>
-    </plurals>
     <string name="widget_small">AnkiDroid Malý</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

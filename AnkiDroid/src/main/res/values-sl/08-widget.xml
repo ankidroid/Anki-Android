@@ -46,20 +46,6 @@
         <item quantity="few">%d AnkiDroid cards due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_no_cards_due">Nobena kar. ni zapadla</string>
-    <string name="widget_loading">Nalaganje pripomočka &#8230;</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d kartica zapade v %2$s</item>
-        <item quantity="two">%1$d kartici zapadeta v %2$s</item>
-        <item quantity="few">%1$d kartice zapadejo v %2$s</item>
-        <item quantity="other">%1$d kartic zapade v %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d komplet</item>
-        <item quantity="two">%1$d kompleta</item>
-        <item quantity="few">%1$d kompleti</item>
-        <item quantity="other">%1$d kompletov</item>
-    </plurals>
     <string name="widget_small">AnkiDroid - majhen</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

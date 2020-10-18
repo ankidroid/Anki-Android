@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Záloha nebyla uložena. Na SD kartě není dostatek místa. Snižte počet záloh nebo odstraňte nějaké jiné soubory.</string>
     <string name="sd_space_warning">Na vaší SD kartě je méně místa než %d mb.\nUvolněte trochu místa, aby se zabránilo ztrátě dat.</string>
-    <string name="backup_delete">Odstraňování záloh&#8230;</string>
     <string name="backup_restore">Obnovit ze zálohy</string>
     <string name="backup_new_collection">Nová kolekce</string>
     <string name="backup_del_collection">Odstranit kolekci a vytvořit novou</string>

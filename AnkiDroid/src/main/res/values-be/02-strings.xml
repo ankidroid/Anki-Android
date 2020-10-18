@@ -41,9 +41,6 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Адкрыць панэль</string>
-    <string name="drawer_close">Закрыць панэль</string>
-    <string name="CardEditorLaterMessage">Захаваная інфармацыя</string>
     <string name="CardEditorCardDeck">Калода картак:</string>
     <string name="CardEditorNoteDeck">Калода:</string>
     <string name="CardEditorModel">Тып:</string>
@@ -55,7 +52,6 @@
     <string name="check_all_tags">Выбраць/зняць усе пазнакі</string>
     <string name="filter_tags">Фільтраваць пазнакі</string>
     <string name="no_tags">Вы пакуль не дадалі ніводнай пазнакі</string>
-    <string name="sdcard_missing_message">Адключыце рэжым назапашвальніка USB, каб атрымаць доступ да калоды</string>
     <string name="updated_version">Абноўлена да версіі %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Захаваць дошку</string>
@@ -118,7 +114,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Захаванне нататкі</string>
     <string name="saving_model">Захоўваецца тып нататкі</string>
-    <string name="add">Дадаць</string>
     <string name="save">Захаваць</string>
     <string name="close">Закрыць</string>
     <string name="select">Выбраць</string>
@@ -139,11 +134,9 @@
         <item quantity="many">%1$d хвілін</item>
         <item quantity="other">%1$d хвіліны</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Вітаем у AnkiDroid</string>
     <string name="fact_adder_intent_title">Картка AnkiDroid</string>
     <string name="note_editor_add_note">Дадаць нататку</string>
     <string name="note_editor_copy_note">Скапіяваць нататку</string>
-    <string name="card_editor_copy_card">Скапіяваць картку</string>
     <string name="card_editor_reposition_card">Перамясціць</string>
     <string name="card_editor_reset_card">Скінуць дасягненні</string>
     <string name="card_editor_reschedule_card">Змяніць расклад</string>
@@ -157,7 +150,6 @@
         <item quantity="many">%d картак дададзена</item>
         <item quantity="other">%d карткі дададзена</item>
     </plurals>
-    <string name="help_title">Дапамога</string>
     <string name="check_db">Праверыць базу даных</string>
     <string name="check_media">Праверыць медыяфайлы</string>
     <string name="empty_cards">Пустыя карткі</string>
@@ -167,7 +159,6 @@
     <string name="delete_deck">Выдаленне калоды&#8230;</string>
     <string name="show_hint">Паказаць %s</string>
     <string name="info_rate">Ацаніць AnkiDroid</string>
-    <string name="col_load_failed">Збой загрузкі калекцыі.\nНацісніце кнопку назад, каб закрыць AnkiDroid.</string>
     <string name="import_title">Імпартаванне</string>
     <string name="import_select_title">Выберыце файл для імпарту</string>
     <string name="import_message_add">Дадаць</string>
@@ -278,8 +269,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Памылка агульнага доступу да файла apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Для імпарту гэтага файла неабходна ўключыць планіроўшчык другой версіі.</string>
-    <string name="import_cannot_with_v2">Планіроўшчык другой версіі не можа імпартаваць калоды з раскладам першай версіі.</string>
     <string name="export_v2_dummy_note">Дадзены файл патрабуе больш новую версію праграмы.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Не атрымалася зпампаваць \'%s\'.</string>

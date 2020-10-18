@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Suche nach:</string>
-    <string name="multimedia_editor_text_field_editing_show">Bild</string>
     <string name="multimedia_editor_text_field_editing_say">Aussprache</string>
     <string name="multimedia_editor_text_field_editing_clear">Zurücksetzen</string>
     <string name="multimedia_editor_text_field_editing_clone">Kopieren von</string>

@@ -40,19 +40,16 @@
     <!--Browser-->
     <string name="model_browser_delete">노트 유형 삭제</string>
     <string name="model_browser_rename">이름 변경</string>
-    <string name="model_browser_options">옵션</string>
     <string name="model_browser_template">카드 편집</string>
     <string name="model_browser_add">노트 유형 추가</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">필드 편집</string>
     <string name="model_field_editor_add">필드 추가</string>
     <string name="model_field_editor_delete">필드 삭제</string>
-    <string name="model_field_editor_options">필드 옵션</string>
     <string name="model_field_editor_rename">필드 이름 변경</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">필드 재배치</string>

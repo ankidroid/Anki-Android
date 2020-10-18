@@ -41,9 +41,6 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Mở ngăn kéo</string>
-    <string name="drawer_close">Đóng ngăn kéo</string>
-    <string name="CardEditorLaterMessage">Đã lưu thông tin cho sau này</string>
     <string name="CardEditorCardDeck">Bộ thẻ:</string>
     <string name="CardEditorNoteDeck">Bộ:</string>
     <string name="CardEditorModel">Loại:</string>
@@ -55,7 +52,6 @@
     <string name="check_all_tags">Chọn/bỏ chọn toàn bộ đuôi</string>
     <string name="filter_tags">Lọc các đuôi</string>
     <string name="no_tags">Bạn chưa thêm bất kỳ đuôi nào</string>
-    <string name="sdcard_missing_message">Ngắt ổ lưu trữ USB để truy cập các bộ thẻ</string>
     <string name="updated_version">Đã cập nhật lên phiên bản %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -118,7 +114,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Đang lưu ghi chú</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">Thêm</string>
     <string name="save">Lưu</string>
     <string name="close">Đóng</string>
     <string name="select">Chọn</string>
@@ -133,11 +128,9 @@
     <plurals name="in_minutes">
         <item quantity="other">%1$d phút</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Chào mừng đến với AnkiDroid</string>
     <string name="fact_adder_intent_title">Thẻ AnkiDroid</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">Sao chép thẻ</string>
     <string name="card_editor_reposition_card">Đặt lại vị trí</string>
     <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>
     <string name="card_editor_reschedule_card">Lên lịch lại</string>
@@ -148,7 +141,6 @@
     <plurals name="factadder_cards_added">
         <item quantity="other">Đã thêm %d thẻ</item>
     </plurals>
-    <string name="help_title">Trợ giúp</string>
     <string name="check_db">Kiểm tra CSDL</string>
     <string name="check_media">Kiểm tra các tệp đa phương tiện</string>
     <string name="empty_cards">Các thẻ rỗng</string>
@@ -158,7 +150,6 @@
     <string name="delete_deck">Đang xoá bộ thẻ&#8230;</string>
     <string name="show_hint">Hiện %s</string>
     <string name="info_rate">Đánh giá AnkiDroid</string>
-    <string name="col_load_failed">Lỗi nạp bộ sưu tập.\nẤn quay lại để đóng AnkiDroid.</string>
     <string name="import_title">Đang nhập</string>
     <string name="import_select_title">Chọn một tệp để nhập</string>
     <string name="import_message_add">Thêm</string>
@@ -248,8 +239,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Lỗi chia sẻ tệp tin apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">Tệp tin này yêu cầu phiên bản Anki mới hơn.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

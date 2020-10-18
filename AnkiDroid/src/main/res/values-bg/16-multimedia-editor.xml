@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Търсене за:</string>
-    <string name="multimedia_editor_text_field_editing_show">Снимка</string>
     <string name="multimedia_editor_text_field_editing_say">Произношение</string>
     <string name="multimedia_editor_text_field_editing_clear">Изчистване</string>
     <string name="multimedia_editor_text_field_editing_clone">Клониране от</string>

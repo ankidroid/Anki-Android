@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Buscar:</string>
-    <string name="multimedia_editor_text_field_editing_show">Imagen</string>
     <string name="multimedia_editor_text_field_editing_say">Pronunciación</string>
     <string name="multimedia_editor_text_field_editing_clear">Limpiar</string>
     <string name="multimedia_editor_text_field_editing_clone">Clonar de</string>

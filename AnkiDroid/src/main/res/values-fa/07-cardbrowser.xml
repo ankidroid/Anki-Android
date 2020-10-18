@@ -46,19 +46,13 @@
     <string name="card_browser_all_decks">همه دسته ها</string>
     <string name="card_browser_delete_card">حذف یادداشت‌ها</string>
     <string name="card_browser_suspend_card">کارت‌های معلق</string>
-    <string name="card_browser_toggle_suspend_card">کارت‌های (غیر) معلق</string>
     <string name="card_browser_change_deck">تغییر دسته</string>
     <string name="card_browser_unsuspend_card">کارت‌های غیر معلق</string>
     <string name="card_browser_mark_card">علامت گذاری یادداشت</string>
     <string name="card_browser_flag">پرچم</string>
-    <string name="card_browser_toggle_mark_card">(برداشتن)علامت گذاری یادداشت</string>
     <string name="card_browser_unmark_card">برداشتن علامت گذاری یادداشت</string>
     <string name="delete_card_title">حذف یادداشت</string>
-    <string name="delete_cards_title">حذف یادداشت‌ها?</string>
-    <string name="delete_card_message">آیا مایلید همه کارتهای این یادداشت را حذف کنید؟\nعدم موفقیت جستجو: %s</string>
-    <string name="delete_card_mult_message">همه کارت‌های انتخاب شده حذف شوند؟\n(نه فقط کارت‌های انتخاب شده)</string>
     <string name="changed_deck_message">انتقال به %s</string>
-    <string name="card_browser_suspended_cards">کارت‌های (غیر) معلق</string>
     <string name="card_browser_show_marked">فیلتر علامتگذاری شد</string>
     <string name="card_browser_show_suspended">فیلتر معلق شد</string>
     <string name="card_browser_search_by_tag">بوسیله برچسب فیلتر شد</string>
@@ -78,7 +72,6 @@
     <string name="card_details_answer">پاسخ</string>
     <string name="card_details_due">موعد</string>
     <string name="card_details_tags">برچسب ها</string>
-    <string name="card_browser_filtering_cards">در حال فیلتر کردن کارتها... \nبرای لغو دکمه برگشت را بزنید</string>
     <string-array name="card_browser_order_labels">
         <item>مرتب سازی نکن (سریعتر)</item>
         <item>مرتب‌سازی براساس فیلد</item>

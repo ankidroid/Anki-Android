@@ -75,7 +75,6 @@
         <item quantity="other">%d kártyák visszaállítva</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Kártya átütemezés</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Kártya átütemezése</item>
         <item quantity="other">Kártyák átütemezése</item>
@@ -96,8 +95,6 @@
     <string name="answering_error_message">A gyűjteménybe írás sikertelen. Az adatbázis lehet, hogy korrupt vagy nincs elég hely a lemezen.\n\n. Ha gyakrabban történik ilyen, akkor próbálja ellenőrizni az adatbázist, javítsa meg a gyűjteményt vagy állítsa azt vissza egy biztonsági másolatból. Ehhez nyomjon rá a \"beállításokra\".\n. Vagy lehet, hogy ez egy AnkiDroid bug; kérjük jelentse a hibát, hogy le tudjuk ellenőrizni.</string>
     <string name="answering_error_report">Hibák jelentése</string>
     <string name="repair_deck_dialog">Tényleg megpróbálod megjavítani az adatbázist?\n\nEnnek megkísérlése előtt a program létrehoz egy másolatot a \'%s\' almappában.</string>
-    <string name="intent_add_saved_information">Mentett adatok</string>
-    <string name="intent_add_clear_all">Mindent töröl</string>
     <string name="intent_aedict_empty">Az \"alap\" kategória üres</string>
     <string name="intent_aedict_category">Hogy új kártyákat adj az AnkiDroid-hoz, távolítsd el az összes Jegyzettömb/Notepad/ kategóriát, vagy adj hozzá egyet \'default\' névvel</string>
     <string name="custom_study_new_total_new">Új kártyák a pakliban: %d</string>
@@ -109,7 +106,6 @@
     <string name="custom_study_random">A pakliból x kártya véletlen kiválasztása:</string>
     <string name="custom_study_preview">Az elmúlt x nap új kártyáinak előre átnézése:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nem lehetett újraépíteni a jelenlegi egyéni tanulókártyákat</string>
-    <string name="rebuild_custom_study_deck">Egyéni gyakorlópakli újraépítése.\nKérlek, várj...</string>
     <string name="importing_collection">Gyűjtemény importálása.\nKérlek, várj&#8230;</string>
     <string name="import_media_count">Média fájlok importálása %1$d%%\nKérlek, várj&#8230;</string>
     <string name="import_progress">• Importált megjegyzések: %1$d%%\n• importált kártyák: %2$d%%\n• utómunka: %3$d%%</string>
@@ -126,7 +122,6 @@
     <string name="dialog_continue">Folytatás</string>
     <string name="dialog_positive_create">Létrehoz</string>
     <string name="dialog_positive_delete">Töröl</string>
-    <string name="dialog_positive_disable">Letilt</string>
     <string name="dialog_positive_overwrite">Felülír</string>
     <string name="dialog_positive_remove">Eltávolít</string>
     <string name="dialog_positive_repair">Javít</string>

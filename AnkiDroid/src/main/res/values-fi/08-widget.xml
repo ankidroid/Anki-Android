@@ -44,16 +44,6 @@
         <item quantity="one">%d AnkiDroid kortti erääntynyt</item>
         <item quantity="other">%d Ankidroid korttia erääntynyt</item>
     </plurals>
-    <string name="widget_no_cards_due">Ei ole tiedossa korttien määrää</string>
-    <string name="widget_loading">Ladataan widgettiä...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d kortti jäljellä %2$s:ssä</item>
-        <item quantity="other">%1$d korttia jäljellä %2$s:ssä</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d pakka</item>
-        <item quantity="other">%1$d pakkaa</item>
-    </plurals>
     <string name="widget_small">Android pieni</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

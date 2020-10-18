@@ -44,16 +44,6 @@
         <item quantity="one">%d AnkiDroid card due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_no_cards_due">कोई पत्ते बाकी नहीं</string>
-    <string name="widget_loading">विजेट लोड हो रहा है...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%2$s में %1$d पत्ता बाकी</item>
-        <item quantity="other">%2$s में %1$d पत्ते बाकी</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d डेक</item>
-        <item quantity="other">%1$d डेक</item>
-    </plurals>
     <string name="widget_small">AnkiDroid छोटा</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

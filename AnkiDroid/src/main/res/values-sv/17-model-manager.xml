@@ -42,19 +42,16 @@
     <!--Browser-->
     <string name="model_browser_delete">Ta bort nottyp</string>
     <string name="model_browser_rename">Byt namn</string>
-    <string name="model_browser_options">Alternativ</string>
     <string name="model_browser_template">Redigera kort</string>
     <string name="model_browser_add">Lägg till nottyp</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Redigera fält</string>
     <string name="model_field_editor_add">Lägg till fält</string>
     <string name="model_field_editor_delete">Ta bort fält</string>
-    <string name="model_field_editor_options">Fältalternativ</string>
     <string name="model_field_editor_rename">Byt namn på fält</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Flytta fält</string>

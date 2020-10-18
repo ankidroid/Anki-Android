@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Որոնել՝</string>
-    <string name="multimedia_editor_text_field_editing_show">Պատկեր</string>
     <string name="multimedia_editor_text_field_editing_say">Արտասանություն</string>
     <string name="multimedia_editor_text_field_editing_clear">Մաքրել</string>
     <string name="multimedia_editor_text_field_editing_clone">Կրկնօրինակել այստեղից՝</string>

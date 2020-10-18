@@ -46,19 +46,13 @@
     <string name="card_browser_all_decks">Alle Stapel</string>
     <string name="card_browser_delete_card">Notizen löschen</string>
     <string name="card_browser_suspend_card">Karten ausschließen</string>
-    <string name="card_browser_toggle_suspend_card">Karten ein-/ausschließen</string>
     <string name="card_browser_change_deck">Stapel wechseln</string>
     <string name="card_browser_unsuspend_card">Karten einschließen</string>
     <string name="card_browser_mark_card">Notizen markieren</string>
     <string name="card_browser_flag">Markieren</string>
-    <string name="card_browser_toggle_mark_card">Notizen (ent-)markieren</string>
     <string name="card_browser_unmark_card">Markierung entfernen</string>
     <string name="delete_card_title">Notiz löschen?</string>
-    <string name="delete_cards_title">Notizen löschen?</string>
-    <string name="delete_card_message">Alle Karten dieser Notiz löschen?\nSuchfeld: %s</string>
-    <string name="delete_card_mult_message">Alle Karten aller ausgewählten Notizen löschen?\n(Nicht nur ausgewählte Karten)</string>
     <string name="changed_deck_message">Verschoben nach %s</string>
-    <string name="card_browser_suspended_cards">Ein-/ausgeschlossene Karten</string>
     <string name="card_browser_show_marked">Markierte herausfiltern</string>
     <string name="card_browser_show_suspended">Nach Ausgeschlossenen filtern</string>
     <string name="card_browser_search_by_tag">Nach Schlagwort filtern</string>
@@ -78,7 +72,6 @@
     <string name="card_details_answer">Antwort</string>
     <string name="card_details_due">Fällig</string>
     <string name="card_details_tags">Schlagwörter</string>
-    <string name="card_browser_filtering_cards">Filtere Karten&#8230; \nAbbrechen mit »Zurück«</string>
     <string-array name="card_browser_order_labels">
         <item>Keine Sortierung (schneller)</item>
         <item>Nach Sortierfeld</item>

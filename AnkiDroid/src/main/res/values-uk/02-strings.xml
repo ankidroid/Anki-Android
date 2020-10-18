@@ -41,9 +41,6 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Відкрити шухляду</string>
-    <string name="drawer_close">Закрити шухляду</string>
-    <string name="CardEditorLaterMessage">Збережена інформація</string>
     <string name="CardEditorCardDeck">Колода карток:</string>
     <string name="CardEditorNoteDeck">Колода:</string>
     <string name="CardEditorModel">Тип:</string>
@@ -55,7 +52,6 @@
     <string name="check_all_tags">Обрати/прибрати усі позначки</string>
     <string name="filter_tags">Фільтр позначок</string>
     <string name="no_tags">Ви ще не додали жодної позначки</string>
-    <string name="sdcard_missing_message">Вимкніть USB-накопичувач для доступу до ваших колод</string>
     <string name="updated_version">Оновлено до версії %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Зберегти написане</string>
@@ -118,7 +114,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Завдання з пропусками працюватиме лише у типі запису з завданнями з пропуском</string>
     <string name="saving_facts">Зберегти запис</string>
     <string name="saving_model">Збереженя типу записів</string>
-    <string name="add">Додати</string>
     <string name="save">Зберегти</string>
     <string name="close">Закрити</string>
     <string name="select">Вибрати</string>
@@ -139,11 +134,9 @@
         <item quantity="many">%1$d хвилин</item>
         <item quantity="other">%1$d хвилин</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Ласкаво просимо до AnkiDroid</string>
     <string name="fact_adder_intent_title">Картка AnkiDroid</string>
     <string name="note_editor_add_note">Додати примітку</string>
     <string name="note_editor_copy_note">Копіювати примітку</string>
-    <string name="card_editor_copy_card">Копіювати картку</string>
     <string name="card_editor_reposition_card">Переставити</string>
     <string name="card_editor_reset_card">Скинути перебіг</string>
     <string name="card_editor_reschedule_card">Перепланувати</string>
@@ -157,7 +150,6 @@
         <item quantity="many">Додано %d карток</item>
         <item quantity="other">Додано карток: %d</item>
     </plurals>
-    <string name="help_title">Допомога</string>
     <string name="check_db">Перевірити базу даних</string>
     <string name="check_media">Перевірте медіа</string>
     <string name="empty_cards">Порожні картки</string>
@@ -167,7 +159,6 @@
     <string name="delete_deck">Видалення колоди...\n Будь ласка, зачекайте.</string>
     <string name="show_hint">Показати %s</string>
     <string name="info_rate">Оцініть AnkiDroid</string>
-    <string name="col_load_failed">Не вдалося завантажити колекцію.\nНатисніть назад для закриття AnkiDroid.</string>
     <string name="import_title">Імпортування</string>
     <string name="import_select_title">Виберіть файл для імпорту</string>
     <string name="import_message_add">Додати</string>
@@ -278,8 +269,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Помилка поширення файлу apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Активуйте планувальник V2 щоб імпортувати цей файл.</string>
-    <string name="import_cannot_with_v2">Планувальник V2 не може імпортувати колоди V1 зі збереженням планувань.</string>
     <string name="export_v2_dummy_note">Цей файл потребує новішої версії Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Не вдалося завантажити \'%s\'.</string>

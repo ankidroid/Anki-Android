@@ -75,7 +75,6 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Kartı yenidən planlaşdırırıq</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -96,8 +95,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Səhv bildir</string>
     <string name="repair_deck_dialog">Doğrudan verilənlər bazasını bərpa etməyə çalışırsınız?Keçirilməyə başlamazdan əvvəl,alt klasörlerde bir kopya yaradılacaq \"%s\"</string>
-    <string name="intent_add_saved_information">Saxlanılan məlumatlar</string>
-    <string name="intent_add_clear_all">Hamısını sil</string>
     <string name="intent_aedict_empty">Kateqoriya \"default\" boşdur</string>
     <string name="intent_aedict_category">AnkiDroid kartlarını əlavə etmək üçün bütün Notepad kateqoriyalarını silin və ya \"default\" adını əlavə edin</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -109,7 +106,6 @@
     <string name="custom_study_random">Gəmidən təsadüfi x kartları seçin:</string>
     <string name="custom_study_preview">Son x günlərdə əlavə edilmiş yeni kartların Ön görünüşü:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Xüsusi iş yerinin bərpası ...</string>
     <string name="importing_collection">Yığım idxal ...</string>
     <string name="import_media_count">Media faylları idxalı %1$d%%&#8230;</string>
     <string name="import_progress">• İthalat qeydləri: %1$d%%\n• Kartları idxal etmək: %2$d%%\n • Post-processing: %3$d%%</string>
@@ -126,7 +122,6 @@
     <string name="dialog_continue">Davam et</string>
     <string name="dialog_positive_create">Yaratmaq</string>
     <string name="dialog_positive_delete">Delete</string>
-    <string name="dialog_positive_disable">Disable</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
     <string name="dialog_positive_remove">Remove</string>
     <string name="dialog_positive_repair">Repair</string>

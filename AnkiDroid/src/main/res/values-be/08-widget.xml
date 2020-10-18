@@ -46,20 +46,6 @@
         <item quantity="many">Засталося %d картак</item>
         <item quantity="other">Засталося %d карткі</item>
     </plurals>
-    <string name="widget_no_cards_due">Няма картак для паўтору</string>
-    <string name="widget_loading">Віджэт загружаецца&#8230;</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">Засталася %1$d картка ў %2$s</item>
-        <item quantity="few">Засталося %1$d карткі ў %2$s</item>
-        <item quantity="many">Засталося %1$d картак у %2$s</item>
-        <item quantity="other">Засталося %1$d карткі ў %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d калода</item>
-        <item quantity="few">%1$d калоды</item>
-        <item quantity="many">%1$d калод</item>
-        <item quantity="other">%1$d калоды</item>
-    </plurals>
     <string name="widget_small">Маленькі AnkiDroid</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

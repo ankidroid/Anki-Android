@@ -72,7 +72,6 @@
         <item quantity="other">%d枚のカードの学習履歴がリセットされました</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">スケジュールを変更</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">Reschedule cards</item>
     </plurals>
@@ -90,8 +89,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">エラーを報告する</string>
     <string name="repair_deck_dialog">本当にデータの修復を行いますか？　\n\n処理を開始する前に、サブフォルダー（%s）にコピーが作成されます。</string>
-    <string name="intent_add_saved_information">保存されたデータ</string>
-    <string name="intent_add_clear_all">全て消去</string>
     <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
     <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
     <string name="custom_study_new_total_new">デッキの中の新規カードの枚数: %d</string>
@@ -103,7 +100,6 @@
     <string name="custom_study_random">デッキからランダムに x 枚のカードを抽出する</string>
     <string name="custom_study_preview">過去 x 日間に追加された新規カードをプレビュー</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">カスタムデッキを再構築しています...</string>
     <string name="importing_collection">コレクションをインポートしています&#8230;</string>
     <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
     <string name="import_progress">• ノートのインポート: %1$d%%\n• カードのインポート: %2$d%%\n• 後処理: %3$d%%</string>
@@ -120,7 +116,6 @@
     <string name="dialog_continue">続行</string>
     <string name="dialog_positive_create">作成</string>
     <string name="dialog_positive_delete">削除</string>
-    <string name="dialog_positive_disable">無効化</string>
     <string name="dialog_positive_overwrite">上書き</string>
     <string name="dialog_positive_remove">削除</string>
     <string name="dialog_positive_repair">修復</string>

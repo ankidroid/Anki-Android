@@ -46,19 +46,16 @@
     <!--Browser-->
     <string name="model_browser_delete">Выдаліць тып нататкі</string>
     <string name="model_browser_rename">Пераназваць</string>
-    <string name="model_browser_options">Параметры</string>
     <string name="model_browser_template">Змяніць карткі</string>
     <string name="model_browser_add">Дадаць тып нататкі</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Рэдагаванне палёў</string>
     <string name="model_field_editor_add">Дадаць крысу</string>
     <string name="model_field_editor_delete">Выдаліць крысу</string>
-    <string name="model_field_editor_options">Параметры поля</string>
     <string name="model_field_editor_rename">Пераназваць поле</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Перамясціць поле</string>

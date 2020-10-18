@@ -45,16 +45,13 @@
     <string name="vague_error">Error</string>
     <string name="retry">Reincearca</string>
     <string name="cancel">Anuleaza</string>
-    <string name="terms_and_conditions">Termeni și condiții</string>
     <string name="menu_get_shared_decks">Obţinerea punţilor comune</string>
     <string name="connection_error_message">A network error has ocurred.</string>
     <string name="not_logged_in_title">Conectaţi-vă la AnkiWeb</string>
     <string name="login_create_account_message">Trebuie să va conectaţi la un terţ contul pentru a utiliza serviciul de sincronizare nor. Puteţi crea unul în pasul următor.</string>
     <!-- MyAccount.java -->
     <string name="username">Adresa de e-mail</string>
-    <string name="username_repeat">Repetaţi adresa de email</string>
     <string name="password">Parolă</string>
-    <string name="password_repeat">Repetă parola</string>
     <string name="log_in">Logare</string>
     <string name="sign_up_description">Nu aveţi un cont AnkiWeb? Este gratuit!</string>
     <string name="sign_up_not_affiliated">Notă: AnkiWeb nu este afiliat cu AnkiDroid</string>

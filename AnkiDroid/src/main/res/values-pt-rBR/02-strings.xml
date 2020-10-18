@@ -41,9 +41,6 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Abrir gaveta</string>
-    <string name="drawer_close">Fechar gaveta</string>
-    <string name="CardEditorLaterMessage">Informação salva para mais tarde</string>
     <string name="CardEditorCardDeck">Baralho de cartões:</string>
     <string name="CardEditorNoteDeck">Baralho:</string>
     <string name="CardEditorModel">Tipo:</string>
@@ -55,7 +52,6 @@
     <string name="check_all_tags">Marcar/desmarcar todas as tags</string>
     <string name="filter_tags">Filtrar tags</string>
     <string name="no_tags">Você ainda não adicionou nenhuma tag.</string>
-    <string name="sdcard_missing_message">Desconecte o armazenamento USB para acessar seus decks</string>
     <string name="updated_version">Atualizado para a versão %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Salvar quadro.</string>
@@ -118,7 +114,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions somente funcionarão no cartão do tipo Cloze.</string>
     <string name="saving_facts">Salvando nota</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">Adicionar</string>
     <string name="save">Salvar</string>
     <string name="close">Fechar</string>
     <string name="select">Selecione</string>
@@ -135,11 +130,9 @@
         <item quantity="one">%1$d minuto</item>
         <item quantity="other">%1$d minutos</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
     <string name="fact_adder_intent_title">Cartão AnkiDroid</string>
     <string name="note_editor_add_note">Adicionar nota</string>
     <string name="note_editor_copy_note">Copiar nota</string>
-    <string name="card_editor_copy_card">Copiar cartão</string>
     <string name="card_editor_reposition_card">Reposicionar</string>
     <string name="card_editor_reset_card">Redefinir progresso</string>
     <string name="card_editor_reschedule_card">Reagendar</string>
@@ -151,7 +144,6 @@
         <item quantity="one">%d cartão adicionado</item>
         <item quantity="other">%d cartões adicionados</item>
     </plurals>
-    <string name="help_title">Ajuda</string>
     <string name="check_db">Verificar banco de dados</string>
     <string name="check_media">Verificar mídia</string>
     <string name="empty_cards">Cartões vazios</string>
@@ -161,7 +153,6 @@
     <string name="delete_deck">Excluindo baralho&#8230;</string>
     <string name="show_hint">Mostrar %s</string>
     <string name="info_rate">Qualifique o AnkiDroid</string>
-    <string name="col_load_failed">Carregamento da coleção falhou.\nPressione voltar para fechar AnkiDroid.</string>
     <string name="import_title">Importando</string>
     <string name="import_select_title">Selecione um arquivo para importar</string>
     <string name="import_message_add">Adicionar</string>
@@ -258,8 +249,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Erro ao compartilhar arquivo apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">O agendador V2 deve ser habilitado para importar este arquivo.</string>
-    <string name="import_cannot_with_v2">O agendador V2 não pode importar decks V1 junto com o agendamento.</string>
     <string name="export_v2_dummy_note">Este arquivo requer uma versão mais recente do Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

@@ -43,14 +43,6 @@
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="other">%d 张卡片需要复习</item>
     </plurals>
-    <string name="widget_no_cards_due">没有卡片待复习</string>
-    <string name="widget_loading">载入桌面小部件中&#8230;</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="other">%2$s 中有 %1$d 张卡片待复习</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="other">%1$d 个牌组</item>
-    </plurals>
     <string name="widget_small">AnkiDroid小号插件</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

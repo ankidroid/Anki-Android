@@ -41,9 +41,6 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Отвори фиоку</string>
-    <string name="drawer_close">Затвори фиоку</string>
-    <string name="CardEditorLaterMessage">Сачувана информација за касније</string>
     <string name="CardEditorCardDeck">Шпил карата:</string>
     <string name="CardEditorNoteDeck">Шпил:</string>
     <string name="CardEditorModel">Тип:</string>
@@ -55,7 +52,6 @@
     <string name="check_all_tags">Потврди/поништи све ознаке</string>
     <string name="filter_tags">Филтрирај ознаке</string>
     <string name="no_tags">Још нисте додали никакве ознаке.</string>
-    <string name="sdcard_missing_message">SD картица је недоступна јер се употребљава као USB. Искључите USB да бисте добили приступ шпиловима.</string>
     <string name="updated_version">Ажурирај до верзије %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -118,7 +114,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Сачуване белешке</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">Додаj</string>
     <string name="save">Save</string>
     <string name="close">Затвори</string>
     <string name="select">Изабери</string>
@@ -137,11 +132,9 @@
         <item quantity="few">%1$d minutes</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Добро дошли у AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid карта</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">Копирај карту</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Ресетуј напредак</string>
     <string name="card_editor_reschedule_card">Reschedule</string>
@@ -154,7 +147,6 @@
         <item quantity="few">%d карата је додато</item>
         <item quantity="other">%d cards added</item>
     </plurals>
-    <string name="help_title">Помоћ</string>
     <string name="check_db">Провера базе података</string>
     <string name="check_media">Провери медијске датотеке</string>
     <string name="empty_cards">Empty cards</string>
@@ -164,7 +156,6 @@
     <string name="delete_deck">Брисање шпила...\nМолим сачекајте.</string>
     <string name="show_hint">Прикажи %s</string>
     <string name="info_rate">Оцени AnkiDroid</string>
-    <string name="col_load_failed">Прекид учитавања колекције.\nПритисните дугме назад, да бисте затворили AnkiDroid.</string>
     <string name="import_title">Importing</string>
     <string name="import_select_title">Изаберите датотеку за увоз</string>
     <string name="import_message_add">Додај</string>
@@ -268,8 +259,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error sharing apkg file</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
-    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

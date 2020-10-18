@@ -46,19 +46,13 @@
     <string name="card_browser_all_decks">Lahat ng mga deck</string>
     <string name="card_browser_delete_card">Delete notes</string>
     <string name="card_browser_suspend_card">Suspend cards</string>
-    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
     <string name="card_browser_change_deck">Change deck</string>
     <string name="card_browser_unsuspend_card">Unsuspend cards</string>
     <string name="card_browser_mark_card">Mark notes</string>
     <string name="card_browser_flag">Flag</string>
-    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
     <string name="card_browser_unmark_card">Unmark notes</string>
     <string name="delete_card_title">Burahin ang paalala?</string>
-    <string name="delete_cards_title">Delete notes?</string>
-    <string name="delete_card_message">Burahin ang lahat ng mga baraha ng paalalang ito?\nSearch field: %s</string>
-    <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
     <string name="changed_deck_message">Moved to %s</string>
-    <string name="card_browser_suspended_cards">(un)suspended cards</string>
     <string name="card_browser_show_marked">Salain ang mga namarkahan</string>
     <string name="card_browser_show_suspended">Salain ang mga suspendido</string>
     <string name="card_browser_search_by_tag">Salain ayon sa tag</string>
@@ -78,7 +72,6 @@
     <string name="card_details_answer">Sagot</string>
     <string name="card_details_due">Kailangan na</string>
     <string name="card_details_tags">Mga tag</string>
-    <string name="card_browser_filtering_cards">Sinasala ang mga baraha...\nPindutin ang butones na back upang kanselahin</string>
     <string-array name="card_browser_order_labels">
         <item>Walang pagsasaayos ayon sa uri (mas mabilis)</item>
         <item>Ayon sa uri ng field</item>

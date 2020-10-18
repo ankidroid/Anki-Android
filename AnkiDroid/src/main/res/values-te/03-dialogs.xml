@@ -75,7 +75,6 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">కార్డును వాయిదా చేయండి</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -96,8 +95,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">నివేదన లోపం</string>
     <string name="repair_deck_dialog">మీరు నిజంగా డాటాబేస్ రిపేరు చేయాలనుకుంటున్నారా? \n\n ప్రయత్నం ప్రారంభించటానికి ముందు, \"కాపీ\" ఫోల్డర్ \"%s\" లో సృష్టించబడుతుంది.</string>
-    <string name="intent_add_saved_information">సేవ్ చేయబడిన డేటా</string>
-    <string name="intent_add_clear_all">అన్ని తొలగించు</string>
     <string name="intent_aedict_empty">\"default\" వర్గం ఖాళీగా ఉంది</string>
     <string name="intent_aedict_category">AnkiDroid కు కార్డులు జోడించడానికి అన్ని నోట్ప్యాడ్లో కేతగిరీలు తొలగించండి లేదా \"default\" కు ఒక పేరును జోడించండి</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -109,7 +106,6 @@
     <string name="custom_study_random">డెక్ నుండి యాదృచ్ఛికంగా x కార్డులను ఎంచుకోండి:</string>
     <string name="custom_study_preview">గత x రోజులలో జోడించిన కొత్త కార్డులను ప్రివ్యూ చేయండి:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">కస్టమ్ అధ్యయనం డెక్ పునర్నిర్మాణం&#8230;</string>
     <string name="importing_collection">సేకరణను దిగుమతి చేస్తోంది&#8230;</string>
     <string name="import_media_count">మీడియా ఫైళ్ళు ను దిగుమతి చేస్తున్నాయి %1$d%%&#8230;</string>
     <string name="import_progress">• దిగుమతి గమనికలు:%1$d%%\n• దిగుమతి కార్డులు:%2$d%%\n• పోస్ట్ ప్రాసెసింగ్:%3$d%%</string>
@@ -126,7 +122,6 @@
     <string name="dialog_continue">కొనసాగండి</string>
     <string name="dialog_positive_create">సృష్టించు</string>
     <string name="dialog_positive_delete">తొలగించు</string>
-    <string name="dialog_positive_disable">అచేతనం</string>
     <string name="dialog_positive_overwrite">తిరిగి వ్రాయండి</string>
     <string name="dialog_positive_remove">తొలగించు</string>
     <string name="dialog_positive_repair">బాగు చేయు</string>

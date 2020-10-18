@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">جستجو برای:</string>
-    <string name="multimedia_editor_text_field_editing_show">تصویر</string>
     <string name="multimedia_editor_text_field_editing_say">تلفظ</string>
     <string name="multimedia_editor_text_field_editing_clear">پاکسازی</string>
     <string name="multimedia_editor_text_field_editing_clone">کپی از</string>

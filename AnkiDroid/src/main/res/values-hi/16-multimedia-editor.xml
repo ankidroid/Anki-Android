@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">इसे खोजें:</string>
-    <string name="multimedia_editor_text_field_editing_show">चित्र</string>
     <string name="multimedia_editor_text_field_editing_say">उच्चारण</string>
     <string name="multimedia_editor_text_field_editing_clear">खाली करें</string>
     <string name="multimedia_editor_text_field_editing_clone">से जुड़वाँ बनाएँ</string>

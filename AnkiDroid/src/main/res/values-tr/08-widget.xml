@@ -44,16 +44,6 @@
         <item quantity="one">%d AnkiDroid kartı çalışılacak</item>
         <item quantity="other">%d AnkiDroid kartı çalışılacak</item>
     </plurals>
-    <string name="widget_no_cards_due">Çalışılacak kart yok</string>
-    <string name="widget_loading">Widget yükleniyor...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%2$s karttan %1$d tanesi çalışılacak</item>
-        <item quantity="other">%2$s karttan %1$d tanesi çalışılacak</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d deste</item>
-        <item quantity="other">%1$d deste</item>
-    </plurals>
     <string name="widget_small">AnkiDroid Küçük</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

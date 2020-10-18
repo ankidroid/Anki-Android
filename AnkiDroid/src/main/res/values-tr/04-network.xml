@@ -45,16 +45,13 @@
     <string name="vague_error">Hata</string>
     <string name="retry">Yeniden Dene</string>
     <string name="cancel">İptâl</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Kayıtlar ve Koşullar</a></string>
     <string name="menu_get_shared_decks">Paylaşılan desteler edin</string>
     <string name="connection_error_message">Bir ağ hatası meydana geldi.</string>
     <string name="not_logged_in_title">AnkiWeb\'e giriş yap</string>
     <string name="login_create_account_message">Bulut senkronizasyon hizmetini kullanmak için üçüncü parti bir hesaba giriş yapmanız gerekiyor. Hesabı bir sonraki adımda açabilirsiniz.</string>
     <!-- MyAccount.java -->
     <string name="username">Eposta adresi</string>
-    <string name="username_repeat">Tekrar eposta adresi</string>
     <string name="password">Şifre</string>
-    <string name="password_repeat">Şifre (tekrar)</string>
     <string name="log_in">Giriş yap</string>
     <string name="sign_up_description">AnkiWeb hesabınız yok mu? Ücretsiz edinin!</string>
     <string name="sign_up_not_affiliated">Not: AnkiWeb, AnkiDroid\'le bağlı değildir</string>

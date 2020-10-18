@@ -75,7 +75,6 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Промяна графика на карта</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -96,8 +95,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Доклад грешки</string>
     <string name="repair_deck_dialog">Наистина ли искате да опитате да поправите базата данни? \n\nПреди да започнете, копие ще бъде създадено в папка \"%s\".</string>
-    <string name="intent_add_saved_information">Записани данни</string>
-    <string name="intent_add_clear_all">Изчисти всичко</string>
     <string name="intent_aedict_empty">Категория \"по подразбиране\" е празна</string>
     <string name="intent_aedict_category">За да добавите карти за AnkiDroid, премахнете всички категории на Notepad или добавите такава с име \'default\'</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -109,7 +106,6 @@
     <string name="custom_study_random">Избор на x случайни карти от тестето:</string>
     <string name="custom_study_preview">Преглед на нови карти, добавени през последните x дни:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Пренареждане на специално тесте за учене&#8230;</string>
     <string name="importing_collection">Изнасяне на колекция&#8230;</string>
     <string name="import_media_count">Изнасяне на медийни файлове %1$d%%&#8230;</string>
     <string name="import_progress">• Импортирани бележки: %1$d%%\n• Импортирани карти: %2$d%%\n• Обработени: %3$d%%</string>
@@ -126,7 +122,6 @@
     <string name="dialog_continue">Продължи</string>
     <string name="dialog_positive_create">Създай</string>
     <string name="dialog_positive_delete">Изтрий</string>
-    <string name="dialog_positive_disable">Деактивирай</string>
     <string name="dialog_positive_overwrite">Презапиши</string>
     <string name="dialog_positive_remove">Премахни</string>
     <string name="dialog_positive_repair">Поправи</string>

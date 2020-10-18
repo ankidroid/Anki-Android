@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Cadangan tidak tersimpan. Tidak cukup ruang tersisa di kartu SD. Turunkan besar cadangan atau hapus beberapa berkas lain.</string>
     <string name="sd_space_warning">Kurang dari %d MB tersisa di kartu SDmu.\nKosongkan sebagian untuk menghindari kehilangan data</string>
-    <string name="backup_delete">Menghapus cadangan&#8230;</string>
     <string name="backup_restore">Pulihkan dari cadangan</string>
     <string name="backup_new_collection">Koleksi baru</string>
     <string name="backup_del_collection">Hapus koleksi dan buat baru</string>

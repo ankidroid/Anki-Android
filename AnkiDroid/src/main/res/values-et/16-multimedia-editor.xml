@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Search for:</string>
-    <string name="multimedia_editor_text_field_editing_show">Pilt</string>
     <string name="multimedia_editor_text_field_editing_say">Hääldus</string>
     <string name="multimedia_editor_text_field_editing_clear">Tühjenda</string>
     <string name="multimedia_editor_text_field_editing_clone">Clone from</string>

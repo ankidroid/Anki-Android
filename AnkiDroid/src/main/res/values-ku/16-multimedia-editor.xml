@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">:Lê bigere ji bo</string>
-    <string name="multimedia_editor_text_field_editing_show">Wêne</string>
     <string name="multimedia_editor_text_field_editing_say">Xwendin</string>
     <string name="multimedia_editor_text_field_editing_clear">Paqij bike</string>
     <string name="multimedia_editor_text_field_editing_clone">Klon ji</string>

@@ -48,19 +48,13 @@
     <string name="card_browser_all_decks">Усе калоды</string>
     <string name="card_browser_delete_card">Выдаліць нататкі</string>
     <string name="card_browser_suspend_card">Прыпыненых картак</string>
-    <string name="card_browser_toggle_suspend_card">Аднавіць (прыпыніць) картку</string>
     <string name="card_browser_change_deck">Змяніць калоду</string>
     <string name="card_browser_unsuspend_card">Аднавіць карткі</string>
     <string name="card_browser_mark_card">Пазначыць нататкі</string>
     <string name="card_browser_flag">Сцяжок</string>
-    <string name="card_browser_toggle_mark_card">Зняць/пазначыць нататкі</string>
     <string name="card_browser_unmark_card">Зняць пазнакі з нататак</string>
     <string name="delete_card_title">Выдаліць нататку?</string>
-    <string name="delete_cards_title">Выдаліць нататкі?</string>
-    <string name="delete_card_message">Выдаліць усе карткі гэтай нататкі?\nПоле пошука: %s</string>
-    <string name="delete_card_mult_message">Выдаліць усе карткі ўсіх выбраных нататак?\n(Не толькі выбраных картак)</string>
     <string name="changed_deck_message">Перамешчана ў %s</string>
-    <string name="card_browser_suspended_cards">Адноўлена (прыпынена) картак</string>
     <string name="card_browser_show_marked">Фільтраваць пазначаныя</string>
     <string name="card_browser_show_suspended">Фільтраваць прыпыненыя</string>
     <string name="card_browser_search_by_tag">Фільтр па пазнаках</string>
@@ -80,7 +74,6 @@
     <string name="card_details_answer">Адказ</string>
     <string name="card_details_due">Паўтарэнняў</string>
     <string name="card_details_tags">Пазнакі</string>
-    <string name="card_browser_filtering_cards">Карткі фільтруюцца&#8230;\nНацісніце кнопку \"Назад\", каб скасаваць аперацыю</string>
     <string-array name="card_browser_order_labels">
         <item>Без сартавання (хутка)</item>
         <item>Па полі сартавання</item>

@@ -44,16 +44,6 @@
         <item quantity="one">%d Carta AnkiDroid scaduta</item>
         <item quantity="other">%d Carte AnkiDroid scadute</item>
     </plurals>
-    <string name="widget_no_cards_due">Nessuna carta scaduta</string>
-    <string name="widget_loading">Widget caricamento...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d carta scaduta in %2$s</item>
-        <item quantity="other">%1$d carte scadute in %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d mazzo</item>
-        <item quantity="other">%1$d mazzi</item>
-    </plurals>
     <string name="widget_small">AnkiDroid piccolo</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

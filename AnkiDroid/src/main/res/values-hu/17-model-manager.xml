@@ -42,19 +42,16 @@
     <!--Browser-->
     <string name="model_browser_delete">Megjegyzéstípus törlése</string>
     <string name="model_browser_rename">Átnevezés</string>
-    <string name="model_browser_options">Beállítások</string>
     <string name="model_browser_template">Kártya szerkesztése</string>
     <string name="model_browser_add">Jegyzettípus hozzáadása</string>
     <!--Rename-->
     <string name="rename_model">Jegyzettípus átnevezése</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Mező szerkesztése</string>
     <string name="model_field_editor_add">Mező hozzáadása</string>
     <string name="model_field_editor_delete">Mező törlése</string>
-    <string name="model_field_editor_options">Mező beállításai</string>
     <string name="model_field_editor_rename">Mező átnevezése</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Áthelyezési mező</string>

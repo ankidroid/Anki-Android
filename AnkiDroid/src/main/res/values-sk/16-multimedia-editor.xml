@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Hľadať:</string>
-    <string name="multimedia_editor_text_field_editing_show">Obrázok</string>
     <string name="multimedia_editor_text_field_editing_say">Výslovnosť</string>
     <string name="multimedia_editor_text_field_editing_clear">Vyčistiť</string>
     <string name="multimedia_editor_text_field_editing_clone">Klonovať z</string>

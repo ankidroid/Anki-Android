@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">備份未儲存。記憶卡上無足夠剩餘空間。請降低備份深度或移除其他檔案。</string>
     <string name="sd_space_warning">記憶卡少於%d mb的空間. 請釋放一些空間以避免資料遺失. </string>
-    <string name="backup_delete">刪除備份中\n請稍後...</string>
     <string name="backup_restore">從備份還原</string>
     <string name="backup_new_collection">新的收藏</string>
     <string name="backup_del_collection">刪除收藏，並建立新的收藏</string>

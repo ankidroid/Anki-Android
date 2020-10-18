@@ -44,16 +44,6 @@
         <item quantity="one">%d AnkiDroid card due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_no_cards_due">Няма оставащи карти</string>
-    <string name="widget_loading">Зареждане на джаджа...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d карта остава в %2$s</item>
-        <item quantity="other">%1$d карти остават в %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d тесте</item>
-        <item quantity="other">%1$d тестета</item>
-    </plurals>
     <string name="widget_small">AnkiDroid малък</string>
     <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">

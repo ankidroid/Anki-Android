@@ -76,7 +76,6 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">I - reeschedule ang kard</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -97,8 +96,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Maling ulat</string>
     <string name="repair_deck_dialog">Gusto mo ba talagang subukan ang pag-aayos ng database? \n\n Bago mo simulan ang pagtatangka, isang kopya ang lilikhain sa mga subfolder \"%s\".</string>
-    <string name="intent_add_saved_information">Nai-save na data</string>
-    <string name="intent_add_clear_all">Alisin lahat</string>
     <string name="intent_aedict_empty">Ang kategoryang \"default\" ay walng laman</string>
     <string name="intent_aedict_category">Upang magdagdag ng mga kard sa AnkiDroid alisin lahat ng mga kategorya ng Notepad o magdagdag ng isa na pinangalanang \"default\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -110,7 +107,6 @@
     <string name="custom_study_random">Pumili ng x kard sa pamamagitan ng random mula sa deck:</string>
     <string name="custom_study_preview">I-preview ang mga bagong kjard na naidagdag sa mga huling x araw:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Muling pagtatayo ng pasadyang pag-aaral ng deck&#8230;</string>
     <string name="importing_collection">Pag-import ng koleksyon&#8230;</string>
     <string name="import_media_count">Ang pag-import ng mga file ng media %1$d%%&#8230;</string>
     <string name="import_progress">• Pag-import ng mga tala:%1$d%%\n • Pag-import ng mga card:%2$d%%\n • Post-processing:%3$d%%</string>
@@ -127,7 +123,6 @@
     <string name="dialog_continue">Magpatuloy</string>
     <string name="dialog_positive_create">Gumawa</string>
     <string name="dialog_positive_delete">Burahin</string>
-    <string name="dialog_positive_disable">Huwag paganahin</string>
     <string name="dialog_positive_overwrite">I-overwrite</string>
     <string name="dialog_positive_remove">Tanggalin</string>
     <string name="dialog_positive_repair">Isaayos</string>
