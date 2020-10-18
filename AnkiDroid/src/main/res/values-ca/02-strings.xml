@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Obrir el calaix</string>
+    <string name="drawer_close">Tancar el calaix</string>
+    <string name="CardEditorLaterMessage">S\'ha desat la informació per més tard</string>
     <string name="CardEditorCardDeck">Paquet de cartes:</string>
     <string name="CardEditorNoteDeck">Paquet:</string>
     <string name="CardEditorModel">Tipus:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">Activar/desactivar totes les etiquetes</string>
     <string name="filter_tags">Filtrar etiquetes</string>
     <string name="no_tags">Encara no s\'ha afegit cap etiqueta.</string>
+    <string name="sdcard_missing_message">La targeta SD no es troba disponible perquè està sent utilitzada com a emmagatzematge via USB. Desconnecteu l\'USB per accedir a les teves baralles.</string>
     <string name="updated_version">Actualitzeu a la versió %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">S\'està desant la nota</string>
     <string name="saving_model">Saving note type</string>
+    <string name="add">Afegeix</string>
     <string name="save">Desa</string>
     <string name="close">Tanca</string>
     <string name="select">Seleccioneu</string>
@@ -130,9 +135,11 @@
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
+    <string name="studyoptions_welcome_title">Benvingut a l\'AnkiDroid</string>
     <string name="fact_adder_intent_title">Fitxa AnkiDroid</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
+    <string name="card_editor_copy_card">Còpia la fitxa</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Reinicia</string>
     <string name="card_editor_reschedule_card">Tornar a planificar</string>
@@ -144,6 +151,7 @@
         <item quantity="one">%d carta afegida</item>
         <item quantity="other">%d cartes afegides</item>
     </plurals>
+    <string name="help_title">Ajuda</string>
     <string name="check_db">Comprova la base de dades</string>
     <string name="check_media">Comprovar la multimèdia</string>
     <string name="empty_cards">Targetes buides</string>
@@ -153,6 +161,7 @@
     <string name="delete_deck">S\'està suprimint el paquet...\nUn moment si us plau.</string>
     <string name="show_hint">Mostra %s</string>
     <string name="info_rate">Valoreu l\'AnkiDroid</string>
+    <string name="col_load_failed">Ha fallat la càrrega de col lecció. \nPremeu Torna per tal de tancar l\'AnkiDroid.</string>
     <string name="import_title">S\'està important</string>
     <string name="import_select_title">Escolliu el fitxer per importar</string>
     <string name="import_message_add">Afegeix</string>
@@ -249,6 +258,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error en compartir l\'arxiu apkg</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
+    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">Aquest arxiu requereix una versió més recent d\'Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

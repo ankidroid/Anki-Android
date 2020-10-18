@@ -22,7 +22,7 @@
     <!--Fields-->
     <string name="front_field_name">Вонкавы бок</string>
     <string name="back_field_name">Зваротны бок</string>
-    <string name="text_field_name">Тэкст</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Тэкст</string>
     <string name="extra_field_name">Дадаткова</string>
     <string name="field_to_ask_front_name">Дадаць зваротны бок</string>
     <!--Card type-->

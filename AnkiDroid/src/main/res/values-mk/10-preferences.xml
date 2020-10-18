@@ -42,7 +42,6 @@
     <string name="disabled">Оневозможи</string>
     <string name="enabled">Овозможи</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Општи поднесувања</string>
     <string name="pref_cat_reviewing">Повторуање</string>
     <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>

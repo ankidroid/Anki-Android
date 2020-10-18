@@ -44,14 +44,16 @@
     <string name="sync_error">同步出错</string>
     <string name="vague_error">错误</string>
     <string name="retry">重试</string>
-    <string name="cancel">取消</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">用户协议</a></string>
     <string name="menu_get_shared_decks">获取共享牌组</string>
     <string name="connection_error_message">网络错误</string>
     <string name="not_logged_in_title">登录到AnkiWeb</string>
     <string name="login_create_account_message">您必须登录到第三方账户以使用云同步服务。您可以在下一步创建一个账户。</string>
     <!-- MyAccount.java -->
     <string name="username">电子邮件地址</string>
+    <string name="username_repeat">确认电子邮件地址</string>
     <string name="password">密码</string>
+    <string name="password_repeat">确认密码</string>
     <string name="log_in">登录</string>
     <string name="sign_up_description">还没有AnkiWeb账户吗？它是免费的！</string>
     <string name="sign_up_not_affiliated">注 ︰ AnkiWeb不属于AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">同步</string>
     <string name="sync_downloading_media">正在下载媒体文件%1$d/%2$d...</string>
     <string name="sync_log_uploading_message">从本地完全同步</string>
-    <string name="sync_log_downloading_message">从服务器完全同步</string>
     <string name="sync_log_clocks_unsynchronized">你设备上的时间有%1$d秒%2$s的误差；为避免出现错误，你的时间和时区需要设置正确才能进行同步。请确保你手机上的日期、时间和时区都已设置正确再进行同步。</string>
     <string name="sync_log_clocks_unsynchronized_tz">，设备的时区可能是错误的</string>
     <string name="sync_log_clocks_unsynchronized_date">，设备的日期可能是错误的</string>

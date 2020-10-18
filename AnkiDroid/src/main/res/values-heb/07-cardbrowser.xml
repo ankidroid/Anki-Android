@@ -48,13 +48,19 @@
     <string name="card_browser_all_decks">כל החפיסות</string>
     <string name="card_browser_delete_card">מחיקת הערות</string>
     <string name="card_browser_suspend_card">השהיית קלפים</string>
+    <string name="card_browser_toggle_suspend_card">(ביטול) השהיית כרטיסים</string>
     <string name="card_browser_change_deck">החלפת חפיסה</string>
     <string name="card_browser_unsuspend_card">ביטול השהיית כרטיסים</string>
     <string name="card_browser_mark_card">סימון רשומות</string>
     <string name="card_browser_flag">Flag</string>
+    <string name="card_browser_toggle_mark_card">(ביטול) סימון רשומות</string>
     <string name="card_browser_unmark_card">ביטול סימון רשומות</string>
     <string name="delete_card_title">למחוק את הרשומה?</string>
+    <string name="delete_cards_title">למחוק את הרשומות?</string>
+    <string name="delete_card_message">למחוק את כל הכרטיסים של הרשומה הזאת?\nשדה החיפוש: %s</string>
+    <string name="delete_card_mult_message">למחוק את כל הכרטיסים של הרשומות שנבחרו?\n(לא רק את הכרטיסים שנבחרו)</string>
     <string name="changed_deck_message">התבצעה העברה אל החפיסה %s</string>
+    <string name="card_browser_suspended_cards">(un)suspended cards</string>
     <string name="card_browser_show_marked">סינון לפי סימון</string>
     <string name="card_browser_show_suspended">סינון לפי השהייה</string>
     <string name="card_browser_search_by_tag">סינון לפי תג</string>
@@ -74,6 +80,7 @@
     <string name="card_details_answer">תשובה</string>
     <string name="card_details_due">Due</string>
     <string name="card_details_tags">תגיות</string>
+    <string name="card_browser_filtering_cards">סינון כרטיסים&#8230;\nלביטול יש ללחוץ על כפתור החזרה</string>
     <string-array name="card_browser_order_labels">
         <item>ללא מיון (מהיר יותר)</item>
         <item>לפי שדה המיון</item>

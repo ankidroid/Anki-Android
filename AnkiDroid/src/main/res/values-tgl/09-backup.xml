@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Mas mababa sa %d MB na espasyo sa iyong SD card na natitira. \n Libre ng ilang espasyo upang maiwasan ang pagkawala ng data.</string>
+    <string name="backup_delete">Pagtanggal ng mga pag-backup&#8230;</string>
     <string name="backup_restore">Ibalik mula sa backup</string>
     <string name="backup_new_collection">Bagong koleksyon</string>
     <string name="backup_del_collection">Tanggalin ang koleksyon at lumikha ng bago</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Mga Opsyon</string>
     <string name="backup_retry_opening">Muling subukan ang pagbubukas</string>
     <string name="backup_error_menu_repair">Pag-ayos ng database</string>
-    <string name="backup_repair_deck">Pagkukumpuni</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Pag-aayos ng database&#8230;</string>
     <string name="backup_error">Pagkakamali</string>

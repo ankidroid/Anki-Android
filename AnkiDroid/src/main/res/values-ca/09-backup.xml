@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Hi ha menys de %d MB d\'espai lliure a la targeta SD.\nAllibereu una mica d\'espai per evitar la pèrdua de dades.</string>
+    <string name="backup_delete">S\'està eliminant les còpies. \nSi us plau, espereu ...</string>
     <string name="backup_restore">Restaura des d\'una còpia de reserva</string>
     <string name="backup_new_collection">Nova col·lecció</string>
     <string name="backup_del_collection">Suprimeix la col·lecció i genera una nova</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Opcions</string>
     <string name="backup_retry_opening">Torneu a intentar l\'obertura</string>
     <string name="backup_error_menu_repair">Reparació de la base de dades</string>
-    <string name="backup_repair_deck">Repara</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">S\'està reparant la base de dades.\nUn moment si us plau...</string>
     <string name="backup_error">Error</string>

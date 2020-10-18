@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Otwórz menu boczne</string>
+    <string name="drawer_close">Zamknij menu boczne</string>
+    <string name="CardEditorLaterMessage">Zapisz informacje na później</string>
     <string name="CardEditorCardDeck">Talia kart:</string>
     <string name="CardEditorNoteDeck">Talia:</string>
     <string name="CardEditorModel">Typ:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">Zaznacz/odznacz wszystkie tagi</string>
     <string name="filter_tags">Filtruj tagi</string>
     <string name="no_tags">Nie dodałeś jeszcze żadnych tagów</string>
+    <string name="sdcard_missing_message">Karta SD jest niedostępna, ponieważ jest ona używana jako pamięć masowa USB. Odłącz USB, aby uzyskać dostęp do Twoich talii.</string>
     <string name="updated_version">Zaktualizowano do wersji %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Zapisz tablicę</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Luki do wypełnienia będą działały tylko w typie notatki \"luka\"</string>
     <string name="saving_facts">Zapisywanie notatki</string>
     <string name="saving_model">Zapis typu notatki</string>
+    <string name="add">Dodaj</string>
     <string name="save">Zapisz</string>
     <string name="close">Zamknij</string>
     <string name="select">Wybierz</string>
@@ -134,9 +139,11 @@
         <item quantity="many">%1$d minut</item>
         <item quantity="other">%1$d minut</item>
     </plurals>
+    <string name="studyoptions_welcome_title">Witamy w AnkiDroid</string>
     <string name="fact_adder_intent_title">Karta AnkiDroida</string>
     <string name="note_editor_add_note">Zapisz notatkę</string>
     <string name="note_editor_copy_note">Kopiuj notatkę</string>
+    <string name="card_editor_copy_card">Kopiuj kartę</string>
     <string name="card_editor_reposition_card">Przestawianie</string>
     <string name="card_editor_reset_card">Resetuj postępy</string>
     <string name="card_editor_reschedule_card">Zaplanuj ponownie</string>
@@ -150,6 +157,7 @@
         <item quantity="many">%d kart dodanych</item>
         <item quantity="other">%d kart dodanych</item>
     </plurals>
+    <string name="help_title">Pomoc</string>
     <string name="check_db">Sprawdź bazę danych</string>
     <string name="check_media">Sprawdź media</string>
     <string name="empty_cards">Puste karty</string>
@@ -159,6 +167,7 @@
     <string name="delete_deck">Usuwanie talii...\nProszę czekać...</string>
     <string name="show_hint">Pokaż %s</string>
     <string name="info_rate">Oceń AnkiDroid</string>
+    <string name="col_load_failed">Ładowanie kolekcji nie powiodło się.\nNaciśnij \"Back\" aby zamknąć AnkiDroid.</string>
     <string name="import_title">Importowanie</string>
     <string name="import_select_title">Wybierz plik do importu</string>
     <string name="import_message_add">Dodaj</string>
@@ -269,6 +278,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Błąd udostępniania pliku apkg</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">Program planujący V2 musi być włączony, żeby zaimportować ten plik.</string>
+    <string name="import_cannot_with_v2">Program planujący V2 nie może zaimportować talii V1 z włączonym planowaniem planowaniem.</string>
     <string name="export_v2_dummy_note">Ten plik wymaga nowszej wersji Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Ładowanie \'%s\' nie powiodło się.</string>

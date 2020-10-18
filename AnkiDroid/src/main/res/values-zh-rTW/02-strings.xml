@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">開啟側欄</string>
+    <string name="drawer_close">關閉側欄</string>
+    <string name="CardEditorLaterMessage">封存的資訊</string>
     <string name="CardEditorCardDeck">卡片牌組：</string>
     <string name="CardEditorNoteDeck">牌組：</string>
     <string name="CardEditorModel">種類：</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">選擇/不選擇所有標籤</string>
     <string name="filter_tags">篩選標籤</string>
     <string name="no_tags">你還沒新增任何標籤</string>
+    <string name="sdcard_missing_message">SD記憶卡目前正在當隨身碟存取中，因此無法使用。拔除USB之後即可使用。</string>
     <string name="updated_version">更新到版本 %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">儲存白板</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">克漏字測驗僅工作於克漏字筆記類型</string>
     <string name="saving_facts">儲存筆記中</string>
     <string name="saving_model">儲存筆記類型中</string>
+    <string name="add">新增</string>
     <string name="save">存儲</string>
     <string name="close">關閉</string>
     <string name="select">選擇</string>
@@ -128,9 +133,11 @@
     <plurals name="in_minutes">
         <item quantity="other">%1$d 分鐘</item>
     </plurals>
+    <string name="studyoptions_welcome_title">歡迎使用 AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid 卡片</string>
     <string name="note_editor_add_note">新增筆記</string>
     <string name="note_editor_copy_note">複製筆記</string>
+    <string name="card_editor_copy_card">複製卡片</string>
     <string name="card_editor_reposition_card">變更位置</string>
     <string name="card_editor_reset_card">重設卡片進度</string>
     <string name="card_editor_reschedule_card">重新排程</string>
@@ -141,6 +148,7 @@
     <plurals name="factadder_cards_added">
         <item quantity="other">新增 %d 張卡片</item>
     </plurals>
+    <string name="help_title">說明</string>
     <string name="check_db">檢查資料庫</string>
     <string name="check_media">檢查媒體</string>
     <string name="empty_cards">空白卡片</string>
@@ -150,6 +158,7 @@
     <string name="delete_deck">刪除牌組中...\n請稍候</string>
     <string name="show_hint">顯示%s</string>
     <string name="info_rate">評價 AnkiDroid</string>
+    <string name="col_load_failed">載入收藏時發生錯誤。\n按返回鍵來關閉 AnkiDroid</string>
     <string name="import_title">正在匯入……</string>
     <string name="import_select_title">選擇欲匯入的檔案</string>
     <string name="import_message_add">新增</string>
@@ -239,6 +248,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">分享 Apkg 檔案時出錯</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">必須啟用 V2 排程器以匯入此檔案。</string>
+    <string name="import_cannot_with_v2">V2 排程器不能匯入包含排程的 V1 牌組。</string>
     <string name="export_v2_dummy_note">此檔案需要更新版本的 Anki。</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">載入 ‘%s’ 失敗。</string>

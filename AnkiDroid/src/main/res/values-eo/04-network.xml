@@ -44,14 +44,16 @@
     <string name="sync_error">Eraro dum samtempigado</string>
     <string name="vague_error">Eraro</string>
     <string name="retry">Reprovi</string>
-    <string name="cancel">Nuligi</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Kondiĉoj de uzado</a></string>
     <string name="menu_get_shared_decks">Elŝuti publikajn kartarojn</string>
     <string name="connection_error_message">Reta eraro okazis</string>
     <string name="not_logged_in_title">Ensalutu en AnkiWeb</string>
     <string name="login_create_account_message">Vi devu ensaluti en ekstera liveranto-konto por uzi la samtempigan servon. Via povas krei konton je la venonta etapo.</string>
     <!-- MyAccount.java -->
     <string name="username">Retpoŝta adreso</string>
+    <string name="username_repeat">Ripeti retpoŝtan adreson</string>
     <string name="password">Pasvorto</string>
+    <string name="password_repeat">Ripeti pasvorton</string>
     <string name="log_in">Ensaluti</string>
     <string name="sign_up_description">Ĉu vi ne havas AnkiWeb-konton? Ĝi estas senkosta!</string>
     <string name="sign_up_not_affiliated">Atentigo: AnkiWeb ne estas rilata al AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Samtempigo</string>
     <string name="sync_downloading_media">Elŝutado de aŭdvidaĵo %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Plena samtempigo al la servilo</string>
-    <string name="sync_log_downloading_message">Plena samtempigo el la servilo</string>
     <string name="sync_log_clocks_unsynchronized">Via horloĝo estas deŝovita je %1$d sekundoj, %2$s. Certiĝu, ke la dato, tempo kaj horzono ĉe via telefono estas ĝuste agorditaj kaj reprovu.</string>
     <string name="sync_log_clocks_unsynchronized_tz">la horzono probable estas misagordita</string>
     <string name="sync_log_clocks_unsynchronized_date">la dato estas probable misagordita</string>

@@ -44,14 +44,16 @@
     <string name="sync_error">Ошибка синхронизации</string>
     <string name="vague_error">Ошибка</string>
     <string name="retry">Повторить</string>
-    <string name="cancel">Отменить</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Условия</a></string>
     <string name="menu_get_shared_decks">Скачать колоды</string>
     <string name="connection_error_message">Произошла ошибка сети</string>
     <string name="not_logged_in_title">Войти в AnkiWeb</string>
     <string name="login_create_account_message">Чтобы использовать синхронизацию, вы должны войти учётную запись, предоставляемую третьей стороной. Вы можете создать запись на следующем шаге.</string>
     <!-- MyAccount.java -->
     <string name="username">Адрес электронной почты</string>
+    <string name="username_repeat">Повторите адрес электронной почты</string>
     <string name="password">Пароль</string>
+    <string name="password_repeat">Повторите пароль</string>
     <string name="log_in">Войти</string>
     <string name="sign_up_description">У вас нет учётной записи AnkiWeb? Она бесплатная!</string>
     <string name="sign_up_not_affiliated">AnkiWeb не аффилирован с AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Синхронизация</string>
     <string name="sync_downloading_media">Загружаются медиафайлы%1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Полностью синхронизировано с устройством</string>
-    <string name="sync_log_downloading_message">Полностью синхронизировано с сервером</string>
     <string name="sync_log_clocks_unsynchronized">Часы устройства сбиты на %1$d с %2$s. Проверьте, что дата, время и часовой пояс выставлены правильно и попробуйте снова.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, неверный часовой пояс</string>
     <string name="sync_log_clocks_unsynchronized_date">, неверная дата</string>
@@ -91,7 +92,7 @@
     <string name="sync_overwrite_error">Текущая коллекция не может быть перезаписана загруженным файлом</string>
     <string name="sync_connection_error">Время ожидания истекло. У вас или проблемы с подключением к интернету, или очень большие медиафайлы.</string>
     <string name="sync_write_access_error">Загруженный файл не может быть сохранён в хранилище: оно переполнено или доступно только для чтения.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">Пользовательский сервер синхронизации, указанный в дополнительных настройках недействителен (%s). Пожалуйста, введите корректный сервер или отключите настройку.</string>
     <string name="sync_deletions_message">Синхронизируются удалённые&#8230;</string>
     <string name="sync_small_objects_message">Синхронизируются малые объекты&#8230;</string>
     <string name="sync_finish_message">Синхронизация заканчивается&#8230;</string>

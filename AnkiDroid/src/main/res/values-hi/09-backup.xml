@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">SD कार्ड में %d MB से कम जगह है। \nडेटा हानि से बचने के लिए जगह खाली करें।</string>
+    <string name="backup_delete">बैकअप हटाए जा रहे...</string>
     <string name="backup_restore">बैकअप से पुनर्स्थापित करें</string>
     <string name="backup_new_collection">नया संग्रह</string>
     <string name="backup_del_collection">संग्रह हटाएँ और नया संग्रह बनाएँ</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">विकल्प</string>
     <string name="backup_retry_opening">खोलने का पुनः प्रयास करें</string>
     <string name="backup_error_menu_repair">डेटाबेस सुधारें</string>
-    <string name="backup_repair_deck">सुधारें</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">डेटाबेस सुधारा जा रहा है...</string>
     <string name="backup_error">त्रुटि</string>

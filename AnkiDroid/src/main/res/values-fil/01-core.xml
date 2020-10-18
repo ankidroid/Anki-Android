@@ -207,7 +207,6 @@ mga natitirang minuto</item>
     <string name="read_write_permission_label">Basahin at isulat sa database ng AnkiDroid</string>
     <string name="read_write_permission_description">i-access ang mga umiiral na tala, kard, mga uri ng tala, at mga deck, pati na rin ang gumawa ng mga bago</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
     <string name="card_browser_context_menu">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

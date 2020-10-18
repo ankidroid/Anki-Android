@@ -42,8 +42,8 @@
     <string name="statistics_mature">Закреплённые</string>
     <string name="statistics_young_and_learn">Свежие и изучаемые</string>
     <string name="statistics_unlearned">Непросмотренные</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">Приостановленные</string>
+    <string name="statistics_buried">Отложенные</string>
     <string name="statistics_relearn">Переучиваемые</string>
     <string name="statistics_learn">Изучаемые</string>
     <string name="statistics_cram">Зазубренные</string>

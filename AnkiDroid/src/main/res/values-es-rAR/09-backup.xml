@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">No se pudo ejecutar la última acción de copia de seguridad debido al insuficiente espacio en tu tarjeta SD. Libera algo de espacio o bien disminuye la profundidad de copia de seguridad.</string>
     <string name="sd_space_warning">Hay menos de %d mb de espacio en su tarjeta SD.\nLibere algo de espacio para evitar pérdida de datos.</string>
+    <string name="backup_delete">Eliminando copias de seguridad&#8230;</string>
     <string name="backup_restore">Restaurar desde copia de seguridad</string>
     <string name="backup_new_collection">Nueva colección</string>
     <string name="backup_del_collection">Eliminar colección y crear una nueva</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Opciones</string>
     <string name="backup_retry_opening">Intente abrir nuevamente</string>
     <string name="backup_error_menu_repair">Reparar base de datos</string>
-    <string name="backup_repair_deck">Reparar</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Reparando base de datos.\nPor favor aguarde...</string>
     <string name="backup_error">Error</string>

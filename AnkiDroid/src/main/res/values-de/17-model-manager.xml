@@ -42,16 +42,19 @@
     <!--Browser-->
     <string name="model_browser_delete">Notiztyp löschen</string>
     <string name="model_browser_rename">Umbenennen</string>
+    <string name="model_browser_options">Optionen</string>
     <string name="model_browser_template">Karten bearbeiten</string>
     <string name="model_browser_add">Notiztyp hinzufügen</string>
     <!--Rename-->
     <string name="rename_model">Notiztyp umbenennen</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Felder bearbeiten</string>
     <string name="model_field_editor_add">Feld hinzufügen</string>
     <string name="model_field_editor_delete">Feld löschen</string>
+    <string name="model_field_editor_options">Feldoptionen</string>
     <string name="model_field_editor_rename">Feld umbenennen</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Feld neu positionieren</string>

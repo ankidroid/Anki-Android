@@ -75,6 +75,7 @@
         <item quantity="other">%d kort återställda</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Schemalägg kort</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -95,6 +96,8 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Rapportera fel</string>
     <string name="repair_deck_dialog">Vill du verkligen försöka reparera databasen?\n\nEn kopia kommer att skapas i mappen \'%s\' innan.</string>
+    <string name="intent_add_saved_information">Sparad data</string>
+    <string name="intent_add_clear_all">Rensa allt</string>
     <string name="intent_aedict_empty">Kategori \'default\' är tom</string>
     <string name="intent_aedict_category">För att lägga till kort till AnkiDroid, ta bort alla Notepadkategorier eller lägg till en som heter \'default\'</string>
     <string name="custom_study_new_total_new">Nya kort i kortlek: %d</string>
@@ -106,6 +109,7 @@
     <string name="custom_study_random">Välj x kort slumpmässigt från kortleken:</string>
     <string name="custom_study_preview">Förhandsgranska nya kort som lagts till de senaste x dagarna:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="rebuild_custom_study_deck">Bygger om anpassad studiekortlek.\nVar god dröj...</string>
     <string name="importing_collection">Importerar samling.\nVar god dröj&#8230;</string>
     <string name="import_media_count">Importerar mediafiler %1$d%%\nVar god dröj&#8230;</string>
     <string name="import_progress">• Importerar noter: %1$d%%\n• Importerar kort: %2$d%%\n• Efterbearbetning: %3$d%%</string>
@@ -122,6 +126,7 @@
     <string name="dialog_continue">Fortsätt</string>
     <string name="dialog_positive_create">Skapa</string>
     <string name="dialog_positive_delete">Radera</string>
+    <string name="dialog_positive_disable">Inaktivera</string>
     <string name="dialog_positive_overwrite">Skriv över</string>
     <string name="dialog_positive_remove">Ta bort</string>
     <string name="dialog_positive_repair">Reparera</string>

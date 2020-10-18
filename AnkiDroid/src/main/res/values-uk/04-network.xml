@@ -44,14 +44,16 @@
     <string name="sync_error">Помилка синхронізації</string>
     <string name="vague_error">Помилка</string>
     <string name="retry">Повторити спробу</string>
-    <string name="cancel">Відміна</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Правила та умови</a></string>
     <string name="menu_get_shared_decks">Завантажити колоди</string>
     <string name="connection_error_message">Виникла помилка мережі.</string>
     <string name="not_logged_in_title">Увійдіть у AnkiWeb</string>
     <string name="login_create_account_message">Ви повинні увійти до стороннього профілю щоб використовувати хмарну синхронізацію. Ви можете створити профіль на наступному кроці.</string>
     <!-- MyAccount.java -->
     <string name="username">Електронна адреса</string>
+    <string name="username_repeat">Ще раз електронна адреса</string>
     <string name="password">Пароль</string>
+    <string name="password_repeat">Повторити пароль</string>
     <string name="log_in">Ввійти</string>
     <string name="sign_up_description">Не маєте облікового запису AnkiWeb? Це безкоштовно!</string>
     <string name="sign_up_not_affiliated">Примітка: AnkiWeb не афілійований з AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Синхронізація</string>
     <string name="sync_downloading_media">Завантаження медіа %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Повна синхронізація з пристрою</string>
-    <string name="sync_log_downloading_message">Повна синхронізація з сервера</string>
     <string name="sync_log_clocks_unsynchronized">Годинник на вашому пристрої невірний на %1$d секунд %2$s; Для синхронізації необхідно, щоб і годинник і часовий пояс були коректними для уникнення помилок. Будь ласка, встановіть коректну дату, час і часовий пояс вашого телефону і почніть синхронізацію знову.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, часовий пояс на пристрої ймовірно не правильний</string>
     <string name="sync_log_clocks_unsynchronized_date">, дата на пристрої ймовірно не правильна</string>

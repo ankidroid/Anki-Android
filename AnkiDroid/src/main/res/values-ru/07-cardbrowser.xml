@@ -48,17 +48,23 @@
     <string name="card_browser_all_decks">Все колоды</string>
     <string name="card_browser_delete_card">Удалить записи</string>
     <string name="card_browser_suspend_card">Исключить карточки</string>
+    <string name="card_browser_toggle_suspend_card">исключение карточек</string>
     <string name="card_browser_change_deck">Сменить колоду</string>
     <string name="card_browser_unsuspend_card">Включить карточки</string>
     <string name="card_browser_mark_card">Отметить записи</string>
     <string name="card_browser_flag">Флажок</string>
+    <string name="card_browser_toggle_mark_card">отметить записи</string>
     <string name="card_browser_unmark_card">Снять отметку</string>
     <string name="delete_card_title">Удалить запись?</string>
+    <string name="delete_cards_title">Удалить записи?</string>
+    <string name="delete_card_message">Удалить все карты этой записи?\nПоле поиска: %s</string>
+    <string name="delete_card_mult_message">Удалить все карточки всех выбранных записей?\n(Не только выбранных карточек)</string>
     <string name="changed_deck_message">Перемещено в %s</string>
+    <string name="card_browser_suspended_cards">исключённые карточки</string>
     <string name="card_browser_show_marked">Отфильтровать отмеченные</string>
     <string name="card_browser_show_suspended">Отфильтровать исключённые</string>
     <string name="card_browser_search_by_tag">Отфильтровать по меткам</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
+    <string name="card_browser_search_by_flag">Отфильтровать по флагам</string>
     <string name="card_browser_tags_shown">Метки: %1$s</string>
     <string name="card_browser_list_my_searches">Мои поисковые запросы</string>
     <string name="card_browser_list_my_searches_save">Сохранить поисковый запрос</string>
@@ -74,6 +80,7 @@
     <string name="card_details_answer">Ответ</string>
     <string name="card_details_due">К просмотру</string>
     <string name="card_details_tags">Метки</string>
+    <string name="card_browser_filtering_cards">Карты фильтруются&#8230;\nНажмите кнопку \"Назад\", чтобы отменить</string>
     <string-array name="card_browser_order_labels">
         <item>Без сортировки (быстро)</item>
         <item>По полю сортировки</item>
@@ -98,9 +105,9 @@
     <string name="card_browser_search_all_decks">Искать во всех колодах</string>
     <string name="card_browser_unknown_deck_name">Неизвестно</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
+        <item quantity="one">%d карточка удалена</item>
         <item quantity="few">%d cards deleted</item>
         <item quantity="many">%d cards deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="other">%d карточек удалено</item>
     </plurals>
 </resources>

@@ -44,14 +44,16 @@
     <string name="sync_error">خطأ بالمزامنة</string>
     <string name="vague_error">خطأ</string>
     <string name="retry">إعادة المحاولة</string>
-    <string name="cancel">إلغاء</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">الشروط والأحكام</a></string>
     <string name="menu_get_shared_decks">احصل على رزم مشتركة</string>
     <string name="connection_error_message">حدث خطأ في الشبكة</string>
     <string name="not_logged_in_title">تسجيل الدخول إلى أنكي ويب</string>
     <string name="login_create_account_message">يجب تسجيل الدخول إلى حساب طرف ثالث لاستخدام خدمة المزامنة السحابية. تستطيع إنشاء واحد في الخطوة التالية.</string>
     <!-- MyAccount.java -->
     <string name="username">عنوان البريد الإلكتروني</string>
+    <string name="username_repeat">أعد إدخال عنوان البريد الإلكتروني</string>
     <string name="password">كلمة السر</string>
+    <string name="password_repeat">أعد إدخال كلمة السر</string>
     <string name="log_in">تسجيل الدخول</string>
     <string name="sign_up_description">ألا تملك حساب أنكي ويب؟ إنه مجاني!</string>
     <string name="sign_up_not_affiliated">ملاحظة: أنكي ويب غير تابع لأنكيدويد.</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">المزامنة</string>
     <string name="sync_downloading_media">تحميل الوسائط %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">مزامنة كاملة من القرص المحلي</string>
-    <string name="sync_log_downloading_message">مزامنة كاملة من الخادم</string>
     <string name="sync_log_clocks_unsynchronized">ساعتك مخطئة بمقدار %1$d ثانية%2$s. تأكد من ضبط التاريخ، والوقت، والمنطقة الزمنية في هاتفك بشكل صحيح، ثم زامن مجددًا.</string>
     <string name="sync_log_clocks_unsynchronized_tz">، من المحتمل أن المنطقة الزمنية للجهاز غير صحيحة</string>
     <string name="sync_log_clocks_unsynchronized_date">، من المحتمل أن تاريخ الجهاز غير صحيح</string>

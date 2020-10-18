@@ -66,7 +66,7 @@
     <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text">Tekst</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Tekst</string>
     <string name="multimedia_editor_field_editing_image">Bilde</string>
     <string name="multimedia_editor_field_editing_audio">Lydopptak</string>
     <string name="multimedia_editor_field_editing_audio_clip">Lydklipp</string>

@@ -218,7 +218,6 @@
     <string name="read_write_permission_label">Чытанне і запіс у базу даных AnkiDroid</string>
     <string name="read_write_permission_description">доступ да бягучых нататак, картак, тыпаў нататак і калод, а таксама стварэнне новых</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Агляднік карт</string>
     <string name="card_browser_context_menu">Агляднік карт</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

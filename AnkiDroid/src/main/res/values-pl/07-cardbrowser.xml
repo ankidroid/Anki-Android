@@ -48,13 +48,19 @@
     <string name="card_browser_all_decks">Wszystkie talie</string>
     <string name="card_browser_delete_card">Usuń notatki</string>
     <string name="card_browser_suspend_card">Zawieś karty</string>
+    <string name="card_browser_toggle_suspend_card">(od)zawieś karty</string>
     <string name="card_browser_change_deck">Zmień talie</string>
     <string name="card_browser_unsuspend_card">Odwieś karty</string>
     <string name="card_browser_mark_card">Wyróżnij notatki</string>
     <string name="card_browser_flag">Oznacz</string>
+    <string name="card_browser_toggle_mark_card">Cofnij wyróżnienie notatek</string>
     <string name="card_browser_unmark_card">Cofnij wyróżnienie notatek</string>
     <string name="delete_card_title">Usuń notatkę</string>
+    <string name="delete_cards_title">Usunąć notatki?</string>
+    <string name="delete_card_message">Naprawdę usunąć wszystkie karty tej notatki?\nPole wyszukiwania: %s</string>
+    <string name="delete_card_mult_message">Usunąć wszystkie karty z wszystkich zaznaczonych notatek?\n(Nie tylko zaznaczone karty)</string>
     <string name="changed_deck_message">Przeniesiono do: %s</string>
+    <string name="card_browser_suspended_cards">(nie)zawieszone karty</string>
     <string name="card_browser_show_marked">Odfiltruj zaznaczone</string>
     <string name="card_browser_show_suspended">Odfiltruj zawieszone</string>
     <string name="card_browser_search_by_tag">Filtruj po etykiecie</string>
@@ -74,6 +80,7 @@
     <string name="card_details_answer">Odpowiedź</string>
     <string name="card_details_due">Do przejrzenia</string>
     <string name="card_details_tags">Etykiety</string>
+    <string name="card_browser_filtering_cards">Filtrowanie kart&#8230; \nAby przerwać, wciśnij przycisk powrotu</string>
     <string-array name="card_browser_order_labels">
         <item>Bez sortowania (szybciej)</item>
         <item>Wg pola wyszukiwania</item>

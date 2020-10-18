@@ -44,14 +44,16 @@
     <string name="sync_error">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ</string>
     <string name="vague_error">ᱵᱷᱩᱞ</string>
     <string name="retry">ᱫᱼᱪᱮᱥᱴᱟ</string>
-    <string name="cancel">ᱵᱟᱰᱨᱟ</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">ᱫᱚᱣ ᱟᱨ ᱚᱵᱚᱥᱛᱟ ᱠᱚ</a></string>
     <string name="menu_get_shared_decks">ᱥᱟᱡᱟᱣᱟ ᱠᱟᱱ ᱰᱮᱠ ᱠᱚ ᱧᱟᱢ ᱢᱮ</string>
     <string name="connection_error_message">ᱱᱮᱴᱣᱟᱨᱠ ᱦᱩᱰᱟᱹᱜ ᱦᱩᱭ ᱮᱱᱟ</string>
     <string name="not_logged_in_title">AnkiWeb ᱛᱮ ᱵᱷᱤᱛᱤᱨ ᱵᱚᱞᱚ</string>
     <string name="login_create_account_message">cloud ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱠᱟᱹᱢᱤ ᱨᱮ ᱵᱷᱤᱛᱤᱨ ᱵᱚᱞᱚ ᱞᱟᱹᱜᱤᱫ third party ᱠᱷᱟᱛᱟ ᱫᱚᱨᱠᱟᱨ ᱾ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱤᱱᱟ ᱛᱟᱭᱚᱢ ᱡᱷᱟᱸᱯ ᱠᱚ ᱧᱮᱞ ᱢᱮ ᱾ </string>
     <!-- MyAccount.java -->
     <string name="username">ᱤ-ᱢᱮᱞ ᱴᱷᱤᱠᱟᱹᱱᱟ</string>
+    <string name="username_repeat">ᱤ-ᱢᱮᱞ ᱴᱷᱤᱠᱟᱹᱱᱟ ᱫᱚᱯᱚᱲᱦᱟᱣᱢᱮ</string>
     <string name="password">ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
+    <string name="password_repeat">ᱫᱚᱯᱚᱲᱦᱟ ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
     <string name="log_in">ᱞᱚᱜᱤᱱ</string>
     <string name="sign_up_description">AnkiWeb ᱠᱷᱟᱛᱟ ᱵᱟᱹᱱᱩᱜ ᱟ ? ᱱᱚᱶᱟ ᱫᱚ  ᱥᱟᱹᱫᱷᱤᱱ ᱜᱮᱭᱟ!</string>
     <string name="sign_up_not_affiliated">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱢᱮ: AnkiWeb ᱟᱜ AnkiDroid ᱥᱟᱞᱟᱜ ᱪᱮᱫ ᱥᱚᱢᱯᱚᱨᱠᱚ ᱵᱟᱹᱱᱩᱜᱽᱟ</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">ᱟᱭᱩᱨ ᱤᱫᱤᱜ ᱪᱟᱹᱞᱩᱜ ᱠᱟᱱᱟ</string>
     <string name="sync_downloading_media">%1$d/%2$d&#8230; ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱠᱟᱱᱟ</string>
     <string name="sync_log_uploading_message">ᱞᱚᱠᱟᱞ ᱠᱷᱚᱱ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ</string>
-    <string name="sync_log_downloading_message">ᱥᱚᱨᱵᱷᱚᱨ ᱠᱷᱚᱱ ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="sync_log_clocks_unsynchronized">ᱟᱢᱟᱜ ᱥᱚᱢᱚᱭ %1$d ᱴᱤᱡ %2$s ᱠᱷᱚᱱ ᱵᱚᱸᱫ ᱜᱮᱭᱟ ᱾  Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, ᱚᱠᱛᱚ ᱡᱟᱭᱜᱟ ᱵᱷᱩᱞᱽ</string>
     <string name="sync_log_clocks_unsynchronized_date">, ᱢᱟᱹᱦᱤᱛ ᱵᱷᱩᱞ</string>

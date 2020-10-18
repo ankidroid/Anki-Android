@@ -47,7 +47,6 @@
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
     <string name="widget_small">AnkiDroid קטן</string>
-    <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d card due</item>
         <item quantity="two">%d cards due</item>

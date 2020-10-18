@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Оставено е помалку од %d MB простор на вашиот SD картичка. \nНаправите простор за да избегнете губење на податоци.</string>
+    <string name="backup_delete">Бришење на резервната копија&#8230;</string>
     <string name="backup_restore">Вратете од резервната копија</string>
     <string name="backup_new_collection">Нова колекција</string>
     <string name="backup_del_collection">Избришете ја колекцијата и креирајте нова</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Опции</string>
     <string name="backup_retry_opening">Повторете го отворањето</string>
     <string name="backup_error_menu_repair">Поправка на базата на податоци</string>
-    <string name="backup_repair_deck">Поправка</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Поправување на базата на податоци&#8230;</string>
     <string name="backup_error">Грешка</string>

@@ -66,7 +66,7 @@
     <string name="multimedia_editor_poweredbeolingus">Tecnologia Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text">Testo</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Testo</string>
     <string name="multimedia_editor_field_editing_image">Immagine</string>
     <string name="multimedia_editor_field_editing_audio">Registrazione audio</string>
     <string name="multimedia_editor_field_editing_audio_clip">Clip audio</string>

@@ -45,7 +45,6 @@
         <item quantity="other">%d Ankidroid korttia erääntynyt</item>
     </plurals>
     <string name="widget_small">Android pieni</string>
-    <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d kortti erääntynyt</item>
         <item quantity="other">%d korttia erääntynyt</item>

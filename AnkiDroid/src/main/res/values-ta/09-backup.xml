@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">ஸ் டி கார்டில் ம் பி %d இடம் விட குறைவாக உள்ளது. தரவு இழப்பைத் தவிர்க்க சில இடங்களை இலவசமாகப் பயன்படுத்தவும் \n.</string>
+    <string name="backup_delete">காப்புப்பிரதிகளை நீக்குகிறது</string>
     <string name="backup_restore">காப்பு இருந்து மீட்க</string>
     <string name="backup_new_collection">புதிய தொகுப்பு</string>
     <string name="backup_del_collection">சேகரிப்பை நீக்கி புதிய ஒன்றை உருவாக்குங்கள்</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">விருப்பங்கள்</string>
     <string name="backup_retry_opening">மீண்டும் திறக்க</string>
     <string name="backup_error_menu_repair">பழுதுபார்க்கும் தரவுத்தளம்</string>
-    <string name="backup_repair_deck">பழுது</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">பழுதுபார்க்கும் தரவுத்தளம்...</string>
     <string name="backup_error">பிழை</string>

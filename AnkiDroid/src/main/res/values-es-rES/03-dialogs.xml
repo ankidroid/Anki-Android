@@ -75,6 +75,7 @@
         <item quantity="other">%d tarjetas reiniciadas</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Reprogramar tarjeta</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reprogramar tarjeta</item>
         <item quantity="other">Reprogramar tarjetas</item>
@@ -95,6 +96,8 @@
     <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, presiona \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
     <string name="answering_error_report">Reportar error</string>
     <string name="repair_deck_dialog">¿Realmente deseas intentar reparar la base de datos?\n\nAntes de iniciar el intento, se creará una copia en la subcarpeta \'%s\'.</string>
+    <string name="intent_add_saved_information">Datos guardados</string>
+    <string name="intent_add_clear_all">Borrar todo</string>
     <string name="intent_aedict_empty">La categoría \'por defecto\' está vacía</string>
     <string name="intent_aedict_category">Para añadir tarjetas AnkiDroid borra todas las categorías del Bloc de notas o agrega una llamada \'por defecto\'</string>
     <string name="custom_study_new_total_new">Tarjetas nuevas en el mazo: %d</string>
@@ -106,6 +109,7 @@
     <string name="custom_study_random">Selecciona x tarjetas al azar del mazo:</string>
     <string name="custom_study_preview">Previsualizar nuevas tarjetas añadidas en los últimos x días:</string>
     <string name="custom_study_rebuild_deck_corrupt">No se pudo reconstruir el mazo de estudio personalizado</string>
+    <string name="rebuild_custom_study_deck">Reconstruyendo mazo de estudio personalizada&#8230;</string>
     <string name="importing_collection">Importando colección&#8230;</string>
     <string name="import_media_count">Importando archivos multimedia %1$d%%&#8230;</string>
     <string name="import_progress">• Importando notas: %1$d%%\n• Importando tarjetas: %2$d%%\n• Postprocesando: %3$d%%</string>
@@ -122,6 +126,7 @@
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_positive_create">Crear</string>
     <string name="dialog_positive_delete">Eliminar</string>
+    <string name="dialog_positive_disable">Deshabilitar</string>
     <string name="dialog_positive_overwrite">Sobreescribir</string>
     <string name="dialog_positive_remove">Quitar</string>
     <string name="dialog_positive_repair">Reparar</string>

@@ -46,16 +46,19 @@
     <!--Browser-->
     <string name="model_browser_delete">מחיקת סוג רשומה</string>
     <string name="model_browser_rename">שינוי שם</string>
+    <string name="model_browser_options">אפשרויות</string>
     <string name="model_browser_template">עריכת קלפים</string>
     <string name="model_browser_add">הוספת סוג רשומה חדש</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">עריכת שדות</string>
     <string name="model_field_editor_add">הוספת שדה</string>
     <string name="model_field_editor_delete">מחיקת שדה</string>
+    <string name="model_field_editor_options">אפשרויות שדה</string>
     <string name="model_field_editor_rename">שינוי שם שדה</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">שינוי מיקום שדה</string>

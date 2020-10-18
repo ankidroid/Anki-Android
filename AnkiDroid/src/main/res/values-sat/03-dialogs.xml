@@ -75,6 +75,7 @@
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱴ</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">ᱠᱟᱰ‌ ᱨᱤᱥᱮᱰᱭᱩᱞ</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
         <item quantity="other">ᱠᱟᱰ ᱠᱚ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
@@ -95,6 +96,8 @@
     <string name="answering_error_message">ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱚᱞ ᱵᱷᱩᱞ ᱾ database ᱫᱚ ᱠᱦᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱰᱤᱥᱠ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱱᱩᱜᱟ ᱾ \n\nᱡᱚᱫᱤ ᱵᱟᱨᱚᱢᱵᱟᱨ ᱱᱚᱠᱟ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ, ᱮᱱᱰᱮᱠᱷᱟᱱ ᱟᱨ ᱢᱤᱫ ᱡᱮᱠᱷᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ backup ᱠᱷᱚᱱ ᱰᱟᱴᱟ restore ᱛᱟᱵᱚᱱ ᱯᱮ ᱾ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ \&quot;options\&quot; ᱨᱮ ᱚᱛᱟᱭ ᱯᱮ ᱾\n\ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱱᱚᱟ ᱫᱚ bug ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱟ; ᱫᱚᱭᱟᱠᱟᱛᱮ report ᱯᱮ ᱾ </string>
     <string name="answering_error_report">ᱦᱩᱰᱟᱜ ᱥᱚᱱᱫᱮᱥ</string>
     <string name="repair_deck_dialog">ᱟᱢ ᱫᱚ ᱱᱚᱶᱟ database ᱥᱟᱡᱟᱣ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ ? \n\nᱮᱛᱷᱚᱵ ᱢᱟᱲᱟᱝ ᱨᱮ, ᱢᱤᱫᱴᱟᱝ ᱠᱚᱯᱤ \&quot;%s\&quot; ᱥᱚᱵᱼᱯᱷᱚᱞᱰᱟᱨ ᱨᱮ ᱛᱮᱭᱨᱚᱜᱽᱟ ᱱᱟᱦ ᱾</string>
+    <string name="intent_add_saved_information">ᱰᱟᱴᱟ ᱥᱟᱝᱪᱟᱣ</string>
+    <string name="intent_add_clear_all">ᱡᱷᱚᱛᱚ ᱥᱟᱯᱷᱟᱭ ᱢᱮ</string>
     <string name="intent_aedict_empty">ᱴᱩᱢᱟᱹᱞ \&quot;default\&quot; ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="intent_aedict_category">AnkiDroid ᱛᱮ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ Notepad ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱜᱟᱨ ᱠᱟᱜ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ “default” ᱧᱩᱛᱩᱢ ᱠᱟᱜ ᱢᱮ</string>
     <string name="custom_study_new_total_new">ᱰᱮᱠ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰᱺ%d</string>
@@ -106,6 +109,7 @@
     <string name="custom_study_random">ᱴᱟᱴᱠᱟ ᱡᱟᱱᱟᱢ(ᱟᱛᱷᱟᱹᱲᱤ) x ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱠᱚᱨᱟᱣ ᱢᱮ ᱰᱮᱠ ᱠᱷᱚᱱᱺ</string>
     <string name="custom_study_preview">ᱢᱟᱲᱟᱝ xᱫᱤᱱ ᱨᱮ ᱥᱮᱞᱮᱫ ᱠᱟᱱ ᱠᱟᱰ ᱠᱚ preview ᱢᱮ</string>
     <string name="custom_study_rebuild_deck_corrupt">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱷᱟᱣᱜ ᱰᱮᱠ ᱫᱟᱭ ᱛᱮᱭᱟᱨ ᱞᱮᱱᱟ</string>
+    <string name="rebuild_custom_study_deck">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱷᱟᱣᱜ ᱰᱮᱠ ᱛᱮᱭᱟᱨᱚᱜᱠᱟᱱᱟ&#8230;</string>
     <string name="importing_collection">ᱴᱩᱢᱟᱹᱞ ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱᱟ...</string>
     <string name="import_media_count">ᱢᱤᱰᱤᱭᱟ ᱨᱮᱫ %1$d%%&#8230; ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱᱟ </string>
     <string name="import_progress">• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱱᱚᱥ: %1$d%%\n• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ: %2$d%%\n• ᱠᱩᱞ-ᱠᱟᱹᱢᱤᱠᱟᱱᱟ: %3$d%%</string>
@@ -122,6 +126,7 @@
     <string name="dialog_continue">ᱞᱮᱛᱟᱲ</string>
     <string name="dialog_positive_create">ᱛᱮᱭᱟᱨ</string>
     <string name="dialog_positive_delete">ᱜᱮᱫ ᱜᱤᱰᱤ</string>
+    <string name="dialog_positive_disable">ᱵᱟᱝ ᱩᱥᱨᱟᱹᱣ</string>
     <string name="dialog_positive_overwrite">ᱚᱞ ᱪᱮᱛᱟᱱ ᱚᱞ</string>
     <string name="dialog_positive_remove">ᱚᱪᱚᱜᱽ</string>
     <string name="dialog_positive_repair">ᱡᱩᱛᱨᱟᱹᱣ</string>

@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Не хапае вольнага месца каб захаваць рэзервовую копію. Паменьшыце глыбіню рэзервавання, ці выдаліце якія іншыя файлы.</string>
     <string name="sd_space_warning">Засталося менш за %d МБ на вашай SD-картцы.\nВызваліце крыху месца, каб пазбегнуць страты даных.</string>
+    <string name="backup_delete">Выдаленне рэзервовых копій&#8230;</string>
     <string name="backup_restore">Аднавіць з рэзервовай копіі</string>
     <string name="backup_new_collection">Новая калекцыя</string>
     <string name="backup_del_collection">Выдаленне калекцыі і стварэнне новай</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Параметры</string>
     <string name="backup_retry_opening">Адкрыць паўторна</string>
     <string name="backup_error_menu_repair">Аднавіць базу даных</string>
-    <string name="backup_repair_deck">Аднавіць</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Аднаўленне базы даных&#8230;</string>
     <string name="backup_error">Памылка</string>

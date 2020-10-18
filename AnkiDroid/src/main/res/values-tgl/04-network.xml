@@ -44,14 +44,16 @@
     <string name="sync_error">May mali sa pagsisingkronisa</string>
     <string name="vague_error">May mali</string>
     <string name="retry">Subukang muli</string>
-    <string name="cancel">Kanselahin</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Mga tuntunin at mga kundisyon</a></string>
     <string name="menu_get_shared_decks">Kunin ang naibahaging mga deck</string>
     <string name="connection_error_message">May maling naganap sa network</string>
     <string name="not_logged_in_title">Mag-login sa AnkiWeb</string>
     <string name="login_create_account_message">Kailangang mag-login sa isang hiwalay na account upang gumamit ng serbisyong mag-sisingkronisa sa cloud. Maari kang gumawa ng isa sa susunod na hakbang.</string>
     <!-- MyAccount.java -->
     <string name="username">Email address</string>
+    <string name="username_repeat">Uliting ang email address</string>
     <string name="password">Password</string>
+    <string name="password_repeat">Ulitin ang password</string>
     <string name="log_in">Mag-login</string>
     <string name="sign_up_description">Wala ka bang account sa AnkiWeb? Libre ito!</string>
     <string name="sign_up_not_affiliated">Pabatid: Ang AnkiWeb ay walang kaugnayan sa AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Pagsisingkronisa</string>
     <string name="sync_downloading_media">Nagda-download ng media %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Buong pag-sisingkronisa mula sa lokal</string>
-    <string name="sync_log_downloading_message">Buong pag-sisingkronisa mula sa server</string>
     <string name="sync_log_clocks_unsynchronized">Ang iyong orasan ay sa may kaibahan na %1$d segundo%2$s. Tiyaking tama ang araw, oras, at timezone sa iyong telepono, pagkatapos ay i-singkronisa muli.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, ang time zone ay maaaring mali</string>
     <string name="sync_log_clocks_unsynchronized_date">, ang araw ay maaaring mali</string>

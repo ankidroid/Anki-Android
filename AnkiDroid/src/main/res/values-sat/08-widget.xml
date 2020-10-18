@@ -45,7 +45,6 @@
         <item quantity="other">%d AnkiDroid ᱠᱟᱰ ᱥᱟᱨᱮᱡ ᱠᱚ</item>
     </plurals>
     <string name="widget_small">AnkiDroid ᱠᱟᱹᱴᱤᱡ</string>
-    <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d ᱠᱟᱰ ᱥᱟᱨᱟᱡ</item>
         <item quantity="other">%d ᱥᱟᱰᱥ ᱥᱟᱨᱮᱡ</item>

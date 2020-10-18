@@ -42,7 +42,6 @@
     <string name="disabled">Выключено</string>
     <string name="enabled">Включено</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Общие настроки</string>
     <string name="pref_cat_reviewing">Обучение</string>
     <string name="pref_cat_reviewing_summ">Настройки обучения, не зависящие от колоды</string>

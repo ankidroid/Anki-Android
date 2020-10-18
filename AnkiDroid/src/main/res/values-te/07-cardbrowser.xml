@@ -46,13 +46,19 @@
     <string name="card_browser_all_decks">అన్ని డెక్స్</string>
     <string name="card_browser_delete_card">Delete notes</string>
     <string name="card_browser_suspend_card">Suspend cards</string>
+    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
     <string name="card_browser_change_deck">Change deck</string>
     <string name="card_browser_unsuspend_card">Unsuspend cards</string>
     <string name="card_browser_mark_card">Mark notes</string>
     <string name="card_browser_flag">Flag</string>
+    <string name="card_browser_toggle_mark_card">(un)mark notes</string>
     <string name="card_browser_unmark_card">Unmark notes</string>
     <string name="delete_card_title">గమనికను తొలగించాలా?</string>
+    <string name="delete_cards_title">Delete notes?</string>
+    <string name="delete_card_message">ఈ గమనిక యొక్క అన్ని కార్డ్లను తొలగించాలా?\nశోధన ఫీల్డ్:%s</string>
+    <string name="delete_card_mult_message">Delete all cards of all selected notes?\n(Not only selected cards)</string>
     <string name="changed_deck_message">Moved to %s</string>
+    <string name="card_browser_suspended_cards">(un)suspended cards</string>
     <string name="card_browser_show_marked">ఫిల్టర్ మార్క్ చేయబడింది</string>
     <string name="card_browser_show_suspended">ఫిల్టర్ సస్పెండ్ చేయబడింది</string>
     <string name="card_browser_search_by_tag">ట్యాగ్ ద్వారా ఫిల్టర్ చేయండి</string>
@@ -72,6 +78,7 @@
     <string name="card_details_answer">సమాధానం</string>
     <string name="card_details_due">కారణంగా</string>
     <string name="card_details_tags">టాగ్లు</string>
+    <string name="card_browser_filtering_cards">ఫిల్టరింగ్ కార్డులు...\nరద్దు చేయడానికి వెనుకకు బటన్ నొక్కండి</string>
     <string-array name="card_browser_order_labels">
         <item>క్రమబద్ధీకరించడం లేదు(వేగంగా)</item>
         <item>ఫీల్డ్ ద్వారా క్రమబద్ధీకరించు</item>

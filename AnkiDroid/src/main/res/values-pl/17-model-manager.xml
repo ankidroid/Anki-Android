@@ -46,16 +46,19 @@
     <!--Browser-->
     <string name="model_browser_delete">Usuń typ notatki</string>
     <string name="model_browser_rename">Zmień nazwę</string>
+    <string name="model_browser_options">Opcje</string>
     <string name="model_browser_template">Edytuj karty</string>
     <string name="model_browser_add">Dodaj typ notatki</string>
     <!--Rename-->
     <string name="rename_model">Zmień nazwę typu notatki</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Edytuj pola</string>
     <string name="model_field_editor_add">Dodaj pole</string>
     <string name="model_field_editor_delete">Usuń pole</string>
+    <string name="model_field_editor_options">Opcje pola</string>
     <string name="model_field_editor_rename">Zmień nazwę pola</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Zmień pozycję pola</string>

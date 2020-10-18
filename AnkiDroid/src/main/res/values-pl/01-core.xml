@@ -218,7 +218,6 @@
     <string name="read_write_permission_label">Odczyt i zapis do bazy danych AnkiDroid</string>
     <string name="read_write_permission_description">dostęp do istniejących notatek, kart, typów notatek i talii, a także tworzenia istniejących</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Przeglądarka kart</string>
     <string name="card_browser_context_menu">Przeglądarka kart</string>
     <string name="context_menu_anki_card_label">Karta Anki</string>
 </resources>

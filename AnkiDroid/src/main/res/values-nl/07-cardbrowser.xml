@@ -46,13 +46,19 @@
     <string name="card_browser_all_decks">Alle leersets</string>
     <string name="card_browser_delete_card">Notities verwijderen</string>
     <string name="card_browser_suspend_card">Kaart opschorten</string>
+    <string name="card_browser_toggle_suspend_card">Kaarten opschorten/herstellen</string>
     <string name="card_browser_change_deck">WIjzig dek</string>
     <string name="card_browser_unsuspend_card">Kaarten herstellen</string>
     <string name="card_browser_mark_card">Memo\'s markeren</string>
     <string name="card_browser_flag">Vlag</string>
+    <string name="card_browser_toggle_mark_card">Memo\'s (on)markeren</string>
     <string name="card_browser_unmark_card">Memo onmarkeren</string>
     <string name="delete_card_title">Memo verwijderen</string>
+    <string name="delete_cards_title">Notities verwijderen?</string>
+    <string name="delete_card_message">Alle kaarten gemaakt met deze memo echt verwijderen?\nZoekveld: %s</string>
+    <string name="delete_card_mult_message">Alle kaarten van alle geselecteerde memo\'s verwijderen?\n(Niet alleen geselecteerde kaarten)</string>
     <string name="changed_deck_message">Verplaatst naar %s</string>
+    <string name="card_browser_suspended_cards">Opgeschorte/Herstelde kaarten</string>
     <string name="card_browser_show_marked">Filteren op gemarkeerd</string>
     <string name="card_browser_show_suspended">Filteren op verwijderd</string>
     <string name="card_browser_search_by_tag">Filteren op tag</string>
@@ -72,6 +78,7 @@
     <string name="card_details_answer">Antwoord</string>
     <string name="card_details_due">Te doen</string>
     <string name="card_details_tags">Labels</string>
+    <string name="card_browser_filtering_cards">Kaarten filteren&#8230; \nDruk op de terugknop om te annuleren</string>
     <string-array name="card_browser_order_labels">
         <item>Niet sorteren (sneller)</item>
         <item>Naar sorteerveld</item>

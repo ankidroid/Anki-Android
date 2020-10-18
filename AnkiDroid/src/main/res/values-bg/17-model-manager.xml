@@ -42,16 +42,19 @@
     <!--Browser-->
     <string name="model_browser_delete">Изтриване тип на бележка</string>
     <string name="model_browser_rename">Преименуване</string>
+    <string name="model_browser_options">Настройки</string>
     <string name="model_browser_template">Редактиране на карти</string>
     <string name="model_browser_add">Нов тип на бележка</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Редактиране на полета</string>
     <string name="model_field_editor_add">Добавяне на поле</string>
     <string name="model_field_editor_delete">Изтриване на поле</string>
+    <string name="model_field_editor_options">Опции за поле</string>
     <string name="model_field_editor_rename">Преименуване на поле</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Препозициониране на поле</string>

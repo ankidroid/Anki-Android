@@ -44,14 +44,16 @@
     <string name="sync_error">خطا در همگام سازی</string>
     <string name="vague_error">خطا</string>
     <string name="retry">تلاش مجدد</string>
-    <string name="cancel">لغو</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and Conditions</a></string>
     <string name="menu_get_shared_decks">دريافت كارتهاي اشتراكي</string>
     <string name="connection_error_message">خطاي شبكه رخ داده است.</string>
     <string name="not_logged_in_title">ورود به AnkiWeb</string>
     <string name="login_create_account_message">شما برای استفاده از خدمت همگام سازی ابری باید وارد حساب شخص ثالث شوید. در قدم بعدی شما می توانید آن را ایجاد کنید.</string>
     <!-- MyAccount.java -->
     <string name="username">نشانی رایانامه</string>
+    <string name="username_repeat">تکرار نشانی رایانامه</string>
     <string name="password">رمزعبور</string>
+    <string name="password_repeat">تكرار رمز عبور</string>
     <string name="log_in">ورود به حساب کاربری</string>
     <string name="sign_up_description">آيا حساب كاربري در آنکی وب نداريد؟ حساب كاربري رايگان است!</string>
     <string name="sign_up_not_affiliated">توجه: AnkiWeb وابسته به ankidroid نیست</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">همگام سازى</string>
     <string name="sync_downloading_media">درحال دانلود رسانه %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">همگام سازی کامل از دستگاه</string>
-    <string name="sync_log_downloading_message">همگام سازی کامل از سرور</string>
     <string name="sync_log_clocks_unsynchronized">ساعت دستگاهتان تا %1$d ثانیه%2$s صحیح نیست; برای همگامسازی و به منظور  جلوگیری از خطا لازم است که هر دو ساعت دستگاه و منطقه زمانی به طور صحیح تنظیم شوند. لطفا مطمئن شوید که تاریخ و زمان دستگاه شما بطور صحیح تنظیم گردیده, سپس دوباره همگامسازی کنید.</string>
     <string name="sync_log_clocks_unsynchronized_tz">منطقه زماني دستگاه احتمالا اشتباه است</string>
     <string name="sync_log_clocks_unsynchronized_date">تاريخ دستگاه احتمالا اشتباه است</string>

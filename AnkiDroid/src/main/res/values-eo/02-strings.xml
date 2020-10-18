@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Montri tirmenuon</string>
+    <string name="drawer_close">Kaŝi tirmenuon</string>
+    <string name="CardEditorLaterMessage">Informoj konservitaj por poste</string>
     <string name="CardEditorCardDeck">Kartaro:</string>
     <string name="CardEditorNoteDeck">Kartaro:</string>
     <string name="CardEditorModel">Tipo:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">(Mal)marki ĉiujn etikedojn</string>
     <string name="filter_tags">Filtri etikedojn</string>
     <string name="no_tags">Vi ankoraŭ aldonis neniun etikedon</string>
+    <string name="sdcard_missing_message">Malŝaltu USB-konservejon por aliri viajn kartarojn</string>
     <string name="updated_version">Ĝisdatigis al la versio %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Konservi skribtabulon</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Trutekstaj malplenoj nur funkcias kun la nototipo “truteksto”</string>
     <string name="saving_facts">Konservado de noto</string>
     <string name="saving_model">Konservado de nototipo</string>
+    <string name="add">Aldoni</string>
     <string name="save">Konservi</string>
     <string name="close">Fermi</string>
     <string name="select">Elekti</string>
@@ -130,9 +135,11 @@
         <item quantity="one">%1$d minuto</item>
         <item quantity="other">%1$d minutoj</item>
     </plurals>
+    <string name="studyoptions_welcome_title">Bonvenon al AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid-karto</string>
     <string name="note_editor_add_note">Aldoni noton</string>
     <string name="note_editor_copy_note">Kopii noton</string>
+    <string name="card_editor_copy_card">Kopii karton</string>
     <string name="card_editor_reposition_card">Repozicii</string>
     <string name="card_editor_reset_card">Nuligi progreson</string>
     <string name="card_editor_reschedule_card">Replani</string>
@@ -144,6 +151,7 @@
         <item quantity="one">aldonis %d karton</item>
         <item quantity="other">%d kartoj estas aldonitaj</item>
     </plurals>
+    <string name="help_title">Helpo</string>
     <string name="check_db">Kontroli datumbazon</string>
     <string name="check_media">Kontroli aŭdvidaĵojn</string>
     <string name="empty_cards">Malplenaj kartoj</string>
@@ -153,6 +161,7 @@
     <string name="delete_deck">Forigado de kartaro&#8230;</string>
     <string name="show_hint">Montri %s</string>
     <string name="info_rate">Taksi AnkiDroid</string>
+    <string name="col_load_failed">Fiaskis enlegi kolekton.\nFrapetu reen-butonon por fermi AnkiDroid.</string>
     <string name="import_title">Enporti</string>
     <string name="import_select_title">Elektu dosieron por enporti</string>
     <string name="import_message_add">Aldoni</string>
@@ -249,6 +258,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Eraro dum kunhavigado de apkg-dosiero</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">Planilo V2 estu aktiva por enporti tiun ĉi dosieron.</string>
+    <string name="import_cannot_with_v2">Planilo V2 ne povas enporti kartarojn V1 kun inkluzivita lern-plano.</string>
     <string name="export_v2_dummy_note">Ĉi tiu dosiero postulas pli novan version de Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Fiaskis enlegi “%s”.</string>

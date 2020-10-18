@@ -42,16 +42,19 @@
     <!--Browser-->
     <string name="model_browser_delete">Excluir tipo de nota</string>
     <string name="model_browser_rename">Renomear</string>
+    <string name="model_browser_options">Opções</string>
     <string name="model_browser_template">Editar cartas</string>
     <string name="model_browser_add">Adicionar tipo de nota</string>
     <!--Rename-->
     <string name="rename_model">Renomear modelos de nota</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Dica de idioma do teclado</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Definir idioma da dica para %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Editar campos</string>
     <string name="model_field_editor_add">Adicionar campo</string>
     <string name="model_field_editor_delete">Excluir campo</string>
+    <string name="model_field_editor_options">Opções de campo</string>
     <string name="model_field_editor_rename">Renomear campo</string>
     <string name="model_field_editor_language_hint">Definir idioma do teclado</string>
     <string name="model_field_editor_reposition_menu">Campo de reposição</string>

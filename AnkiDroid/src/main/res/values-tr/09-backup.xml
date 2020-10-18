@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">SD kartınızda %d MB\'tan daha az yer var.\nVeri kaybını önlemek için biraz yer açın.</string>
+    <string name="backup_delete">Yedekler siliniyor.\nLütfen bekleyin...</string>
     <string name="backup_restore">Yedekten geri yükle</string>
     <string name="backup_new_collection">Yeni koleksiyon</string>
     <string name="backup_del_collection">Koleksiyonu silip yenisini oluştur</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Seçenekler</string>
     <string name="backup_retry_opening">Açmayı yeniden dene</string>
     <string name="backup_error_menu_repair">Veritabanını onar</string>
-    <string name="backup_repair_deck">Onar</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Veritabanı onarılıyor.\nLütfen bekleyin...</string>
     <string name="backup_error">Hata</string>

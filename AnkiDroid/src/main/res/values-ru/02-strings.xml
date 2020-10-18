@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Открыть панель</string>
+    <string name="drawer_close">Закрыть панель</string>
+    <string name="CardEditorLaterMessage">Сохранённая информация</string>
     <string name="CardEditorCardDeck">Колода:</string>
     <string name="CardEditorNoteDeck">Колода:</string>
     <string name="CardEditorModel">Тип:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">Выбрать/снять все метки</string>
     <string name="filter_tags">Отобрать по меткам</string>
     <string name="no_tags">Пока меток нет</string>
+    <string name="sdcard_missing_message">Отключите режим передачи файлов по USB, чтобы получить доступ к колодам</string>
     <string name="updated_version">Обновлено до версии %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Сохранить написанное</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Задание с пропусками работают только в типе записи с пропусками</string>
     <string name="saving_facts">Запись сохраняется</string>
     <string name="saving_model">Тип записи сохраняется</string>
+    <string name="add">Добавить</string>
     <string name="save">Сохранить</string>
     <string name="close">Закрыть</string>
     <string name="select">Выбрать</string>
@@ -134,9 +139,11 @@
         <item quantity="many">%1$d минут</item>
         <item quantity="other">%1$d минут</item>
     </plurals>
+    <string name="studyoptions_welcome_title">AnkiDroid приветствует вас</string>
     <string name="fact_adder_intent_title">Карточка AnkiDroid</string>
     <string name="note_editor_add_note">Добавить запись</string>
     <string name="note_editor_copy_note">Копировать запись</string>
+    <string name="card_editor_copy_card">Копировать карточку</string>
     <string name="card_editor_reposition_card">Переместить</string>
     <string name="card_editor_reset_card">Сбросить прогресс</string>
     <string name="card_editor_reschedule_card">Перепланировать</string>
@@ -150,6 +157,7 @@
         <item quantity="many">Добавлено %d карточек</item>
         <item quantity="other">Добавлено %d карточек</item>
     </plurals>
+    <string name="help_title">Справка</string>
     <string name="check_db">Проверить базу данных</string>
     <string name="check_media">Проверить медиафайлы</string>
     <string name="empty_cards">Пустые карточки</string>
@@ -159,6 +167,7 @@
     <string name="delete_deck">Колода удаляется&#8230;</string>
     <string name="show_hint">Показать %s</string>
     <string name="info_rate">Оценить AnkiDroid</string>
+    <string name="col_load_failed">Сбой при загрузке коллекции.\nНажмите кнопку \"Назад\", чтобы закрыть AnkiDroid.</string>
     <string name="import_title">Импорт</string>
     <string name="import_select_title">Выберите файл для импорта</string>
     <string name="import_message_add">Добавить</string>
@@ -268,6 +277,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Ошибка при отправке файла apkg</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">Для импорта этого файла нужно включить планировщик 2-й версии.</string>
+    <string name="import_cannot_with_v2">Планировщик 2-й версии не может импортировать колоды с расписанием 1-й версии.</string>
     <string name="export_v2_dummy_note">Этот файл требует новой версии Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Не удалось загрузить \"%s\".</string>
@@ -333,7 +344,7 @@
     <string name="card_viewer_could_not_find_image_get_help">Помощь</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
-    <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="search_decks">Найти колоду</string>
+    <string name="ankidroid_init_failed_webview_title">Критическая ошибка</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid использует системный WebView, который сейчас не доступен. Это может произойти, если система устанавливает обновления. Пожалуйста, повторите попытку через несколько минут.\n\n%s</string>
 </resources>

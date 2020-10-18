@@ -44,14 +44,16 @@
     <string name="sync_error">Erreur de synchronisation</string>
     <string name="vague_error">Erreur</string>
     <string name="retry">Réessayer</string>
-    <string name="cancel">Annuler</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Conditions générales</a></string>
     <string name="menu_get_shared_decks">Télécharger des paquets partagés</string>
     <string name="connection_error_message">Une erreur réseau s\'est produite.</string>
     <string name="not_logged_in_title">Se connecter à AnkiWeb</string>
     <string name="login_create_account_message">Vous devez vous connecter à un service tiers pour utiliser le service de synchronisation. Vous pouvez créer un compte à l’étape suivante.</string>
     <!-- MyAccount.java -->
     <string name="username">Adresse électronique</string>
+    <string name="username_repeat">Confirmation de l’adresse électronique</string>
     <string name="password">Mot de passe</string>
+    <string name="password_repeat">Confirmation du mot de passe</string>
     <string name="log_in">Se connecter</string>
     <string name="sign_up_description">Vous n\'avez pas de compte AnkiWeb ? C\'est gratuit !</string>
     <string name="sign_up_not_affiliated">Remarque : AnkiWeb n’est pas affilié à AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Synchronisation</string>
     <string name="sync_downloading_media">Téléchargement du média %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Synchronisation complète depuis la version locale</string>
-    <string name="sync_log_downloading_message">Synchronisation complète depuis la version serveur</string>
     <string name="sync_log_clocks_unsynchronized">L’heure sur votre appareil est incorrecte de %1$d secondes %2$s; La synchronisation requiert que votre horloge et le fuseau horaire soient définis correctement afin d’éviter les erreurs. Veuillez vous assurer que les date, heure et fuseau horaire sur votre appareil sont correctement réglés, puis resynchronisez.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, le fuseau horaire de l\'appareil est peut-être erroné</string>
     <string name="sync_log_clocks_unsynchronized_date">, la date de l\'appareil est peut-être erronée</string>

@@ -42,16 +42,19 @@
     <!--Browser-->
     <string name="model_browser_delete">Slett notattype</string>
     <string name="model_browser_rename">Endre navn</string>
+    <string name="model_browser_options">Innstillinger</string>
     <string name="model_browser_template">Rediger kort</string>
     <string name="model_browser_add">Legg til notattype</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Rediger felt</string>
     <string name="model_field_editor_add">Legg til felt</string>
     <string name="model_field_editor_delete">Slett felt</string>
+    <string name="model_field_editor_options">Feltinnstillinger</string>
     <string name="model_field_editor_rename">Endre navn på felt</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Flytt felt</string>

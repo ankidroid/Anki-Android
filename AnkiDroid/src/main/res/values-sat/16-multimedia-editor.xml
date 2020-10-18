@@ -66,7 +66,7 @@
     <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text">ᱚᱱᱚᱞ</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ᱚᱱᱚᱞ</string>
     <string name="multimedia_editor_field_editing_image">ᱪᱤᱛᱟᱹᱨ</string>
     <string name="multimedia_editor_field_editing_audio">ᱥᱟᱲᱮ ᱨᱮᱠᱚᱰ</string>
     <string name="multimedia_editor_field_editing_audio_clip">ᱥᱟᱲᱮ ᱠᱞᱤᱯ</string>

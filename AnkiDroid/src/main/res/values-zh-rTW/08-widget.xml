@@ -44,7 +44,6 @@
         <item quantity="other">%d AnkiDroid 卡片到期</item>
     </plurals>
     <string name="widget_small">AnkiDroid 小型</string>
-    <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="other">%d 張卡片待複習</item>
     </plurals>

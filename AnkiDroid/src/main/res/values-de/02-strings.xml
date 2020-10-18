@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Navigationsleiste öffnen</string>
+    <string name="drawer_close">Navigationsleiste schließen</string>
+    <string name="CardEditorLaterMessage">Information für später gespeichert</string>
     <string name="CardEditorCardDeck">Kartenstapel:</string>
     <string name="CardEditorNoteDeck">Stapel:</string>
     <string name="CardEditorModel">Typ:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">Alle Schlagwörter markieren/nicht markieren</string>
     <string name="filter_tags">Schlagwörter filtern</string>
     <string name="no_tags">Sie haben noch keine Schlagwörter hinzugefügt.</string>
+    <string name="sdcard_missing_message">Deaktivieren Sie den  USB-Speicher um auf Ihre Stapel zuzugreifen</string>
     <string name="updated_version">Aktualisiert auf Version %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Whiteboard speichern</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Notiz speichern</string>
     <string name="saving_model">Notiztyp wird gespeichert</string>
+    <string name="add">Hinzufügen</string>
     <string name="save">Speichern</string>
     <string name="close">Schließen</string>
     <string name="select">Auswählen</string>
@@ -130,9 +135,11 @@
         <item quantity="one">%1$d Minute</item>
         <item quantity="other">%1$d Minuten</item>
     </plurals>
+    <string name="studyoptions_welcome_title">Willkommen bei AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid Karte</string>
     <string name="note_editor_add_note">Notiz hinzufügen</string>
     <string name="note_editor_copy_note">Notiz kopieren</string>
+    <string name="card_editor_copy_card">Karte kopieren</string>
     <string name="card_editor_reposition_card">Position ändern</string>
     <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
     <string name="card_editor_reschedule_card">Umplanen</string>
@@ -144,6 +151,7 @@
         <item quantity="one">%d Karte hinzugefügt</item>
         <item quantity="other">%d Karten hinzugefügt</item>
     </plurals>
+    <string name="help_title">Hilfe</string>
     <string name="check_db">Datenbank überprüfen</string>
     <string name="check_media">Medien überprüfen</string>
     <string name="empty_cards">Leere Karten</string>
@@ -153,6 +161,7 @@
     <string name="delete_deck">Lösche Stapel&#8230;</string>
     <string name="show_hint">%s anzeigen</string>
     <string name="info_rate">AnkiDroid bewerten</string>
+    <string name="col_load_failed">Laden der Sammlung fehlgeschlagen.\nDrücken Sie \"zurück\", um AnkiDroid zu schließen.</string>
     <string name="import_title">Importieren</string>
     <string name="import_select_title">Zu importierende Datei auswählen</string>
     <string name="import_message_add">Hinzufügen</string>
@@ -249,6 +258,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fehler beim Teilen der APKG-Datei</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">Zeitplaner V2 muss aktiviert sein, um diese Datei zu importieren.</string>
+    <string name="import_cannot_with_v2">Zeitplaner V2 kann keine V1-Stapel mit enthaltener Zeitplanung importieren.</string>
     <string name="export_v2_dummy_note">Diese Datei benötigt eine neuere Version von Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">»%s« konnte nicht geladen werden.</string>

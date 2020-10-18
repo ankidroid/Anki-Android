@@ -44,14 +44,16 @@
     <string name="sync_error">Erro de sincronização</string>
     <string name="vague_error">Erro</string>
     <string name="retry">Repetir</string>
-    <string name="cancel">Cancelar</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Termos e condições (em inglês)</a></string>
     <string name="menu_get_shared_decks">Obter baralhos partilhados</string>
     <string name="connection_error_message">Ocorreu um erro de rede.</string>
     <string name="not_logged_in_title">Iniciar sessão na AnkiWeb</string>
     <string name="login_create_account_message">Deve iniciar a sessão numa conta de terceiros para usar o serviço de sincronização da nuvem. Pode criar uma no passo seguinte.</string>
     <!-- MyAccount.java -->
     <string name="username">Endereço de correio eletrónico</string>
+    <string name="username_repeat">Repita o endereço de correio eletrónico</string>
     <string name="password">Palavra-passe</string>
+    <string name="password_repeat">Repita a palavra-passe</string>
     <string name="log_in">Iniciar sessão</string>
     <string name="sign_up_description">Não tem uma conta AnkiWeb? É grátis!</string>
     <string name="sign_up_not_affiliated">Nota: AnkiWeb não é afiliado com AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Sincronização</string>
     <string name="sync_downloading_media">A descarregar ficheiro %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Sincronização completa a partir dos dados locais</string>
-    <string name="sync_log_downloading_message">Sincronização completa a partir do servidor</string>
     <string name="sync_log_clocks_unsynchronized">O seu relógio está incorreto por %1$d segundos%2$s. Por favor, certifique-se de que a data, a hora e o fuso horário do seu dispositivo estão definidos corretamente e volte a sincronizar.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, o fuso horário pode estar errado</string>
     <string name="sync_log_clocks_unsynchronized_date">, a data pode estar errada</string>

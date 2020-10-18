@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Kopia zapasowa nie została utworzona z powodu braku miejsca na karcie SD. Zwolnij trochę miejsca lub zmniejsz zakres kopi zapasowej</string>
     <string name="sd_space_warning">Na karcie SD zostało mniej niż %d MB wolnego miejsca.\nZwolnij trochę miejsca, aby uniknąć utraty danych.</string>
+    <string name="backup_delete">Usuwanie kopii.\nProszę czekać...</string>
     <string name="backup_restore">Przywróć kopię zapasową</string>
     <string name="backup_new_collection">Nowa kolekcja</string>
     <string name="backup_del_collection">Usuń kolekcje i utworz nową</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Opcje</string>
     <string name="backup_retry_opening">Ponów próbę otwarcia</string>
     <string name="backup_error_menu_repair">Napraw bazę danych</string>
-    <string name="backup_repair_deck">Napraw</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Naprawianie bazy danych.\nProszę czekać...</string>
     <string name="backup_error">Błąd</string>

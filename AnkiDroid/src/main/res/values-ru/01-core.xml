@@ -38,8 +38,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
-    <string name="no">no</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
     <!-- Navigation drawer items-->
     <string name="decks">Колоды</string>
     <string name="card_browser">Список карточек</string>
@@ -218,7 +218,6 @@
     <string name="read_write_permission_label">Чтение и запись в базу данных AnkiDroid</string>
     <string name="read_write_permission_description">доступ к колодам, карточкам, записям, их типам, а также создание новых</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Список карточек</string>
     <string name="card_browser_context_menu">Список карточек</string>
     <string name="context_menu_anki_card_label">Карточка Anki</string>
 </resources>

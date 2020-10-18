@@ -52,7 +52,6 @@ Tämä nollaa edistymisesi ja poistaa kaikki kortit!</string>
     <string name="error_handling_options">Asetukset</string>
     <string name="backup_retry_opening">Yritä uudelleen avaamista</string>
     <string name="backup_error_menu_repair">Korjaa tietokanta</string>
-    <string name="backup_repair_deck">Korjaus</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Korjataan tietokantaa.\nOdota hetki...</string>
     <string name="backup_error">Virhe</string>

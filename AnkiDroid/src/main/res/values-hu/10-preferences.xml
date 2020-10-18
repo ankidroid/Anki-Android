@@ -42,7 +42,6 @@
     <string name="disabled">Kikapcsolva</string>
     <string name="enabled">Engedélyezve</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Általános beállítások</string>
     <string name="pref_cat_reviewing">Ismétlés</string>
     <string name="pref_cat_reviewing_summ">Paklifüggetlen beállítások</string>

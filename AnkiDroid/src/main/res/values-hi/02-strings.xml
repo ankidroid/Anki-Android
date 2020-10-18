@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">दराज़ खोलें</string>
+    <string name="drawer_close">दराज़ बंद करें</string>
+    <string name="CardEditorLaterMessage">जानकारी के लिए बाद में बचा लिया</string>
     <string name="CardEditorCardDeck">पत्ता डेक:</string>
     <string name="CardEditorNoteDeck">डेक:</string>
     <string name="CardEditorModel">प्रकार:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">सभी टैग चयनित/अचयनित करें</string>
     <string name="filter_tags">टैग छानें</string>
     <string name="no_tags">अपने अभी तक कोई टैग नहीं जोड़ा है</string>
+    <string name="sdcard_missing_message">एसडी कार्ड उपलब्ध नहीं है क्योंकि यह USB भंडारण के रूप में इस्तेमाल किया जा रहा है। आपके डेक तक पहुँचने के लिए USB डिस्कनेक्ट करें।</string>
     <string name="updated_version">%s संस्करण को अद्यतित किया गया</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">स्लेट सुरक्षित करें </string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">क्लोज डिलीट केवल क्लोज नोट टाइप पर काम करेगा</string>
     <string name="saving_facts">नोट सहेजने</string>
     <string name="saving_model">नोट प्रकार सहेज रहा है</string>
+    <string name="add">जोड़ें</string>
     <string name="save">सेव</string>
     <string name="close">बंद करें</string>
     <string name="select">का चयन करें</string>
@@ -130,9 +135,11 @@
         <item quantity="one">%1$d मिनट</item>
         <item quantity="other">मिनट</item>
     </plurals>
+    <string name="studyoptions_welcome_title">AnkiDroid में आपका स्वागत है</string>
     <string name="fact_adder_intent_title">AnkiDroid कार्ड</string>
     <string name="note_editor_add_note">नोट जोड़ें</string>
     <string name="note_editor_copy_note">नोट कॉपी करें</string>
+    <string name="card_editor_copy_card">प्रति कार्ड</string>
     <string name="card_editor_reposition_card">स्थानांतरित करे </string>
     <string name="card_editor_reset_card">प्रगति को रीसेट</string>
     <string name="card_editor_reschedule_card">पुनः शेड्यूल करें</string>
@@ -144,6 +151,7 @@
         <item quantity="one">%d कार्ड जोड़ा गया</item>
         <item quantity="other">%d कार्ड जोड़ा गया</item>
     </plurals>
+    <string name="help_title">मदद</string>
     <string name="check_db">डेटाबेस की जाँच करें</string>
     <string name="check_media">मीडिया जांचें</string>
     <string name="empty_cards">खाली कार्ड</string>
@@ -153,6 +161,7 @@
     <string name="delete_deck">हटाने deck...\nPlease रुको।</string>
     <string name="show_hint">%s दिखाएं</string>
     <string name="info_rate">दर AnkiDroid</string>
+    <string name="col_load_failed">संग्रह लोड करने में विफल। \nPress वापस AnkiDroid को बंद करने के लिए।</string>
     <string name="import_title">आयात</string>
     <string name="import_select_title">आयात करने के लिए कोई फ़ाइल चुनें</string>
     <string name="import_message_add">जोड़ें</string>
@@ -249,6 +258,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg फ़ाइल साझा करने में त्रुटि</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">इस फ़ाइल को आयात करने के लिए V2 scheduler सक्षम करें</string>
+    <string name="import_cannot_with_v2">V2 scheduler V1 डेक को शेड्यूलिंग के साथ आयात नहीं कर सकता।</string>
     <string name="export_v2_dummy_note">इस फ़ाइल को Anki के नए संस्करण की आवश्यकता है।</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url"> \'%s\'  लोड करना असफल रहा</string>

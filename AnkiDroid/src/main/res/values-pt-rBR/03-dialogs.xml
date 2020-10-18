@@ -75,6 +75,7 @@
         <item quantity="other">%d resetar cartões</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Remarcar cartão</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -95,6 +96,8 @@
     <string name="answering_error_message">Ocorreu um erro ao gravar na coleção. Isso pode estar relacionado a um banco de dados corrompido ou espaço insuficiente no disco.\n\nSe isso ocorrer frequentemente, tente verificar o banco de dados, reparar a coleção ou restaurá-la de um backup. Clique em \'Opções\' para isso.\n\nEm todo caso, isso pode ser um bug do AnkiDroid; relate o erro para que possamos verificar o problema.</string>
     <string name="answering_error_report">Reportar erro</string>
     <string name="repair_deck_dialog">Você realmente deseja tentar reparar o banco de dados?\n\nAntes de iniciar a tentativa, uma cópia será criada na subpasta \"%s\".</string>
+    <string name="intent_add_saved_information">Dados salvos</string>
+    <string name="intent_add_clear_all">Apagar tudo</string>
     <string name="intent_aedict_empty">Categoria \'padrão\' está vazia</string>
     <string name="intent_aedict_category">Para adicionar cartões ao AnkiDroid remova todas as categorias das notas ou adicione uma com o nome \'default\'</string>
     <string name="custom_study_new_total_new">Novos cartões no deck: %d</string>
@@ -106,6 +109,7 @@
     <string name="custom_study_random">Selecione aleatoriamente x cartões do baralho:</string>
     <string name="custom_study_preview">Visualizar novos cartões adicionados nos últimos x dias:</string>
     <string name="custom_study_rebuild_deck_corrupt">Não foi possível reconstruir o baralho de estudo personalizado</string>
+    <string name="rebuild_custom_study_deck">Reconstruindo baralho de estudo personalizado&#8230;</string>
     <string name="importing_collection">Importando coleção.\nPor favor aguarde...</string>
     <string name="import_media_count">Importando arquivos de mídia %1$d%%\nPor favor aguarde...</string>
     <string name="import_progress">• Importando notas: %1$d%%\n• Importando cartões: %2$d%%\n• Processando: %3$d%%</string>
@@ -122,6 +126,7 @@
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_positive_create">Criar</string>
     <string name="dialog_positive_delete">Excluir</string>
+    <string name="dialog_positive_disable">Desativar</string>
     <string name="dialog_positive_overwrite">Sobrescrever</string>
     <string name="dialog_positive_remove">Remover</string>
     <string name="dialog_positive_repair">Reparar</string>
