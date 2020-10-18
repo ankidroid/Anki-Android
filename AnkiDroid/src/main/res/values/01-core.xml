@@ -195,7 +195,6 @@
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
     <string name="card_browser_context_menu">Card Browser</string>
 
     <string name="context_menu_anki_card_label">Anki Card</string>
