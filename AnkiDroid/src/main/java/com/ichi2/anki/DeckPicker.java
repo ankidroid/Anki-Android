@@ -1770,7 +1770,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                         }
                         // Show confirmation dialog to check if the user wants to cancel the sync
                         MaterialDialog.Builder builder = new MaterialDialog.Builder(mProgressDialog.getContext());
-                        builder.content(R.string.cancel_sync_confirm)
+                        builder.content(R.string.dialog_cancel)
                                 .cancelable(false)
                                 .positiveText(R.string.dialog_ok)
                                 .negativeText(R.string.continue_sync)

@@ -83,7 +83,7 @@ public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
             mCurrentSearchTerms = getArguments().getString("currentSearchTerms");
             builder.title(getString(R.string.card_browser_list_my_searches_save))
                    .positiveText(getString(android.R.string.ok))
-                   .negativeText(getString(R.string.cancel))
+                   .negativeText(getString(R.string.dialog_cancel))
                    .input(R.string.card_browser_list_my_searches_new_name, R.string.empty_string, (dialog, text) -> {
                        Timber.d("Saving search with title/terms: %s/%s", text, mCurrentSearchTerms);
                        mMySearchesDialogListener.onSaveSearch(text.toString(), mCurrentSearchTerms);
@@ -109,7 +109,7 @@ public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
         new MaterialDialog.Builder(getActivity())
                 .content(res.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
                 .positiveText(res.getString(android.R.string.ok))
-                .negativeText(res.getString(R.string.cancel))
+                .negativeText(res.getString(R.string.dialog_cancel))
                 .onPositive((dialog, which) -> {
                     mMySearchesDialogListener.onRemoveSearch(searchName);
                     mSavedFilters.remove(searchName);

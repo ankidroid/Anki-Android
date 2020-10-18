@@ -153,7 +153,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             }
             case DIALOG_MEDIA_SYNC_ERROR: {
                 return builder.positiveText(R.string.check_media)
-                        .negativeText(R.string.cancel)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((dialog, which) -> {
                             ((SyncErrorDialogListener) getActivity()).mediaCheck();
                             dismissAllDialogFragments();
