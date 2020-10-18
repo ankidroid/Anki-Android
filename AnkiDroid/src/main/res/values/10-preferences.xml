@@ -247,7 +247,6 @@
         <item quantity="one">%s subdeck will use this group</item>
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font">Browser and editor font</string>
     <string name="deck_conf_cram_filter">Filter</string>

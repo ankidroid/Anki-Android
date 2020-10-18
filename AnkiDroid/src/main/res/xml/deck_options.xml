@@ -58,7 +58,7 @@
             <com.ichi2.preferences.CustomDialogPreference
                 android:dialogIcon="@drawable/ic_dialog_alert"
                 android:dialogMessage="@string/deck_conf_set_subdecks_message"
-                android:dialogTitle="@string/deck_conf_set_subdecks_title"
+                android:dialogTitle="@string/deck_conf_set_subdecks"
                 android:key="confSetSubdecks"
                 android:negativeButtonText="@string/dialog_cancel"
                 android:positiveButtonText="@string/dialog_positive_set"
