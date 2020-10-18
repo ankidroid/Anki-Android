@@ -75,6 +75,7 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Reprogramar cartón</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -95,6 +96,8 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Informar de erros</string>
     <string name="repair_deck_dialog">Tes a certeza de querer tentar reparar a base de datos?\n\nAntes de comezar, crearase unha copia no cartafol \"%s\".</string>
+    <string name="intent_add_saved_information">Datos gardados</string>
+    <string name="intent_add_clear_all">Limpar todo</string>
     <string name="intent_aedict_empty">A categoría \'predeterminado\' está baleira</string>
     <string name="intent_aedict_category">Para engadir cartóns ao AnkiDroid elimina todas as categorías do caderno de notas ou engade unha chamada \"predefinido\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -106,6 +109,7 @@
     <string name="custom_study_random">Seleccionar da baralla x cartóns ao chou:</string>
     <string name="custom_study_preview">Vista previa dos novos cartóns engadidos nos últimos x días:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="rebuild_custom_study_deck">Reconstruíndo a baralla de estudo personalizado.\nPor favor, agarda&#8230;</string>
     <string name="importing_collection">Importando colección&#8230;</string>
     <string name="import_media_count">Importando ficheiros de medios %1$d%%&#8230;</string>
     <string name="import_progress">• Importando notas: %1$d%%\n• Importando cartóns: %2$d%%\n• Post-procesando: %3$d%%</string>
@@ -122,6 +126,7 @@
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_positive_create">Crear</string>
     <string name="dialog_positive_delete">Eliminar</string>
+    <string name="dialog_positive_disable">Desactivar</string>
     <string name="dialog_positive_overwrite">Substituír</string>
     <string name="dialog_positive_remove">Eliminar</string>
     <string name="dialog_positive_repair">Reparar</string>

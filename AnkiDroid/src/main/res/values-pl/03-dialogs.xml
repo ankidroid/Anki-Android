@@ -81,6 +81,7 @@
         <item quantity="other">%d kart zresetowano</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Ponownie ustal czas dla karty</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Ponownie ustal czas dla karty</item>
         <item quantity="few">Zaktualizuj harmonogram kart</item>
@@ -107,6 +108,8 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Zgłoś błąd</string>
     <string name="repair_deck_dialog">Czy na pewno chcesz próbować naprawić bazę danych? \n\nPrzed próbą naprawy zostanie utworzona kopia w katalogu \'%s\'.</string>
+    <string name="intent_add_saved_information">Zapisane dane</string>
+    <string name="intent_add_clear_all">Wyczyść wszystko</string>
     <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
     <string name="intent_aedict_category">Aby dodać karty AnkiDroid usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'default\'</string>
     <string name="custom_study_new_total_new">Nowe karty w talii: %d</string>
@@ -118,6 +121,7 @@
     <string name="custom_study_random">Wybierz losowo x kart z talii:</string>
     <string name="custom_study_preview">Podgląd nowych kart dodanych w ostatnich x dniach:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nie udało się przebudować talii nauki niestandardowej</string>
+    <string name="rebuild_custom_study_deck">Przebudowa talii nauki niestandardowej.\nProszę czekać...</string>
     <string name="importing_collection">Importowanie kolekcji.\nProszę czekaj&#8230;</string>
     <string name="import_media_count">Importowanie mediów %1$d%%\nProszę czekaj&#8230;</string>
     <string name="import_progress">• Importowanie notatek: %1$d%%\n• Importowanie kart: %2$d%%\n• Post-processing: %3$d%%</string>
@@ -134,6 +138,7 @@
     <string name="dialog_continue">Kontynuuj</string>
     <string name="dialog_positive_create">Utwórz</string>
     <string name="dialog_positive_delete">Usuń</string>
+    <string name="dialog_positive_disable">Wyłacz</string>
     <string name="dialog_positive_overwrite">Nadpisz</string>
     <string name="dialog_positive_remove">Usuń</string>
     <string name="dialog_positive_repair">Napraw</string>

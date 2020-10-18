@@ -46,16 +46,19 @@
     <!--Browser-->
     <string name="model_browser_delete">Видалити тип запису</string>
     <string name="model_browser_rename">Перейменувати</string>
+    <string name="model_browser_options">Налаштування</string>
     <string name="model_browser_template">Редагувати картки</string>
     <string name="model_browser_add">Додати тип запису</string>
     <!--Rename-->
     <string name="rename_model">Перейменувати тип запису</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Натяк мови клавіатури</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Встановити мову натяку до %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Редагувати поля</string>
     <string name="model_field_editor_add">Додати поле</string>
     <string name="model_field_editor_delete">Видалити поле</string>
+    <string name="model_field_editor_options">Налаштування полів</string>
     <string name="model_field_editor_rename">Перейменувати поля</string>
     <string name="model_field_editor_language_hint">Встановлення натяк мови клавіатури</string>
     <string name="model_field_editor_reposition_menu">Перемістити поле</string>

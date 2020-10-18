@@ -78,6 +78,7 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Одложи картицу</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="few">Reschedule cards</item>
@@ -101,6 +102,8 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Извести о грешци</string>
     <string name="repair_deck_dialog">Да ли заиста желите да обновите базу података?\n\nДо почетка обнављања, копија базе података ће бити смештена у фасциклу \'%s\'.</string>
+    <string name="intent_add_saved_information">Сачувани подаци</string>
+    <string name="intent_add_clear_all">Избриши све</string>
     <string name="intent_aedict_empty">Категорија \'подразумевано\' је празна</string>
     <string name="intent_aedict_category">При додавању карата AnkiDroid уклања све категорије бележница или додаје једну са именом \'default\'</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -112,6 +115,7 @@
     <string name="custom_study_random">Изабери х случајних карата из шпила:</string>
     <string name="custom_study_preview">Нове картице, додате за последњих х дана:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="rebuild_custom_study_deck">Пресложи специјални шпил.\nМолим сачекајте...</string>
     <string name="importing_collection">Увоз колекције.\nМолим сачекајте&#8230;</string>
     <string name="import_media_count">Увоз медија датотека %1$d%%\nМолим сачекајте&#8230;</string>
     <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
@@ -128,6 +132,7 @@
     <string name="dialog_continue">Настави</string>
     <string name="dialog_positive_create">Направи</string>
     <string name="dialog_positive_delete">Избриши</string>
+    <string name="dialog_positive_disable">Онемогући</string>
     <string name="dialog_positive_overwrite">Пресними</string>
     <string name="dialog_positive_remove">Уклони</string>
     <string name="dialog_positive_repair">Обнављање</string>

@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Zijmenu openen</string>
+    <string name="drawer_close">Zijmenu sluiten</string>
+    <string name="CardEditorLaterMessage">Informatie opgeslagen voor later</string>
     <string name="CardEditorCardDeck">Kaartenset:</string>
     <string name="CardEditorNoteDeck">Set:</string>
     <string name="CardEditorModel">Type:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">Alle labels selecteren/deselecteren</string>
     <string name="filter_tags">Op labels filteren</string>
     <string name="no_tags">Je hebt nog geen labels toegevoegd.</string>
+    <string name="sdcard_missing_message">De SD-kaart is niet beschikbaar omdat ze in gebruik is voor USB-opslag. Ontkoppel de USB om toegang te krijgen tot uw sets.</string>
     <string name="updated_version">Geüpdatet naar versie %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Kaart opslaan</string>
     <string name="saving_model">Memotype opslaan</string>
+    <string name="add">Toevoegen</string>
     <string name="save">Opslaan</string>
     <string name="close">Sluiten</string>
     <string name="select">Selecteren</string>
@@ -130,9 +135,11 @@
         <item quantity="one">%1$d minuut</item>
         <item quantity="other">%1$d minuten</item>
     </plurals>
+    <string name="studyoptions_welcome_title">Welkom bij AnkiDroid</string>
     <string name="fact_adder_intent_title">Ankidroid kaart</string>
     <string name="note_editor_add_note">Voeg memo toe</string>
     <string name="note_editor_copy_note">Memo kopiëren</string>
+    <string name="card_editor_copy_card">Kopieer kaart</string>
     <string name="card_editor_reposition_card">Verplaatsen</string>
     <string name="card_editor_reset_card">Vooruitgang resetten</string>
     <string name="card_editor_reschedule_card">Opnieuw inplannen</string>
@@ -144,6 +151,7 @@
         <item quantity="one">%d kaart toegevoegd</item>
         <item quantity="other">%d kaarten toegevoegd</item>
     </plurals>
+    <string name="help_title">Help</string>
     <string name="check_db">Database controleren</string>
     <string name="check_media">Media controleren</string>
     <string name="empty_cards">Lege kaarten zoeken</string>
@@ -153,6 +161,7 @@
     <string name="delete_deck">Leerset verwijderen...\nEven wachten.</string>
     <string name="show_hint">Toon %s</string>
     <string name="info_rate">Beoordeel AnkiDroid</string>
+    <string name="col_load_failed">Laden van collectie mislukt.\nKlik \'terug\' om AnkiDroid te sluiten.</string>
     <string name="import_title">Importeren</string>
     <string name="import_select_title">Kies een bestand om te importeren</string>
     <string name="import_message_add">Toevoegen</string>
@@ -250,6 +259,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fout met het delen van de apkg bestand</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">V2-planner moet ingeschakeld zijn om dit bestand te importeren.</string>
+    <string name="import_cannot_with_v2">V2-planner kan geen V1-sets importeren met inbegrip van planningsinformatie.</string>
     <string name="export_v2_dummy_note">Dit bestand vereist een nieuwere versie van Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Laden \'%s\' mislukt.</string>

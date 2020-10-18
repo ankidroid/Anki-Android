@@ -66,7 +66,7 @@
     <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text">Text</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
     <string name="multimedia_editor_field_editing_image">Image</string>
     <string name="multimedia_editor_field_editing_audio">Audio recording</string>
     <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Search for:</string>
-    <string name="multimedia_editor_text_field_editing_show">Image</string>
     <string name="multimedia_editor_text_field_editing_say">Pronunciation</string>
     <string name="multimedia_editor_text_field_editing_clear">Clear</string>
     <string name="multimedia_editor_text_field_editing_clone">Clone from</string>

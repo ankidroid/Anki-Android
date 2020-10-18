@@ -44,14 +44,16 @@
     <string name="sync_error">Грешка синхронизације</string>
     <string name="vague_error">Грешка</string>
     <string name="retry">Понови</string>
-    <string name="cancel">Откажи</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Услови</a></string>
     <string name="menu_get_shared_decks">Преузми дељене шпилове</string>
     <string name="connection_error_message">Грешка у мрежи.</string>
     <string name="not_logged_in_title">Прикључите се на AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.java -->
     <string name="username">Адреса е-поште</string>
+    <string name="username_repeat">Поновите адресу е-поште</string>
     <string name="password">Лозинка</string>
+    <string name="password_repeat">Поновите лозинку</string>
     <string name="log_in">Пријави се</string>
     <string name="sign_up_description">Немате AnkiWeb налог? Бесплатан је!</string>
     <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Синхронизација</string>
     <string name="sync_downloading_media">Преузимање медија датотека %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Потпуно синхронизовано са локалним подацима</string>
-    <string name="sync_log_downloading_message">Потпуно синхронизовано са сервером</string>
     <string name="sync_log_clocks_unsynchronized">Сат на вашем уређају је нетачан за %1$d секунди%2$s; За синхронизацију је неопходно да сат и временска зона буду приказани коректно. Поставите коректан датум, временску зону вашег телефона и покрените синхронизацију поново.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, постављена временска зона уређаја је вероватно погрешна</string>
     <string name="sync_log_clocks_unsynchronized_date">, датум, постављен на уређају је вероватно погрешан</string>

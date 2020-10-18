@@ -45,7 +45,6 @@
         <item quantity="other">%d Carte AnkiDroid scadute</item>
     </plurals>
     <string name="widget_small">AnkiDroid piccolo</string>
-    <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d carta scaduta</item>
         <item quantity="other">%d carte scadute</item>

@@ -42,16 +42,19 @@
     <!--Browser-->
     <string name="model_browser_delete">حذف نوع یادداشت</string>
     <string name="model_browser_rename">تغییر نام</string>
+    <string name="model_browser_options">گزینه ها</string>
     <string name="model_browser_template">ویرایش کارتها</string>
     <string name="model_browser_add">اضافه کردن نوع یادداشت</string>
     <!--Rename-->
     <string name="rename_model">تغییر نام نوع یادداشت</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">ویرایش فیلدها</string>
     <string name="model_field_editor_add">افزودن فیلد</string>
     <string name="model_field_editor_delete">حذف فیلد</string>
+    <string name="model_field_editor_options">گزینه های فیلد</string>
     <string name="model_field_editor_rename">تغییر نام فیلد</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">تغییر مکان فیلد</string>

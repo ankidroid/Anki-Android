@@ -66,7 +66,7 @@
     <string name="multimedia_editor_poweredbeolingus">由 Beolingus 提供支持</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text">文字</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">文字</string>
     <string name="multimedia_editor_field_editing_image">圖像</string>
     <string name="multimedia_editor_field_editing_audio">音訊錄製</string>
     <string name="multimedia_editor_field_editing_audio_clip">音訊剪輯</string>

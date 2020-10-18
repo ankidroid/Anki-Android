@@ -46,13 +46,19 @@
     <string name="card_browser_all_decks">Bütün desteler</string>
     <string name="card_browser_delete_card">Notları sil</string>
     <string name="card_browser_suspend_card">Kartları askıya al</string>
+    <string name="card_browser_toggle_suspend_card">Kartları askıya/-dan al</string>
     <string name="card_browser_change_deck">Desteyi değiştir</string>
     <string name="card_browser_unsuspend_card">Kartları askıdan al</string>
     <string name="card_browser_mark_card">Notları işâretle</string>
     <string name="card_browser_flag">Flag</string>
+    <string name="card_browser_toggle_mark_card">Notları işâretle/işâreti kaldır</string>
     <string name="card_browser_unmark_card">Notlardan işâreti kaldır</string>
     <string name="delete_card_title">Notu sil</string>
+    <string name="delete_cards_title">Notlar silinsin mi?</string>
+    <string name="delete_card_message">Bu nottaki bütün kartlar gerçekten silinsin mi?\nArama alanı: %s</string>
+    <string name="delete_card_mult_message">Seçilen notların bütün kartları silinsin mi?\n(Sadece seçilen kartlar değil)</string>
     <string name="changed_deck_message">%s\'e taşındı</string>
+    <string name="card_browser_suspended_cards">Kartlar askıya/-dan alındı</string>
     <string name="card_browser_show_marked">İşâretlileri göster</string>
     <string name="card_browser_show_suspended">Askıdakileri göster</string>
     <string name="card_browser_search_by_tag">Etikete göre filtrele</string>
@@ -72,6 +78,7 @@
     <string name="card_details_answer">Cevap</string>
     <string name="card_details_due">Vade</string>
     <string name="card_details_tags">Etiketler</string>
+    <string name="card_browser_filtering_cards">Kartlar filtreleniyor&#8230; \nİptâl etmek için geri düğmesine basın</string>
     <string-array name="card_browser_order_labels">
         <item>Sıralamadan (daha hızlı)</item>
         <item>Sıralama alanına göre</item>

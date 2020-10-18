@@ -42,16 +42,19 @@
     <!--Browser-->
     <string name="model_browser_delete">Forigi nototipon</string>
     <string name="model_browser_rename">Alinomi</string>
+    <string name="model_browser_options">Opcioj</string>
     <string name="model_browser_template">Redakti kartojn</string>
     <string name="model_browser_add">Aldoni nototipon</string>
     <!--Rename-->
     <string name="rename_model">Alinomi nototipon</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Redakti kampojn</string>
     <string name="model_field_editor_add">Aldoni kampon</string>
     <string name="model_field_editor_delete">Forigi kampon</string>
+    <string name="model_field_editor_options">Kampoopcioj</string>
     <string name="model_field_editor_rename">Alinomi kampon</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Repozicii kampon</string>

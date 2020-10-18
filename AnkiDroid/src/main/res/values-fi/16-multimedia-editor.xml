@@ -66,7 +66,7 @@
     <string name="multimedia_editor_poweredbeolingus">Käyttää Beolingusta</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text">Teksti</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Teksti</string>
     <string name="multimedia_editor_field_editing_image">Kuva</string>
     <string name="multimedia_editor_field_editing_audio">Äänen tallennus</string>
     <string name="multimedia_editor_field_editing_audio_clip">Äänileike</string>
@@ -74,7 +74,6 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Hae:</string>
-    <string name="multimedia_editor_text_field_editing_show">Kuva</string>
     <string name="multimedia_editor_text_field_editing_say">Ääntäminen</string>
     <string name="multimedia_editor_text_field_editing_clear">Tyhjennä</string>
     <string name="multimedia_editor_text_field_editing_clone">Kopioi täältä:</string>

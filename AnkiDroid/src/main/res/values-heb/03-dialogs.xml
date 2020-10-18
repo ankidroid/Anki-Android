@@ -81,6 +81,7 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">תזמון קלף מחדש</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="two">Reschedule cards</item>
@@ -107,6 +108,8 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">דיווח על שגיאה</string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
+    <string name="intent_add_saved_information">נתונים נשמרו</string>
+    <string name="intent_add_clear_all">נקה הכל</string>
     <string name="intent_aedict_empty">הקטגוריה \'ברירת מחדל\' ריקה</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -118,6 +121,7 @@
     <string name="custom_study_random">כמה כרטיסים לבחור באקראי מהחפיסה?</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="rebuild_custom_study_deck">בניה מחדש של חפיסה ללימוד נוסף&#8230;</string>
     <string name="importing_collection">אוסף מיובא&#8230;</string>
     <string name="import_media_count">Importing media files %1$d%%&#8230;</string>
     <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
@@ -134,6 +138,7 @@
     <string name="dialog_continue">המשך</string>
     <string name="dialog_positive_create">יצירה</string>
     <string name="dialog_positive_delete">מחיקה</string>
+    <string name="dialog_positive_disable">השבתה</string>
     <string name="dialog_positive_overwrite">שכתוב</string>
     <string name="dialog_positive_remove">הסרה</string>
     <string name="dialog_positive_repair">תיקון</string>

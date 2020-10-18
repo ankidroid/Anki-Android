@@ -200,7 +200,6 @@
     <string name="read_write_permission_label">AnkiDroid データベースの読み書き</string>
     <string name="read_write_permission_description">ノート、カード、ノートタイプ、デッキへのアクセスや、それらの新規作成を行います。</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">カードブラウザー</string>
     <string name="card_browser_context_menu">AnkiDroid検索</string>
     <string name="context_menu_anki_card_label">Ankiカード</string>
 </resources>

@@ -46,7 +46,7 @@
     <string name="statistics">الإحصائيات</string>
     <string name="settings">الإعدادات</string>
     <string name="help">المساعدة</string>
-    <string name="send_feedback">إرسال الآراء والاقتراحات</string>
+    <string name="send_feedback">ارسل رأيك</string>
     <string name="studyoptions_due_today">المستحق اليوم:</string>
     <string name="studyoptions_new_total">مجموع البطاقات الجديدة:</string>
     <string name="studyoptions_total_cards">مجموع البطاقات:</string>
@@ -230,7 +230,6 @@
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة بيانات أنكيدرويد</string>
     <string name="read_write_permission_description">الوصول إلى الملحوظات الموجودة، والبطاقات، وأنواع الملحوظات، والرزم، بالإضافة إلى إنشاء أخرى</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">متصفح البطاقات</string>
     <string name="card_browser_context_menu">متصفح البطاقات</string>
     <string name="context_menu_anki_card_label">بطاقة أنكي</string>
 </resources>

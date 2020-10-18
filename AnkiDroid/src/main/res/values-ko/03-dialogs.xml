@@ -72,6 +72,7 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">카드 일정 다시 조정하기</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">Reschedule cards</item>
     </plurals>
@@ -89,6 +90,8 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">오류 보고하기</string>
     <string name="repair_deck_dialog">데이터베이스를 복구하시겠습니까?\n\n 복구를 시작하기 전에 지정된 하위폴더에 복사본 파일이 저장됩니다\'%s\'.</string>
+    <string name="intent_add_saved_information">저장된 데이터</string>
+    <string name="intent_add_clear_all">모두 지우기</string>
     <string name="intent_aedict_empty">\'기본값\' 카테고리가 비어 있습니다</string>
     <string name="intent_aedict_category">AnkiDroid에 카드를 추가하기 위해 모든 메모장 범주 삭제 또는 \'기본값\'으로 지정하기</string>
     <string name="custom_study_new_total_new">카드 묶음의 새로운 카드: %d</string>
@@ -100,6 +103,7 @@
     <string name="custom_study_random">카드 묶음으로부터 x개의 카드를 무작위로 고르기:</string>
     <string name="custom_study_preview">최근 x일 내에 추가된 카드를 미리 학습하기:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="rebuild_custom_study_deck">맞춤 학습 카드 묶음을 다시 섞는 중입니다.\n잠시만 기다려 주세요...</string>
     <string name="importing_collection">컬렉션 가져오는 중.\n잠시만 기다려 주세요...</string>
     <string name="import_media_count">미디어 파일 불러오는 중 %1$d%%\n잠시만 기다려 주세요...</string>
     <string name="import_progress">• 노트 가져오기: %1$d%%\n• 카드 가져오기: %2$d%%\n• 후처리: %3$d%%</string>
@@ -116,6 +120,7 @@
     <string name="dialog_continue">계속하기</string>
     <string name="dialog_positive_create">만들기</string>
     <string name="dialog_positive_delete">삭제</string>
+    <string name="dialog_positive_disable">사용 안 함</string>
     <string name="dialog_positive_overwrite">덮어쓰기</string>
     <string name="dialog_positive_remove">제거</string>
     <string name="dialog_positive_repair">복구</string>

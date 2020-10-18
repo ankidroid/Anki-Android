@@ -206,7 +206,6 @@
     <string name="read_write_permission_label">AnkiDroid ᱥᱟᱫᱠᱷᱤᱭᱟᱽ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱟᱨ ᱚᱞ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="read_write_permission_description">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ, ᱠᱟᱰ, ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱯᱨᱚᱠᱟᱨ ᱟᱨ ᱰᱮᱠ ᱚᱠ ᱦᱚᱠ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ ᱚᱱᱟ ᱥᱟᱞᱟᱜ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱦᱚᱸ ᱛᱮᱭᱟᱨ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
     <string name="card_browser_context_menu">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
     <string name="context_menu_anki_card_label">Anki ᱠᱟᱰ</string>
 </resources>

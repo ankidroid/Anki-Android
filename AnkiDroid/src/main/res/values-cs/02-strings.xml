@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Otevřít zásuvku</string>
+    <string name="drawer_close">Zavřít zásuvku</string>
+    <string name="CardEditorLaterMessage">Uložené informace na později</string>
     <string name="CardEditorCardDeck">Balíček karet:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
     <string name="CardEditorModel">Typ poznámky:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">Označit/odznačit všechny štítky</string>
     <string name="filter_tags">Filtrovat štítky</string>
     <string name="no_tags">Ještě jste nepřidali žádné štítky</string>
+    <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Odpojte USB pro přístup ke svým balíkům.</string>
     <string name="updated_version">Aktualizováno na verzi %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Uložit tabuli</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Doplňovačky budou fungovat pouze na typu poznámky Doplňovačka</string>
     <string name="saving_facts">Ukládání poznámky</string>
     <string name="saving_model">Ukládání typu poznámky</string>
+    <string name="add">Přidat</string>
     <string name="save">Uložit</string>
     <string name="close">Zavřít</string>
     <string name="select">Vybrat</string>
@@ -134,9 +139,11 @@
         <item quantity="many">%1$d minuty</item>
         <item quantity="other">%1$d minut</item>
     </plurals>
+    <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid karta</string>
     <string name="note_editor_add_note">Přidat poznámku</string>
     <string name="note_editor_copy_note">Kopírovat poznámku</string>
+    <string name="card_editor_copy_card">Kopírovat kartu</string>
     <string name="card_editor_reposition_card">Změnit pořadí</string>
     <string name="card_editor_reset_card">Obnovit proces učení</string>
     <string name="card_editor_reschedule_card">Přeplánovat</string>
@@ -150,6 +157,7 @@
         <item quantity="many">přidáno %d karty</item>
         <item quantity="other">přidáno %d karet</item>
     </plurals>
+    <string name="help_title">Nápověda</string>
     <string name="check_db">Zkontrolovat databázi</string>
     <string name="check_media">Zkontrolovat multimédia</string>
     <string name="empty_cards">Prázdné karty</string>
@@ -159,6 +167,7 @@
     <string name="delete_deck">Odstraňování balíčku...\nProsím čekejte.</string>
     <string name="show_hint">Zobrazit %s</string>
     <string name="info_rate">Ohodnotit AnkiDroid</string>
+    <string name="col_load_failed">Načítání kolekce se nezdařilo.\nStiskněte zpět pro zavření AnkiDroid.</string>
     <string name="import_title">Importuje se</string>
     <string name="import_select_title">Vyberte soubor k importu</string>
     <string name="import_message_add">Přidat</string>
@@ -269,6 +278,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba sdílení souboru apkg</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">Abyste mohli importovat tento soubor, musí být povolen V2 plánovač.</string>
+    <string name="import_cannot_with_v2">V2 plánovač nemůže importovat V1 balíčky, které obsahují plánování.</string>
     <string name="export_v2_dummy_note">Tento soubor vyžaduje novější verzi Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Načítání \'%s\' selhalo.</string>
@@ -298,7 +309,7 @@
     <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
     <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
     <string name="note_importer_error_empty_notes">Jedna nebo více poznámek nebyla importována, protože nevytvořila žádné karty. To se může stát, pokud máte prázdná pole nebo pokud jste nepřiřadili obsah textového souboru ke správným polím</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ měl %2$d polí, očekáváno %3$d</string>
     <string name="csv_importer_error_exception">Aborted: %s</string>
     <string name="user_is_a_robot">Zjištěn automatizovaný test. Pokud jste člověk, kontaktujte podporu AnkiDroid</string>
     <plurals name="note_importer_notes_added">
@@ -322,19 +333,19 @@
     <!-- JS api -->
     <string name="api_version_developer_contact">Tato karta používá nepodporované funkce AnkiDroid. Kontaktujte vývojáře %1$s nebo si prohlédněte wiki. %2$s</string>
     <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="valid_js_api_version">Neplatná verze AnkiDroid JS API. Kontaktujte vývojáře %s, nebo se podívejte na wiki</string>
+    <string name="update_js_api_version">Je dostupná aktualizace AnkiDroid JS API. Kontaktujte vývojáře %s, nebo se podívejte na wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
     <string name="anki_js_error_code">(Kód chyby: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
     <string name="card_viewer_could_not_find_image_get_help">Nápověda</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
+    <string name="deck_picker_failed_deck_load">Nepodařilo se načíst balíček „%s“</string>
     <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview_title">Kritická chyba</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid spoléhá na systémový WebView, který je nedostupný. K tomu může dojít, jestliže systém instaluje aktualizace. Zkuste to prosím znovu za pár minut.\n\n%s</string>
 </resources>

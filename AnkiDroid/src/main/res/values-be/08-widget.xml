@@ -47,7 +47,6 @@
         <item quantity="other">Засталося %d карткі</item>
     </plurals>
     <string name="widget_small">Маленькі AnkiDroid</string>
-    <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d картка ў чарзе</item>
         <item quantity="few">%d карткі ў чарзе</item>

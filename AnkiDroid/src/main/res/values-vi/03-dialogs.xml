@@ -72,6 +72,7 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Lên lịch lại cho thẻ</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">Reschedule cards</item>
     </plurals>
@@ -89,6 +90,8 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Báo cáo lỗi</string>
     <string name="repair_deck_dialog">Bạn có thực sự muốn sửa chữa cơ sở dữ liệu? \n\nTrước khi bắt đầu, một bản sao sẽ được tạo trong thư mục con \"%s\".</string>
+    <string name="intent_add_saved_information">Dữ liệu đã lưu</string>
+    <string name="intent_add_clear_all">Xoá toàn bộ</string>
     <string name="intent_aedict_empty">Danh mục \"mặc định\" rỗng</string>
     <string name="intent_aedict_category">Để thêm thẻ vào AnkiDroid, hãy xoá toàn bộ danh mục Notepad hoặc thêm danh mục tên \"mặc định\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -100,6 +103,7 @@
     <string name="custom_study_random">Chọn ngẫu nhiên x thẻ từ bộ:</string>
     <string name="custom_study_preview">Xem trước thẻ mới được thêm vào x ngày trước:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="rebuild_custom_study_deck">Đang dựng lại bộ thẻ học tuỳ chọn&#8230;</string>
     <string name="importing_collection">Đang nhập bộ sưu tập&#8230;</string>
     <string name="import_media_count">Đang nhập các tệp đa phương tiện %1$d%%&#8230;</string>
     <string name="import_progress">• Đang nhập các ghi chú: %1$d%%\n• Đang nhập các thẻ: %2$d%%\n• Đang hậu xử lý: %3$d%%</string>
@@ -116,6 +120,7 @@
     <string name="dialog_continue">Tiếp tục</string>
     <string name="dialog_positive_create">Tạo</string>
     <string name="dialog_positive_delete">Xoá</string>
+    <string name="dialog_positive_disable">Tắt</string>
     <string name="dialog_positive_overwrite">Ghi đè</string>
     <string name="dialog_positive_remove">Xoá</string>
     <string name="dialog_positive_repair">Sửa chữa</string>

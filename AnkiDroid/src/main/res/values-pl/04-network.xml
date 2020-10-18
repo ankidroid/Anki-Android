@@ -44,14 +44,16 @@
     <string name="sync_error">Błąd synchronizacji</string>
     <string name="vague_error">Błąd</string>
     <string name="retry">Próbuj ponownie</string>
-    <string name="cancel">Anuluj</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Warunki użytkowania</a></string>
     <string name="menu_get_shared_decks">Pobierz udostępniane talie</string>
     <string name="connection_error_message">Wystąpił błąd sieciowy.</string>
     <string name="not_logged_in_title">Zaloguj się do AnkiWeb</string>
     <string name="login_create_account_message">Musisz zalogować się na konto zewnętrznego serwisu aby korzystać z usługi synchronizacji w chmurze. Możesz utworzyć nowe konto w następnym kroku.</string>
     <!-- MyAccount.java -->
     <string name="username">Adres e-mail</string>
+    <string name="username_repeat">Powtórz adres e-mail</string>
     <string name="password">Hasło</string>
+    <string name="password_repeat">Powtórz hasło</string>
     <string name="log_in">Zaloguj się</string>
     <string name="sign_up_description">Nie masz konta AnkiWeb? Jest darmowe!</string>
     <string name="sign_up_not_affiliated">Uwaga: AnkiWeb nie jest powiązane z AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Synchronizacja</string>
     <string name="sync_downloading_media">Pobieranie mediów %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Pełna synchronizacja do serwera</string>
-    <string name="sync_log_downloading_message">Pełna synchronizacja z serwera</string>
     <string name="sync_log_clocks_unsynchronized">Zegar na Twoim urządzeniu działa nieprawidłowo (o %1$d sekund%2$s); synchronizacja wymaga prawidłowego ustawienia zegara i strefy czasowej aby uniknąć błędów. Upewnij się, że w Twoim telefonie data, czas i Twoja strefa czasowa są ustawione prawidłowo i spróbuj ponownie zsynchronizować.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, być może źle ustawiono strefę czasową</string>
     <string name="sync_log_clocks_unsynchronized_date">, być może źle ustawiono datę</string>

@@ -75,6 +75,7 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Презакажување на картичка</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -95,6 +96,8 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Пријавете грешка</string>
     <string name="repair_deck_dialog">Дали навистина сакате да се обидете да ја поправите базата на податоци?\n\nПред да го започнете обидот, копијата ќе биде креирана во подпапката \"%s\".</string>
+    <string name="intent_add_saved_information">Зачувани податоци</string>
+    <string name="intent_add_clear_all">Исчистете се</string>
     <string name="intent_aedict_empty">Категоријата \"default\" е празна</string>
     <string name="intent_aedict_category">За да додадете картички на AnkiDroid, отстранете ги сите обележени категории или додадете еден по име \"default\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -106,6 +109,7 @@
     <string name="custom_study_random">Изберете x картички по случаен избор од deck:</string>
     <string name="custom_study_preview">Преглед на нови картички додадени во последните x дена:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="rebuild_custom_study_deck">Обнова на прилагодената студија на deck&#8230;</string>
     <string name="importing_collection">Внесување колекција&#8230;</string>
     <string name="import_media_count">Внесување на медиумски датотеки %1$d%%&#8230;</string>
     <string name="import_progress">• Внесување на белешки: %1$d%%\n• Внесување картички: %2$d%%\n• Пост-обработка: %3$d%%</string>
@@ -122,6 +126,7 @@
     <string name="dialog_continue">Продолжи</string>
     <string name="dialog_positive_create">Креирај</string>
     <string name="dialog_positive_delete">Избриши</string>
+    <string name="dialog_positive_disable">Оневозможено</string>
     <string name="dialog_positive_overwrite">Пребриши</string>
     <string name="dialog_positive_remove">Отстрани</string>
     <string name="dialog_positive_repair">Поправка</string>

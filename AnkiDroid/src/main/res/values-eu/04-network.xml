@@ -44,14 +44,16 @@
     <string name="sync_error">Sync error</string>
     <string name="vague_error">Errorea</string>
     <string name="retry">Saiatu berriro</string>
-    <string name="cancel">Utzi</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">Sare akats bat gertatu da</string>
     <string name="not_logged_in_title">Saioa hasi AnkiWeb-en</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.java -->
     <string name="username">E-mail helbidea</string>
+    <string name="username_repeat">Errepikatu korreo elektronikoaren helbidea</string>
     <string name="password">Pasahitza</string>
+    <string name="password_repeat">Errepikatu pasahitza</string>
     <string name="log_in">Hasi saioa</string>
     <string name="sign_up_description">Ez daukazu AnkiWeb konturik? Doainekoa da!</string>
     <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Sinkronizazioa</string>
     <string name="sync_downloading_media">Downloading media %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Full sync from local</string>
-    <string name="sync_log_downloading_message">Full sync from server</string>
     <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, the time zone’s possibly wrong</string>
     <string name="sync_log_clocks_unsynchronized_date">, the date’s possibly wrong</string>

@@ -206,7 +206,6 @@
     <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
     <string name="read_write_permission_description">acceder a notas, tarjetas, tipo de notas, y mazos existentes, así como crear otros nuevos</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Navegador de la tarjeta</string>
     <string name="card_browser_context_menu">Navegador de la tarjeta</string>
     <string name="context_menu_anki_card_label">Tarjeta Anki</string>
 </resources>

@@ -75,6 +75,7 @@
         <item quantity="other">%d kaarten gereset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Kaart herplannen</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Kaart herplannen</item>
         <item quantity="other">Kaarten herplannen</item>
@@ -95,6 +96,8 @@
     <string name="answering_error_message">Het schrijven naar de collectie is mislukt. De database kan corrupt zijn of er is onvoldoende opslagruimte op de schijf.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn. Gelieve de fout te melden zodat we dit kunnen controleren.</string>
     <string name="answering_error_report">Fout melden</string>
     <string name="repair_deck_dialog">Weet u zeker dat wilt proberen de database te repareren?\n\nVoordat dit wordt geprobeerd, wordt een kopie gemaakt in de submap \'%s\'.</string>
+    <string name="intent_add_saved_information">opgelagen data</string>
+    <string name="intent_add_clear_all">Alles legen</string>
     <string name="intent_aedict_empty">Categorie \'standaard\' is leeg</string>
     <string name="intent_aedict_category">Om kaarten aan AnkiDroid toe te voegen verwijder je alle Notepad categorieën of voeg een toe met de naam \'standaard\'</string>
     <string name="custom_study_new_total_new">Nieuwe kaarten in set: %d</string>
@@ -106,6 +109,7 @@
     <string name="custom_study_random">Kies willekeurig x kaarten uit de set:</string>
     <string name="custom_study_preview">Voorbeschouw nieuwe kaarten toegevoegd in de laatste x dagen:</string>
     <string name="custom_study_rebuild_deck_corrupt">De aangepaste studieset kon niet opnieuw worden opgebouwd</string>
+    <string name="rebuild_custom_study_deck">Bezig de aangepaste studieset te maken.\nEven geduld...</string>
     <string name="importing_collection">Collectie aan het importeren.\nGelieve even te wachten&#8230;</string>
     <string name="import_media_count">Mediabestanden aan het importeren %1$d%%\nGelieve even te wachten&#8230;</string>
     <string name="import_progress">• Importeren notities: %1$d%%\n• Importeren kaarten: %2$d%%\n• Post-processing: %3$d%%</string>
@@ -122,6 +126,7 @@
     <string name="dialog_continue">Doorgaan</string>
     <string name="dialog_positive_create">Maak</string>
     <string name="dialog_positive_delete">Verwijder</string>
+    <string name="dialog_positive_disable">Uitschakelen</string>
     <string name="dialog_positive_overwrite">Overschrijven</string>
     <string name="dialog_positive_remove">Verwijderen</string>
     <string name="dialog_positive_repair">Repareer</string>

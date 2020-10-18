@@ -46,16 +46,19 @@
     <!--Browser-->
     <string name="model_browser_delete">Odstranit typ poznámky</string>
     <string name="model_browser_rename">Přejmenovat</string>
+    <string name="model_browser_options">Možnosti</string>
     <string name="model_browser_template">Upravit karty</string>
     <string name="model_browser_add">Přidat typ poznámky</string>
     <!--Rename-->
     <string name="rename_model">Přejmenovat typ poznámky</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Upravit pole</string>
     <string name="model_field_editor_add">Přidat pole</string>
     <string name="model_field_editor_delete">Odstranit pole</string>
+    <string name="model_field_editor_options">Možnosti pole</string>
     <string name="model_field_editor_rename">Přejmenovat pole</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Změna umístění pole</string>

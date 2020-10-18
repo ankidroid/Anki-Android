@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Fiók megnyitása</string>
+    <string name="drawer_close">Fiók bezárása</string>
+    <string name="CardEditorLaterMessage">Információk későbbre elmentve</string>
     <string name="CardEditorCardDeck">Kártyapakli:</string>
     <string name="CardEditorNoteDeck">Pakli:</string>
     <string name="CardEditorModel">Típus:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">Címkék jelölése ki/be</string>
     <string name="filter_tags">Címkék szűrése</string>
     <string name="no_tags">Még nem hoztál létre címkéket</string>
+    <string name="sdcard_missing_message">Az SD kártya nem elérhető, mert USB háttérként van használatban. Válaszd le az USB-ről a készüléket, hogy hozzáférhess a paklikhoz.</string>
     <string name="updated_version">%s verzióra frissítve</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Rajztábla mentése</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">A kitöltő törlések csak a kitöltő jegyzet típuson működnek</string>
     <string name="saving_facts">Jegyzet mentése</string>
     <string name="saving_model">Jegyzettípus mentése</string>
+    <string name="add">Hozzáadás</string>
     <string name="save">Mentés</string>
     <string name="close">Bezárás</string>
     <string name="select">Kiválasztás</string>
@@ -130,9 +135,11 @@
         <item quantity="one">%1$d perc</item>
         <item quantity="other">%1$d perc</item>
     </plurals>
+    <string name="studyoptions_welcome_title">Üdv az AnkiDroidban!</string>
     <string name="fact_adder_intent_title">AnkiDroid Kártya</string>
     <string name="note_editor_add_note">Jegyzet hozzáadása</string>
     <string name="note_editor_copy_note">Jegyzet másolása</string>
+    <string name="card_editor_copy_card">Kártya másolása</string>
     <string name="card_editor_reposition_card">Áthelyezés</string>
     <string name="card_editor_reset_card">Reset folyamat</string>
     <string name="card_editor_reschedule_card">Átütemezés</string>
@@ -144,6 +151,7 @@
         <item quantity="one">%d kártya hozzáadva</item>
         <item quantity="other">%d kártyák hozzáadva</item>
     </plurals>
+    <string name="help_title">Segítség</string>
     <string name="check_db">Adatbázis ellenőrzése</string>
     <string name="check_media">Média ellenőrzése</string>
     <string name="empty_cards">Üres kártyák listája</string>
@@ -153,6 +161,7 @@
     <string name="delete_deck">Pakli törlése...\nKérlek, várj...</string>
     <string name="show_hint">Mutass %s</string>
     <string name="info_rate">AnkiDroid értékelése</string>
+    <string name="col_load_failed">A gyűjtemény betöltése sikertelen.\nAz AnkiDroid bezárásához nyomd meg a vissza gombot.</string>
     <string name="import_title">Importálás</string>
     <string name="import_select_title">Válassz egy importálandó fájlt</string>
     <string name="import_message_add">Hozzáadás</string>
@@ -249,6 +258,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Hiba történt az apkg fájl megosztásakor</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">A V2 ütemező be kell hogy legyen kapcsolva, hogy importálni tudja ezt a fájlt.</string>
+    <string name="import_cannot_with_v2">A V2 ütemező nem tudja importálni a V1-es kártyákat, ha be van kapcsolva az ütemező.</string>
     <string name="export_v2_dummy_note">A fájlhoz egy újabb Anki verzió szükséges.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' betöltése sikertelen.</string>
@@ -305,7 +316,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Hiba történt a hibakeresési információk vágólapra másolása közben</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
+    <string name="card_viewer_could_not_find_image_get_help">Súgó</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">A(z) \'%s\' pakli betöltése nem sikerült</string>
     <string name="search_decks">Keresés a paklikban</string>

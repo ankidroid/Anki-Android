@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Less than %d MB space on your SD card left.\nFree some space to avoid data loss.</string>
+    <string name="backup_delete">Deleting backups&#8230;</string>
     <string name="backup_restore">Restore from backup</string>
     <string name="backup_new_collection">Bilduma berria</string>
     <string name="backup_del_collection">Delete collection and create new one</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Aukerak</string>
     <string name="backup_retry_opening">Retry opening</string>
     <string name="backup_error_menu_repair">Repair database</string>
-    <string name="backup_repair_deck">Konpondu</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Repairing database&#8230;</string>
     <string name="backup_error">Errorea</string>

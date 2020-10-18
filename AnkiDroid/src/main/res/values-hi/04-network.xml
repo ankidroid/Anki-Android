@@ -44,14 +44,16 @@
     <string name="sync_error">समकालन में त्रुटि</string>
     <string name="vague_error">त्रुटि</string>
     <string name="retry">पुनः प्रयास करें</string>
-    <string name="cancel">रद्द करें</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms"> नियम और शर्तें</a></string>
     <string name="menu_get_shared_decks">साझा किए गए डेक पाएँ</string>
     <string name="connection_error_message">कोई नेटवर्क त्रुटि हुई</string>
     <string name="not_logged_in_title">AnkiWeb में लॉग इन करें</string>
     <string name="login_create_account_message">क्लाउड समकालन सेवा का उपयोग करने के लिए आपको किसी तीसरा पक्ष खाते में लॉग इन करना होगा। आप अगले चरण में खाता बना सकते हैं।</string>
     <!-- MyAccount.java -->
     <string name="username">ईमेल पता</string>
+    <string name="username_repeat">ईमेल पता दोहराएँ</string>
     <string name="password">पासवर्ड</string>
+    <string name="password_repeat">पासवर्ड दोहराएँ</string>
     <string name="log_in">लॉग इन करें</string>
     <string name="sign_up_description">AnkiWeb खाता नहीं है? यह मुफ़्त है!</string>
     <string name="sign_up_not_affiliated">नोट: AnkiWeb AnkiDroid से सम्बंधित नहीं है</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">समकालन</string>
     <string name="sync_downloading_media">डाउनलोडिंग मीडिया %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">स्थानीय से पूर्ण सिंक्रनाइज़ेशन</string>
-    <string name="sync_log_downloading_message">स्थानीय से पूर्ण सिंक्रनाइज़ेशन</string>
     <string name="sync_log_clocks_unsynchronized">अपनी घड़ी %1$d seconds%2$s द्वारा बंद है । सुनिश्चित करें कि आपके फ़ोन पर दिनांक, समय और क्षेत्र सही तरीके से सेट हैं, फिर पुन: सिंक्रनाइज़ करें ।</string>
     <string name="sync_log_clocks_unsynchronized_tz">, समय ज़ोन संभवत: गलत</string>
     <string name="sync_log_clocks_unsynchronized_date">, तारीख संभवत: गलत</string>

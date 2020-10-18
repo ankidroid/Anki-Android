@@ -44,14 +44,16 @@
     <string name="sync_error">Susinchronizuoti nepavyko</string>
     <string name="vague_error">Klaida</string>
     <string name="retry">Bandyti dar kartą</string>
-    <string name="cancel">Atšaukti</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Naudojimo sąlygos</a></string>
     <string name="menu_get_shared_decks">Gauti pasidalintų rinkinių</string>
     <string name="connection_error_message">Atsirado tinklo klaida</string>
     <string name="not_logged_in_title">Prisijunkite prie „AnkiWeb“</string>
     <string name="login_create_account_message">Norėdami naudoti debesijos sinchronizavimo paslaugą, privalote prisijungti prie trečiosios šalies paskyros. Ją galite susikurti sekančiame etape.</string>
     <!-- MyAccount.java -->
     <string name="username">El. pašto adresas</string>
+    <string name="username_repeat">Pakartokite el. pašto adresą</string>
     <string name="password">Slaptažodis</string>
+    <string name="password_repeat">Pakartokite slaptažodį</string>
     <string name="log_in">Prisijungti</string>
     <string name="sign_up_description">Nesate susikūrę „AnkiWeb“ paskyros? Tai padaryti galite nemokamai!</string>
     <string name="sign_up_not_affiliated">Pastaba: „AnkiWeb“ nėra susijusi su „AnkiDroid“</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Sinchronizavimas</string>
     <string name="sync_downloading_media">Laikmenos parsiunčiamos %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Išsamus sinchronizavimas iš įrenginio</string>
-    <string name="sync_log_downloading_message">Išsamus sinchronizavimas iš serverio</string>
     <string name="sync_log_clocks_unsynchronized">Jūsų laikrodis atsilieka %1$d sek.%2$s. Prašome įsitikinti, kad telefone laikas ir laiko juosta yra nustatyti teisingai ir bandyti sinchronizuoti iš naujo.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, gali būti, kad blogai nustatyta laiko juosta</string>
     <string name="sync_log_clocks_unsynchronized_date">, gali būti, kad blogai nustatyta data</string>

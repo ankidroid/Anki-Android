@@ -44,14 +44,16 @@
     <string name="sync_error">Chyby synchronizace</string>
     <string name="vague_error">Chyba</string>
     <string name="retry">Opakovat</string>
-    <string name="cancel">Zrušit</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Obchodní podmínky</a></string>
     <string name="menu_get_shared_decks">Získat sdílené balíčky</string>
     <string name="connection_error_message">Došlo k síťové chybě.</string>
     <string name="not_logged_in_title">Přihlasit se k AnkiWeb</string>
     <string name="login_create_account_message">Musíte se přihlásit ke svému účtu AnkiWeb, abyste mohli sychronizovat svá data v cloudu. Účet můžete vytvořit v dalším kroku.</string>
     <!-- MyAccount.java -->
     <string name="username">Emailová adresa</string>
+    <string name="username_repeat">Zopakujte e-mailovou adresu</string>
     <string name="password">Heslo</string>
+    <string name="password_repeat">Opakujte heslo</string>
     <string name="log_in">Přihlášení</string>
     <string name="sign_up_description">Nemáte ještě účet AnkiWeb? Je zdarma.</string>
     <string name="sign_up_not_affiliated">Poznámka: Služba AnkiWeb není součástí AnkiDroid a naopak. Jedná se o dvě samostatné služby</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Synchronizace</string>
     <string name="sync_downloading_media">Stahování multimédií %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Úplná synchronizace z místního úložiště</string>
-    <string name="sync_log_downloading_message">Plná synchronizace ze serveru</string>
     <string name="sync_log_clocks_unsynchronized">Čas na vašem zařízení je rozdílný o %1$d sekund %2$s; Synchronizace vyžaduje nastavení času i časového pásma, aby nedocházelo k chybám. Prosím zkontrolujte, zda je správně nastaven datum, čas a časové pásmo na telefonu, pak znovu synchronizujte.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo přístroje je pravděpodobně špatné</string>
     <string name="sync_log_clocks_unsynchronized_date">, datum na přístroji je pravděpodobně chybné</string>

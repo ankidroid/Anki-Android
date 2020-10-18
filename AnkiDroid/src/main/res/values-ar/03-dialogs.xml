@@ -87,6 +87,7 @@
         <item quantity="other">تم تصفير %d بطاقة</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">إعادة جدولة البطاقة</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="zero">إعادة جدولة بطاقة</item>
         <item quantity="one">إعادة جدولة بطاقة</item>
@@ -119,6 +120,8 @@
     <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا كان هذا يحدث غالبًا، جرب فحص قاعدة البيانات، أو إصلاح المجموعة، أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في أنكي درويد ربما؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
     <string name="answering_error_report">إبلاغ عن الخطأ</string>
     <string name="repair_deck_dialog">هل تريد حقًا إصلاح قاعدة البيانات؟\n\nقبل بدء هذه المحاولة، ستُنشَأ نسخة في المجلد الفرعي “%s”.</string>
+    <string name="intent_add_saved_information">بيانات محفوظة</string>
+    <string name="intent_add_clear_all">مسح الكل</string>
     <string name="intent_aedict_empty">تصنيف “default” فارغ</string>
     <string name="intent_aedict_category">لإضافة بطاقات إلى أنكيدرويد، أزل كل تصنيفات المفكرة أو أضف تصنيفًا باسم “default”</string>
     <string name="custom_study_new_total_new">البطاقات الجديدة في الرزمة: %d</string>
@@ -130,6 +133,7 @@
     <string name="custom_study_random">اختر س بطاقة من الرزمة عشوائيًا:</string>
     <string name="custom_study_preview">عاين البطاقات الجديدة المضافة في آخر س يوم:</string>
     <string name="custom_study_rebuild_deck_corrupt">تعذرت إعادة إنشاء رزمة الدراسة المخصصة</string>
+    <string name="rebuild_custom_study_deck">تجري إعادة إنشاء رزمة الدراسة المخصصة&#8230;</string>
     <string name="importing_collection">يجري استيراد المجموعة&#8230;</string>
     <string name="import_media_count">يجري استيراد ملفات الوسائط %1$d&#8230;</string>
     <string name="import_progress">• استيراد الملحوظات: %1$d%%\n• استيراد البطاقات: %2$d%%\n• بعد المعالجة: %3$d%%</string>
@@ -146,6 +150,7 @@
     <string name="dialog_continue">استمرار</string>
     <string name="dialog_positive_create">إنشاء</string>
     <string name="dialog_positive_delete">حذف</string>
+    <string name="dialog_positive_disable">تعطيل</string>
     <string name="dialog_positive_overwrite">استبدال</string>
     <string name="dialog_positive_remove">إزالة</string>
     <string name="dialog_positive_repair">إصلاح</string>

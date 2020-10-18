@@ -44,14 +44,16 @@
     <string name="sync_error">Napaka sinhronizacije</string>
     <string name="vague_error">Napaka</string>
     <string name="retry">Poizkusi znova</string>
-    <string name="cancel">Prekliči</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Pogoji storitve</a></string>
     <string name="menu_get_shared_decks">Dobi deljene komplete</string>
     <string name="connection_error_message">Pojavila se je omrežna napaka</string>
     <string name="not_logged_in_title">Prijavite se v AnkiWeb</string>
     <string name="login_create_account_message">Za uporabo storitve sinhronizacije v oblaku se morate prijaviti v račun tretje osebe. Enega lahko ustvarite v naslednjem koraku.</string>
     <!-- MyAccount.java -->
     <string name="username">E-poštni naslov</string>
+    <string name="username_repeat">Ponovite e-poštni naslov</string>
     <string name="password">Geslo</string>
+    <string name="password_repeat">Ponovite geslo</string>
     <string name="log_in">Prijava</string>
     <string name="sign_up_description">Še nimate računa AnkiWeb? Je brezplačen!</string>
     <string name="sign_up_not_affiliated">Opomba: AnkiWeb ni povezan z AnkiDroidom</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Sinhronizacija</string>
     <string name="sync_downloading_media">Prejemanje predstavnosti %1$d/%2$d &#8230;</string>
     <string name="sync_log_uploading_message">Polna sin. iz lokalne pom. naprave</string>
-    <string name="sync_log_downloading_message">Polna sinhronizacija iz strežnika</string>
     <string name="sync_log_clocks_unsynchronized">Vaša ura je zamaknjena za %1$d s%2$s. Prepričajte se, da so datum, čas in časovni pas na vašem telefonu pravilno nastavljeni in potem sinhronizirajte znova.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, časovni pas je verjetno napačen</string>
     <string name="sync_log_clocks_unsynchronized_date">, datum je verjetno napačen</string>

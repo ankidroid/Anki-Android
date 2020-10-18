@@ -45,7 +45,6 @@
         <item quantity="other">%d lernendaj AnkiDroid-kartoj</item>
     </plurals>
     <string name="widget_small">AnkiDroid malgranda</string>
-    <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d lernenda karto</item>
         <item quantity="other">%d lernendaj kartoj</item>

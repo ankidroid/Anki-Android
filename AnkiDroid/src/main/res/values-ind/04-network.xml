@@ -44,14 +44,16 @@
     <string name="sync_error">Galat mensinkronisasi</string>
     <string name="vague_error">Galat</string>
     <string name="retry">Coba Lagi</string>
-    <string name="cancel">Batal</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/ account /terms"> Syarat dan ketentuan </a></string>
     <string name="menu_get_shared_decks">Cari dek dibagi bersama</string>
     <string name="connection_error_message">Telah terjadi galat jaringan.</string>
     <string name="not_logged_in_title">Masuk ke AnkiWeb</string>
     <string name="login_create_account_message">Kamu harus masuk ke akun pihak ketiga untuk menggunakan layanan sinkronisasi awan. Kamu bisa membuatnya di langkah berikutnya.</string>
     <!-- MyAccount.java -->
     <string name="username">Alamat surel</string>
+    <string name="username_repeat">Ulangi alamat surel</string>
     <string name="password">Kata Sandi</string>
+    <string name="password_repeat">Ulangi kata sandi</string>
     <string name="log_in">Masuk</string>
     <string name="sign_up_description">Belum punya akun AnkiWeb? Gratis!</string>
     <string name="sign_up_not_affiliated">Catatan: AnkiWeb tidak berafiliasi dengan AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Sinkronisasi</string>
     <string name="sync_downloading_media">Mengunduh media %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Sinkronisasi penuh dari lokal</string>
-    <string name="sync_log_downloading_message">Sinkronisasi penuh dari server</string>
     <string name="sync_log_clocks_unsynchronized">Jam perangkatmu meleset sebesar %1$d detik %2$s. Pastikan tanggal, waktu, dan zona waktu pada teleponmu sudah benar, lalu sinkronkan lagi.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, zona waktunya mungkin salah</string>
     <string name="sync_log_clocks_unsynchronized_date">, tanggalnya mungkin salah</string>

@@ -44,14 +44,16 @@
     <string name="sync_error">Грешка при синхронизацията</string>
     <string name="vague_error">Грешка</string>
     <string name="retry">Повторен опит</string>
-    <string name="cancel">Отказ</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Правила и условия</a></string>
     <string name="menu_get_shared_decks">Вземете споделени тестета</string>
     <string name="connection_error_message">Възникна мрежова грешка.</string>
     <string name="not_logged_in_title">Влезте в AnkiWeb</string>
     <string name="login_create_account_message">Трябва да влезете като трето лице, за да използвате услугата за синхронизиране в облака. Можете да създадете един в следващия етап.</string>
     <!-- MyAccount.java -->
     <string name="username">Email адрес</string>
+    <string name="username_repeat">Повторете email адрес</string>
     <string name="password">Парола</string>
+    <string name="password_repeat">Повторете паролата</string>
     <string name="log_in">Влизане</string>
     <string name="sign_up_description">Нямате AnkiWeb профил? Безплатно е!</string>
     <string name="sign_up_not_affiliated">Забележка: AnkiWeb няма връзка с AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Синхронизация</string>
     <string name="sync_downloading_media">Изтегляне на мултимедийни %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Пълно синхронизиране от местни</string>
-    <string name="sync_log_downloading_message">Пълно синхронизиране от сървъра</string>
     <string name="sync_log_clocks_unsynchronized">Вашият часовник е неправилен с %1$d секунди%2$s. Уверете се, че датата, часа и часовата зона на телефона са зададени правилно и тогава синхронизирайте отново.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, часовата зона на устройството е вероятно грешна</string>
     <string name="sync_log_clocks_unsynchronized_date">, датата на устройството е вероятно грешна</string>

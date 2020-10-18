@@ -46,13 +46,19 @@
     <string name="card_browser_all_decks">Ĉiuj kartaroj</string>
     <string name="card_browser_delete_card">Forigi notojn</string>
     <string name="card_browser_suspend_card">Kaŝi karton daŭre</string>
+    <string name="card_browser_toggle_suspend_card">(mal)kaŝi kartojn</string>
     <string name="card_browser_change_deck">Ŝanĝi kartaron</string>
     <string name="card_browser_unsuspend_card">Malkaŝi kartojn</string>
     <string name="card_browser_mark_card">Marki notojn</string>
     <string name="card_browser_flag">Flagi</string>
+    <string name="card_browser_toggle_mark_card">(mal)marki notojn</string>
     <string name="card_browser_unmark_card">Malmarki notojn</string>
     <string name="delete_card_title">Ĉu forigi noton?</string>
+    <string name="delete_cards_title">Ĉu forigi notojn?</string>
+    <string name="delete_card_message">Ĉu forigi ĉiujn kartojn de tiu ĉi noto?\nSerĉ-kampo: %s</string>
+    <string name="delete_card_mult_message">Ĉu forigi ĉiujn kartojn de ĉiuj elektitaj notoj?\n(ne nur elektitaj kartoj)</string>
     <string name="changed_deck_message">Movis al %s</string>
+    <string name="card_browser_suspended_cards">(mal)kaŝis kartojn</string>
     <string name="card_browser_show_marked">Filtri markitajn</string>
     <string name="card_browser_show_suspended">Filtri daŭre kaŝitajn</string>
     <string name="card_browser_search_by_tag">Filtri laŭ etikedo</string>
@@ -72,6 +78,7 @@
     <string name="card_details_answer">Respondo</string>
     <string name="card_details_due">Lernendaj</string>
     <string name="card_details_tags">Etikedoj</string>
+    <string name="card_browser_filtering_cards">Filtrado de etikedoj&#8230;\nPremu reen-butonon por rezigni</string>
     <string-array name="card_browser_order_labels">
         <item>Sen ordigo (pli rapide)</item>
         <item>Laŭ ordig-kampon</item>

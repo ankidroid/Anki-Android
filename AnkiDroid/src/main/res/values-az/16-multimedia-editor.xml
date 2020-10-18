@@ -66,7 +66,7 @@
     <string name="multimedia_editor_poweredbeolingus">Beolingus tərəfindən təmin edilir</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text">Mətn</string>
+    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Mətn</string>
     <string name="multimedia_editor_field_editing_image">Təsvir</string>
     <string name="multimedia_editor_field_editing_audio">Audio recording</string>
     <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>

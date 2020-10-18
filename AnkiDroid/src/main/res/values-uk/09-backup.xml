@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Резервну копію не збережено. Не достатньо місця у сховищі. Зменьшіть глибину резервного копіювання або видаліть інші файли.</string>
     <string name="sd_space_warning">Менше ніж  %d Мб простору залишилось на карті пам’яті.\n Звільніть трохи місця, щоб вберегтися від втрати даних.</string>
+    <string name="backup_delete">Видалення резервних копій.\nБудь ласка, чекайте...</string>
     <string name="backup_restore">Відновити з резервної копії</string>
     <string name="backup_new_collection">Нова колекція</string>
     <string name="backup_del_collection">Видалити колекцію та створити нову</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Параметри</string>
     <string name="backup_retry_opening">Спробувати відкрити повторно</string>
     <string name="backup_error_menu_repair">Відлагодити базу даних</string>
-    <string name="backup_repair_deck">Відлагодити</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Відлагодження бази даних.\nБудь ласка, чекайте...</string>
     <string name="backup_error">Помилка</string>

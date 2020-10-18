@@ -75,6 +75,7 @@
         <item quantity="other">%d कार्ड रीसेट हुआ</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">कार्ड पुनर्निर्धारित करें</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">कार्ड पुनर्निर्धारित करें</item>
         <item quantity="other">कार्ड पुनर्निर्धारित करें</item>
@@ -95,6 +96,8 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">त्रुटि की सूचना दें</string>
     <string name="repair_deck_dialog">क्या आप वास्तव में डेटाबेस को सुधारने का प्रयास करना चाहते हैं? \n\nBefore प्रयास प्रारंभ कर रहा है, एक प्रतिलिपि सबफ़ोल्डर \"%s\" में बनाया जाएगा ।</string>
+    <string name="intent_add_saved_information">सहेजा गया डेटा</string>
+    <string name="intent_add_clear_all">सभी साफ़ करें</string>
     <string name="intent_aedict_empty">श्रेणी \"डिफ़ॉल्ट\" रिक्त है</string>
     <string name="intent_aedict_category">AnkiDroid में कार्ड जोड़ने के लिए सभी नोटपैड श्रेणियों को हटाएँ या एक \"डिफ़ॉल्ट\" नामक पत्ता जोड़ें</string>
     <string name="custom_study_new_total_new">डेक में नए पत्ते: %d</string>
@@ -106,6 +109,7 @@
     <string name="custom_study_random">डेक से यादृच्छिक रूप से एक्स कार्ड का चयन करें:</string>
     <string name="custom_study_preview">पिछले x दिनों में जोड़े गए नए कार्ड का पूर्वावलोकन करें:</string>
     <string name="custom_study_rebuild_deck_corrupt">कस्टम अध्ययन डेक का पुनर्निर्माण नहीं किया जा सका</string>
+    <string name="rebuild_custom_study_deck">कस्टम अध्ययन डेक के पुनर्निर्माण.. ।</string>
     <string name="importing_collection">संग्रह आयात कर रहा है.. ।</string>
     <string name="import_media_count">मीडिया फ़ाइलें आयात कर रहा है %1$d%%.. ।</string>
     <string name="import_progress">• आयात नोट्स: %1$d%% \ n • कार्ड आयात: %2$d%% \ n • पोस्ट-प्रोसेसिंग: %3$d%%</string>
@@ -122,6 +126,7 @@
     <string name="dialog_continue">जारी रखें</string>
     <string name="dialog_positive_create">बनाएँ</string>
     <string name="dialog_positive_delete">हटाएँ</string>
+    <string name="dialog_positive_disable">डिसेबल</string>
     <string name="dialog_positive_overwrite">उपरिलेखित करें</string>
     <string name="dialog_positive_remove">हटाएं</string>
     <string name="dialog_positive_repair">सुधारें</string>

@@ -46,13 +46,19 @@
     <string name="card_browser_all_decks">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱚᱠ</string>
     <string name="card_browser_delete_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
     <string name="card_browser_suspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
+    <string name="card_browser_toggle_suspend_card">(ᱵᱟᱝ)ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
     <string name="card_browser_change_deck">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="card_browser_unsuspend_card">ᱵᱚᱹᱫ ᱠᱩᱜ ᱠᱟᱰ ᱠᱚ</string>
     <string name="card_browser_mark_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱢᱟᱨᱠ ᱢᱮ</string>
     <string name="card_browser_flag">ᱯᱚᱛᱠᱟ</string>
+    <string name="card_browser_toggle_mark_card">(ᱵᱟᱝ)ᱢᱟᱨᱠ ᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ</string>
     <string name="card_browser_unmark_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱚ-ᱢᱟᱨᱠᱚᱭ ᱢᱮ</string>
     <string name="delete_card_title">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
+    <string name="delete_cards_title">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
+    <string name="delete_card_message">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱨᱮᱭᱟᱜ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱲᱤᱼᱟᱢ?\nᱥᱮᱸᱫᱽᱨᱟ ᱡᱟᱭᱜᱟ: %s</string>
+    <string name="delete_card_mult_message">ᱪᱚᱭᱚᱱ ᱠᱟᱱᱟ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱲᱤᱼᱟᱢ ᱥᱮ?\n(ᱪᱚᱭᱚᱱ ᱠᱟᱱ ᱠᱟᱰ ᱦᱚᱸ ᱵᱟᱝᱟ)</string>
     <string name="changed_deck_message">%s ᱛᱮ ᱩᱪᱟᱲᱼᱱᱟ</string>
+    <string name="card_browser_suspended_cards">(ᱵᱟᱝ)ᱵᱟᱹᱫ ᱠᱚᱱ ᱠᱟᱰ ᱠᱚ</string>
     <string name="card_browser_show_marked">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱢᱮᱨᱠᱼᱠᱟᱱᱟ</string>
     <string name="card_browser_show_suspended">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱵᱚᱸᱫ ᱜᱤᱰᱤ ᱠᱟᱱᱟ</string>
     <string name="card_browser_search_by_tag">ᱴᱮᱜ ᱛᱮ ᱪᱷᱟᱱᱠᱟᱱᱟ</string>
@@ -72,6 +78,7 @@
     <string name="card_details_answer">ᱛᱮᱞᱟ</string>
     <string name="card_details_due">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
     <string name="card_details_tags">ᱴᱮᱜᱥ</string>
+    <string name="card_browser_filtering_cards">ᱠᱟᱰ ᱪᱷᱟᱹᱱᱤ&#8230; \nᱵᱟᱫᱽ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱹᱪᱞᱟ ᱵᱚᱴᱚᱱ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string-array name="card_browser_order_labels">
         <item>ᱢᱚᱦᱰᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ (ᱞᱚᱜᱚᱱ)</item>
         <item>ᱡᱟᱭᱜᱟ ᱢᱚᱦᱰᱟ ᱠᱟᱛᱮ</item>

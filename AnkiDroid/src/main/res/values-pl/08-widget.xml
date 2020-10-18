@@ -47,7 +47,6 @@
         <item quantity="other">%d kart do przejrzenia</item>
     </plurals>
     <string name="widget_small">AnkiDroid Mały</string>
-    <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d karta do przejrzenia</item>
         <item quantity="few">%d karty do przejrzenia</item>

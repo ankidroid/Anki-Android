@@ -75,6 +75,7 @@
         <item quantity="other">%d kartoj estas nuligitaj</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Replani karton</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Replani karton</item>
         <item quantity="other">Replani kartojn</item>
@@ -95,6 +96,8 @@
     <string name="answering_error_message">Fiaskis skribi al la kolekto. La datumbazo povas esti difektita aŭ eble mankas spaco en la konservejo.\n\nSe tio ĉi okazos pli ofte, provu kontroli la datumbazon, ripari la kolekton aŭ restarigi ĝin el sekurkopio. Frapetu “agordojn” por fari tion.\nAŭ tio ĉi povas esti eraro en AnkiDroid, do bonvolu raporti ĝin por ke ni povu ĝin ripari.</string>
     <string name="answering_error_report">Raporti eraron</string>
     <string name="repair_deck_dialog">Ĉu vi certe volas ripari la datumbazon?\n\nAntaŭ komenci, kopio estos kreita en subdosierujo “%s”.</string>
+    <string name="intent_add_saved_information">Konservita datumo</string>
+    <string name="intent_add_clear_all">Forviŝi ĉiujn</string>
     <string name="intent_aedict_empty">La ĉefa kategorio estas malplena</string>
     <string name="intent_aedict_category">Por aldoni kartojn al AnkiDroid, forigu ĉiujn kategoriojn de kajero kaj aldonu unu nomitan «default»</string>
     <string name="custom_study_new_total_new">Novaj kartoj en kartaro: %d</string>
@@ -106,6 +109,7 @@
     <string name="custom_study_random">Elekti tiom da hazardaj kartoj el la kartaro:</string>
     <string name="custom_study_preview">Antaŭrigardi novajn kartojn aldonitajn dum tiom da antaŭaj tagoj:</string>
     <string name="custom_study_rebuild_deck_corrupt">Ne povis rekrei kartaron por propra lernado</string>
+    <string name="rebuild_custom_study_deck">Rekreado de kartaro por propra lernado&#8230;</string>
     <string name="importing_collection">Enportado de kolekto&#8230;</string>
     <string name="import_media_count">Enportado de aŭdvidaĵoj %1$d%%&#8230;</string>
     <string name="import_progress">• Enportado de notoj: %1$d%%\n• Enportado de kartoj: %2$d%%\n• Prilaborado: %3$d%%</string>
@@ -122,6 +126,7 @@
     <string name="dialog_continue">Pluigi</string>
     <string name="dialog_positive_create">Krei</string>
     <string name="dialog_positive_delete">Forigi</string>
+    <string name="dialog_positive_disable">Malaktivigi</string>
     <string name="dialog_positive_overwrite">Anstataŭigi</string>
     <string name="dialog_positive_remove">Forigi</string>
     <string name="dialog_positive_repair">Ripari</string>

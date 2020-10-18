@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Atidaryti meniu</string>
+    <string name="drawer_close">Uždaryti meniu</string>
+    <string name="CardEditorLaterMessage">Vėlesniam naudojimui išsaugota informacija</string>
     <string name="CardEditorCardDeck">Kortelių rinkinys:</string>
     <string name="CardEditorNoteDeck">Rinkinys:</string>
     <string name="CardEditorModel">Tipas:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">Pažymėti/atžymėti visas žymes</string>
     <string name="filter_tags">Filtruoti žymes</string>
     <string name="no_tags">Dar nepridėjote jokių žymių</string>
+    <string name="sdcard_missing_message">Atjungti USB jungtį, siekiant prisijungti prie savo rinkinių</string>
     <string name="updated_version">Atnaujinta versija %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Užrašas įrašomas</string>
     <string name="saving_model">Saving note type</string>
+    <string name="add">Pridėti</string>
     <string name="save">Išsaugoti</string>
     <string name="close">Uždaryti</string>
     <string name="select">Pažymėti</string>
@@ -134,9 +139,11 @@
         <item quantity="many">%1$d minučių</item>
         <item quantity="other">%1$d min.</item>
     </plurals>
+    <string name="studyoptions_welcome_title">Sveiki apsilankę „AnkiDroid“ programoje</string>
     <string name="fact_adder_intent_title">„AnkiDroid“ kortelė</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
+    <string name="card_editor_copy_card">Kopijuoti kortelę</string>
     <string name="card_editor_reposition_card">Keisti išdėstymą</string>
     <string name="card_editor_reset_card">Atkurti pažangą</string>
     <string name="card_editor_reschedule_card">Atidėti</string>
@@ -150,6 +157,7 @@
         <item quantity="many">Pridėta %d kortelių</item>
         <item quantity="other">Pridėta %d kort.</item>
     </plurals>
+    <string name="help_title">Pagalba</string>
     <string name="check_db">Tikrinti duomenų bazę</string>
     <string name="check_media">Tikrinti laikmenas</string>
     <string name="empty_cards">Tuščios kortelės</string>
@@ -159,6 +167,7 @@
     <string name="delete_deck">Rinkinys trinamas&#8230;</string>
     <string name="show_hint">Rodyti %s</string>
     <string name="info_rate">Įvertinkite „AnkiDroid“</string>
+    <string name="col_load_failed">Įkelti kolekcijos nepavyko.\nNorėdami „AnkiDroid“ uždaryti, grįžkite atgal.</string>
     <string name="import_title">Importuojama</string>
     <string name="import_select_title">Pasirinkite įkeliamą failą</string>
     <string name="import_message_add">Pridėti</string>
@@ -270,6 +279,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Pasidalinti apkg failo nepavyko</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">Norint importuoti šį failą privalo būti įjungta V2 planuoklė.</string>
+    <string name="import_cannot_with_v2">V2 planuoklė negali importuoti V1 katalogų, įtraukdama planavimo duomenis.</string>
     <string name="export_v2_dummy_note">Šiam failui reikia naujesnės „Anki“ versijos.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

@@ -42,16 +42,19 @@
     <!--Browser-->
     <string name="model_browser_delete">Избриши го типот белешка</string>
     <string name="model_browser_rename">Преименувај</string>
+    <string name="model_browser_options">Опции</string>
     <string name="model_browser_template">Edit cards</string>
     <string name="model_browser_add">Додај тип на белешка</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Уредете ги полињата</string>
     <string name="model_field_editor_add">Додај поле</string>
     <string name="model_field_editor_delete">Избриши поле</string>
+    <string name="model_field_editor_options">Опции на поле</string>
     <string name="model_field_editor_rename">Преименувај го полето</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Поле за поместување</string>

@@ -42,7 +42,6 @@
     <string name="disabled">Nonaktif</string>
     <string name="enabled">Aktif</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Pengaturan umum</string>
     <string name="pref_cat_reviewing">Mengulas</string>
     <string name="pref_cat_reviewing_summ">Pengaturan ulasan yang bukan tentang dek</string>

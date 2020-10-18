@@ -75,6 +75,7 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Reagendar ficha</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -95,6 +96,8 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Comunicar erro</string>
     <string name="repair_deck_dialog">Realmente deseja tentar reparar a base de dados?\n\nAntes de iniciar a tentativa, será criada uma cópia na subpasta \'%s\'.</string>
+    <string name="intent_add_saved_information">Dados guardados</string>
+    <string name="intent_add_clear_all">Limpar tudo</string>
     <string name="intent_aedict_empty">A categoria \'predefinida\' está vazia</string>
     <string name="intent_aedict_category">Para adicionar fichas na AnkiDroid remova todas as categorias de notas ou adicione uma com o nome \'predefinida\'</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -106,6 +109,7 @@
     <string name="custom_study_random">Selecionar aleatoriamente x fichas do baralho:</string>
     <string name="custom_study_preview">Pré-visualizar novas fichas adicionadas nos últimos x dias:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="rebuild_custom_study_deck">A reconstruir o baralho de estudo personalizado&#8230;</string>
     <string name="importing_collection">A importar colecção&#8230;</string>
     <string name="import_media_count">A importar os arquivos multimédia %1$d%%&#8230;</string>
     <string name="import_progress">• A importar notas: %1$d%%\n• A importar fichas: %2$d%%\n• A pós-processar: %3$d%%</string>
@@ -122,6 +126,7 @@
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_positive_create">Criar</string>
     <string name="dialog_positive_delete">Eliminar</string>
+    <string name="dialog_positive_disable">Desativar</string>
     <string name="dialog_positive_overwrite">Substituir</string>
     <string name="dialog_positive_remove">Remover</string>
     <string name="dialog_positive_repair">Reparar</string>

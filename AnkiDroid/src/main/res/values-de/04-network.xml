@@ -44,14 +44,16 @@
     <string name="sync_error">Synchronisierungsfehler</string>
     <string name="vague_error">Fehler</string>
     <string name="retry">Erneut versuchen</string>
-    <string name="cancel">Abbrechen</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Nutzungsbedingungen</a></string>
     <string name="menu_get_shared_decks">Öffentlichen Stapel hinzufügen</string>
     <string name="connection_error_message">Ein Netzwerkfehler ist aufgetreten.</string>
     <string name="not_logged_in_title">Bei AnkiWeb einloggen</string>
     <string name="login_create_account_message">Sie müssen sich mit einem Drittanbieterkonto anmelden, um die Cloud-Synchronisation verwenden zu können. Im nächsten Schritt können Sie ein Konto einrichten.</string>
     <!-- MyAccount.java -->
     <string name="username">E-Mail-Adresse</string>
+    <string name="username_repeat">E-Mail-Adresse wiederholen</string>
     <string name="password">Passwort</string>
+    <string name="password_repeat">Passwort-Wiederholung</string>
     <string name="log_in">Einloggen</string>
     <string name="sign_up_description">Sie haben keinen AnkiWeb-Konto? Es ist gratis!</string>
     <string name="sign_up_not_affiliated">Hinweis: AnkiWeb gehört nicht zu AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Synchronisation</string>
     <string name="sync_downloading_media">Mediendatei %1$d/%2$d wird heruntergeladen &#8230;</string>
     <string name="sync_log_uploading_message">Vollsynchronisation des lokalen Stapels</string>
-    <string name="sync_log_downloading_message">Vollsynchronisation vom Server</string>
     <string name="sync_log_clocks_unsynchronized">Die Uhr auf Ihrem Gerät geht um %1$d Sekunden falsch.%2$s Stellen Sie sicher, dass Datum, Zeit und Zeitzone auf Ihrem Handy korrekt sind und synchronisieren Sie nochmals.</string>
     <string name="sync_log_clocks_unsynchronized_tz"> (Die Zeitzone ist vermutlich falsch eingestellt.)</string>
     <string name="sync_log_clocks_unsynchronized_date"> (Vermutlich stimmt das Datum nicht.)</string>

@@ -47,7 +47,6 @@
         <item quantity="other">%d AnkiDroid karet ke zkoušení</item>
     </plurals>
     <string name="widget_small">AnkiDroid Malý</string>
-    <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d karta ke zkoušení</item>
         <item quantity="few">%d karty ke zkoušení</item>

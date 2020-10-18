@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup non salvato. Non c\'è abbastanza spazio rimasto sulla scheda SD. Abbassa la profondità di backup o rimuovi alcuni altri file.</string>
     <string name="sd_space_warning">Meno di %d mb di spazio rimasto sulla scheda SD.\nPer evitare di perdere dati libera dello spazio.</string>
+    <string name="backup_delete">Eliminazione backup.\nAttendi...</string>
     <string name="backup_restore">Ripristina dal backup</string>
     <string name="backup_new_collection">Nuova collezione</string>
     <string name="backup_del_collection">Elimina collezione e creane una nuova</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Opzioni</string>
     <string name="backup_retry_opening">Riprova ad aprire</string>
     <string name="backup_error_menu_repair">Ripara database</string>
-    <string name="backup_repair_deck">Ripara</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Riparazione database.\nAttendi...</string>
     <string name="backup_error">Errore</string>

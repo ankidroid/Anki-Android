@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Otvoriť lištu</string>
+    <string name="drawer_close">Zavrieť lištu</string>
+    <string name="CardEditorLaterMessage">Informácie uložené na neskôr</string>
     <string name="CardEditorCardDeck">Balíček kartičky:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
     <string name="CardEditorModel">Typ:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">Zaškrtnúť/odškrtnúť všetky štítky</string>
     <string name="filter_tags">Filtrovať štítky</string>
     <string name="no_tags">Ešte ste nepridali žiadne štítky.</string>
+    <string name="sdcard_missing_message">Pre prístup k vašim balíčkom odpojte USB</string>
     <string name="updated_version">Aktualizované na verziu %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Poznámka sa ukladá</string>
     <string name="saving_model">Typ poznámky sa ukladá</string>
+    <string name="add">Pridať</string>
     <string name="save">Uložiť</string>
     <string name="close">Zavrieť</string>
     <string name="select">Zvoliť</string>
@@ -134,9 +139,11 @@
         <item quantity="many">%1$d minút</item>
         <item quantity="other">%1$d minút</item>
     </plurals>
+    <string name="studyoptions_welcome_title">Vitajte v AnkiDroid</string>
     <string name="fact_adder_intent_title">AnkiDroid kartička</string>
     <string name="note_editor_add_note">Pridať poznámku</string>
     <string name="note_editor_copy_note">Kopírovať poznámku</string>
+    <string name="card_editor_copy_card">Kopírovať kartičku</string>
     <string name="card_editor_reposition_card">Premiestniť</string>
     <string name="card_editor_reset_card">Vynulovať pokrok</string>
     <string name="card_editor_reschedule_card">Preplánovať</string>
@@ -150,6 +157,7 @@
         <item quantity="many">%d pridaných kartičiek</item>
         <item quantity="other">%d pridaných kartičiek</item>
     </plurals>
+    <string name="help_title">Pomocník</string>
     <string name="check_db">Skontrolovať databázu</string>
     <string name="check_media">Skontrolovať multimédia</string>
     <string name="empty_cards">Prázdne kartičky</string>
@@ -159,6 +167,7 @@
     <string name="delete_deck">Balíček sa odstraňuje&#8230;</string>
     <string name="show_hint">Zobraziť %s</string>
     <string name="info_rate">Ohodnotiť AnkiDroid</string>
+    <string name="col_load_failed">Načítavanie zbierky zlyhalo.\nProsím stlačte tlačidlo Späť a zavrite AnkiDroid.</string>
     <string name="import_title">Importuje sa</string>
     <string name="import_select_title">Zvoľte súbor pre import</string>
     <string name="import_message_add">Pridať</string>
@@ -269,6 +278,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba pri zdieľaní apkg súboru</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">V2 plánovač musí byť povolený pre import tohto súboru.</string>
+    <string name="import_cannot_with_v2">V2 plánovač nedokáže importovať V1 balíčky s uvedeným plánovaním.</string>
     <string name="export_v2_dummy_note">Tento súbor vyžaduje novšiu verziu Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Načítavanie \'%s\' zlyhalo.</string>

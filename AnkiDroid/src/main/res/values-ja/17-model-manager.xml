@@ -40,16 +40,19 @@
     <!--Browser-->
     <string name="model_browser_delete">削除</string>
     <string name="model_browser_rename">名前を変更</string>
+    <string name="model_browser_options">オプション</string>
     <string name="model_browser_template">カードのテンプレートを編集</string>
     <string name="model_browser_add">ノートタイプを追加</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">フィールドを編集</string>
     <string name="model_field_editor_add">フィールドを追加</string>
     <string name="model_field_editor_delete">削除</string>
+    <string name="model_field_editor_options">フィールドのオプション</string>
     <string name="model_field_editor_rename">名前を変更</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">並べ替える</string>

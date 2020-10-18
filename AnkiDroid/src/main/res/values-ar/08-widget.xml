@@ -49,7 +49,6 @@
         <item quantity="other">%d بطاقة أنكيدرويد مستحقة</item>
     </plurals>
     <string name="widget_small">أنكيدرويد صغير</string>
-    <string name="widget_small_button">أنكيدرويد</string>
     <plurals name="widget_cards_due">
         <item quantity="zero">%d بطاقة مستحقة</item>
         <item quantity="one">%d بطاقة مستحقة</item>

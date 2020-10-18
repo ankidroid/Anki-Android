@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">La sauvegarde n’a pu être effectuée car il manque de la place sur votre carte SD.\n\nFaites-y de la place ou faites une sauvegarde moins profonde.</string>
     <string name="sd_space_warning">Il vous reste moins de %d Mo d’espace sur votre carte SD.\nVeuillez faire de la place pour éviter la perte de données.</string>
+    <string name="backup_delete">Suppression des sauvegardes.\nPatience&#8230;</string>
     <string name="backup_restore">Restaurer à partir d’une sauvegarde</string>
     <string name="backup_new_collection">Nouvelle collection</string>
     <string name="backup_del_collection">Supprimer la collection, en créer une autre</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Options</string>
     <string name="backup_retry_opening">Nouvelle tentative d’ouverture</string>
     <string name="backup_error_menu_repair">Réparation de la base de données</string>
-    <string name="backup_repair_deck">Réparer</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Réparation de la base de données&#8230;</string>
     <string name="backup_error">Erreur</string>

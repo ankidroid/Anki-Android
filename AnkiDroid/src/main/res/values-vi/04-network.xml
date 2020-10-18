@@ -44,14 +44,16 @@
     <string name="sync_error">Lỗi đồng bộ</string>
     <string name="vague_error">Lỗi</string>
     <string name="retry">Thử lại</string>
-    <string name="cancel">Huỷ bỏ</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Điều khoản và điều kiện</a></string>
     <string name="menu_get_shared_decks">Nhận các bộ thẻ đã chia sẻ</string>
     <string name="connection_error_message">Đã xảy ra lỗi mạng</string>
     <string name="not_logged_in_title">Đăng nhập AnkiWeb</string>
     <string name="login_create_account_message">Bạn phải đăng nhập tài khoản bên thứ ba để dùng dịch vụ đồng bộ đám mây. Bạn có thể tạo mới ở bước tiếp theo.</string>
     <!-- MyAccount.java -->
     <string name="username">Địa chỉ email</string>
+    <string name="username_repeat">Lặp lại địa chỉ email</string>
     <string name="password">Mật khẩu</string>
+    <string name="password_repeat">Lặp lại mật khẩu</string>
     <string name="log_in">Đăng nhập</string>
     <string name="sign_up_description">Không có tài khoản AnkiWeb? Nó miễn phí đấy!</string>
     <string name="sign_up_not_affiliated">Lưu ý: AnkiWeb không liên quan gì đến AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Đồng bộ</string>
     <string name="sync_downloading_media">Đang tải xuống tệp đa phương tiện %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Đồng bộ hoàn toàn từ thiết bị</string>
-    <string name="sync_log_downloading_message">Đồng bộ hoàn toàn từ máy chủ</string>
     <string name="sync_log_clocks_unsynchronized">Đồng hồ của bạn lệch %1$d giây%2$s. Hãy chắc chắn rằng ngày tháng, thời gian và múi giờ trên điện thoại được thiết lập chính xác rồi đồng bộ lại.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, có thể múi giờ bị sai</string>
     <string name="sync_log_clocks_unsynchronized_date">, có thể ngày tháng bị sai</string>

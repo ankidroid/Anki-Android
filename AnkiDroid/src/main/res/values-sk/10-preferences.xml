@@ -42,7 +42,6 @@
     <string name="disabled">Vypnuté</string>
     <string name="enabled">Zapnuté</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Všeobecné nastavenia</string>
     <string name="pref_cat_reviewing">Opakovanie</string>
     <string name="pref_cat_reviewing_summ">Všeobecné nastavenia pre opakovania</string>

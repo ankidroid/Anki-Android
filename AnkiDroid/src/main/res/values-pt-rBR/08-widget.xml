@@ -45,7 +45,6 @@
         <item quantity="other">%d Cartões pendentes no AnkiDroid</item>
     </plurals>
     <string name="widget_small">AnkiDroid pequeno</string>
-    <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d cartão pendente</item>
         <item quantity="other">%d cartões pendentes</item>

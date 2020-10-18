@@ -206,7 +206,6 @@
     <string name="read_write_permission_label">خواندن و نوشتن داده‌ها روی دیتابیس AnkiDroid</string>
     <string name="read_write_permission_description">قابلیت دسترسی و ویرایش یادداشت‌ها، کارت‌ها، نوع یادداشت‌ها، و دسته‌ها</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">مرورگر کارت</string>
     <string name="card_browser_context_menu">مرورگر کارت</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

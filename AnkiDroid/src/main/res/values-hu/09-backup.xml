@@ -40,6 +40,7 @@
 <resources>
     <string name="backup_deck_no_space_left">Biztonsági mentés nem lett elmentve. Nincsen elég hely az SD kártyán. Vegye lejjebb a biztonsági mentés mélységét vagy töröljön pár más fájlt.</string>
     <string name="sd_space_warning">Kevesebb, mint %d MB hely maradt az SD kártyán.\n Szabadíts fel helyet az adatvesztés elkerülése érdekében.</string>
+    <string name="backup_delete">Biztonsági mentések törlése folyamatban.\nKérlek, várj&#8230;</string>
     <string name="backup_restore">Visszaállítás a biztonsági másolatból</string>
     <string name="backup_new_collection">Új gyűjtemény</string>
     <string name="backup_del_collection">Törölje a gyűjteményt, és hozzon létre egy újat</string>
@@ -50,7 +51,6 @@
     <string name="error_handling_options">Beállítások</string>
     <string name="backup_retry_opening">Megnyitás újra</string>
     <string name="backup_error_menu_repair">Adatbázis javítása</string>
-    <string name="backup_repair_deck">Javítás</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Adatbázis javítása folyamatban.\nKérlek, várj&#8230;</string>
     <string name="backup_error">Hiba</string>

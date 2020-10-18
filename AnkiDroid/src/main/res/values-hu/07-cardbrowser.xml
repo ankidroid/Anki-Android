@@ -46,17 +46,23 @@
     <string name="card_browser_all_decks">Minden pakli</string>
     <string name="card_browser_delete_card">Jegyzet törlése</string>
     <string name="card_browser_suspend_card">Kártyák felfüggesztése</string>
+    <string name="card_browser_toggle_suspend_card">Kártyák felfüggesztése</string>
     <string name="card_browser_change_deck">Pakli csere</string>
     <string name="card_browser_unsuspend_card">Kártya felfüggesztése</string>
     <string name="card_browser_mark_card">Jegyzet megjelölése</string>
     <string name="card_browser_flag">Megjelölés</string>
+    <string name="card_browser_toggle_mark_card">Bejegyzések megjelölése</string>
     <string name="card_browser_unmark_card">Bejegyzések elvetése</string>
     <string name="delete_card_title">Jegyzet törlése?</string>
+    <string name="delete_cards_title">Jegyzetek törlése?</string>
+    <string name="delete_card_message">Valóban törölöd a jegyzet összes kártyáját?\nKereső mező: %s</string>
+    <string name="delete_card_mult_message">Valóban törlöd az összes kiválasztott bejegyzés összes kártyáját?\n(Nem csak a kiválasztott kártyákat)</string>
     <string name="changed_deck_message">Áthelyezés ide %s</string>
+    <string name="card_browser_suspended_cards">Felfüggesztett kártyák</string>
     <string name="card_browser_show_marked">Megjelöltek szűrése</string>
     <string name="card_browser_show_suspended">Szűrés felfüggesztve</string>
     <string name="card_browser_search_by_tag">Címke szerinti szűrés</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
+    <string name="card_browser_search_by_flag">Jelölő szerinti szűrés</string>
     <string name="card_browser_tags_shown">Címkék: %1$s</string>
     <string name="card_browser_list_my_searches">Kereséseim</string>
     <string name="card_browser_list_my_searches_save">Keresés mentése</string>
@@ -72,6 +78,7 @@
     <string name="card_details_answer">Válasz</string>
     <string name="card_details_due">Esedékes</string>
     <string name="card_details_tags">Címkék</string>
+    <string name="card_browser_filtering_cards">Kártyák szűrése&#8230;\nNyomd meg a vissza gombot a megszüntetéshez</string>
     <string-array name="card_browser_order_labels">
         <item>Rendezés nélkül (gyorsabb)</item>
         <item>Rendezés mező szerint</item>

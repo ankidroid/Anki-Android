@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">메뉴 열기</string>
+    <string name="drawer_close">메뉴 닫기</string>
+    <string name="CardEditorLaterMessage">나중을 위해 저장된 정보</string>
     <string name="CardEditorCardDeck">카드 덱:</string>
     <string name="CardEditorNoteDeck">덱:</string>
     <string name="CardEditorModel">유형:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">모든 태그 선택/취소</string>
     <string name="filter_tags">태그 필터링</string>
     <string name="no_tags">아직 추가된 태그가 없습니다.</string>
+    <string name="sdcard_missing_message">현재 SD카드가 USB 저장소로 사용되고 있어 사용이 불가능합니다. 덱에 접근하려면 USB 연결을 해제하세요.</string>
     <string name="updated_version">버전 %s로 업데이트됨</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">칠판 저장</string>
@@ -115,6 +119,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">노트 저장 중</string>
     <string name="saving_model">Saving note type</string>
+    <string name="add">추가</string>
     <string name="save">저장</string>
     <string name="close">닫기</string>
     <string name="select">선택</string>
@@ -129,9 +134,11 @@
     <plurals name="in_minutes">
         <item quantity="other">%1$d minutes</item>
     </plurals>
+    <string name="studyoptions_welcome_title">AnkiDroid에 오신 것을 환영합니다</string>
     <string name="fact_adder_intent_title">AnkiDroid 카드</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
+    <string name="card_editor_copy_card">카드 복사</string>
     <string name="card_editor_reposition_card">위치 변경</string>
     <string name="card_editor_reset_card">학습 진도 재설정</string>
     <string name="card_editor_reschedule_card">일정 변경</string>
@@ -142,6 +149,7 @@
     <plurals name="factadder_cards_added">
         <item quantity="other">%d 카드 추가됨</item>
     </plurals>
+    <string name="help_title">도움말</string>
     <string name="check_db">데이터베이스 점검하기</string>
     <string name="check_media">미디어 확인</string>
     <string name="empty_cards">빈 카드</string>
@@ -151,6 +159,7 @@
     <string name="delete_deck">카드 묶음 삭제 중...\n 잠시만 기다리세요.</string>
     <string name="show_hint">%s 표시</string>
     <string name="info_rate">AnkiDroid 평가하기</string>
+    <string name="col_load_failed">컬렉션을 불러오지 못했습니다.\nAnkiDroid을 종료하려면 뒤로가기 버튼을 누르세요.</string>
     <string name="import_title">가져오는 중</string>
     <string name="import_select_title">가져올 파일 선택</string>
     <string name="import_message_add">추가</string>
@@ -242,6 +251,8 @@ Context | Request Context    </string>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg 파일 공유 오류</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">이 파일을 열기 위해서는 V2 스케줄러를 활성화해야 합니다.</string>
+    <string name="import_cannot_with_v2">V2 스케줄러는 일정이 포함된 V1 카드 묶음을 열 수 없습니다.</string>
     <string name="export_v2_dummy_note">이 파일을 열기 위해서는 앱을 업데이트 해야 합니다.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

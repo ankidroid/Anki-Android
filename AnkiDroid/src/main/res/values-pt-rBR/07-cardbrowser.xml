@@ -46,13 +46,19 @@
     <string name="card_browser_all_decks">Todos os baralhos</string>
     <string name="card_browser_delete_card">Excluir notas</string>
     <string name="card_browser_suspend_card">Suspender cartões</string>
+    <string name="card_browser_toggle_suspend_card">Cancelar suspensão dos cartões</string>
     <string name="card_browser_change_deck">Mudar Baralho</string>
     <string name="card_browser_unsuspend_card">Cancelar suspensão dos cartões</string>
     <string name="card_browser_mark_card">Marcar notas</string>
     <string name="card_browser_flag">Sinalizar</string>
+    <string name="card_browser_toggle_mark_card">Desmarcar notas</string>
     <string name="card_browser_unmark_card">Desmarcar notas</string>
     <string name="delete_card_title">Excluir nota?</string>
+    <string name="delete_cards_title">Excluir notas?</string>
+    <string name="delete_card_message">Excluir todos os cartões desta nota?\nCampo de busca: %s</string>
+    <string name="delete_card_mult_message">Excluir todos os cartões de todas as notas selecionadas?\n(Não apenas os cartões selecionados)</string>
     <string name="changed_deck_message">Movido para %s</string>
+    <string name="card_browser_suspended_cards">cartas suspensas / não suspensas</string>
     <string name="card_browser_show_marked">Filtrar marcadas</string>
     <string name="card_browser_show_suspended">Filtrar suspenso</string>
     <string name="card_browser_search_by_tag">Filtrar por tag</string>
@@ -72,6 +78,7 @@
     <string name="card_details_answer">Resposta</string>
     <string name="card_details_due">Pendentes</string>
     <string name="card_details_tags">Tags</string>
+    <string name="card_browser_filtering_cards">Filtrando cartões&#8230;\nPressione o botão voltar para cancelar</string>
     <string-array name="card_browser_order_labels">
         <item>Sem ordenação (mais rápido)</item>
         <item>Pelo campo de ordenação</item>

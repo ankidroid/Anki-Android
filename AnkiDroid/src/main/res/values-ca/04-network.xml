@@ -44,14 +44,16 @@
     <string name="sync_error">Error de sincronització</string>
     <string name="vague_error">Error</string>
     <string name="retry">Intenta-ho de nou</string>
-    <string name="cancel">Anul·la</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Termes i condicions</a></string>
     <string name="menu_get_shared_decks">Baixeu paquets compartits</string>
     <string name="connection_error_message">S\'ha produït un error de xarxa</string>
     <string name="not_logged_in_title">Entra a AnkiWeb</string>
     <string name="login_create_account_message">Cal estar registrat a un compte de tercers per utilitzar el servei de sincronització de núvol. Pods crear-ne uns en el pròxim pas.</string>
     <!-- MyAccount.java -->
     <string name="username">Adreça de correu electrònic</string>
+    <string name="username_repeat">Repeteix l\'adreça de correu electrònic</string>
     <string name="password">Contrasenya</string>
+    <string name="password_repeat">Repeteix la contrasenya</string>
     <string name="log_in">Inicia la sessió</string>
     <string name="sign_up_description">No teniu un compte d\'AnkiWeb? És gratuït!</string>
     <string name="sign_up_not_affiliated">Nota: AnkiWeb no està afiliat amb AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Sincronització</string>
     <string name="sync_downloading_media">S\'està baixant els media %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Sincronització completa dels paquets locals</string>
-    <string name="sync_log_downloading_message">Sincronització completa del servidor</string>
     <string name="sync_log_clocks_unsynchronized">El rellotge del vostre dispositiu mostra un error de %1$d segons%2$s; Per sincronitzar cal que el vostre rellotge i la vostra zona horària siguin correctes per tal d\'evitar errors. Si us plau assegureu-vos que la data, hora i zona horària del vostre telèfon són correctes, i torneu a sincronitzar.</string>
     <string name="sync_log_clocks_unsynchronized_tz">Sembla que la zona horària del dispositiu és incorrecta</string>
     <string name="sync_log_clocks_unsynchronized_date">Sembla que la data del dispositiu podria ser incorrecta</string>

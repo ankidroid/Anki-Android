@@ -44,14 +44,16 @@
     <string name="sync_error">同期エラー</string>
     <string name="vague_error">エラー</string>
     <string name="retry">再実行</string>
-    <string name="cancel">キャンセル</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms"> 利用規約</a></string>
     <string name="menu_get_shared_decks">共有デッキをダウンロード</string>
     <string name="connection_error_message">ネットワークエラーが発生しました</string>
     <string name="not_logged_in_title">AnkiWebへのログイン</string>
     <string name="login_create_account_message">サードパーティーのクラウド同期サービスを使用するため、このサービスのアカウントにログインする必要があります。（アカウントをお持ちでない場合は、ログイン画面の下部から新規登録の手続きが行えます。）</string>
     <!-- MyAccount.java -->
     <string name="username">登録済みアカウントのメールアドレス</string>
+    <string name="username_repeat">メールアドレス（確認）</string>
     <string name="password">パスワード</string>
+    <string name="password_repeat">パスワード（確認）</string>
     <string name="log_in">ログイン</string>
     <string name="sign_up_description">AnkiWebのアカウントを新規登録（無料）</string>
     <string name="sign_up_not_affiliated">備考: AnkiWebはAnkiのサービスです。Ankiから独立して活動しているAnkiDroid開発グループが管理するものではありません。</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">同期</string>
     <string name="sync_downloading_media">メディア %1$d/%2$d をダウンロード中...</string>
     <string name="sync_log_uploading_message">この端末側のコレクションによる完全同期が完了しました</string>
-    <string name="sync_log_downloading_message">AnkiWeb側のコレクションによる完全同期が完了しました</string>
     <string name="sync_log_clocks_unsynchronized">端末の時計が正しくありません（%1$d 秒 %2$s）；データ同期時のエラー発生を防止するため、時計を正しくセットしてください。日付、時刻、およびタイムゾーンが正しく設定した後、再び同期を開始してください。</string>
     <string name="sync_log_clocks_unsynchronized_tz">, 端末のタイムゾーンが間違っています</string>
     <string name="sync_log_clocks_unsynchronized_date">, 端末の日付が間違っています</string>

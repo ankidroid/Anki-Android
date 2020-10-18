@@ -44,14 +44,16 @@
     <string name="sync_error">Errore di sincronizzazione</string>
     <string name="vague_error">Errore</string>
     <string name="retry">Riprova</string>
-    <string name="cancel">Annulla</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Termini e condizioni</a></string>
     <string name="menu_get_shared_decks">Ottieni mazzi condivisi</string>
     <string name="connection_error_message">Si è verificato un errore di rete.</string>
     <string name="not_logged_in_title">Accedi ad AnkiWeb</string>
     <string name="login_create_account_message">È necessario accedere ad un account di terzi per utilizzare il servizio di sincronizzazione cloud. Puoi crearne uno nel passaggio successivo.</string>
     <!-- MyAccount.java -->
     <string name="username">Indirizzo di posta elettronica</string>
+    <string name="username_repeat">Ripeti indirizzo e-mail</string>
     <string name="password">Password</string>
+    <string name="password_repeat">Ripeti la password</string>
     <string name="log_in">Accedi</string>
     <string name="sign_up_description">Non hai un account AnkiWeb? È gratis!</string>
     <string name="sign_up_not_affiliated">Nota: AnkiWeb non è affiliato con AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">Sincronizzazione</string>
     <string name="sync_downloading_media">Scaricando il media %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Sincronizzazione completa da locale</string>
-    <string name="sync_log_downloading_message">Sincronizzazione completa dal server</string>
     <string name="sync_log_clocks_unsynchronized">L\'orologio sul tuo dispositivo è errato di %1$d secondi%2$s; La sincronizzazione richiede che il tuo orologio ed il fuso orario siano impostati correttamente per evitare errori. Assicurati che la data, l\'ora e il fuso orario sul tuo telefono cellulare siano impostati correttamente, quindi sincronizza nuovamente.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, il fuso orario del dispositivo è forse sbagliato</string>
     <string name="sync_log_clocks_unsynchronized_date">, la data del dispositivo è forse sbagliata</string>

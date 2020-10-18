@@ -81,6 +81,7 @@
         <item quantity="other">%d karet obnoveno</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
+    <string name="reschedule_card_dialog_title">Přeplánovat kartu</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Přeplánovat kartu</item>
         <item quantity="few">Přeplánovat karty</item>
@@ -107,6 +108,8 @@
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>
     <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři \'%s\'.</string>
+    <string name="intent_add_saved_information">Uložená data</string>
+    <string name="intent_add_clear_all">Vymazat vše</string>
     <string name="intent_aedict_empty">Kategorie \'výchozí\' je prázdná</string>
     <string name="intent_aedict_category">Chcete-li přidat AnkiDroid karty, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem \'default\'</string>
     <string name="custom_study_new_total_new">Nové karty v balíčku: %d</string>
@@ -118,6 +121,7 @@
     <string name="custom_study_random">Vybrat náhodně x karet z balíčku:</string>
     <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nelze znovu sestavit balíček vlastního učení</string>
+    <string name="rebuild_custom_study_deck">Obnovování balíčku vlastního učení&#8230;</string>
     <string name="importing_collection">Importování kolekce.\nProsím čekejte&#8230;</string>
     <string name="import_media_count">Import multimediálních souborů %1$d%%\nProsím čekejte&#8230;</string>
     <string name="import_progress">• Importování poznámek: %1$d%%\n• Importování karet: %2$d%%\n• Post-processing: %3$d%%</string>
@@ -134,6 +138,7 @@
     <string name="dialog_continue">Pokračovat</string>
     <string name="dialog_positive_create">Vytvořit</string>
     <string name="dialog_positive_delete">Odstranit</string>
+    <string name="dialog_positive_disable">Zakázat</string>
     <string name="dialog_positive_overwrite">Přepsat</string>
     <string name="dialog_positive_remove">Odstranit</string>
     <string name="dialog_positive_repair">Opravit</string>

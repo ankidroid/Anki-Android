@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Buka menu</string>
+    <string name="drawer_close">Tutup menu</string>
+    <string name="CardEditorLaterMessage">Informasi disimpan untuk nanti</string>
     <string name="CardEditorCardDeck">Dek kartu:</string>
     <string name="CardEditorNoteDeck">Dek:</string>
     <string name="CardEditorModel">Tipe:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">Centang / hapus centang semua tag</string>
     <string name="filter_tags">Filter tag</string>
     <string name="no_tags">Kamu belum menambahkan tag apapun</string>
+    <string name="sdcard_missing_message">Matikan penyimpanan USB untuk mengakses dekmu</string>
     <string name="updated_version">Diperbarui ke versi %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Simpan whiteboard</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Kosongan Kloza hanya bekerja pada tipe catatan Kloza</string>
     <string name="saving_facts">Menyimpan catatan</string>
     <string name="saving_model">Menyimpan tipe catatan</string>
+    <string name="add">Tambah</string>
     <string name="save">Simpan</string>
     <string name="close">Tutup</string>
     <string name="select">Pilih</string>
@@ -128,9 +133,11 @@
     <plurals name="in_minutes">
         <item quantity="other">%1$d menit</item>
     </plurals>
+    <string name="studyoptions_welcome_title">Selamat datang di AnkiDroid</string>
     <string name="fact_adder_intent_title">Kartu AnkiDroid</string>
     <string name="note_editor_add_note">Tambah catatan</string>
     <string name="note_editor_copy_note">Salin Catatan</string>
+    <string name="card_editor_copy_card">Salin kartu</string>
     <string name="card_editor_reposition_card">Pindah posisi</string>
     <string name="card_editor_reset_card">Reset kemajuan</string>
     <string name="card_editor_reschedule_card">Jadwalkan ulang</string>
@@ -141,6 +148,7 @@
     <plurals name="factadder_cards_added">
         <item quantity="other">%d kartu ditambahkan</item>
     </plurals>
+    <string name="help_title">Bantuan</string>
     <string name="check_db">Periksa basisdata</string>
     <string name="check_media">Periksa media</string>
     <string name="empty_cards">Kartu kosong</string>
@@ -150,6 +158,7 @@
     <string name="delete_deck">Menghapus dek&#8230;</string>
     <string name="show_hint">Tampilkan %s</string>
     <string name="info_rate">Beri AnkiDroid rating</string>
+    <string name="col_load_failed">Gagal memuat koleksi. \nTekan kembali untuk menutup AnkiDroid.</string>
     <string name="import_title">Mengimpor</string>
     <string name="import_select_title">Pilih berkas untuk diimpor</string>
     <string name="import_message_add">Tambah</string>
@@ -239,6 +248,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Galat membagikan berkas apkg</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">Penjadwal v2 harus diaktifkan untuk mengimpor berkas ini.</string>
+    <string name="import_cannot_with_v2">Penjadwal v2 tidak dapat mengimpor dek V1 yang memiliki penjadwalan.</string>
     <string name="export_v2_dummy_note">Berkas ini memerlukan versi terbaru dari Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Memuat \'%s\' gagal.</string>

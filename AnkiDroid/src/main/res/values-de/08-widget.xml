@@ -45,7 +45,6 @@
         <item quantity="other">%d AnkiDroid-Karten fällig</item>
     </plurals>
     <string name="widget_small">AnkiDroid klein</string>
-    <string name="widget_small_button">AnkiDroid</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d Karte fällig</item>
         <item quantity="other">%d Karten fällig</item>

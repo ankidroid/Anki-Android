@@ -41,6 +41,9 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
+    <string name="drawer_open">Buksan and kahon</string>
+    <string name="drawer_close">Isara ang kahon</string>
+    <string name="CardEditorLaterMessage">Inimpok ang impormasyon para sa hinaharap</string>
     <string name="CardEditorCardDeck">Deck ng baraha:</string>
     <string name="CardEditorNoteDeck">Deck:</string>
     <string name="CardEditorModel">Uri:</string>
@@ -52,6 +55,7 @@
     <string name="check_all_tags">Lagyan ng tsek/alisin ang tsek ng lahat ng tag</string>
     <string name="filter_tags">Salain ang mga tag</string>
     <string name="no_tags">Hindi ka pa nakakapagdagdag ng anumang tag</string>
+    <string name="sdcard_missing_message">Patayin ang USB storage upang ma-access ang iyong mga deck</string>
     <string name="updated_version">Nabago ang bersyon sa %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -114,6 +118,7 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Isina-save ang paalala</string>
     <string name="saving_model">Saving note type</string>
+    <string name="add">Magdagdag</string>
     <string name="save">I-save</string>
     <string name="close">Isara</string>
     <string name="select">Pumili</string>
@@ -130,9 +135,11 @@
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
+    <string name="studyoptions_welcome_title">Maligayang pagdating sa AnkiDroid</string>
     <string name="fact_adder_intent_title">Baraha ng AnkiDroid</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
+    <string name="card_editor_copy_card">Kopyahin ang baraha</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">I-reset ang progreso</string>
     <string name="card_editor_reschedule_card">Reschedule</string>
@@ -144,6 +151,7 @@
         <item quantity="one">%d naidagdag na ang baraha</item>
         <item quantity="other">%d naidagdag na ang mga baraha</item>
     </plurals>
+    <string name="help_title">Tulong</string>
     <string name="check_db">Suriin ang database</string>
     <string name="check_media">Suriin ang media</string>
     <string name="empty_cards">Tangalin ang mga baraha</string>
@@ -153,6 +161,7 @@
     <string name="delete_deck">Bunubura ang deck&#8230;</string>
     <string name="show_hint">Ipakita %s</string>
     <string name="info_rate">I-rate ang AnkiDroid</string>
+    <string name="col_load_failed">Nabigo ang pagkarga ng pagkolekta.\nPindutin muli upang isara ang AnkiDroid.</string>
     <string name="import_title">Ini-Import</string>
     <string name="import_select_title">Pumili ng isang file na i-iimport</string>
     <string name="import_message_add">Magdagdag</string>
@@ -249,6 +258,8 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">May mali sa pagbabahagi ng apkg file</string>
     <!-- Import and export v2 feedback -->
+    <string name="import_needs_v2">V2 scheduler must be enabled to import this file.</string>
+    <string name="import_cannot_with_v2">V2 scheduler can not import V1 decks with scheduling included.</string>
     <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

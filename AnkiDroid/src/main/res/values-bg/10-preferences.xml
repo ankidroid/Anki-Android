@@ -42,7 +42,6 @@
     <string name="disabled">Изключен</string>
     <string name="enabled">Enabled</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Общи настройки</string>
     <string name="pref_cat_reviewing">Преглед</string>
     <string name="pref_cat_reviewing_summ">Специфични настройки на разглеждането, които не касаят тестетата</string>

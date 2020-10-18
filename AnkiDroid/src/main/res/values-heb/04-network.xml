@@ -44,14 +44,16 @@
     <string name="sync_error">שגיאת סנכרון</string>
     <string name="vague_error">שגיאה</string>
     <string name="retry">נסה שנית</string>
-    <string name="cancel">בטל</string>
+    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">תנאים ומגבלות</a></string>
     <string name="menu_get_shared_decks">קבלת חפיסות משותפות</string>
     <string name="connection_error_message">אירעה שגיאת רשת</string>
     <string name="not_logged_in_title">כניסה ל־AnkiWeb</string>
     <string name="login_create_account_message">יש להתחבר לחשבון צד שלישי כדי להשתמש בשירות הסנכרון בענן. ניתן ליצור חשבון כזה מיד בשלב הקרוב.</string>
     <!-- MyAccount.java -->
     <string name="username">כתובת דוא״ל</string>
+    <string name="username_repeat">חזרה על כתובת דוא״ל</string>
     <string name="password">ססמה</string>
+    <string name="password_repeat">חזרה על ססמה</string>
     <string name="log_in">כניסה</string>
     <string name="sign_up_description">אין לך חשבון ב־AnkiWeb? זה חינם!</string>
     <string name="sign_up_not_affiliated">לתשומת לבך: אין קשר בין AnkiWeb ל־AnkiDroid</string>
@@ -77,7 +79,6 @@
     <string name="sync_title">סנכרון</string>
     <string name="sync_downloading_media">מוריד קבצי מדיה: %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">סנכרון מלא מהמקומי</string>
-    <string name="sync_log_downloading_message">סנכרון מלא מהשרת</string>
     <string name="sync_log_clocks_unsynchronized">השעון לא מכוון ב־%1$d שניות%2$s. יש לוודא שהתאריך, השעה ואיזור הזמן בטלפון שלך מכוונים כראוי, ואז לבצע סנכרון מחדש.</string>
     <string name="sync_log_clocks_unsynchronized_tz">; יתכן שאיזור הזמן שגוי</string>
     <string name="sync_log_clocks_unsynchronized_date">; יתכן שהתאריך שגוי</string>

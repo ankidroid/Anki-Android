@@ -206,7 +206,6 @@
     <string name="read_write_permission_label">Ler e escrever para o banco de dados do AnkiDroid</string>
     <string name="read_write_permission_description">acessar as notas, cartas, modelos e baralhos existentes, bem como criar novos</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Navegador de Baralhos</string>
     <string name="card_browser_context_menu">Navegador de Baralhos</string>
     <string name="context_menu_anki_card_label">Cartão do Anki</string>
 </resources>
