@@ -91,7 +91,7 @@ public class FieldEditText extends FixedEditText {
     }
 
 
-    public void init(int ord, String content, @Nullable Locale hintLocale) {
+    public void init(int ord, String content) {
         mOrd = ord;
 
         if (content == null) {
@@ -100,9 +100,6 @@ public class FieldEditText extends FixedEditText {
             content = content.replaceAll("<br(\\s*/*)>", NEW_LINE);
         }
         setText(content);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && hintLocale != null) {
-            setHintLocale(hintLocale);
-        }
         setMinimumWidth(400);
         mOrigBackground = getBackground();
         // Fixes bug where new instances of this object have wrong colors, probably

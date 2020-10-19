@@ -22,16 +22,17 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 public class FieldEditLine extends FrameLayout {
-    private EditText mEditText;
+    private FieldEditText mEditText;
     private TextView mLabel;
 
     private String mName;
@@ -90,6 +91,11 @@ public class FieldEditLine extends FrameLayout {
         mLabel.setText(name);
     }
 
+    public void setHintLocale(@Nullable Locale hintLocale) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && hintLocale != null) {
+            mEditText.setHintLocale(hintLocale);
+        }
+    }
 
     public String getName() {
         return mName;

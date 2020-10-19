@@ -1353,6 +1353,7 @@ public class NoteEditor extends AnkiActivity {
 
             edit_line_view.setTypeface(mCustomTypeface);
             edit_line_view.setName(fields[i][0]);
+            edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
             initFieldEditText(newTextbox, i, fields[i], !editModelMode, clipboard);
 
             TextView label = edit_line_view.findViewById(R.id.id_label);
@@ -1496,10 +1497,8 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void initFieldEditText(FieldEditText editText, final int index, String[] values, boolean enabled, @Nullable ClipboardManager clipboard) {
-        String name = values[0];
         String content = values[1];
-        Locale hintLocale = getHintLocaleForField(name);
-        editText.init(index, content, hintLocale);
+        editText.init(index, content);
 
         // HACK: To be removed after #7124
         // Additional cloze icon using GBoard Clipboard function for MIUI users
