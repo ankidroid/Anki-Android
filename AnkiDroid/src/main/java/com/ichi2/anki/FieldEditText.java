@@ -81,13 +81,6 @@ public class FieldEditText extends FixedEditText {
     }
 
 
-    public TextView getLabel() {
-        TextView label = new FixedTextView(this.getContext());
-        label.setText(mName);
-        return label;
-    }
-
-
     public int getOrd() {
         return mOrd;
     }
@@ -98,20 +91,7 @@ public class FieldEditText extends FixedEditText {
     }
 
 
-    public void init(int ord, String name, String content, @Nullable Locale hintLocale) {
-        mOrd = ord;
-        mName = name;
-
-        if (content == null) {
-            content = "";
-        } else {
-            content = content.replaceAll("<br(\\s*/*)>", NEW_LINE);
-        }
-        setText(content);
-        setContentDescription(name);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && hintLocale != null) {
-            setHintLocale(hintLocale);
-        }
+    public void init() {
         setMinimumWidth(400);
         mOrigBackground = getBackground();
         // Fixes bug where new instances of this object have wrong colors, probably
@@ -158,6 +138,22 @@ public class FieldEditText extends FixedEditText {
     public void setSelectionChangeListener(TextSelectionListener listener) {
         this.mSelectionChangeListener = listener;
     }
+
+
+    public void setContent(String content) {
+        if (content == null) {
+            content = "";
+        } else {
+            content = content.replaceAll("<br(\\s*/*)>", NEW_LINE);
+        }
+        setText(content);
+    }
+
+
+    public void setOrd(int ord) {
+        mOrd = ord;
+    }
+
 
     public interface TextSelectionListener {
         void onSelectionChanged(int selStart, int selEnd);

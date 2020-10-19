@@ -60,7 +60,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
@@ -121,7 +120,6 @@ import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
 import com.ichi2.async.TaskData;import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -1341,24 +1339,27 @@ public class NoteEditor extends AnkiActivity {
         ClipboardManager clipboard = ContextCompat.getSystemService(this, ClipboardManager.class);
 
         for (int i = 0; i < fields.length; i++) {
-            View edit_line_view = getLayoutInflater().inflate(R.layout.card_multimedia_editline, mFieldsLayoutContainer, false);
+            FieldEditLine edit_line_view = new FieldEditLine(this);
             FieldEditText newTextbox = edit_line_view.findViewById(R.id.id_note_editText);
 
+            // TODO: Remove the >= 23 check - one callback works on API 11.
             if (Build.VERSION.SDK_INT >= 23) {
                 // Use custom implementation of ActionMode.Callback customize selection and insert menus
                 Field f = new Field(getFieldByIndex(i), getCol());
                 ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox, f);
-                newTextbox.setCustomSelectionActionModeCallback(actionModeCallback);
-                newTextbox.setCustomInsertionActionModeCallback(actionModeCallback);
+                edit_line_view.setActionModeCallbacks(actionModeCallback);
+
             }
 
-            initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode, clipboard);
-
-            TextView label = newTextbox.getLabel();
-            label.setPadding((int) UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
+            edit_line_view.setTypeface(mCustomTypeface);
+            edit_line_view.setName(fields[i][0]);
+            edit_line_view.setContent(fields[i][1]);
+            edit_line_view.setOrd(i);
+            edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
+            initFieldEditText(newTextbox, i, !editModelMode, clipboard);
             mEditFields.add(newTextbox);
 
-            ImageButton mediaButton = edit_line_view.findViewById(R.id.id_media_button);
+            ImageButton mediaButton = edit_line_view.getMediaButton();
             // Load icons from attributes
             int[] icons = Themes.getResFromAttr(this, new int[] { R.attr.attachFileImage, R.attr.upDownImage});
             // Make the icon change between media icon and switch field icon depending on whether editing note type
@@ -1374,7 +1375,6 @@ public class NoteEditor extends AnkiActivity {
                 setMMButtonListener(mediaButton, i);
             }
             mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, fields[i][0]));
-            mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(edit_line_view);
         }
     }
@@ -1495,15 +1495,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void initFieldEditText(FieldEditText editText, final int index, String[] values, Typeface customTypeface, boolean enabled, @Nullable ClipboardManager clipboard) {
-        String name = values[0];
-        String content = values[1];
-        Locale hintLocale = getHintLocaleForField(name);
-        editText.init(index, name, content, hintLocale);
-        if (customTypeface != null) {
-            editText.setTypeface(customTypeface);
-        }
-
+    private void initFieldEditText(FieldEditText editText, final int index, boolean enabled, @Nullable ClipboardManager clipboard) {
         // HACK: To be removed after #7124
         // Additional cloze icon using GBoard Clipboard function for MIUI users
         if (clipboard != null && !AdaptionUtil.canUseContextMenu() && AnkiDroidApp.getSharedPrefs(this).getBoolean("enableMIUIClipboardHack", true)) {

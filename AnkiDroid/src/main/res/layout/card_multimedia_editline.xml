@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
+
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/id_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="8dp"
+        android:layout_alignParentLeft="true"
+        tools:text="Label"
+        />
 
     <com.ichi2.anki.FieldEditText
         android:id="@+id/id_note_editText"
@@ -12,7 +22,9 @@
         android:drawablePadding="8dp"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/id_media_button"
+        android:layout_below="@id/id_label"
         android:layout_alignTop="@+id/id_media_button"
+        tools:text="This is a lot of target content to test how multiline values are displayed"
          />
 
     <ImageButton
@@ -21,7 +33,9 @@
         android:layout_height="wrap_content"
         android:gravity="right|center_vertical"
         android:background="?attr/attachFileImage"
-        android:layout_alignParentRight="true"  />
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/id_label"
+        tools:background="@drawable/ic_attachment_black_24dp"/>
 
 
 </RelativeLayout>

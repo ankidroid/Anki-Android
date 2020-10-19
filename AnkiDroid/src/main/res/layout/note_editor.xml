@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -101,7 +102,8 @@
                             android:layout_marginLeft="5dip"
                             android:layout_marginRight="5dip"
                             android:clickable="false"
-                            android:gravity="left|center_vertical" />
+                            android:gravity="left|center_vertical"
+                            tools:text="Tags: AnkiDroid"/>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -124,6 +126,7 @@
                             android:layout_marginLeft="5dip"
                             android:layout_marginRight="5dip"
                             android:clickable="false"
+                            tools:text="Cards: Card 1"
                             android:gravity="left|center_vertical" />
                     </LinearLayout>
                 </LinearLayout>
