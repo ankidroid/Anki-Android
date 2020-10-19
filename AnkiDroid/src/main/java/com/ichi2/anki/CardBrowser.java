@@ -472,7 +472,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private Long getLastDeckId() {
+    @VisibleForTesting
+    Long getLastDeckId() {
         SharedPreferences state = getSharedPreferences(PERSISTENT_STATE_FILE,0);
         if (!state.contains(LAST_DECK_ID_KEY)) {
             return null;
@@ -738,7 +739,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private void selectAllDecks() {
+    @VisibleForTesting
+    void selectAllDecks() {
         selectDropDownItem(0);
     }
 
@@ -1250,10 +1252,15 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private void addNoteFromCardBrowser() {
+    @VisibleForTesting
+    Intent getAddNoteIntent() {
         Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
-        startActivityForResultWithAnimation(intent, ADD_NOTE, LEFT);
+        return intent;
+    }
+
+    private void addNoteFromCardBrowser() {
+        startActivityForResultWithAnimation(getAddNoteIntent(), ADD_NOTE, LEFT);
     }
 
 
@@ -1348,6 +1355,19 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         searchCards();
     }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    void selectDeckId(long targetDid) {
+        for (int i = 0; i < mDropDownDecks.size(); i++) {
+            if (mDropDownDecks.get(i).getLong("id") == targetDid) {
+                deckDropDownItemChanged(i + 1);
+                return;
+            }
+        }
+        throw new IllegalStateException("Could not find did " + targetDid);
+    }
+
+
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
