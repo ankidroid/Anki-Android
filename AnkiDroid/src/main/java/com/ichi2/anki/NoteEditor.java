@@ -1354,7 +1354,8 @@ public class NoteEditor extends AnkiActivity {
 
             initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode, clipboard);
 
-            TextView label = newTextbox.getLabel();
+            TextView label = edit_line_view.findViewById(R.id.id_label);
+            label.setText(newTextbox.getName());
             label.setPadding((int) UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
             mEditFields.add(newTextbox);
 
@@ -1374,7 +1375,6 @@ public class NoteEditor extends AnkiActivity {
                 setMMButtonListener(mediaButton, i);
             }
             mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, fields[i][0]));
-            mFieldsLayoutContainer.addView(label);
             mFieldsLayoutContainer.addView(edit_line_view);
         }
     }

@@ -81,13 +81,6 @@ public class FieldEditText extends FixedEditText {
     }
 
 
-    public TextView getLabel() {
-        TextView label = new FixedTextView(this.getContext());
-        label.setText(mName);
-        return label;
-    }
-
-
     public int getOrd() {
         return mOrd;
     }
