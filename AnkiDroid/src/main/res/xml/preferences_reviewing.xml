@@ -138,7 +138,7 @@
             android:summary="@string/whiteboard_black_summ"
             android:title="@string/whiteboard_black" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_cat_automatic_display" >
+    <PreferenceCategory android:title="@string/timeout_answer_text" >
         <CheckBoxPreference
             android:defaultValue="false"
             android:disableDependentsState="false"
