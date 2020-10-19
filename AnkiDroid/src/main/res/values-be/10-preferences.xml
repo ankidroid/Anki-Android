@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Паводзіны</string>
     <string name="pref_cat_flashcard">Паказаць</string>
     <string name="pref_cat_whiteboard">Дошка</string>
-    <string name="pref_cat_automatic_display">Аўтаматычна паказваць адказ</string>
     <string name="pref_cat_appearance">Знешні выгляд</string>
     <string name="pref_cat_appearance_summ">Змена тэмы і шрыфтоў</string>
     <string name="pref_cat_themes">Тэмы</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Аўтаматычна паказваць адказ</string>
     <string name="timeout_answer_summ">Аўтаматычна паказваць адказ без уводу даных карыстальникам. Затрымка складаецца з часу аўтаматычнага прайгравання аўдыяфайлаў.</string>
     <string name="timeout_answer_seconds">Час паказу адказу</string>
-    <string name="timeout_answer_seconds_summ">XXX сек.</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX сек.</string>
     <string name="timeout_question_seconds">Час паказу наступнага пытання</string>
-    <string name="timeout_question_seconds_summ">XXX сек.</string>
     <string name="select_locale_title">Выберыце мову</string>
     <string name="safe_display">Статычны рэжым экрана</string>
     <string name="safe_display_summ">Адключыць усю анімацыю і выкарыстоўваць бяспечны метад для адлюстравання картак. Гэта можа быць актуальна для прылад з электроннымі чарніламі.</string>
@@ -257,7 +255,6 @@
     <string name="deck_conf_current_group">Цякучая група</string>
     <string name="deck_conf_rename">Пераіменаваць</string>
     <string name="deck_conf_reset">Скінуць налады</string>
-    <string name="deck_conf_reset_title">Аднавіць па змаўчанні</string>
     <string name="deck_conf_reset_message">Аднавіць значэнні бягучых групавых параметраў па змаўчанні?</string>
     <string name="deck_conf_add">Дадаць</string>
     <string name="deck_conf_add_summ">Стварыць копію бягучых групавых параметраў</string>
@@ -271,7 +268,6 @@
         <item quantity="many">%s subdecks will use this group</item>
         <item quantity="other">%s падкалод будуць скарыстаць канфігурацыю</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Усталяваць для ўсіх падкалод</string>
     <string name="deck_conf_set_subdecks_message">Усталяваць бягучыя групавыя параметры для ўсіх падкалод гэтай калоды?</string>
     <string name="pref_browser_editor_font">Шрыфт аглядніка і рэдактара</string>
     <string name="deck_conf_cram_filter">Фільтр</string>

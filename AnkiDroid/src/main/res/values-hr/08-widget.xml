@@ -45,7 +45,7 @@
         <item quantity="few">%d AnkiDroid cards due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_small">AnkiDroid malo</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid malo</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d karticu potrebno dovršiti</item>
         <item quantity="few">%d kartice potrebno dovršiti</item>
@@ -56,6 +56,6 @@
         <item quantity="few">Preostale %d minute</item>
         <item quantity="other">Preostalo %d minuta</item>
     </plurals>
-    <string name="widget_add_note">Dodaj bilješku</string>
+    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Dodaj bilješku</string>
     <string name="widget_add_note_button">Dodaj novu AnkiDroid bilješku</string>
 </resources>

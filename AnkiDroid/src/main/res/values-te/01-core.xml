@@ -106,7 +106,7 @@
     <string name="rename_deck">పేరు మార్చండి</string>
     <string name="menu_add">చేర్చు</string>
     <string name="menu_add_note">గమనిక చేర్చు</string>
-    <string name="menu_my_account">ఖాతాను సమకాలీకరించండి</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ఖాతాను సమకాలీకరించండి</string>
     <string name="menu_dismiss_note">దాచు / తొలగించు</string>
     <string name="menu_bury_card">గమనిక బరీ</string>
     <string name="menu_bury_note">బరీ గమనిక</string>

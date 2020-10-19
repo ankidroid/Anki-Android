@@ -106,7 +106,7 @@
     <string name="rename_deck">Renommer le paquet</string>
     <string name="menu_add">Ajouter</string>
     <string name="menu_add_note">Ajouter une note</string>
-    <string name="menu_my_account">Compte de synchronisation</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de synchronisation</string>
     <string name="menu_dismiss_note">Masquer / Supprimer</string>
     <string name="menu_bury_card">Enterrer la carte</string>
     <string name="menu_bury_note">Enterrer la note</string>

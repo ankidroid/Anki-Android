@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Pag-uugali</string>
     <string name="pref_cat_flashcard">Display</string>
     <string name="pref_cat_whiteboard">Whiteboard</string>
-    <string name="pref_cat_automatic_display">Awtomatikong display ng sagot</string>
     <string name="pref_cat_appearance">Kaanyuan</string>
     <string name="pref_cat_appearance_summ">Baguhin ang mga tema at default na font</string>
     <string name="pref_cat_themes">Themes</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Awtomatikong i-display ang sagot</string>
     <string name="timeout_answer_summ">Ipakita ang sagot nang awtomatiko nang hindi gumagamit ng input. Kasama ang pag-antala ng oras para sa awtomatikong pag-play ng mga audio file.</string>
     <string name="timeout_answer_seconds">Oras upang ipakita ang sagot</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Oras upang ipakita ang susunod na tanong</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Piliin ang wika</string>
     <string name="safe_display">Ligtas na display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -253,7 +251,6 @@
     <string name="deck_conf_current_group">Kasalukuyang grupo</string>
     <string name="deck_conf_rename">Palitan ang pangalan</string>
     <string name="deck_conf_reset">Ibalik sa dating ayos</string>
-    <string name="deck_conf_reset_title">Ibalik sa dating ayos</string>
     <string name="deck_conf_reset_message">Ibalik ang kasalukuyang mga opsyon ng pangkat sa mga default na halaga?</string>
     <string name="deck_conf_add">Magdagdag</string>
     <string name="deck_conf_add_summ">Lumikha ng isang kopya ng kasalukuyang pangkat ng mga pagpipilian</string>
@@ -265,7 +262,6 @@
         <item quantity="one">Gagamitin ng %s subdeck ang pangkat na ito</item>
         <item quantity="other">Gagamitin ng mga %s subdeck ang pangkat na ito</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Itakda para sa lahat ng mga subdecks</string>
     <string name="deck_conf_set_subdecks_message">Itakda ang kasalukuyang mga opsyon na pangkat para sa lahat ng mga subdecks ng deck na ito?</string>
     <string name="pref_browser_editor_font">Browser at editor ng font</string>
     <string name="deck_conf_cram_filter">Salain</string>

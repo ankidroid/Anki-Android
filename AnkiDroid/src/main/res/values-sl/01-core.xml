@@ -116,7 +116,7 @@
     <string name="rename_deck">Preimenuj komplet</string>
     <string name="menu_add">Dodaj</string>
     <string name="menu_add_note">Dodaj zapisek</string>
-    <string name="menu_my_account">Sinhroniziraj račun</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinhroniziraj račun</string>
     <string name="menu_dismiss_note">Skrij/Izbriši</string>
     <string name="menu_bury_card">Prikrij kartico</string>
     <string name="menu_bury_note">Prikrij zapisek</string>

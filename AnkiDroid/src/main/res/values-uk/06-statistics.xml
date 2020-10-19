@@ -42,8 +42,8 @@
     <string name="statistics_mature">Закріплені</string>
     <string name="statistics_young_and_learn">Нові і нещодавні</string>
     <string name="statistics_unlearned">Не переглядані</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">Призупинено</string>
+    <string name="statistics_buried">Сховано</string>
     <string name="statistics_relearn">Повторно вчено</string>
     <string name="statistics_learn">Вчено</string>
     <string name="statistics_cram">Зазубрені</string>
@@ -81,7 +81,6 @@
     <string name="stats_overview_forecast_average">Пересічно: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
     <string name="stats_overview_forecast_due_tomorrow">На завтра: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Днів навчання: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d із %3$d)</string>
-    <string name="stats_overview_total_reviews">Загалом: &lt;b&gt;%1$d&lt;/b&gt; переглядів</string>
     <string name="stats_overview_reviews_per_day_studydays">Пересічно навчання: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
     <string name="stats_overview_reviews_per_day_all">Якщо вчити щодня: &lt;b&gt;%1$.1f&lt;/b&gt; переглядів на добу</string>
     <string name="stats_overview_total_time_in_period">Загалом: &lt;b&gt;%d&lt;/b&gt; хвилин</string>

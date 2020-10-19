@@ -46,7 +46,7 @@
         <item quantity="many">%d AnkiDroid cards due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_small">AnkiDroid קטן</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid קטן</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d card due</item>
         <item quantity="two">%d cards due</item>
@@ -59,6 +59,6 @@
         <item quantity="many">נותרו %d דקות</item>
         <item quantity="other">נותרו %d דקות</item>
     </plurals>
-    <string name="widget_add_note">הוספת מושג</string>
+    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">הוספת מושג</string>
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

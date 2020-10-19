@@ -116,7 +116,7 @@
     <string name="rename_deck">Premenovať balíček</string>
     <string name="menu_add">Pridať</string>
     <string name="menu_add_note">Pridať poznámku</string>
-    <string name="menu_my_account">Synchronizácia účtu</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronizácia účtu</string>
     <string name="menu_dismiss_note">Skryt / vymazať</string>
     <string name="menu_bury_card">Skryť kartičku</string>
     <string name="menu_bury_note">Skryť poznámku</string>

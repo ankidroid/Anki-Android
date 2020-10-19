@@ -113,9 +113,9 @@
     <string name="multimedia_editor_audio_view_playing_failed">Přehrávání selhalo</string>
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text">Editační pole</string>
-    <string name="title_activity_translation">Překlad</string>
-    <string name="title_activity_load_pronounciation">Výslovnost</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editační pole</string>
+    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Překlad</string>
+    <string name="title_activity_load_pronounciation" comment="Name of the window allowing to load pronunciation of words. This text can not be seen in AnkiDroid directly.">Výslovnost</string>
     <!-- Network failure -->
     <string name="network_no_connection">Žádné připojení</string>
     <!-- Crop function-->

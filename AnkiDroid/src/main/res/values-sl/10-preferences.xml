@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Vedenje</string>
     <string name="pref_cat_flashcard">Prikaz</string>
     <string name="pref_cat_whiteboard">Bela tabla</string>
-    <string name="pref_cat_automatic_display">Samodejno prikaži odgovor</string>
     <string name="pref_cat_appearance">Videz</string>
     <string name="pref_cat_appearance_summ">Spremeni teme in privzeto pisavo</string>
     <string name="pref_cat_themes">Teme</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Sam. prikaži odgovor</string>
     <string name="timeout_answer_summ">Samodejno prikaži odgovor brez uporabniškega vnosa. Zakasnitev vključuje čas za samodejno predvajanje zvočnih datotek.</string>
     <string name="timeout_answer_seconds">Čas za prikaz odgovora</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Časa do naslednjega vprašanja</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Izberite jezik</string>
     <string name="safe_display">Način varnega prikaza</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -255,7 +253,6 @@
     <string name="deck_conf_current_group">Trenutna skupina</string>
     <string name="deck_conf_rename">Preimenuj</string>
     <string name="deck_conf_reset">Obnovi privzete</string>
-    <string name="deck_conf_reset_title">Obnovi privzete</string>
     <string name="deck_conf_reset_message">Obnovi trenutno skupino možnosti na privzete vrednosti?</string>
     <string name="deck_conf_add">Dodaj</string>
     <string name="deck_conf_add_summ">Ustvari kopijo trenutne skupine možnosti</string>
@@ -269,7 +266,6 @@
         <item quantity="few">%s podkompleti bodo uporabili to skupino</item>
         <item quantity="other">%s podkompletov bo uporabilo to skupino</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Nastavi za vse podkomplete</string>
     <string name="deck_conf_set_subdecks_message">Nastavi trenutno skupino možnosti za vse podkomplete tega kompleta?</string>
     <string name="pref_browser_editor_font">Pisava brskalnika in urejevalnika</string>
     <string name="deck_conf_cram_filter">Filter</string>

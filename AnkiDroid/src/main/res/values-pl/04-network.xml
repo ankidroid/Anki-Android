@@ -133,6 +133,4 @@
     <string name="sync_menu_title">Synchronizacja</string>
     <string name="sync_menu_title_full_sync">Synchronizacja (pełna)</string>
     <string name="sync_menu_title_no_account">Synchronizacja (logowanie)</string>
-    <!-- An option on a message box to open the "corrupt collection" webpage -->
-    <string name="sync_corrupt_collection_get_help">Pomoc</string>
 </resources>

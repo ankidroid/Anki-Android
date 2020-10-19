@@ -133,6 +133,4 @@
     <string name="sync_menu_title">Синхронизация</string>
     <string name="sync_menu_title_full_sync">Синхронизация (полная)</string>
     <string name="sync_menu_title_no_account">Синхронизация (при входе)</string>
-    <!-- An option on a message box to open the "corrupt collection" webpage -->
-    <string name="sync_corrupt_collection_get_help">Помощь</string>
 </resources>

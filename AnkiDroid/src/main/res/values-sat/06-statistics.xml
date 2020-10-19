@@ -78,7 +78,6 @@
     <string name="stats_overview_forecast_average">ᱢᱟᱸᱡᱞᱟ ᱨᱟᱥ: &lt;b&gt;%1$.1f&lt;/b&gt; ᱫᱩᱦᱲᱟ ᱧᱮᱞ/ᱫᱤᱱ</string>
     <string name="stats_overview_forecast_due_tomorrow">ᱜᱟᱯᱟ ᱛᱮ ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">ᱫᱤᱱ ᱯᱟᱲᱦᱟᱣᱮᱱᱟ: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-    <string name="stats_overview_total_reviews">ᱢᱩᱴ: &lt;b&gt;%1$d&lt;/b&gt; ᱫᱩᱦᱲᱟ ᱧᱮᱞ</string>
     <string name="stats_overview_reviews_per_day_studydays">ᱫᱤᱱ ᱯᱟᱲᱦᱟᱣ ᱨᱮᱭᱟᱜ ᱢᱟᱸᱡᱞᱟ ᱨᱟᱥ: &lt;b&gt;%1$.1f&lt;/b&gt; ᱫᱩᱦᱲᱟ ᱧᱮᱞ/ᱫᱤᱱ</string>
     <string name="stats_overview_reviews_per_day_all">ᱫᱤᱱᱼᱫᱤᱱ ᱮᱢ ᱯᱟᱲᱦᱟᱣ ᱠᱷᱟᱱ: &lt;b&gt;%1$.1f&lt;/b&gt; ᱫᱩᱦᱲᱟ ᱧᱮᱞ/ᱫᱤᱱ</string>
     <string name="stats_overview_total_time_in_period">ᱢᱩᱴ: &lt;b&gt;%d&lt;/b&gt; ᱴᱤᱯᱤᱡ</string>

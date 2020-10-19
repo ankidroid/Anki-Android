@@ -78,7 +78,6 @@
     <string name="stats_overview_forecast_average">Balasak: &lt;b&gt;%1$.1f&lt;/b&gt; balik-aral/araw</string>
     <string name="stats_overview_forecast_due_tomorrow">Kailangan na bukas: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Mga araw na nagaral: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-    <string name="stats_overview_total_reviews">Kabuuan: &lt;b&gt;%1$d&lt;/b&gt; mga balik-aral</string>
     <string name="stats_overview_reviews_per_day_studydays">Balasak para sa mga araw na nagaral: &lt;b&gt;%1$.1f&lt;/b&gt; balik-araw/araw</string>
     <string name="stats_overview_reviews_per_day_all">Kung nagaral ka araw-araw: &lt;b&gt;%1$.1f&lt;/b&gt; balik-aral/araw</string>
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>

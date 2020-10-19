@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Davranış</string>
     <string name="pref_cat_flashcard">Ekran</string>
     <string name="pref_cat_whiteboard">Yazı tahtası</string>
-    <string name="pref_cat_automatic_display">Cevabı otomatik göster</string>
     <string name="pref_cat_appearance">Görünüş</string>
     <string name="pref_cat_appearance_summ">Temaları ve varsayılan fontu değiştir</string>
     <string name="pref_cat_themes">Temalar</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Cevabı otomatik göster</string>
     <string name="timeout_answer_summ">Cevabı kullanıcı girişi yapılmadan otomatik olarak göster. Ses dosyasını otomatik oynatmak için gecikme zamanı içerir.</string>
     <string name="timeout_answer_seconds">Cevabı gösterme zamanı</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Sonraki soruyu gösterme zamanı</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Dil Seç</string>
     <string name="safe_display">Güvenli görüntü modu</string>
     <string name="safe_display_summ">Bütün animasyonları devredışı bırak ve kartları çizmek için daha güvenli yöntem kullan. Bu e-mürekkepli cihazlar için gerekebilir.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Şu anki grup</string>
     <string name="deck_conf_rename">Adını değiştir</string>
     <string name="deck_conf_reset">Varsayılanlara geri dön</string>
-    <string name="deck_conf_reset_title">Varsayılanlara geri dön</string>
     <string name="deck_conf_reset_message">Şu anki seçenek grubu varsayılan değerlerine döndürülsün mü?</string>
     <string name="deck_conf_add">Yapılandırma ekle</string>
     <string name="deck_conf_add_summ">Şu anki seçenek grubunun kopyasını oluştur</string>
@@ -264,7 +261,6 @@
         <item quantity="one">%s altdeste bu grubu kullanacak</item>
         <item quantity="other">%s altdeste bu grubu kullanacak</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Bütün altdesteler için ayarla</string>
     <string name="deck_conf_set_subdecks_message">Şu anki seçenek grubu bu destenin bütün altdesteleri için ayarlansın mı?</string>
     <string name="pref_browser_editor_font">Tarayıcı ve düzenleyici fontu</string>
     <string name="deck_conf_cram_filter">Filtre</string>

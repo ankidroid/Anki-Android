@@ -106,7 +106,7 @@
     <string name="rename_deck">ᱰᱮᱠ ᱟ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ‌ ᱢᱮ</string>
     <string name="menu_add">ᱥᱮᱞᱮᱫ </string>
     <string name="menu_add_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
-    <string name="menu_my_account">ᱠᱷᱟᱛᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱮ</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ᱠᱷᱟᱛᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱮ</string>
     <string name="menu_dismiss_note">ᱩᱠᱩᱭ ᱢᱮ/ᱜᱫ ᱜᱤᱰᱤ</string>
     <string name="menu_bury_card">ᱠᱟᱰ ᱛᱚᱯᱟᱭ ᱢᱮ</string>
     <string name="menu_bury_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱛᱚᱯᱟᱭ ᱢᱮ</string>

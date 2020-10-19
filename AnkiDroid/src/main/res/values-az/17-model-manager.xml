@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">Qeyd növlərini idarə et</string>
-    <string name="model_editor_label">Sahələri idarə et</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Qeyd növlərini idarə et</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Sahələri idarə et</string>
     <!--Toasts-->
     <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Qeyd növlərinin ən az bir sahəsi olmalıdır</string>
@@ -37,8 +37,6 @@
         <item quantity="one">%d qeyd</item>
         <item quantity="other">%d qeyd</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">Qeyd növü əlavə et</string>
     <!--Browser-->
     <string name="model_browser_delete">Qeyd növünü sil</string>
     <string name="model_browser_rename">Yenidən adlandır</string>

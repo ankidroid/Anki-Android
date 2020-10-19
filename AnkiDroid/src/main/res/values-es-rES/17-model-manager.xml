@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">Gestionar tipos de nota</string>
-    <string name="model_editor_label">Administrar campos</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Gestionar tipos de nota</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Administrar campos</string>
     <!--Toasts-->
     <string name="toast_last_model">No puede eliminar su último tipo de nota</string>
     <string name="toast_last_field">Los tipos de nota deben tener por lo menos un campo</string>
@@ -37,8 +37,6 @@
         <item quantity="one">%d nota</item>
         <item quantity="other">%d notas</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">Añadir tipo de nota</string>
     <!--Browser-->
     <string name="model_browser_delete">Borrar tipo de nota</string>
     <string name="model_browser_rename">Renombrar</string>

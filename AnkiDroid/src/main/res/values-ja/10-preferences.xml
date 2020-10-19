@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">動作</string>
     <string name="pref_cat_flashcard">画面表示</string>
     <string name="pref_cat_whiteboard">ホワイトボード機能</string>
-    <string name="pref_cat_automatic_display">解答の自動表示</string>
     <string name="pref_cat_appearance">デザイン</string>
     <string name="pref_cat_appearance_summ">テーマと標準フォントの変更</string>
     <string name="pref_cat_themes">テーマ</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">解答を自動的に表示</string>
     <string name="timeout_answer_summ">操作しなくても、一定時間経過後に自動的に解答を表示します。音声ファイルを自動的に再生する場合は、その再生時間と下記の「解答を表示するまでの時間」が経過した後に解答を表示します。</string>
     <string name="timeout_answer_seconds">解答を表示するまでの時間</string>
-    <string name="timeout_answer_seconds_summ">XXX 秒</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
     <string name="timeout_question_seconds">次の質問までの時間</string>
-    <string name="timeout_question_seconds_summ">XXX 秒</string>
     <string name="select_locale_title">言語を選択</string>
     <string name="safe_display">安全表示モード</string>
     <string name="safe_display_summ">アニメーションを無効にし、より不具合が起こりくい方法でカードを表示します。電子ペーパー端末ではこの設定が必要となる可能性があります。</string>
@@ -251,7 +249,6 @@
     <string name="deck_conf_current_group">このデッキが使用しているオプショングループ</string>
     <string name="deck_conf_rename">名前の変更</string>
     <string name="deck_conf_reset">標準の設定へ戻す</string>
-    <string name="deck_conf_reset_title">標準の設定へ戻す</string>
     <string name="deck_conf_reset_message">このオプショングループを標準の設定に戻しますか？</string>
     <string name="deck_conf_add">追加</string>
     <string name="deck_conf_add_summ">このオプショングループのコピーを作成します</string>
@@ -262,7 +259,6 @@
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">この設定を行うと、このデッキの中にある%s個のサブデッキにもこのオプショングループを適用します</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">全てのサブデッキに適用</string>
     <string name="deck_conf_set_subdecks_message">このオプショングループをこのデッキ内の全てのサブデッキにも適用しますか？</string>
     <string name="pref_browser_editor_font">ブラウザとノート編集のフォント</string>
     <string name="deck_conf_cram_filter">フィルター</string>

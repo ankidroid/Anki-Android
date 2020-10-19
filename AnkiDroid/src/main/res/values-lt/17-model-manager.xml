@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">Tvarkyti užrašų tipus</string>
-    <string name="model_editor_label">Tvarkyti laukelius</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Tvarkyti užrašų tipus</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Tvarkyti laukelius</string>
     <!--Toasts-->
     <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Užrašų tipai privalo turėti bent po vieną laukelį</string>
@@ -41,8 +41,6 @@
         <item quantity="many">%d notes</item>
         <item quantity="other">%d užrašų</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">Pridėti užrašo tipą</string>
     <!--Browser-->
     <string name="model_browser_delete">Ištrinti užrašo tipą</string>
     <string name="model_browser_rename">Pervadinti</string>

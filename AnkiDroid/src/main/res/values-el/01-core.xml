@@ -106,7 +106,7 @@
     <string name="rename_deck">Rename deck</string>
     <string name="menu_add">Προσθήκη</string>
     <string name="menu_add_note">Προσθήκη σημείωσης</string>
-    <string name="menu_my_account">Συγχρονισμός λογαριασμού</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Συγχρονισμός λογαριασμού</string>
     <string name="menu_dismiss_note">Απόκρυψη / διαγραφή</string>
     <string name="menu_bury_card">Κρύψιμο κάρτας</string>
     <string name="menu_bury_note">Απόκρυψη Σημείωσης</string>

@@ -133,6 +133,4 @@
     <string name="sync_menu_title">同步</string>
     <string name="sync_menu_title_full_sync">同步（完整）</string>
     <string name="sync_menu_title_no_account">同步（登录）</string>
-    <!-- An option on a message box to open the "corrupt collection" webpage -->
-    <string name="sync_corrupt_collection_get_help">帮助</string>
 </resources>

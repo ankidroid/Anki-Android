@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">إدارة أنواع الملحوظات</string>
-    <string name="model_editor_label">إدارة الحقول</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">إدارة أنواع الملحوظات</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">إدارة الحقول</string>
     <!--Toasts-->
     <string name="toast_last_model">لا يمكنك حذف آخر نوع ملحوظة لديك</string>
     <string name="toast_last_field">يجب أن تحتوي أنواع الملحوظات على حقل واحد على الأقل</string>
@@ -45,8 +45,6 @@
         <item quantity="many">%d ملحوظة</item>
         <item quantity="other">%d ملحوظة</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">إضافة نوع ملحوظة</string>
     <!--Browser-->
     <string name="model_browser_delete">حذف نوع الملحوظة</string>
     <string name="model_browser_rename">إعادة التسمية</string>

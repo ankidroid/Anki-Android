@@ -27,7 +27,6 @@
     <string name="field_to_ask_front_name">Pridať obrátenú stranu kartičky</string>
     <!--Card type-->
     <string name="card_n_name">Card %d</string>
-    <string name="card_cloze_name">Doplňovačka</string>
     <!--Note type-->
     <string name="basic_model_name">Základná</string>
     <string name="cloze_model_name">Doplňovačka</string>

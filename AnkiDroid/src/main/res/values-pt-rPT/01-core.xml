@@ -106,7 +106,7 @@
     <string name="rename_deck">Renomear baralho</string>
     <string name="menu_add">Adicionar</string>
     <string name="menu_add_note">Adicionar nota</string>
-    <string name="menu_my_account">Conta de sincronização</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Conta de sincronização</string>
     <string name="menu_dismiss_note">Ocultar / Eliminar</string>
     <string name="menu_bury_card">Ocultar ficha</string>
     <string name="menu_bury_note">Ocultar nota</string>

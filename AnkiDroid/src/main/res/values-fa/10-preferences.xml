@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">رفتار</string>
     <string name="pref_cat_flashcard">نمایش</string>
     <string name="pref_cat_whiteboard">تخته سفید</string>
-    <string name="pref_cat_automatic_display">نمایش پاسخ بصورت خودکار</string>
     <string name="pref_cat_appearance">ظاهر</string>
     <string name="pref_cat_appearance_summ">تغییر پس زمینه و خط پیش فرض</string>
     <string name="pref_cat_themes">پوسته ها</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">نمایش پاسخ بصورت خودکار</string>
     <string name="timeout_answer_summ">نمایش خودکار پاسخ بدون درخواست کاربر. تأخیر شامل زمان پخش فایل صوتی نیز می‌شود.</string>
     <string name="timeout_answer_seconds">زمان نمایش پاسخ</string>
-    <string name="timeout_answer_seconds_summ">XXX ثانیه</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ثانیه</string>
     <string name="timeout_question_seconds">زمان نمایش پرسش بعدی</string>
-    <string name="timeout_question_seconds_summ">XXX ثانیه</string>
     <string name="select_locale_title">زبان را انتخاب کنید</string>
     <string name="safe_display">حالت نمایش محتاطانه</string>
     <string name="safe_display_summ">غیرفعال کردن همۀ انیمیشن‌ها و استفاده از حالت امن‌تر برای نقاشی روی کارت‌ها. دستگاه‌های E-ink ممکن است نیازمند از گزینه باشند.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">گروه فعلی</string>
     <string name="deck_conf_rename">تغییر نام</string>
     <string name="deck_conf_reset">بازیابی پیش فرضها</string>
-    <string name="deck_conf_reset_title">بازیابی پیش فرضها</string>
     <string name="deck_conf_reset_message">تنظیمات فعلی گروه را به مقادیر پیش فرض بازمی گردانید؟</string>
     <string name="deck_conf_add">پیکربندی را اضافه کن</string>
     <string name="deck_conf_add_summ">ایجاد یک کپی از تنظیمات گروه فعلی</string>
@@ -264,7 +261,6 @@
         <item quantity="one">%s زیر دسته از این گروه استفاده خواهند کرد</item>
         <item quantity="other">%s زیر دسته از این گروه استفاده خواهند کرد</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">برای تمام دسته ها تنظیم شود</string>
     <string name="deck_conf_set_subdecks_message">تنظیمات گروه فعلی برای کل این دسته از دسته ها تنظیم شود؟</string>
     <string name="pref_browser_editor_font">فونت مرورگر و ویرایشگر</string>
     <string name="deck_conf_cram_filter">فیلتر</string>

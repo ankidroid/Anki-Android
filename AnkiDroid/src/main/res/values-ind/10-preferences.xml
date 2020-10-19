@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Perilaku</string>
     <string name="pref_cat_flashcard">Tampilan</string>
     <string name="pref_cat_whiteboard">Whiteboard</string>
-    <string name="pref_cat_automatic_display">Otomatis tampilkan jawaban</string>
     <string name="pref_cat_appearance">Tampilan</string>
     <string name="pref_cat_appearance_summ">Ubah tema dan fon dasar</string>
     <string name="pref_cat_themes">Tema</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Otomatis tampilkan jawaban</string>
     <string name="timeout_answer_summ">Tampilkan jawaban secara otomatis tanpa masukan dari pengguna. Jeda termasuk waktu untuk memutar berkas audio secara otomatis.</string>
     <string name="timeout_answer_seconds">Waktu menampilkan jawaban</string>
-    <string name="timeout_answer_seconds_summ">XXX dtk</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX dtk</string>
     <string name="timeout_question_seconds">Waktu menampilkan pertanyaan selanjutnya</string>
-    <string name="timeout_question_seconds_summ">XXX dtk</string>
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="safe_display">Mode tampilan aman</string>
     <string name="safe_display_summ">Nonaktifkan semua animasi dan gunakan metode yang lebih aman untuk menggambar kartu. Perangkat E-ink mungkin memerlukan ini.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Grup saat ini</string>
     <string name="deck_conf_rename">Ubah nama</string>
     <string name="deck_conf_reset">Kembalikan ke awal</string>
-    <string name="deck_conf_reset_title">Kembalikan ke awal</string>
     <string name="deck_conf_reset_message">Kembalikan opsi kelompok sekarang menjadi seperti awal?</string>
     <string name="deck_conf_add">Tambah</string>
     <string name="deck_conf_add_summ">Buat salinan dari grup opsi saat ini</string>
@@ -263,7 +260,6 @@
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s subdek akan menggunakan grup ini</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Set untuk semua subdek</string>
     <string name="deck_conf_set_subdecks_message">Set opsi grup pilihan saat ini untuk semua subdek dek ini?</string>
     <string name="pref_browser_editor_font">Penelusur dan editor fon</string>
     <string name="deck_conf_cram_filter">Filter</string>

@@ -136,7 +136,7 @@
         <item quantity="other">%1$d minuten</item>
     </plurals>
     <string name="studyoptions_welcome_title">Welkom bij AnkiDroid</string>
-    <string name="fact_adder_intent_title">Ankidroid kaart</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Ankidroid kaart</string>
     <string name="note_editor_add_note">Voeg memo toe</string>
     <string name="note_editor_copy_note">Memo kopiëren</string>
     <string name="card_editor_copy_card">Kopieer kaart</string>
@@ -151,7 +151,6 @@
         <item quantity="one">%d kaart toegevoegd</item>
         <item quantity="other">%d kaarten toegevoegd</item>
     </plurals>
-    <string name="help_title">Help</string>
     <string name="check_db">Database controleren</string>
     <string name="check_media">Media controleren</string>
     <string name="empty_cards">Lege kaarten zoeken</string>
@@ -317,7 +316,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>

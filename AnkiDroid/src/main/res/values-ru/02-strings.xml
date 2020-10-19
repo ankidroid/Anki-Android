@@ -140,7 +140,7 @@
         <item quantity="other">%1$d минут</item>
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid приветствует вас</string>
-    <string name="fact_adder_intent_title">Карточка AnkiDroid</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Карточка AnkiDroid</string>
     <string name="note_editor_add_note">Добавить запись</string>
     <string name="note_editor_copy_note">Копировать запись</string>
     <string name="card_editor_copy_card">Копировать карточку</string>
@@ -157,7 +157,6 @@
         <item quantity="many">Добавлено %d карточек</item>
         <item quantity="other">Добавлено %d карточек</item>
     </plurals>
-    <string name="help_title">Справка</string>
     <string name="check_db">Проверить базу данных</string>
     <string name="check_media">Проверить медиафайлы</string>
     <string name="empty_cards">Пустые карточки</string>
@@ -341,7 +340,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Ошибка при копировании отладочной информации в буфер обмена</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
-    <string name="card_viewer_could_not_find_image_get_help">Помощь</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
     <string name="search_decks">Найти колоду</string>

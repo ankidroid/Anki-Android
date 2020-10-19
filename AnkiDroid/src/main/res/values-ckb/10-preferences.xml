@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Behavior</string>
     <string name="pref_cat_flashcard">Ekran</string>
     <string name="pref_cat_whiteboard">Whiteboard</string>
-    <string name="pref_cat_automatic_display">Automatic display answer</string>
     <string name="pref_cat_appearance">Appearance</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
     <string name="pref_cat_themes">Themes</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Automatic display answer</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds">Time to show answer</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Time to show next question</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Zimanekî hilbijêre</string>
     <string name="safe_display">Safe display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -253,7 +251,6 @@
     <string name="deck_conf_current_group">Koma niha</string>
     <string name="deck_conf_rename">Nav biguherîne</string>
     <string name="deck_conf_reset">Restore defaults</string>
-    <string name="deck_conf_reset_title">Restore defaults</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
     <string name="deck_conf_add">Lê zêde bike</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
@@ -265,7 +262,6 @@
         <item quantity="one">%s subdeck will use this group</item>
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font">Browser and editor font</string>
     <string name="deck_conf_cram_filter">Parzûn</string>

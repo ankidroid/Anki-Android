@@ -101,7 +101,7 @@
     <string name="rename_deck">このデッキの名前を変更</string>
     <string name="menu_add">ノートを追加</string>
     <string name="menu_add_note">ノートを追加</string>
-    <string name="menu_my_account">アカウントの設定と同期</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
     <string name="menu_dismiss_note">延期、保留、削除</string>
     <string name="menu_bury_card">カードを延期</string>
     <string name="menu_bury_note">ノートを延期</string>

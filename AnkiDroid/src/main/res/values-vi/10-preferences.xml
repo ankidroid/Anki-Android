@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Cách thức</string>
     <string name="pref_cat_flashcard">Hiển thị</string>
     <string name="pref_cat_whiteboard">Bảng viết</string>
-    <string name="pref_cat_automatic_display">Tự động hiển thị trả lời</string>
     <string name="pref_cat_appearance">Appearance</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
     <string name="pref_cat_themes">Themes</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Tự động hiển thị trả lời</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds">Thời gian để hiển thị câu trả lời</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Thời gian để hiển thị câu hỏi tiếp theo</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Chọn ngôn ngữ</string>
     <string name="safe_display">Chế độ an toàn màn hình</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Nhóm hiện tại</string>
     <string name="deck_conf_rename">Đổi Tên</string>
     <string name="deck_conf_reset">Phục hồi mặc định</string>
-    <string name="deck_conf_reset_title">Phục hồi mặc định</string>
     <string name="deck_conf_reset_message">Khôi phục tùy chọn nhóm hiện tại về mặc định?</string>
     <string name="deck_conf_add">Thêm</string>
     <string name="deck_conf_add_summ">Tạo một bản sao của nhóm lựa chọn hiện tại</string>
@@ -263,7 +260,6 @@
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Thiết lập cho tất cả chủ đề phụ</string>
     <string name="deck_conf_set_subdecks_message">Thiết lập hiện tại tùy chọn nhóm cho tất cả chủ đề phụ này?</string>
     <string name="pref_browser_editor_font">Trình duyệt và trình soạn thảo font</string>
     <string name="deck_conf_cram_filter">Bộ lọc</string>

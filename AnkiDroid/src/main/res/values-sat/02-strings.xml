@@ -136,7 +136,7 @@
         <item quantity="other">%1$d ᱴᱤᱯᱤᱡ</item>
     </plurals>
     <string name="studyoptions_welcome_title">Ankidrod ᱛᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ</string>
-    <string name="fact_adder_intent_title">AnkiDroid ᱠᱟᱰ</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ᱠᱟᱰ</string>
     <string name="note_editor_add_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_copy_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱠᱚᱯᱤ ᱢᱮ</string>
     <string name="card_editor_copy_card">ᱠᱟᱰ ᱱᱚᱠᱚᱞ ᱢᱮ</string>
@@ -151,7 +151,6 @@
         <item quantity="one">%d ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
     </plurals>
-    <string name="help_title">ᱜᱚᱸᱲᱚᱸ</string>
     <string name="check_db">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ</string>
     <string name="check_media">ᱢᱤᱰᱤᱭᱟ ᱪᱮᱠ ᱢᱮ</string>
     <string name="empty_cards">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰ ᱠᱚ</string>
@@ -312,7 +311,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞ:  ‘%s’ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ</string>
-    <string name="card_viewer_could_not_find_image_get_help">ᱜᱚᱲᱚ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ᱰᱮᱠ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ ‘%s’</string>
     <string name="search_decks">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>

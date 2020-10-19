@@ -140,7 +140,7 @@
         <item quantity="other">%1$d minut</item>
     </plurals>
     <string name="studyoptions_welcome_title">Witamy w AnkiDroid</string>
-    <string name="fact_adder_intent_title">Karta AnkiDroida</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Karta AnkiDroida</string>
     <string name="note_editor_add_note">Zapisz notatkę</string>
     <string name="note_editor_copy_note">Kopiuj notatkę</string>
     <string name="card_editor_copy_card">Kopiuj kartę</string>
@@ -157,7 +157,6 @@
         <item quantity="many">%d kart dodanych</item>
         <item quantity="other">%d kart dodanych</item>
     </plurals>
-    <string name="help_title">Pomoc</string>
     <string name="check_db">Sprawdź bazę danych</string>
     <string name="check_media">Sprawdź media</string>
     <string name="empty_cards">Puste karty</string>
@@ -342,7 +341,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Błąd kopiowania informacji debugowania do schowka</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Błąd zawartości karty, nie udało się załadować: %s</string>
-    <string name="card_viewer_could_not_find_image_get_help">Pomoc</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nie udało się załadować talii: %s</string>
     <string name="search_decks">Search decks</string>

@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Comportamento</string>
     <string name="pref_cat_flashcard">Exibição</string>
     <string name="pref_cat_whiteboard">Quadro</string>
-    <string name="pref_cat_automatic_display">Mostrar resposta automaticamente</string>
     <string name="pref_cat_appearance">Aparência</string>
     <string name="pref_cat_appearance_summ">Alterar temas e fonte padrão</string>
     <string name="pref_cat_themes">Temas</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Exibir resposta automaticamente</string>
     <string name="timeout_answer_summ">Mostra a resposta automaticamente sem intervenção do usuário. Inclui atraso para reprodução automatica de arquivos de áudio.</string>
     <string name="timeout_answer_seconds">Tempo para mostrar a resposta</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Tempo para mostrar próxima questão</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Selecionar Idioma</string>
     <string name="safe_display">Modo de exibição segura</string>
     <string name="safe_display_summ">Desativar todas animações e utilizar método seguro para desenhar cartões. Dispositivos E-ink podem exigir isso.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Grupo atual</string>
     <string name="deck_conf_rename">Renomear</string>
     <string name="deck_conf_reset">Restaurar padrões</string>
-    <string name="deck_conf_reset_title">Restaurar padrões</string>
     <string name="deck_conf_reset_message">Restaurar o atual grupo de opções para valores padrão?</string>
     <string name="deck_conf_add">Adicionar configuração</string>
     <string name="deck_conf_add_summ">Criar uma cópia de grupo de opções atual</string>
@@ -264,7 +261,6 @@
         <item quantity="one">Subdeck %s utilizará este subgrupo</item>
         <item quantity="other">Subdecks %s utilizarão este subgrupo</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Definir para todos os subdecks</string>
     <string name="deck_conf_set_subdecks_message">Definir o atual grupo de opções para todos os subdecks deste baralho?</string>
     <string name="pref_browser_editor_font">Navegador e editor de fonte</string>
     <string name="deck_conf_cram_filter">Filtro</string>

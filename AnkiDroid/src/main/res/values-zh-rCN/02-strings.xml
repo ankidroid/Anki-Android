@@ -134,7 +134,7 @@
         <item quantity="other">%1$d 分钟</item>
     </plurals>
     <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
-    <string name="fact_adder_intent_title">AnkiDroid卡片</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid卡片</string>
     <string name="note_editor_add_note">添加笔记</string>
     <string name="note_editor_copy_note">复制笔记</string>
     <string name="card_editor_copy_card">复制卡片</string>
@@ -148,7 +148,6 @@
     <plurals name="factadder_cards_added">
         <item quantity="other">已添加%d张卡片</item>
     </plurals>
-    <string name="help_title">帮助</string>
     <string name="check_db">检查数据</string>
     <string name="check_media">检查媒体</string>
     <string name="empty_cards">空白卡片</string>
@@ -303,7 +302,6 @@
     <string name="about_ankidroid_error_copy_debug_info">复制调试信息到剪贴板时出错</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">加载“%s”失败</string>
-    <string name="card_viewer_could_not_find_image_get_help">帮助</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">加载牌组“%s”失败</string>
     <string name="search_decks">搜索牌组</string>

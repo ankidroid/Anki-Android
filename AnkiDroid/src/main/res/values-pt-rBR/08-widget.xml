@@ -44,7 +44,7 @@
         <item quantity="one">%d Cartão pendente no AnkiDroid</item>
         <item quantity="other">%d Cartões pendentes no AnkiDroid</item>
     </plurals>
-    <string name="widget_small">AnkiDroid pequeno</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid pequeno</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d cartão pendente</item>
         <item quantity="other">%d cartões pendentes</item>
@@ -53,6 +53,6 @@
         <item quantity="one">%d minutos restantes</item>
         <item quantity="other">%d minutos restantes</item>
     </plurals>
-    <string name="widget_add_note">Adicionar nota</string>
+    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Adicionar nota</string>
     <string name="widget_add_note_button">Adicionar nova nota do AnkiDroid</string>
 </resources>

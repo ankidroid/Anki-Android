@@ -101,7 +101,7 @@
     <string name="rename_deck">카드 묶음 이름 바꾸기</string>
     <string name="menu_add">추가</string>
     <string name="menu_add_note">노트 추가</string>
-    <string name="menu_my_account">계정 동기화</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">계정 동기화</string>
     <string name="menu_dismiss_note">숨김 / 삭제</string>
     <string name="menu_bury_card">카드 나중에 보기</string>
     <string name="menu_bury_note">노트 나중에 보기</string>

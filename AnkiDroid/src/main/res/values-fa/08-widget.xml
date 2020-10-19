@@ -44,7 +44,7 @@
         <item quantity="one">مرور %d کارت در آنکی‌دروید باقی‌مانده است</item>
         <item quantity="other">مرور %d کارت در آنکی دروید باقی مانده است</item>
     </plurals>
-    <string name="widget_small">آنکی دروید کوچک</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">آنکی دروید کوچک</string>
     <plurals name="widget_cards_due">
         <item quantity="one">موعد مرور %d کارت</item>
         <item quantity="other">موعد مرور %d کارت</item>
@@ -53,6 +53,6 @@
         <item quantity="one">%d دقیقه باقیمانده</item>
         <item quantity="other">%d دقیقه باقیمانده</item>
     </plurals>
-    <string name="widget_add_note">افزودن یادداشت</string>
+    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">افزودن یادداشت</string>
     <string name="widget_add_note_button">افزودن یادداشت جدید</string>
 </resources>

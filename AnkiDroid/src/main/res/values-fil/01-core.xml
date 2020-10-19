@@ -107,7 +107,7 @@ mga natitirang minuto</item>
     <string name="rename_deck">Palitan ang pangalan ng deck</string>
     <string name="menu_add">Idagdag</string>
     <string name="menu_add_note">Magdagdag ng tala</string>
-    <string name="menu_my_account">I-sync ang account</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">I-sync ang account</string>
     <string name="menu_dismiss_note">Itago / burahin</string>
     <string name="menu_bury_card">Ilibing ang kard</string>
     <string name="menu_bury_note">Ilibing ang tala</string>

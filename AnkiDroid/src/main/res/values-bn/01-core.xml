@@ -106,7 +106,7 @@
     <string name="rename_deck">ডেক পুনঃনামকরণ করুন</string>
     <string name="menu_add">যোগ করুন</string>
     <string name="menu_add_note">নোট যোগ করুন</string>
-    <string name="menu_my_account">হিসাব সিঙ্ক করুন</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">হিসাব সিঙ্ক করুন</string>
     <string name="menu_dismiss_note">গোপন / মুছে ফেলুন</string>
     <string name="menu_bury_card">কার্ড বাতিল</string>
     <string name="menu_bury_note">নোট বাতিল</string>

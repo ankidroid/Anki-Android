@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">ప్రవర్తన</string>
     <string name="pref_cat_flashcard">ప్రదర్శన</string>
     <string name="pref_cat_whiteboard">వైట్‌బోర్డ్</string>
-    <string name="pref_cat_automatic_display">స్వయంచాలక ప్రదర్శన సమాధానం</string>
     <string name="pref_cat_appearance">స్వరూపం</string>
     <string name="pref_cat_appearance_summ">థీమ్లను మరియు డిఫాల్ట్ ఫాంట్ను మార్చండి</string>
     <string name="pref_cat_themes">థీమ్లు</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_summ">వినియోగదారు ఇన్పుట్ లేకుండా స్వయంచాలకంగా సమాధానం చూపు. 
 ఆలస్యం స్వయంచాలకంగా ప్లే చేయబడిన ఆడియో ఫైల్లకు సమయాన్ని కలిగి ఉంటుంది.</string>
     <string name="timeout_answer_seconds">సమాధానం చూపించడానికి సమయం</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">తదుపరి ప్రశ్న చూపించడానికి సమయం</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">భాషను ఎంచుకోండి</string>
     <string name="safe_display">సురక్షిత ప్రదర్శన మోడ్</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -253,7 +251,6 @@
     <string name="deck_conf_current_group">ప్రస్తుత సమూహం</string>
     <string name="deck_conf_rename">పేరుమార్చు</string>
     <string name="deck_conf_reset">నిర్ణీత విలువలకు మార్చు</string>
-    <string name="deck_conf_reset_title">నిర్ణీత విలువలకు మార్చు</string>
     <string name="deck_conf_reset_message">డిఫాల్ట్ విలువల కోసం ప్రస్తుత ఎంపికల సమూహాన్ని పునరుద్ధరించాలా?</string>
     <string name="deck_conf_add">చేర్చు</string>
     <string name="deck_conf_add_summ">ప్రస్తుత ఎంపికల సమూహపు నకలును సృష్టించండి</string>
@@ -265,7 +262,6 @@
         <item quantity="one">%s subdeck ఈ గుంపును ఉపయోగిస్తుంది</item>
         <item quantity="other">%s subdecks ఈ గుంపును ఉపయోగిస్తుంది</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">అన్ని subdecks కోసం సెట్</string>
     <string name="deck_conf_set_subdecks_message">ఈ డెక్ యొక్క subdecks అన్ని ప్రస్తుత ఎంపికలు సమూహం సెట్?</string>
     <string name="pref_browser_editor_font">బ్రౌజర్ మరియు ఎడిటర్ ఫాంట్</string>
     <string name="deck_conf_cram_filter">వడపోత</string>

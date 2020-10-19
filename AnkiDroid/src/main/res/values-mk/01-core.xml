@@ -106,7 +106,7 @@
     <string name="rename_deck">Преименувај палубата</string>
     <string name="menu_add">Додави</string>
     <string name="menu_add_note">Додави забелешка</string>
-    <string name="menu_my_account">Синхронизирајте сметка</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Синхронизирајте сметка</string>
     <string name="menu_dismiss_note">Скриј / избриши</string>
     <string name="menu_bury_card">Погребете картичката</string>
     <string name="menu_bury_note">Погребете белешка</string>

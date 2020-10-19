@@ -136,7 +136,7 @@
         <item quantity="other">%1$d minutos</item>
     </plurals>
     <string name="studyoptions_welcome_title">Bem-vindo ao AnkiDroid</string>
-    <string name="fact_adder_intent_title">Cartão AnkiDroid</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Cartão AnkiDroid</string>
     <string name="note_editor_add_note">Adicionar nota</string>
     <string name="note_editor_copy_note">Copiar nota</string>
     <string name="card_editor_copy_card">Copiar cartão</string>
@@ -151,7 +151,6 @@
         <item quantity="one">%d cartão adicionado</item>
         <item quantity="other">%d cartões adicionados</item>
     </plurals>
-    <string name="help_title">Ajuda</string>
     <string name="check_db">Verificar banco de dados</string>
     <string name="check_media">Verificar mídia</string>
     <string name="empty_cards">Cartões vazios</string>
@@ -316,10 +315,9 @@
     <string name="about_ankidroid_error_copy_debug_info">Erro ao copiar informações de debug para a área de transferência.</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Erro de Conteúdo do Cartão: falha ao carregar ‘%s\'</string>
-    <string name="card_viewer_could_not_find_image_get_help">Ajuda</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Falha ao carregar o baralho ‘%s\'</string>
     <string name="search_decks">Pesquisar baralhos</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview_title">Erro Fatal</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid depende do System WebView que não está disponível. Isso pode acontecer se o sistema está instalando atualizações. Por favor, tente novamente em alguns minutos.\n\n%s</string>
 </resources>

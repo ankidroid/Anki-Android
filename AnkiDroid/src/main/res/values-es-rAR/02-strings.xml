@@ -136,7 +136,7 @@
         <item quantity="other">%1$d minutos</item>
     </plurals>
     <string name="studyoptions_welcome_title">Bienvenido a AnkiDroid</string>
-    <string name="fact_adder_intent_title">Tarjeta de AnkiDroid</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Tarjeta de AnkiDroid</string>
     <string name="note_editor_add_note">Añadir nota</string>
     <string name="note_editor_copy_note">Copiar nota</string>
     <string name="card_editor_copy_card">Copiar tarjeta</string>
@@ -151,7 +151,6 @@
         <item quantity="one">%d tarjeta añadida</item>
         <item quantity="other">%d tarjetas añadidas</item>
     </plurals>
-    <string name="help_title">Ayuda</string>
     <string name="check_db">Comprobar base de datos</string>
     <string name="check_media">Comprobar archivo multimedia</string>
     <string name="empty_cards">Tarjetas vacías</string>
@@ -316,7 +315,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>

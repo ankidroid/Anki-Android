@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Zachowanie</string>
     <string name="pref_cat_flashcard">Wyświetlanie</string>
     <string name="pref_cat_whiteboard">Tablica</string>
-    <string name="pref_cat_automatic_display">Automatyczne wyświetlanie odpowiedzi</string>
     <string name="pref_cat_appearance">Wygląd</string>
     <string name="pref_cat_appearance_summ">Zmiana tematów i czcionki domyślnej</string>
     <string name="pref_cat_themes">Motywy</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Automatyczne wyświetlanie odpowiedzi</string>
     <string name="timeout_answer_summ">Pokaż odpowiedź automatycznie bez interakcji z użytkownikiem. Opóźnienie czas automatycznego odtwarzania plików dźwiękowych.</string>
     <string name="timeout_answer_seconds">Czas do pokazania odpowiedzi</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Czas do pokazania kolejnego pytania</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Wybór języka</string>
     <string name="safe_display">Tryb bezpiecznego wyświetlania</string>
     <string name="safe_display_summ">Wyłącz wszystkie animacje i użyj bezpieczniejszej metody rysowania kart. Urządzenia E-ink mogą tego wymagać.</string>
@@ -254,7 +252,6 @@
     <string name="deck_conf_current_group">Bieżąca grupa ustawień</string>
     <string name="deck_conf_rename">Zmień nazwę</string>
     <string name="deck_conf_reset">Przywróć domyślne</string>
-    <string name="deck_conf_reset_title">Przywróć domyślne</string>
     <string name="deck_conf_reset_message">Przywrócić bieżące ustawienia grupy do wartości domyślnych?</string>
     <string name="deck_conf_add">Dodaj konfigurację</string>
     <string name="deck_conf_add_summ">Utwórz kopię bieżących ustawień grupy</string>
@@ -268,7 +265,6 @@
         <item quantity="many">%s sub-talii używa tej grupy</item>
         <item quantity="other">%s sub-talii używa tej grupy</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Ustaw dla wszystkich sub-talii</string>
     <string name="deck_conf_set_subdecks_message">Zastosować bieżące ustawienia grupy dla wszystkich sub-talii tej talii?</string>
     <string name="pref_browser_editor_font">Czcionka przeglądarki i edytora</string>
     <string name="deck_conf_cram_filter">Filtrowanie</string>

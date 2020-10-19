@@ -78,7 +78,6 @@
     <string name="stats_overview_forecast_average">平均: &lt;b&gt;%1$.1f&lt;/b&gt;枚/日</string>
     <string name="stats_overview_forecast_due_tomorrow">明日: &lt;b&gt;%1$d&lt;/b&gt;枚</string>
     <string name="stats_overview_days_studied">学習実行率: &lt;b&gt;%1$d%% &lt;/b &gt; (%3$d日中%2$d日)</string>
-    <string name="stats_overview_total_reviews">合計: &lt;b&gt;%1$d&lt;/b&gt;枚</string>
     <string name="stats_overview_reviews_per_day_studydays">各学習の平均: &lt;b&gt;%1$.1f&lt;/b&gt;枚/日</string>
     <string name="stats_overview_reviews_per_day_all">毎日学習した場合の平均: &lt;b&gt;%1$.1f&lt;/b&gt;回/日</string>
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>

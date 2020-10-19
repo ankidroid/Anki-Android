@@ -136,7 +136,7 @@
         <item quantity="other">%1$d perc</item>
     </plurals>
     <string name="studyoptions_welcome_title">Üdv az AnkiDroidban!</string>
-    <string name="fact_adder_intent_title">AnkiDroid Kártya</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid Kártya</string>
     <string name="note_editor_add_note">Jegyzet hozzáadása</string>
     <string name="note_editor_copy_note">Jegyzet másolása</string>
     <string name="card_editor_copy_card">Kártya másolása</string>
@@ -151,7 +151,6 @@
         <item quantity="one">%d kártya hozzáadva</item>
         <item quantity="other">%d kártyák hozzáadva</item>
     </plurals>
-    <string name="help_title">Segítség</string>
     <string name="check_db">Adatbázis ellenőrzése</string>
     <string name="check_media">Média ellenőrzése</string>
     <string name="empty_cards">Üres kártyák listája</string>
@@ -316,7 +315,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Hiba történt a hibakeresési információk vágólapra másolása közben</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Súgó</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">A(z) \'%s\' pakli betöltése nem sikerült</string>
     <string name="search_decks">Keresés a paklikban</string>

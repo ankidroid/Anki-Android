@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Chování</string>
     <string name="pref_cat_flashcard">Zobrazení</string>
     <string name="pref_cat_whiteboard">Tabule</string>
-    <string name="pref_cat_automatic_display">Automaticky zobrazovat odpověď</string>
     <string name="pref_cat_appearance">Nastavení vzhledu</string>
     <string name="pref_cat_appearance_summ">Změna motivu vzhledu a výchozího písma</string>
     <string name="pref_cat_themes">Motivy vzhledu</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Automatické zobrazení odpovědi</string>
     <string name="timeout_answer_summ">Zobrazit odpověď automaticky bez zásahu uživatele. Zpoždění zahrnuje čas pro automaticky přehrávané audio soubory.</string>
     <string name="timeout_answer_seconds">Čas pro zobrazení odpovědi</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Čas pro zobrazení další otázky</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Vyberte jazyk</string>
     <string name="safe_display">Režim bezpečného zobrazení</string>
     <string name="safe_display_summ">Zakázat všechny animace a použít bezpečnější metodu pro vykreslení karty. E-ink zařízení toto mohou vyžadovat.</string>
@@ -254,7 +252,6 @@
     <string name="deck_conf_current_group">Aktuální skupina</string>
     <string name="deck_conf_rename">Přejmenovat</string>
     <string name="deck_conf_reset">Obnovit výchozí</string>
-    <string name="deck_conf_reset_title">Obnovit výchozí</string>
     <string name="deck_conf_reset_message">Obnovit aktuální možnosti skupiny na výchozí hodnoty?</string>
     <string name="deck_conf_add">Přidání konfigurace</string>
     <string name="deck_conf_add_summ">Vytvořit kopii možností aktuální skupiny</string>
@@ -268,7 +265,6 @@
         <item quantity="many">%s podřízeného balíčku bude používat tuto skupinu</item>
         <item quantity="other">%s podřízených balíčků bude používat tuto skupinu</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Nastavit pro všechny podřízené balíčky</string>
     <string name="deck_conf_set_subdecks_message">Použít aktuální nastavení pro všechny podřízené balíčky tohoto balíčku?</string>
     <string name="pref_browser_editor_font">Písmo editoru a prohlížeče</string>
     <string name="deck_conf_cram_filter">Filtr</string>

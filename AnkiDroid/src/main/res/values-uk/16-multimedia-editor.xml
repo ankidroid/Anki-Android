@@ -113,9 +113,9 @@
     <string name="multimedia_editor_audio_view_playing_failed">Не вдалося відтворити</string>
     <string name="multimedia_editor_audio_view_create_failed">Неможливо створити панель інструментів запису</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text">Не вдалося редагувати</string>
-    <string name="title_activity_translation">Переклад</string>
-    <string name="title_activity_load_pronounciation">Вимова</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Не вдалося редагувати</string>
+    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Переклад</string>
+    <string name="title_activity_load_pronounciation" comment="Name of the window allowing to load pronunciation of words. This text can not be seen in AnkiDroid directly.">Вимова</string>
     <!-- Network failure -->
     <string name="network_no_connection">Немає з\'єднання</string>
     <!-- Crop function-->

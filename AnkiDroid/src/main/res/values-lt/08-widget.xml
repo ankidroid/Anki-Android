@@ -46,7 +46,7 @@
         <item quantity="many">Laukia %d „AnkiDroid“ kortelių</item>
         <item quantity="other">Laukia %d „AnkiDroid“ kort.</item>
     </plurals>
-    <string name="widget_small">Mažas „AnkiDroid“</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">Mažas „AnkiDroid“</string>
     <plurals name="widget_cards_due">
         <item quantity="one">Laukia %d kortelė</item>
         <item quantity="few">Laukia %d kortelės</item>
@@ -59,6 +59,6 @@
         <item quantity="many">Liko %d minučių</item>
         <item quantity="other">Liko %d min.</item>
     </plurals>
-    <string name="widget_add_note">Pridėti užrašą</string>
+    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Pridėti užrašą</string>
     <string name="widget_add_note_button">Pridėti naują „AnkiDroid“ užrašą</string>
 </resources>

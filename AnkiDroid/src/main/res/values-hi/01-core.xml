@@ -106,7 +106,7 @@
     <string name="rename_deck">डेक का नाम बदलें</string>
     <string name="menu_add">जोड़ें</string>
     <string name="menu_add_note">नोट जोड़ें</string>
-    <string name="menu_my_account">खाता को तुल्यकालन करें</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">खाता को तुल्यकालन करें</string>
     <string name="menu_dismiss_note">छुपाएं/हटाना</string>
     <string name="menu_bury_card">कार्ड दफनाना</string>
     <string name="menu_bury_note">नोट दफनाना</string>

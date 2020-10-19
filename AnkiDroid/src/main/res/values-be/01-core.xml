@@ -116,7 +116,7 @@
     <string name="rename_deck">Перайменаваць калоду</string>
     <string name="menu_add">Дадаць</string>
     <string name="menu_add_note">Дадаць нататку</string>
-    <string name="menu_my_account">Сінхранізаваць уліковы запіс</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Сінхранізаваць уліковы запіс</string>
     <string name="menu_dismiss_note">Схаваць / выдаліць</string>
     <string name="menu_bury_card">Адкласці картку</string>
     <string name="menu_bury_note">Адкласці нататку</string>

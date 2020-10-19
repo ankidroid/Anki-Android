@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Tingkah laku</string>
     <string name="pref_cat_flashcard">Paparan</string>
     <string name="pref_cat_whiteboard">Papan putih interaktif</string>
-    <string name="pref_cat_automatic_display">Jawapan Papar automatik</string>
     <string name="pref_cat_appearance">Penampilan</string>
     <string name="pref_cat_appearance_summ">Perubahan tema dan font</string>
     <string name="pref_cat_themes">Tema</string>
@@ -141,9 +140,8 @@ minit yang lalu.</string>
     <string name="timeout_answer_text">Automatik paparan menjawab</string>
     <string name="timeout_answer_summ">Menunjukkan menjawab secara automatik tanpa input pengguna. Kelewatan termasuk masa untuk automatik bermain fail audio.</string>
     <string name="timeout_answer_seconds">Masa untuk menunjukkan menjawab</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Masa untuk menunjukkan pertanyaan berikutnya</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Pilih Bahasa</string>
     <string name="safe_display">Safe display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -252,7 +250,6 @@ minit yang lalu.</string>
     <string name="deck_conf_current_group">Semasa kumpulan</string>
     <string name="deck_conf_rename">Menamakan</string>
     <string name="deck_conf_reset">Memulihkan mungkir</string>
-    <string name="deck_conf_reset_title">Memulihkan mungkir</string>
     <string name="deck_conf_reset_message">Memulihkan semasa pilihan kumpulan untuk lalai nilai-nilai?</string>
     <string name="deck_conf_add">Menambah</string>
     <string name="deck_conf_add_summ">Membuat salinan semasa pilihan kumpulan</string>
@@ -263,7 +260,6 @@ minit yang lalu.</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Set untuk semua subdecks</string>
     <string name="deck_conf_set_subdecks_message">Set semasa pilihan kumpulan untuk semua ini dek itu subdecks?</string>
     <string name="pref_browser_editor_font">Pelayar dan editor font</string>
     <string name="deck_conf_cram_filter">Penapis</string>

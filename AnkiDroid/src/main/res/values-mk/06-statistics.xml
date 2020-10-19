@@ -78,7 +78,6 @@
     <string name="stats_overview_forecast_average">Просечно: &lt;b&gt;%1$.1f&lt;/b&gt; прегледи/ден</string>
     <string name="stats_overview_forecast_due_tomorrow">Утрешно достасување: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Изучено денови: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d од %3$d)</string>
-    <string name="stats_overview_total_reviews">Вкупно: &lt;b&gt;%1$d&lt;/b&gt; прегледи</string>
     <string name="stats_overview_reviews_per_day_studydays">Просечно студирање по денови: &lt;b&gt;%1$.1f&lt;/b&gt; прегледи/ден</string>
     <string name="stats_overview_reviews_per_day_all">Ако студирате секој ден: &lt;b&gt;%1$.1f&lt;/b&gt; прегледи/ден</string>
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>

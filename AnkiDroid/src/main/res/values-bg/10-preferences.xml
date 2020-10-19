@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Поведение</string>
     <string name="pref_cat_flashcard">Екран</string>
     <string name="pref_cat_whiteboard">Бяла дъска</string>
-    <string name="pref_cat_automatic_display">Автоматично показване отговор</string>
     <string name="pref_cat_appearance">Appearance</string>
     <string name="pref_cat_appearance_summ">Промяна теми и шрифт по подразбиране</string>
     <string name="pref_cat_themes">Теми</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Автоматично  показване на отговор</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds">Време за показване на отговора</string>
-    <string name="timeout_answer_seconds_summ">ХХХ с</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">ХХХ с</string>
     <string name="timeout_question_seconds">Време за показване на следващия въпрос</string>
-    <string name="timeout_question_seconds_summ">ХХХ с</string>
     <string name="select_locale_title">Изберете език</string>
     <string name="safe_display">Безопасен режим на дисплея</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Настояща група</string>
     <string name="deck_conf_rename">Преименуване</string>
     <string name="deck_conf_reset">Възстанови по подразбиране</string>
-    <string name="deck_conf_reset_title">Възстанови по подразбиране</string>
     <string name="deck_conf_reset_message">Възстановяване на настройките по подразбиране на текущата група?</string>
     <string name="deck_conf_add">Нов</string>
     <string name="deck_conf_add_summ">Създаване копие на опциите за текущата група</string>
@@ -264,7 +261,6 @@
         <item quantity="one">Тази група ще използва %s подтесте</item>
         <item quantity="other">Тази група ще използва %s подтестета</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">За всички подтестета</string>
     <string name="deck_conf_set_subdecks_message">Задаване текущите опции за всички подтестета в тестето?</string>
     <string name="pref_browser_editor_font">Шрифт при разглеждане и редактиране</string>
     <string name="deck_conf_cram_filter">Филтър</string>

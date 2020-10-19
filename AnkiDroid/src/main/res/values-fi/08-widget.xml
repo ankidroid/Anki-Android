@@ -44,7 +44,7 @@
         <item quantity="one">%d AnkiDroid kortti erääntynyt</item>
         <item quantity="other">%d Ankidroid korttia erääntynyt</item>
     </plurals>
-    <string name="widget_small">Android pieni</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">Android pieni</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d kortti erääntynyt</item>
         <item quantity="other">%d korttia erääntynyt</item>
@@ -53,6 +53,6 @@
         <item quantity="one">%d minuutti jäljellä</item>
         <item quantity="other">%d minuuttia jäljellä</item>
     </plurals>
-    <string name="widget_add_note">Lisää merkintä</string>
+    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Lisää merkintä</string>
     <string name="widget_add_note_button">Lisää uusi AnkiDroid merkintä</string>
 </resources>

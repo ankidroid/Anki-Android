@@ -78,7 +78,6 @@
     <string name="stats_overview_forecast_average">Povprečje: &lt;b&gt;%1$.1f&lt;/b&gt; pregledov/dan</string>
     <string name="stats_overview_forecast_due_tomorrow">Zapade jutri: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Učeno dni: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d od %3$d)</string>
-    <string name="stats_overview_total_reviews">Skupaj: &lt;b&gt;%1$d&lt;/b&gt; pregledov</string>
     <string name="stats_overview_reviews_per_day_studydays">Povprečje za dni učenja: &lt;b&gt;%1$.1f&lt;/b&gt; pregledov/dan</string>
     <string name="stats_overview_reviews_per_day_all">Vsakodnevno učenje: &lt;b&gt;%1$.1f&lt;/b&gt; pregledov/dan</string>
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>

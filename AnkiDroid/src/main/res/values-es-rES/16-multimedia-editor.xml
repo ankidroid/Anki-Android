@@ -113,9 +113,9 @@
     <string name="multimedia_editor_audio_view_playing_failed">Reproducción fallida</string>
     <string name="multimedia_editor_audio_view_create_failed">No se puede crear la barra de herramientas de grabación</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text">Edición fallida</string>
-    <string name="title_activity_translation">Traducción</string>
-    <string name="title_activity_load_pronounciation">Pronunciación</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Edición fallida</string>
+    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Traducción</string>
+    <string name="title_activity_load_pronounciation" comment="Name of the window allowing to load pronunciation of words. This text can not be seen in AnkiDroid directly.">Pronunciación</string>
     <!-- Network failure -->
     <string name="network_no_connection">Sin conexión</string>
     <!-- Crop function-->
