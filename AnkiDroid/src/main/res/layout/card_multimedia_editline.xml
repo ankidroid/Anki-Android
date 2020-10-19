@@ -1,31 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/id_label"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawablePadding="8dp"
         android:layout_alignParentLeft="true"
-        tools:text="Label"
-        />
-
-    <com.ichi2.anki.FieldEditText
-        android:id="@+id/id_note_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawablePadding="8dp"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/id_media_button"
-        android:layout_below="@id/id_label"
-        android:layout_alignTop="@+id/id_media_button"
-        tools:text="This is a lot of target content to test how multiline values are displayed"
-         />
+        app:layout_constraintBottom_toTopOf="@+id/id_note_editText"
+        app:layout_constraintEnd_toStartOf="@id/id_media_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Front\nNewline" />
 
     <ImageButton
         android:id="@+id/id_media_button"
@@ -33,9 +22,27 @@
         android:layout_height="wrap_content"
         android:gravity="right|center_vertical"
         android:background="?attr/attachFileImage"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/id_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:background="@drawable/ic_attachment_black_24dp"/>
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/multimedia_barrier"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="id_label, id_media_button" />
 
-</RelativeLayout>
+    <com.ichi2.anki.FieldEditText
+        android:id="@+id/id_note_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle=""
+        android:nextFocusForward="@id/id_media_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/multimedia_barrier"
+        tools:text="This is a lot of target content to test how multiline values are displayed" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
