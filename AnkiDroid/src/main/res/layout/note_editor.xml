@@ -80,7 +80,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:focusable="true"
-                    android:padding="@dimen/keyline_1" />
+                    android:paddingVertical="@dimen/keyline_1"
+                    android:paddingHorizontal="6dip" />
 
                 <LinearLayout
                     android:layout_width="fill_parent"
