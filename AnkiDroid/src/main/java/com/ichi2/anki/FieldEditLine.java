@@ -67,6 +67,7 @@ public class FieldEditLine extends FrameLayout {
         LayoutInflater.from(getContext()).inflate(R.layout.card_multimedia_editline, this, true);
         this.mEditText = findViewById(R.id.id_note_editText);
         this.mLabel = findViewById(R.id.id_label);
+        mEditText.init();
     }
 
 

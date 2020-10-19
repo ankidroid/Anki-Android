@@ -1499,8 +1499,6 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void initFieldEditText(FieldEditText editText, final int index, boolean enabled, @Nullable ClipboardManager clipboard) {
-        editText.init();
-
         // HACK: To be removed after #7124
         // Additional cloze icon using GBoard Clipboard function for MIUI users
         if (clipboard != null && !AdaptionUtil.canUseContextMenu() && AnkiDroidApp.getSharedPrefs(this).getBoolean("enableMIUIClipboardHack", true)) {
