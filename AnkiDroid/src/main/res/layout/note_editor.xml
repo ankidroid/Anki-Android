@@ -80,6 +80,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:focusable="true"
+                    android:animateLayoutChanges="true"
                     android:paddingVertical="@dimen/keyline_1"
                     android:paddingHorizontal="6dip" />
 

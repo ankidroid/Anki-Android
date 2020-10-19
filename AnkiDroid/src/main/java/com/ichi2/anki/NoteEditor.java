@@ -1350,6 +1350,8 @@ public class NoteEditor extends AnkiActivity {
             }
             previous = edit_line_view;
 
+            edit_line_view.setEnableAnimation(animationEnabled());
+
             // TODO: Remove the >= 23 check - one callback works on API 11.
             if (Build.VERSION.SDK_INT >= 23) {
                 // Use custom implementation of ActionMode.Callback customize selection and insert menus
