@@ -91,15 +91,9 @@ public class FieldEditText extends FixedEditText {
     }
 
 
-    public void init(int ord, String content) {
+    public void init(int ord) {
         mOrd = ord;
 
-        if (content == null) {
-            content = "";
-        } else {
-            content = content.replaceAll("<br(\\s*/*)>", NEW_LINE);
-        }
-        setText(content);
         setMinimumWidth(400);
         mOrigBackground = getBackground();
         // Fixes bug where new instances of this object have wrong colors, probably
@@ -146,6 +140,17 @@ public class FieldEditText extends FixedEditText {
     public void setSelectionChangeListener(TextSelectionListener listener) {
         this.mSelectionChangeListener = listener;
     }
+
+
+    public void setContent(String content) {
+        if (content == null) {
+            content = "";
+        } else {
+            content = content.replaceAll("<br(\\s*/*)>", NEW_LINE);
+        }
+        setText(content);
+    }
+
 
     public interface TextSelectionListener {
         void onSelectionChanged(int selStart, int selEnd);

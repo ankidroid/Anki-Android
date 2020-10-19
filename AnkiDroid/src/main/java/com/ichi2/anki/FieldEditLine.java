@@ -97,6 +97,10 @@ public class FieldEditLine extends FrameLayout {
         }
     }
 
+    public void setContent(String content) {
+        mEditText.setContent(content);
+    }
+
     public String getName() {
         return mName;
     }
