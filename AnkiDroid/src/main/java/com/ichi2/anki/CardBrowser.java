@@ -1256,6 +1256,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     Intent getAddNoteIntent() {
         Intent intent = new Intent(CardBrowser.this, NoteEditor.class);
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD);
+        Long did = getLastDeckId();
+        if (did != null && did > 0) {
+            intent.putExtra(NoteEditor.EXTRA_DID, (long) did);
+        }
         return intent;
     }
 
