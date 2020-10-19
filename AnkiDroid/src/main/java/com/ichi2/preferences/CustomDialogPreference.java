@@ -44,7 +44,7 @@ public class CustomDialogPreference extends android.preference.DialogPreference 
                 Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confReset", true);
                 editor.commit();
-            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_remove))) {
+            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.dialog_positive_remove))) {
                 // Deck Options :: Remove Options Group
                 Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confRemove", true);
