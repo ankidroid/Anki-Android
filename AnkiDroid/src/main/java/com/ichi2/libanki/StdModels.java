@@ -121,7 +121,7 @@ public class StdModels {
         String fieldExtraName = AnkiDroidApp.getAppResources().getString(R.string.extra_field_name);
         fm = mm.newField(fieldExtraName);
         mm.addFieldInNewModel(m, fm);
-        String cardTypeClozeName = AnkiDroidApp.getAppResources().getString(R.string.card_cloze_name);
+        String cardTypeClozeName = AnkiDroidApp.getAppResources().getString(R.string.cloze_model_name);
         JSONObject t = Models.newTemplate(cardTypeClozeName);
         String fmt = "{{cloze:" + txt + "}}";
         m.put("css", m.getString("css") + ".cloze {" + "font-weight: bold;" + "color: blue;" + "}");
