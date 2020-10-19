@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
@@ -13,6 +14,7 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/id_media_button"
         android:layout_alignTop="@+id/id_media_button"
+        tools:text="This is a lot of target content to test how multiline values are displayed"
          />
 
     <ImageButton
@@ -21,7 +23,8 @@
         android:layout_height="wrap_content"
         android:gravity="right|center_vertical"
         android:background="?attr/attachFileImage"
-        android:layout_alignParentRight="true"  />
+        android:layout_alignParentRight="true"
+        tools:background="@drawable/ic_attachment_black_24dp"/>
 
 
 </RelativeLayout>
