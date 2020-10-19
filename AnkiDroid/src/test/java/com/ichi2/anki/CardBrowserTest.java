@@ -347,6 +347,7 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("after: cards", intentAfterReverse.getLongArrayExtra("cardList"), is(new long[] { cid2, cid1 }));
     }
 
+    /** 7420 */
     @Test
     public void addCardDeckIsNotSetIfAllDecksSelectedAfterLoad() {
         addDeck("NotDefault");
@@ -364,8 +365,8 @@ public class CardBrowserTest extends RobolectricTest {
         IntentAssert.doesNotHaveExtra(addIntent, NoteEditor.EXTRA_DID);
     }
 
+    /** 7420 */
     @Test
-    @Ignore("7420")
     public void addCardDeckISetIfDeckIsSelected() {
         long targetDid = addDeck("NotDefault");
 
@@ -382,8 +383,8 @@ public class CardBrowserTest extends RobolectricTest {
         IntentAssert.hasExtra(addIntent, NoteEditor.EXTRA_DID, targetDid);
     }
 
+    /** 7420 */
     @Test
-    @Ignore("7420")
     public void addCardDeckISetIfDeckIsSelectedOnOpen() {
         long initialDid = addDeck("NotDefault");
 
