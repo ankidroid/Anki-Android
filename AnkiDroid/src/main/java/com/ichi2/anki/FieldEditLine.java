@@ -19,7 +19,9 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -27,6 +29,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 public class FieldEditLine extends FrameLayout {
+    private EditText mEditText;
+
+
     public FieldEditLine(@NonNull Context context) {
         super(context);
         init();
@@ -54,5 +59,14 @@ public class FieldEditLine extends FrameLayout {
 
     private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.card_multimedia_editline, this, true);
+        this.mEditText = findViewById(R.id.id_note_editText);
+    }
+
+
+    public void setActionModeCallbacks(ActionMode.Callback callback) {
+        mEditText.setCustomSelectionActionModeCallback(callback);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mEditText.setCustomInsertionActionModeCallback(callback);
+        }
     }
 }

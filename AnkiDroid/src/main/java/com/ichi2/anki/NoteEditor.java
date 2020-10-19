@@ -1341,15 +1341,16 @@ public class NoteEditor extends AnkiActivity {
         ClipboardManager clipboard = ContextCompat.getSystemService(this, ClipboardManager.class);
 
         for (int i = 0; i < fields.length; i++) {
-            View edit_line_view = new FieldEditLine(this);
+            FieldEditLine edit_line_view = new FieldEditLine(this);
             FieldEditText newTextbox = edit_line_view.findViewById(R.id.id_note_editText);
 
+            // TODO: Remove the >= 23 check - one callback works on API 11.
             if (Build.VERSION.SDK_INT >= 23) {
                 // Use custom implementation of ActionMode.Callback customize selection and insert menus
                 Field f = new Field(getFieldByIndex(i), getCol());
                 ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox, f);
-                newTextbox.setCustomSelectionActionModeCallback(actionModeCallback);
-                newTextbox.setCustomInsertionActionModeCallback(actionModeCallback);
+                edit_line_view.setActionModeCallbacks(actionModeCallback);
+
             }
 
             initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode, clipboard);
