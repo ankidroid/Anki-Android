@@ -12,7 +12,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Deck;
 import com.ichi2.testutils.AnkiAssert;
-import com.ichi2.utils.JSONObject;
+import com.ichi2.testutils.IntentAssert;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -26,7 +26,6 @@ import org.robolectric.shadows.ShadowApplication;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.CheckReturnValue;
@@ -348,6 +347,56 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat("after: cards", intentAfterReverse.getLongArrayExtra("cardList"), is(new long[] { cid2, cid1 }));
     }
 
+    @Test
+    public void addCardDeckIsNotSetIfAllDecksSelectedAfterLoad() {
+        addDeck("NotDefault");
+
+        CardBrowser b = getBrowserWithNoNewCards();
+
+        assertThat("All decks should not be selected", b.hasSelectedAllDecks(), is(false));
+
+        b.selectAllDecks();
+
+        assertThat("All decks should be selected", b.hasSelectedAllDecks(), is(true));
+
+        Intent addIntent = b.getAddNoteIntent();
+
+        IntentAssert.doesNotHaveExtra(addIntent, NoteEditor.EXTRA_DID);
+    }
+
+    @Test
+    @Ignore("7420")
+    public void addCardDeckISetIfDeckIsSelected() {
+        long targetDid = addDeck("NotDefault");
+
+        CardBrowser b = getBrowserWithNoNewCards();
+
+        assertThat("The target deck should not yet be selected", b.getLastDeckId(), not(is(targetDid)));
+
+        b.selectDeckId(targetDid);
+
+        assertThat("The target deck should be selected", b.getLastDeckId(), is(targetDid));
+
+        Intent addIntent = b.getAddNoteIntent();
+
+        IntentAssert.hasExtra(addIntent, NoteEditor.EXTRA_DID, targetDid);
+    }
+
+    @Test
+    @Ignore("7420")
+    public void addCardDeckISetIfDeckIsSelectedOnOpen() {
+        long initialDid = addDeck("NotDefault");
+
+        getCol().getDecks().select(initialDid);
+
+        CardBrowser b = getBrowserWithNoNewCards();
+
+        assertThat("The initial deck should be selected", b.getLastDeckId(), is(initialDid));
+
+        Intent addIntent = b.getAddNoteIntent();
+
+        IntentAssert.hasExtra(addIntent, NoteEditor.EXTRA_DID, initialDid);
+    }
 
     private void flagCardForNote(Note n, int flag) {
         Card c = n.firstCard();
