@@ -91,9 +91,8 @@ public class FieldEditText extends FixedEditText {
     }
 
 
-    public void init(int ord, String name, String content, @Nullable Locale hintLocale) {
+    public void init(int ord, String content, @Nullable Locale hintLocale) {
         mOrd = ord;
-        mName = name;
 
         if (content == null) {
             content = "";
@@ -101,7 +100,6 @@ public class FieldEditText extends FixedEditText {
             content = content.replaceAll("<br(\\s*/*)>", NEW_LINE);
         }
         setText(content);
-        setContentDescription(name);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && hintLocale != null) {
             setHintLocale(hintLocale);
         }

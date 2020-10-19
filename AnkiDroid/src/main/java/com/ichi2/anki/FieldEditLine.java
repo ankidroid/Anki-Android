@@ -24,6 +24,7 @@ import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,9 @@ import androidx.annotation.RequiresApi;
 
 public class FieldEditLine extends FrameLayout {
     private EditText mEditText;
+    private TextView mLabel;
+
+    private String mName;
 
 
     public FieldEditLine(@NonNull Context context) {
@@ -61,6 +65,7 @@ public class FieldEditLine extends FrameLayout {
     private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.card_multimedia_editline, this, true);
         this.mEditText = findViewById(R.id.id_note_editText);
+        this.mLabel = findViewById(R.id.id_label);
     }
 
 
@@ -76,5 +81,17 @@ public class FieldEditLine extends FrameLayout {
         if (typeface != null) {
             mEditText.setTypeface(typeface);
         }
+    }
+
+
+    public void setName(String name) {
+        mName = name;
+        mEditText.setContentDescription(name);
+        mLabel.setText(name);
+    }
+
+
+    public String getName() {
+        return mName;
     }
 }
