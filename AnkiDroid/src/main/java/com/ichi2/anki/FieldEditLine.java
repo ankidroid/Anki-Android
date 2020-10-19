@@ -101,6 +101,11 @@ public class FieldEditLine extends FrameLayout {
         mEditText.setContent(content);
     }
 
+
+    public void setOrd(int i) {
+        mEditText.setOrd(i);
+    }
+
     public String getName() {
         return mName;
     }

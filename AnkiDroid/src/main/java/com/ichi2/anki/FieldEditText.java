@@ -91,9 +91,7 @@ public class FieldEditText extends FixedEditText {
     }
 
 
-    public void init(int ord) {
-        mOrd = ord;
-
+    public void init() {
         setMinimumWidth(400);
         mOrigBackground = getBackground();
         // Fixes bug where new instances of this object have wrong colors, probably
@@ -149,6 +147,11 @@ public class FieldEditText extends FixedEditText {
             content = content.replaceAll("<br(\\s*/*)>", NEW_LINE);
         }
         setText(content);
+    }
+
+
+    public void setOrd(int ord) {
+        mOrd = ord;
     }
 
 
