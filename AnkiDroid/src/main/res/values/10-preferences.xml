@@ -121,9 +121,8 @@
     <string name="timeout_answer_text">Automatic display answer</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds">Time to show answer</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="How much seconds to wait in reviewer before showing next question or next answer">XXX s</string>
     <string name="timeout_question_seconds">Time to show next question</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Select language</string>
     <string name="safe_display">Safe display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>

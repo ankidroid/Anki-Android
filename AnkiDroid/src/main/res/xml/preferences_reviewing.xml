@@ -157,7 +157,7 @@
             android:dependency="timeoutAnswer"
             android:key="timeoutQuestionSeconds"
             android:max="60"
-            android:summary="@string/timeout_question_seconds_summ"
+            android:summary="@string/timeout_answer_seconds_summ"
             android:title="@string/timeout_question_seconds" />
     </PreferenceCategory>
 </PreferenceScreen>
