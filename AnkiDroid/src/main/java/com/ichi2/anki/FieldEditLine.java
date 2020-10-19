@@ -23,6 +23,7 @@ import android.util.AttributeSet;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -34,6 +35,7 @@ import androidx.annotation.RequiresApi;
 public class FieldEditLine extends FrameLayout {
     private FieldEditText mEditText;
     private TextView mLabel;
+    private ImageButton mMediaButton;
 
     private String mName;
 
@@ -67,6 +69,7 @@ public class FieldEditLine extends FrameLayout {
         LayoutInflater.from(getContext()).inflate(R.layout.card_multimedia_editline, this, true);
         this.mEditText = findViewById(R.id.id_note_editText);
         this.mLabel = findViewById(R.id.id_label);
+        this.mMediaButton = findViewById(R.id.id_media_button);
         mEditText.init();
         mLabel.setPadding((int) UIUtils.getDensityAdjustedValue(getContext(), 3.4f), 0, 0, 0);
     }
@@ -110,5 +113,10 @@ public class FieldEditLine extends FrameLayout {
 
     public String getName() {
         return mName;
+    }
+
+
+    public ImageButton getMediaButton() {
+        return mMediaButton;
     }
 }

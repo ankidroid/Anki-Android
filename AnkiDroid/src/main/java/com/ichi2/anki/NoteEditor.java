@@ -1359,7 +1359,7 @@ public class NoteEditor extends AnkiActivity {
             initFieldEditText(newTextbox, i, !editModelMode, clipboard);
             mEditFields.add(newTextbox);
 
-            ImageButton mediaButton = edit_line_view.findViewById(R.id.id_media_button);
+            ImageButton mediaButton = edit_line_view.getMediaButton();
             // Load icons from attributes
             int[] icons = Themes.getResFromAttr(this, new int[] { R.attr.attachFileImage, R.attr.upDownImage});
             // Make the icon change between media icon and switch field icon depending on whether editing note type
