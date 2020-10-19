@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Správanie</string>
     <string name="pref_cat_flashcard">Zobrazenie</string>
     <string name="pref_cat_whiteboard">Tabuľa</string>
-    <string name="pref_cat_automatic_display">Automaticky zobrazovat odpoveď</string>
     <string name="pref_cat_appearance">Vzhľad</string>
     <string name="pref_cat_appearance_summ">Zmena motivu a východzieho písma</string>
     <string name="pref_cat_themes">Motívy</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Automatické zobrazenie odpovede</string>
     <string name="timeout_answer_summ">Ukázať odpoveď automaticky bez podnetu používateľa. Oneskorenie zahŕňa čas na automatické prehranie audio súborov.</string>
     <string name="timeout_answer_seconds">Čas do zobrazenia odpovede</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Čas do zobrazenia ďalšej otázky</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Zvoliť jazyk</string>
     <string name="safe_display">Režim bezpečného zobrazenia</string>
     <string name="safe_display_summ">Vypnuť všetky animácie a použiť bezpečnejšiu metódu na ťahanie kartičiek. Toto môže byť vyžadované E-ink zariadeniami.</string>
@@ -255,7 +253,6 @@
     <string name="deck_conf_current_group">Aktuálna skupina</string>
     <string name="deck_conf_rename">Premenovať</string>
     <string name="deck_conf_reset">Obnoviť predvolené</string>
-    <string name="deck_conf_reset_title">Obnoviť predvolené</string>
     <string name="deck_conf_reset_message">Obnoviť pôvodné hodnoty aktuálnej skupiny nastavení ?</string>
     <string name="deck_conf_add">Pridať konfiguráciu</string>
     <string name="deck_conf_add_summ">Vytvoriť kópiu aktuálnej skupiny nastavení</string>
@@ -269,7 +266,6 @@
         <item quantity="many">%s podbalíčkov použije túto skupinu</item>
         <item quantity="other">%s podbalíčkov použije túto skupinu</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Nastaviť pre všetky podbalíčky</string>
     <string name="deck_conf_set_subdecks_message">Nastaviť aktuálnu skupinu nastavení pre všetky podbalíčky tohto balíčka?</string>
     <string name="pref_browser_editor_font">Font prehliadača a editora</string>
     <string name="deck_conf_cram_filter">Filter</string>

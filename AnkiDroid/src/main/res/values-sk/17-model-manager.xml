@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">Upraviť typy poznámok</string>
-    <string name="model_editor_label">Upraviť polia</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Upraviť typy poznámok</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Upraviť polia</string>
     <!--Toasts-->
     <string name="toast_last_model">Nemôžete vymazať váš posledný typ poznámok</string>
     <string name="toast_last_field">Typy poznámok musia mať aspoň jedno pole</string>
@@ -41,8 +41,6 @@
         <item quantity="many">%d poznámok</item>
         <item quantity="other">%d poznámok</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">Pridať typ poznámok</string>
     <!--Browser-->
     <string name="model_browser_delete">Vymazať typ poznámok</string>
     <string name="model_browser_rename">Premenovať</string>

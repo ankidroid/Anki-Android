@@ -140,7 +140,7 @@
         <item quantity="other">%1$d minut</item>
     </plurals>
     <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
-    <string name="fact_adder_intent_title">AnkiDroid karta</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid karta</string>
     <string name="note_editor_add_note">Přidat poznámku</string>
     <string name="note_editor_copy_note">Kopírovat poznámku</string>
     <string name="card_editor_copy_card">Kopírovat kartu</string>
@@ -157,7 +157,6 @@
         <item quantity="many">přidáno %d karty</item>
         <item quantity="other">přidáno %d karet</item>
     </plurals>
-    <string name="help_title">Nápověda</string>
     <string name="check_db">Zkontrolovat databázi</string>
     <string name="check_media">Zkontrolovat multimédia</string>
     <string name="empty_cards">Prázdné karty</string>
@@ -342,7 +341,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
-    <string name="card_viewer_could_not_find_image_get_help">Nápověda</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nepodařilo se načíst balíček „%s“</string>
     <string name="search_decks">Search decks</string>

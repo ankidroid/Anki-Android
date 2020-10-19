@@ -133,6 +133,4 @@
     <string name="sync_menu_title">Synchroniser</string>
     <string name="sync_menu_title_full_sync">Synchroniser (tout)</string>
     <string name="sync_menu_title_no_account">Synchroniser (se connecter)</string>
-    <!-- An option on a message box to open the "corrupt collection" webpage -->
-    <string name="sync_corrupt_collection_get_help">Aide</string>
 </resources>

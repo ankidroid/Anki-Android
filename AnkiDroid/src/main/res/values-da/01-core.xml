@@ -106,7 +106,7 @@
     <string name="rename_deck">Omdøb kortsæt</string>
     <string name="menu_add">Tilføj</string>
     <string name="menu_add_note">Tilføj note</string>
-    <string name="menu_my_account">Synkroniseringskonto</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkroniseringskonto</string>
     <string name="menu_dismiss_note">Skjul / slet</string>
     <string name="menu_bury_card">Begrav kort</string>
     <string name="menu_bury_note">Begrav note</string>

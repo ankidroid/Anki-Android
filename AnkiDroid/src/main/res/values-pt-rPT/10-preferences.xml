@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Comportamento</string>
     <string name="pref_cat_flashcard">Exibir</string>
     <string name="pref_cat_whiteboard">Quadro branco</string>
-    <string name="pref_cat_automatic_display">Mostrar resposta automaticamente</string>
     <string name="pref_cat_appearance">Aparência</string>
     <string name="pref_cat_appearance_summ">Mudar temas e tipos de letra padrão</string>
     <string name="pref_cat_themes">Temas</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Mostrar automaticamente a resposta</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds">Tempo para mostrar a resposta</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Tempo para mostrar a pergunta seguinte</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Selecionar Idioma</string>
     <string name="safe_display">Modo de visualização segura</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -253,7 +251,6 @@
     <string name="deck_conf_current_group">Grupo atual</string>
     <string name="deck_conf_rename">Renomear</string>
     <string name="deck_conf_reset">Restaurar predefinições</string>
-    <string name="deck_conf_reset_title">Restaurar predefinições</string>
     <string name="deck_conf_reset_message">Restaurar o grupo de opções atual para os valores predefinidos?</string>
     <string name="deck_conf_add">Adicionar</string>
     <string name="deck_conf_add_summ">Criar uma cópia do grupo de opções atual</string>
@@ -265,7 +262,6 @@
         <item quantity="one">%s sub-baralho usará este grupo</item>
         <item quantity="other">%s sub-baralhos usarão este grupo</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Definir para todos os sub-baralhos</string>
     <string name="deck_conf_set_subdecks_message">Definir o grupo de opções atual para todos os sub-baralhos deste baralho?</string>
     <string name="pref_browser_editor_font">Tipo de letra do navegador e editor</string>
     <string name="deck_conf_cram_filter">Filtro</string>

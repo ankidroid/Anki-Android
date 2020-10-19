@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Sinteno</string>
     <string name="pref_cat_flashcard">Montrado</string>
     <string name="pref_cat_whiteboard">Skribtabulo</string>
-    <string name="pref_cat_automatic_display">Aŭtomata montrado de respondo</string>
     <string name="pref_cat_appearance">Aspekto</string>
     <string name="pref_cat_appearance_summ">Ŝanĝi etoson kaj implicitan tiparon</string>
     <string name="pref_cat_themes">Etoso</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Aŭtomate montri respondon</string>
     <string name="timeout_answer_summ">Aŭtomate montri respondon sen enigo de uzanto. Prokrasto enhavas tempon por aŭtomate ludi sonaĵon.</string>
     <string name="timeout_answer_seconds">Montri respondon post</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Montri sekvan demandon post</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Elekti lingvon</string>
     <string name="safe_display">Sekura vidiga reĝimo</string>
     <string name="safe_display_summ">Malaktivigi ĉiujn movbildojn kaj uzi pli sekuran manieron por bildigi kartojn. Elektronik-paperaj aparatoj povas bezoni tion ĉi.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Nuna grupo</string>
     <string name="deck_conf_rename">Alinomi</string>
     <string name="deck_conf_reset">Restarigi normojn</string>
-    <string name="deck_conf_reset_title">Restarigi normojn</string>
     <string name="deck_conf_reset_message">Ĉu restarigi la nunan grupon de agordoj al implicitaj valoroj?</string>
     <string name="deck_conf_add">Aldoni</string>
     <string name="deck_conf_add_summ">Krei kopion de la nuna grupo de agordoj</string>
@@ -264,7 +261,6 @@
         <item quantity="one">%s subkartaro uzos tiun ĉi grupon</item>
         <item quantity="other">%s subkartaroj uzos tiun ĉi grupon</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Agordi por ĉiuj subkartaroj</string>
     <string name="deck_conf_set_subdecks_message">Ĉu agordi la nunan grupon de agordoj por ĉiuj subkartaroj de tiu ĉi kartaro?</string>
     <string name="pref_browser_editor_font">Tiparo de foliumilo kaj redaktilo</string>
     <string name="deck_conf_cram_filter">Filtri</string>

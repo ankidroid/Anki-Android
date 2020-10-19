@@ -136,7 +136,7 @@
         <item quantity="other">%1$d دقیقه</item>
     </plurals>
     <string name="studyoptions_welcome_title">به آنکی دروید خوش آمدید</string>
-    <string name="fact_adder_intent_title">کارت آنکی دروید</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">کارت آنکی دروید</string>
     <string name="note_editor_add_note">افزودن یادداشت</string>
     <string name="note_editor_copy_note">کپی یادداشت</string>
     <string name="card_editor_copy_card">کپی کارت</string>
@@ -151,7 +151,6 @@
         <item quantity="one">%d کارت اضافه شد</item>
         <item quantity="other">%d کارت اضافه شد</item>
     </plurals>
-    <string name="help_title">کمک</string>
     <string name="check_db">بررسی پایگاه داده</string>
     <string name="check_media">بررسی رسانه ها</string>
     <string name="empty_cards">کارت های خالی</string>
@@ -316,7 +315,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>

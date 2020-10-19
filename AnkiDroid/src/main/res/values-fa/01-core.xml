@@ -106,7 +106,7 @@
     <string name="rename_deck">تغییر نام دسته</string>
     <string name="menu_add">افزودن</string>
     <string name="menu_add_note">افزودن یادداشت</string>
-    <string name="menu_my_account">همگام سازی حساب</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">همگام سازی حساب</string>
     <string name="menu_dismiss_note">پنهان/حذف کردن</string>
     <string name="menu_bury_card">مخفی کردن کارت</string>
     <string name="menu_bury_note">مخفی کردن یادداشت</string>

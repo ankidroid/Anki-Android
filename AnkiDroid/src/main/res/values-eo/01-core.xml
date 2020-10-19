@@ -106,7 +106,7 @@
     <string name="rename_deck">Renomi kartaron</string>
     <string name="menu_add">Aldoni</string>
     <string name="menu_add_note">Aldoni noton</string>
-    <string name="menu_my_account">Samtempigo-konton</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Samtempigo-konton</string>
     <string name="menu_dismiss_note">Kaŝi / forigi</string>
     <string name="menu_bury_card">Kaŝi karton por tago</string>
     <string name="menu_bury_note">Kaŝi noton por tago</string>

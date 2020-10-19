@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Comportamiento</string>
     <string name="pref_cat_flashcard">Pantalla</string>
     <string name="pref_cat_whiteboard">Pizarra</string>
-    <string name="pref_cat_automatic_display">Mostrar respuesta automáticamente</string>
     <string name="pref_cat_appearance">Apariencia</string>
     <string name="pref_cat_appearance_summ">Cambiar temas y fuente predeterminada</string>
     <string name="pref_cat_themes">Temas</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Visualización automática de la respuesta</string>
     <string name="timeout_answer_summ">Mostrar respuesta automáticamente sin intervención del usuario. El retraso incluye tiempo para reproduciones automáticas de archivos de audio.</string>
     <string name="timeout_answer_seconds">Tiempo para mostrar respuesta</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Tiempo para mostrar la siguiente pregunta</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Selecciona idioma</string>
     <string name="safe_display">Modo de visualización segura</string>
     <string name="safe_display_summ">Deshabilita todas las animaciones y utiliza un método más seguro para dibujar las tarjetas. Dispositivos E-ink podrían requerir esto.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Grupo actual</string>
     <string name="deck_conf_rename">Renombrar</string>
     <string name="deck_conf_reset">Restablecer predefinidos</string>
-    <string name="deck_conf_reset_title">Restablecer ajustes predefinidos</string>
     <string name="deck_conf_reset_message">¿Restaurar el grupo de opciones actual a los valores predeterminados?</string>
     <string name="deck_conf_add">Añadir</string>
     <string name="deck_conf_add_summ">Crear una copia del grupo de opciones actual</string>
@@ -264,7 +261,6 @@
         <item quantity="one">%s submazo utilizará este grupo</item>
         <item quantity="other">%s submazos utilizarán este grupo</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Establecer para todos los submazos</string>
     <string name="deck_conf_set_subdecks_message">¿Establecer el grupo de opciones actual para todos los submazos de este mazo?</string>
     <string name="pref_browser_editor_font">Fuente del explorador y editor</string>
     <string name="deck_conf_cram_filter">Filtrar</string>

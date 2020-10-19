@@ -113,9 +113,9 @@
     <string name="multimedia_editor_audio_view_playing_failed">Fiaskis ludi</string>
     <string name="multimedia_editor_audio_view_create_failed">Ne povas krei ilarstrion de registrado</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text">Redakti kampon</string>
-    <string name="title_activity_translation">Traduko</string>
-    <string name="title_activity_load_pronounciation">Elparolo</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Redakti kampon</string>
+    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Traduko</string>
+    <string name="title_activity_load_pronounciation" comment="Name of the window allowing to load pronunciation of words. This text can not be seen in AnkiDroid directly.">Elparolo</string>
     <!-- Network failure -->
     <string name="network_no_connection">Senkonekte</string>
     <!-- Crop function-->

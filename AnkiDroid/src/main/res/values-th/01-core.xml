@@ -102,7 +102,7 @@
     <string name="rename_deck">เปลี่ยนชื่อสำรับ</string>
     <string name="menu_add">เพิ่ม</string>
     <string name="menu_add_note">เพิ่มโน้ต</string>
-    <string name="menu_my_account">เชื่อมบัญชีผู้ใช้</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">เชื่อมบัญชีผู้ใช้</string>
     <string name="menu_dismiss_note">ซ่อน / ลบ</string>
     <string name="menu_bury_card">ซ่อนการ์ด</string>
     <string name="menu_bury_note">ซ่อนโน้ต</string>

@@ -26,8 +26,7 @@
     <string name="extra_field_name">Додатково</string>
     <string name="field_to_ask_front_name">Додати зворотний бік</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
-    <string name="card_cloze_name">З пропусками</string>
+    <string name="card_n_name">Картка %d</string>
     <!--Note type-->
     <string name="basic_model_name">Основний</string>
     <string name="cloze_model_name">З пропусками</string>

@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Comportement</string>
     <string name="pref_cat_flashcard">Afficher</string>
     <string name="pref_cat_whiteboard">Tableau blanc</string>
-    <string name="pref_cat_automatic_display">Affichage automatique de la réponse</string>
     <string name="pref_cat_appearance">Affichage</string>
     <string name="pref_cat_appearance_summ">Changer le thème et la police par défaut</string>
     <string name="pref_cat_themes">Thèmes</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Affichage automatique de la réponse</string>
     <string name="timeout_answer_summ">Voir la réponse automatiquement sans intervention de l’utilisateur. Ceci comprend le temps utilisé par les fichiers audio joués automatiquements.</string>
     <string name="timeout_answer_seconds">Temps avant d’afficher la réponse</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Temps avant de montrer la question suivante</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Sélectionnez la langue</string>
     <string name="safe_display">Mode d’affichage protégé</string>
     <string name="safe_display_summ">Désactiver toutes les animations et utiliser le mode sécurisé pour afficher les cartes. Les appareils à encre électronique peuvent nécessiter ceci.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Groupe actuel</string>
     <string name="deck_conf_rename">Renommer</string>
     <string name="deck_conf_reset">Restaurer les valeurs par défaut</string>
-    <string name="deck_conf_reset_title">Restaurer les valeurs par défaut</string>
     <string name="deck_conf_reset_message">Restaurer les valeurs par défaut pour le groupe actuel ?</string>
     <string name="deck_conf_add">Ajouter une configuration</string>
     <string name="deck_conf_add_summ">Créer une copie du groupe d’option actuel</string>
@@ -264,7 +261,6 @@
         <item quantity="one">%s sous-paquet utilise ce groupe</item>
         <item quantity="other">%s sous-paquets utilisent ce groupe</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Définir pour tous les sous-paquets</string>
     <string name="deck_conf_set_subdecks_message">Définir ce groupe d’option pour tous les sous-paquets de ce paquet ?</string>
     <string name="pref_browser_editor_font">Police du navigateur et de l’éditeur</string>
     <string name="deck_conf_cram_filter">Filtre</string>

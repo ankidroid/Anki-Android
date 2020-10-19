@@ -27,7 +27,6 @@
     <string name="field_to_ask_front_name">Fordított hozzáadása</string>
     <!--Card type-->
     <string name="card_n_name">Card %d</string>
-    <string name="card_cloze_name">Kitöltés</string>
     <!--Note type-->
     <string name="basic_model_name">Általános</string>
     <string name="cloze_model_name">Kitöltés</string>

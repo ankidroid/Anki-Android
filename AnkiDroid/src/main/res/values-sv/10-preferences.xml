@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Uppförande</string>
     <string name="pref_cat_flashcard">Visning</string>
     <string name="pref_cat_whiteboard">Whiteboard</string>
-    <string name="pref_cat_automatic_display">VIsa svar automatiskt</string>
     <string name="pref_cat_appearance">Utseende</string>
     <string name="pref_cat_appearance_summ">Ändra teman och standardteckensnitt</string>
     <string name="pref_cat_themes">Teman</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Visa svar automatiskt</string>
     <string name="timeout_answer_summ">Visa svar automatiskt utan att användaren gör något. Fördröjningen inkluderar tiden som det tar för automatisk uppspelning av ljudfiler.</string>
     <string name="timeout_answer_seconds">Tid för att visa svar</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Tid för att visa nästa fråga</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Välj språk</string>
     <string name="safe_display">Säkert visningsläge</string>
     <string name="safe_display_summ">Stäng av alla animationer och använd en säkrare metod för att rita kort. E-bläckenheter kan kräva detta.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Nuvarande grupp</string>
     <string name="deck_conf_rename">Byt namn</string>
     <string name="deck_conf_reset">Återställ standardinställningar</string>
-    <string name="deck_conf_reset_title">Återställ standardinställningar</string>
     <string name="deck_conf_reset_message">Återställ nuvarande konfigurationsgrupp till standardinställningar?</string>
     <string name="deck_conf_add">Lägg till konfiguration</string>
     <string name="deck_conf_add_summ">Skapa en kopia av den aktuella konfigurationsgruppen</string>
@@ -264,7 +261,6 @@
         <item quantity="one">%s underkortlek kommer att använda denna grupp</item>
         <item quantity="other">%s underkortlekar kommer att använda denna grupp</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Ställ in för alla underkortlekar</string>
     <string name="deck_conf_set_subdecks_message">Vill du ställa in den nuvarande konfigurationsgruppen för alla denna kortleks underkortlekar?</string>
     <string name="pref_browser_editor_font">Typsnitt för bläddrare och kortredigering</string>
     <string name="deck_conf_cram_filter">Filter</string>

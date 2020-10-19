@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Comportament</string>
     <string name="pref_cat_flashcard">Pantalla</string>
     <string name="pref_cat_whiteboard">Pissarra</string>
-    <string name="pref_cat_automatic_display">Mostra la resposta automàticament</string>
     <string name="pref_cat_appearance">Aparença</string>
     <string name="pref_cat_appearance_summ">Canviar els temes i la font per defecte</string>
     <string name="pref_cat_themes">Temes</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Visualització automàtica de la resposta</string>
     <string name="timeout_answer_summ">Mostra la resposta automàticament sense aportació d\'usuari. El retard inclou el temps de les reproduccions automàtiques d\'arxius d\'àudio.</string>
     <string name="timeout_answer_seconds">Temps per mostrar la resposta</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Temps per mostrar la següent pregunta</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Seleccioneu l\'idioma</string>
     <string name="safe_display">Mode d\'exhibició segur</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Grup actual</string>
     <string name="deck_conf_rename">Canvia el nom</string>
     <string name="deck_conf_reset">Restaurar valors predeterminats</string>
-    <string name="deck_conf_reset_title">Restaurar valors predeterminats</string>
     <string name="deck_conf_reset_message">Restaurar l\'actual grup d\'opcions als valors per defecte?</string>
     <string name="deck_conf_add">Afegeix una configuració</string>
     <string name="deck_conf_add_summ">Crear una còpia de l\'actual grup d\'opcions</string>
@@ -264,7 +261,6 @@
         <item quantity="one">La sub-colecció %s utilitzarà aquest grup</item>
         <item quantity="other">Les sub-coleccions %s utilitzaran aquest grup</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Aplica per a tots les sub-coleccions</string>
     <string name="deck_conf_set_subdecks_message">Vols aplicar l\'actual grup d\'opcions per a totes les sub-coleccions de aquesta targeta?</string>
     <string name="pref_browser_editor_font">Tipus de lletra del navegador i de l\'editor</string>
     <string name="deck_conf_cram_filter">Filtre</string>

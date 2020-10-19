@@ -106,7 +106,7 @@
     <string name="rename_deck">Hernoem pak</string>
     <string name="menu_add">Voeg by</string>
     <string name="menu_add_note">Voeg nota by</string>
-    <string name="menu_my_account">Gesinchroniseerde rekening</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Gesinchroniseerde rekening</string>
     <string name="menu_dismiss_note">Steek weg / verwyder</string>
     <string name="menu_bury_card">Begrawe kaart</string>
     <string name="menu_bury_note">Begrawe nota</string>
@@ -201,7 +201,7 @@
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title" comment="Label of the window controlling the appearance of the card browser. This text can't be found directly in AnkiDroid.">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>

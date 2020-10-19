@@ -138,7 +138,7 @@
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">Добро дошли у AnkiDroid</string>
-    <string name="fact_adder_intent_title">AnkiDroid карта</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid карта</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">Копирај карту</string>
@@ -154,7 +154,6 @@
         <item quantity="few">%d карата је додато</item>
         <item quantity="other">%d cards added</item>
     </plurals>
-    <string name="help_title">Помоћ</string>
     <string name="check_db">Провера базе података</string>
     <string name="check_media">Провери медијске датотеке</string>
     <string name="empty_cards">Empty cards</string>
@@ -329,7 +328,6 @@
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>

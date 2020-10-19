@@ -78,7 +78,6 @@
     <string name="stats_overview_forecast_average">సరాసరి:&lt;b&gt;%1$.1f&lt;/b&gt;సమీక్షలు / రోజు</string>
     <string name="stats_overview_forecast_due_tomorrow">రేపు కారణంగా: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">చదువుకున్న రోజులు: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-    <string name="stats_overview_total_reviews">మొత్తం: &lt;b&gt;%1$d&lt;/b&gt; సమీక్షలు</string>
     <string name="stats_overview_reviews_per_day_studydays">అధ్యయనం చేసిన రోజులు సగటు: &lt;b&gt;%1$.1f&lt;/b&gt; సమీక్షలు / రోజు</string>
     <string name="stats_overview_reviews_per_day_all">మీరు ప్రతిరోజూ చదువుతున్నట్లయితే: &lt;b&gt;%1$.1f&lt;/b&gt; సమీక్షలు / రోజు</string>
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>

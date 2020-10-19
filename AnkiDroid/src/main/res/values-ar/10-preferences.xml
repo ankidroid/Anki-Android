@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">السلوك</string>
     <string name="pref_cat_flashcard">الشاشة</string>
     <string name="pref_cat_whiteboard">السبورة</string>
-    <string name="pref_cat_automatic_display">إظهار الجواب تلقائيًا</string>
     <string name="pref_cat_appearance">المظهر</string>
     <string name="pref_cat_appearance_summ">تغيير السمات والخط الافتراضي</string>
     <string name="pref_cat_themes">السمات</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">عرض الجواب تلقائيًا</string>
     <string name="timeout_answer_summ">إظهار الجواب تلقائيًا بدون تدخل المستخدم. تتضمن المهلة وقت تشغيل الملفات الصوتية تلقائيًا.</string>
     <string name="timeout_answer_seconds">مهلة إظهار الجواب</string>
-    <string name="timeout_answer_seconds_summ">XXX ثانية</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ثانية</string>
     <string name="timeout_question_seconds">مهلة إظهار السؤال التالي</string>
-    <string name="timeout_question_seconds_summ">XXX ثانية</string>
     <string name="select_locale_title">حدد اللغة</string>
     <string name="safe_display">وضع العرض الآمن</string>
     <string name="safe_display_summ">تعطيل كل التأثيرات المتحركة واستخدام طريقة أأمن لرسم البطاقات. قد تتطلب أجهزة الحبر الإلكتروني هذا.</string>
@@ -256,7 +254,6 @@
     <string name="deck_conf_current_group">المجموعة الحالية</string>
     <string name="deck_conf_rename">تغيير الاسم</string>
     <string name="deck_conf_reset">استعادة الافتراضي</string>
-    <string name="deck_conf_reset_title">استعادة الافتراضي</string>
     <string name="deck_conf_reset_message">هل تريد إرجاع مجموعة الخيارات الحالية إلى القيم الافتراضية؟</string>
     <string name="deck_conf_add">إضافة</string>
     <string name="deck_conf_add_summ">إنشاء نسخة من مجموعة الخيارات الحالية</string>
@@ -272,7 +269,6 @@
         <item quantity="many">تستخدم %s رزمة فرعية هذه المجموعة</item>
         <item quantity="other">تستخدم %s رزمة فرعية هذه المجموعة</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">ضبط لكل الرزم الفرعية</string>
     <string name="deck_conf_set_subdecks_message">هل تريد ضبط مجموعة الخيارات الحالية لكل الرزم الفرعية لهذه الرزمة؟</string>
     <string name="pref_browser_editor_font">خط المتصفح والمحرر</string>
     <string name="deck_conf_cram_filter">فلتر</string>

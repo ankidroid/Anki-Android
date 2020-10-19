@@ -101,7 +101,7 @@
     <string name="rename_deck">Đổi tên bộ thẻ</string>
     <string name="menu_add">Thêm</string>
     <string name="menu_add_note">Thêm ghi chú</string>
-    <string name="menu_my_account">Tài khoản đồng bộ</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Tài khoản đồng bộ</string>
     <string name="menu_dismiss_note">Ẩn / xoá</string>
     <string name="menu_bury_card">Tạm ẩn thẻ</string>
     <string name="menu_bury_note">Tạm ẩn ghi chú</string>

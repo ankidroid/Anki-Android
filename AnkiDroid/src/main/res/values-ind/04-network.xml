@@ -133,6 +133,4 @@
     <string name="sync_menu_title">Sinkronisasi</string>
     <string name="sync_menu_title_full_sync">Sinkronisasi (penuh)</string>
     <string name="sync_menu_title_no_account">Sinkronisasi (masuk)</string>
-    <!-- An option on a message box to open the "corrupt collection" webpage -->
-    <string name="sync_corrupt_collection_get_help">Help</string>
 </resources>

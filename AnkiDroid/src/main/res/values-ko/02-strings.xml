@@ -135,7 +135,7 @@
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid에 오신 것을 환영합니다</string>
-    <string name="fact_adder_intent_title">AnkiDroid 카드</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid 카드</string>
     <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">카드 복사</string>
@@ -149,7 +149,6 @@
     <plurals name="factadder_cards_added">
         <item quantity="other">%d 카드 추가됨</item>
     </plurals>
-    <string name="help_title">도움말</string>
     <string name="check_db">데이터베이스 점검하기</string>
     <string name="check_media">미디어 확인</string>
     <string name="empty_cards">빈 카드</string>
@@ -306,7 +305,6 @@ Context | Request Context    </string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>

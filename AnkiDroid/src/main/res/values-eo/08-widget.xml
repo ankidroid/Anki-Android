@@ -44,7 +44,7 @@
         <item quantity="one">%d lernenda AnkiDroid-karto</item>
         <item quantity="other">%d lernendaj AnkiDroid-kartoj</item>
     </plurals>
-    <string name="widget_small">AnkiDroid malgranda</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid malgranda</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d lernenda karto</item>
         <item quantity="other">%d lernendaj kartoj</item>
@@ -53,6 +53,6 @@
         <item quantity="one">%d minuto restas</item>
         <item quantity="other">%d minutoj restas</item>
     </plurals>
-    <string name="widget_add_note">Aldoni noton</string>
+    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Aldoni noton</string>
     <string name="widget_add_note_button">Aldoni novan AnkiDroid-noton</string>
 </resources>

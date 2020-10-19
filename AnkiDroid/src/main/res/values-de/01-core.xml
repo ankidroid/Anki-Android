@@ -106,7 +106,7 @@
     <string name="rename_deck">Stapel umbenennen</string>
     <string name="menu_add">Hinzufügen</string>
     <string name="menu_add_note">Notiz hinzufügen</string>
-    <string name="menu_my_account">Synchronisierungskonto</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronisierungskonto</string>
     <string name="menu_dismiss_note">Aussetzen / Löschen</string>
     <string name="menu_bury_card">Karte aufschieben</string>
     <string name="menu_bury_note">Notiz aufschieben</string>

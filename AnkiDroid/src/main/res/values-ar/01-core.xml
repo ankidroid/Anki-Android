@@ -126,7 +126,7 @@
     <string name="rename_deck">تغيير اسم الرزمة</string>
     <string name="menu_add">إضافة</string>
     <string name="menu_add_note">إضافة ملحوظة</string>
-    <string name="menu_my_account">حساب المزامنة</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">حساب المزامنة</string>
     <string name="menu_dismiss_note">إخفاء / حذف</string>
     <string name="menu_bury_card">دفن البطاقة</string>
     <string name="menu_bury_note">دفن الملحوظة</string>

@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Поведінка</string>
     <string name="pref_cat_flashcard">Відображення</string>
     <string name="pref_cat_whiteboard">Дошка</string>
-    <string name="pref_cat_automatic_display">Автоматично відображати відповідь</string>
     <string name="pref_cat_appearance">Зовнішній вигляд</string>
     <string name="pref_cat_appearance_summ">Зміна теми і шрифтів</string>
     <string name="pref_cat_themes">Теми</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Автоматичне відкриття відповіді</string>
     <string name="timeout_answer_summ">Показати відповідь автоматично, без введення даних користувачем. Затримка включає в себе час автоматичного відтворення аудіофайлів.</string>
     <string name="timeout_answer_seconds">Час показу відповіді</string>
-    <string name="timeout_answer_seconds_summ">XXX сек.</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX сек.</string>
     <string name="timeout_question_seconds">Час показу наступного питання</string>
-    <string name="timeout_question_seconds_summ">XXX сек.</string>
     <string name="select_locale_title">Виберіть мову</string>
     <string name="safe_display">Статичний режим екрану</string>
     <string name="safe_display_summ">Вимкнути усю анімацію та використовувати безпечні методи для відображення карток. Це може бути потрібно для E-ink пристроїв</string>
@@ -257,7 +255,6 @@
     <string name="deck_conf_current_group">Поточна група</string>
     <string name="deck_conf_rename">Перейменувати</string>
     <string name="deck_conf_reset">Відновити типові</string>
-    <string name="deck_conf_reset_title">Відновити типові</string>
     <string name="deck_conf_reset_message">Відновити групу поточних значень параметрів  до типових?</string>
     <string name="deck_conf_add">Додати конфігурацію</string>
     <string name="deck_conf_add_summ">Створіть копію поточної групи параметрів</string>
@@ -271,7 +268,6 @@
         <item quantity="many">%s підколод використовуватимуть конфігурацію</item>
         <item quantity="other">%s підколод використовуватимуть конфігурацію</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Установити для усіх підколод</string>
     <string name="deck_conf_set_subdecks_message">Установити групу поточних параметрів для усіх підколод цієї колоди?</string>
     <string name="pref_browser_editor_font">Переглядач та редактор шрифтів</string>
     <string name="deck_conf_cram_filter">Фільтр</string>

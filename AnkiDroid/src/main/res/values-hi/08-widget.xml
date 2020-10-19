@@ -44,7 +44,7 @@
         <item quantity="one">%d AnkiDroid card due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_small">AnkiDroid छोटा</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid छोटा</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d पत्ता बाकी</item>
         <item quantity="other">%d पत्ते बाकी</item>
@@ -53,6 +53,6 @@
         <item quantity="one">%d मिनट बाकी</item>
         <item quantity="other">%d मिनट बाकी</item>
     </plurals>
-    <string name="widget_add_note">नोट जोड़ें</string>
+    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">नोट जोड़ें</string>
     <string name="widget_add_note_button">नया AnkiDroid नोट जोड़ें</string>
 </resources>

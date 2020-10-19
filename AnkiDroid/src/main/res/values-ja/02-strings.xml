@@ -134,7 +134,7 @@
         <item quantity="other">%1$d分</item>
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroidへようこそ</string>
-    <string name="fact_adder_intent_title">AnkiDroid カード</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid カード</string>
     <string name="note_editor_add_note">ノートを追加</string>
     <string name="note_editor_copy_note">ノートをコピー</string>
     <string name="card_editor_copy_card">カードをコピー</string>
@@ -148,7 +148,6 @@
     <plurals name="factadder_cards_added">
         <item quantity="other">%d枚のカードを追加しました</item>
     </plurals>
-    <string name="help_title">ヘルプ</string>
     <string name="check_db">データベースをチェック</string>
     <string name="check_media">メディアをチェック</string>
     <string name="empty_cards">白紙カードをチェック</string>
@@ -302,7 +301,6 @@
     <string name="about_ankidroid_error_copy_debug_info">デバッグ情報をクリップボードにコピー中にエラーが発生しました</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_could_not_find_image_get_help">Help</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>

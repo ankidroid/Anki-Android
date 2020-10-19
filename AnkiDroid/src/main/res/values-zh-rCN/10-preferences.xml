@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">行为</string>
     <string name="pref_cat_flashcard">显示</string>
     <string name="pref_cat_whiteboard">白板</string>
-    <string name="pref_cat_automatic_display">自动显示答案</string>
     <string name="pref_cat_appearance">外观</string>
     <string name="pref_cat_appearance_summ">更改主题和默认字体</string>
     <string name="pref_cat_themes">主题</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">自动显示答案</string>
     <string name="timeout_answer_summ">无需用户输入自动显示答案。延迟时间包括自动播放音频文件的时间。</string>
     <string name="timeout_answer_seconds">显示答案时间</string>
-    <string name="timeout_answer_seconds_summ">XXX 秒</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
     <string name="timeout_question_seconds">显示下一个问题时间</string>
-    <string name="timeout_question_seconds_summ">XXX 秒</string>
     <string name="select_locale_title">选择语言</string>
     <string name="safe_display">安全显示模式</string>
     <string name="safe_display_summ">禁用所有动画并使用更安全的方法绘制卡牌。使用墨水屏（E-ink）的设备可能需要此功能。</string>
@@ -251,7 +249,6 @@
     <string name="deck_conf_current_group">当前组</string>
     <string name="deck_conf_rename">重命名</string>
     <string name="deck_conf_reset">恢复默认</string>
-    <string name="deck_conf_reset_title">恢复默认</string>
     <string name="deck_conf_reset_message">是否将当前选项组还原到默认值？</string>
     <string name="deck_conf_add">添加选项组</string>
     <string name="deck_conf_add_summ">创建当前选项组的副本</string>
@@ -262,7 +259,6 @@
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s 子牌组将使用此选项组</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">应用此选项组到所有子牌组</string>
     <string name="deck_conf_set_subdecks_message">为当前牌组的所有子牌组应用此选项组?</string>
     <string name="pref_browser_editor_font">浏览器和编辑器字体</string>
     <string name="deck_conf_cram_filter">筛选器</string>

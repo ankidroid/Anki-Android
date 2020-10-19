@@ -48,7 +48,7 @@
         <item quantity="many">%d بطاقة أنكيدرويد مستحقة</item>
         <item quantity="other">%d بطاقة أنكيدرويد مستحقة</item>
     </plurals>
-    <string name="widget_small">أنكيدرويد صغير</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">أنكيدرويد صغير</string>
     <plurals name="widget_cards_due">
         <item quantity="zero">%d بطاقة مستحقة</item>
         <item quantity="one">%d بطاقة مستحقة</item>
@@ -65,6 +65,6 @@
         <item quantity="many">تبقى %d دقيقة</item>
         <item quantity="other">تبقى %d دقيقة</item>
     </plurals>
-    <string name="widget_add_note">إضافة ملحوظة</string>
+    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">إضافة ملحوظة</string>
     <string name="widget_add_note_button">إضافة ملحوظة أنكيدرويد جديدة</string>
 </resources>

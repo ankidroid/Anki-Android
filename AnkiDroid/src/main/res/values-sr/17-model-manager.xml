@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">Управљање типовима бележака</string>
-    <string name="model_editor_label">Управљање пољима</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Управљање типовима бележака</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Управљање пољима</string>
     <!--Toasts-->
     <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Тип белешке мора да има бар једно поље</string>
@@ -39,8 +39,6 @@
         <item quantity="few">%d белешке</item>
         <item quantity="other">%d белешка</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">Додај тип белешке</string>
     <!--Browser-->
     <string name="model_browser_delete">Избриши тип белешке</string>
     <string name="model_browser_rename">Преименуј</string>

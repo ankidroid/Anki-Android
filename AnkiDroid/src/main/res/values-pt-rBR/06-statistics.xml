@@ -40,7 +40,7 @@
 <resources>
     <string name="statistics_young">Jovem</string>
     <string name="statistics_mature">Maduro</string>
-    <string name="statistics_young_and_learn">Jovem+Apreendido</string>
+    <string name="statistics_young_and_learn">Jovem+Aprender</string>
     <string name="statistics_unlearned">Não visto</string>
     <string name="statistics_suspended">Suspenso</string>
     <string name="statistics_buried">Oculto</string>
@@ -49,13 +49,13 @@
     <string name="statistics_cram">Cursinho</string>
     <string name="stats_cards">Cartões</string>
     <string name="stats_cards_intervals">Cartões com determinado intervalo</string>
-    <string name="stats_cumulative_cards">Cartões Cumulativos</string>
-    <string name="stats_cumulative_answers">Respostas Cumulativas</string>
-    <string name="stats_cumulative_time_minutes">Minutos Cumulativos</string>
-    <string name="stats_cumulative_time_hours">Horas Cumulativas</string>
-    <string name="stats_cumulative">Cumulativo</string>
-    <string name="stats_cumulative_percentage">Porcentagem Cumulativa</string>
-    <string formatted="false" name="stats_cumulative_correct_percentage">% Correto Cumulativo</string>
+    <string name="stats_cumulative_cards">Cartões Acumulados</string>
+    <string name="stats_cumulative_answers">Respostas Acumuladas</string>
+    <string name="stats_cumulative_time_minutes">Minutos Acumulados</string>
+    <string name="stats_cumulative_time_hours">Horas Acumuladas</string>
+    <string name="stats_cumulative">Acumulado</string>
+    <string name="stats_cumulative_percentage">Porcentagem Acumulada</string>
+    <string formatted="false" name="stats_cumulative_correct_percentage">Correto Acumulado %</string>
     <string name="stats_answers">Respostas</string>
     <string name="stats_minutes">Minutos</string>
     <string name="stats_hours">Horas</string>
@@ -78,7 +78,6 @@
     <string name="stats_overview_forecast_average">Média: &lt;b&gt;%1$.1f&lt;/b&gt; revisões/dia</string>
     <string name="stats_overview_forecast_due_tomorrow">Vence amanhã: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Dias estudados: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
-    <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; revisões</string>
     <string name="stats_overview_reviews_per_day_studydays">Média por dias estudados: &lt;b&gt;%1$.1f&lt;/b&gt; revisões/dia</string>
     <string name="stats_overview_reviews_per_day_all">Se você estudou todos os dias: &lt;b&gt;%1$.1f&lt;/b&gt; revisões/dia</string>
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutos</string>

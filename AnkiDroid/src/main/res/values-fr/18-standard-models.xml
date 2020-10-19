@@ -27,7 +27,6 @@
     <string name="field_to_ask_front_name">Ajouter le verso</string>
     <!--Card type-->
     <string name="card_n_name">Card %d</string>
-    <string name="card_cloze_name">Texte à trous</string>
     <!--Note type-->
     <string name="basic_model_name">Basique</string>
     <string name="cloze_model_name">Texte à trous</string>

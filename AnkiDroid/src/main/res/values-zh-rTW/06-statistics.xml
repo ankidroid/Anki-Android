@@ -78,7 +78,6 @@
     <string name="stats_overview_forecast_average">平均：&lt;b&gt;%1$.1f&lt;/b&gt; 張卡片待複習/天</string>
     <string name="stats_overview_forecast_due_tomorrow">明天到期： &lt;b&gt;%1$d&lt;/b&gt; 張</string>
     <string name="stats_overview_days_studied">打卡天數：%2$d／%3$d（&lt;b&gt;%1$d%%&lt;/b&gt;）</string>
-    <string name="stats_overview_total_reviews">總共： &lt;b&gt;%1$d&lt;/b&gt; 張卡片已復習</string>
     <string name="stats_overview_reviews_per_day_studydays">平均：&lt;b&gt;%1$.1f&lt;/b&gt; 張/天</string>
     <string name="stats_overview_reviews_per_day_all">如果你每天都學習，那麼每天只需複習 &lt;b&gt;%1$.1f&lt;/b&gt; 張卡片</string>
     <string name="stats_overview_total_time_in_period">總計：&lt;b&gt;&lt;%d/b&gt;分鐘</string>

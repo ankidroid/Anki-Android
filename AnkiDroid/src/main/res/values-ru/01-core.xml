@@ -116,7 +116,7 @@
     <string name="rename_deck">Переименовать колоду</string>
     <string name="menu_add">Добавить</string>
     <string name="menu_add_note">Добавить запись</string>
-    <string name="menu_my_account">Учётная запись синхронизации</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Учётная запись синхронизации</string>
     <string name="menu_dismiss_note">Спрятать или удалить</string>
     <string name="menu_bury_card">Отложить карточку</string>
     <string name="menu_bury_note">Отложить запись</string>

@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Elgesys</string>
     <string name="pref_cat_flashcard">Rodymas</string>
     <string name="pref_cat_whiteboard">Lenta</string>
-    <string name="pref_cat_automatic_display">Automatinis atsakymo rodymas</string>
     <string name="pref_cat_appearance">Išvaizda</string>
     <string name="pref_cat_appearance_summ">Keisti apipavidalinimą ir numatytąjį šriftą</string>
     <string name="pref_cat_themes">Apipavidalinimas</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Automatinis atsakymo rodymas</string>
     <string name="timeout_answer_summ">Atsakymą rodyti automatiškai, vartotojui neprašant. Uždelsimas apims laiką per kurį bus grojami garso failai.</string>
     <string name="timeout_answer_seconds">Laikas, po kurio bus rodomas atsakymas</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Laikas, po kurio bus rodomas sekantis klausimas</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Pasirinkite kalbą</string>
     <string name="safe_display">Ribotoji ekrano veiksena</string>
     <string name="safe_display_summ">Išjungti visą animaciją ir naudoti saugesnį kortelių piešimo būdą. To gali reikėti įrenginiams, kurių veikimas paremtas „E-ink“ technologija.</string>
@@ -255,7 +253,6 @@
     <string name="deck_conf_current_group">Esama grupė</string>
     <string name="deck_conf_rename">Pervadinti</string>
     <string name="deck_conf_reset">Atkurti numatytuosius parametrus</string>
-    <string name="deck_conf_reset_title">Atkurti numatytuosius parametrus</string>
     <string name="deck_conf_reset_message">Ar norite atkurti esamos parinkčių grupės parametrus į numatytuosius?</string>
     <string name="deck_conf_add">Pridėti</string>
     <string name="deck_conf_add_summ">Kurti esamų parinkčių grupės kopiją</string>
@@ -269,7 +266,6 @@
         <item quantity="many">Šią grupę naudos %s poaplankių</item>
         <item quantity="other">Šią grupę naudos %s poaplank.</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Taikyti visiems poaplankiams</string>
     <string name="deck_conf_set_subdecks_message">Ar norite esamą parinkčių grupę taikyti visiems šio rinkinio poaplankiams?</string>
     <string name="pref_browser_editor_font">Naršyklės ir tekstų rengyklės šriftas</string>
     <string name="deck_conf_cram_filter">Filtras</string>

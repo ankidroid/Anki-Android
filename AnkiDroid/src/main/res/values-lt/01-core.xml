@@ -116,7 +116,7 @@
     <string name="rename_deck">Pervadinti malką</string>
     <string name="menu_add">Pridėti</string>
     <string name="menu_add_note">Pridėti užrašą</string>
-    <string name="menu_my_account">Sinchronizuoti paskyrą</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinchronizuoti paskyrą</string>
     <string name="menu_dismiss_note">Paslėpti / ištrinti</string>
     <string name="menu_bury_card">Paslėpti kortelę</string>
     <string name="menu_bury_note">Paslėpti užrašą</string>

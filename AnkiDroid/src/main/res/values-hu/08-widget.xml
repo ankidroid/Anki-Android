@@ -44,7 +44,7 @@
         <item quantity="one">%d AnkiDroid kártya határideje</item>
         <item quantity="other">%d AnkiDroid kártyák határideje</item>
     </plurals>
-    <string name="widget_small">AnkiDroid kicsi</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid kicsi</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d kártya esedékes</item>
         <item quantity="other">%d kártyák esedékesek</item>
@@ -53,6 +53,6 @@
         <item quantity="one">%d perc maradt</item>
         <item quantity="other">%d perc maradt</item>
     </plurals>
-    <string name="widget_add_note">Megjegyzés hozzáadása</string>
+    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Megjegyzés hozzáadása</string>
     <string name="widget_add_note_button">Új AnkiDroid megjegyzés hozzáadása</string>
 </resources>

@@ -101,7 +101,7 @@
     <string name="rename_deck">Ubah nama dek</string>
     <string name="menu_add">Tambah</string>
     <string name="menu_add_note">Tambah catatan</string>
-    <string name="menu_my_account">Sinkronisasi akun</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinkronisasi akun</string>
     <string name="menu_dismiss_note">Sembunyikan / hapus</string>
     <string name="menu_bury_card">Pendam kartu</string>
     <string name="menu_bury_note">Pendam catatan</string>

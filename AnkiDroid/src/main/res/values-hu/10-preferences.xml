@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Viselkedés</string>
     <string name="pref_cat_flashcard">Kijelző</string>
     <string name="pref_cat_whiteboard">Tábla</string>
-    <string name="pref_cat_automatic_display">Válasz automatikus mutatása</string>
     <string name="pref_cat_appearance">Kinézet</string>
     <string name="pref_cat_appearance_summ">Témák és az alapértelmezett betűtípus módosítása</string>
     <string name="pref_cat_themes">Témák</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Automatikusan mutassa a választ</string>
     <string name="timeout_answer_summ">Válasz automatikus megjelenítése, felhasználói beavatkozása nélkül. A késleltetés magában foglalja az automatikusan lejátszott audió fájlok idejét.</string>
     <string name="timeout_answer_seconds">Válasz mutatása ennyi idő elteltével</string>
-    <string name="timeout_answer_seconds_summ">XXX másodperc</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX másodperc</string>
     <string name="timeout_question_seconds">A következő kérdés megjelenítése ennyi idő után</string>
-    <string name="timeout_question_seconds_summ">XXX másodperc</string>
     <string name="select_locale_title">Nyelv kiválasztása</string>
     <string name="safe_display">Biztonságos megjelenítési mód</string>
     <string name="safe_display_summ">Kapcsolja ki az összes animációt, és biztonságosabb módszereket használjon a kártya rajzok számára. Az e-tintaeszközök igényelhetik ezt.</string>
@@ -253,7 +251,6 @@
     <string name="deck_conf_current_group">Aktuális csoport</string>
     <string name="deck_conf_rename">Átnevezés</string>
     <string name="deck_conf_reset">Alapértelmezések visszaállítása</string>
-    <string name="deck_conf_reset_title">Alapértelmezések visszaállítása</string>
     <string name="deck_conf_reset_message">Alaphelyzetbe állítod az aktuális opciócsoportot?</string>
     <string name="deck_conf_add">Új beállítás</string>
     <string name="deck_conf_add_summ">Készítsen egy másolatot az aktuális opciócsoportról</string>
@@ -265,7 +262,6 @@
         <item quantity="one">%s pakli használata ebben a csoportban</item>
         <item quantity="other">%s alpakli használata ebben a csoportban</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Alkalmazás minden alcsoportra</string>
     <string name="deck_conf_set_subdecks_message">Állítsa be az aktuális opciócsoportot a pakli minden alcsoportjában?</string>
     <string name="pref_browser_editor_font">Böngésző és szerkesztő betűtípus</string>
     <string name="deck_conf_cram_filter">Szűrő</string>

@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Понашање</string>
     <string name="pref_cat_flashcard">Приказ</string>
     <string name="pref_cat_whiteboard">Бела табла</string>
-    <string name="pref_cat_automatic_display">Аутоматски приказуј одговор</string>
     <string name="pref_cat_appearance">Appearance</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
     <string name="pref_cat_themes">Themes</string>
@@ -141,9 +140,8 @@
     <string name="timeout_answer_text">Аутоматски приказуј одговор</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds">Време за приказивање одговора</string>
-    <string name="timeout_answer_seconds_summ">XXX с</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX с</string>
     <string name="timeout_question_seconds">Време за приказивање следећег питања</string>
-    <string name="timeout_question_seconds_summ">XXX с</string>
     <string name="select_locale_title">Изаберите језик</string>
     <string name="safe_display">Безбедан режим приказивања</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -254,7 +252,6 @@
     <string name="deck_conf_current_group">Текућа група</string>
     <string name="deck_conf_rename">Преименуј</string>
     <string name="deck_conf_reset">Врати подразумевана подешавања</string>
-    <string name="deck_conf_reset_title">Врати подразумевана подешавања</string>
     <string name="deck_conf_reset_message">Да вратим тренутну групу опција на подразумевана подешавања?</string>
     <string name="deck_conf_add">Додавање конфигурације</string>
     <string name="deck_conf_add_summ">Направи копију текуће групе опција</string>
@@ -267,7 +264,6 @@
         <item quantity="few">%s подшпила ће да користи ову групу</item>
         <item quantity="other">%s подшпила ће да користи ову групу</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Задај за све групе шпилова</string>
     <string name="deck_conf_set_subdecks_message">Да задам текућу групу опција за све подшпилове ових шпилова?</string>
     <string name="pref_browser_editor_font">Прегледач и фонт уредника</string>
     <string name="deck_conf_cram_filter">Филтер</string>

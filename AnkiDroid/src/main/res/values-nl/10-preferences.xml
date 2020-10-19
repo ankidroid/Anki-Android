@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Gedrag</string>
     <string name="pref_cat_flashcard">Weergave</string>
     <string name="pref_cat_whiteboard">Schrijfbord</string>
-    <string name="pref_cat_automatic_display">Automatische weergave antwoord</string>
     <string name="pref_cat_appearance">Opmaak</string>
     <string name="pref_cat_appearance_summ">Wijzig thema\'s en standaardlettertype</string>
     <string name="pref_cat_themes">Thema\'s</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Automatisch het antwoord tonen</string>
     <string name="timeout_answer_summ">Toon antwoord automatisch zonder invoer van de gebruiker. Tijd voor het automatisch spelen van audio files is in rekening gehouden.</string>
     <string name="timeout_answer_seconds">Tijd om het antwoord te tonen</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Tijd om de volgende vraag te tonen</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Taal selecteren</string>
     <string name="safe_display">Veilige weergavemodus</string>
     <string name="safe_display_summ">Alle animaties uitschakelen en veiligere methode gebruiken om kaarten te trekken. Dit kan nodig zijn voor sommige E-inkt-apparaten.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Huidige groep</string>
     <string name="deck_conf_rename">Naam wijzigen</string>
     <string name="deck_conf_reset">Standaardinstellingen herstellen</string>
-    <string name="deck_conf_reset_title">Standaardinstellingen herstellen</string>
     <string name="deck_conf_reset_message">Standaardwaarden instellen voor de huidige set aan instellingen?</string>
     <string name="deck_conf_add">Configuratie toevoegen</string>
     <string name="deck_conf_add_summ">Maak een kopie van de huidige groep instellingen</string>
@@ -264,7 +261,6 @@
         <item quantity="one">%s subset zal gebruikmaken van deze groep</item>
         <item quantity="other">%s subsets zullen gebruikmaken van deze groep</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Instellen voor alle subsets</string>
     <string name="deck_conf_set_subdecks_message">Huidige set aan instellingen laten gelden voor alle subsets van deze set?</string>
     <string name="pref_browser_editor_font">Lettertype browser/bewerker</string>
     <string name="deck_conf_cram_filter">Filter</string>

@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">व्यवहार</string>
     <string name="pref_cat_flashcard">प्रदर्शन</string>
     <string name="pref_cat_whiteboard">स्लेट</string>
-    <string name="pref_cat_automatic_display">स्वतः उत्तर दिखाएँ</string>
     <string name="pref_cat_appearance">दिखावट</string>
     <string name="pref_cat_appearance_summ">थीम और डिफ़ॉल्ट फ़ॉन्ट बदलें</string>
     <string name="pref_cat_themes">थीम</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">स्वचालित प्रदर्शन उत्तर</string>
     <string name="timeout_answer_summ">उपयोगकर्ता इनपुट के बिना स्वचालित रूप से उत्तर दिखाएं । देरी स्वचालित रूप से खेला ऑडियो फ़ाइलों के लिए समय शामिल है ।</string>
     <string name="timeout_answer_seconds">जवाब दिखाने के लिए समय</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">अगला प्रश्न दिखाने का समय</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">भाषा चुनें</string>
     <string name="safe_display">सुरक्षित प्रदर्शन मोड</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">वर्तमान समूह</string>
     <string name="deck_conf_rename">नाम बदलें</string>
     <string name="deck_conf_reset">मूल पुनस्थापित करें</string>
-    <string name="deck_conf_reset_title">मूल पुनस्थापित करें</string>
     <string name="deck_conf_reset_message">वर्तमान विकल्प समूह को डिफ़ॉल्ट मानों में पुनर्स्थापित करें?</string>
     <string name="deck_conf_add">जोड़ें</string>
     <string name="deck_conf_add_summ">वर्तमान विकल्प समूह की प्रतिलिपि बनाएं</string>
@@ -264,7 +261,6 @@
         <item quantity="one">%s subdeck इस समूह का उपयोग करेगा</item>
         <item quantity="other">%s subdeck इस समूह का उपयोग करेगा</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">सभी उपडेक के लिए सेट करें</string>
     <string name="deck_conf_set_subdecks_message">इस डेक उपडेक के सभी के लिए वर्तमान विकल्प समूह सेट करें?</string>
     <string name="pref_browser_editor_font">ब्राउज़र और संपादक फ़ॉन्ट</string>
     <string name="deck_conf_cram_filter">फ़िल्टर</string>

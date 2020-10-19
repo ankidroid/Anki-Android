@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Поведение</string>
     <string name="pref_cat_flashcard">Экран</string>
     <string name="pref_cat_whiteboard">Доска</string>
-    <string name="pref_cat_automatic_display">Автоматически показывать ответ</string>
     <string name="pref_cat_appearance">Внешний вид</string>
     <string name="pref_cat_appearance_summ">Выбор темы и шрифтов</string>
     <string name="pref_cat_themes">Темы</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Автоматически показывать ответ</string>
     <string name="timeout_answer_summ">Показывает ответ автоматически. Задержка включает в себя время для воспроизведения звука.</string>
     <string name="timeout_answer_seconds">Показать ответ через</string>
-    <string name="timeout_answer_seconds_summ">XXX с</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX с</string>
     <string name="timeout_question_seconds">Показать следующий вопрос через</string>
-    <string name="timeout_question_seconds_summ">XXX с</string>
     <string name="select_locale_title">Выберите язык</string>
     <string name="safe_display">Статический режим экрана</string>
     <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экранов на электронных чернилах</string>
@@ -254,7 +252,6 @@
     <string name="deck_conf_current_group">Текущая конфигурация</string>
     <string name="deck_conf_rename">Переименовать</string>
     <string name="deck_conf_reset">Сбросить настройки</string>
-    <string name="deck_conf_reset_title">Сбросить настройки</string>
     <string name="deck_conf_reset_message">Сбросить эту конфигурацию?</string>
     <string name="deck_conf_add">Добавить</string>
     <string name="deck_conf_add_summ">Создать копию этой конфигурации</string>
@@ -268,7 +265,6 @@
         <item quantity="many">%s подколод задействуют конфигурацию</item>
         <item quantity="other">%s подколод задействуют конфигурацию</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Установить для всех подколод</string>
     <string name="deck_conf_set_subdecks_message">Установить текущую конфигурацию для всех подколод этой колоды?</string>
     <string name="pref_browser_editor_font">Шрифт в списке и редакторе</string>
     <string name="deck_conf_cram_filter">Фильтр</string>

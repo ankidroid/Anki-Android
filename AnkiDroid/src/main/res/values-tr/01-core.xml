@@ -106,7 +106,7 @@
     <string name="rename_deck">Destenin adını değiştir</string>
     <string name="menu_add">Ekle</string>
     <string name="menu_add_note">Not ekle</string>
-    <string name="menu_my_account">Senkronizasyon hesabı</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Senkronizasyon hesabı</string>
     <string name="menu_dismiss_note">Gizle / Sil</string>
     <string name="menu_bury_card">Kartı gizle</string>
     <string name="menu_bury_note">Notu Gizle</string>

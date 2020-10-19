@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">Toiminta</string>
     <string name="pref_cat_flashcard">Näyttö</string>
     <string name="pref_cat_whiteboard">Valkotaulu</string>
-    <string name="pref_cat_automatic_display">Näytä vastaukset automaattisesti</string>
     <string name="pref_cat_appearance">Ulkoasu</string>
     <string name="pref_cat_appearance_summ">Vaihda teemaa ja oletusfonttia</string>
     <string name="pref_cat_themes">Teemat</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">Näytä vastaukset automaattisesti</string>
     <string name="timeout_answer_summ">Näytä vastaus automaattisesti ilman käyttäjän komentoa. Viive sisältää ajan automaattisesti toistetaville äänitiedostoille.</string>
     <string name="timeout_answer_seconds">Aika ennen vastauksen näyttämistä</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Aika ennen seuraavan kysymyksen näyttämistä</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Valitse kieli</string>
     <string name="safe_display">Turvallinen näyttötila</string>
     <string name="safe_display_summ">Poista kaikki animaatiot käytöstä ja käytä turvallisempaa menetelmää korttien piirtämiseen. E-muste laitteet voivat vaatia tätä.</string>
@@ -252,7 +250,6 @@
     <string name="deck_conf_current_group">Nykyinen ryhmä</string>
     <string name="deck_conf_rename">Nimeä uudelleen</string>
     <string name="deck_conf_reset">Palauta oletusarvot</string>
-    <string name="deck_conf_reset_title">Palauta oletusarvot</string>
     <string name="deck_conf_reset_message">Palauta nykyinen asetusryhmä oletusarvoihin?</string>
     <string name="deck_conf_add">Lisää</string>
     <string name="deck_conf_add_summ">Luo kopio nykyisestä asetusryhmästä</string>
@@ -264,7 +261,6 @@
         <item quantity="one">%s alapakka käyttää tätä ryhmää</item>
         <item quantity="other">%s alapakkaa käyttää tätä ryhmää</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Aseta kaikille alipakoille</string>
     <string name="deck_conf_set_subdecks_message">Aseta nykyinen asetusryhmä kaikille tämän pakan alipakoille?</string>
     <string name="pref_browser_editor_font">Selaimen ja editorin kirjasintyyppi</string>
     <string name="deck_conf_cram_filter">Suodatin</string>

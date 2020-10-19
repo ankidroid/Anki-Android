@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">行爲</string>
     <string name="pref_cat_flashcard">顯示</string>
     <string name="pref_cat_whiteboard">白板</string>
-    <string name="pref_cat_automatic_display">自動顯示答案</string>
     <string name="pref_cat_appearance">外觀</string>
     <string name="pref_cat_appearance_summ">變更主題和預設字型</string>
     <string name="pref_cat_themes">佈景</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">自動顯示答案</string>
     <string name="timeout_answer_summ">無需用戶輸入自動顯示答案。延遲時間包括自動播放音訊檔案的時間。</string>
     <string name="timeout_answer_seconds">顯示答案的時間</string>
-    <string name="timeout_answer_seconds_summ">XXX 秒</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
     <string name="timeout_question_seconds">顯示下一題的時間</string>
-    <string name="timeout_question_seconds_summ">XXX 秒</string>
     <string name="select_locale_title">選擇語言</string>
     <string name="safe_display">安全顯示模式</string>
     <string name="safe_display_summ">關閉所有動畫且使用較安全的方法來繪製卡片。電子墨水裝置可能會需要這個方法。</string>
@@ -251,7 +249,6 @@
     <string name="deck_conf_current_group">目前使用的群組</string>
     <string name="deck_conf_rename">重新命名</string>
     <string name="deck_conf_reset">還原預設值</string>
-    <string name="deck_conf_reset_title">還原預設值</string>
     <string name="deck_conf_reset_message">回復當前設定群組成預設值嗎？</string>
     <string name="deck_conf_add">新增設定</string>
     <string name="deck_conf_add_summ">複製一份當前的設定群組</string>
@@ -262,7 +259,6 @@
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s 個子牌組將使用這個群組</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">設定給所有子牌組</string>
     <string name="deck_conf_set_subdecks_message">套用當前設定群組到該牌組的所有子牌組嗎？</string>
     <string name="pref_browser_editor_font">瀏覽器和編輯器字型</string>
     <string name="deck_conf_cram_filter">篩選器</string>

@@ -44,7 +44,7 @@
         <item quantity="one">%d Carta AnkiDroid scaduta</item>
         <item quantity="other">%d Carte AnkiDroid scadute</item>
     </plurals>
-    <string name="widget_small">AnkiDroid piccolo</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid piccolo</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d carta scaduta</item>
         <item quantity="other">%d carte scadute</item>
@@ -53,6 +53,6 @@
         <item quantity="one">%d minuto rimasto</item>
         <item quantity="other">%d minuti rimasti</item>
     </plurals>
-    <string name="widget_add_note">Aggiungi nota</string>
+    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Aggiungi nota</string>
     <string name="widget_add_note_button">Aggiungi nuova nota AnkiDroid</string>
 </resources>

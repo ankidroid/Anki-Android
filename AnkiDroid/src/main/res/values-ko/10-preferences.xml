@@ -48,7 +48,6 @@
     <string name="pref_cat_reviewer_behaviour">동작</string>
     <string name="pref_cat_flashcard">디스플레이</string>
     <string name="pref_cat_whiteboard">화이트보드</string>
-    <string name="pref_cat_automatic_display">정답 자동 표시</string>
     <string name="pref_cat_appearance">외관</string>
     <string name="pref_cat_appearance_summ">기본 글꼴과 테마 변경</string>
     <string name="pref_cat_themes">테마</string>
@@ -140,9 +139,8 @@
     <string name="timeout_answer_text">자동으로 정답 표시</string>
     <string name="timeout_answer_summ">사용자 입력 없이 자동으로 답변을 표시합니다. 지연에는 자동으로 재생되는 오디오 파일의 시간이 포함됩니다.</string>
     <string name="timeout_answer_seconds">정답을 표시할 시간</string>
-    <string name="timeout_answer_seconds_summ">XXX 초</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 초</string>
     <string name="timeout_question_seconds">다음 문제를 표시할 시간</string>
-    <string name="timeout_question_seconds_summ">XXX 초</string>
     <string name="select_locale_title">언어 선택</string>
     <string name="safe_display">안전한 디스플레이 모드</string>
     <string name="safe_display_summ">모든 애니메이션을 비활성화하고 더 안전한 그리기 방법을 사용합니다. 전자 잉크 기기에는 이 기능이 필요할 수 있습니다.</string>
@@ -251,7 +249,6 @@
     <string name="deck_conf_current_group">현재 그룹</string>
     <string name="deck_conf_rename">이름 바꾸기</string>
     <string name="deck_conf_reset">기본값 복원</string>
-    <string name="deck_conf_reset_title">기본값 복원</string>
     <string name="deck_conf_reset_message">현재 옵션 그룹을 기본값으로 복원할까요?</string>
     <string name="deck_conf_add">새로 환경설정 지정</string>
     <string name="deck_conf_add_summ">현재 옵션 그룹의 복사본을 만들기</string>
@@ -262,7 +259,6 @@
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s 하위 카드 묶음이 이 그룹을 사용 합니다</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">모든 하위 묶음에 설정하기</string>
     <string name="deck_conf_set_subdecks_message">이 카드 묶음의 모든 하위 묶음에 현재의 옵션 그룹을 설정할까요?</string>
     <string name="pref_browser_editor_font">탐색기 및 편집기 글꼴</string>
     <string name="deck_conf_cram_filter">필터</string>
