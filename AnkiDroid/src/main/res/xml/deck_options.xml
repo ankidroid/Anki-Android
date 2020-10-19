@@ -137,7 +137,7 @@
                 android:summary="@string/deck_conf_rev_bury_summ"
                 android:title="@string/deck_conf_rev_bury" />
 
-            <PreferenceCategory android:title="@string/pref_cat_automatic_display" >
+            <PreferenceCategory android:title="@string/timeout_answer_text" >
                 <CheckBoxPreference
                     android:defaultValue="true"
                     android:disableDependentsState="true"
