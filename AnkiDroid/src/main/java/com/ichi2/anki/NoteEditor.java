@@ -1341,7 +1341,7 @@ public class NoteEditor extends AnkiActivity {
         ClipboardManager clipboard = ContextCompat.getSystemService(this, ClipboardManager.class);
 
         for (int i = 0; i < fields.length; i++) {
-            View edit_line_view = getLayoutInflater().inflate(R.layout.card_multimedia_editline, mFieldsLayoutContainer, false);
+            View edit_line_view = new FieldEditLine(this);
             FieldEditText newTextbox = edit_line_view.findViewById(R.id.id_note_editText);
 
             if (Build.VERSION.SDK_INT >= 23) {
