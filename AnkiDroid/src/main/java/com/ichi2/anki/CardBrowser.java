@@ -58,7 +58,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
@@ -164,7 +163,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private int mColumn2Index;
 
     //DEFECT: Doesn't need to be a local
-    private long mNewDid;   // for change_deck
+    /** The next deck for the "Change Deck" operation */
+    private long mNewDid;
 
     private static final int EDIT_CARD = 0;
     private static final int ADD_NOTE = 1;
@@ -424,8 +424,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
         return checkedCardCount() == 1;
     }
 
+
+    /**
+     * Change Deck
+     * @param deckPosition NOT the did. The index in the DISPLAYED Deck list to change the decks to.
+     * grep: changeDeck
+     */
     @VisibleForTesting
-    void changeDeck(int deckPosition) {
+    void moveSelectedCardsToDeck(int deckPosition) {
         long[] ids = getSelectedCardIds();
 
         Deck selectedDeck = getValidDecksForChangeDeck().get(deckPosition);
@@ -1239,7 +1245,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         builderSingle.setNegativeButton(getString(R.string.dialog_cancel), (dialog, which) -> dialog.dismiss());
-        builderSingle.setAdapter(arrayAdapter, (dialog, which) -> changeDeck(which));
+        builderSingle.setAdapter(arrayAdapter, (dialog, which) -> moveSelectedCardsToDeck(which));
         builderSingle.show();
     }
 

@@ -224,7 +224,7 @@ public class CardBrowserTest extends RobolectricTest {
         final int deckPosition = b.getChangeDeckPositionFromId(deckIdToChangeTo);
 
         //act
-        AnkiAssert.assertDoesNotThrow(() -> b.changeDeck(deckPosition));
+        AnkiAssert.assertDoesNotThrow(() -> b.moveSelectedCardsToDeck(deckPosition));
 
         //assert
         advanceRobolectricLooperWithSleep();
