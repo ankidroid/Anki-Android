@@ -60,7 +60,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
@@ -121,7 +120,6 @@ import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
 import com.ichi2.async.TaskData;import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -1353,7 +1351,8 @@ public class NoteEditor extends AnkiActivity {
 
             }
 
-            initFieldEditText(newTextbox, i, fields[i], mCustomTypeface, !editModelMode, clipboard);
+            edit_line_view.setTypeface(mCustomTypeface);
+            initFieldEditText(newTextbox, i, fields[i], !editModelMode, clipboard);
 
             TextView label = edit_line_view.findViewById(R.id.id_label);
             label.setText(newTextbox.getName());
@@ -1496,14 +1495,11 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void initFieldEditText(FieldEditText editText, final int index, String[] values, Typeface customTypeface, boolean enabled, @Nullable ClipboardManager clipboard) {
+    private void initFieldEditText(FieldEditText editText, final int index, String[] values, boolean enabled, @Nullable ClipboardManager clipboard) {
         String name = values[0];
         String content = values[1];
         Locale hintLocale = getHintLocaleForField(name);
         editText.init(index, name, content, hintLocale);
-        if (customTypeface != null) {
-            editText.setTypeface(customTypeface);
-        }
 
         // HACK: To be removed after #7124
         // Additional cloze icon using GBoard Clipboard function for MIUI users

@@ -17,6 +17,7 @@
 package com.ichi2.anki;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ActionMode;
@@ -67,6 +68,13 @@ public class FieldEditLine extends FrameLayout {
         mEditText.setCustomSelectionActionModeCallback(callback);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mEditText.setCustomInsertionActionModeCallback(callback);
+        }
+    }
+
+
+    public void setTypeface(@Nullable Typeface typeface) {
+        if (typeface != null) {
+            mEditText.setTypeface(typeface);
         }
     }
 }
