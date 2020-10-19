@@ -37,7 +37,7 @@
             <com.ichi2.preferences.CustomDialogPreference
                 android:dialogIcon="@drawable/ic_dialog_alert"
                 android:dialogMessage="@string/deck_conf_remove_message"
-                android:dialogTitle="@string/deck_conf_remove_title"
+                android:dialogTitle="@string/deck_conf_remove"
                 android:key="confRemove"
                 android:negativeButtonText="@string/dialog_cancel"
                 android:positiveButtonText="@string/dialog_positive_remove"
