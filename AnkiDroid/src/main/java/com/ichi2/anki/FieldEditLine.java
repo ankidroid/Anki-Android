@@ -18,6 +18,7 @@ package com.ichi2.anki;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -30,19 +31,27 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.ichi2.ui.AnimationUtil;
+
 import java.util.Locale;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.view.ViewCompat;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 public class FieldEditLine extends FrameLayout {
     private FieldEditText mEditText;
     private TextView mLabel;
     private ImageButton mMediaButton;
+    private ImageButton mExpandButton;
 
     private String mName;
+    private ExpansionState mExpansionState;
+
+    private boolean mEnableAnimation = true;
 
 
     public FieldEditLine(@NonNull Context context) {
@@ -82,11 +91,50 @@ public class FieldEditLine extends FrameLayout {
             mEditText.setNextFocusForwardId(mMediaButton.getId());
         }
 
+        this.mExpandButton = findViewById(R.id.id_expand_button);
+
+        this.mExpansionState = ExpansionState.EXPANDED;
+
+        setExpanderBackgroundImage();
+        mExpandButton.setOnClickListener((v) -> toggleExpansionState());
         mEditText.init();
         mLabel.setPadding((int) UIUtils.getDensityAdjustedValue(getContext(), 3.4f), 0, 0, 0);
     }
 
 
+    private void toggleExpansionState() {
+        switch (mExpansionState) {
+            case EXPANDED: {
+                AnimationUtil.collapseView(mEditText, mEnableAnimation);
+                mExpansionState = ExpansionState.COLLAPSED;
+                break;
+            }
+            case COLLAPSED: {
+                AnimationUtil.expandView(mEditText, mEnableAnimation);
+                mExpansionState = ExpansionState.EXPANDED;
+                break;
+            }
+            default:
+        }
+        setExpanderBackgroundImage();
+    }
+
+
+    private void setExpanderBackgroundImage() {
+        switch (mExpansionState) {
+            case COLLAPSED:
+                mExpandButton.setBackground(getBackgroundImage(R.drawable.ic_expand_more_black_24dp_xml));
+                break;
+            case EXPANDED:
+                mExpandButton.setBackground(getBackgroundImage(R.drawable.ic_expand_less_black_24dp));
+                break;
+        }
+    }
+
+
+    private Drawable getBackgroundImage(@DrawableRes int idRes) {
+        return VectorDrawableCompat.create(this.getResources(), idRes, getContext().getTheme());
+    }
 
 
     public void setActionModeCallbacks(ActionMode.Callback callback) {
@@ -123,6 +171,10 @@ public class FieldEditLine extends FrameLayout {
 
     public void setOrd(int i) {
         mEditText.setOrd(i);
+    }
+
+    public void setEnableAnimation(boolean value) {
+        this.mEnableAnimation = value;
     }
 
     public String getName() {
@@ -169,6 +221,8 @@ public class FieldEditLine extends FrameLayout {
             getChildAt(i).saveHierarchyState(savedState.mChildrenStates);
         }
 
+        savedState.mExpansionState = mExpansionState;
+
         return savedState;
     }
 
@@ -196,6 +250,12 @@ public class FieldEditLine extends FrameLayout {
 
         mEditText.setId(editTextId);
         mMediaButton.setId(mediaButtonId);
+
+        if (mExpansionState != ss.mExpansionState) {
+            toggleExpansionState();
+        }
+
+        this.mExpansionState = ss.mExpansionState;
     }
 
 
@@ -203,6 +263,7 @@ public class FieldEditLine extends FrameLayout {
         private SparseArray<Parcelable> mChildrenStates;
         private int mEditTextId;
         private int mMediaButtonId;
+        private ExpansionState mExpansionState;
 
         SavedState(Parcelable superState) {
             super(superState);
@@ -214,6 +275,7 @@ public class FieldEditLine extends FrameLayout {
             out.writeSparseArray(mChildrenStates);
             out.writeInt(mEditTextId);
             out.writeInt(mMediaButtonId);
+            out.writeSerializable(mExpansionState);
         }
 
         //required field that makes Parcelables from a Parcel
@@ -241,6 +303,13 @@ public class FieldEditLine extends FrameLayout {
             this.mChildrenStates = in.readSparseArray(loader);
             this.mEditTextId = in.readInt();
             this.mMediaButtonId = in.readInt();
+            this.mExpansionState = (ExpansionState) in.readSerializable();
         }
+    }
+
+
+    public enum ExpansionState {
+        EXPANDED,
+        COLLAPSED
     }
 }
