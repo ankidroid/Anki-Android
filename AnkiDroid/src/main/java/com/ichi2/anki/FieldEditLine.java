@@ -68,6 +68,7 @@ public class FieldEditLine extends FrameLayout {
         this.mEditText = findViewById(R.id.id_note_editText);
         this.mLabel = findViewById(R.id.id_label);
         mEditText.init();
+        mLabel.setPadding((int) UIUtils.getDensityAdjustedValue(getContext(), 3.4f), 0, 0, 0);
     }
 
 

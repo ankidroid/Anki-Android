@@ -1357,9 +1357,6 @@ public class NoteEditor extends AnkiActivity {
             edit_line_view.setOrd(i);
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
             initFieldEditText(newTextbox, i, !editModelMode, clipboard);
-
-            TextView label = edit_line_view.findViewById(R.id.id_label);
-            label.setPadding((int) UIUtils.getDensityAdjustedValue(this, 3.4f), 0, 0, 0);
             mEditFields.add(newTextbox);
 
             ImageButton mediaButton = edit_line_view.findViewById(R.id.id_media_button);
