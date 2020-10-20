@@ -65,8 +65,7 @@ public class NoteEditorTest extends RobolectricTest {
     @Test
     public void verifyPreviewAddingNote() {
         NoteEditor n = getNoteEditorAdding(NoteType.BASIC).withFirstField("Preview Test").build();
-        ActionMenuItemView previewButton = n.findViewById(R.id.action_preview);
-        previewButton.performClick();
+        n.performPreview();
         ShadowActivity.IntentForResult intent = shadowOf(n).getNextStartedActivityForResult();
         Bundle noteEditorBundle = intent.intent.getBundleExtra("noteEditorBundle");
         assertThat("Bundle set to add note style", noteEditorBundle.getBoolean("addNote"), is(true));

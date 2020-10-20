@@ -332,4 +332,7 @@
 
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Font Size</string>
 </resources>

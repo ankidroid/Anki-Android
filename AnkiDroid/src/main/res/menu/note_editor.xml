@@ -20,4 +20,8 @@
         android:id="@+id/action_copy_note"
         android:enabled="false"
         android:title="@string/note_editor_copy_note"/>
+    <item
+        android:id="@+id/action_font_size"
+        android:title="@string/menu_font_size"
+        ankidroid:showAsAction="never"/>
 </menu>
