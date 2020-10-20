@@ -335,4 +335,5 @@
 
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Font Size</string>
+    <string name="note_editor_word_wrap">Word Wrap</string>
 </resources>

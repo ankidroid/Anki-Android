@@ -24,4 +24,9 @@
         android:id="@+id/action_font_size"
         android:title="@string/menu_font_size"
         ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_word_wrap"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/note_editor_word_wrap" />
 </menu>

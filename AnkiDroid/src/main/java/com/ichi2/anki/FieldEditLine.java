@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -43,31 +44,35 @@ public class FieldEditLine extends FrameLayout {
 
     public FieldEditLine(@NonNull Context context) {
         super(context);
-        init();
+        init(R.layout.card_multimedia_editline);
     }
 
+    public FieldEditLine(@NonNull Context context, @LayoutRes int layout) {
+        super(context);
+        init(layout);
+    }
 
     public FieldEditLine(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(R.layout.card_multimedia_editline);
     }
 
 
     public FieldEditLine(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(R.layout.card_multimedia_editline);
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public FieldEditLine(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
+        init(R.layout.card_multimedia_editline);
     }
 
 
-    private void init() {
-        LayoutInflater.from(getContext()).inflate(R.layout.card_multimedia_editline, this, true);
+    private void init(int layout) {
+        LayoutInflater.from(getContext()).inflate(layout, this, true);
         this.mEditText = findViewById(R.id.id_note_editText);
         this.mLabel = findViewById(R.id.id_label);
         this.mMediaButton = findViewById(R.id.id_media_button);

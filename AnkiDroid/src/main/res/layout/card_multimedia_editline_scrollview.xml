@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/id_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        app:layout_constraintBottom_toTopOf="@id/note_edit_field_scrollview"
+        app:layout_constraintEnd_toStartOf="@id/id_media_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Front\nNewline" />
+
+    <ImageButton
+        android:id="@+id/id_media_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right|center_vertical"
+        android:background="?attr/attachFileImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@drawable/ic_attachment_black_24dp"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/multimedia_barrier"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="id_label, id_media_button" />
+
+    <HorizontalScrollView
+        android:id="@+id/note_edit_field_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/multimedia_barrier"
+        android:fillViewport="true" >
+        <com.ichi2.anki.FieldEditText
+            android:id="@+id/id_note_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollHorizontally="true"
+            android:nextFocusForward="@id/id_media_button"
+            tools:text="This is a lot of target content to test how multiline values are displayed"  />
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

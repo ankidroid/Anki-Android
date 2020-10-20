@@ -114,7 +114,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 
@@ -228,6 +227,8 @@ public class NoteEditor extends AnkiActivity {
     // A bundle that maps field ords to the text content of that field for use in
     // restoring the Activity.
     private Bundle mSavedFields;
+
+    private FieldLayout mFieldLayout = FieldLayout.REGULAR;
 
     private SaveNoteHandler saveNoteHandler() {
         return new SaveNoteHandler(this);
@@ -1044,6 +1045,12 @@ public class NoteEditor extends AnkiActivity {
             repositionDialog.setCallbackRunnable(this::setFontSize);
             showDialogFragment(repositionDialog);
             return true;
+        } else if (itemId == R.id.action_word_wrap) {
+            item.setChecked(!item.isChecked()); // ಠ_ಠ Yes, this is necessary on Android 9
+            mFieldLayout = item.isChecked() ? FieldLayout.REGULAR : FieldLayout.HorizontalScroll;
+            mSavedFields = getFieldsAsBundle(false);
+            populateEditFields();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -1371,7 +1378,7 @@ public class NoteEditor extends AnkiActivity {
 
         FieldEditLine previous = null;
         for (int i = 0; i < fields.length; i++) {
-            FieldEditLine edit_line_view = new FieldEditLine(this);
+            FieldEditLine edit_line_view = new FieldEditLine(this, getEditLineLayout());
             FieldEditText newTextbox = edit_line_view.getEditText();
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -1426,6 +1433,15 @@ public class NoteEditor extends AnkiActivity {
             mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, fields[i][0]));
             mFieldsLayoutContainer.addView(edit_line_view);
         }
+    }
+
+
+    private int getEditLineLayout() {
+        // TODO: Save for activity relaunch
+        if (mFieldLayout == FieldLayout.HorizontalScroll) {
+            return R.layout.card_multimedia_editline_scrollview;
+        }
+        return R.layout.card_multimedia_editline;
     }
 
 
@@ -2244,5 +2260,10 @@ public class NoteEditor extends AnkiActivity {
                 Timber.w(e, "Failed to save hint locale");
             }
         }
+    }
+
+    private enum FieldLayout {
+        REGULAR,
+        HorizontalScroll
     }
 }
