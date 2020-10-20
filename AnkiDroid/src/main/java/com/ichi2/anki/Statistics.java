@@ -324,7 +324,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 case ANSWER_BUTTONS_TAB_POSITION:
                     return getString(R.string.stats_answer_buttons).toUpperCase(l);
                 case CARDS_TYPES_TAB_POSITION:
-                    return getString(R.string.stats_cards_types).toUpperCase(l);
+                    return getString(R.string.title_activity_template_editor).toUpperCase(l);
             }
             return null;
         }

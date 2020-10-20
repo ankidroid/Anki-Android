@@ -1289,7 +1289,7 @@ public class Stats {
      * Card Types
      */
     public boolean calculateCardTypes(AxisType type) {
-        mTitle = R.string.stats_cards_types;
+        mTitle = R.string.title_activity_template_editor;
         mBackwards = false;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
         mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended, R.string.statistics_buried};
