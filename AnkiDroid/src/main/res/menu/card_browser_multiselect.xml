@@ -5,7 +5,7 @@
         ankidroid:showAsAction="never"
         android:visible="false"
         android:id="@+id/action_edit_note"
-        android:title="@string/card_browser_edit_note"
+        android:title="@string/cardeditor_title_edit_card"
         android:icon="@drawable/ic_mode_edit_white_24dp"/>
 
     <item
