@@ -62,6 +62,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DiscardChangesDialog;
+import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -96,6 +97,7 @@ import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.utils.NoteFieldDecorator;
+import com.ichi2.utils.TextViewUtil;
 import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONArray;
@@ -1034,8 +1036,36 @@ public class NoteEditor extends AnkiActivity {
             Timber.i("NoteEditor:: Copy Note button pressed");
             copyNote();
             return true;
+        } else if (itemId == R.id.action_font_size) {
+            Timber.i("NoteEditor:: Font Size button pressed");
+            IntegerDialog repositionDialog = new IntegerDialog();
+            repositionDialog.setArgs(getString(R.string.menu_font_size), getEditTextFontSize(), 2);
+            repositionDialog.setCallbackRunnable(this::setFontSize);
+            showDialogFragment(repositionDialog);
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void setFontSize(Integer fontSizeSp) {
+        if (fontSizeSp == null || fontSizeSp <= 0) {
+            return;
+        }
+        Timber.i("Setting font size to %d", fontSizeSp);
+        AnkiDroidApp.getSharedPrefs(this).edit().putInt("note_editor_font_size", fontSizeSp).apply();
+        for (FieldEditText f : mEditFields) {
+            f.setTextSize(fontSizeSp);
+        }
+    }
+
+
+    private String getEditTextFontSize() {
+        // Note: We're not being accurate here - the initial value isn't actually what's supplied in the layout.xml
+        // So a value of 18sp in the XML won't be 18sp on the TextView, but it's close enough.
+        // Values are setFontSize are whole when returned.
+        float sp = TextViewUtil.getTextSizeSp(mEditFields.getFirst());
+        return Integer.toString(Math.round(sp));
     }
 
 
@@ -1358,6 +1388,9 @@ public class NoteEditor extends AnkiActivity {
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
             initFieldEditText(newTextbox, i, !editModelMode, clipboard);
             mEditFields.add(newTextbox);
+            if (AnkiDroidApp.getSharedPrefs(this).getInt("note_editor_font_size", -1) > 0) {
+                newTextbox.setTextSize(AnkiDroidApp.getSharedPrefs(this).getInt("note_editor_font_size", -1));
+            }
 
             ImageButton mediaButton = edit_line_view.getMediaButton();
             // Load icons from attributes
