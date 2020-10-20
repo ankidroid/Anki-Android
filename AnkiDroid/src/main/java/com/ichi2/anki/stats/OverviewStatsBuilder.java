@@ -203,7 +203,7 @@ public class OverviewStatsBuilder {
         stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_mature,  oStats.matureCardsOverview.getPercentage(), oStats.matureCardsOverview.correct, oStats.matureCardsOverview.total));
 
         //CARD TYPES
-        stringBuilder.append(_subtitle(res.getString(R.string.stats_cards_types).toUpperCase()));
+        stringBuilder.append(_subtitle(res.getString(R.string.title_activity_template_editor).toUpperCase()));
         stringBuilder.append(res.getString(R.string.stats_overview_card_types_total_cards, oStats.totalCards));
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_card_types_total_notes, oStats.totalNotes));
