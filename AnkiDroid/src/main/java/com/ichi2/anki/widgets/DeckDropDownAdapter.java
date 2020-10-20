@@ -76,7 +76,7 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             deckCountsView = viewHolder.deckCountsView;
         }
         if (position == 0) {
-            deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
+            deckNameView.setText(context.getResources().getString(R.string.card_browser_all_decks));
         } else {
             Deck deck = decks.get(position - 1);
             String deckName = deck.getString("name");
@@ -98,7 +98,7 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             deckNameView = (TextView) convertView.getTag();
         }
         if (position == 0) {
-            deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
+            deckNameView.setText(context.getResources().getString(R.string.card_browser_all_decks));
         } else {
             Deck deck = decks.get(position - 1);
             String deckName = deck.getString("name");

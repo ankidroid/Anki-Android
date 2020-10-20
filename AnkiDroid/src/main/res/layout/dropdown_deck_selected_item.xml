@@ -17,7 +17,7 @@
         android:drawableRight="@drawable/spinner_triangle"
         android:textColor="?attr/actionBarTextColor"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-        tools:text="@string/deck_summary_all_decks" />
+        tools:text="@string/card_browser_all_decks" />
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/dropdown_deck_counts"
