@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import java.util.Locale;
 
@@ -20,7 +19,6 @@ import timber.log.Timber;
 
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
-import com.ichi2.ui.FixedTextView;
 
 import java.util.Objects;
 
@@ -32,7 +30,6 @@ public class FieldEditText extends FixedEditText {
     @NonNull
     public static final String NEW_LINE = Objects.requireNonNull(System.getProperty("line.separator"));
 
-    private String mName;
     private int mOrd;
     private Drawable mOrigBackground;
     @Nullable
@@ -86,11 +83,6 @@ public class FieldEditText extends FixedEditText {
     }
 
 
-    public String getName() {
-        return mName;
-    }
-
-
     public void init() {
         setMinimumWidth(400);
         mOrigBackground = getBackground();
@@ -116,7 +108,7 @@ public class FieldEditText extends FixedEditText {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setHintLocale(@NonNull Locale locale) {
-        Timber.d("Setting hint locale of '%s' to '%s'", mName, locale);
+        Timber.d("Setting hint locale to '%s'", locale);
         setImeHintLocales(new LocaleList(locale));
     }
 
