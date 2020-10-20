@@ -132,6 +132,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 JSONObject revOptions = mOptions.getJSONObject("rev");
                 mValues.put("revPerDay", revOptions.getString("perDay"));
                 mValues.put("easyBonus", Integer.toString((int) (revOptions.getDouble("ease4") * 100)));
+                mValues.put("hardFactor", Integer.toString((int) (revOptions.optDouble("hardFactor", 1.2) * 100)));
                 mValues.put("revIvlFct", Integer.toString((int) (revOptions.getDouble("ivlFct") * 100)));
                 mValues.put("revMaxIvl", revOptions.getString("maxIvl"));
                 mValues.put("revBury", Boolean.toString(revOptions.optBoolean("bury", true)));
@@ -245,6 +246,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "easyBonus":
                                 mOptions.getJSONObject("rev").put("ease4", (Integer) value / 100.0f);
+                                break;
+                            case "hardFactor":
+                                mOptions.getJSONObject("rev").put("hardFactor", (Integer) value / 100.0f);
                                 break;
                             case "revIvlFct":
                                 mOptions.getJSONObject("rev").put("ivlFct", (Integer) value / 100.0f);

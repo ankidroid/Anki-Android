@@ -99,7 +99,6 @@
                 android:title="@string/deck_conf_start_ease"
                 app:max="999"
                 app:min="100" />
-
             <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="newBury"
@@ -116,6 +115,12 @@
                 android:key="easyBonus"
                 android:summary="@string/deck_conf_percent"
                 android:title="@string/deck_conf_easy_bonus"
+                app:max="1000"
+                app:min="100" />
+            <com.ichi2.preferences.NumberRangePreference
+                android:key="hardFactor"
+                android:summary="@string/deck_conf_percent"
+                android:title="@string/deck_conf_hard_factor"
                 app:max="1000"
                 app:min="100" />
             <com.ichi2.preferences.NumberRangePreference
