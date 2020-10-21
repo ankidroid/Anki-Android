@@ -114,6 +114,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 
@@ -1368,9 +1369,20 @@ public class NoteEditor extends AnkiActivity {
         }
         ClipboardManager clipboard = ContextCompat.getSystemService(this, ClipboardManager.class);
 
+        FieldEditLine previous = null;
         for (int i = 0; i < fields.length; i++) {
             FieldEditLine edit_line_view = new FieldEditLine(this);
-            FieldEditText newTextbox = edit_line_view.findViewById(R.id.id_note_editText);
+            FieldEditText newTextbox = edit_line_view.getEditText();
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                if (i == 0) {
+                    findViewById(R.id.note_deck_spinner).setNextFocusForwardId(newTextbox.getId());
+                }
+                if (previous != null) {
+                    previous.getMediaButton().setNextFocusForwardId(newTextbox.getId());
+                }
+            }
+            previous = edit_line_view;
 
             // TODO: Remove the >= 23 check - one callback works on API 11.
             if (Build.VERSION.SDK_INT >= 23) {
@@ -1407,6 +1419,10 @@ public class NoteEditor extends AnkiActivity {
                 mediaButton.setBackgroundResource(icons[0]);
                 setMMButtonListener(mediaButton, i);
             }
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O && previous != null) {
+                previous.getMediaButton().setNextFocusForwardId(R.id.CardEditorTagButton);
+            }
+
             mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, fields[i][0]));
             mFieldsLayoutContainer.addView(edit_line_view);
         }
