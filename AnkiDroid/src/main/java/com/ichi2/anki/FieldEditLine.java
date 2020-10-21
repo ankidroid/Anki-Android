@@ -31,6 +31,7 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.view.ViewCompat;
 
 public class FieldEditLine extends FrameLayout {
     private FieldEditText mEditText;
@@ -70,9 +71,18 @@ public class FieldEditLine extends FrameLayout {
         this.mEditText = findViewById(R.id.id_note_editText);
         this.mLabel = findViewById(R.id.id_label);
         this.mMediaButton = findViewById(R.id.id_media_button);
+        // 7433 -
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            mEditText.setId(ViewCompat.generateViewId());
+            mMediaButton.setId(ViewCompat.generateViewId());
+            mEditText.setNextFocusForwardId(mMediaButton.getId());
+        }
+
         mEditText.init();
         mLabel.setPadding((int) UIUtils.getDensityAdjustedValue(getContext(), 3.4f), 0, 0, 0);
     }
+
+
 
 
     public void setActionModeCallbacks(ActionMode.Callback callback) {
@@ -118,5 +128,10 @@ public class FieldEditLine extends FrameLayout {
 
     public ImageButton getMediaButton() {
         return mMediaButton;
+    }
+
+
+    public FieldEditText getEditText() {
+        return mEditText;
     }
 }
