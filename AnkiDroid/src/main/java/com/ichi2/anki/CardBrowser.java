@@ -1507,7 +1507,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         //TODO: Duplication between here and CustomStudyDialog:customStudyFromTags
         mSearchView.setQuery("", false);
         String tags = selectedTags.toString();
-        mSearchView.setQueryHint(getResources().getString(R.string.card_browser_tags_shown,
+        mSearchView.setQueryHint(getResources().getString(R.string.CardEditorTags,
                 tags.substring(1, tags.length() - 1)));
         StringBuilder sb = new StringBuilder();
         switch (option) {
