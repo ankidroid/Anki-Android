@@ -17,75 +17,34 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.view.KeyEvent;
 import android.view.inputmethod.BaseInputConnection;
 
-import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.GrantPermissionRule;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assume.assumeThat;
 
 @RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
-public class NoteEditorTabOrderTest {
-
-    public NoteEditorTabOrderTest() {
-        // Rules mean that we get a failure on API 25.
-        // Even if we ignore the tests, the rules cause a failure.
-        // We can't ignore the test in @BeforeClass ("Test run failed to complete. Expected 150 tests, received 149")
-        // and @Before executes after the rule.
-        // So, disable the rules in the constructor, and ignore in before.
-        if (Build.VERSION.SDK_INT == 25 || Build.VERSION.SDK_INT == 30) {
-            activityRule = null;
-            mRuntimePermissionRule = null;
-        }
-    }
-
-    @Before
-    public void before() {
-        // TODO: Look into these assumptions and see if they can be diagnosed - both work on my emulators.
-        // If we fix them, we might be able to use instrumentation.sendKeyDownUpSync
-        /*
-        java.lang.AssertionError: Activity never becomes requested state "[DESTROYED]" (last lifecycle transition = "PAUSED")
-        at androidx.test.core.app.ActivityScenario.waitForActivityToBecomeAnyOf(ActivityScenario.java:301)
-         */
-        assumeThat("Test fails on Travis API 25", Build.VERSION.SDK_INT, not(is(25)));
+public class NoteEditorTabOrderTest extends NoteEditorTest {
+    @Override
+    protected List<Integer> getInvalidSdks() {
         /*
         java.lang.AssertionError:
         Expected: is "a"
          */
-        assumeThat("Test fails on Travis API 30", Build.VERSION.SDK_INT, not(is(30)));
+        return Collections.singletonList(30);
     }
 
-    @Rule public ActivityScenarioRule<NoteEditor> activityRule = new ActivityScenarioRule<>(getStartActivityIntent());
-    @Rule public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(WRITE_EXTERNAL_STORAGE);
-
-    @NonNull
-    private Intent getStartActivityIntent() {
-        Intent intent = new Intent(getTargetContext(), NoteEditor.class);
-        intent.setComponent(new ComponentName(getTargetContext(), NoteEditor.class));
-        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER);
-        return intent;
-    }
 
     @Test
     @Ignore("flaky on API 21 as well: " +
@@ -96,7 +55,7 @@ public class NoteEditorTabOrderTest {
             "\tExpected: is \"a\"")
     public void testTabOrder() throws Throwable {
         ensureCollectionLoaded();
-        ActivityScenario<NoteEditor> scenario = activityRule.getScenario();
+        ActivityScenario<NoteEditor> scenario = mActivityRule.getScenario();
         scenario.moveToState(Lifecycle.State.RESUMED);
 
         onActivity(scenario, editor -> {
@@ -139,10 +98,5 @@ public class NoteEditorTabOrderTest {
 
     private void ensureCollectionLoaded() {
         CollectionHelper.getInstance().getCol(getTargetContext());
-    }
-
-
-    private Context getTargetContext() {
-        return InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 }
