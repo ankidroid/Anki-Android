@@ -17,7 +17,11 @@
 package com.ichi2.anki.noteeditor;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Pair;
+import android.util.SparseArray;
+import android.view.AbsSavedState;
+import android.view.View;
 
 import com.ichi2.anki.FieldEditLine;
 import com.ichi2.anki.NoteEditor;
@@ -31,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 
 import static com.ichi2.utils.MapUtil.getKeyByValue;
 
@@ -40,6 +45,8 @@ import static com.ichi2.utils.MapUtil.getKeyByValue;
 public class FieldState {
 
     private final NoteEditor mEditor;
+    private List<View.BaseSavedState> mSavedFieldData;
+
 
     private FieldState(NoteEditor editor) {
         mEditor = editor;
@@ -57,6 +64,36 @@ public class FieldState {
 
     @NonNull
     public List<FieldEditLine> loadFieldEditLines(FieldChangeType type) {
+        List<FieldEditLine> fieldEditLines;
+        if (type.mType == Type.INIT && mSavedFieldData != null) {
+            fieldEditLines = recreateFieldsFromState();
+            mSavedFieldData = null;
+        } else {
+            fieldEditLines = createFields(type);
+        }
+        for (FieldEditLine l : fieldEditLines) {
+            l.setId(ViewCompat.generateViewId());
+        }
+        return fieldEditLines;
+    }
+
+
+    private List<FieldEditLine> recreateFieldsFromState() {
+        List<FieldEditLine> editLines = new ArrayList<>();
+        for (AbsSavedState state : mSavedFieldData) {
+            FieldEditLine edit_line_view = new FieldEditLine(mEditor);
+            if (edit_line_view.getId() == 0) {
+                edit_line_view.setId(ViewCompat.generateViewId());
+            }
+            edit_line_view.loadState(state);
+            editLines.add(edit_line_view);
+        }
+        return editLines;
+    }
+
+
+    @NonNull
+    protected List<FieldEditLine> createFields(FieldChangeType type) {
         String[][] fields = getFields(type);
 
         List<FieldEditLine> editLines = new ArrayList<>();
@@ -76,13 +113,6 @@ public class FieldState {
             String[][] items = mEditor.getFieldsFromSelectedNote();
             Map<String, Pair<Integer, JSONObject>> fMapNew = Models.fieldMap(type.newModel);
             return FieldState.fromFieldMap(mEditor, items, fMapNew, type.modelChangeFieldMap);
-        }
-        if (type.mType == Type.INIT) {
-            String[][] savedFields = mEditor.consumeSavedFields();
-            if (savedFields == null) {
-                savedFields = mEditor.getFieldsFromSelectedNote();
-            }
-            return savedFields;
         }
         return mEditor.getFieldsFromSelectedNote();
     }
@@ -123,6 +153,38 @@ public class FieldState {
         }
         return fields;
     }
+
+
+    public void setInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            return;
+        }
+
+        if (!savedInstanceState.containsKey("customViewIds") || !savedInstanceState.containsKey("android:viewHierarchyState")) {
+            return;
+        }
+
+        ArrayList<Integer> customViewIds = savedInstanceState.getIntegerArrayList("customViewIds");
+        Bundle viewHierarchyState = savedInstanceState.getBundle("android:viewHierarchyState");
+
+        if (customViewIds == null || viewHierarchyState == null) {
+            return;
+        }
+
+        SparseArray<?> views = (SparseArray<?>) viewHierarchyState.get("android:views");
+
+        if (views == null) {
+            return;
+        }
+
+        List<View.BaseSavedState> important = new ArrayList<>();
+        for (Integer i : customViewIds) {
+            important.add((View.BaseSavedState) views.get(i));
+        }
+
+        mSavedFieldData = important;
+    }
+
 
     /** How fields should be changed when the UI is rebuilt */
     public static class FieldChangeType {
