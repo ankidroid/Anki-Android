@@ -212,6 +212,8 @@ public class NoteEditor extends AnkiActivity {
     private Map<Integer, Integer> mModelChangeFieldMap;
     private HashMap<Integer, Integer> mModelChangeCardMap;
 
+    private ArrayList<Integer> mCustomViewIds = new ArrayList<>();
+
     /* indicates if a new note is added or a card is edited */
     private boolean mAddNote;
 
@@ -227,10 +229,6 @@ public class NoteEditor extends AnkiActivity {
     private String[] mSourceText;
 
     private FieldState mFieldState = FieldState.fromEditor(this);
-
-    // A bundle that maps field ords to the text content of that field for use in
-    // restoring the Activity.
-    private Bundle mSavedFields;
 
     private SaveNoteHandler saveNoteHandler() {
         return new SaveNoteHandler(this);
@@ -383,6 +381,7 @@ public class NoteEditor extends AnkiActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
+        mFieldState.setInstanceState(savedInstanceState);
         setContentView(R.layout.note_editor);
         Intent intent = getIntent();
         if (savedInstanceState != null) {
@@ -390,7 +389,6 @@ public class NoteEditor extends AnkiActivity {
             mAddNote = savedInstanceState.getBoolean("addNote");
             mCurrentDid = savedInstanceState.getLong("did");
             mSelectedTags = savedInstanceState.getStringArrayList("tags");
-            mSavedFields = savedInstanceState.getBundle("editFields");
             mReloadRequired = savedInstanceState.getBoolean("reloadRequired");
             mChanged = savedInstanceState.getBoolean("changed");
         } else {
@@ -420,18 +418,18 @@ public class NoteEditor extends AnkiActivity {
         savedInstanceState.putLong("did", mCurrentDid);
         savedInstanceState.putBoolean("changed", mChanged);
         savedInstanceState.putBoolean("reloadRequired", mReloadRequired);
+        savedInstanceState.putIntegerArrayList("customViewIds", mCustomViewIds);
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<>();
         }
         savedInstanceState.putStringArrayList("tags", mSelectedTags);
-        savedInstanceState.putBundle("editFields", getFieldsAsBundle(false));
     }
 
 
     /**
-     * @param useHtmlLineBreaks Whether field values should be converted to use HTML linebreaks
+     * Converts field values should to HTML linebreaks
      */
-    private Bundle getFieldsAsBundle(boolean useHtmlLineBreaks) {
+    private Bundle getFieldsAsBundleForPreview() {
         Bundle fields = new Bundle();
         // Save the content of all the note fields. We use the field's ord as the key to
         // easily map the fields correctly later.
@@ -444,12 +442,7 @@ public class NoteEditor extends AnkiActivity {
                 continue;
             }
 
-            String fieldValue;
-            if (useHtmlLineBreaks) {
-                fieldValue = convertToHtmlNewline(e.getText().toString());
-            } else {
-                fieldValue = e.getText().toString();
-            }
+            String fieldValue = convertToHtmlNewline(e.getText().toString());
             fields.putString(Integer.toString(e.getOrd()), fieldValue);
         }
         return fields;
@@ -1111,7 +1104,7 @@ public class NoteEditor extends AnkiActivity {
         // Send the previewer all our current editing information
         Bundle noteEditorBundle = new Bundle();
         addInstanceStateToBundle(noteEditorBundle);
-        noteEditorBundle.putBundle("editFields", getFieldsAsBundle(true));
+        noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview());
         previewer.putExtra("noteEditorBundle", noteEditorBundle);
         startActivityForResultWithoutAnimation(previewer, REQUEST_PREVIEW);
     }
@@ -1342,6 +1335,7 @@ public class NoteEditor extends AnkiActivity {
 
     private void populateEditFields(FieldChangeType type, boolean editModelMode) {
         mFieldsLayoutContainer.removeAllViews();
+        mCustomViewIds.clear();
         mEditFields = new LinkedList<>();
 
         // Use custom font if selected from preferences
@@ -1358,6 +1352,7 @@ public class NoteEditor extends AnkiActivity {
 
         for (int i = 0; i < editLines.size(); i++) {
             FieldEditLine edit_line_view = editLines.get(i);
+            mCustomViewIds.add(edit_line_view.getId());
             FieldEditText newTextbox = edit_line_view.getEditText();
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -1827,21 +1822,6 @@ public class NoteEditor extends AnkiActivity {
     private boolean allowFieldRemapping() {
         // Map<String, Pair<Integer, JSONObject>> fMapNew = getCol().getModels().fieldMap(getCurrentlySelectedModel())
         return mEditorNote.items().length > 2;
-    }
-
-    public String[][] consumeSavedFields() {
-        if (mSavedFields == null) {
-            return null;
-        }
-        String[][] fields = mEditorNote.items();
-        for (String key : mSavedFields.keySet()) {
-            int ord = Integer.parseInt(key);
-            String text = mSavedFields.getString(key);
-            fields[ord][1] = text;
-        }
-        // Clear the saved values since we've consumed them.
-        mSavedFields = null;
-        return fields;
     }
 
     public String[][] getFieldsFromSelectedNote() {
