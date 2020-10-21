@@ -87,6 +87,16 @@ public class FieldState {
                 }
             }
         }
+
+        if (type.mType == Type.CHANGE_FIELD_COUNT) {
+            String[] currentFieldStrings = mEditor.getCurrentFieldStrings();
+
+            for (int i = 0; i < Math.min(currentFieldStrings.length, fieldEditLines.size()); i++) {
+                fieldEditLines.get(i).setContent(currentFieldStrings[i]);
+            }
+        }
+
+
         return fieldEditLines;
     }
 
