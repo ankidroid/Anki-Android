@@ -259,9 +259,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     private void saveImageForRevert() {
-        deletePreviousImage();
-        mPreviousImagePath = mViewModel.mImagePath;
-        mPreviousImageUri = mViewModel.mImageUri;
+        if (!mViewModel.isPreExistingImage) {
+            deletePreviousImage();
+            mPreviousImagePath = mViewModel.mImagePath;
+            mPreviousImageUri = mViewModel.mImageUri;
+        }
     }
 
 
@@ -785,6 +787,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private static class ImageViewModel {
         public final @Nullable String mImagePath;
         public final @Nullable Uri mImageUri;
+        public boolean isPreExistingImage = false;
 
         private ImageViewModel(@Nullable String mImagePath, @Nullable Uri mImageUri) {
             this.mImagePath = mImagePath;
@@ -818,7 +821,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             if (newImageUri == null && newImagePath != null) {
                 newImageUri = getUriForFile(new File(newImagePath), context);
             }
-            return new ImageViewModel(newImagePath, newImageUri);
+            ImageViewModel ivm = new ImageViewModel(newImagePath, newImageUri);
+            ivm.isPreExistingImage = true;
+            return ivm;
         }
 
 
