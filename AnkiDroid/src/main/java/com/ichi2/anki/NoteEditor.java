@@ -781,13 +781,6 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void resetEditFields(String[] content) {
-        for (int i = 0; i < Math.min(content.length, mEditFields.size()); i++) {
-            mEditFields.get(i).setText(content[i]);
-        }
-    }
-
-
     private boolean hasUnsavedChanges() {
         if (!collectionHasLoaded()) {
             return false;
@@ -1849,14 +1842,8 @@ public class NoteEditor extends AnkiActivity {
                     mCurrentDid = model.getLong("did");
                     updateDeckPosition();
                 }
-                // Reset edit fields
-                int size = mEditFields.size();
-                String[] oldValues = new String[size];
-                for (int i = 0; i < size; i++) {
-                    oldValues[i] = getCurrentFieldText(i);
-                }
+
                 refreshNoteData(FieldChangeType.changeFieldCount());
-                resetEditFields(oldValues);
                 setDuplicateFieldStyles();
             }
         }
