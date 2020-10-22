@@ -2,6 +2,9 @@ language: bash
 # ignored on non-linux platforms, but bionic is required for nested virtualization
 dist: bionic
 
+workspaces:
+  use: apk_cache
+
 stages:
   - install
   - unit_test # custom stage defined in jobs::include section
@@ -21,11 +24,14 @@ env:
     - GRAVIS="$HOME/gravis"
     - JDK="1.8"
     - TOOLS=${ANDROID_HOME}/tools
+    - APK_CACHE_FILE=com.ichi2.anki.apk
+    - APK_TEST_CACHE_FILE=com.ichi2.anki.tests.apk
     # PATH order is incredibly important. e.g. the 'emulator' script exists in more than one place!
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
     - UNIT_TEST=FALSE # by default we don't run the unit tests, they are run only in specific builds
     - LINT=FALSE # by default we don't lint, they are run only in specific builds
     - FINALIZE_COVERAGE=FALSE # by default we don't finalize coverage, it is done in one specific build
+    - CLEAR_APK_CACHE=FALSE # by default we don't clear the APK cache, it is done in one specific build
     - TERM=dumb
   matrix:
    - API=16 ABI=x86 AUDIO=-no-audio LOCALE="ko_KR"
@@ -68,6 +74,15 @@ jobs:
     - stage: unit_test
       name: "Lint - Release"
       env: LINT=Release API=NONE
+      workspaces:
+        create:
+          name: apk_cache
+          paths:
+            - com.ichi2.anki.apk
+            - AnkiDroid-x86_64-debug.apk
+            - com.ichi2.anki.tests.apk
+            - test-metadata.json
+            - output-metadata.json
       install: skip
       os: linux
     - stage: unit_test
@@ -96,6 +111,8 @@ before_install:
   - export TARGET_JDK="${JDK}"
   - JDK="adopt@1.8"
   - source $GRAVIS/install-jdk
+
+  - if [ "$API" != "NONE" ] && [[ ! -f "${APK_CACHE_FILE}" || ! -f ${APK_TEST_CACHE_FILE} ]]; then travis_terminate 12; fi
 
   # Set up Android SDK - this is needed everywhere but coverage finalization, so toggle on that
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then travis_retry wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip; fi
@@ -143,12 +160,29 @@ install:
   - JDK="adopt@${TARGET_JDK}"
   - source $GRAVIS/install-jdk
 
+  - mkdir -p ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/debug/
+  - mkdir -p ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/androidTest/debug/
+
+  - cp output-metadata.json ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/debug/output-metadata.json
+  - cp ${APK_CACHE_FILE} ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/debug/AnkiDroid-x86-debug.apk
+  - cp AnkiDroid-x86_64-debug.apk ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/debug/AnkiDroid-x86_64-debug.apk
+  - cp test-metadata.json ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/androidTest/debug/output-metadata.json
+  - cp ${APK_TEST_CACHE_FILE} ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/androidTest/debug/AnkiDroid-debug-androidTest.apk
+
 script:
-  - travis_retry ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint # warm gradle w/travis_retry to handle network blips
+  - if [ "$API" = "NONE" ]; then travis_retry ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint; fi # warm gradle w/travis_retry to handle network blips
   - if [ "$UNIT_TEST" = "TRUE" ]; then travis_retry ./gradlew robolectricSdkDownload; fi # pre-download robolectric jars w/travis_retry to handle network blips
   - if [ "$UNIT_TEST" = "TRUE" ]; then ./gradlew jacocoUnitTestReport; fi
   - if [ "$LINT" != "FALSE" ]; then ./gradlew lint$LINT; fi
-  - if [ "$API" != "NONE" ]; then ./gradlew jacocoAndroidTestReport; fi
+  # apks are copied from the workspace
+  - if [ "$API" != "NONE" ]; then ./gradlew jacocoAndroidTestReport -x packageDebugAndroidTest -x packageDebug; fi
+  - if [ "$LINT" = "Release" ]; then ./gradlew assembleDebug assembleAndroidTest; fi # generate APKs to cache
+  - if [ "$LINT" = "Release" ]; then echo "copying APKs to cache"; fi
+  - if [ "$LINT" = "Release" ]; then cp ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/debug/AnkiDroid-x86-debug.apk ${APK_CACHE_FILE}; fi
+  - if [ "$LINT" = "Release" ]; then cp ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/debug/AnkiDroid-x86_64-debug.apk AnkiDroid-x86_64-debug.apk; fi
+  - if [ "$LINT" = "Release" ]; then cp ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/debug/output-metadata.json output-metadata.json; fi
+  - if [ "$LINT" = "Release" ]; then cp ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/androidTest/debug/AnkiDroid-debug-androidTest.apk ${APK_TEST_CACHE_FILE}; fi
+  - if [ "$LINT" = "Release" ]; then cp ${TRAVIS_BUILD_DIR}/AnkiDroid/build/outputs/apk/androidTest/debug/output-metadata.json test-metadata.json; fi
 
 after_success:
   - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then travis_retry bash tools/upload-codacy-report.sh; fi
