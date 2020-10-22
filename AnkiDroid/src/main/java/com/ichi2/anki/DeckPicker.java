@@ -75,7 +75,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -170,9 +169,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private static final int REQUEST_PATH_UPDATE = 1;
     public static final int REPORT_FEEDBACK = 4;
     private static final int LOG_IN_FOR_SYNC = 6;
-    private static final int SHOW_INFO_WELCOME = 8;
     private static final int SHOW_INFO_NEW_VERSION = 9;
-    private static final int REPORT_ERROR = 10;
     public static final int SHOW_STUDYOPTIONS = 11;
     private static final int ADD_NOTE = 12;
     private static final int PICK_APKG_FILE = 13;
@@ -853,12 +850,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return;
         }
 
-        if (requestCode == REPORT_ERROR) {
-            showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 4);
-        } else if (requestCode == SHOW_INFO_WELCOME || requestCode == SHOW_INFO_NEW_VERSION) {
+        if (requestCode == SHOW_INFO_NEW_VERSION) {
             if (resultCode == RESULT_OK) {
-                showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()),
-                        requestCode == SHOW_INFO_WELCOME ? 2 : 3);
+                showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 3);
             } else {
                 finishWithAnimation();
             }
