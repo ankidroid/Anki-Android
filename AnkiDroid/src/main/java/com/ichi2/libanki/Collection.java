@@ -160,7 +160,7 @@ public class Collection {
         CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
         MARK_NOTE_MULTI(R.string.card_browser_mark_card),
         UNMARK_NOTE_MULTI(R.string.card_browser_unmark_card),
-        FLAG(R.string.card_browser_flag),
+        FLAG(R.string.menu_flag),
         REPOSITION_CARDS(R.string.undo_action_reposition_card),
         RESCHEDULE_CARDS(R.string.undo_action_reschedule_card),
         RESET_CARDS(R.string.undo_action_reset_card);
