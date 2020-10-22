@@ -51,27 +51,33 @@ jobs:
   include:
     # The "test" stage is implicit and gets the main matrix. This adds extra stages/jobs
     - stage: unit_test
+      name: "Unit Tests - Windows"
       env: UNIT_TEST=TRUE API=NONE
       install: skip
       os: windows
     - stage: unit_test
+      name: "Unit Tests - macOS"
       env: UNIT_TEST=TRUE API=NONE
       install: skip
       os: osx
     - stage: unit_test
+      name: "Unit Tests - Linux"
       env: UNIT_TEST=TRUE API=NONE
       install: skip
       os: linux
     - stage: unit_test
+      name: "Lint - Release"
       env: LINT=Release API=NONE
       install: skip
       os: linux
     - stage: unit_test
+      name: "Lint - Debug (expected to fail - all errors since last baseline)"
       env: LINT=Debug API=NONE
       install: skip
       os: linux
     - stage: finalize_coverage
       env: FINALIZE_COVERAGE=TRUE API=NONE
+      name: "Finalize Codacy Coverage Uploads"
       install: skip
       script: echo finalize codacy coverage uploads
   allow_failures:
