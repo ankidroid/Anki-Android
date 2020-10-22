@@ -851,11 +851,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
 
         if (requestCode == SHOW_INFO_NEW_VERSION) {
-            if (resultCode == RESULT_OK) {
-                showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 3);
-            } else {
-                finishWithAnimation();
-            }
+            showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 3);
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
             mSyncOnResume = true;
         } else if ((requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS)
