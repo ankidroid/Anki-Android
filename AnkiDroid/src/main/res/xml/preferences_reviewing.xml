@@ -40,7 +40,7 @@
             app:min="0" />
         <com.ichi2.preferences.NumberRangePreference
             android:key="learnCutoff"
-            android:summary="@string/learn_cutoff_summ"
+            android:summary="@string/time_limit_summ"
             android:title="@string/learn_cutoff"
             app:max="999"
             app:min="0" />

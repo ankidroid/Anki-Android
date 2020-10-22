@@ -143,7 +143,6 @@
     <string name="use_current">Deck for new cards</string>
     <string name="new_spread">New card position</string>
     <string name="learn_cutoff">Learn ahead limit</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Timebox time limit</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Start of next day</string>
