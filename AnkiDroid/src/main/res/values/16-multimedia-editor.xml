@@ -107,7 +107,6 @@
 
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editing field</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Translation</string>
-    <string name="title_activity_load_pronounciation" comment="Name of the window allowing to load pronunciation of words. This text can not be seen in AnkiDroid directly.">Pronunciation</string>
 
 	<!-- Network failure -->
 	<string name="network_no_connection">No connection</string>

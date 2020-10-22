@@ -418,7 +418,7 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity"
-            android:label="@string/title_activity_load_pronounciation"
+            android:label="@string/multimedia_editor_text_field_editing_say"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             >
