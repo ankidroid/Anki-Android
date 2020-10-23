@@ -162,7 +162,6 @@
     <string name="use_current">Dek untuk kartu baru</string>
     <string name="new_spread">Posisi kartu baru</string>
     <string name="learn_cutoff">Batas belajar duluan</string>
-    <string name="learn_cutoff_summ">XXX mnt</string>
     <string name="time_limit">Batas waktu Timebox</string>
     <string name="time_limit_summ">XXX mnt</string>
     <string name="day_offset">Mulai besok</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">Kembalikan opsi kelompok sekarang menjadi seperti awal?</string>
     <string name="deck_conf_add">Tambah</string>
     <string name="deck_conf_add_summ">Buat salinan dari grup opsi saat ini</string>
-    <string name="deck_conf_remove">Hapus</string>
-    <string name="deck_conf_remove_title">Hapus</string>
     <string name="deck_conf_remove_message">Hapus grup opsi saat ini?</string>
     <string name="deck_conf_set_subdecks">Set untuk semua subdek</string>
     <plurals name="deck_conf_set_subdecks_summ">

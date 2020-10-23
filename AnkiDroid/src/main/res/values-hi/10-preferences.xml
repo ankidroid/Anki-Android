@@ -161,7 +161,6 @@
     <string name="use_current">नए कार्ड के लिए डेक</string>
     <string name="new_spread">नए कार्ड की स्थिति</string>
     <string name="learn_cutoff">आगे की सीमा जानें</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Timebox समय सीमा</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">अगले दिन की शुरुआत</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">वर्तमान विकल्प समूह को डिफ़ॉल्ट मानों में पुनर्स्थापित करें?</string>
     <string name="deck_conf_add">जोड़ें</string>
     <string name="deck_conf_add_summ">वर्तमान विकल्प समूह की प्रतिलिपि बनाएं</string>
-    <string name="deck_conf_remove">हटाएं</string>
-    <string name="deck_conf_remove_title">हटाएं</string>
     <string name="deck_conf_remove_message">वर्तमान विकल्प समूह निकालें?</string>
     <string name="deck_conf_set_subdecks">सभी उपडेक के लिए सेट करें</string>
     <plurals name="deck_conf_set_subdecks_summ">

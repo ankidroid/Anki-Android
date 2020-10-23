@@ -161,7 +161,6 @@
     <string name="use_current">Pakka uusille korteille</string>
     <string name="new_spread">Uuden kortin sijainti</string>
     <string name="learn_cutoff">Kertauksen etukäteisaikaraja</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Aikaraja</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Seuraava päivä alkaa</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">Palauta nykyinen asetusryhmä oletusarvoihin?</string>
     <string name="deck_conf_add">Lisää</string>
     <string name="deck_conf_add_summ">Luo kopio nykyisestä asetusryhmästä</string>
-    <string name="deck_conf_remove">Poista</string>
-    <string name="deck_conf_remove_title">Poista</string>
     <string name="deck_conf_remove_message">Poista nykyinen asetusryhmä?</string>
     <string name="deck_conf_set_subdecks">Aseta kaikille alipakoille</string>
     <plurals name="deck_conf_set_subdecks_summ">

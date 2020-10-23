@@ -162,7 +162,6 @@
     <string name="use_current">Deck para sa mga bagong card</string>
     <string name="new_spread">Bagong posisyon ng card</string>
     <string name="learn_cutoff">Matuto nang higit na limitasyon</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Limitasyon ng oras ng Timebox</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Simula ng susunod na araw</string>
@@ -254,8 +253,6 @@
     <string name="deck_conf_reset_message">Ibalik ang kasalukuyang mga opsyon ng pangkat sa mga default na halaga?</string>
     <string name="deck_conf_add">Magdagdag</string>
     <string name="deck_conf_add_summ">Lumikha ng isang kopya ng kasalukuyang pangkat ng mga pagpipilian</string>
-    <string name="deck_conf_remove">Alisin</string>
-    <string name="deck_conf_remove_title">Alisin</string>
     <string name="deck_conf_remove_message">Alisin ang mga kasalukuyang pangkat ng mga pagpipilian?</string>
     <string name="deck_conf_set_subdecks">Itakda para sa lahat ng mga subdecks</string>
     <plurals name="deck_conf_set_subdecks_summ">

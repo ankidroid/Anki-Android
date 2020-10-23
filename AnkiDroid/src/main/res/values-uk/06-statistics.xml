@@ -103,7 +103,6 @@
     <string name="stats_overview_card_types_lowest_ease">Найскладніше: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Середня легкість: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Найлегше: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="deck_summary_all_decks">Всі колоди</string>
     <string name="stats_select_time_scale">Вибрати шкалу часу</string>
     <string-array name="due_x_axis_title">
         <item>Дні</item>

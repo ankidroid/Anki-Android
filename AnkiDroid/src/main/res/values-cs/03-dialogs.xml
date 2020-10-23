@@ -52,8 +52,8 @@
         <item quantity="other">Odstranit všechny karty v %1$s? Obsahuje %2$d karet.</item>
     </plurals>
     <string name="delete_cram_deck_message">Jste si jistý, že si přejete poslat všechny karty z balíčku %s zpátky do původního balíčku?</string>
-    <string name="no_tts_available_message">Žádný jazyk k předčítání není k dispozici</string>
-    <string name="initializing_tts">Inicializuji TTS&#8230;</string>
+    <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
+    <string name="initializing_tts">Inicializuje se TTS&#8230;</string>
     <string name="tts_no_tts">Nemluv</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Kartičky pro Android</h2>AnkiDroid je kartičková aplikace plně kompatibilní s desktopovou verzí <a href=\"%2$s\">Anki</a>. Můžete vytvářet, stahovat a učit se materiály jak v AnkiDroid tak Anki Desktop a velmi snadno je synchronizovat i s AnkiWeb.]]></item>
@@ -72,7 +72,7 @@
         <item quantity="many">%d karty přesunuto</item>
         <item quantity="other">%d karet přesunuto</item>
     </plurals>
-    <string name="reset_card_dialog_title">Obnovit pokrok v učení</string>
+    <string name="reset_card_dialog_title">Obnovit proces učení karty</string>
     <string name="reset_card_dialog_message">Tato karta bude umístěna na konec fronty s novými kartami.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d karta obnovena</item>
@@ -94,7 +94,7 @@
         <item quantity="many">Současný interval: %d dne</item>
         <item quantity="other">Současný interval: %d dní</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Přeplánovat zkoušení pro x dní:</string>
+    <string name="reschedule_card_dialog_message">Přeplánovat opakování za x dní:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d karta přeplánována</item>
         <item quantity="few">%d karty přeplánovány</item>
@@ -225,7 +225,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Nepodařilo se naplánovat upomínky</string>
     <string name="boot_service_too_many_notifications">Naplánováno příliš mnoho upomínek. Některé se nezobrazí</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
+    <string name="locale_selection_dialog_title">Výběr nápovědy klávesnice</string>
     <string name="locale_selection_dialog_summary">Některé vícejazyčné klávesnice, např. GBoard podporují změnu jazyka při úpravách textu\n\nProsím požádejte výrobce klávesnice o funkci „setImeHintLocales“, pokud vaše klávesnice nepřepíná mezi jazyky.</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">

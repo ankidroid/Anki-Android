@@ -162,7 +162,6 @@
     <string name="use_current">Deck for new cards</string>
     <string name="new_spread">New card position</string>
     <string name="learn_cutoff">Learn ahead limit</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Timebox time limit</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Start of next day</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
     <string name="deck_conf_add">Add</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
-    <string name="deck_conf_remove">Remove</string>
-    <string name="deck_conf_remove_title">Remove</string>
     <string name="deck_conf_remove_message">Remove current options group?</string>
     <string name="deck_conf_set_subdecks">Set for all subdecks</string>
     <plurals name="deck_conf_set_subdecks_summ">

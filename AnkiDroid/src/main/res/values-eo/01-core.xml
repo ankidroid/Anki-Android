@@ -202,6 +202,8 @@
     <string name="template_for_current_card_deleted">La speco de karto por la nuna karto estis forigita.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspekto de foliumilo</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Legi kaj skribi al datumbazo de AnkiDroid</string>
     <string name="read_write_permission_description">aliri ekzistajn notojn, kartojn, tipojn de notoj kaj kartarojn kaj krei novajn</string>

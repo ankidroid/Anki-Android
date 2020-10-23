@@ -161,7 +161,6 @@
     <string name="use_current">新牌组</string>
     <string name="new_spread">新卡片位置</string>
     <string name="learn_cutoff">提前学习的限制</string>
-    <string name="learn_cutoff_summ">XXX 分钟</string>
     <string name="time_limit">时间盒时间限制</string>
     <string name="time_limit_summ">XXX 分钟</string>
     <string name="day_offset">下一天开始的时间</string>
@@ -252,8 +251,6 @@
     <string name="deck_conf_reset_message">是否将当前选项组还原到默认值？</string>
     <string name="deck_conf_add">添加选项组</string>
     <string name="deck_conf_add_summ">创建当前选项组的副本</string>
-    <string name="deck_conf_remove">删除</string>
-    <string name="deck_conf_remove_title">删除</string>
     <string name="deck_conf_remove_message">是否确认删除当前选项组？</string>
     <string name="deck_conf_set_subdecks">所有子牌组使用此选项组</string>
     <plurals name="deck_conf_set_subdecks_summ">

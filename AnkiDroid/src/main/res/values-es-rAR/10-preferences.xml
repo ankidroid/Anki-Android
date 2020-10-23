@@ -161,7 +161,6 @@
     <string name="use_current">Mazo para nuevas tarjetas</string>
     <string name="new_spread">Nueva posición de tarjeta</string>
     <string name="learn_cutoff">Aprender antes del límite</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Límite de tiempo para Timebox</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Comienzo del siguiente día</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">¿Restaurar el grupo de opciones actuales a sus valores predeterminados?</string>
     <string name="deck_conf_add">Añadir configuración</string>
     <string name="deck_conf_add_summ">Crea una copia del grupo de opciones actuales</string>
-    <string name="deck_conf_remove">Remover</string>
-    <string name="deck_conf_remove_title">Remover</string>
     <string name="deck_conf_remove_message">¿Remover el grupo de opciones actuales?</string>
     <string name="deck_conf_set_subdecks">Aplicar a todos los submazos</string>
     <plurals name="deck_conf_set_subdecks_summ">

@@ -162,7 +162,6 @@
     <string name="use_current">Deck for new cards</string>
     <string name="new_spread">New card position</string>
     <string name="learn_cutoff">Learn ahead limit</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Timebox time limit</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Start of next day</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">Khôi phục tùy chọn nhóm hiện tại về mặc định?</string>
     <string name="deck_conf_add">Thêm</string>
     <string name="deck_conf_add_summ">Tạo một bản sao của nhóm lựa chọn hiện tại</string>
-    <string name="deck_conf_remove">Gỡ bỏ</string>
-    <string name="deck_conf_remove_title">Gỡ bỏ</string>
     <string name="deck_conf_remove_message">Loại bỏ hiện tại tùy chọn nhóm?</string>
     <string name="deck_conf_set_subdecks">Thiết lập cho tất cả chủ đề phụ</string>
     <plurals name="deck_conf_set_subdecks_summ">

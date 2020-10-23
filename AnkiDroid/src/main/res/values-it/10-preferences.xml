@@ -161,7 +161,6 @@
     <string name="use_current">Mazzo per carte nuove</string>
     <string name="new_spread">Posizione carte nuove</string>
     <string name="learn_cutoff">Impara oltre il limite</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Limite di tempo per sessione</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Inizio del giorno successivo</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">Ripristinare il gruppo attuale di opzioni ai valori predefiniti?</string>
     <string name="deck_conf_add">Aggiungi configurazione</string>
     <string name="deck_conf_add_summ">Crea una copia del gruppo di opzioni attuale</string>
-    <string name="deck_conf_remove">Rimuovi</string>
-    <string name="deck_conf_remove_title">Rimuovi</string>
     <string name="deck_conf_remove_message">Rimuovere il gruppo di opzioni attuale?</string>
     <string name="deck_conf_set_subdecks">Imposta per tutti i sottomazzi</string>
     <plurals name="deck_conf_set_subdecks_summ">

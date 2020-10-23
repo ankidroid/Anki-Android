@@ -161,7 +161,6 @@
     <string name="use_current">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱰᱮᱠ</string>
     <string name="new_spread">ᱱᱟᱣᱟ ᱠᱟᱰ ᱡᱟᱭᱜᱟ</string>
     <string name="learn_cutoff">ᱢᱟᱲᱟᱝ ᱥᱮᱫ ᱯᱟᱲᱦᱟᱣ ᱪᱮᱫᱚᱜ</string>
-    <string name="learn_cutoff_summ">XXX ᱴᱤᱯᱤᱡ</string>
     <string name="time_limit">ᱥᱚᱢᱚᱭ ᱵᱟᱠᱥᱚ ᱚᱠᱛᱚ ᱥᱤᱢᱟᱹ</string>
     <string name="time_limit_summ">XXX ᱴᱤᱯᱤᱡ</string>
     <string name="day_offset">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱫᱤᱱ ᱮᱛᱦᱚᱵ</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
     <string name="deck_conf_add">ᱥᱮᱞᱮᱫ</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
-    <string name="deck_conf_remove">ᱚᱪᱚᱜᱽ</string>
-    <string name="deck_conf_remove_title">ᱚᱪᱚᱜᱽ</string>
     <string name="deck_conf_remove_message">Remove current options group?</string>
     <string name="deck_conf_set_subdecks">Set for all subdecks</string>
     <plurals name="deck_conf_set_subdecks_summ">

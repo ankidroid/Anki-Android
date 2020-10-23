@@ -162,7 +162,6 @@
     <string name="use_current">Új kártyák paklija</string>
     <string name="new_spread">Új kártyák beszúrása</string>
     <string name="learn_cutoff">Korai tanulás korlátai</string>
-    <string name="learn_cutoff_summ">XXX perc</string>
     <string name="time_limit">Időkorlát érték</string>
     <string name="time_limit_summ">XXX perc</string>
     <string name="day_offset">Következő nap kezdete</string>
@@ -247,15 +246,13 @@
     <string name="deck_conf_replayq">Ismételje meg a kérdést</string>
     <string name="deck_conf_replayq_summ">Ismételje meg a kérdést és a választ hanggal együtt, amikor a válasz megjelenik</string>
     <string name="deck_conf_manage">Konfigurációkezelés</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Opciócsoportok hozzáadása és változtatása</string>
     <string name="deck_conf_current_group">Aktuális csoport</string>
     <string name="deck_conf_rename">Átnevezés</string>
     <string name="deck_conf_reset">Alapértelmezések visszaállítása</string>
     <string name="deck_conf_reset_message">Alaphelyzetbe állítod az aktuális opciócsoportot?</string>
     <string name="deck_conf_add">Új beállítás</string>
     <string name="deck_conf_add_summ">Készítsen egy másolatot az aktuális opciócsoportról</string>
-    <string name="deck_conf_remove">Eltávolít</string>
-    <string name="deck_conf_remove_title">Eltávolít</string>
     <string name="deck_conf_remove_message">Törlöd az aktuális opciócsoportot?</string>
     <string name="deck_conf_set_subdecks">Alkalmazás minden alcsoportra</string>
     <plurals name="deck_conf_set_subdecks_summ">

@@ -41,7 +41,7 @@
 <resources>
     <string name="youre_offline">Jste v režimu offline</string>
     <string name="sync_even_if_offline">Přesto zkusit</string>
-    <string name="sync_error">Chyby synchronizace</string>
+    <string name="sync_error">Chyba synchronizace</string>
     <string name="vague_error">Chyba</string>
     <string name="retry">Opakovat</string>
     <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Obchodní podmínky</a></string>
@@ -128,7 +128,7 @@
     <string name="sync_error_500_unknown">AnkiWeb zaznamenal chybu. Zkuste to prosím znovu za pár minut a pokud problém přetrvá, vyplňte prosím chybové hlášení.</string>
     <string name="sync_error_501_upgrade_required">Proveďte upgrade na nejnovější verzi AnkiDroid</string>
     <string name="sync_error_502_maintenance">Provádí se údržba AnkiWeb. Zkuste to prosím znovu za pár minut.</string>
-    <string name="sync_error_504_gateway_timeout">504 Byla přijata chyba časového limitu brány.</string>
+    <string name="sync_error_504_gateway_timeout">Vyskytla se chyba 504 časového limitu brány.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title">Synchronizovat</string>
     <string name="sync_menu_title_full_sync">Synchronizace (úplná)</string>

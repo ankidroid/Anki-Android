@@ -90,7 +90,7 @@
         <item quantity="other">Dnes studováno %1$d karet během %2$s</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Zapište odpověď</string>
+    <string name="type_answer_hint">Napište odpověď</string>
     <string name="show_answer">Zobrazit odpověď</string>
     <string name="hide_answer">Skrýt odpověď</string>
     <string name="ease_button_again">Znovu</string>
@@ -109,7 +109,7 @@
     <string name="undo_action_delete_multi">odstranit poznámky</string>
     <string name="undo_action_change_deck_multi">změnit balíky</string>
     <string name="undo_action_reschedule_card">přeplánovat</string>
-    <string name="undo_action_reset_card">obnovit proces</string>
+    <string name="undo_action_reset_card">obnovit proces učení</string>
     <string name="undo_action_reposition_card">změnit pořadí</string>
     <string name="move_all_to_deck">Přemístit vše do balíku</string>
     <string name="unbury">Zrušit přeskočení</string>
@@ -188,7 +188,7 @@
     <string name="cancel_sync_confirm">Přejete si přerušit synchronizaci?</string>
     <string name="continue_sync">Pokračovat v synchronizaci</string>
     <string name="sync_cancelled">Synchronizace přrušena</string>
-    <string name="sync_cancel_message">Přerušuji&#8230;\nOperace může chvíli trvat.</string>
+    <string name="sync_cancel_message">Přerušuje se&#8230;\nMůže to chvíli trvat.</string>
     <string name="export">Export</string>
     <string name="export_collection">Export kolekce</string>
     <string name="export_deck">Export balíčku</string>
@@ -214,6 +214,8 @@
     <string name="template_for_current_card_deleted">Typ karty současné karty byl odstraněn.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Vzhled prohlížeče</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Čtení a zápis do AnkiDroid databáze</string>
     <string name="read_write_permission_description">spravovat stávající poznámky, karty, typy poznámek a balíčky, a také vytvářet nové</string>
