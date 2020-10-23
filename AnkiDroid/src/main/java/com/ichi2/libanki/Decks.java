@@ -44,6 +44,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -449,8 +450,8 @@ public class Decks {
     }
 
 
-    public Long[] allIds() {
-        return mDecks.keySet().toArray(new Long[mDecks.keySet().size()]);
+    public Set<Long> allIds() {
+        return mDecks.keySet();
     }
 
 
@@ -860,9 +861,8 @@ public class Decks {
     }
 
     private void _recoverOrphans() {
-        Long[] dids = allIds();
         boolean mod = mCol.getDb().getMod();
-        SyncStatus.ignoreDatabaseModification(() -> mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(dids)));
+        SyncStatus.ignoreDatabaseModification(() -> mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(allIds())));
         mCol.getDb().setMod(mod);
     }
 
