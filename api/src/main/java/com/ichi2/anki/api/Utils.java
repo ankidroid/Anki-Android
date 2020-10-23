@@ -36,6 +36,7 @@ class Utils {
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
     private static final Pattern imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
+    private static final String FIELD_SEPARATOR = Character.toString('\u001f');
 
 
     static String joinFields(String[] list) {
@@ -44,7 +45,7 @@ class Utils {
 
 
     static String[] splitFields(String fields) {
-        return fields != null? fields.split("\\x1f", -1): null;
+        return fields != null? fields.split(FIELD_SEPARATOR, -1): null;
     }
 
     static String joinTags(Set<String> tags) {
