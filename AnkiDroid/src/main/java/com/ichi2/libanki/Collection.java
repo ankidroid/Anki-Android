@@ -800,7 +800,7 @@ public class Collection {
                     return null;
                 }
                 Long nid = cur.getLong(0);
-                long mid = cur.getLong(1);
+                @NonNull Long mid = cur.getLong(1);
                 String flds = cur.getString(2);
                 Model model = getModels().get(mid);
                 ArrayList<Integer> avail = getModels().availOrds(model, Utils.splitFields(flds));
