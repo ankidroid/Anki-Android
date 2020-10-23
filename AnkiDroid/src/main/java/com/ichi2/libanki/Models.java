@@ -1090,7 +1090,7 @@ public class Models {
                     for (int j = 0; j < req.length(); j++) {
                         int idx = req.getInt(j);
                         if (fields[idx] != null && fields[idx].length() != 0) {
-                            // missing and was required
+                            // Present and suffices to generate the card
                             avail.add(ord);
                             continue templates;
                         }
