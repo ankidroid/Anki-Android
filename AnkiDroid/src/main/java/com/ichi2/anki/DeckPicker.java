@@ -2783,10 +2783,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
     private static class HandleEmptyCardListener extends TaskListenerWithContext<DeckPicker> {
         private final int mNumberOfCards;
+        private final int mOnePercent;
+        private int mIncreaseSinceLastUpdate = 0;
 
         public HandleEmptyCardListener(DeckPicker deckPicker) {
             super(deckPicker);
             mNumberOfCards = deckPicker.getCol().cardCount();
+            mOnePercent = mNumberOfCards / 100;
         }
 
         private void confirmCancel(@NonNull DeckPicker deckPicker, @NonNull CollectionTask task) {
@@ -2818,7 +2821,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, @NonNull TaskData progress) {
-            deckPicker.mProgressDialog.incrementProgress(progress.getInt());
+            mIncreaseSinceLastUpdate += progress.getInt();
+            // Increase each time at least a percent of card has been processed since last update
+            if (mIncreaseSinceLastUpdate > mOnePercent) {
+                deckPicker.mProgressDialog.incrementProgress(mIncreaseSinceLastUpdate);
+                mIncreaseSinceLastUpdate = 0;
+            }
         }
 
         @Override
