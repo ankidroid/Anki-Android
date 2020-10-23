@@ -161,7 +161,6 @@
     <string name="use_current">رزمة البطاقات الجديدة</string>
     <string name="new_spread">موضع البطاقات الجديدة</string>
     <string name="learn_cutoff">حد التعلم المبكر</string>
-    <string name="learn_cutoff_summ">XXX دقيقة</string>
     <string name="time_limit">مهلة مربع الوقت</string>
     <string name="time_limit_summ">XXX دقيقة</string>
     <string name="day_offset">بداية اليوم التالي</string>
@@ -257,8 +256,6 @@
     <string name="deck_conf_reset_message">هل تريد إرجاع مجموعة الخيارات الحالية إلى القيم الافتراضية؟</string>
     <string name="deck_conf_add">إضافة</string>
     <string name="deck_conf_add_summ">إنشاء نسخة من مجموعة الخيارات الحالية</string>
-    <string name="deck_conf_remove">حذف</string>
-    <string name="deck_conf_remove_title">حذف</string>
     <string name="deck_conf_remove_message">هل تريد حذف مجموعة الخيارات الحالية؟</string>
     <string name="deck_conf_set_subdecks">ضبط لكل الرزم الفرعية</string>
     <plurals name="deck_conf_set_subdecks_summ">

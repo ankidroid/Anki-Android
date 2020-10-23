@@ -162,7 +162,6 @@
     <string name="use_current">Шпил за нове картице</string>
     <string name="new_spread">Нова позиција карте</string>
     <string name="learn_cutoff">Учити више од задатог лимита</string>
-    <string name="learn_cutoff_summ">XXX мин</string>
     <string name="time_limit">Ограничење времена</string>
     <string name="time_limit_summ">XXX мин</string>
     <string name="day_offset">Почетак следећег дана</string>
@@ -255,8 +254,6 @@
     <string name="deck_conf_reset_message">Да вратим тренутну групу опција на подразумевана подешавања?</string>
     <string name="deck_conf_add">Додавање конфигурације</string>
     <string name="deck_conf_add_summ">Направи копију текуће групе опција</string>
-    <string name="deck_conf_remove">Уклони</string>
-    <string name="deck_conf_remove_title">Уклони</string>
     <string name="deck_conf_remove_message">Да уклоним текућу групу опција?</string>
     <string name="deck_conf_set_subdecks">Задај за све групе подшпилова</string>
     <plurals name="deck_conf_set_subdecks_summ">

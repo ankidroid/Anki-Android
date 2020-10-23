@@ -161,7 +161,6 @@
     <string name="use_current">Колода для новых карточек</string>
     <string name="new_spread">Позиция новых карточек</string>
     <string name="learn_cutoff">Лимит опережения</string>
-    <string name="learn_cutoff_summ">XXX мин.</string>
     <string name="time_limit">Лимит учебного блока</string>
     <string name="time_limit_summ">XXX мин.</string>
     <string name="day_offset">Начало следующего дня</string>
@@ -255,8 +254,6 @@
     <string name="deck_conf_reset_message">Сбросить эту конфигурацию?</string>
     <string name="deck_conf_add">Добавить</string>
     <string name="deck_conf_add_summ">Создать копию этой конфигурации</string>
-    <string name="deck_conf_remove">Удалить</string>
-    <string name="deck_conf_remove_title">Удалить</string>
     <string name="deck_conf_remove_message">Удалить текущую конфигурацию?</string>
     <string name="deck_conf_set_subdecks">Установить для всех подколод</string>
     <plurals name="deck_conf_set_subdecks_summ">

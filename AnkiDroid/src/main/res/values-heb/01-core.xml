@@ -214,6 +214,8 @@
     <string name="template_for_current_card_deleted">סוג הכרטיס של הכרטיס הנוכחי נמחק.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">מראה הדפדפן</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
     <string name="read_write_permission_description">תן לאפליקציה גישה להערות, כרטיסים, סוגי הערות, וחפיסות, וכן גישה ליצור חדשים</string>

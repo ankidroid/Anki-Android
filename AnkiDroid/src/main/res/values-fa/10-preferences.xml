@@ -161,7 +161,6 @@
     <string name="use_current">دسته برای کارتهای جدید</string>
     <string name="new_spread">موقعیت کارت جدید</string>
     <string name="learn_cutoff">محدودیت های پیش رو را یاد بگیرید</string>
-    <string name="learn_cutoff_summ">XXX دقیقه</string>
     <string name="time_limit">محدوده زمانی جعبه زمان</string>
     <string name="time_limit_summ">XXX دقیقه</string>
     <string name="day_offset">شروع روز بعد</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">تنظیمات فعلی گروه را به مقادیر پیش فرض بازمی گردانید؟</string>
     <string name="deck_conf_add">پیکربندی را اضافه کن</string>
     <string name="deck_conf_add_summ">ایجاد یک کپی از تنظیمات گروه فعلی</string>
-    <string name="deck_conf_remove">حذف</string>
-    <string name="deck_conf_remove_title">حذف</string>
     <string name="deck_conf_remove_message">تنظیمات فعلی گروه حذف شود؟</string>
     <string name="deck_conf_set_subdecks">برای تمام دسته ها تنظیم شود</string>
     <plurals name="deck_conf_set_subdecks_summ">

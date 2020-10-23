@@ -161,7 +161,6 @@
     <string name="use_current">Тесте за нови карти</string>
     <string name="new_spread">Нова позиция на картите</string>
     <string name="learn_cutoff">Учене над лимита</string>
-    <string name="learn_cutoff_summ">XXX мин</string>
     <string name="time_limit">Ограничение на времето</string>
     <string name="time_limit_summ">XXX мин</string>
     <string name="day_offset">Началото от следващия ден</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">Възстановяване на настройките по подразбиране на текущата група?</string>
     <string name="deck_conf_add">Нов</string>
     <string name="deck_conf_add_summ">Създаване копие на опциите за текущата група</string>
-    <string name="deck_conf_remove">Премахване</string>
-    <string name="deck_conf_remove_title">Премахване</string>
     <string name="deck_conf_remove_message">Премахване опциите на текущата група?</string>
     <string name="deck_conf_set_subdecks">За всички подтестета</string>
     <plurals name="deck_conf_set_subdecks_summ">

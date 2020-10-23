@@ -50,7 +50,6 @@
     <string name="card_browser_change_deck">Stapel wechseln</string>
     <string name="card_browser_unsuspend_card">Karten einschließen</string>
     <string name="card_browser_mark_card">Notizen markieren</string>
-    <string name="card_browser_flag">Markieren</string>
     <string name="card_browser_toggle_mark_card">Notizen (ent-)markieren</string>
     <string name="card_browser_unmark_card">Markierung entfernen</string>
     <string name="delete_card_title">Notiz löschen?</string>
@@ -63,7 +62,6 @@
     <string name="card_browser_show_suspended">Nach Ausgeschlossenen filtern</string>
     <string name="card_browser_search_by_tag">Nach Schlagwort filtern</string>
     <string name="card_browser_search_by_flag">Filter by flag</string>
-    <string name="card_browser_tags_shown">Schlagworte: %1$s</string>
     <string name="card_browser_list_my_searches">Meine Suchen</string>
     <string name="card_browser_list_my_searches_save">Suche speichern</string>
     <string name="card_browser_list_my_searches_title">Wählen Sie eine gespeicherte Suche</string>
@@ -106,4 +104,32 @@
         <item quantity="one">%d card deleted</item>
         <item quantity="other">%d cards deleted</item>
     </plurals>
+    <!-- Card Info subscreen -->
+    <string name="card_info_added">Added</string>
+    <string name="card_info_first_review">First Review</string>
+    <string name="card_info_latest_review">Latest Review</string>
+    <string name="card_info_due">Due</string>
+    <string name="card_info_interval">Interval</string>
+    <string name="card_info_ease">Ease</string>
+    <string name="card_info_reviews">Reviews</string>
+    <string name="card_info_lapses">Lapses</string>
+    <string name="card_info_average_time">Average Time</string>
+    <string name="card_info_total_time">Total Time</string>
+    <string name="card_info_card_type">Card Type</string>
+    <string name="card_info_note_type">Note Type</string>
+    <string name="card_info_deck_name">Deck Name</string>
+    <string name="card_info_card_id">Card Id</string>
+    <string name="card_info_note_id">Note Id</string>
+    <string name="card_info_revlog_time">Time</string>
+    <string name="card_info_revlog_ease">Ease</string>
+    <string name="card_info_revlog_interval">Interval</string>
+    <string name="card_info_revlog_date">Date</string>
+    <string name="card_info_revlog_rating">Rating</string>
+    <string name="card_info_revlog_type">Type</string>
+    <string name="card_info_revlog_learn">Learn</string>
+    <string name="card_info_revlog_review">Review</string>
+    <string name="card_info_revlog_relearn">Relearn</string>
+    <string name="card_info_revlog_filtered">Filtered</string>
+    <string name="card_info_ease_not_applicable">N/A</string>
+    <string name="card_info_cannot_load">An unexpected error occurred</string>
 </resources>

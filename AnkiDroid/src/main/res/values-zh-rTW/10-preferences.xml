@@ -161,7 +161,6 @@
     <string name="use_current">存放新卡片的牌組</string>
     <string name="new_spread">新卡片的位置</string>
     <string name="learn_cutoff">提早學習上限</string>
-    <string name="learn_cutoff_summ">XXX分鐘</string>
     <string name="time_limit">時間盒的時間上限</string>
     <string name="time_limit_summ">XXX分鐘</string>
     <string name="day_offset">明天的開始時間</string>
@@ -252,8 +251,6 @@
     <string name="deck_conf_reset_message">回復當前設定群組成預設值嗎？</string>
     <string name="deck_conf_add">新增設定</string>
     <string name="deck_conf_add_summ">複製一份當前的設定群組</string>
-    <string name="deck_conf_remove">刪除</string>
-    <string name="deck_conf_remove_title">刪除</string>
     <string name="deck_conf_remove_message">移除當前的設定群組嗎？</string>
     <string name="deck_conf_set_subdecks">設定給所有子牌組</string>
     <plurals name="deck_conf_set_subdecks_summ">

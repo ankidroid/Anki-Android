@@ -161,7 +161,6 @@
     <string name="use_current">Kartaro por novaj kartoj</string>
     <string name="new_spread">Pozicio de nova karto</string>
     <string name="learn_cutoff">Limigo de anticipa lernado</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Limigo de lernada tempero (timebox)</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Komenco de sekva tago</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">Ĉu restarigi la nunan grupon de agordoj al implicitaj valoroj?</string>
     <string name="deck_conf_add">Aldoni</string>
     <string name="deck_conf_add_summ">Krei kopion de la nuna grupo de agordoj</string>
-    <string name="deck_conf_remove">Forigi</string>
-    <string name="deck_conf_remove_title">Forigi</string>
     <string name="deck_conf_remove_message">Ĉu forigi la nunan grupon de agordoj?</string>
     <string name="deck_conf_set_subdecks">Agordi por ĉiuj subkartaroj</string>
     <plurals name="deck_conf_set_subdecks_summ">

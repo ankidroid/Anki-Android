@@ -162,7 +162,6 @@
     <string name="use_current">Komplet za nove kartice</string>
     <string name="new_spread">Položaj novih kartic</string>
     <string name="learn_cutoff">Omejitev vnaprejšnjega učenja</string>
-    <string name="learn_cutoff_summ">XXX min.</string>
     <string name="time_limit">Omejitev časovnega obdobja</string>
     <string name="time_limit_summ">XXX min.</string>
     <string name="day_offset">Začetek naslednjega dne</string>
@@ -256,8 +255,6 @@
     <string name="deck_conf_reset_message">Obnovi trenutno skupino možnosti na privzete vrednosti?</string>
     <string name="deck_conf_add">Dodaj</string>
     <string name="deck_conf_add_summ">Ustvari kopijo trenutne skupine možnosti</string>
-    <string name="deck_conf_remove">Odstrani</string>
-    <string name="deck_conf_remove_title">Odstrani</string>
     <string name="deck_conf_remove_message">Odstrani trenutno skupino možnosti?</string>
     <string name="deck_conf_set_subdecks">Nastavi za vse podkomplete</string>
     <plurals name="deck_conf_set_subdecks_summ">

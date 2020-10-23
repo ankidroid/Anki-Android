@@ -23,7 +23,7 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Кіраванне тыпамі нататак</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Кіраваць палямі</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">Вы не можаце выдаліць апошні тып нататкі</string>
     <string name="toast_last_field">Тып дадзеных павінен утрымваць хоць бы адно поле</string>
     <string name="toast_empty_name">Вы павінны ўвесці імя поля</string>
     <string name="toast_duplicate_field">Імя поля ўжо выкарыстоўваецца</string>

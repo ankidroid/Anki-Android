@@ -161,7 +161,6 @@
     <string name="use_current">新規カードの追加先デッキ</string>
     <string name="new_spread">新規カードの追加場所</string>
     <string name="learn_cutoff">先取り学習の限度</string>
-    <string name="learn_cutoff_summ">XXX 分</string>
     <string name="time_limit">タイムボックスの時間枠</string>
     <string name="time_limit_summ">XXX 分</string>
     <string name="day_offset">日付更新時刻</string>
@@ -252,8 +251,6 @@
     <string name="deck_conf_reset_message">このオプショングループを標準の設定に戻しますか？</string>
     <string name="deck_conf_add">追加</string>
     <string name="deck_conf_add_summ">このオプショングループのコピーを作成します</string>
-    <string name="deck_conf_remove">削除</string>
-    <string name="deck_conf_remove_title">削除</string>
     <string name="deck_conf_remove_message">このオプショングループを削除しますか？</string>
     <string name="deck_conf_set_subdecks">全てのサブデッキに適用</string>
     <plurals name="deck_conf_set_subdecks_summ">

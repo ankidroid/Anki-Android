@@ -162,7 +162,6 @@ minit yang lalu.</string>
     <string name="use_current">Deck for new cards</string>
     <string name="new_spread">New card position</string>
     <string name="learn_cutoff">Learn ahead limit</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Timebox time limit</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Start of next day</string>
@@ -253,8 +252,6 @@ minit yang lalu.</string>
     <string name="deck_conf_reset_message">Memulihkan semasa pilihan kumpulan untuk lalai nilai-nilai?</string>
     <string name="deck_conf_add">Menambah</string>
     <string name="deck_conf_add_summ">Membuat salinan semasa pilihan kumpulan</string>
-    <string name="deck_conf_remove">Membuang</string>
-    <string name="deck_conf_remove_title">Membuang</string>
     <string name="deck_conf_remove_message">Membuang pilihan semasa kumpulan?</string>
     <string name="deck_conf_set_subdecks">Set untuk semua subdecks</string>
     <plurals name="deck_conf_set_subdecks_summ">

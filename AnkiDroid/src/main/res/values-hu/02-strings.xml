@@ -242,6 +242,10 @@
         <item quantity="one">%s év</item>
         <item quantity="other">%s év</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s seconds</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -314,10 +318,12 @@
     <string name="about_ankidroid_successfully_copied_debug">A hibakeresési információ a vágólapra másolva</string>
     <string name="about_ankidroid_error_copy_debug_info">Hiba történt a hibakeresési információk vágólapra másolása közben</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image">Hibás kártya tartalom: \"%s\" betöltése sikertelen</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">A(z) \'%s\' pakli betöltése nem sikerült</string>
     <string name="search_decks">Keresés a paklikban</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview_title">Végzetes hiba</string>
+    <string name="ankidroid_init_failed_webview">Az AnkiDroid a System WebView-t használja, ami jelenleg nem elérhető. Lehetséges, hogy a rendszer frissítéseket telepít. Próbáld újra pár perc múlva.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Betűméret</string>
 </resources>

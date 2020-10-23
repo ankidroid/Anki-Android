@@ -161,7 +161,6 @@
     <string name="use_current">Paquet pour les nouvelles cartes</string>
     <string name="new_spread">Position des nouvelles cartes</string>
     <string name="learn_cutoff">Limite d’apprentissage</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Limite de temps</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Début du jour suivant</string>
@@ -253,8 +252,6 @@
     <string name="deck_conf_reset_message">Restaurer les valeurs par défaut pour le groupe actuel ?</string>
     <string name="deck_conf_add">Ajouter une configuration</string>
     <string name="deck_conf_add_summ">Créer une copie du groupe d’option actuel</string>
-    <string name="deck_conf_remove">Supprimer</string>
-    <string name="deck_conf_remove_title">Supprimer</string>
     <string name="deck_conf_remove_message">Supprimer le groupe d’option actuel ?</string>
     <string name="deck_conf_set_subdecks">Définir pour tous les sous-paquets</string>
     <plurals name="deck_conf_set_subdecks_summ">

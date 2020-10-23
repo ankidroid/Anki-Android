@@ -100,7 +100,6 @@
     <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="deck_summary_all_decks">అన్ని డెక్స్</string>
     <string name="stats_select_time_scale">సమయాలను ఎంచుకోండి</string>
     <string-array name="due_x_axis_title">
         <item>రోజులు</item>

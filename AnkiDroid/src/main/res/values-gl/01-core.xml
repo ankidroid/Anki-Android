@@ -202,6 +202,8 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escribir na bases de datos do AnkiDroid</string>
     <string name="read_write_permission_description">acceder as notas, cartóns, tipos de notas e barallas existentes así como crear novos</string>

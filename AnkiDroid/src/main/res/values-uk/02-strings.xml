@@ -260,6 +260,10 @@
         <item quantity="many">%s років</item>
         <item quantity="other">%s роки</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s seconds</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -346,4 +350,6 @@
     <string name="search_decks">Шукати колоди</string>
     <string name="ankidroid_init_failed_webview_title">Критична помилка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid використовує системний WebView, який недоступний. Це можливе, якщо система встановлює оновлення. Будь ласка, спробуйте знову за кілька хвилин.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Font Size</string>
 </resources>

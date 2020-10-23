@@ -162,7 +162,6 @@
     <string name="use_current">Калода для новых картак</string>
     <string name="new_spread">Размяшчэнне новай карткі</string>
     <string name="learn_cutoff">Вучыць наперад</string>
-    <string name="learn_cutoff_summ">XXX хв.</string>
     <string name="time_limit">Абмежаванне навучальнага блока</string>
     <string name="time_limit_summ">XXX хв.</string>
     <string name="day_offset">Пачатак наступнага дня</string>
@@ -258,8 +257,6 @@
     <string name="deck_conf_reset_message">Аднавіць значэнні бягучых групавых параметраў па змаўчанні?</string>
     <string name="deck_conf_add">Дадаць</string>
     <string name="deck_conf_add_summ">Стварыць копію бягучых групавых параметраў</string>
-    <string name="deck_conf_remove">Выдаліць</string>
-    <string name="deck_conf_remove_title">Выдаліць</string>
     <string name="deck_conf_remove_message">Выдаліць бягучыя групавыя параметры?</string>
     <string name="deck_conf_set_subdecks">Усталяваць для ўсіх падкалод</string>
     <plurals name="deck_conf_set_subdecks_summ">

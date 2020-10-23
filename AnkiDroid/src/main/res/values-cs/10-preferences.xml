@@ -70,7 +70,7 @@
     <string name="use_input_tag_summ">Odpověď vložte do textového pole na kartě</string>
     <string name="dictionary">Slovník</string>
     <string name="reset_languages">Obnovit jazyky</string>
-    <string name="reset_languages_summ">Vynulovat přiřazení jazyka (pro řevod textu na řeč a slovníky) pro všechny balíčky</string>
+    <string name="reset_languages_summ">Vynulovat přiřazení jazyka (pro převod textu na řeč a slovníky) pro všechny balíčky</string>
     <string name="reset_languages_question">Obnovit všechny přiřazení jazyka?</string>
     <string name="reset_confirmation">Obnovit všechny stavy</string>
     <string name="card_zoom">Zvětšení karty</string>
@@ -111,7 +111,7 @@
     <string name="card_browser_enable_external_context_menu_summary">Povolí globální kontextovou nabídku „%s“</string>
     <string name="double_scrolling_gap">Dvojitý posun</string>
     <string name="double_scrolling_gap_summ">Dvojitý posuvník s eReader</string>
-    <string name="swipe_sensitivity">Swipe citlivost</string>
+    <string name="swipe_sensitivity">Citlivost tažení</string>
     <string name="tts">Převod textu na řeč</string>
     <string name="tts_summ">Přečte otázku a odpověď, pokud není připojen žádný zvukový soubor</string>
     <string name="sync_fetch_missing_media">Stáhnout multimédia při synchronizaci</string>
@@ -121,7 +121,7 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Automatická synchronizace</string>
     <string name="automatic_sync_choice_summ">Automaticky synchronizovat aplikaci při startu a při ukončení pokud od poslední synchronizace uplynulo více než 10 minut.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
+    <string name="sync_status_badge">Zobrazit stav synchronizace</string>
     <string name="sync_status_badge_summ">Změnit ikonu synchronizace, když lze nahrát změny</string>
     <string name="day_theme">Motivy vzhledu - den</string>
     <string name="night_theme">Motivy vzhledu - noc</string>
@@ -154,14 +154,13 @@
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
     <string name="show_top_bar">Zobrazit horní lištu</string>
     <string name="show_top_bar_summ">Zobrazit počty karet, příznak a označení v horní liště</string>
-    <string name="show_progress">Zobraz zbývající</string>
+    <string name="show_progress">Zobrazit zbývající</string>
     <string name="show_progress_summ">Zobrazit zbývající počet karet</string>
     <string name="show_eta">Zobrazit ETA</string>
     <string name="show_eta_summ">Zobrazit zbývající čas</string>
     <string name="use_current">Balíček pro nové karty</string>
     <string name="new_spread">Pozice nové karty</string>
     <string name="learn_cutoff">Limit učení se napřed</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Časové omezení</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Začátek příštího dne</string>
@@ -180,7 +179,7 @@
     <string name="custom_buttons">Tlačítka na panelu aplikace</string>
     <string name="custom_buttons_summary">Vlastní akce, které se objeví v panelu aplikace</string>
     <string name="custom_buttons_setting_always_show">Vždy zobrazovat</string>
-    <string name="custom_buttons_setting_if_room">Ukazuj pokud je místo</string>
+    <string name="custom_buttons_setting_if_room">Zobrazit pokud je místo</string>
     <string name="custom_buttons_setting_menu_only">Pouze nabídka</string>
     <string name="reset_custom_buttons">Obnovit výchozí nastavení</string>
     <string name="thirdparty_apps_title">API aplikace třetích stran</string>
@@ -255,8 +254,6 @@
     <string name="deck_conf_reset_message">Obnovit aktuální možnosti skupiny na výchozí hodnoty?</string>
     <string name="deck_conf_add">Přidání konfigurace</string>
     <string name="deck_conf_add_summ">Vytvořit kopii možností aktuální skupiny</string>
-    <string name="deck_conf_remove">Odstranit</string>
-    <string name="deck_conf_remove_title">Odstranit</string>
     <string name="deck_conf_remove_message">Odstranit možnosti aktuální skupiny?</string>
     <string name="deck_conf_set_subdecks">Nastavit pro všechny podřízené balíčky</string>
     <plurals name="deck_conf_set_subdecks_summ">

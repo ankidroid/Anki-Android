@@ -202,6 +202,8 @@
     <string name="template_for_current_card_deleted">वर्तमान कार्ड का कार्ड प्रकार हटा दिया गया</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ब्राउज़र का दिखाव</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">पढ़ें और AnkiDroid डेटाबेस के लिए लिखें</string>
     <string name="read_write_permission_description">मौजूदा नोट्स, कार्ड, नोट प्रकार, और डेक तक पहुंचें, साथ ही नए बनाएं</string>

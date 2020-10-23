@@ -202,6 +202,8 @@
     <string name="template_for_current_card_deleted">Il tipo di carta per la carta corrente è stato eliminato.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspetto del browser</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
     <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>

@@ -208,6 +208,8 @@
     <string name="template_for_current_card_deleted">Tip kartice za trenutnu karticu je obrisan.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Izgled preglednika</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Čitanje i pisanje u AnkiDroid bazu podataka</string>
     <string name="read_write_permission_description">Pristupi postojećim bilješkama, karticama, tipovima kartica i špilovima, te kreiranju novih</string>
