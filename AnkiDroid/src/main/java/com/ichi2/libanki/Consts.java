@@ -149,4 +149,6 @@ public class Consts {
     public static final long DEFAULT_DECK_ID = 1;
     /** Default dconf - can't be removed */
     public static final long DEFAULT_DECK_CONFIG_ID = 1;
+
+    public static final String FIELD_SEPARATOR = Character.toString('\u001f');
 }

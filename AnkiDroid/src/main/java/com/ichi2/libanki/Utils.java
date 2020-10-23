@@ -71,6 +71,8 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
+
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.MethodNamingConventions","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
 public class Utils {
@@ -545,7 +547,7 @@ public class Utils {
 
     public static String[] splitFields(String fields) {
         // -1 ensures that we don't drop empty fields at the ends
-        return fields.split("\\x1f", -1);
+        return fields.split(FIELD_SEPARATOR, -1);
     }
 
     /*
