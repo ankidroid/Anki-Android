@@ -46,13 +46,6 @@ public class TaskData {
     }
 
 
-    public TaskData(int value, long cardId, boolean bool) {
-        this(value);
-        mLong = cardId;
-        mBool = bool;
-    }
-
-
     public TaskData(Card card) {
         mCard = card;
     }
@@ -97,12 +90,6 @@ public class TaskData {
     }
 
 
-    public TaskData(long value, boolean bool) {
-        mLong = value;
-        mBool = bool;
-    }
-
-
     public TaskData(int value, boolean bool) {
         mInteger = value;
         mBool = bool;
@@ -138,13 +125,6 @@ public class TaskData {
     public TaskData(int value, String msg) {
         mMsg = msg;
         mInteger = value;
-    }
-
-
-    public TaskData(String msg, long cardId, boolean bool) {
-        mMsg = msg;
-        mLong = cardId;
-        mBool = bool;
     }
 
 
