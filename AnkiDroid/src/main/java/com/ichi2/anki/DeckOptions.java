@@ -46,6 +46,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
@@ -676,6 +677,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             mPref.registerOnSharedPreferenceChangeListener(this);
 
             this.addPreferencesFromResource(R.xml.deck_options);
+            if (this.isSchedV2()) {
+                this.enableSchedV2Preferences();
+            }
             this.buildLists();
             this.updateSummaries();
             // Set the activity title to include the name of the deck
@@ -830,6 +834,21 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         leechActPref.setEntries(R.array.leech_action_labels);
         leechActPref.setEntryValues(R.array.leech_action_values);
         leechActPref.setValue(mPref.getString("lapLeechAct", Integer.toString(Consts.LEECH_SUSPEND)));
+    }
+
+
+    private boolean isSchedV2() {
+        return mCol.schedVer() == 2;
+    }
+
+
+    /**
+     * Enable deck preferences that are only available with Scheduler V2.
+     */
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+    protected void enableSchedV2Preferences() {
+            NumberRangePreference hardFactorPreference = (NumberRangePreference) findPreference("hardFactor");
+            hardFactorPreference.setEnabled(true);
     }
 
 
