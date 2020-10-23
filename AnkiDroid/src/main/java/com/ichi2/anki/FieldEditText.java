@@ -6,9 +6,9 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.LocaleList;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import java.util.Locale;
 
@@ -20,6 +20,7 @@ import timber.log.Timber;
 
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
+import com.ichi2.ui.FixedTextView;
 
 import java.util.Objects;
 
@@ -31,6 +32,7 @@ public class FieldEditText extends FixedEditText {
     @NonNull
     public static final String NEW_LINE = Objects.requireNonNull(System.getProperty("line.separator"));
 
+    private String mName;
     private int mOrd;
     private Drawable mOrigBackground;
     @Nullable
@@ -51,6 +53,13 @@ public class FieldEditText extends FixedEditText {
         super(context, attrs, defStyle);
     }
 
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        // content text has been saved in NoteEditor.java, restore twice caused issue#5660
+        super.onSaveInstanceState();
+        return null;
+    }
 
     @Override
     protected void onAttachedToWindow() {
@@ -74,6 +83,11 @@ public class FieldEditText extends FixedEditText {
 
     public int getOrd() {
         return mOrd;
+    }
+
+
+    public String getName() {
+        return mName;
     }
 
 
@@ -102,7 +116,7 @@ public class FieldEditText extends FixedEditText {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setHintLocale(@NonNull Locale locale) {
-        Timber.d("Setting hint locale to '%s'", locale);
+        Timber.d("Setting hint locale of '%s' to '%s'", mName, locale);
         setImeHintLocales(new LocaleList(locale));
     }
 
@@ -140,61 +154,6 @@ public class FieldEditText extends FixedEditText {
         mOrd = ord;
     }
 
-    @Nullable
-    @Override
-    public Parcelable onSaveInstanceState() {
-        Parcelable state = super.onSaveInstanceState();
-
-        SavedState savedState = new SavedState(state);
-        savedState.mOrd = mOrd;
-
-        return savedState;
-    }
-
-
-    @Override
-    public void onRestoreInstanceState(Parcelable state) {
-        if (!(state instanceof SavedState)) {
-            super.onRestoreInstanceState(state);
-            return;
-        }
-
-        SavedState ss = (SavedState) state;
-        super.onRestoreInstanceState(ss.getSuperState());
-
-        mOrd = ss.mOrd;
-    }
-
-    static class SavedState extends BaseSavedState {
-        private int mOrd;
-
-        SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeInt(mOrd);
-        }
-
-        public static final Parcelable.Creator<SavedState> CREATOR =
-                new Parcelable.Creator<SavedState>() {
-                    @Override
-                    public SavedState createFromParcel(Parcel source) {
-                        return new SavedState(source);
-                    }
-
-                    public SavedState[] newArray(int size) {
-                        return new SavedState[size];
-                    }
-                };
-
-        private SavedState(Parcel in) {
-            super(in);
-            this.mOrd = in.readInt();
-        }
-    }
 
     public interface TextSelectionListener {
         void onSelectionChanged(int selStart, int selEnd);

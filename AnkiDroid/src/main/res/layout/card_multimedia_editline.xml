@@ -9,7 +9,6 @@
         android:id="@+id/id_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:freezesText="true"
         android:layout_alignParentLeft="true"
         app:layout_constraintBottom_toTopOf="@+id/id_note_editText"
         app:layout_constraintEnd_toStartOf="@id/id_media_button"

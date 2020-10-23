@@ -19,11 +19,7 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.SparseArray;
-import android.view.AbsSavedState;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
@@ -134,93 +130,8 @@ public class FieldEditLine extends FrameLayout {
         return mMediaButton;
     }
 
+
     public FieldEditText getEditText() {
         return mEditText;
-    }
-
-    public void loadState(AbsSavedState state) {
-        this.onRestoreInstanceState(state);
-    }
-
-
-    @Override
-    protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
-        dispatchFreezeSelfOnly(container);
-    }
-
-
-    @Override
-    protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container) {
-        dispatchThawSelfOnly(container);
-    }
-
-
-    @Nullable
-    @Override
-    protected Parcelable onSaveInstanceState() {
-        Parcelable state = super.onSaveInstanceState();
-
-        SavedState savedState = new SavedState(state);
-        savedState.mChildrenStates = new SparseArray<>();
-        for (int i = 0; i < getChildCount(); i++) {
-            getChildAt(i).saveHierarchyState(savedState.mChildrenStates);
-        }
-
-        return savedState;
-    }
-
-
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-        if (!(state instanceof SavedState)) {
-            super.onRestoreInstanceState(state);
-            return;
-        }
-
-        SavedState ss = (SavedState) state;
-        super.onRestoreInstanceState(ss.getSuperState());
-        for (int i = 0; i < getChildCount(); i++) {
-            getChildAt(i).restoreHierarchyState(ss.mChildrenStates);
-        }
-    }
-
-
-    static class SavedState extends BaseSavedState {
-        private SparseArray<Parcelable> mChildrenStates;
-
-        SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeSparseArray(mChildrenStates);
-        }
-
-        //required field that makes Parcelables from a Parcel
-        public static final Parcelable.Creator<SavedState> CREATOR =
-            new ClassLoaderCreator<SavedState>() {
-                @Override
-                public SavedState createFromParcel(Parcel in, ClassLoader loader) {
-                    return new SavedState(in, loader);
-                }
-
-
-                @Override
-                public SavedState createFromParcel(Parcel source) {
-                    throw new IllegalStateException();
-                }
-
-
-                public SavedState[] newArray(int size) {
-                    return new SavedState[size];
-                }
-            };
-
-        private SavedState(Parcel in, ClassLoader loader) {
-            super(in);
-            this.mChildrenStates = in.readSparseArray(loader);
-        }
     }
 }
