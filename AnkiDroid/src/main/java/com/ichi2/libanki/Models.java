@@ -1158,20 +1158,18 @@ public class Models {
         String question = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
         Set<Integer> ords = new HashSet<>();
         List<String> matches = new ArrayList<>();
-        Matcher mm = fClozePattern1.matcher(question);
-        while (mm.find()) {
-            matches.add(mm.group(1));
-        }
-        mm = fClozePattern2.matcher(question);
-        while (mm.find()) {
-            matches.add(mm.group(1));
+        for (Pattern pattern : new Pattern[]{fClozePattern1, fClozePattern2}) {
+             Matcher mm = pattern.matcher(question);
+             while (mm.find()) {
+                 matches.add(mm.group(1));
+             }
         }
         for (String fname : matches) {
             if (!map.containsKey(fname)) {
                 continue;
             }
             int ord = map.get(fname).first;
-            mm = fClozeOrdPattern.matcher(sflds[ord]);
+            Matcher mm = fClozeOrdPattern.matcher(sflds[ord]);
             while (mm.find()) {
                 ords.add(Integer.parseInt(mm.group(1)) - 1);
             }
