@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.WeakHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1146,18 +1147,28 @@ public class Models {
         return _availClozeOrds(m, sflds, true);
     }
 
+    /**
+     * Cache of getNamesOfFieldsContainingCloze
+     * Computing hash of string is costly. However, hash is cashed in the string object, so this virtually ensure that
+     * given a card type, we don't nede to recompute the hash.
+     */
+    private static WeakHashMap<String, List<String>> namesOfFieldsContainingClozeCache = new WeakHashMap<>();
+
     /** The name of all fields that are used as cloze in the question.
      * It is not guaranteed that the field found are actually the name of any field of the note type.*/
     @VisibleForTesting
     protected static List<String> getNamesOfFieldsContainingCloze(String question) {
-        List<String> matches = new ArrayList<>();
-        for (Pattern pattern : new Pattern[]{fClozePattern1, fClozePattern2}) {
-             Matcher mm = pattern.matcher(question);
-             while (mm.find()) {
-                 matches.add(mm.group(1));
-             }
+        if (! namesOfFieldsContainingClozeCache.containsKey(question)) {
+            List<String> matches = new ArrayList<>();
+            for (Pattern pattern : new Pattern[] {fClozePattern1, fClozePattern2}) {
+                Matcher mm = pattern.matcher(question);
+                while (mm.find()) {
+                    matches.add(mm.group(1));
+                }
+            }
+            namesOfFieldsContainingClozeCache.put(question, matches);
         }
-        return matches;
+        return namesOfFieldsContainingClozeCache.get(question);
     }
 
     /**
