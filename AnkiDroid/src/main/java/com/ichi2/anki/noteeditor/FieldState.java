@@ -28,6 +28,7 @@ import com.ichi2.anki.NoteEditor;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
+import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
@@ -73,6 +74,18 @@ public class FieldState {
         }
         for (FieldEditLine l : fieldEditLines) {
             l.setId(ViewCompat.generateViewId());
+        }
+
+        if (type.mType == Type.CLEAR_KEEP_STICKY) {
+            // we use the UI values here as the model will post-processing steps (newline -> br).
+            String[] currentFieldStrings = mEditor.getCurrentFieldStrings();
+
+            JSONArray flds = mEditor.getCurrentFields();
+            for (int fldIdx = 0; fldIdx < flds.length(); fldIdx++) {
+                if (flds.getJSONObject(fldIdx).getBoolean("sticky")) {
+                    fieldEditLines.get(fldIdx).setContent(currentFieldStrings[fldIdx]);
+                }
+            }
         }
         return fieldEditLines;
     }
