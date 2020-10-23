@@ -1369,9 +1369,10 @@ public class NoteEditor extends AnkiActivity {
         }
         ClipboardManager clipboard = ContextCompat.getSystemService(this, ClipboardManager.class);
 
+        List<FieldEditLine> editLines = getFieldEditLines(fields);
         FieldEditLine previous = null;
-        for (int i = 0; i < fields.length; i++) {
-            FieldEditLine edit_line_view = new FieldEditLine(this);
+        for (int i = 0; i < editLines.size(); i++) {
+            FieldEditLine edit_line_view = editLines.get(i);
             FieldEditText newTextbox = edit_line_view.getEditText();
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -1390,13 +1391,9 @@ public class NoteEditor extends AnkiActivity {
                 Field f = new Field(getFieldByIndex(i), getCol());
                 ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox, f);
                 edit_line_view.setActionModeCallbacks(actionModeCallback);
-
             }
 
             edit_line_view.setTypeface(mCustomTypeface);
-            edit_line_view.setName(fields[i][0]);
-            edit_line_view.setContent(fields[i][1]);
-            edit_line_view.setOrd(i);
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
             initFieldEditText(newTextbox, i, !editModelMode, clipboard);
             mEditFields.add(newTextbox);
@@ -1426,6 +1423,20 @@ public class NoteEditor extends AnkiActivity {
             mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, fields[i][0]));
             mFieldsLayoutContainer.addView(edit_line_view);
         }
+    }
+
+
+    @NonNull
+    private List<FieldEditLine> getFieldEditLines(String[][] fields) {
+        List<FieldEditLine> editLines = new ArrayList<>();
+        for (int i = 0; i < fields.length; i++) {
+            FieldEditLine edit_line_view = new FieldEditLine(this);
+            editLines.add(edit_line_view);
+            edit_line_view.setName(fields[i][0]);
+            edit_line_view.setContent(fields[i][1]);
+            edit_line_view.setOrd(i);
+        }
+        return editLines;
     }
 
 
