@@ -1155,13 +1155,14 @@ public class Models {
      * If empty is not allowed, it will contains ord 1.*/
     public static ArrayList<Integer> _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
+        String question = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
         Set<Integer> ords = new HashSet<>();
         List<String> matches = new ArrayList<>();
-        Matcher mm = fClozePattern1.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
+        Matcher mm = fClozePattern1.matcher(question);
         while (mm.find()) {
             matches.add(mm.group(1));
         }
-        mm = fClozePattern2.matcher(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"));
+        mm = fClozePattern2.matcher(question);
         while (mm.find()) {
             matches.add(mm.group(1));
         }
