@@ -744,9 +744,9 @@ public class Collection {
         HashMap<Long, Long> dids = new HashMap<>();
         // For each note, an arbitrary due of one of its due card processed, if any exists
         HashMap<Long, Long> dues = new HashMap<>();
-        Cursor cur = null;
+        Cursor cur = null; 
         try {
-            cur = mDb.getDatabase().query("select id, nid, ord, did, due, odue, odid, type from cards where nid in " + snids, null);
+            cur = mDb.getDatabase().query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids, null);
             while (cur.moveToNext()) {
                 if (task != null && task.isCancelled()) {
                     Timber.v("Empty card cancelled");
@@ -757,19 +757,13 @@ public class Collection {
                 int ord = cur.getInt(2);
                 long did = cur.getLong(3);
                 long due = cur.getLong(4);
-                long odue = cur.getLong(5);
-                long odid = cur.getLong(6);
-                @Consts.CARD_TYPE int type = cur.getInt(7);
+                @Consts.CARD_TYPE int type = cur.getInt(5);
 
                 // existing cards
                 if (!have.containsKey(nid)) {
                     have.put(nid, new HashMap<>());
                 }
                 have.get(nid).put(ord, id);
-                // if in a filtered deck, add new cards to original deck
-                if (odid != 0) {
-                    did = odid;
-                }
                 // and their dids
                 if (dids.containsKey(nid)) {
                     if (dids.get(nid) != 0 && dids.get(nid) != did) {
@@ -779,10 +773,6 @@ public class Collection {
                 } else {
                     // first card or multiple cards in same deck
                     dids.put(nid, did);
-                }
-                // save due
-                if (odid != 0) {
-                    due = odue;
                 }
                 if (!dues.containsKey(nid) && type == Consts.CARD_TYPE_NEW) {
                     dues.put(nid, due);
