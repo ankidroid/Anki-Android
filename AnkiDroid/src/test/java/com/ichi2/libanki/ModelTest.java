@@ -5,10 +5,10 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -472,5 +472,13 @@ public class ModelTest extends RobolectricTest {
         Note note = addNoteUsingBasicModel("foo", "bar");
         Card c = note.cards().get(0);
         assertThat(c.q(), containsString("unknown field"));
+    }
+
+    @Test
+    public void test_getNamesOfFieldContainingCloze() {
+        assertEquals(new ArrayList<>(), Models.getNamesOfFieldsContainingCloze(""));
+        String example = "{{cloze::foo}} <%cloze:bar%>";
+        assertEquals(Arrays.asList(new String[] {"foo", "bar"}), Models.getNamesOfFieldsContainingCloze(example));
+        assertEquals(Arrays.asList(new String[] {"foo", "bar"}), Models.getNamesOfFieldsContainingCloze(example));
     }
 }

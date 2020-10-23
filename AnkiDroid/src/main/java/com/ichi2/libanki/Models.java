@@ -1146,6 +1146,19 @@ public class Models {
         return _availClozeOrds(m, sflds, true);
     }
 
+    /** The name of all fields that are used as cloze in the question.
+     * It is not guaranteed that the field found are actually the name of any field of the note type.*/
+    @VisibleForTesting
+    protected static List<String> getNamesOfFieldsContainingCloze(String question) {
+        List<String> matches = new ArrayList<>();
+        for (Pattern pattern : new Pattern[]{fClozePattern1, fClozePattern2}) {
+             Matcher mm = pattern.matcher(question);
+             while (mm.find()) {
+                 matches.add(mm.group(1));
+             }
+        }
+        return matches;
+    }
 
     /**
      * @param m A note type with cloze
@@ -1157,13 +1170,7 @@ public class Models {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
         String question = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
         Set<Integer> ords = new HashSet<>();
-        List<String> matches = new ArrayList<>();
-        for (Pattern pattern : new Pattern[]{fClozePattern1, fClozePattern2}) {
-             Matcher mm = pattern.matcher(question);
-             while (mm.find()) {
-                 matches.add(mm.group(1));
-             }
-        }
+        List<String> matches = getNamesOfFieldsContainingCloze(question);
         for (String fname : matches) {
             if (!map.containsKey(fname)) {
                 continue;
