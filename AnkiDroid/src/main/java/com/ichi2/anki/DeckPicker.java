@@ -245,7 +245,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private final OnClickListener mDeckExpanderClickListener = view -> {
         Long did = (Long) view.getTag();
         if (getCol().getDecks().children(did).size() > 0) {
-            getCol().getDecks().collpase(did);
+            getCol().getDecks().collapse(did);
             __renderPage();
             dismissAllDialogFragments();
         }
