@@ -1195,8 +1195,8 @@ public class Models {
 
     /** Validate model entries. */
 	public boolean validateModel() {
-        for (Entry<Long, Model> longJSONObjectEntry : mModels.entrySet()) {
-            if (!validateBrackets(longJSONObjectEntry.getValue())) {
+        for (Model model : mModels.values()) {
+            if (!validateBrackets(model)) {
                 return false;
             }
         }
