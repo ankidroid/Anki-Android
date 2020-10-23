@@ -84,4 +84,10 @@ public class UtilsTest {
         Utils.copyFile(new File(resource.toURI()), copy);
         Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
     }
+
+    @Test
+    public void testSplit() {
+        Assert.assertArrayEquals(new String[]{"foo", "bar"}, Utils.splitFields("foobar"));
+        Assert.assertArrayEquals(new String[]{"", "foo", "", "", ""}, Utils.splitFields("foo"));
+    }
 }
