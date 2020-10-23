@@ -75,6 +75,8 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.anki.multimediacard.fields.ImageField;
 import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
+import com.ichi2.anki.noteeditor.FieldState;
+import com.ichi2.anki.noteeditor.FieldState.FieldChangeType;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.CollectionTask;
@@ -95,6 +97,7 @@ import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.MapUtil;
 import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.utils.NoteFieldDecorator;
 import com.ichi2.utils.TextViewUtil;
@@ -111,7 +114,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
@@ -224,6 +226,7 @@ public class NoteEditor extends AnkiActivity {
 
     private String[] mSourceText;
 
+    private FieldState mFieldState = FieldState.fromEditor(this);
 
     // A bundle that maps field ords to the text content of that field for use in
     // restoring the Activity.
@@ -264,7 +267,7 @@ public class NoteEditor extends AnkiActivity {
                 Note oldNote = noteEditor.mEditorNote.clone();
                 // The saved values may have changes (newline -> <br>) use UI values instead.
                 String[] currentStrings = noteEditor.getCurrentFieldStrings();
-                noteEditor.setNote();
+                noteEditor.refreshNoteData(FieldChangeType.refreshWithStickyFields());
                 // Respect "Remember last input when adding" field option.
                 JSONArray flds = noteEditor.mEditorNote.model().getJSONArray("flds");
                 if (oldNote != null) {
@@ -588,7 +591,7 @@ public class NoteEditor extends AnkiActivity {
 
         setDid(mEditorNote);
 
-        setNote(mEditorNote);
+        setNote(mEditorNote, FieldChangeType.onActivityCreation());
 
         if (mAddNote) {
             mNoteTypeSpinner.setOnItemSelectedListener(new SetNoteTypeListener());
@@ -1337,26 +1340,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    private void populateEditFields() {
-        String[][] fields;
-        // If we have a bundle of pre-populated field values, we overwrite the existing values
-        // with those ones since we are resuming the activity after it was terminated early.
-        if (mSavedFields != null) {
-            fields = mEditorNote.items();
-            for (String key : mSavedFields.keySet()) {
-                int ord = Integer.parseInt(key);
-                String text = mSavedFields.getString(key);
-                fields[ord][1] = text;
-            }
-            // Clear the saved values since we've consumed them.
-            mSavedFields = null;
-        } else {
-            fields = mEditorNote.items();
-        }
-        populateEditFields(fields, false);
-    }
-
-    private void populateEditFields(String[][] fields, boolean editModelMode) {
+    private void populateEditFields(FieldChangeType type, boolean editModelMode) {
         mFieldsLayoutContainer.removeAllViews();
         mEditFields = new LinkedList<>();
 
@@ -1369,8 +1353,9 @@ public class NoteEditor extends AnkiActivity {
         }
         ClipboardManager clipboard = ContextCompat.getSystemService(this, ClipboardManager.class);
 
-        List<FieldEditLine> editLines = getFieldEditLines(fields);
+        List<FieldEditLine> editLines = mFieldState.loadFieldEditLines(type);
         FieldEditLine previous = null;
+
         for (int i = 0; i < editLines.size(); i++) {
             FieldEditLine edit_line_view = editLines.get(i);
             FieldEditText newTextbox = edit_line_view.getEditText();
@@ -1420,23 +1405,9 @@ public class NoteEditor extends AnkiActivity {
                 previous.getMediaButton().setNextFocusForwardId(R.id.CardEditorTagButton);
             }
 
-            mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, fields[i][0]));
+            mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, edit_line_view.getName()));
             mFieldsLayoutContainer.addView(edit_line_view);
         }
-    }
-
-
-    @NonNull
-    private List<FieldEditLine> getFieldEditLines(String[][] fields) {
-        List<FieldEditLine> editLines = new ArrayList<>();
-        for (int i = 0; i < fields.length; i++) {
-            FieldEditLine edit_line_view = new FieldEditLine(this);
-            editLines.add(edit_line_view);
-            edit_line_view.setName(fields[i][0]);
-            edit_line_view.setContent(fields[i][1]);
-            edit_line_view.setOrd(i);
-        }
-        return editLines;
     }
 
 
@@ -1518,7 +1489,7 @@ public class NoteEditor extends AnkiActivity {
                 Integer idx = item.getItemId();
                 Timber.i("NoteEditor:: User chose to remap to old field %d", idx);
                 // Retrieve any existing mappings between newFieldIndex and idx
-                Integer previousMapping = getKeyByValue(mModelChangeFieldMap, newFieldIndex);
+                Integer previousMapping = MapUtil.getKeyByValue(mModelChangeFieldMap, newFieldIndex);
                 Integer mappingConflict = mModelChangeFieldMap.get(idx);
                 // Update the mapping depending on any conflicts
                 if (idx == items.length && previousMapping != null) {
@@ -1731,13 +1702,13 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    /** Make NOTE the current note. */
-    private void setNote() {
-        setNote(null);
+    /** Refreshes the UI using the currently selected model as a template */
+    private void refreshNoteData(@NonNull FieldChangeType changeType) {
+        setNote(null, changeType);
     }
 
-
-    private void setNote(Note note) {
+    /** Handles setting the current note (non-null afterwards) and rebuilding the UI based on this note */
+    private void setNote(Note note, @NonNull FieldChangeType changeType) {
         if (note == null || mAddNote) {
             Model model = getCol().getModels().current();
             mEditorNote = new Note(getCol(), model);
@@ -1752,7 +1723,7 @@ public class NoteEditor extends AnkiActivity {
         updateDeckPosition();
         updateTags();
         updateCards(mEditorNote.model());
-        populateEditFields();
+        populateEditFields(changeType, false);
     }
 
 
@@ -1839,62 +1810,13 @@ public class NoteEditor extends AnkiActivity {
         return getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition()));
     }
 
-    /**
-     * Convenience method for getting the corresponding key given the value in a 1-to-1 map
-     * @param map map containing 1-to-1 key/value pairs
-     * @param value value to get key for
-     * @return key corresponding to the given value
-     */
-    @Nullable
-    private <T, E> T getKeyByValue(Map<T, E> map, E value) {
-        for (Entry<T, E> entry : map.entrySet()) {
-            if (value.equals(entry.getValue())) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
 
     /**
      * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
      */
     private void updateFieldsFromMap(Model newModel) {
-        // Get the field map for new model and old fields list
-        String [][] oldFields = mEditorNote.items();
-        Map<String, Pair<Integer, JSONObject>> fMapNew = Models.fieldMap(newModel);
-        // Build array of label/values to provide to field EditText views
-        String[][] fields = new String[fMapNew.size()][2];
-        for (String fname : fMapNew.keySet()) {
-            Pair<Integer, JSONObject> fieldPair = fMapNew.get(fname);
-            if (fieldPair == null) {
-                continue;
-            }
-            // Field index of new note type
-            Integer i = fieldPair.first;
-            // Add values from old note type if they exist in map, otherwise make the new field empty
-            if (mModelChangeFieldMap.containsValue(i)) {
-                // Get index of field from old note type given the field index of new note type
-                Integer j = getKeyByValue(mModelChangeFieldMap, i);
-                if (j == null) {
-                    continue;
-                }
-                // Set the new field label text
-                if (allowFieldRemapping()) {
-                    // Show the content of old field if remapping is enabled
-                    fields[i][0] = String.format(getResources().getString(R.string.field_remapping), fname, oldFields[j][0]);
-                } else {
-                    fields[i][0] = fname;
-                }
-
-                // Set the new field label value
-                fields[i][1] = oldFields[j][1];
-            } else {
-                // No values from old note type exist in the mapping
-                fields[i][0] = fname;
-                fields[i][1] = "";
-            }
-        }
-        populateEditFields(fields, true);
+        FieldChangeType type = FieldChangeType.refreshWithMap(newModel, mModelChangeFieldMap);
+        populateEditFields(type, true);
         updateCards(newModel);
     }
 
@@ -1905,6 +1827,25 @@ public class NoteEditor extends AnkiActivity {
     private boolean allowFieldRemapping() {
         // Map<String, Pair<Integer, JSONObject>> fMapNew = getCol().getModels().fieldMap(getCurrentlySelectedModel())
         return mEditorNote.items().length > 2;
+    }
+
+    public String[][] consumeSavedFields() {
+        if (mSavedFields == null) {
+            return null;
+        }
+        String[][] fields = mEditorNote.items();
+        for (String key : mSavedFields.keySet()) {
+            int ord = Integer.parseInt(key);
+            String text = mSavedFields.getString(key);
+            fields[ord][1] = text;
+        }
+        // Clear the saved values since we've consumed them.
+        mSavedFields = null;
+        return fields;
+    }
+
+    public String[][] getFieldsFromSelectedNote() {
+        return mEditorNote.items();
     }
 
     // ----------------------------------------------------------------------------
@@ -1942,7 +1883,7 @@ public class NoteEditor extends AnkiActivity {
                 for (int i = 0; i < size; i++) {
                     oldValues[i] = getCurrentFieldText(i);
                 }
-                setNote();
+                refreshNoteData(FieldChangeType.changeFieldCount());
                 resetEditFields(oldValues);
                 setDuplicateFieldStyles();
             }
@@ -1996,7 +1937,7 @@ public class NoteEditor extends AnkiActivity {
                     mNoteDeckSpinner.setSelection(position, false);
                 }
             } else {
-                populateEditFields();
+                populateEditFields(FieldChangeType.refresh(), false);
                 updateCards(mCurrentEditedCard.model());
                 findViewById(R.id.CardEditorTagButton).setEnabled(true);
                 //((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
