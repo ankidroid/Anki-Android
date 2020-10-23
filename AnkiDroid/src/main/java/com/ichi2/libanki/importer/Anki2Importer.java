@@ -51,6 +51,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
@@ -248,9 +249,10 @@ public class Anki2Importer extends Importer {
                     dupes += 1;
                     if (mAllowUpdate) {
                         Object[] n = mNotes.get(note[GUID]);
+                        //todo: oldNid could be Long instead of long.
                         long oldNid = (Long) n[0];
                         long oldMod = (Long) n[1];
-                        long oldMid = (Long) n[2];
+                        @NonNull Long oldMid = (Long) n[2];
                         // will update if incoming note more recent
                         if (oldMod < (Long) note[MOD]) {
                             // safe if note types identical
@@ -349,8 +351,8 @@ public class Anki2Importer extends Importer {
     // returns true if note should be added
     private boolean _uniquifyNote(Object[] note) {
         String origGuid = (String) note[GUID];
-        long srcMid = (Long) note[MID];
-        long dstMid = _mid(srcMid);
+        @NonNull Long srcMid = (Long) note[MID];
+        @NonNull Long dstMid = _mid(srcMid);
         // duplicate Schemas?
         if (srcMid == dstMid) {
             return !mNotes.containsKey(origGuid);
@@ -381,12 +383,12 @@ public class Anki2Importer extends Importer {
 
 
     /** Return local id for remote MID. */
-    private long _mid(long srcMid) {
+    @NonNull private Long _mid(Long srcMid) {
         // already processed this mid?
         if (mModelMap.containsKey(srcMid)) {
             return mModelMap.get(srcMid);
         }
-        long mid = srcMid;
+        @NonNull Long mid = srcMid;
         Model srcModel = mSrc.getModels().get(srcMid);
         String srcScm = mSrc.getModels().scmhash(srcModel);
         while (true) {
@@ -394,7 +396,7 @@ public class Anki2Importer extends Importer {
             if (!mDst.getModels().have(mid)) {
                 // copy it over
                 Model model = srcModel.deepClone();
-                model.put("id", mid);
+                model.put("id", (long) mid);
                 model.put("mod", mCol.getTime().intTime());
                 model.put("usn", mCol.usn());
                 mDst.getModels().update(model);

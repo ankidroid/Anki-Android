@@ -1908,7 +1908,7 @@ public class NoteEditor extends AnkiActivity {
             // If a new column was selected then change the key used to map from mCards to the column TextView
             //Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
             long oldModelId = getCol().getModels().current().getLong("id");
-            long newId = mAllModelIds.get(pos);
+            @NonNull Long newId = mAllModelIds.get(pos);
             Timber.i("Changing note type to '%d", newId);
             if (oldModelId != newId) {
                 Model model = getCol().getModels().get(newId);

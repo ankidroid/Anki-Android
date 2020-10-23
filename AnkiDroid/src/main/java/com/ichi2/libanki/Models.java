@@ -277,7 +277,7 @@ public class Models {
 
 
     /** get model with ID, or null. */
-    public @Nullable Model get(long id) {
+    public @Nullable Model get(@NonNull Long id) {
         if (mModels.containsKey(id)) {
             return mModels.get(id);
         } else {
