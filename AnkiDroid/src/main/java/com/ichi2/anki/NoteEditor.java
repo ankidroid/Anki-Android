@@ -32,6 +32,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -116,7 +117,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 
@@ -262,19 +262,7 @@ public class NoteEditor extends AnkiActivity {
             if (count > 0) {
                 noteEditor.mChanged = true;
                 noteEditor.mSourceText = null;
-                Note oldNote = noteEditor.mEditorNote.clone();
-                // The saved values may have changes (newline -> <br>) use UI values instead.
-                String[] currentStrings = noteEditor.getCurrentFieldStrings();
                 noteEditor.refreshNoteData(FieldChangeType.refreshWithStickyFields());
-                // Respect "Remember last input when adding" field option.
-                JSONArray flds = noteEditor.mEditorNote.model().getJSONArray("flds");
-                if (oldNote != null) {
-                    for (int fldIdx = 0; fldIdx < flds.length(); fldIdx++) {
-                        if (flds.getJSONObject(fldIdx).getBoolean("sticky")) {
-                            noteEditor.mEditFields.get(fldIdx).setText(currentStrings[fldIdx]);
-                        }
-                    }
-                }
                 UIUtils.showThemedToast(noteEditor,
                         noteEditor.getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
             } else {
@@ -1320,8 +1308,12 @@ public class NoteEditor extends AnkiActivity {
     }
 
 
-    @VisibleForTesting
-    String[] getCurrentFieldStrings() {
+    public JSONArray getCurrentFields() {
+        return mEditorNote.model().getJSONArray("flds");
+    }
+
+    @CheckResult
+    public String[] getCurrentFieldStrings() {
         if (mEditFields == null) {
             return new String[0];
         }
@@ -1334,6 +1326,7 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void populateEditFields(FieldChangeType type, boolean editModelMode) {
+        List<FieldEditLine> editLines = mFieldState.loadFieldEditLines(type);
         mFieldsLayoutContainer.removeAllViews();
         mCustomViewIds.clear();
         mEditFields = new LinkedList<>();
@@ -1347,7 +1340,6 @@ public class NoteEditor extends AnkiActivity {
         }
         ClipboardManager clipboard = ContextCompat.getSystemService(this, ClipboardManager.class);
 
-        List<FieldEditLine> editLines = mFieldState.loadFieldEditLines(type);
         FieldEditLine previous = null;
 
         for (int i = 0; i < editLines.size(); i++) {
