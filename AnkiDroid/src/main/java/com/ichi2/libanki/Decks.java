@@ -454,7 +454,7 @@ public class Decks {
     }
 
 
-    public void collpase(long did) {
+    public void collapse(long did) {
         Deck deck = get(did);
         deck.put("collapsed", !deck.getBoolean("collapsed"));
         save(deck);
