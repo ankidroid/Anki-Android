@@ -754,11 +754,11 @@ public class Collection {
                     Timber.v("Empty card cancelled");
                     return null;
                 }
-                Long id = cur.getLong(0);
-                Long nid = cur.getLong(1);
-                Integer ord = cur.getInt(2);
-                Long did = cur.getLong(3);
-                Long due = cur.getLong(4);
+                @NonNull Long id = cur.getLong(0);
+                @NonNull Long nid = cur.getLong(1);
+                @NonNull Integer ord = cur.getInt(2);
+                @NonNull Long did = cur.getLong(3);
+                @NonNull Long due = cur.getLong(4);
                 @Consts.CARD_TYPE int type = cur.getInt(5);
 
                 // existing cards
@@ -799,7 +799,7 @@ public class Collection {
                     Timber.v("Empty card cancelled");
                     return null;
                 }
-                Long nid = cur.getLong(0);
+                @NonNull Long nid = cur.getLong(0);
                 @NonNull Long mid = cur.getLong(1);
                 String flds = cur.getString(2);
                 Model model = getModels().get(mid);
@@ -809,7 +809,7 @@ public class Collection {
                 }
                 Long did = dids.get(nid);
                 // use sibling due if there is one, else use a new id
-                Long due;
+                @NonNull Long due;
                 if (dues.containsKey(nid)) {
                     due = dues.get(nid);
                 } else {
