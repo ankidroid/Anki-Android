@@ -706,10 +706,8 @@ public class Collection {
         JSONArray tmpls;
         if (model.getInt("type") == Consts.MODEL_STD) {
             tmpls = model.getJSONArray("tmpls");
-            for (JSONObject t : tmpls.jsonObjectIterable()) {
-                if (avail.contains(t.getInt("ord"))) {
-                    ok.add(t);
-                }
+            for (Integer ord : avail) {
+                ok.add(tmpls.getJSONObject(ord));
             }
         } else {
             // cloze - generate temporary templates from first
