@@ -92,7 +92,7 @@
     <string name="card_info_latest_review">Latest Review</string>
     <string name="card_info_interval">Interval</string>
     <string name="card_info_ease">Ease</string>
-    <string name="card_info_reviews">Reviews</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
     <string name="card_info_lapses">Lapses</string>
     <string name="card_info_average_time">Average Time</string>
     <string name="card_info_total_time">Total Time</string>
