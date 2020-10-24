@@ -865,14 +865,15 @@ public class Models {
     /**
      * Change a model
      * @param m The model to change.
-     * @param nids The list of notes that the change applies to. They are all of note type n
+     * @param nid The notes that the change applies to.
      * @param newModel For replacing the old model with another one. Should be self if the model is not changing
      * @param fmap Map for switching fields. This is ord->ord and there should not be duplicate targets
      * @param cmap Map for switching cards. This is ord->ord and there should not be duplicate targets
      * @throws ConfirmModSchemaException 
      */
-    public void change(Model m, long[] nids, Model newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
+    public void change(Model m, long nid, Model newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
         mCol.modSchema();
+        long[] nids = new long[] {nid};
         assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
         if (fmap != null) {
             _changeNotes(nids, newModel, fmap);

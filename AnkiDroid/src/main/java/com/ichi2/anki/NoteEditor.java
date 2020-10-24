@@ -952,8 +952,8 @@ public class NoteEditor extends AnkiActivity {
      * @throws ConfirmModSchemaException If a full sync will be required
      */
     private void changeNoteType(Model oldModel, Model newModel) throws ConfirmModSchemaException {
-        final long [] noteIds = {mEditorNote.getId()};
-        getCol().getModels().change(oldModel, noteIds, newModel, mModelChangeFieldMap, mModelChangeCardMap);
+        final long noteId = mEditorNote.getId();
+        getCol().getModels().change(oldModel, noteId, newModel, mModelChangeFieldMap, mModelChangeCardMap);
         // refresh the note object to reflect the database changes
         mEditorNote.load();
         // close note editor
