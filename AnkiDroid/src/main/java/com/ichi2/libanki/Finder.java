@@ -935,7 +935,7 @@ public class Finder {
             long mid = entry.getKey();
             java.util.Collection<Long> nids_ = entry.getValue();
             long[] pnids = Utils.toPrimitive(nids_);
-            col.updateFieldCache(pnids);
+            col.updateFieldCache(nidss);
             col.genCards(pnids, mid);
         }
         return d.size();

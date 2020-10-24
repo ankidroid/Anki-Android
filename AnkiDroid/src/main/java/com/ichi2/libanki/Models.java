@@ -462,7 +462,7 @@ public class Models {
     public void setSortIdx(Model m, int idx) throws ConfirmModSchemaException{
         mCol.modSchema();
         m.put("sortf", idx);
-        mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
+        mCol.updateFieldCache(nids(m));
         save(m);
     }
 
@@ -535,7 +535,7 @@ public class Models {
         _transformFields(m, new TransformFieldDelete(idx));
         if (idx == sortIdx(m)) {
             // need to rebuild
-            mCol.updateFieldCache(Utils.toPrimitive(nids(m)));
+            mCol.updateFieldCache(nids(m));
         }
         renameField(m, field, null);
 
