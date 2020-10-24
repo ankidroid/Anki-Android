@@ -405,7 +405,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void onSearch() {
         mSearchTerms = mSearchView.getQuery().toString();
         if (mSearchTerms.length() == 0) {
-            mSearchView.setQueryHint(getResources().getString(R.string.downloaddeck_search));
+            mSearchView.setQueryHint(getResources().getString(R.string.deck_conf_cram_search));
         }
         searchCards();
     }
