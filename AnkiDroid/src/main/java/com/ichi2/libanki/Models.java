@@ -876,7 +876,7 @@ public class Models {
         long[] nids = new long[] {nid};
         assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
         if (fmap != null) {
-            _changeNotes(nids, newModel, fmap);
+            _changeNote(nid, newModel, fmap);
         }
         if (cmap != null) {
             _changeCards(nid, m, newModel, cmap);
@@ -884,15 +884,14 @@ public class Models {
         mCol.genCards(nids, newModel);
     }
 
-    private void _changeNotes(long[] nids, Model newModel, Map<Integer, Integer> map) {
+    private void _changeNote(long nid, Model newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<>();
         int nfields = newModel.getJSONArray("flds").length();
         long mid = newModel.getLong("id");
         try (Cursor cur = mCol.getDb().getDatabase().query(
-                "select id, flds from notes where id in " + Utils.ids2str(nids), null)) {
+                "select flds from notes where id = ?", new Object[] {nid})) {
             while (cur.moveToNext()) {
-                long nid = cur.getLong(0);
-                String[] flds = Utils.splitFields(cur.getString(1));
+                String[] flds = Utils.splitFields(cur.getString(0));
                 Map<Integer, String> newflds = new HashMap<>();
 
                 for (Entry<Integer, Integer> entry : map.entrySet()) {
@@ -911,7 +910,7 @@ public class Models {
             }
         }
         mCol.getDb().executeMany("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", d);
-        mCol.updateFieldCache(nids);
+        mCol.updateFieldCache(new long[] {nid});
     }
 
     private void _changeCards(long nid, Model oldModel, Model newModel, Map<Integer, Integer> map) {
