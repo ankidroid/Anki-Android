@@ -24,6 +24,7 @@ import android.os.Build;
 import android.view.KeyEvent;
 import android.view.inputmethod.BaseInputConnection;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +45,35 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assume.assumeThat;
 
 @RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
-public class NoteEditorTest {
+public class NoteEditorTabOrderTest {
+
+    public NoteEditorTabOrderTest() {
+        // Rules mean that we get a failure on API 25.
+        // Even if we ignore the tests, the rules cause a failure.
+        // We can't ignore the test in @BeforeClass ("Test run failed to complete. Expected 150 tests, received 149")
+        // and @Before executes after the rule.
+        // So, disable the rules in the constructor, and ignore in before.
+        if (Build.VERSION.SDK_INT == 25 || Build.VERSION.SDK_INT == 30) {
+            activityRule = null;
+            mRuntimePermissionRule = null;
+        }
+    }
+
+    @Before
+    public void before() {
+        // TODO: Look into these assumptions and see if they can be diagnosed - both work on my emulators.
+        // If we fix them, we might be able to use instrumentation.sendKeyDownUpSync
+        /*
+        java.lang.AssertionError: Activity never becomes requested state "[DESTROYED]" (last lifecycle transition = "PAUSED")
+        at androidx.test.core.app.ActivityScenario.waitForActivityToBecomeAnyOf(ActivityScenario.java:301)
+         */
+        assumeThat("Test fails on Travis API 25", Build.VERSION.SDK_INT, not(is(25)));
+        /*
+        java.lang.AssertionError:
+        Expected: is "a"
+         */
+        assumeThat("Test fails on Travis API 30", Build.VERSION.SDK_INT, not(is(30)));
+    }
 
     @Rule public ActivityScenarioRule<NoteEditor> activityRule = new ActivityScenarioRule<>(getStartActivityIntent());
     @Rule public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(WRITE_EXTERNAL_STORAGE);
@@ -59,19 +88,6 @@ public class NoteEditorTest {
 
     @Test
     public void testTabOrder() throws Throwable {
-        // TODO: Look into these assumptions and see if they can be diagnosed - both work on my emulators.
-        // If we fix them, we might be able to use instrumentation.sendKeyDownUpSync
-        /*
-        java.lang.AssertionError: Activity never becomes requested state "[DESTROYED]" (last lifecycle transition = "PAUSED")
-        at androidx.test.core.app.ActivityScenario.waitForActivityToBecomeAnyOf(ActivityScenario.java:301)
-         */
-        assumeThat("Test fails on Travis API 25", Build.VERSION.SDK_INT, not(is(25)));
-        /*
-        java.lang.AssertionError:
-        Expected: is "a"
-         */
-        assumeThat("Test fails on Travis API 30", Build.VERSION.SDK_INT, not(is(30)));
-
         ensureCollectionLoaded();
         ActivityScenario<NoteEditor> scenario = activityRule.getScenario();
         scenario.moveToState(Lifecycle.State.RESUMED);
