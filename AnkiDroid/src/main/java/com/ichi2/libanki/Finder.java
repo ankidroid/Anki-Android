@@ -894,16 +894,16 @@ public class Finder {
 
         ArrayList<Object[]> d = new ArrayList<>();
         String snids = Utils.ids2str(nids);
-        nids = new ArrayList<>();
+        Map<Long, java.util.Collection<Long>> midToNid = new HashMap<>();
         try (Cursor cur = col.getDb().getDatabase().query(
                 "select id, mid, flds from notes where id in " + snids, null)) {
             while (cur.moveToNext()) {
+                long mid = cur.getLong(1);
                 String flds = cur.getString(2);
                 String origFlds = flds;
                 // does it match?
                 String[] sflds = Utils.splitFields(flds);
                 if (field != null) {
-                    long mid = cur.getLong(1);
                     if (!mmap.containsKey(mid)) {
                         // note doesn't have that field
                         continue;
@@ -918,7 +918,10 @@ public class Finder {
                 flds = Utils.joinFields(sflds);
                 if (!flds.equals(origFlds)) {
                     long nid = cur.getLong(0);
-                    nids.add(nid);
+                    if (!midToNid.containsKey(mid)) {
+                        midToNid.put(mid, new ArrayList<>());
+                    }
+                    midToNid.get(mid).add(nid);
                     d.add(new Object[] { flds, col.getTime().intTime(), col.usn(), nid }); // order based on query below
                 }
             }
@@ -928,9 +931,13 @@ public class Finder {
         }
         // replace
         col.getDb().executeMany("update notes set flds=?,mod=?,usn=? where id=?", d);
-        long[] pnids = Utils.toPrimitive(nids);
-        col.updateFieldCache(pnids);
-        col.genCards(pnids);
+        for (Map.Entry<Long, java.util.Collection<Long>> entry : midToNid.entrySet()) {
+            long mid = entry.getKey();
+            java.util.Collection<Long> nids_ = entry.getValue();
+            long[] pnids = Utils.toPrimitive(nids);
+            col.updateFieldCache(pnids);
+            col.genCards(pnids, mid);
+        }
         return d.size();
     }
 
