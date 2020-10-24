@@ -342,7 +342,7 @@ public class ModelTest extends RobolectricTest {
         Map<Integer, Integer> map = new HashMap<>();
         map.put(0, 1);
         map.put(1, 0);
-        col.getModels().change(basic, new long[] {note.getId()}, basic, map, null);
+        col.getModels().change(basic, note.getId(), basic, map, null);
         note.load();
         assertEquals("b123", note.getItem("Front"));
         assertEquals("note", note.getItem("Back"));
@@ -353,7 +353,7 @@ public class ModelTest extends RobolectricTest {
         assertThat(c1.q(), containsString("note"));
         assertEquals(0, c0.getOrd());
         assertEquals(1, c1.getOrd());
-        col.getModels().change(basic, new long[] {note.getId()}, basic, null, map);
+        col.getModels().change(basic, note.getId(), basic, null, map);
         note.load();
         c0.load();
         c1.load();
@@ -371,7 +371,7 @@ public class ModelTest extends RobolectricTest {
         //     // The low precision timer on Windows reveals a race condition
         //     time.sleep(0.05);
         // }
-        col.getModels().change(basic, new long[] {note.getId()}, basic, null, map);
+        col.getModels().change(basic, note.getId(), basic, null, map);
         note.load();
         c0.load();
         // the card was deleted
@@ -380,7 +380,7 @@ public class ModelTest extends RobolectricTest {
         // an unmapped field becomes blank
         assertEquals("b123", note.getItem("Front"));
         assertEquals("note", note.getItem("Back"));
-        col.getModels().change(basic, new long[] {note.getId()}, basic, map, null);
+        col.getModels().change(basic, note.getId(), basic, map, null);
         note.load();
         assertEquals("", note.getItem("Front"));
         assertEquals("note", note.getItem("Back"));
@@ -397,7 +397,7 @@ public class ModelTest extends RobolectricTest {
         map = new HashMap<>();
         map.put(0, 0);
         map.put(1, 1);
-        col.getModels().change(basic, new long[] {note.getId()}, cloze, map, map);
+        col.getModels().change(basic, note.getId(), cloze, map, map);
         note.load();
         assertEquals("f2", note.getItem("Text"));
         assertEquals(2, note.numberOfCards());
@@ -406,7 +406,7 @@ public class ModelTest extends RobolectricTest {
         assertEquals(2, col.getDb().queryScalar("select count() from cards where nid = ?", note.getId()));
         map = new HashMap<>();
         map.put(0, 0);
-        col.getModels().change(cloze, new long[] {note.getId()}, basic, map, map);
+        col.getModels().change(cloze, note.getId(), basic, map, map);
         assertEquals(1, col.getDb().queryScalar("select count() from cards where nid = ?", note.getId()));
     }
 
