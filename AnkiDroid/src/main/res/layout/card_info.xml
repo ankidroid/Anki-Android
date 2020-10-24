@@ -110,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@id/card_info_due"
-            android:text="@string/card_info_due"
+            android:text="@string/card_details_due"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/card_info_latest_review_label"
             app:layout_constraintTop_toBottomOf="@+id/card_info_latest_review" />
