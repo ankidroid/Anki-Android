@@ -1098,9 +1098,23 @@ public class Collection {
     }
 
 
-    /** Update field checksums and sort cache, after find&replace, etc. */
+    /** Update field checksums and sort cache, after find&replace, etc.
+     * @param nids*/
+    public void updateFieldCache(java.util.Collection<Long> nids) {
+        String snids = Utils.ids2str(nids);
+        updateFieldCache(snids);
+    }
+
+    /** Update field checksums and sort cache, after find&replace, etc.
+     * @param nids*/
     public void updateFieldCache(long[] nids) {
         String snids = Utils.ids2str(nids);
+        updateFieldCache(snids);
+    }
+
+    /** Update field checksums and sort cache, after find&replace, etc.
+     * @param snids comma separated nids*/
+    public void updateFieldCache(String snids) {
         ArrayList<Object[]> r = new ArrayList<>();
         for (Object[] o : _fieldData(snids)) {
             String[] fields = Utils.splitFields((String) o[2]);
@@ -1709,7 +1723,7 @@ public class Collection {
         // field cache
         for (Model m : getModels().all()) {
             notifyProgress.run();
-            updateFieldCache(Utils.collection2Array(getModels().nids(m)));
+            updateFieldCache(getModels().nids(m));
         }
         return Collections.emptyList();
     }

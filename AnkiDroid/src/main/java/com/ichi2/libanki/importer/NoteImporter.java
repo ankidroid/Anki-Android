@@ -247,7 +247,7 @@ public class NoteImporter extends Importer {
         addNew(_new);
         addUpdates(updates);
         // make sure to update sflds, etc
-        mCol.updateFieldCache(collection2Array(_ids));
+        mCol.updateFieldCache(_ids);
         // generate cards
         if (!mCol.genCards(_ids, mModel).isEmpty()) {
             this.getLog().add(0, getString(R.string.note_importer_empty_cards_found));

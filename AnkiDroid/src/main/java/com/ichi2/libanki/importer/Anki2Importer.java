@@ -292,7 +292,7 @@ public class Anki2Importer extends Importer {
                 if (dirty.size() >= thresExecDirty) {
                     totalDirtyCount  += dirty.size();
                     long[] das = Utils.collection2Array(dirty);
-                    mDst.updateFieldCache(das);
+                    mDst.updateFieldCache(dirty);
                     mDst.getTags().registerNotes(das);
                     dirty.clear();
                     Timber.d("dirty notes: %d", totalDirtyCount);
@@ -335,7 +335,7 @@ public class Anki2Importer extends Importer {
         }
 
         long[] das = Utils.collection2Array(dirty);
-        mDst.updateFieldCache(das);
+        mDst.updateFieldCache(dirty);
         mDst.getTags().registerNotes(das);
     }
 
