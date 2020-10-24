@@ -352,7 +352,7 @@
         <!-- "Add Note" widget -->
         <receiver
             android:name="com.ichi2.widget.AddNoteWidget"
-            android:label="@string/widget_add_note">
+            android:label="@string/menu_add_note">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
