@@ -935,9 +935,8 @@ public class Finder {
         for (Map.Entry<Long, java.util.Collection<Long>> entry : midToNid.entrySet()) {
             long mid = entry.getKey();
             java.util.Collection<Long> nids_ = entry.getValue();
-            long[] pnids = Utils.toPrimitive(nids_);
-            col.updateFieldCache(nidss);
-            col.genCards(pnids, mid);
+            col.updateFieldCache(nids_);
+            col.genCards(nids_, mid);
         }
         return d.size();
     }
