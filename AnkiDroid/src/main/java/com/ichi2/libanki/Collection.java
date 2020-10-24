@@ -725,16 +725,16 @@ public class Collection {
     /**
      * Generate cards for non-empty templates, return ids to remove.
      */
-	public ArrayList<Long> genCards(List<Long> nids, @NonNull Model model) {
+	public ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model) {
 	    return genCards(Utils.collection2Array(nids), model);
 	}
 
-    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(List<Long> nids, @NonNull Model model, @Nullable T task) {
+    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model, @Nullable T task) {
        return genCards(Utils.collection2Array(nids), model, task);
     }
 
-    public ArrayList<Long> genCards(long[] nids, long mid) {
-        return genCards(nids, getModels().get(mid), null);
+    public ArrayList<Long> genCards(java.util.Collection<Long> nids, long mid) {
+        return genCards(nids, getModels().get(mid));
     }
 
     public ArrayList<Long> genCards(long[] nids, @NonNull Model model) {
