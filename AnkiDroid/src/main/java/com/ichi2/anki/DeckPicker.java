@@ -728,14 +728,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
             case NO_CHANGES:
             case INCONCLUSIVE:
                 BadgeDrawableBuilder.removeBadge(syncMenu);
-                syncMenu.setTitle(R.string.sync_menu_title);
+                syncMenu.setTitle(R.string.button_sync);
                 break;
             case HAS_CHANGES:
                 // Light orange icon
                 new BadgeDrawableBuilder(getResources())
                         .withColor(ContextCompat.getColor(this, R.color.badge_warning))
                         .replaceBadge(syncMenu);
-                syncMenu.setTitle(R.string.sync_menu_title);
+                syncMenu.setTitle(R.string.button_sync);
                 break;
             case NO_ACCOUNT:
             case FULL_SYNC:
