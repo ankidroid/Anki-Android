@@ -224,19 +224,7 @@ public class Stats {
 
 
         long cut = mCol.getSched().getDayCutoff();
-        int cardCount = 0;
-        String query = "select " +
-                "(cast((id/1000.0 - ?) / " + SECONDS_PER_DAY + ".0 as int))/? as day," +
-                " count(id) " +
-                " from cards " + lim +
-                " group by day order by day";
-
-        try (Cursor c = mCol.getDb().getDatabase().query(query,
-                new Object[] {cut, chunk })) {
-            while (c.moveToNext()) {
-                cardCount += c.getLong(1);
-            }
-        }
+        int cardCount= mCol.getDb().queryScalar("select count(id) from cards " + lim);
 
         long periodDays = _periodDays(timespan); // 30|365|-1
         if (periodDays == -1) {
