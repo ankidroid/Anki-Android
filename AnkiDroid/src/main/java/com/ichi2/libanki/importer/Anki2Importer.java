@@ -408,7 +408,7 @@ public class Anki2Importer extends Importer {
             if (srcScm.equals(dstScm)) {
                 // they do; we can reuse this mid
                 Model model = srcModel.deepClone();
-                model.put("id", mid);
+                model.put("id", (long) mid);
                 model.put("mod", mCol.getTime().intTime());
                 model.put("usn", mCol.usn());
                 mDst.getModels().update(model);
