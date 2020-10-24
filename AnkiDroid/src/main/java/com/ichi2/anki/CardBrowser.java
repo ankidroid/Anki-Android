@@ -2481,7 +2481,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return getCard().getDueString();
             case EASE:
                 if (getCard().getType() == Consts.CARD_TYPE_NEW) {
-                    return AnkiDroidApp.getInstance().getString(R.string.card_browser_ease_new_card);
+                    return AnkiDroidApp.getInstance().getString(R.string.card_browser_interval_new_card);
                 } else {
                     return (getCard().getFactor()/10)+"%";
                 }
