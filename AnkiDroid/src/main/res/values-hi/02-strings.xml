@@ -245,7 +245,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s सेकंड</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -279,11 +279,11 @@
     <string name="restore_default">पहले जैसा कर देना</string>
     <string name="reviewer_tts_cloze_spoken_replacement">रिक्त</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">कृपया जावास्क्रिप्ट का उपयोग करके शो नेविगेशन दराज का उपयोग करने के लिए फुलस्क्रीन चालू करें।</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">कृपया जावास्क्रिप्ट का उपयोग करके शो विकल्प मेनू का उपयोग करने के लिए फुलस्क्रीन चालू करें।</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
+    <string name="white_board_image_save_failed">व्हाइटबोर्ड छवि को बचाने में विफल। %s</string>
+    <string name="white_board_image_saved">व्हाइटबोर्ड छवि %s में सहेजी गई</string>
     <string name="title_whiteboard_pen_color">व्हाईट बोर्ड के पेन</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>

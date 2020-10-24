@@ -116,7 +116,6 @@
     <string name="stats_breakdown">По часам</string>
     <string name="stats_weekly_breakdown">По дням</string>
     <string name="stats_answer_buttons">Кнопки ответа</string>
-    <string name="stats_cards_types">Типы карточек</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>

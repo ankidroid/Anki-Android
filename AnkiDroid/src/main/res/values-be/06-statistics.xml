@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Дзённае размеркаванне</string>
     <string name="stats_weekly_breakdown">Тыднёвае размеркаванне</string>
     <string name="stats_answer_buttons">Кнопкі адказу</string>
-    <string name="stats_cards_types">Тыпы картак</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>

@@ -231,6 +231,7 @@
     <string name="deck_conf_use_general_timeout_settings">Gunakan pengaturan umum</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Gunakan pengaturan umum \'Tampilkan jawaban otomatis\' daripada menggunakan pengaturan grup ini.</string>
     <string name="deck_conf_easy_bonus">Bonus mudah</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Pengubah interval</string>
     <string name="deck_conf_max_ivl">Interval maksimal</string>
     <string name="deck_conf_new_lps_ivl">Interval baru</string>

@@ -231,6 +231,7 @@
     <string name="deck_conf_use_general_timeout_settings">Uzi ĝeneralajn agordojn</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Uzi ĝeneralajn agordojn pri “aŭtomate montri respondon” anstataŭ uzi agordojn por tiu ĉi grupo.</string>
     <string name="deck_conf_easy_bonus">Premio por facileco</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Obligi intertempon je</string>
     <string name="deck_conf_max_ivl">Maksimuma intertempo</string>
     <string name="deck_conf_new_lps_ivl">Nova intertempo</string>

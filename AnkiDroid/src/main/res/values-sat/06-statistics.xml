@@ -116,7 +116,6 @@
     <string name="stats_breakdown">ᱴᱟᱲᱟᱝ ᱠᱷᱩᱱᱰᱤ</string>
     <string name="stats_weekly_breakdown">ᱦᱟᱴ ᱠᱷᱩᱱᱰᱤ</string>
     <string name="stats_answer_buttons">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ</string>
-    <string name="stats_cards_types">ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ</string>
     <string-array name="stats_day_time_strings">
         <item>᱔AM</item>
         <item>᱑᱐AM</item>

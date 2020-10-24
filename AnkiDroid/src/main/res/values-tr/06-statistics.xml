@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Saatlik döküm</string>
     <string name="stats_weekly_breakdown">Haftalık döküm</string>
     <string name="stats_answer_buttons">Cevap butonlari</string>
-    <string name="stats_cards_types">Kart türleri</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>

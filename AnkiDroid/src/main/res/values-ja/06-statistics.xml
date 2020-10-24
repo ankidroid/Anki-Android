@@ -116,7 +116,6 @@
     <string name="stats_breakdown">時間帯ごとの分析</string>
     <string name="stats_weekly_breakdown">曜日ごとの分析</string>
     <string name="stats_answer_buttons">回答ボタン</string>
-    <string name="stats_cards_types">カードの種類</string>
     <string-array name="stats_day_time_strings">
         <item>AM4:00</item>
         <item>AM10:00</item>

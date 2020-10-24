@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Resultat uppdelat på timme</string>
     <string name="stats_weekly_breakdown">Resultat uppdelat på vecka</string>
     <string name="stats_answer_buttons">Svarsknappar</string>
-    <string name="stats_cards_types">Korttyper</string>
     <string-array name="stats_day_time_strings">
         <item>04:00</item>
         <item>10:00</item>

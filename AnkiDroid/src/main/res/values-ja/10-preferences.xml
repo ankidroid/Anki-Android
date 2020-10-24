@@ -230,6 +230,7 @@
     <string name="deck_conf_use_general_timeout_settings">一般設定を使用する</string>
     <string name="deck_conf_use_general_timeout_settings_summ">このグループ独自の設定は行わず、ドロワーメニューの[設定]>[カードの学習]>[解答の自動表示]での一般的な設定をそのまま使用します。</string>
     <string name="deck_conf_easy_bonus">簡単と答えた時のボーナス（復習間隔の伸び率の割り増し）</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">復習間隔の調整</string>
     <string name="deck_conf_max_ivl">復習間隔の上限</string>
     <string name="deck_conf_new_lps_ivl">新しい復習間隔（前回比）</string>

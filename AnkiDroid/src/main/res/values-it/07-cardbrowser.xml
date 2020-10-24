@@ -91,7 +91,6 @@
     </string-array>
     <string name="card_browser_select_all">Seleziona tutto</string>
     <string name="card_browser_select_none">Deseleziona tutto</string>
-    <string name="card_browser_edit_note">Modifica la nota</string>
     <string name="card_browser_interval_new_card">(nuova)</string>
     <string name="card_browser_ease_new_card">(nuovo)</string>
     <string name="card_browser_due_filtered_card">(filtrato)</string>

@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Stündliche Aufschlüsselung</string>
     <string name="stats_weekly_breakdown">Wöchentliche Aufschlüsselung</string>
     <string name="stats_answer_buttons">Antwortschaltflächen</string>
-    <string name="stats_cards_types">Kartentypen</string>
     <string-array name="stats_day_time_strings">
         <item>4 Uhr</item>
         <item>10 Uhr</item>

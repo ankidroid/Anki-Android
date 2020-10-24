@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Desglossament per hora</string>
     <string name="stats_weekly_breakdown">Desglossament per setmana</string>
     <string name="stats_answer_buttons">Botons de resposta</string>
-    <string name="stats_cards_types">Tipus de cartes</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>

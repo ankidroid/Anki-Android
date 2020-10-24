@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Phân tích theo giờ</string>
     <string name="stats_weekly_breakdown">Phân tích theo tuần</string>
     <string name="stats_answer_buttons">Các nút đáp án</string>
-    <string name="stats_cards_types">Các loại thẻ</string>
     <string-array name="stats_day_time_strings">
         <item>4g SA</item>
         <item>10g SA</item>

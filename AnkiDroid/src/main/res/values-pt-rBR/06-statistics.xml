@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Por Hora</string>
     <string name="stats_weekly_breakdown">Por Semanas</string>
     <string name="stats_answer_buttons">Botões de Resposta</string>
-    <string name="stats_cards_types">Tipos de Cartões</string>
     <string-array name="stats_day_time_strings">
         <item>04:00</item>
         <item>10:00</item>

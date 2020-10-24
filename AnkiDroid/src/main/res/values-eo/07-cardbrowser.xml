@@ -91,7 +91,6 @@
     </string-array>
     <string name="card_browser_select_all">Elekti ĉiujn</string>
     <string name="card_browser_select_none">Elekti neniujn</string>
-    <string name="card_browser_edit_note">Redakti noton</string>
     <string name="card_browser_interval_new_card">(nova)</string>
     <string name="card_browser_ease_new_card">(nova)</string>
     <string name="card_browser_due_filtered_card">(filtrita)</string>

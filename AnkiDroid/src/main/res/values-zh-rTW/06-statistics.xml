@@ -116,7 +116,6 @@
     <string name="stats_breakdown">按小時劃分</string>
     <string name="stats_weekly_breakdown">按週劃分</string>
     <string name="stats_answer_buttons">回答按鈕</string>
-    <string name="stats_cards_types">筆記類型</string>
     <string-array name="stats_day_time_strings">
         <item>凌晨４點</item>
         <item>早上１０點</item>

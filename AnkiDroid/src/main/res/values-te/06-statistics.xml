@@ -116,7 +116,6 @@
     <string name="stats_breakdown">ప్రతి గంట విచ్ఛిన్నం</string>
     <string name="stats_weekly_breakdown">వారానికి ఓసారి ప్రచురింపబడునట్టి విచ్ఛిన్నం</string>
     <string name="stats_answer_buttons">సమాధానం బటన్లు</string>
-    <string name="stats_cards_types">కార్డ్ రకాలు</string>
     <string-array name="stats_day_time_strings">
         <item>ఉదయం 4</item>
         <item>ఉదయం 10 గంటలకు</item>

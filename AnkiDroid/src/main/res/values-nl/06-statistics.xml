@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Verdeling per uur</string>
     <string name="stats_weekly_breakdown">Verdeling per week</string>
     <string name="stats_answer_buttons">Antwoordknoppen</string>
-    <string name="stats_cards_types">Kaarttypen</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>

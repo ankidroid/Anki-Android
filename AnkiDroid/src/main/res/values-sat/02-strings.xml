@@ -241,7 +241,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s ᱴᱤᱡ ᱠᱚ</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -290,7 +290,7 @@
     <string name="note_importer_error_empty_notes">ᱢᱤᱫᱴᱟᱹᱝ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱱᱚᱴ ᱠᱚ ᱵᱟᱭ ᱞᱟᱫᱮ ᱟᱠᱟᱱᱟ, ᱪᱮᱫᱟᱜ ᱩᱱᱠᱩ ᱫᱚ ᱠᱟᱰ ᱠᱚ ᱵᱟᱠᱚ ᱛᱮᱭᱟᱨ ᱟᱠᱟᱫᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ ᱟᱨ ᱵᱟᱝ ᱡᱤᱱᱤᱥ ᱠᱚ ᱨᱮᱭᱟᱜ ᱚᱞ ᱨᱮᱫ ᱠᱚ ᱴᱷᱤᱠ ᱥᱮ ᱵᱟᱭ ᱢᱮᱯ ᱟᱠᱟᱱᱟ ᱴᱷᱤᱠ ᱡᱟᱭᱜᱟ ᱨᱮ </string>
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ ᱴᱷᱮᱱ %2$d ᱡᱟᱭᱜᱟ, %3$d ᱟᱥᱟ ᱛᱟᱦᱮᱸ ᱠᱟᱱᱟ</string>
     <string name="csv_importer_error_exception">ᱰᱟᱫ ᱮᱱᱟ: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">ᱟᱹᱴᱚᱢᱮᱴᱮᱰ ᱴᱮᱥᱴ ᱯᱟᱱᱛᱮ ᱚᱲᱚᱠ ᱾ ᱡᱩᱫᱤ ᱟᱢ ᱦᱚᱲ ᱠᱟᱱᱟᱢ AnkiDroid ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ</string>
     <plurals name="note_importer_notes_added">
         <item quantity="one">%d ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
@@ -304,22 +304,22 @@
         <item quantity="other">%d ᱱᱚᱴ ᱠᱚ ᱵᱟᱝ ᱵᱚᱫᱚᱞᱟᱠᱟᱱᱟ</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
+    <string name="api_version_developer_contact">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱵᱟᱝ ᱥᱟᱯᱯᱚᱨᱴ AnkiDroid ᱯᱷᱤᱪᱚᱨ ᱠᱚ ᱵᱮᱵᱷᱟᱨ ᱮᱫ ᱟᱭ ᱾ %1$s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾ %2$s</string>
     <string name="invalid_json_data">ᱠᱟᱰ ᱵᱷᱩᱞ ᱰᱟᱴᱟ ᱮᱢᱠᱮᱫ ᱟ ᱾ %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="valid_js_api_version"> ‌‌ᱵᱷᱩᱯ AnkiDroid JS API ᱵᱷᱟᱹᱨᱥᱚᱱ ᱾%s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾</string>
+    <string name="update_js_api_version">AnkiDroid JS API ᱟᱹᱯᱰᱮᱴ ᱢᱮᱱᱟᱜᱼᱟ ᱾ %s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾</string>
     <string name="reviewer_invalid_api_version_visit_documentation">ᱫᱮᱠᱷᱟᱣ</string>
     <string name="anki_js_error_code">(ᱵᱷᱩᱞ ᱠᱳᱰ: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">ᱠᱞᱤᱯᱵᱚᱰ ᱛᱮ ᱰᱮᱵᱩᱜ ᱵᱤᱵᱨᱚᱬ ᱱᱚᱠᱚᱞ ᱮᱱᱟ</string>
+    <string name="about_ankidroid_error_copy_debug_info">ᱠᱞᱤᱯᱵᱚᱰ ᱛᱮ ᱰᱮᱵᱩᱜ ᱵᱤᱵᱨᱚᱬ ᱱᱚᱠᱟᱞ ᱵᱷᱩᱞ</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞ:  ‘%s’ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ᱰᱮᱠ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ ‘%s’</string>
     <string name="search_decks">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="ankidroid_init_failed_webview_title">ᱯᱩᱨᱟᱹ ᱵᱷᱩᱞ</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">Ankidroid ᱫᱚ ᱥᱭᱥᱴᱮᱢ ᱣᱮᱵᱼᱵᱷᱤᱭᱩ ᱪᱮᱛᱟᱱ ᱨᱮ ᱱᱤᱨᱵᱷᱚᱨᱚᱜ ᱠᱟᱱᱟᱭ ᱚᱠᱟ ᱫᱚ ᱱᱤᱛᱚᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱛᱮᱵᱮ ᱦᱩᱭᱩᱜᱼᱟ ᱚᱠᱟ ᱡᱷᱚᱜ ᱥᱭᱥᱴᱟᱹᱢ ᱟᱹᱯᱰᱮᱴ ᱠᱚ ᱠᱚ ᱵᱚᱦᱟᱞ ᱮᱪᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱱᱟᱥᱮ ᱴᱤᱯᱤᱡ ᱜᱦᱟᱹᱬᱤᱡ ᱛᱟᱭᱚᱢ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾ \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font Size</string>
+    <string name="menu_font_size">ᱪᱤᱠᱤ ᱢᱟᱯ</string>
 </resources>

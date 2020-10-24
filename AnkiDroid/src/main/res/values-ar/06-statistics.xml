@@ -116,7 +116,6 @@
     <string name="stats_breakdown">تفصيل لكل ساعة</string>
     <string name="stats_weekly_breakdown">تفصيل أسبوعي</string>
     <string name="stats_answer_buttons">أزرار الإجابة</string>
-    <string name="stats_cards_types">أنواع البطاقات</string>
     <string-array name="stats_day_time_strings">
         <item>4 صباحًا</item>
         <item>10 صباحًا</item>
