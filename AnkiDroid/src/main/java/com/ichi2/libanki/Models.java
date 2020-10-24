@@ -879,7 +879,7 @@ public class Models {
             _changeNotes(nids, newModel, fmap);
         }
         if (cmap != null) {
-            _changeCards(nids, m, newModel, cmap);
+            _changeCards(nid, m, newModel, cmap);
         }
         mCol.genCards(nids, newModel);
     }
@@ -914,7 +914,7 @@ public class Models {
         mCol.updateFieldCache(nids);
     }
 
-    private void _changeCards(long[] nids, Model oldModel, Model newModel, Map<Integer, Integer> map) {
+    private void _changeCards(long nid, Model oldModel, Model newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<>();
         List<Long> deleted = new ArrayList<>();
         Cursor cur = null;
@@ -923,7 +923,7 @@ public class Models {
         int nflds = newModel.getJSONArray("tmpls").length();
         try {
             cur = mCol.getDb().getDatabase().query(
-                    "select id, ord from cards where nid in " + Utils.ids2str(nids), null);
+                    "select id, ord from cards where nid = ?", new Object[] {nid});
             while (cur.moveToNext()) {
                 // if the src model is a cloze, we ignore the map, as the gui doesn't currently
                 // support mapping them
