@@ -129,7 +129,7 @@ public class Tags {
 
 
     /** Add any missing tags from notes to the tags list. */
-    public void registerNotes(long[] nids) {
+    public void registerNotes(java.util.Collection<Long> nids) {
         // when called with a null argument, the old list is cleared first.
         String lim;
         if (nids != null) {

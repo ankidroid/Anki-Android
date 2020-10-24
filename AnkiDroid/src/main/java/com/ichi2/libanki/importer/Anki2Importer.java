@@ -291,9 +291,8 @@ public class Anki2Importer extends Importer {
                 // add to col partially, so as to avoid OOM
                 if (dirty.size() >= thresExecDirty) {
                     totalDirtyCount  += dirty.size();
-                    long[] das = Utils.collection2Array(dirty);
                     mDst.updateFieldCache(dirty);
-                    mDst.getTags().registerNotes(das);
+                    mDst.getTags().registerNotes(dirty);
                     dirty.clear();
                     Timber.d("dirty notes: %d", totalDirtyCount);
                 }
@@ -334,9 +333,8 @@ public class Anki2Importer extends Importer {
             DB.safeEndInTransaction(mDst.getDb());
         }
 
-        long[] das = Utils.collection2Array(dirty);
         mDst.updateFieldCache(dirty);
-        mDst.getTags().registerNotes(das);
+        mDst.getTags().registerNotes(dirty);
     }
 
     private void addNotes(List<Object[]> add) {
