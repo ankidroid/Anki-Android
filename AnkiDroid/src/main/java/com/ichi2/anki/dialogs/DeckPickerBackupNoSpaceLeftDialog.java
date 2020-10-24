@@ -26,7 +26,7 @@ public class DeckPickerBackupNoSpaceLeftDialog extends AnalyticsDialogFragment {
         return new MaterialDialog.Builder(getActivity())
                 .title(res.getString(R.string.sd_card_almost_full_title))
                 .content(res.getString(R.string.sd_space_warning, space/1024/1024))
-                .positiveText(res.getString(R.string.dialog_ok))
+                .positiveText(R.string.dialog_ok)
                 .onPositive((dialog, which) -> ((DeckPicker) getActivity()).finishWithoutAnimation())
                 .cancelable(true)
                 .cancelListener(dialog -> ((DeckPicker) getActivity()).finishWithoutAnimation())

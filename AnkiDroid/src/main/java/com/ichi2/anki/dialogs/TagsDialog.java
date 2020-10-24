@@ -145,7 +145,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
                 .positiveText(mPositiveText)
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .negativeText(R.string.dialog_cancel)
                 .customView(tagsDialogView, false)
                 .onPositive((dialog, which) -> mTagsDialogListener
                         .onPositive(new ArrayList<>(mCurrentTags), mSelectedOption));

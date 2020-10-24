@@ -106,7 +106,7 @@ public class ReadText {
             Timber.w("ReadText.textToSpeech() no TTS languages available");
             builder.content(res.getString(R.string.no_tts_available_message))
                     .iconAttr(R.attr.dialogErrorIcon)
-                    .positiveText(res.getString(R.string.dialog_ok));
+                    .positiveText(R.string.dialog_ok);
         } else {
             ArrayList<CharSequence> dialogItems = new ArrayList<>();
             final ArrayList<String> dialogIds = new ArrayList<>();
