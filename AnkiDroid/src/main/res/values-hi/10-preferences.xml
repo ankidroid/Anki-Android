@@ -231,6 +231,7 @@
     <string name="deck_conf_use_general_timeout_settings">सामान्य सेटिंग्स का उपयोग करें</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">आसान बोनस</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">अंतराल संशोधक</string>
     <string name="deck_conf_max_ivl">अधिकतम अंतराल</string>
     <string name="deck_conf_new_lps_ivl">नया अंतराल</string>

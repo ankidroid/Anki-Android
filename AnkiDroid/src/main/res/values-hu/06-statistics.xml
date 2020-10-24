@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Óránkénti lebontás</string>
     <string name="stats_weekly_breakdown">Heti bontásban</string>
     <string name="stats_answer_buttons">Válasz gombok</string>
-    <string name="stats_cards_types">Kártyatípusok</string>
     <string-array name="stats_day_time_strings">
         <item>4.00</item>
         <item>10.00</item>

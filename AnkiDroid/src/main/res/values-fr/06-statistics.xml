@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Division horaire</string>
     <string name="stats_weekly_breakdown">Division hebdomadaire</string>
     <string name="stats_answer_buttons">Boutons réponse</string>
-    <string name="stats_cards_types">Types de cartes</string>
     <string-array name="stats_day_time_strings">
         <item>4 h</item>
         <item>10 h</item>

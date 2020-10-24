@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Почасова разбивка</string>
     <string name="stats_weekly_breakdown">Седмична разбивка</string>
     <string name="stats_answer_buttons">Бутони за отговор</string>
-    <string name="stats_cards_types">Тип на картата</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>

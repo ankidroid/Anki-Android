@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Ripartizione oraria</string>
     <string name="stats_weekly_breakdown">Ripartizione settimanale</string>
     <string name="stats_answer_buttons">Pulsanti di risposta</string>
-    <string name="stats_cards_types">Tipi di carte</string>
     <string-array name="stats_day_time_strings">
         <item>04:00</item>
         <item>10:00</item>

@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Hourly breakdown</string>
     <string name="stats_weekly_breakdown">Weekly breakdown</string>
     <string name="stats_answer_buttons">Antwoord knoppies</string>
-    <string name="stats_cards_types">Kaarttipes</string>
     <string-array name="stats_day_time_strings">
         <item>4AM</item>
         <item>10AM</item>

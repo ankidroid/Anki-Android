@@ -232,6 +232,7 @@
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">సులువు బోనస్</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">ఇంటర్వల్ మాడిఫైయర్</string>
     <string name="deck_conf_max_ivl">గరిష్ఠ విరామం</string>
     <string name="deck_conf_new_lps_ivl">క్రొత్త విరామం</string>

@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Hora distribuo</string>
     <string name="stats_weekly_breakdown">Semajna distribuo</string>
     <string name="stats_answer_buttons">Respond-butonoj</string>
-    <string name="stats_cards_types">Kart-tipoj</string>
     <string-array name="stats_day_time_strings">
         <item>04:00</item>
         <item>10:00</item>

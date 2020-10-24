@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Po urah</string>
     <string name="stats_weekly_breakdown">Po tednih</string>
     <string name="stats_answer_buttons">Gumbi za odgovor</string>
-    <string name="stats_cards_types">Vrste kartice</string>
     <string-array name="stats_day_time_strings">
         <item>04:00</item>
         <item>10:00</item>

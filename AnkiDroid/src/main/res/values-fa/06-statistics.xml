@@ -120,7 +120,6 @@
     <string name="stats_breakdown">تفکیک ساعت به ساعت</string>
     <string name="stats_weekly_breakdown">تفکیک هفتگی</string>
     <string name="stats_answer_buttons">دکمه های پاسخ</string>
-    <string name="stats_cards_types">نوع کارتها</string>
     <string-array name="stats_day_time_strings">
         <item>4 صبح</item>
         <item>10صبح</item>

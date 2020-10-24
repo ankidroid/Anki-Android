@@ -231,6 +231,7 @@
     <string name="deck_conf_use_general_timeout_settings">Usa impostazioni generali</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Usa le impostazioni generali di «Risposta di visualizzazione automatica» invece di usare le impostazioni per questo gruppo.</string>
     <string name="deck_conf_easy_bonus">Bonus facile</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Modificatore intervallo</string>
     <string name="deck_conf_max_ivl">Intervallo massimo</string>
     <string name="deck_conf_new_lps_ivl">Nuovo intervallo</string>

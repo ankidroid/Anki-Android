@@ -116,7 +116,6 @@
     <string name="stats_breakdown">घंटा ब्रेकडाउन</string>
     <string name="stats_weekly_breakdown">साप्ताहिक ब्रेकडाउन</string>
     <string name="stats_answer_buttons">उत्तर बटन</string>
-    <string name="stats_cards_types">कार्ड के प्रकार</string>
     <string-array name="stats_day_time_strings">
         <item>4AM</item>
         <item>10am</item>

@@ -231,6 +231,7 @@
     <string name="deck_conf_use_general_timeout_settings">Allgemeine Einstellungen verwenden</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Allgemeine Einstellungen für »Antworten automatisch anzeigen« verwenden anstatt der Einstellungen für diese Gruppe.</string>
     <string name="deck_conf_easy_bonus">Bonus für \'einfach\'</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Intervallfaktor</string>
     <string name="deck_conf_max_ivl">Maximales Intervall</string>
     <string name="deck_conf_new_lps_ivl">Intervall für neue</string>

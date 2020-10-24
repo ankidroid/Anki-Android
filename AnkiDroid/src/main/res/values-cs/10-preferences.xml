@@ -233,6 +233,7 @@
     <string name="deck_conf_use_general_timeout_settings">Použít obecné nastavení</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Použít obecné nastavení „automaticky zobrazovat odpověď“ místo nastavení pro tuto skupinu.</string>
     <string name="deck_conf_easy_bonus">Bonus pro snadné</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Modifikátor intervalu</string>
     <string name="deck_conf_max_ivl">Maximální interval</string>
     <string name="deck_conf_new_lps_ivl">Nový interval</string>

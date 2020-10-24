@@ -93,7 +93,6 @@
     </string-array>
     <string name="card_browser_select_all">Выбраць усё</string>
     <string name="card_browser_select_none">Адмяніць выбар</string>
-    <string name="card_browser_edit_note">Змяніць нататку</string>
     <string name="card_browser_interval_new_card">(новыя)</string>
     <string name="card_browser_ease_new_card">(новыя)</string>
     <string name="card_browser_due_filtered_card">(фільтраваныя)</string>

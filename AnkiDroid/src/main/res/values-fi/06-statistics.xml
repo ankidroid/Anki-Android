@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Tunneittain</string>
     <string name="stats_weekly_breakdown">Viikottain</string>
     <string name="stats_answer_buttons">Vastauspainikkeet</string>
-    <string name="stats_cards_types">Korttien tyypit</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>

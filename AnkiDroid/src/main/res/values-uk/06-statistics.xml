@@ -119,7 +119,6 @@
     <string name="stats_breakdown">Годинний розподіл</string>
     <string name="stats_weekly_breakdown">Тижневий розподіл</string>
     <string name="stats_answer_buttons">Кнопки відповіді</string>
-    <string name="stats_cards_types">Типи карток</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>

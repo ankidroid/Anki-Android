@@ -38,8 +38,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
-    <string name="no">no</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
     <!-- Navigation drawer items-->
     <string name="decks">شَدّة أوراق</string>
     <string name="card_browser">متصفح البطاقات</string>
@@ -227,7 +227,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">مظهر المتصفح</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">معلومات البطاقة</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة بيانات أنكيدرويد</string>
     <string name="read_write_permission_description">الوصول إلى الملحوظات الموجودة، والبطاقات، وأنواع الملحوظات، والرزم، بالإضافة إلى إنشاء أخرى</string>

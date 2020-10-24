@@ -116,7 +116,6 @@
     <string name="stats_breakdown">פילוח שעתי</string>
     <string name="stats_weekly_breakdown">פילוח שבועי</string>
     <string name="stats_answer_buttons">כפתורי תשובה</string>
-    <string name="stats_cards_types">סוגי קלפים</string>
     <string-array name="stats_day_time_strings">
         <item>4 לפנה״צ</item>
         <item>10 לפנה״צ</item>

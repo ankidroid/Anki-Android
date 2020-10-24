@@ -116,7 +116,6 @@
     <string name="stats_breakdown">Rozkład godzinowy</string>
     <string name="stats_weekly_breakdown">Rozkład po dniach tygodnia</string>
     <string name="stats_answer_buttons">Przyciski odpowiedzi</string>
-    <string name="stats_cards_types">Typy kart</string>
     <string-array name="stats_day_time_strings">
         <item>04:00</item>
         <item>10:00</item>
