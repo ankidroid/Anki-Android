@@ -110,7 +110,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">Continue</string>
-    <string name="dialog_positive_create">Create</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
     <string name="dialog_positive_delete">Delete</string>
     <string name="dialog_positive_disable">Disable</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
