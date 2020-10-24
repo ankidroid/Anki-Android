@@ -102,7 +102,6 @@
     <string name="card_info_card_id">Card Id</string>
     <string name="card_info_note_id">Note Id</string>
     <string name="card_info_revlog_time">Time</string>
-    <string name="card_info_revlog_ease">Ease</string>
     <string name="card_info_revlog_date">Date</string>
     <string name="card_info_revlog_rating">Rating</string>
     <string name="card_info_revlog_type">Type</string>
