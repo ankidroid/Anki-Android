@@ -27,3 +27,4 @@ _Please, go through these checks before submitting the PR._
 - [ ] You have commented your code, particularly in hard-to-understand areas
 - [ ] You have performed a self-review of your own code
 - [ ] UI changes: include screenshots of all affected screens (in particular showing any new or changed strings)
+- [ ] Strings resources: All strings added as resources are unique or contain a comment for seemingly duplicate strings to explain the difference between both resources
