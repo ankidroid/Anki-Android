@@ -873,7 +873,6 @@ public class Models {
      */
     public void change(Model m, long nid, Model newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
         mCol.modSchema();
-        long[] nids = new long[] {nid};
         assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
         if (fmap != null) {
             _changeNote(nid, newModel, fmap);
@@ -881,7 +880,7 @@ public class Models {
         if (cmap != null) {
             _changeCards(nid, m, newModel, cmap);
         }
-        mCol.genCards(nids, newModel);
+        mCol.genCards(nid, newModel);
     }
 
     private void _changeNote(long nid, Model newModel, Map<Integer, Integer> map) {
