@@ -749,6 +749,15 @@ public class Collection {
     public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(long[] nids, @NonNull Model model, @Nullable T task) {
         // build map of (nid,ord) so we don't create dupes
         String snids = Utils.ids2str(nids);
+        return genCards(snids, model, task);
+    }
+
+    /**
+     * @param snids All ids of nodes of a note type, separated by comma
+     * @param task Task to check for cancellation and update number of card processed
+     * @return Cards that should be removed because they should not be generated
+     */
+    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(String snids, @NonNull Model model, @Nullable T task) {
         // For each note, indicates ords of cards it contains
         HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>();
         // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
