@@ -56,7 +56,7 @@
     <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
     <string name="card_details_question">Question</string>
     <string name="card_details_answer">Answer</string>
-    <string name="card_details_due">Due</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">Due</string>
     <string name="card_details_tags">Tags</string>
     <string name="card_browser_filtering_cards">Filtering cards… \nPress back button to cancel</string>
     <string-array name="card_browser_order_labels">
@@ -91,7 +91,6 @@
     <string name="card_info_added">Added</string>
     <string name="card_info_first_review">First Review</string>
     <string name="card_info_latest_review">Latest Review</string>
-    <string name="card_info_due">Due</string>
     <string name="card_info_interval">Interval</string>
     <string name="card_info_ease">Ease</string>
     <string name="card_info_reviews">Reviews</string>
