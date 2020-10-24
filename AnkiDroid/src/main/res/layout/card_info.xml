@@ -364,7 +364,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:text="@string/card_info_revlog_interval"
+                    android:text="@string/card_info_interval"
                     />
                 <com.ichi2.ui.FixedTextView
                     android:gravity="center"
