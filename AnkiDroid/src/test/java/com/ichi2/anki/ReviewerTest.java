@@ -213,7 +213,7 @@ public class ReviewerTest extends RobolectricTest {
     }
 
     @Test
-    public synchronized void testLrnQueueAfterUndo() throws ConfirmModSchemaException, InterruptedException {
+    public void testLrnQueueAfterUndo() throws ConfirmModSchemaException, InterruptedException {
         Collection col = getCol();
         JSONObject nw = col.getDecks().confForDid(1).getJSONObject("new");
         MockTime time = (MockTime) col.getTime();
@@ -416,4 +416,3 @@ public class ReviewerTest extends RobolectricTest {
     }
 
 }
-
