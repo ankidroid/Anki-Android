@@ -20,7 +20,7 @@
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/ic_action_cancel"
-        android:title="@string/card_template_editor_menu_delete"
+        android:title="@string/dialog_positive_delete"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_card_browser_appearance"
