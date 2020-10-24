@@ -695,6 +695,12 @@ public class Collection {
     }
 
 
+    /**
+     * @param model A note type
+     * @param avail Ords of cards from this note type.
+     * @return One template by element i of avail, for the i-th card. For standard template, avail should contains only existing ords.
+     * for cloze, avail should contains only non-negative numbers, and the i-th card is a copy of the first card, with a different ord.
+     */
     private ArrayList<JSONObject> _tmplsFromOrds(Model model, ArrayList<Integer> avail) {
         ArrayList<JSONObject> ok = new ArrayList<>();
         JSONArray tmpls;
