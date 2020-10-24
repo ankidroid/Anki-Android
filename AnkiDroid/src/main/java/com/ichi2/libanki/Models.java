@@ -888,27 +888,23 @@ public class Models {
         List<Object[]> d = new ArrayList<>();
         int nfields = newModel.getJSONArray("flds").length();
         long mid = newModel.getLong("id");
-        try (Cursor cur = mCol.getDb().getDatabase().query(
-                "select flds from notes where id = ?", new Object[] {nid})) {
-            while (cur.moveToNext()) {
-                String[] flds = Utils.splitFields(cur.getString(0));
-                Map<Integer, String> newflds = new HashMap<>();
+        String sflds = mCol.getDb().queryString("select flds from notes where id = ?", nid);
+        String[] flds = Utils.splitFields(sflds);
+        Map<Integer, String> newflds = new HashMap<>();
 
-                for (Entry<Integer, Integer> entry : map.entrySet()) {
-                    newflds.put(entry.getValue(), flds[entry.getKey()]);
-                }
-                List<String> flds2 = new ArrayList<>();
-                for (int c = 0; c < nfields; ++c) {
-                    if (newflds.containsKey(c)) {
-                        flds2.add(newflds.get(c));
-                    } else {
-                        flds2.add("");
-                    }
-                }
-                String joinedFlds = Utils.joinFields(flds2.toArray(new String[flds2.size()]));
-                d.add(new Object[] { joinedFlds, mid, mCol.getTime().intTime(), mCol.usn(), nid });
+        for (Entry<Integer, Integer> entry : map.entrySet()) {
+            newflds.put(entry.getValue(), flds[entry.getKey()]);
+        }
+        List<String> flds2 = new ArrayList<>();
+        for (int c = 0; c < nfields; ++c) {
+            if (newflds.containsKey(c)) {
+                flds2.add(newflds.get(c));
+            } else {
+                flds2.add("");
             }
         }
+        String joinedFlds = Utils.joinFields(flds2.toArray(new String[flds2.size()]));
+        d.add(new Object[] {joinedFlds, mid, mCol.getTime().intTime(), mCol.usn(), nid});
         mCol.getDb().executeMany("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", d);
         mCol.updateFieldCache(new long[] {nid});
     }
