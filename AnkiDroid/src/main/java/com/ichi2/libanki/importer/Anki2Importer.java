@@ -256,7 +256,7 @@ public class Anki2Importer extends Importer {
                         // will update if incoming note more recent
                         if (oldMod < (Long) note[MOD]) {
                             // safe if note types identical
-                            if (oldMid == (Long) note[MID]) {
+                            if (Utils.equals(oldMid, note[MID])) {
                                 // incoming note should use existing id
                                 note[0] = oldNid;
                                 note[4] = usn;
@@ -354,7 +354,7 @@ public class Anki2Importer extends Importer {
         @NonNull Long srcMid = (Long) note[MID];
         @NonNull Long dstMid = _mid(srcMid);
         // duplicate Schemas?
-        if (srcMid == dstMid) {
+        if (Utils.equals(srcMid, dstMid)) {
             return !mNotes.containsKey(origGuid);
         }
         // differing schemas and note doesn't exist?
