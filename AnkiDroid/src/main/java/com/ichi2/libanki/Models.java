@@ -854,7 +854,7 @@ public class Models {
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // unused upstream as well
     private void _syncTemplates(Model m) {
-        ArrayList<Long> rem = mCol.genCards(Utils.collection2Array(nids(m)));
+        ArrayList<Long> rem = mCol.genCards(Utils.collection2Array(nids(m)), m);
     }
 
 
@@ -865,7 +865,7 @@ public class Models {
     /**
      * Change a model
      * @param m The model to change.
-     * @param nids The list of notes that the change applies to.
+     * @param nids The list of notes that the change applies to. They are all of note type n
      * @param newModel For replacing the old model with another one. Should be self if the model is not changing
      * @param fmap Map for switching fields. This is ord->ord and there should not be duplicate targets
      * @param cmap Map for switching cards. This is ord->ord and there should not be duplicate targets
@@ -880,7 +880,7 @@ public class Models {
         if (cmap != null) {
             _changeCards(nids, m, newModel, cmap);
         }
-        mCol.genCards(nids);
+        mCol.genCards(nids, newModel);
     }
 
     private void _changeNotes(long[] nids, Model newModel, Map<Integer, Integer> map) {

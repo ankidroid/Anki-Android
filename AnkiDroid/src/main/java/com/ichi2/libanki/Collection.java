@@ -725,16 +725,20 @@ public class Collection {
     /**
      * Generate cards for non-empty templates, return ids to remove.
      */
-	public ArrayList<Long> genCards(List<Long> nids) {
-	    return genCards(Utils.collection2Array(nids));
+	public ArrayList<Long> genCards(List<Long> nids, @NonNull Model model) {
+	    return genCards(Utils.collection2Array(nids), model);
 	}
 
-    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(List<Long> nids, @Nullable T task) {
-       return genCards(Utils.collection2Array(nids), task);
+    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(List<Long> nids, @NonNull Model model, @Nullable T task) {
+       return genCards(Utils.collection2Array(nids), model, task);
     }
 
-    public ArrayList<Long> genCards(long[] nids) {
-       return genCards(nids, null);
+    public ArrayList<Long> genCards(long[] nids, long mid) {
+        return genCards(nids, getModels().get(mid), null);
+    }
+
+    public ArrayList<Long> genCards(long[] nids, @NonNull Model model) {
+        return genCards(nids, model, null);
     }
 
     /**
@@ -742,7 +746,7 @@ public class Collection {
      * @param task Task to check for cancellation and update number of card processed
      * @return Cards that should be removed because they should not be generated
      */
-    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(long[] nids, @Nullable T task) {
+    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(long[] nids, @NonNull Model model, @Nullable T task) {
         // build map of (nid,ord) so we don't create dupes
         String snids = Utils.ids2str(nids);
         // For each note, indicates ords of cards it contains
@@ -798,16 +802,14 @@ public class Collection {
         int usn = usn();
         cur = null;
         try {
-            cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
+            cur = mDb.getDatabase().query("SELECT id, flds FROM notes WHERE id IN " + snids, null);
             while (cur.moveToNext()) {
                 if (task != null && task.isCancelled()) {
                     Timber.v("Empty card cancelled");
                     return null;
                 }
                 @NonNull Long nid = cur.getLong(0);
-                @NonNull Long mid = cur.getLong(1);
-                String flds = cur.getString(2);
-                Model model = getModels().get(mid);
+                String flds = cur.getString(1);
                 ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds));
                 if (task != null) {
                     task.doProgress(new TaskData(avail.size()));
@@ -1039,7 +1041,7 @@ public class Collection {
     public List<Long> emptyCids(@Nullable CollectionTask task) {
         List<Long> rem = new ArrayList<>();
         for (Model m : getModels().all()) {
-            rem.addAll(genCards(getModels().nids(m), task));
+            rem.addAll(genCards(getModels().nids(m), m, task));
         }
         return rem;
     }
