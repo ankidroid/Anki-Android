@@ -212,6 +212,47 @@ public class ReviewerTest extends RobolectricTest {
         assertCurrentOrdIsNot(reviewer, 3); // Anki Desktop shows "1"
     }
 
+    @Test
+    public void testLrnQueueAfterUndo() throws ConfirmModSchemaException, InterruptedException {
+        Collection col = getCol();
+        JSONObject nw = col.getDecks().confForDid(1).getJSONObject("new");
+        MockTime time = (MockTime) col.getTime();
+        nw.put("delays", new JSONArray(new int[] {1, 10, 60, 120}));
+
+        Card cards[] = new Card[4];
+        cards[0] = addRevNoteUsingBasicModelDueToday("1", "bar").firstCard();
+        cards[1] = addNoteUsingBasicModel("2", "bar").firstCard();
+        cards[2] = addNoteUsingBasicModel("3", "bar").firstCard();
+
+        waitForAsyncTasksToComplete();
+
+        Reviewer reviewer = startReviewer();
+
+        waitForAsyncTasksToComplete();
+
+
+        equalFirstField(cards[0], reviewer.mCurrentCard);
+        reviewer.answerCard(Consts.BUTTON_ONE);
+        waitForAsyncTasksToComplete();
+
+        equalFirstField(cards[1], reviewer.mCurrentCard);
+        reviewer.answerCard(Consts.BUTTON_ONE);
+        waitForAsyncTasksToComplete();
+
+        undo(reviewer);
+        waitForAsyncTasksToComplete();
+
+        equalFirstField(cards[1], reviewer.mCurrentCard);
+        reviewer.answerCard(getCol().getSched().getGoodNewButton());
+        waitForAsyncTasksToComplete();
+
+        equalFirstField(cards[2], reviewer.mCurrentCard);
+        time.addM(2);
+        reviewer.answerCard(getCol().getSched().getGoodNewButton());
+        advanceRobolectricLooperWithSleep();
+        equalFirstField(cards[0], reviewer.mCurrentCard); // This failed in #6898 because this card was not in the queue
+    }
+
 
     private void assertCurrentOrdIsNot(Reviewer r, int i) {
         waitForAsyncTasksToComplete();
@@ -375,4 +416,3 @@ public class ReviewerTest extends RobolectricTest {
     }
 
 }
-
