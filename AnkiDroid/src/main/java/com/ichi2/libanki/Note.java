@@ -324,7 +324,7 @@ public class Note implements Cloneable {
      */
     private void _postFlush() {
         if (!mNewlyAdded) {
-            mCol.genCards(new long[] { mId }, mModel);
+            mCol.genCards(mId, mModel);
         }
     }
 

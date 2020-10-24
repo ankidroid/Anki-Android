@@ -741,6 +741,14 @@ public class Collection {
         return genCards(nids, model, null);
     }
 
+    public ArrayList<Long> genCards(long nid, @NonNull Model model) {
+        return genCards(nid, model, null);
+    }
+
+    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(long nid, @NonNull Model model, @Nullable T task) {
+        return genCards("(" + nid + ")", model, task);
+    }
+
     /**
      * @param nids All ids of nodes of a note type
      * @param task Task to check for cancellation and update number of card processed
