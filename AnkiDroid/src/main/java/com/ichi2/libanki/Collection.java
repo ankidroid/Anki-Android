@@ -707,8 +707,9 @@ public class Collection {
             }
         } else {
             // cloze - generate temporary templates from first
+            JSONObject template0 = model.getJSONArray("tmpls").getJSONObject(0);
             for (int ord : avail) {
-                JSONObject t = new JSONObject(model.getJSONArray("tmpls").getString(0));
+                JSONObject t = template0.deepClone();
                 t.put("ord", ord);
                 ok.add(t);
             }
