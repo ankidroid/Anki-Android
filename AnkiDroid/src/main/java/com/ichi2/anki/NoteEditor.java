@@ -592,7 +592,7 @@ public class NoteEditor extends AnkiActivity {
 
         if (mAddNote) {
             mNoteTypeSpinner.setOnItemSelectedListener(new SetNoteTypeListener());
-            setTitle(R.string.cardeditor_title_add_note);
+            setTitle(R.string.menu_add_note);
             // set information transferred by intent
             String contents = null;
             String[] tags = intent.getStringArrayExtra(EXTRA_TAGS);
