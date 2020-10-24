@@ -108,8 +108,8 @@ public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
         Resources res = getResources();
         new MaterialDialog.Builder(getActivity())
                 .content(res.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
-                .positiveText(res.getString(android.R.string.ok))
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .positiveText(android.R.string.ok)
+                .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
                     mMySearchesDialogListener.onRemoveSearch(searchName);
                     mSavedFilters.remove(searchName);

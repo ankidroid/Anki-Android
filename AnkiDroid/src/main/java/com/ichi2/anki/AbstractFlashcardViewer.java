@@ -1309,8 +1309,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 .iconAttr(R.attr.dialogErrorIcon)
                 .content(res.getString(R.string.delete_note_message,
                         Utils.stripHTML(mCurrentCard.q(true))))
-                .positiveText(res.getString(R.string.dialog_positive_delete))
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .positiveText(R.string.dialog_positive_delete)
+                .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
                     Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard.getNid());
                     mSoundPlayer.stopSounds();
