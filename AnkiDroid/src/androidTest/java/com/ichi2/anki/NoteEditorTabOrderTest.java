@@ -25,6 +25,7 @@ import android.view.KeyEvent;
 import android.view.inputmethod.BaseInputConnection;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -87,6 +88,12 @@ public class NoteEditorTabOrderTest {
     }
 
     @Test
+    @Ignore("flaky on API 21 as well: " +
+            "com.ichi2.anki.NoteEditorTabOrderTest > testTabOrder[test(AVD) - 5.1.1] FAILED \n" +
+            "\n" +
+            "\tjava.lang.AssertionError:\n" +
+            "\n" +
+            "\tExpected: is \"a\"")
     public void testTabOrder() throws Throwable {
         ensureCollectionLoaded();
         ActivityScenario<NoteEditor> scenario = activityRule.getScenario();
