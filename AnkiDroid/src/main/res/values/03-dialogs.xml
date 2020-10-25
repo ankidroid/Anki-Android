@@ -42,7 +42,7 @@
         <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
     </string-array>
 
-    <string name="preview_title">Preview</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Preview</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
