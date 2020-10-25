@@ -28,6 +28,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -54,6 +55,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -77,6 +79,7 @@ import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.noteeditor.FieldState;
 import com.ichi2.anki.noteeditor.FieldState.FieldChangeType;
+import com.ichi2.anki.noteeditor.CustomToolbarButton;
 import com.ichi2.anki.noteeditor.Toolbar;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
@@ -111,10 +114,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -124,7 +129,8 @@ import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
-import com.ichi2.async.TaskData;import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import com.ichi2.async.TaskData;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -1733,6 +1739,12 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void updateToolbar() {
+        if (mToolbar == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
+        }
+
+        mToolbar.clearCustomItems();
+
         View clozeIcon = mToolbar.getClozeIcon();
         if (Models.isCloze(mEditorNote.model())) {
             Toolbar.TextFormatter clozeFormatter = s -> {
@@ -1753,6 +1765,84 @@ public class NoteEditor extends AnkiActivity {
         } else {
             clozeIcon.setVisibility(View.GONE);
         }
+
+
+        ArrayList<CustomToolbarButton> buttons = getToolbarButtons();
+
+        for (CustomToolbarButton b : buttons) {
+
+            String text = Integer.toString(b.getIndex() + 1);
+            Drawable bmp = mToolbar.createDrawableForString(text);
+
+            View v = mToolbar.insertItem(0, bmp, b.toFormatter());
+            v.setOnLongClickListener(discard -> {
+                suggestRemoveButton(b);
+                return true;
+            });
+        }
+
+        // Let the user add more buttons (always at the end).
+        mToolbar.insertItem(0, R.drawable.ic_add_toolbar_icon, this::displayAddToolbarDialog);
+    }
+
+    @NonNull
+    private ArrayList<CustomToolbarButton> getToolbarButtons() {
+        Set<String> set = AnkiDroidApp.getSharedPrefs(this).getStringSet("note_editor_custom_buttons", new HashSet<>());
+        return CustomToolbarButton.fromStringSet(set);
+    }
+
+    private void saveToolbarButtons(ArrayList<CustomToolbarButton> buttons) {
+        AnkiDroidApp.getSharedPrefs(this).edit()
+                .putStringSet("note_editor_custom_buttons", CustomToolbarButton.toStringSet(buttons))
+                .apply();
+    }
+
+    private void addToolbarButton(String prefix, String suffix) {
+        if (TextUtils.isEmpty(prefix) && TextUtils.isEmpty(suffix)) {
+            return;
+        }
+
+        ArrayList<CustomToolbarButton> toolbarButtons = getToolbarButtons();
+
+        toolbarButtons.add(new CustomToolbarButton(toolbarButtons.size(), prefix, suffix));
+        saveToolbarButtons(toolbarButtons);
+
+        updateToolbar();
+    }
+
+
+    private void suggestRemoveButton(CustomToolbarButton button) {
+        new MaterialDialog.Builder(this)
+                .title(R.string.remove_toolbar_item)
+                .positiveText(R.string.dialog_positive_delete)
+                .negativeText(R.string.dialog_cancel)
+                .onPositive((dialog, action) -> removeButton(button))
+                .show();
+    }
+
+    private void removeButton(CustomToolbarButton button) {
+        ArrayList<CustomToolbarButton> toolbarButtons = getToolbarButtons();
+
+        toolbarButtons.remove(button.getIndex());
+
+        saveToolbarButtons(toolbarButtons);
+        updateToolbar();
+    }
+
+    private void displayAddToolbarDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.add_toolbar_item)
+                .customView(R.layout.note_editor_toolbar_add_custom_item, true)
+                .positiveText(R.string.dialog_positive_create)
+                .negativeText(R.string.dialog_cancel)
+                .onPositive((m, v) -> {
+                    View view = m.getView();
+                    EditText et =  view.findViewById(R.id.note_editor_toolbar_before);
+                    EditText et2 = view.findViewById(R.id.note_editor_toolbar_after);
+
+                    addToolbarButton(et.getText().toString(), et2.getText().toString());
+                })
+                .show();
     }
 
 

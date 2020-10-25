@@ -126,10 +126,10 @@
         <item name="android:layout_marginLeft">10dp</item>
     </style>
 
+    <!-- padding is hardcoded in Toolbar.java (32) to allow for fixing the scrollview -->
     <style name="note_editor_toolbar_button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:padding">4dp</item>
     </style>
 </resources>

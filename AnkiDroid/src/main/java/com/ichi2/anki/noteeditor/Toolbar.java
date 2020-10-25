@@ -16,9 +16,18 @@
 
 package com.ichi2.anki.noteeditor;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +38,9 @@ import android.widget.LinearLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -36,13 +48,15 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
-import timber.log.Timber;
 
 public class Toolbar extends FrameLayout {
 
     private TextFormatListener mFormatCallback;
     private LinearLayout mToolbar;
+    private List<View> mCustomButtons = new ArrayList<>();
     private View mClozeIcon;
+
+    private Paint mStringPaint;
 
 
     public Toolbar(@NonNull Context context) {
@@ -71,6 +85,14 @@ public class Toolbar extends FrameLayout {
 
     private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.note_editor_toolbar, this, true);
+
+        int paintSize = dpToPixels(28);
+
+        mStringPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mStringPaint.setTextSize(paintSize);
+        mStringPaint.setColor(Color.BLACK);
+        mStringPaint.setTextAlign(Paint.Align.CENTER);
+
         this.mToolbar = findViewById(R.id.editor_toolbar_internal);
         setClick(R.id.note_editor_toolbar_button_bold, "<b>", "</b>");
         setClick(R.id.note_editor_toolbar_button_italic, "<em>", "</em>");
@@ -83,17 +105,41 @@ public class Toolbar extends FrameLayout {
         this.mClozeIcon = findViewById(R.id.note_editor_toolbar_button_cloze);
     }
 
+
+    private int dpToPixels(int value) {
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                value,
+                getResources().getDisplayMetrics()
+        );
+    }
+
+
     public View getClozeIcon() {
         // HACK until API 21
         return mClozeIcon;
     }
 
-    public void insertItem(@IdRes int id, @DrawableRes int drawable, TextFormatter formatter) {
+
+    @NonNull
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public AppCompatImageButton insertItem(@IdRes int id, @DrawableRes int drawable, Runnable runnable) {
+        // This fails before API 21
+        VectorDrawableCompat d = VectorDrawableCompat.create(getContext().getResources(), drawable, getContext().getTheme());
+        return insertItem(id, d, runnable);
+    }
+
+    @NonNull
+    public View insertItem(int id, Drawable drawable, TextFormatter formatter) {
+        return insertItem(id, drawable, () -> onFormat(formatter));
+    }
+
+    @NonNull
+    public AppCompatImageButton insertItem(@IdRes int id, Drawable drawable, Runnable runnable) {
         Context context = getContext();
         AppCompatImageButton button = new AppCompatImageButton(context);
         button.setId(id);
-        VectorDrawableCompat d = VectorDrawableCompat.create(context.getResources(), drawable, context.getTheme());
-        button.setBackgroundDrawable(d);
+        button.setBackgroundDrawable(drawable);
 
         /*
             Style didn't work
@@ -114,18 +160,37 @@ public class Toolbar extends FrameLayout {
         // end apply style
 
 
-        button.setOnClickListener(l -> onFormat(formatter));
         this.mToolbar.addView(button, mToolbar.getChildCount());
+        mCustomButtons.add(button);
+        button.setOnClickListener(l -> runnable.run());
+
+        // Hack - items are truncated from the scrollview
+        View v = findViewById(R.id.editor_toolbar_internal);
+
+        int expectedWidth = getVisibleItemCount() * dpToPixels(32);
+        int width = getScreenWidth();
+        LayoutParams p = new LayoutParams(v.getLayoutParams());
+        p.gravity = Gravity.CENTER_VERTICAL | ((expectedWidth > width) ? Gravity.LEFT : Gravity.CENTER_HORIZONTAL);
+        v.setLayoutParams(p);
+
+        return button;
     }
 
-    public void removeItem(@IdRes int id) {
-        View v = mToolbar.findViewById(id);
-        if (v == null) {
-            Timber.w("Could not remove toolbar item %d", id);
-            return;
-        }
 
-        mToolbar.removeView(v);
+    protected int getScreenWidth() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager()
+                .getDefaultDisplay()
+                .getMetrics(displayMetrics);
+        return displayMetrics.widthPixels;
+    }
+
+
+    public void clearCustomItems() {
+        for (View v : mCustomButtons) {
+            mToolbar.removeView(v);
+        }
+        mCustomButtons.clear();
     }
 
     public void setFormatListener(TextFormatListener formatter) {
@@ -162,7 +227,29 @@ public class Toolbar extends FrameLayout {
                 .show();
     }
 
+    @NonNull
+    public Drawable createDrawableForString(String text) {
+        float baseline = -mStringPaint.ascent();
+        int size = (int) (baseline + mStringPaint.descent() + 0.5f);
 
+        Bitmap image = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(image);
+
+        canvas.drawText(text, size /2f, baseline, mStringPaint);
+
+        return new BitmapDrawable(getResources(), image);
+    }
+
+
+    private int getVisibleItemCount() {
+        int count = 0;
+        for (int i = 0; i < mToolbar.getChildCount(); i++) {
+            if (mToolbar.getChildAt(i).getVisibility() == View.VISIBLE){
+                count++;
+            }
+        }
+        return count;
+    }
 
     private void setClick(@IdRes int id, String prefix, String suffix) {
         setClick(id, new TextWrapper(prefix, suffix));
