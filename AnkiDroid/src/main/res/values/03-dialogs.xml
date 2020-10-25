@@ -59,7 +59,6 @@
     </plurals>
 
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Reschedule card</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
