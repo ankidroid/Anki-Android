@@ -364,7 +364,12 @@ public class Finder {
     }
 
 
-    private String _query(String preds, String order) {
+    /**
+     * @param preds A sql predicate, or empty string, with c a card, n its note
+     * @param order A part of a query, ordering element of table Card, with c a card, n its note
+     * @return A query to return all card ids satifying the predicate and in the given order
+     */
+    private static String _query(String preds, String order) {
         // can we skip the note table?
         String sql;
         if (!preds.contains("n.") && !order.contains("n.")) {
