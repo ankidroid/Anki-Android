@@ -338,4 +338,12 @@
 
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Font Size</string>
+
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
 </resources>
