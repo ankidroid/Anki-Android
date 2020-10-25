@@ -61,7 +61,7 @@
     <string name="multimedia_editor_text_field_editing_say">Pronunciation</string>
     <string name="multimedia_editor_text_field_editing_clear">Clear</string>
     <string name="multimedia_editor_text_field_editing_clone">Clone from</string>
-    <string name="multimedia_editor_text_field_editing_translate">Translation</string>
+    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Translation</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Input some text first</string>
     <string name="multimedia_editor_text_field_editing_many_words">Dictionary usually expects one word</string>
