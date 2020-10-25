@@ -19,20 +19,31 @@ package com.ichi2.anki.noteeditor;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+import timber.log.Timber;
 
 public class Toolbar extends FrameLayout {
 
     private TextFormatListener mFormatCallback;
+    private LinearLayout mToolbar;
+    private View mClozeIcon;
+
 
     public Toolbar(@NonNull Context context) {
         super(context);
@@ -60,6 +71,7 @@ public class Toolbar extends FrameLayout {
 
     private void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.note_editor_toolbar, this, true);
+        this.mToolbar = findViewById(R.id.editor_toolbar_internal);
         setClick(R.id.note_editor_toolbar_button_bold, "<b>", "</b>");
         setClick(R.id.note_editor_toolbar_button_italic, "<em>", "</em>");
         setClick(R.id.note_editor_toolbar_button_underline, "<u>", "</u>");
@@ -68,6 +80,52 @@ public class Toolbar extends FrameLayout {
         setClick(R.id.note_editor_toolbar_button_horizontal_rule, "", "<hr>");
         findViewById(R.id.note_editor_toolbar_button_font_size).setOnClickListener(l -> displayFontSizeDialog());
         findViewById(R.id.note_editor_toolbar_button_title).setOnClickListener(l -> displayInsertHeadingDialog());
+        this.mClozeIcon = findViewById(R.id.note_editor_toolbar_button_cloze);
+    }
+
+    public View getClozeIcon() {
+        // HACK until API 21
+        return mClozeIcon;
+    }
+
+    public void insertItem(@IdRes int id, @DrawableRes int drawable, TextFormatter formatter) {
+        Context context = getContext();
+        AppCompatImageButton button = new AppCompatImageButton(context);
+        button.setId(id);
+        VectorDrawableCompat d = VectorDrawableCompat.create(context.getResources(), drawable, context.getTheme());
+        button.setBackgroundDrawable(d);
+
+        /*
+            Style didn't work
+            int buttonStyle = R.style.note_editor_toolbar_button;
+            ContextThemeWrapper context = new ContextThemeWrapper(getContext(), buttonStyle);
+            AppCompatImageButton button = new AppCompatImageButton(context, null, buttonStyle);
+        */
+
+        // apply style
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER;
+        button.setLayoutParams(params);
+
+
+        int fourDp = (int) Math.ceil(4 / context.getResources().getDisplayMetrics().density);
+
+        button.setPadding(fourDp, fourDp, fourDp, fourDp);
+        // end apply style
+
+
+        button.setOnClickListener(l -> onFormat(formatter));
+        this.mToolbar.addView(button, mToolbar.getChildCount());
+    }
+
+    public void removeItem(@IdRes int id) {
+        View v = mToolbar.findViewById(id);
+        if (v == null) {
+            Timber.w("Could not remove toolbar item %d", id);
+            return;
+        }
+
+        mToolbar.removeView(v);
     }
 
     public void setFormatListener(TextFormatListener formatter) {
@@ -116,7 +174,7 @@ public class Toolbar extends FrameLayout {
     }
 
 
-    private void onFormat(TextFormatter formatter) {
+    public void onFormat(TextFormatter formatter) {
         if (mFormatCallback == null) {
             return;
         }

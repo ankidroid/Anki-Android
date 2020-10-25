@@ -231,6 +231,8 @@ public class NoteEditor extends AnkiActivity {
 
     private FieldState mFieldState = FieldState.fromEditor(this);
 
+    private Toolbar mToolbar;
+
     private SaveNoteHandler saveNoteHandler() {
         return new SaveNoteHandler(this);
     }
@@ -450,8 +452,8 @@ public class NoteEditor extends AnkiActivity {
 
         View mainView = findViewById(android.R.id.content);
 
-        Toolbar toolbar = findViewById(R.id.editor_toolbar);
-        toolbar.setFormatListener(formatter -> {
+        mToolbar = findViewById(R.id.editor_toolbar);
+        mToolbar.setFormatListener(formatter -> {
             View currentFocus = getCurrentFocus();
             if (!(currentFocus instanceof FieldEditText)) {
                 return;
@@ -1756,7 +1758,32 @@ public class NoteEditor extends AnkiActivity {
         updateDeckPosition();
         updateTags();
         updateCards(mEditorNote.model());
+        updateToolbar();
         populateEditFields(changeType, false);
+    }
+
+
+    private void updateToolbar() {
+        View clozeIcon = mToolbar.getClozeIcon();
+        if (Models.isCloze(mEditorNote.model())) {
+            Toolbar.TextFormatter clozeFormatter = s -> {
+                Toolbar.TextWrapper.StringFormat stringFormat = new Toolbar.TextWrapper.StringFormat();
+                String prefix = "{{c" + getNextClozeIndex() + "::";
+                stringFormat.result = prefix + s + "}}";
+                if (s.length() == 0) {
+                    stringFormat.start = prefix.length();
+                    stringFormat.end = prefix.length();
+                } else {
+                    stringFormat.start = 0;
+                    stringFormat.end = stringFormat.result.length();
+                }
+                return stringFormat;
+            };
+            clozeIcon.setOnClickListener(l -> mToolbar.onFormat(clozeFormatter));
+            clozeIcon.setVisibility(View.VISIBLE);
+        } else {
+            clozeIcon.setVisibility(View.GONE);
+        }
     }
 
 
