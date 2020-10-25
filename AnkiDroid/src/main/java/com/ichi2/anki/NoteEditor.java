@@ -21,7 +21,6 @@ package com.ichi2.anki;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
-import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -1452,9 +1451,6 @@ public class NoteEditor extends AnkiActivity {
                 PopupMenuWithIcons popup = new PopupMenuWithIcons(NoteEditor.this, v, false);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.getMenu());
-                if (isClozeType()) {
-                    popup.getMenu().findItem(R.id.menu_multimedia_add_cloze).setVisible(true);
-                }
                 popup.setOnMenuItemClickListener(item -> {
 
                     int itemId = item.getItemId();
@@ -1473,10 +1469,6 @@ public class NoteEditor extends AnkiActivity {
                     } else if (itemId == R.id.menu_multimedia_text) {
                         Timber.i("NoteEditor:: Advanced editor button pressed");
                         startAdvancedTextEditor(index);
-                        return true;
-                    } else if (itemId == R.id.menu_multimedia_add_cloze) {
-                        Timber.i("NoteEditor:: Insert cloze button pressed");
-                        convertSelectedTextToCloze(index, AddClozeType.INCREMENT_NUMBER);
                         return true;
                     } else if (itemId == R.id.menu_multimedia_clear_field) {
                         Timber.i("NoteEditor:: Clear field button pressed");
@@ -1562,29 +1554,6 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void initFieldEditText(FieldEditText editText, final int index, boolean enabled, @Nullable ClipboardManager clipboard) {
-        // HACK: To be removed after #7124
-        // Additional cloze icon using GBoard Clipboard function for MIUI users
-        if (clipboard != null && !AdaptionUtil.canUseContextMenu() && AnkiDroidApp.getSharedPrefs(this).getBoolean("enableMIUIClipboardHack", true)) {
-            editText.setSelectionChangeListener((selStart, selEnd) -> {
-                if (!isClozeType()) {
-                    return;
-                }
-
-                Editable text = editText.getText();
-                // only display if one or more characters is selected
-                if (selStart == selEnd || text == null) {
-                    return;
-                }
-
-                int start = Math.min(selStart, selEnd);
-                int end = Math.max(selStart, selEnd);
-
-                String nextCloze = previewNextClozeDeletion(start, end, text);
-                ClipData clip = ClipData.newPlainText("", nextCloze);
-                clipboard.setPrimaryClip(clip);
-            });
-        }
-
         // Listen for changes in the first field so we can re-check duplicate status.
         editText.addTextChangedListener(new EditFieldTextWatcher(index));
         if (index == 0) {
@@ -2086,13 +2055,6 @@ public class NoteEditor extends AnkiActivity {
         public void onLocaleSelectionCancelled() {
             dismissAllDialogFragments();
         }
-    }
-
-    private void convertSelectedTextToCloze(int fieldIndex, AddClozeType addClozeType) {
-        if (fieldIndex < 0 || fieldIndex > mEditFields.size()) {
-            Timber.w("Invalid field index %d requested for cloze insertion.", fieldIndex);
-        }
-        convertSelectedTextToCloze(mEditFields.get(fieldIndex), addClozeType);
     }
 
     private void convertSelectedTextToCloze(FieldEditText textBox, AddClozeType addClozeType) {
