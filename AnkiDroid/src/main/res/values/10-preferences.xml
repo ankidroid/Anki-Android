@@ -233,7 +233,7 @@
     <string name="deck_conf_manage">Group management</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Current group</string>
-    <string name="deck_conf_rename">Rename</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Rename</string>
     <string name="deck_conf_reset">Restore defaults</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
     <string name="deck_conf_add">Add</string>
