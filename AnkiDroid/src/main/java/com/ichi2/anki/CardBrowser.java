@@ -173,6 +173,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private static final int DEFAULT_FONT_SIZE_RATIO = 100;
     // Should match order of R.array.card_browser_order_labels
     public static final int CARD_ORDER_NONE = 0;
+    // Whether the browser is loaded. Don't do search until it is actually loaded. This avoid doing two search when opening the browser
+    private boolean mBrowserLoaded = false;
     private static final String[] fSortTypes = new String[] {
         "",
         "noteFld",
@@ -679,6 +681,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } else {
             selectDeckById(getCol().getDecks().selected());
         }
+        mBrowserLoaded = true;
     }
 
 
@@ -1419,6 +1422,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void searchCards() {
         // cancel the previous search & render tasks if still running
         invalidate();
+        if (!mBrowserLoaded) {
+            return;
+        }
         String searchText;
         if (mSearchTerms == null) {
             mSearchTerms = "";
