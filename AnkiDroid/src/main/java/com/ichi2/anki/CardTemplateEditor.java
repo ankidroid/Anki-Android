@@ -239,7 +239,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         String message;
         if (deck == null) {
             Timber.i("Removing default template from template '%s'", templateName);
-            template.put("did", null);
+            template.put("did", JSONObject.NULL);
             message = getString(R.string.model_manager_deck_override_removed_message, templateName);
         } else {
             Timber.i("Setting template '%s' to '%s'", templateName, deck.getName());
