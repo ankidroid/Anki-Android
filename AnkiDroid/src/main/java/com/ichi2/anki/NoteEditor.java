@@ -78,6 +78,7 @@ import com.ichi2.anki.multimediacard.fields.TextField;
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.anki.noteeditor.FieldState;
 import com.ichi2.anki.noteeditor.FieldState.FieldChangeType;
+import com.ichi2.anki.noteeditor.Toolbar;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.servicelayer.NoteService;
 import com.ichi2.async.CollectionTask;
@@ -449,6 +450,15 @@ public class NoteEditor extends AnkiActivity {
 
         View mainView = findViewById(android.R.id.content);
 
+        Toolbar toolbar = findViewById(R.id.editor_toolbar);
+        toolbar.setFormatListener(formatter -> {
+            View currentFocus = getCurrentFocus();
+            if (!(currentFocus instanceof FieldEditText)) {
+                return;
+            }
+            modifyCurrentSelection(formatter, (FieldEditText) currentFocus);
+        });
+
         enableToolbar(mainView);
 
         mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout);
@@ -626,6 +636,40 @@ public class NoteEditor extends AnkiActivity {
         if (mEditFields != null && !mEditFields.isEmpty()) {
             mEditFields.getFirst().requestFocus();
         }
+    }
+
+
+    private void modifyCurrentSelection(Toolbar.TextFormatter formatter, FieldEditText textBox) {
+
+        // get the current text and selection locations
+        int selectionStart = textBox.getSelectionStart();
+        int selectionEnd = textBox.getSelectionEnd();
+
+        // #6762 values are reversed if using a keyboard and pressing Ctrl+Shift+LeftArrow
+        int start = Math.min(selectionStart, selectionEnd);
+        int end = Math.max(selectionStart, selectionEnd);
+
+        String text = "";
+        if (textBox.getText() != null) {
+            text = textBox.getText().toString();
+        }
+
+        // Split the text in the places where the formatting will take place
+        String beforeText = text.substring(0, start);
+        String selectedText = text.substring(start, end);
+        String afterText = text.substring(end);
+
+        Toolbar.TextWrapper.StringFormat formatResult = formatter.format(selectedText);
+        String newText = formatResult.result;
+
+        // Update text field with updated text and selection
+        int length = beforeText.length() + newText.length() + afterText.length();
+        StringBuilder newValue = new StringBuilder(length).append(beforeText).append(newText).append(afterText);
+        textBox.setText(newValue);
+
+        int newStart = formatResult.start;
+        int newEnd = formatResult.end;
+        textBox.setSelection(start + newStart, start + newEnd);
     }
 
 
@@ -2025,36 +2069,15 @@ public class NoteEditor extends AnkiActivity {
     }
 
     private void convertSelectedTextToCloze(FieldEditText textBox, AddClozeType addClozeType) {
-        // get the current text and selection locations
-        int selectionStart = textBox.getSelectionStart();
-        int selectionEnd = textBox.getSelectionEnd();
-
-        // #6762 values are reversed if using a keyboard and pressing Ctrl+Shift+LeftArrow
-        int start = Math.min(selectionStart, selectionEnd);
-        int end = Math.max(selectionStart, selectionEnd);
-
-        String text = "";
-        if (textBox.getText() != null) {
-            text = textBox.getText().toString();
-        }
-
-        // Split the text in the places where the cloze deletion will be inserted
-        String beforeText = text.substring(0, start);
-        String selectedText = text.substring(start, end);
-        String afterText = text.substring(end);
         int nextClozeIndex = getNextClozeIndex();
         if (addClozeType == AddClozeType.SAME_NUMBER) {
             nextClozeIndex = nextClozeIndex - 1;
         }
-        nextClozeIndex = Math.max(1, nextClozeIndex);
 
-        // Format the cloze deletion open bracket
-        String clozeOpenBracket = "{{c" + (nextClozeIndex) + "::";
+        String prefix = "{{c" + Math.max(1, nextClozeIndex) + "::";
 
-        // Update text field with updated text and selection
-        textBox.setText(String.format("%s%s%s}}%s", beforeText, clozeOpenBracket, selectedText, afterText));
-        int clozeOpenSize = clozeOpenBracket.length();
-        textBox.setSelection(start + clozeOpenSize, end + clozeOpenSize);
+        String suffix = "}}";
+        modifyCurrentSelection(new Toolbar.TextWrapper(prefix, suffix), textBox);
     }
 
     @NonNull
