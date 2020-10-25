@@ -25,7 +25,6 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.async.CancelListener;
-import com.ichi2.async.CollectionTask;
 
 import com.ichi2.libanki.Deck;
 import com.ichi2.utils.JSONArray;
@@ -84,7 +83,7 @@ public class Finder {
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order, CollectionTask task) {
+    public List<Long> findCards(String query, boolean _order, CancelListener task) {
         return _findCards(query, _order, task);
     }
 

@@ -1038,7 +1038,7 @@ public class Collection {
     }
 
 
-    public List<Long> emptyCids(@Nullable CollectionTask task) {
+    public <T extends ProgressSender<TaskData> & CancelListener> List<Long> emptyCids(@Nullable T task) {
         List<Long> rem = new ArrayList<>();
         for (Model m : getModels().all()) {
             rem.addAll(genCards(getModels().nids(m), m, task));
@@ -1233,7 +1233,7 @@ public class Collection {
         return findCards(search, order, null);
     }
 
-    public List<Long> findCards(String search, boolean order, CollectionTask task) {
+    public List<Long> findCards(String search, boolean order, CancelListener task) {
         return new Finder(this).findCards(search, order, task);
     }
 
