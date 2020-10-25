@@ -1176,6 +1176,56 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
+    /**
+     * A class allowing to send partial search result to the browser to display while the search ends
+     */
+    public class PartialSearch implements CancelListener, ProgressSender<List<Long>> {
+        private final List<CardBrowser.CardCache> mCards;
+        private final int mColumn1Index, mColumn2Index;
+        private final int mNumCardsToRender;
+
+        public PartialSearch(List<CardBrowser.CardCache> cards, int columnIndex1, int columnIndex2, int numCardsToRender) {
+            mCards = cards;
+            mColumn1Index = columnIndex1;
+            mColumn2Index = columnIndex2;
+            mNumCardsToRender = numCardsToRender;
+        }
+
+        @Override
+        public boolean isCancelled() {
+            return CollectionTask.this.isCancelled();
+        }
+
+
+        /**
+         * @param cids Card ids to display in the browser. It is assumed that it is as least as long as mCards, and that
+         *             mCards[i].cid = cids[i].  It add the cards in cids after `mPosition` to mCards
+         */
+        public void add(@NonNull List<Long> cids) {
+            while (mCards.size() < cids.size()) {
+                mCards.add(new CardBrowser.CardCache(cids.get(mCards.size()), getCol(), mCards.size()));
+            }
+        }
+
+
+        @Override
+        public void doProgress(@NonNull List<Long>... values) {
+            add(values[0]);
+            for (CardBrowser.CardCache card : mCards) {
+                if (isCancelled()) {
+                    Timber.d("doInBackgroundSearchCards was cancelled so return");
+                    return;
+                }
+                card.load(false, mColumn1Index, mColumn2Index);
+            }
+            CollectionTask.this.doProgress(new TaskData(mCards));
+        }
+
+        public int getNumCardsToRender() {
+            return mNumCardsToRender;
+        }
+    }
+
     private TaskData doInBackgroundSearchCards(TaskData param) {
         Timber.d("doInBackgroundSearchCards");
         Collection col = getCol();
@@ -1188,23 +1238,12 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         }
         int column1Index = (Integer) param.getObjArray()[3];
         int column2Index = (Integer) param.getObjArray()[4];
-        List<Long> searchResult_ = col.findCards(query, order, this);
+        final List<CardBrowser.CardCache> searchResult = new ArrayList<>();
+        PartialSearch partialSearch = new PartialSearch(searchResult, column1Index, column2Index, numCardsToRender);
+        List<Long> searchResult_ = col.findCards(query, order, partialSearch);
+        partialSearch.add(searchResult_);
         int resultSize = searchResult_.size();
-        List<CardBrowser.CardCache> searchResult = new ArrayList<>(resultSize);
         Timber.d("The search found %d cards", resultSize);
-        int position = 0;
-        for (Long cid: searchResult_) {
-            CardBrowser.CardCache card = new CardBrowser.CardCache(cid, col, position++);
-            searchResult.add(card);
-        }
-        // Render the first few items
-        for (int i = 0; i < Math.min(numCardsToRender, searchResult.size()); i++) {
-            if (isCancelled()) {
-                Timber.d("doInBackgroundSearchCards was cancelled so return null");
-                return null;
-            }
-            searchResult.get(i).load(false, column1Index, column2Index);
-        }
         // Finish off the task
         if (isCancelled()) {
             Timber.d("doInBackgroundSearchCards was cancelled so return null");
