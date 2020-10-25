@@ -33,7 +33,6 @@ import android.util.Pair;
 
 import com.ichi2.anki.R;
 import com.ichi2.async.CancelListener;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -532,8 +531,8 @@ public class SchedV2 extends AbstractSched {
     }
 
     @Nullable
-    public List<DeckDueTreeNode> deckDueTree(@Nullable CollectionTask collectionTask) {
-        List<DeckDueTreeNode> deckDueTree = deckDueList(collectionTask);
+    public List<DeckDueTreeNode> deckDueTree(@Nullable CancelListener cancelListener) {
+        List<DeckDueTreeNode> deckDueTree = deckDueList(cancelListener);
         if (deckDueTree == null) {
             return null;
         }

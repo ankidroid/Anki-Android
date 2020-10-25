@@ -24,7 +24,6 @@ import android.database.SQLException;
 import android.text.TextUtils;
 
 import com.ichi2.async.CancelListener;
-import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -211,14 +210,14 @@ public class Sched extends SchedV2 {
      * Returns [deckname, did, rev, lrn, new]
      */
     @Override
-    public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener collectionTask) {
+    public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener cancelListener) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         ArrayList<Deck> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>();
         for (Deck deck : decks) {
-            if (collectionTask != null && collectionTask.isCancelled()) {
+            if (cancelListener != null && cancelListener.isCancelled()) {
                 return null;
             }
             String deckName = deck.getString("name");

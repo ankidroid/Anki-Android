@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 
 import com.ichi2.anki.R;
-import com.ichi2.async.CollectionTask;
+import com.ichi2.async.CancelListener;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
@@ -166,9 +166,9 @@ public abstract class AbstractSched {
     public abstract @NonNull List<DeckDueTreeNode> deckDueList();
 
     /**
-     * @param collectionTask A task that is potentially cancelled
+     * @param cancelListener A task that is potentially cancelled
      * @return the due tree. null if task is cancelled*/
-    public abstract @Nullable List<DeckDueTreeNode> deckDueTree(CollectionTask collectionTask);
+    public abstract @Nullable List<DeckDueTreeNode> deckDueTree(CancelListener cancelListener);
 
     /**
      * @return the due tree. null if task is cancelled. */
