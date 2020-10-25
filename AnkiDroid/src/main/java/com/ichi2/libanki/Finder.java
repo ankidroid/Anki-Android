@@ -47,6 +47,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
+import timber.log.Timber;
 
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
@@ -107,6 +108,7 @@ public class Finder {
         String order = res2.first;
         boolean rev = res2.second;
         String sql = _query(preds, order);
+        Timber.v("Search query '%s' is compiled as '%s'.", query, sql);
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
                 if (task != null && task.isCancelled()) {
