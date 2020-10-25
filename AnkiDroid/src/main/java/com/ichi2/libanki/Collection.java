@@ -1252,7 +1252,7 @@ public class Collection {
         return findCards(search, order, null);
     }
 
-    public List<Long> findCards(String search, boolean order, CancelListener task) {
+    public List<Long> findCards(String search, boolean order, CollectionTask.PartialSearch task) {
         return new Finder(this).findCards(search, order, task);
     }
 

@@ -1899,6 +1899,16 @@ public class CardBrowser extends NavigationDrawerActivity implements
             super(browser);
         }
 
+
+        @Override
+        public void actualOnProgressUpdate(@NonNull CardBrowser browser, TaskData result) {
+            // Need to copy the list into a new list, because the original list is modified, and
+            // ListAdapter crash
+            mCards.replaceWith(new ArrayList<>(result.getCards()));
+            updateList();
+        }
+
+
         @Override
         public void actualOnPostExecute(@NonNull CardBrowser browser, TaskData result) {
             if (result != null) {

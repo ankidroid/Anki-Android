@@ -26,6 +26,8 @@ import android.util.Pair;
 
 import com.ichi2.async.CancelListener;
 
+import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSender;
 import com.ichi2.libanki.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -83,7 +85,7 @@ public class Finder {
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order, CancelListener task) {
+    public List<Long> findCards(String query, boolean _order, CollectionTask.PartialSearch task) {
         return _findCards(query, _order, task);
     }
 
@@ -94,7 +96,7 @@ public class Finder {
     }
 
     @CheckResult
-    private List<Long> _findCards(String query, Object _order, CancelListener task) {
+    private List<Long> _findCards(String query, Object _order, CollectionTask.PartialSearch task) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
@@ -108,12 +110,17 @@ public class Finder {
         boolean rev = res2.second;
         String sql = _query(preds, order);
         Timber.v("Search query '%s' is compiled as '%s'.", query, sql);
+        boolean sendProgress = task != null;
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
                 if (task != null && task.isCancelled()) {
                     return new ArrayList<>();
                 }
                 res.add(cur.getLong(0));
+                if (sendProgress && res.size() > task.getNumCardsToRender()) {
+                    task.doProgress(res);
+                    sendProgress = false;
+                }
             }
         } catch (SQLException e) {
             // invalid grouping
