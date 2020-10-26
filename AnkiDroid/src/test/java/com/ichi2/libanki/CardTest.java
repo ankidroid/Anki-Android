@@ -15,6 +15,7 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.utils.JSONObject.NULL;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
@@ -130,7 +131,7 @@ public class CardTest extends RobolectricTest {
         models.renameField(model, flds.getJSONObject(0), "A");
         models.renameField(model, flds.getJSONObject(1), "B");
         JSONObject fld2 = models.newField("C");
-        fld2.put("ord", null);
+        fld2.put("ord", NULL);
         models.addField(model, fld2);
 
         JSONArray tmpls = model.getJSONArray("tmpls");
