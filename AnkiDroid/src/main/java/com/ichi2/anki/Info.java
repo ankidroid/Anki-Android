@@ -20,10 +20,7 @@ package com.ichi2.anki;
 
 import android.content.ClipData;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -33,13 +30,11 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.compat.CompatHelper;
+import com.ichi2.utils.IntentUtil;
 import com.ichi2.utils.VersionUtils;
 
 import org.acra.util.Installation;
 
-import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
@@ -88,7 +83,7 @@ public class Info extends AnkiActivity {
         Button marketButton = findViewById(R.id.left_button);
         if (canOpenMarketUri()) {
             marketButton.setText(R.string.info_rate);
-            marketButton.setOnClickListener(arg0 -> openMarketUrl());
+            marketButton.setOnClickListener(arg0 -> IntentUtil.tryOpenIntent(this, AnkiDroidApp.getMarketIntent(this)));
         } else {
             marketButton.setVisibility(View.GONE);
         }
@@ -152,42 +147,10 @@ public class Info extends AnkiActivity {
 
     private boolean canOpenMarketUri() {
         try {
-            return canOpenMarketUri(getMarketIntent());
+            return IntentUtil.canOpenIntent(this, AnkiDroidApp.getMarketIntent(this));
         } catch (Exception e) {
             Timber.w(e);
             return false;
-        }
-    }
-
-    private boolean canOpenMarketUri(Intent intent) {
-        try {
-            final PackageManager packageManager = getPackageManager();
-            return intent.resolveActivity(packageManager) != null;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-
-    @NonNull
-    private Intent getMarketIntent() {
-        final String intentUri = getString(
-                CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
-        return new Intent(Intent.ACTION_VIEW, Uri.parse(intentUri));
-    }
-
-    private void openMarketUrl() {
-        try {
-            final Intent intent = getMarketIntent();
-            if (canOpenMarketUri(intent)) {
-                startActivityWithoutAnimation(intent);
-            } else {
-                final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
-                UIUtils.showThemedToast(Info.this, errorMsg, true);
-            }
-        } catch (Exception e) {
-            final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
-            UIUtils.showThemedToast(Info.this, errorMsg, true);
         }
     }
 
