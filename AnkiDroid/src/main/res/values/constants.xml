@@ -163,6 +163,7 @@
     <string name="link_ankidroid_development_guide">https://github.com/ankidroid/Anki-Android/wiki/Development-Guide</string>
     <string name="link_ankidroid_faq">https://github.com/ankidroid/Anki-Android/wiki/FAQ</string>
     <string name="link_ankidroid_support">https://docs.ankidroid.org/help.html</string>
+    <string name="link_opencollective_donate">https://opencollective.com/ankidroid</string>
 
     <string-array name="leech_action_values">
         <item>0</item>
