@@ -198,7 +198,7 @@
     </plurals>
     <string name="deck_conf_new_cards">New cards</string>
     <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
-    <string name="deck_conf_lps_cards">Lapses</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
     <string name="deck_conf_general">General</string>
     <string name="deck_conf_reminders">Reminders</string>
     <string name="deck_conf_steps">Steps (in minutes)</string>
