@@ -728,14 +728,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
             case NO_CHANGES:
             case INCONCLUSIVE:
                 BadgeDrawableBuilder.removeBadge(syncMenu);
-                syncMenu.setTitle(R.string.sync_menu_title);
+                syncMenu.setTitle(R.string.button_sync);
                 break;
             case HAS_CHANGES:
                 // Light orange icon
                 new BadgeDrawableBuilder(getResources())
                         .withColor(ContextCompat.getColor(this, R.color.badge_warning))
                         .replaceBadge(syncMenu);
-                syncMenu.setTitle(R.string.sync_menu_title);
+                syncMenu.setTitle(R.string.button_sync);
                 break;
             case NO_ACCOUNT:
             case FULL_SYNC:
@@ -792,8 +792,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
             new MaterialDialog.Builder(DeckPicker.this)
                     .title(res.getString(R.string.new_deck))
                     .customView(mDialogEditText, true)
-                    .positiveText(res.getString(R.string.create))
-                    .negativeText(res.getString(R.string.dialog_cancel))
+                    .positiveText(R.string.create)
+                    .negativeText(R.string.dialog_cancel)
                     .onPositive((dialog, which) -> {
                         String filteredDeckName = mDialogEditText.getText().toString();
                         if (!Decks.isValidDeckName(filteredDeckName)) {
@@ -2565,8 +2565,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         new MaterialDialog.Builder(DeckPicker.this)
                 .title(res.getString(R.string.rename_deck))
                 .customView(mDialogEditText, true)
-                .positiveText(res.getString(R.string.rename))
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .positiveText(R.string.rename)
+                .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
                     String newName = mDialogEditText.getText().toString().replaceAll("\"", "");
                     Collection col = getCol();
@@ -2871,7 +2871,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 .title(R.string.create_subdeck)
                 .customView(mDialogEditText, true)
                 .positiveText(R.string.dialog_ok)
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
                     String textValue = mDialogEditText.getText().toString();
                     String newName = getCol().getDecks().getSubdeckName(did, textValue);

@@ -26,7 +26,7 @@ public class DeckPickerAnalyticsOptInDialog extends AnalyticsDialogFragment {
                 .title(res.getString(R.string.analytics_dialog_title))
                 .content(res.getString(R.string.analytics_summ))
                 .checkBoxPrompt(res.getString(R.string.analytics_title), true, null)
-                .positiveText(res.getString(R.string.dialog_continue))
+                .positiveText(R.string.dialog_continue)
                 .onPositive((dialog, which) -> {
                     AnkiDroidApp.getSharedPrefs(getContext()).edit()
                             .putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, dialog.isPromptCheckBoxChecked())

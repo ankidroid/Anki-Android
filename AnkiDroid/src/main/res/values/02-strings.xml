@@ -94,7 +94,6 @@
     <string name="custom_study_limit_tags">Limit to particular tags</string>
 
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Add note</string>
     <string name="cardeditor_title_edit_card">Edit note</string>
     <string name="discard_unsaved_changes">Close and lose current input?</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
@@ -126,13 +125,12 @@
 
     <string name="studyoptions_welcome_title">Welcome to AnkiDroid</string>
     <string name="fact_adder_intent_title" comment="Label of the 'Add Note' window. This title can't be seen in AnkiDroid directly.">AnkiDroid card</string>
-    <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">Copy card</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Reset progress</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
-    <string name="card_editor_preview_card">Preview</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Preview</string>
     <string name="error_insufficient_memory">Operation not possible due to insufficient memory on your device</string>
     <string name="rename">Rename</string>
     <string name="default_conf_delete_error">The default options group can’t be removed</string>
@@ -199,7 +197,7 @@
     <string name="export_unsuccessful">Error exporting apkg file</string>
     <string name="import_hint">Place the apkg file in directory “%s” and touch “OK” to import cards</string>
     <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
-    <string name="study_options">Options</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Options</string>
     <string name="select_tts">Set TTS language</string>
     <string name="custom_study">Custom study</string>
     <string name="more_options">More</string>

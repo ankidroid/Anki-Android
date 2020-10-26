@@ -405,7 +405,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void onSearch() {
         mSearchTerms = mSearchView.getQuery().toString();
         if (mSearchTerms.length() == 0) {
-            mSearchView.setQueryHint(getResources().getString(R.string.downloaddeck_search));
+            mSearchView.setQueryHint(getResources().getString(R.string.deck_conf_cram_search));
         }
         searchCards();
     }
@@ -2481,7 +2481,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 return getCard().getDueString();
             case EASE:
                 if (getCard().getType() == Consts.CARD_TYPE_NEW) {
-                    return AnkiDroidApp.getInstance().getString(R.string.card_browser_ease_new_card);
+                    return AnkiDroidApp.getInstance().getString(R.string.card_browser_interval_new_card);
                 } else {
                     return (getCard().getFactor()/10)+"%";
                 }

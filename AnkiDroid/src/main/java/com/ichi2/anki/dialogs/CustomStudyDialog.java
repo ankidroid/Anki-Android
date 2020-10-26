@@ -203,8 +203,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         // Set builder parameters
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
                 .customView(v, true)
-                .positiveText(res.getString(R.string.dialog_ok))
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .positiveText(R.string.dialog_ok)
+                .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
                     Collection col = CollectionHelper.getInstance().getCol(getActivity());
                     // Get the value selected by user

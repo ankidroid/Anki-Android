@@ -42,7 +42,7 @@
         <item><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GNU-GPL v3 license</a> and the source code is available <a href=\"%2$s\">on GitHub</a>.]]></item>
     </string-array>
 
-    <string name="preview_title">Preview</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Preview</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
@@ -59,7 +59,6 @@
     </plurals>
 
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Reschedule card</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -111,7 +110,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">Continue</string>
-    <string name="dialog_positive_create">Create</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
     <string name="dialog_positive_delete">Delete</string>
     <string name="dialog_positive_disable">Disable</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
@@ -147,7 +146,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">All cards</string>
     <string name="tags_dialog_option_new_cards">New</string>
-    <string name="tags_dialog_option_due_cards">Due</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
 
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards…</string>
