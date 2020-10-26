@@ -126,6 +126,8 @@
         <item>3</item>
     </string-array>
     <string name="link_anki">http://ankisrs.net</string>
+    <string name="link_anki_manual">https://docs.ankiweb.net/#/</string>
+    <string name="link_anki_forum">https://forums.ankiweb.net/</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
     <string name="link_wiki">https://github.com/ankidroid/Anki-Android/wiki</string>
     <string name="link_issue_tracker">https://github.com/ankidroid/Anki-Android/issues</string>
@@ -153,6 +155,14 @@
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
     <string name="register_url">https://ankiweb.net/account/register</string>
     <string name="changelog_url">https://docs.ankidroid.org/changelog.html</string>
+    <string name="link_reddit">https://www.reddit.com/r/Anki/</string>
+    <!-- Link is in the name of Glutanimate - server admin -->
+    <string name="link_discord">https://discord.gg/qjzcRTx</string>
+    <string name="link_facebook">https://www.facebook.com/AnkiDroid/</string>
+    <string name="link_twitter">https://twitter.com/ankidroid</string>
+    <string name="link_ankidroid_development_guide">https://github.com/ankidroid/Anki-Android/wiki/Development-Guide</string>
+    <string name="link_ankidroid_faq">https://github.com/ankidroid/Anki-Android/wiki/FAQ</string>
+    <string name="link_ankidroid_support">https://docs.ankidroid.org/help.html</string>
 
     <string-array name="leech_action_values">
         <item>0</item>
@@ -206,7 +216,6 @@
         <item>@string/settings</item>
         <item>@string/night_mode</item>
         <item>@string/help</item>
-        <item>@string/send_feedback</item>
     </string-array>
 
     <string-array name="day_theme_values">

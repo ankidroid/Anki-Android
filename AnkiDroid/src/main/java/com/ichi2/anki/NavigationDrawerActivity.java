@@ -36,7 +36,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.HelpDialog;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
 import androidx.drawerlayout.widget.ClosableDrawerLayout;
@@ -320,10 +320,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, FADE);
             } else if (itemId == R.id.nav_help) {
                 Timber.i("Navigating to help");
-                openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
-            } else if (itemId == R.id.nav_feedback) {
-                Timber.i("Navigating to feedback");
-                openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
+                showDialogFragment(HelpDialog.createInstance(this));
             }
         };
 

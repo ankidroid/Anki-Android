@@ -22,6 +22,7 @@ import android.content.Intent;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.dialogs.DialogHandler;
+import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskData;
@@ -54,9 +55,12 @@ import org.robolectric.shadows.ShadowLog;
 
 import java.util.ArrayList;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory;
+
+import androidx.fragment.app.DialogFragment;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import androidx.test.core.app.ApplicationProvider;
@@ -164,13 +168,13 @@ public class RobolectricTest {
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
-    protected void advanceRobolectricLooper() {
+    public static void advanceRobolectricLooper() {
         shadowOf(getMainLooper()).runToEndOfTasks();
         shadowOf(getMainLooper()).idle();
         shadowOf(getMainLooper()).runToEndOfTasks();
     }
     // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
-    protected void advanceRobolectricLooperWithSleep() {
+    public static void advanceRobolectricLooperWithSleep() {
         advanceRobolectricLooper();
         try { Thread.sleep(500); } catch (Exception e) { Timber.e(e); }
         advanceRobolectricLooper();
@@ -423,4 +427,18 @@ public class RobolectricTest {
     public void equalFirstField(Card expected, Card obtained) {
         assertThat(obtained.note().getFields()[0], is(expected.note().getFields()[0]));
     }
+
+
+    @NonNull
+    @CheckResult
+    protected FragmentTestActivity openDialogFragmentUsingActivity(DialogFragment menu) {
+        Intent startActivityIntent = new Intent(getTargetContext(), FragmentTestActivity.class);
+
+        FragmentTestActivity activity = startActivityNormallyOpenCollectionWithIntent(FragmentTestActivity.class, startActivityIntent);
+
+        activity.showDialogFragment(menu);
+
+        return activity;
+    }
+
 }

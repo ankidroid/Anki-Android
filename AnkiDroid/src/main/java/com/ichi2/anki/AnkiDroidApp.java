@@ -25,6 +25,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.LocaleList;
@@ -551,6 +552,14 @@ public class AnkiDroidApp extends MultiDexApplication {
         }
         editor.apply();
     }
+
+
+    public static Intent getMarketIntent(Context context) {
+        final String uri = context.getString(CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
+        Uri parsed = Uri.parse(uri);
+        return new Intent(Intent.ACTION_VIEW, parsed);
+    }
+
 
     /**
      * Get the url for the feedback page
