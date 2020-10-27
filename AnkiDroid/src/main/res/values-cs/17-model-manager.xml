@@ -44,21 +44,20 @@
     <!--Browser-->
     <string name="model_browser_delete">Odstranit typ poznámky</string>
     <string name="model_browser_rename">Přejmenovat</string>
-    <string name="model_browser_options">Možnosti</string>
     <string name="model_browser_template">Upravit karty</string>
     <string name="model_browser_add">Přidat typ poznámky</string>
     <!--Rename-->
     <string name="rename_model">Přejmenovat typ poznámky</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_title">Jazyk nápovědy klávesnice</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">Jazyk nápovědy nastaven na %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Upravit pole</string>
     <string name="model_field_editor_add">Přidat pole</string>
     <string name="model_field_editor_delete">Odstranit pole</string>
     <string name="model_field_editor_options">Možnosti pole</string>
     <string name="model_field_editor_rename">Přejmenovat pole</string>
-    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
+    <string name="model_field_editor_language_hint">Nastavit jazyk nápovědy klávesnice</string>
     <string name="model_field_editor_reposition_menu">Změna umístění pole</string>
     <string name="model_field_editor_reposition">Změna umístění pole (zadejte hodnotu %1$d – %2$d)</string>
     <string name="model_field_editor_toggle_sticky">Zapamatovat si poslední vstup při přidání</string>
@@ -79,12 +78,12 @@
     <string name="card_template_browser_appearance_restore_default_dialog">Obnovit výchozí hodnoty?</string>
     <string name="card_template_browser_appearance_saving_note">Tyto změny se použijí při ukládání šablony karty</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">Cannot set Deck Override to a filtered deck</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
+    <string name="card_template_editor_deck_override_on">Přepsat balíček (zapnuto)</string>
+    <string name="card_template_editor_deck_override_off">Přepsat balíček (vypnuto)</string>
+    <string name="model_manager_deck_override_added_message">Výchozí balíček pro „%1$s“ nastaven na „%2$s“</string>
+    <string name="model_manager_deck_override_removed_message">Odstraněn výchozí balíček pro „%s“</string>
+    <string name="model_manager_deck_override_cloze_error">Nelze nastavit přepsání balíčku pro poznámky typu doplňovačka</string>
+    <string name="model_manager_deck_override_dynamic_deck_error">Nelze nastavit přepsání balíčku na filtrovaný balíček</string>
+    <string name="deck_override_explanation">Vyberte balíček, do kterého vložíte nové karty „%s“</string>
     <string name="deck_picker_dialog_filter_decks">Filter decks</string>
 </resources>

@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Nieprawidłowy adres e-mail lub hasło.</string>
     <string name="reset_password">Resetuj hasło</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Szukaj</string>
     <string name="preferences_title">Ustawienia</string>
     <string name="deckpreferences_title">Opcje dla XXX</string>
     <string name="sync_conflict_message">Twoje talie tutaj oraz na AnkiWeb różnią się do tego stopnia, że nie mogą być połączone. Konieczne jest zatem nadpisanie talii w jednym miejscu taliami skądinąd.\n\nCzy chciałbyś przesłać talie stąd czy pobrać talie z AnkiWeb?</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb jest chwilowo niedostępny. Proszę spróbować ponownie za kilka minut.</string>
     <string name="sync_error_504_gateway_timeout">504 otrzymano błąd gateway timeout.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Synchronizacja</string>
     <string name="sync_menu_title_full_sync">Synchronizacja (pełna)</string>
     <string name="sync_menu_title_no_account">Synchronizacja (logowanie)</string>
 </resources>

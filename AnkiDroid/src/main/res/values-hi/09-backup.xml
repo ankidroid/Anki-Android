@@ -48,12 +48,11 @@
     <string name="backup_full_sync_from_server">परिसेवक से पूर्ण समकालन</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb के संग्रह से अपने संग्रह को अधिलेखित करें? यह पिछले समकालन के बाद से आपके सीखने की प्रगति और जोड़े जानकारी को मिटा देगा।</string>
     <string name="error_handling_title">त्रुटि प्रबंधन</string>
-    <string name="error_handling_options">विकल्प</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">विकल्प</string>
     <string name="backup_retry_opening">खोलने का पुनः प्रयास करें</string>
     <string name="backup_error_menu_repair">डेटाबेस सुधारें</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">डेटाबेस सुधारा जा रहा है...</string>
-    <string name="backup_error">त्रुटि</string>
     <string name="backup_invalid_file_error">चयनित बैकअप फ़ाइल अमान्य था</string>
     <string name="backup_restore_select_title">पुनर्स्थापित करने के लिए बैकअप चुनें</string>
     <string name="backup_restore_no_backups">इस डिवाइस पर कोई बैकअप उपलब्ध नहीं है । यदि आप अपने डेस्कटॉप कंप्यूटर पर बैकअप है, उंहें अपने AnkiDroid फ़ोल्डर में मैंयुअल रूप से प्रतिलिपि बनाएं ।</string>

@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Slett notattype</string>
     <string name="model_browser_rename">Endre navn</string>
-    <string name="model_browser_options">Innstillinger</string>
     <string name="model_browser_template">Rediger kort</string>
     <string name="model_browser_add">Legg til notattype</string>
     <!--Rename-->

@@ -48,12 +48,11 @@
     <string name="backup_full_sync_from_server">Visiškai sinchronizuoti iš serverio</string>
     <string name="backup_full_sync_from_server_question">Ar norite pakeisti turimą kolekciją esančia „AnkiWeb“ svetainėje? Dėl to sumažės jūsų mokymosi pažanga ir po paskutinio sinchronizavimo pridėta nauja informacija.</string>
     <string name="error_handling_title">Klaida</string>
-    <string name="error_handling_options">Parinktys</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Parinktys</string>
     <string name="backup_retry_opening">Atidaryti dar kartą</string>
     <string name="backup_error_menu_repair">Taisyti duomenų bazę</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Duomenų bazė taisoma&#8230;</string>
-    <string name="backup_error">Klaida</string>
     <string name="backup_invalid_file_error">Pasirinktos atsarginės kopijos failas neveikia</string>
     <string name="backup_restore_select_title">Norėdami atkurti, pasirinkite atsarginę kopiją</string>
     <string name="backup_restore_no_backups">Šiame įrenginyje nėra jokių atsarginių kopijų. Jei turite atsarginių kopijų kompiuteryje, nukopijuokite jas rankiniu būdu į „AnkiDroid“ katalogą.</string>

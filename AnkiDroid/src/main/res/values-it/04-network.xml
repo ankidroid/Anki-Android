@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Indirizzo email o password errati</string>
     <string name="reset_password">Reimposta la password</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Cerca</string>
     <string name="preferences_title">Preferenze</string>
     <string name="deckpreferences_title">Opzioni per XXX</string>
     <string name="sync_conflict_message">I tuoi mazzi qui e su AnkiWeb differiscono in modo tale che non è possibile unirli. È necessario sovrascrivere i mazzi in un posto con quelli nell\'altro posto.\n\nVuoi caricare i mazzi da qui o scaricare i mazzi da AnkiWeb?</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb è in manutenzione. Riprova tra qualche minuto.</string>
     <string name="sync_error_504_gateway_timeout">504 errore di timeout gateway ricevuto.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sincronizza</string>
     <string name="sync_menu_title_full_sync">Sincronizza (tutto)</string>
     <string name="sync_menu_title_no_account">Sincronizza (login)</string>
 </resources>

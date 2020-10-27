@@ -73,7 +73,7 @@
     <string name="card_browser_change_display_order_reverse">选择字段两次，以翻转。</string>
     <string name="card_details_question">问题</string>
     <string name="card_details_answer">答案</string>
-    <string name="card_details_due">到期时间</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">到期时间</string>
     <string name="card_details_tags">标签</string>
     <string name="card_browser_filtering_cards">正在筛选卡牌&#8230; \n按返回键取消</string>
     <string-array name="card_browser_order_labels">
@@ -90,8 +90,7 @@
     </string-array>
     <string name="card_browser_select_all">全选</string>
     <string name="card_browser_select_none">取消全选</string>
-    <string name="card_browser_interval_new_card">（新卡片）</string>
-    <string name="card_browser_ease_new_card">（新卡片）</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">（新卡片）</string>
     <string name="card_browser_due_filtered_card">（已过滤）</string>
     <string name="card_browser_interval_learning_card">（学习中的卡片）</string>
     <string name="card_browser_note_editor_error">打开笔记编辑器出错</string>
@@ -102,14 +101,13 @@
         <item quantity="other">%d 张卡牌已删除</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added">已添加</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">已添加</string>
     <string name="card_info_first_review">首次复习</string>
     <string name="card_info_latest_review">最近复习</string>
-    <string name="card_info_due">截止日期</string>
     <string name="card_info_interval">间隔</string>
     <string name="card_info_ease">缓慢</string>
-    <string name="card_info_reviews">复习</string>
-    <string name="card_info_lapses">失误</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">复习</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">失误</string>
     <string name="card_info_average_time">平均时间</string>
     <string name="card_info_total_time">总时间</string>
     <string name="card_info_card_type">卡牌类型</string>
@@ -118,14 +116,12 @@
     <string name="card_info_card_id">卡牌 ID</string>
     <string name="card_info_note_id">注解 ID</string>
     <string name="card_info_revlog_time">时间</string>
-    <string name="card_info_revlog_ease">缓慢</string>
-    <string name="card_info_revlog_interval">间隔</string>
     <string name="card_info_revlog_date">日期</string>
     <string name="card_info_revlog_rating">打分</string>
     <string name="card_info_revlog_type">类型</string>
-    <string name="card_info_revlog_learn">学习</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">学习</string>
     <string name="card_info_revlog_review">复习</string>
-    <string name="card_info_revlog_relearn">重新学习</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">重新学习</string>
     <string name="card_info_revlog_filtered">已过滤</string>
     <string name="card_info_ease_not_applicable">N/A</string>
     <string name="card_info_cannot_load">发生一个意外的错误</string>

@@ -65,6 +65,5 @@
         <item quantity="many">تبقى %d دقيقة</item>
         <item quantity="other">تبقى %d دقيقة</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">إضافة ملحوظة</string>
     <string name="widget_add_note_button">إضافة ملحوظة أنكيدرويد جديدة</string>
 </resources>

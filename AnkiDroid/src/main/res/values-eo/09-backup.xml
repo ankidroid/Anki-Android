@@ -48,12 +48,11 @@
     <string name="backup_full_sync_from_server">Plena samtempigo el la servilo</string>
     <string name="backup_full_sync_from_server_question">Ĉu anstataŭigi vian kolekton per tiu de AnkiWeb. Tio ĉi forviŝos vian lernadan progreson kaj informojn aldonitajn ekde la antaŭa samtempigado.</string>
     <string name="error_handling_title">Pritraktado de eraroj</string>
-    <string name="error_handling_options">Agordoj</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Agordoj</string>
     <string name="backup_retry_opening">Reprovi malfermi</string>
     <string name="backup_error_menu_repair">Ripari datumbazon</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Riparado de datumbazo&#8230;</string>
-    <string name="backup_error">Eraro</string>
     <string name="backup_invalid_file_error">La elektita dosiero de sekurkopio estas malĝusta</string>
     <string name="backup_restore_select_title">Elektu sekurkopion por restarigi</string>
     <string name="backup_restore_no_backups">Neniu sekurkopio en tiu ĉi aparato. Se vi havas sekurkopiojn en via labortabla komputilo, permane kopiu ilin al dosierujo de AnkiDroid.</string>

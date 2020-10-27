@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">دیده نشده</string>
     <string name="statistics_suspended">Suspended</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">بازآموزی</string>
-    <string name="statistics_learn">یادگیری</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">بازآموزی</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">یادگیری</string>
     <string name="statistics_cram">مطالعه فشرده</string>
     <string name="stats_cards">کارتها</string>
     <string name="stats_cards_intervals">کارت ها با وقفه داده شده</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">زمان روز</string>
     <string name="stats_day_of_week">روز هفته</string>
     <string formatted="false" name="stats_percentage_correct">% درست</string>
-    <string name="stats_reviews">مرورها</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">مرورها</string>
     <string name="stats_answer_type">نوع پاسخ</string>
     <string name="stats_today_again_count">شمارش دوباره: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; درست)</string>
@@ -115,7 +115,7 @@
     <string name="stats_forecast">پیش بینی</string>
     <string name="stats_review_count">شمارش مرور</string>
     <string name="stats_review_time">زمان مرور</string>
-    <string name="stats_added">اضافه شده</string>
+    <string name="stats_added" comment="Label of the number of added card">اضافه شده</string>
     <string name="stats_review_intervals">وقفه ها</string>
     <string name="stats_breakdown">تفکیک ساعت به ساعت</string>
     <string name="stats_weekly_breakdown">تفکیک هفتگی</string>

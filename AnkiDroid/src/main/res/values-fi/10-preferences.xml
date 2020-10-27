@@ -212,8 +212,8 @@
         <item quantity="other">%1$s\n%2$d pakkaa käyttää tätä ryhmää</item>
     </plurals>
     <string name="deck_conf_new_cards">Uusia kortteja</string>
-    <string name="deck_conf_rev_cards">Kertauksia</string>
-    <string name="deck_conf_lps_cards">Vääriä vastauksia</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Kertauksia</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Vääriä vastauksia</string>
     <string name="deck_conf_general">Yleistä</string>
     <string name="deck_conf_reminders">Muistutukset</string>
     <string name="deck_conf_steps">Askelia (minuuteissa)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Ryhmien hallinta</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Nykyinen ryhmä</string>
-    <string name="deck_conf_rename">Nimeä uudelleen</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Nimeä uudelleen</string>
     <string name="deck_conf_reset">Palauta oletusarvot</string>
     <string name="deck_conf_reset_message">Palauta nykyinen asetusryhmä oletusarvoihin?</string>
     <string name="deck_conf_add">Lisää</string>
@@ -262,11 +262,10 @@
     <string name="deck_conf_set_subdecks_message">Aseta nykyinen asetusryhmä kaikille tämän pakan alipakoille?</string>
     <string name="pref_browser_editor_font">Selaimen ja editorin kirjasintyyppi</string>
     <string name="deck_conf_cram_filter">Suodatin</string>
-    <string name="deck_conf_cram_options">Asetukset</string>
     <string name="deck_conf_cram_search">Haku</string>
     <string name="deck_conf_cram_limit">Rajoita</string>
     <string name="deck_conf_cram_order">korttia valittu</string>
-    <string name="deck_conf_cram_reschedule">Ajoita uudelleen</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Ajoita uudelleen</string>
     <string name="deck_conf_cram_reschedule_summ">Ajoita kortit tämän pakan vastausten perusteella</string>
     <string name="deck_conf_cram_steps">Muokatut vaiheet (minuuteissa)</string>
     <string name="deck_conf_cram_steps_summ">Määritä muokatut vaiheet</string>

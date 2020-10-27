@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Ogiltig e-postadress eller lösenord.</string>
     <string name="reset_password">Återställ lösenord</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Sök</string>
     <string name="preferences_title">Inställningar</string>
     <string name="deckpreferences_title">Alternativ för XXX</string>
     <string name="sync_conflict_message">Dina kortlekar här och på AnkiWeb skiljer sig på ett sätt så att de inte kan slås samman, så kortlekarna på ena sidan måste skrivas över med de från den andra sidan.\n\nVill du ladda upp kortlekarna som används här, eller hämta kortlekarna från AnkiWeb?</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb är i underhållsläge. Försök igen om ett par minuter.</string>
     <string name="sync_error_504_gateway_timeout">504 tidsgränsfel för gateway erhållet.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

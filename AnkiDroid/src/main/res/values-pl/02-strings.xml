@@ -107,7 +107,6 @@
     <string name="custom_study_preview_new">Podejrzyj nowe karty</string>
     <string name="custom_study_limit_tags">Ogranicz do poszczególnych tagów</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Dodaj notatkę</string>
     <string name="cardeditor_title_edit_card">Edytuj notatkę</string>
     <string name="discard_unsaved_changes">Zamknąć i utracić bieżący wkład?</string>
     <string name="note_editor_no_cards_created">Nie stworzono żadnych kart. Wypełnij więcej pól.</string>
@@ -141,15 +140,14 @@
     </plurals>
     <string name="studyoptions_welcome_title">Witamy w AnkiDroid</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Karta AnkiDroida</string>
-    <string name="note_editor_add_note">Zapisz notatkę</string>
     <string name="note_editor_copy_note">Kopiuj notatkę</string>
     <string name="card_editor_copy_card">Kopiuj kartę</string>
     <string name="card_editor_reposition_card">Przestawianie</string>
     <string name="card_editor_reset_card">Resetuj postępy</string>
-    <string name="card_editor_reschedule_card">Zaplanuj ponownie</string>
-    <string name="card_editor_preview_card">Podgląd</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Zaplanuj ponownie</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Podgląd</string>
     <string name="error_insufficient_memory">Operacja nie może być wykonana z powodu niewystarczającej pamięci na urządzeniu</string>
-    <string name="rename">Zmień nazwę</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Zmień nazwę</string>
     <string name="default_conf_delete_error">Nie można usunąć domyślnej grupy ustawień</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d karta dodana</item>
@@ -210,7 +208,7 @@
     <string name="export_unsuccessful">Błąd eksportowania pliku apkg</string>
     <string name="import_hint">Aby zaimportować karty, umieść plik apkg w katalogu %s i naciśnij ok</string>
     <string name="upgrade_import_no_file_found">Nie znaleziono żadnych plików do zaimportowania (%1$s)</string>
-    <string name="study_options">Opcje</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Opcje</string>
     <string name="select_tts">Ustaw język TTS</string>
     <string name="custom_study">Nauka niestandardowa</string>
     <string name="more_options">Więcej</string>
@@ -352,4 +350,17 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Font Size</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
 </resources>

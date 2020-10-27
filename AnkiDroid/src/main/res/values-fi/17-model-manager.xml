@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Poista malli</string>
     <string name="model_browser_rename">Uudelleennimeä</string>
-    <string name="model_browser_options">Asetukset</string>
     <string name="model_browser_template">Muokkaa kortteja</string>
     <string name="model_browser_add">Lisää malli</string>
     <!--Rename-->

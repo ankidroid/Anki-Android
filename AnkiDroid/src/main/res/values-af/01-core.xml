@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">Unmark note</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Skep pak</string>
-    <string name="create">Skep</string>
+    <string name="create" comment="Button to create a filtered deck">Skep</string>
     <string name="new_dynamic_deck">Skep gefiltreerde kaartpak</string>
     <string name="night_mode">Nag modus</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">Front template</string>
     <string name="card_template_editor_back">Back template</string>
     <string name="card_template_editor_styling">Styl</string>
-    <string name="card_template_editor_menu_delete">Verwyder</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Ten minste een kaarttipe word benodig.</string>

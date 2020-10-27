@@ -60,7 +60,7 @@
         <item><![CDATA[Não-desenvolvedores também podem ajudar. Por exemplo, você pode <a href=\"%1$s\"> ajudar a traduzir</a> AnkiDroid, atualizar o wiki, fornecer screenshots, ou blogar sobre AnkiDroid.]]></item>
         <item><![CDATA[O AnkiDroid é publicado sob a <a href=\"%1$s\">licença GNU-GPL v3</a> e o código-fonte está disponível <a href=\"%2$s\">no GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">Pré visualização</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Pré visualização</string>
     <string name="reposition_card_dialog_title">Reposicionar novo cartão</string>
     <string name="reposition_card_dialog_message">Posição inicial:</string>
     <string name="reposition_card_not_new_error">Apenas novos cartões podem ser reposicionados</string>
@@ -75,7 +75,6 @@
         <item quantity="other">%d resetar cartões</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Remarcar cartão</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -124,7 +123,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Não</string>
     <string name="dialog_continue">Continuar</string>
-    <string name="dialog_positive_create">Criar</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Criar</string>
     <string name="dialog_positive_delete">Excluir</string>
     <string name="dialog_positive_disable">Desativar</string>
     <string name="dialog_positive_overwrite">Sobrescrever</string>
@@ -156,7 +155,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Todos cartões</string>
     <string name="tags_dialog_option_new_cards">Novos</string>
-    <string name="tags_dialog_option_due_cards">Pendentes</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Pendentes</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Buscando cartões vazios&#8230;</string>
     <string name="confirm_cancel">Você quer cancelar?</string>
@@ -213,6 +212,26 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">Seleção de dicas para o teclado</string>
     <string name="locale_selection_dialog_summary">Alguns teclados multilíngues, como GBoard suportam alterar o idioma ao editar o texto\n\nPor favor, solicite o recurso \"setImeHintLocales\" do seu fabricante de teclado se o seu teclado não alterar o idioma. </string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_translate_ankidroid">Translate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Uma sincronização automática pode ser executada em %d segundos.</item>

@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Избриши го типот белешка</string>
     <string name="model_browser_rename">Преименувај</string>
-    <string name="model_browser_options">Опции</string>
     <string name="model_browser_template">Edit cards</string>
     <string name="model_browser_add">Додај тип на белешка</string>
     <!--Rename-->

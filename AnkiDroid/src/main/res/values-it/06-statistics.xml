@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">Mai viste</string>
     <string name="statistics_suspended">Suspended</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">Reimpara</string>
-    <string name="statistics_learn">Impara</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Reimpara</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Impara</string>
     <string name="statistics_cram">Studio focalizzato</string>
     <string name="stats_cards">Carte</string>
     <string name="stats_cards_intervals">Carte con intervallo specifico</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Ora del giorno</string>
     <string name="stats_day_of_week">Giorno della settimana</string>
     <string formatted="false" name="stats_percentage_correct">% Corretto</string>
-    <string name="stats_reviews">Ripetizioni</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Ripetizioni</string>
     <string name="stats_answer_type">Tipo di risposta</string>
     <string name="stats_today_again_count">Carte fallite: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; corrette)</string>
@@ -111,7 +111,7 @@
     <string name="stats_forecast">Previsioni</string>
     <string name="stats_review_count">Ripetizioni</string>
     <string name="stats_review_time">Durata</string>
-    <string name="stats_added">Aggiunto</string>
+    <string name="stats_added" comment="Label of the number of added card">Aggiunto</string>
     <string name="stats_review_intervals">Intervalli</string>
     <string name="stats_breakdown">Ripartizione oraria</string>
     <string name="stats_weekly_breakdown">Ripartizione settimanale</string>

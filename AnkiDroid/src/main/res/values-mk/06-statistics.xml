@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">Невидено</string>
     <string name="statistics_suspended">Suspended</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">Ре учење</string>
-    <string name="statistics_learn">Учење</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Ре учење</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Учење</string>
     <string name="statistics_cram">Cram</string>
     <string name="stats_cards">Картички</string>
     <string name="stats_cards_intervals">Картички со даден интервал</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Време од денот</string>
     <string name="stats_day_of_week">Ден на неделата</string>
     <string formatted="false" name="stats_percentage_correct">% точно</string>
-    <string name="stats_reviews">Прегледи</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Прегледи</string>
     <string name="stats_answer_type">Тип на одговор</string>
     <string name="stats_today_again_count">Повторно израчунајте: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; точно)</string>
@@ -111,7 +111,7 @@
     <string name="stats_forecast">Прогноза</string>
     <string name="stats_review_count">Преглед на рачун</string>
     <string name="stats_review_time">Преглед на време</string>
-    <string name="stats_added">Додадено</string>
+    <string name="stats_added" comment="Label of the number of added card">Додадено</string>
     <string name="stats_review_intervals">Интервали</string>
     <string name="stats_breakdown">Часовен дефект</string>
     <string name="stats_weekly_breakdown">Неделен дефект</string>

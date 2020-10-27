@@ -53,6 +53,5 @@
         <item quantity="one">%d minuter kvar</item>
         <item quantity="other">%d minuter kvar</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Lägg till not</string>
     <string name="widget_add_note_button">Lägg till ny AnkiDroid not</string>
 </resources>

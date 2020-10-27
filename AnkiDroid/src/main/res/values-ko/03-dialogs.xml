@@ -59,7 +59,7 @@
         <item><![CDATA[개발자가 아니어도 AnkiDroid 향상에 기여할 수 있습니다. 예를 들어, <a href=\"%1$s\">번역을 돕거나, 위키를 업데이트하거나, 스크린샷을 제공하거나, 기부</a>를 하거나, AnkiDroid에 대한 블로그를 작성하실 수 있습니다.]]></item>
         <item><![CDATA[AnkiDroid는 <a href=\"%1$s\">GNU GPL v3 라이센스</a> 하에 배포되고 있습니다. 소스 코드는 <a href=\"%2$s\">GitHub</a>에서 확인할 수 있습니다.]]></item>
     </string-array>
-    <string name="preview_title">미리보기</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">미리보기</string>
     <string name="reposition_card_dialog_title">새 카드 위치 변경</string>
     <string name="reposition_card_dialog_message">시작 위치:</string>
     <string name="reposition_card_not_new_error">새 카드만 순서를 조정할 수 있습니다.</string>
@@ -72,7 +72,6 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">카드 일정 다시 조정하기</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">Reschedule cards</item>
     </plurals>
@@ -118,7 +117,7 @@
     <string name="dialog_ok">확인</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">계속하기</string>
-    <string name="dialog_positive_create">만들기</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">만들기</string>
     <string name="dialog_positive_delete">삭제</string>
     <string name="dialog_positive_disable">사용 안 함</string>
     <string name="dialog_positive_overwrite">덮어쓰기</string>
@@ -149,7 +148,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">모든 카드</string>
     <string name="tags_dialog_option_new_cards">신규</string>
-    <string name="tags_dialog_option_due_cards">예정</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">예정</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">빈 카드를 찾는 중...</string>
     <string name="confirm_cancel">Do you want to cancel?</string>
@@ -206,6 +205,26 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_translate_ankidroid">Translate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>

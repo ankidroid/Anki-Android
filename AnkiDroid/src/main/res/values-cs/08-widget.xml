@@ -39,7 +39,7 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Karty k zopakování</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">Karty ke zkoušení</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d AnkiDroid karta ke zkoušení</item>
         <item quantity="few">%d AnkiDroid karty ke zkoušení</item>
@@ -59,6 +59,5 @@
         <item quantity="many">Zbývá %d minuty</item>
         <item quantity="other">Zbývá %d minut</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Přidat poznámku</string>
     <string name="widget_add_note_button">Přidat novou AnkiDroid poznámku</string>
 </resources>

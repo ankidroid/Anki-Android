@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Няправільная электронная пошта або пароль</string>
     <string name="reset_password">Скінуць пароль</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Пошук</string>
     <string name="preferences_title">Налады</string>
     <string name="deckpreferences_title">Параметры для XXX</string>
     <string name="sync_conflict_message">Немагчыма сінхранізаваць лакальную калекцыю калод з калодамі з Ankiweb. Вы можа перазапісаць лакальную калекцыю з Ankiweb або наадварот.</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">Сервер AnkiWeb знаходзіцца ў стане абслугоўвання. Паспрабуйце яшчэ раз праз некалькі хвілін.</string>
     <string name="sync_error_504_gateway_timeout">Памылка 504: час чакання адказу шлюза скончыўся.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

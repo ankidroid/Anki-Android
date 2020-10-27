@@ -212,8 +212,8 @@
         <item quantity="other">%1$s\n%2$d paquets utilitzen aquest grup</item>
     </plurals>
     <string name="deck_conf_new_cards">Noves fitxes</string>
-    <string name="deck_conf_rev_cards">Revisions</string>
-    <string name="deck_conf_lps_cards">Intervals</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisions</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Intervals</string>
     <string name="deck_conf_general">General</string>
     <string name="deck_conf_reminders">Recordatoris</string>
     <string name="deck_conf_steps">Passos (en minuts)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Administració dels grups</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Grup actual</string>
-    <string name="deck_conf_rename">Canvia el nom</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Canvia el nom</string>
     <string name="deck_conf_reset">Restaurar valors predeterminats</string>
     <string name="deck_conf_reset_message">Restaurar l\'actual grup d\'opcions als valors per defecte?</string>
     <string name="deck_conf_add">Afegeix una configuració</string>
@@ -262,11 +262,10 @@
     <string name="deck_conf_set_subdecks_message">Vols aplicar l\'actual grup d\'opcions per a totes les sub-coleccions de aquesta targeta?</string>
     <string name="pref_browser_editor_font">Tipus de lletra del navegador i de l\'editor</string>
     <string name="deck_conf_cram_filter">Filtre</string>
-    <string name="deck_conf_cram_options">Opcions</string>
     <string name="deck_conf_cram_search">Cerca</string>
     <string name="deck_conf_cram_limit">Limita-ho a</string>
     <string name="deck_conf_cram_order">fitxes triades per</string>
-    <string name="deck_conf_cram_reschedule">Torna a planificar</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Torna a planificar</string>
     <string name="deck_conf_cram_reschedule_summ">Torna a planificar les fitxes en base a les meves respostes en aquest paquet</string>
     <string name="deck_conf_cram_steps">Passos personalitzats (en minuts)</string>
     <string name="deck_conf_cram_steps_summ">Defines els passos personalitzats</string>

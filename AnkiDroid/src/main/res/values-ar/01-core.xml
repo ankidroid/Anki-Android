@@ -150,7 +150,7 @@
     <string name="menu_unmark_note">إلغاء تعليم الملحوظة</string>
     <string name="menu_toggle_mic_tool_bar">تحقق من النطق</string>
     <string name="new_deck">إنشاء رزمة</string>
-    <string name="create">إنشاء</string>
+    <string name="create" comment="Button to create a filtered deck">إنشاء</string>
     <string name="new_dynamic_deck">إنشاء رزمة مفلترة</string>
     <string name="night_mode">وضع ليلي</string>
     <string name="directory_inaccessible">لا يمكن الوصول لمجلد أنكيدرويد</string>
@@ -208,7 +208,6 @@
     <string name="card_template_editor_front">القالب الأمامي</string>
     <string name="card_template_editor_back">القالب الخلفي</string>
     <string name="card_template_editor_styling">التنسيق</string>
-    <string name="card_template_editor_menu_delete">حذف</string>
     <string name="card_template_editor_menu_card_browser_appearance">مظهر متصفح البطاقات</string>
     <string name="card_template_editor_deck_override">الرزمة المهيمنة</string>
     <string name="card_template_editor_cant_delete">يلزم نوع بطاقة واحد على الأقل</string>

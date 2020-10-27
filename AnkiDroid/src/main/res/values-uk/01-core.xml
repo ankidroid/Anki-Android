@@ -140,7 +140,7 @@
     <string name="menu_unmark_note">Зняти позначку запису</string>
     <string name="menu_toggle_mic_tool_bar">Перевірити вимову</string>
     <string name="new_deck">Створити колоду</string>
-    <string name="create">Створити</string>
+    <string name="create" comment="Button to create a filtered deck">Створити</string>
     <string name="new_dynamic_deck">Створити фільтровану колоду</string>
     <string name="night_mode">Нічний режим</string>
     <string name="directory_inaccessible">AnkiDroid каталог не доступний</string>
@@ -198,7 +198,6 @@
     <string name="card_template_editor_front">Шаблон передньої сторони</string>
     <string name="card_template_editor_back">Шаблон задньої сторони</string>
     <string name="card_template_editor_styling">Стиль</string>
-    <string name="card_template_editor_menu_delete">Видалити</string>
     <string name="card_template_editor_menu_card_browser_appearance">Вигляд переглядача карток</string>
     <string name="card_template_editor_deck_override">Перевизначення колоди</string>
     <string name="card_template_editor_cant_delete">Необхідна хоча б один тип карток</string>

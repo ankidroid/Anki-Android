@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">Desmarkatu oharra</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Sortu sorta</string>
-    <string name="create">Sortu</string>
+    <string name="create" comment="Button to create a filtered deck">Sortu</string>
     <string name="new_dynamic_deck">Sortu iragazitako sorta</string>
     <string name="night_mode">Gau modua</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">Aurrealdearen txantiloia</string>
     <string name="card_template_editor_back">Atzealdearen txantiloia</string>
     <string name="card_template_editor_styling">Estiloa</string>
-    <string name="card_template_editor_menu_delete">Ezabatu</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Gutxienez txartel mota bat behar da</string>

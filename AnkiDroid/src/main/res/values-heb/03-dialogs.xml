@@ -62,7 +62,7 @@
         <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid משוחררת ב<a href=\"%1$s\">רשיון הציבורי הכללי של גנו, גרסה 3</a> וקוד המקור שלה זמין <a href=\"%2$s\">באתר GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">תצוגה מקדימה</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">תצוגה מקדימה</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">מיקום התחלתי:</string>
     <string name="reposition_card_not_new_error">ניתן לשנות מיקום לקלפים חדשים בלבד</string>
@@ -81,7 +81,6 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">תזמון קלף מחדש</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="two">Reschedule cards</item>
@@ -136,7 +135,7 @@
     <string name="dialog_ok">אישור</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">המשך</string>
-    <string name="dialog_positive_create">יצירה</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">יצירה</string>
     <string name="dialog_positive_delete">מחיקה</string>
     <string name="dialog_positive_disable">השבתה</string>
     <string name="dialog_positive_overwrite">שכתוב</string>
@@ -170,7 +169,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">כל הקלפים</string>
     <string name="tags_dialog_option_new_cards">חדש</string>
-    <string name="tags_dialog_option_due_cards">מיועד</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">מיועד</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">מתבצע איתור קלפים ריקים&#8230;</string>
     <string name="confirm_cancel">Do you want to cancel?</string>
@@ -227,6 +226,26 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_translate_ankidroid">Translate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>

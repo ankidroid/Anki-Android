@@ -213,8 +213,8 @@
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
     <string name="deck_conf_new_cards">Нови карти</string>
-    <string name="deck_conf_rev_cards">Повторувања</string>
-    <string name="deck_conf_lps_cards">Lapses</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторувања</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
     <string name="deck_conf_general">Општо</string>
     <string name="deck_conf_reminders">Потсетници</string>
     <string name="deck_conf_steps">Чекори (во минути)</string>
@@ -249,7 +249,7 @@
     <string name="deck_conf_manage">Group management</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Моменталната група</string>
-    <string name="deck_conf_rename">Преименувај</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Преименувај</string>
     <string name="deck_conf_reset">Обновете на стандардни подесувања</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
     <string name="deck_conf_add">Додај</string>
@@ -263,11 +263,10 @@
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font">Пребарувач и уредувач фонт</string>
     <string name="deck_conf_cram_filter">Филтрирај</string>
-    <string name="deck_conf_cram_options">Опции</string>
     <string name="deck_conf_cram_search">Пребарај</string>
     <string name="deck_conf_cram_limit">Ограничи до</string>
     <string name="deck_conf_cram_order">Карти се селектирани според</string>
-    <string name="deck_conf_cram_reschedule">Презакажи</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Презакажи</string>
     <string name="deck_conf_cram_reschedule_summ">Презакажи карти според мојте одговори во овој шпил</string>
     <string name="deck_conf_cram_steps">Сопствени чекори (во минути)</string>
     <string name="deck_conf_cram_steps_summ">Дефинирај сопствени чекори</string>

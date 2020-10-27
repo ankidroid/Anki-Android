@@ -49,12 +49,11 @@ Tämä nollaa edistymisesi ja poistaa kaikki kortit!</string>
     <string name="backup_full_sync_from_server">Täydellinen synkronointi palvelimelta</string>
     <string name="backup_full_sync_from_server_question">Haluatko todella korvata kokoelmasi AnkiWebistä? Kaikki edellisen synkronoinnin jälkeen tapahtunyt opiskelu ja lisätyt tiedot unohdetaan!</string>
     <string name="error_handling_title">Virheidenkäsittely</string>
-    <string name="error_handling_options">Asetukset</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Asetukset</string>
     <string name="backup_retry_opening">Yritä uudelleen avaamista</string>
     <string name="backup_error_menu_repair">Korjaa tietokanta</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Korjataan tietokantaa.\nOdota hetki...</string>
-    <string name="backup_error">Virhe</string>
     <string name="backup_invalid_file_error">Valittu varmuuskopio oli viallinen</string>
     <string name="backup_restore_select_title">Valitse varmuuskopio palauttaaksesi</string>
     <string name="backup_restore_no_backups">Ei varmuuskopioita käytettävissä tälle kokoelmalle tällä laitteella. Jos sinulla on varmuuskopioita pöytätietokoneella, kopioi ne manuaalisesti AnkiDroid-kansioon</string>

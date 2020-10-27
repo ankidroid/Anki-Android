@@ -53,6 +53,5 @@
         <item quantity="one">%d నిమిషాలు మిగిలాయి</item>
         <item quantity="other">%d నిమిషాలు మిగిలాయి</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">గమనిక చేర్చు</string>
     <string name="widget_add_note_button">కొత్త AnkiDroid గమనికను జోడించండి</string>
 </resources>

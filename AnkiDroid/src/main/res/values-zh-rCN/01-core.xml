@@ -125,7 +125,7 @@
     <string name="menu_unmark_note">取消标记</string>
     <string name="menu_toggle_mic_tool_bar">检查发音</string>
     <string name="new_deck">创建牌组</string>
-    <string name="create">创建</string>
+    <string name="create" comment="Button to create a filtered deck">创建</string>
     <string name="new_dynamic_deck">创建筛选牌组</string>
     <string name="night_mode">夜间模式</string>
     <string name="directory_inaccessible">无法访问AnkiDroid目录</string>
@@ -183,7 +183,6 @@
     <string name="card_template_editor_front">正面</string>
     <string name="card_template_editor_back">背面</string>
     <string name="card_template_editor_styling">样式</string>
-    <string name="card_template_editor_menu_delete">删除</string>
     <string name="card_template_editor_menu_card_browser_appearance">卡牌浏览器外观</string>
     <string name="card_template_editor_deck_override">牌组覆盖</string>
     <string name="card_template_editor_cant_delete">至少需要保留一个卡片类型。</string>

@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Di-wastong email address o password</string>
     <string name="reset_password">I-reset ang password</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Maghanap</string>
     <string name="preferences_title">Preferences</string>
     <string name="deckpreferences_title">Mga opsiyon para sa XXX</string>
     <string name="sync_conflict_message">Dapat mong i-upload itong koleksyon o i-download sa Ankiweb, dahil hindi sila maaaring pagsamahin. Ang koleksyon sa isang panig ay mapapatungan.</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

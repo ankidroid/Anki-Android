@@ -215,8 +215,8 @@
         <item quantity="other">%1$s\n%2$d kompletov uporablja to skupino</item>
     </plurals>
     <string name="deck_conf_new_cards">Nove kartice</string>
-    <string name="deck_conf_rev_cards">Pregledi</string>
-    <string name="deck_conf_lps_cards">Spodrsljaji</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Pregledi</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Spodrsljaji</string>
     <string name="deck_conf_general">Splošno</string>
     <string name="deck_conf_reminders">Opomniki</string>
     <string name="deck_conf_steps">Koraki (v minutah)</string>
@@ -251,7 +251,7 @@
     <string name="deck_conf_manage">Upravljanje skupin</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Trenutna skupina</string>
-    <string name="deck_conf_rename">Preimenuj</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Preimenuj</string>
     <string name="deck_conf_reset">Obnovi privzete</string>
     <string name="deck_conf_reset_message">Obnovi trenutno skupino možnosti na privzete vrednosti?</string>
     <string name="deck_conf_add">Dodaj</string>
@@ -267,11 +267,10 @@
     <string name="deck_conf_set_subdecks_message">Nastavi trenutno skupino možnosti za vse podkomplete tega kompleta?</string>
     <string name="pref_browser_editor_font">Pisava brskalnika in urejevalnika</string>
     <string name="deck_conf_cram_filter">Filter</string>
-    <string name="deck_conf_cram_options">Možnosti</string>
     <string name="deck_conf_cram_search">Poišči</string>
     <string name="deck_conf_cram_limit">Omeji na</string>
     <string name="deck_conf_cram_order">kartic, ki jih je izbral</string>
-    <string name="deck_conf_cram_reschedule">Spremeni urnik</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Spremeni urnik</string>
     <string name="deck_conf_cram_reschedule_summ">Spremeni urnik kartic glede na moje odgovore v tem kompletu</string>
     <string name="deck_conf_cram_steps">Koraki po meri (v minutah)</string>
     <string name="deck_conf_cram_steps_summ">Določi korake po meri</string>

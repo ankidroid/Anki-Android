@@ -212,8 +212,8 @@
         <item quantity="other">%1$s\n%2$d dek menggunakan grup ini</item>
     </plurals>
     <string name="deck_conf_new_cards">Kartu baru</string>
-    <string name="deck_conf_rev_cards">Ulasan</string>
-    <string name="deck_conf_lps_cards">Kelupaan</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Ulasan</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Kelupaan</string>
     <string name="deck_conf_general">Umum</string>
     <string name="deck_conf_reminders">Pengingat</string>
     <string name="deck_conf_steps">Langkah-langkah (dalam menit)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Manajemen grup</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Grup saat ini</string>
-    <string name="deck_conf_rename">Ubah nama</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Ubah nama</string>
     <string name="deck_conf_reset">Kembalikan ke awal</string>
     <string name="deck_conf_reset_message">Kembalikan opsi kelompok sekarang menjadi seperti awal?</string>
     <string name="deck_conf_add">Tambah</string>
@@ -261,11 +261,10 @@
     <string name="deck_conf_set_subdecks_message">Set opsi grup pilihan saat ini untuk semua subdek dek ini?</string>
     <string name="pref_browser_editor_font">Penelusur dan editor fon</string>
     <string name="deck_conf_cram_filter">Filter</string>
-    <string name="deck_conf_cram_options">Opsi</string>
     <string name="deck_conf_cram_search">Cari</string>
     <string name="deck_conf_cram_limit">Batasi ke</string>
     <string name="deck_conf_cram_order">kartu dipilih menurut </string>
-    <string name="deck_conf_cram_reschedule">Jadwalkan ulang</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Jadwalkan ulang</string>
     <string name="deck_conf_cram_reschedule_summ">Jadwalkan ulang kartu berdasarkan jawabanku di dek ini</string>
     <string name="deck_conf_cram_steps">Langkah kustom(dalam menit)</string>
     <string name="deck_conf_cram_steps_summ">Tentukan langkah kustom</string>

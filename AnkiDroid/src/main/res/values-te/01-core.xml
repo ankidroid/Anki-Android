@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">గమనిక నుండి గుర్తు తీసివేయండి</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">ఒక డెక్ సృష్టించండి</string>
-    <string name="create">సృష్టించు</string>
+    <string name="create" comment="Button to create a filtered deck">సృష్టించు</string>
     <string name="new_dynamic_deck">ఫిల్టర్ డెక్ను సృష్టించండి</string>
     <string name="night_mode">రాత్రి మోడ్</string>
     <string name="directory_inaccessible">AnkiDroid డైరెక్టరీ అందుబాటులో లేదు</string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">ముందు టెంప్లేట్</string>
     <string name="card_template_editor_back">బ్యాక్ టెంప్లేట్</string>
     <string name="card_template_editor_styling">స్టైలింగ్</string>
-    <string name="card_template_editor_menu_delete">తొలగించు</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">కనీసం ఒక కార్డు రకం అవసరం</string>

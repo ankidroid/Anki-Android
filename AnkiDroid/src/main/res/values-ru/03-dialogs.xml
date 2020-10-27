@@ -62,7 +62,7 @@
         <item><![CDATA[Неразработчики тоже могут помочь. Например, вы можете <a href=\"%1$s\">помочь с переводом</a> AnkiDroid, обновить вики, предоставить скриншоты или написать в блоге об AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid выпускается под <a href=\"%1$s\">лицензией GNU-GPL v3</a>, и исходный код доступен <a href=\"%2$s\">на GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">Предпросмотр</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Предпросмотр</string>
     <string name="reposition_card_dialog_title">Переместить новую карточку</string>
     <string name="reposition_card_dialog_message">Начальная позиция:</string>
     <string name="reposition_card_not_new_error">Можно переместить только новые карточки</string>
@@ -81,7 +81,6 @@
         <item quantity="other">%d карточек сброшены</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Перепланировать карточку</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Перепланировать карточку</item>
         <item quantity="few">Перепланировать карточки</item>
@@ -136,7 +135,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Нет</string>
     <string name="dialog_continue">Продолжить</string>
-    <string name="dialog_positive_create">Создать</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Создать</string>
     <string name="dialog_positive_delete">Удалить</string>
     <string name="dialog_positive_disable">Отключить</string>
     <string name="dialog_positive_overwrite">Перезаписать</string>
@@ -170,7 +169,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Все карточки</string>
     <string name="tags_dialog_option_new_cards">Новые</string>
-    <string name="tags_dialog_option_due_cards">К просмотру</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">К просмотру</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Поиск пустых карточек&#8230;</string>
     <string name="confirm_cancel">Вы уверены, что хотите отменить?</string>
@@ -227,6 +226,26 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">Выбор языка подсказок</string>
     <string name="locale_selection_dialog_summary">Некоторые многоязычные клавиатуры, например GBoard, могут переключать языка при редактировании текста\n\nПожалуйста, запросите функцию «setImeHintLocales» у разработчика клавиатуры, если клавиатура не переключает язык.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_translate_ankidroid">Translate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Автоматическая синхронизация может быть запущена через %d секунду</item>

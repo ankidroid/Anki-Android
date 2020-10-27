@@ -213,8 +213,8 @@
         <item quantity="other">Ang %1$s\n%2$d deck ay gumagamit ng pangkat na ito</item>
     </plurals>
     <string name="deck_conf_new_cards">Mga bagong kard</string>
-    <string name="deck_conf_rev_cards">Mga Review</string>
-    <string name="deck_conf_lps_cards">Mga pagkakamali</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Mga Review</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Mga pagkakamali</string>
     <string name="deck_conf_general">Pangkalahatan</string>
     <string name="deck_conf_reminders">Mga Paalala</string>
     <string name="deck_conf_steps">Mga hakbang (sa ilang minuto)</string>
@@ -249,7 +249,7 @@
     <string name="deck_conf_manage">Pamamahala ng grupo</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Kasalukuyang grupo</string>
-    <string name="deck_conf_rename">Palitan ang pangalan</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Palitan ang pangalan</string>
     <string name="deck_conf_reset">Ibalik sa dating ayos</string>
     <string name="deck_conf_reset_message">Ibalik ang kasalukuyang mga opsyon ng pangkat sa mga default na halaga?</string>
     <string name="deck_conf_add">Magdagdag</string>
@@ -263,11 +263,10 @@
     <string name="deck_conf_set_subdecks_message">Itakda ang kasalukuyang mga opsyon na pangkat para sa lahat ng mga subdecks ng deck na ito?</string>
     <string name="pref_browser_editor_font">Browser at editor ng font</string>
     <string name="deck_conf_cram_filter">Salain</string>
-    <string name="deck_conf_cram_options">Mga Opsyon</string>
     <string name="deck_conf_cram_search">Paghahanap</string>
     <string name="deck_conf_cram_limit">Limitasyon sa</string>
     <string name="deck_conf_cram_order">napili ng mga kard sa pamamagitan ng</string>
-    <string name="deck_conf_cram_reschedule">Iskedyul uli</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Iskedyul uli</string>
     <string name="deck_conf_cram_reschedule_summ">Ischedule ulu ang maga cards batay sa aking mga sagot sa deck na ito</string>
     <string name="deck_conf_cram_steps">Mga pasadyang hakbang (sa ilang minuto)</string>
     <string name="deck_conf_cram_steps_summ">Magtakda ng mga pasadyang hakbang</string>

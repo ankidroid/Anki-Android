@@ -60,7 +60,7 @@
         <item><![CDATA[Les non-programmeurs peuvent aussi aider. Par exemple, vous pouvez aider à <a href=\"%1$s\">traduire</a> AnkiDroid, mettre à jour le wiki, envoyer des screenshots ou partager AnkiDroid sur votre blog.]]></item>
         <item><![CDATA[AnkiDroid est distribué sous la <a href=\"%1$s\">licence GNU-GPL v3</a> et le code source est disponible <a href=\"%2$s\">sur GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">Aperçu</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Aperçu</string>
     <string name="reposition_card_dialog_title">Repositionner la nouvelle carte</string>
     <string name="reposition_card_dialog_message">Position de départ:</string>
     <string name="reposition_card_not_new_error">Seules les nouvelles cartes peuvent être repositionnées</string>
@@ -75,7 +75,6 @@
         <item quantity="other">%d cartes réinitialisées</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Replanifier la carte</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Replanifier la carte</item>
         <item quantity="other">Replanifier les cartes</item>
@@ -124,7 +123,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Non</string>
     <string name="dialog_continue">Continuer</string>
-    <string name="dialog_positive_create">Créer</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Créer</string>
     <string name="dialog_positive_delete">Supprimer</string>
     <string name="dialog_positive_disable">Désactiver</string>
     <string name="dialog_positive_overwrite">Écraser</string>
@@ -156,7 +155,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Toutes les cartes</string>
     <string name="tags_dialog_option_new_cards">Nouvelle</string>
-    <string name="tags_dialog_option_due_cards">À faire</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">À faire</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Recherche de cartes vides en cours&#8230;</string>
     <string name="confirm_cancel">Do you want to cancel?</string>
@@ -213,6 +212,26 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">Sélection des indices clavier</string>
     <string name="locale_selection_dialog_summary">Certains claviers multilingues, comme GBoard, prennent en charge le changement de langue lors de l\'édition du texte\n\nVeuillez demander la fonctionnalité « setImeHintLocales » du fabricant de votre clavier si votre clavier ne change pas de langue.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_translate_ankidroid">Translate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Une synchronisation automatique peut être déclenchée dans %d seconde</item>

@@ -99,15 +99,14 @@
         <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
+    <string name="custom_study_increase_review_limit">今日の復習カード上限を変更</string>
     <string name="custom_study_review_forgotten">忘却したカードを復習する</string>
     <string name="custom_study_review_ahead">予定を先取りして復習する</string>
     <string name="custom_study_random_selection">カードをランダムに学習する</string>
     <string name="custom_study_preview_new">新規カードをプレビューする</string>
     <string name="custom_study_limit_tags">特定のタグで選ぶ</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">ノートを追加</string>
     <string name="cardeditor_title_edit_card">ノートの編集</string>
     <string name="discard_unsaved_changes">閉じて現在の入力を破棄しますか？</string>
     <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
@@ -135,15 +134,14 @@
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroidへようこそ</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid カード</string>
-    <string name="note_editor_add_note">ノートを追加</string>
     <string name="note_editor_copy_note">ノートをコピー</string>
     <string name="card_editor_copy_card">カードをコピー</string>
     <string name="card_editor_reposition_card">新規カードの表示順序を変更</string>
     <string name="card_editor_reset_card">学習履歴をリセット</string>
-    <string name="card_editor_reschedule_card">スケジュールを変更</string>
-    <string name="card_editor_preview_card">プレビュー</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">スケジュールを変更</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">プレビュー</string>
     <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
-    <string name="rename">名前の変更</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">名前の変更</string>
     <string name="default_conf_delete_error">デフォルトのオプショングループを削除することはできません</string>
     <plurals name="factadder_cards_added">
         <item quantity="other">%d枚のカードを追加しました</item>
@@ -200,7 +198,7 @@
     <string name="export_unsuccessful">Ankiファイルのエクスポートエラー</string>
     <string name="import_hint">取り込みたいデッキまたはコレクション（全デッキ）のファイル（*. apkg）をあらかじめ \"%s\" に保存した後、この画面で「OK」ボタンをタップしてください。</string>
     <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
-    <string name="study_options">オプション</string>
+    <string name="study_options" comment="Menu entry to open an options menu">オプション</string>
     <string name="select_tts">テキスト読み上げ機能の言語設定</string>
     <string name="custom_study">カスタム学習</string>
     <string name="more_options">その他</string>
@@ -312,4 +310,17 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Font Size</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
 </resources>

@@ -107,7 +107,6 @@
     <string name="custom_study_preview_new">Pratinjau kartu baru</string>
     <string name="custom_study_limit_tags">Batasi ke tag tertentu</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Tambah catatan</string>
     <string name="cardeditor_title_edit_card">Edit catatan</string>
     <string name="discard_unsaved_changes">Tutup dan buang masukan saat ini?</string>
     <string name="note_editor_no_cards_created">Tidak ada kartu yang dibuat. Harap isi semua bidang teks</string>
@@ -135,15 +134,14 @@
     </plurals>
     <string name="studyoptions_welcome_title">Selamat datang di AnkiDroid</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Kartu AnkiDroid</string>
-    <string name="note_editor_add_note">Tambah catatan</string>
     <string name="note_editor_copy_note">Salin Catatan</string>
     <string name="card_editor_copy_card">Salin kartu</string>
     <string name="card_editor_reposition_card">Pindah posisi</string>
     <string name="card_editor_reset_card">Reset kemajuan</string>
-    <string name="card_editor_reschedule_card">Jadwalkan ulang</string>
-    <string name="card_editor_preview_card">Pratinjau</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Jadwalkan ulang</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pratinjau</string>
     <string name="error_insufficient_memory">Operasi gagal karena memori tidak cukup pada perangkat</string>
-    <string name="rename">Ubah nama</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Ubah nama</string>
     <string name="default_conf_delete_error">Grup opsi bawaan tidak dapat dihapus</string>
     <plurals name="factadder_cards_added">
         <item quantity="other">%d kartu ditambahkan</item>
@@ -201,7 +199,7 @@
     <string name="export_unsuccessful">Galat mengekspor berkas apkg</string>
     <string name="import_hint">Untuk mengimpor kartu, taruh berkas apkg ke dalam direktori “%s” dan tekan “OK”</string>
     <string name="upgrade_import_no_file_found">Tidak ada berkas %1$s ditemukan yang dapat diimpor</string>
-    <string name="study_options">Opsi</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Opsi</string>
     <string name="select_tts">Tetapkan bahasa TTS</string>
     <string name="custom_study">Belajar kustom</string>
     <string name="more_options">Lainnya</string>
@@ -313,4 +311,17 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Font Size</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
 </resources>

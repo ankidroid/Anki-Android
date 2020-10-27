@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Borrar tipo de nota</string>
     <string name="model_browser_rename">Renombrar</string>
-    <string name="model_browser_options">Opciones</string>
     <string name="model_browser_template">Editar tarjetas</string>
     <string name="model_browser_add">Añadir tipo de nota</string>
     <!--Rename-->

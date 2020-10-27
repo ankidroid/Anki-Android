@@ -212,8 +212,8 @@
         <item quantity="other">Los mazos %1$s\n%2$d utilizan este grupo</item>
     </plurals>
     <string name="deck_conf_new_cards">Nuevas tarjetas</string>
-    <string name="deck_conf_rev_cards">Revisiones</string>
-    <string name="deck_conf_lps_cards">Intervalos</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisiones</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Intervalos</string>
     <string name="deck_conf_general">General</string>
     <string name="deck_conf_reminders">Recordatorios</string>
     <string name="deck_conf_steps">Pasos (en minutos)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Gestión de los grupos</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Grupo actual</string>
-    <string name="deck_conf_rename">Renombrar</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Renombrar</string>
     <string name="deck_conf_reset">Restaurar valores predeterminados</string>
     <string name="deck_conf_reset_message">¿Restaurar el grupo de opciones actuales a sus valores predeterminados?</string>
     <string name="deck_conf_add">Añadir configuración</string>
@@ -262,11 +262,10 @@
     <string name="deck_conf_set_subdecks_message">¿Aplicar el grupo de opciones actuales a todos los submazos de este mazo?</string>
     <string name="pref_browser_editor_font">Fuente del explorador y editor</string>
     <string name="deck_conf_cram_filter">Filtro</string>
-    <string name="deck_conf_cram_options">Opciones</string>
     <string name="deck_conf_cram_search">Buscar</string>
     <string name="deck_conf_cram_limit">Limitar a</string>
     <string name="deck_conf_cram_order">Tarjetas seleccionadas por</string>
-    <string name="deck_conf_cram_reschedule">Reprogramar</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reprogramar</string>
     <string name="deck_conf_cram_reschedule_summ">Reprogramar las tarjetas basándose en mis respuestas en este mazo</string>
     <string name="deck_conf_cram_steps">Pasos personalizados (en minutos)</string>
     <string name="deck_conf_cram_steps_summ">Definir pasos personalizados</string>

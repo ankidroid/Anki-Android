@@ -74,7 +74,7 @@
     <string name="card_browser_change_display_order_reverse">Fordított sorrendhez válaszd ki a mezőt kétszer.</string>
     <string name="card_details_question">Kérdés</string>
     <string name="card_details_answer">Válasz</string>
-    <string name="card_details_due">Esedékes</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">Esedékes</string>
     <string name="card_details_tags">Címkék</string>
     <string name="card_browser_filtering_cards">Kártyák szűrése&#8230;\nNyomd meg a vissza gombot a megszüntetéshez</string>
     <string-array name="card_browser_order_labels">
@@ -91,8 +91,7 @@
     </string-array>
     <string name="card_browser_select_all">Összes kijelölése</string>
     <string name="card_browser_select_none">Nincs kijelölve semmi</string>
-    <string name="card_browser_interval_new_card">(új)</string>
-    <string name="card_browser_ease_new_card">(új)</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(új)</string>
     <string name="card_browser_due_filtered_card">(szűrt)</string>
     <string name="card_browser_interval_learning_card">(tanulás)</string>
     <string name="card_browser_note_editor_error">Hiba a Jegyzetszerkesztő megnyitása során</string>
@@ -104,14 +103,13 @@
         <item quantity="other">%d kártya törölve</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added">Hozzáaadva</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Hozzáaadva</string>
     <string name="card_info_first_review">Első ismétlés</string>
     <string name="card_info_latest_review">Legutóbbi ismétlés</string>
-    <string name="card_info_due">Esedékes</string>
     <string name="card_info_interval">Intervallum</string>
     <string name="card_info_ease">Nehézség</string>
-    <string name="card_info_reviews">Ismétlések</string>
-    <string name="card_info_lapses">Lapses</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Ismétlések</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
     <string name="card_info_average_time">Átlagos idő</string>
     <string name="card_info_total_time">Összes idő</string>
     <string name="card_info_card_type">Kártya típus</string>
@@ -120,14 +118,12 @@
     <string name="card_info_card_id">Kártya azonosító</string>
     <string name="card_info_note_id">Jegyzet azonosító</string>
     <string name="card_info_revlog_time">Idő</string>
-    <string name="card_info_revlog_ease">Ease</string>
-    <string name="card_info_revlog_interval">Intervallum</string>
     <string name="card_info_revlog_date">Dátum</string>
     <string name="card_info_revlog_rating">Értékelés</string>
     <string name="card_info_revlog_type">Típus</string>
-    <string name="card_info_revlog_learn">Tanulás</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Tanulás</string>
     <string name="card_info_revlog_review">Ismétlés</string>
-    <string name="card_info_revlog_relearn">Újratanulás</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Újratanulás</string>
     <string name="card_info_revlog_filtered">Szűrt</string>
     <string name="card_info_ease_not_applicable">N/A</string>
     <string name="card_info_cannot_load">Váratlan hiba történt</string>

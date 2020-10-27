@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Notiztyp löschen</string>
     <string name="model_browser_rename">Umbenennen</string>
-    <string name="model_browser_options">Optionen</string>
     <string name="model_browser_template">Karten bearbeiten</string>
     <string name="model_browser_add">Notiztyp hinzufügen</string>
     <!--Rename-->

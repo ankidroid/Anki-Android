@@ -48,12 +48,11 @@
     <string name="backup_full_sync_from_server">Đồng bộ hóa đầy đủ từ máy chủ</string>
     <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
     <string name="error_handling_title">Lỗi xử lý</string>
-    <string name="error_handling_options">Các tùy chọn</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Các tùy chọn</string>
     <string name="backup_retry_opening">Thử mở lại</string>
     <string name="backup_error_menu_repair">Sửa cơ sở dữ liệu</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Đang sửa cơ sở dữ liệu&#8230;</string>
-    <string name="backup_error">Lỗi</string>
     <string name="backup_invalid_file_error">Tệp sao lưu đã chọn không hợp lệ</string>
     <string name="backup_restore_select_title">Chọn sao lưu để khôi phục</string>
     <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>

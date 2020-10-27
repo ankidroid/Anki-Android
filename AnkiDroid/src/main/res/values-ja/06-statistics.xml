@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">未学習(新規)</string>
     <string name="statistics_suspended">Suspended</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">再基本学習</string>
-    <string name="statistics_learn">基本学習</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">再基本学習</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">基本学習</string>
     <string name="statistics_cram">フィルター学習</string>
     <string name="stats_cards">枚数</string>
     <string name="stats_cards_intervals">次の復習予定日が ～後のカード</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">時刻</string>
     <string name="stats_day_of_week">曜日</string>
     <string formatted="false" name="stats_percentage_correct">正解率 (%)　</string>
-    <string name="stats_reviews">回答数</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">回答数</string>
     <string name="stats_answer_type">回答の種類</string>
     <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>
@@ -111,7 +111,7 @@
     <string name="stats_forecast">予測</string>
     <string name="stats_review_count">履歴（回答数）</string>
     <string name="stats_review_time">履歴（時間）</string>
-    <string name="stats_added">履歴（カードの追加）</string>
+    <string name="stats_added" comment="Label of the number of added card">履歴（カードの追加）</string>
     <string name="stats_review_intervals">間隔</string>
     <string name="stats_breakdown">時間帯ごとの分析</string>
     <string name="stats_weekly_breakdown">曜日ごとの分析</string>

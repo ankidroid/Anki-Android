@@ -213,8 +213,8 @@
         <item quantity="other">%1$s\n%2$d డెక్స్ ఈ గుంపును ఉపయోగిస్తాయి</item>
     </plurals>
     <string name="deck_conf_new_cards">కొత్త కార్డులు</string>
-    <string name="deck_conf_rev_cards">సమీక్షలు</string>
-    <string name="deck_conf_lps_cards">లాప్సెస్</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">సమీక్షలు</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">లాప్సెస్</string>
     <string name="deck_conf_general">సాధారణం</string>
     <string name="deck_conf_reminders">జ్ఞాపికలు</string>
     <string name="deck_conf_steps">దశలు (నిమిషాల్లో)</string>
@@ -249,7 +249,7 @@
     <string name="deck_conf_manage">గ్రూప్ మేనేజ్మెంట్</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">ప్రస్తుత సమూహం</string>
-    <string name="deck_conf_rename">పేరుమార్చు</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">పేరుమార్చు</string>
     <string name="deck_conf_reset">నిర్ణీత విలువలకు మార్చు</string>
     <string name="deck_conf_reset_message">డిఫాల్ట్ విలువల కోసం ప్రస్తుత ఎంపికల సమూహాన్ని పునరుద్ధరించాలా?</string>
     <string name="deck_conf_add">చేర్చు</string>
@@ -263,11 +263,10 @@
     <string name="deck_conf_set_subdecks_message">ఈ డెక్ యొక్క subdecks అన్ని ప్రస్తుత ఎంపికలు సమూహం సెట్?</string>
     <string name="pref_browser_editor_font">బ్రౌజర్ మరియు ఎడిటర్ ఫాంట్</string>
     <string name="deck_conf_cram_filter">వడపోత</string>
-    <string name="deck_conf_cram_options">ఎంపికలు</string>
     <string name="deck_conf_cram_search">శోధన</string>
     <string name="deck_conf_cram_limit">పరిమితి</string>
     <string name="deck_conf_cram_order">కార్డులు ఎంపిక చేశాయి</string>
-    <string name="deck_conf_cram_reschedule">వాయిదా</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">వాయిదా</string>
     <string name="deck_conf_cram_reschedule_summ">ఈ డెక్లో నా సమాధానాల ఆధారంగా కార్డులను రిచెస్ చేయండి</string>
     <string name="deck_conf_cram_steps">అనుకూల దశలు (నిమిషాల్లో)</string>
     <string name="deck_conf_cram_steps_summ">అనుకూల దశలను నిర్వచించండి</string>

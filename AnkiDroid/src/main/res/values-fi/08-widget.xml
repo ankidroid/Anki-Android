@@ -53,6 +53,5 @@
         <item quantity="one">%d minuutti jäljellä</item>
         <item quantity="other">%d minuuttia jäljellä</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Lisää merkintä</string>
     <string name="widget_add_note_button">Lisää uusi AnkiDroid merkintä</string>
 </resources>

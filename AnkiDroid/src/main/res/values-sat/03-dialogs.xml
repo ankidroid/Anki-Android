@@ -60,7 +60,7 @@
         <item><![CDATA[Non-developers ᱦᱚᱸ ᱜᱚᱸᱲᱚᱸ ᱢᱮᱥᱟ ᱫᱟᱲᱮᱭᱟᱜ ᱠᱚ. ᱡᱮᱢᱛᱤ ᱟᱢ&lt;a href=\&quot;%1$s\&quot;&gt;translate ᱠᱚᱨᱮ&lt;/a&gt; AnkiDroid ᱜᱚᱲᱚᱭᱯᱮ, ᱣᱤᱠᱤ ᱠᱚᱨᱮ ᱟᱹᱯᱰᱮᱴ ᱠᱟᱛᱮ, screenshots ᱮᱢ ᱟᱨᱦᱚᱸ AnkiDroid blog ᱠᱟᱛᱮ ᱾]]></item>
         <item><![CDATA[AnkiDroid ᱫᱚ&lt;a href=\&quot;%1$s\&quot;&gt;GNU-GPL v3 license&lt;/a&gt;ᱛᱮ ᱚᱰᱚᱠ ᱟᱠᱟᱱᱟ ᱟᱨ source code&lt;a href=\&quot;%2$s\&quot;&gt;ᱫᱚ GitHub ᱨᱮ ᱯᱮ ᱧᱟᱢᱟ&lt;/a&gt;.]]></item>
     </string-array>
-    <string name="preview_title">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
     <string name="reposition_card_dialog_title">ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱯᱮ</string>
     <string name="reposition_card_dialog_message">ᱮᱛᱦᱚᱵ ᱡᱟᱭᱜᱟᱺ</string>
     <string name="reposition_card_not_new_error">ᱠᱷᱟᱹᱞᱤ ᱱᱟᱶᱟ ᱠᱟᱰ ᱜᱮ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱫᱟᱲᱮᱭᱟᱜᱟᱢ</string>
@@ -75,7 +75,6 @@
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱴ</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">ᱠᱟᱰ‌ ᱨᱤᱥᱮᱰᱭᱩᱞ</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
         <item quantity="other">ᱠᱟᱰ ᱠᱚ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</item>
@@ -89,7 +88,7 @@
         <item quantity="one">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
+    <string name="reschedule_card_dialog_new_card_warning">ᱱᱟᱶᱟ ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱠᱟᱱᱟ ᱾ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱞᱮᱠᱷᱟᱱ ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ ‌ᱛᱮ‌ ᱵᱚᱫᱚᱞᱚᱜᱼᱟ ᱾ ᱱᱟᱶᱟ ᱫᱷᱟᱲᱤ ᱨᱮ ᱱᱟᱶᱟ ᱡᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱟᱭᱜᱟ ᱵᱚᱫᱚᱞ‌ ᱞᱟᱹᱜᱤᱫ ᱨᱤᱯᱚᱡᱤᱥᱚᱱ ᱠᱟᱰ ᱵᱮᱵᱷᱟᱨ ᱢᱮ‌ᱸ</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ᱨᱮᱫ ᱢᱮᱱᱮᱡᱟᱨ ᱛᱮ ᱰᱮᱠ ᱠᱷᱚᱱ ᱠᱟᱰ ᱪᱚᱭᱚᱱ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ about:downloads ᱥᱟᱠᱟᱢ ᱠᱷᱟᱱ import ᱢᱮ</string>
     <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
@@ -124,7 +123,7 @@
     <string name="dialog_ok">ᱴᱷᱤᱠ</string>
     <string name="dialog_no">ᱵᱟᱝ</string>
     <string name="dialog_continue">ᱞᱮᱛᱟᱲ</string>
-    <string name="dialog_positive_create">ᱛᱮᱭᱟᱨ</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ᱛᱮᱭᱟᱨ</string>
     <string name="dialog_positive_delete">ᱜᱮᱫ ᱜᱤᱰᱤ</string>
     <string name="dialog_positive_disable">ᱵᱟᱝ ᱩᱥᱨᱟᱹᱣ</string>
     <string name="dialog_positive_overwrite">ᱚᱞ ᱪᱮᱛᱟᱱ ᱚᱞ</string>
@@ -156,7 +155,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱠᱚ </string>
     <string name="tags_dialog_option_new_cards">ᱱᱟᱶᱟ</string>
-    <string name="tags_dialog_option_due_cards">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱯᱟᱱᱛᱮ ᱪᱟᱹᱞᱩ ᱠᱟᱱᱟ&#8230;</string>
     <string name="confirm_cancel">ᱵᱚᱸᱫ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ?</string>
@@ -213,6 +212,26 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">ᱠᱤᱵᱚᱰ ᱦᱤᱸᱴ ᱪᱚᱭᱚᱱ</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_translate_ankidroid">Translate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>

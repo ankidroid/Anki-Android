@@ -135,7 +135,7 @@
     <string name="menu_unmark_note">Odznači bilješku</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Stvori skupinu</string>
-    <string name="create">Stvori</string>
+    <string name="create" comment="Button to create a filtered deck">Stvori</string>
     <string name="new_dynamic_deck">Stvori filtriranu skupinu</string>
     <string name="night_mode">Noćni način rada</string>
     <string name="directory_inaccessible">AnkiDroid mapa nije dostupna</string>
@@ -193,7 +193,6 @@
     <string name="card_template_editor_front">Prednji predložak</string>
     <string name="card_template_editor_back">Stražnji predložak</string>
     <string name="card_template_editor_styling">Stil</string>
-    <string name="card_template_editor_menu_delete">Izbriši</string>
     <string name="card_template_editor_menu_card_browser_appearance">Izgled preglednika karata</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Potrebna je barem jedna vrsta kartice</string>

@@ -59,7 +59,7 @@
         <item><![CDATA[ソフトウェア開発の専門知識を持っていない方も、例えばAnkiDroidの<a href=\"%1$s\">翻訳を改善</a>したり、Wikiを更新したり、スクリーンショット画像を提供したり、AnkiDroidのことをSNSに書いたりして、このアプリの発展に貢献することができます。]]></item>
         <item><![CDATA[AnkiDroidは、<a href="%1$s">GNU GPL v3 ライセンス</a>の下でリリースされています。ソースコードは<a href="%2$s">こちら</a>です。]]></item>
     </string-array>
-    <string name="preview_title">プレビュー</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">プレビュー</string>
     <string name="reposition_card_dialog_title">新規カードの表示順序を変更</string>
     <string name="reposition_card_dialog_message">開始位置</string>
     <string name="reposition_card_not_new_error">新規カード以外は表示順序を変更できません。</string>
@@ -72,7 +72,6 @@
         <item quantity="other">%d枚のカードの学習履歴がリセットされました</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">スケジュールを変更</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">Reschedule cards</item>
     </plurals>
@@ -96,8 +95,8 @@
     <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
     <string name="custom_study_new_total_new">デッキの中の新規カードの枚数: %d</string>
     <string name="custom_study_rev_total_rev">予定日時に達した復習カード数: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">今日の新規カードの上限枚数をいくつ増やしますか？（減らす場合は負の数を入力してください）</string>
+    <string name="custom_study_rev_extend">今日の復習カードの上限枚数をいくつ増やしますか？（減らす場合は負の数を入力してください）</string>
     <string name="custom_study_forgotten">過去 x 日以内に忘却したカードを復習する</string>
     <string name="custom_study_ahead">先取りする日数</string>
     <string name="custom_study_random">デッキからランダムに x 枚のカードを抽出する</string>
@@ -118,7 +117,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">続行</string>
-    <string name="dialog_positive_create">作成</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">作成</string>
     <string name="dialog_positive_delete">削除</string>
     <string name="dialog_positive_disable">無効化</string>
     <string name="dialog_positive_overwrite">上書き</string>
@@ -149,7 +148,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">全て</string>
     <string name="tags_dialog_option_new_cards">新規</string>
-    <string name="tags_dialog_option_due_cards">予定日時後</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">予定日時後</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">白紙カード（表側に何も表示されないカード）がないか確認しています&#8230;</string>
     <string name="confirm_cancel">Do you want to cancel?</string>
@@ -206,6 +205,26 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_translate_ankidroid">Translate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>

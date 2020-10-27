@@ -212,8 +212,8 @@ minit yang lalu.</string>
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
     <string name="deck_conf_new_cards">New cards</string>
-    <string name="deck_conf_rev_cards">Reviews</string>
-    <string name="deck_conf_lps_cards">Kesilapan</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Kesilapan</string>
     <string name="deck_conf_general">Umum</string>
     <string name="deck_conf_reminders">Peringatan</string>
     <string name="deck_conf_steps">Langkah-langkah (dalam beberapa minit)</string>
@@ -248,7 +248,7 @@ minit yang lalu.</string>
     <string name="deck_conf_manage">Kumpulan pengurusan</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Semasa kumpulan</string>
-    <string name="deck_conf_rename">Menamakan</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Menamakan</string>
     <string name="deck_conf_reset">Memulihkan mungkir</string>
     <string name="deck_conf_reset_message">Memulihkan semasa pilihan kumpulan untuk lalai nilai-nilai?</string>
     <string name="deck_conf_add">Menambah</string>
@@ -261,11 +261,10 @@ minit yang lalu.</string>
     <string name="deck_conf_set_subdecks_message">Set semasa pilihan kumpulan untuk semua ini dek itu subdecks?</string>
     <string name="pref_browser_editor_font">Pelayar dan editor font</string>
     <string name="deck_conf_cram_filter">Penapis</string>
-    <string name="deck_conf_cram_options">Pilihan</string>
     <string name="deck_conf_cram_search">Cari</string>
     <string name="deck_conf_cram_limit">Had</string>
     <string name="deck_conf_cram_order">kad yang dipilih oleh</string>
-    <string name="deck_conf_cram_reschedule">Reschedule</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">Define custom steps</string>

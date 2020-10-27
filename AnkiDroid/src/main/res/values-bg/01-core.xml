@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">Размаркирай бележка</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Създай тесте</string>
-    <string name="create">Създай</string>
+    <string name="create" comment="Button to create a filtered deck">Създай</string>
     <string name="new_dynamic_deck">Създайте филтрирано тесте</string>
     <string name="night_mode">Нощен режим</string>
     <string name="directory_inaccessible">AnkiDroid директорията е недостъпна</string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">Шаблон лицева страна</string>
     <string name="card_template_editor_back">Шаблон обратна страна</string>
     <string name="card_template_editor_styling">Оформление</string>
-    <string name="card_template_editor_menu_delete">Изтриване</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Трябва да има поне една карта</string>

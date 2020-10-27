@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Megjegyzéstípus törlése</string>
     <string name="model_browser_rename">Átnevezés</string>
-    <string name="model_browser_options">Beállítások</string>
     <string name="model_browser_template">Kártya szerkesztése</string>
     <string name="model_browser_add">Jegyzettípus hozzáadása</string>
     <!--Rename-->

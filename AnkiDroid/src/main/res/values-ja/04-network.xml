@@ -64,7 +64,6 @@
     <string name="invalid_username_password">メールアドレスまたはパスワードが無効です</string>
     <string name="reset_password">パスワードを再設定</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">検索</string>
     <string name="preferences_title">設定</string>
     <string name="deckpreferences_title">XXX のオプション</string>
     <string name="sync_conflict_message">コレクションのファイルを AnkiWebへアップロードするか、AnkiWebからダウンロードする必要があります。いずれの場合も一方のファイルは上書きされます。</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb は現在メンテナンス中です。数分後にもう一度お試しください。</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_no_account">同期 (ログイン)</string>
 </resources>

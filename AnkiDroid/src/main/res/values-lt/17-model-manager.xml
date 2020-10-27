@@ -44,7 +44,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Ištrinti užrašo tipą</string>
     <string name="model_browser_rename">Pervadinti</string>
-    <string name="model_browser_options">Parinktys</string>
     <string name="model_browser_template">Redaguoti korteles</string>
     <string name="model_browser_add">Pridėti užrašo tipą</string>
     <!--Rename-->

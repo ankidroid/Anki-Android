@@ -53,6 +53,5 @@
         <item quantity="one">%d verbleibende Minute</item>
         <item quantity="other">%d verbleibende Minuten</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Notiz hinzufügen</string>
     <string name="widget_add_note_button">Neue AnkiDroid-Notiz hinzufügen</string>
 </resources>

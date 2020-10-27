@@ -48,12 +48,11 @@
     <string name="backup_full_sync_from_server">Sarvharavarūna pūrṇa samakramaṇa</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb madhūna āpalē saṅgraha adhilikhita karā hē āpalē antima saṅkālana jhālyāpāsūna āpalyā sarva śikaṇyācyā pragatī āṇi jōḍalēlyā māhitī khālī sōḍēla.</string>
     <string name="error_handling_title">Truṭī hātāḷaṇī</string>
-    <string name="error_handling_options">Paryāya</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Paryāya</string>
     <string name="backup_retry_opening">Ughaḍaṇyācā prayatna punhā karā</string>
     <string name="backup_error_menu_repair">Ḍēṭābēsacī durustī karā</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Ḍēṭābēsacī durustī karaṇē&#8230;</string>
-    <string name="backup_error">Truṭī</string>
     <string name="backup_invalid_file_error">Nivaḍalēlī bĕka\'apa phā\'īla avaidha hōtī</string>
     <string name="backup_restore_select_title">Punarsan̄cayita karaṇyāsāṭhī bĕka\'apa nivaḍā</string>
     <string name="backup_restore_no_backups">Yā ḍivhā\'isavara kōṇatēhī bĕka\'apa upalabdha nāhīta āpaṇa āpalyā ḍēskaṭŏpa saṅgaṇakāvara bĕka\'apa asalyāsa, āpalyā AnkiDroid phōlḍaramadhyē tyānnā svataḥ kŏpī.</string>

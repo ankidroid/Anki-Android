@@ -107,7 +107,6 @@
     <string name="custom_study_preview_new">Új kártyák átnézése</string>
     <string name="custom_study_limit_tags">Szűkítés címkékre</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Jegyzet hozzáadása</string>
     <string name="cardeditor_title_edit_card">Jegyzet szerkesztése</string>
     <string name="discard_unsaved_changes">Bezár és mostani állást elvet?</string>
     <string name="note_editor_no_cards_created">A kártyák nem lettek létrehozva. Kérjük töltsön ki több mezőt</string>
@@ -137,15 +136,14 @@
     </plurals>
     <string name="studyoptions_welcome_title">Üdv az AnkiDroidban!</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid Kártya</string>
-    <string name="note_editor_add_note">Jegyzet hozzáadása</string>
     <string name="note_editor_copy_note">Jegyzet másolása</string>
     <string name="card_editor_copy_card">Kártya másolása</string>
     <string name="card_editor_reposition_card">Áthelyezés</string>
     <string name="card_editor_reset_card">Reset folyamat</string>
-    <string name="card_editor_reschedule_card">Átütemezés</string>
-    <string name="card_editor_preview_card">Előnézet</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Átütemezés</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Előnézet</string>
     <string name="error_insufficient_memory">A művelet nem végrhajtható:  a készülék nem rendelkezik elég memóriával</string>
-    <string name="rename">Átnevezés</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Átnevezés</string>
     <string name="default_conf_delete_error">Az alapértelmezett beállítások csoport nem távolítható el</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d kártya hozzáadva</item>
@@ -204,7 +202,7 @@
     <string name="export_unsuccessful">Hiba történt az apkg fájl exportálásakor</string>
     <string name="import_hint">Kártyák importálásához helyezd az apkg fájlt a %s könyvtárba és nyomd meg az OK gombot</string>
     <string name="upgrade_import_no_file_found">Nem importálható %1$s fájlt található</string>
-    <string name="study_options">Beállítások</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Beállítások</string>
     <string name="select_tts">TTS nyelv beállítása</string>
     <string name="custom_study">Egyéni tanulás</string>
     <string name="more_options">Több</string>
@@ -245,7 +243,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s másodperc</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -326,4 +324,17 @@
     <string name="ankidroid_init_failed_webview">Az AnkiDroid a System WebView-t használja, ami jelenleg nem elérhető. Lehetséges, hogy a rendszer frissítéseket telepít. Próbáld újra pár perc múlva.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Betűméret</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
 </resources>

@@ -212,8 +212,8 @@
         <item quantity="other">%1$s\n%2$d sets gebruikt in deze groep</item>
     </plurals>
     <string name="deck_conf_new_cards">Nieuwe kaarten</string>
-    <string name="deck_conf_rev_cards">Overhoringen</string>
-    <string name="deck_conf_lps_cards">Missers</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Overhoringen</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Missers</string>
     <string name="deck_conf_general">Algemeen</string>
     <string name="deck_conf_reminders">Herinneringen</string>
     <string name="deck_conf_steps">Stappen (in minuten)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Groepenbeheer</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Huidige groep</string>
-    <string name="deck_conf_rename">Naam wijzigen</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Naam wijzigen</string>
     <string name="deck_conf_reset">Standaardinstellingen herstellen</string>
     <string name="deck_conf_reset_message">Standaardwaarden instellen voor de huidige set aan instellingen?</string>
     <string name="deck_conf_add">Configuratie toevoegen</string>
@@ -262,11 +262,10 @@
     <string name="deck_conf_set_subdecks_message">Huidige set aan instellingen laten gelden voor alle subsets van deze set?</string>
     <string name="pref_browser_editor_font">Lettertype browser/bewerker</string>
     <string name="deck_conf_cram_filter">Filter</string>
-    <string name="deck_conf_cram_options">Opties</string>
     <string name="deck_conf_cram_search">Zoeken</string>
     <string name="deck_conf_cram_limit">Beperken tot</string>
     <string name="deck_conf_cram_order">kaarten geselecteerd door</string>
-    <string name="deck_conf_cram_reschedule">Opnieuw inplannen</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Opnieuw inplannen</string>
     <string name="deck_conf_cram_reschedule_summ">Karaten opnieuw inplannen op basis van mijn antwoorden in deze set</string>
     <string name="deck_conf_cram_steps">Aangepaste stappen (in minuten)</string>
     <string name="deck_conf_cram_steps_summ">Aangepaste stapgroottes definiëren</string>

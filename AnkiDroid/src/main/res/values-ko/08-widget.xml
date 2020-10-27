@@ -50,6 +50,5 @@
     <plurals name="widget_eta">
         <item quantity="other">%d분 남음</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">노트 추가</string>
     <string name="widget_add_note_button">새 AnkiDroid 노트 추가</string>
 </resources>

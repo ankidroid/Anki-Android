@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">आप ऑफ़लाइन हैं</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">फिर भी कोशिश करो</string>
     <string name="sync_error">समकालन में त्रुटि</string>
     <string name="vague_error">त्रुटि</string>
     <string name="retry">पुनः प्रयास करें</string>
@@ -64,7 +64,6 @@
     <string name="invalid_username_password">अमान्य ईमेल पता या पासवर्ड</string>
     <string name="reset_password">पासवर्ड रीसेट करें</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">खोज</string>
     <string name="preferences_title">पसंद</string>
     <string name="deckpreferences_title">XXX के लिए विकल्प</string>
     <string name="sync_conflict_message">आपको या तो यह संग्रह अपलोड करना होगा या इसे Ankiweb से डाउनलोड करना चाहिए, क्योंकि वे मर्ज नहीं किए जा सकते । एक तरफ का संग्रह अधिलेखित हो जाएगा ।</string>
@@ -92,7 +91,7 @@
     <string name="sync_overwrite_error">आपका वर्तमान संग्रह डाउनलोड की गई फ़ाइल द्वारा अधिलेखित नहीं किया जा सका</string>
     <string name="sync_connection_error">कनेक्शन टाइम आउट हो गया । या तो आपका इंटरनेट कनेक्शन समस्याओं का सामना कर रहा है, या आपके मीडिया फ़ोल्डर में एक बहुत बड़ी फ़ाइल है ।</string>
     <string name="sync_write_access_error">डाउनलोड की गई फ़ाइल को SD कार्ड पर सहेजा नहीं जा सका । या तो कार्ड केवल पढ़ने के लिए माउंटेड है या पर्याप्त स्थान नहीं है ।</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">उन्नत सेटिंग्स में कस्टम सिंक सर्वर अमान्य है (%s)। कृपया एक मान्य सर्वर दर्ज करें, या सेटिंग अक्षम करें।</string>
     <string name="sync_deletions_message">हटाए गए सिंक्रनाइज़ कर रहा है.. ।</string>
     <string name="sync_small_objects_message">छोटी ऑब्जेक्ट्स सिंक्रनाइज़ कर रहा है.. ।</string>
     <string name="sync_finish_message">सिंक्रनाइज़ करना समाप्त कर रहा है.. ।</string>
@@ -100,7 +99,7 @@
     <string name="sync_writing_db">डेटाबेस में परिवर्तन लिख रहा है.. ।</string>
     <string name="sync_download_chunk">परिवर्तन डाउनलोड कर रहा है.. ।</string>
     <string name="sync_upload_chunk">परिवर्तन अपलोड कर रहा है.. ।</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">अप: %1$d डी KB, डाउन: %2$dडी KB</string>
     <string name="sync_generic_error">कुछ समस्या प्रकट हुई। दोबारा प्रयत्न करें।</string>
     <string name="sync_check_upload_file">अपलोड करने से पहले फ़ाइल जांच रहा है.. ।</string>
     <string name="sync_check_download_file">डाउनलोड की गई फ़ाइल जांच रहा है.. ।</string>
@@ -115,7 +114,7 @@
     <string name="sync_media_error">मीडिया डेटा सिंक्रनाइज़ करने में त्रुटि</string>
     <string name="sync_media_error_check">मीडिया सिंक्रनाइज़ करते समय त्रुटि । कोई मीडिया जांच अनुशंसित है ।</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
+    <string name="sync_basic_check_failed">कृपया सिंक करने से पहले ‘%s’ चलाएं</string>
     <string name="sync_sanity_local">स्थानीय</string>
     <string name="sync_sanity_remote">दूरस्थ</string>
     <string name="force_full_sync_title">पूर्ण सिंक्रनाइज़ेशन को बाध्य करें</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb maintenance में है। कृपया कुछ देर बाद दुबारा कोशिश करे।</string>
     <string name="sync_error_504_gateway_timeout">504 गेटवे टाइमआउट त्रुटि प्राप्त हुई।</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_full_sync">सिंक (पूर्ण)</string>
+    <string name="sync_menu_title_no_account">सिंक (लॉग इन)</string>
 </resources>

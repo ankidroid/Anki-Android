@@ -212,8 +212,8 @@
         <item quantity="other">%1$s\n%2$d deste bu grubu kullanıyor</item>
     </plurals>
     <string name="deck_conf_new_cards">Yeni kartlar</string>
-    <string name="deck_conf_rev_cards">Çalışma</string>
-    <string name="deck_conf_lps_cards">Hatâlar</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Çalışma</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Hatâlar</string>
     <string name="deck_conf_general">Genel</string>
     <string name="deck_conf_reminders">Hatırlatmalar</string>
     <string name="deck_conf_steps">Adımlar (dakika)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Grup yönetimi</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Şu anki grup</string>
-    <string name="deck_conf_rename">Adını değiştir</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Adını değiştir</string>
     <string name="deck_conf_reset">Varsayılanlara geri dön</string>
     <string name="deck_conf_reset_message">Şu anki seçenek grubu varsayılan değerlerine döndürülsün mü?</string>
     <string name="deck_conf_add">Yapılandırma ekle</string>
@@ -262,11 +262,10 @@
     <string name="deck_conf_set_subdecks_message">Şu anki seçenek grubu bu destenin bütün altdesteleri için ayarlansın mı?</string>
     <string name="pref_browser_editor_font">Tarayıcı ve düzenleyici fontu</string>
     <string name="deck_conf_cram_filter">Filtre</string>
-    <string name="deck_conf_cram_options">Seçenekler</string>
     <string name="deck_conf_cram_search">Arama</string>
     <string name="deck_conf_cram_limit">Sınırla:</string>
     <string name="deck_conf_cram_order">kart seçme ölçütü:</string>
-    <string name="deck_conf_cram_reschedule">Zamanını değiştir</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Zamanını değiştir</string>
     <string name="deck_conf_cram_reschedule_summ">Bu destede cevaplarıma göre kartların zamanını değiştir</string>
     <string name="deck_conf_cram_steps">Özel adımlar (dakika cinsinden)</string>
     <string name="deck_conf_cram_steps_summ">Kendi adımlarınızı tanımlayın</string>

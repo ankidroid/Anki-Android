@@ -213,8 +213,8 @@
         <item quantity="other">Os baralhos %1$s\n%2$d usam este grupo</item>
     </plurals>
     <string name="deck_conf_new_cards">Novas fichas</string>
-    <string name="deck_conf_rev_cards">Revisões</string>
-    <string name="deck_conf_lps_cards">Lapsos</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisões</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapsos</string>
     <string name="deck_conf_general">Geral</string>
     <string name="deck_conf_reminders">Lembretes</string>
     <string name="deck_conf_steps">Passos (em minutos)</string>
@@ -249,7 +249,7 @@
     <string name="deck_conf_manage">Gestão de grupos</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Grupo atual</string>
-    <string name="deck_conf_rename">Renomear</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Renomear</string>
     <string name="deck_conf_reset">Restaurar predefinições</string>
     <string name="deck_conf_reset_message">Restaurar o grupo de opções atual para os valores predefinidos?</string>
     <string name="deck_conf_add">Adicionar</string>
@@ -263,11 +263,10 @@
     <string name="deck_conf_set_subdecks_message">Definir o grupo de opções atual para todos os sub-baralhos deste baralho?</string>
     <string name="pref_browser_editor_font">Tipo de letra do navegador e editor</string>
     <string name="deck_conf_cram_filter">Filtro</string>
-    <string name="deck_conf_cram_options">Opções</string>
     <string name="deck_conf_cram_search">Procurar</string>
     <string name="deck_conf_cram_limit">Limitar a</string>
     <string name="deck_conf_cram_order">fichas selecionadas por</string>
-    <string name="deck_conf_cram_reschedule">Reagendar</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reagendar</string>
     <string name="deck_conf_cram_reschedule_summ">Reagendar as fichas, com base nas minhas respostas neste baralho</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">Definir passos personalizados</string>

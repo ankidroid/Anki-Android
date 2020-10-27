@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Неверный адрес почты или пароль</string>
     <string name="reset_password">Сбросить пароль</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Искать</string>
     <string name="preferences_title">Настройки</string>
     <string name="deckpreferences_title">Опции для XXX</string>
     <string name="sync_conflict_message">Коллекции не могут быть объединены. Вы можете перезаписать локальную коллекцию версией с AnkiWeb или наоборот.</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb находится на обслуживании. Повторите ещё раз через несколько минут.</string>
     <string name="sync_error_504_gateway_timeout">Ошибка 504: шлюз не отвечает</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Синхронизация</string>
     <string name="sync_menu_title_full_sync">Синхронизация (полная)</string>
     <string name="sync_menu_title_no_account">Синхронизация (при входе)</string>
 </resources>

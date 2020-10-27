@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Supprimer un type de note</string>
     <string name="model_browser_rename">Renommer</string>
-    <string name="model_browser_options">Options</string>
     <string name="model_browser_template">Modifier les cartes</string>
     <string name="model_browser_add">Ajouter un type de note</string>
     <!--Rename-->

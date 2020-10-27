@@ -64,7 +64,6 @@
     <string name="invalid_username_password">כתובת דוא״ל או ססמה שגויים</string>
     <string name="reset_password">איפוס ססמה</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">חיפוש</string>
     <string name="preferences_title">העדפות</string>
     <string name="deckpreferences_title">אפשרויות עבור XXX</string>
     <string name="sync_conflict_message">לא ניתן לאחד את אוסף החפיסות הזה עם זה שב־Ankiweb, ולכן יש לבחור בין העלאה של האוסף הזה לשרת או הורדה של האוסף שבשרת אל המכשיר. אחד משני האוספים יוחלף באחר.</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb בתחזוקה כרגע. אנא נסו שוב בעוד מספר דקות.</string>
     <string name="sync_error_504_gateway_timeout">התקבלה שגיאת 504 gateway timeout.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

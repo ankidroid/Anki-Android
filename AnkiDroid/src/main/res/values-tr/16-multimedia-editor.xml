@@ -39,6 +39,7 @@
     <string name="multimedia_editor_popup_audio">Ses kaydet</string>
     <string name="multimedia_editor_popup_text">Gelişmiş düzenleyici</string>
     <string name="multimedia_editor_popup_cloze">Boşluk doldurma</string>
+    <string name="multimedia_editor_popup_clear_field">Clear field</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Hizmet glosbe.com tarafından sağlanmaktadır.</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -70,14 +71,14 @@
     <string name="multimedia_editor_field_editing_image">Resim</string>
     <string name="multimedia_editor_field_editing_audio">Ses kaydı</string>
     <string name="multimedia_editor_field_editing_audio_clip">Ses Klibi</string>
-    <string name="multimedia_editor_field_editing_done">Bitti</string>
+    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Bitti</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Aranan:</string>
     <string name="multimedia_editor_text_field_editing_say">Telaffuz</string>
     <string name="multimedia_editor_text_field_editing_clear">Temizle</string>
     <string name="multimedia_editor_text_field_editing_clone">Kopyala</string>
-    <string name="multimedia_editor_text_field_editing_translate">Çeviri</string>
+    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Çeviri</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Önce biraz yazı girin</string>
     <string name="multimedia_editor_text_field_editing_many_words">Sözlük genellikle bir kelime bekler</string>
@@ -95,7 +96,7 @@
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">İndiriliyor</string>
     <!-- when process finishes -->
-    <string name="multimedia_editor_general_done">Bitti</string>
+    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Bitti</string>
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">Kelime bulunmadı</string>
     <!-- failure when contacting glosbe or similar -->

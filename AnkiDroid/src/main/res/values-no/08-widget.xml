@@ -53,6 +53,5 @@
         <item quantity="one">%d minutt igjen</item>
         <item quantity="other">%d minutter igjen</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Legg til notat</string>
     <string name="widget_add_note_button">Legg til nytt AnkiDroid notat</string>
 </resources>

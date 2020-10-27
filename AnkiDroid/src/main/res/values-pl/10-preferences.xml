@@ -214,8 +214,8 @@
         <item quantity="other">%1$s\n%2$d talii używa tej grupy</item>
     </plurals>
     <string name="deck_conf_new_cards">Nowe karty</string>
-    <string name="deck_conf_rev_cards">Powtórki</string>
-    <string name="deck_conf_lps_cards">Pomyłki</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Powtórki</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Pomyłki</string>
     <string name="deck_conf_general">Ogólne</string>
     <string name="deck_conf_reminders">Przypomnienia</string>
     <string name="deck_conf_steps">Kroki (w minutach)</string>
@@ -250,7 +250,7 @@
     <string name="deck_conf_manage">Zarządzanie grupą ustawień</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Bieżąca grupa ustawień</string>
-    <string name="deck_conf_rename">Zmień nazwę</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Zmień nazwę</string>
     <string name="deck_conf_reset">Przywróć domyślne</string>
     <string name="deck_conf_reset_message">Przywrócić bieżące ustawienia grupy do wartości domyślnych?</string>
     <string name="deck_conf_add">Dodaj konfigurację</string>
@@ -266,11 +266,10 @@
     <string name="deck_conf_set_subdecks_message">Zastosować bieżące ustawienia grupy dla wszystkich sub-talii tej talii?</string>
     <string name="pref_browser_editor_font">Czcionka przeglądarki i edytora</string>
     <string name="deck_conf_cram_filter">Filtrowanie</string>
-    <string name="deck_conf_cram_options">Opcje</string>
     <string name="deck_conf_cram_search">Szukaj</string>
     <string name="deck_conf_cram_limit">Ogranicz do</string>
     <string name="deck_conf_cram_order">karty zaznaczone przez</string>
-    <string name="deck_conf_cram_reschedule">Kolejkuj ponownie</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Kolejkuj ponownie</string>
     <string name="deck_conf_cram_reschedule_summ">Kolejkuj karty ponownie bazując na moich odpowiedziach w tej talii</string>
     <string name="deck_conf_cram_steps">Własne kroki (w minutach)</string>
     <string name="deck_conf_cram_steps_summ">Zdefiniuj własne kroki</string>

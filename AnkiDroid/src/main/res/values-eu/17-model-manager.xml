@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Ezabatu ohar mota</string>
     <string name="model_browser_rename">Berrizendatu</string>
-    <string name="model_browser_options">Aukerak</string>
     <string name="model_browser_template">Edit cards</string>
     <string name="model_browser_add">Ohar mota gehitu</string>
     <!--Rename-->

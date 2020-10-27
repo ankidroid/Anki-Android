@@ -146,7 +146,7 @@
     <string name="safe_display_summ">Zakázat všechny animace a použít bezpečnější metodu pro vykreslení karty. E-ink zařízení toto mohou vyžadovat.</string>
     <string name="disable_extended_text_ui">Zakázat režim úprav v jednom poli</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Povolit kontextové menu doplňovačky v režimu na šířku.</string>
     <string name="vertical_centering">Zarovnání na střed</string>
     <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
     <string name="pref_backup_max">Maximální počet záloh</string>
@@ -202,11 +202,11 @@
     <string name="custom_sync_server_media_url_title">Sync url pro média</string>
     <string name="custom_sync_server_media_url_invalid">Neplatná URL synchronizace médií</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Změny nastavení skupiny balíčků ovlivní více balíčků. Pokud si přejete změnit pouze současný balíček, nejdříve prosím přidejte novou skupinu nastavení</string>
+    <string name="deck_conf_group_summ">Změny možností skupiny balíčků ovlivní více balíčků. Pokud si přejete změnit pouze aktuální balíček, nejdříve prosím přidejte novou skupinu možností</string>
     <string name="studyoptions_limit_select_tags">Výběr štítků</string>
     <!-- Deck configurations -->
     <string name="deck_conf_deck_description">Popis balíčku (ovlivní pouze současný balíček)</string>
-    <string name="deck_conf_group">Skupina nastavení</string>
+    <string name="deck_conf_group">Skupina možností</string>
     <plurals name="deck_conf_group_summ">
         <item quantity="one">%1$s\n%2$d balíček používá tuto skupinu</item>
         <item quantity="few">%1$s\n%2$d balíčky používají tuto skupinu</item>
@@ -214,8 +214,8 @@
         <item quantity="other">%1$s\n%2$d balíčků používá tuto skupinu</item>
     </plurals>
     <string name="deck_conf_new_cards">Nové karty</string>
-    <string name="deck_conf_rev_cards">Opakování</string>
-    <string name="deck_conf_lps_cards">Zapomínání</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Opakování</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Zapomínání</string>
     <string name="deck_conf_general">Obecné</string>
     <string name="deck_conf_reminders">Upomínky</string>
     <string name="deck_conf_steps">Kroky (v minutách)</string>
@@ -233,7 +233,7 @@
     <string name="deck_conf_use_general_timeout_settings">Použít obecné nastavení</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Použít obecné nastavení „automaticky zobrazovat odpověď“ místo nastavení pro tuto skupinu.</string>
     <string name="deck_conf_easy_bonus">Bonus pro snadné</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">Těžký interval</string>
     <string name="deck_conf_ivl_fct">Modifikátor intervalu</string>
     <string name="deck_conf_max_ivl">Maximální interval</string>
     <string name="deck_conf_new_lps_ivl">Nový interval</string>
@@ -248,14 +248,14 @@
     <string name="deck_conf_replayq">Přehrát otázku</string>
     <string name="deck_conf_replayq_summ">Při zobrazení odpovědi přehrát audio otázky i odpovědi</string>
     <string name="deck_conf_manage">Správa skupin</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Přidat a změnit skupiny možností</string>
     <string name="deck_conf_current_group">Aktuální skupina</string>
-    <string name="deck_conf_rename">Přejmenovat</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Přejmenovat</string>
     <string name="deck_conf_reset">Obnovit výchozí</string>
-    <string name="deck_conf_reset_message">Obnovit aktuální možnosti skupiny na výchozí hodnoty?</string>
-    <string name="deck_conf_add">Přidání konfigurace</string>
-    <string name="deck_conf_add_summ">Vytvořit kopii možností aktuální skupiny</string>
-    <string name="deck_conf_remove_message">Odstranit možnosti aktuální skupiny?</string>
+    <string name="deck_conf_reset_message">Obnovit aktuální skupinu možností na výchozí hodnoty?</string>
+    <string name="deck_conf_add">Přidat</string>
+    <string name="deck_conf_add_summ">Vytvořit kopii aktuální skupiny možností</string>
+    <string name="deck_conf_remove_message">Odstranit aktuální skupinu možností?</string>
     <string name="deck_conf_set_subdecks">Nastavit pro všechny podřízené balíčky</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s podřízený balíček bude používat tuto skupinu</item>
@@ -263,14 +263,13 @@
         <item quantity="many">%s podřízeného balíčku bude používat tuto skupinu</item>
         <item quantity="other">%s podřízených balíčků bude používat tuto skupinu</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_message">Použít aktuální nastavení pro všechny podřízené balíčky tohoto balíčku?</string>
+    <string name="deck_conf_set_subdecks_message">Použít aktuální skupinu možností pro všechny podřízené balíčky tohoto balíčku?</string>
     <string name="pref_browser_editor_font">Písmo editoru a prohlížeče</string>
     <string name="deck_conf_cram_filter">Filtr</string>
-    <string name="deck_conf_cram_options">Možnosti</string>
     <string name="deck_conf_cram_search">Hledat</string>
     <string name="deck_conf_cram_limit">Omezit na</string>
-    <string name="deck_conf_cram_order">vybrané karty</string>
-    <string name="deck_conf_cram_reschedule">Přeplánovat</string>
+    <string name="deck_conf_cram_order">karty vybrané podle</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Přeplánovat</string>
     <string name="deck_conf_cram_reschedule_summ">Přeplánovat karty podle mých odpovědí v tomto balíčku</string>
     <string name="deck_conf_cram_steps">Vlastní kroky (v minutách)</string>
     <string name="deck_conf_cram_steps_summ">Definovat vlastní kroky</string>
@@ -280,6 +279,6 @@
     <string name="analytics_dialog_title">Pomozte udělat AnkiDroid lepší!</string>
     <string name="analytics_title">Sdílet používání funkcí</string>
     <string name="analytics_summ">Můžete přispět do AnkiDroid tím, že pomůžete vývojovému týmu dozvědět se, které funkce lidé používají</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="enable_miui_keyboard_hack">„Vložit“ vloží doplňovačku</string>
+    <string name="enable_miui_keyboard_hack_summ">„Vložit“ v editoru poznámek změní vybraný text na doplňovačku</string>
 </resources>

@@ -48,12 +48,11 @@
     <string name="backup_full_sync_from_server">从服务器完全同步</string>
     <string name="backup_full_sync_from_server_question">确定要从AnkiWeb下载并覆盖您的本地集合吗？这将删除自您上次同步以来的所有学习进度及增加的信息！</string>
     <string name="error_handling_title">错误处理</string>
-    <string name="error_handling_options">选项</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">选项</string>
     <string name="backup_retry_opening">重新尝试打开</string>
     <string name="backup_error_menu_repair">修复数据库</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">修复数据库。 \n 请稍候...</string>
-    <string name="backup_error">错误</string>
     <string name="backup_invalid_file_error">选择的备份文件无效</string>
     <string name="backup_restore_select_title">选择要还原的备份文件</string>
     <string name="backup_restore_no_backups">此设备上没有本集合的可用备份。如果您在桌面计算机上有备份，请手动复制它们到 AnkiDroid 文件夹。</string>

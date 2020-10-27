@@ -212,8 +212,8 @@
         <item quantity="other">%1$s\n%2$d kartaroj uzas tiun ĉi grupon</item>
     </plurals>
     <string name="deck_conf_new_cards">Novaj kartoj</string>
-    <string name="deck_conf_rev_cards">Ripetoj</string>
-    <string name="deck_conf_lps_cards">Misrespondoj</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Ripetoj</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Misrespondoj</string>
     <string name="deck_conf_general">Ĝeneralaj</string>
     <string name="deck_conf_reminders">Memorigaĵoj</string>
     <string name="deck_conf_steps">Paŝoj (en minutoj)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Administri grupojn</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Nuna grupo</string>
-    <string name="deck_conf_rename">Alinomi</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Alinomi</string>
     <string name="deck_conf_reset">Restarigi normojn</string>
     <string name="deck_conf_reset_message">Ĉu restarigi la nunan grupon de agordoj al implicitaj valoroj?</string>
     <string name="deck_conf_add">Aldoni</string>
@@ -262,11 +262,10 @@
     <string name="deck_conf_set_subdecks_message">Ĉu agordi la nunan grupon de agordoj por ĉiuj subkartaroj de tiu ĉi kartaro?</string>
     <string name="pref_browser_editor_font">Tiparo de foliumilo kaj redaktilo</string>
     <string name="deck_conf_cram_filter">Filtri</string>
-    <string name="deck_conf_cram_options">Agordoj</string>
     <string name="deck_conf_cram_search">Serĉi</string>
     <string name="deck_conf_cram_limit">Limigi al</string>
     <string name="deck_conf_cram_order">kartoj elektitaj laŭ</string>
-    <string name="deck_conf_cram_reschedule">Replani</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replani</string>
     <string name="deck_conf_cram_reschedule_summ">Replani karton surbaze de miaj respondoj en tiu ĉi kartaro</string>
     <string name="deck_conf_cram_steps">Propraj paŝoj (en minutoj)</string>
     <string name="deck_conf_cram_steps_summ">Difini proprajn paŝojn</string>

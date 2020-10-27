@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Neplatná e-mailová adresa nebo heslo.</string>
     <string name="reset_password">Obnovit heslo</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Hledat</string>
     <string name="preferences_title">Nastavení</string>
     <string name="deckpreferences_title">Možnosti pro XXX</string>
     <string name="sync_conflict_message">Vaše balíčky zde a na AnkiWeb se liší natolik, že nemohou být sloučeny dohromady, takže je nutné přepsat balíčky jedné strany druhou.\n\nChcete použít balíčky odtud nebo balíčky z AnkiWeb?</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">Provádí se údržba AnkiWeb. Zkuste to prosím znovu za pár minut.</string>
     <string name="sync_error_504_gateway_timeout">Vyskytla se chyba 504 časového limitu brány.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Synchronizovat</string>
     <string name="sync_menu_title_full_sync">Synchronizace (úplná)</string>
     <string name="sync_menu_title_no_account">Synchronizovat (přihlásit se)</string>
 </resources>

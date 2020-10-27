@@ -107,7 +107,6 @@
     <string name="custom_study_preview_new">معاينة البطاقات الجديدة</string>
     <string name="custom_study_limit_tags">قصر على وسوم معينة</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">إضافة ملحوظة</string>
     <string name="cardeditor_title_edit_card">تحرير الملحوظة</string>
     <string name="discard_unsaved_changes">هل أنت متأكد من الإغلاق وخسران المدخلات الحالية؟</string>
     <string name="note_editor_no_cards_created">لم تُنشَأ أي بطاقات. الرجاء تعبئة مزيد من الحقول</string>
@@ -145,15 +144,14 @@
     </plurals>
     <string name="studyoptions_welcome_title">مرحبًا بك مع أنكيدرويد</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">بطاقة أنكيدرويد</string>
-    <string name="note_editor_add_note">إضافة ملحوظة</string>
     <string name="note_editor_copy_note">نسخ الملحوظة</string>
     <string name="card_editor_copy_card">نسخ البطاقة</string>
     <string name="card_editor_reposition_card">تغيير الموضع</string>
     <string name="card_editor_reset_card">إعادة تعيين التقدم</string>
-    <string name="card_editor_reschedule_card">إعادة الجدولة</string>
-    <string name="card_editor_preview_card">معاينة</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">إعادة الجدولة</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">معاينة</string>
     <string name="error_insufficient_memory">العملية غير ممكنة نظرًا للذاكرة غير الكافية في جهازك</string>
-    <string name="rename">إعادة التسمية</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">إعادة التسمية</string>
     <string name="default_conf_delete_error">لا يمكن إزالة مجموعة الخيارات الافتراضية</string>
     <plurals name="factadder_cards_added">
         <item quantity="zero">أضيفت %d بطاقة</item>
@@ -216,7 +214,7 @@
     <string name="export_unsuccessful">حدث خطأ عند تصدير ملف apkg</string>
     <string name="import_hint">لاستيراد البطاقات، ضع ملف الـ apkg في المجلد “%s” وانقر «موافق»</string>
     <string name="upgrade_import_no_file_found">تعذر العثور على ملف %1$s يمكن استيراده</string>
-    <string name="study_options">الخيارات</string>
+    <string name="study_options" comment="Menu entry to open an options menu">الخيارات</string>
     <string name="select_tts">تعيين لغة تحويل النص إلى كلام</string>
     <string name="custom_study">دراسة مخصصة</string>
     <string name="more_options">المزيد</string>
@@ -378,4 +376,17 @@
     <string name="ankidroid_init_failed_webview">يعتمد أنكيدرويد على عارض الويب الخاص بالنظام وهو غير متوفر. يمكن أن يحدث هذا إذا كان النظام ينصب تحديثات. الرجاء المحاولة مجددًا بعد بضع دقائق.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">حجم الخط</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
 </resources>

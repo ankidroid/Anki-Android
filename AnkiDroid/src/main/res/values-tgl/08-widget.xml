@@ -53,6 +53,5 @@
         <item quantity="one">%d natitirang minuto</item>
         <item quantity="other">%d natitirang mga minuto</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Magdagdag ng paalala</string>
     <string name="widget_add_note_button">Magdadadag ng bagong paalalang AnkiDroid</string>
 </resources>

@@ -64,7 +64,6 @@
     <string name="invalid_username_password">E-Mail-Adresse oder Passwort ungültig</string>
     <string name="reset_password">Passwort zurücksetzen</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Suchen</string>
     <string name="preferences_title">Einstellungen</string>
     <string name="deckpreferences_title">Optionen für XXX</string>
     <string name="sync_conflict_message">Sie müssen entweder diese Sammlung hochladen oder sie von AnkiWeb herunterladen, da beide nicht zusammengeführt werden können. Die Sammlung auf einer Seite wird überschreiben.</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb wird gerade gewartet. Bitte versuchen Sie es in ein paar Minuten erneut.</string>
     <string name="sync_error_504_gateway_timeout">Fehler 504: Zeitüberschreitung.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Synchronisieren</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

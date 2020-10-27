@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">Jegyzet megjelölés megszüntetése</string>
     <string name="menu_toggle_mic_tool_bar">Kiejtés ellenőrzése</string>
     <string name="new_deck">Pakli létrehozása</string>
-    <string name="create">Létrehozás</string>
+    <string name="create" comment="Button to create a filtered deck">Létrehozás</string>
     <string name="new_dynamic_deck">Szűrt pakli létrehozása</string>
     <string name="night_mode">Éjszakai mód</string>
     <string name="directory_inaccessible">Nem érhető el az AnkiDroid könyvtár</string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">Sablon az első oldalhoz</string>
     <string name="card_template_editor_back">Sablon vissza</string>
     <string name="card_template_editor_styling">Stílus</string>
-    <string name="card_template_editor_menu_delete">Törlés</string>
     <string name="card_template_editor_menu_card_browser_appearance">A kártya böngésző kinézete</string>
     <string name="card_template_editor_deck_override">Kártyacsomag felülírása</string>
     <string name="card_template_editor_cant_delete">Legalább egy kártya típus szükséges</string>
@@ -203,7 +202,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Böngésző kinézete</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Kártya információ</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid adatbázist olvasás/írás</string>
     <string name="read_write_permission_description">meglévő jegyzetek, kártyák, jegyzetfajták és paklik elérése, valamint újak létrehozása</string>

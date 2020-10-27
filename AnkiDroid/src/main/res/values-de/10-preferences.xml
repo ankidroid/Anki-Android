@@ -212,8 +212,8 @@
         <item quantity="other">%1$s\n%2$d Stapel verwenden diese Gruppe</item>
     </plurals>
     <string name="deck_conf_new_cards">Neue Karten</string>
-    <string name="deck_conf_rev_cards">Wiederholungen</string>
-    <string name="deck_conf_lps_cards">Fehlschläge</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Wiederholungen</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Fehlschläge</string>
     <string name="deck_conf_general">Allgemein</string>
     <string name="deck_conf_reminders">Erinnerungen</string>
     <string name="deck_conf_steps">Schritte (in Minuten)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Gruppenverwaltung</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Aktuelle Gruppe</string>
-    <string name="deck_conf_rename">Umbenennen</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Umbenennen</string>
     <string name="deck_conf_reset">Standard wiederherstellen</string>
     <string name="deck_conf_reset_message">Die aktuelle Optionsgruppe auf Standardwerte zurücksetzen?</string>
     <string name="deck_conf_add">Konfiguration hinzufügen</string>
@@ -262,11 +262,10 @@
     <string name="deck_conf_set_subdecks_message">Aktuelle Optionsgruppe für alle Unterstapel dieses Stapels anwenden?</string>
     <string name="pref_browser_editor_font">Schriftart für Übersicht und Editor</string>
     <string name="deck_conf_cram_filter">Filter</string>
-    <string name="deck_conf_cram_options">Optionen</string>
     <string name="deck_conf_cram_search">Suchen</string>
     <string name="deck_conf_cram_limit">Beschränken auf</string>
     <string name="deck_conf_cram_order">Karten ausgewählt nach</string>
-    <string name="deck_conf_cram_reschedule">Neu planen</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Neu planen</string>
     <string name="deck_conf_cram_reschedule_summ">Karten basierend auf meinen Antworten in diesem Stapel umplanen</string>
     <string name="deck_conf_cram_steps">Personalisierte Schritte (in Minuten)</string>
     <string name="deck_conf_cram_steps_summ">Personalisierte Schritte definieren</string>
