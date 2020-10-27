@@ -595,11 +595,31 @@ public class Utils {
 
 
     /**
-     * @param data the string to generate hash from
+     * Optimized in case of sortIdx = 0
+     * @param fields Fields of a note
+     * @param sortIdx An index of the field
+     * @return The field at sortIdx, without html media, and the csum of the first field.
+     */
+    public static Pair<String, Long> sfieldAndCsum(String[] fields, int sortIdx) {
+        String firstStripped = stripHTMLMedia(fields[0]);
+        String sortStripped = (sortIdx == 0) ?  firstStripped: stripHTMLMedia(fields[sortIdx]);
+        return new Pair<>(sortStripped, fieldChecksumWithoutHtmlMedia(firstStripped));
+    }
+
+    /**
+     * @param data the string to generate hash from.
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
     public static long fieldChecksum(String data) {
-        return Long.valueOf(checksum(stripHTMLMedia(data)).substring(0, 8), 16);
+        return fieldChecksumWithoutHtmlMedia(stripHTMLMedia(data));
+    }
+
+    /**
+     * @param data the string to generate hash from. Html media should be removed
+     * @return 32 bit unsigned number from first 8 digits of sha1 hash
+     */
+    public static long fieldChecksumWithoutHtmlMedia(String data) {
+        return Long.valueOf(checksum(data).substring(0, 8), 16);
     }
 
     /**

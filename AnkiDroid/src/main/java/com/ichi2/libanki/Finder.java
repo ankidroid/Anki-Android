@@ -795,7 +795,7 @@ public class Finder {
         }
         String mid = split[0];
         val = split[1];
-        String csum = Long.toString(Utils.fieldChecksum(val));
+        String csum = Long.toString(Utils.fieldChecksumWithoutHtmlMedia(val));
         List<Long> nids = new ArrayList<>();
         try (Cursor cur = mCol.getDb().getDatabase().query(
                 "select id, flds from notes where mid=? and csum=?",
