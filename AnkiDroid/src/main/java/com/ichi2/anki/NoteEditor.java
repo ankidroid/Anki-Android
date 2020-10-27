@@ -1432,6 +1432,9 @@ public class NoteEditor extends AnkiActivity {
                         Timber.i("NoteEditor:: Insert cloze button pressed");
                         convertSelectedTextToCloze(index, AddClozeType.INCREMENT_NUMBER);
                         return true;
+                    } else if (itemId == R.id.menu_multimedia_clear_field) {
+                        Timber.i("NoteEditor:: Clear field button pressed");
+                        clearField(index);
                     }
                     return false;
                 });
@@ -1442,6 +1445,12 @@ public class NoteEditor extends AnkiActivity {
                 popup.show();
             }
         });
+    }
+
+
+    @VisibleForTesting
+    void clearField(int index) {
+        setFieldValueFromUi(index, "");
     }
 
 

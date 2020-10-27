@@ -19,6 +19,9 @@
             android:id="@+id/menu_multimedia_add_cloze"
             android:title="@string/multimedia_editor_popup_cloze"
             android:visible="false"/>
+        <item
+            android:id="@+id/menu_multimedia_clear_field"
+            android:title="@string/multimedia_editor_popup_clear_field"/>
     </group>
 
 </menu>
