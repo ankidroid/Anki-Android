@@ -12,6 +12,7 @@ apply plugin: 'app.brant.amazonappstorepublisher'
 repositories {
     google()
     jcenter()
+    mavenCentral()
 }
 def homePath = System.properties['user.home']
 android {
@@ -58,6 +59,8 @@ android {
             timeOutInMs 20 * 60 * 1000  // 20 minutes
             DdmPreferences.setTimeOut(120000) // apparently if not multidex you do this
         }
+       // Required for desugaring when setting minSdkVersion to 20 or lower
+        multiDexEnabled true
     }
     signingConfigs {
         release {
@@ -150,6 +153,8 @@ android {
         preDexLibraries = preDexEnabled && !travisBuild
     }
     compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -251,7 +256,7 @@ dependencies {
     //noinspection GradleDependency NewerVersionAvailable
     implementation 'com.squareup.okhttp3:okhttp:3.12.12'
     implementation 'com.arcao:slf4j-timber:3.1'
-
+    implementation group: 'it.unimi.dsi', name: 'fastutil', version: '8.4.4'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.jsoup:jsoup:1.13.1'
@@ -281,4 +286,5 @@ dependencies {
     //For AnkiDroid JS API Versioning
     implementation "com.github.zafarkhaja:java-semver:0.9.0"
 
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
 }
