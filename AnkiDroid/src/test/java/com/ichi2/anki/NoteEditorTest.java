@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -277,6 +276,17 @@ public class NoteEditorTest extends RobolectricTest {
         // #6923 regression test - Low value - Could not make this fail as onSaveInstanceState did not crash under Robolectric.
         NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
         assertDoesNotThrow(editor::performPreview);
+    }
+
+    @Test
+    public void clearFieldWorks() {
+        // #7522
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+        editor.setFieldValueFromUi(1, "Hello");
+        assertThat(editor.getCurrentFieldStrings()[1], is("Hello"));
+        editor.clearField(1);
+        assertThat(editor.getCurrentFieldStrings()[1], is(""));
+
     }
 
     private Intent getCopyNoteIntent(NoteEditor editor) {
