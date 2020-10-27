@@ -728,6 +728,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         }
 
+        // Remove the filter - not necessary and search has other implications for new users.
+        menu.findItem(R.id.deck_picker_action_filter).setVisible(getCol().getDecks().count() >= 10);
+
         return super.onCreateOptionsMenu(menu);
     }
 
