@@ -233,8 +233,11 @@ public class DB {
             String methodName = getCursorMethodName(type.getSimpleName());
             while (cursor.moveToNext()) {
                 try {
-                    // The magical line. Almost as illegible as python code ;)
-                    results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, 0)));
+                    do {
+                        // The magical line. Almost as illegible as python code ;)
+                        results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, 0)));
+                    } while (cursor.moveToNext());
+                    break;
                 } catch (InvocationTargetException e) {
                     if (cursor.isNull(0)) { // null value encountered
                         nullExceptionCount++;
