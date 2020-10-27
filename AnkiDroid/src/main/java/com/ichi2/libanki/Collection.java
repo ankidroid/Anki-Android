@@ -1131,7 +1131,10 @@ public class Collection {
                 // note point to invalid model
                 continue;
             }
-            r.add(new Object[] { Utils.stripHTMLMedia(fields[getModels().sortIdx(model)]), Utils.fieldChecksum(fields[0]), o[0] });
+            int sortIdx = getModels().sortIdx(model);
+            String sortFieldStripped = Utils.stripHTMLMedia(fields[sortIdx]);
+            String firstFieldStripped = (sortIdx == 0) ? sortFieldStripped: fields[0];
+            r.add(new Object[] {sortFieldStripped, Utils.fieldChecksumStripped(firstFieldStripped), o[0] });
         }
         // apply, relying on calling code to bump usn+mod
         mDb.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r);

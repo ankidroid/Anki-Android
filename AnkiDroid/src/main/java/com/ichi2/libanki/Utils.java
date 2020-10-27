@@ -599,7 +599,15 @@ public class Utils {
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
     public static long fieldChecksum(String data) {
-        return Long.valueOf(checksum(stripHTMLMedia(data)).substring(0, 8), 16);
+        return fieldChecksumStripped(stripHTMLMedia(data));
+    }
+
+    /**
+     * @param data the string to generate hash from. Assumed already stripped.
+     * @return 32 bit unsigned number from first 8 digits of sha1 hash
+     */
+    public static long fieldChecksumStripped(String data) {
+        return Long.valueOf(checksum(data).substring(0, 8), 16);
     }
 
     /**
