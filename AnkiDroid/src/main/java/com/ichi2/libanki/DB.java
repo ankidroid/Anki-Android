@@ -218,71 +218,21 @@ public class DB {
 
 
     /**
-     * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
-     * the specified class.
-     *
-     * @param type The class of the column's data type. Example: int.class, String.class.
-     * @param query The SQL query statement.
-     * @return An ArrayList with the contents of the specified column.
-     */
-    public <T> ArrayList<T> list(Class<T> type, String query, Object... bindArgs) {
-        int nullExceptionCount = 0;
-        InvocationTargetException nullException = null; // to catch the null exception for reporting
-        ArrayList<T> results = new ArrayList<>();
-
-        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
-            String methodName = getCursorMethodName(type.getSimpleName());
-            Method method = Cursor.class.getMethod(methodName, int.class);
-            while (cursor.moveToNext()) {
-                try {
-                    // The magical line. Almost as illegible as python code ;)
-                    results.add(type.cast(method.invoke(cursor, 0)));
-                } catch (InvocationTargetException e) {
-                    if (cursor.isNull(0)) { // null value encountered
-                        nullExceptionCount++;
-                        if (nullExceptionCount == 1) { // Toast and error report first time only
-                            nullException = e;
-                            Toast.makeText(AnkiDroidApp.getInstance().getBaseContext(),
-                                    "Error report pending: unexpected null in database.", Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException e) {
-            // This is really coding error, so it should be revealed if it ever happens
-            throw new RuntimeException(e);
-        } finally {
-            if (nullExceptionCount > 0) {
-                if (nullException != null) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("DB.queryColumn (column ").append(0).append("): ");
-                    sb.append("Exception due to null. Query: ").append(query);
-                    sb.append(" Null occurrences during this query: ").append(nullExceptionCount);
-                    AnkiDroidApp.sendExceptionReport(nullException, "queryColumn_encounteredNull", sb.toString());
-                    Timber.w(sb.toString());
-                } else { // nullException not properly initialized
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("DB.queryColumn(): Critical error -- ");
-                    sb.append("unable to pass in the actual exception to error reporting.");
-                    AnkiDroidApp.sendExceptionReport(new RuntimeException("queryColumn null"), "queryColumn_encounteredNull", sb.toString());
-                    Timber.e(sb.toString());
-                }
-            }
-        }
-
-        return results;
-    }
-
-    /**
-     * Convenience method for querying the database for an entire column of long. 
+     * Convenience method for querying the database for an entire column of long.
      *
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
     public ArrayList<Long> queryLongList(String query, Object... bindArgs) {
-        return list(Long.class, query, bindArgs);
+        ArrayList<Long> results = new ArrayList<>();
+
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
+            while (cursor.moveToNext()) {
+                results.add(cursor.getLong(0));
+            }
+        }
+
+        return results;
     }
 
     /**
@@ -292,7 +242,15 @@ public class DB {
      * @return An ArrayList with the contents of the specified column.
      */
     public ArrayList<String> queryStringList(String query, Object... bindArgs) {
-        return list(String.class, query, bindArgs);
+        ArrayList<String> results = new ArrayList<>();
+
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
+            while (cursor.moveToNext()) {
+                results.add(cursor.getString(0));
+            }
+        }
+
+        return results;
     }
 
     /**
