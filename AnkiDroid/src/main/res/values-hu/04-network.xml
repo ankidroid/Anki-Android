@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Érvénytelen e-mail cím vagy jelszót.</string>
     <string name="reset_password">Jelszó visszaállítása</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Keresés</string>
     <string name="preferences_title">Beállítások</string>
     <string name="deckpreferences_title">XXX lehetőségei</string>
     <string name="sync_conflict_message">Az itteni és az AnkiWeb-es paklik között olyan a különbség, hogy nem lehet őket egybegyúrni, ezért szükséges felülirni az egyik helyen lévő paklit a másik helyen lévővel.\n\nSzeretnéd feltölteni innen a paklikat, vagy letöltöd őket az AnkiWeb-ről?</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">Az AnkiWeb karbantartás alatt van. Kérjük próbálkozzon újra egy pár perc múlva.</string>
     <string name="sync_error_504_gateway_timeout">504 Gateway Timeout hiba észlelve.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Szinkronizálás</string>
     <string name="sync_menu_title_full_sync">Szinkronizálás (teljes)</string>
     <string name="sync_menu_title_no_account">Szinkronizálás (bejelentkezés)</string>
 </resources>

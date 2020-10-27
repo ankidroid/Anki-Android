@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Địa chỉ email hoặc mật khẩu không hợp lệ</string>
     <string name="reset_password">Đặt lại mật khẩu</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Tìm kiếm</string>
     <string name="preferences_title">Tuỳ chỉnh</string>
     <string name="deckpreferences_title">Tùy chọn cho XXX</string>
     <string name="sync_conflict_message">Bạn phải tải lên bộ sưu tập này hoặc tải nó xuống từ Ankiweb vì chúng không thể sáp nhập với nhau. Bộ sưu tập đó sẽ bị ghi đè một phía.</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

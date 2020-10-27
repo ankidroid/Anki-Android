@@ -212,8 +212,8 @@
         <item quantity="other">Os baralhos %1$s\n%2$d utilizam este grupo</item>
     </plurals>
     <string name="deck_conf_new_cards">Novos cartões</string>
-    <string name="deck_conf_rev_cards">Revisões</string>
-    <string name="deck_conf_lps_cards">Lapsos</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisões</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapsos</string>
     <string name="deck_conf_general">Geral</string>
     <string name="deck_conf_reminders">Lembretes</string>
     <string name="deck_conf_steps">Passos (em minutos)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Gerenciamento de grupos</string>
     <string name="deck_conf_manage_summ">Adicionar e mudar opções de grupos</string>
     <string name="deck_conf_current_group">Grupo atual</string>
-    <string name="deck_conf_rename">Renomear</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Renomear</string>
     <string name="deck_conf_reset">Restaurar padrões</string>
     <string name="deck_conf_reset_message">Restaurar o atual grupo de opções para valores padrão?</string>
     <string name="deck_conf_add">Adicionar configuração</string>
@@ -262,11 +262,10 @@
     <string name="deck_conf_set_subdecks_message">Definir o atual grupo de opções para todos os subdecks deste baralho?</string>
     <string name="pref_browser_editor_font">Navegador e editor de fonte</string>
     <string name="deck_conf_cram_filter">Filtro</string>
-    <string name="deck_conf_cram_options">Opções</string>
     <string name="deck_conf_cram_search">Pesquisa</string>
     <string name="deck_conf_cram_limit">Limitar para</string>
     <string name="deck_conf_cram_order">cartões selecionados por</string>
-    <string name="deck_conf_cram_reschedule">Remarcar</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Remarcar</string>
     <string name="deck_conf_cram_reschedule_summ">Reagendar cartões baseado nas minhas respostas deste deck</string>
     <string name="deck_conf_cram_steps">Passos personalizados (em minutos)</string>
     <string name="deck_conf_cram_steps_summ">Definir passos personalizados</string>

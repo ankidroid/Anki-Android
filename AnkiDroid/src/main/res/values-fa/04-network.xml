@@ -64,7 +64,6 @@
     <string name="invalid_username_password">نشانی رایانامه یا رمز عبور وارد شده اشتباه است</string>
     <string name="reset_password">تنظیم مجدد گذرواژه</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">جستجو</string>
     <string name="preferences_title">تنظيمات</string>
     <string name="deckpreferences_title">گزینه هایي برای XXX</string>
     <string name="sync_conflict_message">دسته های شما اینجا و در آنکی وب با یکدیگر متفاوتند چنانکه نمی توان آنها را با یکدیگر ادغام کرد, همچنین ضروری است دسته ها  از یک طرف با دسته های از طرف دیگر بازنویسی شوند.\n\nآیا مایلید دسته ها را از اینجا بارگذاری کنید, یا دسته ها را از آنکی وب بارگیری می کنید؟</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">آنکی‌وب در حال تعمیر است. لطفاً بعداً تلاش کنید.</string>
     <string name="sync_error_504_gateway_timeout">ارور 504</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

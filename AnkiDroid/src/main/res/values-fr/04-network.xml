@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Votre adresse électronique ou mot de passe est invalide.</string>
     <string name="reset_password">Réinitialiser le mot de passe</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Recherche</string>
     <string name="preferences_title">Préférences</string>
     <string name="deckpreferences_title">Options pour XXX</string>
     <string name="sync_conflict_message">Vos paquets ici et sur AnkiWeb diffèrent de telle manière qu\'ils ne peuvent pas être fusionnés, il est donc nécessaire d\'écraser les uns ou les autres.\n\nVoulez vous garder et envoyer les paquets d\'ici, ou téléchargez les paquets de AnkiWeb ?</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb est en cours de maintenance. Veuillez réessayer dans quelques minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 Erreur de délai d\'attente de la passerelle reçue.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Synchroniser</string>
     <string name="sync_menu_title_full_sync">Synchroniser (tout)</string>
     <string name="sync_menu_title_no_account">Synchroniser (se connecter)</string>
 </resources>

@@ -49,5 +49,5 @@
     <string name="feedback_copy_debug">העתקת נתוני ניפוי שגיאות</string>
     <string name="feedback_report">דיווח</string>
     <string name="feedback_report_automatically">שליחת דיווח על תקלות באופן אוטומטי</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="feedback_no_suitable_app_found">לא נמצאו יישומים מתאימים.</string>
 </resources>

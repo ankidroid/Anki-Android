@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Ongeldig e-mailadres of wachtwoord.</string>
     <string name="reset_password">Wachtwoord resetten</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Zoeken</string>
     <string name="preferences_title">Voorkeuren</string>
     <string name="deckpreferences_title">Opties voor XXX</string>
     <string name="sync_conflict_message">Je leersets hier en die op AnkiWeb verschillen zodanig, dat zij niet kunnen worden samengevoegd. Dus het is noodzakelijk om de leersets van een kant te overschrijven.\n\nWil je de lokale leersets uploaden, de leersets van AnkiWeb downloaden?</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb is momenteel in onderhoud. Probeer opnieuw binnen enkele minuten.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout foutmelding ontvangen.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

@@ -108,7 +108,7 @@
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ メニュー</string>
-    <string name="card_browser_enable_external_context_menu_summary">Androidアプリ全般で、テキスト選択時のコンテキストメニューに ‘%s’ を追加する</string>
+    <string name="card_browser_enable_external_context_menu_summary">Androidアプリ全般で、テキスト選択時に表示されるコンテキストメニューに ‘%s’ を追加します</string>
     <string name="double_scrolling_gap">ダブルスクロール</string>
     <string name="double_scrolling_gap_summ">eReader とのスクロールのギャップを 2 倍にする場合、これを有効にします</string>
     <string name="swipe_sensitivity">スワイプ感度</string>
@@ -121,8 +121,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">自動同期</string>
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">同期状態を区別</string>
+    <string name="sync_status_badge_summ">他の端末と同期できる変更を行い、その変更をまだアップロードしていない場合、同期アイコンに目印を付けます</string>
     <string name="day_theme">デイ テーマ</string>
     <string name="night_theme">ナイト テーマ</string>
     <string name="default_font">標準フォント</string>
@@ -211,8 +211,8 @@
         <item quantity="other">%1$s\n%2$d個のデッキがこのグループを使用しています</item>
     </plurals>
     <string name="deck_conf_new_cards">新規カードと基本学習</string>
-    <string name="deck_conf_rev_cards">復習</string>
-    <string name="deck_conf_lps_cards">忘却と再基本学習</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">復習</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">忘却と再基本学習</string>
     <string name="deck_conf_general">一般</string>
     <string name="deck_conf_reminders">リマインダー</string>
     <string name="deck_conf_steps">学習ステップ（分）</string>
@@ -247,7 +247,7 @@
     <string name="deck_conf_manage">オプショングループの管理</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">このデッキが使用しているオプショングループ</string>
-    <string name="deck_conf_rename">名前の変更</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">名前の変更</string>
     <string name="deck_conf_reset">標準の設定へ戻す</string>
     <string name="deck_conf_reset_message">このオプショングループを標準の設定に戻しますか？</string>
     <string name="deck_conf_add">追加</string>
@@ -260,11 +260,10 @@
     <string name="deck_conf_set_subdecks_message">このオプショングループをこのデッキ内の全てのサブデッキにも適用しますか？</string>
     <string name="pref_browser_editor_font">ブラウザとノート編集のフォント</string>
     <string name="deck_conf_cram_filter">フィルター</string>
-    <string name="deck_conf_cram_options">オプション</string>
     <string name="deck_conf_cram_search">フィルターの抽出条件</string>
     <string name="deck_conf_cram_limit">抽出件数の上限</string>
     <string name="deck_conf_cram_order">抽出されたカードの並べ方</string>
-    <string name="deck_conf_cram_reschedule">スケジュールを変更</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">スケジュールを変更</string>
     <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
     <string name="deck_conf_cram_steps">カスタム学習ステップ（分）</string>
     <string name="deck_conf_cram_steps_summ">独自の学習ステップを設定</string>

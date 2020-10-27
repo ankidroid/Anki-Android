@@ -38,7 +38,6 @@
     <!--Browser-->
     <string name="model_browser_delete">刪除筆記類型</string>
     <string name="model_browser_rename">重新命名</string>
-    <string name="model_browser_options">選項</string>
     <string name="model_browser_template">編輯卡片</string>
     <string name="model_browser_add">新增筆記類型</string>
     <!--Rename-->

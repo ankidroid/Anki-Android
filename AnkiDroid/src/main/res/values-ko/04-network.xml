@@ -64,7 +64,6 @@
     <string name="invalid_username_password">잘못된 이메일 주소 혹은 암호입니다.</string>
     <string name="reset_password">암호 재설정</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">검색</string>
     <string name="preferences_title">환경 설정</string>
     <string name="deckpreferences_title">XXX 옵션</string>
     <string name="sync_conflict_message">컬렉션을 합칠 수 없기 때문에 이 컬렉션을 업로드하거나 AnkiWeb에서 다운로드를 해야만 합니다. 어느 한쪽의 콜렉션은 덮어쓰게 됩니다.</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

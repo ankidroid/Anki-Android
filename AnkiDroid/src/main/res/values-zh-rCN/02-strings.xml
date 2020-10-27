@@ -107,7 +107,6 @@
     <string name="custom_study_preview_new">预览新卡片</string>
     <string name="custom_study_limit_tags">仅限于特定标签</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">添加笔记</string>
     <string name="cardeditor_title_edit_card">编辑笔记</string>
     <string name="discard_unsaved_changes">确定直接关闭吗？您将丢失所有已输入的内容。</string>
     <string name="note_editor_no_cards_created">没有已创建的卡片。请填写更多字段</string>
@@ -135,15 +134,14 @@
     </plurals>
     <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid卡片</string>
-    <string name="note_editor_add_note">添加笔记</string>
     <string name="note_editor_copy_note">复制笔记</string>
     <string name="card_editor_copy_card">复制卡片</string>
     <string name="card_editor_reposition_card">更改位置</string>
     <string name="card_editor_reset_card">重设学习进度</string>
-    <string name="card_editor_reschedule_card">重新安排</string>
-    <string name="card_editor_preview_card">预览</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">重新安排</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">预览</string>
     <string name="error_insufficient_memory">由于设备内存不足导致操作无法完成。</string>
-    <string name="rename">重命名</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">重命名</string>
     <string name="default_conf_delete_error">不能删除默认牌组</string>
     <plurals name="factadder_cards_added">
         <item quantity="other">已添加%d张卡片</item>
@@ -201,7 +199,7 @@
     <string name="export_unsuccessful">导出apkg文件时出错</string>
     <string name="import_hint">请把apkg文件放在%s目录中，然后按确定。</string>
     <string name="upgrade_import_no_file_found">没有找到可导入的 %1$s 文件</string>
-    <string name="study_options">选项</string>
+    <string name="study_options" comment="Menu entry to open an options menu">选项</string>
     <string name="select_tts">设置 TTS 语言</string>
     <string name="custom_study">自定义学习</string>
     <string name="more_options">更多</string>
@@ -313,4 +311,17 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid 依赖的系统 WebView 不可用。如果系统正在安装更新，可能会发生这种情况。请几分钟后再试。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">字体大小</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
 </resources>

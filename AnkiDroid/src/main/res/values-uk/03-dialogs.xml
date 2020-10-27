@@ -62,7 +62,7 @@
         <item><![CDATA[Навіть якщо ви не є програмістом, то також можете допомогти. Ви можете, наприклад <a href=\"%1$s\">допомогти перекласти</a> AnkiDroid, оновити вікі, знятки, або блоґ про AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid випущений під <a href=\"%1$s\"> ліцензією GNU GPL v3</a>, а програмний код доступний <a href=\"%2$s\"> на GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">Перегляд</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Перегляд</string>
     <string name="reposition_card_dialog_title">Переміщення нової картки</string>
     <string name="reposition_card_dialog_message">Початкова позиція:</string>
     <string name="reposition_card_not_new_error">Тільки нові картки можуть бути переміщені</string>
@@ -81,7 +81,6 @@
         <item quantity="other">%d картки скинуті</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Перепланувати картки</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Перепланувати картку</item>
         <item quantity="few">Перепланувати картки</item>
@@ -136,7 +135,7 @@
     <string name="dialog_ok">Гаразд</string>
     <string name="dialog_no">Ні</string>
     <string name="dialog_continue">Продовжити</string>
-    <string name="dialog_positive_create">Створити</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Створити</string>
     <string name="dialog_positive_delete">Видалити</string>
     <string name="dialog_positive_disable">Вимкнути</string>
     <string name="dialog_positive_overwrite">Замінити</string>
@@ -170,7 +169,7 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Усі картки</string>
     <string name="tags_dialog_option_new_cards">Нові</string>
-    <string name="tags_dialog_option_due_cards">Термін</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Термін</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Пошук порожніх карток&#8230;</string>
     <string name="confirm_cancel">Ви справді хочете скасувати?</string>
@@ -227,6 +226,26 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">Вибір натяку клавіатури</string>
     <string name="locale_selection_dialog_summary">Деякі багатомовні клавіатури, наприклад, GBoard підтримує зміну мови під час редагування тексту\n\nБудь ласка, запитайте функцію \"setImeHintLocals\" у виробника клавіатури, якщо ваша клавіатура не змінює мову.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_translate_ankidroid">Translate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Автоматична синхронізація може запуститися через %d секунду.</item>

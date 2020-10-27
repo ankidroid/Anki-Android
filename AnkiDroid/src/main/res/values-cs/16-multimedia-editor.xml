@@ -39,10 +39,11 @@
     <string name="multimedia_editor_popup_audio">Pořídit zvukový záznam</string>
     <string name="multimedia_editor_popup_text">Pokročilý editor</string>
     <string name="multimedia_editor_popup_cloze">Doplňovačka</string>
+    <string name="multimedia_editor_popup_clear_field">Clear field</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Běží na glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">Od</string>
+    <string name="multimedia_editor_trans_from">Z</string>
     <string name="multimedia_editor_trans_to">Do</string>
     <!-- imperative for the button title -->
     <string name="multimedia_editor_trans_translate">Přeložit</string>
@@ -70,14 +71,14 @@
     <string name="multimedia_editor_field_editing_image">Obrázek</string>
     <string name="multimedia_editor_field_editing_audio">Záznam zvuku</string>
     <string name="multimedia_editor_field_editing_audio_clip">Zvukový klip</string>
-    <string name="multimedia_editor_field_editing_done">Hotovo</string>
+    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Hotovo</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Hledat:</string>
     <string name="multimedia_editor_text_field_editing_say">Výslovnost</string>
     <string name="multimedia_editor_text_field_editing_clear">Vymazat</string>
     <string name="multimedia_editor_text_field_editing_clone">Klonovat z</string>
-    <string name="multimedia_editor_text_field_editing_translate">Překlad</string>
+    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Překlad</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Nejprve zadejte nějaký text</string>
     <string name="multimedia_editor_text_field_editing_many_words">Slovník obvykle očekává jedno slovo</string>
@@ -95,7 +96,7 @@
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Stahování</string>
     <!-- when process finishes -->
-    <string name="multimedia_editor_general_done">Hotovo</string>
+    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Hotovo</string>
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">Slovo nebylo nalezeno</string>
     <!-- failure when contacting glosbe or similar -->
@@ -120,7 +121,7 @@
     <!-- Crop function-->
     <string name="crop_image">Chcete oříznout tento obrázek?</string>
     <string name="crop_button">Oříznout obrázek</string>
-    <string name="save_dialog_content">Aktuální velikost obrázku je %sMB. Výchozí limit velikosti obrázku je 1 MB. Chcete jej oříznout?</string>
+    <string name="save_dialog_content">Aktuální velikost obrázku je %s MB. Výchozí limit velikosti obrázku je 1 MB. Chcete jej oříznout?</string>
     <string name="select_image_failed">"Select image failed, Please retry"</string>
     <string name="activity_result_unexpected">Aplikace vrátila neočekávanou hodnotu. Možná budete muset použít jinou aplikaci</string>
 </resources>

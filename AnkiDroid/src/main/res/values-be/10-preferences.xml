@@ -217,8 +217,8 @@
         <item quantity="other">канфігурацыя \"%1$s\" выкарыстоўваецца %2$d (раз)</item>
     </plurals>
     <string name="deck_conf_new_cards">Новыя карткі</string>
-    <string name="deck_conf_rev_cards">Паўтораў</string>
-    <string name="deck_conf_lps_cards">Абмылы</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Паўтораў</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Абмылы</string>
     <string name="deck_conf_general">Агульныя</string>
     <string name="deck_conf_reminders">Напамінкі</string>
     <string name="deck_conf_steps">Крокі (у хвілінах)</string>
@@ -253,7 +253,7 @@
     <string name="deck_conf_manage">Кіраванне канфігурацыямі</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Цякучая група</string>
-    <string name="deck_conf_rename">Пераіменаваць</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Пераіменаваць</string>
     <string name="deck_conf_reset">Скінуць налады</string>
     <string name="deck_conf_reset_message">Аднавіць значэнні бягучых групавых параметраў па змаўчанні?</string>
     <string name="deck_conf_add">Дадаць</string>
@@ -269,11 +269,10 @@
     <string name="deck_conf_set_subdecks_message">Усталяваць бягучыя групавыя параметры для ўсіх падкалод гэтай калоды?</string>
     <string name="pref_browser_editor_font">Шрыфт аглядніка і рэдактара</string>
     <string name="deck_conf_cram_filter">Фільтр</string>
-    <string name="deck_conf_cram_options">Параметры</string>
     <string name="deck_conf_cram_search">Пошук</string>
     <string name="deck_conf_cram_limit">Абмежаваць</string>
     <string name="deck_conf_cram_order">карты адабраць па</string>
-    <string name="deck_conf_cram_reschedule">Змяніць расклад</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Змяніць расклад</string>
     <string name="deck_conf_cram_reschedule_summ">Змяніць расклад картак на падставе маіх адказаў у гэтай калодзе</string>
     <string name="deck_conf_cram_steps">Карыстацкія крокі (у хвілінах)</string>
     <string name="deck_conf_cram_steps_summ">Вызначыць дадатковыя крокі</string>

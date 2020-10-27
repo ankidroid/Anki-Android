@@ -213,8 +213,8 @@
         <item quantity="other">%1$s\n%2$d barallas usan este grupo</item>
     </plurals>
     <string name="deck_conf_new_cards">Novos cartóns</string>
-    <string name="deck_conf_rev_cards">Reviews</string>
-    <string name="deck_conf_lps_cards">Lapses</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
     <string name="deck_conf_general">Xeral</string>
     <string name="deck_conf_reminders">Reminders</string>
     <string name="deck_conf_steps">Pasos (en minutos)</string>
@@ -249,7 +249,7 @@
     <string name="deck_conf_manage">Xestión de grupos</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Grupo actual</string>
-    <string name="deck_conf_rename">Renomear</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Renomear</string>
     <string name="deck_conf_reset">Restaurar valores predefinidos</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
     <string name="deck_conf_add">Engadir</string>
@@ -263,11 +263,10 @@
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font">Fonte do explorador e editor</string>
     <string name="deck_conf_cram_filter">Filtrar</string>
-    <string name="deck_conf_cram_options">Opcións</string>
     <string name="deck_conf_cram_search">Buscar</string>
     <string name="deck_conf_cram_limit">Limitar a</string>
     <string name="deck_conf_cram_order">cartóns seleccionados por</string>
-    <string name="deck_conf_cram_reschedule">Reschedule</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">Definir pasos personalizados</string>

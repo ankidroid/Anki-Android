@@ -107,7 +107,6 @@
     <string name="custom_study_preview_new">క్రొత్త కార్డులను పరిదృశ్యం చేయండి</string>
     <string name="custom_study_limit_tags">నిర్దిష్ట ట్యాగ్లకు పరిమితం చేయండి</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">గమనిక చేర్చు</string>
     <string name="cardeditor_title_edit_card">గమనికను సవరించండి</string>
     <string name="discard_unsaved_changes">ప్రస్తుత ఇన్పుట్ను మూసివేయవద్దు మరియు దానిని కోల్పోదామా?</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
@@ -137,15 +136,14 @@
     </plurals>
     <string name="studyoptions_welcome_title">AnkiDroid కు స్వాగతం</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid కార్డు</string>
-    <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">కార్డును కాపీ చేయండి</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">పురోగతిని రీసెట్ చేయండి</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
-    <string name="card_editor_preview_card">ప్రత్యేక ప్రదర్శన</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ప్రత్యేక ప్రదర్శన</string>
     <string name="error_insufficient_memory">మీ పరికరంలో తగినంత మెమరీ కారణంగా ఆపరేషన్ సాధ్యపడదు</string>
-    <string name="rename">పేరుమార్చు</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">పేరుమార్చు</string>
     <string name="default_conf_delete_error">డిఫాల్ట్ ఎంపికల సమూహం తొలగించబడదు</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d కార్డ్ జోడించబడింది</item>
@@ -204,7 +202,7 @@
     <string name="export_unsuccessful">Apkg ఫైల్ను ఎగుమతి చేయడంలో లోపం</string>
     <string name="import_hint">డైరెక్టరీలో \"%s\" లో apkg ఫైల్ను ఉంచండి మరియు కార్డ్లను దిగుమతి చేయడానికి \"సరే\" ను తాకండి</string>
     <string name="upgrade_import_no_file_found">దిగుమతి చెయ్యదగిన %1$s ఫైల్ కనుగొనబడలేదు</string>
-    <string name="study_options">Options</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Options</string>
     <string name="select_tts">TTS భాషను సెట్ చేయండి</string>
     <string name="custom_study">అనుకూల అధ్యయనం</string>
     <string name="more_options">ఎక్కువ</string>
@@ -326,4 +324,17 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Font Size</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
 </resources>

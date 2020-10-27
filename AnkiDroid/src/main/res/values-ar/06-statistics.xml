@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">لم ترى</string>
     <string name="statistics_suspended">معلقة</string>
     <string name="statistics_buried">مدفونة</string>
-    <string name="statistics_relearn">إعادة التعلم</string>
-    <string name="statistics_learn">تعلم</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">إعادة التعلم</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">تعلم</string>
     <string name="statistics_cram">دراسة مستعجلة</string>
     <string name="stats_cards">بطاقات</string>
     <string name="stats_cards_intervals">بطاقات لها الفاصل الزمني المعطى</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">وقت من اليوم</string>
     <string name="stats_day_of_week">يوم من الأسبوع</string>
     <string formatted="false" name="stats_percentage_correct">% صحيح</string>
-    <string name="stats_reviews">مراجعات</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">مراجعات</string>
     <string name="stats_answer_type">نوع الجواب</string>
     <string name="stats_today_again_count">عدد البطاقات المجابة بـ «مجددًا»: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f&lt;/b&gt; صحيح)</string>
@@ -111,7 +111,7 @@
     <string name="stats_forecast">توقعات</string>
     <string name="stats_review_count">عدد المراجعات</string>
     <string name="stats_review_time">وقت المراجعة</string>
-    <string name="stats_added">أُضيفت</string>
+    <string name="stats_added" comment="Label of the number of added card">أُضيفت</string>
     <string name="stats_review_intervals">فواصل زمنية</string>
     <string name="stats_breakdown">تفصيل لكل ساعة</string>
     <string name="stats_weekly_breakdown">تفصيل أسبوعي</string>

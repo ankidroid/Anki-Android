@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">Memo onmarkeren</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Leerset aanmaken</string>
-    <string name="create">Maak</string>
+    <string name="create" comment="Button to create a filtered deck">Maak</string>
     <string name="new_dynamic_deck">Gefilterde set maken</string>
     <string name="night_mode">Nachtmodus</string>
     <string name="directory_inaccessible">AnkiDroidmap is ontoegankelijk</string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">Sjabloon van de voorkant</string>
     <string name="card_template_editor_back">Sjabloon van de achterkant</string>
     <string name="card_template_editor_styling">Stijl</string>
-    <string name="card_template_editor_menu_delete">Verwijder</string>
     <string name="card_template_editor_menu_card_browser_appearance">Kaartenverkenner Uiterlijk</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Minstens een kaarttype is vereist.</string>

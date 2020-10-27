@@ -214,8 +214,8 @@
         <item quantity="other">%1$s\n%2$d колод использует эту группу</item>
     </plurals>
     <string name="deck_conf_new_cards">Новые карточки</string>
-    <string name="deck_conf_rev_cards">Повторения</string>
-    <string name="deck_conf_lps_cards">Ошибки</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторения</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Ошибки</string>
     <string name="deck_conf_general">Общие</string>
     <string name="deck_conf_reminders">Напоминания</string>
     <string name="deck_conf_steps">Шаги (в минутах)</string>
@@ -250,7 +250,7 @@
     <string name="deck_conf_manage">Управление конфигурациями</string>
     <string name="deck_conf_manage_summ">Добавить или изменить конфигурации</string>
     <string name="deck_conf_current_group">Текущая конфигурация</string>
-    <string name="deck_conf_rename">Переименовать</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Переименовать</string>
     <string name="deck_conf_reset">Сбросить настройки</string>
     <string name="deck_conf_reset_message">Сбросить эту конфигурацию?</string>
     <string name="deck_conf_add">Добавить</string>
@@ -266,11 +266,10 @@
     <string name="deck_conf_set_subdecks_message">Установить текущую конфигурацию для всех подколод этой колоды?</string>
     <string name="pref_browser_editor_font">Шрифт в списке и редакторе</string>
     <string name="deck_conf_cram_filter">Фильтр</string>
-    <string name="deck_conf_cram_options">Параметры</string>
     <string name="deck_conf_cram_search">Запрос</string>
     <string name="deck_conf_cram_limit">Количество</string>
     <string name="deck_conf_cram_order">Отобрать</string>
-    <string name="deck_conf_cram_reschedule">Перепланировать</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланировать</string>
     <string name="deck_conf_cram_reschedule_summ">Перепланировать карточки в зависимости от ответов</string>
     <string name="deck_conf_cram_steps">Заданные шаги (мин.)</string>
     <string name="deck_conf_cram_steps_summ">Задать свои шаги</string>

@@ -38,8 +38,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
-    <string name="no">no</string>
+    <string name="yes">ᱦᱮᱸ</string>
+    <string name="no">ᱵᱟᱝ</string>
     <!-- Navigation drawer items-->
     <string name="decks">ᱰᱮᱠ ᱠᱚ</string>
     <string name="card_browser">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱚ-ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ </string>
     <string name="menu_toggle_mic_tool_bar">ᱥᱩᱨ ᱧᱣᱞ ᱛᱟᱢ</string>
     <string name="new_deck">ᱱᱟᱶᱟ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
-    <string name="create">ᱛᱮᱭᱟᱨ</string>
+    <string name="create" comment="Button to create a filtered deck">ᱛᱮᱭᱟᱨ</string>
     <string name="new_dynamic_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="night_mode">ᱧᱤᱸᱫᱟᱹ ᱢᱚᱰ</string>
     <string name="directory_inaccessible">AnkiDroid ᱩᱱᱩᱫᱩᱜ ᱫᱚ ᱵᱟᱭ ᱦᱟᱛᱟᱣ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟ </string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">ᱢᱟᱲᱟᱝ ᱪᱷᱟᱸᱪ</string>
     <string name="card_template_editor_back">ᱯᱟᱹᱪᱞᱟᱹ ᱪᱷᱟᱸᱪ</string>
     <string name="card_template_editor_styling">ᱦᱩᱱᱟᱹᱨ</string>
-    <string name="card_template_editor_menu_delete">ᱜᱮᱫ ᱜᱤᱰᱤ</string>
     <string name="card_template_editor_menu_card_browser_appearance">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱠᱚ</string>
     <string name="card_template_editor_deck_override">ᱰᱮᱠ ᱠᱟᱰ ᱢᱮ</string>
     <string name="card_template_editor_cant_delete">ᱠᱚᱢ ᱥᱮ ᱠᱚᱢ ᱢᱤᱫ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱠᱟᱰ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ </string>
@@ -203,7 +202,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱠᱚ</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">ᱠᱟᱰ ᱵᱟᱵᱚᱛ</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ᱥᱟᱫᱠᱷᱤᱭᱟᱽ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱟᱨ ᱚᱞ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="read_write_permission_description">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ, ᱠᱟᱰ, ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱯᱨᱚᱠᱟᱨ ᱟᱨ ᱰᱮᱠ ᱚᱠ ᱦᱚᱠ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ ᱚᱱᱟ ᱥᱟᱞᱟᱜ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱦᱚᱸ ᱛᱮᱭᱟᱨ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ</string>

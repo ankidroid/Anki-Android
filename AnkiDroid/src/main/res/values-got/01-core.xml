@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">Ungatarhei melein</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Skapei wikon</string>
-    <string name="create">Skapei</string>
+    <string name="create" comment="Button to create a filtered deck">Skapei</string>
     <string name="new_dynamic_deck">Skapei wikon mi</string>
     <string name="night_mode">Nahtamodus</string>
     <string name="directory_inaccessible">AnkiDroid staþ atgaggan mahts nist</string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">Frumawlits</string>
     <string name="card_template_editor_back">Hindarwlits</string>
     <string name="card_template_editor_styling">Wlits</string>
-    <string name="card_template_editor_menu_delete">Usnim</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Mais þau ain kartahaidus ganauhiþ.</string>

@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">Hindi nakikita</string>
     <string name="statistics_suspended">Suspended</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">Muling matuto</string>
-    <string name="statistics_learn">Matuto</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Muling matuto</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Matuto</string>
     <string name="statistics_cram">Cram</string>
     <string name="stats_cards">Mga card</string>
     <string name="stats_cards_intervals">Mga card na may pagitan</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Oras ng araw</string>
     <string name="stats_day_of_week">Araw ng linggo</string>
     <string formatted="false" name="stats_percentage_correct">% tama</string>
-    <string name="stats_reviews">Mga repaso</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Mga repaso</string>
     <string name="stats_answer_type">Uri ng sagot</string>
     <string name="stats_today_again_count">Muling bilangin: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; tama)</string>
@@ -111,7 +111,7 @@
     <string name="stats_forecast">Forecast</string>
     <string name="stats_review_count">Bilang ng narepaso</string>
     <string name="stats_review_time">Oras ng pagrerepaso</string>
-    <string name="stats_added">Idinagdag</string>
+    <string name="stats_added" comment="Label of the number of added card">Idinagdag</string>
     <string name="stats_review_intervals">Agwat</string>
     <string name="stats_breakdown">Orasang pagbreakdown</string>
     <string name="stats_weekly_breakdown">Lingguhang pagbreakdown</string>

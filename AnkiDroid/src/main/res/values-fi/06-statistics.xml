@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">Näkemättömät</string>
     <string name="statistics_suspended">Suspended</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">Uudelleenopi</string>
-    <string name="statistics_learn">Opi</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Uudelleenopi</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Opi</string>
     <string name="statistics_cram">Pänttää</string>
     <string name="stats_cards">Kortit</string>
     <string name="stats_cards_intervals">Kortteja annetulla aikavälillä</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Aika</string>
     <string name="stats_day_of_week">Viikonpäivä</string>
     <string formatted="false" name="stats_percentage_correct">% Oikein</string>
-    <string name="stats_reviews">Kertaukset</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Kertaukset</string>
     <string name="stats_answer_type">Vastaustyyppi</string>
     <string name="stats_today_again_count">Toistojen lukumäärä: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; oikein)</string>
@@ -111,7 +111,7 @@
     <string name="stats_forecast">Ennuste</string>
     <string name="stats_review_count">Läpikäyntimäärä</string>
     <string name="stats_review_time">Läpikäyntiaika</string>
-    <string name="stats_added">Lisätty</string>
+    <string name="stats_added" comment="Label of the number of added card">Lisätty</string>
     <string name="stats_review_intervals">Intervallit</string>
     <string name="stats_breakdown">Tunneittain</string>
     <string name="stats_weekly_breakdown">Viikottain</string>

@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">Niewidziane</string>
     <string name="statistics_suspended">Zawieszone</string>
     <string name="statistics_buried">Zakopane</string>
-    <string name="statistics_relearn">Uczone ponownie</string>
-    <string name="statistics_learn">Uczone</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Uczone ponownie</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Uczone</string>
     <string name="statistics_cram">Zakuwane</string>
     <string name="stats_cards">Karty</string>
     <string name="stats_cards_intervals">Liczba kart według przerwy</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Godzina</string>
     <string name="stats_day_of_week">Dzień tygodnia</string>
     <string formatted="false" name="stats_percentage_correct">% poprawnych</string>
-    <string name="stats_reviews">Powtórki</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Powtórki</string>
     <string name="stats_answer_type">Typ odpowiedzi</string>
     <string name="stats_today_again_count">Liczba powtórek: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; dobrze)</string>
@@ -111,7 +111,7 @@
     <string name="stats_forecast">Prognoza</string>
     <string name="stats_review_count">Liczba powtórek</string>
     <string name="stats_review_time">Czas powtórek</string>
-    <string name="stats_added">Dodano</string>
+    <string name="stats_added" comment="Label of the number of added card">Dodano</string>
     <string name="stats_review_intervals">Przerwy</string>
     <string name="stats_breakdown">Rozkład godzinowy</string>
     <string name="stats_weekly_breakdown">Rozkład po dniach tygodnia</string>

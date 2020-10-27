@@ -39,6 +39,7 @@
     <string name="multimedia_editor_popup_audio">Spela in ljud</string>
     <string name="multimedia_editor_popup_text">Avancerad redigering</string>
     <string name="multimedia_editor_popup_cloze">Lucktest</string>
+    <string name="multimedia_editor_popup_clear_field">Clear field</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Använder glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -70,14 +71,14 @@
     <string name="multimedia_editor_field_editing_image">Bild</string>
     <string name="multimedia_editor_field_editing_audio">Ljudinspelning</string>
     <string name="multimedia_editor_field_editing_audio_clip">Ljudklipp</string>
-    <string name="multimedia_editor_field_editing_done">Klar</string>
+    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Klar</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Sök efter:</string>
     <string name="multimedia_editor_text_field_editing_say">Uttal</string>
     <string name="multimedia_editor_text_field_editing_clear">Rensa</string>
     <string name="multimedia_editor_text_field_editing_clone">Klona från</string>
-    <string name="multimedia_editor_text_field_editing_translate">Översättning</string>
+    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Översättning</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Skriv något först</string>
     <string name="multimedia_editor_text_field_editing_many_words">Ordböcker förväntar sig vanligtvis ett ord</string>
@@ -95,7 +96,7 @@
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Laddar ner</string>
     <!-- when process finishes -->
-    <string name="multimedia_editor_general_done">Klar</string>
+    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Klar</string>
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">Ordet hittades inte</string>
     <!-- failure when contacting glosbe or similar -->

@@ -217,8 +217,8 @@
         <item quantity="other">%1$s\n%2$d колод використовують цю групу</item>
     </plurals>
     <string name="deck_conf_new_cards">Нові картки</string>
-    <string name="deck_conf_rev_cards">Перегляди</string>
-    <string name="deck_conf_lps_cards">Забуті</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Перегляди</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Забуті</string>
     <string name="deck_conf_general">Загальні</string>
     <string name="deck_conf_reminders">Нагадування</string>
     <string name="deck_conf_steps">Кроки (в хвилинах)</string>
@@ -253,7 +253,7 @@
     <string name="deck_conf_manage">Управління групами</string>
     <string name="deck_conf_manage_summ">Додати і змінити налаштування груп</string>
     <string name="deck_conf_current_group">Поточна група</string>
-    <string name="deck_conf_rename">Перейменувати</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Перейменувати</string>
     <string name="deck_conf_reset">Відновити типові</string>
     <string name="deck_conf_reset_message">Відновити групу поточних значень параметрів  до типових?</string>
     <string name="deck_conf_add">Додати конфігурацію</string>
@@ -269,11 +269,10 @@
     <string name="deck_conf_set_subdecks_message">Установити групу поточних параметрів для усіх підколод цієї колоди?</string>
     <string name="pref_browser_editor_font">Переглядач та редактор шрифтів</string>
     <string name="deck_conf_cram_filter">Фільтр</string>
-    <string name="deck_conf_cram_options">Параметри</string>
     <string name="deck_conf_cram_search">Пошук</string>
     <string name="deck_conf_cram_limit">Обмежити до</string>
     <string name="deck_conf_cram_order">картки вибрані за</string>
-    <string name="deck_conf_cram_reschedule">Перепланувати</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Перепланувати</string>
     <string name="deck_conf_cram_reschedule_summ">Перепланувати картки на основі відповідей в колоді</string>
     <string name="deck_conf_cram_steps">Користувальницькі кроки (в хвилинах)</string>
     <string name="deck_conf_cram_steps_summ">Задати користувацькі кроки</string>

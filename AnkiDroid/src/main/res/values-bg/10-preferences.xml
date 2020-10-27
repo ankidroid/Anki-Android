@@ -212,8 +212,8 @@
         <item quantity="other">В тази група се използват %1$s\n%2$d тестета</item>
     </plurals>
     <string name="deck_conf_new_cards">Нови карти</string>
-    <string name="deck_conf_rev_cards">Разглеждания</string>
-    <string name="deck_conf_lps_cards">Пропуски</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Разглеждания</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Пропуски</string>
     <string name="deck_conf_general">Общо</string>
     <string name="deck_conf_reminders">Напомняния</string>
     <string name="deck_conf_steps">Стъпки (в минути)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Управление на група</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Настояща група</string>
-    <string name="deck_conf_rename">Преименуване</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Преименуване</string>
     <string name="deck_conf_reset">Възстанови по подразбиране</string>
     <string name="deck_conf_reset_message">Възстановяване на настройките по подразбиране на текущата група?</string>
     <string name="deck_conf_add">Нов</string>
@@ -262,11 +262,10 @@
     <string name="deck_conf_set_subdecks_message">Задаване текущите опции за всички подтестета в тестето?</string>
     <string name="pref_browser_editor_font">Шрифт при разглеждане и редактиране</string>
     <string name="deck_conf_cram_filter">Филтър</string>
-    <string name="deck_conf_cram_options">Настройки</string>
     <string name="deck_conf_cram_search">Търсене</string>
     <string name="deck_conf_cram_limit">Ограничи до</string>
     <string name="deck_conf_cram_order">карти, избрани от</string>
-    <string name="deck_conf_cram_reschedule">Повторно планиране</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Повторно планиране</string>
     <string name="deck_conf_cram_reschedule_summ">Пренасрочване карти на базата на моите отговори в това тесте</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">Определяне потребителски стъпки</string>

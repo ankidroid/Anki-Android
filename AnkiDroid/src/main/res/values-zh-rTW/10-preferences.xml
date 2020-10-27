@@ -211,8 +211,8 @@
         <item quantity="other">%1$s\n%2$d 個牌組使用這個群組</item>
     </plurals>
     <string name="deck_conf_new_cards">新卡片</string>
-    <string name="deck_conf_rev_cards">複習次數</string>
-    <string name="deck_conf_lps_cards">忘記</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">複習次數</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">忘記</string>
     <string name="deck_conf_general">一般</string>
     <string name="deck_conf_reminders">提醒</string>
     <string name="deck_conf_steps">步(單位是分鐘)</string>
@@ -230,7 +230,7 @@
     <string name="deck_conf_use_general_timeout_settings">使用一般設定</string>
     <string name="deck_conf_use_general_timeout_settings_summ">使用通用‘自動展示答案’設定而不是使用此群組的設定。</string>
     <string name="deck_conf_easy_bonus">簡單卡片的間隔倍率</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">困難難度的間隔</string>
     <string name="deck_conf_ivl_fct">間隔調節器</string>
     <string name="deck_conf_max_ivl">最長間隔為</string>
     <string name="deck_conf_new_lps_ivl">設定新的間隔為</string>
@@ -247,7 +247,7 @@
     <string name="deck_conf_manage">管理群組</string>
     <string name="deck_conf_manage_summ">新增和變更設定群組</string>
     <string name="deck_conf_current_group">目前使用的群組</string>
-    <string name="deck_conf_rename">重新命名</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">重新命名</string>
     <string name="deck_conf_reset">還原預設值</string>
     <string name="deck_conf_reset_message">回復當前設定群組成預設值嗎？</string>
     <string name="deck_conf_add">新增設定</string>
@@ -260,11 +260,10 @@
     <string name="deck_conf_set_subdecks_message">套用當前設定群組到該牌組的所有子牌組嗎？</string>
     <string name="pref_browser_editor_font">瀏覽器和編輯器字型</string>
     <string name="deck_conf_cram_filter">篩選器</string>
-    <string name="deck_conf_cram_options">選項</string>
     <string name="deck_conf_cram_search">搜尋</string>
     <string name="deck_conf_cram_limit">上限為</string>
     <string name="deck_conf_cram_order">依條件選擇卡片</string>
-    <string name="deck_conf_cram_reschedule">重新排程</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新排程</string>
     <string name="deck_conf_cram_reschedule_summ">依據我在本牌組的回答狀況來重新排程卡片</string>
     <string name="deck_conf_cram_steps">自訂步伐（以分鐘計）</string>
     <string name="deck_conf_cram_steps_summ">設定自訂步數</string>

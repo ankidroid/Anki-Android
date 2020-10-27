@@ -39,6 +39,7 @@
     <string name="multimedia_editor_popup_audio">Registra audio</string>
     <string name="multimedia_editor_popup_text">Editor avanzato</string>
     <string name="multimedia_editor_popup_cloze">Elimina testo da completare</string>
+    <string name="multimedia_editor_popup_clear_field">Clear field</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Tecnologia glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -70,14 +71,14 @@
     <string name="multimedia_editor_field_editing_image">Immagine</string>
     <string name="multimedia_editor_field_editing_audio">Registrazione audio</string>
     <string name="multimedia_editor_field_editing_audio_clip">Clip audio</string>
-    <string name="multimedia_editor_field_editing_done">Fatto</string>
+    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Fatto</string>
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_search_label">Cerca:</string>
     <string name="multimedia_editor_text_field_editing_say">Pronuncia</string>
     <string name="multimedia_editor_text_field_editing_clear">Cancella</string>
     <string name="multimedia_editor_text_field_editing_clone">Clona da</string>
-    <string name="multimedia_editor_text_field_editing_translate">Traduzione</string>
+    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Traduzione</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Inserisci dapprima del testo</string>
     <string name="multimedia_editor_text_field_editing_many_words">Il dizionario di solito si aspetta una sola parola</string>
@@ -95,7 +96,7 @@
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Download in corso</string>
     <!-- when process finishes -->
-    <string name="multimedia_editor_general_done">Fatto</string>
+    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Fatto</string>
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">La parola non è stata trovata</string>
     <!-- failure when contacting glosbe or similar -->

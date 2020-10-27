@@ -213,8 +213,8 @@
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
     <string name="deck_conf_new_cards">Nye kort</string>
-    <string name="deck_conf_rev_cards">Gjennomganger</string>
-    <string name="deck_conf_lps_cards">Feilsvar</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Gjennomganger</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Feilsvar</string>
     <string name="deck_conf_general">Generelt</string>
     <string name="deck_conf_reminders">Varsel</string>
     <string name="deck_conf_steps">Trinn (i minutter)</string>
@@ -249,7 +249,7 @@
     <string name="deck_conf_manage">Group management</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Current group</string>
-    <string name="deck_conf_rename">Endre navn</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Endre navn</string>
     <string name="deck_conf_reset">Gjenopprett standardinnstillinger</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
     <string name="deck_conf_add">Legg til konfigurasjon</string>
@@ -263,11 +263,10 @@
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font">Browser and editor font</string>
     <string name="deck_conf_cram_filter">Filter</string>
-    <string name="deck_conf_cram_options">Alternativer</string>
     <string name="deck_conf_cram_search">Søk</string>
     <string name="deck_conf_cram_limit">Begrens til</string>
     <string name="deck_conf_cram_order">kort valgt etter</string>
-    <string name="deck_conf_cram_reschedule">Gi ny tidsplan</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Gi ny tidsplan</string>
     <string name="deck_conf_cram_reschedule_summ">Lag ny tidsplan for kort basert på svarene jeg gir i denne kortstokken</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">Still inn egendefinerte trinn</string>

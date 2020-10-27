@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">Eddig még nem látott</string>
     <string name="statistics_suspended">Felfüggesztve</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">Újra tanul</string>
-    <string name="statistics_learn">Tanulás</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Újra tanul</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Tanulás</string>
     <string name="statistics_cram">Magolás</string>
     <string name="stats_cards">Kártyák</string>
     <string name="stats_cards_intervals">Kártyák megadott időtartammal</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Napszak</string>
     <string name="stats_day_of_week">A hét napja</string>
     <string formatted="false" name="stats_percentage_correct">% helyes</string>
-    <string name="stats_reviews">Vélemények</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Vélemények</string>
     <string name="stats_answer_type">Válasz típusa</string>
     <string name="stats_today_again_count">\"Újra\" válaszok száma &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(az összes kártya &lt;b&gt;%.1f%%&lt;/b&gt;-ára \"Jó\" választ adtál)</string>
@@ -111,7 +111,7 @@
     <string name="stats_forecast">Előrejelzés</string>
     <string name="stats_review_count">Ismétlések száma</string>
     <string name="stats_review_time">Tanulással töltött idő</string>
-    <string name="stats_added">Hozzáadott új kártyák</string>
+    <string name="stats_added" comment="Label of the number of added card">Hozzáadott új kártyák</string>
     <string name="stats_review_intervals">Időtartamok</string>
     <string name="stats_breakdown">Óránkénti lebontás</string>
     <string name="stats_weekly_breakdown">Heti bontásban</string>

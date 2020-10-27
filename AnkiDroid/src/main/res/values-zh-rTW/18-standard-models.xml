@@ -26,7 +26,7 @@
     <string name="extra_field_name">附加</string>
     <string name="field_to_ask_front_name">新增反向</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">卡片 %d</string>
     <!--Note type-->
     <string name="basic_model_name">基本</string>
     <string name="cloze_model_name">克漏題</string>

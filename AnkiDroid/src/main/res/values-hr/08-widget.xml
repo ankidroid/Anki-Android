@@ -56,6 +56,5 @@
         <item quantity="few">Preostale %d minute</item>
         <item quantity="other">Preostalo %d minuta</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Dodaj bilješku</string>
     <string name="widget_add_note_button">Dodaj novu AnkiDroid bilješku</string>
 </resources>

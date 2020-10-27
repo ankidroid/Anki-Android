@@ -53,6 +53,5 @@
         <item quantity="one">%d मिनट बाकी</item>
         <item quantity="other">%d मिनट बाकी</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">नोट जोड़ें</string>
     <string name="widget_add_note_button">नया AnkiDroid नोट जोड़ें</string>
 </resources>

@@ -107,7 +107,6 @@
     <string name="custom_study_preview_new">Förhandsgranska nya kort</string>
     <string name="custom_study_limit_tags">Begränsa till vissa etiketter</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Lägg till not</string>
     <string name="cardeditor_title_edit_card">Redigera not</string>
     <string name="discard_unsaved_changes">Vill du stänga och förlora nuvarande inmatning?</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
@@ -137,15 +136,14 @@
     </plurals>
     <string name="studyoptions_welcome_title">Välkommen till AnkiDroid</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-kort</string>
-    <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">Kopiera kort</string>
     <string name="card_editor_reposition_card">Ompositionera</string>
     <string name="card_editor_reset_card">Återställ framsteg</string>
-    <string name="card_editor_reschedule_card">Omplanera</string>
-    <string name="card_editor_preview_card">Förhandsgranska</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Omplanera</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Förhandsgranska</string>
     <string name="error_insufficient_memory">Åtgärden är inte möjlig på grund av otillräckligt med minne på enheten.</string>
-    <string name="rename">Byt namn</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Byt namn</string>
     <string name="default_conf_delete_error">Standardkonfigurationsgruppen kan ej tas bort</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d kort tillagt</item>
@@ -204,7 +202,7 @@
     <string name="export_unsuccessful">Fel vid export apkg-fil</string>
     <string name="import_hint">För att importera kort, placera apkg-filen i katalogen %s och tryck på ok</string>
     <string name="upgrade_import_no_file_found">Ingen importerbar %1$s fil hittad</string>
-    <string name="study_options">Alternativ</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Alternativ</string>
     <string name="select_tts">Ställ in TTS-språk</string>
     <string name="custom_study">Anpassade studier</string>
     <string name="more_options">Mer</string>
@@ -326,4 +324,17 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Font Size</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
 </resources>

@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">নোটের টীকা চিহ্ন মুছুন</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">ডেক তৈরি করুন</string>
-    <string name="create">তৈরি করুন</string>
+    <string name="create" comment="Button to create a filtered deck">তৈরি করুন</string>
     <string name="new_dynamic_deck">ফিল্টার করা ডেক তৈরি করুন</string>
     <string name="night_mode">নাইট মোড</string>
     <string name="directory_inaccessible">আনকিড্রইড ডাইরেক্টরি অপ্রবেশ্য।</string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">সম্মুখ খসড়া</string>
     <string name="card_template_editor_back">পশ্চাৎ খসড়া</string>
     <string name="card_template_editor_styling">স্টাইলিং</string>
-    <string name="card_template_editor_menu_delete">মুছুন</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">কমপক্ষে একটি কার্ড টাইপ প্রয়োজন</string>

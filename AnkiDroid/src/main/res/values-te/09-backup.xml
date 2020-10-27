@@ -48,12 +48,11 @@
     <string name="backup_full_sync_from_server">సర్వర్ నుండి పూర్తి సమకాలీకరణ</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb నుండి మీ సేకరణని ఓవర్రైట్ చేయాలా? ఇది మీ అభ్యాస పురోగతిని తగ్గిస్తుంది మరియు మీ చివరి సమకాలీకరణ నుండి సమాచారాన్ని జోడించవచ్చు.</string>
     <string name="error_handling_title">లోపం నిర్వహణ</string>
-    <string name="error_handling_options">ఎంపికలు</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ఎంపికలు</string>
     <string name="backup_retry_opening">దీన్ని తెరవడానికి మళ్ళీ ప్రయత్నించండి</string>
     <string name="backup_error_menu_repair">రిపేర్ డేటాబేస్</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">డేటాబేస్ మరమత్తు&#8230;</string>
-    <string name="backup_error">తప్పు</string>
     <string name="backup_invalid_file_error">ఎంచుకున్న బ్యాకప్ ఫైల్ చెల్లనిది</string>
     <string name="backup_restore_select_title">పునరుద్ధరించడానికి బ్యాకప్ను ఎంచుకోండి</string>
     <string name="backup_restore_no_backups">ఈ పరికరంలో బ్యాకప్లు అందుబాటులో లేవు. మీరు మీ డెస్క్టాప్ కంప్యూటర్లో బ్యాకప్లను కలిగి ఉంటే, మీ AnkiDroid ఫోల్డర్లో వాటిని మానవీయంగా కాపీ చేయండి.</string>

@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">未学习</string>
     <string name="statistics_suspended">已暂停</string>
     <string name="statistics_buried">已隐藏</string>
-    <string name="statistics_relearn">重新学习</string>
-    <string name="statistics_learn">学习</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">重新学习</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">学习</string>
     <string name="statistics_cram">强记模式</string>
     <string name="stats_cards">卡片</string>
     <string name="stats_cards_intervals">卡片间隔</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">时间</string>
     <string name="stats_day_of_week">星期</string>
     <string formatted="false" name="stats_percentage_correct">% 正确率</string>
-    <string name="stats_reviews">复习</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">复习</string>
     <string name="stats_answer_type">回答类型</string>
     <string name="stats_today_again_count">重来数量：&lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">（正确率：&lt;b&gt;%.1f%%&lt;/b&gt; ）</string>
@@ -111,7 +111,7 @@
     <string name="stats_forecast">预测</string>
     <string name="stats_review_count">复习数量</string>
     <string name="stats_review_time">复习时间</string>
-    <string name="stats_added">已添加</string>
+    <string name="stats_added" comment="Label of the number of added card">已添加</string>
     <string name="stats_review_intervals">间隔</string>
     <string name="stats_breakdown">按小时分类</string>
     <string name="stats_weekly_breakdown">按周分类</string>

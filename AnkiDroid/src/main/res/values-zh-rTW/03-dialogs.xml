@@ -59,7 +59,7 @@
         <item><![CDATA[非開發者亦可提供幫助。例如，你可以<a href=\"%1$s\">幫助翻譯</a>AnkiDroid、更新wiki、提供螢幕截圖，或撰寫關於 AnkiDroid 的博客。]]></item>
         <item><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GNU-GPL v3 授權</a> 下釋出，而且你可在 <a href=\"%2$s\">GitHub</a> 上取得其程式碼。]]></item>
     </string-array>
-    <string name="preview_title">預覽</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">預覽</string>
     <string name="reposition_card_dialog_title">變更新卡片位置</string>
     <string name="reposition_card_dialog_message">開始位置：</string>
     <string name="reposition_card_not_new_error">只有新卡片可以變更位置</string>
@@ -72,7 +72,6 @@
         <item quantity="other">%d 卡片已重設</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">重置卡片進度</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">重置卡片</item>
     </plurals>
@@ -118,7 +117,7 @@
     <string name="dialog_ok">確定</string>
     <string name="dialog_no">否</string>
     <string name="dialog_continue">繼續</string>
-    <string name="dialog_positive_create">新增</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">新增</string>
     <string name="dialog_positive_delete">刪除</string>
     <string name="dialog_positive_disable">關閉</string>
     <string name="dialog_positive_overwrite">覆蓋</string>
@@ -149,10 +148,10 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">所有卡片</string>
     <string name="tags_dialog_option_new_cards">新增</string>
-    <string name="tags_dialog_option_due_cards">到期</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">到期</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">正在搜尋空白卡片&#8230;&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
+    <string name="confirm_cancel">是否取消？</string>
     <string name="empty_cards_none">沒有空白卡片</string>
     <string name="empty_cards_count">將要刪除卡片：%d</string>
     <string name="empty_cards_deleted">已刪除卡片：%d</string>
@@ -206,6 +205,26 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">鍵盤提示選擇</string>
     <string name="locale_selection_dialog_summary">有些多國語言鍵盤，想是GBoard支援編輯文字時切換語言。\n\n如果您的鍵盤不會切換語言，句請請求您的鍵盤開發人員提供「setImeHintLocales」功能。</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_translate_ankidroid">Translate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d秒後可執行自動同步</item>

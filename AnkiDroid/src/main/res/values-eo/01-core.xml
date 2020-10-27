@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">Malmarki noton</string>
     <string name="menu_toggle_mic_tool_bar">Kontroli elparolon</string>
     <string name="new_deck">Krei kartaron</string>
-    <string name="create">Krei</string>
+    <string name="create" comment="Button to create a filtered deck">Krei</string>
     <string name="new_dynamic_deck">Krei filtritan kartaron</string>
     <string name="night_mode">Nokta reĝimo</string>
     <string name="directory_inaccessible">Dosierujo de AnkiDroid estas nealirebla</string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">Ŝablono fronta</string>
     <string name="card_template_editor_back">Ŝablono dorsa</string>
     <string name="card_template_editor_styling">Stilo</string>
-    <string name="card_template_editor_menu_delete">Forigi</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aspekto de kart-foliumilo</string>
     <string name="card_template_editor_deck_override">Superskribi kartaron</string>
     <string name="card_template_editor_cant_delete">Almenaŭ unu karto estas postulata</string>

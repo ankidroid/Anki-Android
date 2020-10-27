@@ -107,7 +107,6 @@
     <string name="custom_study_preview_new">Karta berrien aurrebista</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Gehitu oharra</string>
     <string name="cardeditor_title_edit_card">Aldatu oharra</string>
     <string name="discard_unsaved_changes">Itxi eta galdu oraingo sarrera?</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
@@ -137,15 +136,14 @@
     </plurals>
     <string name="studyoptions_welcome_title">Ongi etorri AnkiDroidera</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid txartela</string>
-    <string name="note_editor_add_note">Add note</string>
     <string name="note_editor_copy_note">Copy note</string>
     <string name="card_editor_copy_card">Kopiatu txartela</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Hasieratu garapena</string>
-    <string name="card_editor_reschedule_card">Reschedule</string>
-    <string name="card_editor_preview_card">Aurreikusi</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Aurreikusi</string>
     <string name="error_insufficient_memory">Eragiketa ezinezkoa da memoria nahikorik ez dagoelako</string>
-    <string name="rename">Aldatu izena</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Aldatu izena</string>
     <string name="default_conf_delete_error">Lehenetsitako ezarpen-taldea ezin da ezabatu</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d card added</item>
@@ -204,7 +202,7 @@
     <string name="export_unsuccessful">Errorea apkg fitxategia esportatzean</string>
     <string name="import_hint">Place the apkg file in directory “%s” and touch “OK” to import cards</string>
     <string name="upgrade_import_no_file_found">Ez da topatu inporta daitekeen %1$s fitxategia</string>
-    <string name="study_options">Aukerak</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Aukerak</string>
     <string name="select_tts">TTS hizkuntza ezarri</string>
     <string name="custom_study">Neurrira egindako ikasketa saioa</string>
     <string name="more_options">Gehiago</string>
@@ -326,4 +324,17 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Font Size</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
 </resources>

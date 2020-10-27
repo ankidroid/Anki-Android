@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Qeyd növünü sil</string>
     <string name="model_browser_rename">Yenidən adlandır</string>
-    <string name="model_browser_options">Seçimlər</string>
     <string name="model_browser_template">Kartlara düzəliş et</string>
     <string name="model_browser_add">Qeyd növü əlavə et</string>
     <!--Rename-->

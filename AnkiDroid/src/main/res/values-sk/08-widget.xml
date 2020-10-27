@@ -59,6 +59,5 @@
         <item quantity="many">zostáva %d minút</item>
         <item quantity="other">zostáva %d minút</item>
     </plurals>
-    <string name="widget_add_note" comment="Label of the widget allowing to add note from other app. This text can\'t be found directly in AnkiDroid.">Pridať poznámku</string>
     <string name="widget_add_note_button">Pridať novú poznámku Ankidroid</string>
 </resources>

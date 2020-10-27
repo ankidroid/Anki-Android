@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">حذف نوع یادداشت</string>
     <string name="model_browser_rename">تغییر نام</string>
-    <string name="model_browser_options">گزینه ها</string>
     <string name="model_browser_template">ویرایش کارتها</string>
     <string name="model_browser_add">اضافه کردن نوع یادداشت</string>
     <!--Rename-->

@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Изтриване тип на бележка</string>
     <string name="model_browser_rename">Преименуване</string>
-    <string name="model_browser_options">Настройки</string>
     <string name="model_browser_template">Редактиране на карти</string>
     <string name="model_browser_add">Нов тип на бележка</string>
     <!--Rename-->

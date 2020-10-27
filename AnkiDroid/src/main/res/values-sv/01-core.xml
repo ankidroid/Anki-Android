@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">Avmarkera not</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Skapa kortlek</string>
-    <string name="create">Skapa</string>
+    <string name="create" comment="Button to create a filtered deck">Skapa</string>
     <string name="new_dynamic_deck">Skapa filtrerad kortlek</string>
     <string name="night_mode">Nattläge</string>
     <string name="directory_inaccessible">AnkiDroid-mappen är inte tillgänglig</string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">Kortmall för framsida</string>
     <string name="card_template_editor_back">Kortmall för baksida</string>
     <string name="card_template_editor_styling">Formgivning</string>
-    <string name="card_template_editor_menu_delete">Ta bort</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Minst en korttyp krävs.</string>

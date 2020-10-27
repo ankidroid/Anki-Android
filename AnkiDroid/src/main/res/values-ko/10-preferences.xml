@@ -211,8 +211,8 @@
         <item quantity="other">%1$s\n%2$d 덱이 이 그룹을 사용합니다</item>
     </plurals>
     <string name="deck_conf_new_cards">새 카드</string>
-    <string name="deck_conf_rev_cards">복습 횟수</string>
-    <string name="deck_conf_lps_cards">학습경과 시간</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">복습 횟수</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">학습경과 시간</string>
     <string name="deck_conf_general">일반</string>
     <string name="deck_conf_reminders">알림</string>
     <string name="deck_conf_steps">학습단계(분)</string>
@@ -247,7 +247,7 @@
     <string name="deck_conf_manage">그룹 관리</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">현재 그룹</string>
-    <string name="deck_conf_rename">이름 바꾸기</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">이름 바꾸기</string>
     <string name="deck_conf_reset">기본값 복원</string>
     <string name="deck_conf_reset_message">현재 옵션 그룹을 기본값으로 복원할까요?</string>
     <string name="deck_conf_add">새로 환경설정 지정</string>
@@ -260,11 +260,10 @@
     <string name="deck_conf_set_subdecks_message">이 카드 묶음의 모든 하위 묶음에 현재의 옵션 그룹을 설정할까요?</string>
     <string name="pref_browser_editor_font">탐색기 및 편집기 글꼴</string>
     <string name="deck_conf_cram_filter">필터</string>
-    <string name="deck_conf_cram_options">옵션</string>
     <string name="deck_conf_cram_search">검색</string>
     <string name="deck_conf_cram_limit">한도</string>
     <string name="deck_conf_cram_order">에 선택된 카드</string>
-    <string name="deck_conf_cram_reschedule">일정을 다시</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">일정을 다시</string>
     <string name="deck_conf_cram_reschedule_summ">이 카드묶음에서 내 대답에 근거에 재조정된 카드들</string>
     <string name="deck_conf_cram_steps">사용자 지정 단계(분)</string>
     <string name="deck_conf_cram_steps_summ">사용자 정의 단계 정의</string>

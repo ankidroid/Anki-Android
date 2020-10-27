@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Forigi nototipon</string>
     <string name="model_browser_rename">Alinomi</string>
-    <string name="model_browser_options">Opcioj</string>
     <string name="model_browser_template">Redakti kartojn</string>
     <string name="model_browser_add">Aldoni nototipon</string>
     <!--Rename-->

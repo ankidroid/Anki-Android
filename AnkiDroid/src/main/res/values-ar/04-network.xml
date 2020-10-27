@@ -64,7 +64,6 @@
     <string name="invalid_username_password">البريد الإلكتروني أو كلمة السر غير صحيحة</string>
     <string name="reset_password">إعادة تعيين كلمة السر</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">بحث</string>
     <string name="preferences_title">تفضيلات</string>
     <string name="deckpreferences_title">خيارات XXX</string>
     <string name="sync_conflict_message">رزمك الخاص بك هنا وعلى أنكي ويب تختلف بطريقة بحيث لا يمكن دمجهما معا، لذلك من الضروري إحلال الرزم من جهة إلى جهة أخرى .\n\nهل تريد رفع الرزم من هنا، أو تنزيل الرزم من أنكي ويب؟</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">إن أنكي ويب تحت الصيانة. الرجاء المحاولة مجددًا بعد بضع دقائق.</string>
     <string name="sync_error_504_gateway_timeout">تم استلام خطأ مهلة البوابة 504.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">مزامنة</string>
     <string name="sync_menu_title_full_sync">مزامنة (كاملة)</string>
     <string name="sync_menu_title_no_account">مزامنة (تسجيل دخول)</string>
 </resources>

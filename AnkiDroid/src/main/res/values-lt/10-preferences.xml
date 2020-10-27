@@ -215,8 +215,8 @@
         <item quantity="other">Šią grupę naudoja %1$s\n%2$d rink.</item>
     </plurals>
     <string name="deck_conf_new_cards">Naujos kortelės</string>
-    <string name="deck_conf_rev_cards">Peržiūros</string>
-    <string name="deck_conf_lps_cards">Dažnai užmirštamos</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Peržiūros</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Dažnai užmirštamos</string>
     <string name="deck_conf_general">Bendra</string>
     <string name="deck_conf_reminders">Priminimai</string>
     <string name="deck_conf_steps">Veiksmai (minutėmis)</string>
@@ -251,7 +251,7 @@
     <string name="deck_conf_manage">Grupės valdymas</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Esama grupė</string>
-    <string name="deck_conf_rename">Pervadinti</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Pervadinti</string>
     <string name="deck_conf_reset">Atkurti numatytuosius parametrus</string>
     <string name="deck_conf_reset_message">Ar norite atkurti esamos parinkčių grupės parametrus į numatytuosius?</string>
     <string name="deck_conf_add">Pridėti</string>
@@ -267,11 +267,10 @@
     <string name="deck_conf_set_subdecks_message">Ar norite esamą parinkčių grupę taikyti visiems šio rinkinio poaplankiams?</string>
     <string name="pref_browser_editor_font">Naršyklės ir tekstų rengyklės šriftas</string>
     <string name="deck_conf_cram_filter">Filtras</string>
-    <string name="deck_conf_cram_options">Parinktys</string>
     <string name="deck_conf_cram_search">Ieškoti</string>
     <string name="deck_conf_cram_limit">Apriboti iki</string>
     <string name="deck_conf_cram_order">Kortelių atrinkimo tvarka</string>
-    <string name="deck_conf_cram_reschedule">Keisti mokymosi dieną</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Keisti mokymosi dieną</string>
     <string name="deck_conf_cram_reschedule_summ">Keisti kortelių mokymosi dieną, remiantis mano atsakymais šiame rinkinyje</string>
     <string name="deck_conf_cram_steps">Individualūs veiksmai (minutėmis)</string>
     <string name="deck_conf_cram_steps_summ">Apibrėžti individualius veiksmus</string>

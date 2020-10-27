@@ -40,7 +40,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Esborra el tipus de nota</string>
     <string name="model_browser_rename">Canvia el nom</string>
-    <string name="model_browser_options">Opcions</string>
     <string name="model_browser_template">Edita les targetes</string>
     <string name="model_browser_add">Afegeix el tipus de nota</string>
     <!--Rename-->

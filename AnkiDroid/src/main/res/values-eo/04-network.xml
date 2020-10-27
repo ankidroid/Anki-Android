@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Nevalida retpoŝta adreso aŭ pasvorto</string>
     <string name="reset_password">Restarigi pasvorton</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Serĉi</string>
     <string name="preferences_title">Agordoj</string>
     <string name="deckpreferences_title">Agordoj por XXX</string>
     <string name="sync_conflict_message">Vi devas aŭ alŝuti tiun ĉi kolekton aŭ elŝuti ĝin el AnkiWeb, ĉar ili tro malsamas por esti kunigitaj. Kelka kolekto estos anstataŭigita.</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb estas vartata. Bonvolu reprovi ĝin en kelkaj minutoj.</string>
     <string name="sync_error_504_gateway_timeout">Okazis eraro 504: templimo de konekto atingita.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Samtempigo</string>
     <string name="sync_menu_title_full_sync">Samtempigo (plena)</string>
     <string name="sync_menu_title_no_account">Samtempigo (ensaluto)</string>
 </resources>

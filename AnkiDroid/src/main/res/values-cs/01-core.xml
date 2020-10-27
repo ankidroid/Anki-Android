@@ -140,7 +140,7 @@
     <string name="menu_unmark_note">Odznačit poznámku</string>
     <string name="menu_toggle_mic_tool_bar">Zkontrolovat výslovnost</string>
     <string name="new_deck">Vytvořit balíček</string>
-    <string name="create">Vytvořit</string>
+    <string name="create" comment="Button to create a filtered deck">Vytvořit</string>
     <string name="new_dynamic_deck">Vytvořit filtrovaný balíček</string>
     <string name="night_mode">Noční režim</string>
     <string name="directory_inaccessible">AnkiDroid adresář není přístupný</string>
@@ -181,7 +181,7 @@
     <string name="studyoptions_congrats_more_rev">Bylo dosaženo limitu dnešního opakování, ale stále existují karty pro přezkoušení. Pro optimální zapamatování zvažte zvýšení denního limitu v možnostech.</string>
     <string name="studyoptions_congrats_more_new">Existuje více nových karet, ale byl dosažen denní limit. Můžete zvýšit tento limit v Nastavení, ale mějte na paměti, že se krátkodobě zvýší vaše zátěž na opakování.</string>
     <string name="studyoptions_congrats_custom">Pro studium mimo normální plán klepněte na tlačítko \'Vlastní učení\'.</string>
-    <string name="studyoptions_no_cards_due">Žádné další karty k opakování</string>
+    <string name="studyoptions_no_cards_due">Žádné karty ještě nejsou ke zkoušení</string>
     <string name="sd_card_not_mounted">Zařízení úložiště není připojeno</string>
     <string name="empty_cloze_warning">Upravte tuto poznámku a přidejte nějaké doplňovačky. (%1$s)</string>
     <string name="button_sync">Synchronizovat</string>
@@ -198,9 +198,8 @@
     <string name="card_template_editor_front">Šablona líce</string>
     <string name="card_template_editor_back">Šablona rubu</string>
     <string name="card_template_editor_styling">Styl</string>
-    <string name="card_template_editor_menu_delete">Odstranit</string>
     <string name="card_template_editor_menu_card_browser_appearance">Vzhled prohlížeče karet</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">Přepsat balíček</string>
     <string name="card_template_editor_cant_delete">Je vyžadován alespoň jeden typ karty.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Odstranit typ karty „%2$s“ a jeho %1$d kartu?</item>
@@ -215,7 +214,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Vzhled prohlížeče</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Informace o kartě</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Čtení a zápis do AnkiDroid databáze</string>
     <string name="read_write_permission_description">spravovat stávající poznámky, karty, typy poznámek a balíčky, a také vytvářet nové</string>

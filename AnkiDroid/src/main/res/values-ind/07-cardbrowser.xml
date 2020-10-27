@@ -73,7 +73,7 @@
     <string name="card_browser_change_display_order_reverse">Pilih kolom dua kali untuk membalik</string>
     <string name="card_details_question">Pertanyaan</string>
     <string name="card_details_answer">Jawaban</string>
-    <string name="card_details_due">Jatuh tempo</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">Jatuh tempo</string>
     <string name="card_details_tags">Tag</string>
     <string name="card_browser_filtering_cards">Memfilter kartu&#8230; \nTekan tombol kembali untuk membatalkan</string>
     <string-array name="card_browser_order_labels">
@@ -90,8 +90,7 @@
     </string-array>
     <string name="card_browser_select_all">Pilih semua</string>
     <string name="card_browser_select_none">Batalkan pilihan</string>
-    <string name="card_browser_interval_new_card">(baru)</string>
-    <string name="card_browser_ease_new_card">(baru)</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(baru)</string>
     <string name="card_browser_due_filtered_card">(difilter)</string>
     <string name="card_browser_interval_learning_card">(masih belajar)</string>
     <string name="card_browser_note_editor_error">Galat membuka editor catatan</string>
@@ -102,14 +101,13 @@
         <item quantity="other">%d cards deleted</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added">Added</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
     <string name="card_info_first_review">First Review</string>
     <string name="card_info_latest_review">Latest Review</string>
-    <string name="card_info_due">Due</string>
     <string name="card_info_interval">Interval</string>
     <string name="card_info_ease">Ease</string>
-    <string name="card_info_reviews">Reviews</string>
-    <string name="card_info_lapses">Lapses</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
     <string name="card_info_average_time">Average Time</string>
     <string name="card_info_total_time">Total Time</string>
     <string name="card_info_card_type">Card Type</string>
@@ -118,14 +116,12 @@
     <string name="card_info_card_id">Card Id</string>
     <string name="card_info_note_id">Note Id</string>
     <string name="card_info_revlog_time">Time</string>
-    <string name="card_info_revlog_ease">Ease</string>
-    <string name="card_info_revlog_interval">Interval</string>
     <string name="card_info_revlog_date">Date</string>
     <string name="card_info_revlog_rating">Rating</string>
     <string name="card_info_revlog_type">Type</string>
-    <string name="card_info_revlog_learn">Learn</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
     <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn">Relearn</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
     <string name="card_info_revlog_filtered">Filtered</string>
     <string name="card_info_ease_not_applicable">N/A</string>
     <string name="card_info_cannot_load">An unexpected error occurred</string>

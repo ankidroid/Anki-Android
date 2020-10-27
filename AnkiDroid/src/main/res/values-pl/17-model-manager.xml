@@ -44,7 +44,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Usuń typ notatki</string>
     <string name="model_browser_rename">Zmień nazwę</string>
-    <string name="model_browser_options">Opcje</string>
     <string name="model_browser_template">Edytuj karty</string>
     <string name="model_browser_add">Dodaj typ notatki</string>
     <!--Rename-->

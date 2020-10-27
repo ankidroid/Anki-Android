@@ -44,7 +44,6 @@
     <!--Browser-->
     <string name="model_browser_delete">Выдаліць тып нататкі</string>
     <string name="model_browser_rename">Пераназваць</string>
-    <string name="model_browser_options">Параметры</string>
     <string name="model_browser_template">Змяніць карткі</string>
     <string name="model_browser_add">Дадаць тып нататкі</string>
     <!--Rename-->

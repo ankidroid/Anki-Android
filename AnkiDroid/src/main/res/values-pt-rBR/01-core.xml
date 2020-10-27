@@ -130,7 +130,7 @@
     <string name="menu_unmark_note">Desmarcar nota</string>
     <string name="menu_toggle_mic_tool_bar">Verificar pronúncia</string>
     <string name="new_deck">Criar baralho</string>
-    <string name="create">Criar</string>
+    <string name="create" comment="Button to create a filtered deck">Criar</string>
     <string name="new_dynamic_deck">Criar baralho com filtros</string>
     <string name="night_mode">Modo noturno</string>
     <string name="directory_inaccessible">Diretório do AnkiDroid está inacessível</string>
@@ -188,7 +188,6 @@
     <string name="card_template_editor_front">Modelo da frente</string>
     <string name="card_template_editor_back">Modelo de trás</string>
     <string name="card_template_editor_styling">Estilo</string>
-    <string name="card_template_editor_menu_delete">Excluir</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aparência do Navegador de Cartões</string>
     <string name="card_template_editor_deck_override">Sobreposição do baralho</string>
     <string name="card_template_editor_cant_delete">Ao menos um tipo de cartão é necessário.</string>

@@ -48,12 +48,11 @@
     <string name="backup_full_sync_from_server">مزامنة كاملة من الخادم</string>
     <string name="backup_full_sync_from_server_question">هل تريد استبدال مجموعتك بالمجموعة في أنكي ويب؟ سيحذف هذا كل تقدمك والمعلومات المضافة منذ آخر مزامنة.</string>
     <string name="error_handling_title">معالجة الأخطاء</string>
-    <string name="error_handling_options">خيارات</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">خيارات</string>
     <string name="backup_retry_opening">إعادة محاولة الفتح</string>
     <string name="backup_error_menu_repair">إصلاح قاعدة البيانات</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">إصلاح قاعدة البيانات&#8230;</string>
-    <string name="backup_error">خطأ</string>
     <string name="backup_invalid_file_error">ملف النسخة الاحتياطية المحدد غير صالح</string>
     <string name="backup_restore_select_title">اختر نسخة احتياطية لاستعادتها</string>
     <string name="backup_restore_no_backups">لا توجد نسخ احتياطية على هذا الجهاز. إذا كان لديك نسخ احتياطية على حاسوبك، انسخها يدويًا إلى مجلد أنكيدرويد.</string>

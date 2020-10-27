@@ -77,7 +77,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">回答の入力</string>
     <string name="show_answer">解答を表示</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">解答を非表示</string>
     <string name="ease_button_again">もう一度</string>
     <string name="ease_button_hard">難しい</string>
     <string name="ease_button_good">普通</string>
@@ -125,7 +125,7 @@
     <string name="menu_unmark_note">ノートのマークをはずす</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">デッキを新規作成</string>
-    <string name="create">新規作成</string>
+    <string name="create" comment="Button to create a filtered deck">新規作成</string>
     <string name="new_dynamic_deck">フィルターデッキを作成</string>
     <string name="night_mode">ナイトモード</string>
     <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
@@ -183,7 +183,6 @@
     <string name="card_template_editor_front">表面のテンプレート</string>
     <string name="card_template_editor_back">裏面のテンプレート</string>
     <string name="card_template_editor_styling">書式</string>
-    <string name="card_template_editor_menu_delete">削除</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">カードタイプは少なくとも１種類必要です。</string>

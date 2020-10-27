@@ -216,8 +216,8 @@
         <item quantity="other">تستخدم %1$s\n%2$d رزمة هذه المجموعة</item>
     </plurals>
     <string name="deck_conf_new_cards">بطاقات جديدة</string>
-    <string name="deck_conf_rev_cards">مراجعات</string>
-    <string name="deck_conf_lps_cards">سقطات</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">مراجعات</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">سقطات</string>
     <string name="deck_conf_general">عام</string>
     <string name="deck_conf_reminders">تذكيرات</string>
     <string name="deck_conf_steps">الخطوات (بالدقيقة)</string>
@@ -252,7 +252,7 @@
     <string name="deck_conf_manage">إدارة المجموعة</string>
     <string name="deck_conf_manage_summ">إضافة مجموعات الخيارات وتغييرها</string>
     <string name="deck_conf_current_group">المجموعة الحالية</string>
-    <string name="deck_conf_rename">تغيير الاسم</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">تغيير الاسم</string>
     <string name="deck_conf_reset">استعادة الافتراضي</string>
     <string name="deck_conf_reset_message">هل تريد إرجاع مجموعة الخيارات الحالية إلى القيم الافتراضية؟</string>
     <string name="deck_conf_add">إضافة</string>
@@ -270,11 +270,10 @@
     <string name="deck_conf_set_subdecks_message">هل تريد ضبط مجموعة الخيارات الحالية لكل الرزم الفرعية لهذه الرزمة؟</string>
     <string name="pref_browser_editor_font">خط المتصفح والمحرر</string>
     <string name="deck_conf_cram_filter">فلتر</string>
-    <string name="deck_conf_cram_options">خيارات</string>
     <string name="deck_conf_cram_search">البحث</string>
     <string name="deck_conf_cram_limit">الحد إلى</string>
     <string name="deck_conf_cram_order">بطاقة محددة حسب</string>
-    <string name="deck_conf_cram_reschedule">إعادة جدولة</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">إعادة جدولة</string>
     <string name="deck_conf_cram_reschedule_summ">إعادة جدولة البطاقات بناءً على أجوبتي في هذه الرزمة</string>
     <string name="deck_conf_cram_steps">خطوات مخصصة (بالدقيقة)</string>
     <string name="deck_conf_cram_steps_summ">ضبط خطوات مخصصة</string>

@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Пограшна адреса е-поште или лозинка.</string>
     <string name="reset_password">Ресетујте лозинку</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Претрага</string>
     <string name="preferences_title">Поставке</string>
     <string name="deckpreferences_title">Опције за XXX</string>
     <string name="sync_conflict_message">Ваши шпилови овде и на AnkiWeb се разликују и не могу бити обједињени, јер је неопходно попуно презаписати један шпил другим.\n\nЖелите ли да учитате шпил одавде или да преузмете шпил са AnkiWeb овамо?</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

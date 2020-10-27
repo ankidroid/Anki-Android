@@ -140,7 +140,7 @@
     <string name="menu_unmark_note">Odznači zapisek</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Ustvari komplet</string>
-    <string name="create">Ustvari</string>
+    <string name="create" comment="Button to create a filtered deck">Ustvari</string>
     <string name="new_dynamic_deck">Ustvari filtriran komplet</string>
     <string name="night_mode">Nočni način</string>
     <string name="directory_inaccessible">Slovar AnkiDroid ni na voljo</string>
@@ -198,7 +198,6 @@
     <string name="card_template_editor_front">Sprednja predloga</string>
     <string name="card_template_editor_back">Zadnja predloga</string>
     <string name="card_template_editor_styling">Slog</string>
-    <string name="card_template_editor_menu_delete">Izbriši</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Zahtevana je vsaj ena vrsta kartice</string>

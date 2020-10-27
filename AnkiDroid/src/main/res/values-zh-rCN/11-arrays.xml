@@ -108,4 +108,13 @@
         <item>黑色</item>
         <item>暗色</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>x-large</item>
+        <item>xx-large</item>
+    </string-array>
 </resources>

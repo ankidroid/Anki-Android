@@ -212,8 +212,8 @@
         <item quantity="other">%1$s\n%2$d decks use this group</item>
     </plurals>
     <string name="deck_conf_new_cards">New cards</string>
-    <string name="deck_conf_rev_cards">Reviews</string>
-    <string name="deck_conf_lps_cards">Lapses</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
     <string name="deck_conf_general">General</string>
     <string name="deck_conf_reminders">Reminders</string>
     <string name="deck_conf_steps">Steps (in minutes)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Quản lý Nhóm</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Nhóm hiện tại</string>
-    <string name="deck_conf_rename">Đổi Tên</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Đổi Tên</string>
     <string name="deck_conf_reset">Phục hồi mặc định</string>
     <string name="deck_conf_reset_message">Khôi phục tùy chọn nhóm hiện tại về mặc định?</string>
     <string name="deck_conf_add">Thêm</string>
@@ -261,11 +261,10 @@
     <string name="deck_conf_set_subdecks_message">Thiết lập hiện tại tùy chọn nhóm cho tất cả chủ đề phụ này?</string>
     <string name="pref_browser_editor_font">Trình duyệt và trình soạn thảo font</string>
     <string name="deck_conf_cram_filter">Bộ lọc</string>
-    <string name="deck_conf_cram_options">Tùy chọn</string>
     <string name="deck_conf_cram_search">Tìm</string>
     <string name="deck_conf_cram_limit">Giới hạn</string>
     <string name="deck_conf_cram_order">thẻ được lựa chọn bởi</string>
-    <string name="deck_conf_cram_reschedule">Lên lịch lại</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Lên lịch lại</string>
     <string name="deck_conf_cram_reschedule_summ">Lên lịch lại thẻ dựa trên câu trả lời của tôi trong chủ đề này</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">Define custom steps</string>

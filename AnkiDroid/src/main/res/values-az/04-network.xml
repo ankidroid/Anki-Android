@@ -64,7 +64,6 @@
     <string name="invalid_username_password">Yanlış e-poçt ünvanı və ya şifrə</string>
     <string name="reset_password">Şifrəni dəyiş</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Axtarmaq</string>
     <string name="preferences_title">Seçimlərimiz</string>
     <string name="deckpreferences_title">XXX seçimləri</string>
     <string name="sync_conflict_message">Bu koleksiyanı yükləyin və ya Ankiweb-dan yükləyin,çünki onlar birləşdirilə bilməz.Bir tərəfdən toplanan siyahının üzərində yazılacaq.</string>
@@ -130,7 +129,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

@@ -215,8 +215,8 @@
         <item quantity="other">%1$s\n%2$d balíčkov používa túto skupinu</item>
     </plurals>
     <string name="deck_conf_new_cards">Nové kartičky</string>
-    <string name="deck_conf_rev_cards">Opakovania</string>
-    <string name="deck_conf_lps_cards">Zabudnutia</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Opakovania</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Zabudnutia</string>
     <string name="deck_conf_general">Všeobecné</string>
     <string name="deck_conf_reminders">Pripomienky</string>
     <string name="deck_conf_steps">Kroky (v minútach)</string>
@@ -251,7 +251,7 @@
     <string name="deck_conf_manage">Spravovanie skupiny</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Aktuálna skupina</string>
-    <string name="deck_conf_rename">Premenovať</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Premenovať</string>
     <string name="deck_conf_reset">Obnoviť predvolené</string>
     <string name="deck_conf_reset_message">Obnoviť pôvodné hodnoty aktuálnej skupiny nastavení ?</string>
     <string name="deck_conf_add">Pridať konfiguráciu</string>
@@ -267,11 +267,10 @@
     <string name="deck_conf_set_subdecks_message">Nastaviť aktuálnu skupinu nastavení pre všetky podbalíčky tohto balíčka?</string>
     <string name="pref_browser_editor_font">Font prehliadača a editora</string>
     <string name="deck_conf_cram_filter">Filter</string>
-    <string name="deck_conf_cram_options">Možnosti</string>
     <string name="deck_conf_cram_search">Hľadať</string>
     <string name="deck_conf_cram_limit">Obmedziť na</string>
     <string name="deck_conf_cram_order">kartičky zvolené podľa</string>
-    <string name="deck_conf_cram_reschedule">Preplánovať</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Preplánovať</string>
     <string name="deck_conf_cram_reschedule_summ">Preplánovať kartičky podľa mojich odpovedí v tomto balíčku</string>
     <string name="deck_conf_cram_steps">Vlastný postup (v minútach)</string>
     <string name="deck_conf_cram_steps_summ">Definovať vlastný postup</string>

@@ -48,12 +48,11 @@
     <string name="backup_full_sync_from_server">AnkiWeb側コレクションによる完全同期</string>
     <string name="backup_full_sync_from_server_question">AnkiWebからコレクションを上書きしますか？全ての学習進度と、前回の同期後の情報を削除します！</string>
     <string name="error_handling_title">エラー処理</string>
-    <string name="error_handling_options">オプション</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">オプション</string>
     <string name="backup_retry_opening">起動画面の再試行</string>
     <string name="backup_error_menu_repair">データベース修復</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">データベースを修復しています...</string>
-    <string name="backup_error">エラー</string>
     <string name="backup_invalid_file_error">選択したバックアップ ファイルは無効です。</string>
     <string name="backup_restore_select_title">復元するバックアップの選択</string>
     <string name="backup_restore_no_backups">このデバイス上では、このコレクションをバックアップできません。デスクトップコンピューターにバックアップがある場合には、それをあなたのAnkiDroidフォルダに手動でコピーしてください</string>

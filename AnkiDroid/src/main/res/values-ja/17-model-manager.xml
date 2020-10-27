@@ -38,7 +38,6 @@
     <!--Browser-->
     <string name="model_browser_delete">削除</string>
     <string name="model_browser_rename">名前を変更</string>
-    <string name="model_browser_options">オプション</string>
     <string name="model_browser_template">カードのテンプレートを編集</string>
     <string name="model_browser_add">ノートタイプを追加</string>
     <!--Rename-->

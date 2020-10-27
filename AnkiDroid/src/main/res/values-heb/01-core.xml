@@ -38,8 +38,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
-    <string name="no">no</string>
+    <string name="yes">כן</string>
+    <string name="no">לא</string>
     <!-- Navigation drawer items-->
     <string name="decks">חפיסות</string>
     <string name="card_browser">דפדוף בכרטיסים</string>
@@ -75,7 +75,7 @@
         <item quantity="other">%d שעות %d נותרו</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
+        <item quantity="one">%d ימים ו %d שעות נותרו</item>
         <item quantity="two">%d days %d left</item>
         <item quantity="many">%d days %d left</item>
         <item quantity="other">%d ימים ו %d שעות נותרו</item>
@@ -92,7 +92,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">הקלדת תשובה</string>
     <string name="show_answer">הצגת תשובה</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">הסתר תשובה</string>
     <string name="ease_button_again">שוב</string>
     <string name="ease_button_hard">קשה</string>
     <string name="ease_button_good">טוב</string>
@@ -140,7 +140,7 @@
     <string name="menu_unmark_note">הסר סימון הערה</string>
     <string name="menu_toggle_mic_tool_bar">בדוק הגיה</string>
     <string name="new_deck">יצירת חפיסה</string>
-    <string name="create">יצירה</string>
+    <string name="create" comment="Button to create a filtered deck">יצירה</string>
     <string name="new_dynamic_deck">יצירת חפיסה מסוננת</string>
     <string name="night_mode">מצב לילה</string>
     <string name="directory_inaccessible">הספרייה של AnkiDroid אינה נגישה</string>
@@ -198,7 +198,6 @@
     <string name="card_template_editor_front">תבנית קדמית</string>
     <string name="card_template_editor_back">תבנית אחורית</string>
     <string name="card_template_editor_styling">סגנון</string>
-    <string name="card_template_editor_menu_delete">מחיקה</string>
     <string name="card_template_editor_menu_card_browser_appearance">מראה דפדפן הכרטיסים</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
@@ -215,7 +214,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">מראה הדפדפן</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">מידע על הכרטיס</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
     <string name="read_write_permission_description">תן לאפליקציה גישה להערות, כרטיסים, סוגי הערות, וחפיסות, וכן גישה ליצור חדשים</string>

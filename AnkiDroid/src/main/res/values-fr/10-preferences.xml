@@ -212,8 +212,8 @@
         <item quantity="other">%1$s\n%2$d paquets utilisent ce groupe</item>
     </plurals>
     <string name="deck_conf_new_cards">Nouvelles cartes</string>
-    <string name="deck_conf_rev_cards">Révisions</string>
-    <string name="deck_conf_lps_cards">Oublis</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Révisions</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Oublis</string>
     <string name="deck_conf_general">Général</string>
     <string name="deck_conf_reminders">Rappels</string>
     <string name="deck_conf_steps">Intervalle (en minutes)</string>
@@ -248,7 +248,7 @@
     <string name="deck_conf_manage">Gestion des groupes</string>
     <string name="deck_conf_manage_summ">Ajouter et modifier des groupes d\'options</string>
     <string name="deck_conf_current_group">Groupe actuel</string>
-    <string name="deck_conf_rename">Renommer</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Renommer</string>
     <string name="deck_conf_reset">Restaurer les valeurs par défaut</string>
     <string name="deck_conf_reset_message">Restaurer les valeurs par défaut pour le groupe actuel ?</string>
     <string name="deck_conf_add">Ajouter une configuration</string>
@@ -262,11 +262,10 @@
     <string name="deck_conf_set_subdecks_message">Définir ce groupe d’option pour tous les sous-paquets de ce paquet ?</string>
     <string name="pref_browser_editor_font">Police du navigateur et de l’éditeur</string>
     <string name="deck_conf_cram_filter">Filtre</string>
-    <string name="deck_conf_cram_options">Options</string>
     <string name="deck_conf_cram_search">Recherche</string>
     <string name="deck_conf_cram_limit">Limiter à</string>
     <string name="deck_conf_cram_order">Cartes sélectionnées par</string>
-    <string name="deck_conf_cram_reschedule">Replanifier</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Replanifier</string>
     <string name="deck_conf_cram_reschedule_summ">Replanifier les cartes selon mes réponses dans ce paquet</string>
     <string name="deck_conf_cram_steps">Étapes personnalisées (en minute)</string>
     <string name="deck_conf_cram_steps_summ">Définir le pas personnalisé</string>

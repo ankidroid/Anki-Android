@@ -44,8 +44,8 @@
     <string name="statistics_unlearned">Невидяни</string>
     <string name="statistics_suspended">Suspended</string>
     <string name="statistics_buried">Buried</string>
-    <string name="statistics_relearn">Преговор</string>
-    <string name="statistics_learn">Учене</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Преговор</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Учене</string>
     <string name="statistics_cram">Зубрене</string>
     <string name="stats_cards">Карти</string>
     <string name="stats_cards_intervals">Карти с даден интервал</string>
@@ -67,7 +67,7 @@
     <string name="stats_time_of_day">Време от деня</string>
     <string name="stats_day_of_week">Ден от седмицата</string>
     <string formatted="false" name="stats_percentage_correct">% верни</string>
-    <string name="stats_reviews">Разглеждания</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Разглеждания</string>
     <string name="stats_answer_type">Тип отговор</string>
     <string name="stats_today_again_count">Повторно прегледани: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; правилно)</string>
@@ -111,7 +111,7 @@
     <string name="stats_forecast">Прогноза</string>
     <string name="stats_review_count">Брой преглеждания</string>
     <string name="stats_review_time">Преглед на времето</string>
-    <string name="stats_added">Добавено</string>
+    <string name="stats_added" comment="Label of the number of added card">Добавено</string>
     <string name="stats_review_intervals">Интервали</string>
     <string name="stats_breakdown">Почасова разбивка</string>
     <string name="stats_weekly_breakdown">Седмична разбивка</string>

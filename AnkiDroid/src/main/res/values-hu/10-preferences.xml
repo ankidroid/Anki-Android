@@ -213,8 +213,8 @@
         <item quantity="other">%1$s\n%2$d pakli használata ebben a csoportban</item>
     </plurals>
     <string name="deck_conf_new_cards">Új kártyák</string>
-    <string name="deck_conf_rev_cards">Ismétlések</string>
-    <string name="deck_conf_lps_cards">Körök</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Ismétlések</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Körök</string>
     <string name="deck_conf_general">Általános</string>
     <string name="deck_conf_reminders">Emlékeztetők</string>
     <string name="deck_conf_steps">Lépések (percben)</string>
@@ -249,7 +249,7 @@
     <string name="deck_conf_manage">Konfigurációkezelés</string>
     <string name="deck_conf_manage_summ">Opciócsoportok hozzáadása és változtatása</string>
     <string name="deck_conf_current_group">Aktuális csoport</string>
-    <string name="deck_conf_rename">Átnevezés</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Átnevezés</string>
     <string name="deck_conf_reset">Alapértelmezések visszaállítása</string>
     <string name="deck_conf_reset_message">Alaphelyzetbe állítod az aktuális opciócsoportot?</string>
     <string name="deck_conf_add">Új beállítás</string>
@@ -263,11 +263,10 @@
     <string name="deck_conf_set_subdecks_message">Állítsa be az aktuális opciócsoportot a pakli minden alcsoportjában?</string>
     <string name="pref_browser_editor_font">Böngésző és szerkesztő betűtípus</string>
     <string name="deck_conf_cram_filter">Szűrő</string>
-    <string name="deck_conf_cram_options">Beállítások</string>
     <string name="deck_conf_cram_search">Keresés</string>
     <string name="deck_conf_cram_limit">Határ</string>
     <string name="deck_conf_cram_order">kártyák kiválasztása után</string>
-    <string name="deck_conf_cram_reschedule">Átütemezés</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Átütemezés</string>
     <string name="deck_conf_cram_reschedule_summ">A telepített kártyák átütemezése adott válaszaim alapján</string>
     <string name="deck_conf_cram_steps">Egyéni lépések (percben)</string>
     <string name="deck_conf_cram_steps_summ">Add meg az egyéni lépéseket</string>
