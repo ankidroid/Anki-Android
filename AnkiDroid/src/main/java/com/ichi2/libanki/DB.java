@@ -32,6 +32,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.utils.DatabaseChangeDecorator;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -231,10 +232,11 @@ public class DB {
 
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             String methodName = getCursorMethodName(type.getSimpleName());
+            Method method = Cursor.class.getMethod(methodName, int.class);
             while (cursor.moveToNext()) {
                 try {
                     // The magical line. Almost as illegible as python code ;)
-                    results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, 0)));
+                    results.add(type.cast(method.invoke(cursor, 0)));
                 } catch (InvocationTargetException e) {
                     if (cursor.isNull(0)) { // null value encountered
                         nullExceptionCount++;
