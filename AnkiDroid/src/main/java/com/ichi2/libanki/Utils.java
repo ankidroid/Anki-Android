@@ -31,6 +31,7 @@ import android.text.Spanned;
 
 import androidx.annotation.NonNull;
 import android.os.StatFs;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
