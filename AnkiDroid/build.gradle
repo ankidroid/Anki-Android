@@ -179,8 +179,8 @@ android {
 }
 
 play {
-    serviceAccountCredentials.set(file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json"))
-    track.set('alpha')
+    serviceAccountCredentials = file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json")
+    track = 'alpha'
 }
 amazon {
     securityProfile = file("${homePath}/src/AnkiDroid-Amazon-Publish-Security-Profile.json")
