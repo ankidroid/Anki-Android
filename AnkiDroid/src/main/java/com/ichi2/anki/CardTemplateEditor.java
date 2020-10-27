@@ -45,7 +45,6 @@ import android.widget.EditText;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck;
@@ -221,7 +220,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
     public void onDeckSelected(@Nullable SelectableDeck deck) {
         if (Models.isCloze(getTempModel().getModel())) {
             Timber.w("Attempted to set deck for cloze model");
-            UIUtils.showThemedToast(this, getString(R.string.model_manager_deck_override_cloze_error), true);
+            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true);
             return;
         }
 
@@ -232,7 +231,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
         if (deck != null && Decks.isDynamic(getCol(), deck.getDeckId())) {
             Timber.w("Attempted to set default deck of %s to dynamic deck %s", templateName, deck.getName());
-            UIUtils.showThemedToast(this, getString(R.string.model_manager_deck_override_dynamic_deck_error), true);
+            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true);
             return;
         }
 
@@ -544,7 +543,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         private void displayDeckOverrideDialog(Collection col, TemporaryModel tempModel) {
             AnkiActivity activity = (AnkiActivity) requireActivity();
             if (Models.isCloze(tempModel.getModel())) {
-                UIUtils.showThemedToast(activity, getString(R.string.model_manager_deck_override_cloze_error), true);
+                UIUtils.showThemedToast(activity, getString(R.string.multimedia_editor_something_wrong), true);
                 return;
             }
             String name = getCurrentTemplateName(tempModel);
