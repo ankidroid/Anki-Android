@@ -214,6 +214,8 @@ public class CardBrowserTest extends RobolectricTest {
         CardBrowser b = getBrowserWithNotes(5);
         b.checkedCardsAtPositions(new int[] {0, 2});
 
+        advanceRobolectricLooperWithSleep();
+
         List<Long> cardIds = b.getCheckedCardIds();
 
         for (Long cardId : cardIds) {
