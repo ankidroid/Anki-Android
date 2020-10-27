@@ -294,11 +294,12 @@ public class Note implements Cloneable {
         }
         long csum = Utils.fieldChecksum(val);
         // find any matching csums and compare
+        String strippedFirstField = Utils.stripHTMLMedia(mFields[0]);
         for (String flds : mCol.getDb().queryStringList(
                 "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
                 csum, (mId), mMid)) {
             if (Utils.stripHTMLMedia(
-                    Utils.splitFields(flds)[0]).equals(Utils.stripHTMLMedia(mFields[0]))) {
+                    Utils.splitFields(flds)[0]).equals(strippedFirstField)) {
                 return DupeOrEmpty.DUPE;
             }
         }
