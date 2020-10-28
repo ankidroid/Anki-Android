@@ -129,7 +129,7 @@ public class Media {
         File fd = new File(mDir);
         if (!fd.exists()) {
             if (!fd.mkdir()) {
-                Timber.e("Cannot create media directory: " + mDir);
+                Timber.e("Cannot create media directory: %s", mDir);
             }
         }
         // change database

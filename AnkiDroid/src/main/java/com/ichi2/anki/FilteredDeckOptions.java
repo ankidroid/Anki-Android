@@ -122,7 +122,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                 Timber.d("commit() changes back to database");
 
                 for (Entry<String, Object> entry : mUpdate.valueSet()) {
-                    Timber.i("Change value for key '" + entry.getKey() + "': " + entry.getValue());
+                    Timber.i("Change value for key '%s': %s", entry.getKey(), entry.getValue());
                     if ("search".equals(entry.getKey())) {
                         JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(0, entry.getValue());

@@ -213,7 +213,7 @@ public class AnkiStatsTaskHandler {
                 int minutes;
                 Cursor cur = null;
                 String query = "select count(), sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff() - SECONDS_PER_DAY) * 1000);
-                Timber.d("DeckPreviewStatistics query: " + query);
+                Timber.d("DeckPreviewStatistics query: %s", query);
 
                 try {
                     cur = collection.getDb()

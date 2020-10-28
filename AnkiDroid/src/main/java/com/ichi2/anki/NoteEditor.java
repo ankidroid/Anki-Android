@@ -558,7 +558,7 @@ public class NoteEditor extends AnkiActivity {
         mNoteDeckSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = "+Integer.toString(pos));
+                // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = %d", pos);
                 mCurrentDid = mAllDeckIds.get(pos);
             }
 

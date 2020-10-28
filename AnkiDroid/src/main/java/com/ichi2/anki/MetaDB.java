@@ -496,7 +496,7 @@ public class MetaDB {
         } catch (SQLiteException e) {
             Timber.e(e, "MetaDB.storeSmallWidgetStatus: failed");
             closeDB();
-            Timber.i("MetaDB:: Trying to reset Widget: " + resetWidget(context));
+            Timber.i("MetaDB:: Trying to reset Widget: %b", resetWidget(context));
         }
     }
 

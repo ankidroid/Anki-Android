@@ -91,7 +91,7 @@ public class Threads {
     @UiThread
     public static void checkMainThread() {
         if (!isOnMainThread()) {
-            Timber.e("must be called on the main thread instead of " + Thread.currentThread());
+            Timber.e("must be called on the main thread instead of %s", Thread.currentThread());
         }
     }
 

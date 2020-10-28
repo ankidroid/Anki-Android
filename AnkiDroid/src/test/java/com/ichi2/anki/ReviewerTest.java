@@ -68,7 +68,7 @@ public class ReviewerTest extends RobolectricTest {
     public void setUp() {
         super.setUp();
         try {
-            Timber.d("scheduler version is " + schedVersion);
+            Timber.d("scheduler version is %d", schedVersion);
             getCol().changeSchedulerVer(schedVersion);
         } catch (ConfirmModSchemaException e) {
             throw new RuntimeException("Could not change schedVer", e);

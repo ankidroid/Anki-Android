@@ -1262,7 +1262,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void lookUpOrSelectText() {
         if (clipboardHasText()) {
-            Timber.d("Clipboard has text = " + clipboardHasText());
+            Timber.d("Clipboard has text = %b", clipboardHasText());
             lookUp();
         } else {
             selectAndCopyText();

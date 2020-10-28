@@ -315,7 +315,7 @@ public class AdvancedStatistics {
         SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
         long t1 = mCol.getTime().intTimeMS();
 
-        Timber.d("Simulation of all decks took: " + (t1 - t0) + " ms");
+        Timber.d("Simulation of all decks took: %d ms", t1 - t0);
 
         int[][] nReviews = ArrayUtils.transposeMatrix(simulationResult.getNReviews());
         int[][] nInState = ArrayUtils.transposeMatrix(simulationResult.getNInState());
@@ -501,11 +501,11 @@ public class AdvancedStatistics {
                 newPerDay = conf.getJSONObject("new").getInt("perDay");
                 initialFactor = conf.getJSONObject("new").getInt("initialFactor");
 
-                Timber.d("rev.perDay=" + revPerDay);
-                Timber.d("new.perDay=" + newPerDay);
-                Timber.d("new.initialFactor=" + initialFactor);
+                Timber.d("rev.perDay=%d", revPerDay);
+                Timber.d("new.perDay=%d", newPerDay);
+                Timber.d("new.initialFactor=%d", initialFactor);
             } else {
-                Timber.d("dyn=" + conf.getInt("dyn"));
+                Timber.d("dyn=%d", conf.getInt("dyn"));
             }
 
             return new Deck(did, newPerDay, revPerDay, initialFactor);
@@ -659,15 +659,15 @@ public class AdvancedStatistics {
             calculateCumProbabilitiesForNewEasePerCurrentEase();
             long t1 = time.intTimeMS();
 
-            Timber.d("Calculating probability distributions took: " + (t1 - t0) + " ms");
+            Timber.d("Calculating probability distributions took: %d ms", t1 - t0);
 
-            Timber.d("new\t\t" + Arrays.toString(this.probabilities[0]));
-            Timber.d("young\t\t" + Arrays.toString(this.probabilities[1]));
-            Timber.d("mature\t" + Arrays.toString(this.probabilities[2]));
+            Timber.d("new\t\t%s", Arrays.toString(this.probabilities[0]));
+            Timber.d("young\t\t%s", Arrays.toString(this.probabilities[1]));
+            Timber.d("mature\t%s", Arrays.toString(this.probabilities[2]));
 
-            Timber.d("Cumulative new\t\t" + Arrays.toString(this.probabilitiesCumulative[0]));
-            Timber.d("Cumulative young\t\t" + Arrays.toString(this.probabilitiesCumulative[1]));
-            Timber.d("Cumulative mature\t" + Arrays.toString(this.probabilitiesCumulative[2]));
+            Timber.d("Cumulative new\t\t%s", Arrays.toString(this.probabilitiesCumulative[0]));
+            Timber.d("Cumulative young\t\t%s", Arrays.toString(this.probabilitiesCumulative[1]));
+            Timber.d("Cumulative mature\t%s", Arrays.toString(this.probabilitiesCumulative[2]));
 
             random = new Random();
         }
@@ -952,7 +952,7 @@ public class AdvancedStatistics {
             //Forecasted final state of deck
             //finalIvl = np.empty((nSmooth, nCards), dtype='f8')
 
-            Timber.d("today: " + today);
+            Timber.d("today: %d", today);
 
             Stack<Review> reviews = new Stack<>();
             ArrayList<Review> reviewList = new ArrayList<>();
@@ -987,13 +987,13 @@ public class AdvancedStatistics {
                     if (review.getT() < tMax)
                         reviews.push(review);
 
-                    //Timber.d("Card started: " + cardN);
+                    //Timber.d("Card started: %d", cardN);
 
                     while (!reviews.isEmpty()) {
                         reviews.pop().simulateReview();
                     }
 
-                    //Timber.d("Card done: " + cardN++);
+                    //Timber.d("Card done: %d", cardN++);
 
                 }
             }
@@ -1073,10 +1073,10 @@ public class AdvancedStatistics {
          * @return Today in days counted from the time at which the collection was created
          */
         public int getToday(long collectionCreatedTime) {
-            Timber.d("Collection creation timestamp: " + collectionCreatedTime);
+            Timber.d("Collection creation timestamp: %d", collectionCreatedTime);
 
             long currentTime = mCol.getTime().intTime();
-            Timber.d("Now: " + currentTime);
+            Timber.d("Now: %d", currentTime);
             return (int) ((currentTime - collectionCreatedTime) / SECONDS_PER_DAY);
         }
 
@@ -1686,9 +1686,9 @@ public class AdvancedStatistics {
             String tabs = "";
             for(int d = 0; d<nPrevRevs; d++)
                 tabs += "\t";
-            Timber.d(tabs + "t=" + tElapsed + " p=" + prob + " * " + outcomeProb);
-            Timber.d(tabs + prevCard);
-            Timber.d(tabs + newCard);
+            Timber.d("%st=%d p=%f * %s", tabs, tElapsed, prob, outcomeProb);
+            Timber.d("%s%s",tabs , prevCard);
+            Timber.d("%s%s", tabs, newCard);
         }
 
         /**
