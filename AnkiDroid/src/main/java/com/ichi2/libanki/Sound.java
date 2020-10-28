@@ -42,6 +42,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -304,7 +305,7 @@ public class Sound {
 //                    Integer.parseInt(soundPath.substring(3, 4)));
         } else {
             // Check if the file extension is that of a known video format
-            final String extension = soundPath.substring(soundPath.lastIndexOf(".") + 1).toLowerCase();
+            final String extension = soundPath.substring(soundPath.lastIndexOf(".") + 1).toLowerCase(Locale.getDefault());
             boolean isVideo = Arrays.asList(VIDEO_WHITELIST).contains(extension);
             if (!isVideo) {
                 final String guessedType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);

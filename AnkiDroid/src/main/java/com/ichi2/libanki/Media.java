@@ -325,7 +325,7 @@ public class Media {
                 m = p.matcher(s);
                 while (m.find()) {
                     String fname = m.group(fnameIdx);
-                    boolean isLocal = !fRemotePattern.matcher(fname.toLowerCase(Locale.US)).find();
+                    boolean isLocal = !fRemotePattern.matcher(fname.toLowerCase(Locale.getDefault())).find();
                     if (isLocal || includeRemote) {
                         l.add(fname);
                     }

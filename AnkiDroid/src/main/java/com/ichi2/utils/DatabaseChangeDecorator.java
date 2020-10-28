@@ -56,8 +56,8 @@ public class DatabaseChangeDecorator implements SupportSQLiteDatabase {
         if (!needsComplexCheck()) {
             return;
         }
-        String lower = sql.toLowerCase();
-        String upper = sql.toUpperCase();
+        String lower = sql.toLowerCase(Locale.ROOT);
+        String upper = sql.toUpperCase(Locale.ROOT);
         for (String modString : MOD_SQLS) {
             if (startsWithIgnoreCase(lower, upper, modString)) {
                 markDataAsChanged();
@@ -69,7 +69,7 @@ public class DatabaseChangeDecorator implements SupportSQLiteDatabase {
 
     private boolean startsWithIgnoreCase(String lowerHaystack, String upperHaystack, String needle) {
         // Needs to do both according to https://stackoverflow.com/a/38947571
-        return lowerHaystack.startsWith(needle) || upperHaystack.startsWith(needle.toUpperCase());
+        return lowerHaystack.startsWith(needle) || upperHaystack.startsWith(needle.toUpperCase(Locale.ROOT));
     }
 
 

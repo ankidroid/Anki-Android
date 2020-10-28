@@ -39,6 +39,7 @@ import com.ichi2.utils.FilterResultsUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -255,9 +256,9 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                 if (constraint.length() == 0) {
                     mFilteredDecks.addAll(allDecks);
                 } else {
-                    final String filterPattern = constraint.toString().toLowerCase().trim();
+                    final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
                     for (SelectableDeck deck : allDecks) {
-                        if (deck.getName().toLowerCase().contains(filterPattern)) {
+                        if (deck.getName().toLowerCase(Locale.getDefault()).contains(filterPattern)) {
                             mFilteredDecks.add(deck);
                         }
                     }

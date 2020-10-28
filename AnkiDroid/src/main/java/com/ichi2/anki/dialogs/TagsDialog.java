@@ -31,6 +31,7 @@ import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.TreeSet;
 
 public class TagsDialog extends AnalyticsDialogFragment {
@@ -343,9 +344,9 @@ public class TagsDialog extends AnalyticsDialogFragment {
                 if (constraint.length() == 0) {
                     mFilteredTags.addAll(mAllTags);
                 } else {
-                    final String filterPattern = constraint.toString().toLowerCase().trim();
+                    final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
                     for (String tag : mAllTags) {
-                        if (tag.toLowerCase().contains(filterPattern)) {
+                        if (tag.toLowerCase(Locale.getDefault()).contains(filterPattern)) {
                             mFilteredTags.add(tag);
                         }
                     }

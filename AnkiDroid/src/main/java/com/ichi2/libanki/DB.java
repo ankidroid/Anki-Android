@@ -319,7 +319,7 @@ public class DB {
 
 
     public void execute(String sql, Object... object) {
-        String s = sql.trim().toLowerCase(Locale.US);
+        String s = sql.trim().toLowerCase(Locale.ROOT);
         // mark modified?
         for (String mo : MOD_SQLS) {
             if (s.startsWith(mo)) {
