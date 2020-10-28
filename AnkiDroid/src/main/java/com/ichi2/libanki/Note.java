@@ -21,6 +21,7 @@ import android.database.Cursor;
 
 import android.util.Pair;
 
+import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONObject;
 
 import java.util.AbstractSet;
@@ -66,7 +67,7 @@ public class Note implements Cloneable {
 
 
     public Note(Collection col, Model model, Long id) {
-        assert !(model != null && id != null);
+        Assert.that(!(model != null && id != null));
         mCol = col;
         if (id != null) {
             mId = id;
@@ -125,7 +126,7 @@ public class Note implements Cloneable {
     }
 
     public void flush(Long mod, boolean changeUsn) {
-        assert mScm == mCol.getScm();
+        Assert.that(mScm == mCol.getScm());
         _preFlush();
         if (changeUsn) {
             mUsn = mCol.usn();

@@ -44,6 +44,7 @@ import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
+import com.ichi2.utils.Assert;
 import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
@@ -2021,7 +2022,7 @@ public class Collection {
      * Card Flags *****************************************************************************************************
      */
     public void setUserFlag(int flag, long[] cids)  {
-        assert (0<= flag && flag <= 7);
+        Assert.that(0 <= flag && flag <= 7);
         mDb.execute("update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(cids),
                     0b111, flag, usn(), getTime().intTime());
     }

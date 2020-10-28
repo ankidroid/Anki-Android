@@ -29,6 +29,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.DeckRenameException;
 import com.ichi2.libanki.exception.NoSuchDeckException;
 
+import com.ichi2.utils.Assert;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.DeckNameComparator;
 import com.ichi2.utils.JSONArray;
@@ -700,7 +701,7 @@ public class Decks {
 
     public DeckConfig confForDid(long did) {
         Deck deck = get(did, false);
-        assert deck != null;
+        Assert.that(deck != null);
         if (deck.has("conf")) {
             DeckConfig conf = getConf(deck.getLong("conf"));
             conf.put("dyn", 0);
@@ -749,7 +750,7 @@ public class Decks {
      * @throws ConfirmModSchemaException 
      */
     public void remConf(long id) throws ConfirmModSchemaException {
-        assert id != 1;
+        Assert.that(id != 1);
         mCol.modSchema();
         mDconf.remove(id);
         for (Deck g : all()) {

@@ -24,6 +24,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.utils.Assert;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -60,7 +61,7 @@ public class Storage {
         return Collection(context, path, server, log, new SystemTime());
     }
     public static Collection Collection(Context context, String path, boolean server, boolean log, @NonNull Time time) {
-        assert path.endsWith(".anki2");
+        Assert.that(path.endsWith(".anki2"));
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
         // connect

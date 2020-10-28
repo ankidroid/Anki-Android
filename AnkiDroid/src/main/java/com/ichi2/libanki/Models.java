@@ -862,7 +862,7 @@ public class Models {
      */
     public void change(Model m, long nid, Model newModel, Map<Integer, Integer> fmap, Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
         mCol.modSchema();
-        assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
+        Assert.that ((newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null));
         if (fmap != null) {
             _changeNote(nid, newModel, fmap);
         }
