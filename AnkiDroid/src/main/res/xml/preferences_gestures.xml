@@ -33,6 +33,7 @@
         android:title="@string/gestures" />
     <CheckBoxPreference
         android:defaultValue="false"
+        android:dependency="gestures"
         android:disableDependentsState="false"
         android:key="linkOverridesTouchGesture"
         android:summary="@string/gestures_allow_links_summary"
