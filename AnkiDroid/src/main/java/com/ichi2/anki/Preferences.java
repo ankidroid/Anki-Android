@@ -33,7 +33,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -276,6 +275,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 break;
             case "com.ichi2.anki.prefs.gestures":
                 listener.addPreferencesFromResource(R.xml.preferences_gestures);
+                screen = listener.getPreferenceScreen();
+                updateGestureCornerTouch(screen);
+
                 break;
             case "com.ichi2.anki.prefs.custom_buttons":
                 getSupportActionBar().setTitle(R.string.custom_buttons);
@@ -767,6 +769,9 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                 case AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY:
                     AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
                     break;
+                case "gestureCornerTouch": {
+                    updateGestureCornerTouch(screen);
+                }
             }
             // Update the summary text to reflect new value
             updateSummary(pref);
@@ -776,6 +781,23 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
             throw new RuntimeException(e);
         }
     }
+
+
+    private void updateGestureCornerTouch(android.preference.PreferenceScreen screen) {
+        boolean gestureCornerTouch = AnkiDroidApp.getSharedPrefs(this).getBoolean("gestureCornerTouch", false);
+        if (gestureCornerTouch) {
+            screen.findPreference("gestureTapTop").setTitle(R.string.gestures_corner_tap_top_center);
+            screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_corner_tap_middle_left);
+            screen.findPreference("gestureTapRight").setTitle(R.string.gestures_corner_tap_middle_center);
+            screen.findPreference("gestureTapBottom").setTitle(R.string.gestures_corner_tap_middle_right);
+        } else {
+            screen.findPreference("gestureTapTop").setTitle(R.string.gestures_tap_top);
+            screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_tap_left);
+            screen.findPreference("gestureTapRight").setTitle(R.string.gestures_tap_right);
+            screen.findPreference("gestureTapBottom").setTitle(R.string.gestures_tap_bottom);
+        }
+    }
+
 
     public void updateNotificationPreference(android.preference.ListPreference listpref) {
         CharSequence[] entries = listpref.getEntries();
