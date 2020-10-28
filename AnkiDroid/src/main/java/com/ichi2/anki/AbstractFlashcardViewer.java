@@ -2531,6 +2531,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_EDIT:
                 editCard();
                 return true;
+            case COMMAND_CARD_INFO:
+                openCardInfo();
+                return true;
             case COMMAND_TAG:
                 showTagsDialog();
                 return true;
