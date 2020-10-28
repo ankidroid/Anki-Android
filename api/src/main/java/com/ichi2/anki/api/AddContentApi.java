@@ -596,16 +596,9 @@ public final class AddContentApi {
      * @param did ID of deck
      * @return the name of the deck, or null if no deck was found
      */
-    public String getDeckName(Long did) {
+    public String getDeckName(long did) {
         Map<Long, String> deckList = getDeckList();
-        if (did != null && did >= 0 && deckList != null) {
-            for (Map.Entry<Long, String> entry : deckList.entrySet()) {
-                if (entry.getKey().equals(did)) {
-                    return entry.getValue();
-                }
-            }
-        }
-        return null;
+        return deckList.get(did);
     }
 
 
