@@ -351,7 +351,7 @@ public abstract class AbstractSched {
      * This is used to deal which are imported
      * @param did Id of a deck
      */
-    public abstract void maybeRandomizeDeck(@NonNull Long did);
+    public abstract void maybeRandomizeDeck(@Nullable Long did);
 
     /**
      * @param did An id of a deck
