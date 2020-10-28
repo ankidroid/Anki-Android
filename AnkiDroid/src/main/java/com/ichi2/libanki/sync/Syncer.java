@@ -378,12 +378,10 @@ public class Syncer {
                     return result;
                 }
             }
-            for (Map.Entry<String, Integer> tag : mCol.getTags().allItems()) {
-                if (tag.getValue() == -1) {
-                    Timber.e("Sync - SanityCheck: there are unsynced tags");
-                    result.put("client", "tag had usn = -1");
-                    return result;
-                }
+            if (mCol.getTags().minusOneValue()) {
+                Timber.e("Sync - SanityCheck: there are unsynced tags");
+                result.put("client", "tag had usn = -1");
+                return result;
             }
             boolean found = false;
             for (JSONObject m : mCol.getModels().all()) {

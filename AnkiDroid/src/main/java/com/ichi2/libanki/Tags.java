@@ -154,6 +154,10 @@ public class Tags {
         return mTags.entrySet();
     }
 
+    public boolean minusOneValue() {
+        return mTags.containsValue(-1);
+    }
+
 
     public void save() {
         mChanged = true;
