@@ -395,7 +395,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
             if (TextUtils.isEmpty(constraint)) {
                 mFilteredDecks.addAll(allDecks);
             } else {
-                final String filterPattern = constraint.toString().toLowerCase().trim();
+                final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
                 List<AbstractDeckTreeNode> filteredDecks = filterDecks(filterPattern, allDecks);
                 mFilteredDecks.addAll(filteredDecks);
             }
@@ -445,7 +445,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
 
         private <T extends AbstractDeckTreeNode<T>> boolean containsFilterString(String filterPattern, T root) {
             String deckName = root.getFullDeckName();
-            return deckName.toLowerCase().contains(filterPattern) || deckName.toLowerCase(Locale.US).contains(filterPattern);
+            return deckName.toLowerCase(Locale.getDefault()).contains(filterPattern) || deckName.toLowerCase(Locale.getDefault()).contains(filterPattern);
         }
     }
 }

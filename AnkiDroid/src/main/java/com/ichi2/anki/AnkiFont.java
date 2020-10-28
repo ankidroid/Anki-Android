@@ -63,29 +63,29 @@ public class AnkiFont {
             return null;
         }
 
-        if (tf.isBold() || name.toLowerCase(Locale.US).contains("bold")) {
+        if (tf.isBold() || name.toLowerCase(Locale.ROOT).contains("bold")) {
             attributes.add("font-weight: bolder;");
             family = family.replaceFirst("(?i)-?Bold", "");
-        } else if (name.toLowerCase(Locale.US).contains("light")) {
+        } else if (name.toLowerCase(Locale.ROOT).contains("light")) {
             attributes.add("font-weight: lighter;");
             family = family.replaceFirst("(?i)-?Light", "");
         } else {
             attributes.add("font-weight: normal;");
         }
-        if (tf.isItalic() || name.toLowerCase(Locale.US).contains("italic")) {
+        if (tf.isItalic() || name.toLowerCase(Locale.ROOT).contains("italic")) {
             attributes.add("font-style: italic;");
             family = family.replaceFirst("(?i)-?Italic", "");
-        } else if (name.toLowerCase(Locale.US).contains("oblique")) {
+        } else if (name.toLowerCase(Locale.ROOT).contains("oblique")) {
             attributes.add("font-style: oblique;");
             family = family.replaceFirst("(?i)-?Oblique", "");
         } else {
             attributes.add("font-style: normal;");
         }
-        if (name.toLowerCase(Locale.US).contains("condensed") || name.toLowerCase(Locale.US).contains("narrow")) {
+        if (name.toLowerCase(Locale.ROOT).contains("condensed") || name.toLowerCase(Locale.ROOT).contains("narrow")) {
             attributes.add("font-stretch: condensed;");
             family = family.replaceFirst("(?i)-?Condensed", "");
             family = family.replaceFirst("(?i)-?Narrow(er)?", "");
-        } else if (name.toLowerCase(Locale.US).contains("expanded") || name.toLowerCase(Locale.US).contains("wide")) {
+        } else if (name.toLowerCase(Locale.ROOT).contains("expanded") || name.toLowerCase(Locale.ROOT).contains("wide")) {
             attributes.add("font-stretch: expanded;");
             family = family.replaceFirst("(?i)-?Expanded", "");
             family = family.replaceFirst("(?i)-?Wide(r)?", "");

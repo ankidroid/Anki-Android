@@ -133,8 +133,9 @@ public class OverviewStatsBuilder {
         // FORECAST
         // Fill in the forecast summaries first
         calculateForecastOverview(mType, oStats);
+        Locale l = Locale.getDefault();
 
-        stringBuilder.append(_subtitle(res.getString(R.string.stats_forecast).toUpperCase()));
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_forecast).toUpperCase(l)));
         stringBuilder.append(res.getString(R.string.stats_overview_forecast_total, oStats.forecastTotalReviews));
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_forecast_average, oStats.forecastAverageReviews));
@@ -144,7 +145,7 @@ public class OverviewStatsBuilder {
         stringBuilder.append("<br>");
 
         // REVIEW COUNT
-        stringBuilder.append(_subtitle(res.getString(R.string.stats_review_count).toUpperCase()));
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_review_count).toUpperCase(l)));
         stringBuilder.append(daysStudied);
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_forecast_total, oStats.totalReviews));
@@ -160,7 +161,7 @@ public class OverviewStatsBuilder {
         //TODO: AnkiDroid uses 30 days on 2020-06-09, whereas Anki Desktop used 31
 
         //REVIEW TIME
-        stringBuilder.append(_subtitle(res.getString(R.string.stats_review_time).toUpperCase()));
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_review_time).toUpperCase(l)));
         stringBuilder.append(daysStudied);
         stringBuilder.append("<br>");
         //TODO: Anki Desktop allows changing to hours / days here.
@@ -179,7 +180,7 @@ public class OverviewStatsBuilder {
         stringBuilder.append("<br>");
 
         // ADDED
-        stringBuilder.append(_subtitle(res.getString(R.string.stats_added).toUpperCase()));
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_added).toUpperCase(l)));
         stringBuilder.append(res.getString(R.string.stats_overview_total_new_cards, oStats.totalNewCards));
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_new_cards_per_day, oStats.newCardsPerDay));
@@ -187,7 +188,7 @@ public class OverviewStatsBuilder {
         stringBuilder.append("<br>");
 
         // INTERVALS
-        stringBuilder.append(_subtitle(res.getString(R.string.stats_review_intervals).toUpperCase()));
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_review_intervals).toUpperCase(l)));
         stringBuilder.append(res.getString(R.string.stats_overview_average_interval));
         stringBuilder.append(Utils.roundedTimeSpan(mWebView.getContext(), (int) Math.round(oStats.averageInterval * Stats.SECONDS_PER_DAY)));
         stringBuilder.append("<br>");
@@ -195,7 +196,7 @@ public class OverviewStatsBuilder {
         stringBuilder.append(Utils.roundedTimeSpan(mWebView.getContext(), (int) Math.round(oStats.longestInterval * Stats.SECONDS_PER_DAY)));
 
         //ANSWER BUTTONS
-        stringBuilder.append(_subtitle(res.getString(R.string.stats_answer_buttons).toUpperCase()));
+        stringBuilder.append(_subtitle(res.getString(R.string.stats_answer_buttons).toUpperCase(l)));
         stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_learn, oStats.newCardsOverview.getPercentage(), oStats.newCardsOverview.correct, oStats.newCardsOverview.total));
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_young, oStats.youngCardsOverview.getPercentage(), oStats.youngCardsOverview.correct, oStats.youngCardsOverview.total));
@@ -203,7 +204,7 @@ public class OverviewStatsBuilder {
         stringBuilder.append(res.getString(R.string.stats_overview_answer_buttons_mature,  oStats.matureCardsOverview.getPercentage(), oStats.matureCardsOverview.correct, oStats.matureCardsOverview.total));
 
         //CARD TYPES
-        stringBuilder.append(_subtitle(res.getString(R.string.title_activity_template_editor).toUpperCase()));
+        stringBuilder.append(_subtitle(res.getString(R.string.title_activity_template_editor).toUpperCase(l)));
         stringBuilder.append(res.getString(R.string.stats_overview_card_types_total_cards, oStats.totalCards));
         stringBuilder.append("<br>");
         stringBuilder.append(res.getString(R.string.stats_overview_card_types_total_notes, oStats.totalNotes));

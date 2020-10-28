@@ -60,7 +60,7 @@ public class ImportUtils {
     }
 
     public static boolean isCollectionPackage(String filename) {
-        return filename != null && (filename.toLowerCase().endsWith(".colpkg") || "collection.apkg".equals(filename));
+        return filename != null && (filename.toLowerCase(Locale.ROOT).endsWith(".colpkg") || "collection.apkg".equals(filename));
     }
 
     /** @return Whether the file is either a deck, or a collection package */
@@ -303,7 +303,7 @@ public class ImportUtils {
         }
 
         private static boolean isDeckPackage(String filename) {
-            return filename != null && filename.toLowerCase().endsWith(".apkg") && !"collection.apkg".equals(filename);
+            return filename != null && filename.toLowerCase(Locale.ROOT).endsWith(".apkg") && !"collection.apkg".equals(filename);
         }
 
 
@@ -315,7 +315,7 @@ public class ImportUtils {
             String extensionSegment = fileParts[fileParts.length - 1];
             //either "apkg", or "apkg (1)".
             // COULD_BE_BETTE: accepts .apkgaa"
-            return extensionSegment.toLowerCase(Locale.US).startsWith(extension);
+            return extensionSegment.toLowerCase(Locale.ROOT).startsWith(extension);
         }
 
 

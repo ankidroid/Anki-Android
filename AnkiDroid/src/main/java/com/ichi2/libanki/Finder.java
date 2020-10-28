@@ -297,7 +297,7 @@ public class Finder {
                 // commands
             } else if (token.contains(":")) {
                 String[] spl = token.split(":", 2);
-                String cmd = spl[0].toLowerCase(Locale.US);
+                String cmd = spl[0].toLowerCase(Locale.ROOT);
                 String val = spl[1];
 
                 switch (cmd) {
@@ -551,7 +551,7 @@ public class Finder {
         if (!m.matches()) {
             return null;
         }
-        String prop = m.group(1).toLowerCase(Locale.US);
+        String prop = m.group(1).toLowerCase(Locale.ROOT);
         String cmp = m.group(2);
         String sval = m.group(3);
         int val;
@@ -952,9 +952,9 @@ public class Finder {
         for (JSONObject m : col.getModels().all()) {
             JSONArray flds = m.getJSONArray("flds");
             for (JSONObject f: flds.jsonObjectIterable()) {
-                if (!fields.contains(f.getString("name").toLowerCase(Locale.US))) {
+                if (!fields.contains(f.getString("name").toLowerCase(Locale.ROOT))) {
                     names.add(f.getString("name"));
-                    fields.add(f.getString("name").toLowerCase(Locale.US));
+                    fields.add(f.getString("name").toLowerCase(Locale.ROOT));
                 }
             }
         }

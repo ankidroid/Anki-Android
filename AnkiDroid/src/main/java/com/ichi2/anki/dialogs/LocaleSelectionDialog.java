@@ -245,10 +245,10 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
                         return filterResults;
                     }
 
-                    String normalisedConstraint = constraint.toString().toLowerCase();
+                    String normalisedConstraint = constraint.toString().toLowerCase(Locale.getDefault());
                     ArrayList<Locale> locales = new ArrayList<>();
                     for (Locale l : selectableLocales) {
-                        if (l.getDisplayName().toLowerCase().contains(normalisedConstraint)) {
+                        if (l.getDisplayName().toLowerCase(Locale.getDefault()).contains(normalisedConstraint)) {
                             locales.add(l);
                         }
                     }
