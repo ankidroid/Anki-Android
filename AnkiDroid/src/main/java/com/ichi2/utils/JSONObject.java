@@ -345,8 +345,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
     @CheckResult
     public JSONObject deepClone() {
         JSONObject clone = new JSONObject();
-        deepClonedInto(clone);
-        return clone;
+        return deepClonedInto(clone);
     }
 
     /** deep clone this into clone.
@@ -357,7 +356,6 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         j.deepClonedInto(t);
         ```
         in order to obtain a deep clone of `j` of type ```T```. */
-    @CheckResult
     protected <T extends JSONObject> T deepClonedInto(T clone) {
         for (String key: this) {
             if (get(key) instanceof JSONObject) {

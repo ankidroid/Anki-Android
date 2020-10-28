@@ -18,6 +18,8 @@ package com.ichi2.libanki;
 
 import com.ichi2.utils.JSONObject;
 
+import androidx.annotation.CheckResult;
+
 public class Deck extends JSONObject {
     public Deck(JSONObject json) {
         super(json);
@@ -32,9 +34,9 @@ public class Deck extends JSONObject {
     }
 
     @Override
+    @CheckResult
     public Deck deepClone() {
         Deck clone = new Deck();
-        deepClonedInto(clone);
-        return clone;
+        return deepClonedInto(clone);
     }
 }
