@@ -291,6 +291,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
                     edit.remove("customButtonTags");
                     edit.remove("customButtonAddCard");
                     edit.remove("customButtonReplay");
+                    edit.remove("customButtonCardInfo");
                     edit.remove("customButtonSelectTts");
                     edit.remove("customButtonDeckOptions");
                     edit.remove("customButtonMarkCard");
