@@ -842,8 +842,8 @@ public class Decks {
         }
         List<Long> dids = new ArrayList<>();
         dids.add(did);
-        for(Map.Entry<String, Long> entry : children(did).entrySet()) {
-            dids.add(entry.getValue());
+        for(long childDid : children(did).values()) {
+            dids.add(childDid);
         }
         return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(Utils.collection2Array(dids))));
     }
