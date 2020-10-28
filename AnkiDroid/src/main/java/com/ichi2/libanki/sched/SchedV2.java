@@ -2709,7 +2709,7 @@ public class SchedV2 extends AbstractSched {
         maybeRandomizeDeck(null);
     }
 
-    public void maybeRandomizeDeck(@NonNull Long did) {
+    public void maybeRandomizeDeck(@Nullable Long did) {
         if (did == null) {
             did = mCol.getDecks().selected();
         }
