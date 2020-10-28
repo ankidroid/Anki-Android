@@ -1741,7 +1741,7 @@ public class NoteEditor extends AnkiActivity {
 
 
     private void updateToolbar() {
-        if (mToolbar == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if (mToolbar == null) {
             return;
         }
 
@@ -1766,6 +1766,11 @@ public class NoteEditor extends AnkiActivity {
             clozeIcon.setVisibility(View.VISIBLE);
         } else {
             clozeIcon.setVisibility(View.GONE);
+        }
+
+        // Custom buttons are not supported until Lollipop due to possibly fixable DrawableCompat issue
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
         }
 
 
