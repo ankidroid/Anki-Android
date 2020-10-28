@@ -282,9 +282,10 @@ public class CsvSniffer {
             double threshold = 0.9;
             while (delims.size() == 0 && consistency >= threshold) {
                 for (Map.Entry<Character, Tuple> entry : modeList) {
-                    if (entry.getValue().first > 0 && entry.getValue().second > 0) {
-                        if (((double) entry.getValue().second / total) >= consistency && (delimiters == null || delimiters.contains(entry.getKey()))) {
-                            delims.put(entry.getKey(), entry.getValue());
+                    Tuple value = entry.getValue();
+                    if (value.first > 0 && value.second > 0) {
+                        if (((double) value.second / total) >= consistency && (delimiters == null || delimiters.contains(entry.getKey()))) {
+                            delims.put(entry.getKey(), value);
                         }
                     }
                 }

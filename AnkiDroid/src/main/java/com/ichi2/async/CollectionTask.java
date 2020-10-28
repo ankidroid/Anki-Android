@@ -1616,8 +1616,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         DeckConfig conf = (DeckConfig) data[1];
         try {
             TreeMap<String, Long> children = col.getDecks().children(deck.getLong("id"));
-            for (Map.Entry<String, Long> entry : children.entrySet()) {
-                Deck child = col.getDecks().get(entry.getValue());
+            for (long childDid : children.values()) {
+                Deck child = col.getDecks().get(childDid);
                 if (child.getInt("dyn") == 1) {
                     continue;
                 }

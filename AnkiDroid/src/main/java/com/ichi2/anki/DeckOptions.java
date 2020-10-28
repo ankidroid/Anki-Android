@@ -886,8 +886,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         int count = 0;
         long did = mDeck.getLong("id");
         TreeMap<String, Long> children = mCol.getDecks().children(did);
-        for (Map.Entry<String, Long> entry : children.entrySet()) {
-            Deck child = mCol.getDecks().get(entry.getValue());
+        for (long childDid : children.values()) {
+            Deck child = mCol.getDecks().get(childDid);
             if (child.getInt("dyn") == 1) {
                 continue;
             }
