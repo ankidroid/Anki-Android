@@ -473,7 +473,7 @@ public class SchedV2 extends AbstractSched {
         ArrayList<Deck> decks = mCol.getDecks().allSorted();
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>();
-        HashMap<Long, HashMap> childMap = mCol.getDecks().childMap();
+        Decks.Node childMap = mCol.getDecks().childMap();
         for (Deck deck : decks) {
             if (collectionTask != null && collectionTask.isCancelled()) {
                 return null;
@@ -1511,7 +1511,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected int _revForDeck(long did, int lim, @NonNull HashMap<Long, HashMap> childMap) {
+    protected int _revForDeck(long did, int lim, @NonNull Decks.Node childMap) {
         List<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);
