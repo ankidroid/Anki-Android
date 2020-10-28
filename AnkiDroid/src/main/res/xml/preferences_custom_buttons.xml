@@ -21,6 +21,9 @@ MenuItem.SHOW_AS_ACTION_NEVER = 0
 MenuItem.SHOW_AS_ACTION_IF_ROOM = 1
 MenuItem.SHOW_AS_ACTION_ALWAYS  = 2
 MENU_DISABLED = 3
+
+Ensure to add the custom icons to Preferences.java's reset functionality
+TODO: Add a unit test
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <Preference
