@@ -60,7 +60,7 @@ public class BeolingusParser {
      */
     public static String getMp3AddressFromPronounciation(String pronunciationPageHtml) {
         // Only log the page if you need to work with the regex
-        // Timber.d("pronunciationPageHtml is " + pronunciationPageHtml);
+        // Timber.d("pronunciationPageHtml is %s", pronunciationPageHtml);
         Matcher m = MP3_PATTERN.matcher(pronunciationPageHtml);
         if (m.find()) {
             Timber.d("MP3 address is https://dict.tu-chemnitz.de%s", m.group(1));

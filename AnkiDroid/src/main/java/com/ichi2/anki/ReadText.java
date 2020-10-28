@@ -64,7 +64,7 @@ public class ReadText {
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             Toast.makeText(mReviewer.get(), mReviewer.get().getString(R.string.no_tts_available_message)
                     + " (" + loc + ")", Toast.LENGTH_LONG).show();
-            Timber.e("Error loading locale " + loc);
+            Timber.e("Error loading locale %s", loc);
         } else {
             if (mTts.isSpeaking() && queueMode == TextToSpeech.QUEUE_FLUSH) {
                 Timber.d("tts engine appears to be busy... clearing queue");
@@ -337,7 +337,7 @@ public class ReadText {
                     Timber.v("ReadText.buildAvailableLanguages() :: %s  not available (error code %d)", loc.getDisplayName(), retCode);
                 }
             } catch (IllegalArgumentException e) {
-                Timber.e("Error checking if language " + loc.getDisplayName() + " available");
+                Timber.e("Error checking if language %s available", loc.getDisplayName());
             }
         }
     }

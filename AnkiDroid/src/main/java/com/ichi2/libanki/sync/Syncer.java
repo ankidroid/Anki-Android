@@ -373,7 +373,7 @@ public class Syncer {
             }
             for (Deck g : mCol.getDecks().all()) {
                 if (g.getInt("usn") == -1) {
-                    Timber.e("Sync - SanityCheck: unsynced deck: " + g.getString("name"));
+                    Timber.e("Sync - SanityCheck: unsynced deck: %s", g.getString("name"));
                     result.put("client", "deck had usn = -1");
                     return result;
                 }
@@ -393,7 +393,7 @@ public class Syncer {
                     }
                 } else {
                     if (m.getInt("usn") == -1) {
-                        Timber.e("Sync - SanityCheck: unsynced model: " + m.getString("name"));
+                        Timber.e("Sync - SanityCheck: unsynced model: %s", m.getString("name"));
                         result.put("client", "model had usn = -1");
                         return result;
                     }

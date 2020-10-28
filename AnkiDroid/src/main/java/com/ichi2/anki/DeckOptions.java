@@ -199,7 +199,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
                         String key = entry.getKey();
                         Object value = entry.getValue();
-                        Timber.i("Change value for key '" + key + "': " + value);
+                        Timber.i("Change value for key '%s': %s", key, value);
 
                         switch (key) {
                             case "maxAnswerTime":

@@ -947,7 +947,7 @@ public class Stats {
                 "count() " +
                 "from revlog where type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_LRN + "," + Consts.CARD_TYPE_REV + ") " + lim +" " +
                 "group by hour having count() > 30 order by hour";
-        Timber.d(rolloverHour + " : " +cutoff + " breakdown query: %s", query);
+        Timber.d("%d : %d breakdown query: %s", rolloverHour, cutoff, query);
         try {
             cur = mCol.getDb()
                     .getDatabase()

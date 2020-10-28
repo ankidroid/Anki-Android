@@ -399,7 +399,7 @@ public class AudioView extends LinearLayout {
 
                             } catch (Exception e) {
                                 // either output file failed or codec didn't work, in any case fail out
-                                Timber.e("RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
+                                Timber.e("RecordButton.onClick() :: error recording to %s\n%s", mAudioPath, e.getMessage());
                                 UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
                                 mStatus = Status.STOPPED;
                                 break;

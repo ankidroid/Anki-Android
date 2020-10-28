@@ -234,7 +234,7 @@ public class BackupManager {
             process.waitFor();
 
             if (!new File(deckPath + ".tmp").exists()) {
-                Timber.e("repairCollection - dump to " + deckPath + ".tmp failed");
+                Timber.e("repairCollection - dump to %s.tmp failed", deckPath);
                 return false;
             }
 

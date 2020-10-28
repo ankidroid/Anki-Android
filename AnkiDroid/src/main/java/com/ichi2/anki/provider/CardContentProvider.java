@@ -811,7 +811,7 @@ public class CardContentProvider extends ContentProvider {
                 }
                 Long thisModelId = values.getAsLong(FlashCardsContract.Note.MID);
                 if (thisModelId == null || thisModelId < 0) {
-                    Timber.d("Unable to get model at index: " + i);
+                    Timber.d("Unable to get model at index: %d", i);
                     continue;
                 }
                 String[] fldsArray = Utils.splitFields(flds);
