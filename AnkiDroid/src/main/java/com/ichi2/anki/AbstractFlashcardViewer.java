@@ -2595,6 +2595,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
+
+    protected void openCardInfo() {
+        if (mCurrentCard == null) {
+            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true);
+            return;
+        }
+        Intent intent = new Intent(this, CardInfo.class);
+        intent.putExtra("cardId", mCurrentCard.getId());
+        startActivityWithAnimation(intent, FADE);
+    }
+
+
     /** Displays a snackbar which does not obscure the answer buttons */
     protected void showSnackbar(String mainText, @StringRes int buttonText, OnClickListener onClickListener) {
         // BUG: Moving from full screen to non-full screen obscures the buttons

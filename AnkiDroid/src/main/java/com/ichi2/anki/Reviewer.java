@@ -407,6 +407,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         } else if (itemId == R.id.action_flag_four) {
             Timber.i("Reviewer:: Flag four");
             onFlag(mCurrentCard, FLAG_BLUE);
+        } else if (itemId == R.id.action_card_info) {
+            Timber.i("Card Viewer:: Card Info");
+            openCardInfo();
         } else {
             return super.onOptionsItemSelected(item);
         }

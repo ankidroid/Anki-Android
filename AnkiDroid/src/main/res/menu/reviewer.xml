@@ -73,6 +73,11 @@
         android:icon="@drawable/ic_add_white_24dp"
         ankidroid:showAsAction="never"/>
     <item
+        android:id="@+id/action_card_info"
+        android:icon="@drawable/ic_dialog_info"
+        android:title="@string/card_info_title"
+        ankidroid:showAsAction="never"/>
+    <item
         android:id="@+id/action_tag"
         android:icon="@drawable/ic_tag"
         android:title="@string/menu_edit_tags"
