@@ -23,7 +23,6 @@ package com.ichi2.anki;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -88,7 +87,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anim.ViewAnimation;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.dialogs.TagsDialog;
@@ -2876,25 +2874,34 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 int width = mTouchLayer.getWidth();
                 float posX = e.getX();
                 float posY = e.getY();
-                boolean gestureIsRight = posY > height * (1 - posX / width);
-                if (posX > posY / height * width) {
-                    if (gestureIsRight) {
-                        executeCommand(mGestureTapRight);
-                    } else {
-                        executeCommand(mGestureTapTop);
-                    }
-                } else {
-                    if (gestureIsRight) {
-                        executeCommand(mGestureTapBottom);
-                    } else {
-                        executeCommand(mGestureTapLeft);
-                    }
-                }
+
+                int gesture = getCommandFromTap(height, width, posX, posY);
+
+                executeCommand(gesture);
             }
             mIsSelecting = false;
             showLookupButtonIfNeeded();
             return false;
         }
+
+
+        private int getCommandFromTap(int height, int width, float posX, float posY) {
+            boolean gestureIsRight = posY > height * (1 - posX / width);
+            if (posX > posY / height * width) {
+                if (gestureIsRight) {
+                    return mGestureTapRight;
+                } else {
+                    return mGestureTapTop;
+                }
+            } else {
+                if (gestureIsRight) {
+                    return mGestureTapBottom;
+                } else {
+                    return mGestureTapLeft;
+                }
+            }
+        }
+
 
         public void onWebViewCreated(@NonNull WebView webView) {
             //intentionally blank
