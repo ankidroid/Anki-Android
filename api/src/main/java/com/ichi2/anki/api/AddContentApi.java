@@ -525,16 +525,9 @@ public final class AddContentApi {
      * @param mid id of model
      * @return the name of the model, or null if no model was found
      */
-    public String getModelName(Long mid) {
-        if (mid != null && mid >= 0) {
-            Map<Long, String> modelList = getModelList();
-            for (Map.Entry<Long, String> entry : modelList.entrySet()) {
-                if (entry.getKey().equals(mid)) {
-                    return entry.getValue();
-                }
-            }
-        }
-        return null;
+    public String getModelName(long mid) {
+        Map<Long, String> modelList = getModelList();
+        return modelList.get(mid);
     }
 
     /**
