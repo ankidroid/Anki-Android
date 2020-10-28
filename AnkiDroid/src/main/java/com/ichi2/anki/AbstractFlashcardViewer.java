@@ -88,6 +88,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.anim.ViewAnimation;
+import com.ichi2.anki.cardviewer.GestureTapProcessor;
 import com.ichi2.anki.cardviewer.MissingImageHandler;
 import com.ichi2.anki.dialogs.TagsDialog;
 import com.ichi2.anki.multimediacard.AudioView;
@@ -329,13 +330,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private int mGestureSwipeLeft;
     private int mGestureSwipeRight;
     private int mGestureDoubleTap;
-    private int mGestureTapLeft;
-    private int mGestureTapRight;
-    private int mGestureTapTop;
-    private int mGestureTapBottom;
     private int mGestureLongclick;
     private int mGestureVolumeUp;
     private int mGestureVolumeDown;
+    private GestureTapProcessor mGestureTapProcessor = new GestureTapProcessor();
 
     private String mCardContent;
     private String mBaseUrl;
@@ -1749,10 +1747,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             mGestureSwipeLeft = Integer.parseInt(preferences.getString("gestureSwipeLeft", "8"));
             mGestureSwipeRight = Integer.parseInt(preferences.getString("gestureSwipeRight", "17"));
             mGestureDoubleTap = Integer.parseInt(preferences.getString("gestureDoubleTap", "7"));
-            mGestureTapLeft = Integer.parseInt(preferences.getString("gestureTapLeft", "3"));
-            mGestureTapRight = Integer.parseInt(preferences.getString("gestureTapRight", "6"));
-            mGestureTapTop = Integer.parseInt(preferences.getString("gestureTapTop", "12"));
-            mGestureTapBottom = Integer.parseInt(preferences.getString("gestureTapBottom", "2"));
+            mGestureTapProcessor.init(preferences);
             mGestureLongclick = Integer.parseInt(preferences.getString("gestureLongclick", "11"));
             mGestureVolumeUp = Integer.parseInt(preferences.getString("gestureVolumeUp", "0"));
             mGestureVolumeDown = Integer.parseInt(preferences.getString("gestureVolumeDown", "0"));
@@ -2890,31 +2885,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 float posX = e.getX();
                 float posY = e.getY();
 
-                int gesture = getCommandFromTap(height, width, posX, posY);
+                int gesture = mGestureTapProcessor.getCommandFromTap(height, width, posX, posY);
 
                 executeCommand(gesture);
             }
             mIsSelecting = false;
             showLookupButtonIfNeeded();
             return false;
-        }
-
-
-        private int getCommandFromTap(int height, int width, float posX, float posY) {
-            boolean gestureIsRight = posY > height * (1 - posX / width);
-            if (posX > posY / height * width) {
-                if (gestureIsRight) {
-                    return mGestureTapRight;
-                } else {
-                    return mGestureTapTop;
-                }
-            } else {
-                if (gestureIsRight) {
-                    return mGestureTapBottom;
-                } else {
-                    return mGestureTapLeft;
-                }
-            }
         }
 
 
