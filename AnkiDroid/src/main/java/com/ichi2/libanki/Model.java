@@ -19,6 +19,8 @@ package com.ichi2.libanki;
 
 import com.ichi2.utils.JSONObject;
 
+import androidx.annotation.CheckResult;
+
 /**
  * Represents a note type, a.k.a. Model.
  * The content of an object is described in https://github.com/ankidroid/Anki-Android/wiki/Database-Structure
@@ -39,9 +41,9 @@ public class Model extends JSONObject {
     }
 
     @Override
+    @CheckResult
     public Model deepClone() {
         Model clone = new Model();
-        deepClonedInto(clone);
-        return clone;
+        return deepClonedInto(clone);
     }
 }
