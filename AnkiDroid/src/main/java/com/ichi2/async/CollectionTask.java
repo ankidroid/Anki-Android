@@ -169,10 +169,9 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     private CollectionTask mPreviousTask;
 
 
-    protected CollectionTask(Task<ProgressBackground, ResultBackground> task, TaskListener<ProgressListener, ResultListener> listener, CollectionTask previousTask) {
+    protected CollectionTask(Task<ProgressBackground, ResultBackground> task, TaskListener<ProgressListener, ResultListener> listener) {
         mTask = task;
         mListener = listener;
-        mPreviousTask = previousTask;
         TaskManager.addTasks(this);
     }
 
@@ -188,26 +187,6 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
     // This method and those that are called here are executed in a new thread
     protected ResultBackground actualDoInBackground() {
         super.doInBackground();
-        // Wait for previous thread (if any) to finish before continuing
-        if (mPreviousTask != null && mPreviousTask.getStatus() != AsyncTask.Status.FINISHED) {
-            Timber.d("Waiting for %s to finish before starting %s", mPreviousTask.mTask, mTask.getClass());
-            try {
-                mPreviousTask.get();
-                Timber.d("Finished waiting for %s to finish. Status= %s", mPreviousTask.mTask, mPreviousTask.getStatus());
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                // We have been interrupted, return immediately.
-                Timber.d(e, "interrupted while waiting for previous task: %s", mPreviousTask.mTask.getClass());
-                return null;
-            } catch (ExecutionException e) {
-                // Ignore failures in the previous task.
-                Timber.e(e, "previously running task failed with exception: %s", mPreviousTask.mTask.getClass());
-            } catch (CancellationException e) {
-                // Ignore cancellation of previous task
-                Timber.d(e, "previously running task was cancelled: %s", mPreviousTask.mTask.getClass());
-            }
-        }
-        setLatestInstance(this);
         mContext = AnkiDroidApp.getInstance().getApplicationContext();
 
         // Skip the task if the collection cannot be opened
@@ -247,8 +226,6 @@ public class CollectionTask<ProgressListener, ProgressBackground extends Progres
         if (mListener != null) {
             mListener.onPostExecute(result);
         }
-        Timber.d("enabling garbage collection of mPreviousTask...");
-        mPreviousTask = null;
     }
 
     @Override

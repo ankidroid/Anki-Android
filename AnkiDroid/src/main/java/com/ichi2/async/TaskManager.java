@@ -70,7 +70,7 @@ public class TaskManager {
     public static <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> launchCollectionTask(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
                                                                                                                                                                                                                                                        @Nullable TaskListener<ProgressListener, ResultListener> listener) {
         // Start new task
-        CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> newTask = new CollectionTask<>(task, listener, sLatestInstance);
+        CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> newTask = new CollectionTask<>(task, listener);
         newTask.execute();
         return newTask;
     }
