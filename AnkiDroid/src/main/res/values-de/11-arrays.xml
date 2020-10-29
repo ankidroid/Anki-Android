@@ -67,6 +67,7 @@
         <item>Flagge entfernen</item>
         <item>Seite hoch</item>
         <item>Seite runter</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Karte ausschließen</item>

@@ -52,10 +52,10 @@
         <item>ノートを編集</item>
         <item>ノートにタグを付ける</item>
         <item>ノートにマークを付ける</item>
-        <item>Lookup expression</item>
+        <item>Mark note</item>
         <item>カードを延期</item>
         <item>カードを保留</item>
-        <item>Delete note</item>
+        <item>Suspend card</item>
         <item>音声・動画を再生</item>
         <item>学習を中断</item>
         <item>ノートを延期</item>
@@ -67,6 +67,7 @@
         <item>フラグを取り外す</item>
         <item>１画面分上へスクロール</item>
         <item>１画面分下へスクロール</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>タグを付けて保留</item>

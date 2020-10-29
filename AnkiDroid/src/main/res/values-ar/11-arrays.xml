@@ -67,6 +67,7 @@
         <item>إزالة المؤشر</item>
         <item>تمرير صفحة إلى الأعلى</item>
         <item>تمرير صفحة إلى الأسفل</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>علق البطاقة</item>

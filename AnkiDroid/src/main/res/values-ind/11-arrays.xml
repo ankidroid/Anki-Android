@@ -67,6 +67,7 @@
         <item>Hapus Panji</item>
         <item>Halaman Atas</item>
         <item>Halaman Bawah</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Tangguhkan kartu</item>

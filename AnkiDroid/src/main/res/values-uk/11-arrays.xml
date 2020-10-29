@@ -67,6 +67,7 @@
         <item>Прибрати прапорець</item>
         <item>Попередня сторінка</item>
         <item>Наступна сторінка</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Призупинити картку</item>

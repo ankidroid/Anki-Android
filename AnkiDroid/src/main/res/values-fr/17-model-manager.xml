@@ -78,8 +78,6 @@
     <string name="card_template_editor_deck_override_off">Substitution du paquet (désactivé)</string>
     <string name="model_manager_deck_override_added_message">Définir le paquet par défaut « %1$s » pour « %2$s »</string>
     <string name="model_manager_deck_override_removed_message">Paquet par défaut retiré pour « %s »</string>
-    <string name="model_manager_deck_override_cloze_error">Impossible de définir le remplacement du paquet pour les notes à trous</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">Impossible de définir le remplacement du paquet pour un paquet filtré</string>
     <string name="deck_override_explanation">Sélectionnez le paquet dans lequel placer les nouvelles cartes « %s »</string>
     <string name="deck_picker_dialog_filter_decks">Filtrer les paquets</string>
 </resources>

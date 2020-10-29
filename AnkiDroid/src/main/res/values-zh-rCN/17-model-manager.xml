@@ -76,8 +76,6 @@
     <string name="card_template_editor_deck_override_off">牌组覆盖（关闭）</string>
     <string name="model_manager_deck_override_added_message">将“%1$s”的默认牌组设置为“%2$s”</string>
     <string name="model_manager_deck_override_removed_message">已移除“%s”的默认牌组</string>
-    <string name="model_manager_deck_override_cloze_error">无法设置用于完形填空笔记的牌组覆盖</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">无法设置用于已过滤牌组的牌组覆盖</string>
     <string name="deck_override_explanation">选择将新的“%s”卡片放入其中的牌组</string>
     <string name="deck_picker_dialog_filter_decks">筛选牌组</string>
 </resources>

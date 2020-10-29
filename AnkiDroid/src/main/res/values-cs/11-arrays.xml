@@ -67,6 +67,7 @@
         <item>Odstranit příznak</item>
         <item>Stránka nahoru</item>
         <item>Stránka dolů</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Vyřadit kartu</item>
