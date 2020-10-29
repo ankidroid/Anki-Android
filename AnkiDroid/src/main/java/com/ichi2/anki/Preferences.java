@@ -794,8 +794,8 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
         if (gestureCornerTouch) {
             screen.findPreference("gestureTapTop").setTitle(R.string.gestures_corner_tap_top_center);
             screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_corner_tap_middle_left);
-            screen.findPreference("gestureTapRight").setTitle(R.string.gestures_corner_tap_middle_center);
-            screen.findPreference("gestureTapBottom").setTitle(R.string.gestures_corner_tap_middle_right);
+            screen.findPreference("gestureTapRight").setTitle(R.string.gestures_corner_tap_middle_right);
+            screen.findPreference("gestureTapBottom").setTitle(R.string.gestures_corner_tap_bottom_center);
         } else {
             screen.findPreference("gestureTapTop").setTitle(R.string.gestures_tap_top);
             screen.findPreference("gestureTapLeft").setTitle(R.string.gestures_tap_left);
