@@ -27,8 +27,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -39,6 +41,8 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.PopupMenu;
+
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -100,6 +104,7 @@ import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DeckComparator;
+import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.MapUtil;
 import com.ichi2.utils.NamedJSONComparator;
@@ -110,6 +115,8 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1390,6 +1397,7 @@ public class NoteEditor extends AnkiActivity {
             FieldEditLine edit_line_view = editLines.get(i);
             mCustomViewIds.add(edit_line_view.getId());
             FieldEditText newTextbox = edit_line_view.getEditText();
+            newTextbox.setImagePasteListener(this::onImagePaste);
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 if (i == 0) {
@@ -1441,6 +1449,53 @@ public class NoteEditor extends AnkiActivity {
             mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, edit_line_view.getName()));
             mFieldsLayoutContainer.addView(edit_line_view);
         }
+    }
+
+    private boolean onImagePaste(EditText editText, Uri uri) {
+        // NOTE: This does not handle duplication
+
+        //noinspection PointlessArithmeticExpression
+        final int oneMegabyte = 1 * 1000 * 1000;
+        try {
+            try (Cursor c = getContentResolver().query(uri, new String[] { MediaStore.MediaColumns.DISPLAY_NAME }, null, null, null)) {
+                c.moveToNext();
+                String filename = c.getString(0);
+                InputStream fd = getContentResolver().openInputStream(uri);
+
+                Map.Entry<String, String> fileNameAndExtension = FileUtil.getFileNameAndExtension(filename);
+
+                File clipCopy = File.createTempFile(fileNameAndExtension.getKey(), fileNameAndExtension.getValue());
+                String tempFilePath = clipCopy.getAbsolutePath();
+                long bytesWritten = CompatHelper.getCompat().copyFile(fd, tempFilePath);
+
+                Timber.d("File was %d bytes", bytesWritten);
+                if (bytesWritten > oneMegabyte) {
+                    Timber.w("File was too large: %d bytes", bytesWritten);
+                    UIUtils.showThemedToast(this, getString(R.string.note_editor_paste_too_large), false);
+                    new File(tempFilePath).delete();
+                    return false;
+                }
+
+
+                MultimediaEditableNote noteNew = new MultimediaEditableNote();
+                noteNew.setNumFields(1);
+                ImageField field = new ImageField();
+                field.setHasTemporaryMedia(true);
+                field.setImagePath(tempFilePath);
+                noteNew.setField(0, field);
+                NoteService.saveMedia(getCol(), noteNew);
+
+                editText.getText().append(field.getFormattedValue());
+                return true;
+            }
+        } catch (Exception e) {
+            // NOTE: This is happy path coding which works on Android 9.
+            AnkiDroidApp.sendExceptionReport(e, "NoteEditor:onImagePaste");
+            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false);
+            return false;
+        }
+
+
     }
 
 
