@@ -445,7 +445,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
 
         private <T extends AbstractDeckTreeNode<T>> boolean containsFilterString(String filterPattern, T root) {
             String deckName = root.getFullDeckName();
-            return deckName.toLowerCase(Locale.getDefault()).contains(filterPattern) || deckName.toLowerCase(Locale.getDefault()).contains(filterPattern);
+            return deckName.toLowerCase(Locale.getDefault()).contains(filterPattern) || deckName.toLowerCase(Locale.ROOT).contains(filterPattern);
         }
     }
 }
