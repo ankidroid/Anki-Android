@@ -21,6 +21,7 @@ import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.net.Uri;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
 
 public class ClipboardUtil {
@@ -73,5 +74,41 @@ public class ClipboardUtil {
         }
 
         return primaryClip.getItemAt(0).getUri();
+    }
+
+    @Nullable
+    @CheckResult
+    public static CharSequence getText(@Nullable ClipboardManager clipboard) {
+        if (clipboard == null) {
+            return null;
+        }
+
+        if (!clipboard.hasPrimaryClip()) {
+            return null;
+        }
+
+        ClipData data = clipboard.getPrimaryClip();
+
+        if (data.getItemCount() == 0) {
+            return null;
+        }
+
+        ClipData.Item i = data.getItemAt(0);
+
+        return i.getText();
+    }
+
+    @Nullable
+    @CheckResult
+    public static CharSequence getDescriptionLabel(@Nullable ClipData clip) {
+        if (clip == null) {
+            return null;
+        }
+
+        if (clip.getDescription() == null) {
+            return null;
+        }
+
+        return clip.getDescription().getLabel();
     }
 }

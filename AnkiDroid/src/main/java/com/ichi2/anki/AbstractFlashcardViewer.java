@@ -25,6 +25,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -115,6 +116,7 @@ import com.ichi2.themes.HtmlColors;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
+import com.ichi2.utils.ClipboardUtil;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
@@ -296,8 +298,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected RelativeLayout mTopBarLayout;
     private Chronometer mCardTimer;
     protected Whiteboard mWhiteboard;
-    @SuppressWarnings("deprecation") // Tracked separately as #5023 on github
-    private android.text.ClipboardManager mClipboard;
+    private android.content.ClipboardManager mClipboard;
 
     protected Card mCurrentCard;
     private int mCurrentEase;
@@ -916,7 +917,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         setTitle();
 
         if (!mDisableClipboard) {
-            clipboardSetText("");
+            clearClipboard();
         }
 
         // Load the template for the card
@@ -1065,19 +1066,30 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         return mAnswerField != null && mAnswerField.isFocused();
     }
 
-
-    @SuppressWarnings("deprecation") // Tracked separately as #5023 on github
     protected boolean clipboardHasText() {
-        return mClipboard != null && mClipboard.hasText();
+        return !TextUtils.isEmpty(ClipboardUtil.getText(mClipboard));
     }
 
-
-    @SuppressWarnings("deprecation") // Tracked separately as #5023 on github
-    private void clipboardSetText(CharSequence text) {
+    /** We use the clipboard here for the lookup dictionary functionality
+     * If the clipboard has data and we're using the functionality, then */
+    private void clearClipboard() {
         if (mClipboard != null) {
             try {
-                mClipboard.setText(text);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    mClipboard.clearPrimaryClip();
+                } else {
+                    if (!mClipboard.hasPrimaryClip()) {
+                        return;
+                    }
+
+                    CharSequence descriptionLabel = ClipboardUtil.getDescriptionLabel(mClipboard.getPrimaryClip());
+                    if (!"Cleared".contentEquals(descriptionLabel)) {
+                        mClipboard.setPrimaryClip(ClipData.newPlainText("Cleared", ""));
+                    }
+                }
             } catch (Exception e) {
+                // TODO: This may no longer be relevant
+
                 // https://code.google.com/p/ankidroid/issues/detail?id=1746
                 // https://code.google.com/p/ankidroid/issues/detail?id=1820
                 // Some devices or external applications make the clipboard throw exceptions. If this happens, we
@@ -1095,9 +1107,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      *
      * @return the text in clipboard or the empty string.
      */
-    @SuppressWarnings("deprecation") // Tracked separately as #5023 on github
     private CharSequence clipboardGetText() {
-        CharSequence text = mClipboard != null ? mClipboard.getText() : null;
+        CharSequence text = ClipboardUtil.getText(mClipboard);
         return text != null ? text : "";
     }
 
@@ -1136,7 +1147,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             performReload();
         }
         if (!mDisableClipboard) {
-            clipboardSetText("");
+            clearClipboard();
         }
     }
 
@@ -1272,7 +1283,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mLookUpIcon.setVisibility(View.GONE);
         mIsSelecting = false;
         if (Lookup.lookUp(clipboardGetText().toString())) {
-            clipboardSetText("");
+            clearClipboard();
         }
     }
 
@@ -1294,7 +1305,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (!mDisableClipboard && mLookUpIcon.getVisibility() != View.GONE) {
             mLookUpIcon.setVisibility(View.GONE);
             enableViewAnimation(mLookUpIcon, ViewAnimation.fade(ViewAnimation.FADE_OUT, mFadeDuration, 0));
-            clipboardSetText("");
+            clearClipboard();
         }
     }
 
@@ -1413,7 +1424,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
     // Set the content view to the one provided and initialize accessors.
-    @SuppressWarnings("deprecation") // Tracked separately as #5023 on github for clipboard
     protected void initLayout() {
         FrameLayout mCardContainer = findViewById(R.id.flashcard_frame);
 
@@ -1428,7 +1438,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mTouchLayer = findViewById(R.id.touch_layer);
         mTouchLayer.setOnTouchListener(mGestureListener);
         if (!mDisableClipboard) {
-            mClipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            mClipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         }
         mCardFrame.removeAllViews();
 
