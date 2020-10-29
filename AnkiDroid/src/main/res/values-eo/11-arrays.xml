@@ -67,6 +67,7 @@
         <item>Forigi flagon</item>
         <item>Paĝo supren</item>
         <item>Paĝo suben</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Kaŝi karton por daŭre</item>

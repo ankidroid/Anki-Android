@@ -67,6 +67,7 @@
         <item>Убрать флажок</item>
         <item>На страницу вверх</item>
         <item>На страницу вниз</item>
+        <item>Page Down</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Исключить карточку</item>

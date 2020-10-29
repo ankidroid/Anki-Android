@@ -243,7 +243,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s secondes</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -320,21 +320,21 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossible de charger le paquet « %s »</string>
     <string name="search_decks">Rechercher dans les paquets</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview_title">Erreur fatale</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid s\'appuie sur la WebView du système qui n\'est pas disponible. Ceci peut se produire si le système installe des mises à jour. Veuillez réessayer dans quelques minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font Size</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
+    <string name="menu_font_size">Taille de la police</string>
+    <string name="format_insert_bold">Formater comme gras</string>
+    <string name="format_insert_italic">Formater comme italique</string>
+    <string name="format_insert_underline">Formater comme souligné</string>
+    <string name="insert_horizontal_line">Insérer une ligne horizontale</string>
+    <string name="insert_heading">Insérer un entête</string>
+    <string name="format_font_size">Changer la taille de la police</string>
+    <string name="insert_mathjax">Insérer une équation MathJax</string>
+    <string name="insert_cloze">Insérer un texte à trous</string>
+    <string name="before_text">HTML avant sélection</string>
+    <string name="after_text">HTML après sélection</string>
+    <string name="add_toolbar_item">Créer un élément de la barre d\'outils</string>
+    <string name="toolbar_item_explain_remove">Entrez le code HTML à insérer avant et après le texte sélectionné\n\nAppuyez longuement sur un élément de la barre d\'outils pour le supprimer</string>
+    <string name="remove_toolbar_item">Supprimer l\'élément de la barre d\'outils ?</string>
 </resources>

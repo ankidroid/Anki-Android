@@ -38,8 +38,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
-    <string name="no">no</string>
+    <string name="yes">oui</string>
+    <string name="no">non</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paquets</string>
     <string name="card_browser">Navigateur de cartes</string>
@@ -202,7 +202,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Apparence du navigateur</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Infos de la carte</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lire et écrire dans la base de données d\'AnkiDroid</string>
     <string name="read_write_permission_description">accéder aux notes, cartes, types de notes et paquets actuels, mais aussi en créer de nouveaux</string>

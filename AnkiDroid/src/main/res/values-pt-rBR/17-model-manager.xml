@@ -78,8 +78,6 @@
     <string name="card_template_editor_deck_override_off">Sobreposição do baralho (desativada)</string>
     <string name="model_manager_deck_override_added_message">Definir \'%1$s\' do baralho padrão para \'%2$s\'</string>
     <string name="model_manager_deck_override_removed_message">Baralho padrão removido para \'%s\'</string>
-    <string name="model_manager_deck_override_cloze_error">Não é possível definir sobreposição de baralho para notas de Cloze</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">Não é possível definir sobreposição de baralho para um baralho filtrado</string>
     <string name="deck_override_explanation">Selecione um baralho para colocar novos ‘%s\' cartões dentro.</string>
     <string name="deck_picker_dialog_filter_decks">Filtrar baralhos</string>
 </resources>

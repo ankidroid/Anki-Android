@@ -82,8 +82,6 @@
     <string name="card_template_editor_deck_override_off">Přepsat balíček (vypnuto)</string>
     <string name="model_manager_deck_override_added_message">Výchozí balíček pro „%1$s“ nastaven na „%2$s“</string>
     <string name="model_manager_deck_override_removed_message">Odstraněn výchozí balíček pro „%s“</string>
-    <string name="model_manager_deck_override_cloze_error">Nelze nastavit přepsání balíčku pro poznámky typu doplňovačka</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">Nelze nastavit přepsání balíčku na filtrovaný balíček</string>
     <string name="deck_override_explanation">Vyberte balíček, do kterého vložíte nové karty „%s“</string>
     <string name="deck_picker_dialog_filter_decks">Filter decks</string>
 </resources>
