@@ -124,6 +124,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textIsSelectable">true</item>
     </style>
 
     <!-- padding is hardcoded in Toolbar.java (32) to allow for fixing the scrollview -->
