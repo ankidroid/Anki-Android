@@ -27,6 +27,7 @@ import android.util.SparseArray;
 import android.view.AbsSavedState;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -39,6 +40,8 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.view.ViewCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
@@ -84,14 +87,20 @@ public class FieldEditLine extends FrameLayout {
         this.mEditText = findViewById(R.id.id_note_editText);
         this.mLabel = findViewById(R.id.id_label);
         this.mMediaButton = findViewById(R.id.id_media_button);
+        ConstraintLayout mConstraintLayout = findViewById(R.id.constraint_layout);
+        this.mExpandButton = findViewById(R.id.id_expand_button);
         // 7433 -
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             mEditText.setId(ViewCompat.generateViewId());
             mMediaButton.setId(ViewCompat.generateViewId());
+            mExpandButton.setId(ViewCompat.generateViewId());
             mEditText.setNextFocusForwardId(mMediaButton.getId());
+            mMediaButton.setNextFocusForwardId(mExpandButton.getId());
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(mConstraintLayout);
+            constraintSet.connect(mMediaButton.getId(), ConstraintSet.END, mExpandButton.getId(), ConstraintSet.START);
+            constraintSet.applyTo(mConstraintLayout);
         }
-
-        this.mExpandButton = findViewById(R.id.id_expand_button);
 
         this.mExpansionState = ExpansionState.EXPANDED;
 
@@ -186,6 +195,10 @@ public class FieldEditLine extends FrameLayout {
         return mMediaButton;
     }
 
+    public View getLastViewInTabOrder() {
+        return mExpandButton;
+    }
+
     public FieldEditText getEditText() {
         return mEditText;
     }
@@ -216,6 +229,7 @@ public class FieldEditLine extends FrameLayout {
         savedState.mChildrenStates = new SparseArray<>();
         savedState.mEditTextId = getEditText().getId();
         savedState.mMediaButtonId = getMediaButton().getId();
+        savedState.mExpandButtonId = mExpandButton.getId();
 
         for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).saveHierarchyState(savedState.mChildrenStates);
@@ -238,9 +252,11 @@ public class FieldEditLine extends FrameLayout {
 
         int editTextId = mEditText.getId();
         int mediaButtonId = mMediaButton.getId();
+        int expandButtonId = mExpandButton.getId();
 
         mEditText.setId(ss.mEditTextId);
         mMediaButton.setId(ss.mMediaButtonId);
+        mExpandButton.setId(ss.mExpandButtonId);
 
 
         super.onRestoreInstanceState(ss.getSuperState());
@@ -250,6 +266,7 @@ public class FieldEditLine extends FrameLayout {
 
         mEditText.setId(editTextId);
         mMediaButton.setId(mediaButtonId);
+        mExpandButton.setId(expandButtonId);
 
         if (mExpansionState != ss.mExpansionState) {
             toggleExpansionState();
@@ -263,6 +280,7 @@ public class FieldEditLine extends FrameLayout {
         private SparseArray<Parcelable> mChildrenStates;
         private int mEditTextId;
         private int mMediaButtonId;
+        public int mExpandButtonId;
         private ExpansionState mExpansionState;
 
         SavedState(Parcelable superState) {
@@ -275,6 +293,7 @@ public class FieldEditLine extends FrameLayout {
             out.writeSparseArray(mChildrenStates);
             out.writeInt(mEditTextId);
             out.writeInt(mMediaButtonId);
+            out.writeInt(mExpandButtonId);
             out.writeSerializable(mExpansionState);
         }
 
@@ -303,6 +322,7 @@ public class FieldEditLine extends FrameLayout {
             this.mChildrenStates = in.readSparseArray(loader);
             this.mEditTextId = in.readInt();
             this.mMediaButtonId = in.readInt();
+            this.mExpandButtonId = in.readInt();
             this.mExpansionState = (ExpansionState) in.readSerializable();
         }
     }
