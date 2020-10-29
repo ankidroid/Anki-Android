@@ -691,6 +691,11 @@ public class NoteEditor extends AnkiActivity {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
+
+        if (mToolbar != null && mToolbar.onKeyUp(keyCode, event)) {
+            return true;
+        }
+
         switch(keyCode) {
 
             //some hardware keyboards swap between mobile/desktop mode...
@@ -1778,10 +1783,16 @@ public class NoteEditor extends AnkiActivity {
 
         for (CustomToolbarButton b : buttons) {
 
-            String text = Integer.toString(b.getIndex() + 1);
+            // 0th button shows as '1' and is Ctrl + 1
+            int visualIndex = b.getIndex() + 1;
+            String text = Integer.toString(visualIndex);
             Drawable bmp = mToolbar.createDrawableForString(text);
 
             View v = mToolbar.insertItem(0, bmp, b.toFormatter());
+
+            // Allow Ctrl + 1...Ctrl + 0 for item 10.
+            v.setTag(Integer.toString(visualIndex % 10));
+
             v.setOnLongClickListener(discard -> {
                 suggestRemoveButton(b);
                 return true;

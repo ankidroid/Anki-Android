@@ -29,6 +29,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
+import com.ichi2.libanki.Utils;
+import com.ichi2.utils.ViewGroupUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +51,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+import timber.log.Timber;
 
 public class Toolbar extends FrameLayout {
 
@@ -103,6 +107,38 @@ public class Toolbar extends FrameLayout {
         findViewById(R.id.note_editor_toolbar_button_font_size).setOnClickListener(l -> displayFontSizeDialog());
         findViewById(R.id.note_editor_toolbar_button_title).setOnClickListener(l -> displayInsertHeadingDialog());
         this.mClozeIcon = findViewById(R.id.note_editor_toolbar_button_cloze);
+    }
+
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        // hack to see if only CTRL is pressed - might not be perfect.
+        // I'll avoid checking "function" here as it may be required to press Ctrl
+        if (!event.isCtrlPressed() || event.isAltPressed() || event.isShiftPressed() || event.isMetaPressed()) {
+            return false;
+        }
+
+        char c;
+        try {
+            c = (char) event.getUnicodeChar(0);
+        } catch (Exception e) {
+            return false;
+        }
+
+        if (c == '\0') {
+            return false;
+        }
+
+        String expected = Character.toString(c);
+        for (View v : ViewGroupUtils.getAllChildrenRecursive(this)) {
+            if (Utils.equals(expected, v.getTag())) {
+                Timber.i("Handling Ctrl + %s", c);
+                v.performClick();
+                return true;
+            }
+        }
+
+        return super.onKeyUp(keyCode, event);
     }
 
 
