@@ -1396,7 +1396,7 @@ public class NoteEditor extends AnkiActivity {
                     findViewById(R.id.note_deck_spinner).setNextFocusForwardId(newTextbox.getId());
                 }
                 if (previous != null) {
-                    previous.getMediaButton().setNextFocusForwardId(newTextbox.getId());
+                    previous.getLastViewInTabOrder().setNextFocusForwardId(newTextbox.getId());
                 }
             }
             previous = edit_line_view;
@@ -1435,7 +1435,7 @@ public class NoteEditor extends AnkiActivity {
                 setMMButtonListener(mediaButton, i);
             }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O && previous != null) {
-                previous.getMediaButton().setNextFocusForwardId(R.id.CardEditorTagButton);
+                previous.getLastViewInTabOrder().setNextFocusForwardId(R.id.CardEditorTagButton);
             }
 
             mediaButton.setContentDescription(getString(R.string.multimedia_editor_attach_mm_content, edit_line_view.getName()));
