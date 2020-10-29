@@ -13,7 +13,7 @@
         android:freezesText="true"
         android:layout_alignParentLeft="true"
         app:layout_constraintBottom_toTopOf="@+id/id_note_editText"
-        app:layout_constraintEnd_toStartOf="@id/id_expand_button"
+        app:layout_constraintEnd_toStartOf="@id/id_media_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Front\nNewline" />
