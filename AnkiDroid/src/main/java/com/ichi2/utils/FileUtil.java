@@ -1,13 +1,10 @@
 package com.ichi2.utils;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.net.Uri;
 import android.os.StatFs;
 
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.utils.SystemTime;
-import com.ichi2.libanki.utils.TimeUtils;
 
 
 import java.io.File;
@@ -15,10 +12,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.AbstractMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.util.Pair;
 import timber.log.Timber;
 
 public class FileUtil {
@@ -74,4 +72,20 @@ public class FileUtil {
         return internalFile;
     }
 
+
+    /**
+     * @return Key: Filename; Value: extension including dot
+     */
+    @Nullable
+    public static Map.Entry<String, String> getFileNameAndExtension(@Nullable String fileName) {
+        if (fileName == null) {
+            return null;
+        }
+        int index = fileName.lastIndexOf(".");
+        if (index < 1) {
+            return null;
+        }
+
+        return new AbstractMap.SimpleEntry<>(fileName.substring(0, index), fileName.substring(index));
+    }
 }

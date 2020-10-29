@@ -353,4 +353,6 @@
     <string name="add_toolbar_item">Create Toolbar Item</string>
     <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
     <string name="remove_toolbar_item">Remove Toolbar Item?</string>
+
+    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
 </resources>

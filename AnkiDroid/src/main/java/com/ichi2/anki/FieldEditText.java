@@ -1,14 +1,19 @@
 
 package com.ichi2.anki;
 
+import android.content.ClipDescription;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.LocaleList;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
+import android.widget.EditText;
 
 import java.util.Locale;
 
@@ -35,6 +40,8 @@ public class FieldEditText extends FixedEditText {
     private Drawable mOrigBackground;
     @Nullable
     private TextSelectionListener mSelectionChangeListener;
+    @Nullable
+    private ImagePasteListener mImageListener;
 
 
     public FieldEditText(Context context) {
@@ -83,6 +90,65 @@ public class FieldEditText extends FixedEditText {
         // Fixes bug where new instances of this object have wrong colors, probably
         // from some reuse mechanic in Android.
         setDefaultStyle();
+    }
+
+    public void setImagePasteListener(ImagePasteListener imageListener) {
+        mImageListener = imageListener;
+    }
+
+    @Override
+    public InputConnection onCreateInputConnection(EditorInfo editorInfo) {
+        InputConnection inputConnection = super.onCreateInputConnection(editorInfo);
+        String[] mimeTypes = new String[] {"image/gif", "image/png", "image/jpg"};
+        androidx.core.view.inputmethod.EditorInfoCompat.setContentMimeTypes(editorInfo, mimeTypes);
+        return androidx.core.view.inputmethod.InputConnectionCompat.createWrapper(inputConnection, editorInfo, (contentInfo, flags, opts) -> {
+
+            if (mImageListener == null) {
+                return false;
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1  && (flags &
+                    androidx.core.view.inputmethod.InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION) != 0) {
+                try {
+                    contentInfo.requestPermission();
+                }
+                catch (Exception e) {
+                    return false;
+                }
+            }
+
+
+            boolean imagesSupported = false;
+            ClipDescription description = contentInfo.getDescription();
+
+            if (description == null) {
+                return false;
+            }
+
+            for (String mimeType : mimeTypes) {
+                if (description.hasMimeType(mimeType)) {
+                    imagesSupported = true;
+                }
+            }
+            if (!imagesSupported) {
+                return false;
+            }
+
+            try {
+                if (!mImageListener.onImagePaste(this, contentInfo.getContentUri())) {
+                    return false;
+                }
+                // There is a timeout on this line which occurs even if we're stopped in the debugger, if we take too long we get
+                // "Ankidroid doesn't support image insertion here"
+                androidx.core.view.inputmethod.InputConnectionCompat.commitContent(inputConnection, editorInfo, contentInfo, flags, opts);
+                return true;
+            } catch (Exception e) {
+                AnkiDroidApp.sendExceptionReport(e, "NoteEditor::onImage");
+                return false;
+            }
+        });
+
+
     }
 
 
@@ -198,5 +264,9 @@ public class FieldEditText extends FixedEditText {
 
     public interface TextSelectionListener {
         void onSelectionChanged(int selStart, int selEnd);
+    }
+
+    public interface ImagePasteListener {
+        boolean onImagePaste(EditText editText, Uri uri);
     }
 }
