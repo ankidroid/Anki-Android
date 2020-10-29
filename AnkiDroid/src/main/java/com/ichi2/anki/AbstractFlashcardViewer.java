@@ -1083,30 +1083,32 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     /** We use the clipboard here for the lookup dictionary functionality
      * If the clipboard has data and we're using the functionality, then */
     private void clearClipboard() {
-        if (mClipboard != null) {
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    mClipboard.clearPrimaryClip();
-                } else {
-                    if (!mClipboard.hasPrimaryClip()) {
-                        return;
-                    }
+        if (mClipboard == null) {
+            return;
+        }
 
-                    CharSequence descriptionLabel = ClipboardUtil.getDescriptionLabel(mClipboard.getPrimaryClip());
-                    if (!"Cleared".contentEquals(descriptionLabel)) {
-                        mClipboard.setPrimaryClip(ClipData.newPlainText("Cleared", ""));
-                    }
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                mClipboard.clearPrimaryClip();
+            } else {
+                if (!mClipboard.hasPrimaryClip()) {
+                    return;
                 }
-            } catch (Exception e) {
-                // TODO: This may no longer be relevant
 
-                // https://code.google.com/p/ankidroid/issues/detail?id=1746
-                // https://code.google.com/p/ankidroid/issues/detail?id=1820
-                // Some devices or external applications make the clipboard throw exceptions. If this happens, we
-                // must disable it or AnkiDroid will crash if it tries to use it.
-                Timber.e("Clipboard error. Disabling text selection setting.");
-                mDisableClipboard = true;
+                CharSequence descriptionLabel = ClipboardUtil.getDescriptionLabel(mClipboard.getPrimaryClip());
+                if (!"Cleared".contentEquals(descriptionLabel)) {
+                    mClipboard.setPrimaryClip(ClipData.newPlainText("Cleared", ""));
+                }
             }
+        } catch (Exception e) {
+            // TODO: This may no longer be relevant
+
+            // https://code.google.com/p/ankidroid/issues/detail?id=1746
+            // https://code.google.com/p/ankidroid/issues/detail?id=1820
+            // Some devices or external applications make the clipboard throw exceptions. If this happens, we
+            // must disable it or AnkiDroid will crash if it tries to use it.
+            Timber.e("Clipboard error. Disabling text selection setting.");
+            mDisableClipboard = true;
         }
     }
 
