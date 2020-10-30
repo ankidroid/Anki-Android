@@ -52,7 +52,6 @@
     <string name="card_details_answer">Answer</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Due</string>
     <string name="card_details_tags">Tags</string>
-    <string name="card_browser_filtering_cards">Filtering cards… \nPress back button to cancel</string>
     <string-array name="card_browser_order_labels">
         <item>No sorting (faster)</item>
         <item>By sort field</item>
