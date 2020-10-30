@@ -103,7 +103,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Saving note</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">Add</string>
     <string name="save">Save</string>
     <string name="close">Close</string>
     <string name="select">Select</string>
