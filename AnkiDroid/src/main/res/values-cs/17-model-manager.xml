@@ -83,5 +83,5 @@
     <string name="model_manager_deck_override_added_message">Výchozí balíček pro „%1$s“ nastaven na „%2$s“</string>
     <string name="model_manager_deck_override_removed_message">Odstraněn výchozí balíček pro „%s“</string>
     <string name="deck_override_explanation">Vyberte balíček, do kterého vložíte nové karty „%s“</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="deck_picker_dialog_filter_decks">Filtrovat balíčky</string>
 </resources>

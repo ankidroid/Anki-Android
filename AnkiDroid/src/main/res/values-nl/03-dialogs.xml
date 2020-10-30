@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Database controleren?</string>
     <string name="check_db_warning">Dit kan een lange tijd duren</string>
     <string name="check_db_acknowledge">Database gecontroleerd</string>
@@ -125,7 +125,8 @@
     <string name="dialog_continue">Doorgaan</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Maak</string>
     <string name="dialog_positive_delete">Verwijder</string>
-    <string name="dialog_positive_disable">Uitschakelen</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Uitschakelen</string>
     <string name="dialog_positive_overwrite">Overschrijven</string>
     <string name="dialog_positive_remove">Verwijderen</string>
     <string name="dialog_positive_repair">Repareer</string>

@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">డేటాబేస్ తనిఖీ చేయాలా?</string>
     <string name="check_db_warning">దీనికి కొంత సమయం పడుతుంది, దయచేసి వేచి వుండండి</string>
     <string name="check_db_acknowledge">డేటా బేస్ తనిఖీ పూర్తి అయ్యింది</string>
@@ -125,7 +125,8 @@
     <string name="dialog_continue">కొనసాగండి</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">సృష్టించు</string>
     <string name="dialog_positive_delete">తొలగించు</string>
-    <string name="dialog_positive_disable">అచేతనం</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">అచేతనం</string>
     <string name="dialog_positive_overwrite">తిరిగి వ్రాయండి</string>
     <string name="dialog_positive_remove">తొలగించు</string>
     <string name="dialog_positive_repair">బాగు చేయు</string>

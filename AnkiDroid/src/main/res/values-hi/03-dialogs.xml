@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">डेटाबेस की जाँच करें?</string>
     <string name="check_db_warning">इसमें बहुत समय लग सकता है</string>
     <string name="check_db_acknowledge">डेटाबेस की जाँच की गई</string>
@@ -125,7 +125,8 @@
     <string name="dialog_continue">जारी रखें</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">बनाएँ</string>
     <string name="dialog_positive_delete">हटाएँ</string>
-    <string name="dialog_positive_disable">डिसेबल</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">डिसेबल</string>
     <string name="dialog_positive_overwrite">उपरिलेखित करें</string>
     <string name="dialog_positive_remove">हटाएं</string>
     <string name="dialog_positive_repair">सुधारें</string>

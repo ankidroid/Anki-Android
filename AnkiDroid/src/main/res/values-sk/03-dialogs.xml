@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Skontrolovať databázu?</string>
     <string name="check_db_warning">Toto môže chvíľu trvať</string>
     <string name="check_db_acknowledge">Databáza skontrolovaná</string>
@@ -137,7 +137,8 @@
     <string name="dialog_continue">Pokračovať</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Vytvoriť</string>
     <string name="dialog_positive_delete">Vymazať</string>
-    <string name="dialog_positive_disable">Zakázať</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Zakázať</string>
     <string name="dialog_positive_overwrite">Prepísať</string>
     <string name="dialog_positive_remove">Odstrániť</string>
     <string name="dialog_positive_repair">Opraviť</string>
