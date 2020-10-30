@@ -44,7 +44,6 @@
     <string name="model_field_editor_title">Edit fields</string>.
     <string name="model_field_editor_add">Add field</string>
     <string name="model_field_editor_delete">Delete field</string>
-    <string name="model_field_editor_options">Field options</string>
     <string name="model_field_editor_rename">Rename field</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Reposition field</string>
