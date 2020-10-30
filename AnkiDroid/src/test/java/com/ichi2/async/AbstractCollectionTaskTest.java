@@ -43,7 +43,6 @@ public abstract class AbstractCollectionTaskTest extends RobolectricTest {
         assertThat("The result object should be non-null", result.getObjArray(), notNullValue());
         assertThat("There should only be one result object", result.getObjArray(), arrayWithSize(1));
         assertThat(String.format("Result should be instance of type '%s'", clazz.getName()), result.getObjArray()[0], instanceOf(clazz));
-        //noinspection unchecked
-        return (T) result.getObjArray()[0];
+        return clazz.cast(result.getObjArray()[0]);
     }
 }
