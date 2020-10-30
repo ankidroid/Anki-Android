@@ -253,28 +253,6 @@ public class DB {
         return results;
     }
 
-    /**
-     * Mapping of Java type names to the corresponding Cursor.get method.
-     *
-     * @param typeName The simple name of the type's class. Example: String.class.getSimpleName().
-     * @return The name of the Cursor method to be called.
-     */
-    private static String getCursorMethodName(String typeName) {
-        if ("String".equals(typeName)) {
-            return "getString";
-        } else if ("Long".equals(typeName)) {
-            return "getLong";
-        } else if ("Integer".equals(typeName)) {
-            return "getInt";
-        } else if ("Float".equals(typeName)) {
-            return "getFloat";
-        } else if ("Double".equals(typeName)) {
-            return "getDouble";
-        } else {
-            return null;
-        }
-    }
-
 
     public void execute(String sql, Object... object) {
         String s = sql.trim().toLowerCase(Locale.ROOT);
