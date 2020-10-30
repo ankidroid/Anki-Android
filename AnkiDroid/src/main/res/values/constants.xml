@@ -155,7 +155,6 @@
     <string name="repair_deck">https://docs.ankiweb.net/#/files?id=corrupt-collections</string>
     <string name="resetpw_url">http://ankiweb.net/account/resetpw</string>
     <string name="register_url">https://ankiweb.net/account/register</string>
-    <string name="changelog_url">https://docs.ankidroid.org/changelog.html</string>
     <string name="link_reddit">https://www.reddit.com/r/Anki/</string>
     <!-- Link is in the name of Glutanimate - server admin -->
     <string name="link_discord">https://discord.gg/qjzcRTx</string>
