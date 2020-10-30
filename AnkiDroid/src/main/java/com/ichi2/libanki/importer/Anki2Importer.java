@@ -53,7 +53,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
@@ -446,6 +448,7 @@ public class Anki2Importer extends Importer {
      */
 
     /** Given did in src col, return local id. */
+    @CheckResult
     private long _did(long did) {
         // already converted?
         if (mDecks.containsKey(did)) {
@@ -706,6 +709,7 @@ public class Anki2Importer extends Importer {
     }
 
 
+    @CheckResult
     private BufferedInputStream _mediaData(String fname, String dir) {
         if (dir == null) {
             dir = mSrc.getMedia().dir();
@@ -722,6 +726,7 @@ public class Anki2Importer extends Importer {
     /**
      * Data for FNAME in src collection.
      */
+    @CheckResult
     protected BufferedInputStream _srcMediaData(String fname) {
         return _mediaData(fname, mSrc.getMedia().dir());
     }
@@ -730,6 +735,7 @@ public class Anki2Importer extends Importer {
     /**
      * Data for FNAME in dst collection.
      */
+    @CheckResult
     private BufferedInputStream _dstMediaData(String fname) {
         return _mediaData(fname, mDst.getMedia().dir());
     }
@@ -757,6 +763,7 @@ public class Anki2Importer extends Importer {
 
 
     // running splitFields() on every note is fairly expensive and actually not necessary
+    @CheckResult
     private String _mungeMedia(long mid, String fields) {
         for (Pattern p : Media.mRegexps) {
             Matcher m = p.matcher(fields);
@@ -824,6 +831,7 @@ public class Anki2Importer extends Importer {
      */
 
 
+    @CheckResult
     private boolean compareMedia(BufferedInputStream lhis, BufferedInputStream rhis) {
         byte[] lhbytes = _mediaPick(lhis);
         byte[] rhbytes = _mediaPick(rhis);
@@ -835,6 +843,7 @@ public class Anki2Importer extends Importer {
      * Return the contents of the given input stream, limited to Anki2Importer.MEDIAPICKLIMIT bytes This is only used
      * for comparison of media files with the limited resources of mobile devices
      */
+    @CheckResult
     private byte[] _mediaPick(BufferedInputStream is) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream(MEDIAPICKLIMIT * 2);
@@ -885,16 +894,19 @@ public class Anki2Importer extends Importer {
     }
 
 
+    @CheckResult
     public int getDupes() {
         return mDupes;
     }
 
 
+    @CheckResult
     public int getAdded() {
         return mAdded;
     }
 
 
+    @CheckResult
     public int getUpdated() {
         return mUpdated;
     }

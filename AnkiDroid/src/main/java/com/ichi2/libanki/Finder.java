@@ -134,6 +134,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     public List<Long> findNotes(String query) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
@@ -166,6 +167,7 @@ public class Finder {
      * ***********************************************************
      */
 
+    @CheckResult
     public String[] _tokenize(String query) {
         char inQuote = 0;
         List<String> tokens = new ArrayList<>();
@@ -285,6 +287,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private Pair<String, String[]> _where(String[] tokens) {
         // state and query
         SearchState s = new SearchState();
@@ -370,6 +373,7 @@ public class Finder {
      * @param order A part of a query, ordering element of table Card, with c a card, n its note
      * @return A query to return all card ids satifying the predicate and in the given order
      */
+    @CheckResult
     private static String _query(String preds, String order) {
         // can we skip the note table?
         String sql;
@@ -406,7 +410,8 @@ public class Finder {
      * The python code combines all code paths in one function. In Java, we must overload the method
      * in order to consume either a String (no order, custom order) or a Boolean (no order, built-in order).
      */
-    
+
+    @CheckResult
     private Pair<String, Boolean> _order(String order) {
         if (TextUtils.isEmpty(order)) {
             return _order(false);
@@ -415,7 +420,8 @@ public class Finder {
             return new Pair<>(" order by " + order, false);
         }
     }
-    
+
+    @CheckResult
     private Pair<String, Boolean> _order(Boolean order) {
         if (!order) {
             return new Pair<>("", false);
@@ -460,6 +466,7 @@ public class Finder {
      * ***********************************************************
      */
 
+    @CheckResult
     private String _findTag(String val, List<String> args) {
         if ("none".equals(val)) {
             return "n.tags = \"\"";
@@ -476,6 +483,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private String _findCardState(String val) {
         int n;
         if ("review".equals(val) || "new".equals(val) || "learn".equals(val)) {
@@ -499,6 +507,7 @@ public class Finder {
         }
     }
 
+    @CheckResult
     private String _findFlag(String val) {
         int flag;
         switch (val) {
@@ -524,6 +533,7 @@ public class Finder {
         return "(c.flags & "+mask+") == " + flag;
     }
 
+    @CheckResult
     private String _findRated(String val) {
         // days(:optional_ease)
         String[] r = val.split(":");
@@ -547,6 +557,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private String _findAdded(String val) {
         int days;
         try {
@@ -559,6 +570,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private String _findProp(String _val) {
         // extract
         Matcher m = fPropPattern.matcher(_val);
@@ -599,6 +611,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private String _findText(String val, List<String> args) {
         val = val.replace("*", "%");
         args.add("%" + val + "%");
@@ -607,6 +620,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private String _findNids(String val) {
         if (fNidsPattern.matcher(val).find()) {
             return null;
@@ -615,6 +629,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private String _findCids(String val) {
         if (fNidsPattern.matcher(val).find()) {
             return null;
@@ -623,6 +638,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private String _findMid(String val) {
         if (fMidPattern.matcher(val).find()) {
             return null;
@@ -631,6 +647,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private String _findModel(String val) {
         LinkedList<Long> ids = new LinkedList<>();
         for (JSONObject m : mCol.getModels().all()) {
@@ -644,6 +661,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private List<Long> dids(Long did) {
         if (did == null) {
             return null;
@@ -656,6 +674,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     public String _findDeck(String val) {
         // if searching for all decks, skip
         if ("*".equals(val)) {
@@ -700,6 +719,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private String _findTemplate(String val) {
         // were we given an ordinal number?
         Integer num = null;
@@ -735,6 +755,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private String _findField(String field, String val) {
         /*
          * We need two expressions to query the cards: One that will use JAVA REGEX syntax and another
@@ -800,6 +821,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     private String _findDupes(String val) {
         // caller must call stripHTMLMedia on passed val
         String[] split = val.split(",", 1);
@@ -837,6 +859,7 @@ public class Finder {
      * @param dst The text to change to.
      * @return Number of notes with fields that were updated.
      */
+    @CheckResult
     public static int findReplace(Collection col, List<Long> nids, String src, String dst) {
         return findReplace(col, nids, src, dst, false, null, true);
     }
@@ -851,6 +874,7 @@ public class Finder {
      * @param regex If true, the src is treated as a regex. Default = false.
      * @return Number of notes with fields that were updated.
      */
+    @CheckResult
     public static int findReplace(Collection col, List<Long> nids, String src, String dst, boolean regex) {
         return findReplace(col, nids, src, dst, regex, null, true);
     }
@@ -865,6 +889,7 @@ public class Finder {
      * @param field Limit the search to specific field. If null, it searches all fields.
      * @return Number of notes with fields that were updated.
      */
+    @CheckResult
     public static int findReplace(Collection col, List<Long> nids, String src, String dst, String field) {
         return findReplace(col, nids, src, dst, false, field, true);
     }
@@ -960,6 +985,7 @@ public class Finder {
      * ***********************************************************
      */
 
+    @CheckResult
     public static Integer ordForMid(Collection col, Map<Long, Integer> fields, long mid, String fieldName) {
         if (!fields.containsKey(mid)) {
             JSONObject model = col.getModels().get(mid);
@@ -976,6 +1002,7 @@ public class Finder {
     }
 
 
+    @CheckResult
     public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName) {
         return findDupes(col, fieldName, "");
     }
@@ -984,6 +1011,7 @@ public class Finder {
     /**
      * @return List of Pair("dupestr", List[nids])
      */
+    @CheckResult
     public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName, String search) {
         // limit search to notes with applicable field name
     	if (!TextUtils.isEmpty(search)) {

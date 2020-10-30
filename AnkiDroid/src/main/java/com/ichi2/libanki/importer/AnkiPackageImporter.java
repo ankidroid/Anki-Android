@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
+import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.NPathComplexity"})
@@ -175,6 +176,7 @@ public class AnkiPackageImporter extends Anki2Importer {
     }
 
     @Override
+    @CheckResult
     protected BufferedInputStream _srcMediaData(String fname) {
         if (mNameToNum.containsKey(fname)) {
             try {

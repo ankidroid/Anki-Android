@@ -8,6 +8,8 @@ import com.ichi2.libanki.Note;
 
 import java.util.List;
 
+import androidx.annotation.CheckResult;
+
 import static com.ichi2.anki.CardBrowser.CardCache;
 
 public class TaskData {
@@ -138,51 +140,61 @@ public class TaskData {
     }
 
 
+    @CheckResult
     public Card getCard() {
         return mCard;
     }
 
 
+    @CheckResult
     public Note getNote() {
         return mNote;
     }
 
 
+    @CheckResult
     public long getLong() {
         return mLong;
     }
 
 
+    @CheckResult
     public int getInt() {
         return mInteger;
     }
 
 
+    @CheckResult
     public String getString() {
         return mMsg;
     }
 
 
+    @CheckResult
     public boolean getBoolean() {
         return mBool;
     }
 
 
+    @CheckResult
     public Context getContext() {
         return mContext;
     }
 
 
+    @CheckResult
     public int getType() {
         return mType;
     }
 
 
+    @CheckResult
     public Object[] getObjArray() {
         return mObjects;
     }
 
 
+    @CheckResult
     public <T> boolean objAtIndexIs(int i, Class<T> clazz) {
         if (getObjArray() == null) {
             return false;

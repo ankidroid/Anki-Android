@@ -42,6 +42,7 @@ import java.util.Set;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
+import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
 import static com.ichi2.utils.CollectionUtils.addAll;
@@ -64,6 +65,7 @@ class Exporter {
     }
 
     /** card ids of cards in deck self.did if it is set, all ids otherwise. */
+    @CheckResult
     public Long[] cardIds() {
         Long[] cids;
         if (mDid == null) {
@@ -291,6 +293,7 @@ class AnkiExporter extends Exporter {
     }
 
 
+    @CheckResult
     private String removeSystemTags(String tags) {
         return mSrc.getTags().remFromStr("marked leech", tags);
     }

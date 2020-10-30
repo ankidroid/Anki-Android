@@ -59,6 +59,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
@@ -141,6 +142,7 @@ public class Media {
 
 
     @NonNull
+    @CheckResult
     public static String getCollectionMediaPath(String collectionPath) {
         return collectionPath.replaceFirst("\\.anki2$", ".media");
     }
@@ -223,6 +225,7 @@ public class Media {
         connect();
     }
 
+    @CheckResult
     public String dir() {
         return mDir;
     }
@@ -295,6 +298,7 @@ public class Media {
      * ***********************************************************
      */
 
+    @CheckResult
     public List<String> filesInStr(Long mid, String string) {
         return filesInStr(mid, string, false);
     }
@@ -307,6 +311,7 @@ public class Media {
      * @param includeRemote If true will also include external http/https/ftp urls.
      * @return A list containing all the sound and image filenames found in the input string.
      */
+    @CheckResult
     public List<String> filesInStr(Long mid, String string, boolean includeRemote) {
         List<String> l = new ArrayList<>();
         Model model = mCol.getModels().get(mid);
@@ -342,6 +347,7 @@ public class Media {
     }
 
 
+    @CheckResult
     private List<String> _expandClozes(String string) {
         Set<String> ords = new TreeSet<>();
         @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
@@ -377,6 +383,7 @@ public class Media {
      * @param txt The string to be cleared of media references.
      * @return The media-free string.
      */
+    @CheckResult
     public String strip(String txt) {
         for (Pattern p : mRegexps) {
             txt = p.matcher(txt).replaceAll("");
@@ -385,6 +392,7 @@ public class Media {
     }
 
 
+    @CheckResult
     public String escapeImages(String string) {
         return escapeImages(string, false);
     }
@@ -395,6 +403,7 @@ public class Media {
      * @param string The string to search for image references and escape the filenames.
      * @return The string with the filenames of any local images percent-escaped as UTF-8.
      */
+    @CheckResult
     public String escapeImages(String string, boolean unescape) {
         for (Pattern p : Arrays.asList(fImgRegExpQ, fImgRegExpU)) {
             Matcher m = p.matcher(string);
@@ -429,11 +438,13 @@ public class Media {
      *
      * @return A list containing three lists of files (missingFiles, unusedFiles, invalidFiles)
      */
+    @CheckResult
     public List<List<String>> check() {
         return check(null);
     }
 
 
+    @CheckResult
     private List<List<String>> check(File[] local) {
         File mdir = new File(dir());
         // gather all media references in NFC form
@@ -543,6 +554,7 @@ public class Media {
      * ***********************************************************
      */
 
+    @CheckResult
     public boolean have(String fname) {
         return new File(dir(), fname).exists();
     }
@@ -552,17 +564,20 @@ public class Media {
      * ***********************************************************
      */
 
+    @CheckResult
     public String stripIllegal(String str) {
         Matcher m = fIllegalCharReg.matcher(str);
         return m.replaceAll("");
     }
 
 
+    @CheckResult
     public boolean hasIllegal(String str) {
         Matcher m = fIllegalCharReg.matcher(str);
         return m.find();
     }
 
+    @CheckResult
     public String cleanFilename(String fname) {
         fname = stripIllegal(fname);
         fname = _cleanWin32Filename(fname);
@@ -576,10 +591,12 @@ public class Media {
 
     /** This method only change things on windows. So it's the
      * identity here. */
+    @CheckResult
     private String _cleanWin32Filename(String fname) {
         return fname;
     }
 
+    @CheckResult
     private String _cleanLongFilename(String fname) {
         /* a fairly safe limit that should work on typical windows
          paths and on eCryptfs partitions, even with a duplicate
@@ -636,6 +653,7 @@ public class Media {
     }
 
 
+    @CheckResult
     public boolean haveDirty() {
         return mDb.queryScalar("select 1 from media where dirty=1 limit 1") > 0;
     }
@@ -648,12 +666,14 @@ public class Media {
      * @param path The path to the file we are checking. path can be a file or a directory.
      * @return The number of seconds (rounded down).
      */
+    @CheckResult
     private long _mtime(String path) {
         File f = new File(path);
         return f.lastModified() / 1000;
     }
 
 
+    @CheckResult
     private String _checksum(String path) {
         return Utils.fileChecksum(path);
     }
@@ -666,6 +686,7 @@ public class Media {
      * @return The modification time of the media directory if it has changed since the last call of findChanges(). If
      *         it hasn't, it returns null.
      */
+    @CheckResult
     public Long _changed() {
         long mod = mDb.queryLongScalar("select dirMod from meta");
         long mtime = _mtime(dir());
@@ -696,6 +717,7 @@ public class Media {
     }
 
 
+    @CheckResult
     private Pair<List<String>, List<String>> _changes() {
         Map<String, Object[]> cache = new HashMap<>();
         try (Cursor cur = mDb.query("select fname, csum, mtime from media where csum is not null")) {
@@ -775,6 +797,7 @@ public class Media {
      * ***********************************************************
      */
 
+    @CheckResult
     public int lastUsn() {
         return mDb.queryScalar("select lastUsn from meta");
     }
@@ -786,6 +809,7 @@ public class Media {
     }
 
 
+    @CheckResult
     public Pair<String, Integer> syncInfo(String fname) {
         try (Cursor cur = mDb.query("select csum, dirty from media where fname=?", fname)) {
             if (cur.moveToNext()) {
@@ -815,11 +839,13 @@ public class Media {
     }
 
 
+    @CheckResult
     public int mediacount() {
         return mDb.queryScalar("select count() from media where csum is not null");
     }
 
 
+    @CheckResult
     public int dirtyCount() {
         return mDb.queryScalar("select count() from media where dirty=1");
     }
@@ -856,6 +882,7 @@ public class Media {
      * and mark it as removed in the database. (This behaviour differs from the desktop client).
      * <p>
      */
+    @CheckResult
     public Pair<File, List<String>> mediaChangesZip() {
         File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncToServer.zip"));
         List<String> fnames = new ArrayList<>();
@@ -973,6 +1000,7 @@ public class Media {
     /**
      * Used by unit tests only.
      */
+    @CheckResult
     public DB getDb() {
         return mDb;
     }
@@ -983,6 +1011,7 @@ public class Media {
      * (Anki2Importer needs this). This is needed because we didn't implement the "transformNames"
      * function and have delegated its job to the caller of this class.
      */
+    @CheckResult
     public static int indexOfFname(Pattern p) {
         return p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
     }
@@ -1017,6 +1046,7 @@ public class Media {
     /**
      * @return True if the media db has not been populated yet.
      */
+    @CheckResult
     public boolean needScan() {
         long mod = mDb.queryLongScalar("select dirMod from meta");
         return mod == 0;

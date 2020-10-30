@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki.utils;
 
+import androidx.annotation.CheckResult;
+
 public class SystemTime extends Time {
 
     public SystemTime() {
@@ -23,6 +25,7 @@ public class SystemTime extends Time {
 
 
     @Override
+    @CheckResult
     public long intTimeMS() {
         return System.currentTimeMillis();
     }

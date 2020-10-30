@@ -6,6 +6,7 @@ import com.ichi2.libanki.Decks;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -40,6 +41,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
      * Sort on the head of the node.
      */
     @Override
+    @CheckResult
     public int compareTo(AbstractDeckTreeNode<T> rhs) {
         int minDepth = Math.min(getDepth(), rhs.getDepth()) + 1;
         // Consider each subdeck name in the ordering
@@ -57,12 +59,14 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
     }
 
     /** Line representing this string without its children. Used in timbers only. */
+    @CheckResult
     protected String toStringLine() {
         return String.format(Locale.US, "%s, %d, %s",
                              mName, mDid, mChildren);
     }
 
     @Override
+    @CheckResult
     public @NonNull String toString() {
         StringBuffer buf = new StringBuffer();
         toString(buf);
@@ -85,6 +89,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
     /**
      * @return The full deck name, e.g. "A::B::C"
      * */
+    @CheckResult
     public String getFullDeckName() {
         return mName;
     }
@@ -93,6 +98,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
      * For deck "A::B::C", `getDeckNameComponent(0)` returns "A",
      * `getDeckNameComponent(1)` returns "B", etc...
      */
+    @CheckResult
     public String getDeckNameComponent(int part) {
         return mNameComponents[part];
     }
@@ -102,10 +108,12 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
      * part that does not belong to its parents. E.g.  for deck
      * "A::B::C", returns "C".
      */
+    @CheckResult
     public String getLastDeckNameComponent() {
         return getDeckNameComponent(getDepth());
     }
 
+    @CheckResult
     public long getDid() {
         return mDid;
     }
@@ -115,6 +123,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
      * their children have depth 1, etc... So "A::B::C" would have
      * depth 2.
      */
+    @CheckResult
     public int getDepth() {
         return mNameComponents.length - 1;
     }
@@ -124,12 +133,14 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
      * in the data structure returned by DeckDueTree but are
      * always empty when the data structure is returned by
      * deckDueList.*/
+    @CheckResult
     public List<T> getChildren() {
         return mChildren;
     }
 
     /**
      * @return whether this node as any children. */
+    @CheckResult
     public boolean hasChildren() {
         return mChildren != null && !mChildren.isEmpty();
     }
@@ -140,6 +151,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
     }
 
     @Override
+    @CheckResult
     public int hashCode() {
         int childrenHash = mChildren == null ? 0 : mChildren.hashCode();
         return getFullDeckName().hashCode() + childrenHash;
@@ -152,6 +164,7 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
      * @return
      */
     @Override
+    @CheckResult
     public boolean equals(Object object) {
         if (!(object instanceof AbstractDeckTreeNode)) {
             return false;
@@ -163,34 +176,41 @@ public abstract class AbstractDeckTreeNode<T extends AbstractDeckTreeNode<T>> im
             ;
     }
 
+    @CheckResult
     public Collection getCol() {
         return mCol;
     }
 
+    @CheckResult
     public boolean shouldDisplayCounts() {
         return false;
     }
 
     /* Number of new cards to see today known to be in this deck and its descendants. The number to show to user*/
+    @CheckResult
     public int getNewCount() {
         throw new UnsupportedOperationException();
     }
 
     /* Number of lrn cards (or repetition) to see today known to be in this deck and its descendants. The number to show to user*/
+    @CheckResult
     public int getLrnCount() {
         throw new UnsupportedOperationException();
     }
 
     /* Number of rev cards to see today known to be in this deck and its descendants. The number to show to user*/
+    @CheckResult
     public int getRevCount() {
         throw new UnsupportedOperationException();
     }
 
 
+    @CheckResult
     public boolean knownToHaveRep() {
         return false;
     }
 
 
+    @CheckResult
     public abstract T withChildren(List<T> children);
 }

@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
 
@@ -148,19 +149,23 @@ public class Note implements Cloneable {
     }
 
 
+    @CheckResult
     public String joinedFields() {
         return Utils.joinFields(mFields);
     }
 
 
+    @CheckResult
     public int numberOfCards() {
         return (int) mCol.getDb().queryLongScalar("SELECT count() FROM cards WHERE nid = ?", mId);
     }
 
+    @CheckResult
     public List<Long> cids() {
         return mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid = ? ORDER BY ord", mId);
     }
 
+    @CheckResult
     public ArrayList<Card> cards() {
         ArrayList<Card> cards = new ArrayList<>();
         for (long cid : cids()) {
@@ -173,11 +178,13 @@ public class Note implements Cloneable {
     }
 
     /** The first card, assuming it exists.*/
+    @CheckResult
     public Card firstCard() {
         return mCol.getCard(mCol.getDb().queryLongScalar("SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1", mId));
     }
 
 
+    @CheckResult
     public Model model() {
         return mModel;
     }
@@ -188,16 +195,19 @@ public class Note implements Cloneable {
      * ***********************************************************
      */
 
+    @CheckResult
     public String[] keys() {
         return (String[])mFMap.keySet().toArray();
     }
 
 
+    @CheckResult
     public String[] values() {
         return mFields;
     }
 
 
+    @CheckResult
     public String[][] items() {
         // TODO: Revisit this method. The field order returned differs from Anki.
         // The items here are only used in the note editor, so it's a low priority.
@@ -211,6 +221,7 @@ public class Note implements Cloneable {
     }
 
 
+    @CheckResult
     private int _fieldOrd(String key) {
         Pair<Integer, JSONObject> fieldPair = mFMap.get(key);
         if (fieldPair == null) {
@@ -220,6 +231,7 @@ public class Note implements Cloneable {
     }
 
 
+    @CheckResult
     public String getItem(String key) {
         return mFields[_fieldOrd(key)];
     }
@@ -228,7 +240,8 @@ public class Note implements Cloneable {
     public void setItem(String key, String value) {
         mFields[_fieldOrd(key)] = value;
     }
-    
+
+    @CheckResult
     public boolean contains(String key) {
     	return mFMap.containsKey(key);
     }
@@ -239,11 +252,13 @@ public class Note implements Cloneable {
      * ***********************************************************
      */
 
+    @CheckResult
     public boolean hasTag(String tag) {
         return mCol.getTags().inList(tag, mTags);
     }
 
 
+    @CheckResult
     public String stringTags() {
         return mCol.getTags().join(mCol.getTags().canonify(mTags));
     }
@@ -293,6 +308,7 @@ public class Note implements Cloneable {
      * 
      * @return whether it has no content, dupe first field, or nothing remarkable.
      */
+    @CheckResult
     public DupeOrEmpty dupeOrEmpty() {
         String val = mFields[0];
         if (val.trim().length() == 0) {
@@ -342,6 +358,7 @@ public class Note implements Cloneable {
      * ***********************************************************
      */
 
+    @CheckResult
     public long getMid() {
         return mMid;
     }
@@ -350,22 +367,26 @@ public class Note implements Cloneable {
     /**
      * @return the mId
      */
+    @CheckResult
     public long getId() {
         // TODO: Conflicting method name and return value. Reconsider.
         return mId;
     }
 
 
+    @CheckResult
     public Collection getCol() {
         return mCol;
     }
 
 
+    @CheckResult
     public String getSFld() {
         return mCol.getDb().queryString("SELECT sfld FROM notes WHERE id = ?", mId);
     }
 
 
+    @CheckResult
     public String[] getFields() {
         return mFields;
     }
@@ -376,11 +397,13 @@ public class Note implements Cloneable {
     }
 
 
+    @CheckResult
     public long getMod() {
         return mMod;
     }
 
 
+    @CheckResult
     public Note clone() {
         try {
             return (Note)super.clone();
@@ -390,11 +413,13 @@ public class Note implements Cloneable {
     }
 
 
+    @CheckResult
     public ArrayList<String> getTags() {
         return mTags;
     }
 
     @Override
+    @CheckResult
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -405,6 +430,7 @@ public class Note implements Cloneable {
     }
 
     @Override
+    @CheckResult
     public int hashCode() {
         return (int) (mId ^ (mId >>> 32));
     }
@@ -421,6 +447,7 @@ public class Note implements Cloneable {
          * @param fieldValues Iterable of field values that may contain existing cloze deletions
          * @return the next index that a cloze should be inserted at
          */
+        @CheckResult
         public static int getNextClozeIndex(Iterable<String> fieldValues) {
 
             int highestClozeId = 0;

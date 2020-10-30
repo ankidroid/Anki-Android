@@ -40,6 +40,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
@@ -161,6 +162,7 @@ public class AdvancedStatistics {
      * @param dids Deck id's
      * @return @see #metaInfo
      */
+    @CheckResult
     public StatsMetaInfo calculateDueAsMetaInfo(StatsMetaInfo metaInfo, Stats.AxisType type, Context context, String dids) {
 
         if (!AnkiDroidApp.getSharedPrefs(context).getBoolean("advanced_statistics_enabled", false)) {
@@ -288,6 +290,7 @@ public class AdvancedStatistics {
      *        - The forecasted number of reviews per review type (relearn, mature, young, learn)
      *        - The forecasted number of cards in each state (new, young, mature)
      */
+    @CheckResult
     private PlottableSimulationResult calculateDueAsPlottableSimulationResult(Stats.AxisType type, Collection mCol, String dids) {
         int end = 0;
         int chunk = 0;
@@ -393,6 +396,7 @@ public class AdvancedStatistics {
         private long id;
 
         @Override
+        @CheckResult
         public @NonNull String toString() {
             return "Card [ivl=" + ivl + ", factor=" + factor + ", due=" + due + ", correct=" + correct + ", id="
                     + id + "]";
@@ -426,10 +430,12 @@ public class AdvancedStatistics {
             this.lastReview = card.lastReview;
         }
 
+        @CheckResult
         public long getId() {
             return id;
         }
 
+        @CheckResult
         public int getIvl() {
             return ivl;
         }
@@ -438,6 +444,7 @@ public class AdvancedStatistics {
             this.ivl = ivl;
         }
 
+        @CheckResult
         public double getFactor() {
             return factor;
         }
@@ -446,6 +453,7 @@ public class AdvancedStatistics {
             this.factor = factor;
         }
 
+        @CheckResult
         public int getDue() {
             return due;
         }
@@ -458,6 +466,7 @@ public class AdvancedStatistics {
          * Type of the card, based on the interval.
          * @return CARD_TYPE_NEW if interval = 0, CARD_TYPE_YOUNG if interval 1-20, CARD_TYPE_MATURE if interval >= 20
          */
+        @CheckResult
         public int getType() {
             if(ivl == 0) {
                 return CARD_TYPE_NEW;
@@ -468,6 +477,7 @@ public class AdvancedStatistics {
             }
         }
 
+        @CheckResult
         public int getCorrect() {
             return correct;
         }
@@ -476,6 +486,7 @@ public class AdvancedStatistics {
             this.correct = correct;
         }
 
+        @CheckResult
         public int getLastReview() {
             return lastReview;
         }
@@ -487,6 +498,7 @@ public class AdvancedStatistics {
 
     private class DeckFactory {
 
+        @CheckResult
         public Deck createDeck(long did, Decks decks) {
 
             Timber.d("Trying to get deck settings for deck with id=" + did);
@@ -531,18 +543,22 @@ public class AdvancedStatistics {
             this.initialFactor = initialFactor;
         }
 
+        @CheckResult
         public long getDid() {
             return did;
         }
 
+        @CheckResult
         public int getNewPerDay() {
             return newPerDay;
         }
 
+        @CheckResult
         public int getRevPerDay() {
             return revPerDay;
         }
 
+        @CheckResult
         public int getInitialFactor() {
             return initialFactor;
         }
@@ -573,6 +589,7 @@ public class AdvancedStatistics {
 
         }
 
+        @CheckResult
         public boolean moveToNext() {
             return cur.moveToNext();
         }
@@ -673,6 +690,7 @@ public class AdvancedStatistics {
             random = new Random();
         }
 
+        @CheckResult
         private double[] cumsum(double[] p) {
 
             double[] q = new double[4];
@@ -833,6 +851,7 @@ public class AdvancedStatistics {
             }
         }
 
+        @CheckResult
         public int getNLearned(long did) {
             if(nLearnedPerDeckId.containsKey(did)) {
                 return nLearnedPerDeckId.get(did);
@@ -1021,14 +1040,17 @@ public class AdvancedStatistics {
             Timber.d("simulateNIterations: %s", simulateNIterations);
         }
 
+        @CheckResult
         public int getComputeNDays() {
             return computeNDays;
         }
 
+        @CheckResult
         public double getComputeMaxError() {
             return computeMaxError;
         }
 
+        @CheckResult
         public int getSimulateNIterations() {
             return simulateNIterations;
         }
@@ -1036,6 +1058,7 @@ public class AdvancedStatistics {
         /**
          * @return Maximum number of new cards per day which will be used if it cannot be read from Deck settings.
          */
+        @CheckResult
         public int getMaxNewPerDay() {
             return 20;
         }
@@ -1043,6 +1066,7 @@ public class AdvancedStatistics {
         /**
          * @return Maximum number of reviews per day which will be used if it cannot be read from Deck settings.
          */
+        @CheckResult
         public int getMaxReviewsPerDay() {
             return 10000;
         }
@@ -1051,6 +1075,7 @@ public class AdvancedStatistics {
          *
          * @return Factor which will be used if it cannot be read from Deck settings.
          */
+        @CheckResult
         public int getInitialFactor() {
             return Consts.STARTING_FACTOR;
         }
@@ -1060,6 +1085,7 @@ public class AdvancedStatistics {
          * @param collectionCreatedTime The difference, measured in seconds, between midnight, January 1, 1970 UTC and the time at which the collection was created.
          * @return Today in days counted from the time at which the collection was created
          */
+        @CheckResult
         public int getToday(long collectionCreatedTime) {
             Timber.d("Collection creation timestamp: %d", collectionCreatedTime);
 
@@ -1073,6 +1099,7 @@ public class AdvancedStatistics {
          * @param collectionCreatedTime The difference, measured in seconds, between midnight, January 1, 1970 UTC and the time at which the collection was created.
          * @return The beginning of today in milliseconds counted from the time at which the collection was created
          */
+        @CheckResult
         public long getDayStartCutoff (long collectionCreatedTime) {
             long today = getToday(collectionCreatedTime);
             return (collectionCreatedTime + (today * SECONDS_PER_DAY)) * 1000;
@@ -1080,6 +1107,7 @@ public class AdvancedStatistics {
     }
 
     private class ArrayUtils {
+        @CheckResult
         public int[][] createIntMatrix(int m, int n) {
             int[][] matrix = new int[m][];
             for(int i=0; i<m; i++) {
@@ -1091,6 +1119,7 @@ public class AdvancedStatistics {
             return matrix;
         }
 
+        @CheckResult
         public int[][] toIntMatrix(double[][] doubleMatrix, int doubleToIntMode) {
             int m = doubleMatrix.length;
             if(m == 0)
@@ -1111,6 +1140,7 @@ public class AdvancedStatistics {
             return intMatrix;
         }
 
+        @CheckResult
         public double[][] createDoubleMatrix(int m, int n) {
             double[][] matrix = new double[m][];
             for(int i=0; i<m; i++) {
@@ -1131,16 +1161,19 @@ public class AdvancedStatistics {
             return arr;
         }
 
+        @CheckResult
         public int nRows(int[][] matrix) {
             return matrix.length;
         }
 
+        @CheckResult
         public int nCols(int[][] matrix) {
             if(matrix.length == 0)
                 return 0;
             return matrix[0].length;
         }
 
+        @CheckResult
         public long[] stringToLongArray(String s) {
 
             String[] split = s.substring(1, s.length() - 1).split(", ");
@@ -1152,6 +1185,7 @@ public class AdvancedStatistics {
             return arr;
         }
 
+        @CheckResult
         public int[][] transposeMatrix(int[][] matrix) {
             if (matrix.length == 0)
                 return matrix;
@@ -1172,6 +1206,7 @@ public class AdvancedStatistics {
         }
 
 
+        @CheckResult
         public double[][] transposeMatrix(double[][] matrix) {
             if (matrix.length == 0)
                 return matrix;
@@ -1268,6 +1303,7 @@ public class AdvancedStatistics {
             this.doubleToIntMode = doubleToIntMode;
         }
 
+        @CheckResult
         public int getnDays() {
             return nDays;
         }
@@ -1294,10 +1330,12 @@ public class AdvancedStatistics {
                     this.nInState[i][j] += nInState[i][j] * prob;
         }
 
+        @CheckResult
         public int[][] getNReviews() {
             return ArrayUtils.toIntMatrix(nReviews, doubleToIntMode);
         }
 
+        @CheckResult
         public int[][] getNInState() {
             return ArrayUtils.toIntMatrix(nInState, doubleToIntMode);
         }
@@ -1315,6 +1353,7 @@ public class AdvancedStatistics {
          * @return Number of reviews of young and mature cards simulated at time tElapsed.
          * This excludes new cards and relearns as they don't count towards the limit.
          */
+        @CheckResult
         public int nReviewsDoneToday(int tElapsed) {
             return (int)(nReviewsPerDay[REVIEW_TYPE_YOUNG][tElapsed] +
                          nReviewsPerDay[REVIEW_TYPE_MATURE][tElapsed]);
@@ -1420,10 +1459,12 @@ public class AdvancedStatistics {
             this.nInState = nInState;
         }
 
+        @CheckResult
         public ArrayList<int[]> getNReviews() {
             return nReviews;
         }
 
+        @CheckResult
         public double[][] getNInState() {
             return nInState;
         }
@@ -1448,15 +1489,18 @@ public class AdvancedStatistics {
             this.prob = prob;
         }
 
+        @CheckResult
         public Card getCard() {
             return card;
         }
 
+        @CheckResult
         public double getProb() {
             return prob;
         }
 
         @Override
+        @CheckResult
         public @NonNull String toString() {
             return "ReviewOutcome{" +
                     "card=" + card +
@@ -1726,6 +1770,7 @@ public class AdvancedStatistics {
             }
         }
 
+        @CheckResult
         public int getT() {
             return tElapsed;
         }

@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
@@ -89,6 +90,7 @@ public class NoteImporter extends Importer {
 
 
     /** The number of fields.*/
+    @CheckResult
     protected int fields() {
         return 0;
     }
@@ -121,6 +123,7 @@ public class NoteImporter extends Importer {
 
 
     @NonNull
+    @CheckResult
     protected List<ForeignNote> foreignNotes() {
         return new ArrayList<>();
     }
@@ -280,6 +283,7 @@ public class NoteImporter extends Importer {
     }
 
     @Nullable
+    @CheckResult
     private Object[] newData(ForeignNote n) {
         long id = mNextId;
         mNextId++;
@@ -307,6 +311,7 @@ public class NoteImporter extends Importer {
     }
 
 
+    @CheckResult
     private Object[] updateData(ForeignNote n, long id, String[] sflds) {
         _ids.add(id);
         if (!processFields(n, sflds)) {
@@ -356,10 +361,12 @@ public class NoteImporter extends Importer {
     }
 
 
+    @CheckResult
     private boolean processFields(ForeignNote note) {
         return processFields(note, null);
     }
 
+    @CheckResult
     private boolean processFields(ForeignNote note, @Nullable String[] fields) {
         if (fields == null) {
             int length = mModel.getJSONArray("flds").length();
@@ -393,6 +400,7 @@ public class NoteImporter extends Importer {
 
     /** Not in libAnki */
 
+    @CheckResult
     private <T> List<Map.Entry<Integer, T>> enumerate(List<T> list) {
         List<Map.Entry<Integer, T>> ret = new ArrayList<>();
         int index = 0;
@@ -404,6 +412,7 @@ public class NoteImporter extends Importer {
     }
 
 
+    @CheckResult
     public int getTotal() {
         return mTotal;
     }
@@ -413,18 +422,21 @@ public class NoteImporter extends Importer {
     }
 
 
+    @CheckResult
     private String getQuantityString(@PluralsRes int res, int quantity) {
         return AnkiDroidApp.getAppResources().getQuantityString(res, quantity, quantity);
     }
 
 
     @NonNull
+    @CheckResult
     protected String getString(@StringRes int res) {
         return AnkiDroidApp.getAppResources().getString(res);
     }
 
 
     @NonNull
+    @CheckResult
     protected String getString(int res, @NonNull Object... formatArgs) {
         return AnkiDroidApp.getAppResources().getString(res, formatArgs);
     }

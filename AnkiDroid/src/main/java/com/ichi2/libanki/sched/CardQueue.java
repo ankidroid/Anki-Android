@@ -9,6 +9,8 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
+import androidx.annotation.CheckResult;
+
 abstract class CardQueue<T extends Card.Cache> {
     // We need to store mSched and not queue, because during initialization of sched, when CardQueues are initialized
     // sched.getCol is null.
@@ -46,14 +48,17 @@ abstract class CardQueue<T extends Card.Cache> {
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    @CheckResult
     public boolean isEmpty() {
         return mQueue.isEmpty();
     }
 
+    @CheckResult
     public int size() {
         return mQueue.size();
     }
 
+    @CheckResult
     protected LinkedList<T> getQueue() {
         return mQueue;
     }
@@ -62,10 +67,12 @@ abstract class CardQueue<T extends Card.Cache> {
         Collections.shuffle(mQueue, r);
     }
 
+    @CheckResult
     public ListIterator<T> listIterator() {
         return mQueue.listIterator();
     }
 
+    @CheckResult
     protected Collection getCol() {
         return mSched.getCol();
     }

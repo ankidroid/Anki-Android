@@ -1,5 +1,7 @@
 package com.ichi2.libanki.exception;
 
+import androidx.annotation.CheckResult;
+
 /**
  * A deck was accessed which did not exist.
  * <br/>
@@ -13,6 +15,7 @@ public class NoSuchDeckException extends Exception {
     }
 
     /** The ID of the accessed deck */
+    @CheckResult
     public long getDeckId() {
         return mDeckId;
     }

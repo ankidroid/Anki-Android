@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -246,41 +247,49 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public String q() {
         return q(false);
     }
 
 
+    @CheckResult
     public String q(boolean reload) {
         return q(reload, false);
     }
 
 
+    @CheckResult
     public String q(boolean reload, boolean browser) {
         return css() + _getQA(reload, browser).get("q");
     }
 
 
+    @CheckResult
     public String a() {
         return css() + _getQA().get("a");
     }
 
 
+    @CheckResult
     public String css() {
         return String.format(Locale.US, "<style>%s</style>", model().getString("css"));
     }
 
 
+    @CheckResult
     public HashMap<String, String> _getQA() {
         return _getQA(false);
     }
 
 
+    @CheckResult
     public HashMap<String, String> _getQA(boolean reload) {
         return _getQA(reload, false);
     }
 
 
+    @CheckResult
     public HashMap<String, String> _getQA(boolean reload, boolean browser) {
         if (mQA == null || reload) {
             Note f = note(reload);
@@ -299,11 +308,13 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public Note note() {
         return note(false);
     }
 
 
+    @CheckResult
     public Note note(boolean reload) {
         if (mNote == null || reload) {
             mNote = mCol.getNote(mNid);
@@ -313,11 +324,13 @@ public class Card implements Cloneable {
 
 
     // not in upstream
+    @CheckResult
     public Model model() {
         return note().model();
     }
 
 
+    @CheckResult
     public JSONObject template() {
         JSONObject m = model();
         if (m.getInt("type") == Consts.MODEL_STD) {
@@ -336,6 +349,7 @@ public class Card implements Cloneable {
     /**
      * Time limit for answering in milliseconds.
      */
+    @CheckResult
     public int timeLimit() {
         DeckConfig conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
         return conf.getInt("maxTaken") * 1000;
@@ -345,6 +359,7 @@ public class Card implements Cloneable {
     /*
      * Time taken to answer card, in integer MS.
      */
+    @CheckResult
     public int timeTaken() {
         // Indeed an int. Difference between two big numbers is still small.
         int total = (int) (getCol().getTime().intTimeMS() - mTimerStarted);
@@ -352,6 +367,7 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public boolean isEmpty() {
         return Models.emptyCard(model(), mOrd, note().getFields());
     }
@@ -364,6 +380,7 @@ public class Card implements Cloneable {
      */
 
 
+    @CheckResult
     public String qSimple() {
         return _getQA(false).get("q");
     }
@@ -372,6 +389,7 @@ public class Card implements Cloneable {
     /*
      * Returns the answer with anything before the <hr id=answer> tag removed
      */
+    @CheckResult
     public String getPureAnswer() {
         String s = _getQA(false).get("a");
         String target = "<hr id=answer>";
@@ -411,6 +429,7 @@ public class Card implements Cloneable {
      */
     public void setTimerStarted(long timeStarted){ mTimerStarted = timeStarted; }
 
+    @CheckResult
     public long getId() {
         return mId;
     }
@@ -425,6 +444,7 @@ public class Card implements Cloneable {
         mMod = mod;
     }
 
+    @CheckResult
     public long getMod() {
         return mMod ;
     }
@@ -435,12 +455,14 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public long getNid() {
         return mNid;
     }
 
 
     @Consts.CARD_TYPE
+    @CheckResult
     public int getType() {
         return mType;
     }
@@ -456,11 +478,13 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public int getLeft() {
         return mLeft;
     }
 
     @Consts.CARD_QUEUE
+    @CheckResult
     public int getQueue() {
         return mQueue;
     }
@@ -471,6 +495,7 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public long getODue() {
         return mODue;
     }
@@ -481,6 +506,7 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public long getODid() {
         return mODid;
     }
@@ -491,6 +517,7 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public long getDue() {
         return mDue;
     }
@@ -501,6 +528,7 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public int getIvl() {
         return mIvl;
     }
@@ -511,6 +539,7 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public int getFactor() {
         return mFactor;
     }
@@ -521,6 +550,7 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public int getReps() {
         return mReps;
     }
@@ -532,11 +562,13 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public int incrReps() {
         return ++mReps;
     }
 
 
+    @CheckResult
     public int getLapses() {
         return mLapses;
     }
@@ -557,6 +589,7 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public int getOrd() {
         return mOrd;
     }
@@ -567,11 +600,13 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public long getDid() {
         return mDid;
     }
 
 
+    @CheckResult
     public boolean getWasNew() {
         return mWasNew;
     }
@@ -582,6 +617,7 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public int getLastIvl() {
         return mLastIvl;
     }
@@ -593,6 +629,7 @@ public class Card implements Cloneable {
 
 
     // Needed for tests
+    @CheckResult
     public Collection getCol() {
         return mCol;
     }
@@ -604,12 +641,14 @@ public class Card implements Cloneable {
     }
 
 
+    @CheckResult
     public boolean showTimer() {
         DeckConfig options = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
         return DeckConfig.parseTimerOpt(options, true);
     }
 
 
+    @CheckResult
     public Card clone() {
         try {
             return (Card)super.clone();
@@ -623,6 +662,7 @@ public class Card implements Cloneable {
     public static final Set<String> SKIP_PRINT = new HashSet<>(Arrays.asList("SKIP_PRINT", "$assertionsDisabled", "TYPE_LRN",
             "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"));
 
+    @CheckResult
     public @NonNull String toString() {
         List<String> members = new ArrayList<>();
         for (Field f : this.getClass().getDeclaredFields()) {
@@ -640,6 +680,7 @@ public class Card implements Cloneable {
     }
 
     @Override
+    @CheckResult
     public boolean equals(Object obj) {
         if (obj instanceof Card) {
             return this.getId() == ((Card)obj).getId();
@@ -648,17 +689,20 @@ public class Card implements Cloneable {
     }
 
     @Override
+    @CheckResult
     public int hashCode() {
         // Map a long to an int. For API>=24 you would just do `Long.hashCode(this.getId())`
         return (int)(this.getId()^(this.getId()>>>32));
     }
 
+    @CheckResult
     public static int intToFlag(int flags) {
         // setting all bits to 0, except the three first one.
         // equivalent to `mFlags % 8`. Used this way to copy Anki.
         return flags & 0b111;
     }
 
+    @CheckResult
     public int userFlag() {
         return Card.intToFlag(mFlags);
     }
@@ -682,6 +726,7 @@ public class Card implements Cloneable {
     }
 
     // not in Anki.
+    @CheckResult
     public String getDueString() {
         String t = nextDue();
         if (getQueue() < 0) {
@@ -691,6 +736,7 @@ public class Card implements Cloneable {
     }
 
     // as in Anki aqt/browser.py
+    @CheckResult
     private String nextDue() {
         long date;
         long due = getDue();
@@ -711,16 +757,19 @@ public class Card implements Cloneable {
     }
 
     /** Non libAnki */
+    @CheckResult
     public boolean isDynamic() {
         //I have cards in my collection with oDue <> 0 and oDid = 0.
         //These are not marked as dynamic.
         return this.getODid() != 0;
     }
 
+    @CheckResult
     public boolean isReview() {
         return this.getType() == Consts.CARD_TYPE_REV && this.getQueue() == Consts.QUEUE_TYPE_REV;
     }
 
+    @CheckResult
     public boolean isNew() {
         return this.getType() == Consts.CARD_TYPE_NEW;
     }
@@ -795,26 +844,31 @@ public class Card implements Cloneable {
             mCard = null;
         }
 
+        @CheckResult
         public long getId() {
             return mId;
         }
 
         @NonNull
+        @CheckResult
         public Collection getCol() {
             return mCol;
         }
 
         @Override
+        @CheckResult
         public int hashCode() {
             return Long.valueOf(mId).hashCode();
         }
 
         /** The cloned version represents the same card but data are not loaded. */
         @NonNull
+        @CheckResult
         public Cache clone() {
             return new Cache(mCol, mId);
         }
 
+        @CheckResult
         public boolean equals(Object cache) {
             if (!(cache instanceof Cache)) {
                 return false;

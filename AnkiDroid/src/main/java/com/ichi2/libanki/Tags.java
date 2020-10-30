@@ -35,6 +35,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
+
 
 /**
 Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -116,6 +118,7 @@ public class Tags {
     }
 
 
+    @CheckResult
     public List<String> all() {
         return new ArrayList<>(mTags.keySet());
     }
@@ -148,10 +151,12 @@ public class Tags {
     }
 
 
+    @CheckResult
     public Set<Map.Entry<String, Integer>> allItems() {
         return mTags.entrySet();
     }
 
+    @CheckResult
     public boolean minusOneValue() {
         return mTags.containsValue(-1);
     }
@@ -168,6 +173,7 @@ public class Tags {
     * @param children whether to include the deck's children
     * @return a list of the tags
     */
+    @CheckResult
     public ArrayList<String> byDeck(long did, boolean children) {
         List<String> tags;
         if (children) {
@@ -265,6 +271,7 @@ public class Tags {
      */
 
     /** Parse a string and return a list of tags. */
+    @CheckResult
     public ArrayList<String> split(String tags) {
         ArrayList<String> list = new ArrayList<>();
         for (String s : tags.replace('\u3000', ' ').split("\\s")) {
@@ -277,6 +284,7 @@ public class Tags {
 
 
     /** Join tags into a single string, with leading and trailing spaces. */
+    @CheckResult
     public String join(java.util.Collection<String> tags) {
         if (tags == null || tags.size() == 0) {
             return "";
@@ -288,6 +296,7 @@ public class Tags {
 
 
     /** Add tags if they don't exist, and canonify */
+    @CheckResult
     public String addToStr(String addtags, String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(addtags)) {
@@ -299,12 +308,14 @@ public class Tags {
     }
 
     // submethod of remFromStr in anki
+    @CheckResult
     public boolean wildcard(String pat, String str) {
         String pat_replaced = Pattern.quote(pat).replace("\\*", ".*");
         return Pattern.compile(pat_replaced, Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CASE).matcher(str).matches();
     }
 
     /** Delete tags if they exist. */
+    @CheckResult
     public String remFromStr(String deltags, String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(deltags)) {
@@ -329,6 +340,7 @@ public class Tags {
      */
 
     /** Strip duplicates, adjust case to match existing tags, and sort. */
+    @CheckResult
     public TreeSet<String> canonify(List<String> tagList) {
         // NOTE: The python version creates a list of tags, puts them into a set, then sorts them. The TreeSet
         // used here already guarantees uniqueness and sort order, so we return it as-is without those steps.
@@ -347,6 +359,7 @@ public class Tags {
 
 
     /** True if TAG is in TAGS. Ignore case. */
+    @CheckResult
     public boolean inList(String tag, Iterable<String> tags) {
         for (String t : tags) {
             if (t.equalsIgnoreCase(tag)) {

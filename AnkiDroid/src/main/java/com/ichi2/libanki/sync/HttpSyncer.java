@@ -58,6 +58,7 @@ import java.util.zip.GZIPOutputStream;
 
 import javax.net.ssl.SSLException;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -105,6 +106,7 @@ public class HttpSyncer {
         mHostNum = hostNum;
     }
 
+    @CheckResult
     private OkHttpClient.Builder getHttpClientBuilder() {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
                 .addNetworkInterceptor(chain -> chain.proceed(
@@ -124,6 +126,7 @@ public class HttpSyncer {
         return clientBuilder;
     }
 
+    @CheckResult
     private OkHttpClient getHttpClient() {
         if (this.mHttpClient != null) {
             return mHttpClient;
@@ -132,6 +135,7 @@ public class HttpSyncer {
     }
 
     //PERF: Thread safety isn't required for the current implementation
+    @CheckResult
     private synchronized OkHttpClient setupHttpClient() {
         if (mHttpClient != null) {
             return mHttpClient;
@@ -308,6 +312,7 @@ public class HttpSyncer {
 
 
     @SuppressWarnings("CharsetObjectCanBeUsed")
+    @CheckResult
     public String stream2String(InputStream stream, int maxSize) {
         BufferedReader rd;
         try {
@@ -466,6 +471,7 @@ public class HttpSyncer {
     }
 
 
+    @CheckResult
     public String syncURL() {
         // Allow user to specify custom sync server
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());

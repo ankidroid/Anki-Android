@@ -32,6 +32,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
@@ -41,11 +42,13 @@ import timber.log.Timber;
 public class Storage {
 
     /* Open a new or existing collection. Path must be unicode */
+    @CheckResult
     public static Collection Collection(Context context, String path) {
         return Collection(context, path, false, false);
     }
 
     /** Helper method for when the collection can't be opened */
+    @CheckResult
     public static int getDatabaseVersion(String path) throws UnknownDatabaseVersionException {
         try {
             DB db = new DB(path);
@@ -56,9 +59,12 @@ public class Storage {
         }
     }
 
+    @CheckResult
     public static Collection Collection(Context context, String path, boolean server, boolean log) {
         return Collection(context, path, server, log, new SystemTime());
     }
+
+    @CheckResult
     public static Collection Collection(Context context, String path, boolean server, boolean log, @NonNull Time time) {
         assert path.endsWith(".anki2");
         File dbFile = new File(path);

@@ -218,6 +218,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     public String name() {
         // TODO:
         return (new File(mPath)).getName().replace(".anki2", "");
@@ -230,6 +231,7 @@ public class Collection {
      */
 
 
+    @CheckResult
     public int schedVer() {
         int ver = mConf.optInt("schedVer", fDefaultSchedulerVersion);
         if (fSupportedSchedulerVersions.contains(ver)) {
@@ -310,6 +312,7 @@ public class Collection {
 
     private static int sChunk = 0;
 
+    @CheckResult
     private int getChunk() {
         if (sChunk != 0) {
             return sChunk;
@@ -348,6 +351,7 @@ public class Collection {
         return sChunk;
     }
 
+    @CheckResult
     public String loadColumn(String columnName) {
         int pos = 1;
         StringBuilder buf = new StringBuilder();
@@ -509,11 +513,13 @@ public class Collection {
 
 
     /** True if schema changed since last sync. */
+    @CheckResult
     public boolean schemaChanged() {
         return mScm > mLs;
     }
 
 
+    @CheckResult
     public int usn() {
         if (mServer) {
             return mUsn;
@@ -550,15 +556,18 @@ public class Collection {
      * *********************************************
      */
 
+    @CheckResult
     public Card getCard(long id) {
         return new Card(this, id);
     }
 
+    @CheckResult
     public Card.Cache getCardCache(long id) {
         return new Card.Cache(this, id);
     }
 
 
+    @CheckResult
     public Note getNote(long id) {
         return new Note(this, id);
     }
@@ -568,6 +577,7 @@ public class Collection {
      * Utils ******************************************************************** ***************************
      */
 
+    @CheckResult
     public int nextID(String type) {
         type = "next" + Character.toUpperCase(type.charAt(0)) + type.substring(1);
         int id;
@@ -618,6 +628,7 @@ public class Collection {
      * Notes ******************************************************************** ***************************
      */
 
+    @CheckResult
     public int noteCount() {
         return mDb.queryScalar("SELECT count() FROM notes");
     }
@@ -626,6 +637,7 @@ public class Collection {
      * Return a new note with the default model from the deck
      * @return The new note
      */
+    @CheckResult
     public Note newNote() {
         return newNote(true);
     }
@@ -636,6 +648,7 @@ public class Collection {
      *                the configuration (curModel)
      * @return The new note
      */
+    @CheckResult
     public Note newNote(boolean forDeck) {
         return newNote(getModels().current(forDeck));
     }
@@ -645,6 +658,7 @@ public class Collection {
      * @param m The model to use for the new note
      * @return The new note
      */
+    @CheckResult
     public Note newNote(Model m) {
         return new Note(this, m);
     }
@@ -703,6 +717,7 @@ public class Collection {
      * @param note A note
      * @return (active), non-empty templates.
      */
+    @CheckResult
     public ArrayList<JSONObject> findTemplates(Note note) {
         Model model = note.model();
         ArrayList<Integer> avail = Models.availOrds(model, note.getFields());
@@ -716,6 +731,7 @@ public class Collection {
      * @return One template by element i of avail, for the i-th card. For standard template, avail should contains only existing ords.
      * for cloze, avail should contains only non-negative numbers, and the i-th card is a copy of the first card, with a different ord.
      */
+    @CheckResult
     private ArrayList<JSONObject> _tmplsFromOrds(Model model, ArrayList<Integer> avail) {
         ArrayList<JSONObject> ok = new ArrayList<>();
         JSONArray tmpls;
@@ -905,11 +921,13 @@ public class Collection {
      *             2 - when previewing in models dialog, all templates
      * @return list of cards
 	 */
-	public List<Card> previewCards(Note note, Previewing type) {
+    @CheckResult
+    public List<Card> previewCards(Note note, Previewing type) {
         int did = 0;
         return previewCards(note, type, did);
     }
 
+    @CheckResult
     public List<Card> previewCards(Note note, Previewing type, int did) {
 	    List<JSONObject> cms;
 	    switch (type) {
@@ -932,6 +950,8 @@ public class Collection {
 	    }
 	    return cards;
 	}
+
+	@CheckResult
     public List<Card> previewCards(Note note) {
         return previewCards(note, ADD);
     }
@@ -939,21 +959,25 @@ public class Collection {
     /**
      * Create a new card.
      */
+    @CheckResult
     private Card _newCard(Note note, JSONObject template, int due) {
         boolean flush = true;
         return _newCard(note, template, due, flush);
     }
 
+    @CheckResult
     private Card _newCard(Note note, JSONObject template, int due, int did) {
         boolean flush = true;
         return _newCard(note, template, due, did, flush);
     }
 
+    @CheckResult
     private Card _newCard(Note note, JSONObject template, int due, boolean flush) {
         int did = 0;
         return _newCard(note, template, due, did, flush);
     }
 
+    @CheckResult
     private Card _newCard(Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         Card card = new Card(this);
         return getNewLinkedCard(card, note, template, due, parameterDid, flush);
@@ -963,6 +987,7 @@ public class Collection {
     // you pass the Card object in. This allows you to work on 'Card' subclasses that may not have
     // actual backing store (for instance, if you are previewing unsaved changes on templates)
     // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
+    @CheckResult
     public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         long nid = note.getId();
         card.setNid(nid);
@@ -996,6 +1021,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     public int _dueForDid(long did, int due) {
         DeckConfig conf = mDecks.confForDid(did);
         // in order due?
@@ -1015,21 +1041,25 @@ public class Collection {
      * Cards ******************************************************************** ***************************
      */
 
+    @CheckResult
     public boolean isEmpty() {
         return mDb.queryScalar("SELECT 1 FROM cards LIMIT 1") == 0;
     }
 
 
+    @CheckResult
     public int cardCount() {
         return mDb.queryScalar("SELECT count() FROM cards");
     }
 
 
     // NOT IN LIBANKI //
+    @CheckResult
     public int cardCount(Long... dids) {
         return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids));
     }
 
+    @CheckResult
     public boolean isEmptyDeck(Long... dids) {
         return cardCount(dids) == 0;
     }
@@ -1061,6 +1091,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     public <T extends ProgressSender<TaskData> & CancelListener> List<Long> emptyCids(@Nullable T task) {
         List<Long> rem = new ArrayList<>();
         for (Model m : getModels().all()) {
@@ -1070,6 +1101,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     public String emptyCardReport(List<Long> cids) {
         StringBuilder rep = new StringBuilder();
         try (Cursor cur = mDb.query("select group_concat(ord+1), count(), flds from cards c, notes n "
@@ -1089,6 +1121,7 @@ public class Collection {
      * ********************************************************
      */
 
+    @CheckResult
     private ArrayList<Object[]> _fieldData(String snids) {
         ArrayList<Object[]> result = new ArrayList<>();
         try (Cursor cur = mDb.query("SELECT id, mid, flds FROM notes WHERE id IN " + snids)) {
@@ -1140,11 +1173,13 @@ public class Collection {
     /**
      * Returns hash of id, question, answer.
      */
+    @CheckResult
     public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags) {
         return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null);
     }
 
 
+    @CheckResult
     public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
@@ -1207,11 +1242,13 @@ public class Collection {
     /**
      * Return [cid, nid, mid, did, ord, tags, flds, flags] db query
      */
+    @CheckResult
     public ArrayList<Object[]> _qaData() {
         return _qaData("");
     }
 
 
+    @CheckResult
     public ArrayList<Object[]> _qaData(String where) {
         ArrayList<Object[]> data = new ArrayList<>();
         try (Cursor cur = mDb.query(
@@ -1226,6 +1263,7 @@ public class Collection {
         return data;
     }
 
+    @CheckResult
 	public String _flagNameFromCardFlags(int flags){
 		int flag = flags & 0b111;
 		if (flag == 0) {
@@ -1239,56 +1277,67 @@ public class Collection {
      */
 
     /** Return a list of card ids */
+    @CheckResult
     public List<Long> findCards(String search) {
         return new Finder(this).findCards(search, null);
     }
 
 
     /** Return a list of card ids */
+    @CheckResult
     public List<Long> findCards(String search, String order) {
         return new Finder(this).findCards(search, order);
     }
 
+    @CheckResult
     public List<Long> findCards(String search, boolean order) {
         return findCards(search, order, null);
     }
 
+    @CheckResult
     public List<Long> findCards(String search, boolean order, CollectionTask.PartialSearch task) {
         return new Finder(this).findCards(search, order, task);
     }
 
 
     /** Return a list of note ids */
+    @CheckResult
     public List<Long> findNotes(String query) {
         return new Finder(this).findNotes(query);
     }
 
 
+    @CheckResult
     public int findReplace(List<Long> nids, String src, String dst) {
         return Finder.findReplace(this, nids, src, dst);
     }
 
 
+    @CheckResult
     public int findReplace(List<Long> nids, String src, String dst, boolean regex) {
         return Finder.findReplace(this, nids, src, dst, regex);
     }
 
 
+    @CheckResult
     public int findReplace(List<Long> nids, String src, String dst, String field) {
         return Finder.findReplace(this, nids, src, dst, field);
     }
 
 
+    @CheckResult
     public int findReplace(List<Long> nids, String src, String dst, boolean regex, String field, boolean fold) {
         return Finder.findReplace(this, nids, src, dst, regex, field, fold);
     }
 
 
+    @CheckResult
     public List<Pair<String, List<Long>>> findDupes(String fieldName) {
         return Finder.findDupes(this, fieldName, "");
     }
 
 
+    @CheckResult
     public List<Pair<String, List<Long>>> findDupes(String fieldName, String search) {
         return Finder.findDupes(this, fieldName, search);
     }
@@ -1310,6 +1359,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     public long getTimeLimit() {
         return mConf.getLong("timeLim");
     }
@@ -1322,6 +1372,7 @@ public class Collection {
 
 
     /* Return (elapsedTime, reps) if timebox reached, or null. */
+    @CheckResult
     public Pair<Integer, Integer> timeboxReached() {
         if (mConf.getLong("timeLim") == 0) {
             // timeboxing disabled
@@ -1352,12 +1403,15 @@ public class Collection {
 
     /** Undo menu item name, or "" if undo unavailable. */
     @VisibleForTesting
+    @CheckResult
     public @Nullable DismissType undoType() {
         if (mUndo.size() > 0) {
             return mUndo.getLast().getDismissType();
         }
         return null;
     }
+
+    @CheckResult
     public String undoName(Resources res) {
         DismissType type = undoType();
         if (type != null) {
@@ -1366,11 +1420,13 @@ public class Collection {
         return "";
     }
 
+    @CheckResult
     public boolean undoAvailable() {
         Timber.d("undoAvailable() undo size: %s", mUndo.size());
         return mUndo.size() > 0;
     }
 
+    @CheckResult
     public @Nullable Card undo() {
         Undoable lastUndo = mUndo.removeLast();
         Timber.d("undo() of type %s", lastUndo.getDismissType());
@@ -1406,6 +1462,7 @@ public class Collection {
      * Basic integrity check for syncing. True if ok.
      */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    @CheckResult
     public boolean basicCheck() {
         // cards without notes
         if (mDb.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1") > 0) {
@@ -1439,6 +1496,7 @@ public class Collection {
 
 
     /** Fix possible problems and rebuild caches. */
+    @CheckResult
     public CheckDatabaseResult fixIntegrity(CollectionTask.ProgressCallback progressCallback) {
         File file = new File(mPath);
         CheckDatabaseResult result = new CheckDatabaseResult(file.length());
@@ -1578,6 +1636,7 @@ public class Collection {
      * </ul>
      * Both of these cases can be fixed by moving the decks to a known-good deck
      */
+    @CheckResult
     private List<String> ensureCardsHaveHomeDeck(Runnable notifyProgress, CheckDatabaseResult result) {
         Timber.d("ensureCardsHaveHomeDeck()");
 
@@ -1628,6 +1687,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private ArrayList<String> ensureModelsAreNotEmpty(Runnable notifyProgress) {
         Timber.d("ensureModelsAreNotEmpty()");
         ArrayList<String> problems = new ArrayList<>();
@@ -1639,6 +1699,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private ArrayList<String> restoreMissingDatabaseIndices(Runnable notifyProgress) {
         Timber.d("restoreMissingDatabaseIndices");
         ArrayList<String> problems = new ArrayList<>();
@@ -1652,6 +1713,7 @@ public class Collection {
         return problems;
     }
 
+    @CheckResult
     private ArrayList<String> fixDecimalCardsData(Runnable notifyProgress) {
         Timber.d("fixDecimalCardsData");
         ArrayList<String> problems = new ArrayList<>();
@@ -1666,6 +1728,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private ArrayList<String> fixDecimalRevLogData(Runnable notifyProgress) {
         Timber.d("fixDecimalRevLogData()");
         ArrayList<String> problems = new ArrayList<>();
@@ -1680,6 +1743,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private ArrayList<String> fixExcessiveReviewDueDates(Runnable notifyProgress) {
         Timber.d("fixExcessiveReviewDueDates()");
         ArrayList<String> problems = new ArrayList<>();
@@ -1704,6 +1768,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private List<String> fixNewCardDuePositionOverflow(Runnable notifyProgress) {
         Timber.d("fixNewCardDuePositionOverflow");
         // new cards can't have a due position > 32 bits
@@ -1757,6 +1822,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private ArrayList<String> removeDynamicPropertyFromNonDynamicDecks(Runnable notifyProgress) {
         Timber.d("removeDynamicPropertyFromNonDynamicDecks()");
         ArrayList<String> problems = new ArrayList<>();
@@ -1779,6 +1845,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private ArrayList<String> removeOriginalDuePropertyWhereInvalid(Runnable notifyProgress) {
         Timber.d("removeOriginalDuePropertyWhereInvalid()");
         ArrayList<String> problems = new ArrayList<>();
@@ -1795,6 +1862,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private ArrayList<String> deleteCardsWithMissingNotes(Runnable notifyProgress) {
         Timber.d("deleteCardsWithMissingNotes()");
         ArrayList<String> problems = new ArrayList<>();
@@ -1811,6 +1879,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private ArrayList<String> deleteNotesWithMissingCards(Runnable notifyProgress) {
         Timber.d("deleteNotesWithMissingCards()");
         ArrayList<String> problems = new ArrayList<>();
@@ -1827,6 +1896,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private ArrayList<String> deleteNotesWithWrongFieldCounts(Runnable notifyProgress, JSONObject m) throws JSONException {
         Timber.d("deleteNotesWithWrongFieldCounts");
         ArrayList<String> problems = new ArrayList<>();
@@ -1877,6 +1947,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, JSONObject m) throws JSONException {
         Timber.d("deleteCardsWithInvalidModelOrdinals()");
         ArrayList<String> problems = new ArrayList<>();
@@ -1900,6 +1971,7 @@ public class Collection {
     }
 
 
+    @CheckResult
     private ArrayList<String> deleteNotesWithMissingModel(Runnable notifyProgress) {
         Timber.d("deleteNotesWithMissingModel()");
         ArrayList<String> problems = new ArrayList<>();
@@ -2030,16 +2102,19 @@ public class Collection {
      * Getters/Setters ********************************************************** *************************************
      */
 
+    @CheckResult
     public DB getDb() {
         return mDb;
     }
 
 
+    @CheckResult
     public Decks getDecks() {
         return mDecks;
     }
 
 
+    @CheckResult
     public Media getMedia() {
         return mMedia;
     }
@@ -2058,6 +2133,7 @@ public class Collection {
      *
      * @return The model manager
      */
+    @CheckResult
     public synchronized Models getModels() {
         if (mModels == null) {
             mModels = new Models(this);
@@ -2068,11 +2144,13 @@ public class Collection {
 
     /** Check if this collection is valid. */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    @CheckResult
     public boolean validCollection() {
     	//TODO: more validation code
     	return getModels().validateModel();
     }
 
+    @CheckResult
     public JSONObject getConf() {
         return mConf;
     }
@@ -2091,11 +2169,13 @@ public class Collection {
     }
 
 
+    @CheckResult
     public long getScm() {
         return mScm;
     }
 
 
+    @CheckResult
     public boolean getServer() {
         return mServer;
     }
@@ -2111,30 +2191,36 @@ public class Collection {
     }
 
 
+    @CheckResult
     public long getMod() {
         return mMod;
     }
 
 
     /* this getter is only for syncing routines, use usn() instead elsewhere */
+    @CheckResult
     public int getUsnForSync() {
         return mUsn;
     }
 
 
+    @CheckResult
     public Tags getTags() {
         return mTags;
     }
 
 
+    @CheckResult
     public long getCrt() {
         return mCrt;
     }
 
+    @CheckResult
     public Calendar crtCalendar() {
         return Time.calendar(getCrt() * 1000);
     }
 
+    @CheckResult
     public GregorianCalendar crtGregorianCalendar() {
         return Time.gregorianCalendar(getCrt() * 1000);
     }
@@ -2145,11 +2231,13 @@ public class Collection {
     }
 
 
+    @CheckResult
     public AbstractSched getSched() {
         return mSched;
     }
 
 
+    @CheckResult
     public String getPath() {
         return mPath;
     }
@@ -2159,6 +2247,7 @@ public class Collection {
         mServer = server;
     }
 
+    @CheckResult
     public boolean getDirty() {
         return mDty;
     }
@@ -2166,6 +2255,7 @@ public class Collection {
     /**
      * @return The context that created this Collection.
      */
+    @CheckResult
     public Context getContext() {
         return mContext;
     }
@@ -2176,6 +2266,7 @@ public class Collection {
         return getDb().queryLongList("select id from cards where id in " + Utils.ids2str(cards));
     }
 
+    @CheckResult
     public int queryVer() throws UnknownDatabaseVersionException {
         try {
             return getDb().queryScalar("select ver from col");
@@ -2185,6 +2276,7 @@ public class Collection {
     }
 
     //This duplicates _loadScheduler (but returns the value and sets the report limit).
+    @CheckResult
     public AbstractSched createScheduler(int reportLimit) {
         int ver = schedVer();
         if (ver == 1) {
@@ -2225,16 +2317,19 @@ public class Collection {
             this.mFixedCardsWithNoHomeDeckCount = count;
         }
 
+        @CheckResult
         public boolean hasProblems() {
             return mProblems.size() > 0;
         }
 
 
+        @CheckResult
         public List<String> getProblems() {
             return mProblems;
         }
 
 
+        @CheckResult
         public int getCardsWithFixedHomeDeckCount() {
             return mFixedCardsWithNoHomeDeckCount;
         }
@@ -2243,6 +2338,7 @@ public class Collection {
             this.mNewSize = size;
         }
 
+        @CheckResult
         public double getSizeChangeInKb() {
             return (mOldSize - mNewSize) / 1024.0;
         }
@@ -2266,17 +2362,20 @@ public class Collection {
             mLocked = value;
         }
 
+        @CheckResult
         public boolean getDatabaseLocked() {
             return mLocked;
         }
 
 
+        @CheckResult
         public boolean getFailed() {
             return mFailed;
         }
     }
 
     @NonNull
+    @CheckResult
     public Time getTime() {
         return mTime;
     }

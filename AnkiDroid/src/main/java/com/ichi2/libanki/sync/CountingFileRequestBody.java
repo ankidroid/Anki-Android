@@ -19,6 +19,7 @@ package com.ichi2.libanki.sync;
 import java.io.File;
 import java.io.IOException;
 
+import androidx.annotation.CheckResult;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.internal.Util;
@@ -45,11 +46,13 @@ public class CountingFileRequestBody extends RequestBody {
     }
 
     @Override
+    @CheckResult
     public long contentLength() {
         return file.length();
     }
 
     @Override
+    @CheckResult
     public MediaType contentType() {
         return MediaType.parse(contentType);
     }

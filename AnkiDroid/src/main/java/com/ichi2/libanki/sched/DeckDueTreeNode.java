@@ -7,6 +7,7 @@ import com.ichi2.utils.JSONObject;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 
 /**
@@ -32,12 +33,14 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
     }
 
     @Override
+    @CheckResult
     public @NonNull String toString() {
         return String.format(Locale.US, "%s, %d, %d, %d, %d, %s",
                              getFullDeckName(), getDid(), mRevCount, mLrnCount, mNewCount, getChildren());
     }
 
 
+    @CheckResult
     public int getRevCount() {
         return mRevCount;
     }
@@ -46,6 +49,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
         mRevCount = Math.max(0, Math.min(mRevCount, limit));
     }
 
+    @CheckResult
     public int getNewCount() {
         return mNewCount;
     }
@@ -54,6 +58,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
         mNewCount = Math.max(0, Math.min(mNewCount, limit));
     }
 
+    @CheckResult
     public int getLrnCount() {
         return mLrnCount;
     }
@@ -80,6 +85,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
     }
 
     @Override
+    @CheckResult
     public int hashCode() {
         int childrenHash = getChildren() == null ? 0 : getChildren().hashCode();
         return getFullDeckName().hashCode() + mRevCount + mLrnCount + mNewCount + childrenHash;
@@ -92,6 +98,7 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
      * @return
      */
     @Override
+    @CheckResult
     public boolean equals(Object object) {
         if (!(object instanceof DeckDueTreeNode)) {
             return false;
@@ -107,21 +114,25 @@ public class DeckDueTreeNode extends AbstractDeckTreeNode<DeckDueTreeNode> {
     }
 
     /** Line representing this string without its children. Used in timbers only. */
+    @CheckResult
     protected String toStringLine() {
         return String.format(Locale.US, "%s, %d, %d, %d, %d\n",
                              getFullDeckName(), getDid(), mRevCount, mLrnCount, mNewCount);
     }
 
+    @CheckResult
     public boolean shouldDisplayCounts() {
         return true;
     }
 
+    @CheckResult
     public boolean knownToHaveRep() {
         return mRevCount > 0 || mNewCount > 0 || mLrnCount > 0;
     }
 
 
     @Override
+    @CheckResult
     public DeckDueTreeNode withChildren(List<DeckDueTreeNode> children) {
         Collection col = getCol();
         String name = getFullDeckName();

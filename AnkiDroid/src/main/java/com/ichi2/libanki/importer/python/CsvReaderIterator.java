@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
@@ -54,6 +55,7 @@ public class CsvReaderIterator implements Iterator<List<String>> {
 
 
     @Override
+    @CheckResult
     public boolean hasNext() {
         return this.reader.input_iter.hasNext();
     }

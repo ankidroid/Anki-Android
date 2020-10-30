@@ -29,6 +29,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.text.Spanned;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import android.os.StatFs;
 import android.util.Pair;
@@ -126,6 +127,7 @@ public class Utils {
      * @return The time quantity string. Something like "3 s" or "1.7
      * yr". Only months and year have a number after the decimal.
      */
+    @CheckResult
     public static String timeQuantityTopDeckPicker(Context context, long time_s) {
         Resources res = context.getResources();
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
@@ -157,6 +159,7 @@ public class Utils {
      * @return The time quantity string. Something like "3 s" or "1.7
      * yr". Only months and year have a number after the decimal.
      */
+    @CheckResult
     public static String timeQuantityNextIvl(Context context, long time_s) {
         Resources res = context.getResources();
         // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
@@ -183,6 +186,7 @@ public class Utils {
      * @param time_s The time to format, in seconds
      * @return The time quantity string. Something like "3 minutes left" or "2 hours left".
      */
+    @CheckResult
     public static String remainingTime(Context context, long time_s) {
         int time_x;  // Time in unit x
         int remaining_seconds; // Time not counted in the number in unit x
@@ -216,6 +220,7 @@ public class Utils {
      * @return The formatted, localized time string. The time is always an integer.
      *  e.g. something like "3 seconds" or "1 year".
      */
+    @CheckResult
     public static String timeSpan(Context context, long time_s) {
         int time_x;  // Time in unit x
         Resources res = context.getResources();
@@ -249,6 +254,7 @@ public class Utils {
      * @param time_s The time to format, in seconds
      * @return The formatted, localized time string. The time is always a float. E.g. "27.0 days"
      */
+    @CheckResult
     public static String roundedTimeSpanUnformatted(Context context, long time_s) {
         // As roundedTimeSpan, but without tags; for place where you don't use HTML
         return roundedTimeSpan(context, time_s).replace("<b>", "").replace("</b>", "");
@@ -263,6 +269,7 @@ public class Utils {
      * @param time_s The time to format, in seconds
      * @return The formatted, localized time string. The time is always a float. E.g. "<b>27.0</b> days"
      */
+    @CheckResult
     public static String roundedTimeSpan(Context context, long time_s) {
         if (Math.abs(time_s) < TIME_DAY) {
             return context.getResources().getString(R.string.stats_overview_hours, time_s/TIME_HOUR);
@@ -291,6 +298,7 @@ public class Utils {
      * @param s The HTML text to be cleaned.
      * @return The text without the aforementioned tags.
      */
+    @CheckResult
     public static String stripHTML(String s) {
         s = stripHTMLScriptAndStyleTags(s);
         Matcher htmlMatcher = tagPattern.matcher(s);
@@ -303,6 +311,7 @@ public class Utils {
      * @param s The HTML text to be cleaned.
      * @return The text without the aforementioned tags.
      */
+    @CheckResult
     public static String stripHTMLScriptAndStyleTags(String s) {
         Matcher htmlMatcher = stylePattern.matcher(s);
         s = htmlMatcher.replaceAll("");
@@ -314,11 +323,13 @@ public class Utils {
     /**
      * Strip HTML but keep media filenames
      */
+    @CheckResult
     public static String stripHTMLMedia(@NonNull String s) {
         return stripHTMLMedia(s, " $1 ");
     }
 
 
+    @CheckResult
     public static String stripHTMLMedia(@NonNull String s, String replacement) {
         Matcher imgMatcher = imgPattern.matcher(s);
         return stripHTML(imgMatcher.replaceAll(replacement));
@@ -328,11 +339,13 @@ public class Utils {
     /**
      * Strip sound but keep media filenames
      */
+    @CheckResult
     public static String stripSoundMedia(String s) {
         return stripSoundMedia(s, " $1 ");
     }
 
 
+    @CheckResult
     public static String stripSoundMedia(String s, String replacement) {
         Matcher soundMatcher = soundPattern.matcher(s);
         return soundMatcher.replaceAll(replacement);
@@ -347,6 +360,7 @@ public class Utils {
      * @param html The HTML escaped text
      * @return The text with its HTML entities unescaped.
      */
+    @CheckResult
     private static String entsToTxt(String html) {
         // entitydefs defines nbsp as \xa0 instead of a standard space, so we
         // replace it first
@@ -368,6 +382,7 @@ public class Utils {
      */
 
     /** Given a list of integers, return a string '(int1,int2,...)'. */
+    @CheckResult
     public static String ids2str(int[] ids) {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
@@ -381,6 +396,7 @@ public class Utils {
 
 
     /** Given a list of integers, return a string '(int1,int2,...)'. */
+    @CheckResult
     public static String ids2str(long[] ids) {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
@@ -393,6 +409,7 @@ public class Utils {
     }
 
     /** Given a list of integers, return a string '(int1,int2,...)'. */
+    @CheckResult
     public static String ids2str(Long[] ids) {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
@@ -405,6 +422,7 @@ public class Utils {
     }
 
     /** Given a list of integers, return a string '(int1,int2,...)', in order given by the iterator. */
+    @CheckResult
     public static <T> String ids2str(Iterable<T> ids) {
         StringBuilder sb = new StringBuilder(512);
         sb.append("(");
@@ -423,6 +441,7 @@ public class Utils {
 
 
     /** Given a list of integers, return a string '(int1,int2,...)'. */
+    @CheckResult
     public static String ids2str(JSONArray ids) {
         StringBuilder str = new StringBuilder(512);
         str.append("(");
@@ -447,6 +466,7 @@ public class Utils {
 
     /** LIBANKI: not in libanki
      *  Transform a collection of Long into an array of Long */
+    @CheckResult
     public static long[] collection2Array(java.util.Collection<Long> list) {
         long[] ar = new long[list.size()];
         int i = 0;
@@ -456,12 +476,14 @@ public class Utils {
         return ar;
     }
 
+    @CheckResult
     public static Long[] list2ObjectArray(List<Long> list) {
         return list.toArray(new Long[0]);
     }
 
 
     // used in ankiweb
+    @CheckResult
     private static String base62(int num, String extra) {
         String table = ALL_CHARACTERS + extra;
         int len = table.length();
@@ -476,22 +498,26 @@ public class Utils {
     }
 
     // all printable characters minus quotes, backslash and separators
+    @CheckResult
     private static String base91(int num) {
         return base62(num, BASE91_EXTRA_CHARS);
     }
 
 
     /** return a base91-encoded 64bit random number */
+    @CheckResult
     public static String guid64() {
         return base91((new Random()).nextInt((int) (Math.pow(2, 61) - 1)));
     }
 
     // increment a guid by one, for note type conflicts
     @SuppressWarnings({"unused"}) //used in Anki
+    @CheckResult
     public static String incGuid(String guid) {
         return new StringBuffer(_incGuid(new StringBuffer(guid).reverse().toString())).reverse().toString();
     }
 
+    @CheckResult
     private static String _incGuid(String guid) {
         String table = ALL_CHARACTERS + BASE91_EXTRA_CHARS;
         int idx = table.indexOf(guid.substring(0, 1));
@@ -505,6 +531,7 @@ public class Utils {
     }
 
 
+    @CheckResult
     public static Object[] jsonArray2Objects(JSONArray array) {
         Object[] o = new Object[array.length()];
         for (int i = 0; i < array.length(); i++) {
@@ -518,6 +545,7 @@ public class Utils {
      * ***********************************************************************************************
      */
 
+    @CheckResult
     public static String joinFields(String[] list) {
         StringBuilder result = new StringBuilder(128);
         for (int i = 0; i < list.length - 1; i++) {
@@ -530,6 +558,7 @@ public class Utils {
     }
 
 
+    @CheckResult
     public static String[] splitFields(String fields) {
         // -1 ensures that we don't drop empty fields at the ends
         return fields.split(FIELD_SEPARATOR, -1);
@@ -548,6 +577,7 @@ public class Utils {
      * @return A string of length 40 containing the hexadecimal representation of the MD5 checksum of data.
      */
     @SuppressWarnings("CharsetObjectCanBeUsed")
+    @CheckResult
     public static String checksum(String data) {
         String result = "";
         if (data != null) {
@@ -585,6 +615,7 @@ public class Utils {
      * @param sortIdx An index of the field
      * @return The field at sortIdx, without html media, and the csum of the first field.
      */
+    @CheckResult
     public static Pair<String, Long> sfieldAndCsum(String[] fields, int sortIdx) {
         String firstStripped = stripHTMLMedia(fields[0]);
         String sortStripped = (sortIdx == 0) ?  firstStripped: stripHTMLMedia(fields[sortIdx]);
@@ -595,6 +626,7 @@ public class Utils {
      * @param data the string to generate hash from.
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
+    @CheckResult
     public static long fieldChecksum(String data) {
         return fieldChecksumWithoutHtmlMedia(stripHTMLMedia(data));
     }
@@ -603,6 +635,7 @@ public class Utils {
      * @param data the string to generate hash from. Html media should be removed
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
+    @CheckResult
     public static long fieldChecksumWithoutHtmlMedia(String data) {
         return Long.valueOf(checksum(data).substring(0, 8), 16);
     }
@@ -612,6 +645,7 @@ public class Utils {
      * @param file The file to be checked
      * @return A string of length 32 containing the hexadecimal representation of the SHA1 checksum of the file's contents.
      */
+    @CheckResult
     public static String fileChecksum(String file) {
         byte[] buffer = new byte[1024];
         byte[] digest = null;
@@ -644,6 +678,7 @@ public class Utils {
     }
 
 
+    @CheckResult
     public static String fileChecksum(File file) {
         return fileChecksum(file.getAbsolutePath());
     }
@@ -660,6 +695,7 @@ public class Utils {
      * @param is InputStream to convert
      * @return String version of the InputStream
      */
+    @CheckResult
     public static String convertStreamToString(InputStream is) {
         String contentOfMyInputStream = "";
         try {
@@ -738,6 +774,7 @@ public class Utils {
      * @return true if the file path is inside the directory
      * @exception IOException if there are security or filesystem issues determining the paths
      */
+    @CheckResult
     public static boolean isInside(@NonNull File file, @NonNull File dir) throws IOException {
         return file.getCanonicalPath().startsWith(dir.getCanonicalPath());
     }
@@ -749,6 +786,7 @@ public class Utils {
      * @param zipFile ZipFile of unknown total uncompressed size
      * @return total uncompressed size of zipFile
      */
+    @CheckResult
     public static long calculateUncompressedSize(ZipFile zipFile) {
 
         long totalUncompressedSize = 0;
@@ -768,6 +806,7 @@ public class Utils {
      * @param path the filesystem path you need free space information on
      * @return long indicating the bytes available for that path
      */
+    @CheckResult
     public static long determineBytesAvailable(String path) {
         return CompatHelper.getCompat().getAvailableBytes(new StatFs(path));
     }
@@ -841,11 +880,13 @@ public class Utils {
      * @param action The Intent action to check for availability.
      * @return True if an Intent with the specified action can be sent and responded to, false otherwise.
      */
+    @CheckResult
     public static boolean isIntentAvailable(Context context, String action) {
         return isIntentAvailable(context, action, null);
     }
 
 
+    @CheckResult
     public static boolean isIntentAvailable(Context context, String action, ComponentName componentName) {
         final PackageManager packageManager = context.getPackageManager();
         final Intent intent = new Intent(action);
@@ -858,6 +899,7 @@ public class Utils {
      * @param mediaDir media directory path on SD card
      * @return path converted to file URL, properly UTF-8 URL encoded
      */
+    @CheckResult
     public static String getBaseUrl(String mediaDir) {
         // Use android.net.Uri class to ensure whole path is properly encoded
         // File.toURL() does not work here, and URLEncoder class is not directly usable
@@ -876,6 +918,7 @@ public class Utils {
      * @param array The input with type Long[]
      * @return The output with type long[]
      */
+    @CheckResult
     public static long[] toPrimitive(Collection<Long> array) {
         if (array == null) {
             return null;
@@ -893,6 +936,7 @@ public class Utils {
      * 0 - file name
      * 1 - extension
      */
+    @CheckResult
     public static String[] splitFilename(String filename) {
         String name = filename;
         String ext = "";
@@ -906,6 +950,7 @@ public class Utils {
 
 
     /** Returns a list of files for the installed custom fonts. */
+    @CheckResult
     public static List<AnkiFont> getCustomFonts(Context context) {
         String deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context);
         String fontsPath = deckPath + "/fonts/";
@@ -953,6 +998,7 @@ public class Utils {
 
 
     /** Returns a list of apkg-files. */
+    @CheckResult
     public static List<File> getImportableDecks(Context context) {
         String deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context);
         File dir = new File(deckPath);
@@ -986,6 +1032,7 @@ public class Utils {
      * @return the json serialization of the object
      * @see org.json.JSONObject#toString()
      */
+    @CheckResult
     public static String jsonToString(JSONObject json) {
         return json.toString().replaceAll("\\\\/", "/");
     }
@@ -1000,6 +1047,7 @@ public class Utils {
      * @return the json serialization of the object
      * @see org.json.JSONArray#toString()
      */
+    @CheckResult
     public static String jsonToString(JSONArray json) {
         return json.toString().replaceAll("\\\\/", "/");
     }
@@ -1008,6 +1056,7 @@ public class Utils {
      * @return A description of the device, including the model and android version. No commas are present in the
      * returned string.
      */
+    @CheckResult
     public static String platDesc() {
         // AnkiWeb reads this string and uses , and : as delimiters, so we remove them.
         String model = android.os.Build.MODEL.replace(',', ' ').replace(':', ' ');
@@ -1023,6 +1072,7 @@ public class Utils {
      * @param txt Text to be normalized
      * @return The input text in its NFC normalized form form.
     */
+    @CheckResult
     public static String nfcNormalized(String txt) {
         if (!Normalizer.isNormalized(txt, Normalizer.Form.NFC)) {
             return Normalizer.normalize(txt, Normalizer.Form.NFC);
@@ -1039,6 +1089,7 @@ public class Utils {
      * @param htmlText the text to convert
      * @return the unescaped text
      */
+    @CheckResult
     public static String unescape(String htmlText) {
         return CompatHelper.getCompat().fromHtml(htmlText).toString();
     }
@@ -1047,6 +1098,7 @@ public class Utils {
     /**
      * Return a random float within the range of min and max.
      */
+    @CheckResult
     public static float randomFloatInRange(float min, float max) {
         Random rand = new Random();
         return rand.nextFloat() * (max - min) + min;
@@ -1063,6 +1115,7 @@ public class Utils {
        @return whether there was a non-zero usn; in this case the list
        should be saved before the upload.
      */
+    @CheckResult
     public static boolean markAsUploaded(ArrayList<? extends JSONObject> ar) {
         boolean changed = false;
         for (JSONObject obj: ar) {
@@ -1082,6 +1135,7 @@ public class Utils {
      * @return Whether both objects are equal.
      */
     // Similar as Objects.equals. So deprecated starting at API Level 19 where this methods exists.
+    @CheckResult
     public static <T> boolean equals(@Nullable T left, @Nullable T right) {
         //noinspection EqualsReplaceableByObjectsCall
         return left == right || (left != null && left.equals(right));
@@ -1091,6 +1145,7 @@ public class Utils {
      * @param sflds Some fields
      * @return Array with the same elements, trimmed
      */
+    @CheckResult
     public static @NonNull String[] trimArray(@NonNull String[] sflds) {
         int nbField = sflds.length;
         String[] fields = new String[nbField];

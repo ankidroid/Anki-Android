@@ -4,6 +4,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.utils.JSONObject;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.StringRes;
 
 public class StdModels {
@@ -25,11 +26,13 @@ public class StdModels {
         this.defaultName = defaultName;
     }
 
+    @CheckResult
     private Model _new(Models mm) {
         String name = getDefaultName();
         return _new(mm, name);
     }
 
+    @CheckResult
     private Model _new(Models mm, String name) {
         return fun.create(mm, name);
     }
@@ -48,6 +51,7 @@ public class StdModels {
         return model;
     }
 
+    @CheckResult
     public String getDefaultName() {
         return AnkiDroidApp.getAppResources().getString(defaultName);
     }

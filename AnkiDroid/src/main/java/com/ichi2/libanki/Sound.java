@@ -46,6 +46,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -99,6 +100,7 @@ public class Sound {
         SoundSide(int i) {
             mInt = i;
         }
+        @CheckResult
         public int getInt() {
             return mInt;
         }
@@ -197,6 +199,7 @@ public class Sound {
      * @param content -- card content to be rendered that may contain embedded audio
      * @return -- the same content but in a format that will render working play buttons when audio was embedded
      */
+    @CheckResult
     public static String expandSounds(String soundDir, String content) {
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
@@ -259,6 +262,7 @@ public class Sound {
      * Returns length in milliseconds.
      * @param qa -- One of SoundSide.SOUNDS_QUESTION, SoundSide.SOUNDS_ANSWER, or SoundSide.SOUNDS_QUESTION_AND_ANSWER
      */
+    @CheckResult
     public long getSoundsLength(SoundSide qa) {
         long length = 0;
         if (mSoundPaths != null && (qa == SoundSide.QUESTION_AND_ANSWER && makeQuestionAnswerList() || mSoundPaths.containsKey(qa))) {
@@ -509,13 +513,16 @@ public class Sound {
         mCallingActivity = activityRef;
     }
 
+    @CheckResult
     public OnCompletionListener getMediaCompletionListener() {
         return mPlayAllListener;
     }
 
+    @CheckResult
     public boolean hasQuestion() {
         return mSoundPaths.containsKey(SoundSide.QUESTION);
     }
+    @CheckResult
     public boolean hasAnswer() {
         return mSoundPaths.containsKey(SoundSide.ANSWER);
     }

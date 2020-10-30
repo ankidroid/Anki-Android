@@ -71,6 +71,7 @@ public class CsvReader implements Iterable<List<String>> {
 
     @NonNull
     @Override
+    @CheckResult
     public Iterator<List<String>> iterator() {
         if (this.iter == null) {
             this.iter = new CsvReaderIterator(this);

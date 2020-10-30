@@ -7,6 +7,8 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 
+import androidx.annotation.CheckResult;
+
 public class ViewAnimation {
 
     public static final int SLIDE_IN_FROM_RIGHT = 0;
@@ -20,6 +22,7 @@ public class ViewAnimation {
     public static final int FADE_OUT = 1;
 
 
+    @CheckResult
     public static Animation slide(int type, int duration, int offset) {
         Animation animation;
         switch (type) {
@@ -62,6 +65,7 @@ public class ViewAnimation {
     }
 
 
+    @CheckResult
     public static Animation fade(int type, int duration, int offset) {
         Animation animation = new AlphaAnimation((float) type, 1.0f - (float) type);
         animation.setDuration(duration);

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 
 public class StringUtils {
@@ -28,6 +29,7 @@ public class StringUtils {
 
     /** Equivalent to the python string.split() */
     @NonNull
+    @CheckResult
     public static List<String> splitOnWhitespace(@NonNull String value) {
         String[] split = WHITESPACE_PATTERN.split(value);
         List<String> ret = new ArrayList<>();

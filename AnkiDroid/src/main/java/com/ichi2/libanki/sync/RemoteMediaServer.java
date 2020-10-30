@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.zip.ZipFile;
 
+import androidx.annotation.CheckResult;
 import okhttp3.Response;
 import timber.log.Timber;
 
@@ -56,6 +57,7 @@ public class RemoteMediaServer extends HttpSyncer {
 
 
     @Override
+    @CheckResult
     public String syncURL() {
         // Allow user to specify custom sync server
         SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());

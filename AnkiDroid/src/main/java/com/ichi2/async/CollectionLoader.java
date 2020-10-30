@@ -1,5 +1,6 @@
 package com.ichi2.async;
 
+import androidx.annotation.CheckResult;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import android.os.AsyncTask;
@@ -29,6 +30,7 @@ public final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
     }
 
     @Override
+    @CheckResult
     protected Collection doInBackground(Void... params) {
         // Don't touch collection if lockCollection flag is set
         if (CollectionHelper.getInstance().isCollectionLocked()) {

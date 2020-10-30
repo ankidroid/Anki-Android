@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -90,6 +91,7 @@ public class DB {
     }
 
 
+    @CheckResult
     private SupportSQLiteOpenHelper.Factory getSqliteOpenHelperFactory() {
         if (sqliteOpenHelperFactory == null) {
             return new RequerySQLiteOpenHelperFactory();
@@ -99,6 +101,7 @@ public class DB {
 
 
     /** Get the SQLite callback object to use when creating connections - overridable for testability */
+    @CheckResult
     protected SupportSQLiteOpenHelperCallback getDBCallback() {
         return new SupportSQLiteOpenHelperCallback(1);
     }
@@ -152,6 +155,7 @@ public class DB {
     }
 
 
+    @CheckResult
     public SupportSQLiteDatabase getDatabase() {
         return mDatabase;
     }
@@ -162,11 +166,13 @@ public class DB {
     }
 
 
+    @CheckResult
     public boolean getMod() {
         return mMod;
     }
 
     // Allows to avoid using new Object[]
+    @CheckResult
     public Cursor query(String query, Object... selectionArgs) {
         return mDatabase.query(query, selectionArgs);
     }
@@ -177,6 +183,7 @@ public class DB {
      * @param query The raw SQL query to use.
      * @return The integer result of the query.
      */
+    @CheckResult
     public int queryScalar(String query, Object... selectionArgs) {
         Cursor cursor = null;
         int scalar;
@@ -195,6 +202,7 @@ public class DB {
     }
 
 
+    @CheckResult
     public String queryString(String query, Object... bindArgs) throws SQLException {
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             if (!cursor.moveToNext()) {
@@ -205,6 +213,7 @@ public class DB {
     }
 
 
+    @CheckResult
     public long queryLongScalar(String query, Object... bindArgs) {
         long scalar;
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
@@ -224,6 +233,7 @@ public class DB {
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
+    @CheckResult
     public ArrayList<Long> queryLongList(String query, Object... bindArgs) {
         ArrayList<Long> results = new ArrayList<>();
 
@@ -242,6 +252,7 @@ public class DB {
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
+    @CheckResult
     public ArrayList<String> queryStringList(String query, Object... bindArgs) {
         ArrayList<String> results = new ArrayList<>();
 
@@ -326,6 +337,7 @@ public class DB {
     /**
      * @return The full path to this database file.
      */
+    @CheckResult
     public String getPath() {
         return mDatabase.getPath();
     }

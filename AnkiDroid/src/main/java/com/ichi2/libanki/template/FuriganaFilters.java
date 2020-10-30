@@ -19,11 +19,14 @@ package com.ichi2.libanki.template;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
+
 public class FuriganaFilters {
     private static final Pattern r = Pattern.compile(" ?([^ >]+?)\\[(.+?)]");
 
     private static final String RUBY = "<ruby><rb>$1</rb><rt>$2</rt></ruby>";
 
+    @CheckResult
     private static String noSound(Matcher match, String repl) {
         if (match.group(2).startsWith("sound:")) {
             // return without modification
@@ -33,6 +36,7 @@ public class FuriganaFilters {
         }
     }
 
+    @CheckResult
     public static String kanjiFilter(String txt) {
         Matcher m = r.matcher(txt);
         StringBuffer sb = new StringBuffer();
@@ -43,6 +47,7 @@ public class FuriganaFilters {
         return sb.toString();
     }
 
+    @CheckResult
     public static String kanaFilter(String txt) {
         Matcher m = r.matcher(txt);
         StringBuffer sb = new StringBuffer();
@@ -53,6 +58,7 @@ public class FuriganaFilters {
         return sb.toString();
     }
 
+    @CheckResult
     public static String furiganaFilter(String txt) {
         Matcher m = r.matcher(txt);
         StringBuffer sb = new StringBuffer();

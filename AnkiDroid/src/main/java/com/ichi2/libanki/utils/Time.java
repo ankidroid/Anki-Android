@@ -24,23 +24,29 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import androidx.annotation.CheckResult;
+
 /** Allows injection of time dependencies */
 public abstract class Time {
 
     /** Date of this time */
+    @CheckResult
     public Date getCurrentDate() {
         return new Date(intTimeMS());
     }
 
     /**The time in integer seconds. */
+    @CheckResult
     public long intTime() {
         return intTimeMS() / 1000L;
     }
 
 
+    @CheckResult
     public abstract long intTimeMS();
 
     /** Calendar for this date */
+    @CheckResult
     public Calendar calendar() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(getCurrentDate());
@@ -48,6 +54,7 @@ public abstract class Time {
     }
 
     /** Gregorian calendar for this date */
+    @CheckResult
     public GregorianCalendar gregorianCalendar() {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(getCurrentDate());
@@ -55,6 +62,7 @@ public abstract class Time {
     }
 
     /** Return a non-conflicting timestamp for table. */
+    @CheckResult
     public long timestampID(DB db, String table) {
         // be careful not to create multiple objects without flushing them, or they
         // may share an ID.
@@ -66,6 +74,7 @@ public abstract class Time {
     }
 
     /** Return the first safe ID to use. */
+    @CheckResult
     public long maxID(DB db) {
         long now = intTimeMS();
         now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
@@ -73,12 +82,14 @@ public abstract class Time {
         return now + 1;
     }
 
+    @CheckResult
     public static Calendar calendar(long timeInMS) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeInMS);
         return calendar;
     }
 
+    @CheckResult
     public static GregorianCalendar gregorianCalendar(long timeInMS) {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTimeInMillis(timeInMS);
@@ -89,6 +100,7 @@ public abstract class Time {
     /**
      * Calculate the UTC offset
      */
+    @CheckResult
     public static double utcOffset() {
         // Okay to use real time, as the result does not depends on time at all here
         Calendar cal = Calendar.getInstance();
@@ -108,6 +120,7 @@ public abstract class Time {
      * @param utcOffset The UTC offset in seconds we are going to use to determine today or yesterday.
      * @return The date (with time set to 00:00:00) that corresponds to today in Anki terms
      */
+    @CheckResult
     public java.sql.Date genToday(double utcOffset) {
         // The result is not adjusted for timezone anymore, following libanki model
         // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()

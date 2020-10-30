@@ -44,6 +44,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import okhttp3.Response;
@@ -86,6 +87,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 AnkiDroidApp.getAppResources().getString(R.string.app_name) + ":Connection");
     }
 
+    @CheckResult
     private static Connection launchConnectionTask(TaskListener listener, Payload data) {
 
         if (!isOnline()) {
@@ -110,6 +112,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
     }
 
 
+    @CheckResult
     public static boolean getAllowSyncOnNoConnection() {
         return sAllowSyncOnNoConnection;
     }

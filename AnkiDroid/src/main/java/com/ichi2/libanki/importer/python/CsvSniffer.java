@@ -35,6 +35,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
@@ -51,6 +52,7 @@ public class CsvSniffer {
 
 
 
+    @CheckResult
     public CsvDialect sniff(String sample, char[] delimiters) {
 
         List<Character> delimiterList = toList(delimiters);
@@ -82,6 +84,7 @@ public class CsvSniffer {
     }
 
 
+    @CheckResult
     private List<Character> toList(@Nullable char[] delimiters) {
         ArrayList<Character> ret = new ArrayList<>();
         if (delimiters == null) {
@@ -104,6 +107,7 @@ public class CsvSniffer {
      *  If there is no quotechar the delimiter can't be determined
      *  this way.
      */
+    @CheckResult
     private GuessQuoteAndDelimiter _guess_quote_and_delimiter(String data, List<Character> delimiters) {
         ArrayList<String> regexes = new ArrayList<>();
         regexes.add("(?<delim>[^\\w\\n\"'])(?<space> ?)(?<quote>[\"']).*?\\k<quote>\\k<delim>"); // ,".*?",
@@ -182,6 +186,7 @@ public class CsvSniffer {
     }
 
 
+    @CheckResult
     private char getCharOrNull(Matcher m, String delim) {
         String group = m.group(delim);
         if (group == null || group.length() == 0) {
@@ -208,6 +213,7 @@ public class CsvSniffer {
      * try and evaluate the smallest portion of the data possible, evaluating
      * additional chunks as necessary.
      */
+    @CheckResult
     private Guess _guess_delimiter(String input, List<Character> delimiters) {
 
         // remove falsey values
@@ -337,6 +343,7 @@ public class CsvSniffer {
     }
 
 
+    @CheckResult
     private int sumSecond(List<Tuple> items) {
         int total = 0;
         for (Tuple item : items) {
@@ -346,6 +353,7 @@ public class CsvSniffer {
     }
 
 
+    @CheckResult
     private <T> T max(Map<T, Integer> histogram) {
         T max = null;
         int maximum = 0;
@@ -360,6 +368,7 @@ public class CsvSniffer {
 
 
     /** max(items, key = lambda x:x[1]) */
+    @CheckResult
     private Tuple maxSecond(List<Tuple> items) {
         // items = [(1,1), (2,1)]
         // pp(max(items, key = lambda x:x[1]))
@@ -392,6 +401,7 @@ public class CsvSniffer {
         }
     }
 
+    @CheckResult
     private static int countInString(String s, char c) {
         int count = 0;
         for (int i = 0; i < s.length(); i++) {
@@ -402,6 +412,7 @@ public class CsvSniffer {
         return count;
     }
 
+    @CheckResult
     private static int countInString(String haystack, String needle) {
         int idx = 0;
         int count = 0;

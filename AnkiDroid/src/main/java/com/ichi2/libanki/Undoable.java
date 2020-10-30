@@ -6,6 +6,7 @@ import com.ichi2.libanki.Collection.DismissType;
 
 import java.util.List;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
@@ -20,10 +21,12 @@ public abstract class Undoable {
         mDt = dt;
     }
 
+    @CheckResult
     public String name(Resources res) {
         return mDt.getString(res);
     }
 
+    @CheckResult
     public DismissType getDismissType() {
         return mDt;
     }
@@ -34,6 +37,7 @@ public abstract class Undoable {
      * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
     public abstract @Nullable Card undo(@NonNull Collection col);
 
+    @CheckResult
     public static @NonNull Undoable revertToProvidedState (DismissType dt, Card card){
         Note note = card.note();
         List<Card> cards = note.cards();

@@ -22,6 +22,8 @@ package com.ichi2.libanki;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Pair;
+
+import androidx.annotation.CheckResult;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
@@ -227,6 +229,7 @@ public class Models {
         }
     }
 
+    @CheckResult
     public boolean ensureNotEmpty() {
         if (mModels.isEmpty()) {
             // TODO: Maybe we want to restore all models if we don't have any
@@ -246,6 +249,7 @@ public class Models {
      * Get current model.
      * @return The model, or null if not found in the deck and in the configuration.
      */
+    @CheckResult
     public Model current() {
         return current(true);
     }
@@ -256,6 +260,7 @@ public class Models {
      *                found, it uses the configuration`s field curModel.
      * @return The model, or null if not found in the deck and in the configuration.
      */
+    @CheckResult
     public Model current(boolean forDeck) {
         Model m = null;
         if (forDeck) {
@@ -280,6 +285,7 @@ public class Models {
 
 
     /** get model with ID, or null. */
+    @CheckResult
     public @Nullable Model get(@NonNull Long id) {
         if (mModels.containsKey(id)) {
             return mModels.get(id);
@@ -290,12 +296,14 @@ public class Models {
 
 
     /** get all models */
+    @CheckResult
     public ArrayList<Model> all() {
         return new ArrayList<>(mModels.values());
     }
 
 
     /** get model with NAME. */
+    @CheckResult
     public Model byName(String name) {
         for (Model m : mModels.values()) {
             if (m.getString("name").equals(name)) {
@@ -309,6 +317,7 @@ public class Models {
     /** Create a new model, save it in the registry, and return it. */
 	// Called `new` in Anki's code. New is a reserved word in java,
 	// not in python. Thus the method has to be renamed.
+    @CheckResult
     public Model newModel(String name) {
         // caller should call save() after modifying
         Model m = new Model(defaultModel);
@@ -322,6 +331,7 @@ public class Models {
     }
 
     // not in anki
+    @CheckResult
     public static boolean isModelNew(Model m) {
         return m.getLong("id") == 0;
     }
@@ -369,11 +379,13 @@ public class Models {
     }
 
 
+    @CheckResult
     public boolean have(@NonNull Long id) {
         return mModels.containsKey(id);
     }
 
 
+    @CheckResult
     public Set<Long> ids() {
         return mModels.keySet();
     }
@@ -384,6 +396,7 @@ public class Models {
      */
 
     /** Note ids for M */
+    @CheckResult
     public ArrayList<Long> nids(Model m) {
         return mCol.getDb().queryLongList("SELECT id FROM notes WHERE mid = ?", m.getLong("id"));
     }
@@ -393,6 +406,7 @@ public class Models {
      * @param m The model to the count the notes of.
      * @return The number of notes with that model.
      */
+    @CheckResult
     public int useCount(Model m) {
         return mCol.getDb().queryScalar("select count() from notes where mid = ?", m.getLong("id"));
     }
@@ -403,6 +417,7 @@ public class Models {
      * @param ord The index of the card template
      * @return The number of notes with that model.
      */
+    @CheckResult
     public int tmplUseCount(Model m, int ord) {
         return mCol.getDb().queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?", m.getLong("id"), ord);
     }
@@ -412,6 +427,7 @@ public class Models {
      */
 
     /** Copy, save and return. */
+    @CheckResult
     public Model copy(Model m) {
         Model m2 = m.deepClone();        
         m2.put("name", m2.getString("name") + " copy");
@@ -424,6 +440,7 @@ public class Models {
      * Fields ***********************************************************************************************
      */
 
+    @CheckResult
     public JSONObject newField(String name) {
         JSONObject f = new JSONObject(defaultField);
         f.put("name", name);
@@ -433,6 +450,7 @@ public class Models {
 
     /** "Mapping of field name -> (ord, field). */
     @NonNull
+    @CheckResult
     public static Map<String, Pair<Integer, JSONObject>> fieldMap(@NonNull Model m) {
         JSONArray flds = m.getJSONArray("flds");
         // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
@@ -444,6 +462,7 @@ public class Models {
     }
 
 
+    @CheckResult
     public static ArrayList<String> fieldNames(Model m) {
         JSONArray flds = m.getJSONArray("flds");
         ArrayList<String> names = new ArrayList<>();
@@ -455,6 +474,7 @@ public class Models {
     }
 
 
+    @CheckResult
     public int sortIdx(Model m) {
         return m.getInt("sortf");
     }
@@ -506,6 +526,7 @@ public class Models {
 
     static class TransformFieldAdd implements TransformFieldVisitor {
         @Override
+        @CheckResult
         public String[] transform(String[] fields) {
             String[] f = new String[fields.length + 1];
             System.arraycopy(fields, 0, f, 0, fields.length);
@@ -606,6 +627,7 @@ public class Models {
 
 
         @Override
+        @CheckResult
         public String[] transform(String[] fields) {
             String val = fields[oldidx];
             ArrayList<String> fl = new ArrayList<>(Arrays.asList(fields));
@@ -676,6 +698,7 @@ public class Models {
      * Templates ***********************************************************************************************
      */
 
+    @CheckResult
     public static JSONObject newTemplate(String name) {
         JSONObject t = new JSONObject(defaultTemplate);
         t.put("name", name);
@@ -781,6 +804,7 @@ public class Models {
      * @param ords array of ints, each one is the ordinal a the card template in the given model
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
+    @CheckResult
     public @Nullable List<Long> getCardIdsForModel(long modelId, int[] ords) {
         String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords);
         List<Long> cids = mCol.getDb().queryLongList(cardIdsToDeleteSql, modelId);
@@ -949,6 +973,7 @@ public class Models {
      */
 
     /** Return a hash of the schema, to see if models are compatible. */
+    @CheckResult
     public String scmhash(Model m) {
         StringBuilder s = new StringBuilder();
         JSONArray flds = m.getJSONArray("flds");
@@ -992,6 +1017,7 @@ public class Models {
     }
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // 'String f' is unused upstream as well
+    @CheckResult
     private Object[] _reqForTemplate(Model m, ArrayList<String> flds, JSONObject t) {
         int nbFields = flds.size();
         String[] a = new String[nbFields];
@@ -1039,6 +1065,7 @@ public class Models {
      * @param sfld Fields of a note of this model. (Not trimmed)
      * @return Whether this card is empty
      */
+    @CheckResult
     public static boolean emptyCard(Model m, int ord, String[] sfld) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
             // For cloze, getting the list of cloze numbes is linear in the size of the template
@@ -1053,6 +1080,7 @@ public class Models {
      * @param sfld The vector of fields of a note. (Not trimmed)
      * @return Whether the standard card is empty
      */
+    @CheckResult
     public static boolean emptyStandardCard(JSONArray sr, String[] sfld) {
         String[] fields = trimArray(sfld);
         String type = sr.getString(1);
@@ -1066,6 +1094,7 @@ public class Models {
      * @param trimmedFields the field of a note. Fields are assumed to be trimmed
      * @return Whether the card is empty
      */
+    @CheckResult
     public static boolean emptyStandardCard(String type, JSONArray req, String[] trimmedFields) {
         switch (type) {
         case REQ_NONE:
@@ -1099,6 +1128,7 @@ public class Models {
      * @param m A model
      * @param sfld Fields of a note
      * @return The index of the cards that are generated. For cloze cards, if no card is generated, then {0} */
+    @CheckResult
     public static ArrayList<Integer> availOrds(Model m, String[] sfld) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
             return _availClozeOrds(m, sfld);
@@ -1107,6 +1137,7 @@ public class Models {
     }
 
     /** Given a joined field string and a standard note type, return available template ordinals */
+    @CheckResult
     public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld) {
         String[] fields = trimArray(sfld);
         ArrayList<Integer> avail = new ArrayList<>();
@@ -1130,6 +1161,7 @@ public class Models {
      * @param sflds The fields of a note of type m. (Assume the size of the array is the number of fields)
      * @return The indexes (in increasing order) of cards that should be generated according to req rules.
      */
+    @CheckResult
     public static ArrayList<Integer> _availClozeOrds(Model m, String[] sflds) {
         return _availClozeOrds(m, sflds, true);
     }
@@ -1144,6 +1176,7 @@ public class Models {
     /** The name of all fields that are used as cloze in the question.
      * It is not guaranteed that the field found are actually the name of any field of the note type.*/
     @VisibleForTesting
+    @CheckResult
     protected static List<String> getNamesOfFieldsContainingCloze(String question) {
         if (! namesOfFieldsContainingClozeCache.containsKey(question)) {
             List<String> matches = new ArrayList<>();
@@ -1164,6 +1197,7 @@ public class Models {
      * @param allowEmpty Whether we allow to generate at least one card even if they are all empty
      * @return The indexes (in increasing order) of cards that should be generated according to req rules.
      * If empty is not allowed, it will contains ord 1.*/
+    @CheckResult
     public static ArrayList<Integer> _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
         String question = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
@@ -1210,6 +1244,7 @@ public class Models {
     }
 
 
+    @CheckResult
     public HashMap<Long, HashMap<Integer, String>> getTemplateNames() {
         HashMap<Long, HashMap<Integer, String>> result = new HashMap<>();
         for (Model m : mModels.values()) {
@@ -1227,17 +1262,20 @@ public class Models {
     /**
      * @return the ID
      */
+    @CheckResult
     public int getId() {
         return mId;
     }
 
-
+    
+    @CheckResult
     public HashMap<Long, Model> getModels() {
         return mModels;
     }
 
     /** Validate model entries. */
-	public boolean validateModel() {
+    @CheckResult
+    public boolean validateModel() {
         for (Model model : mModels.values()) {
             if (!validateBrackets(model)) {
                 return false;
@@ -1246,8 +1284,9 @@ public class Models {
 		return true;
 	}
 
-	/** Check if there is a right bracket for every left bracket. */
-	private boolean validateBrackets(JSONObject value) {
+    /** Check if there is a right bracket for every left bracket. */
+    @CheckResult
+    private boolean validateBrackets(JSONObject value) {
 		String s = value.toString();
 		int count = 0;
 		boolean inQuotes = false;
@@ -1277,7 +1316,8 @@ public class Models {
 		return (count == 0);
 	}
 
-	public static boolean isCloze(JSONObject model) {
+    @CheckResult
+    public static boolean isCloze(JSONObject model) {
 	    return model.getInt("type") == Consts.MODEL_CLOZE;
     }
 }

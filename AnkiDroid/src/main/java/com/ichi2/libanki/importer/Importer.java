@@ -27,6 +27,8 @@ import com.ichi2.libanki.Collection;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.CheckResult;
+
 @SuppressWarnings({"PMD.MethodNamingConventions"})
 public abstract class Importer {
 
@@ -83,10 +85,12 @@ public abstract class Importer {
     }
 
 
+    @CheckResult
     protected Resources getRes() {
         return mContext.getResources();
     }
 
+    @CheckResult
     public List<String> getLog() {
         return mLog;
     }

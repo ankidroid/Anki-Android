@@ -36,6 +36,7 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+import androidx.annotation.CheckResult;
 import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
 import okhttp3.TlsVersion;
@@ -56,6 +57,7 @@ public class Tls12SocketFactory extends SSLSocketFactory {
     private final SSLSocketFactory delegate;
 
 
+    @CheckResult
     public static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
         if (Build.VERSION.SDK_INT < 22) {
             try {
@@ -107,12 +109,14 @@ public class Tls12SocketFactory extends SSLSocketFactory {
 
 
     @Override
+    @CheckResult
     public String[] getDefaultCipherSuites() {
         return delegate.getDefaultCipherSuites();
     }
 
 
     @Override
+    @CheckResult
     public String[] getSupportedCipherSuites() {
         return delegate.getSupportedCipherSuites();
     }

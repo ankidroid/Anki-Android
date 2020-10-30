@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import okhttp3.Response;
 import timber.log.Timber;
@@ -270,6 +271,7 @@ public class Syncer {
     }
 
     @NonNull
+    @CheckResult
     protected Object[] sanityCheckError(JSONObject c, JSONObject sanity) {
         mCol.log("sanity check failed", c, sanity);
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.SYNC, "sanityCheckError");
@@ -304,6 +306,7 @@ public class Syncer {
 
 
     /** Bundle up small objects. */
+    @CheckResult
     public JSONObject changes() {
         JSONObject o = new JSONObject();
         o.put("models", getModels());
@@ -447,6 +450,7 @@ public class Syncer {
     // return result;
     // }
 
+    @CheckResult
     private Pair<String, Object[]> usnLim() {
         if (mCol.getServer()) {
             return new Pair("usn >= ?", new Object[] {mMinUsn});
@@ -488,6 +492,7 @@ public class Syncer {
     }
 
 
+    @CheckResult
     private Cursor cursorForTable(String table) {
         Pair<String, Object[]> limAndArg = usnLim();
         if ("revlog".equals(table)) {
@@ -506,6 +511,7 @@ public class Syncer {
     }
 
 
+    @CheckResult
     private List<Integer> columnTypesForQuery(String table) {
         if ("revlog".equals(table)) {
             return Arrays.asList(TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
@@ -521,6 +527,7 @@ public class Syncer {
     }
 
 
+    @CheckResult
     public JSONObject chunk() {
         JSONObject buf = new JSONObject();
         buf.put("done", false);
@@ -592,6 +599,7 @@ public class Syncer {
      * Deletions ********************************************************************
      */
 
+    @CheckResult
     private JSONObject removed() {
         JSONArray cards = new JSONArray();
         JSONArray notes = new JSONArray();
@@ -626,6 +634,7 @@ public class Syncer {
     }
 
 
+    @CheckResult
     public JSONObject start(int minUsn, boolean lnewer, JSONObject graves) {
         mMaxUsn = mCol.getUsnForSync();
         mMinUsn = minUsn;
@@ -657,6 +666,7 @@ public class Syncer {
      * Models ********************************************************************
      */
 
+    @CheckResult
     private JSONArray getModels() {
         JSONArray result = new JSONArray();
         if (mCol.getServer()) {
@@ -705,6 +715,7 @@ public class Syncer {
      * Decks ********************************************************************
      */
 
+    @CheckResult
     private JSONArray getDecks() {
         JSONArray result = new JSONArray();
         if (mCol.getServer()) {
@@ -771,6 +782,7 @@ public class Syncer {
      * Tags ********************************************************************
      */
 
+    @CheckResult
     private JSONArray getTags() {
         JSONArray result = new JSONArray();
         if (mCol.getServer()) {
@@ -815,6 +827,7 @@ public class Syncer {
     }
 
 
+    @CheckResult
     private ArrayList<Object[]> newerRows(JSONArray data, String table, int modIdx) {
         long[] ids = new long[data.length()];
         for (int i = 0; i < data.length(); i++) {
@@ -857,6 +870,7 @@ public class Syncer {
     }
 
 
+    @CheckResult
     public String getSyncMsg() {
         return mSyncMsg;
     }

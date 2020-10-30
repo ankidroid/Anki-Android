@@ -16,6 +16,8 @@
 
 package com.ichi2.libanki.sync;
 
+import androidx.annotation.CheckResult;
+
 public class CustomSyncServerUrlException extends RuntimeException {
     private final String mUrl;
 
@@ -38,6 +40,7 @@ public class CustomSyncServerUrlException extends RuntimeException {
     }
 
 
+    @CheckResult
     public String getUrl() {
         return mUrl;
     }

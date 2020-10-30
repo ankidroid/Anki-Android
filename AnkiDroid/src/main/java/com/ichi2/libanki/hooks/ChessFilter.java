@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
 public class ChessFilter {
@@ -62,6 +63,7 @@ public class ChessFilter {
     		"    return '<div align=\"center\" width=\"100%%\"><table class=\"chess_board\" cellspacing=\"0\" cellpadding=\"0\"><tr>'+fentxt+'</tr></table></div>';" +
     		"})('%s', %b)";
 
+    @CheckResult
     public static String fenToChessboard(String text, Context context) {
         if (!AnkiDroidApp.getSharedPrefs(context).getBoolean("convertFenText", false)) {
             return text;

@@ -17,9 +17,11 @@
 package com.ichi2.async;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.CheckResult;
 
 @FunctionalInterface
 public interface CancelListener {
+    @CheckResult
     boolean isCancelled();
 
     /**

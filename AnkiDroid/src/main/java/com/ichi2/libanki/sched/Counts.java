@@ -3,6 +3,7 @@ package com.ichi2.libanki.sched;
 
 import java.util.Arrays;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 
 /**
@@ -27,14 +28,17 @@ public class Counts {
         mRev = rev;
     }
 
+    @CheckResult
     public int getLrn() {
         return mLrn;
     }
 
+    @CheckResult
     public int getNew() {
         return mNew;
     }
 
+    @CheckResult
     public int getRev() {
         return mRev;
     }
@@ -74,12 +78,14 @@ public class Counts {
     /**
      * @return the sum of the three counts
      */
+    @CheckResult
     public int count() {
         return mNew + mLrn + mRev;
     }
 
 
     @Override
+    @CheckResult
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -95,6 +101,7 @@ public class Counts {
 
 
     @Override
+    @CheckResult
     public int hashCode() {
         return Arrays.asList(mNew, mRev, mLrn).hashCode();
     }

@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
@@ -95,6 +96,7 @@ public class Template {
     /**
      * Turns a Mustache template into something wonderful.
      */
+    @CheckResult
     public @NonNull String render() {
         String template = render_sections(mTemplate, mContext);
         return render_tags(template, mContext);
@@ -103,6 +105,7 @@ public class Template {
     /**
      * Expands sections.
      */
+    @CheckResult
     private @NonNull String render_sections(@NonNull String template, @NonNull Map<String, String> context) {
         /* Apply render_some_section to the templates, until
            render_some_section states that it does not find sections
@@ -132,6 +135,7 @@ public class Template {
      If some change is done, the function should be called again to
      remove those new pairs of conditionals.
      */
+    @CheckResult
     private @Nullable String render_some_sections(@NonNull String template, @NonNull Map<String, String> context) {
         StringBuffer sb = new StringBuffer();
         Matcher match = sSection_re.matcher(template);
@@ -162,6 +166,7 @@ public class Template {
     /**
      * Replaces all the tags in a template in a single pass for the values in the given context map.
      */
+    @CheckResult
     private @NonNull String render_tags(@NonNull String template, @NonNull Map<String, String> context) {
         String ALT_HANDLEBAR_DIRECTIVE = "{{=<% %>=}}";
         if (template.contains(ALT_HANDLEBAR_DIRECTIVE)) {
@@ -191,6 +196,7 @@ public class Template {
     /**
      * {{{ functions just like {{ in anki
      */
+    @CheckResult
     private @NonNull String render_tag(@NonNull String tag_name, @NonNull Map<String, String> context) {
         return render_unescaped(tag_name, context);
     }
@@ -203,6 +209,7 @@ public class Template {
         return "";
     }
 
+    @CheckResult
     private @NonNull String render_unescaped(@NonNull String tag_name, @NonNull Map<String, String> context) {
         String txt = get_or_attr(context, tag_name);
         if (txt != null) {
@@ -308,6 +315,7 @@ public class Template {
         return txt != null ? txt : "";
     }
 
+    @CheckResult
     private String runHint(String txt, String tag) {
         if (txt.trim().length() == 0) {
             return "";
@@ -322,6 +330,7 @@ public class Template {
     }
 
 
+    @CheckResult
     private static @NonNull String clozeText(@NonNull String txt, @NonNull String ord, char type) {
         if (!Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(txt).find()) {
             return "";
@@ -355,6 +364,7 @@ public class Template {
         return txt.replaceAll(String.format(Locale.US, clozeReg, "\\d+"), "$2");
     }
 
+    @CheckResult
     public static boolean textContainsMathjax(@NonNull String txt) {
         // Do you have the first opening and then the first closing,
         // or the second opening and the second closing...?
@@ -394,6 +404,7 @@ public class Template {
      * The clozeText method interprets the upper-case C as "don't wrap this
      * Cloze in a <span>".
      */
+    @CheckResult
     public static @NonNull String removeFormattingFromMathjax(@NonNull String txt, @NonNull String ord) {
         String creg = clozeReg.replace("(?si)", "");
         // Scan the string left to right.

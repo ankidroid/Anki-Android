@@ -40,6 +40,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
+import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
 
@@ -100,14 +101,17 @@ public class Stats {
         mDeckId = did;
     }
 
+    @CheckResult
     public double[][] getSeriesList() {
         return mSeriesList;
     }
+    @CheckResult
     public double[][] getCumulative() {
         return mCumulative;
     }
 
 
+    @CheckResult
     public Object[] getMetaInfo() {
         String title;
         if (mWholeCollection) {
@@ -125,6 +129,7 @@ public class Stats {
     /**
      * Today's statistics
      */
+    @CheckResult
     public int[] calculateTodayStats(){
         String lim = _getDeckFilter();
         if (lim.length() > 0) {
@@ -172,6 +177,7 @@ public class Stats {
         return new int[]{cards, thetime, failed, lrn, rev, relrn, filt, mcnt, msum};
     }
 
+    @CheckResult
     private String getRevlogTimeFilter(AxisType timespan, boolean inverse) {
         if (timespan == AxisType.TYPE_LIFE) {
             return "";
@@ -187,6 +193,7 @@ public class Stats {
         }
     }
 
+    @CheckResult
     public Pair<Integer, Double> getNewCards(AxisType timespan) {
         int chunk = getChunk(timespan);
         int num = getNum(timespan);
@@ -229,6 +236,7 @@ public class Stats {
     private enum DeckAgeType { ADD, REVIEW }
 
 
+    @CheckResult
     private long _deckAge(DeckAgeType by) {
         String lim = _revlogLimit();
         if (!TextUtils.isEmpty(lim)) {
@@ -252,6 +260,7 @@ public class Stats {
     }
 
 
+    @CheckResult
     private String _revlogLimit() {
         if (this.mWholeCollection) {
             return "";
@@ -261,6 +270,7 @@ public class Stats {
     }
 
 
+    @CheckResult
     private String getRevlogFilter(AxisType timespan,boolean inverseTimeSpan){
         ArrayList<String> lims = new ArrayList<>();
         String dayFilter = getRevlogTimeFilter(timespan, inverseTimeSpan);
@@ -348,6 +358,7 @@ public class Stats {
     }
 
 
+    @CheckResult
     private AnswerButtonsOverview toOverview(int type, ArrayList<double[]> list) {
         AnswerButtonsOverview answerButtonsOverview = new AnswerButtonsOverview();
 
@@ -374,6 +385,7 @@ public class Stats {
     }
 
 
+    @CheckResult
     public boolean calculateDue(Context context, AxisType type) {
         // Not in libanki
         StatsMetaInfo metaInfo = new StatsMetaInfo();
@@ -405,6 +417,7 @@ public class Stats {
      * Due and cumulative due
      * ***********************************************************************************************
      */
+    @CheckResult
     private boolean calculateDue(AxisType type) {
         mHasColoredCumulative = false;
         mType = type;
@@ -514,10 +527,12 @@ public class Stats {
     }
 
 
+    @CheckResult
     public boolean calculateReviewCount(AxisType type) {
         return calculateDone(type, ChartType.REVIEW_COUNT);
     }
 
+    @CheckResult
     public boolean calculateReviewTime(AxisType type) {
         return calculateDone(type, ChartType.REVIEW_TIME);
     }
@@ -709,6 +724,7 @@ public class Stats {
     }
 
 
+    @CheckResult
     private int getChunk(AxisType axisType) {
         switch (axisType) {
             case TYPE_MONTH: return 1;
@@ -718,6 +734,7 @@ public class Stats {
         }
     }
 
+    @CheckResult
     private int getNum(AxisType axisType) {
         switch (axisType) {
             case TYPE_MONTH: return 31;
@@ -731,6 +748,7 @@ public class Stats {
      * Intervals ***********************************************************************************************
      */
 
+    @CheckResult
     public boolean calculateIntervals(Context context, AxisType type) {
         mDynamicAxis = true;
         mType = type;
@@ -1133,6 +1151,7 @@ public class Stats {
     }
 
 
+    @CheckResult
     private ArrayList<double[]> eases(AxisType type) {
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
@@ -1245,6 +1264,7 @@ public class Stats {
      * Tools ***********************************************************************************************
      */
 
+    @CheckResult
     private String _limit() {
         return deckLimit(mDeckId, mCol);
     }
@@ -1257,6 +1277,7 @@ public class Stats {
      * @param col collection
      * @return
      */
+    @CheckResult
     public static String deckLimit(long deckId, Collection col) {
         if (deckId == ALL_DECKS_ID) {
             // All decks
@@ -1274,6 +1295,7 @@ public class Stats {
         }
     }
 
+    @CheckResult
     private String _getDeckFilter() {
         if (mWholeCollection) {
             return "";
@@ -1283,6 +1305,7 @@ public class Stats {
     }
 
 
+    @CheckResult
     public static double[][] createCumulative(double[][] nonCumulative) {
         double[][] cumulativeValues = new double[2][nonCumulative[0].length];
         cumulativeValues[0][0] = nonCumulative[0][0];
@@ -1295,6 +1318,7 @@ public class Stats {
     }
 
 
+    @CheckResult
     public static double[][] createCumulative(double[][] nonCumulative, int startAtIndex) {
         double[][] cumulativeValues = new double[2][nonCumulative[0].length - startAtIndex];
         cumulativeValues[0][0] = nonCumulative[0][startAtIndex];
@@ -1307,6 +1331,7 @@ public class Stats {
     }
 
 
+    @CheckResult
     public static double[] createCumulative(double[] nonCumulative) {
         double[] cumulativeValues = new double[nonCumulative.length];
         cumulativeValues[0] = nonCumulative[0];
@@ -1316,11 +1341,13 @@ public class Stats {
         return cumulativeValues;
     }
 
+    @CheckResult
     private int _periodDays() {
         return _periodDays(mType);
     }
 
 
+    @CheckResult
     private int _periodDays(AxisType type) {
         switch (type) {
             case TYPE_MONTH:

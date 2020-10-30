@@ -19,10 +19,12 @@ package com.ichi2.libanki.utils;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 
 public class TimeUtils {
     @NonNull
+    @CheckResult
     public static String getTimestamp(@NonNull Time time) {
         return new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.getCurrentDate());
     }

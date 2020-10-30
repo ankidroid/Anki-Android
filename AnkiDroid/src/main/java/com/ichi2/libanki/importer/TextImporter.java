@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import timber.log.Timber;
@@ -56,6 +57,7 @@ public class TextImporter extends NoteImporter {
 
     @NonNull
     @Override
+    @CheckResult
     protected List<ForeignNote> foreignNotes() {
         open();
         // process all lines
@@ -102,12 +104,14 @@ public class TextImporter extends NoteImporter {
 
     /** Number of fields. */
     @Override
+    @CheckResult
     protected int fields() {
         open();
         return numFields;
     }
 
 
+    @CheckResult
     private ForeignNote noteFromFields(List<String> fields) {
         ForeignNote note = new ForeignNote();
         note.mFields.addAll(fields);
@@ -223,11 +227,13 @@ public class TextImporter extends NoteImporter {
     */
     private static final Pattern COMMENT_PATTERN = Pattern.compile("^#.*$", Pattern.DOTALL);
 
+    @CheckResult
     private String sub(String s) {
         return COMMENT_PATTERN.matcher(s).replaceAll("__comment");
     }
 
 
+    @CheckResult
     private Stream<String> getDataStream() {
         Stream<String> data;
         try {
@@ -244,6 +250,7 @@ public class TextImporter extends NoteImporter {
     }
 
 
+    @CheckResult
     private Optional<String> getFirstFileLine() {
         return getDataStream().findFirst();
     }
@@ -266,6 +273,7 @@ public class TextImporter extends NoteImporter {
 
 
         @NonNull
+        @CheckResult
         public static FileObj open(@NonNull String mFile) {
             return new FileObj(new File(mFile));
         }

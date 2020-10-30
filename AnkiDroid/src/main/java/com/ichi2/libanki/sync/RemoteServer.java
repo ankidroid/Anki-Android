@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 
+import androidx.annotation.CheckResult;
 import okhttp3.Response;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
@@ -119,6 +120,7 @@ public class RemoteServer extends HttpSyncer {
     }
 
     /** Note: these conversion helpers aren't needed in libanki as type deduction occurs automatically there **/
+    @CheckResult
     private JSONObject parseDict(String s) {
         if (!"null".equalsIgnoreCase(s) && s.length() != 0) {
             return new JSONObject(s);
@@ -127,6 +129,7 @@ public class RemoteServer extends HttpSyncer {
         }
     }
 
+    @CheckResult
     private long parseLong(String s) {
         try {
             return Long.parseLong(s);

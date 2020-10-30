@@ -23,6 +23,8 @@ import com.ichi2.utils.JSONObject;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
+
 /**
  * This class is used to detect LaTeX tags in HTML and convert them to their corresponding image
  * file names.
@@ -54,6 +56,7 @@ public class LaTeX {
      * Convert HTML with embedded latex tags to image links.
      * NOTE: _imgLink produces an alphanumeric filename so there is no need to escape the replacement string.
      */
+    @CheckResult
     public static String mungeQA(String html, Collection col, Model model) {
         StringBuffer sb = new StringBuffer();
         Matcher matcher = sStandardPattern.matcher(html);
@@ -85,6 +88,7 @@ public class LaTeX {
     /**
      * Return an img link for LATEX.
      */
+    @CheckResult
     private static String _imgLink(String latex, Model model, Media m) {
         String txt = _latexFromHtml(latex);
 
@@ -105,6 +109,7 @@ public class LaTeX {
     /**
      * Convert entities and fix newlines.
      */
+    @CheckResult
     private static String _latexFromHtml(String latex) {
         latex = latex.replaceAll("<br( /)?>|<div>", "\n");
         latex = Utils.stripHTML(latex);

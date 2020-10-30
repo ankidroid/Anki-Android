@@ -160,6 +160,7 @@ public class Decks {
             mNameMap = new HashMap<>();
         }
 
+        @CheckResult
         public static NameMap constructor(java.util.Collection<Deck> decks) {
             NameMap map = new NameMap();
             for (Deck deck: decks) {
@@ -168,6 +169,7 @@ public class Decks {
             return map;
         }
 
+        @CheckResult
         public synchronized Deck get(String name) {
             String normalized = normalizeName(name);
             Deck deck = mNameMap.get(normalized);
@@ -644,6 +646,7 @@ public class Decks {
     }
 
 
+    @CheckResult
     private static final HashMap<String, String[]> pathCache = new HashMap<>();
     public static String[] path(String name) {
         if (!pathCache.containsKey(name)) {
@@ -652,6 +655,7 @@ public class Decks {
         return pathCache.get(name);
     }
 
+    @CheckResult
     public static String basename(String name) {
         String[] path = path(name);
         return path[path.length - 1];
@@ -693,11 +697,13 @@ public class Decks {
     /**
      * A list of all deck config.
      */
+    @CheckResult
     public ArrayList<DeckConfig> allConf() {
         return new ArrayList<>(mDconf.values());
     }
 
 
+    @CheckResult
     public DeckConfig confForDid(long did) {
         Deck deck = get(did, false);
         assert deck != null;
@@ -711,6 +717,7 @@ public class Decks {
     }
 
 
+    @CheckResult
     public DeckConfig getConf(long confId) {
         return mDconf.get(confId);
     }
@@ -722,6 +729,7 @@ public class Decks {
     }
 
 
+    @CheckResult
     public long confId(String name) {
         return confId(name, defaultConf);
     }
@@ -730,6 +738,7 @@ public class Decks {
     /**
      * Create a new configuration and return id.
      */
+    @CheckResult
     public long confId(String name, String cloneFrom) {
         long id;
         DeckConfig c = new DeckConfig(cloneFrom);
@@ -771,6 +780,7 @@ public class Decks {
     }
 
 
+    @CheckResult
     public List<Long> didsForConf(DeckConfig conf) {
         List<Long> dids = new ArrayList<>();
         for(Deck deck : mDecks.values()) {
@@ -802,11 +812,13 @@ public class Decks {
      */
 
 
+    @CheckResult
     public String name(long did) {
         return name(did, false);
     }
 
 
+    @CheckResult
     public String name(long did, boolean _default) {
         Deck deck = get(did, _default);
         if (deck != null) {
@@ -816,6 +828,7 @@ public class Decks {
     }
 
 
+    @CheckResult
     public String nameOrNone(long did) {
         Deck deck= get(did, false);
         if (deck != null) {
@@ -838,11 +851,13 @@ public class Decks {
     }
 
 
+    @CheckResult
     public Long[] cids(long did) {
         return cids(did, false);
     }
 
 
+    @CheckResult
     public Long[] cids(long did, boolean children) {
         if (!children) {
             return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did=?", did));
@@ -953,6 +968,7 @@ public class Decks {
     /**
      * The currently active dids. Make sure to copy before modifying.
      */
+    @CheckResult
     public LinkedList<Long> active() {
         JSONArray activeDecks = mCol.getConf().getJSONArray("activeDecks");
         LinkedList<Long> result = new LinkedList<>();
@@ -964,11 +980,13 @@ public class Decks {
     /**
      * The currently selected did.
      */
+    @CheckResult
     public long selected() {
         return mCol.getConf().getLong("curDeck");
     }
 
 
+    @CheckResult
     public Deck current() {
         return get(selected());
     }
@@ -1000,6 +1018,7 @@ public class Decks {
      * TODO: There is likely no need for this collection to be a TreeMap. This method should not
      * need to sort on behalf of select().
      */
+    @CheckResult
     public TreeMap<String, Long> children(long did) {
         String name = get(did).getString("name");
         TreeMap<String, Long> actv = new TreeMap<>();
@@ -1021,6 +1040,7 @@ public class Decks {
         }
     }
 
+    @CheckResult
     public List<Long> childDids(long did, Node childMap) {
         List<Long> arr = new ArrayList<>();
         gather(childMap.get(did), arr);
@@ -1028,6 +1048,7 @@ public class Decks {
     }
 
 
+    @CheckResult
     public Node childMap() {
 
         Node childMap = new Node();
@@ -1055,6 +1076,7 @@ public class Decks {
     /**
      * @return Names of ancestors of parents of name.
      */
+    @CheckResult
     private String[] parentsNames(String name) {
         String[] parts = path(name);
         String[] parentsNames = new String[parts.length - 1];
@@ -1072,6 +1094,7 @@ public class Decks {
     /**
      * All parents of did.
      */
+    @CheckResult
     public List<Deck> parents(long did) {
         // get parent and grandparent names
         String[] parents = parentsNames(get(did).getString("name"));
@@ -1112,6 +1135,7 @@ public class Decks {
     /**
      * Return a new dynamic deck and set it as the current deck.
      */
+    @CheckResult
     public long newDyn(String name) {
         long did = id(name, defaultDynamicDeck);
         select(did);
@@ -1119,6 +1143,7 @@ public class Decks {
     }
 
 
+    @CheckResult
     public boolean isDyn(long did) {
         return get(did).getInt("dyn") != 0;
     }
@@ -1129,6 +1154,7 @@ public class Decks {
      * **************************************
      */
     private static final HashMap<String, String> normalized = new HashMap<>();
+    @CheckResult
     public static String normalizeName(String name) {
         if (!normalized.containsKey(name)) {
             normalized.put(name, Normalizer.normalize(name, Normalizer.Form.NFC).toLowerCase(Locale.ROOT));
@@ -1136,6 +1162,7 @@ public class Decks {
         return normalized.get(name);
     }
 
+    @CheckResult
     public static boolean equalName(String name1, String name2) {
         return normalizeName(name1).equals(normalizeName(name2));
     }
@@ -1146,11 +1173,13 @@ public class Decks {
     * ***********************************************************
     */
 
+    @CheckResult
     public static boolean isValidDeckName(@Nullable String deckName) {
         return deckName != null && !deckName.trim().isEmpty();
     }
 
 
+    @CheckResult
     private static final HashMap<String, String> sParentCache = new HashMap<>();
     public static String parent(String deckName) {
         // method parent, from sched's method deckDueList in python
@@ -1167,15 +1196,18 @@ public class Decks {
         return sParentCache.get(deckName);
     }
 
+    @CheckResult
     public String getActualDescription() {
         return current().optString("desc","");
     }
 
 
+    @CheckResult
     public HashMap<Long, Deck> getDecks() {
         return mDecks;
     }
 
+    @CheckResult
     public Long[] allDynamicDeckIds() {
         ArrayList<Long> validValues = new ArrayList<>();
         for (Long did : allIds()) {
@@ -1186,6 +1218,7 @@ public class Decks {
         return validValues.toArray(new Long[0]);
     }
 
+    @CheckResult
     private Deck getDeckOrFail(long deckId) throws NoSuchDeckException {
         Deck deck = get(deckId, false);
         if (deck == null) {
@@ -1194,6 +1227,7 @@ public class Decks {
         return deck;
     }
 
+    @CheckResult
     public boolean hasDeckOptions(long deckId) throws NoSuchDeckException {
         return getDeckOrFail(deckId).has("conf");
     }
@@ -1203,16 +1237,19 @@ public class Decks {
         getDeckOrFail(deckId).remove("conf");
     }
 
+    @CheckResult
     public static boolean isDynamic(Collection col, long deckId) {
         return Decks.isDynamic(col.getDecks().get(deckId));
     }
 
+    @CheckResult
     public static boolean isDynamic(Deck deck) {
         return deck.getInt("dyn") != 0;
     }
 
     /** Retruns the fully qualified name of the subdeck, or null if unavailable */
     @Nullable
+    @CheckResult
     public String getSubdeckName(long did, @Nullable String subdeckName) {
         if (TextUtils.isEmpty(subdeckName)) {
             return null;

@@ -18,6 +18,7 @@ import com.ichi2.libanki.Collection;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -87,6 +88,7 @@ public abstract class AbstractSched {
 
     /**
      * @return Number of new, rev and lrn card to review in selected deck. Sum of elements of counts.*/
+    @CheckResult
     public int count() {
         return counts().count();
     }
@@ -103,10 +105,12 @@ public abstract class AbstractSched {
      */
     // TODO: consider counting the card currently in the reviewer, this would simplify the code greatly
     // We almost never want to consider the card in the reviewer differently, and a lot of code is added to correct this.
+    @CheckResult
     public abstract @NonNull Counts counts();
 
     /** @return Number of new card in selected decks. Recompute it if we reseted.
      */
+    @CheckResult
     public int newCount() {
         // We need to actually recompute the three elements, because we potentially need to deal with undid card
         // in any deck where it may be
@@ -114,11 +118,13 @@ public abstract class AbstractSched {
     }
 
     /** @return Number of lrn card in selected decks. Recompute it if we reseted.*/
+    @CheckResult
     public int lrnCount() {
         return counts().getLrn();
     }
 
     /** @return Number of rev card in selected decks. Recompute it if we reseted.*/
+    @CheckResult
     public int revCount() {
         return counts().getRev();
     }
@@ -126,22 +132,26 @@ public abstract class AbstractSched {
     /**
      * @param card A card that should be added to the count result.
      * @return same array as counts(), apart that Card is added*/
+    @CheckResult
     public abstract @NonNull Counts counts(@NonNull Card card);
 
     /**
      * @param days A number of day
      * @return counts over next DAYS. Includes today.
      */
+    @CheckResult
     public abstract int dueForecast(int days);
 
     /**
      * @param card A Card which is in a mode allowing review. I.e. neither suspended nor buried.
      * @return Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.*/
+    @CheckResult
     public abstract Counts.Queue countIdx(@NonNull Card card);
 
     /**
      * @param card A card in a queue allowing review.
      * @return Number of buttons to show in the reviewer for `card`.*/
+    @CheckResult
     public abstract int answerButtons(@NonNull Card card);
 
     /**
@@ -163,33 +173,40 @@ public abstract class AbstractSched {
     /**
      * @return [deckname, did, rev, lrn, new]
      */
+    @CheckResult
     public abstract @NonNull List<DeckDueTreeNode> deckDueList();
 
     /**
      * @param cancelListener A task that is potentially cancelled
      * @return the due tree. null if task is cancelled*/
+    @CheckResult
     public abstract @Nullable List<DeckDueTreeNode> deckDueTree(CancelListener cancelListener);
 
     /**
      * @return the due tree. null if task is cancelled. */
+    @CheckResult
     public abstract @NonNull List<DeckDueTreeNode> deckDueTree();
 
     /**
      * @return The tree of decks, without numbers
      */
+    @CheckResult
     public abstract @NonNull List<DeckTreeNode> quickDeckDueTree();
 
     /** New count for a single deck.
      * @param did The deck to consider (descendants and ancestors are ignored)
      * @param lim Value bounding the result. It is supposed to be the limit taking deck configuration and today's review into account
      * @return Number of new card in deck `did` that should be seen today, at most `lim`. */
+    @CheckResult
     public abstract int _newForDeck(long did, int lim);
 
     /**
      * @return Number of new card to see today in current deck. */
+    @CheckResult
     public abstract int totalNewForCurrentDeck();
 
     /** @return Number of review cards in current deck.  */
+    @CheckResult
     public abstract int totalRevForCurrentDeck();
 
     /**
@@ -197,6 +214,7 @@ public abstract class AbstractSched {
      * @return An interval around `ivl`, with a few less or more days for fuzzying.
      */
     // In this abstract class for testing purpose only
+    @CheckResult
     public abstract @NonNull Pair<Integer, Integer> _fuzzIvlRange(int ivl);
 
     // In this abstract class for testing purpose only
@@ -223,6 +241,7 @@ public abstract class AbstractSched {
      * @return The conf of the deck of the card.
      */
     // In this abstract class for testing purpose only
+    @CheckResult
     protected abstract @NonNull DeckConfig _cardConf(@NonNull Card card);
 
     public abstract void _checkDay();
@@ -232,23 +251,28 @@ public abstract class AbstractSched {
      * @return A message to show to user when they reviewed the last card. Let them know if they can see learning card later today
      * or if they could see more card today by extending review.
      */
+    @CheckResult
     public abstract @NonNull CharSequence finishedMsg(@NonNull Context context);
 
     /** @return whether there are any rev cards due. */
+    @CheckResult
     public abstract boolean revDue();
 
     /** @return whether there are any new cards due.
      * */
+    @CheckResult
     public abstract boolean newDue();
 
     /** @return whether there are cards in learning, with review due the same
      * day, in the selected decks.
      * */
+    @CheckResult
     public abstract boolean hasCardsTodayAfterStudyAheadLimit();
 
     /**
      * @return Whether there are buried card is selected deck
      */
+    @CheckResult
     public abstract boolean haveBuried();
 
     /**
@@ -271,6 +295,7 @@ public abstract class AbstractSched {
      * @return the next interval for CARD, in seconds if ease is pressed.
      */
     // In this abstract class for testing purpose only
+    @CheckResult
     protected abstract long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease);
 
     /**
@@ -357,6 +382,7 @@ public abstract class AbstractSched {
      * @param did An id of a deck
      * @return Whether there is any buried cards in the deck
      */
+    @CheckResult
     public abstract boolean haveBuried(long did);
 
     public enum UnburyType {
@@ -381,16 +407,19 @@ public abstract class AbstractSched {
     /**
      * @return Name of the scheduler. std or std2 currently.
      */
+    @CheckResult
     public abstract @NonNull String getName();
 
     /**
      * @return Number of days since creation of the collection.
      */
+    @CheckResult
     public abstract int getToday();
 
     /**
      * @return Timestamp of when the day ends. Takes into account hour at which day change for anki and timezone
      */
+    @CheckResult
     public abstract long getDayCutoff();
 
     /**
@@ -406,9 +435,11 @@ public abstract class AbstractSched {
 
     /** @return Number of repetitions today. Note that a repetition is the fact that the scheduler sent a card, and not the fact that the card was answered.
      * So buried, suspended, ... cards are also counted as repetitions.*/
+    @CheckResult
     public abstract int getReps();
 
     /** @return Number of cards in the current decks, its descendants and ancestors. */
+    @CheckResult
     public abstract int cardCount();
 
     /**
@@ -428,9 +459,11 @@ public abstract class AbstractSched {
      * @param counts An array of [new, lrn, rev] counts from the scheduler's counts() method.
      * @param reload Force rebuild of estimator rates using the revlog.
      */
+    @CheckResult
     public abstract int eta(Counts counts, boolean reload);
 
     /** Same as above and force reload.*/
+    @CheckResult
     public abstract int eta(Counts counts);
 
     /**
@@ -441,6 +474,7 @@ public abstract class AbstractSched {
     /**
      * @return The counts, after having reseted them
      */
+    @CheckResult
     public abstract @NonNull int[] recalculateCounts();
 
     /**
@@ -507,9 +541,11 @@ public abstract class AbstractSched {
     /**
      * @return The collection to which the scheduler is linked
      */
+    @CheckResult
     public abstract Collection getCol();
 
     /** @return The button to press to enter "good" on a new card. */
     @VisibleForTesting
+    @CheckResult
     public abstract @Consts.BUTTON_TYPE int getGoodNewButton();
 }

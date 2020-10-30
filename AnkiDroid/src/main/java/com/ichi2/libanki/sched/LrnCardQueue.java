@@ -2,6 +2,8 @@ package com.ichi2.libanki.sched;
 
 import java.util.Collections;
 
+import androidx.annotation.CheckResult;
+
 class LrnCardQueue extends CardQueue<LrnCard> {
     public LrnCardQueue(AbstractSched sched) {
         super(sched);
@@ -19,6 +21,7 @@ class LrnCardQueue extends CardQueue<LrnCard> {
         Collections.sort(getQueue());
     }
 
+    @CheckResult
     public long getFirstDue() {
         return getQueue().getFirst().getDue();
     }

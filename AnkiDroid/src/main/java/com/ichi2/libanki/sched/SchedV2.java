@@ -60,6 +60,7 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Random;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -160,6 +161,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Pop the next card from the queue. null if finished.
      */
+    @CheckResult
     public @Nullable Card getCard() {
         _checkDay();
         // check day deal with cutoff if required. No need to do it in resets
@@ -314,6 +316,7 @@ public class SchedV2 extends AbstractSched {
 
 
     /** new count, lrn count, rev count.  */
+    @CheckResult
     public @NonNull Counts counts() {
         if (!mHaveCounts) {
             resetCounts();
@@ -327,6 +330,7 @@ public class SchedV2 extends AbstractSched {
      * number we actually want.
      * Overridden: left / 1000 in V1
      */
+    @CheckResult
     public @NonNull Counts counts(@NonNull Card card) {
         Counts counts = counts();
         Queue idx = countIdx(card);
@@ -338,6 +342,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Return counts over next DAYS. Includes today.
      */
+    @CheckResult
     public int dueForecast(int days) {
         // TODO:...
         return 0;
@@ -348,6 +353,7 @@ public class SchedV2 extends AbstractSched {
      * Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.
      * Overidden: V1 does not have preview
      */
+    @CheckResult
     public Queue countIdx(@NonNull Card card) {
         switch (card.getQueue()) {
             case Consts.QUEUE_TYPE_DAY_LEARN_RELEARN:
@@ -366,6 +372,7 @@ public class SchedV2 extends AbstractSched {
 
     /** Number of buttons to show in the reviewer for `card`.
      * Overridden */
+    @CheckResult
     public int answerButtons(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
         if (card.getODid() != 0 && !conf.getBoolean("resched")) {
@@ -417,6 +424,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected int _walkingCount(@NonNull LimitMethod limFn, @NonNull CountMethod cntFn) {
         int tot = 0;
         HashMap<Long, Integer> pcounts = new HashMap<>();
@@ -464,11 +472,13 @@ public class SchedV2 extends AbstractSched {
      *
      * Return nulls when deck task is cancelled.
      */
+    @CheckResult
     public @NonNull List<DeckDueTreeNode> deckDueList() {
         return deckDueList(null);
     }
 
     // Overridden
+    @CheckResult
     public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
@@ -513,6 +523,7 @@ public class SchedV2 extends AbstractSched {
      requires multiple database access by deck.  Ignoring this number
      lead to the creation of a tree more quickly.*/
     @Override
+    @CheckResult
     public @NonNull List<DeckTreeNode> quickDeckDueTree() {
         // Similar to deckDueTree, ignoring the numbers
 
@@ -528,11 +539,13 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     public @NonNull List<DeckDueTreeNode> deckDueTree() {
         return deckDueTree(null);
     }
 
     @Nullable
+    @CheckResult
     public List<DeckDueTreeNode> deckDueTree(@Nullable CancelListener cancelListener) {
         List<DeckDueTreeNode> deckDueTree = deckDueList(cancelListener);
         if (deckDueTree == null) {
@@ -541,6 +554,7 @@ public class SchedV2 extends AbstractSched {
         return _groupChildren(deckDueTree, true);
     }
 
+    @CheckResult
     private @NonNull <T extends AbstractDeckTreeNode> List<T> _groupChildren(@NonNull List<T> decks, boolean checkDone) {
         // sort based on name's components
         Collections.sort(decks);
@@ -549,6 +563,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected @NonNull  <T extends AbstractDeckTreeNode> List<T> _groupChildrenMain(@NonNull List<T> decks, boolean checkDone) {
         return _groupChildrenMain(decks, 0, checkDone);
     }
@@ -564,6 +579,7 @@ public class SchedV2 extends AbstractSched {
         false, we can't assume all decks have parents and that there
         is no duplicate. Instead, we'll ignore problems.
      */
+    @CheckResult
     protected @NonNull <T extends AbstractDeckTreeNode>List<T> _groupChildrenMain(@NonNull List<T> descendants, int depth, boolean checkDone) {
         List<T> children = new ArrayList<>();
         // group and recurse
@@ -617,6 +633,7 @@ public class SchedV2 extends AbstractSched {
      * Return the next due card, or null.
      * Overridden: V1 does not allow dayLearnFirst
      */
+    @CheckResult
     protected @Nullable Card _getCard() {
         // learning card due?
         @Nullable Card c = _getLrnCard();
@@ -662,6 +679,7 @@ public class SchedV2 extends AbstractSched {
     /** similar to _getCard but only fill the queues without taking the card.
      * Returns lists that may contain the next cards.
      */
+    @CheckResult
     protected @NonNull CardQueue<? extends Card.Cache>[] _fillNextCard() {
         // learning card due?
         if (_preloadLrnCard(false)) {
@@ -729,6 +747,7 @@ public class SchedV2 extends AbstractSched {
 
     // Used as an argument for _walkingCount() in _resetNewCount() above
     @SuppressWarnings("unused")
+    @CheckResult
     protected int _cntFnNew(long did, int lim) {
         return mCol.getDb().queryScalar(
                 "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND id != ? LIMIT ?)",
@@ -751,6 +770,7 @@ public class SchedV2 extends AbstractSched {
         @return The id of the note currently in the reviewer. 0 if no
         such card.
      */
+    @CheckResult
     protected long currentCardNid() {
         Card currentCard = mCurrentCard;
         /* mCurrentCard may be set to null when the reviewer gets closed. So we copy it to be sure to avoid
@@ -768,6 +788,7 @@ public class SchedV2 extends AbstractSched {
         @return The id of the card currently in the reviewer. 0 if no
         such card.
      */
+    @CheckResult
     protected long currentCardId() {
         if (mCurrentCard == null) {
             /* This method is used to ensure that query don't return current card. Since 0 is not a valid nid, all cards
@@ -778,10 +799,12 @@ public class SchedV2 extends AbstractSched {
         return mCurrentCard.getId();
     }
 
+    @CheckResult
     protected boolean _fillNew() {
         return _fillNew(false);
     }
 
+    @CheckResult
     private boolean _fillNew(boolean allowSibling) {
         if (!mNewQueue.isEmpty()) {
             return true;
@@ -827,6 +850,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected @Nullable Card _getNewCard() {
         if (_fillNew()) {
             // mNewCount -= 1; see decrementCounts()
@@ -854,6 +878,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * @return True if it's time to display a new card when distributing.
      */
+    @CheckResult
     protected boolean _timeForNewCard() {
         if (mNewCount == 0) {
             return false;
@@ -875,6 +900,7 @@ public class SchedV2 extends AbstractSched {
      *
      * @param considerCurrentCard Whether current card should be counted if it is in this deck
      */
+    @CheckResult
     protected int _deckNewLimit(long did, boolean considerCurrentCard) {
         return _deckNewLimit(did, null, considerCurrentCard);
     }
@@ -885,6 +911,7 @@ public class SchedV2 extends AbstractSched {
      *
      * @param considerCurrentCard Whether current card should be counted if it is in this deck
      */
+    @CheckResult
     protected int _deckNewLimit(long did, LimitMethod fn, boolean considerCurrentCard) {
         if (fn == null) {
             fn = (g -> _deckNewLimitSingle(g, considerCurrentCard));
@@ -907,6 +934,7 @@ public class SchedV2 extends AbstractSched {
 
 
     /** New count for a single deck. */
+    @CheckResult
     public int _newForDeck(long did, int lim) {
         if (lim == 0) {
             return 0;
@@ -926,6 +954,7 @@ public class SchedV2 extends AbstractSched {
      * Limits of its ancestors are not applied.
      * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
+    @CheckResult
     public int _deckNewLimitSingle(@NonNull Deck g, boolean considerCurrentCard) {
         if (g.getInt("dyn") != 0) {
             return mDynReportLimit;
@@ -941,6 +970,7 @@ public class SchedV2 extends AbstractSched {
         return lim;
     }
 
+    @CheckResult
     public int totalNewForCurrentDeck() {
         return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
                                         mReportLimit);
@@ -950,6 +980,7 @@ public class SchedV2 extends AbstractSched {
      * Learning queues *********************************************************** ************************************
      */
 
+    @CheckResult
     private boolean _updateLrnCutoff(boolean force) {
         long nextCutoff = getTime().intTime() + mCol.getConf().getInt("collapseTime");
         if (nextCutoff - mLrnCutoff > 60 || force) {
@@ -1001,6 +1032,7 @@ public class SchedV2 extends AbstractSched {
 
     // sub-day learning
     // Overridden: a single kind of queue in V1
+    @CheckResult
     protected boolean _fillLrn() {
         if (mLrnCount == 0) {
             return false;
@@ -1032,12 +1064,14 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected @Nullable Card _getLrnCard() {
         return _getLrnCard(false);
     }
 
 
     // Overidden: no _maybeResetLrn in V1
+    @CheckResult
     protected @Nullable Card _getLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
@@ -1054,6 +1088,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected boolean _preloadLrnCard(boolean collapse) {
         _maybeResetLrn(collapse && mLrnCount == 0);
         if (_fillLrn()) {
@@ -1069,6 +1104,7 @@ public class SchedV2 extends AbstractSched {
 
 
     // daily learning
+    @CheckResult
     protected boolean _fillLrnDay() {
         if (mLrnCount == 0) {
             return false;
@@ -1113,6 +1149,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected @Nullable Card _getLrnDayCard() {
         if (_fillLrnDay()) {
             // mLrnCount -= 1; see decrementCounts()
@@ -1165,6 +1202,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     private int _moveToFirstStep(@NonNull Card card, @NonNull JSONObject conf) {
         card.setLeft(_startingLeft(card));
 
@@ -1232,6 +1270,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected int _delayForGrade(JSONObject conf, int left) {
         left = left % 1000;
         try {
@@ -1255,6 +1294,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     private int _delayForRepeatingGrade(@NonNull JSONObject conf, int left) {
         // halfway between last and  next
         int delay1 = _delayForGrade(conf, left);
@@ -1269,6 +1309,7 @@ public class SchedV2 extends AbstractSched {
 
 
     // Overridden: RELEARNING does not exists in V1
+    @CheckResult
     protected @NonNull JSONObject _lrnConf(@NonNull Card card) {
         if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
             return _lapseConf(card);
@@ -1303,6 +1344,7 @@ public class SchedV2 extends AbstractSched {
 
 
     // Overriden: V1 has type rev for relearinng
+    @CheckResult
     protected int _startingLeft(@NonNull Card card) {
         JSONObject conf;
         if (card.getType() == Consts.CARD_TYPE_RELEARNING) {
@@ -1317,11 +1359,13 @@ public class SchedV2 extends AbstractSched {
 
 
     /** the number of steps that can be completed by the day cutoff */
+    @CheckResult
     protected int _leftToday(@NonNull JSONArray delays, int left) {
         return _leftToday(delays, left, 0);
     }
 
 
+    @CheckResult
     private int _leftToday(@NonNull JSONArray delays, int left, long now) {
         if (now == 0) {
             now = getTime().intTime();
@@ -1339,11 +1383,13 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected int _graduatingIvl(@NonNull Card card, @NonNull JSONObject conf, boolean early) {
         return _graduatingIvl(card, conf, early, true);
     }
 
 
+    @CheckResult
     private int _graduatingIvl(@NonNull Card card, @NonNull JSONObject conf, boolean early, boolean fuzz) {
         if (card.getType() == Consts.CARD_TYPE_REV || card.getType() == Consts.CARD_TYPE_RELEARNING) {
             int bonus = early ? 1 : 0;
@@ -1399,6 +1445,7 @@ public class SchedV2 extends AbstractSched {
 
 
     // Overriden: uses left/1000 in V1
+    @CheckResult
     private int _lrnForDeck(long did) {
         try {
             int cnt = mCol.getDb().queryScalar(
@@ -1430,6 +1477,7 @@ public class SchedV2 extends AbstractSched {
      * Respects the limits of its ancestor. Current card is treated the same way as other cards.
      * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
+    @CheckResult
     private int _currentRevLimit(boolean considerCurrentCard) {
         Deck d = mCol.getDecks().get(mCol.getDecks().selected(), false);
         return _deckRevLimitSingle(d, considerCurrentCard);
@@ -1445,6 +1493,7 @@ public class SchedV2 extends AbstractSched {
      * Overridden: V1 does not consider parents limit
      * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
+    @CheckResult
     protected int _deckRevLimitSingle(@Nullable Deck d, boolean considerCurrentCard) {
         return _deckRevLimitSingle(d, null, considerCurrentCard);
     }
@@ -1460,6 +1509,7 @@ public class SchedV2 extends AbstractSched {
      * @param parentLimit Limit of the parent, this is an upper bound on the limit of this deck
      * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      * */
+    @CheckResult
     private int _deckRevLimitSingle(@Nullable Deck d, Integer parentLimit, boolean considerCurrentCard) {
         // invalid deck selected?
         if (d == null) {
@@ -1491,6 +1541,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected int _revForDeck(long did, int lim, @NonNull Decks.Node childMap) {
         List<Long> dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
@@ -1569,6 +1620,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected @Nullable Card _getRevCard() {
         if (_fillRev()) {
             // mRevCount -= 1; see decrementCounts()
@@ -1579,6 +1631,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     public int totalRevForCurrentDeck() {
         return mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
@@ -1630,6 +1683,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     private int _lapseIvl(@NonNull Card card, @NonNull JSONObject conf) {
         return Math.max(1, Math.max(conf.getInt("minInt"), (int)(card.getIvl() * conf.getDouble("mult"))));
     }
@@ -1667,6 +1721,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Next interval for CARD, given EASE.
      */
+    @CheckResult
     protected int _nextRevIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease, boolean fuzz) {
         long delay = _daysLate(card);
         JSONObject conf = _revConf(card);
@@ -1693,6 +1748,7 @@ public class SchedV2 extends AbstractSched {
                                     (card.getIvl() + delay) * fct * conf.getDouble("ease4")), conf, ivl3, fuzz);
     }
 
+    @CheckResult
     public int _fuzzedIvl(int ivl) {
         Pair<Integer, Integer> minMax = _fuzzIvlRange(ivl);
         // Anki's python uses random.randint(a, b) which returns x in [a, b] while the eq Random().nextInt(a, b)
@@ -1701,6 +1757,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     public @NonNull Pair<Integer, Integer> _fuzzIvlRange(int ivl) {
         int fuzz;
         if (ivl < 2) {
@@ -1720,6 +1777,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected int _constrainedIvl(double ivl, @NonNull JSONObject conf, double prev, boolean fuzz) {
         int newIvl = (int) (ivl * conf.optDouble("ivlFct", 1));
         if (fuzz) {
@@ -1736,6 +1794,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * Number of days later than scheduled.
      */
+    @CheckResult
     protected long _daysLate(Card card) {
         long due = card.getODid() != 0 ? card.getODue() : card.getDue();
         return Math.max(0, mToday - due);
@@ -1754,6 +1813,7 @@ public class SchedV2 extends AbstractSched {
 
 
     /** next interval for card when answered early+correctly */
+    @CheckResult
     private int _earlyReviewIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         if (card.getODid() == 0 || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
             throw new RuntimeException("Unexpected card parameters");
@@ -1889,6 +1949,7 @@ public class SchedV2 extends AbstractSched {
      * @param l deck["limit"]
      * @return The generated SQL to be suffixed to "select ... from ... order by "
      */
+    @CheckResult
     protected @NonNull String _dynOrder(@Consts.DYN_PRIORITY int o, int l) {
         String t;
         switch (o) {
@@ -1987,6 +2048,7 @@ public class SchedV2 extends AbstractSched {
 
     /** Leech handler. True if card was a leech.
         Overridden: in V1, due and did are changed*/
+    @CheckResult
     protected boolean _checkLeech(@NonNull Card card, @NonNull JSONObject conf) {
         int lf = conf.getInt("leechFails");
         if (lf == 0) {
@@ -2017,12 +2079,14 @@ public class SchedV2 extends AbstractSched {
      * Tools ******************************************************************** ***************************
      */
 
+    @CheckResult
     public @NonNull DeckConfig _cardConf(@NonNull Card card) {
         return mCol.getDecks().confForDid(card.getDid());
     }
 
 
     // Overridden: different delays for filtered cards.
+    @CheckResult
     protected @NonNull JSONObject _newConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
         // normal deck
@@ -2046,6 +2110,7 @@ public class SchedV2 extends AbstractSched {
 
 
     // Overridden: different delays for filtered cards.
+    @CheckResult
     protected @NonNull JSONObject _lapseConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
         // normal deck
@@ -2067,6 +2132,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     protected @NonNull JSONObject _revConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
         // normal deck
@@ -2078,11 +2144,13 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     public @NonNull String _deckLimit() {
         return Utils.ids2str(mCol.getDecks().active());
     }
 
 
+    @CheckResult
     private boolean _previewingCard(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
 
@@ -2090,6 +2158,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     private int _previewDelay(@NonNull Card card) {
         return _cardConf(card).optInt("previewDelay", 10) * 60;
     }
@@ -2124,6 +2193,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     private long _dayCutoff() {
         int rolloverTime = mCol.getConf().optInt("rollover", 4);
         if (rolloverTime < 0) {
@@ -2143,6 +2213,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     private int _daysSinceCreation() {
         Calendar c = mCol.crtCalendar();
         c.set(Calendar.HOUR, mCol.getConf().optInt("rollover", 4));
@@ -2179,6 +2250,7 @@ public class SchedV2 extends AbstractSched {
      * *****************************************
      */
 
+    @CheckResult
     public @NonNull CharSequence finishedMsg(@NonNull Context context) {
         SpannableStringBuilder sb = new SpannableStringBuilder();
         sb.append(context.getString(R.string.studyoptions_congrats_finished));
@@ -2191,6 +2263,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     public @NonNull String _nextDueMsg(@NonNull Context context) {
         StringBuilder sb = new StringBuilder();
         if (revDue()) {
@@ -2215,6 +2288,7 @@ public class SchedV2 extends AbstractSched {
 
 
     /** true if there are any rev cards due. */
+    @CheckResult
     public boolean revDue() {
         return mCol.getDb()
                 .queryScalar(
@@ -2231,6 +2305,7 @@ public class SchedV2 extends AbstractSched {
      * method is called, we already know that no cards is due
      * immedietly. It answers whether cards will be due later in the
      * same deck. */
+    @CheckResult
     public boolean hasCardsTodayAfterStudyAheadLimit() {
         return mCol.getDb().queryScalar(
                 "SELECT 1 FROM cards WHERE did IN " + _deckLimit()
@@ -2239,16 +2314,19 @@ public class SchedV2 extends AbstractSched {
 
 
     /** true if there are any new cards due. */
+    @CheckResult
     public boolean newDue() {
         return mCol.getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0;
     }
 
 
+    @CheckResult
     public boolean haveBuriedSiblings() {
         return haveBuriedSiblings(mCol.getDecks().active());
     }
 
 
+    @CheckResult
     private boolean haveBuriedSiblings(@NonNull List<Long> allDecks) {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
@@ -2258,11 +2336,13 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     public boolean haveManuallyBuried() {
         return haveManuallyBuried(mCol.getDecks().active());
     }
 
 
+    @CheckResult
     private boolean haveManuallyBuried(@NonNull List<Long> allDecks) {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
@@ -2272,6 +2352,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     public boolean haveBuried() {
         return haveManuallyBuried() || haveBuriedSiblings();
     }
@@ -2294,6 +2375,7 @@ public class SchedV2 extends AbstractSched {
      * @param ease The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
+    @CheckResult
     public @NonNull String nextIvlStr(@NonNull Context context, @NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         long ivl = nextIvl(card, ease);
         if (ivl == 0) {
@@ -2311,6 +2393,7 @@ public class SchedV2 extends AbstractSched {
      * Return the next interval for CARD, in seconds.
      */
     // Overriden
+    @CheckResult
     protected long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         // preview mode?
         if (_previewingCard(card)) {
@@ -2343,6 +2426,7 @@ public class SchedV2 extends AbstractSched {
 
     // this isn't easily extracted from the learn code
     // Overriden
+    @CheckResult
     protected long _nextLrnIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW) {
             card.setLeft(_startingLeft(card));
@@ -2378,6 +2462,7 @@ public class SchedV2 extends AbstractSched {
      * Overriden: in V1, queue becomes type.
      */
     @NonNull
+    @CheckResult
     protected String _restoreQueueSnippet() {
         return "queue = (case when type in (" + Consts.CARD_TYPE_LRN + "," + Consts.CARD_TYPE_RELEARNING + ") then\n" +
                 "  (case when (case when odue then odue else due end) > 1000000000 then 1 else " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " end)\n" +
@@ -2403,6 +2488,7 @@ public class SchedV2 extends AbstractSched {
 
     /**
      * Overridden: in V1 only sibling buried exits.*/
+    @CheckResult
     protected @NonNull String queueIsBuriedSnippet() {
         return " queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ") ";
     }
@@ -2771,6 +2857,7 @@ public class SchedV2 extends AbstractSched {
      * ***********************************************************
      */
     // Overriden: In sched v1, a single type of burying exist
+    @CheckResult
     public boolean haveBuried(long did) {
         List<Long> all = new ArrayList<>(mCol.getDecks().children(did).values());
         all.add(did);
@@ -2785,11 +2872,13 @@ public class SchedV2 extends AbstractSched {
 
 
     @NonNull
+    @CheckResult
     public String getName() {
         return "std2";
     }
 
 
+    @CheckResult
     public int getToday() {
         return mToday;
     }
@@ -2800,11 +2889,13 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     public long getDayCutoff() {
         return mDayCutoff;
     }
 
 
+    @CheckResult
     public int getReps(){
         return mReps;
     }
@@ -2823,12 +2914,14 @@ public class SchedV2 extends AbstractSched {
      * Counts
      */
 
+    @CheckResult
     public int cardCount() {
         String dids = _deckLimit();
         return mCol.getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids);
     }
 
 
+    @CheckResult
     public int eta(Counts counts) {
         return eta(counts, true);
     }
@@ -2852,6 +2945,7 @@ public class SchedV2 extends AbstractSched {
      * @param reload Force rebuild of estimator rates using the revlog.
      */
     // Overridden because of the different queues in SchedV1 and V2
+    @CheckResult
     public int eta(Counts counts, boolean reload) {
         double newRate;
         double newTime;
@@ -2985,6 +3079,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
+    @CheckResult
     public boolean leechActionSuspend(@NonNull Card card) {
         JSONObject conf = _cardConf(card).getJSONObject("lapse");
         return conf.getInt("leechAction") == Consts.LEECH_SUSPEND;
@@ -2997,6 +3092,7 @@ public class SchedV2 extends AbstractSched {
 
     /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
     @Override
+    @CheckResult
     public @NonNull int[] recalculateCounts() {
         _resetLrnCount();
         _resetNewCount();
@@ -3037,6 +3133,7 @@ public class SchedV2 extends AbstractSched {
 
 
     @NonNull
+    @CheckResult
     public Time getTime() {
         return mCol.getTime();
     }
@@ -3072,6 +3169,7 @@ public class SchedV2 extends AbstractSched {
         mNewQueue.remove(card.getId());
     }
 
+    @CheckResult
     protected boolean currentCardIsInQueueWithDeck(@Consts.CARD_QUEUE int queue, long did) {
         // mCurrentCard may be set to null when the reviewer gets closed. So we copy it to be sure to avoid NullPointerException
         Card currentCard = mCurrentCard;
@@ -3079,12 +3177,14 @@ public class SchedV2 extends AbstractSched {
         return currentCard != null && currentCard.getQueue() == queue && currentCardParentsDid != null && currentCardParentsDid.contains(did);
     }
 
+    @CheckResult
     public @NonNull Collection getCol() {
         return mCol;
     }
 
     @Override
     @VisibleForTesting
+    @CheckResult
     public @Consts.BUTTON_TYPE int getGoodNewButton() {
         return Consts.BUTTON_THREE;
     }

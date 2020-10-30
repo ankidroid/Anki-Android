@@ -27,6 +27,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
+import androidx.annotation.CheckResult;
+
 // https://stackoverflow.com/questions/27562666/programmatically-add-a-certificate-authority-while-keeping-android-system-ssl-ce
 // Changes:
 // We try the local manager first.
@@ -70,6 +72,7 @@ class UnifiedTrustManager implements X509TrustManager {
         }
     }
     @Override
+    @CheckResult
     public X509Certificate[] getAcceptedIssuers() {
         return mAcceptedIssuers;
     }
