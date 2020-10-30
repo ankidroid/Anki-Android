@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Veritabanını kontrol et</string>
     <string name="check_db_warning">Bu uzun sürebilir</string>
     <string name="check_db_acknowledge">Veritabanı kontrol edildi</string>
@@ -125,7 +125,8 @@
     <string name="dialog_continue">Devam Et</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Oluştur</string>
     <string name="dialog_positive_delete">Sil</string>
-    <string name="dialog_positive_disable">Devredışı Bırak</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Devredışı Bırak</string>
     <string name="dialog_positive_overwrite">Üzerine Yaz</string>
     <string name="dialog_positive_remove">Kaldır</string>
     <string name="dialog_positive_repair">Onar</string>

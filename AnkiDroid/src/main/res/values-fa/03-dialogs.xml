@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">بررسی پایگاه داده</string>
     <string name="check_db_warning">این عملیات ممکن است مدت زیادی طول بکشد</string>
     <string name="check_db_acknowledge">بانک اطلاعاتی بررسی شد</string>
@@ -127,7 +127,8 @@
     <string name="dialog_continue">ادامه</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ایجاد</string>
     <string name="dialog_positive_delete">حذف</string>
-    <string name="dialog_positive_disable">غیر فعال کردن</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">غیر فعال کردن</string>
     <string name="dialog_positive_overwrite">رونويسي</string>
     <string name="dialog_positive_remove">حذف</string>
     <string name="dialog_positive_repair">اصلاح</string>

@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">לבדוק את מסד הנתונים?</string>
     <string name="check_db_warning">פעולה זאת עלולה לארוך זמן רב</string>
     <string name="check_db_acknowledge">מסד הנתונים נבדק.‏</string>
@@ -137,7 +137,8 @@
     <string name="dialog_continue">המשך</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">יצירה</string>
     <string name="dialog_positive_delete">מחיקה</string>
-    <string name="dialog_positive_disable">השבתה</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">השבתה</string>
     <string name="dialog_positive_overwrite">שכתוב</string>
     <string name="dialog_positive_remove">הסרה</string>
     <string name="dialog_positive_repair">תיקון</string>

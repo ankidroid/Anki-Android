@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Zkontrolovat databázi</string>
     <string name="check_db_warning">Toto může trvat dlouhou dobu</string>
     <string name="check_db_acknowledge">Databáze zkontrolována</string>
@@ -102,7 +102,7 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">Přeplánovává se nová karta. Přeplánování také změní novou kartu na opakovanou kartu. Použijte volbu „změnit pořadí karty“, abyste změnili pořadí nové karty v rámci fronty nových karet</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Přeplánování také obnoví to, jak bude plánovač v budoucnu zacházet s kartou (snadnost bude nastavena na %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Vyberte balíček ve správci souborů nebo navštivte stránku about:downloads, abyste ho importovali</string>
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>
@@ -137,7 +137,8 @@
     <string name="dialog_continue">Pokračovat</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Vytvořit</string>
     <string name="dialog_positive_delete">Odstranit</string>
-    <string name="dialog_positive_disable">Zakázat</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Zakázat</string>
     <string name="dialog_positive_overwrite">Přepsat</string>
     <string name="dialog_positive_remove">Odstranit</string>
     <string name="dialog_positive_repair">Opravit</string>
@@ -227,23 +228,23 @@
     <string name="locale_selection_dialog_title">Výběr nápovědy klávesnice</string>
     <string name="locale_selection_dialog_summary">Některé vícejazyčné klávesnice, např. GBoard podporují změnu jazyka při úpravách textu\n\nProsím požádejte výrobce klávesnice o funkci „setImeHintLocales“, pokud vaše klávesnice nepřepíná mezi jazyky.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_title_using_ankidroid">Používání AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Příručka AnkiDroid</string>
+    <string name="help_item_anki_manual">Příručka Anki</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
+    <string name="help_title_get_help">Získat pomoc</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_translate_ankidroid">Translate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
-    <string name="help_item_discord">Discord</string>
+    <string name="help_item_report_bug">Nahlásit chybu</string>
+    <string name="help_title_support_ankidroid">Podpořit AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Přispět</string>
+    <string name="help_item_support_translate_ankidroid">Přeložit</string>
+    <string name="help_item_support_develop_ankidroid">Vyvíjet</string>
+    <string name="help_item_support_rate_ankidroid">Ohodnotit</string>
+    <string name="help_item_support_other_ankidroid">Ostatní</string>
+    <string name="help_title_community">Komunita</string>
+    <string name="help_item_anki_forums">Fóra Anki</string>
+    <string name="help_item_discord">Spor</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <!--Sync-->

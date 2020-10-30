@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Kontrolli andmebaasi?</string>
     <string name="check_db_warning">See võib võtta kaua aega</string>
     <string name="check_db_acknowledge">Andmebaas kontrollitud</string>
@@ -125,7 +125,8 @@
     <string name="dialog_continue">Jätka</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Loo</string>
     <string name="dialog_positive_delete">Kustuta</string>
-    <string name="dialog_positive_disable">Keela</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Keela</string>
     <string name="dialog_positive_overwrite">Kirjuta üle</string>
     <string name="dialog_positive_remove">Eemalda</string>
     <string name="dialog_positive_repair">Paranda</string>

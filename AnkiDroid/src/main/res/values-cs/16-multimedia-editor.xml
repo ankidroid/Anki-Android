@@ -39,7 +39,7 @@
     <string name="multimedia_editor_popup_audio">Pořídit zvukový záznam</string>
     <string name="multimedia_editor_popup_text">Pokročilý editor</string>
     <string name="multimedia_editor_popup_cloze">Doplňovačka</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_clear_field">Vymazat pole</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Běží na glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -112,7 +112,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Nahrávání selhalo</string>
     <string name="multimedia_editor_audio_view_playing_failed">Přehrávání selhalo</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">Nelze vytvořit nástrojovou lištu pro nahrávání</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editační pole</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Překlad</string>
@@ -122,6 +122,6 @@
     <string name="crop_image">Chcete oříznout tento obrázek?</string>
     <string name="crop_button">Oříznout obrázek</string>
     <string name="save_dialog_content">Aktuální velikost obrázku je %s MB. Výchozí limit velikosti obrázku je 1 MB. Chcete jej oříznout?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
+    <string name="select_image_failed">"Výběr obrázku selhal, zkuste to prosím znovu"</string>
     <string name="activity_result_unexpected">Aplikace vrátila neočekávanou hodnotu. Možná budete muset použít jinou aplikaci</string>
 </resources>

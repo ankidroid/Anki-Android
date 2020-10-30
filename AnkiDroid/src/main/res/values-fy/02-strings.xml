@@ -37,12 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Open drawer</string>
-    <string name="drawer_close">Close drawer</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Open drawer</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Close drawer</string>
     <string name="CardEditorLaterMessage">Saved information for later</string>
     <string name="CardEditorCardDeck">Kaartenset:</string>
     <string name="CardEditorNoteDeck">Set:</string>
@@ -337,4 +338,5 @@
     <string name="add_toolbar_item">Create Toolbar Item</string>
     <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
     <string name="remove_toolbar_item">Remove Toolbar Item?</string>
+    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
 </resources>

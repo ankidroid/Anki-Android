@@ -37,12 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Otevřít zásuvku</string>
-    <string name="drawer_close">Zavřít zásuvku</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Otevřít zásuvku</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Zavřít zásuvku</string>
     <string name="CardEditorLaterMessage">Uložené informace na později</string>
     <string name="CardEditorCardDeck">Balíček karet:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
@@ -350,17 +351,18 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid spoléhá na systémový WebView, který je nedostupný. K tomu může dojít, jestliže systém instaluje aktualizace. Zkuste to prosím znovu za pár minut.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Velikost písma</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
+    <string name="format_insert_bold">Formátovat jako tučné</string>
+    <string name="format_insert_italic">Formát jako kurzíva</string>
+    <string name="format_insert_underline">Formát jako podtržené</string>
+    <string name="insert_horizontal_line">Vložit vodorovnou čáru</string>
+    <string name="insert_heading">Vložit nadpis</string>
+    <string name="format_font_size">Změnit velikost písma</string>
+    <string name="insert_mathjax">Vložit rovnici MathJax</string>
+    <string name="insert_cloze">Vložit doplňovačku</string>
+    <string name="before_text">HTML před výběrem</string>
+    <string name="after_text">HTML za výběrem</string>
+    <string name="add_toolbar_item">Vytvořit položku nástrojové lišty</string>
+    <string name="toolbar_item_explain_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ho odstranili</string>
+    <string name="remove_toolbar_item">Odstranit položku nástrojové lišty?</string>
+    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
 </resources>

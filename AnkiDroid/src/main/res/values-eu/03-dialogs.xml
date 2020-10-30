@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Analizatu datu-basea?</string>
     <string name="check_db_warning">Honek luze jo lezake</string>
     <string name="check_db_acknowledge">Datubasea analizatuta</string>
@@ -125,7 +125,8 @@
     <string name="dialog_continue">Jarraitu</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Sortu</string>
     <string name="dialog_positive_delete">Ezabatu</string>
-    <string name="dialog_positive_disable">Desgaitu</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Desgaitu</string>
     <string name="dialog_positive_overwrite">Gainidatzi</string>
     <string name="dialog_positive_remove">Kendu</string>
     <string name="dialog_positive_repair">Konpondu</string>
