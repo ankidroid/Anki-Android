@@ -106,6 +106,7 @@ import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
+import com.ichi2.utils.KeyUtils;
 import com.ichi2.utils.MapUtil;
 import com.ichi2.utils.NamedJSONComparator;
 import com.ichi2.utils.NoteFieldDecorator;
@@ -703,7 +704,7 @@ public class NoteEditor extends AnkiActivity {
             return true;
         }
 
-        switch(keyCode) {
+        switch (keyCode) {
 
             //some hardware keyboards swap between mobile/desktop mode...
             //when in mobile mode KEYCODE_NUMPAD_ENTER & KEYCODE_ENTER are equiv. but
@@ -760,7 +761,36 @@ public class NoteEditor extends AnkiActivity {
                 break;
         }
 
+        // 7573: Ctrl+Shift+[Num] to select a field
+        if (event.isCtrlPressed() && event.isShiftPressed() && KeyUtils.isDigit(event)) {
+            int digit = KeyUtils.getDigit(event);
+            // map: '0' -> 9; '1' to 0
+            int indexBase10 = ((digit - 1) % 10 + 10) % 10;
+            selectFieldIndex(indexBase10);
+        }
+
         return super.onKeyUp(keyCode, event);
+    }
+
+
+    private void selectFieldIndex(int index) {
+        Timber.i("Selecting field index %d", index);
+        if (mEditFields.size() <= index || index < 0) {
+            Timber.i("Index out of range: %d", index);
+            return;
+        }
+
+
+        FieldEditText field;
+        try {
+            field = mEditFields.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            Timber.w(e,"Error selecting index %d", index);
+            return;
+        }
+
+        field.requestFocus();
+        Timber.d("Selected field");
     }
 
 
