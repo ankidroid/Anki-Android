@@ -92,7 +92,6 @@
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
 
-    <string name="rebuild_custom_study_deck">Rebuilding custom study deck…</string>
     <string name="importing_collection">Importing collection…</string>
     <string name="import_media_count">Importing media files %1$d%%…</string>
     <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
