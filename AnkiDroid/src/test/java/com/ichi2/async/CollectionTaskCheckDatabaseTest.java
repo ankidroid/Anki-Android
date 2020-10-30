@@ -29,14 +29,11 @@ import static org.hamcrest.Matchers.is;
 public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest {
 
     @Test
-    @Ignore("broke with upgrade to Robolectric 4.4, switch to Looper.PAUSED ?")
     public void checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase();
 
         advanceRobolectricLooper();
         TaskData result = super.execute(CHECK_DATABASE);
-        advanceRobolectricLooperWithSleep();
-        advanceRobolectricLooperWithSleep();
 
         assertThat("The result should specify a failure", result.getBoolean(), is(false));
         Collection.CheckDatabaseResult checkDbResult = assertObjIsDbResult(result);
