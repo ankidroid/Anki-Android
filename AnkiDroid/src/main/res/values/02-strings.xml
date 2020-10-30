@@ -146,7 +146,6 @@
 
     <string name="show_hint">Show %s</string>
     <string name="info_rate">Rate AnkiDroid</string>
-    <string name="col_load_failed">Collection loading failed.\nPress back to close AnkiDroid.</string>
     <string name="import_title">Importing</string>
     <string name="import_select_title">Choose a file to import</string>
     <string name="import_message_add">Add</string>
