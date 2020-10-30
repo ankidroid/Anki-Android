@@ -124,7 +124,6 @@
 
     <string name="fact_adder_intent_title" comment="Label of the 'Add Note' window. This title can't be seen in AnkiDroid directly.">AnkiDroid card</string>
     <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">Copy card</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Reset progress</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
