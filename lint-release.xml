@@ -25,6 +25,10 @@
     <issue id="StringFormatCount" severity="fatal" />
     <issue id="StringFormatMatches" severity="fatal" />
     <issue id="StringFormatInvalid" severity="fatal" />
+    <issue id="UnusedResources" severity="ignore">
+        <!-- Ignore as they'll be used for #7526 -->
+        <ignore regexp="content_picture\.png|device_access_mic\.png" />
+    </issue>
     <issue id="ViewConstructor" severity="fatal" />
     <issue id="ViewHolder" severity="fatal" />
     <issue id="ViewTag" severity="fatal" />
@@ -316,7 +320,6 @@
     <issue id="TypographyQuotes" severity="ignore" />
     <issue id="UnsafeProtectedBroadcastReceiver" severity="ignore" />
     <issue id="UnprotectedSMSBroadcastReceiver" severity="ignore" />
-    <issue id="UnusedResources" severity="ignore" />
     <issue id="UnusedIds" severity="ignore" />
     <issue id="UseCompoundDrawables" severity="ignore" />
     <issue id="UselessLeaf" severity="ignore" />
