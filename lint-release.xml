@@ -28,6 +28,7 @@
     <issue id="UnusedResources" severity="ignore">
         <!-- Ignore as they'll be used for #7526 -->
         <ignore regexp="content_picture\.png|device_access_mic\.png" />
+        <ignore path="res/values/12-dont-translate.xml" />
     </issue>
     <issue id="ViewConstructor" severity="fatal" />
     <issue id="ViewHolder" severity="fatal" />
