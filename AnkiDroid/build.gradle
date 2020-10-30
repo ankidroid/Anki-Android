@@ -238,7 +238,7 @@ dependencies {
     // #6419  - API 27 (& maybe others) could not perform new ZipFile() on a 2GB+ apkg
     // noinspection GradleDependency - pinned at 1.12 until API21 minSdkVersion (File.toPath usage)
     implementation 'org.apache.commons:commons-compress:1.12'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
 
     // May need a resolution strategy for support libs to our versions
