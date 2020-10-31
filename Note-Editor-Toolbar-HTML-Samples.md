@@ -1,3 +1,5 @@
+HTML is a powerful language which allows almost limitless customization of your notes. If this page doesn't list what you require, Google can likely provide the answers. Styling advice can also be requested on our [mailing list](https://groups.google.com/g/anki-android).
+
 ## Conventions
 
 ### Wrapping Text
