@@ -865,7 +865,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         } else if (requestCode == REQUEST_BROWSE_CARDS) {
             // Store the selected deck after opening browser
             if (intent != null && intent.getBooleanExtra("allDecksSelected", false)) {
-                AnkiDroidApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", -1L).apply();
+                AnkiDroidApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", Decks.NOT_FOUND_DECK_ID).apply();
             } else {
                 long selectedDeck = getCol().getDecks().selected();
                 AnkiDroidApp.getSharedPrefs(this).edit().putLong("browserDeckIdFromDeckPicker", selectedDeck).apply();

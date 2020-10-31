@@ -502,7 +502,7 @@ public class CardContentProvider extends ContentProvider {
             case NOTES_ID_CARDS_ORD: {
                 Card currentCard = getCardFromUri(uri, col);
                 boolean isDeckUpdate = false;
-                long did = -1;
+                long did = Decks.NOT_FOUND_DECK_ID;
                 // the key of the ContentValues contains the column name
                 // the value of the ContentValues contains the row value.
                 Set<Map.Entry<String, Object>> valueSet = values.valueSet();
