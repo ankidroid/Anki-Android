@@ -52,6 +52,8 @@ import static com.ichi2.libanki.Utils.trimArray;
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
 public class Models {
+    public static final long NOT_FOUND_NOTE_TYPE = -1L;
+
     @VisibleForTesting
     public static final String REQ_NONE = "none";
     @VisibleForTesting

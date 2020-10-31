@@ -140,6 +140,7 @@ import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
 import com.ichi2.async.TaskData;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -1301,7 +1302,7 @@ public class NoteEditor extends AnkiActivity {
         Intent intent = new Intent(this, CardTemplateEditor.class);
         // Pass the model ID
         intent.putExtra("modelId", getCurrentlySelectedModel().getLong("id"));
-        Timber.d("showCardTemplateEditor() for model %s", intent.getLongExtra("modelId", -1L));
+        Timber.d("showCardTemplateEditor() for model %s", intent.getLongExtra("modelId", NOT_FOUND_NOTE_TYPE));
         // Also pass the note id and ord if not adding new note
         if (!mAddNote && mCurrentEditedCard != null) {
             intent.putExtra("noteId", mCurrentEditedCard.note().getId());
