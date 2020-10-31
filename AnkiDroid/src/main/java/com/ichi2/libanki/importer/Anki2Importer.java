@@ -56,6 +56,13 @@ import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
 
+import static com.ichi2.libanki.Consts.CARD_TYPE_LRN;
+import static com.ichi2.libanki.Consts.CARD_TYPE_NEW;
+import static com.ichi2.libanki.Consts.CARD_TYPE_REV;
+import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
+import static com.ichi2.libanki.Consts.QUEUE_TYPE_NEW;
+import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
+
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
@@ -119,7 +126,7 @@ public class Anki2Importer extends Importer {
 
         if (!importingV2 && mCol.schedVer() != 1) {
             // any scheduling included?
-            if (mSrc.getDb().queryScalar("select 1 from cards where queue != " + Consts.QUEUE_TYPE_NEW + " limit 1") > 0) {
+            if (mSrc.getDb().queryScalar("select 1 from cards where queue != " + QUEUE_TYPE_NEW + " limit 1") > 0) {
                 this.mMustResetLearning = true;
             }
         }
@@ -578,7 +585,7 @@ public class Anki2Importer extends Importer {
                 card[4] = mCol.getTime().intTime();
                 card[5] = usn;
                 // review cards have a due date relative to collection
-                if ((Integer) card[7] == 2 || (Integer) card[7] == 3 || (Integer) card[6] == 2) {
+                if ((Integer) card[7] == QUEUE_TYPE_REV || (Integer) card[7] == QUEUE_TYPE_DAY_LEARN_RELEARN || (Integer) card[6] == CARD_TYPE_REV) {
                     card[8] = (Long) card[8] - aheadBy;
                 }
                 // odue needs updating too
@@ -593,14 +600,14 @@ public class Anki2Importer extends Importer {
                     card[8] = card[14];
                     card[14] = 0;
                     // queue
-                    if ((Integer) card[6] == 1) { // type
-                        card[7] = 0;
+                    if ((Integer) card[6] == CARD_TYPE_LRN) {
+                        card[7] = QUEUE_TYPE_NEW;
                     } else {
                         card[7] = card[6];
                     }
                     // type
-                    if ((Integer) card[6] == 1) {
-                        card[6] = 0;
+                    if ((Integer) card[6] == CARD_TYPE_LRN) {
+                        card[6] = CARD_TYPE_NEW;
                     }
                 }
                 cards.add(card);
@@ -799,7 +806,7 @@ public class Anki2Importer extends Importer {
         }
         // make sure new position is correct
         mDst.getConf().put("nextPos", mDst.getDb().queryLongScalar(
-                "select max(due)+1 from cards where type = " + Consts.CARD_TYPE_NEW));
+                "select max(due)+1 from cards where type = " + CARD_TYPE_NEW));
         mDst.save();
     }
 
