@@ -31,11 +31,14 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +51,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.SearchView;
@@ -142,6 +146,8 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 
+import static com.ichi2.anki.services.ReminderService.EXTRA_DECK_OPTION_ID;
+import static com.ichi2.anki.services.ReminderService.getReviewDeckIntent;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 
@@ -2549,6 +2555,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
         showDialogFragment(ExportDialog.newInstance(msg, did));
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    public void createIcon(Context context) {
+        // This code should not be reachable with lower versions
+        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
+        ShortcutInfo info = new ShortcutInfo.Builder(context, Long.toString(mContextMenuDid))
+                .setIntent(new Intent(context, Reviewer.class)
+                        .setAction(Intent.ACTION_VIEW)
+                        .putExtra("deckId", mContextMenuDid)
+                )
+                .setShortLabel(Decks.basename(getCol().getDecks().name(mContextMenuDid)))
+                .setLongLabel(getCol().getDecks().name(mContextMenuDid))
+                .setIcon(Icon.createWithResource(context, R.mipmap.ic_launcher))
+                .build();
+        shortcutManager.requestPinShortcut(info, null);
+    }
 
     // Callback to show dialog to rename the current deck
     public void renameDeckDialog() {
