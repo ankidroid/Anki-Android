@@ -29,11 +29,15 @@ import com.ichi2.anki.StudyOptionsFragment;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Collection;
 
+import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
+
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     /**
@@ -49,7 +53,19 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     private static final int CONTEXT_MENU_CUSTOM_STUDY_EMPTY = 7;
     private static final int CONTEXT_MENU_CREATE_SUBDECK = 8;
     private static final int CONTEXT_MENU_CREATE_SHORTCUT = 9;
-
+    @Retention(SOURCE)
+    @IntDef( {CONTEXT_MENU_RENAME_DECK,
+            CONTEXT_MENU_DECK_OPTIONS,
+            CONTEXT_MENU_CUSTOM_STUDY,
+            CONTEXT_MENU_DELETE_DECK,
+            CONTEXT_MENU_EXPORT_DECK,
+            CONTEXT_MENU_UNBURY,
+            CONTEXT_MENU_CUSTOM_STUDY_REBUILD,
+            CONTEXT_MENU_CUSTOM_STUDY_EMPTY,
+            CONTEXT_MENU_CREATE_SUBDECK,
+            CONTEXT_MENU_CREATE_SHORTCUT,
+    })
+    public @interface DECK_PICKER_CONTEXT_MENU {};
 
     public static DeckPickerContextMenu newInstance(long did) {
         DeckPickerContextMenu f = new DeckPickerContextMenu();
@@ -98,7 +114,8 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
      * Retrieve the list of ids to put in the context menu list
      * @return the ids of which values to show
      */
-    private int[] getListIds() {
+    private @DECK_PICKER_CONTEXT_MENU
+    int[] getListIds() {
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         long did = getArguments().getLong("did");
         ArrayList<Integer> itemIds = new ArrayList<>();
@@ -126,7 +143,8 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
 
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
     private final MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, item, charSequence) -> {
-        switch (view.getId()) {
+        @DECK_PICKER_CONTEXT_MENU int id = view.getId();
+        switch (id) {
             case CONTEXT_MENU_DELETE_DECK:
                 Timber.i("Delete deck selected");
                 ((DeckPicker) getActivity()).confirmDeckDeletion();
