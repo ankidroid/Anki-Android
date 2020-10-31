@@ -1646,7 +1646,7 @@ public class NoteEditor extends AnkiActivity {
             popup.getMenu().add(Menu.NONE, items.length, Menu.NONE, R.string.nothing);
             popup.setOnMenuItemClickListener(item -> {
                 // Get menu item id
-                Integer idx = item.getItemId();
+                int idx = item.getItemId();
                 Timber.i("NoteEditor:: User chose to remap to old field %d", idx);
                 // Retrieve any existing mappings between newFieldIndex and idx
                 Integer previousMapping = MapUtil.getKeyByValue(mModelChangeFieldMap, newFieldIndex);
