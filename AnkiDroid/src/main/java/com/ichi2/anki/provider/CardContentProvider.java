@@ -87,6 +87,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
+import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 /**
  * Supported URIs:
@@ -792,7 +793,7 @@ public class CardContentProvider extends ContentProvider {
         col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.length, getLogMessage("bulkInsert", null)));
 
         // for caching model information (so we don't have to query for each note)
-        long modelId = -1L;
+        long modelId = NOT_FOUND_NOTE_TYPE;
         Model model = null;
 
         col.getDecks().flush(); // is it okay to move this outside the for-loop? Is it needed at all?

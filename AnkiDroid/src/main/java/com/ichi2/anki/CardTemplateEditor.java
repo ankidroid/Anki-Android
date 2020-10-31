@@ -72,6 +72,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import timber.log.Timber;
 import com.ichi2.async.TaskData;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
 
 /**
@@ -108,8 +109,8 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         // Load the args either from the intent or savedInstanceState bundle
         if (savedInstanceState == null) {
             // get model id
-            mModelId = getIntent().getLongExtra("modelId", -1L);
-            if (mModelId == -1) {
+            mModelId = getIntent().getLongExtra("modelId", NOT_FOUND_NOTE_TYPE);
+            if (mModelId == NOT_FOUND_NOTE_TYPE) {
                 Timber.e("CardTemplateEditor :: no model ID was provided");
                 finishWithoutAnimation();
                 return;
