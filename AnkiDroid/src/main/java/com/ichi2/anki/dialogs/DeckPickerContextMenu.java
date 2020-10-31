@@ -17,8 +17,8 @@ package com.ichi2.anki.dialogs;
 
 import android.app.Dialog;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.AnkiActivity;
@@ -48,6 +48,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     private static final int CONTEXT_MENU_CUSTOM_STUDY_REBUILD = 6;
     private static final int CONTEXT_MENU_CUSTOM_STUDY_EMPTY = 7;
     private static final int CONTEXT_MENU_CREATE_SUBDECK = 8;
+    private static final int CONTEXT_MENU_CREATE_SHORTCUT = 9;
 
 
     public static DeckPickerContextMenu newInstance(long did) {
@@ -89,6 +90,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_REBUILD, res.getString(R.string.rebuild_cram_label));
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY_EMPTY, res.getString(R.string.empty_cram_label));
         keyValueMap.put(CONTEXT_MENU_CREATE_SUBDECK, res.getString(R.string.create_subdeck));
+        keyValueMap.put(CONTEXT_MENU_CREATE_SHORTCUT, res.getString(R.string.create_shortcut));
         return keyValueMap;
     }
 
@@ -115,6 +117,10 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         if (col.getSched().haveBuried(did)) {
             itemIds.add(CONTEXT_MENU_UNBURY);
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            itemIds.add(CONTEXT_MENU_CREATE_SHORTCUT);
+        }
+
         return ContextMenuHelper.integerListToArray(itemIds);
     }
 
@@ -139,6 +145,16 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
                 ((AnkiActivity) getActivity()).showDialogFragment(d);
                 break;
             }
+            case CONTEXT_MENU_CREATE_SHORTCUT:
+                // This condition is theoretically useless. CONTEXT_MENU_CREATE_SHORTCUT can't be selected
+                // before version O. But there is no way to tell it to the compiler, so this condition should be added
+                // To avoid warning
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Timber.i("Create icon for a deck");
+                    ((DeckPicker) getActivity()).createIcon(getContext());
+                }
+                break;
+
             case CONTEXT_MENU_RENAME_DECK:
                 Timber.i("Rename deck selected");
                 ((DeckPicker) getActivity()).renameDeckDialog();
