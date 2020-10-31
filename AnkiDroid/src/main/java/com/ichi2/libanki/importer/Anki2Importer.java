@@ -30,6 +30,7 @@ import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.DeckConfig;
@@ -75,7 +76,17 @@ public class Anki2Importer extends Importer {
     private final boolean mAllowUpdate;
     private boolean mDupeOnSchemaChange;
 
-    private Map<String, Object[]> mNotes;
+    private static class NoteTriple {
+        public final long mNid;
+        public final long mMid;
+        public final long mMod;
+        public NoteTriple(long nid, long mod, long mid) {
+            mNid = nid;
+            mMod = mod;
+            mMid = mid;
+        }
+    }
+    private Map<String, NoteTriple> mNotes;
 
     private Map<Long, Long> mDecks;
     private Map<Long, Long> mModelMap;
@@ -200,7 +211,7 @@ public class Anki2Importer extends Importer {
                 String guid = cur.getString(1);
                 long mod = cur.getLong(2);
                 long mid = cur.getLong(3);
-                mNotes.put(guid, new Object[] { id, mod, mid });
+                mNotes.put(guid, new NoteTriple(id, mod, mid));
                 existing.add(id);
             }
         }
@@ -256,16 +267,15 @@ public class Anki2Importer extends Importer {
                     add.add(new Object[]{nid, guid, mid, mod, usn, tags, flds, sfld, csum, flag, data});
                     dirty.add(nid);
                     // note we have the added guid
-                    mNotes.put(guid, new Object[]{nid, mod, mid});
+                    mNotes.put(guid, new NoteTriple(nid, mod, mid));
                 } else {
                     // a duplicate or changed schema - safe to update?
                     dupes += 1;
                     if (mAllowUpdate) {
-                        Object[] n = mNotes.get(guid);
-                        //todo: oldNid could be Long instead of long.
-                        long oldNid = (Long) n[0];
-                        long oldMod = (Long) n[1];
-                        @NonNull Long oldMid = (Long) n[2];
+                        NoteTriple n = mNotes.get(guid);
+                        long oldNid = n.mNid;
+                        long oldMod = n.mMod;
+                        long oldMid = n.mMid;
                         // will update if incoming note more recent
                         if (oldMod < mod) {
                             // safe if note types identical
@@ -546,7 +556,7 @@ public class Anki2Importer extends Importer {
             while (cur.moveToNext()) {
                 String guid = cur.getString(0);
                 long cid = cur.getLong(1);
-                long scid = cid;
+                long scid = cid; // To keep track of card id in source
                 long did = cur.getLong(2);
                 int ord = cur.getInt(3);
                 @Consts.CARD_TYPE int type = cur.getInt(4);
@@ -569,7 +579,7 @@ public class Anki2Importer extends Importer {
                 if (!mNotes.containsKey(guid)) {
                     continue;
                 }
-                Object[] dnid = mNotes.get(guid);
+                NoteTriple dnid = mNotes.get(guid);
                 // does the card already exist in the dst col?
                 if (mCards.containsKey(guid) && mCards.get(guid).containsKey(ord)) {
                     // fixme: in future, could update if newer mod time
@@ -581,7 +591,7 @@ public class Anki2Importer extends Importer {
                 }
                 existing.put(cid, true);
                 // update cid, nid, etc
-                long nid = (long) mNotes.get(guid)[0];
+                long nid = mNotes.get(guid).mNid;
                 did = _did(did);
                 long mod = mCol.getTime().intTime();
                 // review cards have a due date relative to collection
