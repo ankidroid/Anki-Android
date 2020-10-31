@@ -19,6 +19,7 @@ package com.ichi2.libanki.importer;
 
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.util.Pair;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -236,7 +237,9 @@ public class Anki2Importer extends Importer {
                 Object[] note = new Object[]{cur.getLong(0), cur.getString(1), cur.getLong(2),
                         cur.getLong(3), cur.getInt(4), cur.getString(5), cur.getString(6),
                         cur.getString(7), cur.getLong(8), cur.getInt(9), cur.getString(10)};
-                boolean shouldAdd = _uniquifyNote(note);
+                Pair<Boolean, Long> shouldAddAndNewMid = _uniquifyNote((String)note[GUID], (long)note[MID]);
+                boolean shouldAdd = shouldAddAndNewMid.first;
+                note[MID] = shouldAddAndNewMid.second;
                 if (shouldAdd) {
                     // ensure id is unique
                     while (existing.contains(note[0])) {
@@ -353,23 +356,20 @@ public class Anki2Importer extends Importer {
     }
 
     // determine if note is a duplicate, and adjust mid and/or guid as required
-    // returns true if note should be added
-    private boolean _uniquifyNote(Object[] note) {
-        String origGuid = (String) note[GUID];
-        @NonNull Long srcMid = (Long) note[MID];
+    // returns true if note should be added and its mid
+    private Pair<Boolean, Long> _uniquifyNote(@NonNull String origGuid, long srcMid) {
         @NonNull Long dstMid = _mid(srcMid);
         // duplicate Schemas?
         if (Utils.equals(srcMid, dstMid)) {
-            return !mNotes.containsKey(origGuid);
+            return new Pair<>(!mNotes.containsKey(origGuid), srcMid);
         }
         // differing schemas and note doesn't exist?
-        note[MID] = dstMid;
         if (!mNotes.containsKey(origGuid)) {
-            return true;
+            return new Pair<>(true, dstMid);
         }
 		// schema changed; don't import
 		mIgnoredGuids.put(origGuid, true);
-		return false;
+		return new Pair<>(false, dstMid);
     }
 
     /*
