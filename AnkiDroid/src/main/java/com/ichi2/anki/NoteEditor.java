@@ -1937,7 +1937,9 @@ public class NoteEditor extends AnkiActivity {
                 .title(R.string.add_toolbar_item)
                 .customView(R.layout.note_editor_toolbar_add_custom_item, true)
                 .positiveText(R.string.dialog_positive_create)
+                .neutralText(R.string.help)
                 .negativeText(R.string.dialog_cancel)
+                .onNeutral((m, v) -> openUrl(Uri.parse(getString(R.string.link_manual_note_format_toolbar))))
                 .onPositive((m, v) -> {
                     View view = m.getView();
                     EditText et =  view.findViewById(R.id.note_editor_toolbar_before);
