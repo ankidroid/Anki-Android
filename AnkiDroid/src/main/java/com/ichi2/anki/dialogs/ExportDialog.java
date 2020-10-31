@@ -10,6 +10,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
+import static com.ichi2.libanki.Decks.NOT_FOUND_DECK_ID;
+
 public class ExportDialog extends AnalyticsDialogFragment {
 
     public interface ExportDialogListener {
@@ -54,9 +56,9 @@ public class ExportDialog extends AnalyticsDialogFragment {
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
-        final long did = getArguments().getLong("did", -1L);
+        final long did = getArguments().getLong("did", NOT_FOUND_DECK_ID);
         Integer[] checked;
-        if (did != -1L) {
+        if (did != NOT_FOUND_DECK_ID) {
             mIncludeSched = false;
             checked = new Integer[]{};
         } else {
@@ -92,7 +94,7 @@ public class ExportDialog extends AnalyticsDialogFragment {
                         })
                 .onPositive((dialog, which) -> {
                     ((ExportDialogListener) getActivity())
-                            .exportApkg(null, did != -1L ? did : null, mIncludeSched, mIncludeMedia);
+                            .exportApkg(null, did != NOT_FOUND_DECK_ID ? did : null, mIncludeSched, mIncludeMedia);
                     dismissAllDialogFragments();
                 })
                 .onNegative((dialog, which) -> dismissAllDialogFragments());

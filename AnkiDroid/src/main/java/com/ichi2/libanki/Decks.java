@@ -64,6 +64,10 @@ import static com.ichi2.utils.CollectionUtils.addAll;
         "PMD.MethodNamingConventions","PMD.AvoidReassigningParameters","PMD.SimplifyBooleanReturns"})
 public class Decks {
 
+    // Invalid id, represents an id on an unfound deck
+    public static final long NOT_FOUND_DECK_ID = -1L;
+    
+
     //not in libAnki
     @SuppressWarnings("WeakerAccess")
     public static final String DECK_SEPARATOR = "::";
