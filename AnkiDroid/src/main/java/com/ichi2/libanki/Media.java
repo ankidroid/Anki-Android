@@ -24,9 +24,11 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.utils.Assert;
 
+import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -1015,4 +1017,35 @@ public class Media {
         long mod = mDb.queryLongScalar("select dirMod from meta");
         return mod == 0;
     }
+
+
+    public void rebuildIfInvalid() throws IOException {
+        try {
+            _changed();
+            return;
+        } catch (Exception e) {
+            if (!ExceptionUtil.containsMessage(e, "no such table: meta")) {
+                throw e;
+            }
+            AnkiDroidApp.sendExceptionReport(e, "media::rebuildIfInvalid");
+
+            // TODO: We don't know the root cause of the missing meta table
+            Timber.w(e, "Error accessing media database. Rebuilding");
+            // continue below
+        }
+
+
+        // Delete and recreate the file
+        mDb.getDatabase().close();
+
+        String path = mDb.getPath();
+        Timber.i("Deleted %s", path);
+
+        new File(path).delete();
+
+        mDb = new DB(path);
+        _initDB();
+    }
+
+
 }
