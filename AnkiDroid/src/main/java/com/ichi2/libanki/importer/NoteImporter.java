@@ -21,6 +21,7 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -162,7 +163,7 @@ public class NoteImporter extends Importer {
             }
         }
 
-        HashMap<String, Boolean> firsts = new HashMap<>();
+        HashSet<String> firsts = new HashSet<>();
         int fld0index = mMapping.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
         mFMap = Models.fieldMap(mModel);
         mNextId = mCol.getTime().timestampID(mCol.getDb(), "notes");
@@ -193,12 +194,12 @@ public class NoteImporter extends Importer {
                 continue;
             }
             // earlier in import?
-            if (firsts.containsKey(fld0) && mImportMode != ADD_MODE) {
+            if (firsts.contains(fld0) && mImportMode != ADD_MODE) {
                 // duplicates in source file; log and ignore
                 getLog().add(getString(R.string.note_importer_error_appeared_twice, fld0));
                 continue;
             }
-            firsts.put(fld0, true);
+            firsts.add(fld0);
             // already exists?
             boolean found = false;
             if (csums.containsKey(csum)) {
@@ -238,7 +239,7 @@ public class NoteImporter extends Importer {
                 if (data != null && data.length > 0) {
                     _new.add(data);
                     // note that we've seen this note once already
-                    firsts.put(fld0, true);
+                    firsts.add(fld0);
                 }
             }
         }
