@@ -221,7 +221,7 @@ public class Anki2Importer extends Importer {
         int dupes = 0;
         ArrayList<String> dupesIgnored = new ArrayList<>();
         mDst.getDb().getDatabase().beginTransaction();
-        try (Cursor cur = mSrc.getDb().query("select * from notes")) {
+        try (Cursor cur = mSrc.getDb().getDatabase().query("select id, guid, mid, mod, tags, flds, sfld, csum, flags, data  from notes", null)) {
             // Counters for progress updates
             int total = cur.getCount();
             boolean largeCollection = total > 200;
@@ -234,13 +234,12 @@ public class Anki2Importer extends Importer {
                 String guid = cur.getString(1);
                 long mid = cur.getLong(2);
                 long mod = cur.getLong(3);
-                int oldUsn = cur.getInt(4);
-                String tags = cur.getString(5);
-                String flds = cur.getString(6);
-                String sfld = cur.getString(7);
-                long csum = cur.getLong(8);
-                int flag = cur.getInt(9);
-                String data = cur.getString(10);
+                String tags = cur.getString(4);
+                String flds = cur.getString(5);
+                String sfld = cur.getString(6);
+                long csum = cur.getLong(7);
+                int flag = cur.getInt(8);
+                String data = cur.getString(9);
 
                 Pair<Boolean, Long> shouldAddAndNewMid = _uniquifyNote(guid, mid);
                 boolean shouldAdd = shouldAddAndNewMid.first;
@@ -252,10 +251,9 @@ public class Anki2Importer extends Importer {
                     }
                     existing.add(nid);
                     // bump usn
-                    oldUsn = usn;
                     // update media references in case of dupes
                     flds = _mungeMedia(mid, flds);
-                    add.add(new Object[]{nid, guid, mid, mod, oldUsn, tags, flds, sfld, csum, flag, data});
+                    add.add(new Object[]{nid, guid, mid, mod, usn, tags, flds, sfld, csum, flag, data});
                     dirty.add(nid);
                     // note we have the added guid
                     mNotes.put(guid, new Object[]{nid, mod, mid});
@@ -272,11 +270,10 @@ public class Anki2Importer extends Importer {
                         if (oldMod < mod) {
                             // safe if note types identical
                             if (Utils.equals(oldMid, mid)) {
-                                // incoming note should use existing nid
+                                // incoming note should use existing id
                                 nid = oldNid;
-                                oldUsn = usn;
                                 flds = _mungeMedia(mid, flds);
-                                update.add(new Object[]{nid, guid, mid, mod, oldUsn, tags, flds, sfld, csum, flag, data});
+                                update.add(new Object[]{nid, guid, mid, mod, usn, tags, flds, sfld, csum, flag, data});
                                 dirty.add(nid);
                             } else {
                                 dupesIgnored.add(String.format("%s: %s",
@@ -537,7 +534,7 @@ public class Anki2Importer extends Importer {
         long aheadBy = mSrc.getSched().getToday() - mDst.getSched().getToday();
         mDst.getDb().getDatabase().beginTransaction();
         try (Cursor cur = mSrc.getDb().query(
-                    "select f.guid, f.mid, c.* from cards c, notes f " +
+                    "select f.guid, c.id, c.did, c.ord, c.type, c.queue, c.due, c.ivl, c.factor, c.reps, c.lapses, c.left, c.odue, c.odid, c.flags, c.data from cards c, notes f " +
                     "where c.nid = f.id")) {
 
             // Counters for progress updates
@@ -548,26 +545,22 @@ public class Anki2Importer extends Importer {
 
             while (cur.moveToNext()) {
                 String guid = cur.getString(0);
-                long mid = cur.getLong(1);
-                long cid = cur.getLong(2);
+                long cid = cur.getLong(1);
                 long scid = cid;
-                long nid = cur.getLong(3);
-                long did = cur.getLong(4);
-                int ord = cur.getInt(5);
-                long mod = cur.getLong(6);
-                int oldUsn = cur.getInt(7);
-                @Consts.CARD_TYPE int type = cur.getInt(8);
-                @Consts.CARD_QUEUE int queue = cur.getInt(9);
-                long due = cur.getLong(10);
-                long ivl = cur.getLong(11);
-                long factor = cur.getLong(12);
-                int reps = cur.getInt(13);
-                int lapses = cur.getInt(14);
-                int left = cur.getInt(15);
-                long odue = cur.getLong(16);
-                long odid = cur.getLong(17);
-                int flags = cur.getInt(18);
-                String data = cur.getString(19);
+                long did = cur.getLong(2);
+                int ord = cur.getInt(3);
+                @Consts.CARD_TYPE int type = cur.getInt(4);
+                @Consts.CARD_QUEUE int queue = cur.getInt(5);
+                long due = cur.getLong(6);
+                long ivl = cur.getLong(7);
+                long factor = cur.getLong(8);
+                int reps = cur.getInt(9);
+                int lapses = cur.getInt(10);
+                int left = cur.getInt(11);
+                long odue = cur.getLong(12);
+                long odid = cur.getLong(13);
+                int flags = cur.getInt(14);
+                String data = cur.getString(15);
 
                 if (mIgnoredGuids.containsKey(guid)) {
                     continue;
@@ -588,10 +581,9 @@ public class Anki2Importer extends Importer {
                 }
                 existing.put(cid, true);
                 // update cid, nid, etc
-                nid = (long) mNotes.get(guid)[0];
+                long nid = (long) mNotes.get(guid)[0];
                 did = _did(did);
-                mod = mCol.getTime().intTime();
-                oldUsn = usn;
+                long mod = mCol.getTime().intTime();
                 // review cards have a due date relative to collection
                 if (queue == QUEUE_TYPE_REV || queue == QUEUE_TYPE_DAY_LEARN_RELEARN || type == CARD_TYPE_REV) {
                     due -= aheadBy;
