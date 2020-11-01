@@ -236,22 +236,34 @@ If you have a large number of media files where syncing through AnkiWeb takes to
 1. Once completed, you can re-enable `Fetch media on sync` if you don't want to manually manage your media moving forward. Note that keeping this enabled will require that you do a full media sync to AnkiWeb from AnkiDroid unless you do a full media sync from your other Anki client
 
 ### Why doesn't my sound or image work on AnkiDroid
-There is a problem with the card/deck that was imported. Please contact the deck author if the following steps do not resolve your issue.
 
-The most likely reason is that the media files are not in the main AnkiDroid `collection.media` folder. If you are using sync then please make sure that the "fetch media on sync" preference is enabled in all of your Anki clients, and if not then re-sync from all your clients.
+#### Shared Decks
+
+If this issue appeared from a shared deck which was loaded into AnkiDroid, then it is a problem with the card/deck that was imported. Please contact the deck author, or edit the note, select "Cards" and remove the reference to the missing files.
+
+#### Syncing
+
+If you're syncing a deck via AnkiWeb Sync:
+
+Please check if the media works correctly on both AnkiWeb. 
+* If the media does not work on AnkiWeb, then there was a problem with uploading the media. If the upload was from Anki Desktop, please read the Anki Desktop manual, or ask on the [Anki Desktop support site](http://ankisrs.net/docs/help.html) for help resolving this problem.
+* If the media works on AnkiWeb, then
+   * Use a file manager (see below) to ensure that the file exists in `AnkiDroid/collection.media`
+       * Ensure that `Settings - AnkiDroid - Fetch media on sync` is selected and the media sync fully completed (this will take some time on the first sync)
+       * Media sync errors are typically temporary problems with your internet connection, browse to `AnkiDroid/collection.media` and then perform a sync. If more files are added to this folder, then please sync until the sync completes successfully.
+       * As a last resort, copy the media files from Anki Desktop's `collection.media` folder.
+   * If the file exists in `collection.media` and is still not displaying:
+       * Ensure that it is encoded in one of Android's supported codecs (see below).
+       * Please [contact us](https://groups.google.com/g/anki-android) if issues still occur.
+
+#### External content
 
 If the files are loaded from the internet over `http`, load them via `https` URLs. If HTTPS is not available, you can automatically convert these links to local files via an Anki Desktop Addon: https://ankiweb.net/shared/info/1293255374
 
-If that doesn't work then please check if the media works correctly on both AnkiWeb and Anki Desktop. If you synced correctly with media sync enabled, and the media does not play on either AnkiWeb or Anki Desktop, then there is probably a problem with the cards themselves. Please read the Anki Desktop manual, or ask on the [Anki Desktop support site](http://ankisrs.net/docs/help.html) for help resolving this problem.
-
-If you have checked that you have correctly done a media sync, and that the media is playing correctly on both Anki Desktop and AnkiWeb but not on AnkiDroid, then use a file manager (see below) to check that the media files exist in your `AnkiDroid/collection.media` folder. If the media files do not exist then obviously AnkiDroid cannot play them. You can try manually copying them from Anki Desktop as a last resort.
+tags: `net::err_CLEARTEXT_NOT_PERMITTED`
 
 ### Which file manager should I use?
 Most devices using Android 6 and above come with a built-in file explorer (something like: `settings -> storage and memory -> Explore`). If your device does not have a built-in explorer, you can use any file manager that you like, for example see [here](https://www.tomsguide.com/us/pictures-story/518-best-android-file-managers.html) for a list of various recommended file explorers. We personally recommend using a free and open source (FOSS) file manager like [Simple Explorer](http://forum.xda-developers.com/showthread.php?t=2330864).
-
-### How do I fix `net::err_CLEARTEXT_NOT_PERMITTED`?
-
-AnkiDroid no longer supports `http` content, change the URL in the note/template to `https`.
 
 ### But still AnkiDroid does not play my media!
 
