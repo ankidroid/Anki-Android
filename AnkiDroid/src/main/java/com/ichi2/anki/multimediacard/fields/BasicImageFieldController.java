@@ -97,14 +97,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private @Nullable String mAnkiCacheDirectory; // system provided 'External Cache Dir' with "temp-photos" on it
                                                   // e.g.  '/self/primary/Android/data/com.ichi2.anki.AnkiDroid/cache/temp-photos'
     private DisplayMetrics mMetrics = null;
-    private final Time mTime;
 
     private Button mCropButton = null;
-
-    public BasicImageFieldController(Time time) {
-        super();
-        mTime = time;
-    }
 
     private int getMaxImageSize() {
         DisplayMetrics metrics = getDisplayMetrics();
@@ -280,9 +274,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
     private File createNewCacheImageFile(@NonNull String extension) throws IOException {
-        String timeStamp = TimeUtils.getTimestamp(mTime);
         File storageDir = new File(mAnkiCacheDirectory);
-        return File.createTempFile("img_" + timeStamp, "." + extension, storageDir);
+        return File.createTempFile("img", "." + extension, storageDir);
     }
 
 
