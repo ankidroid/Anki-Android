@@ -1663,6 +1663,12 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     private TaskData doInBackgroundCheckMedia() {
         Timber.d("doInBackgroundCheckMedia");
         Collection col = getCol();
+        // Ensure that the DB is valid - unknown why, but some users were missing the meta table.
+        try {
+            col.getMedia().rebuildIfInvalid();
+        } catch (IOException e) {
+            return new TaskData(false);
+        }
         // A media check on AnkiDroid will also update the media db
         col.getMedia().findChanges(true);
         // Then do the actual check
