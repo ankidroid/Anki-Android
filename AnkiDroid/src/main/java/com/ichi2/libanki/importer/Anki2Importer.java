@@ -90,7 +90,7 @@ public class Anki2Importer extends Importer {
 
     private Map<Long, Long> mDecks;
     private Map<Long, Long> mModelMap;
-    private Map<String, Boolean> mIgnoredGuids;
+    private Set<String> mIgnoredGuids;
 
     private int mDupes;
     private int mAdded;
@@ -217,7 +217,7 @@ public class Anki2Importer extends Importer {
         }
         // we ignore updates to changed schemas. we need to note the ignored
         // guids, so we avoid importing invalid cards
-        mIgnoredGuids = new HashMap<>();
+        mIgnoredGuids = new HashSet<>();
         // iterate over source collection
         ArrayList<Object[]> add = new ArrayList<>();
         int totalAddCount = 0;
@@ -289,7 +289,7 @@ public class Anki2Importer extends Importer {
                                 dupesIgnored.add(String.format("%s: %s",
                                         mCol.getModels().get(oldMid).getString("name"),
                                         flds.replace('\u001f', ',')));
-                                mIgnoredGuids.put(guid, true);
+                                mIgnoredGuids.add(guid);
                             }
                         }
                     }
@@ -380,7 +380,7 @@ public class Anki2Importer extends Importer {
             return new Pair<>(true, dstMid);
         }
 		// schema changed; don't import
-		mIgnoredGuids.put(origGuid, true);
+		mIgnoredGuids.add(origGuid);
 		return new Pair<>(false, dstMid);
     }
 
@@ -572,7 +572,7 @@ public class Anki2Importer extends Importer {
                 int flags = cur.getInt(14);
                 String data = cur.getString(15);
 
-                if (mIgnoredGuids.containsKey(guid)) {
+                if (mIgnoredGuids.contains(guid)) {
                     continue;
                 }
                 // does the card's note exist in dst col?
