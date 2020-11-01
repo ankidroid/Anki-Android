@@ -176,7 +176,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return;
         }
 
-        IControllerFactory controllerFactory = BasicControllerFactory.getInstance(getCol().getTime());
+        IControllerFactory controllerFactory = BasicControllerFactory.getInstance();
 
         IFieldController fieldController = controllerFactory.createControllerForField(newUI.getField());
 

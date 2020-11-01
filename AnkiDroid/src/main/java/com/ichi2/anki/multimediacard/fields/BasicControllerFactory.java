@@ -19,18 +19,14 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
-import com.ichi2.libanki.utils.Time;
-
 public class BasicControllerFactory implements IControllerFactory {
 
-    private final Time mTime;
-    private BasicControllerFactory(Time time) {
-        mTime = time;
+    private BasicControllerFactory() {
     }
 
 
-    public static IControllerFactory getInstance(Time time) {
-        return new BasicControllerFactory(time);
+    public static IControllerFactory getInstance() {
+        return new BasicControllerFactory();
     }
 
 
@@ -43,7 +39,7 @@ public class BasicControllerFactory implements IControllerFactory {
                 return new BasicTextFieldController();
 
             case IMAGE:
-                return new BasicImageFieldController(mTime);
+                return new BasicImageFieldController();
 
             case AUDIO_RECORDING:
                 return new BasicAudioRecordingFieldController();
