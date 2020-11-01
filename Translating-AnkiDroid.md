@@ -13,6 +13,16 @@ Translating is easy and fun:
 
 For each grey bullet, translate the English text to your language.
 
+** Context **
+
+To see where texts are used and check your translation, you can see screenshot of the original text. 
+* Click on context 
+![Image without context](https://milchior.fr/crowdin/without_context.png).
+* Then click on the image  ![Context button](https://milchior.fr/crowdin/with_context.png)
+* And you'll see where the image is used in AnkiDroid
+
+![Screenshot](https://milchior.fr/crowdin/screenshot.png)
+
 **Tips:**
 
 * Many terms such as "note" or "leech" and some other messages should be consistent with Anki Desktop. You can copy the translations from Anki Desktop via it's [translation website](https://i18n.ankiweb.net/projects/anki-desktop/) (or more rarely [this one](https://i18n.ankiweb.net/projects/anki-core/)). Click on a _language code_ file (e.g. "ja_JP" for Japanese) to view a single language, and use your browser's search feature to search for the word or sentence you are looking for.
