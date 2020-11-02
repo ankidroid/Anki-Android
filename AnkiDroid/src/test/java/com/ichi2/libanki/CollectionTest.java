@@ -3,10 +3,12 @@ package com.ichi2.libanki;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.utils.JSONObject;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -14,6 +16,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -174,5 +177,12 @@ public class CollectionTest extends RobolectricTest {
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:}}");
         mm.save(m);
         c.q(true);
+    }
+
+    @Test
+    public void test_filterToValidCards() {
+        Collection col = getCol();
+        long cid = addNoteUsingBasicModel("foo", "bar").firstCard().getId();
+        assertEquals( new ArrayList<>(Collections.singleton(cid)), col.filterToValidCards(new long[]{cid, cid + 1}));
     }
 }
