@@ -174,7 +174,7 @@ public class Tags {
             ArrayList<Long> dids = new ArrayList<>();
             dids.add(did);
             dids.addAll(mCol.getDecks().children(did).values());
-            tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(Utils.collection2Array(dids)));
+            tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(dids));
         } else {
             tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = ?", did);
         }

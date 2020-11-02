@@ -685,7 +685,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 c.flush(false);
                 ids.add(c.getId());
             }
-            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.collection2Array(ids)));
+            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids));
             return card;
         }
     }
@@ -834,7 +834,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 c.flush(false);
                 ids.add(c.getId());
             }
-            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(Utils.collection2Array(ids)));
+            col.getDb().execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids));
             return null;  // don't fetch new card
 
         }
