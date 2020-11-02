@@ -170,17 +170,17 @@ class AnkiExporter extends Exporter {
         }
         // decks
         Timber.d("Copy decks");
-        ArrayList<Long> dids = new ArrayList<>();
+        java.util.Collection<Long> dids = null;
         if (mDid != null) {
+            dids = new HashSet<>(mSrc.getDecks().children(mDid).values());
             dids.add(mDid);
-            dids.addAll(mSrc.getDecks().children(mDid).values());
         }
         JSONObject dconfs = new JSONObject();
         for (Deck d : mSrc.getDecks().all()) {
             if ("1".equals(d.getString("id"))) {
                 continue;
             }
-            if (mDid != null && !dids.contains(d.getLong("id"))) {
+            if (dids != null && !dids.contains(d.getLong("id"))) {
                 continue;
             }
             if (d.getInt("dyn") != 1 && d.getLong("conf") != 1L) {
