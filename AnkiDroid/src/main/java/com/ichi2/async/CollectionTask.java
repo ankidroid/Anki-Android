@@ -944,11 +944,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         AbstractSched sched = col.getSched();
         Object[] data = param.getObjArray();
-        long[] cardIds = Utils.toPrimitive((List<Long>) data[0]);
+        List<Long> cardIds = (List<Long>) data[0];
         // query cards
-        Card[] cards = new Card[cardIds.length];
-        for (int i = 0; i < cardIds.length; i++) {
-            cards[i] = col.getCard(cardIds[i]);
+        Card[] cards = new Card[cardIds.size()];
+        for (int i = 0; i < cardIds.size(); i++) {
+            cards[i] = col.getCard(cardIds.get(i));
         }
 
         Collection.DismissType type = (Collection.DismissType) data[1];

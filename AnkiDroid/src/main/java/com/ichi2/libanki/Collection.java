@@ -2029,7 +2029,7 @@ public class Collection {
     /**
      * Card Flags *****************************************************************************************************
      */
-    public void setUserFlag(int flag, long[] cids)  {
+    public void setUserFlag(int flag, List<Long> cids)  {
         assert (0<= flag && flag <= 7);
         mDb.execute("update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(cids),
                     0b111, flag, usn(), getTime().intTime());
