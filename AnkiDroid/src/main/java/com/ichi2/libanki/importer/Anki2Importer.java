@@ -279,7 +279,7 @@ public class Anki2Importer extends Importer {
                         // will update if incoming note more recent
                         if (oldMod < mod) {
                             // safe if note types identical
-                            if (Utils.equals(oldMid, mid)) {
+                            if (oldMid == mid) {
                                 // incoming note should use existing id
                                 nid = oldNid;
                                 flds = _mungeMedia(mid, flds);
@@ -370,9 +370,9 @@ public class Anki2Importer extends Importer {
     // determine if note is a duplicate, and adjust mid and/or guid as required
     // returns true if note should be added and its mid
     private Pair<Boolean, Long> _uniquifyNote(@NonNull String origGuid, long srcMid) {
-        @NonNull Long dstMid = _mid(srcMid);
+        long dstMid = _mid(srcMid);
         // duplicate Schemas?
-        if (Utils.equals(srcMid, dstMid)) {
+        if (srcMid == dstMid) {
             return new Pair<>(!mNotes.containsKey(origGuid), srcMid);
         }
         // differing schemas and note doesn't exist?
@@ -400,12 +400,12 @@ public class Anki2Importer extends Importer {
 
 
     /** Return local id for remote MID. */
-    @NonNull private Long _mid(Long srcMid) {
+    private long _mid(long srcMid) {
         // already processed this mid?
         if (mModelMap.containsKey(srcMid)) {
             return mModelMap.get(srcMid);
         }
-        @NonNull Long mid = srcMid;
+        long mid = srcMid;
         Model srcModel = mSrc.getModels().get(srcMid);
         String srcScm = mSrc.getModels().scmhash(srcModel);
         while (true) {
@@ -413,7 +413,7 @@ public class Anki2Importer extends Importer {
             if (!mDst.getModels().have(mid)) {
                 // copy it over
                 Model model = srcModel.deepClone();
-                model.put("id", (long) mid);
+                model.put("id", mid);
                 model.put("mod", mCol.getTime().intTime());
                 model.put("usn", mCol.usn());
                 mDst.getModels().update(model);
@@ -425,7 +425,7 @@ public class Anki2Importer extends Importer {
             if (srcScm.equals(dstScm)) {
                 // they do; we can reuse this mid
                 Model model = srcModel.deepClone();
-                model.put("id", (long) mid);
+                model.put("id", mid);
                 model.put("mod", mCol.getTime().intTime());
                 model.put("usn", mCol.usn());
                 mDst.getModels().update(model);
@@ -527,7 +527,7 @@ public class Anki2Importer extends Importer {
                 if (mCards.containsKey(guid)) {
                     mCards.get(guid).put(ord, cid);
                 } else {
-                    Map<Integer, Long> map = new HashMap<>();
+                    Map<Integer, Long> map = new HashMap<>(); // The size is at most the number of card type in the note type.
                     map.put(ord, cid);
                     mCards.put(guid, map);
                 }
