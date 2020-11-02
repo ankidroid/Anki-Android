@@ -416,11 +416,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
         searchCards();
     }
 
-    private long[] getSelectedCardIds() {
-        long[] ids = new long[mCheckedCards.size()];
-        int count = 0;
+    private List<Long> getSelectedCardIds() {
+        List<Long> ids = new ArrayList<>(mCheckedCards.size());
         for (CardCache cardPosition : mCheckedCards) {
-            ids[count++] = cardPosition.getId();
+            ids.add(cardPosition.getId());
         }
         return ids;
     }
@@ -442,7 +441,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     @VisibleForTesting
     void moveSelectedCardsToDeck(int deckPosition) {
-        long[] ids = getSelectedCardIds();
+        List<Long> ids = getSelectedCardIds();
 
         Deck selectedDeck = getValidDecksForChangeDeck().get(deckPosition);
 
@@ -463,13 +462,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         Timber.i("Changing selected cards to deck: %d", mNewDid);
 
-        if (ids.length == 0) {
+        if (ids.isEmpty()) {
             endMultiSelectMode();
             mCardsAdapter.notifyDataSetChanged();
             return;
         }
 
-        if (CardUtils.isIn(ids, getReviewerCardId())) {
+        if (ids.contains(getReviewerCardId())) {
             mReloadRequired = true;
         }
 
@@ -785,7 +784,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void openNoteEditorForCurrentlySelectedNote() {
         try {
             //Just select the first one. It doesn't particularly matter if there's a multiselect occurring.
-            openNoteEditorForCard(getSelectedCardIds()[0]);
+            openNoteEditorForCard(getSelectedCardIds().get(0));
         } catch (Exception e) {
             Timber.w(e, "Error Opening Note Editor");
             UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false);
@@ -1149,7 +1148,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             Timber.i("CardBrowser:: Reposition button pressed");
 
             // Only new cards may be repositioned
-            long[] cardIds = getSelectedCardIds();
+            List<Long> cardIds = getSelectedCardIds();
             for (long cardId : cardIds) {
                 if (getCol().getCard(cardId).getQueue() != Consts.CARD_TYPE_NEW) {
                     SimpleMessageDialog dialog = SimpleMessageDialog.newInstance(
@@ -1175,10 +1174,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
             return super.onOptionsItemSelected(item);
         } else if (itemId == R.id.action_view_card_info) {
-            long[] selectedCardIds = getSelectedCardIds();
-            if (selectedCardIds.length > 0) {
+            List<Long> selectedCardIds = getSelectedCardIds();
+            if (selectedCardIds.size() > 0) {
                 Intent intent = new Intent(this, CardInfo.class);
-                intent.putExtra("cardId", selectedCardIds[0]);
+                intent.putExtra("cardId", selectedCardIds.get(0));
                 startActivityWithAnimation(intent, FADE);
             }
             return true;
@@ -1225,14 +1224,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     @VisibleForTesting
-    void resetProgressNoConfirm(long[] cardIds) {
+    void resetProgressNoConfirm(List<Long> cardIds) {
         CollectionTask.launchCollectionTask(DISMISS_MULTI, resetProgressCardHandler(),
                 new TaskData(new Object[] {cardIds, Collection.DismissType.RESET_CARDS}));
     }
 
 
     @VisibleForTesting
-    void repositionCardsNoValidation(long[] cardIds, Integer position) {
+    void repositionCardsNoValidation(List<Long> cardIds, Integer position) {
         CollectionTask.launchCollectionTask(DISMISS_MULTI, repositionCardHandler(),
                 new TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, position}));
     }
@@ -1250,7 +1249,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (mInMultiSelectMode && checkedCardCount() > 1) {
             // Multiple cards have been explicitly selected, so preview only those cards
             int index = 0;
-            return getPreviewIntent(index, getSelectedCardIds());
+            return getPreviewIntent(index, Utils.toPrimitive(getSelectedCardIds()));
         } else {
             // Preview all cards, starting from the one that is currently selected
             int startIndex = mCheckedCards.isEmpty() ? 0 : mCheckedCards.iterator().next().getPosition();
@@ -1271,25 +1270,25 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
 
-        long[] selectedCardIds = getSelectedCardIds();
+        List<Long> selectedCardIds = getSelectedCardIds();
         FunctionalInterfaces.Consumer<Integer> consumer = newDays -> rescheduleWithoutValidation(selectedCardIds, newDays);
 
         RescheduleDialog rescheduleDialog;
-        if (selectedCardIds.length == 1) {
-            long cardId = selectedCardIds[0];
+        if (selectedCardIds.size() == 1) {
+            long cardId = selectedCardIds.get(0);
             Card selected = getCol().getCard(cardId);
             rescheduleDialog = RescheduleDialog.rescheduleSingleCard(getResources(), selected, consumer);
         } else {
             rescheduleDialog = RescheduleDialog.rescheduleMultipleCards(getResources(),
                     consumer,
-                    selectedCardIds.length);
+                    selectedCardIds.size());
         }
         showDialogFragment(rescheduleDialog);
     }
 
 
     @VisibleForTesting
-    void rescheduleWithoutValidation(long[] selectedCardIds, Integer newDays) {
+    void rescheduleWithoutValidation(List<Long> selectedCardIds, Integer newDays) {
         CollectionTask.launchCollectionTask(DISMISS_MULTI,
             rescheduleCardHandler(),
             new TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays}));
@@ -2850,7 +2849,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) //should only be called from changeDeck()
-    void executeChangeCollectionTask(long[] ids, long newDid) {
+    void executeChangeCollectionTask(List<Long> ids, long newDid) {
         mNewDid = newDid; //line required for unit tests, not necessary, but a noop in regular call.
         CollectionTask.launchCollectionTask(DISMISS_MULTI, new ChangeDeckHandler(this),
                 new TaskData(new Object[]{ids, Collection.DismissType.CHANGE_DECK_MULTI, newDid}));

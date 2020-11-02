@@ -419,7 +419,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
 
-        b.repositionCardsNoValidation(new long[] { card.getId() }, 2);
+        b.repositionCardsNoValidation(Collections.singletonList(card.getId()), 2);
 
         advanceRobolectricLooperWithSleep();
 
@@ -443,7 +443,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         assertThat("Initial due of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("8/12/20"));
 
-        b.resetProgressNoConfirm(new long[] { card.getId() });
+        b.resetProgressNoConfirm(Collections.singletonList(card.getId()));
 
         advanceRobolectricLooperWithSleep();
 
@@ -461,7 +461,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
 
-        b.rescheduleWithoutValidation(new long[] { card.getId() }, 5);
+        b.rescheduleWithoutValidation(Collections.singletonList(card.getId()), 5);
 
         advanceRobolectricLooperWithSleep();
 
@@ -479,7 +479,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
 
-        b.repositionCardsNoValidation(new long[] { card.getId() }, 2);
+        b.repositionCardsNoValidation(Collections.singletonList(card.getId()), 2);
 
         advanceRobolectricLooperWithSleep();
 
@@ -502,7 +502,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         b.checkCardsAtPositions(0);
 
-        b.rescheduleWithoutValidation(new long[] { getCheckedCard(b).getId() }, 2);
+        b.rescheduleWithoutValidation(Collections.singletonList(getCheckedCard(b).getId()), 2);
 
         advanceRobolectricLooperWithSleep();
 

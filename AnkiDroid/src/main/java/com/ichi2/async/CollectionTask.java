@@ -944,7 +944,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
         AbstractSched sched = col.getSched();
         Object[] data = param.getObjArray();
-        long[] cardIds = (long[]) data[0];
+        long[] cardIds = Utils.toPrimitive((List<Long>) data[0]);
         // query cards
         Card[] cards = new Card[cardIds.length];
         for (int i = 0; i < cardIds.length; i++) {
