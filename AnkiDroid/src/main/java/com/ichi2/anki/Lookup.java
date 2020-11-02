@@ -95,7 +95,7 @@ public class Lookup {
                 // localisation is needless here since leo.org translates only into or out of German
                 final CharSequence[] itemValues = { "en", "fr", "es", "it", "ch", "ru" };
                 String language = getLanguage(MetaDB.LANGUAGES_QA_UNDEFINED);
-                if (language.length() > 0) {
+                if (!language.isEmpty()) {
                     for (CharSequence itemValue : itemValues) {
                         if (language.contentEquals(itemValue)) {
                             lookupLeo(language, mLookupText);

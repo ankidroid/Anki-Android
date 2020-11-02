@@ -246,7 +246,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 try {
                     JSONObject response = new JSONObject(ret.body().string());
                     hostkey = response.getString("key");
-                    valid = (hostkey != null) && (hostkey.length() > 0);
+                    valid = (hostkey != null) && (!hostkey.isEmpty());
                 } catch (JSONException e) {
                     valid = false;
                 } catch (IllegalStateException | IOException | NullPointerException e) {

@@ -767,7 +767,7 @@ public class Sched extends SchedV2 {
             return delay;
         }
         // if no relearning steps, nothing to do
-        if (conf.getJSONArray("delays").length() == 0) {
+        if (conf.getJSONArray("delays").isEmpty()) {
             return delay;
         }
         // record rev due date for later
@@ -1143,7 +1143,7 @@ public class Sched extends SchedV2 {
         } else if (ease == Consts.BUTTON_ONE) {
             // lapsed
             JSONObject conf = _lapseConf(card);
-            if (conf.getJSONArray("delays").length() > 0) {
+            if (!conf.getJSONArray("delays").isEmpty()) {
                 return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
             }
             return _nextLapseIvl(card, conf) * SECONDS_PER_DAY;

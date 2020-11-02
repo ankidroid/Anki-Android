@@ -253,7 +253,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
             protected FilterResults performFiltering(CharSequence constraint) {
                 mFilteredDecks.clear();
                 ArrayList<SelectableDeck> allDecks = DecksArrayAdapter.this.mAllDecksList;
-                if (constraint.length() == 0) {
+                if (constraint.length() > 0) {
                     mFilteredDecks.addAll(allDecks);
                 } else {
                     final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();

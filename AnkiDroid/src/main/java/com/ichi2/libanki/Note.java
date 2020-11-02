@@ -290,7 +290,7 @@ public class Note implements Cloneable {
      */
     public DupeOrEmpty dupeOrEmpty() {
         String val = mFields[0];
-        if (val.trim().length() == 0) {
+        if (val.trim().isEmpty()) {
             return DupeOrEmpty.EMPTY;
         }
         Pair<String, Long> csumAndStrippedFieldField = Utils.sfieldAndCsum(mFields, getCol().getModels().sortIdx(mModel));

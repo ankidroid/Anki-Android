@@ -376,7 +376,7 @@ public class ModelBrowser extends AnkiActivity {
      */
     private void addNewNoteType(String modelName, int position) {
         Model model;
-        if (modelName.length() > 0) {
+        if (!modelName.isEmpty()) {
             int nbStdModels = StdModels.stdModels.length;
             if (position < nbStdModels) {
                 model = StdModels.stdModels[position].add(col);
@@ -449,7 +449,7 @@ public class ModelBrowser extends AnkiActivity {
                                     String deckName = mModelNameInput.getText().toString()
                                             // Anki desktop doesn't allow double quote characters in deck names
                                             .replaceAll("[\"\\n\\r]", "");
-                                    if (deckName.length() > 0) {
+                                    if (!deckName.isEmpty()) {
                                         model.put("name", deckName);
                                         col.getModels().update(model);
                                         mModels.get(mModelListPosition).put("name", deckName);

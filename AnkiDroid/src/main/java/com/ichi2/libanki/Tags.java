@@ -268,7 +268,7 @@ public class Tags {
     public ArrayList<String> split(String tags) {
         ArrayList<String> list = new ArrayList<>();
         for (String s : tags.replace('\u3000', ' ').split("\\s")) {
-            if (s.length() > 0) {
+            if (!s.isEmpty()) {
                 list.add(s);
             }
         }
@@ -278,7 +278,7 @@ public class Tags {
 
     /** Join tags into a single string, with leading and trailing spaces. */
     public String join(java.util.Collection<String> tags) {
-        if (tags == null || tags.size() == 0) {
+        if (tags == null || tags.isEmpty()) {
             return "";
         } else {
             String joined = TextUtils.join(" ", tags);

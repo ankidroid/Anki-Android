@@ -613,7 +613,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                     } else {
                         desc = getCol().getDecks().getActualDescription();
                     }
-                    if (desc.length() > 0) {
+                    if (!desc.isEmpty()) {
                         mTextDeckDescription.setText(formatDescription(desc));
                         mTextDeckDescription.setVisibility(View.VISIBLE);
                     } else {

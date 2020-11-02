@@ -77,7 +77,7 @@ public class NoteFieldDecorator {
     }
 
     private static String huevoRevuelto(String huevo) {
-        if (huevo == null || huevo.length() == 0) {
+        if (huevo == null || huevo.isEmpty()) {
             return huevo;
         }
         StringBuilder revuelto = new StringBuilder();

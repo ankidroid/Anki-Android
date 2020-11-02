@@ -148,7 +148,7 @@ public class CsvSniffer {
                 delims.put(key, delims.getOrDefault(key, 0) + 1);
             }
 
-            if (m.space != null && m.space.length() > 0) {
+            if (m.space != null && !m.space.isEmpty()) {
                 spaces += 1;
             }
         }
@@ -184,7 +184,7 @@ public class CsvSniffer {
 
     private char getCharOrNull(Matcher m, String delim) {
         String group = m.group(delim);
-        if (group == null || group.length() == 0) {
+        if (group == null || group.isEmpty()) {
             return '\0';
         }
         return group.charAt(0);
@@ -214,7 +214,7 @@ public class CsvSniffer {
         String[] samples = input.split("\n");
         List<String> data = new ArrayList<>();
         for (String s : samples) {
-            if (s == null || s.length() == 0) {
+            if (s == null || s.isEmpty()) {
                 continue;
             }
             data.add(s);
@@ -280,7 +280,7 @@ public class CsvSniffer {
             double consistency = 1.0;
             // minimum consistency threshold
             double threshold = 0.9;
-            while (delims.size() == 0 && consistency >= threshold) {
+            while (delims.isEmpty() && consistency >= threshold) {
                 for (Map.Entry<Character, Tuple> entry : modeList) {
                     Tuple value = entry.getValue();
                     if (value.first > 0 && value.second > 0) {

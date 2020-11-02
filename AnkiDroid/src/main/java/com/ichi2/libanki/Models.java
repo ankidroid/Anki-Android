@@ -1015,7 +1015,7 @@ public class Models {
             }
             a[i] = "ankiflag";
         }
-        if (req.length() > 0) {
+        if (!req.isEmpty()) {
             return new Object[] { type, req };
         }
         // if there are no required fields, switch to any mode
@@ -1075,7 +1075,7 @@ public class Models {
             // AND requirement?
             for (int j = 0; j < req.length(); j++) {
                 int idx = req.getInt(j);
-                if (trimmedFields[idx] == null || trimmedFields[idx].length() == 0) {
+                if (trimmedFields[idx] == null || trimmedFields[idx].isEmpty()) {
                     // missing and was required
                     return true;
                 }

@@ -138,7 +138,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                         boolean on = (Boolean) entry.getValue();
                         if (on) {
                             JSONArray steps =  StepsPreference.convertToJSON(mValues.get("steps"));
-                            if (steps.length() > 0) {
+                            if (!steps.isEmpty()) {
                                 mDeck.put("delays", steps);
                             }
                         } else {

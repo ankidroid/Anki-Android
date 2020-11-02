@@ -113,7 +113,7 @@ public class BadgeDrawable extends DrawableWrapper {
 
 
     private boolean isShowingText() {
-        return mText != null && mText.length() > 0;
+        return mText != null && !mText.isEmpty();
     }
 
 

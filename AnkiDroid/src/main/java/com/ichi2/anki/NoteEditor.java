@@ -609,7 +609,7 @@ public class NoteEditor extends AnkiActivity {
                 if (mAedictIntent && (mEditFields.size() == 3) && mSourceText[1].contains("[")) {
                     contents = mSourceText[1].replaceFirst("\\[", "\u001f" + mSourceText[0] + "\u001f");
                     contents = contents.substring(0, contents.length() - 1);
-                } else if (mEditFields.size() > 0) {
+                } else if (!mEditFields.isEmpty()) {
                     mEditFields.get(0).setText(mSourceText[0]);
                     if (mEditFields.size() > 1) {
                         mEditFields.get(1).setText(mSourceText[1]);
@@ -1537,7 +1537,7 @@ public class NoteEditor extends AnkiActivity {
     private void setMMButtonListener(ImageButton mediaButton, final int index) {
         mediaButton.setOnClickListener(v -> {
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index);
-            if (mEditorNote.items()[index][1].length() > 0) {
+            if (!mEditorNote.items()[index][1].isEmpty()) {
                 final Collection col = CollectionHelper.getInstance().getCol(NoteEditor.this);
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
@@ -1662,7 +1662,7 @@ public class NoteEditor extends AnkiActivity {
                         return;
                     }
                     String[] currentFieldStrings = getCurrentFieldStrings();
-                    if (currentFieldStrings.length != 2 || currentFieldStrings[1].length() > 0) {
+                    if (currentFieldStrings.length != 2 || !currentFieldStrings[1].isEmpty()) {
                         // we only decorate on 2-field cards while second field is still empty
                         return;
                     }
@@ -1843,7 +1843,7 @@ public class NoteEditor extends AnkiActivity {
                 Toolbar.TextWrapper.StringFormat stringFormat = new Toolbar.TextWrapper.StringFormat();
                 String prefix = "{{c" + getNextClozeIndex() + "::";
                 stringFormat.result = prefix + s + "}}";
-                if (s.length() == 0) {
+                if (s.isEmpty()) {
                     stringFormat.start = prefix.length();
                     stringFormat.end = prefix.length();
                 } else {

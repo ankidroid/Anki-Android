@@ -1242,7 +1242,7 @@ public class SchedV2 extends AbstractSched {
             try {
                 delay = delays.getDouble(len - left);
             } catch (JSONException e) {
-                if (conf.getJSONArray("delays").length() > 0) {
+                if (!conf.getJSONArray("delays").isEmpty()) {
                     delay = conf.getJSONArray("delays").getDouble(0);
                 } else {
                     // user deleted final step; use dummy value
@@ -1613,7 +1613,7 @@ public class SchedV2 extends AbstractSched {
         card.setFactor(Math.max(1300, card.getFactor() - 200));
         int delay;
          boolean suspended = _checkLeech(card, conf) && card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED;
-        if (conf.getJSONArray("delays").length() != 0 && !suspended) {
+        if (!conf.getJSONArray("delays").isEmpty() && !suspended) {
             card.setType(Consts.CARD_TYPE_RELEARNING);
             delay = _moveToFirstStep(card, conf);
         } else {
@@ -2326,7 +2326,7 @@ public class SchedV2 extends AbstractSched {
         } else if (ease == Consts.BUTTON_ONE) {
             // lapse
             JSONObject conf = _lapseConf(card);
-            if (conf.getJSONArray("delays").length() > 0) {
+            if (!conf.getJSONArray("delays").isEmpty()) {
                 return (long) (conf.getJSONArray("delays").getDouble(0) * 60.0);
             }
             return _lapseIvl(card, conf) * SECONDS_PER_DAY;

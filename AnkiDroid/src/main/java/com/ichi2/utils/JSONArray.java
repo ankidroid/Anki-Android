@@ -384,4 +384,8 @@ public class JSONArray extends org.json.JSONArray {
             }
         };
     }
+
+    public boolean isEmpty() {
+        return length() == 0;
+    }
 }

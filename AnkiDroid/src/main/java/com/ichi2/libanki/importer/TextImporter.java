@@ -78,7 +78,7 @@ public class TextImporter extends NoteImporter {
                 }
                 List<String> rowAsString = new ArrayList<>(row);
                 if (rowAsString.size() != numFields) {
-                    if (rowAsString.size() > 0) {
+                    if (!rowAsString.isEmpty()) {
                         String formatted = getString(R.string.csv_importer_error_invalid_field_count,
                                 TextUtils.join(" ", rowAsString),
                                 rowAsString.size(),
@@ -200,7 +200,7 @@ public class TextImporter extends NoteImporter {
         try {
             while (true) {
                 List<String> row = reader.next();
-                if (row.size() > 0) {
+                if (!row.isEmpty()) {
                     numFields = row.size();
                     break;
                 }

@@ -183,7 +183,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
                     String fieldName = mFieldNameInput.getText().toString()
                             .replaceAll("[\\n\\r]", "");
 
-                    if (fieldName.length() == 0) {
+                    if (fieldName.isEmpty()) {
                         UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
                     } else if (containsField(fieldName)) {
                         UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
@@ -275,7 +275,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
 
                         String fieldLabel = mFieldNameInput.getText().toString()
                                 .replaceAll("[\\n\\r]", "");
-                        if (fieldLabel.length() == 0) {
+                        if (fieldLabel.isEmpty()) {
                             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_empty_name), true);
                         } else if (containsField(fieldLabel)) {
                             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);

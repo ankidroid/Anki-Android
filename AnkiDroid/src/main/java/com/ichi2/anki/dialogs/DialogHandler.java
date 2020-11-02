@@ -120,7 +120,7 @@ public class DialogHandler extends Handler {
             String hkey = preferences.getString("hkey", "");
             long millisecondsSinceLastSync = col.getTime().intTimeMS() - preferences.getLong("lastSyncTime", 0);
             boolean limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL;
-            if (!limited && hkey.length() > 0 && Connection.isOnline()) {
+            if (!limited && !hkey.isEmpty() && Connection.isOnline()) {
                 ((DeckPicker) mActivity.get()).sync();
             } else {
                 String err = res.getString(R.string.sync_error);

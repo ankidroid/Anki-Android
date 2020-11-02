@@ -127,7 +127,7 @@ public class Stats {
      */
     public int[] calculateTodayStats(){
         String lim = _getDeckFilter();
-        if (lim.length() > 0) {
+        if (!lim.isEmpty()) {
             lim = " and " + lim;
         }
 
@@ -268,7 +268,7 @@ public class Stats {
             lims.add(dayFilter);
         }
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
-        if (lim.length() > 0){
+        if (!lim.isEmpty()){
             lims.add(lim);
         }
 
@@ -452,7 +452,7 @@ public class Stats {
             }
         }
         // small adjustment for a proper chartbuilding with achartengine
-        if (dues.size() == 0 || dues.get(0)[0] > 0) {
+        if (dues.isEmpty() || dues.get(0)[0] > 0) {
             dues.add(0, new int[] { 0, 0, 0 });
         }
         if (end == -1 && dues.size() < 2) {
@@ -510,7 +510,7 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return dues.size() > 0;
+        return !dues.isEmpty();
     }
 
 
@@ -564,10 +564,10 @@ public class Stats {
             lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * SECONDS_PER_DAY)) * 1000));
         }
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
-        if (lim.length() > 0) {
+        if (!lim.isEmpty()) {
             lims.add(lim);
         }
-        if (lims.size() > 0) {
+        if (!lims.isEmpty()) {
             lim = "WHERE ";
             while (lims.size() > 1) {
                 lim += lims.remove(0) + " AND ";
@@ -617,9 +617,9 @@ public class Stats {
 
 
         // small adjustment for a proper chartbuilding with achartengine
-        if (type != AxisType.TYPE_LIFE && (list.size() == 0 || list.get(0)[0] > -num)) {
+        if (type != AxisType.TYPE_LIFE && (list.isEmpty() || list.get(0)[0] > -num)) {
             list.add(0, new double[] { -num, 0, 0, 0, 0, 0 });
-        } else if (type == AxisType.TYPE_LIFE && list.size() == 0) {
+        } else if (type == AxisType.TYPE_LIFE && list.isEmpty()) {
             list.add(0, new double[] { -12, 0, 0, 0, 0, 0 });
         }
         if (list.get(list.size() - 1)[0] < 0) {
@@ -705,7 +705,7 @@ public class Stats {
             mFirstElement = -10;
             mLastElement = 0;
         }
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
 
@@ -785,7 +785,7 @@ public class Stats {
         }
 
         // small adjustment for a proper chartbuilding with achartengine
-        if (list.size() == 0 || list.get(0)[0] > 0) {
+        if (list.isEmpty() || list.get(0)[0] > 0) {
             list.add(0, new double[] { 0, 0, 0 });
         }
         if (num == -1 && list.size() < 2) {
@@ -843,7 +843,7 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
     /**
@@ -858,7 +858,7 @@ public class Stats {
         mType = type;
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
-        if (lim.length() > 0) {
+        if (!lim.isEmpty()) {
             lim = " and " + lim;
         }
         int rolloverHour;
@@ -893,7 +893,7 @@ public class Stats {
 
         //TODO adjust for breakdown, for now only copied from intervals
         //small adjustment for a proper chartbuilding with achartengine
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             list.add(0, new double[] { 0, 0, 0 });
         }
 
@@ -967,7 +967,7 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
     /**
@@ -982,7 +982,7 @@ public class Stats {
         mType = type;
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
 
-        if (lim.length() > 0) {
+        if (!lim.isEmpty()) {
             lim = " and " + lim;
         }
 
@@ -1015,7 +1015,7 @@ public class Stats {
 
         //TODO adjust for breakdown, for now only copied from intervals
         // small adjustment for a proper chartbuilding with achartengine
-        if (list.size() == 0 ) {
+        if (list.isEmpty() ) {
             list.add(0, new double[] { 0, 0, 0 });
         }
 
@@ -1077,7 +1077,7 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
 
@@ -1097,7 +1097,7 @@ public class Stats {
 
         //TODO adjust for AnswerButton, for now only copied from intervals
         // small adjustment for a proper chartbuilding with achartengine
-        if (list.size() == 0) {
+        if (list.isEmpty()) {
             list.add(0, new double[]{0, 1, 0});
         }
 
@@ -1129,7 +1129,7 @@ public class Stats {
         if(mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return list.size() > 0;
+        return !list.isEmpty();
     }
 
 
@@ -1139,7 +1139,7 @@ public class Stats {
         Vector<String> lims = new Vector<>();
         int days;
 
-        if (lim.length() > 0) {
+        if (!lim.isEmpty()) {
             lims.add(lim);
         }
 
@@ -1154,7 +1154,7 @@ public class Stats {
         if (days > 0) {
             lims.add("id > " + ((mCol.getSched().getDayCutoff() - (days * SECONDS_PER_DAY)) * 1000));
         }
-        if (lims.size() > 0) {
+        if (!lims.isEmpty()) {
             lim = "where " + lims.get(0);
             for (int i = 1; i < lims.size(); i++) {
                 lim += " and " + lims.get(i);
@@ -1218,7 +1218,7 @@ public class Stats {
 
         //TODO adjust for CardsTypes, for now only copied from intervals
         // small adjustment for a proper chartbuilding with achartengine
-//        if (list.size() == 0 || list.get(0)[0] > 0) {
+//        if (list.isEmpty() || list.get(0)[0] > 0) {
 //            list.add(0, new double[] { 0, 0, 0 });
 //        }
 //        if (num == -1 && list.size() < 2) {

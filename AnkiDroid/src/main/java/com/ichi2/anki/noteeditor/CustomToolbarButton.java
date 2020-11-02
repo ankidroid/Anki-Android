@@ -45,7 +45,7 @@ public class CustomToolbarButton {
 
     @Nullable
     public static CustomToolbarButton fromString(String s) {
-        if (s == null || s.length() == 0) {
+        if (s == null || s.isEmpty()) {
             return null;
         }
 

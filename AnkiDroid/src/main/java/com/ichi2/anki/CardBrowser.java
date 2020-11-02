@@ -406,7 +406,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void onSearch() {
         mSearchTerms = mSearchView.getQuery().toString();
-        if (mSearchTerms.length() == 0) {
+        if (mSearchTerms.isEmpty()) {
             mSearchView.setQueryHint(getResources().getString(R.string.deck_conf_cram_search));
         }
         searchCards();
@@ -2014,7 +2014,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     try {
                         @SuppressWarnings("unchecked")
                         List<Long> cardsIdsToHide = (List<Long>) result.getObjArray()[1];
-                        if (cardsIdsToHide.size() > 0) {
+                        if (!cardsIdsToHide.isEmpty()) {
                             Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size());
                             browser.removeNotesView(cardsIdsToHide, true);
                         }

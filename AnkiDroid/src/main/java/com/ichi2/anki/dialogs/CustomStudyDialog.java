@@ -321,7 +321,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 break;
         }
         List<String> arr = new ArrayList<>();
-        if (selectedTags.size() > 0) {
+        if (!selectedTags.isEmpty()) {
             for (String tag : selectedTags) {
                 arr.add(String.format("tag:'%s'", tag));
             }
@@ -464,7 +464,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
             return;
         }
         // and then set various options
-        if (delays.length() > 0) {
+        if (!delays.isEmpty()) {
             dyn.put("delays", delays);
         } else {
             dyn.put("delays", JSONObject.NULL);

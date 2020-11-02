@@ -341,7 +341,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 mFilteredTags.clear();
-                if (constraint.length() == 0) {
+                if (constraint.length() > 0) {
                     mFilteredTags.addAll(mAllTags);
                 } else {
                     final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
