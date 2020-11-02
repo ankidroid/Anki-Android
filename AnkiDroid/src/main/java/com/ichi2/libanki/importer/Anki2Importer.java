@@ -273,7 +273,7 @@ public class Anki2Importer extends Importer {
                             } else {
                                 dupesIgnored.add(String.format("%s: %s",
                                         mCol.getModels().get(oldMid).getString("name"),
-                                        ((String) note[6]).replace("\u001f", ",")));
+                                        ((String) note[6]).replace('\u001f', ',')));
                                 mIgnoredGuids.put((String) note[GUID], true);
                             }
                         }
