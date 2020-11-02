@@ -852,11 +852,13 @@ public class Media {
      */
     public Pair<File, List<String>> mediaChangesZip() {
         File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncToServer.zip"));
-        Cursor cur = null;
-        try (ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)))) {
+        List<String> fnames = new ArrayList<>();
+        try (ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+             Cursor cur = mDb.getDatabase().query(
+                "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT, null);
+        ) {
             z.setMethod(ZipOutputStream.DEFLATED);
 
-            List<String> fnames = new ArrayList<>();
             // meta is a list of (fname, zipname), where zipname of null is a deleted file
             // NOTE: In python, meta is a list of tuples that then gets serialized into json and added
             // to the zip as a string. In our version, we use JSON objects from the start to avoid the
@@ -864,8 +866,7 @@ public class Media {
             JSONArray meta = new JSONArray();
             int sz = 0;
             byte[] buffer = new byte[2048];
-            cur = mDb.getDatabase().query(
-                    "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT, null);
+
 
             for (int c = 0; cur.moveToNext(); c++) {
                 String fname = cur.getString(0);
@@ -910,10 +911,6 @@ public class Media {
         } catch (IOException e) {
             Timber.e(e, "Failed to create media changes zip: ");
             throw new RuntimeException(e);
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
         }
     }
 

@@ -504,11 +504,9 @@ public class Anki2Importer extends Importer {
          */
         Map<String, Map<Integer, Long>> mCards = new HashMap<>();
         Map<Long, Boolean> existing = new HashMap<>();
-        Cursor cur = null;
-        try {
-            cur = mDst.getDb().getDatabase().query(
+        try (Cursor cur = mDst.getDb().getDatabase().query(
                     "select f.guid, c.ord, c.id from cards c, notes f " +
-                    "where c.nid = f.id", null);
+                    "where c.nid = f.id", null)) {
             while (cur.moveToNext()) {
                 String guid = cur.getString(0);
                 int ord = cur.getInt(1);
@@ -522,10 +520,6 @@ public class Anki2Importer extends Importer {
                     mCards.put(guid, map);
                 }
             }
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
         }
         // loop through src
         List<Object[]> cards = new ArrayList<>();
@@ -536,11 +530,10 @@ public class Anki2Importer extends Importer {
         final int thresExecRevlog = 1000;
         int usn = mDst.usn();
         long aheadBy = mSrc.getSched().getToday() - mDst.getSched().getToday();
-        try {
-            mDst.getDb().getDatabase().beginTransaction();
-            cur = mSrc.getDb().getDatabase().query(
+        mDst.getDb().getDatabase().beginTransaction();
+        try (Cursor cur = mSrc.getDb().getDatabase().query(
                     "select f.guid, f.mid, c.* from cards c, notes f " +
-                    "where c.nid = f.id", null);
+                    "where c.nid = f.id", null)) {
 
             // Counters for progress updates
             int total = cur.getCount();
@@ -656,9 +649,6 @@ public class Anki2Importer extends Importer {
             mLog.add(getRes().getString(R.string.import_complete_count, totalCardCount));
             mDst.getDb().getDatabase().setTransactionSuccessful();
         } finally {
-            if (cur != null) {
-                cur.close();
-            }
             DB.safeEndInTransaction(mDst.getDb());
         }
     }

@@ -296,24 +296,18 @@ public class OverviewStatsBuilder {
         }
 
         List<int[]> d = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            String query = String.format(Locale.US,
-                    "select (due-%d)/%d as day,\n" +
-                    "sum(case when ivl < 21 then 1 else 0 end), -- yng\n" +
-                    "sum(case when ivl >= 21 then 1 else 0 end) -- mtr\n" +
-                    "from cards\n" +
-                    "where did in %s and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")\n" +
-                    "%s\n" +
-                    "group by day order by day",
-                    mCol.getSched().getToday(), chunk, _limit(), lim);
-            cur = mCol.getDb().getDatabase().query(query, null);
+        String query = String.format(Locale.US,
+                "select (due-%d)/%d as day,\n" +
+                        "sum(case when ivl < 21 then 1 else 0 end), -- yng\n" +
+                        "sum(case when ivl >= 21 then 1 else 0 end) -- mtr\n" +
+                        "from cards\n" +
+                        "where did in %s and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")\n" +
+                        "%s\n" +
+                        "group by day order by day",
+                mCol.getSched().getToday(), chunk, _limit(), lim);
+        try (Cursor cur = mCol.getDb().getDatabase().query(query, null)) {
             while (cur.moveToNext()) {
                 d.add(new int[]{cur.getInt(0), cur.getInt(1), cur.getInt(2)});
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return d;
