@@ -221,6 +221,7 @@ public abstract class AbstractSched {
      *i @param cids Cards to remove from their dynamic deck (it is assumed they are in one)
      */
     // In this abstract class for testing purpose only
+    public abstract void remFromDyn(List<Long> cids);
     public abstract void remFromDyn(long[] cids);
 
     /**
@@ -308,7 +309,7 @@ public abstract class AbstractSched {
 
     /**
      * @param ids Ids of cards to put at the end of the new queue. */
-    public abstract void forgetCards(@NonNull long[] ids);
+    public abstract void forgetCards(@NonNull List<Long> ids);
 
     /**
      * Put cards in review queue with a new interval in days (min, max).
@@ -317,7 +318,7 @@ public abstract class AbstractSched {
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
      */
-    public abstract void reschedCards(@NonNull long[] ids, int imin, int imax);
+    public abstract void reschedCards(@NonNull List<Long> ids, int imin, int imax);
 
     /**
      * @param ids Ids of cards to reset for export
@@ -331,7 +332,7 @@ public abstract class AbstractSched {
      * @param shuffle Whether the list should be shuffled.
      * @param shift Whether the cards already new should be shifted to make room for cards of cids
      */
-    public abstract void sortCards(@NonNull long[] cids, int start, int step, boolean shuffle, boolean shift);
+    public abstract void sortCards(@NonNull List<Long> cids, int start, int step, boolean shuffle, boolean shift);
 
     /**
      * Randomize the cards of did

@@ -5,6 +5,8 @@ import com.ichi2.anki.RobolectricTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Collections;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.junit.Assert.assertEquals;
@@ -33,7 +35,7 @@ public class FlagTest extends RobolectricTest {
         assertEquals(1, col.findCards("flag:0").size());
         assertEquals(0, col.findCards("flag:1").size());
         // set flag 2
-        col.setUserFlag(2, new long[] {c.getId()});
+        col.setUserFlag(2, Collections.singletonList(c.getId()));
         c.load();
         assertEquals(2, c.userFlag());
         // assertEquals(origBits, c.flags & origBits);TODO: create direct access to real flag value
@@ -41,11 +43,11 @@ public class FlagTest extends RobolectricTest {
         assertEquals(1, col.findCards("flag:2").size());
         assertEquals(0, col.findCards("flag:3").size());
         // change to 3
-        col.setUserFlag(3, new long[] {c.getId()});
+        col.setUserFlag(3, Collections.singletonList(c.getId()));
         c.load();
         assertEquals(3, c.userFlag());
         // unset
-        col.setUserFlag(0, new long[] {c.getId()});
+        col.setUserFlag(0, Collections.singletonList(c.getId()));
         c.load();
         assertEquals(0, c.userFlag());
 

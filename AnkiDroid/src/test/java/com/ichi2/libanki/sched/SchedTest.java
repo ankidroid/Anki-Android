@@ -40,6 +40,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -1353,7 +1354,7 @@ public class SchedTest extends RobolectricTest {
         c.flush();
         col.reset();
         assertEquals(new Counts(0, 0, 1), col.getSched().counts());
-        col.getSched().forgetCards(new long[] {c.getId()});
+        col.getSched().forgetCards(Collections.singletonList(c.getId()));
         col.reset();
         assertEquals(new Counts(1, 0, 0), col.getSched().counts());
     }
@@ -1366,13 +1367,13 @@ public class SchedTest extends RobolectricTest {
         note.setItem("Front", "one");
         col.addNote(note);
         Card c = note.cards().get(0);
-        col.getSched().reschedCards(new long[] {c.getId()}, 0, 0);
+        col.getSched().reschedCards(Collections.singletonList(c.getId()), 0, 0);
         c.load();
         assertEquals(col.getSched().getToday(), c.getDue());
         assertEquals(1, c.getIvl());
         assertEquals(CARD_TYPE_REV, c.getType());
         assertEquals(QUEUE_TYPE_REV, c.getQueue());
-        col.getSched().reschedCards(new long[] {c.getId()}, 1, 1);
+        col.getSched().reschedCards(Collections.singletonList(c.getId()), 1, 1);
         c.load();
         assertEquals(col.getSched().getToday() + 1, c.getDue());
         assertEquals(+1, c.getIvl());

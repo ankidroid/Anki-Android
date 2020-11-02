@@ -250,7 +250,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         List<Long> cardIds = b.getCheckedCardIds();
 
-        b.executeChangeCollectionTask(toLongArray(cardIds), dynId);
+        b.executeChangeCollectionTask(cardIds, dynId);
 
         for (Long cardId: cardIds) {
             assertThat("Deck should not be changed", getCol().getCard(cardId).getDid(), not(dynId));

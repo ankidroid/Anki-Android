@@ -1944,6 +1944,10 @@ public class SchedV2 extends AbstractSched {
         emptyDyn(0, "id IN " + Utils.ids2str(cids) + " AND odid");
     }
 
+    public void remFromDyn(List<Long> cids) {
+        emptyDyn(0, "id IN " + Utils.ids2str(cids) + " AND odid");
+    }
+
 
     /**
      * Generates the required SQL for order by and limit clauses, for dynamic decks.
@@ -2608,7 +2612,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     /** Put cards at the end of the new queue. */
-    public void forgetCards(@NonNull long[] ids) {
+    public void forgetCards(@NonNull List<Long> ids) {
         remFromDyn(ids);
         mCol.getDb().execute("update cards set type=" + Consts.CARD_TYPE_NEW + ",queue=" + Consts.QUEUE_TYPE_NEW + ",ivl=0,due=0,odue=0,factor="+Consts.STARTING_FACTOR +
                 " where id in " + Utils.ids2str(ids));
@@ -2626,8 +2630,8 @@ public class SchedV2 extends AbstractSched {
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
      */
-    public void reschedCards(@NonNull long[] ids, int imin, int imax) {
-        ArrayList<Object[]> d = new ArrayList<>(ids.length);
+    public void reschedCards(@NonNull List<Long> ids, int imin, int imax) {
+        ArrayList<Object[]> d = new ArrayList<>(ids.size());
         int t = mToday;
         long mod = getTime().intTime();
         Random rnd = new Random();
@@ -2647,8 +2651,8 @@ public class SchedV2 extends AbstractSched {
      * Completely reset cards for export.
      */
     public void resetCards(@NonNull Long[] ids) {
-        long[] nonNew = Utils.collection2Array(mCol.getDb().queryLongList(
-                "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")"));
+        List<Long> nonNew = mCol.getDb().queryLongList(
+                "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")");
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
         mCol.log((Object[]) ids);
@@ -2660,15 +2664,15 @@ public class SchedV2 extends AbstractSched {
      * *********************************************
      */
 
-    public void sortCards(@NonNull long[] cids, int start) {
+    public void sortCards(@NonNull List<Long> cids, int start) {
         sortCards(cids, start, 1, false, false);
     }
 
 
-    public void sortCards(@NonNull long[] cids, int start, int step, boolean shuffle, boolean shift) {
+    public void sortCards(@NonNull List<Long> cids, int start, int step, boolean shuffle, boolean shift) {
         String scids = Utils.ids2str(cids);
         long now = getTime().intTime();
-        ArrayList<Long> nids = new ArrayList<>(cids.length);
+        ArrayList<Long> nids = new ArrayList<>(cids.size());
         for (long id : cids) {
             long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?", id);
             if (!nids.contains(nid)) {
@@ -2702,7 +2706,7 @@ public class SchedV2 extends AbstractSched {
             }
         }
         // reorder cards
-        ArrayList<Object[]> d = new ArrayList<>(cids.length);
+        ArrayList<Object[]> d = new ArrayList<>(cids.size());
         try (Cursor cur = mCol.getDb()
                     .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids)) {
             while (cur.moveToNext()) {
@@ -2716,13 +2720,13 @@ public class SchedV2 extends AbstractSched {
 
     public void randomizeCards(long did) {
         List<Long> cids = mCol.getDb().queryLongList("select id from cards where did = ?", did);
-        sortCards(Utils.toPrimitive(cids), 1, 1, true, false);
+        sortCards(cids, 1, 1, true, false);
     }
 
 
     public void orderCards(long did) {
         List<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? ORDER BY nid", did);
-        sortCards(Utils.toPrimitive(cids), 1, 1, false, false);
+        sortCards(cids, 1, 1, false, false);
     }
 
 
@@ -2784,7 +2788,7 @@ public class SchedV2 extends AbstractSched {
 
 
         // remove new cards from learning
-        forgetCards(Utils.collection2Array(mCol.getDb().queryLongList("select id from cards where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")")));
+        forgetCards(mCol.getDb().queryLongList("select id from cards where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")"));
     }
 
 
