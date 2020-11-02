@@ -762,8 +762,10 @@ public class Collection {
 
     /**
      * @param snids All ids of nodes of a note type, separated by comma
+     * @param model
      * @param task Task to check for cancellation and update number of card processed
      * @return Cards that should be removed because they should not be generated
+     * @param <T>
      */
     public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(String snids, @NonNull Model model, @Nullable T task) {
         // For each note, indicates ords of cards it contains
@@ -772,9 +774,7 @@ public class Collection {
         HashMap<Long, Long> dids = new HashMap<>();
         // For each note, an arbitrary due of one of its due card processed, if any exists
         HashMap<Long, Long> dues = new HashMap<>();
-        Cursor cur = null; 
-        try {
-            cur = mDb.getDatabase().query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids, null);
+        try (Cursor cur = mDb.getDatabase().query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids, null)) {
             while (cur.moveToNext()) {
                 if (task != null && task.isCancelled()) {
                     Timber.v("Empty card cancelled");
@@ -806,10 +806,6 @@ public class Collection {
                     dues.put(nid, due);
                 }
             }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         // build cards for each note
         ArrayList<Object[]> data = new ArrayList<>();
@@ -817,9 +813,7 @@ public class Collection {
         long now = getTime().intTime();
         ArrayList<Long> rem = new ArrayList<>();
         int usn = usn();
-        cur = null;
-        try {
-            cur = mDb.getDatabase().query("SELECT id, flds FROM notes WHERE id IN " + snids, null);
+        try (Cursor cur = mDb.getDatabase().query("SELECT id, flds FROM notes WHERE id IN " + snids, null)) {
             while (cur.moveToNext()) {
                 if (task != null && task.isCancelled()) {
                     Timber.v("Empty card cancelled");
@@ -875,10 +869,6 @@ public class Collection {
                         }
                     }
                 }
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         // bulk update
@@ -1066,19 +1056,13 @@ public class Collection {
 
     public String emptyCardReport(List<Long> cids) {
         StringBuilder rep = new StringBuilder();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("select group_concat(ord+1), count(), flds from cards c, notes n "
-                                           + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid", null);
+        try (Cursor cur = mDb.getDatabase().query("select group_concat(ord+1), count(), flds from cards c, notes n "
+                                           + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid", null)) {
             while (cur.moveToNext()) {
                 String ords = cur.getString(0);
                 //int cnt = cur.getInt(1);  // present but unused upstream as well
                 String flds = cur.getString(2);
                 rep.append(String.format("Empty card numbers: %s\nFields: %s\n\n", ords, flds.replace("\u001F", " / ")));
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return rep.toString();
@@ -1091,15 +1075,9 @@ public class Collection {
 
     private ArrayList<Object[]> _fieldData(String snids) {
         ArrayList<Object[]> result = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
+        try (Cursor cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null)) {
             while (cur.moveToNext()) {
                 result.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getString(2) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return result;
@@ -1220,19 +1198,13 @@ public class Collection {
 
     public ArrayList<Object[]> _qaData(String where) {
         ArrayList<Object[]> data = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query(
+        try (Cursor cur = mDb.getDatabase().query(
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
-                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where, null);
+                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where, null)) {
             while (cur.moveToNext()) {
                 data.add(new Object[] { cur.getLong(0), cur.getLong(1),
                         getModels().get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
                         cur.getString(5), cur.getString(6), cur.getInt(7)});
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return data;
@@ -1846,10 +1818,8 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         // notes with invalid field counts
         ArrayList<Long> ids = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            notifyProgress.run();
-            cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
+        notifyProgress.run();
+        try (Cursor cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null)) {
             Timber.i("cursor size: %d", cur.getCount());
             int currentRow = 0;
 
@@ -1887,10 +1857,6 @@ public class Collection {
             if (ids.size() > 0) {
                 problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
                 _remNotes(ids);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return problems;

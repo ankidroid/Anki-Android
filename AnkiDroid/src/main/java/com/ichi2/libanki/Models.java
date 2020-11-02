@@ -910,13 +910,11 @@ public class Models {
     private void _changeCards(long nid, Model oldModel, Model newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<>();
         List<Long> deleted = new ArrayList<>();
-        Cursor cur = null;
         int omType = oldModel.getInt("type");
         int nmType = newModel.getInt("type");
         int nflds = newModel.getJSONArray("tmpls").length();
-        try {
-            cur = mCol.getDb().getDatabase().query(
-                    "select id, ord from cards where nid = ?", new Object[] {nid});
+        try (Cursor cur = mCol.getDb().getDatabase().query(
+                    "select id, ord from cards where nid = ?", new Object[] {nid})) {
             while (cur.moveToNext()) {
                 // if the src model is a cloze, we ignore the map, as the gui doesn't currently
                 // support mapping them
@@ -941,10 +939,6 @@ public class Models {
                 } else {
                     deleted.add(cid);
                 }
-            }
-        } finally {
-            if (cur != null) {
-                cur.close();
             }
         }
         mCol.getDb().executeMany("update cards set ord=?,usn=?,mod=? where id=?", d);

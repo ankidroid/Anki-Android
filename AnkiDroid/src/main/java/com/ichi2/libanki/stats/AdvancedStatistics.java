@@ -707,8 +707,6 @@ public class AdvancedStatistics {
          */
         private double[] calculateProbabilitiesForNewEaseForCurrentEase(String queryNewEaseCountForCurrentEase, int[] prior) {
 
-            Cursor cur = null;
-
             int[] freqs = new int[] {
                     prior[REVIEW_OUTCOME_REPEAT],
                     prior[REVIEW_OUTCOME_HARD],
@@ -718,8 +716,7 @@ public class AdvancedStatistics {
 
             int n = prior[REVIEW_OUTCOME_REPEAT] + prior[REVIEW_OUTCOME_HARD] + prior[REVIEW_OUTCOME_GOOD] + prior[REVIEW_OUTCOME_EASY];
 
-            try {
-                cur = db.query(queryNewEaseCountForCurrentEase, null);
+            try (Cursor cur = db.query(queryNewEaseCountForCurrentEase, null)) {
                 cur.moveToNext();
 
                 freqs[REVIEW_OUTCOME_REPEAT]    += cur.getInt(REVIEW_OUTCOME_REPEAT_PLUS_1);        //Repeat
@@ -731,10 +728,6 @@ public class AdvancedStatistics {
 
                 n += nQuery;
 
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
             }
 
             return new double[] {
@@ -825,22 +818,16 @@ public class AdvancedStatistics {
 
         public TodayStats(SupportSQLiteDatabase db, long dayStartCutoff) {
 
-            Cursor cur = null;
             String query = "select cards.did, "+
                     "sum(case when revlog.type = " + CARD_TYPE_NEW + " then 1 else 0 end)"+ /* learning */
                     " from revlog, cards where revlog.cid = cards.id and revlog.id > " + dayStartCutoff +
                     " group by cards.did";
             Timber.d("AdvancedStatistics.TodayStats query: %s", query);
 
-            try {
-                cur = db.query(query, null);
+            try (Cursor cur = db.query(query, null)) {
 
                 while(cur.moveToNext()) {
                     nLearnedPerDeckId.put(cur.getLong(0), cur.getInt(1));
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
                 }
             }
         }

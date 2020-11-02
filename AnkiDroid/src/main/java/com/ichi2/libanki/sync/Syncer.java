@@ -607,14 +607,12 @@ public class Syncer {
         JSONArray cards = new JSONArray();
         JSONArray notes = new JSONArray();
         JSONArray decks = new JSONArray();
-        Cursor cur = null;
-        try {
-            cur = mCol
+        try (Cursor cur = mCol
                     .getDb()
                     .getDatabase()
                     .query(
                             "SELECT oid, type FROM graves WHERE usn"
-                                    + (mCol.getServer() ? (" >= " + mMinUsn) : (" = -1")), null);
+                                    + (mCol.getServer() ? (" >= " + mMinUsn) : (" = -1")), null)) {
             while (cur.moveToNext()) {
                 @Consts.REM_TYPE int type = cur.getInt(1);
                 switch (type) {
@@ -628,10 +626,6 @@ public class Syncer {
                         decks.put(cur.getLong(0));
                         break;
                 }
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         if (!mCol.getServer()) {
@@ -844,20 +838,14 @@ public class Syncer {
             ids[i] = data.getJSONArray(i).getLong(0);
         }
         HashMap<Long, Long> lmods = new HashMap<>();
-        Cursor cur = null;
-        try {
-            cur = mCol
+        try (Cursor cur = mCol
                     .getDb()
                     .getDatabase()
                     .query(
                             "SELECT id, mod FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND "
-                                    + usnLim(), null);
+                                    + usnLim(), null)) {
             while (cur.moveToNext()) {
                 lmods.put(cur.getLong(0), cur.getLong(1));
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         ArrayList<Object[]> update = new ArrayList<>();

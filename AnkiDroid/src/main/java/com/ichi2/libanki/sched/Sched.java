@@ -354,31 +354,25 @@ public class Sched extends SchedV2 {
         if (!mLrnQueue.isEmpty()) {
             return true;
         }
-        Cursor cur = null;
         mLrnQueue.clear();
         SupportSQLiteDatabase db = mCol.getDb().getDatabase();
-        try {
-            /* Difference with upstream:
-             * Current card can't come in the queue.
-             *
-             * In standard usage, a card is not requested before the previous card is marked as reviewed. However, if we
-             * decide to query a second card sooner, we don't want to get the same card a second time. This simulate
-             * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
-             * required when the card is reviewed.
-             */
-            cur = db.query(
+        /* Difference with upstream:
+         * Current card can't come in the queue.
+         *
+         * In standard usage, a card is not requested before the previous card is marked as reviewed. However, if we
+         * decide to query a second card sooner, we don't want to get the same card a second time. This simulate
+         * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
+         * required when the card is reviewed.
+         */
+        try (Cursor cur = db.query(
                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
-                           new Object[]{mDayCutoff, currentCardId(), mReportLimit});
+                           new Object[]{mDayCutoff, currentCardId(), mReportLimit})) {
             while (cur.moveToNext()) {
                 mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
             // as it arrives sorted by did first, we need to sort it
             mLrnQueue.sort();
             return !mLrnQueue.isEmpty();
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
     }
 
@@ -686,11 +680,15 @@ public class Sched extends SchedV2 {
         while (!mRevDids.isEmpty()) {
             long did = mRevDids.getFirst();
             int lim = Math.min(mQueueLimit, _deckRevLimit(did, false));
-            Cursor cur = null;
             if (lim != 0) {
                 mRevQueue.clear();
                 // fill the queue with the current did
-                try {
+                String idName = (allowSibling) ? "id": "nid";
+                long id = (allowSibling) ? currentCardId(): currentCardNid();
+                try (Cursor cur = db.query(
+                        "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
+                                + " AND " + idName + " != ? LIMIT ?",
+                        new Object[]{did, mToday, id, lim})) {
                     /* Difference with upstream: we take current card into account.
                      *
                      * When current card is answered, the card is not due anymore, so does not belong to the queue.
@@ -700,18 +698,8 @@ public class Sched extends SchedV2 {
                      * queue is not empty if it should not be empty (important for the conditional belows), but the
                      * front of the queue contains distinct card.
                      */
-                    String idName = (allowSibling) ? "id": "nid";
-                    long id = (allowSibling) ? currentCardId(): currentCardNid();
-                    cur = db.query(
-                                    "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
-                                            + " AND " + idName + " != ? LIMIT ?",
-                                    new Object[]{did, mToday, id, lim});
                     while (cur.moveToNext()) {
                         mRevQueue.add(cur.getLong(0));
-                    }
-                } finally {
-                    if (cur != null && !cur.isClosed()) {
-                        cur.close();
                     }
                 }
                 if (!mRevQueue.isEmpty()) {
@@ -1303,9 +1291,7 @@ public class Sched extends SchedV2 {
         double relrnTime;
 
         if (reload || mEtaCache[0] == -1) {
-            Cursor cur = null;
-            try {
-                cur = mCol
+            try (Cursor cur = mCol
                         .getDb()
                         .getDatabase()
                         .query("select "
@@ -1313,7 +1299,7 @@ public class Sched extends SchedV2 {
                                 + "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING+ ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then time else null end) as revTime, "
                                 + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
                                 + "from revlog where id > "
-                                + ((mCol.getSched().getDayCutoff() - (10 * SECONDS_PER_DAY)) * 1000), null);
+                                + ((mCol.getSched().getDayCutoff() - (10 * SECONDS_PER_DAY)) * 1000), null)) {
                 if (!cur.moveToFirst()) {
                     return -1;
                 }
@@ -1329,10 +1315,6 @@ public class Sched extends SchedV2 {
                     cur.close();
                 }
 
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
             }
 
             // If the collection has no revlog data to work with, assume a 20 second average rep for that type

@@ -790,10 +790,10 @@ public class SchedV2 extends AbstractSched {
         while (!mNewDids.isEmpty()) {
             long did = mNewDids.getFirst();
             int lim = Math.min(mQueueLimit, _deckNewLimit(did, true));
-            Cursor cur = null;
             if (lim != 0) {
                 mNewQueue.clear();
-                try {
+                String idName = (allowSibling) ? "id": "nid";
+                long id = (allowSibling) ? currentCardId(): currentCardNid();
                     /* Difference with upstream: we take current card into account.
                      *
                      * When current card is answered, the card is not due anymore, so does not belong to the queue.
@@ -804,15 +804,9 @@ public class SchedV2 extends AbstractSched {
                      * front of the queue contains distinct card.
                  */
                     // fill the queue with the current did
-                    String idName = (allowSibling) ? "id": "nid";
-                    long id = (allowSibling) ? currentCardId(): currentCardNid();
-                    cur = mCol.getDb().query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?", did, id, lim);
+                try (Cursor cur = mCol.getDb().query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?", did, id, lim)) {
                     while (cur.moveToNext()) {
                         mNewQueue.add(cur.getLong(0));
-                    }
-                } finally {
-                    if (cur != null && !cur.isClosed()) {
-                        cur.close();
                     }
                 }
                 if (!mNewQueue.isEmpty()) {
@@ -1015,31 +1009,25 @@ public class SchedV2 extends AbstractSched {
             return true;
         }
         long cutoff = getTime().intTime() + mCol.getConf().getLong("collapseTime");
-        Cursor cur = null;
         mLrnQueue.clear();
-        try {
-            /* Difference with upstream: Current card can't come in the queue.
+        /* Difference with upstream: Current card can't come in the queue.
              *
              * In standard usage, a card is not requested before the previous card is marked as reviewed. However, if we
              * decide to query a second card sooner, we don't want to get the same card a second time. This simulate
              * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
              * required when the card is reviewed.
              */
-            cur = mCol
+        try (Cursor cur = mCol
                     .getDb()
                     .query(
                             "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue IN (" + Consts.QUEUE_TYPE_LRN + ", " + Consts.QUEUE_TYPE_PREVIEW + ") AND due < ?"
-                            + " AND id != ? LIMIT ?", cutoff, currentCardId(), mReportLimit);
+                            + " AND id != ? LIMIT ?", cutoff, currentCardId(), mReportLimit)) {
             while (cur.moveToNext()) {
                 mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
             // as it arrives sorted by did first, we need to sort it
             mLrnQueue.sort();
             return !mLrnQueue.isEmpty();
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
     }
 
@@ -1092,8 +1080,6 @@ public class SchedV2 extends AbstractSched {
             long did = mLrnDids.getFirst();
             // fill the queue with the current did
             mLrnDayQueue.clear();
-            Cursor cur = null;
-            try {
                 /* Difference with upstream:
                  * Current card can't come in the queue.
                  *
@@ -1104,15 +1090,11 @@ public class SchedV2 extends AbstractSched {
                  * simulate _getLrnDayCard which did remove the card
                  * from the queue.
                  */
-                cur = mCol.getDb().query(
+            try (Cursor cur = mCol.getDb().query(
                                 "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? and id != ? LIMIT ?",
-                                did, mToday, currentCardId(), mQueueLimit);
+                                did, mToday, currentCardId(), mQueueLimit)) {
                 while (cur.moveToNext()) {
                     mLrnDayQueue.add(cur.getLong(0));
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
                 }
             }
             if (!mLrnDayQueue.isEmpty()) {
@@ -1552,10 +1534,10 @@ public class SchedV2 extends AbstractSched {
         }
         int lim = Math.min(mQueueLimit, _currentRevLimit(true));
         if (lim != 0) {
-            Cursor cur = null;
             mRevQueue.clear();
             // fill the queue with the current did
-            try {
+            String idName = (allowSibling) ? "id": "nid";
+            long id = (allowSibling) ? currentCardId(): currentCardNid();
                 /* Difference with upstream: we take current card into account.
                  *
                  * When current card is answered, the card is not due anymore, so does not belong to the queue.
@@ -1566,17 +1548,11 @@ public class SchedV2 extends AbstractSched {
                  * contains distinct card.
                  */
                 // fill the queue with the current did
-                String idName = (allowSibling) ? "id": "nid";
-                long id = (allowSibling) ? currentCardId(): currentCardNid();
-                cur = mCol.getDb().query("SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND " + idName + " != ?"
+            try (Cursor cur = mCol.getDb().query("SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND " + idName + " != ?"
                                + " ORDER BY due, random()  LIMIT ?",
-                               mToday, id, lim);
+                               mToday, id, lim)) {
                 while (cur.moveToNext()) {
                     mRevQueue.add(cur.getLong(0));
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
                 }
             }
             if (!mRevQueue.isEmpty()) {
@@ -2525,11 +2501,9 @@ public class SchedV2 extends AbstractSched {
         JSONObject rconf = _revConf(card);
         boolean buryRev = rconf.optBoolean("bury", true);
         // loop through and remove from queues
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().query(
+        try (Cursor cur = mCol.getDb().query(
                     "select id, queue from cards where nid=? and id!=? "+
-                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=" + Consts.QUEUE_TYPE_REV + " and due<=?))", card.getNid(), card.getId(), mToday);
+                    "and (queue=" + Consts.QUEUE_TYPE_NEW + " or (queue=" + Consts.QUEUE_TYPE_REV + " and due<=?))", card.getNid(), card.getId(), mToday)) {
             while (cur.moveToNext()) {
                 long cid = cur.getLong(0);
                 int queue = cur.getInt(1);
@@ -2548,10 +2522,6 @@ public class SchedV2 extends AbstractSched {
                 // even if burying disabled, we still discard to give
                 // same-day spacing
                 queue_object.remove(cid);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         // then bury
@@ -2661,17 +2631,11 @@ public class SchedV2 extends AbstractSched {
         }
         // reorder cards
         ArrayList<Object[]> d = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase()
-                    .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids, null);
+        try (Cursor cur = mCol.getDb().getDatabase()
+                    .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids, null)) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(1);
                 d.add(new Object[] { due.get(nid), now, mCol.usn(), cur.getLong(0) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         mCol.getDb().executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?", d);
@@ -2884,9 +2848,7 @@ public class SchedV2 extends AbstractSched {
         double relrnTime;
 
         if (reload || mEtaCache[0] == -1) {
-            Cursor cur = null;
-            try {
-                cur = mCol
+            try (Cursor cur = mCol
                         .getDb()
                         .query("select "
                                 + "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, "
@@ -2894,7 +2856,7 @@ public class SchedV2 extends AbstractSched {
                                 + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
                                 + "from revlog where id > "
                                 + "?",
-                               (mCol.getSched().getDayCutoff() - (10 * SECONDS_PER_DAY)) * 1000);
+                               (mCol.getSched().getDayCutoff() - (10 * SECONDS_PER_DAY)) * 1000)) {
                 if (!cur.moveToFirst()) {
                     return -1;
                 }
@@ -2910,10 +2872,6 @@ public class SchedV2 extends AbstractSched {
                     cur.close();
                 }
 
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
             }
 
             // If the collection has no revlog data to work with, assume a 20 second average rep for that type

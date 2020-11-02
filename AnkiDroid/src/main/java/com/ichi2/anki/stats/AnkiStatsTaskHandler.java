@@ -211,22 +211,16 @@ public class AnkiStatsTaskHandler {
                 //eventually put this in Stats (in desktop it is not though)
                 int cards;
                 int minutes;
-                Cursor cur = null;
                 String query = "select count(), sum(time)/1000 from revlog where id > " + ((collection.getSched().getDayCutoff() - SECONDS_PER_DAY) * 1000);
                 Timber.d("DeckPreviewStatistics query: %s", query);
 
-                try {
-                    cur = collection.getDb()
+                try (Cursor cur = collection.getDb()
                             .getDatabase()
-                            .query(query, null);
+                            .query(query, null)) {
 
                     cur.moveToFirst();
                     cards = cur.getInt(0);
                     minutes = (int) Math.round(cur.getInt(1) / 60.0);
-                } finally {
-                    if (cur != null && !cur.isClosed()) {
-                        cur.close();
-                    }
                 }
                 Resources res = mTextView.getResources();
                 final String span = res.getQuantityString(R.plurals.in_minutes, minutes, minutes);
