@@ -69,9 +69,7 @@ public class Tags {
 
     public void load(String json) {
         JSONObject tags = new JSONObject(json);
-        Iterator<?> i = tags.keys();
-        while (i.hasNext()) {
-            String t = (String) i.next();
+        for (String t : tags) {
             mTags.put(t, tags.getInt(t));
         }
         mChanged = false;

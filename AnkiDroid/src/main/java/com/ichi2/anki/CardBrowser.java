@@ -1032,9 +1032,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
             HashMap<String, String> savedFilters = new HashMap<>();
             if (savedFiltersObj != null) {
-                Iterator<String> it = savedFiltersObj.keys();
-                while (it.hasNext()) {
-                    String searchName = it.next();
+                for (String searchName : savedFiltersObj) {
                     savedFilters.put(searchName, savedFiltersObj.optString(searchName));
                 }
             }
