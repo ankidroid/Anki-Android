@@ -245,7 +245,7 @@ If this issue appeared from a shared deck which was loaded into AnkiDroid, then 
 
 If you're syncing a deck via AnkiWeb Sync:
 
-Please check if the media works correctly on both AnkiWeb. 
+Please check if the media works correctly on AnkiWeb. 
 * If the media does not work on AnkiWeb, then there was a problem with uploading the media. If the upload was from Anki Desktop, please read the Anki Desktop manual, or ask on the [Anki Desktop support site](http://ankisrs.net/docs/help.html) for help resolving this problem.
 * If the media works on AnkiWeb, then
    * Use a file manager (see below) to ensure that the file exists in `AnkiDroid/collection.media`
