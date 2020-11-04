@@ -632,7 +632,7 @@ public class Finder {
 
 
     private String _findModel(String val) {
-        LinkedList<Long> ids = new LinkedList<>();
+        List<Long> ids = new ArrayList<>();
         for (JSONObject m : mCol.getModels().all()) {
             String modelName = m.getString("name");
             modelName = Normalizer.normalize(modelName, Normalizer.Form.NFC);
@@ -773,7 +773,7 @@ public class Finder {
             // nothing has that field
             return null;
         }
-        LinkedList<Long> nids = new LinkedList<>();
+        List<Long> nids = new ArrayList<>();
         try (Cursor cur = mCol.getDb().query(
                 "select id, mid, flds from notes where mid in " +
                         Utils.ids2str(mods.keySet()) +
