@@ -805,10 +805,8 @@ public class SchedV2 extends AbstractSched {
                      * front of the queue contains distinct card.
                  */
                     // fill the queue with the current did
-                try (Cursor cur = mCol.getDb().query("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?", did, id, lim)) {
-                    while (cur.moveToNext()) {
-                        mNewQueue.add(cur.getLong(0));
-                    }
+                for (long cid : mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?", did, id, lim)) {
+                    mNewQueue.add(cid);
                 }
                 if (!mNewQueue.isEmpty()) {
                     // Note: libanki reverses mNewQueue and returns the last element in _getNewCard().
@@ -1091,12 +1089,10 @@ public class SchedV2 extends AbstractSched {
                  * simulate _getLrnDayCard which did remove the card
                  * from the queue.
                  */
-            try (Cursor cur = mCol.getDb().query(
+            for (long cid : mCol.getDb().queryLongList(
                                 "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? and id != ? LIMIT ?",
                                 did, mToday, currentCardId(), mQueueLimit)) {
-                while (cur.moveToNext()) {
-                    mLrnDayQueue.add(cur.getLong(0));
-                }
+                mLrnDayQueue.add(cid);
             }
             if (!mLrnDayQueue.isEmpty()) {
                 // order
