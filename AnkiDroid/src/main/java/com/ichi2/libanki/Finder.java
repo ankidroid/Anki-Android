@@ -776,7 +776,7 @@ public class Finder {
         LinkedList<Long> nids = new LinkedList<>();
         try (Cursor cur = mCol.getDb().query(
                 "select id, mid, flds from notes where mid in " +
-                        Utils.ids2str(new LinkedList<>(mods.keySet())) +
+                        Utils.ids2str(mods.keySet()) +
                         " and flds like ? escape '\\'",  "%" + sqlVal + "%")) {
             /*
              * Here we use the sqlVal expression, that is required for LIKE syntax in sqllite.
