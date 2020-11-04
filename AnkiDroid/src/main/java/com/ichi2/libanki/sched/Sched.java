@@ -42,6 +42,7 @@ import com.ichi2.utils.SyncStatus;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -373,7 +374,6 @@ public class Sched extends SchedV2 {
                 mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
             // as it arrives sorted by did first, we need to sort it
-            mLrnQueue.sort();
             return !mLrnQueue.isEmpty();
         }
     }
@@ -459,7 +459,7 @@ public class Sched extends SchedV2 {
                     long smallestDue = mLrnQueue.getFirstDue();
                     card.setDue(Math.max(card.getDue(), smallestDue + 1));
                 }
-                _sortIntoLrn(card.getDue(), card.getId());
+                mLrnQueue.add(card.getDue(), card.getId());
             } else {
                 // the card is due in one or more days, so we need to use the day learn queue
                 long ahead = ((card.getDue() - mDayCutoff) / SECONDS_PER_DAY) + 1;
@@ -686,6 +686,7 @@ public class Sched extends SchedV2 {
             int lim = Math.min(mQueueLimit, _deckRevLimit(did, false));
             if (lim != 0) {
                 mRevQueue.clear();
+                List<Long> revQueue = new ArrayList<>(lim);
                 // fill the queue with the current did
                 String idName = (allowSibling) ? "id": "nid";
                 long id = (allowSibling) ? currentCardId(): currentCardNid();
@@ -702,24 +703,20 @@ public class Sched extends SchedV2 {
                      * queue is not empty if it should not be empty (important for the conditional belows), but the
                      * front of the queue contains distinct card.
                      */
-                    mRevQueue.add(cid);
+                    revQueue.add(cid);
                 }
-                if (!mRevQueue.isEmpty()) {
+                if (!revQueue.isEmpty()) {
                     // ordering
-                    if (mCol.getDecks().get(did).getInt("dyn") != 0) {
+                    boolean shuffle = mCol.getDecks().get(did).getInt("dyn") == 0;
                         // dynamic decks need due order preserved
                         // Note: libanki reverses mRevQueue and returns the last element in _getRevCard().
                         // AnkiDroid differs by leaving the queue intact and returning the *first* element
                         // in _getRevCard().
-                    } else {
-                        Random r = new Random();
-                        r.setSeed(mToday);
-                        mRevQueue.shuffle(r);
-                    }
                     // is the current did empty?
-                    if (mRevQueue.size() < lim) {
+                    if (revQueue.size() < lim) {
                         mRevDids.remove();
                     }
+                    mRevQueue = new SimpleCardQueue(this, revQueue, shuffle);
                     return true;
                 }
             }
@@ -788,7 +785,7 @@ public class Sched extends SchedV2 {
         if (card.getDue() < mDayCutoff) {
             mLrnCount += card.getLeft() / 1000;
             card.setQueue(Consts.QUEUE_TYPE_LRN);
-            _sortIntoLrn(card.getDue(), card.getId());
+            mLrnQueue.add(card.getDue(), card.getId());
         } else {
             // day learn queue
             long ahead = ((card.getDue() - mDayCutoff) / SECONDS_PER_DAY) + 1;

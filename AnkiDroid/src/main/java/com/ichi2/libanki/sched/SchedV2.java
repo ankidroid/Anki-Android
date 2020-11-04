@@ -106,13 +106,13 @@ public class SchedV2 extends AbstractSched {
     protected final @NonNull double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
 
     // Queues
-    protected final @NonNull SimpleCardQueue mNewQueue = new SimpleCardQueue(this);
+    protected @NonNull SimpleCardQueue mNewQueue = new SimpleCardQueue(this);
 
 
 
-    protected final @NonNull LrnCardQueue mLrnQueue = new LrnCardQueue(this);
-    protected final @NonNull SimpleCardQueue mLrnDayQueue = new SimpleCardQueue(this);
-    protected final @NonNull SimpleCardQueue mRevQueue = new SimpleCardQueue(this);
+    protected @NonNull LrnCardQueue mLrnQueue = new LrnCardQueue(this);
+    protected @NonNull SimpleCardQueue mLrnDayQueue = new SimpleCardQueue(this);
+    protected @NonNull SimpleCardQueue mRevQueue = new SimpleCardQueue(this);
 
     private @NonNull java.util.Queue<Long> mNewDids = new ArrayDeque<>();
     protected @NonNull java.util.Queue<Long> mLrnDids = new ArrayDeque<>();
@@ -846,7 +846,7 @@ public class SchedV2 extends AbstractSched {
             long did = mNewDids.peek();
             int lim = Math.min(mQueueLimit, _deckNewLimit(did, true));
             if (lim != 0) {
-                mNewQueue.clear();
+                List<Long> newQueue = new ArrayList<>(lim);
                 String idName = (allowSibling) ? "id": "nid";
                 long id = (allowSibling) ? currentCardId(): currentCardNid();
                     /* Difference with upstream: we take current card into account.
@@ -860,12 +860,13 @@ public class SchedV2 extends AbstractSched {
                  */
                     // fill the queue with the current did
                 for (long cid : mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " AND " + idName + "!= ? ORDER BY due, ord LIMIT ?", did, id, lim)) {
-                    mNewQueue.add(cid);
+                    newQueue.add(cid);
                 }
-                if (!mNewQueue.isEmpty()) {
+                if (!newQueue.isEmpty()) {
                     // Note: libanki reverses mNewQueue and returns the last element in _getNewCard().
                     // AnkiDroid differs by leaving the queue intact and returning the *first* element
                     // in _getNewCard().
+                    mNewQueue = new SimpleCardQueue(this, newQueue, false);
                     return true;
                 }
             }
@@ -1087,8 +1088,6 @@ public class SchedV2 extends AbstractSched {
             while (cur.moveToNext()) {
                 mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
-            // as it arrives sorted by did first, we need to sort it
-            mLrnQueue.sort();
             return !mLrnQueue.isEmpty();
         }
     }
@@ -1136,7 +1135,7 @@ public class SchedV2 extends AbstractSched {
         while (!mLrnDids.isEmpty()) {
             long did = mLrnDids.peek();
             // fill the queue with the current did
-            mLrnDayQueue.clear();
+            List<Long> lrnDayQueue = new ArrayList<>(mQueueLimit);
                 /* Difference with upstream:
                  * Current card can't come in the queue.
                  *
@@ -1150,13 +1149,11 @@ public class SchedV2 extends AbstractSched {
             for (long cid : mCol.getDb().queryLongList(
                                 "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? and id != ? LIMIT ?",
                                 did, mToday, currentCardId(), mQueueLimit)) {
-                mLrnDayQueue.add(cid);
+                lrnDayQueue.add(cid);
             }
-            if (!mLrnDayQueue.isEmpty()) {
+            if (!lrnDayQueue.isEmpty()) {
                 // order
-                Random r = new Random();
-                r.setSeed(mToday);
-                mLrnDayQueue.shuffle(r);
+                mLrnDayQueue = new SimpleCardQueue(this, lrnDayQueue, true);
                 // is the current did empty?
                 if (mLrnDayQueue.size() < mQueueLimit) {
                     mLrnDids.remove();
@@ -1277,7 +1274,7 @@ public class SchedV2 extends AbstractSched {
                     long smallestDue = mLrnQueue.getFirstDue();
                     card.setDue(Math.max(card.getDue(), smallestDue + 1));
                 }
-                _sortIntoLrn(card.getDue(), card.getId());
+                mLrnQueue.add(card.getDue(), card.getId());
             }
         } else {
             // the card is due in one or more days, so we need to use the day learn queue
@@ -1598,7 +1595,7 @@ public class SchedV2 extends AbstractSched {
         }
         int lim = Math.min(mQueueLimit, _currentRevLimit(true));
         if (lim != 0) {
-            mRevQueue.clear();
+            List<Long> revQueue = new ArrayList<>(lim);
             // fill the queue with the current did
             String idName = (allowSibling) ? "id": "nid";
             long id = (allowSibling) ? currentCardId(): currentCardNid();
@@ -1616,14 +1613,15 @@ public class SchedV2 extends AbstractSched {
                                + " ORDER BY due, random()  LIMIT ?",
                                mToday, id, lim)) {
                 while (cur.moveToNext()) {
-                    mRevQueue.add(cur.getLong(0));
+                    revQueue.add(cur.getLong(0));
                 }
             }
-            if (!mRevQueue.isEmpty()) {
+            if (!revQueue.isEmpty()) {
                 // preserve order
                 // Note: libanki reverses mRevQueue and returns the last element in _getRevCard().
                 // AnkiDroid differs by leaving the queue intact and returning the *first* element
                 // in _getRevCard().
+                mRevQueue = new SimpleCardQueue(this, revQueue, false);
                 return true;
             }
         }
@@ -3036,21 +3034,6 @@ public class SchedV2 extends AbstractSched {
             mRevCount--;
             break;
         }
-    }
-
-
-    /**
-     * Sorts a card into the lrn queue LIBANKI: not in libanki
-     */
-    protected void _sortIntoLrn(long due, long id) {
-        ListIterator<LrnCard> i = mLrnQueue.listIterator();
-        while (i.hasNext()) {
-            if (i.next().getDue() > due) {
-                i.previous();
-                break;
-            }
-        }
-        i.add(new LrnCard(mCol, due, id));
     }
 
 

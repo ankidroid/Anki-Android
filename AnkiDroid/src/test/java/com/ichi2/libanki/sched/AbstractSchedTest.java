@@ -38,7 +38,9 @@ import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameter;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
 import static com.ichi2.async.CollectionTask.nonTaskUndo;
@@ -132,9 +134,10 @@ public class AbstractSchedTest extends RobolectricTest {
     public void testCardQueue() {
         Collection col = getCol();
         SchedV2 sched = (SchedV2) col.getSched();
-        SimpleCardQueue queue = new SimpleCardQueue(sched);
-        assertThat(queue.size(), is(0));
+        SimpleCardQueue cardQueue = new SimpleCardQueue(sched);
+        assertThat(cardQueue.size(), is(0));
         final int nbCard = 6;
+        List<Long> queue = new ArrayList<>(nbCard);
         long[] cids = new long[nbCard];
         for (int i = 0; i < nbCard; i++) {
             Note note = addNoteUsingBasicModel("foo", "bar");
@@ -143,17 +146,18 @@ public class AbstractSchedTest extends RobolectricTest {
             cids[i] = cid;
             queue.add(cid);
         }
-        assertThat(queue.size(), is(nbCard));
-        assertEquals(cids[0], queue.removeFirstCard().getId());
-        assertThat(queue.size(), is(nbCard - 1));
-        queue.remove(cids[1]);
-        assertThat(queue.size(), is(nbCard - 2));
-        queue.remove(cids[3]);
-        assertThat(queue.size(), is(nbCard - 3));
-        assertEquals(cids[2], queue.removeFirstCard().getId());
-        assertThat(queue.size(), is(nbCard - 4));
-        assertEquals(cids[4], queue.removeFirstCard().getId());
-        assertThat(queue.size(), is(nbCard - 5));
+        cardQueue = new SimpleCardQueue(sched, queue, false);
+        assertThat(cardQueue.size(), is(nbCard));
+        assertEquals(cids[0], cardQueue.removeFirstCard().getId());
+        assertThat(cardQueue.size(), is(nbCard - 1));
+        cardQueue.remove(cids[1]);
+        assertThat(cardQueue.size(), is(nbCard - 2));
+        cardQueue.remove(cids[3]);
+        assertThat(cardQueue.size(), is(nbCard - 3));
+        assertEquals(cids[2], cardQueue.removeFirstCard().getId());
+        assertThat(cardQueue.size(), is(nbCard - 4));
+        assertEquals(cids[4], cardQueue.removeFirstCard().getId());
+        assertThat(cardQueue.size(), is(nbCard - 5));
     }
 
     @Test

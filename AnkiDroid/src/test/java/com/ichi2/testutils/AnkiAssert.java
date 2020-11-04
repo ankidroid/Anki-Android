@@ -13,6 +13,7 @@ import org.junit.Assert;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 /** Assertion methods that aren't currently supported by our dependencies */
@@ -27,8 +28,8 @@ public class AnkiAssert {
         }
     }
 
-    public static <T> void assertEqualsArrayList(T[] ar, List<T> l) {
-        assertEquals(Arrays.asList(ar), l);
+    public static <T> void assertEqualsArrayList(T[] ar, java.util.Collection<T> l) {
+        assertArrayEquals(ar, l.toArray());
     }
 
 
