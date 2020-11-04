@@ -515,8 +515,9 @@ public class Anki2Importer extends Importer {
          * Python: (guid, ord) -> cid
          * Java: guid -> ord -> cid
          */
-        Map<String, Map<Integer, Long>> mCards = new HashMap<>();
-        Set<Long> existing = new HashSet<>();
+        int nbCard = mDst.cardCount();
+        Map<String, Map<Integer, Long>> mCards = new HashMap<>(nbCard);
+        Set<Long> existing = new HashSet<>(nbCard);
         try (Cursor cur = mDst.getDb().query(
                     "select f.guid, c.ord, c.id from cards c, notes f " +
                     "where c.nid = f.id")) {
@@ -535,10 +536,11 @@ public class Anki2Importer extends Importer {
             }
         }
         // loop through src
-        List<Object[]> cards = new ArrayList<>();
+        int nbCardsToImport = mSrc.cardCount();
+        List<Object[]> cards = new ArrayList<>(nbCardsToImport);
         int totalCardCount = 0;
         final int thresExecCards = 1000;
-        List<Object[]> revlog = new ArrayList<>();
+        List<Object[]> revlog = new ArrayList<>(mSrc.getSched().logCount());
         int totalRevlogCount = 0;
         final int thresExecRevlog = 1000;
         int usn = mDst.usn();

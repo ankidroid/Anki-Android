@@ -117,7 +117,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
 
     public DeckAdapter(LayoutInflater layoutInflater, Context context) {
         mLayoutInflater = layoutInflater;
-        mDeckList = new ArrayList<>();
+        mDeckList = new ArrayList<>((mCol == null) ? 10 : mCol.getDecks().count());
         // Get the colors from the theme attributes
         int[] attrs = new int[] {
                 R.attr.zeroCountColor,
@@ -382,7 +382,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
 
 
     private class DeckFilter extends Filter {
-        private final ArrayList<AbstractDeckTreeNode> mFilteredDecks = new ArrayList<>();
+        private final ArrayList<AbstractDeckTreeNode> mFilteredDecks = new ArrayList<>(mCol.getDecks().count());
         private DeckFilter() {
             super();
         }

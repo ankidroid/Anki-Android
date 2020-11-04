@@ -868,8 +868,12 @@ public class Syncer {
         for (int i = 0; i < data.length(); i++) {
             ids[i] = data.getJSONArray(i).getLong(0);
         }
-        HashMap<Long, Long> lmods = new HashMap<>();
         Pair<String, Object[]> limAndArg = usnLim();
+        Map<Long, Long> lmods = new HashMap<>(mCol
+                    .getDb()
+                    .queryScalar(
+                            "SELECT count() FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND "
+                                    +  limAndArg.first, limAndArg.second));
         try (Cursor cur = mCol
                     .getDb()
                     .query(

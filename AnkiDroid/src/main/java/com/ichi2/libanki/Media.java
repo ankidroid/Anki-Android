@@ -697,7 +697,7 @@ public class Media {
 
 
     private Pair<List<String>, List<String>> _changes() {
-        Map<String, Object[]> cache = new HashMap<>();
+        Map<String, Object[]> cache = new HashMap<>(mDb.queryScalar("SELECT count() FROM media WHERE csum IS NOT NULL"));
         try (Cursor cur = mDb.query("select fname, csum, mtime from media where csum is not null")) {
             while (cur.moveToNext()) {
                 String name = cur.getString(0);

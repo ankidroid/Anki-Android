@@ -1439,6 +1439,11 @@ public class SchedV2 extends AbstractSched {
         log(card.getId(), mCol.usn(), ease, ivl, lastIvl, card.getFactor(), card.timeTaken(), type);
     }
 
+    @Override
+    public int logCount() {
+        return mCol.getDb().queryScalar("SELECT count() FROM revlog");
+    }
+
 
     protected void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
         try {

@@ -830,7 +830,7 @@ public class Collection {
         ArrayList<Object[]> data = new ArrayList<>();
         long ts = getTime().maxID(mDb);
         long now = getTime().intTime();
-        ArrayList<Long> rem = new ArrayList<>();
+        ArrayList<Long> rem = new ArrayList<>(mDb.queryScalar("SELECT count() FROM notes where id in " + snids));
         int usn = usn();
         try (Cursor cur = mDb.query("SELECT id, flds FROM notes WHERE id IN " + snids)) {
             while (cur.moveToNext()) {
@@ -1051,7 +1051,7 @@ public class Collection {
      */
 
     private ArrayList<Object[]> _fieldData(String snids) {
-        ArrayList<Object[]> result = new ArrayList<>();
+        ArrayList<Object[]> result = new ArrayList<>(mDb.queryScalar("SELECT count() FROM notes WHERE id IN" + snids));
         try (Cursor cur = mDb.query("SELECT id, mid, flds FROM notes WHERE id IN " + snids)) {
             while (cur.moveToNext()) {
                 result.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getString(2) });

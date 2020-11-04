@@ -513,4 +513,9 @@ public abstract class AbstractSched {
     /** @return The button to press to enter "good" on a new card. */
     @VisibleForTesting
     public abstract @Consts.BUTTON_TYPE int getGoodNewButton();
+
+    /**
+     * @return The number of revlog in the collection
+     */
+    public abstract int logCount();
 }
