@@ -291,9 +291,6 @@ public class NoteImporter extends Importer {
         if (!processFields(n)) {
             return null;
         }
-        for (Map.Entry<Integer, ForeignCard> a : n.cards.entrySet()) {
-            _cards.add(new Triple(id, a.getKey(), a.getValue()));
-        }
         return new Object[] {
                 id,
                 guid64(),
@@ -467,7 +464,6 @@ public class NoteImporter extends Importer {
         public final List<String> mFields = new ArrayList<>();
         public final List<String> mTags = new ArrayList<>();
         public Object deck = new Object();
-        public final Map<Integer, ForeignCard> cards = new HashMap<>();
         public String fieldsStr = "";
     }
 
