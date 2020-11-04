@@ -42,13 +42,14 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Queue;
 
 import androidx.annotation.NonNull;
 import okhttp3.Response;
@@ -83,7 +84,7 @@ public class Syncer {
     private boolean mLNewer;
     private String mSyncMsg;
 
-    private LinkedList<String> mTablesLeft;
+    private Queue<String> mTablesLeft;
     private Cursor mCursor;
 
 
@@ -528,7 +529,7 @@ public class Syncer {
      */
 
     private void prepareToChunk() {
-        mTablesLeft = new LinkedList<>();
+        mTablesLeft = new ArrayDeque<>();
         mTablesLeft.add("revlog");
         mTablesLeft.add("cards");
         mTablesLeft.add("notes");
@@ -575,7 +576,7 @@ public class Syncer {
         int lim = 250;
         List<Integer> colTypes = null;
         while (!mTablesLeft.isEmpty() && lim > 0) {
-            String curTable = mTablesLeft.getFirst();
+            String curTable = mTablesLeft.peek();
             if (mCursor == null) {
                 mCursor = cursorForTable(curTable);
             }
@@ -605,7 +606,7 @@ public class Syncer {
             }
             if (fetched != lim) {
                 // table is empty
-                mTablesLeft.removeFirst();
+                mTablesLeft.remove();
                 mCursor.close();
                 mCursor = null;
                 // if we're the client, mark the objects as having been sent
