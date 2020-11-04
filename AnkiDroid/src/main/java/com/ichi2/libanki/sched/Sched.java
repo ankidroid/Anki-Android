@@ -683,7 +683,7 @@ public class Sched extends SchedV2 {
                 // fill the queue with the current did
                 String idName = (allowSibling) ? "id": "nid";
                 long id = (allowSibling) ? currentCardId(): currentCardNid();
-                try (Cursor cur = mCol.getDb().query(
+                for (long cid: mCol.getDb().queryLongList(
                         "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
                                 + " AND " + idName + " != ? LIMIT ?",
                         did, mToday, id, lim)) {
@@ -696,9 +696,7 @@ public class Sched extends SchedV2 {
                      * queue is not empty if it should not be empty (important for the conditional belows), but the
                      * front of the queue contains distinct card.
                      */
-                    while (cur.moveToNext()) {
-                        mRevQueue.add(cur.getLong(0));
-                    }
+                    mRevQueue.add(cid);
                 }
                 if (!mRevQueue.isEmpty()) {
                     // ordering
