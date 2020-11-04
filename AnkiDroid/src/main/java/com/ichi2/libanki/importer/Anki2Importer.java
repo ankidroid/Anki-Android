@@ -515,7 +515,7 @@ public class Anki2Importer extends Importer {
          * Java: guid -> ord -> cid
          */
         Map<String, Map<Integer, Long>> mCards = new HashMap<>();
-        Map<Long, Boolean> existing = new HashMap<>();
+        Set<Long> existing = new HashSet<>();
         try (Cursor cur = mDst.getDb().query(
                     "select f.guid, c.ord, c.id from cards c, notes f " +
                     "where c.nid = f.id")) {
@@ -523,7 +523,7 @@ public class Anki2Importer extends Importer {
                 String guid = cur.getString(0);
                 int ord = cur.getInt(1);
                 long cid = cur.getLong(2);
-                existing.put(cid, true);
+                existing.add(cid);
                 if (mCards.containsKey(guid)) {
                     mCards.get(guid).put(ord, cid);
                 } else {
@@ -586,10 +586,10 @@ public class Anki2Importer extends Importer {
                     continue;
                 }
                 // ensure the card id is unique
-                while (existing.containsKey(cid)) {
+                while (existing.contains(cid)) {
                     cid += 999;
                 }
-                existing.put(cid, true);
+                existing.add(cid);
                 // update cid, nid, etc
                 long nid = mNotes.get(guid).mNid;
                 did = _did(did);
