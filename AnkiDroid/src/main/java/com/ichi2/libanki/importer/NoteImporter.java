@@ -252,8 +252,6 @@ public class NoteImporter extends Importer {
         }
 
 
-        // apply scheduling updates
-        updateCards();
         // we randomize or order here, to ensure that siblings
         // have the same due#
         long did = mCol.getDecks().selected();
@@ -392,8 +390,6 @@ public class NoteImporter extends Importer {
     }
 
 
-    private void updateCards() {
-    }
 
     /** Not in libAnki */
 
