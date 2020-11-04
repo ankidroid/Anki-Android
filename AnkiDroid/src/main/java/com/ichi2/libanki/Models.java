@@ -882,7 +882,6 @@ public class Models {
     }
 
     private void _changeNote(long nid, Model newModel, Map<Integer, Integer> map) {
-        List<Object[]> d = new ArrayList<>();
         int nfields = newModel.getJSONArray("flds").length();
         long mid = newModel.getLong("id");
         String sflds = mCol.getDb().queryString("select flds from notes where id = ?", nid);
@@ -901,8 +900,7 @@ public class Models {
             }
         }
         String joinedFlds = Utils.joinFields(flds2.toArray(new String[flds2.size()]));
-        d.add(new Object[] {joinedFlds, mid, mCol.getTime().intTime(), mCol.usn(), nid});
-        mCol.getDb().executeMany("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", d);
+        mCol.getDb().execute("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", joinedFlds, mid, mCol.getTime().intTime(), mCol.usn(), nid);
         mCol.updateFieldCache(new long[] {nid});
     }
 
