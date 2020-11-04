@@ -52,6 +52,7 @@ import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -113,8 +114,8 @@ public class SchedV2 extends AbstractSched {
     protected final @NonNull SimpleCardQueue mLrnDayQueue = new SimpleCardQueue(this);
     protected final @NonNull SimpleCardQueue mRevQueue = new SimpleCardQueue(this);
 
-    private @NonNull LinkedList<Long> mNewDids = new LinkedList<>();
-    protected @NonNull LinkedList<Long> mLrnDids = new LinkedList<>();
+    private @NonNull java.util.Queue<Long> mNewDids = new ArrayDeque<>();
+    protected @NonNull java.util.Queue<Long> mLrnDids = new ArrayDeque<>();
 
     // Not in libanki
     protected @Nullable WeakReference<Activity> mContextReference;
@@ -794,7 +795,7 @@ public class SchedV2 extends AbstractSched {
     }
 
     private void _resetNewQueue() {
-        mNewDids = new LinkedList<>(mCol.getDecks().active());
+        mNewDids = mCol.getDecks().active();
         mNewQueue.clear();
         _updateNewCardRatio();
     }
@@ -842,7 +843,7 @@ public class SchedV2 extends AbstractSched {
             return false;
         }
         while (!mNewDids.isEmpty()) {
-            long did = mNewDids.getFirst();
+            long did = mNewDids.peek();
             int lim = Math.min(mQueueLimit, _deckNewLimit(did, true));
             if (lim != 0) {
                 mNewQueue.clear();
@@ -1133,7 +1134,7 @@ public class SchedV2 extends AbstractSched {
             return true;
         }
         while (!mLrnDids.isEmpty()) {
-            long did = mLrnDids.getFirst();
+            long did = mLrnDids.peek();
             // fill the queue with the current did
             mLrnDayQueue.clear();
                 /* Difference with upstream:
@@ -2317,7 +2318,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private boolean haveBuriedSiblings(@NonNull List<Long> allDecks) {
+    private boolean haveBuriedSiblings(@NonNull java.util.Collection<Long> allDecks) {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
         int cnt = mCol.getDb().queryScalar(
@@ -2331,7 +2332,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    private boolean haveManuallyBuried(@NonNull List<Long> allDecks) {
+    private boolean haveManuallyBuried(@NonNull java.util.Collection<Long> allDecks) {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
         int cnt = mCol.getDb().queryScalar(

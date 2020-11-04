@@ -36,6 +36,7 @@ import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
 
 import java.text.Normalizer;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,6 +46,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
@@ -954,9 +956,9 @@ public class Decks {
     /**
      * The currently active dids. Make sure to copy before modifying.
      */
-    public LinkedList<Long> active() {
+    public Queue<Long> active() {
         JSONArray activeDecks = mCol.getConf().getJSONArray("activeDecks");
-        LinkedList<Long> result = new LinkedList<>();
+        Queue<Long> result = new ArrayDeque<>(activeDecks.length());
         addAll(result, activeDecks.longIterable());
         return result;
     }

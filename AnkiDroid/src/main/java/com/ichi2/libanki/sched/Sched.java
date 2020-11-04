@@ -40,9 +40,9 @@ import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
 
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -69,7 +69,7 @@ public class Sched extends SchedV2 {
     private static final int[] FACTOR_ADDITION_VALUES = { -150, 0, 150 };
 
     // Queues
-    private @NonNull LinkedList<Long> mRevDids = new LinkedList<>();
+    private @NonNull java.util.Queue<Long> mRevDids = new ArrayDeque<>();
 
     /**
      * queue types: 0=new/cram, 1=lrn, 2=rev, 3=day lrn, -1=suspended, -2=buried
@@ -193,7 +193,7 @@ public class Sched extends SchedV2 {
         unburyCardsForDeck(mCol.getDecks().active());
     }
 
-    private void unburyCardsForDeck(@NonNull List<Long> allDecks) {
+    private void unburyCardsForDeck(@NonNull java.util.Collection<Long> allDecks) {
         // Refactored to allow unburying an arbitrary deck
         String sids = Utils.ids2str(allDecks);
         mCol.log(mCol.getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet() + " and did in " + sids));
@@ -682,7 +682,7 @@ public class Sched extends SchedV2 {
             return false;
         }
         while (!mRevDids.isEmpty()) {
-            long did = mRevDids.getFirst();
+            long did = mRevDids.peek();
             int lim = Math.min(mQueueLimit, _deckRevLimit(did, false));
             if (lim != 0) {
                 mRevQueue.clear();
@@ -1124,7 +1124,7 @@ public class Sched extends SchedV2 {
         return haveBuried(mCol.getDecks().active());
     }
 
-    private boolean haveBuried(@NonNull List<Long> allDecks) {
+    private boolean haveBuried(@NonNull java.util.Collection<Long> allDecks) {
         // Refactored to allow querying an arbitrary deck
         String sdids = Utils.ids2str(allDecks);
         int cnt = mCol.getDb().queryScalar(
