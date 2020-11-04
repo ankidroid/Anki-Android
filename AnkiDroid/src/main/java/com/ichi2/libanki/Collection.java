@@ -59,16 +59,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.Set;
@@ -1314,7 +1317,7 @@ public class Collection {
     @VisibleForTesting
     public @Nullable DismissType undoType() {
         if (mUndo.size() > 0) {
-            return mUndo.getLast().getDismissType();
+            return mUndo.peekLast().getDismissType();
         }
         return null;
     }
@@ -1339,7 +1342,7 @@ public class Collection {
 
     public void markUndo(@NonNull Undoable undo) {
         Timber.d("markUndo() of type %s", undo.getDismissType());
-        mUndo.add(undo);
+        mUndo.addLast(undo);
         while (mUndo.size() > UNDO_SIZE_MAX) {
             mUndo.removeFirst();
         }
