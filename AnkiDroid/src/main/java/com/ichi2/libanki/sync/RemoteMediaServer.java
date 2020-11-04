@@ -75,7 +75,7 @@ public class RemoteMediaServer extends HttpSyncer {
 
     public JSONObject begin() throws UnknownHttpResponseException, MediaSyncException {
         try {
-            mPostVars = new HashMap<>();
+            mPostVars = new HashMap<>(2);
             mPostVars.put("k", mHKey);
             mPostVars.put("v",
                     String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
@@ -94,7 +94,7 @@ public class RemoteMediaServer extends HttpSyncer {
     // args: lastUsn
     public JSONArray mediaChanges(int lastUsn) throws UnknownHttpResponseException, MediaSyncException {
         try {
-            mPostVars = new HashMap<>();
+            mPostVars = new HashMap<>(1);
             mPostVars.put("sk", mSKey);
 
             Response resp = super.req("mediaChanges",

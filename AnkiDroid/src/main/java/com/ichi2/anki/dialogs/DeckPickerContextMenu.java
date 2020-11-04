@@ -96,7 +96,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
 
     private HashMap<Integer, String> getKeyValueMap() {
         Resources res = getResources();
-        HashMap<Integer, String> keyValueMap = new HashMap<>();
+        HashMap<Integer, String> keyValueMap = new HashMap<>(9);
         keyValueMap.put(CONTEXT_MENU_RENAME_DECK, res.getString(R.string.rename_deck));
         keyValueMap.put(CONTEXT_MENU_DECK_OPTIONS, res.getString(R.string.menu__deck_options));
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY, res.getString(R.string.custom_study));
@@ -118,7 +118,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     int[] getListIds() {
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         long did = getArguments().getLong("did");
-        ArrayList<Integer> itemIds = new ArrayList<>();
+        ArrayList<Integer> itemIds = new ArrayList<>(9);
         if (col.getDecks().isDyn(did)) {
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_REBUILD);
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_EMPTY);

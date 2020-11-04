@@ -466,7 +466,7 @@ public class SchedV2 extends AbstractSched {
      */
     protected int _walkingCount(@NonNull LimitMethod limFn, @NonNull CountMethod cntFn, @Nullable CancelListener cancelListener) {
         int tot = 0;
-        HashMap<Long, Integer> pcounts = new HashMap<>();
+        HashMap<Long, Integer> pcounts = new HashMap<>(mCol.getDecks().count());
         // for each of the active decks
         for (long did : mCol.getDecks().active()) {
             if (isCancelled(cancelListener)) return -1;
@@ -521,8 +521,8 @@ public class SchedV2 extends AbstractSched {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         ArrayList<Deck> decks = mCol.getDecks().allSorted();
-        HashMap<String, Integer[]> lims = new HashMap<>();
-        ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>();
+        HashMap<String, Integer[]> lims = new HashMap<>(decks.size());
+        ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(decks.size());
         Decks.Node childMap = mCol.getDecks().childMap();
         for (Deck deck : decks) {
             if (isCancelled(collectionTask)) {
@@ -564,9 +564,10 @@ public class SchedV2 extends AbstractSched {
     public @NonNull List<DeckTreeNode> quickDeckDueTree() {
         // Similar to deckDueTree, ignoring the numbers
 
+        ArrayList<Deck> decks = mCol.getDecks().allSorted();
         // Similar to deckDueList
         ArrayList<DeckTreeNode> data = new ArrayList<>();
-        for (JSONObject deck : mCol.getDecks().allSorted()) {
+        for (JSONObject deck : decks) {
             DeckTreeNode g = new DeckTreeNode(mCol, deck.getString("name"), deck.getLong("id"));
             data.add(g);
         }
@@ -1992,7 +1993,7 @@ public class SchedV2 extends AbstractSched {
 
     protected void _moveToDyn(long did, @NonNull List<Long> ids, int start) {
         Deck deck = mCol.getDecks().get(did);
-        ArrayList<Object[]> data = new ArrayList<>();
+        ArrayList<Object[]> data = new ArrayList<>(ids.size());
         int u = mCol.usn();
         int due = start;
         for (Long id : ids) {
@@ -2626,7 +2627,7 @@ public class SchedV2 extends AbstractSched {
      * @param imax The maximum interval (inclusive)
      */
     public void reschedCards(@NonNull long[] ids, int imin, int imax) {
-        ArrayList<Object[]> d = new ArrayList<>();
+        ArrayList<Object[]> d = new ArrayList<>(ids.length);
         int t = mToday;
         long mod = getTime().intTime();
         Random rnd = new Random();
@@ -2667,7 +2668,7 @@ public class SchedV2 extends AbstractSched {
     public void sortCards(@NonNull long[] cids, int start, int step, boolean shuffle, boolean shift) {
         String scids = Utils.ids2str(cids);
         long now = getTime().intTime();
-        ArrayList<Long> nids = new ArrayList<>();
+        ArrayList<Long> nids = new ArrayList<>(cids.length);
         for (long id : cids) {
             long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?", id);
             if (!nids.contains(nid)) {
@@ -2679,7 +2680,7 @@ public class SchedV2 extends AbstractSched {
             return;
         }
         // determine nid ordering
-        HashMap<Long, Long> due = new HashMap<>();
+        HashMap<Long, Long> due = new HashMap<>(nids.size());
         if (shuffle) {
             Collections.shuffle(nids);
         }
@@ -2701,7 +2702,7 @@ public class SchedV2 extends AbstractSched {
             }
         }
         // reorder cards
-        ArrayList<Object[]> d = new ArrayList<>();
+        ArrayList<Object[]> d = new ArrayList<>(cids.length);
         try (Cursor cur = mCol.getDb()
                     .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids)) {
             while (cur.moveToNext()) {

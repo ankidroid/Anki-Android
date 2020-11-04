@@ -78,7 +78,7 @@ public class Tls12SocketFactory extends SSLSocketFactory {
                         .tlsVersions(TlsVersion.TLS_1_2)
                         .build();
 
-                List<ConnectionSpec> specs = new ArrayList<>();
+                List<ConnectionSpec> specs = new ArrayList<>(3);
                 specs.add(cs);
                 specs.add(ConnectionSpec.COMPATIBLE_TLS);
                 specs.add(ConnectionSpec.CLEARTEXT);

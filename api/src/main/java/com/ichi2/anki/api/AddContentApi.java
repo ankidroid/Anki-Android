@@ -144,7 +144,7 @@ public final class AddContentApi {
         if (tagsList != null && fieldsList.size() != tagsList.size()) {
             throw new IllegalArgumentException("fieldsList and tagsList different length");
         }
-        List<ContentValues> newNoteValuesList = new ArrayList<>();
+        List<ContentValues> newNoteValuesList = new ArrayList<>(fieldsList.size());
         for (int i = 0; i < fieldsList.size(); i++) {
             ContentValues values = new ContentValues();
             values.put(Note.MID, modelId);

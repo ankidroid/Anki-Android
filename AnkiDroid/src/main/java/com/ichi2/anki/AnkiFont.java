@@ -52,7 +52,7 @@ public class AnkiFont {
         File fontfile = new File(path);
         String name = Utils.splitFilename(fontfile.getName())[0];
         String family = name;
-        List<String> attributes = new ArrayList<>();
+        List<String> attributes = new ArrayList<>(2);
 
         if (fromAssets) {
             path = fAssetPathPrefix + fontfile.getName();

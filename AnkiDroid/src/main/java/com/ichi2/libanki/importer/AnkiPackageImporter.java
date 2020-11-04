@@ -88,7 +88,7 @@ public class AnkiPackageImporter extends Anki2Importer {
                 // The filename that we extract should be collection.anki2
                 // Importing collection.anki21 fails due to some media regexes expecting collection.anki2.
                 // We follow how Anki does it and fix the problem here.
-                HashMap<String, String> mediaToFileNameMap = new HashMap<>();
+                HashMap<String, String> mediaToFileNameMap = new HashMap<>(1);
                 mediaToFileNameMap.put(colname, CollectionHelper.COLLECTION_FILENAME);
                 Utils.unzipFiles(mZip, tempDir.getAbsolutePath(), new String[]{colname, "media"}, mediaToFileNameMap);
                 colname = CollectionHelper.COLLECTION_FILENAME;
@@ -118,11 +118,11 @@ public class AnkiPackageImporter extends Anki2Importer {
             // we need the media dict in advance, and we'll need a map of fname ->
             // number to use during the import
             File mediaMapFile = new File(tempDir, "media");
-            mNameToNum = new HashMap<>();
+            mNameToNum = new HashMap<>(); // Number of file in mediamMMapFile as json. Not knowable
             String dirPath = tmpCol.getMedia().dir();
             File dir = new File(dirPath);
             // We need the opposite mapping in AnkiDroid since our extraction method requires it.
-            Map<String, String> numToName = new HashMap<>();
+            Map<String, String> numToName = new HashMap<>(); // Number of file in mediamMMapFile as json. Not knowable
             try (JsonReader jr = new JsonReader(new FileReader(mediaMapFile))) {
                 jr.beginObject();
                 String name; // v in anki

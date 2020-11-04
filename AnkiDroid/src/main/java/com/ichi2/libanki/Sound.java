@@ -145,7 +145,7 @@ public class Sound {
         while (matcher.find()) {
             // Create appropriate list if needed; list must not be empty so long as code does no check
             if (!mSoundPaths.containsKey(qa)) {
-                mSoundPaths.put(qa, new ArrayList<>());
+                mSoundPaths.put(qa, new ArrayList<>(0));
             }
 
             // Get the sound file name
@@ -172,7 +172,7 @@ public class Sound {
         // make combined list only if necessary to avoid an empty combined list
         if (mSoundPaths.containsKey(SoundSide.QUESTION) || mSoundPaths.containsKey(SoundSide.ANSWER)) {
             // some list exists to place into combined list
-            mSoundPaths.put(SoundSide.QUESTION_AND_ANSWER, new ArrayList<>());
+            mSoundPaths.put(SoundSide.QUESTION_AND_ANSWER, new ArrayList<>(0));
         } else { // no need to make list
             return false;
         }

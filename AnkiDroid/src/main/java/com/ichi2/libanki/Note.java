@@ -162,7 +162,7 @@ public class Note implements Cloneable {
     }
 
     public ArrayList<Card> cards() {
-        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<Card> cards = new ArrayList<>(cids().size());
         for (long cid : cids()) {
             // each getCard access database. This is inneficient.
             // Seems impossible to solve without creating a constructor of a list of card.
@@ -255,7 +255,7 @@ public class Note implements Cloneable {
 
 
     public void delTag(String tag) {
-        List<String> rem = new LinkedList<>();
+        List<String> rem = new ArrayList<>(mTags.size());
         for (String t : mTags) {
             if (t.equalsIgnoreCase(tag)) {
                 rem.add(t);

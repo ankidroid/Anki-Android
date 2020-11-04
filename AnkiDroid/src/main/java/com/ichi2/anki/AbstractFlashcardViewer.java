@@ -210,9 +210,6 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private static final int ankiJsErrorCodeMarkCard = 1;
     private static final int ankiJsErrorCodeFlagCard = 2;
 
-    // JS api list enable/disable status
-    private final HashMap<String, Boolean> mJsApiListMap = new HashMap<>();
-
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -811,14 +808,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      *
      * @param txt The field text with the clozes
      * @param idx The index of the cloze to use
-     * @return A string with a comma-separeted list of unique cloze strings with the corret index.
+     * @return A string with a comma-separeted list of unique cloze strings with the correct index.
      */
 
     private String contentForCloze(String txt, int idx) {
         @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
         Pattern re = Pattern.compile("\\{\\{c" + idx + "::(.+?)\\}\\}");
         Matcher m = re.matcher(txt);
-        Set<String> matches = new LinkedHashSet<>();
+        Set<String> matches = new LinkedHashSet<>(); // Size can't be known in advance
         // LinkedHashSet: make entries appear only once, like Anki desktop (see also issue #2208), and keep the order
         // they appear in.
         String groupOne;
@@ -3006,9 +3003,9 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      * COULD_BE_BETTER: Make base class static and move this out of the CardViewer */
     class LinkDetectingGestureDetector extends AbstractFlashcardViewer.MyGestureDetector {
         /** A list of events to process when listening to WebView touches  */
-        private final HashSet<MotionEvent> mDesiredTouchEvents = new HashSet<>();
+        private final HashSet<MotionEvent> mDesiredTouchEvents = new HashSet<>(2);
         /** A list of events we sent to the WebView (to block double-processing) */
-        private final HashSet<MotionEvent> mDispatchedTouchEvents = new HashSet<>();
+        private final HashSet<MotionEvent> mDispatchedTouchEvents = new HashSet<>(2);
 
         @Override
         public void onFillFlashcard() {
@@ -3787,6 +3784,8 @@ see card.js for available functions
  */
     // list of api that can be accessed
     private final String[] mApiList = {"toggleFlag", "markCard"};
+    // JS api list enable/disable status
+    private final HashMap<String, Boolean> mJsApiListMap = new HashMap<>(mApiList.length);
     public JavaScriptFunction javaScriptFunction() {
         return new JavaScriptFunction();
     }

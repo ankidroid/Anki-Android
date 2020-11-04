@@ -291,7 +291,7 @@ public class BackupManager {
         if (files == null) {
             files = new File[0];
         }
-        ArrayList<File> deckBackups = new ArrayList<>();
+        ArrayList<File> deckBackups = new ArrayList<>(files.length);
         for (File aktFile : files) {
             if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.(apkg|colpkg)$", "$1")
                     .equals(colFile.getName().replace(".anki2",""))) {

@@ -306,7 +306,6 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
 
 
     private static ArrayList<String> parseJson(Response resp, String languageCodeTo) {
-        ArrayList<String> res = new ArrayList<>();
 
         /*
          * The algorithm below includes the parsing of glosbe results. Glosbe.com returns a list of different phrases in
@@ -317,8 +316,9 @@ public class TranslationActivity extends FragmentActivity implements DialogInter
         List<Tuc> tucs = resp.getTuc();
 
         if (tucs == null) {
-            return res;
+            return new ArrayList<>(0);
         }
+        ArrayList<String> res = new ArrayList<>(tucs.size());
 
         String desiredLang = LanguagesListerGlosbe.requestToResponseLangCode(languageCodeTo);
 

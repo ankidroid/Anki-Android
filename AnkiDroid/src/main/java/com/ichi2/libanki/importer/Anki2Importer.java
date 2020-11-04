@@ -142,7 +142,7 @@ public class Anki2Importer extends Importer {
 
 
     private void _import() {
-        mDecks = new HashMap<>();
+        mDecks = new HashMap<>(mSrc.getDecks().count());
         try {
             // Use transactions for performance and rollbacks in case of error
             mDst.getDb().getDatabase().beginTransaction();
@@ -219,18 +219,19 @@ public class Anki2Importer extends Importer {
         // guids, so we avoid importing invalid cards
         mIgnoredGuids = new HashSet<>();
         // iterate over source collection
-        ArrayList<Object[]> add = new ArrayList<>();
+        int nbNoteToImport = mSrc.noteCount();
+        ArrayList<Object[]> add = new ArrayList<>(nbNoteToImport);
         int totalAddCount = 0;
         final int thresExecAdd = 1000;
-        ArrayList<Object[]> update = new ArrayList<>();
+        ArrayList<Object[]> update = new ArrayList<>(nbNoteToImport);
         int totalUpdateCount = 0;
         final int thresExecUpdate = 1000;
-        ArrayList<Long> dirty = new ArrayList<>();
+        ArrayList<Long> dirty = new ArrayList<>(nbNoteToImport);
         int totalDirtyCount = 0;
         final int thresExecDirty = 1000;
         int usn = mDst.usn();
         int dupes = 0;
-        ArrayList<String> dupesIgnored = new ArrayList<>();
+        ArrayList<String> dupesIgnored = new ArrayList<>(nbNoteToImport);
         mDst.getDb().getDatabase().beginTransaction();
         try (Cursor cur = mSrc.getDb().getDatabase().query("select id, guid, mid, mod, tags, flds, sfld, csum, flags, data  from notes", null)) {
             // Counters for progress updates
@@ -395,7 +396,7 @@ public class Anki2Importer extends Importer {
 
     /** Prepare index of schema hashes. */
     private void _prepareModels() {
-        mModelMap = new HashMap<>();
+        mModelMap = new HashMap<>(mSrc.getModels().count());
     }
 
 

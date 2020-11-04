@@ -35,6 +35,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import okhttp3.internal.Util;
+
 
 /**
 Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -171,9 +173,10 @@ public class Tags {
     public ArrayList<String> byDeck(long did, boolean children) {
         List<String> tags;
         if (children) {
-            ArrayList<Long> dids = new ArrayList<>();
+            java.util.Collection<Long> values = mCol.getDecks().children(did).values();
+            ArrayList<Long> dids = new ArrayList<>(values.size());
             dids.add(did);
-            dids.addAll(mCol.getDecks().children(did).values());
+            dids.addAll(values);
             tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(dids));
         } else {
             tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = ?", did);
@@ -266,7 +269,7 @@ public class Tags {
 
     /** Parse a string and return a list of tags. */
     public ArrayList<String> split(String tags) {
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>(tags.length());
         for (String s : tags.replace('\u3000', ' ').split("\\s")) {
             if (s.length() > 0) {
                 list.add(s);
@@ -308,7 +311,8 @@ public class Tags {
     public String remFromStr(String deltags, String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(deltags)) {
-            List<String> remove = new ArrayList<>();
+            List<String> remove = new ArrayList<>(); // Usually not a lot of tags are removed simultaneously.
+            // So don't put initial capacity
             for (String tx: currentTags) {
                 if (tag.equalsIgnoreCase(tx) || wildcard(tag, tx)) {
                     remove.add(tx);

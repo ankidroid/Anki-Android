@@ -879,7 +879,7 @@ public class Syncer {
                 lmods.put(cur.getLong(0), cur.getLong(1));
             }
         }
-        ArrayList<Object[]> update = new ArrayList<>();
+        ArrayList<Object[]> update = new ArrayList<>(data.length());
         for (JSONArray r: data.jsonArrayIterable()) {
             if (!lmods.containsKey(r.getLong(0)) || lmods.get(r.getLong(0)) < r.getLong(modIdx)) {
                 update.add(Utils.jsonArray2Objects(r));

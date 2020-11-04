@@ -17,7 +17,7 @@ public class HtmlColors {
 
     public static String nameToHex(String name) {
         if (sColorsMap == null) {
-            sColorsMap = new HashMap<>();
+            sColorsMap = new HashMap<>(fColorsRawList.length);
             for (int i = 0; i < fColorsRawList.length; i+=2) {
                 sColorsMap.put(fColorsRawList[i].toLowerCase(Locale.US), fColorsRawList[i+1].toLowerCase(Locale.US));
             }

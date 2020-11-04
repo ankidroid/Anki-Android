@@ -1047,11 +1047,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return true;
         } else if (itemId == R.id.action_list_my_searches) {
             JSONObject savedFiltersObj = getCol().getConf().optJSONObject("savedFilters");
-            HashMap<String, String> savedFilters = new HashMap<>();
+            HashMap<String, String> savedFilters;
             if (savedFiltersObj != null) {
+                savedFilters = new HashMap<>(savedFiltersObj.length());
                 for (String searchName : savedFiltersObj) {
                     savedFilters.put(searchName, savedFiltersObj.optString(searchName));
                 }
+            } else {
+                savedFilters = new HashMap<>(0);
             }
             showDialogFragment(CardBrowserMySearchesDialog.newInstance(savedFilters, mMySearchesDialogListener,
                     "", CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST));
@@ -1399,7 +1402,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     private void showTagsDialog() {
         TagsDialog dialog = TagsDialog.newInstance(
-                TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<>(), new ArrayList<>(getCol().getTags().all()));
+                TagsDialog.TYPE_FILTER_BY_TAG, new ArrayList<>(0), new ArrayList<>(getCol().getTags().all()));
         dialog.setTagsDialogListener(this::filterByTag);
         showDialogFragment(dialog);
     }
@@ -1530,7 +1533,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     private static Map<Long, Integer> getPositionMap(CardCollection<CardCache> list) {
-        Map<Long, Integer> positions = new HashMap<>();
+        Map<Long, Integer> positions = new HashMap<>(list.size());
         for (int i = 0; i < list.size(); i++) {
             positions.put(list.get(i).getId(), i);
         }
@@ -1550,7 +1553,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     // convenience method for updateCardsInList(...)
     private void updateCardInList(Card card) {
-        List<Card> cards = new ArrayList<>();
+        List<Card> cards = new ArrayList<>(1);
         cards.add(card);
         updateCardsInList(cards);
     }
@@ -1558,7 +1561,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /** Returns the decks which are valid targets for "Change Deck" */
     @VisibleForTesting
     List<Deck> getValidDecksForChangeDeck() {
-        List<Deck> nonDynamicDecks = new ArrayList<>();
+        List<Deck> nonDynamicDecks = new ArrayList<>(mDropDownDecks.size());
         for (Deck d : mDropDownDecks) {
             if (Decks.isDynamic(d)) {
                 continue;
@@ -1786,7 +1789,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
         }
 
-        List<CardCache> newMCards = new ArrayList<>();
+        List<CardCache> newMCards = new ArrayList<>(oldMCards.size());
         int pos = 0;
         for (CardCache card: oldMCards) {
             if (!idToRemove.contains(card.getId())) {
@@ -2431,7 +2434,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     // no longer a responsibility of CardCache and we can guarantee it's consistent just by using this collection
     /** A position-aware collection to ensure consistency between the position of items and the collection */
     public static class CardCollection<T extends PositionAware> implements Iterable<T> {
-        private List<T> mWrapped = new ArrayList<>();
+        private List<T> mWrapped = new ArrayList<>(0);
 
         public int size() {
             return mWrapped.size();
@@ -2443,7 +2446,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
         public void reset() {
-            mWrapped = new ArrayList<>();
+            mWrapped = new ArrayList<>(0);
         }
 
 
@@ -2838,7 +2841,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public List<Long> getCheckedCardIds() {
-        List<Long> cardIds = new ArrayList<>();
+        List<Long> cardIds = new ArrayList<>(mCheckedCards.size());
         for (CardCache card : mCheckedCards) {
             long id = card.getId();
             cardIds.add(id);

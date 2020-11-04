@@ -1123,7 +1123,7 @@ public class CardContentProvider extends ContentProvider {
         if (projection == null || projection.length == 0) {
             return sDefaultNoteProjectionDBAccess;
         }
-        List<String> sanitized = new ArrayList<>();
+        List<String> sanitized = new ArrayList<>(projection.length);
         for (String column : projection) {
             int idx = projSearch(FlashCardsContract.Note.DEFAULT_PROJECTION, column);
             if (idx >= 0) {

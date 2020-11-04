@@ -705,7 +705,7 @@ public class Utils {
             throw new IOException("Failed to create target directory: " + targetDirectory);
         }
         if (zipEntryToFilenameMap == null) {
-            zipEntryToFilenameMap = new HashMap<>();
+            zipEntryToFilenameMap = new HashMap<>(0);
         }
         for (String requestedEntry : zipEntries) {
             ZipArchiveEntry ze = zipFile.getEntry(requestedEntry);
@@ -922,7 +922,7 @@ public class Utils {
         } catch (IOException e) {
             Timber.e(e, "Error on retrieving ankidroid fonts");
         }
-        List<AnkiFont> fonts = new ArrayList<>();
+        List<AnkiFont> fonts = new ArrayList<>(fontsCount);
         for (int i = 0; i < fontsCount; i++) {
             String filePath = fontsList[i].getAbsolutePath();
             String filePathExtension = splitFilename(filePath)[1];

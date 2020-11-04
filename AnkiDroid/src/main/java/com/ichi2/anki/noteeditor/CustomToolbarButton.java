@@ -68,7 +68,7 @@ public class CustomToolbarButton {
 
     @NonNull
     public static ArrayList<CustomToolbarButton> fromStringSet(Set<String> hs) {
-        ArrayList<CustomToolbarButton> buttons = new ArrayList<>();
+        ArrayList<CustomToolbarButton> buttons = new ArrayList<>(hs.size());
 
         for (String s : hs) {
             CustomToolbarButton customToolbarButton = CustomToolbarButton.fromString(s);
@@ -87,7 +87,7 @@ public class CustomToolbarButton {
 
 
     public static Set<String> toStringSet(ArrayList<CustomToolbarButton> buttons) {
-        HashSet<String> ret = new HashSet<>();
+        HashSet<String> ret = new HashSet<>(buttons.size());
         for (CustomToolbarButton b : buttons) {
             String[] values = new String[] { Integer.toString(b.mIndex), b.mPrefix, b.mSuffix };
 

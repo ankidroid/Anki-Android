@@ -152,7 +152,7 @@ public class ReviewerCustomFonts {
      */
     private static Map<String, AnkiFont> getCustomFontsMap(Context context) {
         List<AnkiFont> fonts = Utils.getCustomFonts(context);
-        Map<String, AnkiFont> customFontsMap = new HashMap<>();
+        Map<String, AnkiFont> customFontsMap = new HashMap<>(fonts.size());
         for (AnkiFont f : fonts) {
             customFontsMap.put(f.getName(), f);
         }

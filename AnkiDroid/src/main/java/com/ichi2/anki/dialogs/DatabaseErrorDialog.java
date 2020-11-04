@@ -118,8 +118,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_ERROR_HANDLING: {
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
-                ArrayList<String> options = new ArrayList<>();
-                ArrayList<Integer> values = new ArrayList<>();
+                ArrayList<String> options = new ArrayList<>(6);
+                ArrayList<Integer> values = new ArrayList<>(6);
                 if (!((AnkiActivity) getActivity()).colIsOpen()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening));
@@ -303,7 +303,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         .show();
             }
             case INCOMPATIBLE_DB_VERSION: {
-                List<Integer> values = new ArrayList<>();
+                List<Integer> values = new ArrayList<>(2);
                 CharSequence[] options = new CharSequence[] { UiUtil.makeBold(res.getString(R.string.backup_restore)), UiUtil.makeBold(res.getString(R.string.backup_full_sync_from_server)) };
                 values.add(0);
                 values.add(1);

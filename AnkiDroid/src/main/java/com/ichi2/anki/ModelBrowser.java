@@ -257,8 +257,8 @@ public class ModelBrowser extends AnkiActivity {
      */
     private void fillModelList() {
         //Anonymous class for handling list item clicks
-        mModelDisplayList = new ArrayList<>();
-        mModelIds = new ArrayList<>();
+        mModelDisplayList = new ArrayList<>(mModelIds.size());
+        mModelIds = new ArrayList<>(mModels.size());
 
         for (int i = 0; i < mModels.size(); i++) {
             mModelIds.add(mModels.get(i).getLong("id"));
@@ -307,11 +307,13 @@ public class ModelBrowser extends AnkiActivity {
         String clone = getResources().getString(R.string.model_browser_add_clone);
 
         //Populates arrayadapters listing the mModels (includes prefixes/suffixes)
-        ArrayList<String> newModelLabels = new ArrayList<>();
-        ArrayList<String> existingModelsNames = new ArrayList<>();
+        int existingModelSize = (mModels == null) ? 0 : mModels.size();
+        int stdModelSize = StdModels.stdModels.length;
+        ArrayList<String> newModelLabels = new ArrayList<>(existingModelSize + stdModelSize);
+        ArrayList<String> existingModelsNames = new ArrayList<>(existingModelSize);
 
         //Used to fetch model names
-        mNewModelNames = new ArrayList<>();
+        mNewModelNames = new ArrayList<>(stdModelSize);
         for (StdModels StdModels: StdModels.stdModels) {
             String defaultName = StdModels.getDefaultName();
             newModelLabels.add(String.format(add, defaultName));

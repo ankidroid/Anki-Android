@@ -90,8 +90,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mCurrentTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         mCurrentTags.addAll(getArguments().getStringArrayList(CHECKED_TAGS_KEY));
 
-        mAllTags = new ArrayList<>();
-        mAllTags.addAll(getArguments().getStringArrayList(ALL_TAGS_KEY));
+        mAllTags = (ArrayList<String>) getArguments().getStringArrayList(ALL_TAGS_KEY).clone();
 
         for (String tag : mCurrentTags) {
             if (!mAllTags.contains(tag)) {
@@ -279,8 +278,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         public final ArrayList<String> mTagsList;
 
         public  TagsArrayAdapter() {
-            mTagsList = new ArrayList<>();
-            mTagsList.addAll(mAllTags);
+            mTagsList = (ArrayList<String>) mAllTags.clone();
             sortData();
         }
 

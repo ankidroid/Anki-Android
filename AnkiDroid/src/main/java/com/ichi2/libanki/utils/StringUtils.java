@@ -30,7 +30,7 @@ public class StringUtils {
     @NonNull
     public static List<String> splitOnWhitespace(@NonNull String value) {
         String[] split = WHITESPACE_PATTERN.split(value);
-        List<String> ret = new ArrayList<>();
+        List<String> ret = new ArrayList<>(split.length);
         for (String s : split) {
             if(s.length() > 0) {
                 ret.add(s);

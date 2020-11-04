@@ -18,7 +18,7 @@ public class CardUtils {
      * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
      */
     public static Set<Note> getNotes(Collection<Card> cards) {
-        Set<Note> notes = new HashSet<>();
+        Set<Note> notes = new HashSet<>(cards.size());
 
         for (Card card : cards) {
             notes.add(card.note());
@@ -31,7 +31,7 @@ public class CardUtils {
      * @return All cards of all notes
      */
     public static List<Card> getAllCards(Set<Note> notes) {
-        List<Card> allCards = new ArrayList<>();
+        List<Card> allCards = new ArrayList<>(notes.size());
         for (Note note : notes) {
             allCards.addAll(note.cards());
         }

@@ -59,7 +59,7 @@ public class MultimediaEditableNote implements IMultimediaEditableNote {
 
     private ArrayList<IField> getFieldsPrivate() {
         if (mFields == null) {
-            mFields = new ArrayList<>();
+            mFields = new ArrayList<>(0);
         }
 
         return mFields;

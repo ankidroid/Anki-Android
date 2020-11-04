@@ -190,7 +190,7 @@ public class Stats {
     public Pair<Integer, Double> getNewCards(AxisType timespan) {
         int chunk = getChunk(timespan);
         int num = getNum(timespan);
-        List<String> lims = new ArrayList<>();
+        List<String> lims = new ArrayList<>(2);
         if (timespan != AxisType.TYPE_LIFE) {
             lims.add("id > " + (mCol.getSched().getDayCutoff() - (num * chunk * SECONDS_PER_DAY)) * 1000);
         }
@@ -262,7 +262,7 @@ public class Stats {
 
 
     private String getRevlogFilter(AxisType timespan,boolean inverseTimeSpan){
-        ArrayList<String> lims = new ArrayList<>();
+        ArrayList<String> lims = new ArrayList<>(2);
         String dayFilter = getRevlogTimeFilter(timespan, inverseTimeSpan);
         if (!TextUtils.isEmpty(dayFilter)) {
             lims.add(dayFilter);
@@ -559,7 +559,7 @@ public class Stats {
                 chunk = 30;
                 break;
         }
-        ArrayList<String> lims = new ArrayList<>();
+        ArrayList<String> lims = new ArrayList<>(2);
         if (num != -1) {
             lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * SECONDS_PER_DAY)) * 1000));
         }
@@ -761,7 +761,7 @@ public class Stats {
                 break;
         }
 
-        ArrayList<double[]> list = new ArrayList<>();
+        ArrayList<double[]> list = new ArrayList<>(52); // Max of `num`, given that we probably won't have card with more than 52 year interval
         try (Cursor cur = mCol
                     .getDb()
                     .query(
@@ -875,7 +875,7 @@ public class Stats {
         long cutoff = mCol.getSched().getDayCutoff();
         long cut = cutoff - rolloverHour * 3600;
 
-        ArrayList<double[]> list = new ArrayList<>();
+        ArrayList<double[]> list = new ArrayList<>(24); // number of hours
         String query = "select " +
                 "23 - ((cast((" + cut + " - id/1000) / 3600.0 as int)) % 24) as hour, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
@@ -995,7 +995,7 @@ public class Stats {
         }
 
         long cutoff = mCol.getSched().getDayCutoff();
-        ArrayList<double[]> list = new ArrayList<>();
+        ArrayList<double[]> list = new ArrayList<>(7); // one by day of the week
         String query = "SELECT strftime('%w',datetime( cast(id/ 1000  -" + sd.get(Calendar.HOUR_OF_DAY) * 3600 +
                 " as int), 'unixepoch')) as wd, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
@@ -1169,7 +1169,7 @@ public class Stats {
         } else {
             ease4repl = "ease";
         }
-        ArrayList<double[]> list = new ArrayList<>();
+        ArrayList<double[]> list = new ArrayList<>(3 * 4); // 3 thetypes * 4 eases
         String query = "select (case " +
                 "                when type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_REV + ") then 0 " +
                 "        when lastIvl < 21 then 1 " +
@@ -1260,16 +1260,18 @@ public class Stats {
     public static String deckLimit(long deckId, Collection col) {
         if (deckId == ALL_DECKS_ID) {
             // All decks
-            ArrayList<Long> ids = new ArrayList<>();
-            for (Deck d : col.getDecks().all()) {
+            ArrayList<Deck> decks = col.getDecks().all();
+            ArrayList<Long> ids = new ArrayList<>(decks.size());
+            for (Deck d : decks) {
                 ids.add(d.getLong("id"));
             }
             return Utils.ids2str(ids);
         } else {
             // The given deck id and its children
-            ArrayList<Long> ids = new ArrayList<>();
+            java.util.Collection<Long> values = col.getDecks().children(deckId).values();
+            ArrayList<Long> ids = new ArrayList<>(values.size());
             ids.add(deckId);
-            ids.addAll(col.getDecks().children(deckId).values());
+            ids.addAll(values);
             return Utils.ids2str(ids);
         }
     }
