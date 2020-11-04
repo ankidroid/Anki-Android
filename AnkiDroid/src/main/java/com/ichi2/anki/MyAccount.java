@@ -266,7 +266,7 @@ public class MyAccount extends AnkiActivity {
                 } else {
                     String message = getResources().getString(R.string.connection_error_message);
                     Object[] result = (Object [])data.result;
-                    if (result.length > 1 && result[1] instanceof Exception) {
+                    if (result != null && result.length > 1 && result[1] instanceof Exception) {
                         showSimpleMessageDialog(message, ((Exception)result[1]).getLocalizedMessage(), false);
                     } else {
                         UIUtils.showSimpleSnackbar(MyAccount.this, message, false);
