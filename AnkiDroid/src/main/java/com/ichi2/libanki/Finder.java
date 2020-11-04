@@ -942,29 +942,6 @@ public class Finder {
     }
 
 
-    public List<String> fieldNames(Collection col) {
-        return fieldNames(col, true);
-    }
-
-    public List<String> fieldNames(Collection col, boolean downcase) {
-        Set<String> fields = new HashSet<>();
-        List<String> names = new ArrayList<>();
-        for (JSONObject m : col.getModels().all()) {
-            JSONArray flds = m.getJSONArray("flds");
-            for (JSONObject f: flds.jsonObjectIterable()) {
-                if (!fields.contains(f.getString("name").toLowerCase(Locale.ROOT))) {
-                    names.add(f.getString("name"));
-                    fields.add(f.getString("name").toLowerCase(Locale.ROOT));
-                }
-            }
-        }
-        if (downcase) {
-            return new ArrayList<>(fields);
-        }
-        return names;
-    }
-
-
     /**
      * Find duplicates
      * ***********************************************************
