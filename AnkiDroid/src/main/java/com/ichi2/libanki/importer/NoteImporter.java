@@ -393,11 +393,6 @@ public class NoteImporter extends Importer {
 
 
     private void updateCards() {
-        ArrayList<Object[]> data = new ArrayList<>();
-
-        // we assume any updated cards are reviews
-        mCol.getDb().executeMany("update cards set type = 2, queue = 2, ivl = ?, due = ?, " +
-                "factor = ?, reps = ?, lapses = ? where nid = ? and ord = ?", data);
     }
 
     /** Not in libAnki */
