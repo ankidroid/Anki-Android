@@ -139,7 +139,7 @@ public class Tags {
             mTags.clear();
             mChanged = true;
         }
-        List<String> tags = new ArrayList<>();
+        List<String> tags = new ArrayList<>(mCol.noteCount());
         try (Cursor cursor = mCol.getDb().query("SELECT DISTINCT tags FROM notes" + lim)) {
             while (cursor.moveToNext()) {
                 tags.add(cursor.getString(0));
@@ -236,7 +236,7 @@ public class Tags {
             t = t.replace("*", "%");
             lim.append(l).append("like '% ").append(t).append(" %'");
         }
-        ArrayList<Object[]> res = new ArrayList<>();
+        ArrayList<Object[]> res = new ArrayList<>(mCol.getDb().queryScalar("select count() from notes where id in "+ Utils.ids2str(ids) + " and (" + lim + ")"));
         try (Cursor cur = mCol
                 .getDb()
                 .query("select id, tags from notes where id in " + Utils.ids2str(ids) +

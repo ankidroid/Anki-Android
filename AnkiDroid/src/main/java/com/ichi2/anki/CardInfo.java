@@ -355,7 +355,7 @@ public class CardInfo extends AnkiActivity {
 
             String due = c.getDueString();
 
-            List<RevLogEntry> entries = new ArrayList<>();
+            List<RevLogEntry> entries = new ArrayList<>(collection.getDb().queryScalar("select count() from revlog where cid = ?", c.getId()));
 
             try (Cursor cur = collection.getDb().query("select " +
                     "id as dateTime, " +

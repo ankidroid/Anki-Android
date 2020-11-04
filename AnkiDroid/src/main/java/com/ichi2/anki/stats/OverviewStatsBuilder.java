@@ -296,15 +296,13 @@ public class OverviewStatsBuilder {
         }
 
         List<int[]> d = new ArrayList<>();
-        String query = String.format(Locale.US,
-                "select (due-%d)/%d as day,\n" +
-                        "sum(case when ivl < 21 then 1 else 0 end), -- yng\n" +
-                        "sum(case when ivl >= 21 then 1 else 0 end) -- mtr\n" +
-                        "from cards\n" +
-                        "where did in %s and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")\n" +
-                        "%s\n" +
-                        "group by day order by day",
-                mCol.getSched().getToday(), chunk, _limit(), lim);
+        String query = "select (due-" + mCol.getSched().getToday() + ")/"+ chunk +" as day,\n" +
+            "sum(case when ivl < 21 then 1 else 0 end), -- yng\n" +
+            "sum(case when ivl >= 21 then 1 else 0 end) -- mtr\n" +
+            "from cards\n" +
+            "where did in " + _limit() + " and queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")\n" +
+            lim + "\n" +
+            "group by day order by day";
         try (Cursor cur = mCol.getDb().query(query)) {
             while (cur.moveToNext()) {
                 d.add(new int[]{cur.getInt(0), cur.getInt(1), cur.getInt(2)});
