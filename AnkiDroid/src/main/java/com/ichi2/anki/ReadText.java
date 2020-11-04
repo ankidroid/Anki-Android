@@ -51,7 +51,6 @@ public class ReadText {
     private static int mOrd;
     private static Sound.SoundSide mQuestionAnswer;
     public static final String NO_TTS = "0";
-    public static final ArrayList<String[]> sTextQueue = new ArrayList<>();
     private static final Compat compat = CompatHelper.getCompat();
     private static final Object mTtsParams = compat.initTtsParams();
 
@@ -286,10 +285,6 @@ public class ReadText {
                 mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
                     @Override
                     public void onDone(String arg0) {
-                        if (ReadText.sTextQueue.size() > 0) {
-                            String[] text = ReadText.sTextQueue.remove(0);
-                            ReadText.speak(text[0], text[1], TextToSpeech.QUEUE_FLUSH);
-                        }
                         listener.onDone();
                     }
                     @Override
@@ -353,9 +348,6 @@ public class ReadText {
 
     public static void stopTts() {
         if (mTts != null) {
-            if (sTextQueue != null) {
-                sTextQueue.clear();
-            }
             mTts.stop();
         }
     }
