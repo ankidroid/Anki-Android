@@ -398,9 +398,8 @@ public class SchedV2 extends AbstractSched {
 
     public void extendLimits(int newc, int rev) {
         Deck cur = mCol.getDecks().current();
-        ArrayList<Deck> decks = new ArrayList<>();
+        List<Deck> decks = mCol.getDecks().parents(cur.getLong("id"));
         decks.add(cur);
-        decks.addAll(mCol.getDecks().parents(cur.getLong("id")));
         for (long did : mCol.getDecks().children(cur.getLong("id")).values()) {
             decks.add(mCol.getDecks().get(did));
         }
