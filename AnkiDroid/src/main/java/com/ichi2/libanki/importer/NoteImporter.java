@@ -65,7 +65,6 @@ public class NoteImporter extends Importer {
     /** _nextID in python */
     private long mNextId;
     private ArrayList<Long> _ids;
-    private List<Triple> _cards;
     private boolean mEmptyNotes;
     private int mUpdateCount;
 
@@ -173,7 +172,6 @@ public class NoteImporter extends Importer {
         // PORT: Translations moved closer to their sources
         List<Object[]> _new = new ArrayList<>();
         _ids = new ArrayList<>();
-        _cards = new ArrayList<>();
         mEmptyNotes = false;
         int dupeCount = 0;
         List<String> dupes = new ArrayList<>();
@@ -396,10 +394,6 @@ public class NoteImporter extends Importer {
 
     private void updateCards() {
         ArrayList<Object[]> data = new ArrayList<>();
-        for (Triple t : _cards) {
-            ForeignCard c = t.mCard;
-            data.add(new Object[] { c.mIvl, c.mDue, c.mFactor, c.mReps, c.mLapses, t.mNid, t.mOrd});
-        }
 
         // we assume any updated cards are reviews
         mCol.getDb().executeMany("update cards set type = 2, queue = 2, ivl = ?, due = ?, " +
