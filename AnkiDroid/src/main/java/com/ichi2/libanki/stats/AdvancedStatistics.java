@@ -306,11 +306,10 @@ public class AdvancedStatistics {
                 break;
         }
 
-        ArrayList<int[]> dues = new ArrayList<>();
 
         EaseClassifier classifier = new EaseClassifier(mCol.getTime(), mCol.getDb());
         ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb(), classifier, end, chunk);
-        TodayStats todayStats = new TodayStats(mCol.getDb(), Settings.getDayStartCutoff(mCol.getCrt()));
+        TodayStats todayStats = new TodayStats(mCol, Settings.getDayStartCutoff(mCol.getCrt()));
 
         long t0 = mCol.getTime().intTimeMS();
         SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
@@ -326,6 +325,7 @@ public class AdvancedStatistics {
         //if(ArrayUtils.nCols(nInState) > 0)
         //    nInState = ArrayUtils.append(nInState, new int[ArrayUtils.nCols(nInState)], 1);
 
+        ArrayList<int[]> dues = new ArrayList<>(nReviews.length + 2);
         // Forecasted number of reviews
         for(int i = 0; i<nReviews.length; i++) {
             dues.add(new int[] { i,                                         //Time
@@ -815,9 +815,12 @@ public class AdvancedStatistics {
 
     public static class TodayStats {
 
-        private final Map<Long, Integer> nLearnedPerDeckId = new HashMap<>();
+        private final Map<Long, Integer> nLearnedPerDeckId;
 
-        public TodayStats(DB db, long dayStartCutoff) {
+        public TodayStats(Collection col, long dayStartCutoff) {
+
+            nLearnedPerDeckId = new HashMap<>(col.getDecks().count());
+            SupportSQLiteDatabase db = col.getDb().getDatabase();
 
             String query = "select cards.did, "+
                     "sum(case when revlog.type = " + CARD_TYPE_NEW + " then 1 else 0 end)"+ /* learning */

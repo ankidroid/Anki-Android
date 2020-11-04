@@ -115,7 +115,7 @@ public class Finder {
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
                 if (isCancelled(task)) {
-                    return new ArrayList<>();
+                    return new ArrayList<>(0);
                 }
                 res.add(cur.getLong(0));
                 if (sendProgress && res.size() > task.getNumCardsToRender()) {
@@ -125,7 +125,7 @@ public class Finder {
             }
         } catch (SQLException e) {
             // invalid grouping
-            return new ArrayList<>();
+            return new ArrayList<>(0);
         }
         if (rev) {
             Collections.reverse(res);
@@ -155,7 +155,7 @@ public class Finder {
             }
         } catch (SQLException e) {
             // invalid grouping
-            return new ArrayList<>();
+            return new ArrayList<>(0);
         }
         return res;
     }
@@ -648,10 +648,10 @@ public class Finder {
         if (did == null) {
             return null;
         }
-        TreeMap<String, Long> children = mCol.getDecks().children(did);
-        List<Long> res = new ArrayList<>();
+        java.util.Collection<Long> children = mCol.getDecks().children(did).values();
+        List<Long> res = new ArrayList<>(children.size() + 1);
         res.add(did);
-        res.addAll(children.values());
+        res.addAll(children);
         return res;
     }
 
@@ -758,7 +758,7 @@ public class Finder {
         Pattern pattern = Pattern.compile("\\Q" + javaVal + "\\E", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
         // find models that have that field
-        Map<Long, Object[]> mods = new HashMap<>();
+        Map<Long, Object[]> mods = new HashMap<>(mCol.getModels().count());
         for (JSONObject m : mCol.getModels().all()) {
             JSONArray flds = m.getJSONArray("flds");
             for (JSONObject f: flds.jsonObjectIterable()) {
@@ -906,9 +906,9 @@ public class Finder {
         }
         Pattern regex = Pattern.compile(src);
 
-        ArrayList<Object[]> d = new ArrayList<>();
+        ArrayList<Object[]> d = new ArrayList<>(nids.size());
         String snids = Utils.ids2str(nids);
-        Map<Long, java.util.Collection<Long>> midToNid = new HashMap<>();
+        Map<Long, java.util.Collection<Long>> midToNid = new HashMap<>(col.getModels().count());
         try (Cursor cur = col.getDb().query(
                 "select id, mid, flds from notes where id in " + snids)) {
             while (cur.moveToNext()) {
@@ -1000,8 +1000,9 @@ public class Finder {
     	}
         search += "'" + fieldName + ":*'";
         // go through notes
-        Map<String, List<Long>> vals = new HashMap<>();
-        List<Pair<String, List<Long>>> dupes = new ArrayList<>();
+        List<Long> nids = col.findNotes(search);
+        Map<String, List<Long>> vals = new HashMap<>(nids.size());
+        List<Pair<String, List<Long>>> dupes = new ArrayList<>(nids.size());
         Map<Long, Integer> fields = new HashMap<>();
         try (Cursor cur = col.getDb().query(
                 "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)))) {

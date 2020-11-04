@@ -59,8 +59,8 @@ public class TextImporter extends NoteImporter {
     protected List<ForeignNote> foreignNotes() {
         open();
         // process all lines
-        List<String> log = new ArrayList<>();
-        List<ForeignNote> notes = new ArrayList<>();
+        List<String> log = new ArrayList<>(); //Number of element is reader's size
+        List<ForeignNote> notes = new ArrayList<>(); //Number of element is reader's size
         int lineNum = 0;
         int ignored = 0;
         // Note: This differs from libAnki as we don't have csv.reader

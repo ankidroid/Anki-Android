@@ -707,7 +707,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Delete note");
-            ArrayList<Long> ids = new ArrayList<>();
+            ArrayList<Long> ids = new ArrayList<>(allCs.size() + 1 );
             note.flush(note.getMod(), false);
             ids.add(note.getId());
             for (Card c : allCs) {
@@ -805,9 +805,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Suspend multiple cards");
-            List<Long> toSuspendIds = new ArrayList<>();
-            List<Long> toUnsuspendIds = new ArrayList<>();
-            for (int i = 0; i < cards.length; i++) {
+            int nbOfCards = cards.length;
+            List<Long> toSuspendIds = new ArrayList<>(nbOfCards);
+            List<Long> toUnsuspendIds = new ArrayList<>(nbOfCards);
+            for (int i = 0; i < nbOfCards; i++) {
                 Card card = cards[i];
                 if (originalSuspended[i]) {
                     toSuspendIds.add(card.getId());
@@ -850,7 +851,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Delete notes");
             // undo all of these at once instead of one-by-one
-            ArrayList<Long> ids = new ArrayList<>();
+            ArrayList<Long> ids = new ArrayList<>(notesArr.length + allCards.size());
             for (Note n : notesArr) {
                 n.flush(n.getMod(), false);
                 ids.add(n.getId());
@@ -1003,8 +1004,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                     case MARK_NOTE_MULTI: {
                         Set<Note> notes = CardUtils.getNotes(Arrays.asList(cards));
                         // collect undo information
-                        List<Note> originalMarked = new ArrayList<>();
-                        List<Note> originalUnmarked = new ArrayList<>();
+                        List<Note> originalMarked = new ArrayList<>(notes.size());
+                        List<Note> originalUnmarked = new ArrayList<>(notes.size());
 
                         for (Note n : notes) {
                             if (n.hasTag("marked"))
@@ -1282,7 +1283,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         int column1Index = (Integer) param.getObjArray()[3];
         int column2Index = (Integer) param.getObjArray()[4];
 
-        List<Long> invalidCardIds = new ArrayList<>();
+        List<Long> invalidCardIds = new ArrayList<>(n);
         // for each specified card in the browser list
         for (int i = startPos; i < startPos + n; i++) {
             // Stop if cancelled
@@ -1801,7 +1802,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
 
         ArrayList<Model> models = col.getModels().all();
-        ArrayList<Integer> cardCount = new ArrayList<>();
+        ArrayList<Integer> cardCount = new ArrayList<>(models.size());
         Collections.sort(models, (Comparator<JSONObject>) (a, b) -> a.getString("name").compareTo(b.getString("name")));
 
         for (Model n : models) {

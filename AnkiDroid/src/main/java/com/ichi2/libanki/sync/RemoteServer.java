@@ -44,7 +44,7 @@ public class RemoteServer extends HttpSyncer {
     @Override
     public Response hostKey(String user, String pw) throws UnknownHttpResponseException {
         try {
-            mPostVars = new HashMap<>();
+            mPostVars = new HashMap<>(0);
             JSONObject credentials = new JSONObject();
             credentials.put("u", user);
             credentials.put("p", pw);
@@ -57,7 +57,7 @@ public class RemoteServer extends HttpSyncer {
 
     @Override
     public Response meta() throws UnknownHttpResponseException {
-        mPostVars = new HashMap<>();
+        mPostVars = new HashMap<>(2);
         mPostVars.put("k", mHKey);
         mPostVars.put("s", mSKey);
         JSONObject meta = new JSONObject();

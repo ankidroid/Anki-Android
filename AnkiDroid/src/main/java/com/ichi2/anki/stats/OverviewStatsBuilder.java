@@ -272,7 +272,7 @@ public class OverviewStatsBuilder {
         }
         List<int[]> d = _due(start, end, chunk);
         int tot = 0;
-        List<int[]> totd = new ArrayList<>();
+        List<int[]> totd = new ArrayList<>(d.size());
         for (int[] day : d) {
             tot += day[1]+day[2];
             totd.add(new int[] {day[0], tot});

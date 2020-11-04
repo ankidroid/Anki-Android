@@ -349,7 +349,7 @@ public class Media {
         while (m.find()) {
             ords.add(m.group(1));
         }
-        ArrayList<String> strings = new ArrayList<>();
+        ArrayList<String> strings = new ArrayList<>(ords.size() + 1);
         String clozeReg = Template.clozeReg;
         
         for (String ord : ords) {
@@ -516,7 +516,7 @@ public class Media {
         } catch (SQLException ignored) {
             _deleteDB();
         }
-        List<List<String>> result = new ArrayList<>();
+        List<List<String>> result = new ArrayList<>(3);
         result.add(nohave);
         result.add(unused);
         result.add(invalid);
@@ -930,12 +930,13 @@ public class Media {
      */
     public int addFilesFromZip(ZipFile z) throws IOException {
         try {
-            List<Object[]> media = new ArrayList<>();
             // get meta info first
             JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
             // then loop through all files
             int cnt = 0;
-            for (ZipEntry i : Collections.list(z.entries())) {
+            ArrayList<? extends ZipEntry> zipEntries = Collections.list(z.entries());
+            List<Object[]> media = new ArrayList<>(zipEntries.size());
+            for (ZipEntry i : zipEntries) {
                 String fileName = i.getName();
                 if ("_meta".equals(fileName)) {
                      // ignore previously-retrieved meta

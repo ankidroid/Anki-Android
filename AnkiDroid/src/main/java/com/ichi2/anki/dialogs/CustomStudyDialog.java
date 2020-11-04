@@ -293,7 +293,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
     private HashMap<Integer, String> getKeyValueMap() {
         Resources res = getResources();
-        HashMap<Integer, String> keyValueMap = new HashMap<>();
+        HashMap<Integer, String> keyValueMap = new HashMap<>(10);
         keyValueMap.put(CONTEXT_MENU_STANDARD, res.getString(R.string.custom_study));
         keyValueMap.put(CUSTOM_STUDY_NEW, res.getString(R.string.custom_study_increase_new_limit));
         keyValueMap.put(CUSTOM_STUDY_REV, res.getString(R.string.custom_study_increase_review_limit));
@@ -320,7 +320,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 // Logging here might be appropriate : )
                 break;
         }
-        List<String> arr = new ArrayList<>();
+        List<String> arr = new ArrayList<>(selectedTags.size());
         if (selectedTags.size() > 0) {
             for (String tag : selectedTags) {
                 arr.add(String.format("tag:'%s'", tag));

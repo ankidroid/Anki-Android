@@ -412,7 +412,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
 
 
         private List<AbstractDeckTreeNode> filterDecks(String filterPattern, List<AbstractDeckTreeNode> allDecks) {
-            ArrayList<AbstractDeckTreeNode> ret = new ArrayList<>();
+            ArrayList<AbstractDeckTreeNode> ret = new ArrayList<>(allDecks.size());
             for (AbstractDeckTreeNode tag : allDecks) {
                 AbstractDeckTreeNode node = filterDeckInternal(filterPattern, tag);
                 if (node != null) {
@@ -430,8 +430,9 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> im
                 return root;
             }
 
-            List<T> ret = new ArrayList<>();
-            for (T child : root.getChildren()) {
+            List<T> children = root.getChildren();
+            List<T> ret = new ArrayList<>(children.size());
+            for (T child : children) {
                 T returned = filterDeckInternal(filterPattern, child);
                 if (returned != null) {
                     ret.add(returned);

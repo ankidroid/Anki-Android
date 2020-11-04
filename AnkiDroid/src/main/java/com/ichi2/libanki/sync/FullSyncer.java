@@ -52,7 +52,7 @@ public class FullSyncer extends HttpSyncer {
 
     public FullSyncer(Collection col, String hkey, Connection con, HostNum hostNum) {
         super(hkey, con, hostNum);
-        mPostVars = new HashMap<>();
+        mPostVars = new HashMap<>(2);
         mPostVars.put("k", hkey);
         mPostVars.put("v",
                 String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));

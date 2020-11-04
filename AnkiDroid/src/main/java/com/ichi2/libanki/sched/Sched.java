@@ -215,8 +215,8 @@ public class Sched extends SchedV2 {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         ArrayList<Deck> decks = mCol.getDecks().allSorted();
-        HashMap<String, Integer[]> lims = new HashMap<>();
-        ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>();
+        HashMap<String, Integer[]> lims = new HashMap<>(decks.size());
+        ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>(decks.size());
         for (Deck deck : decks) {
             if (isCancelled(cancelListener)) {
                 return null;
@@ -951,7 +951,7 @@ public class Sched extends SchedV2 {
 
 
     private void _moveToDyn(long did, @NonNull List<Long> ids) {
-        ArrayList<Object[]> data = new ArrayList<>();
+        ArrayList<Object[]> data = new ArrayList<>(ids.size());
         //long t = getTime().intTime(); // unused variable present (and unused) upstream
         int u = mCol.usn();
         for (long c = 0; c < ids.size(); c++) {

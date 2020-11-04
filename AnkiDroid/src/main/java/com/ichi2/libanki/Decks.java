@@ -156,12 +156,12 @@ public class Decks {
     private static class NameMap {
         private final HashMap<String, Deck> mNameMap;
 
-        private NameMap() {
-            mNameMap = new HashMap<>();
+        private NameMap(int size) {
+            mNameMap = new HashMap<>(size);
         }
 
         public static NameMap constructor(java.util.Collection<Deck> decks) {
-            NameMap map = new NameMap();
+            NameMap map = new NameMap(2 * decks.size());
             for (Deck deck: decks) {
                 map.add(deck);
             }
@@ -227,10 +227,9 @@ public class Decks {
 
 
     public void load(String decks, String dconf) {
-        mDecks = new HashMap<>();
-        mDconf = new HashMap<>();
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
+        mDecks = new HashMap<>(decksarray.length());
         for (String id: ids.stringIterable()) {
             Deck o = new Deck(decksarray.getJSONObject(id));
             long longId = Long.parseLong(id);
@@ -239,6 +238,7 @@ public class Decks {
         mNameMap = NameMap.constructor(mDecks.values());
         JSONObject confarray = new JSONObject(dconf);
         ids = confarray.names();
+        mDconf = new HashMap<>(confarray.length());
         if (ids != null) {
             for (String id : ids.stringIterable()) {
                 mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id)));
@@ -412,7 +412,7 @@ public class Decks {
      * An unsorted list of all deck names.
      */
     public ArrayList<String> allNames(boolean dyn) {
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>(mDecks.size());
         if (dyn) {
             for (Deck x : mDecks.values()) {
                 list.add(x.getString("name"));
@@ -847,9 +847,10 @@ public class Decks {
         if (!children) {
             return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did=?", did));
         }
-        List<Long> dids = new ArrayList<>();
+        java.util.Collection<Long> values = children(did).values();
+        List<Long> dids = new ArrayList<>(values.size() + 1);
         dids.add(did);
-        dids.addAll(children(did).values());
+        dids.addAll(values);
         return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(dids)));
     }
 
@@ -1076,7 +1077,7 @@ public class Decks {
         // get parent and grandparent names
         String[] parents = parentsNames(get(did).getString("name"));
         // convert to objects
-        List<Deck> oParents = new ArrayList<>();
+        List<Deck> oParents = new ArrayList<>(parents.length);
         for (int i = 0; i < parents.length; i++) {
             String parentName = parents[i];
             Deck deck = mNameMap.get(parentName);
@@ -1177,8 +1178,9 @@ public class Decks {
     }
 
     public Long[] allDynamicDeckIds() {
-        ArrayList<Long> validValues = new ArrayList<>();
-        for (Long did : allIds()) {
+        Set<Long> ids = allIds();
+        ArrayList<Long> validValues = new ArrayList<>(ids.size());
+        for (Long did : ids) {
             if (isDyn(did)) {
                 validValues.add(did);
             }

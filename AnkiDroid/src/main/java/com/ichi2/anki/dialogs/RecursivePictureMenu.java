@@ -156,7 +156,7 @@ public class RecursivePictureMenu extends DialogFragment {
         }
 
         public List<Item> getChildren() {
-            return new ArrayList<>();
+            return new ArrayList<>(0);
         }
 
         protected Item(Parcel in) {
@@ -225,7 +225,7 @@ public class RecursivePictureMenu extends DialogFragment {
                 mChildren = new ArrayList<>();
                 in.readList(mChildren, Item.class.getClassLoader());
             } else {
-                mChildren = new ArrayList<>();
+                mChildren = new ArrayList<>(0);
             }
         }
 

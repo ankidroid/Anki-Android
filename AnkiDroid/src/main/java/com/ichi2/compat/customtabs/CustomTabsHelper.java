@@ -73,7 +73,7 @@ public class CustomTabsHelper {
 
         // Get all apps that can handle VIEW intents.
         List<ResolveInfo> resolvedActivityList = pm.queryIntentActivities(activityIntent, 0);
-        List<String> packagesSupportingCustomTabs = new ArrayList<>();
+        List<String> packagesSupportingCustomTabs = new ArrayList<>(resolvedActivityList.size());
         for (ResolveInfo info : resolvedActivityList) {
             Intent serviceIntent = new Intent();
             serviceIntent.setAction(CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION);

@@ -441,7 +441,9 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     protected void updateSummaries() {
         mAllowCommit = false;
         // for all text preferences, set summary as current database value
-        for (String key : mPref.mValues.keySet()) {
+
+        Set<String> keys = mPref.mValues.keySet();
+        for (String key : keys) {
             android.preference.Preference pref = this.findPreference(key);
             String value;
             if (pref == null) {

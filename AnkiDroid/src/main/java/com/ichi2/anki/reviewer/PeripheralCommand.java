@@ -90,7 +90,7 @@ public class PeripheralCommand {
     }
 
     public static List<PeripheralCommand> getDefaultCommands() {
-        List<PeripheralCommand> ret = new ArrayList<>();
+        List<PeripheralCommand> ret = new ArrayList<>(28); // Number of elements below
 
         ret.add(PeripheralCommand.unicode('1', COMMAND_ANSWER_FIRST_BUTTON, CardSide.ANSWER));
         ret.add(PeripheralCommand.unicode('2', COMMAND_ANSWER_SECOND_BUTTON, CardSide.ANSWER));

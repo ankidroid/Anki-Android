@@ -70,6 +70,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
@@ -717,23 +718,25 @@ public class Collection {
      * for cloze, avail should contains only non-negative numbers, and the i-th card is a copy of the first card, with a different ord.
      */
     private ArrayList<JSONObject> _tmplsFromOrds(Model model, ArrayList<Integer> avail) {
-        ArrayList<JSONObject> ok = new ArrayList<>();
         JSONArray tmpls;
         if (model.getInt("type") == Consts.MODEL_STD) {
             tmpls = model.getJSONArray("tmpls");
+            ArrayList<JSONObject> ok = new ArrayList<>(avail.size());
             for (Integer ord : avail) {
                 ok.add(tmpls.getJSONObject(ord));
             }
+            return ok;
         } else {
             // cloze - generate temporary templates from first
             JSONObject template0 = model.getJSONArray("tmpls").getJSONObject(0);
+            ArrayList<JSONObject> ok = new ArrayList<>(avail.size());
             for (int ord : avail) {
                 JSONObject t = template0.deepClone();
                 t.put("ord", ord);
                 ok.add(t);
             }
+            return ok;
         }
-        return ok;
     }
 
 
@@ -783,12 +786,13 @@ public class Collection {
      * @param <T>
      */
     public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(String snids, @NonNull Model model, @Nullable T task) {
+        int nbCount = noteCount();
         // For each note, indicates ords of cards it contains
-        HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>();
+        HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>(nbCount);
         // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
-        HashMap<Long, Long> dids = new HashMap<>();
+        HashMap<Long, Long> dids = new HashMap<>(nbCount);
         // For each note, an arbitrary due of one of its due card processed, if any exists
-        HashMap<Long, Long> dues = new HashMap<>();
+        HashMap<Long, Long> dues = new HashMap<>(nbCount);
         try (Cursor cur = mDb.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids)) {
             while (cur.moveToNext()) {
                 if (isCancelled(task)) {
@@ -852,7 +856,8 @@ public class Collection {
                     did = model.getLong("did");
                 }
                 // add any missing cards
-                for (JSONObject t : _tmplsFromOrds(model, avail)) {
+                ArrayList<JSONObject> tmpls = _tmplsFromOrds(model, avail);
+                for (JSONObject t : tmpls) {
                     int tord = t.getInt("ord");
                     boolean doHave = have.containsKey(nid) && have.get(nid).containsKey(tord);
                     if (!doHave) {
@@ -917,8 +922,9 @@ public class Collection {
     	        cms = findTemplates(note);
     	        break;
             case EDIT:
-    	        cms = new ArrayList<>();
-	            for (Card c : note.cards()) {
+                ArrayList<Card> cards = note.cards();
+    	        cms = new ArrayList<>(cards.size());
+	            for (Card c : cards) {
 	                cms.add(c.template());
 	            }
 	            break;
@@ -926,7 +932,7 @@ public class Collection {
                 JSONArray tmpls = note.model().getJSONArray("tmpls");
                 cms = tmpls.toJSONObjectList();
 	    }
-	    List<Card> cards = new ArrayList<>();
+	    List<Card> cards = new ArrayList<>(cms.size());
 	    for (JSONObject template : cms) {
 	        cards.add(_newCard(note, template, 1, did, false));
 	    }
@@ -1062,8 +1068,9 @@ public class Collection {
 
 
     public <T extends ProgressSender<TaskData> & CancelListener> List<Long> emptyCids(@Nullable T task) {
-        List<Long> rem = new ArrayList<>();
-        for (Model m : getModels().all()) {
+        ArrayList<Model> all = getModels().all();
+        List<Long> rem = new ArrayList<>(all.size());
+        for (Model m : all) {
             rem.addAll(genCards(getModels().nids(m), m, task));
         }
         return rem;
@@ -1117,8 +1124,9 @@ public class Collection {
     /** Update field checksums and sort cache, after find&replace, etc.
      * @param snids comma separated nids*/
     public void updateFieldCache(String snids) {
-        ArrayList<Object[]> r = new ArrayList<>();
-        for (Object[] o : _fieldData(snids)) {
+        ArrayList<Object[]> data = _fieldData(snids);
+        ArrayList<Object[]> r = new ArrayList<>(data.size());
+        for (Object[] o : data) {
             String[] fields = Utils.splitFields((String) o[2]);
             Model model = getModels().get((Long) o[1]);
             if (model == null) {
@@ -1148,9 +1156,10 @@ public class Collection {
     public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
-        Map<String, String> fields = new HashMap<>();
         Map<String, Pair<Integer, JSONObject>> fmap = Models.fieldMap(model);
-        for (Map.Entry<String, Pair<Integer, JSONObject>> entry : fmap.entrySet()) {
+        Set<Map.Entry<String, Pair<Integer, JSONObject>>> maps = fmap.entrySet();
+        Map<String, String> fields = new HashMap<>(maps.size() + 8);
+        for (Map.Entry<String, Pair<Integer, JSONObject>> entry : maps) {
             fields.put(entry.getKey(), flist[entry.getValue().first]);
         }
         int cardNum = ord + 1;
@@ -1169,7 +1178,7 @@ public class Collection {
         fields.put("Card", template.getString("name"));
         fields.put(String.format(Locale.US, "c%d", cardNum), "1");
         // render q & a
-        HashMap<String, String> d = new HashMap<>();
+        HashMap<String, String> d = new HashMap<>(2);
         d.put("id", Long.toString(cid));
         qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
         afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
@@ -1536,7 +1545,7 @@ public class Collection {
 
         //obtain a list of all valid dconf IDs
         List<DeckConfig> allConf = getDecks().allConf();
-        HashSet<Long> configIds  = new HashSet<>();
+        HashSet<Long> configIds  = new HashSet<>(allConf.size());
 
         for (DeckConfig conf : allConf) {
             configIds.add(conf.getLong("id"));
@@ -1559,7 +1568,7 @@ public class Collection {
             }
         }
 
-        List<String> ret = new ArrayList<>();
+        List<String> ret = new ArrayList<>(1);
 
         if (changed > 0) {
             ret.add("Fixed " + changed + " decks with invalid config");
@@ -1630,7 +1639,7 @@ public class Collection {
 
     private ArrayList<String> ensureModelsAreNotEmpty(Runnable notifyProgress) {
         Timber.d("ensureModelsAreNotEmpty()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         if (getModels().ensureNotEmpty()) {
             problems.add("Added missing note type.");
@@ -1641,7 +1650,7 @@ public class Collection {
 
     private ArrayList<String> restoreMissingDatabaseIndices(Runnable notifyProgress) {
         Timber.d("restoreMissingDatabaseIndices");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
         notifyProgress.run();
         int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
@@ -1654,7 +1663,7 @@ public class Collection {
 
     private ArrayList<String> fixDecimalCardsData(Runnable notifyProgress) {
         Timber.d("fixDecimalCardsData");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
                 "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
@@ -1668,7 +1677,7 @@ public class Collection {
 
     private ArrayList<String> fixDecimalRevLogData(Runnable notifyProgress) {
         Timber.d("fixDecimalRevLogData()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
                 "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
@@ -1682,7 +1691,7 @@ public class Collection {
 
     private ArrayList<String> fixExcessiveReviewDueDates(Runnable notifyProgress) {
         Timber.d("fixExcessiveReviewDueDates()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         // reviews should have a reasonable due #
         ArrayList<Long> ids = mDb.queryLongList("SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000");
@@ -1735,7 +1744,7 @@ public class Collection {
 
     private ArrayList<String> removeDeckOptionsFromDynamicDecks(Runnable notifyProgress) {
         Timber.d("removeDeckOptionsFromDynamicDecks()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         //#5708 - a dynamic deck should not have "Deck Options"
         notifyProgress.run();
         int fixCount = 0;
@@ -1759,8 +1768,8 @@ public class Collection {
 
     private ArrayList<String> removeDynamicPropertyFromNonDynamicDecks(Runnable notifyProgress) {
         Timber.d("removeDynamicPropertyFromNonDynamicDecks()");
-        ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> dids = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
+        ArrayList<Long> dids = new ArrayList<>(mDecks.count());
         for (long id : mDecks.allIds()) {
             if (!mDecks.isDyn(id)) {
                 dids.add(id);
@@ -1781,7 +1790,7 @@ public class Collection {
 
     private ArrayList<String> removeOriginalDuePropertyWhereInvalid(Runnable notifyProgress) {
         Timber.d("removeOriginalDuePropertyWhereInvalid()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         // cards with odue set when it shouldn't be
         ArrayList<Long> ids = mDb.queryLongList(
@@ -1797,7 +1806,7 @@ public class Collection {
 
     private ArrayList<String> deleteCardsWithMissingNotes(Runnable notifyProgress) {
         Timber.d("deleteCardsWithMissingNotes()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         // cards with missing notes
         ArrayList<Long> ids = mDb.queryLongList(
@@ -1813,7 +1822,7 @@ public class Collection {
 
     private ArrayList<String> deleteNotesWithMissingCards(Runnable notifyProgress) {
         Timber.d("deleteNotesWithMissingCards()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         // delete any notes with missing cards
         ArrayList<Long> ids = mDb.queryLongList(
@@ -1829,7 +1838,7 @@ public class Collection {
 
     private ArrayList<String> deleteNotesWithWrongFieldCounts(Runnable notifyProgress, JSONObject m) throws JSONException {
         Timber.d("deleteNotesWithWrongFieldCounts");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         // notes with invalid field counts
         ArrayList<Long> ids = new ArrayList<>();
         notifyProgress.run();
@@ -1879,11 +1888,11 @@ public class Collection {
 
     private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, JSONObject m) throws JSONException {
         Timber.d("deleteCardsWithInvalidModelOrdinals()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         notifyProgress.run();
         if (m.getInt("type") == Consts.MODEL_STD) {
-            ArrayList<Integer> ords = new ArrayList<>();
             JSONArray tmpls = m.getJSONArray("tmpls");
+            ArrayList<Integer> ords = new ArrayList<>(tmpls.length());
             for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
                 ords.add(tmpl.getInt("ord"));
             }
@@ -1902,7 +1911,7 @@ public class Collection {
 
     private ArrayList<String> deleteNotesWithMissingModel(Runnable notifyProgress) {
         Timber.d("deleteNotesWithMissingModel()");
-        ArrayList<String> problems = new ArrayList<>();
+        ArrayList<String> problems = new ArrayList<>(1);
         // note types with a missing model
         notifyProgress.run();
         ArrayList<Long> ids = mDb.queryLongList(

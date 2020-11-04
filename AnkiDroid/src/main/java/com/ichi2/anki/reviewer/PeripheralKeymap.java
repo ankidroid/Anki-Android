@@ -123,7 +123,7 @@ public class PeripheralKeymap {
                 //NB: Int is correct here, the value from KeyCode is an int.
                 int unicodeChar = command.getUnicodeCharacter();
                 if (!mUnicodeToCommand.containsKey(unicodeChar)) {
-                    mUnicodeToCommand.put(unicodeChar, new ArrayList<>());
+                    mUnicodeToCommand.put(unicodeChar, new ArrayList<>(0));
                 }
                 //noinspection ConstantConditions
                 mUnicodeToCommand.get(unicodeChar).add(command);
@@ -132,7 +132,7 @@ public class PeripheralKeymap {
             if (command.getKeycode() != null) {
                 Integer c = command.getKeycode();
                 if (!mKeyCodeToCommand.containsKey(c)) {
-                    mKeyCodeToCommand.put(c, new ArrayList<>());
+                    mKeyCodeToCommand.put(c, new ArrayList<>(0));
                 }
                 //noinspection ConstantConditions
                 mKeyCodeToCommand.get(c).add(command);

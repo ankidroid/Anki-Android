@@ -436,7 +436,7 @@ public class Models {
     public static Map<String, Pair<Integer, JSONObject>> fieldMap(@NonNull Model m) {
         JSONArray flds = m.getJSONArray("flds");
         // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-        Map<String, Pair<Integer, JSONObject>> result = new HashMap<>();
+        Map<String, Pair<Integer, JSONObject>> result = new HashMap<>(flds.length());
         for (JSONObject f: flds.jsonObjectIterable()) {
             result.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
         }
@@ -552,7 +552,7 @@ public class Models {
     public void moveField(Model m, JSONObject field, int idx) throws ConfirmModSchemaException {
         mCol.modSchema();
         JSONArray flds = m.getJSONArray("flds");
-        ArrayList<JSONObject> l = new ArrayList<>();
+        ArrayList<JSONObject> l = new ArrayList<>(flds.length());
         int oldidx = -1;
         for (int i = 0; i < flds.length(); ++i) {
             l.add(flds.getJSONObject(i));
@@ -877,12 +877,12 @@ public class Models {
         long mid = newModel.getLong("id");
         String sflds = mCol.getDb().queryString("select flds from notes where id = ?", nid);
         String[] flds = Utils.splitFields(sflds);
-        Map<Integer, String> newflds = new HashMap<>();
+        Map<Integer, String> newflds = new HashMap<>(map.size());
 
         for (Entry<Integer, Integer> entry : map.entrySet()) {
             newflds.put(entry.getValue(), flds[entry.getKey()]);
         }
-        List<String> flds2 = new ArrayList<>();
+        List<String> flds2 = new ArrayList<>(nfields);
         for (int c = 0; c < nfields; ++c) {
             if (newflds.containsKey(c)) {
                 flds2.add(newflds.get(c));
@@ -1094,8 +1094,8 @@ public class Models {
     /** Given a joined field string and a standard note type, return available template ordinals */
     public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld) {
         String[] fields = trimArray(sfld);
-        ArrayList<Integer> avail = new ArrayList<>();
         JSONArray reqArray = m.getJSONArray("req");
+        ArrayList<Integer> avail = new ArrayList<>(reqArray.length());
         templates: for (int i = 0; i < reqArray.length(); i++) {
             JSONArray sr = reqArray.getJSONArray(i);
 
@@ -1196,10 +1196,10 @@ public class Models {
 
 
     public HashMap<Long, HashMap<Integer, String>> getTemplateNames() {
-        HashMap<Long, HashMap<Integer, String>> result = new HashMap<>();
+        HashMap<Long, HashMap<Integer, String>> result = new HashMap<>(mModels.size());
         for (Model m : mModels.values()) {
             JSONArray templates = m.getJSONArray("tmpls");
-            HashMap<Integer, String> names = new HashMap<>();
+            HashMap<Integer, String> names = new HashMap<>(templates.length());
             for (JSONObject t: templates.jsonObjectIterable()) {
                 names.put(t.getInt("ord"), t.getString("name"));
             }
@@ -1219,6 +1219,14 @@ public class Models {
 
     public HashMap<Long, Model> getModels() {
         return mModels;
+    }
+
+
+    /**
+     * @return Number of models
+     */
+    public int count() {
+        return mModels.size();
     }
 
     /** Validate model entries. */

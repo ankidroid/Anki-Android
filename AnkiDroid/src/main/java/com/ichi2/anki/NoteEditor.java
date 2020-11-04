@@ -433,7 +433,7 @@ public class NoteEditor extends AnkiActivity {
         savedInstanceState.putIntegerArrayList("customViewIds", mCustomViewIds);
         savedInstanceState.putSerializable("imageCache", mPastedImageCache);
         if (mSelectedTags == null) {
-            mSelectedTags = new ArrayList<>();
+            mSelectedTags = new ArrayList<>(0);
         }
         savedInstanceState.putStringArrayList("tags", mSelectedTags);
     }
@@ -551,10 +551,10 @@ public class NoteEditor extends AnkiActivity {
 
         // Note type Selector
         mNoteTypeSpinner = findViewById(R.id.note_type_spinner);
-        mAllModelIds = new ArrayList<>();
-        final ArrayList<String> modelNames = new ArrayList<>();
         ArrayList<Model> models = getCol().getModels().all();
         Collections.sort(models, NamedJSONComparator.instance);
+        final ArrayList<String> modelNames = new ArrayList<>(models.size());
+        mAllModelIds = new ArrayList<>(models.size());
         for (JSONObject m : models) {
             modelNames.add(m.getString("name"));
             mAllModelIds.add(m.getLong("id"));
@@ -572,11 +572,11 @@ public class NoteEditor extends AnkiActivity {
             deckTextView.setText(R.string.CardEditorCardDeck);
         }
         mNoteDeckSpinner = findViewById(R.id.note_deck_spinner);
-        mAllDeckIds = new ArrayList<>();
-        final ArrayList<String> deckNames = new ArrayList<>();
 
         ArrayList<Deck> decks = getCol().getDecks().all();
         Collections.sort(decks, DeckComparator.instance);
+        final ArrayList<String> deckNames = new ArrayList<>(decks.size());
+        mAllDeckIds = new ArrayList<>(decks.size());
         for (Deck d : decks) {
             // add current deck and all other non-filtered decks to deck list
             long thisDid = d.getLong("id");
@@ -918,7 +918,7 @@ public class NoteEditor extends AnkiActivity {
     void saveNote() {
         final Resources res = getResources();
         if (mSelectedTags == null) {
-            mSelectedTags = new ArrayList<>();
+            mSelectedTags = new ArrayList<>(0);
         }
         // treat add new note and edit existing note independently
         if (mAddNote) {
@@ -1310,7 +1310,7 @@ public class NoteEditor extends AnkiActivity {
 
     private void showTagsDialog() {
         if (mSelectedTags == null) {
-            mSelectedTags = new ArrayList<>();
+            mSelectedTags = new ArrayList<>(0);
         }
         ArrayList<String> tags = new ArrayList<>(getCol().getTags().all());
         ArrayList<String> selTags = new ArrayList<>(mSelectedTags);
@@ -1476,6 +1476,7 @@ public class NoteEditor extends AnkiActivity {
 
         FieldEditLine previous = null;
 
+        mCustomViewIds.ensureCapacity(editLines.size());
         for (int i = 0; i < editLines.size(); i++) {
             FieldEditLine edit_line_view = editLines.get(i);
             mCustomViewIds.add(edit_line_view.getId());
@@ -1968,7 +1969,7 @@ public class NoteEditor extends AnkiActivity {
 
     @NonNull
     private ArrayList<CustomToolbarButton> getToolbarButtons() {
-        Set<String> set = AnkiDroidApp.getSharedPrefs(this).getStringSet("note_editor_custom_buttons", new HashSet<>());
+        Set<String> set = AnkiDroidApp.getSharedPrefs(this).getStringSet("note_editor_custom_buttons", new HashSet<>(0));
         return CustomToolbarButton.fromStringSet(set);
     }
 
@@ -2049,7 +2050,7 @@ public class NoteEditor extends AnkiActivity {
 
     private void updateTags() {
         if (mSelectedTags == null) {
-            mSelectedTags = new ArrayList<>();
+            mSelectedTags = new ArrayList<>(0);
         }
         mTagsButton.setText(getResources().getString(R.string.CardEditorTags,
                 getCol().getTags().join(getCol().getTags().canonify(mSelectedTags)).trim().replace(" ", ", ")));
@@ -2195,13 +2196,15 @@ public class NoteEditor extends AnkiActivity {
             // Configure the interface according to whether note type is getting changed or not
             if (mAllModelIds.get(pos) != noteModelId) {
                 // Initialize mapping between fields of old model -> new model
-                mModelChangeFieldMap = new HashMap<>();
-                for (int i=0; i < mEditorNote.items().length; i++) {
+                int itemsLength = mEditorNote.items().length;
+                mModelChangeFieldMap = new HashMap<>(itemsLength);
+                for (int i=0; i < itemsLength; i++) {
                     mModelChangeFieldMap.put(i, i);
                 }
                 // Initialize mapping between cards new model -> old model
-                mModelChangeCardMap = new HashMap<>();
-                for (int i = 0; i < newModel.getJSONArray("tmpls").length() ; i++) {
+                int templatesLength = newModel.getJSONArray("tmpls").length();
+                mModelChangeCardMap = new HashMap<>(templatesLength);
+                for (int i = 0; i < templatesLength ; i++) {
                     if (i < mEditorNote.numberOfCards()) {
                         mModelChangeCardMap.put(i, i);
                     } else {

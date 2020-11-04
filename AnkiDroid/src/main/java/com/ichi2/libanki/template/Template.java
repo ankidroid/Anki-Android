@@ -88,7 +88,7 @@ public class Template {
 
     public Template(@NonNull String template, @Nullable Map<String, String> context) {
         mTemplate = template;
-        mContext = context == null ? new HashMap<>() : context;
+        mContext = context == null ? new HashMap<>(0) : context;
     }
 
 

@@ -27,8 +27,9 @@ import androidx.annotation.NonNull;
 public class ViewGroupUtils {
     @NonNull
     public static List<View> getAllChildren(@NonNull ViewGroup viewGroup) {
-        List<View> views = new ArrayList<>();
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+        int childrenCount = viewGroup.getChildCount();
+        List<View> views = new ArrayList<>(childrenCount);
+        for (int i = 0; i < childrenCount; i++) {
             views.add(viewGroup.getChildAt(i));
         }
         return views;

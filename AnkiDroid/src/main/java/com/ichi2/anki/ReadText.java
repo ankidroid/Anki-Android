@@ -107,8 +107,8 @@ public class ReadText {
                     .iconAttr(R.attr.dialogErrorIcon)
                     .positiveText(R.string.dialog_ok);
         } else {
-            ArrayList<CharSequence> dialogItems = new ArrayList<>();
-            final ArrayList<String> dialogIds = new ArrayList<>();
+            ArrayList<CharSequence> dialogItems = new ArrayList<>(availableTtsLocales.size());
+            final ArrayList<String> dialogIds = new ArrayList<>(availableTtsLocales.size());
             // Add option: "no tts"
             dialogItems.add(res.getString(R.string.tts_no_tts));
             dialogIds.add(NO_TTS);
@@ -323,6 +323,7 @@ public class ReadText {
     public static void buildAvailableLanguages() {
         availableTtsLocales.clear();
         Locale[] systemLocales = Locale.getAvailableLocales();
+        availableTtsLocales.ensureCapacity(systemLocales.length);
         for (Locale loc : systemLocales) {
             try {
                 int retCode = mTts.isLanguageAvailable(loc);

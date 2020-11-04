@@ -624,8 +624,9 @@ public class Card implements Cloneable {
             "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"));
 
     public @NonNull String toString() {
-        List<String> members = new ArrayList<>();
-        for (Field f : this.getClass().getDeclaredFields()) {
+        Field[] declaredFields = this.getClass().getDeclaredFields();
+        List<String> members = new ArrayList<>(declaredFields.length);
+        for (Field f : declaredFields) {
             try {
                 // skip non-useful elements
                 if (SKIP_PRINT.contains(f.getName())) {

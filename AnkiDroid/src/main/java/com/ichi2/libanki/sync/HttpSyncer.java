@@ -102,7 +102,7 @@ public class HttpSyncer {
         mHKey = hkey;
         mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
         mCon = con;
-        mPostVars = new HashMap<>();
+        mPostVars = new HashMap<>(0); // New map is created each time it is filled. No need to allocate room
         mHostNum = hostNum;
     }
 

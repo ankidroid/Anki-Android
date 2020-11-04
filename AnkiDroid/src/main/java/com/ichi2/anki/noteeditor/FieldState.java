@@ -102,7 +102,7 @@ public class FieldState {
 
 
     private List<FieldEditLine> recreateFieldsFromState() {
-        List<FieldEditLine> editLines = new ArrayList<>();
+        List<FieldEditLine> editLines = new ArrayList<>(mSavedFieldData.size());
         for (AbsSavedState state : mSavedFieldData) {
             FieldEditLine edit_line_view = new FieldEditLine(mEditor);
             if (edit_line_view.getId() == 0) {
@@ -119,7 +119,7 @@ public class FieldState {
     protected List<FieldEditLine> createFields(FieldChangeType type) {
         String[][] fields = getFields(type);
 
-        List<FieldEditLine> editLines = new ArrayList<>();
+        List<FieldEditLine> editLines = new ArrayList<>(fields.length);
         for (int i = 0; i < fields.length; i++) {
             FieldEditLine edit_line_view = new FieldEditLine(mEditor);
             editLines.add(edit_line_view);
@@ -200,7 +200,7 @@ public class FieldState {
             return;
         }
 
-        List<View.BaseSavedState> important = new ArrayList<>();
+        List<View.BaseSavedState> important = new ArrayList<>(customViewIds.size());
         for (Integer i : customViewIds) {
             important.add((View.BaseSavedState) views.get(i));
         }

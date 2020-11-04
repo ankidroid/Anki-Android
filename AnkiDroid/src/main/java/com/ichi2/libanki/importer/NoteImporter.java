@@ -157,19 +157,19 @@ public class NoteImporter extends Importer {
             }
         }
 
-        HashSet<String> firsts = new HashSet<>();
+        HashSet<String> firsts = new HashSet<>(notes.size());
         int fld0index = mMapping.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
         mFMap = Models.fieldMap(mModel);
         mNextId = mCol.getTime().timestampID(mCol.getDb(), "notes");
         // loop through the notes
-        List<Object[]> updates = new ArrayList<>();
-        List<String> updateLog = new ArrayList<>();
+        List<Object[]> updates = new ArrayList<>(notes.size());
+        List<String> updateLog = new ArrayList<>(notes.size());
         // PORT: Translations moved closer to their sources
         List<Object[]> _new = new ArrayList<>();
         _ids = new ArrayList<>();
         mEmptyNotes = false;
         int dupeCount = 0;
-        List<String> dupes = new ArrayList<>();
+        List<String> dupes = new ArrayList<>(notes.size());
         for (ForeignNote n : notes) {
             for (int c = 0; c < n.mFields.size(); c++) {
                 if (!this.mAllowHTML) {
@@ -389,7 +389,7 @@ public class NoteImporter extends Importer {
     /** Not in libAnki */
 
     private <T> List<Map.Entry<Integer, T>> enumerate(List<T> list) {
-        List<Map.Entry<Integer, T>> ret = new ArrayList<>();
+        List<Map.Entry<Integer, T>> ret = new ArrayList<>(list.size());
         int index = 0;
         for (T el : list) {
             ret.add(new AbstractMap.SimpleEntry<>(index, el));

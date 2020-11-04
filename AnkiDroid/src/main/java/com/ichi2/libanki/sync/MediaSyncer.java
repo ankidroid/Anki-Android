@@ -120,7 +120,7 @@ public class MediaSyncer {
                     break;
                 }
 
-                List<String> need = new ArrayList<>();
+                List<String> need = new ArrayList<>(data.length());
                 lastUsn = data.getJSONArray(data.length()-1).getInt(1);
                 for (int i = 0; i < data.length(); i++) {
                     // Allow cancellation (note: media sync has no finish command, so just throw)

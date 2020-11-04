@@ -286,7 +286,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
         @NonNull
         public static List<SelectableDeck> fromCollection(@NonNull Collection c, @NonNull FunctionalInterfaces.Filter<Deck> filter) {
             List<Deck> all = c.getDecks().all();
-            List<SelectableDeck> ret = new ArrayList<>();
+            List<SelectableDeck> ret = new ArrayList<>(all.size());
             for (Deck d : all) {
                 if (!filter.shouldInclude(d)) {
                     continue;
