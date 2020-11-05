@@ -27,6 +27,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.utils.Time;
@@ -307,9 +308,9 @@ public class AdvancedStatistics {
 
         ArrayList<int[]> dues = new ArrayList<>();
 
-        EaseClassifier classifier = new EaseClassifier(mCol.getTime(), mCol.getDb().getDatabase());
-        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier, end, chunk);
-        TodayStats todayStats = new TodayStats(mCol.getDb().getDatabase(), Settings.getDayStartCutoff(mCol.getCrt()));
+        EaseClassifier classifier = new EaseClassifier(mCol.getTime(), mCol.getDb());
+        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb(), classifier, end, chunk);
+        TodayStats todayStats = new TodayStats(mCol.getDb(), Settings.getDayStartCutoff(mCol.getCrt()));
 
         long t0 = mCol.getTime().intTimeMS();
         SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
@@ -555,7 +556,7 @@ public class AdvancedStatistics {
         private final int today;
         private final Deck deck;
 
-        public CardIterator(SupportSQLiteDatabase db, int today, Deck deck) {
+        public CardIterator(DB db, int today, Deck deck) {
 
             this.today = today;
             this.deck = deck;
@@ -568,7 +569,7 @@ public class AdvancedStatistics {
                     "AND queue != " + Consts.QUEUE_TYPE_SUSPENDED + " " +   // ignore suspended cards
                     "order by id;";
             Timber.d("Forecast query: %s", query);
-            cur = db.query(query, null);
+            cur = db.query(query);
 
         }
 
@@ -607,7 +608,7 @@ public class AdvancedStatistics {
 
         private final Random random;
 
-        private final SupportSQLiteDatabase db;
+        private final DB db;
         private double[][] probabilities;
         private double[][] probabilitiesCumulative;
 
@@ -650,7 +651,7 @@ public class AdvancedStatistics {
                 queryBaseYoungMature
                         + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl >= 21;";
 
-        public EaseClassifier(Time time, SupportSQLiteDatabase db) {
+        public EaseClassifier(Time time, DB db) {
             this.db = db;
 
             singleReviewOutcome = new ReviewOutcome(null, 0);
@@ -716,7 +717,7 @@ public class AdvancedStatistics {
 
             int n = prior[REVIEW_OUTCOME_REPEAT] + prior[REVIEW_OUTCOME_HARD] + prior[REVIEW_OUTCOME_GOOD] + prior[REVIEW_OUTCOME_EASY];
 
-            try (Cursor cur = db.query(queryNewEaseCountForCurrentEase, null)) {
+            try (Cursor cur = db.query(queryNewEaseCountForCurrentEase)) {
                 cur.moveToNext();
 
                 freqs[REVIEW_OUTCOME_REPEAT]    += cur.getInt(REVIEW_OUTCOME_REPEAT_PLUS_1);        //Repeat
@@ -816,7 +817,7 @@ public class AdvancedStatistics {
 
         private final Map<Long, Integer> nLearnedPerDeckId = new HashMap<>();
 
-        public TodayStats(SupportSQLiteDatabase db, long dayStartCutoff) {
+        public TodayStats(DB db, long dayStartCutoff) {
 
             String query = "select cards.did, "+
                     "sum(case when revlog.type = " + CARD_TYPE_NEW + " then 1 else 0 end)"+ /* learning */
@@ -824,7 +825,7 @@ public class AdvancedStatistics {
                     " group by cards.did";
             Timber.d("AdvancedStatistics.TodayStats query: %s", query);
 
-            try (Cursor cur = db.query(query, null)) {
+            try (Cursor cur = db.query(query)) {
 
                 while(cur.moveToNext()) {
                     nLearnedPerDeckId.put(cur.getLong(0), cur.getInt(1));
@@ -879,7 +880,7 @@ public class AdvancedStatistics {
      */
     private class ReviewSimulator {
 
-        private final SupportSQLiteDatabase db;
+        private final DB db;
         private final EaseClassifier classifier;
 
         //TODO: also exists in Review
@@ -890,7 +891,7 @@ public class AdvancedStatistics {
 
         private final NewCardSimulator newCardSimulator = new NewCardSimulator();
 
-        public ReviewSimulator(SupportSQLiteDatabase db, EaseClassifier classifier, int nTimeBins, int timeBinLength) {
+        public ReviewSimulator(DB db, EaseClassifier classifier, int nTimeBins, int timeBinLength) {
             this.db = db;
             this.classifier = classifier;
 

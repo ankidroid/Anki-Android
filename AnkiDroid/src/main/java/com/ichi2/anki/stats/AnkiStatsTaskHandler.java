@@ -215,8 +215,7 @@ public class AnkiStatsTaskHandler {
                 Timber.d("DeckPreviewStatistics query: %s", query);
 
                 try (Cursor cur = collection.getDb()
-                            .getDatabase()
-                            .query(query, null)) {
+                            .query(query)) {
 
                     cur.moveToFirst();
                     cards = cur.getInt(0);

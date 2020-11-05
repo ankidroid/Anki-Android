@@ -355,7 +355,6 @@ public class Sched extends SchedV2 {
             return true;
         }
         mLrnQueue.clear();
-        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         /* Difference with upstream:
          * Current card can't come in the queue.
          *
@@ -364,9 +363,9 @@ public class Sched extends SchedV2 {
          * _getLrnCard which did remove the card from the queue. _sortIntoLrn will add the card back to the queue if
          * required when the card is reviewed.
          */
-        try (Cursor cur = db.query(
+        try (Cursor cur = mCol.getDb().query(
                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
-                           new Object[]{mDayCutoff, currentCardId(), mReportLimit})) {
+                           mDayCutoff, currentCardId(), mReportLimit)) {
             while (cur.moveToNext()) {
                 mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
@@ -676,7 +675,6 @@ public class Sched extends SchedV2 {
         if (mRevCount == 0) {
             return false;
         }
-        SupportSQLiteDatabase db = mCol.getDb().getDatabase();
         while (!mRevDids.isEmpty()) {
             long did = mRevDids.getFirst();
             int lim = Math.min(mQueueLimit, _deckRevLimit(did, false));
@@ -685,10 +683,10 @@ public class Sched extends SchedV2 {
                 // fill the queue with the current did
                 String idName = (allowSibling) ? "id": "nid";
                 long id = (allowSibling) ? currentCardId(): currentCardNid();
-                try (Cursor cur = db.query(
+                try (Cursor cur = mCol.getDb().query(
                         "SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
                                 + " AND " + idName + " != ? LIMIT ?",
-                        new Object[]{did, mToday, id, lim})) {
+                        did, mToday, id, lim)) {
                     /* Difference with upstream: we take current card into account.
                      *
                      * When current card is answered, the card is not due anymore, so does not belong to the queue.
@@ -1293,13 +1291,12 @@ public class Sched extends SchedV2 {
         if (reload || mEtaCache[0] == -1) {
             try (Cursor cur = mCol
                         .getDb()
-                        .getDatabase()
                         .query("select "
                                 + "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, "
                                 + "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING+ ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then time else null end) as revTime, "
                                 + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
                                 + "from revlog where id > "
-                                + ((mCol.getSched().getDayCutoff() - (10 * SECONDS_PER_DAY)) * 1000), null)) {
+                                + ((mCol.getSched().getDayCutoff() - (10 * SECONDS_PER_DAY)) * 1000))) {
                 if (!cur.moveToFirst()) {
                     return -1;
                 }

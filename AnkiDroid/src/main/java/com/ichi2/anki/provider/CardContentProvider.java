@@ -247,7 +247,7 @@ public class CardContentProvider extends ContentProvider {
                 /* Search for notes using direct SQL query */
                 String[] proj = sanitizeNoteProjection(projection);
                 String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, selection, null, null, order, null);
-                return col.getDb().getDatabase().query(sql, selectionArgs);
+                return col.getDb().query(sql, (Object[])selectionArgs);
             }
             case NOTES: {
                 /* Search for notes using the libanki browser syntax */
@@ -267,7 +267,7 @@ public class CardContentProvider extends ContentProvider {
                 String noteId = uri.getPathSegments().get(1);
                 String[] proj = sanitizeNoteProjection(projection);
                 String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, "id=?", null, null, order, null);
-                return col.getDb().getDatabase().query(sql, new String[]{noteId});
+                return col.getDb().query(sql, noteId);
             }
 
             case NOTES_ID_CARDS: {

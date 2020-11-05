@@ -138,7 +138,7 @@ public class Tags {
             mChanged = true;
         }
         List<String> tags = new ArrayList<>();
-        try (Cursor cursor = mCol.getDb().getDatabase().query("SELECT DISTINCT tags FROM notes" + lim, null)) {
+        try (Cursor cursor = mCol.getDb().query("SELECT DISTINCT tags FROM notes" + lim)) {
             while (cursor.moveToNext()) {
                 tags.add(cursor.getString(0));
             }
@@ -236,9 +236,8 @@ public class Tags {
         ArrayList<Object[]> res = new ArrayList<>();
         try (Cursor cur = mCol
                 .getDb()
-                .getDatabase()
                 .query("select id, tags from notes where id in " + Utils.ids2str(ids) +
-                        " and (" + lim + ")", null)) {
+                        " and (" + lim + ")")) {
             if (add) {
                 while (cur.moveToNext()) {
                     res.add(new Object[] { addToStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(), cur.getLong(0) });
