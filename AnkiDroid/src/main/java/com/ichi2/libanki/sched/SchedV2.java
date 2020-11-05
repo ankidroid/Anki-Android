@@ -2630,8 +2630,8 @@ public class SchedV2 extends AbstractSched {
         }
         // reorder cards
         ArrayList<Object[]> d = new ArrayList<>();
-        try (Cursor cur = mCol.getDb().getDatabase()
-                    .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids, null)) {
+        try (Cursor cur = mCol.getDb()
+                    .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids)) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(1);
                 d.add(new Object[] { due.get(nid), now, mCol.usn(), cur.getLong(0) });

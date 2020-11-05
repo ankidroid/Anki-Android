@@ -761,10 +761,10 @@ public class Finder {
             return null;
         }
         LinkedList<Long> nids = new LinkedList<>();
-        try (Cursor cur = mCol.getDb().getDatabase().query(
+        try (Cursor cur = mCol.getDb().query(
                 "select id, mid, flds from notes where mid in " +
                         Utils.ids2str(new LinkedList<>(mods.keySet())) +
-                        " and flds like ? escape '\\'", new String[] {"%" + sqlVal + "%"})) {
+                        " and flds like ? escape '\\'",  "%" + sqlVal + "%")) {
             /*
              * Here we use the sqlVal expression, that is required for LIKE syntax in sqllite.
              * There is no problem with special characters, because only % and _ are special
@@ -797,9 +797,9 @@ public class Finder {
         val = split[1];
         String csum = Long.toString(Utils.fieldChecksumWithoutHtmlMedia(val));
         List<Long> nids = new ArrayList<>();
-        try (Cursor cur = mCol.getDb().getDatabase().query(
+        try (Cursor cur = mCol.getDb().query(
                 "select id, flds from notes where mid=? and csum=?",
-                new String[] {mid, csum})) {
+                mid, csum)) {
             long nid = cur.getLong(0);
             String flds = cur.getString(1);
             if (Utils.stripHTMLMedia(Utils.splitFields(flds)[0]).equals(val)) {
@@ -896,8 +896,8 @@ public class Finder {
         ArrayList<Object[]> d = new ArrayList<>();
         String snids = Utils.ids2str(nids);
         Map<Long, java.util.Collection<Long>> midToNid = new HashMap<>();
-        try (Cursor cur = col.getDb().getDatabase().query(
-                "select id, mid, flds from notes where id in " + snids, null)) {
+        try (Cursor cur = col.getDb().query(
+                "select id, mid, flds from notes where id in " + snids)) {
             while (cur.moveToNext()) {
                 long mid = cur.getLong(1);
                 String flds = cur.getString(2);
@@ -981,8 +981,8 @@ public class Finder {
         Map<String, List<Long>> vals = new HashMap<>();
         List<Pair<String, List<Long>>> dupes = new ArrayList<>();
         Map<Long, Integer> fields = new HashMap<>();
-        try (Cursor cur = col.getDb().getDatabase().query(
-                "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)), null)) {
+        try (Cursor cur = col.getDb().query(
+                "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)))) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);

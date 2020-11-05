@@ -658,8 +658,8 @@ public class Models {
         }
         ArrayList<Object[]> r = new ArrayList<>();
 
-        try (Cursor cur = mCol.getDb().getDatabase()
-                .query("select id, flds from notes where mid = ?", new Object[]{m.getLong("id")})) {
+        try (Cursor cur = mCol.getDb()
+                .query("select id, flds from notes where mid = ?", m.getLong("id"))) {
             while (cur.moveToNext()) {
                 r.add(new Object[] {
                         Utils.joinFields(fn.transform(Utils.splitFields(cur.getString(1)))),
@@ -912,8 +912,8 @@ public class Models {
         int omType = oldModel.getInt("type");
         int nmType = newModel.getInt("type");
         int nflds = newModel.getJSONArray("tmpls").length();
-        try (Cursor cur = mCol.getDb().getDatabase().query(
-                    "select id, ord from cards where nid = ?", new Object[] {nid})) {
+        try (Cursor cur = mCol.getDb().query(
+                    "select id, ord from cards where nid = ?", nid)) {
             while (cur.moveToNext()) {
                 // if the src model is a cloze, we ignore the map, as the gui doesn't currently
                 // support mapping them

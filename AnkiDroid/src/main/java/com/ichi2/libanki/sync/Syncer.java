@@ -491,29 +491,15 @@ public class Syncer {
         if ("revlog".equals(table)) {
             return mCol
                     .getDb()
-                    .getDatabase()
-                    .query(
-                            String.format(Locale.US,
-                                    "SELECT id, cid, %d, ease, ivl, lastIvl, factor, time, type FROM revlog WHERE %s",
-                                    mMaxUsn, limAndArg.first), limAndArg.second);
+                    .query("SELECT id, cid, " + mMaxUsn + ", ease, ivl, lastIvl, factor, time, type FROM revlog WHERE " + limAndArg.first, limAndArg.second);
         } else if ("cards".equals(table)) {
             return mCol
                     .getDb()
-                    .getDatabase()
-                    .query(
-                            String.format(
-                                    Locale.US,
-                                    "SELECT id, nid, did, ord, mod, %d, type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE %s",
-                                    mMaxUsn, limAndArg.first), limAndArg.second);
+                    .query("SELECT id, nid, did, ord, mod, " + mMaxUsn + ", type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE " + limAndArg.first, limAndArg.second);
         } else {
             return mCol
                     .getDb()
-                    .getDatabase()
-                    .query(
-                            String.format(
-                                    Locale.US,
-                                    "SELECT id, guid, mid, mod, %d, tags, flds, '', '', flags, data FROM notes WHERE %s",
-                                    mMaxUsn, limAndArg.first), limAndArg.second);
+                    .query("SELECT id, guid, mid, mod, " + mMaxUsn + ", tags, flds, '', '', flags, data FROM notes WHERE " + limAndArg.first, limAndArg.second);
         }
     }
 
@@ -611,7 +597,6 @@ public class Syncer {
         Pair<String, Object[]> limAndArgs = usnLim();
         try (Cursor cur = mCol
                     .getDb()
-                    .getDatabase()
                     .query("SELECT oid, type FROM graves WHERE " + limAndArgs.first, limAndArgs.second)) {
             while (cur.moveToNext()) {
                 @Consts.REM_TYPE int type = cur.getInt(1);
@@ -840,10 +825,9 @@ public class Syncer {
         HashMap<Long, Long> lmods = new HashMap<>();
         try (Cursor cur = mCol
                     .getDb()
-                    .getDatabase()
                     .query(
                             "SELECT id, mod FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND "
-                                    + usnLim(), null)) {
+                                    + usnLim())) {
             while (cur.moveToNext()) {
                 lmods.put(cur.getLong(0), cur.getLong(1));
             }

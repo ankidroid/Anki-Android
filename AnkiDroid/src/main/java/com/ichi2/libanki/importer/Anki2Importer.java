@@ -197,7 +197,7 @@ public class Anki2Importer extends Importer {
         // build guid -> (id,mod,mid) hash & map of existing note ids
         mNotes = new HashMap<>(noteCount);
         Set<Long> existing = new HashSet<>(noteCount);
-        try (Cursor cur = mDst.getDb().getDatabase().query("select id, guid, mod, mid from notes", null)) {
+        try (Cursor cur = mDst.getDb().query("select id, guid, mod, mid from notes")) {
             while (cur.moveToNext()) {
                 long id = cur.getLong(0);
                 String guid = cur.getString(1);
@@ -224,7 +224,7 @@ public class Anki2Importer extends Importer {
         int dupes = 0;
         ArrayList<String> dupesIgnored = new ArrayList<>();
         mDst.getDb().getDatabase().beginTransaction();
-        try (Cursor cur = mSrc.getDb().getDatabase().query("select * from notes", null)) {
+        try (Cursor cur = mSrc.getDb().query("select * from notes")) {
             // Counters for progress updates
             int total = cur.getCount();
             boolean largeCollection = total > 200;
@@ -504,9 +504,9 @@ public class Anki2Importer extends Importer {
          */
         Map<String, Map<Integer, Long>> mCards = new HashMap<>();
         Map<Long, Boolean> existing = new HashMap<>();
-        try (Cursor cur = mDst.getDb().getDatabase().query(
+        try (Cursor cur = mDst.getDb().query(
                     "select f.guid, c.ord, c.id from cards c, notes f " +
-                    "where c.nid = f.id", null)) {
+                    "where c.nid = f.id")) {
             while (cur.moveToNext()) {
                 String guid = cur.getString(0);
                 int ord = cur.getInt(1);
@@ -531,9 +531,9 @@ public class Anki2Importer extends Importer {
         int usn = mDst.usn();
         long aheadBy = mSrc.getSched().getToday() - mDst.getSched().getToday();
         mDst.getDb().getDatabase().beginTransaction();
-        try (Cursor cur = mSrc.getDb().getDatabase().query(
+        try (Cursor cur = mSrc.getDb().query(
                     "select f.guid, f.mid, c.* from cards c, notes f " +
-                    "where c.nid = f.id", null)) {
+                    "where c.nid = f.id")) {
 
             // Counters for progress updates
             int total = cur.getCount();
@@ -605,7 +605,7 @@ public class Anki2Importer extends Importer {
                 }
                 cards.add(card);
                 // we need to import revlog, rewriting card ids and bumping usn
-                try (Cursor cur2 = mSrc.getDb().getDatabase().query("select * from revlog where cid = " + scid, null)) {
+                try (Cursor cur2 = mSrc.getDb().query("select * from revlog where cid = " + scid)) {
                     while (cur2.moveToNext()) {
                         Object[] rev = new Object[] { cur2.getLong(0), cur2.getLong(1), cur2.getInt(2), cur2.getInt(3),
                                 cur2.getLong(4), cur2.getLong(5), cur2.getLong(6), cur2.getLong(7), cur2.getInt(8) };

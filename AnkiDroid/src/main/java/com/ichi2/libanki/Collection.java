@@ -265,9 +265,9 @@ public class Collection {
         String deckConf = "";
         try {
             // Read in deck table columns
-            cursor = mDb.getDatabase().query(
+            cursor = mDb.query(
                     "SELECT crt, mod, scm, dty, usn, ls, " +
-                    "conf, dconf, tags FROM col", null);
+                    "conf, dconf, tags FROM col");
             if (!cursor.moveToFirst()) {
                 return;
             }
@@ -774,7 +774,7 @@ public class Collection {
         HashMap<Long, Long> dids = new HashMap<>();
         // For each note, an arbitrary due of one of its due card processed, if any exists
         HashMap<Long, Long> dues = new HashMap<>();
-        try (Cursor cur = mDb.getDatabase().query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids, null)) {
+        try (Cursor cur = mDb.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids)) {
             while (cur.moveToNext()) {
                 if (task != null && task.isCancelled()) {
                     Timber.v("Empty card cancelled");
@@ -813,7 +813,7 @@ public class Collection {
         long now = getTime().intTime();
         ArrayList<Long> rem = new ArrayList<>();
         int usn = usn();
-        try (Cursor cur = mDb.getDatabase().query("SELECT id, flds FROM notes WHERE id IN " + snids, null)) {
+        try (Cursor cur = mDb.query("SELECT id, flds FROM notes WHERE id IN " + snids)) {
             while (cur.moveToNext()) {
                 if (task != null && task.isCancelled()) {
                     Timber.v("Empty card cancelled");
@@ -1056,8 +1056,8 @@ public class Collection {
 
     public String emptyCardReport(List<Long> cids) {
         StringBuilder rep = new StringBuilder();
-        try (Cursor cur = mDb.getDatabase().query("select group_concat(ord+1), count(), flds from cards c, notes n "
-                                           + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid", null)) {
+        try (Cursor cur = mDb.query("select group_concat(ord+1), count(), flds from cards c, notes n "
+                                           + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid")) {
             while (cur.moveToNext()) {
                 String ords = cur.getString(0);
                 //int cnt = cur.getInt(1);  // present but unused upstream as well
@@ -1075,7 +1075,7 @@ public class Collection {
 
     private ArrayList<Object[]> _fieldData(String snids) {
         ArrayList<Object[]> result = new ArrayList<>();
-        try (Cursor cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null)) {
+        try (Cursor cur = mDb.query("SELECT id, mid, flds FROM notes WHERE id IN " + snids)) {
             while (cur.moveToNext()) {
                 result.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getString(2) });
             }
@@ -1198,9 +1198,9 @@ public class Collection {
 
     public ArrayList<Object[]> _qaData(String where) {
         ArrayList<Object[]> data = new ArrayList<>();
-        try (Cursor cur = mDb.getDatabase().query(
+        try (Cursor cur = mDb.query(
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
-                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where, null)) {
+                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where)) {
             while (cur.moveToNext()) {
                 data.add(new Object[] { cur.getLong(0), cur.getLong(1),
                         getModels().get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
@@ -1817,7 +1817,7 @@ public class Collection {
         // notes with invalid field counts
         ArrayList<Long> ids = new ArrayList<>();
         notifyProgress.run();
-        try (Cursor cur = mDb.getDatabase().query("select id, flds from notes where mid = ?", new Object[]{ m.getLong("id")})) {
+        try (Cursor cur = mDb.query("select id, flds from notes where mid = ?",  m.getLong("id"))) {
             Timber.i("cursor size: %d", cur.getCount());
             int currentRow = 0;
 

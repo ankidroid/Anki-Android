@@ -23,6 +23,8 @@ import android.database.sqlite.SQLiteTransactionListener;
 import android.os.CancellationSignal;
 import android.util.Pair;
 
+import com.ichi2.libanki.DB;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;

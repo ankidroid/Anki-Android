@@ -432,7 +432,7 @@ public class Media {
         File mdir = new File(dir());
         // gather all media references in NFC form
         Set<String> allRefs = new HashSet<>();
-        try (Cursor cur = mCol.getDb().getDatabase().query("select id, mid, flds from notes", null)) {
+        try (Cursor cur = mCol.getDb().query("select id, mid, flds from notes")) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
@@ -692,7 +692,7 @@ public class Media {
 
     private Pair<List<String>, List<String>> _changes() {
         Map<String, Object[]> cache = new HashMap<>();
-        try (Cursor cur = mDb.getDatabase().query("select fname, csum, mtime from media where csum is not null", null)) {
+        try (Cursor cur = mDb.query("select fname, csum, mtime from media where csum is not null")) {
             while (cur.moveToNext()) {
                 String name = cur.getString(0);
                 String csum = cur.getString(1);
@@ -781,7 +781,7 @@ public class Media {
 
 
     public Pair<String, Integer> syncInfo(String fname) {
-        try (Cursor cur = mDb.getDatabase().query("select csum, dirty from media where fname=?", new String[] {fname})) {
+        try (Cursor cur = mDb.query("select csum, dirty from media where fname=?", fname)) {
             if (cur.moveToNext()) {
                 String csum = cur.getString(0);
                 int dirty = cur.getInt(1);
@@ -854,8 +854,8 @@ public class Media {
         File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncToServer.zip"));
         List<String> fnames = new ArrayList<>();
         try (ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
-             Cursor cur = mDb.getDatabase().query(
-                "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT, null);
+             Cursor cur = mDb.query(
+                "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT);
         ) {
             z.setMethod(ZipOutputStream.DEFLATED);
 

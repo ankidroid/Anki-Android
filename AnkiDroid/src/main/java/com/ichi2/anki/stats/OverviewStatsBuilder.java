@@ -305,7 +305,7 @@ public class OverviewStatsBuilder {
                         "%s\n" +
                         "group by day order by day",
                 mCol.getSched().getToday(), chunk, _limit(), lim);
-        try (Cursor cur = mCol.getDb().getDatabase().query(query, null)) {
+        try (Cursor cur = mCol.getDb().query(query)) {
             while (cur.moveToNext()) {
                 d.add(new int[]{cur.getInt(0), cur.getInt(1), cur.getInt(2)});
             }
