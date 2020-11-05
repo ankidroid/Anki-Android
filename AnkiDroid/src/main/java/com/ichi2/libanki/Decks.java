@@ -1019,7 +1019,7 @@ public class Decks {
         }
     }
 
-    public List<Long> childDids(Long did, Node childMap) {
+    public List<Long> childDids(long did, Node childMap) {
         List<Long> arr = new ArrayList<>();
         gather(childMap.get(did), arr);
         return arr;
