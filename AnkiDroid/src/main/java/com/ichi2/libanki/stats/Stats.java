@@ -1269,7 +1269,7 @@ public class Stats {
      * @param col collection
      * @return
      */
-    public static String deckLimit(Long deckId, Collection col) {
+    public static String deckLimit(long deckId, Collection col) {
         if (deckId == ALL_DECKS_ID) {
             // All decks
             ArrayList<Long> ids = new ArrayList<>();
