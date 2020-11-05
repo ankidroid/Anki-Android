@@ -1504,9 +1504,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
         if (updatedCardTags != null) {
             Map<Long, String> updatedCardTagsMult = new HashMap<>();
             updatedCardTagsMult.put(card.getNid(), updatedCardTags);
-            updateCardsInList(cards, updatedCardTagsMult);
+            updateCardsInList(cards);
         } else {
-            updateCardsInList(cards, null);
+            updateCardsInList(cards);
         }
     }
 
@@ -1616,9 +1616,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     /**
      * @param cards Cards that were changed
-     * @param updatedCardTags Mapping note id -> updated tags
      */
-    private void updateCardsInList(List<Card> cards, Map<Long, String> updatedCardTags) {
+    private void updateCardsInList(List<Card> cards) {
         CardCollection<CardCache> cardList = getCards();
         Map<Long, Integer> idToPos = getPositionMap(cardList);
         for (Card c : cards) {
@@ -1773,7 +1772,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         protected void actualOnValidPostExecute(CardBrowser browser, TaskData result) {
             Card[] cards = (Card[]) result.getObjArray();
-            browser.updateCardsInList(Arrays.asList(cards), null);
+            browser.updateCardsInList(Arrays.asList(cards));
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
@@ -1797,7 +1796,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         @Override
         protected void actualOnValidPostExecute(CardBrowser browser, TaskData result) {
             Card[] cards = (Card[]) result.getObjArray();
-            browser.updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards))), null);
+            browser.updateCardsInList(CardUtils.getAllCards(CardUtils.getNotes(Arrays.asList(cards))));
             browser.hideProgressBar();
             browser.invalidateOptionsMenu();    // maybe the availability of undo changed
         }
