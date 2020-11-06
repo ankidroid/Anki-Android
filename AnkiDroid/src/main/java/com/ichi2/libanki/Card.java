@@ -148,7 +148,7 @@ public class Card implements Cloneable {
 
 
     public void load() {
-        try (Cursor cursor = mCol.getDb().getDatabase().query("SELECT * FROM cards WHERE id = " + mId, null)) {
+        try (Cursor cursor = mCol.getDb().getDatabase().query("SELECT * FROM cards WHERE id = ?", new Object[]{mId})) {
             if (!cursor.moveToFirst()) {
                 throw new WrongId(mId, "card");
             }
@@ -241,7 +241,7 @@ public class Card implements Cloneable {
         values.put("odid", mODid);
         values.put("did", mDid);
         // TODO: The update DB call sets mod=true. Verify if this is intended.
-        mCol.getDb().update("cards", values, "id = " + mId, null);
+        mCol.getDb().update("cards", values, "id = ?", new String[] {Long.toString(mId)});
         mCol.log(this);
     }
 

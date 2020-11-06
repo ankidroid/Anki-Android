@@ -89,7 +89,7 @@ public class Note implements Cloneable {
     public void load() {
         Timber.d("load()");
         try (Cursor cursor = mCol.getDb().getDatabase()
-                .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null)) {
+                .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = ?", new Object[] {mId})) {
             if (!cursor.moveToFirst()) {
                 throw new WrongId(mId, "note");
             }
