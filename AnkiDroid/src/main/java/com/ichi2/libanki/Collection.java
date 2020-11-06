@@ -1595,14 +1595,14 @@ public class Collection {
         getDecks().flush();
 
         mDb.execute("update cards " +
-                        "set did = " + nextDeckId + ", " +
+                        "set did = ?, " +
                         "odid = 0," +
-                        "mod = " +  getTime().intTime() + ", " +
-                        "usn = " + usn() + " " +
+                        "mod = ?, " +
+                        "usn = ? " +
                         "where did in " +
                         Utils.ids2str(dynDeckIds) +
                         "and odid in " +
-                        Utils.ids2str(dynIdsAndZero));
+                        Utils.ids2str(dynIdsAndZero), nextDeckId, getTime().intTime(), usn());
 
 
         result.setCardsWithFixedHomeDeckCount(cardIds.size());
@@ -1673,8 +1673,7 @@ public class Collection {
         notifyProgress.run();
         if (ids.size() > 0) {
             problems.add("Reviews had incorrect due date.");
-            mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  getTime().intTime() +
-                    ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.collection2Array(ids)));
+            mDb.execute("UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(Utils.collection2Array(ids)), mSched.getToday(), getTime().intTime(), usn());
         }
         return problems;
     }
@@ -1693,8 +1692,7 @@ public class Collection {
         Timber.d("fixNewCardDuePositionOverflow");
         // new cards can't have a due position > 32 bits
         notifyProgress.run();
-        mDb.execute("UPDATE cards SET due = 1000000, mod = " + getTime().intTime() + ", usn = " + usn()
-                + " WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW);
+        mDb.execute("UPDATE cards SET due = 1000000, mod = ?, usn = ? WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW, getTime().intTime(), usn());
         return Collections.emptyList();
     }
 
@@ -1819,7 +1817,7 @@ public class Collection {
         // notes with invalid field counts
         ArrayList<Long> ids = new ArrayList<>();
         notifyProgress.run();
-        try (Cursor cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null)) {
+        try (Cursor cur = mDb.getDatabase().query("select id, flds from notes where mid = ?", new Object[]{ m.getLong("id")})) {
             Timber.i("cursor size: %d", cur.getCount());
             int currentRow = 0;
 

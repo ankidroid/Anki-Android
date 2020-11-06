@@ -19,6 +19,7 @@ package com.ichi2.libanki.sync;
 
 import android.database.Cursor;
 import android.database.SQLException;
+import android.util.Pair;
 
 
 import com.ichi2.anki.AnkiDroidApp;
@@ -444,11 +445,11 @@ public class Syncer {
     // return result;
     // }
 
-    private String usnLim() {
+    private Pair<String, Object[]> usnLim() {
         if (mCol.getServer()) {
-            return "usn >= " + mMinUsn;
+            return new Pair("usn >= ?", new Object[] {mMinUsn});
         } else {
-            return "usn = -1";
+            return new Pair("usn = -1", null);
         }
     }
 
@@ -486,7 +487,7 @@ public class Syncer {
 
 
     private Cursor cursorForTable(String table) {
-        String lim = usnLim();
+        Pair<String, Object[]> limAndArg = usnLim();
         if ("revlog".equals(table)) {
             return mCol
                     .getDb()
@@ -494,7 +495,7 @@ public class Syncer {
                     .query(
                             String.format(Locale.US,
                                     "SELECT id, cid, %d, ease, ivl, lastIvl, factor, time, type FROM revlog WHERE %s",
-                                    mMaxUsn, lim), null);
+                                    mMaxUsn, limAndArg.first), limAndArg.second);
         } else if ("cards".equals(table)) {
             return mCol
                     .getDb()
@@ -503,7 +504,7 @@ public class Syncer {
                             String.format(
                                     Locale.US,
                                     "SELECT id, nid, did, ord, mod, %d, type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE %s",
-                                    mMaxUsn, lim), null);
+                                    mMaxUsn, limAndArg.first), limAndArg.second);
         } else {
             return mCol
                     .getDb()
@@ -512,7 +513,7 @@ public class Syncer {
                             String.format(
                                     Locale.US,
                                     "SELECT id, guid, mid, mod, %d, tags, flds, '', '', flags, data FROM notes WHERE %s",
-                                    mMaxUsn, lim), null);
+                                    mMaxUsn, limAndArg.first), limAndArg.second);
         }
     }
 
@@ -573,7 +574,7 @@ public class Syncer {
                 mCursor = null;
                 // if we're the client, mark the objects as having been sent
                 if (!mCol.getServer()) {
-                    mCol.getDb().execute("UPDATE " + curTable + " SET usn=" + mMaxUsn + " WHERE usn=-1");
+                    mCol.getDb().execute("UPDATE " + curTable + " SET usn=? WHERE usn=-1", mMaxUsn);
                 }
             }
             buf.put(curTable, rows);
@@ -607,12 +608,11 @@ public class Syncer {
         JSONArray cards = new JSONArray();
         JSONArray notes = new JSONArray();
         JSONArray decks = new JSONArray();
+        Pair<String, Object[]> limAndArgs = usnLim();
         try (Cursor cur = mCol
                     .getDb()
                     .getDatabase()
-                    .query(
-                            "SELECT oid, type FROM graves WHERE usn"
-                                    + (mCol.getServer() ? (" >= " + mMinUsn) : (" = -1")), null)) {
+                    .query("SELECT oid, type FROM graves WHERE " + limAndArgs.first, limAndArgs.second)) {
             while (cur.moveToNext()) {
                 @Consts.REM_TYPE int type = cur.getInt(1);
                 switch (type) {

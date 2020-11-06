@@ -659,7 +659,7 @@ public class Models {
         ArrayList<Object[]> r = new ArrayList<>();
 
         try (Cursor cur = mCol.getDb().getDatabase()
-                .query("select id, flds from notes where mid = " + m.getLong("id"), null)) {
+                .query("select id, flds from notes where mid = ?", new Object[]{m.getLong("id")})) {
             while (cur.moveToNext()) {
                 r.add(new Object[] {
                         Utils.joinFields(fn.transform(Utils.splitFields(cur.getString(1)))),
@@ -780,9 +780,8 @@ public class Models {
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
     public @Nullable List<Long> getCardIdsForModel(long modelId, int[] ords) {
-        String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = " +
-                modelId + " and c2.ord  in " + Utils.ids2str(ords);
-        List<Long> cids = mCol.getDb().queryLongList(cardIdsToDeleteSql);
+        String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords);
+        List<Long> cids = mCol.getDb().queryLongList(cardIdsToDeleteSql, modelId);
         //Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
         Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size(), modelId, Utils.ids2str(ords));
 
