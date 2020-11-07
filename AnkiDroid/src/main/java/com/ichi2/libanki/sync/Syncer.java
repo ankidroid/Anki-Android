@@ -823,11 +823,12 @@ public class Syncer {
             ids[i] = data.getJSONArray(i).getLong(0);
         }
         HashMap<Long, Long> lmods = new HashMap<>();
+        Pair<String, Object[]> limAndArg = usnLim();
         try (Cursor cur = mCol
                     .getDb()
                     .query(
                             "SELECT id, mod FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND "
-                                    + usnLim())) {
+                                    +  limAndArg.first, limAndArg.second)) {
             while (cur.moveToNext()) {
                 lmods.put(cur.getLong(0), cur.getLong(1));
             }
