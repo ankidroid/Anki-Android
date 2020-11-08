@@ -2,6 +2,7 @@
 package com.ichi2.anki;
 
 import android.content.ClipDescription;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -25,10 +26,12 @@ import timber.log.Timber;
 
 import com.ichi2.themes.Themes;
 import com.ichi2.ui.FixedEditText;
+import com.ichi2.utils.ClipboardUtil;
 
 import java.util.Objects;
 
 import static android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI;
+import static com.ichi2.utils.ClipboardUtil.IMAGE_MIME_TYPES;
 
 
 public class FieldEditText extends FixedEditText {
@@ -42,6 +45,8 @@ public class FieldEditText extends FixedEditText {
     private TextSelectionListener mSelectionChangeListener;
     @Nullable
     private ImagePasteListener mImageListener;
+    @Nullable
+    private ClipboardManager mClipboard;
 
 
     public FieldEditText(Context context) {
@@ -85,6 +90,11 @@ public class FieldEditText extends FixedEditText {
 
 
     public void init() {
+        try {
+            mClipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        } catch (Exception e) {
+            Timber.w(e);
+        }
         setMinimumWidth(400);
         mOrigBackground = getBackground();
         // Fixes bug where new instances of this object have wrong colors, probably
@@ -99,9 +109,7 @@ public class FieldEditText extends FixedEditText {
     @Override
     public InputConnection onCreateInputConnection(EditorInfo editorInfo) {
         InputConnection inputConnection = super.onCreateInputConnection(editorInfo);
-        //image/jpeg often comes from the keyboard
-        String[] mimeTypes = new String[] {"image/gif", "image/png", "image/jpg", "image/jpeg"};
-        androidx.core.view.inputmethod.EditorInfoCompat.setContentMimeTypes(editorInfo, mimeTypes);
+        androidx.core.view.inputmethod.EditorInfoCompat.setContentMimeTypes(editorInfo, IMAGE_MIME_TYPES);
         return androidx.core.view.inputmethod.InputConnectionCompat.createWrapper(inputConnection, editorInfo, (contentInfo, flags, opts) -> {
 
             if (mImageListener == null) {
@@ -118,25 +126,14 @@ public class FieldEditText extends FixedEditText {
                 }
             }
 
-
-            boolean imagesSupported = false;
             ClipDescription description = contentInfo.getDescription();
 
-            if (description == null) {
-                return false;
-            }
-
-            for (String mimeType : mimeTypes) {
-                if (description.hasMimeType(mimeType)) {
-                    imagesSupported = true;
-                }
-            }
-            if (!imagesSupported) {
+            if (!ClipboardUtil.hasImage(description)) {
                 return false;
             }
 
             try {
-                if (!mImageListener.onImagePaste(this, contentInfo.getContentUri())) {
+                if (!onImagePaste(contentInfo.getContentUri())) {
                     return false;
                 }
                 // There is a timeout on this line which occurs even if we're stopped in the debugger, if we take too long we get
@@ -216,6 +213,25 @@ public class FieldEditText extends FixedEditText {
         savedState.mOrd = mOrd;
 
         return savedState;
+    }
+
+
+    @Override
+    public boolean onTextContextMenuItem(int id) {
+        // This handles both CTRL+V and "Paste"
+       if (id == android.R.id.paste && ClipboardUtil.hasImage(mClipboard)) {
+           return onImagePaste(ClipboardUtil.getImageUri(mClipboard));
+       }
+
+        return super.onTextContextMenuItem(id);
+    }
+
+
+    protected boolean onImagePaste(Uri imageUri) {
+        if (imageUri == null) {
+            return false;
+        }
+        return mImageListener.onImagePaste(this, imageUri);
     }
 
 
