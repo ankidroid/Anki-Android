@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Резервну копію не збережено. Не достатньо місця у сховищі. Зменьшіть глибину резервного копіювання або видаліть інші файли.</string>
     <string name="sd_space_warning">Менше ніж  %d Мб простору залишилось на карті пам’яті.\n Звільніть трохи місця, щоб вберегтися від втрати даних.</string>
-    <string name="backup_delete">Видалення резервних копій.\nБудь ласка, чекайте...</string>
     <string name="backup_restore">Відновити з резервної копії</string>
     <string name="backup_new_collection">Нова колекція</string>
     <string name="backup_del_collection">Видалити колекцію та створити нову</string>
@@ -59,5 +58,5 @@
     <string name="open_collection_failed_title">Колекція не відкрита</string>
     <string name="corrupt_db_message">На жаль, вашу колекцію пошкоджено.\n\nОберіть у меню пункт «Відновити з резервної копії». Якщо це не допоможе, перегляньте у посібнтку інструкції для ручного відновлення: \n%1$s</string>
     <string name="access_collection_failed_message">Сталася помилка при доступі до вашої колекції. \n\nСпробуйте запустити перевірку бази даних або відновлення з резервної копії. Якщо це не допоможе, будь ласка, відправте повідомлення про помилку: \n%1$s</string>
-    <string name="deck_repair_error">Неможливо відлагодити колекцію</string>
+    <string name="deck_repair_error">Неможливо відновити колекцію</string>
 </resources>

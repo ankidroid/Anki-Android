@@ -44,7 +44,6 @@
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">Çekmeceyi Aç</string>
     <string tools:ignore="UnusedResources" name="drawer_close">Çekmeceyi Kapat</string>
-    <string name="CardEditorLaterMessage">Bilgi daha sonrası için kaydedildi</string>
     <string name="CardEditorCardDeck">Kart destesi:</string>
     <string name="CardEditorNoteDeck">Deste:</string>
     <string name="CardEditorModel">Tür:</string>
@@ -56,7 +55,6 @@
     <string name="check_all_tags">Tüm etiketleri işaretle/kaldır</string>
     <string name="filter_tags">Etiket filtrele</string>
     <string name="no_tags">Henüz herhangi bir etiket eklemediniz.</string>
-    <string name="sdcard_missing_message">SD kart USB depolama olarak kullanıldığı için kullanılamıyor. Destelerinize erişmek için USB bağlantısını kesin.</string>
     <string name="updated_version">%s versiyonuna güncellendi</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -118,7 +116,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Not kaydediliyor</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">Ekle</string>
     <string name="save">Kaydet</string>
     <string name="close">Kapat</string>
     <string name="select">Seç</string>
@@ -135,10 +132,8 @@
         <item quantity="one">%1$d dakika</item>
         <item quantity="other">%1$d dakika</item>
     </plurals>
-    <string name="studyoptions_welcome_title">AnkiDroid\'e Hoşgeldiniz</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid Kartı</string>
     <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">Kartı kopyala</string>
     <string name="card_editor_reposition_card">Yerini değiştir</string>
     <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Zamanını değiştir</string>
@@ -159,7 +154,6 @@
     <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
     <string name="show_hint">%s göster</string>
     <string name="info_rate">AnkiDroid\'e Oy Ver</string>
-    <string name="col_load_failed">Koleksiyon yükleme başarısız oldu.\nAnkiDroid\'i kapatmak için geriye basın.</string>
     <string name="import_title">İçeri Aktarılıyor</string>
     <string name="import_select_title">Aktarılacak bir dosya seçin</string>
     <string name="import_message_add">Ekle</string>
@@ -259,8 +253,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg dosyasını paylaşırken hata</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Bu dosyayı içeri aktarmak için V2 zamanlayıcının devreye alınması gerekli.</string>
-    <string name="import_cannot_with_v2">V2 zamanlayıcı zamanlamalı V1 destelerini aktaramaz.</string>
     <string name="export_v2_dummy_note">Bu dosya için Anki\'nin daha yeni bir sürümü gerekli.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

@@ -44,16 +44,13 @@
     <string name="sync_error">Помилка синхронізації</string>
     <string name="vague_error">Помилка</string>
     <string name="retry">Повторити спробу</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Правила та умови</a></string>
     <string name="menu_get_shared_decks">Завантажити колоди</string>
-    <string name="connection_error_message">Виникла помилка мережі.</string>
-    <string name="not_logged_in_title">Увійдіть у AnkiWeb</string>
+    <string name="connection_error_message">Виникла помилка мережі</string>
+    <string name="not_logged_in_title">Ввійти в AnkiWeb</string>
     <string name="login_create_account_message">Ви повинні увійти до стороннього профілю щоб використовувати хмарну синхронізацію. Ви можете створити профіль на наступному кроці.</string>
     <!-- MyAccount.java -->
-    <string name="username">Електронна адреса</string>
-    <string name="username_repeat">Ще раз електронна адреса</string>
+    <string name="username">Електронна пошта</string>
     <string name="password">Пароль</string>
-    <string name="password_repeat">Повторити пароль</string>
     <string name="log_in">Ввійти</string>
     <string name="sign_up_description">Не маєте облікового запису AnkiWeb? Це безкоштовно!</string>
     <string name="sign_up_not_affiliated">Примітка: AnkiWeb не афілійований з AnkiDroid</string>
@@ -78,7 +75,7 @@
     <string name="sync_title">Синхронізація</string>
     <string name="sync_downloading_media">Завантаження медіа %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Повна синхронізація з пристрою</string>
-    <string name="sync_log_clocks_unsynchronized">Годинник на вашому пристрої невірний на %1$d секунд %2$s; Для синхронізації необхідно, щоб і годинник і часовий пояс були коректними для уникнення помилок. Будь ласка, встановіть коректну дату, час і часовий пояс вашого телефону і почніть синхронізацію знову.</string>
+    <string name="sync_log_clocks_unsynchronized">Годинник на вашому пристрої відхилився на %1$d секунд %2$s; Для синхронізації необхідно, щоб і годинник і часовий пояс були коректними для уникнення помилок. Будь ласка, встановіть коректну дату, час і часовий пояс вашого телефону і почніть синхронізацію знову.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, часовий пояс на пристрої ймовірно не правильний</string>
     <string name="sync_log_clocks_unsynchronized_date">, дата на пристрої ймовірно не правильна</string>
     <string name="sync_conflict_title">Конфлікт синхронізації</string>
@@ -88,7 +85,7 @@
     <string name="sync_corrupt_database">Ваша база даних пошкоджена. Будь ласка, виправте її перед спробою повторної синхронізації.\n\nДивіться %s для інформації про виправлення бази даних.</string>
     <string name="sync_too_busy">Сервер перевантажений. Спробуйте знову пізніше.</string>
     <string name="sync_remote_db_error">Завантажена база даних була пошкоджена. Будь ласка, спробуйте знову.</string>
-    <string name="sync_overwrite_error">Ваша поточна колекція не може бути заміщена завантаженим файлом.</string>
+    <string name="sync_overwrite_error">Ваша поточна колекція не може бути замінена завантаженим файлом.</string>
     <string name="sync_connection_error">Вичерпано час підключення. Або у вас є проблема з підключенням до Інтернету, або у вас дуже великий файл у папці медіа.</string>
     <string name="sync_write_access_error">Не можливо зберегти завантажений файл на карту пам’яті. Вона встановлена лише для читання або на ній мало місця.</string>
     <string name="sync_error_invalid_sync_server">Користувальницький сервер для синхронізації в розширених налаштуваннях є некоректним (%s). Будь ласка, введіть дійсний сервер, або вимкніть налаштування.</string>

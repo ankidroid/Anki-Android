@@ -95,8 +95,6 @@
     <string name="answering_error_message">संग्रह में लेखन विफल रहा। डेटाबेस दूषित हो सकता है या डिस्क पर पर्याप्त खाली स्थान नहीं हो सकता है। \n\n यदि यह अधिक बार होता है, तो डेटाबेस की जाँच करने, संग्रह की मरम्मत करने या इसे बैकअप से पुनर्स्थापित करने का प्रयास करें। इसके लिए \"विकल्प\" स्पर्श करें। \n या यह एक एंकॉइड बग भी हो सकता है; कृपया त्रुटि रिपोर्ट करें ताकि हम इसकी जांच कर सकें।</string>
     <string name="answering_error_report">त्रुटि की सूचना दें</string>
     <string name="repair_deck_dialog">क्या आप वास्तव में डेटाबेस को सुधारने का प्रयास करना चाहते हैं? \n\nBefore प्रयास प्रारंभ कर रहा है, एक प्रतिलिपि सबफ़ोल्डर \"%s\" में बनाया जाएगा ।</string>
-    <string name="intent_add_saved_information">सहेजा गया डेटा</string>
-    <string name="intent_add_clear_all">सभी साफ़ करें</string>
     <string name="intent_aedict_empty">श्रेणी \"डिफ़ॉल्ट\" रिक्त है</string>
     <string name="intent_aedict_category">AnkiDroid में कार्ड जोड़ने के लिए सभी नोटपैड श्रेणियों को हटाएँ या एक \"डिफ़ॉल्ट\" नामक पत्ता जोड़ें</string>
     <string name="custom_study_new_total_new">डेक में नए पत्ते: %d</string>
@@ -108,7 +106,6 @@
     <string name="custom_study_random">डेक से यादृच्छिक रूप से एक्स कार्ड का चयन करें:</string>
     <string name="custom_study_preview">पिछले x दिनों में जोड़े गए नए कार्ड का पूर्वावलोकन करें:</string>
     <string name="custom_study_rebuild_deck_corrupt">कस्टम अध्ययन डेक का पुनर्निर्माण नहीं किया जा सका</string>
-    <string name="rebuild_custom_study_deck">कस्टम अध्ययन डेक के पुनर्निर्माण.. ।</string>
     <string name="importing_collection">संग्रह आयात कर रहा है.. ।</string>
     <string name="import_media_count">मीडिया फ़ाइलें आयात कर रहा है %1$d%%.. ।</string>
     <string name="import_progress">• आयात नोट्स: %1$d%% \ n • कार्ड आयात: %2$d%% \ n • पोस्ट-प्रोसेसिंग: %3$d%%</string>

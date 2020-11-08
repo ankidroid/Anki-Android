@@ -50,12 +50,12 @@
         <item>推奨される回答よりも良い回答</item>
         <item>元に戻す</item>
         <item>ノートを編集</item>
+        <item>カード情報</item>
         <item>ノートにタグを付ける</item>
-        <item>ノートにマークを付ける</item>
-        <item>Mark note</item>
+        <item>ノートにマークを付ける/取り外す</item>
         <item>カードを延期</item>
         <item>カードを保留</item>
-        <item>Suspend card</item>
+        <item>カードの表示を中止</item>
         <item>音声・動画を再生</item>
         <item>学習を中断</item>
         <item>ノートを延期</item>
@@ -67,7 +67,7 @@
         <item>フラグを取り外す</item>
         <item>１画面分上へスクロール</item>
         <item>１画面分下へスクロール</item>
-        <item>Page Down</item>
+        <item>１画面分下へスクロール</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>タグを付けて保留</item>
@@ -110,12 +110,12 @@
         <item>ダークグレー</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
+        <item>極小</item>
+        <item>最小</item>
+        <item>小</item>
+        <item>普通</item>
+        <item>大</item>
+        <item>最大</item>
+        <item>極大</item>
     </string-array>
 </resources>

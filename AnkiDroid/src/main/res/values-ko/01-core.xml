@@ -99,6 +99,7 @@
     <string name="move_all_to_deck">카드묶음으로 모두 이동</string>
     <string name="unbury">지금 보기</string>
     <string name="rename_deck">카드 묶음 이름 바꾸기</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">추가</string>
     <string name="menu_add_note">노트 추가</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">계정 동기화</string>

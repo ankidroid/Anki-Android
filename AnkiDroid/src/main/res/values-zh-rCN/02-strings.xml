@@ -44,7 +44,6 @@
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">打开侧栏</string>
     <string tools:ignore="UnusedResources" name="drawer_close">关闭侧栏</string>
-    <string name="CardEditorLaterMessage">随后保存相关信息</string>
     <string name="CardEditorCardDeck">牌组：</string>
     <string name="CardEditorNoteDeck">牌组：</string>
     <string name="CardEditorModel">笔记类型：</string>
@@ -56,7 +55,6 @@
     <string name="check_all_tags">选中/取消所有标签</string>
     <string name="filter_tags">过滤标签</string>
     <string name="no_tags">你还没有添加任何标签。</string>
-    <string name="sdcard_missing_message">SD卡暂时不可用，因为当前其正作为USB存储设备。拔掉USB之后即可访问你的牌组。</string>
     <string name="updated_version">更新到%s版本</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">保存白板</string>
@@ -118,7 +116,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">创建填空只能在完形填空笔记类型上使用</string>
     <string name="saving_facts">保存笔记</string>
     <string name="saving_model">保存卡牌记录类型</string>
-    <string name="add">添加</string>
     <string name="save">保存</string>
     <string name="close">关闭</string>
     <string name="select">选择</string>
@@ -133,10 +130,8 @@
     <plurals name="in_minutes">
         <item quantity="other">%1$d 分钟</item>
     </plurals>
-    <string name="studyoptions_welcome_title">欢迎进入 AnkiDroid</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid卡片</string>
     <string name="note_editor_copy_note">复制笔记</string>
-    <string name="card_editor_copy_card">复制卡片</string>
     <string name="card_editor_reposition_card">更改位置</string>
     <string name="card_editor_reset_card">重设学习进度</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">重新安排</string>
@@ -156,7 +151,6 @@
     <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
     <string name="show_hint">显示%s</string>
     <string name="info_rate">给AnkiDroid评分</string>
-    <string name="col_load_failed">集合加载失败\n按返回键关闭AnkiDroid。</string>
     <string name="import_title">正在导入……</string>
     <string name="import_select_title">选择要导入的文件</string>
     <string name="import_message_add">添加</string>
@@ -250,8 +244,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">共享 apkg 文件时出错</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">必须启用 V2 调度器以导入此文件。</string>
-    <string name="import_cannot_with_v2">V2 调度器无法导入包含进度的 V1 牌组。</string>
     <string name="export_v2_dummy_note">此文件需要更新版本的 Anki。</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">加载 “%s” 失败。</string>
@@ -325,5 +317,5 @@
     <string name="add_toolbar_item">创建工具栏项</string>
     <string name="toolbar_item_explain_remove">请输入要在选定文本之前和之后插入的 HTML\n\n长按工具栏项目以删除它</string>
     <string name="remove_toolbar_item">删除工具栏项目？</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="note_editor_paste_too_large">图片太大，无法粘贴，请手动插入图像</string>
 </resources>

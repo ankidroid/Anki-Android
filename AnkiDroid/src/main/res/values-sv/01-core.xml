@@ -104,6 +104,7 @@
     <string name="move_all_to_deck">Flytta alla till kortlek</string>
     <string name="unbury">Sluta dölja</string>
     <string name="rename_deck">Byt namn på lek</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Lägg till</string>
     <string name="menu_add_note">Lägg till not</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkronisera konto</string>

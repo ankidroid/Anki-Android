@@ -104,6 +104,7 @@
     <string name="move_all_to_deck">Տեղափոխել բոլորը կապուկի մեջ</string>
     <string name="unbury">Վերադարձնել առանձնացվածները</string>
     <string name="rename_deck">Վերանվանել կապուկը</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Ավելացնել</string>
     <string name="menu_add_note">Ավելացնել գրառում</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Համաժամեցնել հաշիվը</string>

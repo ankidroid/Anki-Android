@@ -23,7 +23,7 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">ノートタイプを管理</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">フィールドを管理</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">残り一つのノートタイプは削除できません</string>
     <string name="toast_last_field">ノートタイプにはフィールドが少なくとも1つ必要です</string>
     <string name="toast_empty_name">名前を入力してください</string>
     <string name="toast_duplicate_field">そのフィールド名は既に使用されています</string>
@@ -41,25 +41,23 @@
     <string name="model_browser_template">カードのテンプレートを編集</string>
     <string name="model_browser_add">ノートタイプを追加</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">ノートタイプの名前を変更</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">Keyboard language hint</string>
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">使用言語を %sに設定</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">フィールドを編集</string>
     <string name="model_field_editor_add">フィールドを追加</string>
     <string name="model_field_editor_delete">削除</string>
-    <string name="model_field_editor_options">フィールドのオプション</string>
     <string name="model_field_editor_rename">名前を変更</string>
-    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
+    <string name="model_field_editor_language_hint">キーボード言語を設定</string>
     <string name="model_field_editor_reposition_menu">並べ替える</string>
     <string name="model_field_editor_reposition">上から何番目にこのフィールドを配置しますか？（ %1$d ～ %2$d ）</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_toggle_sticky">追加時に最後の入力を記憶する</string>
     <string name="model_field_editor_changing">フィールドを更新</string>
     <string name="model_field_editor_sort_field">ブラウザでのソートフィールド（見出し）にする</string>
     <string name="model_clone_suffix">コピー</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">このノートタイプを削除しますか？</string>
     <string name="field_delete_warning">このフィールドを削除してもよろしいですか？</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">追加: %1$s </string>
@@ -67,10 +65,10 @@
     <string name="model_browser_add_clone">複製: %1$s </string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question Format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
-    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
+    <string name="card_template_browser_appearance_question_format">質問の表示形式</string>
+    <string name="card_template_browser_appearance_answer_format">解答の表示形式</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">デフォルト値を復元しますか？</string>
+    <string name="card_template_browser_appearance_saving_note">変更内容は、カードテンプレートが保存された後に適用されます</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
     <string name="card_template_editor_deck_override_off">Deck Override (off)</string>

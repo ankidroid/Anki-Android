@@ -44,16 +44,13 @@
     <string name="sync_error">同期エラー</string>
     <string name="vague_error">エラー</string>
     <string name="retry">再実行</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms"> 利用規約</a></string>
     <string name="menu_get_shared_decks">共有デッキをダウンロード</string>
     <string name="connection_error_message">ネットワークエラーが発生しました</string>
     <string name="not_logged_in_title">AnkiWebへのログイン</string>
     <string name="login_create_account_message">サードパーティーのクラウド同期サービスを使用するため、このサービスのアカウントにログインする必要があります。（アカウントをお持ちでない場合は、ログイン画面の下部から新規登録の手続きが行えます。）</string>
     <!-- MyAccount.java -->
     <string name="username">登録済みアカウントのメールアドレス</string>
-    <string name="username_repeat">メールアドレス（確認）</string>
     <string name="password">パスワード</string>
-    <string name="password_repeat">パスワード（確認）</string>
     <string name="log_in">ログイン</string>
     <string name="sign_up_description">AnkiWebのアカウントを新規登録（無料）</string>
     <string name="sign_up_not_affiliated">備考: AnkiWebはAnkiのサービスです。Ankiから独立して活動しているAnkiDroid開発グループが管理するものではありません。</string>
@@ -82,7 +79,7 @@
     <string name="sync_log_clocks_unsynchronized_tz">, 端末のタイムゾーンが間違っています</string>
     <string name="sync_log_clocks_unsynchronized_date">, 端末の日付が間違っています</string>
     <string name="sync_conflict_title">同期の競合</string>
-    <string name="sync_no_changes_message">変更はありません</string>
+    <string name="sync_no_changes_message">変更はありません。</string>
     <string name="sync_database_acknowledge">コレクションの同期が完了しました</string>
     <string name="sync_log_error_specific">同期エラーです 形式: %1$s, メッセージ: %2$s</string>
     <string name="sync_corrupt_database">データが壊れています。同期を再実施する前にデータを修復してください。次の情報%sを見てデータを修復してください。</string>
@@ -129,6 +126,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb は現在メンテナンス中です。数分後にもう一度お試しください。</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_full_sync">同期 (完全同期)</string>
     <string name="sync_menu_title_no_account">同期 (ログイン)</string>
 </resources>

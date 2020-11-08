@@ -104,6 +104,7 @@
     <string name="move_all_to_deck">Mover todos para o baralho</string>
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Renomear baralho</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Adicionar</string>
     <string name="menu_add_note">Adicionar nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizar conta</string>
@@ -202,7 +203,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aparência do navegador</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Informação do cartão</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever para o banco de dados do AnkiDroid</string>
     <string name="read_write_permission_description">acessar as notas, cartas, modelos e baralhos existentes, bem como criar novos</string>

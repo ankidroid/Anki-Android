@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Απομένει λιγότερος από %d mb χώρος στην κάρτα SD.\nΑπελευθερώστε λίγο χώρο για να αποφύγετε απώλεια δεδομένων.</string>
-    <string name="backup_delete">Διαγραφή αντιγράφων.\nΠαρακαλώ περιμένετε...</string>
     <string name="backup_restore">Επαναφορά από αντίγραφο</string>
     <string name="backup_new_collection">Νέα συλλογή</string>
     <string name="backup_del_collection">Διαγραφή συλλογής και δημιουργία καινούργιας</string>

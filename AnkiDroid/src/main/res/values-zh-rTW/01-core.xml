@@ -100,6 +100,7 @@
     <string name="move_all_to_deck">全部移動到牌組</string>
     <string name="unbury">取消暫時隱藏</string>
     <string name="rename_deck">重新命名牌組</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">新增</string>
     <string name="menu_add_note">新增筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳號</string>

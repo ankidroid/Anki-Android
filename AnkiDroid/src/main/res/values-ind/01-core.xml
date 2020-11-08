@@ -99,6 +99,7 @@
     <string name="move_all_to_deck">Pindahkan semua ke dek</string>
     <string name="unbury">Angkat</string>
     <string name="rename_deck">Ubah nama dek</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Tambah</string>
     <string name="menu_add_note">Tambah catatan</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinkronisasi akun</string>

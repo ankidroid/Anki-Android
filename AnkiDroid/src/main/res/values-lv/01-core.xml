@@ -109,6 +109,7 @@
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Add</string>
     <string name="menu_add_note">Add note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinhronizēt kontu</string>

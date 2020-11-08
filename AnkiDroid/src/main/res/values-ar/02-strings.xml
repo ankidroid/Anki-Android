@@ -44,7 +44,6 @@
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">فتح القائمة</string>
     <string tools:ignore="UnusedResources" name="drawer_close">إغلاق القائمة</string>
-    <string name="CardEditorLaterMessage">حفظ المعلومات لوقت لاحق</string>
     <string name="CardEditorCardDeck">رزمة البطاقة:</string>
     <string name="CardEditorNoteDeck">الرزمة:</string>
     <string name="CardEditorModel">النوع:</string>
@@ -56,7 +55,6 @@
     <string name="check_all_tags">تحديد/إلغاء تحديد كل الوسوم</string>
     <string name="filter_tags">فلترة الوسوم</string>
     <string name="no_tags">لم تضف أي وسوم بعد</string>
-    <string name="sdcard_missing_message">أوقف تخزين USB للوصول إلى رزمك</string>
     <string name="updated_version">تم التحديث إلى الإصدار: %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">حفظ السبورة</string>
@@ -118,7 +116,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">تعمل عبارات ملء الفراغات في نوع ملحوظة ملء فراغات فقط.</string>
     <string name="saving_facts">حفظ الملحوظة</string>
     <string name="saving_model">حفظ نوع الملحوظة</string>
-    <string name="add">إضافة</string>
     <string name="save">حفظ</string>
     <string name="close">إغلاق</string>
     <string name="select">تحديد</string>
@@ -143,10 +140,8 @@
         <item quantity="many">%1$d دقيقة</item>
         <item quantity="other">%1$d دقيقة</item>
     </plurals>
-    <string name="studyoptions_welcome_title">مرحبًا بك مع أنكيدرويد</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">بطاقة أنكيدرويد</string>
     <string name="note_editor_copy_note">نسخ الملحوظة</string>
-    <string name="card_editor_copy_card">نسخ البطاقة</string>
     <string name="card_editor_reposition_card">تغيير الموضع</string>
     <string name="card_editor_reset_card">إعادة تعيين التقدم</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">إعادة الجدولة</string>
@@ -171,7 +166,6 @@
     <string name="delete_deck">يجري حذف الرزمة...</string>
     <string name="show_hint">إظهار %s</string>
     <string name="info_rate">قيم أنكيدرويد</string>
-    <string name="col_load_failed">فشل تحميل المجموعة.\nاضغط تراجع لإغلاق أنكيدرويد.</string>
     <string name="import_title">استيراد</string>
     <string name="import_select_title">اختر ملفًا لاستيراده</string>
     <string name="import_message_add">إضافة</string>
@@ -300,8 +294,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">يجب تفعيل مجدول V2 لاستيراد هذا الملف.</string>
-    <string name="import_cannot_with_v2">لا يمكن لمجدول V2 استيراد رزم V1 مع معلومات الجدولة.</string>
     <string name="export_v2_dummy_note">يتطلب هذا الملف إصدارًا أحدث من أنكي.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">فشل تحميل \'%s\'.</string>

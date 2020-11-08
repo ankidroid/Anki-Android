@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">SD kartınızdan az %d MB boşluq qaldı.Data zərərini qarşısını almaq üçün boş yer.</string>
-    <string name="backup_delete">Nüsxələrin silinməsi ...</string>
     <string name="backup_restore">Restore from backup</string>
     <string name="backup_new_collection">Yeni kolleksiya</string>
     <string name="backup_del_collection">Toplama sil və yenisini yaradın</string>

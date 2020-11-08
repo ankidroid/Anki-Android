@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Не удалось сохранить резервную копию из-за нехватки места в хранилище. Уменьшите количество копий или удалите какие-нибудь файлы.</string>
     <string name="sd_space_warning">В хранилище меньше %d МБ.\nОсвободите немного места, чтобы не потерять данные.</string>
-    <string name="backup_delete">Резервные копии удаляются&#8230;</string>
     <string name="backup_restore">Восстановить из резервной копии</string>
     <string name="backup_new_collection">Новая коллекция</string>
     <string name="backup_del_collection">Удалить коллекцию и создать новую</string>

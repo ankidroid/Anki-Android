@@ -38,8 +38,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
-    <string name="no">no</string>
+    <string name="yes">ja</string>
+    <string name="no">nein</string>
     <!-- Navigation drawer items-->
     <string name="decks">Stapel</string>
     <string name="card_browser">Kartenübersicht</string>
@@ -104,6 +104,7 @@
     <string name="move_all_to_deck">Alle diesem Stapel hinzufügen</string>
     <string name="unbury">Nicht mehr aufschieben</string>
     <string name="rename_deck">Stapel umbenennen</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Hinzufügen</string>
     <string name="menu_add_note">Notiz hinzufügen</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronisierungskonto</string>
@@ -202,7 +203,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aussehen der Kartenübersicht</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Karteninfos</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid-Datenbank lesen und schreiben</string>
     <string name="read_write_permission_description">Zugriff auf bereits vorhandene Notizen, Karten, Notiztypen und Stapel, sowie deren Neuerstellung</string>

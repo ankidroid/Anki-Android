@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Āpalyā SD kārḍavarīla %d MB pēkṣā kamī jāgā śillaka āhēta.\n ḍēṭācē nukasāna ṭāḷaṇyāsāṭhī kāhī jāgā.</string>
-    <string name="backup_delete">Bĕka\'apa haṭavita āhē&#8230;</string>
     <string name="backup_restore">Bĕka\'apamadhūna punarsan̄cayita karā</string>
     <string name="backup_new_collection">Navina saṅgraha</string>
     <string name="backup_del_collection">Saṅgraha haṭavā āṇi navīna tayāra karā</string>

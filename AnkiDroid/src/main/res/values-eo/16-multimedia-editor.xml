@@ -39,7 +39,7 @@
     <string name="multimedia_editor_popup_audio">Registri sonon</string>
     <string name="multimedia_editor_popup_text">Altnivela redaktilo</string>
     <string name="multimedia_editor_popup_cloze">Truteksta malpleno</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_clear_field">Forviŝi kampon</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Povigata de glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
