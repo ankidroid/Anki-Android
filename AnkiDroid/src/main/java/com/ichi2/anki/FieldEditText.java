@@ -99,7 +99,8 @@ public class FieldEditText extends FixedEditText {
     @Override
     public InputConnection onCreateInputConnection(EditorInfo editorInfo) {
         InputConnection inputConnection = super.onCreateInputConnection(editorInfo);
-        String[] mimeTypes = new String[] {"image/gif", "image/png", "image/jpg"};
+        //image/jpeg often comes from the keyboard
+        String[] mimeTypes = new String[] {"image/gif", "image/png", "image/jpg", "image/jpeg"};
         androidx.core.view.inputmethod.EditorInfoCompat.setContentMimeTypes(editorInfo, mimeTypes);
         return androidx.core.view.inputmethod.InputConnectionCompat.createWrapper(inputConnection, editorInfo, (contentInfo, flags, opts) -> {
 
