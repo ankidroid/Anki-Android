@@ -28,6 +28,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -161,7 +162,11 @@ public class Toolbar extends FrameLayout {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public AppCompatImageButton insertItem(@IdRes int id, @DrawableRes int drawable, Runnable runnable) {
         // This fails before API 21
-        VectorDrawableCompat d = VectorDrawableCompat.create(getContext().getResources(), drawable, getContext().getTheme());
+
+        // we use the light theme here to ensure the tint is black on both
+        // A null theme can be passed after colorControlNormal is defined (API 25)
+        Context themeContext = new ContextThemeWrapper(getContext(), R.style.Theme_Light_Compat);
+        VectorDrawableCompat d = VectorDrawableCompat.create(getContext().getResources(), drawable, themeContext.getTheme());
         return insertItem(id, d, runnable);
     }
 
