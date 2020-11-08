@@ -247,6 +247,9 @@ public class NoteEditor extends AnkiActivity {
 
     private Toolbar mToolbar;
 
+    // Use the same HTML if the same image is pasted multiple times.
+    private HashMap<String, String> mPastedImageCache = new HashMap<>();
+
     private SaveNoteHandler saveNoteHandler() {
         return new SaveNoteHandler(this);
     }
@@ -395,6 +398,7 @@ public class NoteEditor extends AnkiActivity {
             mCurrentDid = savedInstanceState.getLong("did");
             mSelectedTags = savedInstanceState.getStringArrayList("tags");
             mReloadRequired = savedInstanceState.getBoolean("reloadRequired");
+            mPastedImageCache = (HashMap<String, String>) savedInstanceState.getSerializable("imageCache");
             mChanged = savedInstanceState.getBoolean("changed");
         } else {
             mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
@@ -424,6 +428,7 @@ public class NoteEditor extends AnkiActivity {
         savedInstanceState.putBoolean("changed", mChanged);
         savedInstanceState.putBoolean("reloadRequired", mReloadRequired);
         savedInstanceState.putIntegerArrayList("customViewIds", mCustomViewIds);
+        savedInstanceState.putSerializable("imageCache", mPastedImageCache);
         if (mSelectedTags == null) {
             mSelectedTags = new ArrayList<>();
         }
@@ -1488,9 +1493,11 @@ public class NoteEditor extends AnkiActivity {
     }
 
     private boolean onImagePaste(EditText editText, Uri uri) {
-        // NOTE: This does not handle duplication
         try {
-            String imageTag = loadImageIntoCollection(uri);
+            if (!mPastedImageCache.containsKey(uri.toString())) {
+                mPastedImageCache.put(uri.toString(), loadImageIntoCollection(uri));
+            }
+            String imageTag = mPastedImageCache.get(uri.toString());
             if (imageTag == null) {
                 return false;
             }
