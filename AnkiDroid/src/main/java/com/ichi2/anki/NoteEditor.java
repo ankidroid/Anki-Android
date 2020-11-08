@@ -117,6 +117,7 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1488,41 +1489,13 @@ public class NoteEditor extends AnkiActivity {
 
     private boolean onImagePaste(EditText editText, Uri uri) {
         // NOTE: This does not handle duplication
-
-        //noinspection PointlessArithmeticExpression
-        final int oneMegabyte = 1 * 1000 * 1000;
         try {
-            try (Cursor c = getContentResolver().query(uri, new String[] { MediaStore.MediaColumns.DISPLAY_NAME }, null, null, null)) {
-                c.moveToNext();
-                String filename = c.getString(0);
-                InputStream fd = getContentResolver().openInputStream(uri);
-
-                Map.Entry<String, String> fileNameAndExtension = FileUtil.getFileNameAndExtension(filename);
-
-                File clipCopy = File.createTempFile(fileNameAndExtension.getKey(), fileNameAndExtension.getValue());
-                String tempFilePath = clipCopy.getAbsolutePath();
-                long bytesWritten = CompatHelper.getCompat().copyFile(fd, tempFilePath);
-
-                Timber.d("File was %d bytes", bytesWritten);
-                if (bytesWritten > oneMegabyte) {
-                    Timber.w("File was too large: %d bytes", bytesWritten);
-                    UIUtils.showThemedToast(this, getString(R.string.note_editor_paste_too_large), false);
-                    new File(tempFilePath).delete();
-                    return false;
-                }
-
-
-                MultimediaEditableNote noteNew = new MultimediaEditableNote();
-                noteNew.setNumFields(1);
-                ImageField field = new ImageField();
-                field.setHasTemporaryMedia(true);
-                field.setImagePath(tempFilePath);
-                noteNew.setField(0, field);
-                NoteService.saveMedia(getCol(), noteNew);
-
-                editText.getText().append(field.getFormattedValue());
-                return true;
+            String imageTag = loadImageIntoCollection(uri);
+            if (imageTag == null) {
+                return false;
             }
+            editText.getText().append(imageTag);
+            return true;
         } catch (SecurityException ex) {
             // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
             // This typically works if the user copies again - don't know the exact cause
@@ -1539,6 +1512,49 @@ public class NoteEditor extends AnkiActivity {
             UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false);
             return false;
         }
+    }
+
+
+    /**
+     * Loads an image into the collection.media folder and returns a HTML reference
+     * @param uri The uri of the image to load
+     * @return HTML referring to the loaded image
+     */
+    @Nullable
+    private String loadImageIntoCollection(Uri uri) throws IOException {
+        //noinspection PointlessArithmeticExpression
+        final int oneMegabyte = 1 * 1000 * 1000;
+        String filename;
+        try (Cursor c = getContentResolver().query(uri, new String[] { MediaStore.MediaColumns.DISPLAY_NAME }, null, null, null)) {
+            c.moveToNext();
+            filename = c.getString(0);
+        }
+        InputStream fd = getContentResolver().openInputStream(uri);
+
+        Map.Entry<String, String> fileNameAndExtension = FileUtil.getFileNameAndExtension(filename);
+
+        File clipCopy = File.createTempFile(fileNameAndExtension.getKey(), fileNameAndExtension.getValue());
+        String tempFilePath = clipCopy.getAbsolutePath();
+        long bytesWritten = CompatHelper.getCompat().copyFile(fd, tempFilePath);
+
+        Timber.d("File was %d bytes", bytesWritten);
+        if (bytesWritten > oneMegabyte) {
+            Timber.w("File was too large: %d bytes", bytesWritten);
+            UIUtils.showThemedToast(this, getString(R.string.note_editor_paste_too_large), false);
+            new File(tempFilePath).delete();
+            return null;
+        }
+
+
+        MultimediaEditableNote noteNew = new MultimediaEditableNote();
+        noteNew.setNumFields(1);
+        ImageField field = new ImageField();
+        field.setHasTemporaryMedia(true);
+        field.setImagePath(tempFilePath);
+        noteNew.setField(0, field);
+        NoteService.saveMedia(getCol(), noteNew);
+
+        return field.getFormattedValue();
     }
 
 
