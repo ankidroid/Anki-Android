@@ -1523,14 +1523,22 @@ public class NoteEditor extends AnkiActivity {
                 editText.getText().append(field.getFormattedValue());
                 return true;
             }
+        } catch (SecurityException ex) {
+            // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
+            // This typically works if the user copies again - don't know the exact cause
+
+            //  java.lang.SecurityException: Permission Denial: opening provider
+            //  org.chromium.chrome.browser.util.ChromeFileProvider from ProcessRecord{80125c 11262:com.ichi2.anki/u0a455}
+            //  (pid=11262, uid=10455) that is not exported from UID 10057
+            Timber.w(ex, "Failed to paste image");
+            return false;
         } catch (Exception e) {
             // NOTE: This is happy path coding which works on Android 9.
             AnkiDroidApp.sendExceptionReport(e, "NoteEditor:onImagePaste");
+            Timber.w(e, "Failed to paste image");
             UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false);
             return false;
         }
-
-
     }
 
 
