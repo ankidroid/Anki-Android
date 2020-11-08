@@ -99,6 +99,7 @@
     <string name="move_all_to_deck">Di chuyển tất cả đến bộ thẻ</string>
     <string name="unbury">Bỏ tạm ẩn</string>
     <string name="rename_deck">Đổi tên bộ thẻ</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Thêm</string>
     <string name="menu_add_note">Thêm ghi chú</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Tài khoản đồng bộ</string>

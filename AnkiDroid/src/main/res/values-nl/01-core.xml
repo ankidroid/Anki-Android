@@ -104,6 +104,7 @@
     <string name="move_all_to_deck">Alles verplaatsen naar leerset</string>
     <string name="unbury">Opgraven</string>
     <string name="rename_deck">Leerset hernoemen</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Toevoegen</string>
     <string name="menu_add_note">Memo toevoegen</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Account synchroniseren</string>

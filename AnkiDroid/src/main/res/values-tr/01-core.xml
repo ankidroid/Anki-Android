@@ -104,6 +104,7 @@
     <string name="move_all_to_deck">Bir paket kartın hepsini taşı</string>
     <string name="unbury">Görünür Yap</string>
     <string name="rename_deck">Destenin adını değiştir</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Ekle</string>
     <string name="menu_add_note">Not ekle</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Senkronizasyon hesabı</string>

@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">sì</string>
     <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Mazzi</string>
@@ -104,6 +104,7 @@
     <string name="move_all_to_deck">Sposta tutto nel mazzo</string>
     <string name="unbury">Disseppellisci</string>
     <string name="rename_deck">Rinomina mazzo</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Aggiungi</string>
     <string name="menu_add_note">Aggiungi nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizza account</string>
@@ -202,7 +203,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspetto del browser</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Info Scheda</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
     <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>

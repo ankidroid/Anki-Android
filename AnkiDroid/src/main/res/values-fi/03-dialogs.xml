@@ -95,8 +95,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Ilmoita viasta</string>
     <string name="repair_deck_dialog">Haluatko varmasti yrittää korjata tietokannan?\n\nEnnen yritystä kopio tietokannasta luodaan alihakemistoon ”%s”.</string>
-    <string name="intent_add_saved_information">Tallennetut tiedot</string>
-    <string name="intent_add_clear_all">Tyhjennä kaikki</string>
     <string name="intent_aedict_empty">Oletus-luokka on tyhjä</string>
     <string name="intent_aedict_category">Lisätäksesi kortteja AnkiDroidiin poista kaikki Notepad-kategoriat tai lisää uusi nimellä ”default”</string>
     <string name="custom_study_new_total_new">Uusia kortteja pakassa: %d</string>
@@ -108,7 +106,6 @@
     <string name="custom_study_random">Valitse x korttia satunnaisesti pakasta:</string>
     <string name="custom_study_preview">Esikatsele viimeisinä x päivänä lisättyjä kortteja:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Kasataan mukautettua pakkaa&#8230;</string>
     <string name="importing_collection">Tuodaan kokoelmaa.\nOdota&#8230;</string>
     <string name="import_media_count">Tuodaan mediatiedostoja %1$d%%\nOdota&#8230;</string>
     <string name="import_progress">• Tuodaan merkintöjä: %1$d%%\n• Tuodaan kortteja: %2$d%%\n• Jälkikäsittely: %3$d%%</string>

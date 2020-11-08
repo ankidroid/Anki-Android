@@ -67,7 +67,7 @@
         <item>Rimuovi il contrassegno</item>
         <item>Vai su</item>
         <item>Vai giù</item>
-        <item>Page Down</item>
+        <item>Pagina Giù</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Sospendi carta</item>
@@ -110,12 +110,12 @@
         <item>Scuro</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
+        <item>xx-piccolo</item>
+        <item>x-piccolo</item>
+        <item>piccolo</item>
+        <item>medio</item>
+        <item>grande</item>
+        <item>x-grande</item>
+        <item>xx-grande</item>
     </string-array>
 </resources>

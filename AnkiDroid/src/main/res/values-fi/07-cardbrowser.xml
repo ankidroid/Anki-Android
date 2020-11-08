@@ -46,18 +46,12 @@
     <string name="card_browser_all_decks">Kaikki pakat</string>
     <string name="card_browser_delete_card">Delete notes</string>
     <string name="card_browser_suspend_card">Suspend cards</string>
-    <string name="card_browser_toggle_suspend_card">(un)suspend cards</string>
     <string name="card_browser_change_deck">Vaihda pakkoja</string>
     <string name="card_browser_unsuspend_card">Unsuspend cards</string>
     <string name="card_browser_mark_card">Merkitse merkintä</string>
-    <string name="card_browser_toggle_mark_card">Merkitse/poista merkintä.</string>
     <string name="card_browser_unmark_card">Poista merkinnät</string>
     <string name="delete_card_title">Poista merkintä</string>
-    <string name="delete_cards_title">Poista merkinnät?</string>
-    <string name="delete_card_message">Poistetaanko tämän merkinnän kaikki kortit? \nhakukenttä: %s</string>
-    <string name="delete_card_mult_message">Poistetaanko kaikki valittujen merkintöjen kortit?\n(Ei ainoastaan valitut kortit).</string>
     <string name="changed_deck_message">Siirretty %s :ään</string>
-    <string name="card_browser_suspended_cards">jäädytetty/jäädyttämättömät kortit</string>
     <string name="card_browser_show_marked">Suodata merkityt</string>
     <string name="card_browser_show_suspended">Suodata jäädytetyt</string>
     <string name="card_browser_search_by_tag">Suodata kentän mukaan</string>
@@ -76,7 +70,6 @@
     <string name="card_details_answer">Vastaus</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Määrä</string>
     <string name="card_details_tags">Tunnisteet</string>
-    <string name="card_browser_filtering_cards">Suodatetaan kortteja&#8230;\nPeruuta painamalla Takaisin-painiketta</string>
     <string-array name="card_browser_order_labels">
         <item>Ei lajittelua (nopeampi)</item>
         <item>By sort field</item>

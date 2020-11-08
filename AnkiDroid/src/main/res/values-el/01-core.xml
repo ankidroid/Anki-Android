@@ -38,8 +38,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
-    <string name="no">no</string>
+    <string name="yes">ναι</string>
+    <string name="no">όχι</string>
     <!-- Navigation drawer items-->
     <string name="decks">Τράπουλες</string>
     <string name="card_browser">Περιηγητής καρτών</string>
@@ -72,7 +72,7 @@
         <item quantity="one">Απομένει %d ημέρα %d</item>
         <item quantity="other">Απομένουν %d ημέρες %d</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_title">Η συλλογή είναι κενή</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -104,6 +104,7 @@
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Προσθήκη</string>
     <string name="menu_add_note">Προσθήκη σημείωσης</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Συγχρονισμός λογαριασμού</string>
@@ -115,20 +116,20 @@
     <string name="menu_bury">Κρύψιμο</string>
     <string name="menu_suspend">Αναστολή</string>
     <string name="menu_delete_note">Διαγραφή Σημείωσης</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag">Σήμανση</string>
+    <string name="menu_flag_card">Σήμανση κάρτας</string>
+    <string name="menu_flag_card_zero">Καμία σημαία</string>
+    <string name="menu_flag_card_one">Κόκκινη σημαία</string>
+    <string name="menu_flag_card_two">Πορτοκαλί σημαία</string>
+    <string name="menu_flag_card_three">Πράσινη σημαία</string>
+    <string name="menu_flag_card_four">Μπλε σημαία</string>
+    <string name="menu_edit_tags">Επεξεργασία ετικετών</string>
     <string name="delete_note_message">Πραγματικά να διαγραφεί αυτή η σημείωση και όλες οι κάρτες της;\n%s</string>
     <string name="menu_select">Επιλογή κειμένου</string>
     <string name="menu_search">Αναζήτηση στο %1$s</string>
     <string name="menu_mark_note">Μαρκάρισμα σημείωσης</string>
     <string name="menu_unmark_note">Ξεμαρκάρισμα σημείωσης</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Έλεγχος προφοράς</string>
     <string name="new_deck">Δημιουργία τράπουλας</string>
     <string name="create" comment="Button to create a filtered deck">Δημιουργία</string>
     <string name="new_dynamic_deck">Δημιουργία φιλτραρισμένης τράπουλας</string>
@@ -148,10 +149,10 @@
     -->
     <string name="time_quantity_seconds">%d δ.</string>
     <string name="time_quantity_minutes">%d λ.</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_hours_minutes">%1$d ώ %2$d λ</string>
     <string name="time_quantity_hours">%d ώ.</string>
     <string name="time_quantity_days">%d μέρ.</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
+    <string name="time_quantity_days_hours">%1$d η %2$d ώ</string>
     <string name="time_quantity_months">%.1f μήν.</string>
     <string name="time_quantity_years">%.1f χρ.</string>
     <!-- or "%.1f a" -->
@@ -202,11 +203,11 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Πληροφορίες κάρτας</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu">Ευρετήριο καρτών</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

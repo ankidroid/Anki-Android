@@ -44,7 +44,6 @@
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">Avaa laatikosto</string>
     <string tools:ignore="UnusedResources" name="drawer_close">Sulje laatikosto</string>
-    <string name="CardEditorLaterMessage">Tiedot tallennettu myöhempää käyttöä varten</string>
     <string name="CardEditorCardDeck">Korttipakka:</string>
     <string name="CardEditorNoteDeck">Pakka:</string>
     <string name="CardEditorModel">Tyyppi:</string>
@@ -56,7 +55,6 @@
     <string name="check_all_tags">Valitse/poista valinnasta kaikki tunnisteet</string>
     <string name="filter_tags">Suodata tunnisteita</string>
     <string name="no_tags">Et ole vielä lisännyt tunnisteita</string>
-    <string name="sdcard_missing_message">SD-kortti ei ole käytettävissä, koska sitä käytetään USB-liitännän kautta. Irrota USB käyttääksesi korttipakkojasi</string>
     <string name="updated_version">Päivitetty versioon %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -118,7 +116,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Tallennetaan merkintää</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">Lisää</string>
     <string name="save">Tallenna</string>
     <string name="close">Sulje</string>
     <string name="select">Valitse</string>
@@ -135,10 +132,8 @@
         <item quantity="one">%1$d minuutissa</item>
         <item quantity="other">%1$d minuutissa</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Tervetuloa AnkiDroidiin</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-kortti</string>
     <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">Kopioi kortti</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Tyhjennä edistyminen</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Ajasta uudelleen</string>
@@ -159,7 +154,6 @@
     <string name="delete_deck">Poistetaan pakkaa&#8230;</string>
     <string name="show_hint">Näytä %s</string>
     <string name="info_rate">Arvostele AnkiDroid</string>
-    <string name="col_load_failed">Kokoelman lataaminen epäonnistui.\nPaina Takaisin-painiketta sulkeaksesi AnkiDroidin.</string>
     <string name="import_title">Tuodaan</string>
     <string name="import_select_title">Valitse tuotava tiedosto</string>
     <string name="import_message_add">Lisää</string>
@@ -260,8 +254,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Virhe jaettaessa apkg-tiedostoa</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">V2 ajastin täytyy olla aktivoituna tämän tiedoston tuomiseksi.</string>
-    <string name="import_cannot_with_v2">V2 ajastin ei voi tuoda V1 pakkoja ajastuksen kanssa.</string>
     <string name="export_v2_dummy_note">Tiedosto vaatii uudemman Anki version.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>

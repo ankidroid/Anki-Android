@@ -9,7 +9,6 @@ ca: AnkiDroid fitxes per memoritzar
 ckb: Naverokê Bixwaze
 cs: AnkiDroid kartičky
 de: AnkiDroid Karteikarten
-el: Κάρτες Ανκί-Ντρόιντ
 eo: AnkiDroid
 es-AR: Tarjetas flash AnkiDroid
 es-ES: Tarjetas AnkiDroid

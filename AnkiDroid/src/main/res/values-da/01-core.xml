@@ -104,6 +104,7 @@
     <string name="move_all_to_deck">Flyt alle til kortsæt</string>
     <string name="unbury">Grav op</string>
     <string name="rename_deck">Omdøb kortsæt</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Tilføj</string>
     <string name="menu_add_note">Tilføj note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkroniseringskonto</string>

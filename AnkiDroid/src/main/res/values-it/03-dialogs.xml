@@ -95,8 +95,6 @@
     <string name="answering_error_message">Scrittura della raccolta non riuscita. La banca dati potrebbe essere danneggiata o potrebbe non esserci abbastanza spazio vuoto sul disco.\n\nSe questo accade più spesso, prova a controllare la banca dati, a riparare la collezione o a ripristinarla da un backup. Tocca «opzioni» per quello.\n\O potrebbe essere anche un errore di AnkiDroid, per favore segnala l\'errore in modo da poterlo controllare.</string>
     <string name="answering_error_report">Segnala errori</string>
     <string name="repair_deck_dialog">Vuoi veramente provare a riparare il database?\n\nPrima di iniziare il tentativo, verrà creata una copia nella sottocartella \'%s\'.</string>
-    <string name="intent_add_saved_information">Dati salvati</string>
-    <string name="intent_add_clear_all">Cancella tutto</string>
     <string name="intent_aedict_empty">Categoria \'default\' è vuota</string>
     <string name="intent_aedict_category">Per aggiungere le carte ad AnkiDroid rimuovi tutte le categorie Notepad o aggiungine una chiamata \'default\'</string>
     <string name="custom_study_new_total_new">Carte nuove nel mazzo: %d</string>
@@ -108,7 +106,6 @@
     <string name="custom_study_random">Seleziona x carte casualmente dal mazzo:</string>
     <string name="custom_study_preview">Anteprima carte nuove aggiunte negli ultimi x giorni:</string>
     <string name="custom_study_rebuild_deck_corrupt">Impossibile ricostruire il mazzo di studio personalizzato</string>
-    <string name="rebuild_custom_study_deck">Ricreo il mazzo di studio personalizzato.\nAttendi...</string>
     <string name="importing_collection">Importazione collezione.\nAttendi&#8230;</string>
     <string name="import_media_count">Importazione file multimediali %1$d%%\nAttendi&#8230;</string>
     <string name="import_progress">• Importazione note: %1$d%%\n• Importazione carte: %2$d%%\n• Post-elaborazione: %3$d%%</string>
@@ -159,7 +156,7 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Scadute</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Cerco carte vuote&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
+    <string name="confirm_cancel">Vuoi annullare?</string>
     <string name="empty_cards_none">Nessuna carta vuota</string>
     <string name="empty_cards_count">Carte de eliminare: %d</string>
     <string name="empty_cards_deleted">Carte eliminate: %d</string>
@@ -191,8 +188,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Banca dati bloccata</string>
     <string name="database_locked_summary">La banca dati di AnkiDroid è in uso da un\'altra applicazione. Chiudi l\'altra applicazione e riapri AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_title">Versione del Database Incompatibile</string>
+    <string name="incompatible_database_version_summary">Il database è una versione più avanzata di questa con cui AnkiDroid può funzionare. Aggiorna AnkiDroid o esegui il downgrade del database per aprirlo\n\nVersione supportata: %1$d\nVersione del database: %2$d\n\nLe seguenti opzioni di ripristino sovrascriveranno la tua raccolta corrente, possibilmente con una versione compatibile del database:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Immagine di sfondo applicata</string>
     <string name="background_image_removed">Immagine di sfondo rimossa</string>
@@ -214,22 +211,22 @@
     <string name="locale_selection_dialog_title">Selezione Suggerimento Tastiera</string>
     <string name="locale_selection_dialog_summary">Alcune tastiere multilingue, come GBoard, supportano il cambio di lingua durante la modifica del testo\n\nSi prega di richiedere la funzione “setImeHintLocales” dal produttore della tastiera se la tastiera non cambia lingua.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
+    <string name="help_title_using_ankidroid">Usare AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Manuale di AnkiDroid</string>
+    <string name="help_item_anki_manual">Manuale di Anki</string>
+    <string name="help_item_ankidroid_faq">FAQ di AnkiDroid</string>
+    <string name="help_title_get_help">Chiedi Aiuto</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_translate_ankidroid">Translate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_item_report_bug">Segnala un Bug</string>
+    <string name="help_title_support_ankidroid">Supporta AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Dona</string>
+    <string name="help_item_support_translate_ankidroid">Traduci</string>
+    <string name="help_item_support_develop_ankidroid">Sviluppa</string>
+    <string name="help_item_support_rate_ankidroid">Valuta</string>
+    <string name="help_item_support_other_ankidroid">Altro</string>
     <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_anki_forums">Forum di Anki</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>

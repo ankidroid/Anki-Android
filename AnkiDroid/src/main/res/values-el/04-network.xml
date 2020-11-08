@@ -41,19 +41,16 @@
 <resources>
     <string name="youre_offline">You are offline</string>
     <string name="sync_even_if_offline">Try Anyway</string>
-    <string name="sync_error">Sync error</string>
-    <string name="vague_error">Error</string>
+    <string name="sync_error">Σφάλμα συγχρονισμού</string>
+    <string name="vague_error">Σφάλμα</string>
     <string name="retry">Ξαναδοκίμασε</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
     <string name="menu_get_shared_decks">Λήψη κοινόχρηστων τραπουλών</string>
     <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
+    <string name="not_logged_in_title">Σύνδεση στο AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.java -->
     <string name="username">Διεύθυνση email</string>
-    <string name="username_repeat">Επαναλάβετε τη διεύθυνση email</string>
     <string name="password">Κωδικός</string>
-    <string name="password_repeat">Επανάληψη κωδικού</string>
     <string name="log_in">Σύνδεση</string>
     <string name="sign_up_description">Δεν έχετε λογαριασμό στο AnkiWeb; Είναι δωρεάν!</string>
     <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
@@ -62,10 +59,10 @@
     <string name="log_out">Αποσύνδεση</string>
     <string name="alert_logging_message">Σύνδεση, παρακαλώ περιμένετε...</string>
     <string name="invalid_username_password">Μη έγκυρη διεύθυνση email ή κωδικός πρόσβασης.</string>
-    <string name="reset_password">Reset password</string>
+    <string name="reset_password">Επαναφορά κωδικού πρόσβασης</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Προτιμήσεις</string>
-    <string name="deckpreferences_title">Options for XXX</string>
+    <string name="deckpreferences_title">Επιλογές για XXX</string>
     <string name="sync_conflict_message">Πρέπει είτε να ανεβάσετε αυτή τη συλλογή ή να την καταφορτώσετε από το AnkiWeb, καθώς δεν μπορούν να συγχωνευτούν. Μια απ\' τις δυο συλλογές θα αντικατασταθεί.</string>
     <string name="sync_conflict_local">Αποστολή</string>
     <string name="sync_conflict_remote">Λήψη</string>
@@ -83,7 +80,7 @@
     <string name="sync_log_clocks_unsynchronized_date">, η ημερομηνία της συσκευής είναι πιθανώς λάθος</string>
     <string name="sync_conflict_title">Αντίφαση κατά το συγχρονισμό</string>
     <string name="sync_no_changes_message">Δε βρέθηκαν αλλαγές.</string>
-    <string name="sync_database_acknowledge">Collection synchronized</string>
+    <string name="sync_database_acknowledge">Η συλλογή συγχρονίστηκε</string>
     <string name="sync_log_error_specific">Σφάλμα συγχρονισμού, τύπος: %1$s, μύνημα: %2$s</string>
     <string name="sync_corrupt_database">Η βάση δεδομένων είναι κατεστραμμένη. Παρακαλούμε να τη διορθώσετε πριν ξαναδοκιμάσετε να την συγχρονίσετε.\n\nΔείτε  %s για πληροφορίες σχετικές με τη διόρθωση της βάσης δεδομένων σας.</string>
     <string name="sync_too_busy">Ο διακομιστής είναι απασχολημένος. Προσπαθήστε ξανά αργότερα.</string>
@@ -99,7 +96,7 @@
     <string name="sync_writing_db">Εγγραφή αλλαγών στη βάση δεδομένων...</string>
     <string name="sync_download_chunk">Λήψη αλλαγών...</string>
     <string name="sync_upload_chunk">Αποστολή αλλαγών...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Μεταφόρτωση: %1$d KB, λήψη: %2$d KB</string>
     <string name="sync_generic_error">Συνέβη σφάλμα. Παρακαλούμε ξαναπροσπαθήστε αργότερα.</string>
     <string name="sync_check_upload_file">Έλεγχος αρχείου πριν την αποστολή...</string>
     <string name="sync_check_download_file">Έλεγχος ληφθέντος αρχείου...</string>

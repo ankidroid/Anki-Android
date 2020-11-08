@@ -44,7 +44,6 @@
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ</string>
     <string tools:ignore="UnusedResources" name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
-    <string name="CardEditorLaterMessage">ᱠᱷᱚᱵᱚᱨ ᱯᱚᱨᱮ ᱞᱟᱹᱤᱫ ᱨᱩᱠᱷᱤᱭᱟᱹᱣᱠᱟᱱᱟ ᱾</string>
     <string name="CardEditorCardDeck">ᱠᱟᱰ ᱰᱮᱠᱺ</string>
     <string name="CardEditorNoteDeck">ᱰᱮᱠᱺ</string>
     <string name="CardEditorModel">ᱯᱨᱚᱠᱟᱨᱺ</string>
@@ -56,7 +55,6 @@
     <string name="check_all_tags">ᱪᱮᱠ ᱢᱮ/ᱡᱷᱚᱛᱟ ᱴᱮᱜ uncheck ᱢᱮ</string>
     <string name="filter_tags">ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ</string>
     <string name="no_tags">ᱟᱢ ᱴᱮᱜ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱠᱟᱜᱼᱟᱢ</string>
-    <string name="sdcard_missing_message">USB ᱥᱴᱚᱨᱮᱡ ᱵᱚᱸᱫ ᱞᱮᱠᱷᱟᱱ ᱰᱮᱠ ᱚᱠ ᱨᱮ ᱦᱚᱠ ᱮᱢ ᱧᱮᱢ ᱟᱢ</string>
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ </string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
@@ -118,7 +116,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">ᱠᱞᱚᱡ ᱢᱮᱴᱟᱹᱣ ᱫᱚ ᱠᱞᱚᱡ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱮ ᱠᱟᱹᱢᱤ ᱟ</string>
     <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ </string>
     <string name="saving_model">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
-    <string name="add">ᱥᱮᱞᱮᱫ</string>
     <string name="save">ᱥᱟᱝᱪᱚᱣ</string>
     <string name="close">ᱵᱚᱫᱽ</string>
     <string name="select">ᱪᱚᱭᱚᱱ</string>
@@ -135,10 +132,8 @@
         <item quantity="one">%1$d ᱴᱤᱯᱤᱡ</item>
         <item quantity="other">%1$d ᱴᱤᱯᱤᱡ</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Ankidrod ᱛᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ᱠᱟᱰ</string>
     <string name="note_editor_copy_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱠᱚᱯᱤ ᱢᱮ</string>
-    <string name="card_editor_copy_card">ᱠᱟᱰ ᱱᱚᱠᱚᱞ ᱢᱮ</string>
     <string name="card_editor_reposition_card">ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱢᱮ</string>
     <string name="card_editor_reset_card">ᱯᱨᱚᱜᱨᱮᱥ ᱨᱤᱥᱮᱴ ᱢᱮ</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
@@ -159,7 +154,6 @@
     <string name="delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="show_hint">ᱫᱮᱠᱷᱟᱣ %s</string>
     <string name="info_rate">AnkiDroid ᱜᱚᱬᱚᱰ ᱢᱮ</string>
-    <string name="col_load_failed">ᱴᱩᱢᱟᱹᱞ ᱞᱚᱲ ᱦᱩᱲᱟᱜ ᱾\nAnkiDroid ᱵᱚᱸᱫ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱪᱞᱟᱭ ᱢᱮ ᱾</string>
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
     <string name="import_select_title">ᱛᱮᱛ ᱟᱹᱜᱩᱭᱮᱛ ᱞᱟᱹᱜᱤᱫ ᱪᱚᱭᱚᱱ</string>
     <string name="import_message_add">ᱥᱮᱞᱮᱫ</string>
@@ -256,8 +250,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱵᱷᱩᱞ</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱞᱟᱹᱜᱤᱫ V2 scheduler ᱮᱱᱮᱵᱟᱹᱞ ᱢᱮ ᱾</string>
-    <string name="import_cannot_with_v2">V2 scheduler V1 ᱰᱮᱠ ᱚᱠ ᱵᱟᱭ ᱵᱷᱮᱡᱟ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟᱭ ᱥᱮᱰᱭᱩᱞ ᱛᱟᱦᱮᱸ ᱠᱟᱛᱮ ᱦᱚᱸ ᱾</string>
     <string name="export_v2_dummy_note">ᱱᱚᱶᱟ ᱨᱮᱫ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ Anki ᱨᱮᱭᱟᱜ ᱱᱟᱶᱟ ᱵᱷᱚᱨᱥᱚᱱ ᱫᱚᱨᱠᱟᱨ ᱾</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' ᱞᱚᱰ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ ᱾</string>
@@ -321,18 +313,18 @@
     <string name="ankidroid_init_failed_webview">Ankidroid ᱫᱚ ᱥᱭᱥᱴᱮᱢ ᱣᱮᱵᱼᱵᱷᱤᱭᱩ ᱪᱮᱛᱟᱱ ᱨᱮ ᱱᱤᱨᱵᱷᱚᱨᱚᱜ ᱠᱟᱱᱟᱭ ᱚᱠᱟ ᱫᱚ ᱱᱤᱛᱚᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱛᱮᱵᱮ ᱦᱩᱭᱩᱜᱼᱟ ᱚᱠᱟ ᱡᱷᱚᱜ ᱥᱭᱥᱴᱟᱹᱢ ᱟᱹᱯᱰᱮᱴ ᱠᱚ ᱠᱚ ᱵᱚᱦᱟᱞ ᱮᱪᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱱᱟᱥᱮ ᱴᱤᱯᱤᱡ ᱜᱦᱟᱹᱬᱤᱡ ᱛᱟᱭᱚᱢ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾ \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">ᱪᱤᱠᱤ ᱢᱟᱯ</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
+    <string name="format_insert_bold">ᱵᱚᱞ-ᱰ ᱛᱮ ᱥᱮᱴ ᱢᱮᱸ</string>
+    <string name="format_insert_italic">ᱤᱴᱟᱞᱤᱠ ᱛᱮ ᱥᱮᱴ ᱢᱮᱸ</string>
+    <string name="format_insert_underline">ᱜᱟᱨᱞᱟᱭᱤᱱ ᱛᱮ ᱥᱮᱴ ᱢᱮᱸ</string>
     <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="insert_heading">ᱦᱮᱰᱤᱝ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮᱸ</string>
+    <string name="format_font_size">ᱯᱪᱤᱠᱤ ᱢᱟᱯ ᱵᱚᱫᱚᱞ ᱢᱮᱸ</string>
+    <string name="insert_mathjax">MathJax ᱤᱠᱣᱨᱥᱚᱱ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮᱸ</string>
+    <string name="insert_cloze">ᱠᱞᱚᱡᱽ ᱢᱮᱴᱟᱣ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮᱸ</string>
+    <string name="before_text">HTML ᱢᱟᱲᱟᱝ ᱪᱚᱭᱚᱱ</string>
+    <string name="after_text">HTML ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ</string>
+    <string name="add_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱛᱮᱭᱟᱨ</string>
     <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="remove_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱚᱪᱚᱜᱽ ᱟᱢ ᱥᱮ?</string>
+    <string name="note_editor_paste_too_large">ᱪᱤᱛᱟᱹᱨ ᱞᱟᱴᱷᱟ ᱞᱟᱹᱜᱤᱫ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ, ᱫᱚᱭᱟᱠᱟᱛᱮ ᱪᱤᱛᱟᱹᱨ ᱛᱤ ᱛᱮ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮᱸ</string>
 </resources>

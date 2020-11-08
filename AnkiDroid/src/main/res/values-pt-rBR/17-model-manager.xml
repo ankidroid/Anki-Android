@@ -23,7 +23,7 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Gerenciar tipos de nota</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Gerenciar campos</string>
     <!--Toasts-->
-    <string name="toast_last_model">Não é possível excluir seu último modelo de notas</string>
+    <string name="toast_last_model">Não foi possível excluir seu último modelo de notas</string>
     <string name="toast_last_field">Tipos de nota devem ter pelo menos um campo</string>
     <string name="toast_empty_name">Você deve digitar um nome</string>
     <string name="toast_duplicate_field">Nome do campo já utilizado</string>
@@ -45,13 +45,11 @@
     <!--Rename-->
     <string name="rename_model">Renomear modelos de nota</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_title">Dica de idioma do teclado</string>
     <string name="model_field_editor_language_hint_dialog_success_result">Definir idioma da dica para %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Editar campos</string>
     <string name="model_field_editor_add">Adicionar campo</string>
     <string name="model_field_editor_delete">Excluir campo</string>
-    <string name="model_field_editor_options">Opções de campo</string>
     <string name="model_field_editor_rename">Renomear campo</string>
     <string name="model_field_editor_language_hint">Definir idioma do teclado</string>
     <string name="model_field_editor_reposition_menu">Campo de reposição</string>

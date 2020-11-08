@@ -94,8 +94,8 @@
     <string name="gestures_summ">Asigni gestojn al agoj, kiel respondi aŭ redakti karton.</string>
     <string name="gestures_allow_links">Ignori gestojn sur ligiloj</string>
     <string name="gestures_allow_links_summary">Tuŝaj gestoj ne funkcios kiam ligilo ĉeestos.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch">9-punkta frapeto</string>
+    <string name="gestures_corner_touch_summary">Ebligi gestojn en anguloj de la ekrano</string>
     <string name="gestures_swipe_up">Ŝovumi supren</string>
     <string name="gestures_swipe_down">Ŝovumi suben</string>
     <string name="gestures_swipe_left">Ŝovumi maldekstren</string>
@@ -105,15 +105,15 @@
     <string name="gestures_tap_left">Frapeti maldekstre</string>
     <string name="gestures_tap_right">Frapeti dekstre</string>
     <string name="gestures_tap_bottom">Frapeti sube</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
+    <string name="gestures_corner_tap_top_left">Frapeti supran maldekstron</string>
+    <string name="gestures_corner_tap_top_center">Frapeti supran mezon</string>
+    <string name="gestures_corner_tap_top_right">Frapeti supran maldekstron</string>
+    <string name="gestures_corner_tap_middle_left">Frapeti mezan maldekstron</string>
+    <string name="gestures_corner_tap_middle_center">Frapeti centron</string>
+    <string name="gestures_corner_tap_middle_right">Frapeti mezan maldekstron</string>
+    <string name="gestures_corner_tap_bottom_left">Frapeti suban maldekstron</string>
+    <string name="gestures_corner_tap_bottom_center">Frapeti suban mezon</string>
+    <string name="gestures_corner_tap_bottom_right">Frapeti suban dekstron</string>
     <string name="gestures_volume_up">Pliigi sonfortecon</string>
     <string name="gestures_volume_down">Malpliigi sonfortecon</string>
     <string name="more_scrolling_buttons">Elektronika legilo</string>
@@ -195,7 +195,7 @@
     <string name="reset_custom_buttons">Restarigi normojn</string>
     <string name="thirdparty_apps_title">Eksteraj aplikaĵoj uzantaj API</string>
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
-    <string name="html_javascript_debugging">Senerarigado de HTML / Ĝavoskripto</string>
+    <string name="html_javascript_debugging">Senerarigado de HTML / JavaScript</string>
     <string name="html_javascript_debugging_summ">Aktivigu forajn konektojn por WebView kaj konservu HTML de kartoj al la dosierujo “AnkiDroid”</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Detala statistiko</string>
@@ -242,7 +242,7 @@
     <string name="deck_conf_use_general_timeout_settings">Uzi ĝeneralajn agordojn</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Uzi ĝeneralajn agordojn pri “aŭtomate montri respondon” anstataŭ uzi agordojn por tiu ĉi grupo.</string>
     <string name="deck_conf_easy_bonus">Premio por facileco</string>
-    <string name="deck_conf_hard_factor">Hard interval</string>
+    <string name="deck_conf_hard_factor">Ripeti malfacilan karton post</string>
     <string name="deck_conf_ivl_fct">Obligi intertempon je</string>
     <string name="deck_conf_max_ivl">Maksimuma intertempo</string>
     <string name="deck_conf_new_lps_ivl">Nova intertempo</string>
@@ -257,7 +257,7 @@
     <string name="deck_conf_replayq">Reludi semandon</string>
     <string name="deck_conf_replayq_summ">Kiam montri respondon, reludi kaj demandon kaj respondon</string>
     <string name="deck_conf_manage">Administri grupojn</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">Aldoni/ŝanĝi grupojn de agordoj</string>
     <string name="deck_conf_current_group">Nuna grupo</string>
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Alinomi</string>
     <string name="deck_conf_reset">Restarigi normojn</string>
@@ -286,6 +286,6 @@
     <string name="analytics_dialog_title">Helpu, ke AnkiDroid fariĝos pli bona!</string>
     <string name="analytics_title">Kunhavigi uzadon de funkcioj</string>
     <string name="analytics_summ">Vi povas kontribui al AnkiDroid per helpi al la disvovla teamo scii kiujn funkciojn homoj uzas</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="enable_miui_keyboard_hack">“Alglui” por enigi trutekstan malplenon</string>
+    <string name="enable_miui_keyboard_hack_summ">En kart-redaktilo, ordono “alglui” ŝanĝas la elektitan tekston al truteksta malpleno</string>
 </resources>

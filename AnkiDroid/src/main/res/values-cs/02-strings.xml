@@ -44,7 +44,6 @@
     <!-- Navigation drawer strings -->
     <string tools:ignore="UnusedResources" name="drawer_open">Otevřít zásuvku</string>
     <string tools:ignore="UnusedResources" name="drawer_close">Zavřít zásuvku</string>
-    <string name="CardEditorLaterMessage">Uložené informace na později</string>
     <string name="CardEditorCardDeck">Balíček karet:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
     <string name="CardEditorModel">Typ poznámky:</string>
@@ -56,7 +55,6 @@
     <string name="check_all_tags">Označit/odznačit všechny štítky</string>
     <string name="filter_tags">Filtrovat štítky</string>
     <string name="no_tags">Ještě jste nepřidali žádné štítky</string>
-    <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Odpojte USB pro přístup ke svým balíkům.</string>
     <string name="updated_version">Aktualizováno na verzi %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Uložit tabuli</string>
@@ -118,7 +116,6 @@
     <string name="note_editor_insert_cloze_no_cloze_note_type">Doplňovačky budou fungovat pouze na typu poznámky Doplňovačka</string>
     <string name="saving_facts">Ukládání poznámky</string>
     <string name="saving_model">Ukládání typu poznámky</string>
-    <string name="add">Přidat</string>
     <string name="save">Uložit</string>
     <string name="close">Zavřít</string>
     <string name="select">Vybrat</string>
@@ -139,10 +136,8 @@
         <item quantity="many">%1$d minuty</item>
         <item quantity="other">%1$d minut</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid karta</string>
     <string name="note_editor_copy_note">Kopírovat poznámku</string>
-    <string name="card_editor_copy_card">Kopírovat kartu</string>
     <string name="card_editor_reposition_card">Změnit pořadí</string>
     <string name="card_editor_reset_card">Obnovit proces učení</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Přeplánovat</string>
@@ -165,7 +160,6 @@
     <string name="delete_deck">Odstraňování balíčku...\nProsím čekejte.</string>
     <string name="show_hint">Zobrazit %s</string>
     <string name="info_rate">Ohodnotit AnkiDroid</string>
-    <string name="col_load_failed">Načítání kolekce se nezdařilo.\nStiskněte zpět pro zavření AnkiDroid.</string>
     <string name="import_title">Importuje se</string>
     <string name="import_select_title">Vyberte soubor k importu</string>
     <string name="import_message_add">Přidat</string>
@@ -187,7 +181,7 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() selhalo (asi nedostatek místa v úložišti)</string>
     <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">Nahrazuje se kolekce&#8230;</string>
-    <string name="import_interrupted">Import přerušen</string>
+    <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_include_schedule">Zahrnout plánování</string>
     <string name="export_include_media">Zahrnout multimédia</string>
     <string name="confirm_apkg_export">Exportovat kolekci jako Anki balíček?</string>
@@ -280,8 +274,6 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba sdílení souboru apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Abyste mohli importovat tento soubor, musí být povolen V2 plánovač.</string>
-    <string name="import_cannot_with_v2">V2 plánovač nemůže importovat V1 balíčky, které obsahují plánování.</string>
     <string name="export_v2_dummy_note">Tento soubor vyžaduje novější verzi Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Načítání \'%s\' selhalo.</string>
@@ -364,5 +356,5 @@
     <string name="add_toolbar_item">Vytvořit položku nástrojové lišty</string>
     <string name="toolbar_item_explain_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ho odstranili</string>
     <string name="remove_toolbar_item">Odstranit položku nástrojové lišty?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="note_editor_paste_too_large">Obrázek je příliš velký, nelze ho vložit; vložte prosím obrázek ručně</string>
 </resources>

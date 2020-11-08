@@ -44,16 +44,13 @@
     <string name="sync_error">Synkronointivirhe</string>
     <string name="vague_error">Virhe</string>
     <string name="retry">Yritä uudelleen</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Käyttöehdot</a></string>
     <string name="menu_get_shared_decks">Hanki jaettuja pakkoja</string>
     <string name="connection_error_message">Tapahtui verkkovirhe.</string>
     <string name="not_logged_in_title">Kirjaudu AnkiWebiin</string>
     <string name="login_create_account_message">Sinun tulee kirjautua kolmannen osapuolen käyttäjätilille käyttääksesi pilvisynkronointipalvelua. Voit luoda uuden tilin seuraavassa vaiheessa.</string>
     <!-- MyAccount.java -->
     <string name="username">Sähköpostiosoite</string>
-    <string name="username_repeat">Toista sähköpostiosoite</string>
     <string name="password">Salasana</string>
-    <string name="password_repeat">Toista salasana</string>
     <string name="log_in">Kirjaudu sisään</string>
     <string name="sign_up_description">Eikö sinulla ole AnkiWeb-tiliä? Se on ilmainen!</string>
     <string name="sign_up_not_affiliated">Huomatus: AnkiWeb ei ole sidoksissa AnkiDroidiin</string>

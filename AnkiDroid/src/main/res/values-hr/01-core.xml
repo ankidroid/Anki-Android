@@ -109,6 +109,7 @@
     <string name="move_all_to_deck">Premjesti sve u skupinu</string>
     <string name="unbury">Otkopaj</string>
     <string name="rename_deck">Preimenuj skupinu</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Dodaj</string>
     <string name="menu_add_note">Dodaj bilješku</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinkroniziraj račun</string>

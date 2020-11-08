@@ -107,8 +107,6 @@
     <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибка в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>
     <string name="repair_deck_dialog">Вы действительно хотите починить базу данных?\n\nПеред восстановлением копия базы данных будет помещена в папку \'%s\'.</string>
-    <string name="intent_add_saved_information">Сохраненные данные</string>
-    <string name="intent_add_clear_all">Очистить всё</string>
     <string name="intent_aedict_empty">Категория по умолчанию пуста</string>
     <string name="intent_aedict_category">Чтобы добавить карточки в AnkiDroid, удалите все категории Notepad или создайте категорию \"default\"</string>
     <string name="custom_study_new_total_new">Новых карточек в колоде: %d</string>
@@ -120,7 +118,6 @@
     <string name="custom_study_random">Сколько случайных карточек отобрать:</string>
     <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
     <string name="custom_study_rebuild_deck_corrupt">Не удалось перестроить колоду дополнительного обучения</string>
-    <string name="rebuild_custom_study_deck">Дополнительная колода пересобирается&#8230;</string>
     <string name="importing_collection">Коллекция импортируется&#8230;</string>
     <string name="import_media_count">Импортируются медиафайлы %1$d%%&#8230;</string>
     <string name="import_progress">• Записей: %1$d%%\n• Карточек: %2$d%%\n• Обработка: %3$d%%</string>

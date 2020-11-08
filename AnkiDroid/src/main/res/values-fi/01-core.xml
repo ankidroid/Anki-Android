@@ -104,6 +104,7 @@
     <string name="move_all_to_deck">Siirrä kaikki pakkaan</string>
     <string name="unbury">Paljasta</string>
     <string name="rename_deck">Nimeä pakka uudelleen</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Lisää</string>
     <string name="menu_add_note">Lisää merkintä</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkronoi tili</string>

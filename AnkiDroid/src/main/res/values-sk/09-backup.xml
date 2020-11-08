@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Na SD karte je menej než %d MB miesta. \nUvoľnite miesto, predídete tým prípadnej strate dát.</string>
-    <string name="backup_delete">Zálohy sa odstraňujú&#8230;</string>
     <string name="backup_restore">Obnoviť zo zálohy</string>
     <string name="backup_new_collection">Nová zbierka</string>
     <string name="backup_del_collection">Odstrániť zbierku a vytvoriť novú</string>

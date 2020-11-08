@@ -38,8 +38,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
-    <string name="no">no</string>
+    <string name="yes">jes</string>
+    <string name="no">ne</string>
     <!-- Navigation drawer items-->
     <string name="decks">Kartaroj</string>
     <string name="card_browser">Kart-foliumilo</string>
@@ -72,8 +72,8 @@
         <item quantity="one">ankoraŭ %d tago %d</item>
         <item quantity="other">ankoraŭ %d tagoj %d</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Kolekto estas malplena</string>
+    <string name="no_cards_placeholder_description">Komencu aldoni kartojn\nper la butono “+”</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Hodiaŭ vi lernis %1$d karton dum %2$s</item>
@@ -82,7 +82,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">entajpu respondon</string>
     <string name="show_answer">montri respondon</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Kaŝi respondon</string>
     <string name="ease_button_again">denove</string>
     <string name="ease_button_hard">malfacile</string>
     <string name="ease_button_good">facile</string>
@@ -104,6 +104,7 @@
     <string name="move_all_to_deck">Movi ĉiujn al kartaro</string>
     <string name="unbury">Malkaŝi</string>
     <string name="rename_deck">Renomi kartaron</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">Aldoni</string>
     <string name="menu_add_note">Aldoni noton</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Samtempigo-konton</string>
@@ -155,11 +156,11 @@
     <string name="time_quantity_months">%.1f mon.</string>
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Rekreado de filtrita kartaro&#8230;</string>
     <string name="rebuild_cram_label">Rekrei</string>
     <string name="empty_cram_label">Forviŝi</string>
     <string name="create_subdeck">Krei subkartaron</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">Malplenigado de filtrita kartaro&#8230;</string>
     <string name="custom_study_deck_name">Propra lernado</string>
     <string name="custom_study_deck_exists">Unue ŝanĝu nomon de kartaro por propra lernado</string>
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
@@ -202,7 +203,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspekto de foliumilo</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Informoj pri karto</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Legi kaj skribi al datumbazo de AnkiDroid</string>
     <string name="read_write_permission_description">aliri ekzistajn notojn, kartojn, tipojn de notoj kaj kartarojn kaj krei novajn</string>

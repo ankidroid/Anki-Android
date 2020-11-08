@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Back-up niet opgeslagen. Onvoldoende ruimte over op SD-kaart. Verlaag de back-updiepte of verwijder enkele andere bestanden.</string>
     <string name="sd_space_warning">Nog minder dan %d MB ruimte op uw SD-kaart beschikbaar.\nMaak meer ruimte vrij om gegevensverlies te voorkomen.</string>
-    <string name="backup_delete">Verwijderen van back-ups. \nEven wachten...</string>
     <string name="backup_restore">Back-up terugzetten</string>
     <string name="backup_new_collection">Nieuwe collectie</string>
     <string name="backup_del_collection">Verwijder collectie en maak een nieuwe aan</string>

@@ -38,8 +38,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
-    <string name="no">no</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
     <!-- Navigation drawer items-->
     <string name="decks">デッキ</string>
     <string name="card_browser">ブラウザ</string>
@@ -68,8 +68,8 @@
     <plurals name="reviewer_window_title_days">
         <item quantity="other">残り約 %d 日と %d 時間</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">まだカードがありません</string>
+    <string name="no_cards_placeholder_description">＋アイコンから\nカードを追加して下さい</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
@@ -99,6 +99,7 @@
     <string name="move_all_to_deck">移動先デッキを選択</string>
     <string name="unbury">延期を解除</string>
     <string name="rename_deck">このデッキの名前を変更</string>
+    <string name="create_shortcut">Create shortcut</string>
     <string name="menu_add">ノートを追加</string>
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
@@ -123,7 +124,7 @@
     <string name="menu_search">%1$s で検索</string>
     <string name="menu_mark_note">ノートにマークを付ける</string>
     <string name="menu_unmark_note">ノートのマークをはずす</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">録音用マイクアイコン</string>
     <string name="new_deck">デッキを新規作成</string>
     <string name="create" comment="Button to create a filtered deck">新規作成</string>
     <string name="new_dynamic_deck">フィルターデッキを作成</string>
@@ -150,11 +151,11 @@
     <string name="time_quantity_months">%.1fヶ月</string>
     <string name="time_quantity_years">%.1f年</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">フィルターデッキを再構築しています...</string>
     <string name="rebuild_cram_label">再構築</string>
     <string name="empty_cram_label">空にする</string>
     <string name="create_subdeck">サブデッキを作成</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">フィルターデッキを空にしています&#8230;</string>
     <string name="custom_study_deck_name">カスタム学習セッション</string>
     <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
     <string name="empty_deck">このデッキにはカードがありません</string>
@@ -183,20 +184,20 @@
     <string name="card_template_editor_front">表面のテンプレート</string>
     <string name="card_template_editor_back">裏面のテンプレート</string>
     <string name="card_template_editor_styling">書式</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_menu_card_browser_appearance">カードの表示設定</string>
+    <string name="card_template_editor_deck_override">デッキの上書き</string>
     <string name="card_template_editor_cant_delete">カードタイプは少なくとも１種類必要です。</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
     </plurals>
     <string name="invalid_template">カードを作成できませんでした</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
+    <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１つ以上のノートが削除されます。先に新しいカードタイプを追加してください。</string>
     <string name="card_template_editor_save_error">カードテンプレートの変更を保存できません: %s</string>
     <string name="template_for_current_card_deleted">現在のカードのカードタイプが削除されました。</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">カードの表示設定</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">カード情報</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid データベースの読み書き</string>
     <string name="read_write_permission_description">ノート、カード、ノートタイプ、デッキへのアクセスや、それらの新規作成を行います。</string>

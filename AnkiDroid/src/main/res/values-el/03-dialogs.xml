@@ -95,8 +95,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Αναφορά σφάλματος</string>
     <string name="repair_deck_dialog">Είστε βέβαιοι ότι θέλετε να επιδιορθώσετε τη βάση δεδομένων;\n\nΠριν να ξεκινήσει η απόπειρα, θα δημιουργηθεί ένα αντίγραφο στον υποφάκελο \'%s\'.</string>
-    <string name="intent_add_saved_information">Αποθηκευμένα δεδομένα</string>
-    <string name="intent_add_clear_all">Καθαρισμός όλων</string>
     <string name="intent_aedict_empty">Η κατηγορία «προεπιλεγμένο» είναι κενή</string>
     <string name="intent_aedict_category">Για να προσθέσετε κάρτες στο Ανκί-Ντρόιντ αφαιρέστε όλες τις κατηγορίες Notepad ή προσθέστε μία με όνομα «προεπιλεγμένο»</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -108,7 +106,6 @@
     <string name="custom_study_random">Τυχαία επιλογή x καρτών από την τράπουλα:</string>
     <string name="custom_study_preview">Προεπισκόπηση νέων καρτών του προστέθηκαν στις τελευταίες x μέρες:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Ανασύσταση προσαρμοσμένης μελέτης.\nΠαρακαλούμε περιμένετε...</string>
     <string name="importing_collection">Εισαγωγή συλλογής. \nΠαρακαλώ περιμένετε&#8230;</string>
     <string name="import_media_count">Εισαγωγή αρχείων πολυμέσων %1$d%%\nΠαρακαλώ περιμένετε&#8230;</string>
     <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
@@ -117,28 +114,28 @@
     <string name="import_complete_count">Cards imported: %d</string>
     <string name="sd_card_full_title">SD card full</string>
     <string name="sd_card_almost_full_title">SD card almost full</string>
-    <string name="restore_backup_title">Restore backup?</string>
+    <string name="restore_backup_title">Επαναφορά αντιγράφου ασφαλείας;</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_cancel">Ακύρωση</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_no">No</string>
-    <string name="dialog_continue">Continue</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
-    <string name="dialog_positive_delete">Delete</string>
+    <string name="dialog_no">Όχι</string>
+    <string name="dialog_continue">Συνέχεια</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Δημιουργία</string>
+    <string name="dialog_positive_delete">Διαγραφή</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_remove">Remove</string>
-    <string name="dialog_positive_repair">Repair</string>
-    <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_positive_restore">Restore</string>
-    <string name="dialog_positive_set">Set</string>
-    <string name="lookup_button_content">Look up</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Απενεργοποίηση</string>
+    <string name="dialog_positive_overwrite">Αντικατάσταση</string>
+    <string name="dialog_positive_remove">Αφαίρεση</string>
+    <string name="dialog_positive_repair">Επισκευή</string>
+    <string name="dialog_positive_replace">Αντικατάσταση</string>
+    <string name="dialog_positive_restore">Επαναφορά</string>
+    <string name="dialog_positive_set">Ορισμός</string>
+    <string name="lookup_button_content">Αναζήτηση</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
     <string name="check_media_title">Check media?</string>
     <string name="check_media_warning">This may take a long time with large media collections</string>
-    <string name="check_media_message">Checking media&#8230;</string>
+    <string name="check_media_message">Έλεγχος πολυμέσων&#8230;</string>
     <string name="check_media_acknowledge">Media checked</string>
     <string name="check_media_failed">Media check failed</string>
     <string name="check_media_invalid">Files with invalid encoding: %d</string>
@@ -154,8 +151,8 @@
         <item quantity="other">%d files deleted</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
+    <string name="tags_dialog_option_all_cards">Όλες οι κάρτες</string>
+    <string name="tags_dialog_option_new_cards">Νέο</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
@@ -198,7 +195,7 @@
     <string name="background_image_removed">Background image removed</string>
     <string name="no_image_selected">No image selected</string>
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
+    <string name="error_deleting_image">Σφάλμα διαγραφής εικόνας</string>
     <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
     <string name="background_image_too_large">Deck Picker background too large</string>
     <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
@@ -214,22 +211,22 @@
     <string name="locale_selection_dialog_title">Keyboard Hint Selection</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_title_using_ankidroid">Χρήση του AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Εγχειρίδιο AnkiDroid</string>
+    <string name="help_item_anki_manual">Εγχειρίδιο Anki</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_title_get_help">Λήψη βοήθειας</string>
+    <string name="help_item_mailing_list">Λίστα αλληλογραφίας</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_translate_ankidroid">Translate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_report_bug">Αναφορά σφαλμάτων</string>
+    <string name="help_title_support_ankidroid">Υποστήριξη του AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Δωρεά</string>
+    <string name="help_item_support_translate_ankidroid">Μετάφραση</string>
+    <string name="help_item_support_develop_ankidroid">Ανάπτυξη</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_support_other_ankidroid">Άλλο</string>
+    <string name="help_title_community">Κοινότητα</string>
+    <string name="help_item_anki_forums">Φόρουμ Anki</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
