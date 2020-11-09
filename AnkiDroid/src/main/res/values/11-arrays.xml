@@ -22,7 +22,7 @@
     <string-array name="gestures_labels">
         <item>No action</item>
         <item>Show answer</item>
-        <item>Answer button 1</item>
+        <item>Answer button 1 (left button)</item>
         <item>Answer button 2</item>
         <item>Answer button 3</item>
         <item>Answer button 4</item>
