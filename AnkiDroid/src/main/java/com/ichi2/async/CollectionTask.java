@@ -222,15 +222,15 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     /**
      * Block the current thread until the currently running CollectionTask instance (if any) has finished.
-     * @param timeout timeout in seconds
+     * @param timeoutSeconds timeout in seconds
      * @return whether or not the previous task was successful or not
      */
-    public static boolean waitToFinish(Integer timeout) {
+    public static boolean waitToFinish(Integer timeoutSeconds) {
         try {
             if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
                 Timber.d("CollectionTask: waiting for task %s to finish...", sLatestInstance.mType);
-                if (timeout != null) {
-                    sLatestInstance.get(timeout, TimeUnit.SECONDS);
+                if (timeoutSeconds != null) {
+                    sLatestInstance.get(timeoutSeconds, TimeUnit.SECONDS);
                 } else {
                     sLatestInstance.get();
                 }
