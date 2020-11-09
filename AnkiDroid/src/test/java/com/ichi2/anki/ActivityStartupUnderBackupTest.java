@@ -20,6 +20,7 @@ import android.app.Activity;
 
 import com.ichi2.testutils.ActivityList;
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam;
+import com.ichi2.testutils.EmptyApplication;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +28,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameter;
 import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 import org.robolectric.android.controller.ActivityController;
+import org.robolectric.annotation.Config;
 
 import java.util.stream.Collectors;
 
@@ -36,6 +38,7 @@ import static org.hamcrest.Matchers.is;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(ParameterizedRobolectricTestRunner.class)
+@Config(application = EmptyApplication.class) // no point in Application init if we don't use it
 public class ActivityStartupUnderBackupTest extends RobolectricTest {
     @Parameter
     public ActivityLaunchParam mLauncher;
