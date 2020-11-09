@@ -157,7 +157,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         mModelId = model.getLong("id");
-        ArrayList<String> fields = Models.fieldNames(model);
+        List<String> fields = model.getFieldsNames();
         // Use the names of the fields as test values for the notes which will be added
         mDummyFields = fields.toArray(new String[0]);
         // create test decks and add one note for every deck

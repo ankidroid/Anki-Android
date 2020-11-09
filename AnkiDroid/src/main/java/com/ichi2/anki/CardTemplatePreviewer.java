@@ -31,6 +31,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import timber.log.Timber;
@@ -275,7 +276,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             return null;
         }
         Note n = getCol().newNote(model);
-        ArrayList<String> fieldNames = Models.fieldNames(model);
+        List<String> fieldNames = model.getFieldsNames();
         for (int i = 0; i < fieldNames.size() && i < n.getFields().length; i++) {
             n.setField(i, fieldNames.get(i));
         }

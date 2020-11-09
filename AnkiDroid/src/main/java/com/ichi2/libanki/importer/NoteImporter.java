@@ -14,7 +14,6 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.utils.StringUtils;
 import com.ichi2.utils.Assert;
 import com.ichi2.utils.HtmlUtils;
-import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
 import java.util.AbstractMap;
@@ -31,7 +30,6 @@ import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
 
 import static com.ichi2.libanki.Consts.NEW_CARDS_RANDOM;
-import static com.ichi2.libanki.Utils.collection2Array;
 import static com.ichi2.libanki.Utils.fieldChecksum;
 import static com.ichi2.libanki.Utils.guid64;
 import static com.ichi2.libanki.Utils.joinFields;
@@ -96,11 +94,7 @@ public class NoteImporter extends Importer {
 
 
     public void initMapping() {
-        List<String> flds = new ArrayList<>();
-        JSONArray array = mModel.getJSONArray("flds");
-        for (JSONObject fld: array.jsonObjectIterable()) {
-            flds.add(fld.getString("name"));
-        }
+        List<String> flds = mModel.getFieldsNames();
         // truncate to provided count
         flds = flds.subList(0, Math.min(flds.size(), fields()));
         // if there's room left, add tags

@@ -19,6 +19,8 @@ package com.ichi2.libanki;
 
 import com.ichi2.utils.JSONObject;
 
+import java.util.List;
+
 import androidx.annotation.CheckResult;
 
 /**
@@ -45,5 +47,13 @@ public class Model extends JSONObject {
     public Model deepClone() {
         Model clone = new Model();
         return deepClonedInto(clone);
+    }
+
+    public List<String> getFieldsNames() {
+        return getJSONArray("flds").toStringList("name");
+    }
+
+    public List<String> getTemplatesNames() {
+        return getJSONArray("tmpls").toStringList("name");
     }
 }
