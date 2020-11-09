@@ -442,17 +442,6 @@ public class Models {
     }
 
 
-    public static ArrayList<String> fieldNames(Model m) {
-        JSONArray flds = m.getJSONArray("flds");
-        ArrayList<String> names = new ArrayList<>();
-        for (JSONObject fld: flds.jsonObjectIterable()) {
-            names.add(fld.getString("name"));
-        }
-        return names;
-
-    }
-
-
     public int sortIdx(Model m) {
         return m.getInt("sortf");
     }
@@ -972,11 +961,7 @@ public class Models {
             return;
         }
         JSONArray req = new JSONArray();
-        ArrayList<String> flds = new ArrayList<>();
-        JSONArray fields = m.getJSONArray("flds");
-        for (JSONObject field: fields.jsonObjectIterable()) {
-            flds.add(field.getString("name"));
-        }
+        List<String> flds = m.getFieldsNames();
         JSONArray templates = m.getJSONArray("tmpls");
         for (JSONObject t: templates.jsonObjectIterable()) {
             Object[] ret = _reqForTemplate(m, flds, t);
@@ -990,7 +975,7 @@ public class Models {
     }
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // 'String f' is unused upstream as well
-    private Object[] _reqForTemplate(Model m, ArrayList<String> flds, JSONObject t) {
+    private Object[] _reqForTemplate(Model m, List<String> flds, JSONObject t) {
         int nbFields = flds.size();
         String[] a = new String[nbFields];
         String[] b = new String[nbFields];

@@ -27,7 +27,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
@@ -44,9 +43,10 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
-import java.util.ArrayList;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
+
+import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -63,7 +63,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
     private int mCurrentPos;
 
     private ListView mFieldLabelView;
-    private ArrayList<String> mFieldLabels;
+    private List<String> mFieldLabels;
     private MaterialDialog mProgressDialog;
 
     private Collection mCol;
@@ -158,11 +158,8 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         long noteTypeID = getIntent().getLongExtra("noteTypeID", 0);
         mMod = mCol.getModels().get(noteTypeID);
 
-        mFieldLabels = new ArrayList<>();
         mNoteFields = mMod.getJSONArray("flds");
-        for (JSONObject o: mNoteFields.jsonObjectIterable()) {
-            mFieldLabels.add(o.getString("name"));
-        }
+        mFieldLabels = mNoteFields.toStringList("name");
     }
 
 

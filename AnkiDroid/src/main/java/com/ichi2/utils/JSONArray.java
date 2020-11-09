@@ -410,4 +410,17 @@ public class JSONArray extends org.json.JSONArray {
         }
         return l;
     }
+
+
+    /**
+     * @return Given an array of objects, return the array of the value with `key`, assuming that they are String.
+     * E.g. templates, fields are a JSONArray whose objects have name
+     */
+    public List<String> toStringList(String key) {
+        List<String> l = new ArrayList<>(length());
+        for (JSONObject object : jsonObjectIterable()) {
+            l.add(object.getString(key));
+        }
+        return l;
+    }
 }
