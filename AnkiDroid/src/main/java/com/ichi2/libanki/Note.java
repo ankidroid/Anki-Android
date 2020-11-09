@@ -273,6 +273,10 @@ public class Note implements Cloneable {
         mTags.add(tag);
     }
 
+    public void addTags(AbstractSet<String> tags) {
+        mTags.addAll(tags);
+    }
+
 
     /**
      * Unique/duplicate check
