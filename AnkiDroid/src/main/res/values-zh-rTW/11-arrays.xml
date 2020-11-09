@@ -68,6 +68,7 @@
         <item>向上翻頁</item>
         <item>向下翻頁</item>
         <item>Page Down</item>
+        <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>長久擱置卡片</item>

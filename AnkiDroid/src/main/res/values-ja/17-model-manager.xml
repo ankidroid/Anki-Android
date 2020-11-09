@@ -64,7 +64,7 @@
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">複製: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
+    <string name="card_template_browser_appearance_summary">カードブラウザーがカードを表示するために使用するテンプレートを入力します。これを使用すると、より簡潔な答えを表示できます。\n\n\nのフロントテンプレート「 {{Country}} の資本金は:」\nカードブラウザで\n「資本金: {{Country}}」に圧縮できます。</string>
     <string name="card_template_browser_appearance_question_format">質問の表示形式</string>
     <string name="card_template_browser_appearance_answer_format">解答の表示形式</string>
     <string name="card_template_browser_appearance_restore_default_dialog">デフォルト値を復元しますか？</string>

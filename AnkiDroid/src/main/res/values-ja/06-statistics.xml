@@ -42,8 +42,8 @@
     <string name="statistics_mature">復習(熟知)</string>
     <string name="statistics_young_and_learn">復習(未熟)＋基本学習</string>
     <string name="statistics_unlearned">未学習(新規)</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">保留</string>
+    <string name="statistics_buried">延期</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">再基本学習</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">基本学習</string>
     <string name="statistics_cram">フィルター学習</string>
@@ -92,14 +92,14 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt;か月</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt;日</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt;時間</string>
-    <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_learn">学習中: &lt;b&gt;%1$.2f%%&lt;/b&gt; 正解 (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">定着中: &lt;b&gt;%1$.2f%%&lt;/b&gt; 正解 (%2$d of %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">定着済: &lt;b&gt;%1$.2f%%&lt;/b&gt; 正解 (%2$d of %3$d)</string>
     <string name="stats_overview_card_types_total_cards">カード合計:  &lt;b&gt;%d&lt;/b&gt;枚</string>
     <string name="stats_overview_card_types_total_notes">ノート合計:  &lt;b&gt;%d&lt;/b&gt;個</string>
-    <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_lowest_ease">易しさの最小値: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">易しさの平均値: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_highest_ease">易しさの最大値: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_select_time_scale">期間を選択</string>
     <string-array name="due_x_axis_title">
         <item>日</item>

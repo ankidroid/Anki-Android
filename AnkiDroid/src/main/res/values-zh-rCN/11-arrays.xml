@@ -68,6 +68,7 @@
         <item>向上翻页</item>
         <item>向下翻页</item>
         <item>向下翻页</item>
+        <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>暂停卡片</item>

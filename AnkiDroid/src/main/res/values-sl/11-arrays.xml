@@ -68,6 +68,7 @@
         <item>Remove Flag</item>
         <item>Page Up</item>
         <item>Page Down</item>
+        <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Pridrži kartico</item>

@@ -357,4 +357,5 @@
     <string name="toolbar_item_explain_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ho odstranili</string>
     <string name="remove_toolbar_item">Odstranit položku nástrojové lišty?</string>
     <string name="note_editor_paste_too_large">Obrázek je příliš velký, nelze ho vložit; vložte prosím obrázek ručně</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
 </resources>
