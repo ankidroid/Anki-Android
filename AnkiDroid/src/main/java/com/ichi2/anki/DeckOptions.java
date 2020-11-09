@@ -18,6 +18,7 @@ package com.ichi2.anki;
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -64,6 +65,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -105,7 +107,6 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             return DeckOptions.this;
         }
 
-
         private void cacheValues() {
             Timber.i("DeckOptions - CacheValues");
 
@@ -132,9 +133,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 // rev
                 JSONObject revOptions = mOptions.getJSONObject("rev");
                 mValues.put("revPerDay", revOptions.getString("perDay"));
-                mValues.put("easyBonus", Integer.toString((int) (revOptions.getDouble("ease4") * 100)));
-                mValues.put("hardFactor", Integer.toString((int) (revOptions.optDouble("hardFactor", 1.2) * 100)));
-                mValues.put("revIvlFct", Integer.toString((int) (revOptions.getDouble("ivlFct") * 100)));
+                mValues.put("easyBonus", String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ease4") * 100));
+                mValues.put("hardFactor", String.format(Locale.ROOT, "%.0f", revOptions.optDouble("hardFactor", 1.2) * 100));
+                mValues.put("revIvlFct", String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ivlFct") * 100));
                 mValues.put("revMaxIvl", revOptions.getString("maxIvl"));
                 mValues.put("revBury", Boolean.toString(revOptions.optBoolean("bury", true)));
 
@@ -146,7 +147,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 // lapse
                 JSONObject lapOptions = mOptions.getJSONObject("lapse");
                 mValues.put("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")));
-                mValues.put("lapNewIvl", Integer.toString((int) (lapOptions.getDouble("mult") * 100)));
+                mValues.put("lapNewIvl", String.format(Locale.ROOT, "%.0f", lapOptions.getDouble("mult") * 100));
                 mValues.put("lapMinIvl", lapOptions.getString("minInt"));
                 mValues.put("lapLeechThres", lapOptions.getString("leechFails"));
                 mValues.put("lapLeechAct", lapOptions.getString("leechAction"));
