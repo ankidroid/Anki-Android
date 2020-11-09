@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.sched.AbstractSched;
 
@@ -165,7 +164,7 @@ public class DeckPickerTest extends RobolectricTest {
     public void limitAppliedAfterReview() {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
-        Deck deck = col.getDecks().get(1);
+
         DeckConfig dconf = col.getDecks().getConf(1);
         dconf.getJSONObject("new").put("perDay", 10);
         for (int i = 0; i < 11; i++) {
@@ -173,13 +172,11 @@ public class DeckPickerTest extends RobolectricTest {
         }
         // This set a card as current card
         sched.getCard();
+
         ensureCollectionLoadIsSynchronous();
-        try (ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class)) {
-            scenario.onActivity(deckPicker -> {
-                advanceRobolectricLooper();
-                assertEquals(10, deckPicker.mDueTree.get(0).getNewCount());
-            });
-        }
+        DeckPicker deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
+
+        assertEquals(10, deckPicker.mDueTree.get(0).getNewCount());
     }
 
     @Test
