@@ -23,6 +23,7 @@ import android.util.Pair;
 
 import com.ichi2.utils.JSONObject;
 
+import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;

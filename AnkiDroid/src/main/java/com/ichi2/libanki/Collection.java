@@ -83,6 +83,7 @@ import com.ichi2.async.TaskData;
 
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
 import static com.ichi2.libanki.Collection.Previewing.*;
+import static com.ichi2.utils.CollectionUtils.addAll;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not

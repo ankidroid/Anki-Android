@@ -53,6 +53,8 @@ import androidx.annotation.NonNull;
 import okhttp3.Response;
 import timber.log.Timber;
 
+import static com.ichi2.utils.CollectionUtils.addAll;
+
 @SuppressWarnings({"deprecation", // tracking HTTP transport change in github already
                     "PMD.ExcessiveClassLength","PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",

@@ -73,6 +73,7 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
+import static com.ichi2.utils.CollectionUtils.addAll;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.MethodNamingConventions","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
