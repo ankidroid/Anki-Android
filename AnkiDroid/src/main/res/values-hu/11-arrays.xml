@@ -68,6 +68,7 @@
         <item>Felfele</item>
         <item>Lefele</item>
         <item>Page Down</item>
+        <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Kártya felfüggesztése</item>

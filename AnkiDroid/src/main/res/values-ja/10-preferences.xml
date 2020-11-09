@@ -155,9 +155,9 @@
     <string name="select_locale_title">言語を選択</string>
     <string name="safe_display">安全表示モード</string>
     <string name="safe_display_summ">アニメーションを無効にし、より不具合が起こりくい方法でカードを表示します。電子ペーパー端末ではこの設定が必要となる可能性があります。</string>
-    <string name="disable_extended_text_ui">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui">単一フィールド編集モードを無効にする</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め部分」メニューを許可する</string>
     <string name="vertical_centering">上下中央揃え</string>
     <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
     <string name="pref_backup_max">保管するバックアップの世代数</string>
@@ -177,10 +177,10 @@
     <string name="day_offset">日付更新時刻</string>
     <string name="day_offset_summ">XXX 時</string>
     <string name="sched_ver">実験的な新型スケジューラ</string>
-    <string name="sched_ver_summ">Enable the experimental scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_ver_summ">実験スケジューラを有効にします。次の同期時に強制的に変更されます。</string>
     <string name="sched_ver_toggle_title">確認</string>
-    <string name="sched_ver_2to1">This will reset any cards in learning, clear filtered decks, and change the scheduler version. Proceed?</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
+    <string name="sched_ver_2to1">学習中のカードがリセットされ、スケジューラのバージョンが変更されます。続行しますか？</string>
+    <string name="sched_ver_1to2">実験的なスケジューラは間違ったスケジューリングを引き起こす可能性があります。最初に関係するドキュメントを読んで確認してください。続行しますか？</string>
     <string name="pref_keep_screen_on">スクリーンをオンのままにする</string>
     <string name="pref_keep_screen_on_summ">画面の自動オフを無効にします</string>
     <string name="convert_fen_text">チェス表記のサポート</string>
@@ -195,8 +195,8 @@
     <string name="reset_custom_buttons">初期設定にリセット</string>
     <string name="thirdparty_apps_title">サードパーティ製APIアプリ</string>
     <string name="thirdparty_apps_summary">辞書やユーティリティなど、AnkiDroidを活用するアプリのリストを見るにはここをタップしてください</string>
-    <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <string name="html_javascript_debugging">HTML / Javascriptのデバッグ</string>
+    <string name="html_javascript_debugging_summ">リモートの WebView 接続を有効にし、カードの HTML を AnkiDroid ディレクトリに保存します</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">高度な統計</string>
     <string name="enable_advanced_statistics_title">高度な統計を有効にする</string>
@@ -256,7 +256,7 @@
     <string name="deck_conf_replayq">質問の音声・動画も再生</string>
     <string name="deck_conf_replayq_summ">解答が表示されている時に「音声・動画を再生」を選択すると、解答の音声・動画の前に質問の音声・動画も再生します</string>
     <string name="deck_conf_manage">オプショングループの管理</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
+    <string name="deck_conf_manage_summ">オプショングループの追加と変更</string>
     <string name="deck_conf_current_group">このデッキが使用しているオプショングループ</string>
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">名前の変更</string>
     <string name="deck_conf_reset">標準の設定へ戻す</string>
@@ -284,6 +284,6 @@
     <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title">設定の情報提供を許可する</string>
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます。</string>
-    <string name="enable_miui_keyboard_hack">\'Paste\' to insert cloze deletion</string>
-    <string name="enable_miui_keyboard_hack_summ">In the Note Editor, \'Paste\' will turn the selected text into a cloze</string>
+    <string name="enable_miui_keyboard_hack">穴埋め部分に「貼り付け」</string>
+    <string name="enable_miui_keyboard_hack_summ">ノートエディタで、この「貼り付け」を選択するとテキストを穴埋め部分へ変更します。</string>
 </resources>

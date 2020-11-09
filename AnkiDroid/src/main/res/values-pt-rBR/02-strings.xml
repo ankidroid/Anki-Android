@@ -331,4 +331,5 @@
     <string name="toolbar_item_explain_remove">Digite o código HTML a ser inserido antes e após o texto selecionado. Mantenha o item pressionado para remove-lo</string>
     <string name="remove_toolbar_item">Remover item do menu?</string>
     <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
 </resources>

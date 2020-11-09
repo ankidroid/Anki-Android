@@ -68,6 +68,7 @@
         <item>１画面分上へスクロール</item>
         <item>１画面分下へスクロール</item>
         <item>１画面分下へスクロール</item>
+        <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>タグを付けて保留</item>

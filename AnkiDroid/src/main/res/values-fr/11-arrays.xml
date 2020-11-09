@@ -68,6 +68,7 @@
         <item>Remonter</item>
         <item>Descendre</item>
         <item>Descendre</item>
+        <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Suspendre la carte</item>
