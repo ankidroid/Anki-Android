@@ -27,6 +27,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.utils.DatabaseChangeDecorator;
@@ -306,6 +307,11 @@ public class DB {
 
     public void executeMany(String sql, List<Object[]> list) {
         mMod = true;
+        if (BuildConfig.DEBUG) {
+            if (list.size() <= 1) {
+                Timber.w("Query %s called with a list of at most one element. Usually that's not expected.", sql);
+            }
+        }
         executeInTransaction(() -> executeManyNoTransaction(sql, list));
     }
 
