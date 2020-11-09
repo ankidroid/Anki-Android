@@ -31,6 +31,7 @@ import android.os.Environment;
 import android.os.LocaleList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.util.Log;
@@ -187,6 +188,17 @@ public class AnkiDroidApp extends MultiDexApplication {
     @NonNull
     public static InputStream getResourceAsStream(@NonNull String name) {
         return sInstance.getApplicationContext().getClassLoader().getResourceAsStream(name);
+    }
+
+
+    public static boolean isInitialized() {
+        return sInstance == null;
+    }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public static void simulateRestoreFromBackup() {
+        sInstance = null;
     }
 
 

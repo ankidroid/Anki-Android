@@ -584,5 +584,38 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             setSupportActionBar(toolbar);
         }
     }
+
+    protected boolean showedActivityFailedScreen(Bundle savedInstanceState) {
+        if (!AnkiDroidApp.isInitialized()) {
+            return false;
+        }
+
+        // #7630: Can be triggered with `adb shell bmgr restore com.ichi2.anki` after AnkiDroid settings are changed.
+        // Application.onCreate() is not called if:
+        // * The App was open
+        // * A restore took place
+        // * The app is reopened (until it exits: finish() does not do this - and removes it from the app list)
+
+        Timber.w("Activity started with no application instance");
+        UIUtils.showThemedToast(this, getString(R.string.ankidroid_cannot_open_after_backup_try_again), false);
+
+        // Avoids a SuperNotCalledException
+        super.onCreate(savedInstanceState);
+        finishActivityWithFade(this);
+
+        // If we don't kill the process, the backup is not "done" and reopening the app show the same message.
+        new Thread(() -> {
+            // 3.5 seconds sleep, as the toast is killed on process death.
+            // Same as the default value of LENGTH_LONG
+            try {
+                Thread.sleep(3500);
+            } catch (InterruptedException e) {
+                Timber.w(e);
+            }
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }).start();
+
+        return true;
+    }
 }
 
