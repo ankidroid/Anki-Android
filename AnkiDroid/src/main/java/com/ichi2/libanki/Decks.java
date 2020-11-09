@@ -55,6 +55,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.utils.CollectionUtils.addAll;
+
 // fixmes:
 // - make sure users can't set grad interval < 1
 
@@ -843,9 +845,7 @@ public class Decks {
         }
         List<Long> dids = new ArrayList<>();
         dids.add(did);
-        for(long childDid : children(did).values()) {
-            dids.add(childDid);
-        }
+        dids.addAll(children(did).values());
         return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(dids)));
     }
 
@@ -952,9 +952,7 @@ public class Decks {
     public LinkedList<Long> active() {
         JSONArray activeDecks = mCol.getConf().getJSONArray("activeDecks");
         LinkedList<Long> result = new LinkedList<>();
-        for (Long l: activeDecks.longIterable()) {
-            result.add(l);
-        }
+        addAll(result, activeDecks.longIterable());
         return result;
     }
 

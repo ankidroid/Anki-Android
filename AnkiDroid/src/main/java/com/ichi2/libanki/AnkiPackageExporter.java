@@ -43,6 +43,8 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
 import timber.log.Timber;
 
+import static com.ichi2.utils.CollectionUtils.addAll;
+
 class Exporter {
     protected final Collection mCol;
     protected Long mDid;
@@ -240,9 +242,7 @@ class AnkiExporter extends Exporter {
         }
         JSONArray keys = media.names();
         if (keys != null) {
-            for (String key: keys.stringIterable()) {
-                mMediaFiles.add(key);
-            }
+            addAll(mMediaFiles, keys.stringIterable());
         }
         Timber.d("Cleanup");
         dst.setCrt(mSrc.getCrt());
