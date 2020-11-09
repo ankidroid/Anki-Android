@@ -860,13 +860,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
             showStartupScreensAndDialogs(AnkiDroidApp.getSharedPrefs(getBaseContext()), 3);
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
             mSyncOnResume = true;
-        } else if ((requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS)
-                && resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
-            // Show a message when reviewing has finished
-            if (getCol().getSched().count() == 0) {
-                UIUtils.showSimpleSnackbar(this, R.string.studyoptions_congrats_finished, false);
-            } else {
-                UIUtils.showSimpleSnackbar(this, R.string.studyoptions_no_cards_due, false);
+        } else if (requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS) {
+            if (resultCode == Reviewer.RESULT_NO_MORE_CARDS) {
+                // Show a message when reviewing has finished
+                if (getCol().getSched().count() == 0) {
+                    UIUtils.showSimpleSnackbar(this, R.string.studyoptions_congrats_finished, false);
+                } else {
+                    UIUtils.showSimpleSnackbar(this, R.string.studyoptions_no_cards_due, false);
+                }
+            } else if (resultCode == Reviewer.RESULT_ABORT_AND_SYNC) {
+                Timber.i("Obtained Abort and Sync result");
+                CollectionTask.waitForAllToFinish(4);
+                sync();
             }
         } else if (requestCode == REQUEST_BROWSE_CARDS) {
             // Store the selected deck after opening browser

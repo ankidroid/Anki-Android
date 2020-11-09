@@ -162,6 +162,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
      */
     public static final int RESULT_DEFAULT = 50;
     public static final int RESULT_NO_MORE_CARDS = 52;
+    public static final int RESULT_ABORT_AND_SYNC = 53;
 
     /**
      * Available options performed by other activities.
@@ -2585,10 +2586,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_PAGE_DOWN:
                 onPageDown();
                 return true;
+            case COMMAND_ABORT_AND_SYNC:
+                abortAndSync();
+                return true;
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;
         }
+    }
+
+
+    private void abortAndSync() {
+        closeReviewer(RESULT_ABORT_AND_SYNC, true);
     }
 
 

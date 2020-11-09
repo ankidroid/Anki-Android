@@ -56,6 +56,7 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
+import com.ichi2.utils.ThreadUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -241,6 +242,28 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             Timber.e(e, "Exception waiting for task to finish");
             return false;
         }
+    }
+
+    /**
+     * Block the current thread until all CollectionTasks have finished.
+     * @param timeoutSeconds timeout in seconds
+     * @return whether all tasks exited successfully
+     */
+    @SuppressWarnings("UnusedReturnValue")
+    public static boolean waitForAllToFinish(Integer timeoutSeconds) {
+        // HACK: This should be better - there is currently a race condition in sLatestInstance, and no means to obtain this information.
+        // This should work in all reasonable cases given how few tasks we have concurrently blocking.
+        boolean result;
+        result = CollectionTask.waitToFinish(timeoutSeconds / 4);
+        ThreadUtil.sleep(10);
+        result &= CollectionTask.waitToFinish(timeoutSeconds / 4);
+        ThreadUtil.sleep(10);
+        result &= CollectionTask.waitToFinish(timeoutSeconds / 4);
+        ThreadUtil.sleep(10);
+        result &= CollectionTask.waitToFinish(timeoutSeconds / 4);
+        ThreadUtil.sleep(10);
+        Timber.i("Waited for all tasks to finish");
+        return result;
     }
 
     /** Cancel the current task.
