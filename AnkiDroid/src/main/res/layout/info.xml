@@ -62,5 +62,10 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1" />
         </LinearLayout>
+        <Button
+            android:id="@+id/info_donate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/help_item_support_opencollective_donate" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
