@@ -43,6 +43,7 @@ import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
@@ -83,7 +84,9 @@ import com.ichi2.async.TaskData;
 
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
 import static com.ichi2.libanki.Collection.Previewing.*;
-import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filter;
+import static com.ichi2.utils.CollectionUtils.map;
+import static com.ichi2.utils.CollectionUtils.mapAndAdd;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -703,23 +706,15 @@ public class Collection {
      * for cloze, avail should contains only non-negative numbers, and the i-th card is a copy of the first card, with a different ord.
      */
     private ArrayList<JSONObject> _tmplsFromOrds(Model model, ArrayList<Integer> avail) {
-        ArrayList<JSONObject> ok = new ArrayList<>();
         JSONArray tmpls;
         if (model.getInt("type") == Consts.MODEL_STD) {
             tmpls = model.getJSONArray("tmpls");
-            for (Integer ord : avail) {
-                ok.add(tmpls.getJSONObject(ord));
-            }
+            return map(avail, (Integer ord) -> tmpls.getJSONObject(ord));
         } else {
             // cloze - generate temporary templates from first
             JSONObject template0 = model.getJSONArray("tmpls").getJSONObject(0);
-            for (int ord : avail) {
-                JSONObject t = template0.deepClone();
-                t.put("ord", ord);
-                ok.add(t);
-            }
+            return map(avail, (Integer ord) -> {JSONObject t = template0.deepClone(); t.put("ord", ord); return t;});
         }
-        return ok;
     }
 
 
@@ -864,11 +859,8 @@ public class Collection {
                 }
                 // note any cards that need removing
                 if (have.containsKey(nid)) {
-                    for (Map.Entry<Integer, Long> n : have.get(nid).entrySet()) {
-                        if (!avail.contains(n.getKey())) {
-                            rem.add(n.getValue());
-                        }
-                    }
+                    rem = map(filter(have.get(nid).entrySet(), (Map.Entry<Integer, Long> n) -> !avail.contains(n.getKey())),
+                            (Map.Entry<Integer, Long> n) -> n.getValue());
                 }
             }
         }
@@ -903,19 +895,13 @@ public class Collection {
     	        cms = findTemplates(note);
     	        break;
             case EDIT:
-    	        cms = new ArrayList<>();
-	            for (Card c : note.cards()) {
-	                cms.add(c.template());
-	            }
+    	        cms = map(note.cards(), (Card c) -> c.template());
 	            break;
             default: // MODELS
                 JSONArray tmpls = note.model().getJSONArray("tmpls");
                 cms = tmpls.toJSONObjectList();
 	    }
-	    List<Card> cards = new ArrayList<>();
-	    for (JSONObject template : cms) {
-	        cards.add(_newCard(note, template, 1, did, false));
-	    }
+	    List<Card> cards = map(cms, (JSONObject template) -> _newCard(note, template, 1, did, false));
 	    return cards;
 	}
     public List<Card> previewCards(Note note) {
@@ -1072,13 +1058,9 @@ public class Collection {
      */
 
     private ArrayList<Object[]> _fieldData(String snids) {
-        ArrayList<Object[]> result = new ArrayList<>();
         try (Cursor cur = mDb.query("SELECT id, mid, flds FROM notes WHERE id IN " + snids)) {
-            while (cur.moveToNext()) {
-                result.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getString(2) });
-            }
+            return map(cur, () -> new Object[] { cur.getLong(0), cur.getLong(1), cur.getString(2) });
         }
-        return result;
     }
 
 
@@ -1195,17 +1177,13 @@ public class Collection {
 
 
     public ArrayList<Object[]> _qaData(String where) {
-        ArrayList<Object[]> data = new ArrayList<>();
         try (Cursor cur = mDb.query(
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
                             + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where)) {
-            while (cur.moveToNext()) {
-                data.add(new Object[] { cur.getLong(0), cur.getLong(1),
-                        getModels().get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
-                        cur.getString(5), cur.getString(6), cur.getInt(7)});
-            }
+            return map(cur, () -> new Object[] { cur.getLong(0), cur.getLong(1),
+                    getModels().get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
+                    cur.getString(5), cur.getString(6), cur.getInt(7)});
         }
-        return data;
     }
 
 	public String _flagNameFromCardFlags(int flags){
@@ -1520,9 +1498,7 @@ public class Collection {
         List<DeckConfig> allConf = getDecks().allConf();
         HashSet<Long> configIds  = new HashSet<>();
 
-        for (DeckConfig conf : allConf) {
-            configIds.add(conf.getLong("id"));
-        }
+        mapAndAdd(configIds, allConf, (DeckConfig conf) -> conf.getLong("id"));
 
         notifyProgress.run();
 
@@ -1566,9 +1542,9 @@ public class Collection {
         notifyProgress.run();
 
         //get the deck Ids to query
-        Long[] dynDeckIds = getDecks().allDynamicDeckIds();
+        ArrayList<Long> dynDeckIds = getDecks().allDynamicDeckIds();
         //make it mutable
-        List<Long> dynIdsAndZero = new ArrayList<>(Arrays.asList(dynDeckIds));
+        List<Long> dynIdsAndZero = (List<Long>) dynDeckIds.clone();
         dynIdsAndZero.add(0L);
 
         ArrayList<Long> cardIds = mDb.queryLongList("select id from cards where did in " +

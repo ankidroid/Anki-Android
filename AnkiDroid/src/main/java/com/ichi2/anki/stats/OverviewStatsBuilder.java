@@ -31,6 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.map;
+
 public class OverviewStatsBuilder {
     private static final int CARDS_INDEX = 0;
     private static final int THETIME_INDEX = 1;
@@ -295,7 +298,6 @@ public class OverviewStatsBuilder {
             lim += String.format(Locale.US, " and day < %d", end);
         }
 
-        List<int[]> d = new ArrayList<>();
         String query = String.format(Locale.US,
                 "select (due-%d)/%d as day,\n" +
                         "sum(case when ivl < 21 then 1 else 0 end), -- yng\n" +
@@ -306,11 +308,8 @@ public class OverviewStatsBuilder {
                         "group by day order by day",
                 mCol.getSched().getToday(), chunk, _limit(), lim);
         try (Cursor cur = mCol.getDb().query(query)) {
-            while (cur.moveToNext()) {
-                d.add(new int[]{cur.getInt(0), cur.getInt(1), cur.getInt(2)});
-            }
+            return map(cur, () -> new int[]{cur.getInt(0), cur.getInt(1), cur.getInt(2)});
         }
-        return d;
     }
 
 

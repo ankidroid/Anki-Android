@@ -33,6 +33,7 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.FilterResultsUtils;
 
@@ -49,6 +50,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filter;
+import static com.ichi2.utils.CollectionUtils.filterAndAdd;
+import static com.ichi2.utils.CollectionUtils.map;
 
 public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
@@ -257,11 +263,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
                     mFilteredDecks.addAll(allDecks);
                 } else {
                     final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
-                    for (SelectableDeck deck : allDecks) {
-                        if (deck.getName().toLowerCase(Locale.getDefault()).contains(filterPattern)) {
-                            mFilteredDecks.add(deck);
-                        }
-                    }
+                    filterAndAdd(mFilteredDecks, allDecks, (SelectableDeck deck) -> deck.getName().toLowerCase(Locale.getDefault()).contains(filterPattern));
                 }
 
                 return FilterResultsUtils.fromCollection(mFilteredDecks);
@@ -286,14 +288,9 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
         @NonNull
         public static List<SelectableDeck> fromCollection(@NonNull Collection c, @NonNull FunctionalInterfaces.Filter<Deck> filter) {
             List<Deck> all = c.getDecks().all();
-            List<SelectableDeck> ret = new ArrayList<>();
-            for (Deck d : all) {
-                if (!filter.shouldInclude(d)) {
-                    continue;
-                }
-                ret.add( new SelectableDeck(d));
-            }
-            return ret;
+            return map(
+                    filter(all, (Deck d) -> filter.shouldInclude(d)),
+                    (Deck d) -> new SelectableDeck(d));
         }
 
         @SuppressWarnings("unused")

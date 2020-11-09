@@ -46,7 +46,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -54,6 +53,8 @@ import okhttp3.Response;
 import timber.log.Timber;
 
 import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filter;
+import static com.ichi2.utils.CollectionUtils.map;
 
 @SuppressWarnings({"deprecation", // tracking HTTP transport change in github already
                     "PMD.ExcessiveClassLength","PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -831,12 +832,11 @@ public class Syncer {
                 lmods.put(cur.getLong(0), cur.getLong(1));
             }
         }
-        ArrayList<Object[]> update = new ArrayList<>();
-        for (JSONArray r: data.jsonArrayIterable()) {
-            if (!lmods.containsKey(r.getLong(0)) || lmods.get(r.getLong(0)) < r.getLong(modIdx)) {
-                update.add(Utils.jsonArray2Objects(r));
-            }
-        }
+        ArrayList<Object[]> update = map(
+                filter(data.jsonArrayIterable(),
+                (JSONArray r) -> (!lmods.containsKey(r.getLong(0)) || lmods.get(r.getLong(0)) < r.getLong(modIdx))
+                ),
+                (JSONArray r) -> Utils.jsonArray2Objects(r));
         mCol.log(table, data);
         return update;
     }

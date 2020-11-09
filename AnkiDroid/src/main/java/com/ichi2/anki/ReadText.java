@@ -23,7 +23,6 @@ import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -32,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.ichi2.compat.Compat;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Sound;
+import com.ichi2.utils.CollectionUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -41,6 +41,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
+
+import static com.ichi2.utils.CollectionUtils.mapAndAdd;
+
 
 public class ReadText {
     private static TextToSpeech mTts;
@@ -112,10 +115,8 @@ public class ReadText {
             // Add option: "no tts"
             dialogItems.add(res.getString(R.string.tts_no_tts));
             dialogIds.add(NO_TTS);
-            for (int i = 0; i < availableTtsLocales.size(); i++) {
-                dialogItems.add(availableTtsLocales.get(i).getDisplayName());
-                dialogIds.add(availableTtsLocales.get(i).getISO3Language());
-            }
+            mapAndAdd(dialogItems, availableTtsLocales, (availableTtsLocale) -> availableTtsLocale.getDisplayName());
+            mapAndAdd(dialogIds, availableTtsLocales, (availableTtsLocale) -> availableTtsLocale.getISO3Language());
             String[] items = new String[dialogItems.size()];
             dialogItems.toArray(items);
 

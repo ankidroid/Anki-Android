@@ -24,6 +24,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -34,6 +35,9 @@ import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filter;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength","PMD.OneDeclarationPerLine",
@@ -254,12 +258,8 @@ public class Storage {
         t.put("name", "Cloze");
         // delete non-cloze cards for the model
         JSONArray tmpls = m.getJSONArray("tmpls");
-        ArrayList<JSONObject> rem = new ArrayList<>();
-        for (JSONObject ta: tmpls.jsonObjectIterable()) {
-            if (!ta.getString("afmt").contains("{{cloze:")) {
-                rem.add(ta);
-            }
-        }
+        ArrayList<JSONObject> rem = filter(tmpls.jsonObjectIterable(),
+                (JSONObject ta) -> !ta.getString("afmt").contains("{{cloze:"));
         for (JSONObject r : rem) {
             col.getModels().remTemplate(m, r);
         }

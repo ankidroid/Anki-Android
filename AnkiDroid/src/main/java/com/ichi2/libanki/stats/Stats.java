@@ -36,11 +36,13 @@ import com.ichi2.libanki.utils.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
 import timber.log.Timber;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.map;
 
 
 @SuppressWarnings({"PMD.ExcessiveClassLength","PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -447,9 +449,7 @@ public class Stats {
         Timber.d("Forecast query: %s", query);
         try (Cursor cur = mCol
                     .getDb().query(query)) {
-            while (cur.moveToNext()) {
-                dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
-            }
+            dues = map(cur, () -> new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
         }
         // small adjustment for a proper chartbuilding with achartengine
         if (dues.size() == 0 || dues.get(0)[0] > 0) {
@@ -609,10 +609,8 @@ public class Stats {
         try (Cursor cur = mCol
                     .getDb()
                     .query(query)) {
-            while (cur.moveToNext()) {
-                list.add(new double[] { cur.getDouble(0), cur.getDouble(5), cur.getDouble(1), cur.getDouble(4),
-                        cur.getDouble(2), cur.getDouble(3)});
-            }
+            list = map(cur, ()-> new double[] { cur.getDouble(0), cur.getDouble(5), cur.getDouble(1), cur.getDouble(4),
+                    cur.getDouble(2), cur.getDouble(3)});
         }
 
 
@@ -761,7 +759,7 @@ public class Stats {
                 break;
         }
 
-        ArrayList<double[]> list = new ArrayList<>();
+        ArrayList<double[]> list;
         try (Cursor cur = mCol
                     .getDb()
                     .query(
@@ -769,9 +767,7 @@ public class Stats {
                                     "where did in "+ _limit() +" and queue = " + Consts.QUEUE_TYPE_REV + " " + lim + " " +
                                     "group by grp " +
                                     "order by grp")) {
-            while (cur.moveToNext()) {
-                list.add(new double[] {cur.getDouble(0), cur.getDouble(1)});
-            }
+            list = map(cur, () -> new double[] {cur.getDouble(0), cur.getDouble(1)});
         }
         try (Cursor cur = mCol
                     .getDb()
@@ -875,7 +871,7 @@ public class Stats {
         long cutoff = mCol.getSched().getDayCutoff();
         long cut = cutoff - rolloverHour * 3600;
 
-        ArrayList<double[]> list = new ArrayList<>();
+        ArrayList<double[]> list;
         String query = "select " +
                 "23 - ((cast((" + cut + " - id/1000) / 3600.0 as int)) % 24) as hour, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
@@ -886,9 +882,7 @@ public class Stats {
         Timber.d("%d : %d breakdown query: %s", rolloverHour, cutoff, query);
         try (Cursor cur = mCol.getDb()
                     .query(query)) {
-            while (cur.moveToNext()) {
-                list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
-            }
+            list = map(cur, () -> new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
         }
 
         //TODO adjust for breakdown, for now only copied from intervals
@@ -995,7 +989,7 @@ public class Stats {
         }
 
         long cutoff = mCol.getSched().getDayCutoff();
-        ArrayList<double[]> list = new ArrayList<>();
+        ArrayList<double[]> list;
         String query = "SELECT strftime('%w',datetime( cast(id/ 1000  -" + sd.get(Calendar.HOUR_OF_DAY) * 3600 +
                 " as int), 'unixepoch')) as wd, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
@@ -1008,9 +1002,7 @@ public class Stats {
         Timber.d(sd.get(Calendar.HOUR_OF_DAY) + " : " +cutoff + " weekly breakdown query: %s", query);
         try (Cursor cur = mCol.getDb()
                     .query(query)) {
-            while (cur.moveToNext()) {
-                list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
-            }
+            list = map(cur, () -> new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
         }
 
         //TODO adjust for breakdown, for now only copied from intervals
@@ -1169,7 +1161,6 @@ public class Stats {
         } else {
             ease4repl = "ease";
         }
-        ArrayList<double[]> list = new ArrayList<>();
         String query = "select (case " +
                 "                when type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_REV + ") then 0 " +
                 "        when lastIvl < 21 then 1 " +
@@ -1181,11 +1172,8 @@ public class Stats {
 
         try (Cursor cur = mCol.getDb()
                     .query(query)) {
-            while (cur.moveToNext()) {
-                list.add(new double[]{cur.getDouble(0), cur.getDouble(1), cur.getDouble(2)});
-            }
+            return map(cur, () -> new double[]{cur.getDouble(0), cur.getDouble(1), cur.getDouble(2)});
         }
-        return list;
     }
 
 
@@ -1261,10 +1249,7 @@ public class Stats {
     public static String deckLimit(long deckId, Collection col) {
         if (deckId == ALL_DECKS_ID) {
             // All decks
-            ArrayList<Long> ids = new ArrayList<>();
-            for (Deck d : col.getDecks().all()) {
-                ids.add(d.getLong("id"));
-            }
+            ArrayList<Long> ids = map(col.getDecks().all(), (Deck d) -> d.getLong("id"));
             return Utils.ids2str(Utils.collection2Array(ids));
         } else {
             // The given deck id and its children

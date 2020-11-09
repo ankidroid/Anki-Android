@@ -24,7 +24,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.BuildConfig;
@@ -32,8 +31,6 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.utils.DatabaseChangeDecorator;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -44,6 +41,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory;
 import timber.log.Timber;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.map;
 
 /**
  * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
@@ -225,15 +225,9 @@ public class DB {
      * @return An ArrayList with the contents of the specified column.
      */
     public ArrayList<Long> queryLongList(String query, Object... bindArgs) {
-        ArrayList<Long> results = new ArrayList<>();
-
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
-            while (cursor.moveToNext()) {
-                results.add(cursor.getLong(0));
-            }
+            return map(cursor, () -> cursor.getLong(0));
         }
-
-        return results;
     }
 
     /**
@@ -243,15 +237,9 @@ public class DB {
      * @return An ArrayList with the contents of the specified column.
      */
     public ArrayList<String> queryStringList(String query, Object... bindArgs) {
-        ArrayList<String> results = new ArrayList<>();
-
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
-            while (cursor.moveToNext()) {
-                results.add(cursor.getString(0));
-            }
+            return map(cursor, () -> cursor.getString(0));
         }
-
-        return results;
     }
 
 

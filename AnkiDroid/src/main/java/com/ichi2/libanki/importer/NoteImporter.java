@@ -30,7 +30,6 @@ import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
 
 import static com.ichi2.libanki.Consts.NEW_CARDS_RANDOM;
-import static com.ichi2.libanki.Utils.collection2Array;
 import static com.ichi2.libanki.Utils.fieldChecksum;
 import static com.ichi2.libanki.Utils.guid64;
 import static com.ichi2.libanki.Utils.joinFields;
@@ -38,6 +37,8 @@ import static com.ichi2.libanki.Utils.splitFields;
 import static com.ichi2.libanki.importer.NoteImporter.ImportMode.ADD_MODE;
 import static com.ichi2.libanki.importer.NoteImporter.ImportMode.IGNORE_MODE;
 import static com.ichi2.libanki.importer.NoteImporter.ImportMode.UPDATE_MODE;
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.map;
 
 // Ported from https://github.com/ankitects/anki/blob/50fdf9b03dec33c99a501f332306f378db5eb4ea/pylib/anki/importing/noteimp.py
 // Aside from 9f676dbe0b2ad9b87a3bf89d7735b4253abd440e, which allows empty notes.
@@ -95,11 +96,8 @@ public class NoteImporter extends Importer {
 
 
     public void initMapping() {
-        List<String> flds = new ArrayList<>();
         JSONArray array = mModel.getJSONArray("flds");
-        for (JSONObject fld: array.jsonObjectIterable()) {
-            flds.add(fld.getString("name"));
-        }
+        List<String> flds = map(array.jsonObjectIterable(), (JSONObject fld) -> fld.getString("name"));
         // truncate to provided count
         flds = flds.subList(0, Math.min(flds.size(), fields()));
         // if there's room left, add tags

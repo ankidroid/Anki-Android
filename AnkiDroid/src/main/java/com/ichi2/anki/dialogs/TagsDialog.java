@@ -27,12 +27,16 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.TreeSet;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filterAndAdd;
 
 public class TagsDialog extends AnalyticsDialogFragment {
     public interface TagsDialogListener {
@@ -93,11 +97,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
         mAllTags = new ArrayList<>();
         mAllTags.addAll(getArguments().getStringArrayList(ALL_TAGS_KEY));
 
-        for (String tag : mCurrentTags) {
-            if (!mAllTags.contains(tag)) {
-                mAllTags.add(tag);
-            }
-        }
+        filterAndAdd(mAllTags, mCurrentTags, (String tag) -> !mAllTags.contains(tag));
 
         setCancelable(true);
     }
@@ -345,11 +345,7 @@ public class TagsDialog extends AnalyticsDialogFragment {
                     mFilteredTags.addAll(mAllTags);
                 } else {
                     final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
-                    for (String tag : mAllTags) {
-                        if (tag.toLowerCase(Locale.getDefault()).contains(filterPattern)) {
-                            mFilteredTags.add(tag);
-                        }
-                    }
+                    filterAndAdd(mFilteredTags, mAllTags, (String tag) -> tag.toLowerCase(Locale.getDefault()).contains(filterPattern));
                 }
 
                 return FilterResultsUtils.fromCollection(mFilteredTags);

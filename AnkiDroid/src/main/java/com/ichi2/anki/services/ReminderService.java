@@ -34,10 +34,13 @@ import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filter;
 
 public class ReminderService extends BroadcastReceiver {
 
@@ -169,17 +172,13 @@ public class ReminderService extends BroadcastReceiver {
             return null;
         }
 
-        List<DeckDueTreeNode> decks = new ArrayList<>();
         try {
             // This loop over top level deck only. No notification will ever occur for subdecks.
-            for (DeckDueTreeNode node : col.getSched().deckDueTree()) {
+            return filter(col.getSched().deckDueTree(), (DeckDueTreeNode node) -> {
                 JSONObject deck = col.getDecks().get(node.getDid(), false);
                 // Dynamic deck has no "conf", so are not added here.
-                if (deck != null && deck.optLong("conf") == dConfId) {
-                    decks.add(node);
-                }
-            }
-            return decks;
+                return deck != null && deck.optLong("conf") == dConfId;
+               });
         } catch (Exception e) {
             if (recur) {
                 Timber.i(e, "getDeckOptionDue exception - likely database re-initialization from auto-sync. Will re-try after sleep.");

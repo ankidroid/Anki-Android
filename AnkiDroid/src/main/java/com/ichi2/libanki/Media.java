@@ -28,6 +28,7 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.utils.Assert;
 
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -61,6 +62,10 @@ import java.util.zip.ZipOutputStream;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filter;
+import static com.ichi2.utils.CollectionUtils.map;
+import static com.ichi2.utils.CollectionUtils.mapAndAdd;
 import static java.lang.Math.min;
 
 /**
@@ -341,16 +346,14 @@ public class Media {
     private List<String> _expandClozes(String string) {
         Set<String> ords = new TreeSet<>();
         @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
-        Matcher m = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}").matcher(string);
-        while (m.find()) {
-            ords.add(m.group(1));
-        }
+        String clozePattern = "\\{\\{c(\\d+)::.+?\\}\\}";
+        mapAndAdd(ords, Pattern.compile(clozePattern).matcher(string), (m) -> m.group(1));
         ArrayList<String> strings = new ArrayList<>();
         String clozeReg = Template.clozeReg;
         
         for (String ord : ords) {
             StringBuffer buf = new StringBuffer();
-            m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(string);
+            Matcher m = Pattern.compile(String.format(Locale.US, clozeReg, ord)).matcher(string);
             while (m.find()) {
                 if (!TextUtils.isEmpty(m.group(4))) {
                     m.appendReplacement(buf, "[$4]");
@@ -500,12 +503,7 @@ public class Media {
         if (renamedFiles) {
             return check(local);
         }
-        List<String> nohave = new ArrayList<>();
-        for (String x : allRefs) {
-            if (!x.startsWith("_")) {
-                nohave.add(x);
-            }
-        }
+        List<String> nohave = filter(allRefs, (String x) -> !x.startsWith("_"));
         // make sure the media DB is valid
         try {
             findChanges();
@@ -677,14 +675,12 @@ public class Media {
         List<String> added = result.first;
         List<String> removed = result.second;
         ArrayList<Object[]> media = new ArrayList<>(added.size() + removed.size());
-        for (String f : added) {
+        mapAndAdd(media, added, (String f) -> {
             String path = new File(dir(), f).getAbsolutePath();
             long mt = _mtime(path);
-            media.add(new Object[] { f, _checksum(path), mt, 1 });
-        }
-        for (String f : removed) {
-            media.add(new Object[] { f, null, 0, 1});
-        }
+            return new Object[] { f, _checksum(path), mt, 1 };
+        });
+        mapAndAdd(media, removed, (String f) -> new Object[] { f, null, 0, 1});
         // update media db
         mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
         mDb.execute("update meta set dirMod = ?", _mtime(dir()));
@@ -705,7 +701,6 @@ public class Media {
             throw new RuntimeException(e);
         }
         List<String> added = new ArrayList<>();
-        List<String> removed = new ArrayList<>();
         // loop through on-disk files
         for (File f : new File(dir()).listFiles()) {
             // ignore folders and thumbs.db
@@ -757,11 +752,11 @@ public class Media {
             }
         }
         // look for any entries in the cache that no longer exist on disk
-        for (Map.Entry<String, Object[]> entry : cache.entrySet()) {
-            if (!((Boolean) entry.getValue()[2])) {
-                removed.add(entry.getKey());
-            }
-        }
+        List<String> removed = map(
+                filter(cache.entrySet(),
+                        (Map.Entry<String, Object[]> entry) -> !((Boolean) entry.getValue()[2])
+                        ),
+               (Map.Entry<String, Object[]> entry) -> entry.getKey());
         return new Pair<>(added, removed);
     }
 

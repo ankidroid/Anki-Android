@@ -44,6 +44,7 @@ import com.ichi2.libanki.DeckConfig;
 
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Assert;
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -69,6 +70,9 @@ import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.map;
+import static com.ichi2.utils.CollectionUtils.mapAndAdd;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
@@ -400,9 +404,7 @@ public class SchedV2 extends AbstractSched {
         Deck cur = mCol.getDecks().current();
         List<Deck> decks = mCol.getDecks().parents(cur.getLong("id"));
         decks.add(cur);
-        for (long did : mCol.getDecks().children(cur.getLong("id")).values()) {
-            decks.add(mCol.getDecks().get(did));
-        }
+        mapAndAdd(decks, mCol.getDecks().children(cur.getLong("id")).values(), (Long did) -> mCol.getDecks().get(did));
         for (Deck g : decks) {
             // add
             JSONArray today = g.getJSONArray("newToday");
@@ -514,11 +516,8 @@ public class SchedV2 extends AbstractSched {
         // Similar to deckDueTree, ignoring the numbers
 
         // Similar to deckDueList
-        ArrayList<DeckTreeNode> data = new ArrayList<>();
-        for (JSONObject deck : mCol.getDecks().allSorted()) {
-            DeckTreeNode g = new DeckTreeNode(mCol, deck.getString("name"), deck.getLong("id"));
-            data.add(g);
-        }
+        ArrayList<DeckTreeNode> data = map(mCol.getDecks().allSorted(),
+                (Deck deck) -> new DeckTreeNode(mCol, deck.getString("name"), deck.getLong("id")));
         // End of the similar part.
 
         return _groupChildren(data, false);
@@ -2554,14 +2553,15 @@ public class SchedV2 extends AbstractSched {
      * @param imax The maximum interval (inclusive)
      */
     public void reschedCards(@NonNull long[] ids, int imin, int imax) {
-        ArrayList<Object[]> d = new ArrayList<>();
         int t = mToday;
         long mod = getTime().intTime();
         Random rnd = new Random();
-        for (long id : ids) {
-            int r = rnd.nextInt(imax - imin + 1) + imin;
-            d.add(new Object[] { Math.max(1, r), r + t, mCol.usn(), mod, RESCHEDULE_FACTOR, id });
-        }
+        ArrayList<Object[]> d = map(ids,
+                (long id) -> {
+                    int r = rnd.nextInt(imax - imin + 1) + imin;
+                    return new Object[] {Math.max(1, r), r + t, mCol.usn(), mod, RESCHEDULE_FACTOR, id};
+                }
+            );
         remFromDyn(ids);
         mCol.getDb().executeMany(
                 "update cards set type=" + Consts.CARD_TYPE_REV + ",queue=" + Consts.QUEUE_TYPE_REV + ",ivl=?,due=?,odue=0, " +
@@ -2629,13 +2629,10 @@ public class SchedV2 extends AbstractSched {
             }
         }
         // reorder cards
-        ArrayList<Object[]> d = new ArrayList<>();
+        ArrayList<Object[]> d;
         try (Cursor cur = mCol.getDb()
                     .query("SELECT id, nid FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND id IN " + scids)) {
-            while (cur.moveToNext()) {
-                long nid = cur.getLong(1);
-                d.add(new Object[] { due.get(nid), now, mCol.usn(), cur.getLong(0) });
-            }
+            d = map(cur, () -> new Object[] { due.get(cur.getLong(1)), now, mCol.usn(), cur.getLong(0) });
         }
         mCol.getDb().executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?", d);
     }
@@ -3044,10 +3041,7 @@ public class SchedV2 extends AbstractSched {
         mCurrentCard = card;
         long did = card.getDid();
         List<Deck> parents = mCol.getDecks().parents(did);
-        List<Long> currentCardParentsDid = new ArrayList<>(parents.size() + 1);
-        for (JSONObject parent : parents) {
-            currentCardParentsDid.add(parent.getLong("id"));
-        }
+        List<Long> currentCardParentsDid = map(parents, (Deck parent) -> parent.getLong("id"));
         currentCardParentsDid.add(did);
         // We set the member only once it is filled, to ensure we avoid null pointer exception if `discardCurrentCard`
         // were called during `setCurrentCard`.

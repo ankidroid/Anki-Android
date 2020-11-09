@@ -9,6 +9,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.mapAndAdd;
+
 /**
  * Utilities for working on multiple cards
  */
@@ -20,10 +23,7 @@ public class CardUtils {
     public static Set<Note> getNotes(Collection<Card> cards) {
         Set<Note> notes = new HashSet<>();
 
-        for (Card card : cards) {
-            notes.add(card.note());
-        }
-
+        mapAndAdd(notes, cards, (Card card) -> card.note());
         return notes;
     }
 

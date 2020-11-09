@@ -58,6 +58,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.map;
+
 import com.ichi2.async.TaskData;
 
 
@@ -320,11 +323,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 // Logging here might be appropriate : )
                 break;
         }
-        List<String> arr = new ArrayList<>();
         if (selectedTags.size() > 0) {
-            for (String tag : selectedTags) {
-                arr.add(String.format("tag:'%s'", tag));
-            }
+            List<String> arr = map(selectedTags, (String tag) -> String.format("tag:'%s'", tag));
             sb.append("(").append(TextUtils.join(" or ", arr)).append(")");
         }
         createCustomStudySession(new JSONArray(), new Object[] {sb.toString(),

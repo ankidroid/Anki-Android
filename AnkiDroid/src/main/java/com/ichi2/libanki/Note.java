@@ -21,18 +21,22 @@ import android.database.Cursor;
 
 import android.util.Pair;
 
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.JSONObject;
 
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filter;
+import static com.ichi2.utils.CollectionUtils.map;
 
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.MethodNamingConventions"})
@@ -162,13 +166,10 @@ public class Note implements Cloneable {
     }
 
     public ArrayList<Card> cards() {
-        ArrayList<Card> cards = new ArrayList<>();
-        for (long cid : cids()) {
+        ArrayList<Card> cards = map(cids(), (Long cid) -> mCol.getCard(cid));
             // each getCard access database. This is inneficient.
             // Seems impossible to solve without creating a constructor of a list of card.
             // Not a big trouble since most note have a small number of cards.
-            cards.add(mCol.getCard(cid));
-        }
         return cards;
     }
 
@@ -255,15 +256,8 @@ public class Note implements Cloneable {
 
 
     public void delTag(String tag) {
-        List<String> rem = new LinkedList<>();
-        for (String t : mTags) {
-            if (t.equalsIgnoreCase(tag)) {
-                rem.add(t);
-            }
-        }
-        for (String r : rem) {
-            mTags.remove(r);
-        }
+        List<String> rem = filter(mTags, (String t) -> t.equalsIgnoreCase(tag));
+        mTags.removeAll(rem);
     }
 
 

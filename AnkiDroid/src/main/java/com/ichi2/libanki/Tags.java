@@ -22,11 +22,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -34,6 +34,10 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filter;
+import static com.ichi2.utils.CollectionUtils.map;
 
 
 /**
@@ -137,11 +141,9 @@ public class Tags {
             mTags.clear();
             mChanged = true;
         }
-        List<String> tags = new ArrayList<>();
+        List<String> tags;
         try (Cursor cursor = mCol.getDb().query("SELECT DISTINCT tags FROM notes" + lim)) {
-            while (cursor.moveToNext()) {
-                tags.add(cursor.getString(0));
-            }
+            tags = map(cursor, () -> cursor.getString(0));
         }
         HashSet<String> tagSet = new HashSet<>(split(TextUtils.join(" ", tags)));
         register(tagSet);
@@ -233,20 +235,16 @@ public class Tags {
             t = t.replace("*", "%");
             lim.append(l).append("like '% ").append(t).append(" %'");
         }
-        ArrayList<Object[]> res = new ArrayList<>();
+        ArrayList<Object[]> res;
         try (Cursor cur = mCol
                 .getDb()
                 .query("select id, tags from notes where id in " + Utils.ids2str(ids) +
                         " and (" + lim + ")")) {
             if (add) {
-                while (cur.moveToNext()) {
-                    res.add(new Object[] { addToStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(), cur.getLong(0) });
-                }
+                res = map(cur, () -> new Object[] { addToStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(), cur.getLong(0) });
             } else {
-                while (cur.moveToNext()) {
-                    res.add(new Object[] { remFromStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(),
+                res = map(cur, () -> new Object[] { remFromStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(),
                             cur.getLong(0) });
-                }
             }
         }
         // update tags
@@ -266,13 +264,7 @@ public class Tags {
 
     /** Parse a string and return a list of tags. */
     public ArrayList<String> split(String tags) {
-        ArrayList<String> list = new ArrayList<>();
-        for (String s : tags.replace('\u3000', ' ').split("\\s")) {
-            if (s.length() > 0) {
-                list.add(s);
-            }
-        }
-        return list;
+        return filter(tags.replace('\u3000', ' ').split("\\s"), (String s) -> s.length() > 0);
     }
 
 
@@ -290,11 +282,7 @@ public class Tags {
     /** Add tags if they don't exist, and canonify */
     public String addToStr(String addtags, String tags) {
         List<String> currentTags = split(tags);
-        for (String tag : split(addtags)) {
-            if (!inList(tag, currentTags)) {
-                currentTags.add(tag);
-            }
-        }
+        CollectionUtils.filterAndAdd(currentTags, split(addtags), (String tag) -> !inList(tag, currentTags));
         return join(canonify(currentTags));
     }
 
@@ -308,12 +296,7 @@ public class Tags {
     public String remFromStr(String deltags, String tags) {
         List<String> currentTags = split(tags);
         for (String tag : split(deltags)) {
-            List<String> remove = new ArrayList<>();
-            for (String tx: currentTags) {
-                if (tag.equalsIgnoreCase(tx) || wildcard(tag, tx)) {
-                    remove.add(tx);
-                }
-            }
+            List<String> remove = filter(currentTags, (String tx) -> (tag.equalsIgnoreCase(tx) || wildcard(tag, tx)));
             // remove them
             for (String r : remove) {
                 currentTags.remove(r);

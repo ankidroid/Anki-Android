@@ -38,6 +38,8 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.map;
 import static com.ichi2.utils.MapUtil.getKeyByValue;
 
 /** Responsible for recreating EditFieldLines after NoteEditor operations
@@ -200,12 +202,7 @@ public class FieldState {
             return;
         }
 
-        List<View.BaseSavedState> important = new ArrayList<>();
-        for (Integer i : customViewIds) {
-            important.add((View.BaseSavedState) views.get(i));
-        }
-
-        mSavedFieldData = important;
+        mSavedFieldData = map(customViewIds, (Integer i) -> (View.BaseSavedState) views.get(i));
     }
 
 

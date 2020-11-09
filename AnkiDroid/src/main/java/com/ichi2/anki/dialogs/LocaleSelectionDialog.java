@@ -36,6 +36,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.ui.RecyclerSingleTouchAdapter;
+import com.ichi2.utils.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +51,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java8.util.Lists;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
 
 /** Locale selection dialog. Note: this must be dismissed onDestroy if not called from an activity implementing LocaleSelectionDialogHandler */
 public class LocaleSelectionDialog extends AnalyticsDialogFragment {
@@ -246,15 +249,8 @@ public class LocaleSelectionDialog extends AnalyticsDialogFragment {
                     }
 
                     String normalisedConstraint = constraint.toString().toLowerCase(Locale.getDefault());
-                    ArrayList<Locale> locales = new ArrayList<>();
-                    for (Locale l : selectableLocales) {
-                        if (l.getDisplayName().toLowerCase(Locale.getDefault()).contains(normalisedConstraint)) {
-                            locales.add(l);
-                        }
-                    }
-
                     FilterResults filterResults = new FilterResults();
-                    filterResults.values = locales;
+                    filterResults.values = CollectionUtils.filter(selectableLocales, (Locale l) -> l.getDisplayName().toLowerCase(Locale.getDefault()).contains(normalisedConstraint));
                     return filterResults;
                 }
 

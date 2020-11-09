@@ -74,6 +74,7 @@ import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
 import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.map;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.MethodNamingConventions","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
@@ -679,13 +680,7 @@ public class Utils {
     }
 
     public static void unzipAllFiles(ZipFile zipFile, String targetDirectory) throws IOException {
-        List<String> entryNames = new ArrayList<>();
-        Enumeration<ZipArchiveEntry> i = zipFile.getEntries();
-        while (i.hasMoreElements()) {
-            ZipArchiveEntry e = i.nextElement();
-            entryNames.add(e.getName());
-        }
-
+        List<String> entryNames = map(zipFile.getEntries(), (ZipArchiveEntry e) -> e.getName());
         unzipFiles(zipFile, targetDirectory, entryNames.toArray(new String[0]), null);
 
     }

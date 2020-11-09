@@ -44,7 +44,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
@@ -56,6 +55,8 @@ import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filter;
+import static com.ichi2.utils.CollectionUtils.map;
 
 // fixmes:
 // - make sure users can't set grad interval < 1
@@ -408,19 +409,12 @@ public class Decks {
      * An unsorted list of all deck names.
      */
     public ArrayList<String> allNames(boolean dyn) {
-        ArrayList<String> list = new ArrayList<>();
         if (dyn) {
-            for (Deck x : mDecks.values()) {
-                list.add(x.getString("name"));
-            }
+            return map(mDecks.values(), (Deck x) -> x.getString("name"));
         } else {
-            for (Deck x : mDecks.values()) {
-                if (x.getInt("dyn") == 0) {
-                    list.add(x.getString("name"));
-                }
-            }
+            return map(
+                    filter(mDecks.values(), (Deck x) -> x.getInt("dyn") == 0), (Deck x) -> x.getString("name"));
         }
-        return list;
     }
 
 
@@ -768,13 +762,9 @@ public class Decks {
 
 
     public List<Long> didsForConf(DeckConfig conf) {
-        List<Long> dids = new ArrayList<>();
-        for(Deck deck : mDecks.values()) {
-            if (deck.has("conf") && deck.getLong("conf") == conf.getLong("id")) {
-                dids.add(deck.getLong("id"));
-            }
-        }
-        return dids;
+        return map(
+                filter(mDecks.values(),
+                        (Deck deck) -> deck.has("conf") && deck.getLong("conf") == conf.getLong("id")), (Deck deck) -> deck.getLong("id"));
     }
 
 
@@ -1073,11 +1063,7 @@ public class Decks {
         String[] parents = parentsNames(get(did).getString("name"));
         // convert to objects
         List<Deck> oParents = new ArrayList<>();
-        for (int i = 0; i < parents.length; i++) {
-            String parentName = parents[i];
-            Deck deck = mNameMap.get(parentName);
-            oParents.add(i, deck);
-        }
+        addAll(oParents, parents, (String parentName) -> mNameMap.get(parentName));
         return oParents;
     }
 
@@ -1172,14 +1158,8 @@ public class Decks {
         return mDecks;
     }
 
-    public Long[] allDynamicDeckIds() {
-        ArrayList<Long> validValues = new ArrayList<>();
-        for (Long did : allIds()) {
-            if (isDyn(did)) {
-                validValues.add(did);
-            }
-        }
-        return validValues.toArray(new Long[0]);
+    public ArrayList<Long> allDynamicDeckIds() {
+        return filter( allIds(), (Long did) -> isDyn(did));
     }
 
     private Deck getDeckOrFail(long deckId) throws NoSuchDeckException {

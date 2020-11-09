@@ -140,6 +140,7 @@ import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
 import com.ichi2.async.TaskData;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.utils.CollectionUtils.map;
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -2318,12 +2319,10 @@ public class NoteEditor extends AnkiActivity {
 
     private int getNextClozeIndex() {
         // BUG: This assumes all fields are inserted as: {{cloze:Text}}
-        List<String> fieldValues = new ArrayList<>(mEditFields.size());
-        for (FieldEditText e : mEditFields) {
+        List<String> fieldValues = map(mEditFields, (FieldEditText e) -> {
             Editable editable = e.getText();
-            String fieldValue = editable == null ? "" : editable.toString();
-            fieldValues.add(fieldValue);
-        }
+            return editable == null ? "" : editable.toString();
+        });
         return ClozeUtils.getNextClozeIndex(fieldValues);
     }
 

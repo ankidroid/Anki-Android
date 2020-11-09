@@ -43,6 +43,8 @@ import java.util.zip.ZipOutputStream;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
+import static com.ichi2.utils.CollectionUtils.filter;
+
 public class BackupManager {
 
     private static final int MIN_FREE_SPACE = 10;
@@ -291,13 +293,9 @@ public class BackupManager {
         if (files == null) {
             files = new File[0];
         }
-        ArrayList<File> deckBackups = new ArrayList<>();
-        for (File aktFile : files) {
-            if (aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.(apkg|colpkg)$", "$1")
-                    .equals(colFile.getName().replace(".anki2",""))) {
-                deckBackups.add(aktFile);
-            }
-        }
+        ArrayList<File> deckBackups = filter(files,
+                (File aktFile) -> aktFile.getName().replaceAll("^(.*)-\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}.(apkg|colpkg)$", "$1")
+                .equals(colFile.getName().replace(".anki2","")));
         Collections.sort(deckBackups);
         File[] fileList = new File[deckBackups.size()];
         deckBackups.toArray(fileList);

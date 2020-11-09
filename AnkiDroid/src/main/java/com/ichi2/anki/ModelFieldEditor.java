@@ -27,7 +27,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
@@ -54,6 +53,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.utils.CollectionUtils.map;
 
 public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDialog.LocaleSelectionDialogHandler {
 
@@ -158,11 +158,8 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         long noteTypeID = getIntent().getLongExtra("noteTypeID", 0);
         mMod = mCol.getModels().get(noteTypeID);
 
-        mFieldLabels = new ArrayList<>();
         mNoteFields = mMod.getJSONArray("flds");
-        for (JSONObject o: mNoteFields.jsonObjectIterable()) {
-            mFieldLabels.add(o.getString("name"));
-        }
+        mFieldLabels = map(mNoteFields.jsonObjectIterable(), (JSONObject o) -> o.getString("name"));
     }
 
 

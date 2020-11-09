@@ -25,6 +25,7 @@ package com.ichi2.libanki.importer.python;
 import android.os.Build;
 
 import com.ichi2.libanki.importer.CsvException;
+import com.ichi2.utils.CollectionUtils;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -37,6 +38,11 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filter;
+import static com.ichi2.utils.CollectionUtils.map;
+import static com.ichi2.utils.CollectionUtils.mapAndAdd;
 
 @RequiresApi(Build.VERSION_CODES.O) // Regex group(str)
 public class CsvSniffer {
@@ -117,13 +123,15 @@ public class CsvSniffer {
         for(String regex : regexes) {
             Pattern p = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
             Matcher m = p.matcher(data);
-            while (m.find()) {
+            mapAndAdd(matches,
+                    m,
+                    (Matcher m_) -> {
                 Group g = new Group();
                 g.delim = getCharOrNull(m, "delim");
                 g.quote = getCharOrNull(m, "quote");
                 g.space = m.group("space");
-                matches.add(g);
-            }
+                return g;
+            });
             if (!matches.isEmpty()) {
                 break;
             }
@@ -212,13 +220,7 @@ public class CsvSniffer {
 
         // remove falsey values
         String[] samples = input.split("\n");
-        List<String> data = new ArrayList<>();
-        for (String s : samples) {
-            if (s == null || s.length() == 0) {
-                continue;
-            }
-            data.add(s);
-        }
+        List<String> data = filter(samples, (String s) -> (s != null && s.length() > 0));
 
         char[] ascii = new char[128]; // 7-bit ASCII
         for(char i = 0; i < 128; i++) {
@@ -250,11 +252,7 @@ public class CsvSniffer {
                 char c = e.getKey();
                 Set<Map.Entry<Integer, Integer>> bareList = e.getValue().entrySet();
 
-                List<Tuple> items = new ArrayList<>();
-
-                for (Map.Entry<Integer, Integer> entry : bareList) {
-                    items.add(new Tuple(entry));
-                }
+                List<Tuple> items = map(bareList, (Map.Entry<Integer, Integer> entry) -> new Tuple(entry));
 
                 if (items.size() == 1 && items.get(0).second == 0) {
                     continue;
@@ -318,10 +316,7 @@ public class CsvSniffer {
 
         // nothing else indicates a preference, pick the character that
         // dominates(?)
-        ArrayList<Map.Entry<Tuple, Character>> items = new ArrayList<>();
-        for(Map.Entry<Character, Tuple> i : delims.entrySet()) {
-            items.add(new AbstractMap.SimpleEntry<>(i.getValue(), i.getKey()));
-        }
+        ArrayList<Map.Entry<Tuple, Character>> items = map(delims.entrySet(), (Map.Entry<Character, Tuple> i) -> new AbstractMap.SimpleEntry<>(i.getValue(), i.getKey()));
         items.sort((o1, o2) -> {
             int compare = Integer.compare(o1.getKey().first, o2.getKey().first);
             if (compare != 0) {

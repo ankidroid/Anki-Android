@@ -26,7 +26,6 @@ import android.util.Pair;
 
 import com.ichi2.async.CancelListener;
 
-import com.ichi2.libanki.Deck;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -35,12 +34,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,6 +46,8 @@ import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.map;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 public class Finder {
@@ -131,9 +130,8 @@ public class Finder {
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
         String[] args = res1.second;
-        List<Long> res = new ArrayList<>();
         if (preds == null) {
-            return res;
+            return new ArrayList<>();
         }
         if ("".equals(preds)) {
             preds = "1";
@@ -142,14 +140,11 @@ public class Finder {
         }
         String sql = "select distinct(n.id) from cards c, notes n where c.nid=n.id and " + preds;
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
-            while (cur.moveToNext()) {
-                res.add(cur.getLong(0));
-            }
+            return map(cur, () -> cur.getLong(0));
         } catch (SQLException e) {
             // invalid grouping
             return new ArrayList<>();
         }
-        return res;
     }
 
 

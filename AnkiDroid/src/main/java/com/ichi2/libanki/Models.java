@@ -29,6 +29,7 @@ import timber.log.Timber;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.Assert;
 
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -47,6 +48,9 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 import static com.ichi2.libanki.Utils.trimArray;
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.map;
+import static com.ichi2.utils.CollectionUtils.mapAndAdd;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions",
@@ -444,12 +448,7 @@ public class Models {
 
     public static ArrayList<String> fieldNames(Model m) {
         JSONArray flds = m.getJSONArray("flds");
-        ArrayList<String> names = new ArrayList<>();
-        for (JSONObject fld: flds.jsonObjectIterable()) {
-            names.add(fld.getString("name"));
-        }
-        return names;
-
+        return map(flds.jsonObjectIterable(), (JSONObject fld) -> fld.getString("name"));
     }
 
 
@@ -972,11 +971,8 @@ public class Models {
             return;
         }
         JSONArray req = new JSONArray();
-        ArrayList<String> flds = new ArrayList<>();
         JSONArray fields = m.getJSONArray("flds");
-        for (JSONObject field: fields.jsonObjectIterable()) {
-            flds.add(field.getString("name"));
-        }
+        ArrayList<String> flds = map(fields.jsonObjectIterable(), (JSONObject field) -> field.getString("name"));
         JSONArray templates = m.getJSONArray("tmpls");
         for (JSONObject t: templates.jsonObjectIterable()) {
             Object[] ret = _reqForTemplate(m, flds, t);
@@ -1146,10 +1142,7 @@ public class Models {
         if (! namesOfFieldsContainingClozeCache.containsKey(question)) {
             List<String> matches = new ArrayList<>();
             for (Pattern pattern : new Pattern[] {fClozePattern1, fClozePattern2}) {
-                Matcher mm = pattern.matcher(question);
-                while (mm.find()) {
-                    matches.add(mm.group(1));
-                }
+                mapAndAdd(matches, pattern.matcher(question), (m) -> m.group(1));
             }
             namesOfFieldsContainingClozeCache.put(question, matches);
         }

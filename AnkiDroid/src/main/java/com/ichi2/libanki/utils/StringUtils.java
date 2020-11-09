@@ -16,11 +16,15 @@
 
 package com.ichi2.libanki.utils;
 
-import java.util.ArrayList;
+import com.ichi2.utils.CollectionUtils;
+
 import java.util.List;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.filter;
 
 public class StringUtils {
 
@@ -30,13 +34,6 @@ public class StringUtils {
     @NonNull
     public static List<String> splitOnWhitespace(@NonNull String value) {
         String[] split = WHITESPACE_PATTERN.split(value);
-        List<String> ret = new ArrayList<>();
-        for (String s : split) {
-            if(s.length() > 0) {
-                ret.add(s);
-            }
-        }
-
-        return ret;
+        return filter(split, (String s) -> s.length() > 0);
     }
 }

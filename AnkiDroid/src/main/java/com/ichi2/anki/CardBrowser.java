@@ -79,6 +79,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.Themes;
 import com.ichi2.upgrade.Upgrade;
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.utils.Permissions;
@@ -107,6 +108,8 @@ import com.ichi2.async.TaskData;
 import static com.ichi2.anki.CardBrowser.Column.*;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.CollectionUtils.map;
 
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener {
@@ -1516,14 +1519,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     /** Returns the decks which are valid targets for "Change Deck" */
     @VisibleForTesting
     List<Deck> getValidDecksForChangeDeck() {
-        List<Deck> nonDynamicDecks = new ArrayList<>();
-        for (Deck d : mDropDownDecks) {
-            if (Decks.isDynamic(d)) {
-                continue;
-            }
-            nonDynamicDecks.add(d);
-        }
-        return nonDynamicDecks;
+        return CollectionUtils.filter(mDropDownDecks, (Deck d) -> !Decks.isDynamic(d));
     }
 
 
@@ -1720,9 +1716,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     private void removeNotesView(Card[] cards, boolean reorderCards) {
         List<Long> cardIds = new ArrayList<>(cards.length);
-        for (Card c : cards) {
-            cardIds.add(c.getId());
-        }
+        addAll(cardIds, cards, (Card c) -> c.getId());
         removeNotesView(cardIds, reorderCards);
     }
 
@@ -2757,12 +2751,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public List<Long> getCheckedCardIds() {
-        List<Long> cardIds = new ArrayList<>();
-        for (CardCache card : mCheckedCards) {
-            long id = card.getId();
-            cardIds.add(id);
-        }
-        return cardIds;
+        return map(mCheckedCards, (CardCache card) -> card.getId());
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE) //should only be called from changeDeck()
