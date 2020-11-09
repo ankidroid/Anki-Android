@@ -75,7 +75,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void selectAllIsNotVisibleOnceCalled() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         selectMenuItem(browser, R.id.action_select_all);
-        advanceRobolectricLooper();
+        advanceRobolectricLooperWithSleep();
         assertThat(browser.isShowingSelectAll(), is(false));
     }
 
@@ -83,7 +83,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void selectNoneIsVisibleOnceSelectAllCalled() {
         CardBrowser browser = getBrowserWithMultipleNotes();
         selectMenuItem(browser, R.id.action_select_all);
-        advanceRobolectricLooper();
+        advanceRobolectricLooperWithSleep();
         assertThat(browser.isShowingSelectNone(), is(true));
     }
 
