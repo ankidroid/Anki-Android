@@ -89,6 +89,9 @@ public class MyAccount extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
 
         if (AdaptionUtil.isUserATestClient()) {

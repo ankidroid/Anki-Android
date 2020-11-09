@@ -179,6 +179,9 @@ public class ModelBrowser extends AnkiActivity {
     // ----------------------------------------------------------------------------
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.model_browser);
         mModelListView = findViewById(R.id.note_type_browser_list);

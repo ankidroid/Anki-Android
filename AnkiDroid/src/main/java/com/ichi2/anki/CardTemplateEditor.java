@@ -102,6 +102,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_template_editor_activity);

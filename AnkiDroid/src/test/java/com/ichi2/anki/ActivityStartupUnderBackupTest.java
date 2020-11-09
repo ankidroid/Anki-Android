@@ -18,10 +18,13 @@ package com.ichi2.anki;
 
 import android.app.Activity;
 
+import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
+import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.testutils.ActivityList;
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam;
 import com.ichi2.testutils.EmptyApplication;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.ParameterizedRobolectricTestRunner;
@@ -52,6 +55,18 @@ public class ActivityStartupUnderBackupTest extends RobolectricTest {
         return ActivityList.allActivitiesAndIntents().stream().map(x -> new Object[] {x, x.getSimpleName()}).collect(Collectors.toList());
     }
 
+    @Before
+    public void before() {
+        notYetHandled(IntentHandler.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
+        notYetHandled(VideoPlayer.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
+        notYetHandled(LoadPronounciationActivity.class.getSimpleName(), "Not working (or implemented) - inherits from Activity");
+        notYetHandled(Preferences.class.getSimpleName(), "Not working (or implemented) - inherits from AppCompatPreferenceActivity");
+        notYetHandled(TranslationActivity.class.getSimpleName(), "Not working (or implemented) - inherits from FragmentActivity");
+        notYetHandled(DeckOptions.class.getSimpleName(), "Not working (or implemented) - inherits from AppCompatPreferenceActivity");
+        notYetHandled(FilteredDeckOptions.class.getSimpleName(), "Not working (or implemented) - inherits from AppCompatPreferenceActivity");
+    }
+
+
     @Test
     public void activityHandlesRestoreBackup() {
         // See: showActivityFailedScreen
@@ -70,5 +85,12 @@ public class ActivityStartupUnderBackupTest extends RobolectricTest {
         controller.destroy();
 
         assertThat("If a backup was taking place, the activity should be destroyed successfully", controller.get().isDestroyed(), is(true));
+    }
+
+
+    protected void notYetHandled(String activityName, String reason) {
+        if (mLauncher.getSimpleName().equals(activityName)) {
+            assumeThat(activityName + " " + reason, true, is(false));
+        }
     }
 }

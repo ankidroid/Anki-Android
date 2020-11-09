@@ -23,7 +23,6 @@ import android.content.pm.PackageManager;
 import com.ichi2.testutils.ActivityList;
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,7 +39,6 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 public class ActivityStartupMetaTest extends RobolectricTest {
 
     @Test
-    @Ignore("Not implemented - 7630")
     public void ensureAllActivitiesAreTested() throws PackageManager.NameNotFoundException {
         // we can't access this in a static context
         PackageManager pm = getTargetContext().getPackageManager();

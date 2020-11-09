@@ -158,6 +158,9 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 

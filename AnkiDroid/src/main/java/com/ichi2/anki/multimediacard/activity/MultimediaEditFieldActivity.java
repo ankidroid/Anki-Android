@@ -83,6 +83,9 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
 
         Bundle controllerBundle = null;
