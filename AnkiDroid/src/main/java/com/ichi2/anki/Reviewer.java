@@ -567,6 +567,9 @@ public class Reviewer extends AbstractFlashcardViewer {
         MenuItem undoIcon = menu.findItem(R.id.action_undo);
         undoIcon.setIcon(undoIconId);
         undoIcon.setEnabled(undoEnabled).getIcon().mutate().setAlpha(alpha_undo);
+        if (colIsOpen()) { // Required mostly because there are tests where `col` is null
+            undoIcon.setTitle(getResources().getString(R.string.studyoptions_congrats_undo, getCol().undoName(getResources())));
+        }
 
         MenuItem toggle_whiteboard_icon = menu.findItem(R.id.action_toggle_whiteboard);
         MenuItem hide_whiteboard_icon = menu.findItem(R.id.action_hide_whiteboard);
