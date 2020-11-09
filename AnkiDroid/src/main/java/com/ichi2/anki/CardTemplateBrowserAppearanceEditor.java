@@ -52,6 +52,9 @@ public class CardTemplateBrowserAppearanceEditor extends AnkiActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
         Bundle bundle = savedInstanceState;
         if (bundle == null) {

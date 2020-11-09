@@ -68,6 +68,9 @@ public class CardInfo extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.card_info);

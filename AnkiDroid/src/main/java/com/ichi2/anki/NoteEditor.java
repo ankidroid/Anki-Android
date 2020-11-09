@@ -387,6 +387,9 @@ public class NoteEditor extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
         mFieldState.setInstanceState(savedInstanceState);
