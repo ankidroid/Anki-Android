@@ -504,23 +504,6 @@ public class Utils {
     }
 
 
-    public static long[] jsonArrayToLongArray(JSONArray jsonArray) throws JSONException {
-        long[] ar = new long[jsonArray.length()];
-        for (int i = 0; i < jsonArray.length(); i++) {
-            ar[i] = jsonArray.getLong(i);
-        }
-        return ar;
-    }
-
-    public static List<Long> jsonArrayToLongList(JSONArray jsonArray) throws JSONException {
-        List<Long> ar = new ArrayList<>(jsonArray.length());
-        for (Long l: jsonArray.longIterable()) {
-            ar.add(l);
-        }
-        return ar;
-    }
-
-
     public static Object[] jsonArray2Objects(JSONArray array) {
         Object[] o = new Object[array.length()];
         for (int i = 0; i < array.length(); i++) {
