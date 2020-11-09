@@ -639,9 +639,9 @@ public class Syncer {
         boolean wasServer = mCol.getServer();
         mCol.setServer(true);
         // notes first, so we don't end up with duplicate graves
-        mCol._remNotes(Utils.jsonArrayToLongList(graves.getJSONArray("notes")));
+        mCol._remNotes(graves.getJSONArray("notes").toLongList());
         // then cards
-        mCol.remCards(Utils.jsonArrayToLongList(graves.getJSONArray("cards")), false);
+        mCol.remCards(graves.getJSONArray("cards").toLongList(), false);
         // and decks
         JSONArray decks = graves.getJSONArray("decks");
         for (Long did: decks.longIterable()) {
@@ -792,11 +792,7 @@ public class Syncer {
 
 
     private void mergeTags(JSONArray tags) {
-        ArrayList<String> list = new ArrayList<>();
-        for (String tag: tags.stringIterable()) {
-            list.add(tag);
-        }
-        mCol.getTags().register(list, mMaxUsn);
+        mCol.getTags().register(tags.toStringList(), mMaxUsn);
     }
 
 

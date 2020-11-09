@@ -896,7 +896,7 @@ public class Collection {
     }
 
     public List<Card> previewCards(Note note, Previewing type, int did) {
-	    ArrayList<JSONObject> cms;
+	    List<JSONObject> cms;
 	    switch (type) {
             case ADD:
     	        cms = findTemplates(note);
@@ -908,11 +908,8 @@ public class Collection {
 	            }
 	            break;
             default: // MODELS
-    	        cms = new ArrayList<>();
                 JSONArray tmpls = note.model().getJSONArray("tmpls");
-                for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
-                    cms.add(tmpl);
-                }
+                cms = tmpls.toJSONObjectList();
 	    }
 	    List<Card> cards = new ArrayList<>();
 	    for (JSONObject template : cms) {
