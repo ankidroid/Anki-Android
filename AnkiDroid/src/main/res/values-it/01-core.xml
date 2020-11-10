@@ -104,7 +104,7 @@
     <string name="move_all_to_deck">Sposta tutto nel mazzo</string>
     <string name="unbury">Disseppellisci</string>
     <string name="rename_deck">Rinomina mazzo</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">Crea scorciatoia</string>
     <string name="menu_add">Aggiungi</string>
     <string name="menu_add_note">Aggiungi nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizza account</string>

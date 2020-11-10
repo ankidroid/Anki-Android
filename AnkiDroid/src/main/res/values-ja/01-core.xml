@@ -42,8 +42,8 @@
     <string name="no">いいえ</string>
     <!-- Navigation drawer items-->
     <string name="decks">デッキ</string>
-    <string name="card_browser">ブラウザ</string>
-    <string name="statistics">統計</string>
+    <string name="card_browser">カードブラウザ</string>
+    <string name="statistics">統計情報</string>
     <string name="settings">設定</string>
     <string name="help">ヘルプ</string>
     <string name="send_feedback">フィードバック</string>
@@ -75,7 +75,7 @@
         <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">回答の入力</string>
+    <string name="type_answer_hint">解答の入力</string>
     <string name="show_answer">解答を表示</string>
     <string name="hide_answer">解答を非表示</string>
     <string name="ease_button_again">もう一度</string>

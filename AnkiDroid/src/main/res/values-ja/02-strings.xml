@@ -311,11 +311,11 @@
     <string name="format_font_size">フォントサイズ変更</string>
     <string name="insert_mathjax">MathJax 式を挿入</string>
     <string name="insert_cloze">穴埋め部分の挿入</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
+    <string name="before_text">選択部分の前のHTML</string>
+    <string name="after_text">選択部分の後ろのHTML</string>
     <string name="add_toolbar_item">ツールバーアイテムを作成</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="toolbar_item_explain_remove">選択したテキストの前後に挿入する HTML を入力してください\n\nツールバーアイテムを長押しすれば削除します</string>
     <string name="remove_toolbar_item">ツールバーのアイテムを削除しますか？</string>
     <string name="note_editor_paste_too_large">画像が大きすぎるため、手動で画像を挿入してください</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Androidのバックアップが進行中です。もう一度やり直してください</string>
 </resources>

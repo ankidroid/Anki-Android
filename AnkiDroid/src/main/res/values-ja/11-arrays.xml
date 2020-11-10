@@ -42,12 +42,12 @@
     <string-array name="gestures_labels">
         <item>何もしない</item>
         <item>解答を表示</item>
-        <item>回答ボタン１</item>
-        <item>回答ボタン２</item>
-        <item>回答ボタン３</item>
-        <item>回答ボタン４</item>
-        <item>推奨される回答（緑色）</item>
-        <item>推奨される回答よりも良い回答</item>
+        <item>解答ボタン1</item>
+        <item>解答ボタン2</item>
+        <item>解答ボタン3</item>
+        <item>解答ボタン4</item>
+        <item>推奨される解答（緑色）</item>
+        <item>推奨される解答よりも良い解答</item>
         <item>元に戻す</item>
         <item>ノートを編集</item>
         <item>カード情報</item>
@@ -68,7 +68,7 @@
         <item>１画面分上へスクロール</item>
         <item>１画面分下へスクロール</item>
         <item>１画面分下へスクロール</item>
-        <item>Abort Learning and Sync</item>
+        <item>学習と同期を中止する</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>タグを付けて保留</item>

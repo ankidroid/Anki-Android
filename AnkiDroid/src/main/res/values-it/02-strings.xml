@@ -331,5 +331,5 @@
     <string name="toolbar_item_explain_remove">Inserisci l\'HTML da inserire prima e dopo il testo selezionato\n\nPremi a lungo su un elemento della barra degli strumenti per rimuoverlo</string>
     <string name="remove_toolbar_item">Rimuovere l\'Elemento della Barra Strumenti?</string>
     <string name="note_editor_paste_too_large">L\'immagine è troppo grande da incollare, sei pregato di inserire manualmente l\'immagine</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Backup di Android in corso. Sei pregato di riprovare</string>
 </resources>
