@@ -15,7 +15,9 @@ jobs:
           fetch-depth: 0
 
       - name: Credential Prep
+        run: |
           echo "CROWDIN_KEY=${{ secrets.CROWDIN_API_KEY }}" >> $GITHUB_ENV
+        shell: bash
 
       - name: Setup Python
         uses: actions/setup-python@v2
