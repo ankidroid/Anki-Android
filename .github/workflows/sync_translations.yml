@@ -8,13 +8,14 @@ jobs:
     name: 'Sync Translations with Crowdin'
     timeout-minutes: 20
     runs-on: macos-latest
-    env:
-      CROWDIN_KEY: ${{ secrets.CROWDIN_API_KEY }}
     steps:
       - uses: actions/checkout@v2
         with:
           ref: 'master'
           fetch-depth: 0
+
+      - name: Credential Prep
+          echo "CROWDIN_KEY=${{ secrets.CROWDIN_API_KEY }}" >> $GITHUB_ENV
 
       - name: Setup Python
         uses: actions/setup-python@v2
