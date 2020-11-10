@@ -502,6 +502,9 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
         Timber.d("onCreate()");
         if (wasLoadedFromExternalTextActionItem() && !Permissions.hasStorageAccessPermission(this)) {

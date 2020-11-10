@@ -434,6 +434,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) throws SQLException {
         Timber.d("onCreate()");
+
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
+
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
 
         //we need to restore here, as we need it before super.onCreate() is called.

@@ -82,6 +82,9 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.model_field_editor);
 

@@ -81,6 +81,9 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);

@@ -504,23 +504,6 @@ public class Utils {
     }
 
 
-    public static long[] jsonArrayToLongArray(JSONArray jsonArray) throws JSONException {
-        long[] ar = new long[jsonArray.length()];
-        for (int i = 0; i < jsonArray.length(); i++) {
-            ar[i] = jsonArray.getLong(i);
-        }
-        return ar;
-    }
-
-    public static List<Long> jsonArrayToLongList(JSONArray jsonArray) throws JSONException {
-        List<Long> ar = new ArrayList<>(jsonArray.length());
-        for (Long l: jsonArray.longIterable()) {
-            ar.add(l);
-        }
-        return ar;
-    }
-
-
     public static Object[] jsonArray2Objects(JSONArray array) {
         Object[] o = new Object[array.length()];
         for (int i = 0; i < array.length(); i++) {
@@ -706,6 +689,14 @@ public class Utils {
 
     }
 
+
+    /**
+     * @param zipFile A zip file
+     * @param targetDirectory Directory in which to unzip some of the zipped field
+     * @param zipEntries files of the zip folder to unzip
+     * @param zipEntryToFilenameMap Renaming rules from name in zip file to name in the device
+     * @throws IOException if the directory can't be created
+     */
     public static void unzipFiles(ZipFile zipFile, String targetDirectory, @NonNull String[] zipEntries,
                                   @Nullable Map<String, String> zipEntryToFilenameMap) throws IOException {
         File dir = new File(targetDirectory);

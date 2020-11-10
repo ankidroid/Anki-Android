@@ -19,6 +19,7 @@ package com.ichi2.libanki.importer;
 
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.util.Pair;
 
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -29,6 +30,7 @@ import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.DeckConfig;
@@ -68,17 +70,23 @@ import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt"})
 public class Anki2Importer extends Importer {
 
-    private static final int GUID = 1;
-    private static final int MID = 2;
-    private static final int MOD = 3;
-
     private static final int MEDIAPICKLIMIT = 1024;
 
     private final String mDeckPrefix;
     private final boolean mAllowUpdate;
     private boolean mDupeOnSchemaChange;
 
-    private Map<String, Object[]> mNotes;
+    private static class NoteTriple {
+        public final long mNid;
+        public final long mMid;
+        public final long mMod;
+        public NoteTriple(long nid, long mod, long mid) {
+            mNid = nid;
+            mMod = mod;
+            mMid = mid;
+        }
+    }
+    private Map<String, NoteTriple> mNotes;
 
     private Map<Long, Long> mDecks;
     private Map<Long, Long> mModelMap;
@@ -203,7 +211,7 @@ public class Anki2Importer extends Importer {
                 String guid = cur.getString(1);
                 long mod = cur.getLong(2);
                 long mid = cur.getLong(3);
-                mNotes.put(guid, new Object[] { id, mod, mid });
+                mNotes.put(guid, new NoteTriple(id, mod, mid));
                 existing.add(id);
             }
         }
@@ -224,7 +232,7 @@ public class Anki2Importer extends Importer {
         int dupes = 0;
         ArrayList<String> dupesIgnored = new ArrayList<>();
         mDst.getDb().getDatabase().beginTransaction();
-        try (Cursor cur = mSrc.getDb().query("select * from notes")) {
+        try (Cursor cur = mSrc.getDb().getDatabase().query("select id, guid, mid, mod, tags, flds, sfld, csum, flags, data  from notes", null)) {
             // Counters for progress updates
             int total = cur.getCount();
             boolean largeCollection = total > 200;
@@ -233,48 +241,55 @@ public class Anki2Importer extends Importer {
 
             while (cur.moveToNext()) {
                 // turn the db result into a mutable list
-                Object[] note = new Object[]{cur.getLong(0), cur.getString(1), cur.getLong(2),
-                        cur.getLong(3), cur.getInt(4), cur.getString(5), cur.getString(6),
-                        cur.getString(7), cur.getLong(8), cur.getInt(9), cur.getString(10)};
-                boolean shouldAdd = _uniquifyNote(note);
+                long nid = cur.getLong(0);
+                String guid = cur.getString(1);
+                long mid = cur.getLong(2);
+                long mod = cur.getLong(3);
+                String tags = cur.getString(4);
+                String flds = cur.getString(5);
+                String sfld = cur.getString(6);
+                long csum = cur.getLong(7);
+                int flag = cur.getInt(8);
+                String data = cur.getString(9);
+
+                Pair<Boolean, Long> shouldAddAndNewMid = _uniquifyNote(guid, mid);
+                boolean shouldAdd = shouldAddAndNewMid.first;
+                mid = shouldAddAndNewMid.second;
                 if (shouldAdd) {
-                    // ensure id is unique
-                    while (existing.contains(note[0])) {
-                        note[0] = ((Long) note[0]) + 999;
+                    // ensure nid is unique
+                    while (existing.contains(nid)) {
+                        nid += 999;
                     }
-                    existing.add((Long) note[0]);
+                    existing.add(nid);
                     // bump usn
-                    note[4] = usn;
                     // update media references in case of dupes
-                    note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
-                    add.add(note);
-                    dirty.add((Long) note[0]);
+                    flds = _mungeMedia(mid, flds);
+                    add.add(new Object[]{nid, guid, mid, mod, usn, tags, flds, sfld, csum, flag, data});
+                    dirty.add(nid);
                     // note we have the added guid
-                    mNotes.put((String) note[GUID], new Object[]{note[0], note[3], note[MID]});
+                    mNotes.put(guid, new NoteTriple(nid, mod, mid));
                 } else {
                     // a duplicate or changed schema - safe to update?
                     dupes += 1;
                     if (mAllowUpdate) {
-                        Object[] n = mNotes.get(note[GUID]);
-                        //todo: oldNid could be Long instead of long.
-                        long oldNid = (Long) n[0];
-                        long oldMod = (Long) n[1];
-                        @NonNull Long oldMid = (Long) n[2];
+                        NoteTriple n = mNotes.get(guid);
+                        long oldNid = n.mNid;
+                        long oldMod = n.mMod;
+                        long oldMid = n.mMid;
                         // will update if incoming note more recent
-                        if (oldMod < (Long) note[MOD]) {
+                        if (oldMod < mod) {
                             // safe if note types identical
-                            if (Utils.equals(oldMid, note[MID])) {
+                            if (oldMid == mid) {
                                 // incoming note should use existing id
-                                note[0] = oldNid;
-                                note[4] = usn;
-                                note[6] = _mungeMedia((Long) note[MID], (String) note[6]);
-                                update.add(note);
-                                dirty.add((Long) note[0]);
+                                nid = oldNid;
+                                flds = _mungeMedia(mid, flds);
+                                update.add(new Object[]{nid, guid, mid, mod, usn, tags, flds, sfld, csum, flag, data});
+                                dirty.add(nid);
                             } else {
                                 dupesIgnored.add(String.format("%s: %s",
                                         mCol.getModels().get(oldMid).getString("name"),
-                                        ((String) note[6]).replace('\u001f', ',')));
-                                mIgnoredGuids.put((String) note[GUID], true);
+                                        flds.replace('\u001f', ',')));
+                                mIgnoredGuids.put(guid, true);
                             }
                         }
                     }
@@ -353,23 +368,20 @@ public class Anki2Importer extends Importer {
     }
 
     // determine if note is a duplicate, and adjust mid and/or guid as required
-    // returns true if note should be added
-    private boolean _uniquifyNote(Object[] note) {
-        String origGuid = (String) note[GUID];
-        @NonNull Long srcMid = (Long) note[MID];
-        @NonNull Long dstMid = _mid(srcMid);
+    // returns true if note should be added and its mid
+    private Pair<Boolean, Long> _uniquifyNote(@NonNull String origGuid, long srcMid) {
+        long dstMid = _mid(srcMid);
         // duplicate Schemas?
-        if (Utils.equals(srcMid, dstMid)) {
-            return !mNotes.containsKey(origGuid);
+        if (srcMid == dstMid) {
+            return new Pair<>(!mNotes.containsKey(origGuid), srcMid);
         }
         // differing schemas and note doesn't exist?
-        note[MID] = dstMid;
         if (!mNotes.containsKey(origGuid)) {
-            return true;
+            return new Pair<>(true, dstMid);
         }
 		// schema changed; don't import
 		mIgnoredGuids.put(origGuid, true);
-		return false;
+		return new Pair<>(false, dstMid);
     }
 
     /*
@@ -388,12 +400,12 @@ public class Anki2Importer extends Importer {
 
 
     /** Return local id for remote MID. */
-    @NonNull private Long _mid(Long srcMid) {
+    private long _mid(long srcMid) {
         // already processed this mid?
         if (mModelMap.containsKey(srcMid)) {
             return mModelMap.get(srcMid);
         }
-        @NonNull Long mid = srcMid;
+        long mid = srcMid;
         Model srcModel = mSrc.getModels().get(srcMid);
         String srcScm = mSrc.getModels().scmhash(srcModel);
         while (true) {
@@ -401,7 +413,7 @@ public class Anki2Importer extends Importer {
             if (!mDst.getModels().have(mid)) {
                 // copy it over
                 Model model = srcModel.deepClone();
-                model.put("id", (long) mid);
+                model.put("id", mid);
                 model.put("mod", mCol.getTime().intTime());
                 model.put("usn", mCol.usn());
                 mDst.getModels().update(model);
@@ -413,7 +425,7 @@ public class Anki2Importer extends Importer {
             if (srcScm.equals(dstScm)) {
                 // they do; we can reuse this mid
                 Model model = srcModel.deepClone();
-                model.put("id", (long) mid);
+                model.put("id", mid);
                 model.put("mod", mCol.getTime().intTime());
                 model.put("usn", mCol.usn());
                 mDst.getModels().update(model);
@@ -515,7 +527,7 @@ public class Anki2Importer extends Importer {
                 if (mCards.containsKey(guid)) {
                     mCards.get(guid).put(ord, cid);
                 } else {
-                    Map<Integer, Long> map = new HashMap<>();
+                    Map<Integer, Long> map = new HashMap<>(); // The size is at most the number of card type in the note type.
                     map.put(ord, cid);
                     mCards.put(guid, map);
                 }
@@ -532,7 +544,7 @@ public class Anki2Importer extends Importer {
         long aheadBy = mSrc.getSched().getToday() - mDst.getSched().getToday();
         mDst.getDb().getDatabase().beginTransaction();
         try (Cursor cur = mSrc.getDb().query(
-                    "select f.guid, f.mid, c.* from cards c, notes f " +
+                    "select f.guid, c.id, c.did, c.ord, c.type, c.queue, c.due, c.ivl, c.factor, c.reps, c.lapses, c.left, c.odue, c.odid, c.flags, c.data from cards c, notes f " +
                     "where c.nid = f.id")) {
 
             // Counters for progress updates
@@ -542,12 +554,24 @@ public class Anki2Importer extends Importer {
             int i = 0;
 
             while (cur.moveToNext()) {
-                Object[] card = new Object[] { cur.getString(0), cur.getLong(1), cur.getLong(2),
-                        cur.getLong(3), cur.getLong(4), cur.getInt(5), cur.getLong(6), cur.getInt(7),
-                        cur.getInt(8), cur.getInt(9), cur.getLong(10), cur.getLong(11), cur.getLong(12),
-                        cur.getInt(13), cur.getInt(14), cur.getInt(15), cur.getLong(16),
-                        cur.getLong(17), cur.getInt(18), cur.getString(19) };
-                String guid = (String) card[0];
+                String guid = cur.getString(0);
+                long cid = cur.getLong(1);
+                long scid = cid; // To keep track of card id in source
+                long did = cur.getLong(2);
+                int ord = cur.getInt(3);
+                @Consts.CARD_TYPE int type = cur.getInt(4);
+                @Consts.CARD_QUEUE int queue = cur.getInt(5);
+                long due = cur.getLong(6);
+                long ivl = cur.getLong(7);
+                long factor = cur.getLong(8);
+                int reps = cur.getInt(9);
+                int lapses = cur.getInt(10);
+                int left = cur.getInt(11);
+                long odue = cur.getLong(12);
+                long odid = cur.getLong(13);
+                int flags = cur.getInt(14);
+                String data = cur.getString(15);
+
                 if (mIgnoredGuids.containsKey(guid)) {
                     continue;
                 }
@@ -555,61 +579,54 @@ public class Anki2Importer extends Importer {
                 if (!mNotes.containsKey(guid)) {
                     continue;
                 }
-                Object[] dnid = mNotes.get(guid);
+                NoteTriple dnid = mNotes.get(guid);
                 // does the card already exist in the dst col?
-                int ord = (Integer) card[5];
                 if (mCards.containsKey(guid) && mCards.get(guid).containsKey(ord)) {
                     // fixme: in future, could update if newer mod time
                     continue;
                 }
-                // doesn't exist. strip off note info, and save src id for later
-                Object[] oc = card;
-                card = new Object[oc.length - 2];
-                System.arraycopy(oc, 2, card, 0, card.length);
-                long scid = (Long) card[0];
                 // ensure the card id is unique
-                while (existing.containsKey(card[0])) {
-                    card[0] = (Long) card[0] + 999;
+                while (existing.containsKey(cid)) {
+                    cid += 999;
                 }
-                existing.put((Long) card[0], true);
+                existing.put(cid, true);
                 // update cid, nid, etc
-                card[1] = mNotes.get(guid)[0];
-                card[2] = _did((Long) card[2]);
-                card[4] = mCol.getTime().intTime();
-                card[5] = usn;
+                long nid = mNotes.get(guid).mNid;
+                did = _did(did);
+                long mod = mCol.getTime().intTime();
                 // review cards have a due date relative to collection
-                if ((Integer) card[7] == QUEUE_TYPE_REV || (Integer) card[7] == QUEUE_TYPE_DAY_LEARN_RELEARN || (Integer) card[6] == CARD_TYPE_REV) {
-                    card[8] = (Long) card[8] - aheadBy;
+                if (queue == QUEUE_TYPE_REV || queue == QUEUE_TYPE_DAY_LEARN_RELEARN || type == CARD_TYPE_REV) {
+                    due -= aheadBy;
                 }
                 // odue needs updating too
-                if ((Long) card[14] != 0) {
-                    card[14] = (Long) card[14] - aheadBy;
+                if (odue != 0) {
+                    odue -= aheadBy;
                 }
                 // if odid true, convert card from filtered to normal
-                if ((Long) card[15] != 0) {
+                if (odid != 0) {
                     // odid
-                    card[15] = 0;
+                    odid = 0;
                     // odue
-                    card[8] = card[14];
-                    card[14] = 0;
+                    due = odue;
+                    odue = 0;
                     // queue
-                    if ((Integer) card[6] == CARD_TYPE_LRN) {
-                        card[7] = QUEUE_TYPE_NEW;
+                    if (type == CARD_TYPE_LRN) { // type
+                        queue = QUEUE_TYPE_NEW;
                     } else {
-                        card[7] = card[6];
+                        queue = type;
                     }
                     // type
-                    if ((Integer) card[6] == CARD_TYPE_LRN) {
-                        card[6] = CARD_TYPE_NEW;
+                    if (type == CARD_TYPE_LRN) {
+                        type = CARD_TYPE_NEW;
                     }
                 }
-                cards.add(card);
+                cards.add(new Object[]{cid, nid, did, ord, mod, usn, type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data});
                 // we need to import revlog, rewriting card ids and bumping usn
                 try (Cursor cur2 = mSrc.getDb().query("select * from revlog where cid = " + scid)) {
                     while (cur2.moveToNext()) {
                         Object[] rev = new Object[] { cur2.getLong(0), cur2.getLong(1), cur2.getInt(2), cur2.getInt(3),
                                 cur2.getLong(4), cur2.getLong(5), cur2.getLong(6), cur2.getLong(7), cur2.getInt(8) };
-                        rev[1] = card[0];
+                        rev[1] = cid;
                         rev[2] = mDst.usn();
                         revlog.add(rev);
                     }

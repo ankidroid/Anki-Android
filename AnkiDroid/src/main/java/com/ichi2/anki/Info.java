@@ -21,6 +21,7 @@ package com.ichi2.anki;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -53,6 +54,9 @@ public class Info extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
@@ -68,6 +72,7 @@ public class Info extends AnkiActivity {
         setContentView(R.layout.info);
         final View mainView = findViewById(android.R.id.content);
         enableToolbar(mainView);
+        findViewById(R.id.info_donate).setOnClickListener((v) -> openUrl(Uri.parse(getString(R.string.link_opencollective_donate))));
 
         setTitle(String.format("%s v%s", VersionUtils.getAppName(), VersionUtils.getPkgVersionName()));
         WebView webView = findViewById(R.id.info);

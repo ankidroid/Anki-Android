@@ -84,14 +84,14 @@
     <string name="card_browser_select_all">全て選択</string>
     <string name="card_browser_select_none">選択を全て解除</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(新規)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
+    <string name="card_browser_due_filtered_card">(フィルター)</string>
     <string name="card_browser_interval_learning_card">(学習中)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
+    <string name="card_browser_note_editor_error">ノートエディタを開く際にエラーが発生しました</string>
+    <string name="card_browser_no_cards_in_deck">%s のデッキにカードが見つかりませんでした</string>
     <string name="card_browser_search_all_decks">全デッキで検索</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_unknown_deck_name">不明</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="other">%d 枚のカードが削除されました</item>
     </plurals>
     <!-- Card Info subscreen -->
     <string name="card_info_added" comment="Label of the information showing at which date a card was added.">作成日</string>
@@ -117,5 +117,5 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">再基本学習</string>
     <string name="card_info_revlog_filtered">フィルター</string>
     <string name="card_info_ease_not_applicable">未定</string>
-    <string name="card_info_cannot_load">An unexpected error occurred</string>
+    <string name="card_info_cannot_load">予期しないエラーが発生しました</string>
 </resources>
