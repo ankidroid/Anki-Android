@@ -41,8 +41,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21400129
-        versionName="2.14alpha29"
+        versionCode=21500100
+        versionName="2.15alpha0"
         minSdkVersion 16
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
