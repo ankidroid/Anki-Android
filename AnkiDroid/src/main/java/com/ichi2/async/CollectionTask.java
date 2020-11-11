@@ -240,6 +240,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             return null;
         }
         // Actually execute the task now that we are at the front of the queue.
+        return task(param);
+    }
+
+    protected TaskData task(TaskData param) {
         switch (mType) {
             case LOAD_DECK_QUICK:
                 return doInBackgroundLoadDeck();
