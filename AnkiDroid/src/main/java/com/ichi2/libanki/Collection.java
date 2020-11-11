@@ -82,8 +82,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import timber.log.Timber;
 
-import com.ichi2.async.TaskData;
-
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
 
@@ -747,7 +745,7 @@ public class Collection {
 	    return genCards(Utils.collection2Array(nids), model);
 	}
 
-    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model, @Nullable T task) {
+    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model, @Nullable T task) {
        return genCards(Utils.collection2Array(nids), model, task);
     }
 
@@ -763,7 +761,7 @@ public class Collection {
         return genCards(nid, model, null);
     }
 
-    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(long nid, @NonNull Model model, @Nullable T task) {
+    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(long nid, @NonNull Model model, @Nullable T task) {
         return genCards("(" + nid + ")", model, task);
     }
 
@@ -772,7 +770,7 @@ public class Collection {
      * @param task Task to check for cancellation and update number of card processed
      * @return Cards that should be removed because they should not be generated
      */
-    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(long[] nids, @NonNull Model model, @Nullable T task) {
+    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(long[] nids, @NonNull Model model, @Nullable T task) {
         // build map of (nid,ord) so we don't create dupes
         String snids = Utils.ids2str(nids);
         return genCards(snids, model, task);
@@ -785,7 +783,7 @@ public class Collection {
      * @return Cards that should be removed because they should not be generated
      * @param <T>
      */
-    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(String snids, @NonNull Model model, @Nullable T task) {
+    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(String snids, @NonNull Model model, @Nullable T task) {
         int nbCount = noteCount();
         // For each note, indicates ords of cards it contains
         HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>(nbCount);
@@ -842,7 +840,7 @@ public class Collection {
                 String flds = cur.getString(1);
                 ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds));
                 if (task != null) {
-                    task.doProgress(new TaskData(avail.size()));
+                    task.doProgress(avail.size());
                 }
                 Long did = dids.get(nid);
                 // use sibling due if there is one, else use a new id
@@ -1021,10 +1019,9 @@ public class Collection {
     }
 
 
-    public <T extends ProgressSender<TaskData> & CancelListener> List<Long> emptyCids(@Nullable T task) {
-        ArrayList<Model> all = getModels().all();
-        List<Long> rem = new ArrayList<>(all.size());
-        for (Model m : all) {
+    public <T extends ProgressSender<Integer> & CancelListener> List<Long> emptyCids(@Nullable T task) {
+        List<Long> rem = new ArrayList<>();
+        for (Model m : getModels().all()) {
             rem.addAll(genCards(getModels().nids(m), m, task));
         }
         return rem;
@@ -1402,7 +1399,7 @@ public class Collection {
 
 
     /** Fix possible problems and rebuild caches. */
-    public CheckDatabaseResult fixIntegrity(TaskManager.ProgressCallback progressCallback) {
+    public CheckDatabaseResult fixIntegrity(TaskManager.ProgressCallback<String> progressCallback) {
         File file = new File(mPath);
         CheckDatabaseResult result = new CheckDatabaseResult(file.length());
         final int[] currentTask = {1};
@@ -1889,9 +1886,9 @@ public class Collection {
     }
 
 
-    private void fixIntegrityProgress(TaskManager.ProgressCallback progressCallback, int current, int total) {
-        progressCallback.publishProgress(new TaskData(
-                progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total));
+    private void fixIntegrityProgress(TaskManager.ProgressCallback<String> progressCallback, int current, int total) {
+        progressCallback.publishProgress(
+                progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total);
     }
 
 

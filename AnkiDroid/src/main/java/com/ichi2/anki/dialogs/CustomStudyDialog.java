@@ -58,8 +58,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
 
 
 public class CustomStudyDialog extends AnalyticsDialogFragment {
@@ -475,8 +473,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
-        TaskListener listener = createCustomStudySessionListener();
-        TaskManager.launchCollectionTask(REBUILD_CRAM, listener);
+        TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), createCustomStudySessionListener());
 
         // Hide the dialogs
         activity.dismissAllDialogFragments();
@@ -500,7 +497,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
     private CreateCustomStudySessionListener createCustomStudySessionListener(){
         return new CreateCustomStudySessionListener(getAnkiActivity());
     }
-    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity> {
+    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity, Void, int[]> {
         public CreateCustomStudySessionListener(AnkiActivity activity) {
             super(activity);
         }
@@ -513,7 +510,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
 
         @Override
-        public void actualOnPostExecute(@NonNull AnkiActivity activity, TaskData result) {
+        public void actualOnPostExecute(@NonNull AnkiActivity activity, int[] v) {
             activity.hideProgressBar();
             ((CustomStudyListener) activity).onCreateCustomStudySession();
         }

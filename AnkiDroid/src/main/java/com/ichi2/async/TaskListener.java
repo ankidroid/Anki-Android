@@ -9,7 +9,7 @@ import android.os.AsyncTask;
  * <p>
  * Their semantics is equivalent to the methods of {@link AsyncTask}.
  */
-public abstract class TaskListener {
+public abstract class TaskListener<Progress, Result> {
 
     /** Invoked before the task is started. */
     public abstract void onPreExecute();
@@ -20,7 +20,7 @@ public abstract class TaskListener {
      * <p>
      * The semantics of the result depends on the task itself.
      */
-    public abstract void onPostExecute(TaskData result);
+    public abstract void onPostExecute(Result result);
 
 
     /**
@@ -28,7 +28,7 @@ public abstract class TaskListener {
      * <p>
      * The semantics of the update data depends on the task itself.
      */
-    public void onProgressUpdate(TaskData value) {
+    public void onProgressUpdate(Progress value) {
         // most implementations do nothing with this, provide them a default implementation
     }
 

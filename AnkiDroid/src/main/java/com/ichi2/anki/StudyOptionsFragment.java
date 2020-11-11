@@ -43,17 +43,18 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.HtmlUtils;
 
 import timber.log.Timber;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
+
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
@@ -295,7 +296,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         parent.addView(newView);
     }
 
-    private final TaskListener undoListener = new TaskListener() {
+    private final TaskListener<Card, BooleanGetter> undoListener = new TaskListener<Card, BooleanGetter>() {
         @Override
         public void onPreExecute() {
 
@@ -303,7 +304,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void onPostExecute(BooleanGetter v) {
             openReviewer();
         }
     };
@@ -313,7 +314,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         int itemId = item.getItemId();
         if (itemId == R.id.action_undo) {
             Timber.i("StudyOptionsFragment:: Undo button pressed");
-            TaskManager.launchCollectionTask(UNDO, undoListener);
+            TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoListener);
             return true;
         } else if (itemId == R.id.action_deck_or_study_options) {
             Timber.i("StudyOptionsFragment:: Deck or study options button pressed");
@@ -339,13 +340,13 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed");
             mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                     getResources().getString(R.string.rebuild_filtered_deck), true);
-            TaskManager.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
+            TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), getCollectionTaskListener(true));
             return true;
         } else if (itemId == R.id.action_empty) {
             Timber.i("StudyOptionsFragment:: empty cram deck button pressed");
             mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                     getResources().getString(R.string.empty_filtered_deck), false);
-            TaskManager.launchCollectionTask(EMPTY_CRAM, getCollectionTaskListener(true));
+            TaskManager.launchCollectionTask(new CollectionTask.EmptyCram(), getCollectionTaskListener(true));
             return true;
         } else if (itemId == R.id.action_rename) {
             ((DeckPicker) getActivity()).renameDeckDialog(getCol().getDecks().selected());
@@ -461,7 +462,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 }
                     mProgressDialog = StyledProgressDialog.show(getActivity(), "",
                             getResources().getString(R.string.rebuild_filtered_deck), true);
-                    TaskManager.launchCollectionTask(REBUILD_CRAM, getCollectionTaskListener(true));
+                    TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), getCollectionTaskListener(true));
             } else {
                 TaskManager.waitToFinish();
                 refreshInterface(true);
@@ -516,10 +517,9 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      */
     protected void refreshInterface(boolean resetSched, boolean resetDecklist) {
         Timber.d("Refreshing StudyOptionsFragment");
-        TaskManager.cancelAllTasks(UPDATE_VALUES_FROM_DECK);
+        TaskManager.cancelAllTasks(CollectionTask.UpdateValuesFromDeck.class);
         // Load the deck counts for the deck from Collection asynchronously
-        TaskManager.launchCollectionTask(UPDATE_VALUES_FROM_DECK, getCollectionTaskListener(resetDecklist),
-                new TaskData(new Object[]{resetSched}));
+        TaskManager.launchCollectionTask(new CollectionTask.UpdateValuesFromDeck(resetSched), getCollectionTaskListener(resetDecklist));
     }
 
 
@@ -529,25 +529,24 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      * @param refreshDecklist If true, the listener notifies the parent activity to update its deck list
      *                        to reflect the latest values.
      */
-    private TaskListener getCollectionTaskListener(final boolean refreshDecklist) {
-        return new TaskListener() {
+    private TaskListener<Void, int[]> getCollectionTaskListener(final boolean refreshDecklist) {
+        return new TaskListener<Void, int[]>() {
             @Override
             public void onPreExecute() {
 
             }
 
             @Override
-            public void onPostExecute(TaskData result) {
+            public void onPostExecute(int[] obj) {
                 dismissProgressDialog();
-                if (result != null) {
+                if (obj != null) {
                     // Get the return values back from the AsyncTask
-                    Object[] obj = result.getObjArray();
-                    int newCards = (Integer) obj[0];
-                    int lrnCards = (Integer) obj[1];
-                    int revCards = (Integer) obj[2];
-                    int totalNew = (Integer) obj[3];
-                    int totalCards = (Integer) obj[4];
-                    int eta = (Integer) obj[5];
+                    int newCards = obj[0];
+                    int lrnCards = obj[1];
+                    int revCards = obj[2];
+                    int totalNew = obj[3];
+                    int totalCards = obj[4];
+                    int eta = obj[5];
 
                     // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
                     if (getActivity() == null) {
@@ -715,7 +714,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
         if (!mToReviewer) {
             // In the reviewer, we need the count. So don't cancel it. Otherwise, (e.g. go to browser, selecting another
             // deck) cancel counts.
-            TaskManager.cancelAllTasks(UPDATE_VALUES_FROM_DECK);
+            TaskManager.cancelAllTasks(CollectionTask.UpdateValuesFromDeck.class);
         }
     }
 }
