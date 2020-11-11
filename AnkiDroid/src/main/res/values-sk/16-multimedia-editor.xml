@@ -39,7 +39,7 @@
     <string name="multimedia_editor_popup_audio">Nahrať zvuk</string>
     <string name="multimedia_editor_popup_text">Rozšírený editor</string>
     <string name="multimedia_editor_popup_cloze">Doplňovačka</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_clear_field">Vymazať pole</string>
     <!-- Translation activity (Glosbe) -->
     <string name="multimedia_editor_trans_poweredglosbe">Technológia od glosbe.com</string>
     <!-- these are like translate f r o m  and t o  some othe languages -->
@@ -112,16 +112,16 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Nahrávanie zlyhalo</string>
     <string name="multimedia_editor_audio_view_playing_failed">Prehrávanie zlyhalo</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">Nepodarilo sa vytvoriť lištu nahrávania</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Pole úprav</string>
     <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Preklad</string>
     <!-- Network failure -->
     <string name="network_no_connection">Žiadne pripojenie.</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="crop_image">Chcete tento obrázok orezať?</string>
+    <string name="crop_button">Orezať obrázok</string>
+    <string name="save_dialog_content">Aktuálna veľkosť obrázku je %sMB. Limit predvolenej veľkosti obrázku je 1MB. Chcete ho orezať?</string>
+    <string name="select_image_failed">"Zvoľte pole obrázku, Prosím skúste znovu"</string>
+    <string name="activity_result_unexpected">Aplikácia vrátila neočakávanú hodnotu. Možno budete musieť použiť inú aplikáciu</string>
 </resources>

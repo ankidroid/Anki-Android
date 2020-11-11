@@ -50,25 +50,25 @@
         <item>Odpoveď lepšia ako odporúčaná</item>
         <item>Späť</item>
         <item>Upraviť poznámku</item>
-        <item>Card Info</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-        <item>Abort Learning and Sync</item>
+        <item>Info o kartičke</item>
+        <item>Oštítkovať poznámku</item>
+        <item>Označiť poznámku</item>
+        <item>Vyhľadať výraz</item>
+        <item>Zahrabať kartičku</item>
+        <item>Pozastaviť kartičku</item>
+        <item>Vymazať poznámku</item>
+        <item>Prehrať médium</item>
+        <item>Prerušiť učenie</item>
+        <item>Zahrabať poznámku</item>
+        <item>Pozastaviť poznámku</item>
+        <item>Označiť červenou vlajkou</item>
+        <item>Označiť oranžovou vlajkou</item>
+        <item>Označiť zelenou vlajkou</item>
+        <item>Označiť modrou vlajkou</item>
+        <item>Odstrániť vlajku</item>
+        <item>Strana nahor</item>
+        <item>Strana nadol</item>
+        <item>Prerušiť učenie a synchronizáciu</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>Pozastaviť kartičku</item>
@@ -111,12 +111,12 @@
         <item>Tmavý</item>
     </string-array>
     <string-array name="html_size_code_labels">
-        <item>xx-small</item>
-        <item>x-small</item>
-        <item>small</item>
-        <item>medium</item>
-        <item>large</item>
-        <item>x-large</item>
-        <item>xx-large</item>
+        <item>xx-malý</item>
+        <item>x-malý</item>
+        <item>malý</item>
+        <item>stredný</item>
+        <item>veľký</item>
+        <item>x-veľký</item>
+        <item>xx-veľký</item>
     </string-array>
 </resources>
