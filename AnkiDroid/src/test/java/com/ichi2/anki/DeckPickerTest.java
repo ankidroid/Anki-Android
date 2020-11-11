@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
@@ -19,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.ichi2.anki.DeckPicker.UPGRADE_VERSION_KEY;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
@@ -176,5 +180,20 @@ public class DeckPickerTest extends RobolectricTest {
                 assertEquals(10, deckPicker.mDueTree.get(0).getNewCount());
             });
         }
+    }
+
+    @Test
+    public void confirmDeckDeletionDeletesEmptyDeck() {
+        long did = addDeck("Hello World");
+
+        assertThat("Deck was added", getCol().getDecks().count(), is(2));
+
+        DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
+
+        deckPicker.confirmDeckDeletion(did);
+
+        advanceRobolectricLooper();
+
+        assertThat("deck was deleted", getCol().getDecks().count(), is(1));
     }
 }

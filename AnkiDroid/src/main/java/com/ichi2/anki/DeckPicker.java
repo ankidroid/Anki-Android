@@ -2640,9 +2640,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return;
         }
         // Get the number of cards contained in this deck and its subdecks
-        java.util.Collection<Long> children = getCol().getDecks().children(did).values();
-        children.add(did);
-        String ids = Utils.ids2str(children);
+        TreeMap<String, Long> children = getCol().getDecks().children(did);
+        long[] dids = new long[children.size() + 1];
+        dids[0] = did;
+        int i = 1;
+        for (Long l : children.values()) {
+            dids[i++] = l;
+        }
+        String ids = Utils.ids2str(dids);
         int cnt = getCol().getDb().queryScalar(
                 "select count() from cards where did in " + ids + " or odid in " + ids);
         // Delete empty decks without warning
