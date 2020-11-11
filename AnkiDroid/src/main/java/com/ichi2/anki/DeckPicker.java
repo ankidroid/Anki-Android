@@ -64,6 +64,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -114,6 +115,7 @@ import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
@@ -121,15 +123,19 @@ import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
+import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.ImportUtils;
+import com.ichi2.utils.PairWithBoolean;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
+import com.ichi2.utils.Triple;
 import com.ichi2.utils.VersionUtils;
 import com.ichi2.widget.WidgetStatus;
 
@@ -145,10 +151,8 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 
-import com.ichi2.async.TaskData;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
@@ -218,7 +222,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private String mExportFileName;
 
-    @Nullable private CollectionTask mEmptyCardTask = null;
+    @Nullable private CollectionTask<?, ?, ?, ?> mEmptyCardTask = null;
 
     @VisibleForTesting
     public List<? extends AbstractDeckTreeNode> mDueTree;
@@ -306,24 +310,24 @@ public class DeckPicker extends NavigationDrawerActivity implements
     };
 
     private final ImportAddListener mImportAddListener = new ImportAddListener(this);
-    private static class ImportAddListener extends TaskListenerWithContext<DeckPicker> {
+    private static class ImportAddListener extends TaskListenerWithContext<DeckPicker, String, Triple<AnkiPackageImporter, Boolean, String>> {
         public ImportAddListener(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Triple<AnkiPackageImporter, Boolean, String> result) {
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
             // If boolean and string are both set, we are signalling an error message
             // instead of a successful result.
-            if (result.getBoolean() && result.getString() != null) {
-                Timber.w("Import: Add Failed: %s", result.getString());
-                deckPicker.showSimpleMessageDialog(result.getString());
+            if (result.second && result.third != null) {
+                Timber.w("Import: Add Failed: %s", result.third);
+                deckPicker.showSimpleMessageDialog(result.third);
             } else {
                 Timber.i("Import: Add succeeded");
-                AnkiPackageImporter imp = (AnkiPackageImporter) result.getObjArray()[0];
+                AnkiPackageImporter imp = result.first;
                 deckPicker.showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
                 deckPicker.updateDeckList();
             }
@@ -340,28 +344,28 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, TaskData value) {
-            deckPicker.mProgressDialog.setContent(value.getString());
+        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, String content) {
+            deckPicker.mProgressDialog.setContent(content);
         }
     }
 
     private ImportReplaceListener importReplaceListener() {
         return new ImportReplaceListener(this);
     }
-    private static class ImportReplaceListener extends TaskListenerWithContext<DeckPicker>{
+    private static class ImportReplaceListener extends TaskListenerWithContext<DeckPicker, String, BooleanGetter>{
         public ImportReplaceListener(DeckPicker deckPicker) {
             super(deckPicker);
         }
 
         @SuppressWarnings("unchecked")
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, BooleanGetter result) {
             Timber.i("Import: Replace Task Completed");
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
             Resources res = deckPicker.getResources();
-            if (result != null && result.getBoolean()) {
+            if (result.getBoolean()) {
                 deckPicker.updateDeckList();
             } else {
                 deckPicker.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
@@ -380,15 +384,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, TaskData value) {
-            deckPicker.mProgressDialog.setContent(value.getString());
+        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, String message) {
+            deckPicker.mProgressDialog.setContent(message);
         }
     }
 
     private ExportListener exportListener() {
         return new ExportListener(this);
     }
-    private static class ExportListener extends TaskListenerWithContext<DeckPicker>{
+    private static class ExportListener extends TaskListenerWithContext<DeckPicker, Void, Pair<Boolean, String>>{
         public ExportListener(DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -401,19 +405,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Pair<Boolean, String> result) {
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
 
             // If boolean and string are both set, we are signalling an error message
             // instead of a successful result.
-            if (result.getBoolean() && result.getString() != null) {
-                Timber.w("Export Failed: %s", result.getString());
-                deckPicker.showSimpleMessageDialog(result.getString());
+            if (result.first && result.second != null) {
+                Timber.w("Export Failed: %s", result.second);
+                deckPicker.showSimpleMessageDialog(result.second);
             } else {
                 Timber.i("Export successful");
-                String exportPath = result.getString();
+                String exportPath = result.second;
                 if (exportPath != null) {
                     deckPicker.showAsyncDialogFragment(DeckPickerExportCompleteDialog.newInstance(exportPath));
                 } else {
@@ -980,7 +984,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
         /* Complete task and enqueue fetching nonessential data for
           startup. */
-        TaskManager.launchCollectionTask(LOAD_COLLECTION_COMPLETE);
+        TaskManager.launchCollectionTask(new CollectionTask.LoadCollectionComplete());
         // Update sync status (if we've come back from a screen)
         supportInvalidateOptionsMenu();
     }
@@ -1006,7 +1010,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.d("onPause()");
         mActivityPaused = true;
         // The deck count will be computed on resume. No need to compute it now
-        TaskManager.cancelAllTasks(LOAD_DECK_COUNTS);
+        TaskManager.cancelAllTasks(CollectionTask.LoadDeckCounts.class);
         super.onPause();
     }
 
@@ -1382,7 +1386,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private UndoTaskListener undoTaskListener(boolean isReview) {
         return new UndoTaskListener(isReview, this);
     }
-    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker> {
+    private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Card, BooleanGetter> {
         private final boolean isReview;
 
         public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {
@@ -1404,7 +1408,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, BooleanGetter voi) {
             deckPicker.hideProgressBar();
             Timber.i("Undo completed");
             if (isReview) {
@@ -1417,8 +1421,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         Timber.i("undo()");
         String undoReviewString = getResources().getString(R.string.undo_action_review);
         final boolean isReview = undoReviewString.equals(getCol().undoName(getResources()));
-        TaskListener listener = undoTaskListener(isReview);
-        TaskManager.launchCollectionTask(UNDO, listener);
+        TaskManager.launchCollectionTask(new CollectionTask.Undo(), undoTaskListener(isReview));
     }
 
 
@@ -1530,7 +1533,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private RepairCollectionTask repairCollectionTask() {
         return new RepairCollectionTask(this);
     }
-    private static class RepairCollectionTask extends TaskListenerWithContext<DeckPicker>{
+    private static class RepairCollectionTask extends TaskListenerWithContext<DeckPicker, Void, Boolean>{
         public RepairCollectionTask(DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -1543,11 +1546,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Boolean result) {
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
-            if (result == null || !result.getBoolean()) {
+            if (!result) {
                 UIUtils.showThemedToast(deckPicker, deckPicker.getResources().getString(R.string.deck_repair_error), true);
                 deckPicker.showCollectionErrorDialog();
             }
@@ -1556,8 +1559,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     // Callback method to handle repairing deck
     public void repairCollection() {
         Timber.i("Repairing the Collection");
-        TaskListener listener= repairCollectionTask();
-        TaskManager.launchCollectionTask(REPAIR_COLLECTION, listener);
+        TaskManager.launchCollectionTask(new CollectionTask.RepairCollectionn(), repairCollectionTask());
     }
 
 
@@ -1583,14 +1585,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     private void performIntegrityCheck() {
         Timber.i("performIntegrityCheck()");
-        TaskManager.launchCollectionTask(CHECK_DATABASE, new CheckDatabaseListener());
+        TaskManager.launchCollectionTask(new CollectionTask.CheckDatabase(), new CheckDatabaseListener());
     }
 
 
     private MediaCheckListener mediaCheckListener() {
         return new MediaCheckListener(this);
     }
-    private static class MediaCheckListener extends TaskListenerWithContext<DeckPicker>{
+    private static class MediaCheckListener extends TaskListenerWithContext<DeckPicker, Void, PairWithBoolean<List<List<String>>>>{
         public MediaCheckListener (DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -1603,13 +1605,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, PairWithBoolean<List<List<String>>> result) {
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
-            if (result != null && result.getBoolean()) {
+            if (result.bool) {
                 @SuppressWarnings("unchecked")
-                List<List<String>> checkList = (List<List<String>>) result.getObjArray()[0];
+                List<List<String>> checkList = result.other;
                 deckPicker.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList);
             } else {
                 deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.check_media_failed));
@@ -1618,14 +1620,13 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
     @Override
     public void mediaCheck() {
-        TaskListener listener = mediaCheckListener();
-        TaskManager.launchCollectionTask(CHECK_MEDIA, listener);
+        TaskManager.launchCollectionTask(new CollectionTask.CheckMedia(), mediaCheckListener());
     }
 
     private MediaDeleteListener mediaDeleteListener() {
         return new MediaDeleteListener(this);
     }
-    private static class MediaDeleteListener extends TaskListenerWithContext<DeckPicker> {
+    private static class MediaDeleteListener extends TaskListenerWithContext<DeckPicker, Void, Integer> {
         public MediaDeleteListener (DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -1637,19 +1638,17 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Integer deletedFiles) {
             if (deckPicker.mProgressDialog != null && deckPicker.mProgressDialog.isShowing()) {
                 deckPicker.mProgressDialog.dismiss();
             }
-            int deletedFiles = result.getInt();
             deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.delete_media_result_title),
                     deckPicker.getResources().getQuantityString(R.plurals.delete_media_result_message, deletedFiles, deletedFiles));
         }
     }
     @Override
     public void deleteUnused(List<String> unused) {
-        TaskListener listener = mediaDeleteListener();
-        TaskManager.launchCollectionTask(DELETE_MEDIA, listener, new TaskData(new Object[] {unused}));
+        TaskManager.launchCollectionTask(new CollectionTask.DeleteMedia(unused), mediaDeleteListener());
     }
 
 
@@ -2087,15 +2086,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
-        TaskManager.launchCollectionTask(IMPORT, mImportAddListener,
-                new TaskData(importPath));
+        TaskManager.launchCollectionTask(new CollectionTask.ImportAdd(importPath), mImportAddListener);
     }
 
 
     // Callback to import a file -- replacing the existing collection
     @Override
     public void importReplace(String importPath) {
-        TaskManager.launchCollectionTask(IMPORT_REPLACE, importReplaceListener(), new TaskData(importPath));
+        TaskManager.launchCollectionTask(new CollectionTask.ImportReplace(importPath), importReplaceListener());
     }
 
 
@@ -2120,14 +2118,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             String newFileName = colPath.getName().replace(".anki2", timeStampSuffix + ".colpkg");
             exportPath = new File(exportDir, newFileName);
         }
-        // add input arguments to new generic structure
-        Object[] inputArgs = new Object[5];
-        inputArgs[0] = getCol();
-        inputArgs[1] = exportPath.getPath();
-        inputArgs[2] = did;
-        inputArgs[3] = includeSched;
-        inputArgs[4] = includeMedia;
-        TaskManager.launchCollectionTask(EXPORT_APKG, exportListener(), new TaskData(inputArgs));
+        TaskManager.launchCollectionTask(new CollectionTask.ExportApkg(exportPath.getPath(), did, includeSched, includeMedia), exportListener());
     }
 
 
@@ -2362,7 +2353,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private UpdateDeckListListener updateDeckListListener() {
         return new UpdateDeckListListener(this);
     }
-    private static class UpdateDeckListListener extends TaskListenerWithContext<DeckPicker>{
+    private static class  UpdateDeckListListener<T extends AbstractDeckTreeNode> extends TaskListenerWithContext<DeckPicker, Void, List<T>>{
         public UpdateDeckListListener(DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -2377,19 +2368,19 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, List<T> dueTree) {
             Timber.i("Updating deck list UI");
             deckPicker.hideProgressBar();
             // Make sure the fragment is visible
             if (deckPicker.mFragmented) {
                 deckPicker.mStudyoptionsFrame.setVisibility(View.VISIBLE);
             }
-            if (result == null) {
+            if (dueTree == null) {
                 Timber.e("null result loading deck counts");
                 deckPicker.showCollectionErrorDialog();
                 return;
             }
-            deckPicker.mDueTree = (List<? extends AbstractDeckTreeNode>) result.getObjArray()[0];
+            deckPicker.mDueTree = dueTree;
 
             deckPicker.__renderPage();
             // Update the mini statistics bar as well
@@ -2409,9 +2400,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     private void updateDeckList(boolean quick) {
-        TaskListener listener = updateDeckListListener();
-        CollectionTask.TASK_TYPE taskType = quick ? LOAD_DECK_QUICK : LOAD_DECK_COUNTS;
-        TaskManager.launchCollectionTask(taskType, listener);
+        if (quick) {
+            TaskManager.launchCollectionTask(new CollectionTask.LoadDeck(), updateDeckListListener());
+        } else {
+            TaskManager.launchCollectionTask(new CollectionTask.LoadDeckCounts(), updateDeckListListener());
+        }
     }
 
     public void __renderPage() {
@@ -2684,13 +2677,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         deleteDeck(mContextMenuDid);
     }
     public void deleteDeck(final long did) {
-        TaskListener listener = deleteDeckListener(did);
-        TaskManager.launchCollectionTask(DELETE_DECK, listener, new TaskData(did));
+        TaskManager.launchCollectionTask(new CollectionTask.DeleteDeck(did), deleteDeckListener(did));
     }
     private DeleteDeckListener deleteDeckListener(long did) {
         return new DeleteDeckListener(did, this);
     }
-    private static class DeleteDeckListener extends TaskListenerWithContext<DeckPicker>{
+    private static class DeleteDeckListener extends TaskListenerWithContext<DeckPicker, Void, int[]>{
         private final long did;
         // Flag to indicate if the deck being deleted is the current deck.
         private boolean removingCurrent;
@@ -2711,9 +2703,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
 
 
-        @SuppressWarnings("unchecked")
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, @Nullable TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, @Nullable int[] v) {
             // In fragmented mode, if the deleted deck was the current deck, we need to reload
             // the study options fragment with a valid deck and re-center the deck list to the
             // new current deck. Otherwise we just update the list normally.
@@ -2740,7 +2731,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private SimpleProgressListener simpleProgressListener() {
         return new SimpleProgressListener(this);
     }
-    private static class SimpleProgressListener extends TaskListenerWithContext<DeckPicker>{
+    private static class SimpleProgressListener extends TaskListenerWithContext<DeckPicker, Void, int[]>{
         public SimpleProgressListener (DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -2752,7 +2743,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, int[] stats) {
             deckPicker.updateDeckList();
             if (deckPicker.mFragmented) {
                 deckPicker.loadStudyOptionsFragment(false);
@@ -2763,12 +2754,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     public void rebuildFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        TaskManager.launchCollectionTask(REBUILD_CRAM, simpleProgressListener());
+        TaskManager.launchCollectionTask(new CollectionTask.RebuildCram(), simpleProgressListener());
     }
 
     public void emptyFiltered() {
         getCol().getDecks().select(mContextMenuDid);
-        TaskManager.launchCollectionTask(EMPTY_CRAM, simpleProgressListener());
+        TaskManager.launchCollectionTask(new CollectionTask.EmptyCram(), simpleProgressListener());
     }
 
     @Override
@@ -2807,12 +2798,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void handleEmptyCards() {
-        mEmptyCardTask = TaskManager.launchCollectionTask(FIND_EMPTY_CARDS, handlerEmptyCardListener());
+        mEmptyCardTask = TaskManager.launchCollectionTask(new CollectionTask.FindEmptyCards(), handlerEmptyCardListener());
     }
     private HandleEmptyCardListener handlerEmptyCardListener() {
         return new HandleEmptyCardListener(this);
     }
-    private static class HandleEmptyCardListener extends TaskListenerWithContext<DeckPicker> {
+    private static class HandleEmptyCardListener extends TaskListenerWithContext<DeckPicker, Integer, List<Long>> {
         private final int mNumberOfCards;
         private final int mOnePercent;
         private int mIncreaseSinceLastUpdate = 0;
@@ -2823,7 +2814,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             mOnePercent = mNumberOfCards / 100;
         }
 
-        private void confirmCancel(@NonNull DeckPicker deckPicker, @NonNull CollectionTask task) {
+        private void confirmCancel(@NonNull DeckPicker deckPicker, @NonNull CollectionTask<?, ?, ?, ?>  task) {
             new MaterialDialog.Builder(deckPicker)
                     .content(R.string.confirm_cancel)
                     .positiveText(deckPicker.getResources().getString(R.string.yes))
@@ -2836,9 +2827,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
             DialogInterface.OnCancelListener onCancel = (dialogInterface) -> {
-                CollectionTask mEmptyCardTask = deckPicker.mEmptyCardTask;
-                if (mEmptyCardTask != null) {
-                    confirmCancel(deckPicker, mEmptyCardTask);
+                CollectionTask<?, ?, ?, ?>  emptyCardTask = deckPicker.mEmptyCardTask;
+                if (emptyCardTask != null) {
+                    confirmCancel(deckPicker, emptyCardTask);
                 }};
             
             deckPicker.mProgressDialog = new MaterialDialog.Builder(deckPicker)
@@ -2851,8 +2842,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
 
         @Override
-        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, @NonNull TaskData progress) {
-            mIncreaseSinceLastUpdate += progress.getInt();
+        public void actualOnProgressUpdate(@NonNull DeckPicker deckPicker, @NonNull Integer progress) {
+            mIncreaseSinceLastUpdate += progress;
             // Increase each time at least a percent of card has been processed since last update
             if (mIncreaseSinceLastUpdate > mOnePercent) {
                 deckPicker.mProgressDialog.incrementProgress(mIncreaseSinceLastUpdate);
@@ -2867,15 +2858,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         /**
          * @param deckPicker
-         * @param result Null if it is cancelled (in this case we should not have called this method) or a list of cids
+         * @param cids Null if it is cancelled (in this case we should not have called this method) or a list of cids
          */
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, @Nullable TaskData result) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, @Nullable List<Long> cids) {
             deckPicker.mEmptyCardTask = null;
-            if (result == null) {
+            if (cids == null) {
                 return;
             }
-            final List<Long> cids = (List<Long>) result.getObjArray()[0];
             if (cids.size() == 0) {
                 deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.empty_cards_none));
             } else {
@@ -2935,7 +2925,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     @VisibleForTesting
-    class CheckDatabaseListener extends TaskListener {
+    class CheckDatabaseListener extends TaskListener<String, Pair<Boolean, Collection.CheckDatabaseResult>> {
         @Override
         public void onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(DeckPicker.this, AnkiDroidApp.getAppResources().getString(R.string.app_name),
@@ -2944,7 +2934,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void onPostExecute(Pair<Boolean, Collection.CheckDatabaseResult> result) {
             if (mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
@@ -2954,8 +2944,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 return;
             }
 
-            if (!result.objAtIndexIs(0, Collection.CheckDatabaseResult.class)) {
-                if (result.getBoolean()) {
+            Collection.CheckDatabaseResult databaseResult = result.second;
+
+            if (databaseResult == null) {
+                if (result.first) {
                     Timber.w("Expected result data, got nothing");
                 } else {
                     handleDbError();
@@ -2963,9 +2955,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 return;
             }
 
-            Collection.CheckDatabaseResult databaseResult = (Collection.CheckDatabaseResult) result.getObjArray()[0];
-
-            if (!result.getBoolean() || databaseResult.getFailed()) {
+            if (!result.first || databaseResult.getFailed()) {
                 if (databaseResult.getDatabaseLocked()) {
                     handleDbLocked();
                 } else {
@@ -2994,8 +2984,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void onProgressUpdate(TaskData value) {
-            mProgressDialog.setContent(value.getString());
+        public void onProgressUpdate(String message) {
+            mProgressDialog.setContent(message);
         }
     }
 

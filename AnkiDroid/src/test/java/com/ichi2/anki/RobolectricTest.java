@@ -25,7 +25,6 @@ import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskData;
 import com.ichi2.async.TaskListener;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
@@ -41,6 +40,7 @@ import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
 import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.testutils.MockTime;
+import com.ichi2.utils.BooleanGetter;
 import com.ichi2.utils.JSONException;
 
 import org.hamcrest.Matcher;
@@ -338,14 +338,9 @@ public class RobolectricTest {
     }
 
 
-    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, int timeoutMs) throws InterruptedException {
-        waitForTask(taskType, null, timeoutMs);
-    }
-
-
-    protected synchronized void waitForTask(CollectionTask.TASK_TYPE taskType, @Nullable TaskData data, int timeoutMs) throws InterruptedException {
+    protected synchronized <Progress, Result extends BooleanGetter> void waitFortask(CollectionTask.Task<Progress, Result> task, int timeoutMs) throws InterruptedException {
         boolean[] completed = new boolean[] { false };
-        TaskListener listener = new TaskListener() {
+        TaskListener<Progress, Result> listener = new TaskListener<Progress, Result>() {
             @Override
             public void onPreExecute() {
 
@@ -353,7 +348,7 @@ public class RobolectricTest {
 
 
             @Override
-            public void onPostExecute(TaskData result) {
+            public void onPostExecute(Result result) {
 
                 if (result == null || !result.getBoolean()) {
                     throw new IllegalArgumentException("Task failed");
@@ -364,14 +359,14 @@ public class RobolectricTest {
                 }
             }
         };
-        TaskManager.launchCollectionTask(taskType, listener, data);
+        TaskManager.launchCollectionTask(task, listener);
         advanceRobolectricLooper();
 
         wait(timeoutMs);
         advanceRobolectricLooper();
 
         if (!completed[0]) {
-            throw new IllegalStateException(String.format("Task %s didn't finish in %d ms", taskType, timeoutMs));
+            throw new IllegalStateException(String.format("Task %s didn't finish in %d ms", task.getClass(), timeoutMs));
         }
     }
     /**

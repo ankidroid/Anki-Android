@@ -120,6 +120,8 @@ import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
 import com.ichi2.utils.ClipboardUtil;
+import com.ichi2.utils.BooleanGetter;
+import com.ichi2.utils.CardGetter;
 import com.ichi2.utils.DiffEngine;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 import com.ichi2.utils.FunctionalInterfaces.Function;
@@ -152,8 +154,6 @@ import timber.log.Timber;
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
 import static com.ichi2.anki.cardviewer.ViewerCommand.*;
 import static com.ichi2.anki.reviewer.CardMarker.*;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
 import static com.ichi2.libanki.Sound.SoundSide;
 
 import com.github.zafarkhaja.semver.Version;
@@ -513,10 +513,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected final TaskListener mDismissCardHandler = new NextCardHandler() { /* superclass is sufficient */ };
+    protected final NextCardHandler<BooleanGetter> mDismissCardHandler = new NextCardHandler() { /* superclass is sufficient */ };
 
 
-    private final TaskListener mUpdateCardHandler = new TaskListener() {
+    private final TaskListener<CardGetter, Boolean> mUpdateCardHandler = new TaskListener<CardGetter, Boolean>() {
         private boolean mNoMoreCards;
 
 
@@ -527,16 +527,18 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(TaskData value) {
-            if (mCurrentCard != value.getCard()) {
+        public void onProgressUpdate(CardGetter cardGetter) {
+            Card card = cardGetter.getCard();
+            if (mCurrentCard != card) {
                 /*
                  * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
                  * then we need to display it as a new card, without showing the answer.
                  */
                 sDisplayAnswer = false;
             }
-            mCurrentCard = value.getCard();
-            TaskManager.launchCollectionTask(PRELOAD_NEXT_CARD); // Tasks should always be launched from GUI. So in
+
+            mCurrentCard = card;
+            TaskManager.launchCollectionTask(new CollectionTask.PreloadNextCard()); // Tasks should always be launched from GUI. So in
                                                                     // listener and not in background
             if (mCurrentCard == null) {
                 // If the card is null means that there are no more cards scheduled for review.
@@ -564,8 +566,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(TaskData result) {
-            if (!result.getBoolean()) {
+        public void onPostExecute(Boolean result) {
+            if (!result) {
                 // RuntimeException occurred on update cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false);
                 return;
@@ -576,7 +578,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     };
 
-    abstract class NextCardHandler extends TaskListener {
+    abstract class NextCardHandler<Result extends BooleanGetter> extends TaskListener<Card, Result> {
         private boolean mNoMoreCards;
 
 
@@ -587,8 +589,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onProgressUpdate(TaskData value) {
-            displayNext(value.getCard());
+        public void onProgressUpdate(Card card) {
+            displayNext(card);
         }
 
         protected void displayNext(Card nextCard) {
@@ -630,7 +632,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void onPostExecute(Result result) {
             postNextCardDisplay(result.getBoolean());
         }
 
@@ -666,7 +668,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    protected TaskListener mAnswerCardHandler (boolean quick) {
+    protected NextCardHandler<BooleanGetter> mAnswerCardHandler (boolean quick) {
         return new NextCardHandler() {
             @Override
             public void onPreExecute() {
@@ -1149,8 +1151,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (resultCode == RESULT_OK) {
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
-                TaskManager.launchCollectionTask(UPDATE_NOTE, mUpdateCardHandler,
-                        new TaskData(new Object[] { sEditorCard, true, canAccessScheduler() }));
+                TaskManager.launchCollectionTask(new CollectionTask.UpdateNote(sEditorCard, true, canAccessScheduler()), mUpdateCardHandler);
                 onEditedNoteChanged();
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
@@ -1267,7 +1268,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void undo() {
         if (isUndoAvailable()) {
-            TaskManager.launchCollectionTask(UNDO, mAnswerCardHandler(false));
+            TaskManager.launchCollectionTask(new CollectionTask.Undo(), mAnswerCardHandler(false));
         }
     }
 
@@ -1418,8 +1419,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        TaskManager.launchCollectionTask(ANSWER_AND_GET_CARD, mAnswerCardHandler(true),
-                new TaskData(mCurrentCard, mCurrentEase));
+        TaskManager.launchCollectionTask(new CollectionTask.AnswerAndGetCard(mCurrentCard, mCurrentEase), mAnswerCardHandler(true));
     }
 
 
@@ -3193,8 +3193,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     protected void dismiss(Collection.DismissType type) {
         blockControls(false);
-        TaskManager.launchCollectionTask(DISMISS, mDismissCardHandler,
-                new TaskData(new Object[]{mCurrentCard, type}));
+        TaskManager.launchCollectionTask(new CollectionTask.DismissNote(mCurrentCard, type), mDismissCardHandler);
     }
 
     /** Signals from a WebView represent actions with no parameters */
@@ -3719,7 +3718,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        TaskManager.launchCollectionTask(GET_CARD, mAnswerCardHandler(false));
+        TaskManager.launchCollectionTask(new CollectionTask.GetCard(), mAnswerCardHandler(false));
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {

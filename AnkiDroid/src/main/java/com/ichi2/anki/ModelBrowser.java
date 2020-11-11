@@ -23,6 +23,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,7 +37,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -47,6 +47,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.StdModels;
 import com.ichi2.ui.FixedEditText;
+import com.ichi2.utils.Triple;
 import com.ichi2.widget.WidgetStatus;
 
 import java.util.ArrayList;
@@ -55,8 +56,6 @@ import java.util.Random;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
-import com.ichi2.async.TaskData;
 
 
 public class ModelBrowser extends AnkiActivity {
@@ -99,7 +98,7 @@ public class ModelBrowser extends AnkiActivity {
     private LoadingModelsHandler loadingModelsHandler() {
         return new LoadingModelsHandler(this);
     }
-    private static class LoadingModelsHandler extends TaskListenerWithContext<ModelBrowser> {
+    private static class LoadingModelsHandler extends TaskListenerWithContext<ModelBrowser, Void, Triple<Boolean, ArrayList<Model>, ArrayList<Integer>>> {
         public LoadingModelsHandler(ModelBrowser browser) {
             super(browser);
         }
@@ -115,13 +114,13 @@ public class ModelBrowser extends AnkiActivity {
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull ModelBrowser browser, TaskData result) {
-            if (!result.getBoolean()) {
+        public void actualOnPostExecute(@NonNull ModelBrowser browser, Triple<Boolean, ArrayList<Model>, ArrayList<Integer>> result) {
+            if (!result.first) {
                 throw new RuntimeException();
             }
             browser.hideProgressBar();
-            browser.mModels = (ArrayList<Model>) result.getObjArray()[0];
-            browser.mCardCounts = (ArrayList<Integer>) result.getObjArray()[1];
+            browser.mModels = result.second;
+            browser.mCardCounts = result.third;
 
             browser.fillModelList();
         }
@@ -135,7 +134,7 @@ public class ModelBrowser extends AnkiActivity {
     private DeleteModelHandler deleteModelHandler() {
         return new DeleteModelHandler(this);
     }
-    private static class DeleteModelHandler extends TaskListenerWithContext<ModelBrowser>{
+    private static class DeleteModelHandler extends TaskListenerWithContext<ModelBrowser, Void, Boolean>{
         public DeleteModelHandler(ModelBrowser browser) {
             super(browser);
         }
@@ -146,8 +145,8 @@ public class ModelBrowser extends AnkiActivity {
         }
 
         @Override
-        public void actualOnPostExecute(@NonNull ModelBrowser browser, TaskData result) {
-            if (!result.getBoolean()) {
+        public void actualOnPostExecute(@NonNull ModelBrowser browser, Boolean result) {
+            if (!result) {
                 throw new RuntimeException();
             }
             browser.hideProgressBar();
@@ -230,7 +229,7 @@ public class ModelBrowser extends AnkiActivity {
 
     @Override
     public void onDestroy() {
-        TaskManager.cancelAllTasks(COUNT_MODELS);
+        TaskManager.cancelAllTasks(CollectionTask.CountModels.class);
         super.onDestroy();
     }
 
@@ -242,7 +241,7 @@ public class ModelBrowser extends AnkiActivity {
     public void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         this.col = col;
-        TaskManager.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
+        TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
     }
 
 
@@ -505,15 +504,14 @@ public class ModelBrowser extends AnkiActivity {
      * Reloads everything
      */
     private void fullRefresh() {
-        TaskManager.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
+        TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
     }
 
     /*
      * Deletes the currently selected model
      */
     private void deleteModel() {
-        TaskManager.launchCollectionTask(DELETE_MODEL, deleteModelHandler(),
-                new TaskData(mCurrentID));
+        TaskManager.launchCollectionTask(new CollectionTask.DeleteModel(mCurrentID), deleteModelHandler());
         mModels.remove(mModelListPosition);
         mModelIds.remove(mModelListPosition);
         mModelDisplayList.remove(mModelListPosition);
@@ -614,7 +612,7 @@ public class ModelBrowser extends AnkiActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TEMPLATE_EDIT) {
-            TaskManager.launchCollectionTask(COUNT_MODELS, loadingModelsHandler());
+            TaskManager.launchCollectionTask(new CollectionTask.CountModels(), loadingModelsHandler());
         }
     }
 }

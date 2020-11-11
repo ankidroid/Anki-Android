@@ -16,13 +16,13 @@
 
 package com.ichi2.async;
 
+import android.util.Pair;
+
 import com.ichi2.libanki.Collection;
 import com.ichi2.testutils.CollectionUtils;
 
 import org.junit.Ignore;
 import org.junit.Test;
-
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -33,10 +33,10 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
         lockDatabase();
 
         advanceRobolectricLooper();
-        TaskData result = super.execute(CHECK_DATABASE);
+        Pair<Boolean, Collection.CheckDatabaseResult> result = super.execute(new CollectionTask.CheckDatabase());
 
-        assertThat("The result should specify a failure", result.getBoolean(), is(false));
-        Collection.CheckDatabaseResult checkDbResult = assertObjIsDbResult(result);
+        assertThat("The result should specify a failure", result.first, is(false));
+        Collection.CheckDatabaseResult checkDbResult = result.second;
 
         assertThat("The result should specify the database was locked", checkDbResult.getDatabaseLocked());
     }
@@ -45,7 +45,4 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
         CollectionUtils.lockDatabase(getCol());
     }
 
-    protected Collection.CheckDatabaseResult assertObjIsDbResult(TaskData result) {
-        return assertResultArraySingleton(result, Collection.CheckDatabaseResult.class);
-    }
 }

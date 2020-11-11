@@ -19,10 +19,12 @@ package com.ichi2.libanki;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
+import com.ichi2.utils.PairWithBoolean;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -46,7 +48,7 @@ public class CheckMediaTest extends RobolectricTest {
 
         assertThat(getCol().getMedia().getDb().queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"), is(0));
 
-        CollectionTask task = TaskManager.launchCollectionTask(CollectionTask.TASK_TYPE.CHECK_MEDIA);
+        CollectionTask<Void, Void, PairWithBoolean<List<List<String>>>, PairWithBoolean<List<List<String>>>> task = TaskManager.launchCollectionTask(new CollectionTask.CheckMedia());
 
         task.get();
 

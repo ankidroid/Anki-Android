@@ -18,6 +18,7 @@ package com.ichi2.libanki.sched;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
@@ -40,7 +41,6 @@ import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 import java.util.Arrays;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.UNDO;
 import static com.ichi2.async.CollectionTask.nonTaskUndo;
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -94,7 +94,7 @@ public class AbstractSchedTest extends RobolectricTest {
 
         sched.answerCard(cardBeforeUndo, EASE_3);
 
-        waitForTask(UNDO, 5000);
+        waitFortask(new CollectionTask.Undo(), 5000);
 
         Counts countsAfterUndo = sched.counts();
 

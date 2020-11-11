@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -38,19 +39,6 @@ public class TaskManager {
     }
 
 
-    /**
-     * Starts a new {@link CollectionTask}, with no listener
-     * <p>
-     * Tasks will be executed serially, in the order in which they are started.
-     * <p>
-     * This method must be called on the main thread.
-     *
-     * @param type of the task to start
-     * @return the newly created task
-     */
-    public static CollectionTask launchCollectionTask(CollectionTask.TASK_TYPE type) {
-        return launchCollectionTask(type, null, null);
-    }
 
     /**
      * Starts a new {@link CollectionTask}, with no listener
@@ -59,13 +47,14 @@ public class TaskManager {
      * <p>
      * This method must be called on the main thread.
      *
-     * @param type of the task to start
-     * @param param to pass to the task
+     * @param task the task to execute
      * @return the newly created task
      */
-    public static CollectionTask launchCollectionTask(CollectionTask.TASK_TYPE type, TaskData param) {
-        return launchCollectionTask(type, null, param);
+    public static <ProgressBackground, ResultBackground> CollectionTask<ProgressBackground, ProgressBackground, ResultBackground, ResultBackground> launchCollectionTask(CollectionTask.Task<ProgressBackground, ResultBackground> task) {
+        return launchCollectionTask(task, null);
     }
+
+
 
     /**
      * Starts a new {@link CollectionTask}, with a listener provided for callbacks during execution
@@ -74,31 +63,15 @@ public class TaskManager {
      * <p>
      * This method must be called on the main thread.
      *
-     * @param type of the task to start
+     * @param task the task to execute
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    public static CollectionTask launchCollectionTask(CollectionTask.TASK_TYPE type, @Nullable TaskListener listener) {
+    public static <ProgressListener, ProgressBackground extends ProgressListener, ResultListener, ResultBackground extends ResultListener> CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> launchCollectionTask(@NonNull CollectionTask.Task<ProgressBackground, ResultBackground> task,
+                                                                                                                                                                                                                                                       @Nullable TaskListener<ProgressListener, ResultListener> listener) {
         // Start new task
-        return launchCollectionTask(type, listener, null);
-    }
-
-    /**
-     * Starts a new {@link CollectionTask}, with a listener provided for callbacks during execution
-     * <p>
-     * Tasks will be executed serially, in the order in which they are started.
-     * <p>
-     * This method must be called on the main thread.
-     *
-     * @param type of the task to start
-     * @param listener to the status and result of the task, may be null
-     * @param param to pass to the task
-     * @return the newly created task
-     */
-    public static CollectionTask launchCollectionTask(CollectionTask.TASK_TYPE type, @Nullable TaskListener listener, TaskData param) {
-        // Start new task
-        CollectionTask newTask = new CollectionTask(type, listener, sLatestInstance);
-        newTask.execute(param);
+        CollectionTask<ProgressListener, ProgressBackground, ResultListener, ResultBackground> newTask = new CollectionTask<>(task, listener, sLatestInstance);
+        newTask.execute();
         return newTask;
     }
 
@@ -112,13 +85,13 @@ public class TaskManager {
 
     /**
      * Block the current thread until the currently running CollectionTask instance (if any) has finished.
-     * @param timeout timeout in seconds
+     * @param timeoutSeconds timeout in seconds
      * @return whether or not the previous task was successful or not
      */
     public static boolean waitToFinish(Integer timeoutSeconds) {
         try {
             if ((sLatestInstance != null) && (sLatestInstance.getStatus() != AsyncTask.Status.FINISHED)) {
-                Timber.d("CollectionTask: waiting for task %s to finish...", sLatestInstance.getType());
+                Timber.d("CollectionTask: waiting for task %s to finish...", sLatestInstance.getTask().getClass());
                 if (timeoutSeconds != null) {
                     sLatestInstance.get(timeoutSeconds, TimeUnit.SECONDS);
                 } else {
@@ -133,22 +106,23 @@ public class TaskManager {
         }
     }
 
+
     /** Cancel the current task only if it's of type taskType */
     public static void cancelCurrentlyExecutingTask() {
         CollectionTask latestInstance = sLatestInstance;
         if (latestInstance != null) {
             if (latestInstance.safeCancel()) {
-                Timber.i("Cancelled task %s", latestInstance.getType());
+                Timber.i("Cancelled task %s", latestInstance.getTask().getClass());
             }
-        };
+        }
     }
 
     /** Cancel all tasks of type taskType*/
-    public static void cancelAllTasks(CollectionTask.TASK_TYPE taskType) {
+    public static void cancelAllTasks(Class taskType) {
         int count = 0;
         // safeCancel modifies sTasks, so iterate over a concrete copy
         for (CollectionTask task: new ArrayList<>(sTasks)) {
-            if (task.getType() != taskType) {
+            if (task.getTask().getClass() != taskType) {
                 continue;
             }
             if (task.safeCancel()) {
@@ -160,6 +134,7 @@ public class TaskManager {
         }
     }
 
+
     public static ProgressCallback progressCallback(CollectionTask task, Resources res) {
         return new ProgressCallback(task, res);
     }
@@ -168,12 +143,12 @@ public class TaskManager {
     /**
      * Helper class for allowing inner function to publish progress of an AsyncTask.
      */
-    public static class ProgressCallback {
+    public static class ProgressCallback<Progress> {
         private final Resources res;
-        private final CollectionTask task;
+        private final ProgressSender<Progress> task;
 
 
-        protected ProgressCallback(CollectionTask task, Resources res) {
+        protected ProgressCallback(ProgressSender<Progress> task, Resources res) {
             this.res = res;
             if (res != null) {
                 this.task = task;
@@ -188,7 +163,7 @@ public class TaskManager {
         }
 
 
-        public void publishProgress(TaskData value) {
+        public void publishProgress(Progress value) {
             if (task != null) {
                 task.doProgress(value);
             }

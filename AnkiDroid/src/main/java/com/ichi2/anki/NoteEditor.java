@@ -133,12 +133,9 @@ import java.util.Set;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
-
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.compat.Compat.ACTION_PROCESS_TEXT;
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
 
-import com.ichi2.async.TaskData;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE;
 
@@ -260,7 +257,7 @@ public class NoteEditor extends AnkiActivity {
         INCREMENT_NUMBER
     }
 
-    private static class SaveNoteHandler extends TaskListenerWithContext<NoteEditor> {
+    private static class SaveNoteHandler extends TaskListenerWithContext<NoteEditor, Integer, Boolean> {
         private boolean mCloseAfter = false;
         private Intent mIntent;
 
@@ -278,8 +275,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
         @Override
-        public void actualOnProgressUpdate(@NonNull NoteEditor noteEditor, TaskData value) {
-            int count = value.getInt();
+        public void actualOnProgressUpdate(@NonNull NoteEditor noteEditor, Integer count) {
             if (count > 0) {
                 noteEditor.mChanged = true;
                 noteEditor.mSourceText = null;
@@ -320,8 +316,8 @@ public class NoteEditor extends AnkiActivity {
 
 
         @Override
-        public void actualOnPostExecute(@NonNull NoteEditor noteEditor, TaskData result) {
-            if (result.getBoolean()) {
+        public void actualOnPostExecute(@NonNull NoteEditor noteEditor, Boolean noException) {
+            if (noException) {
                 if (noteEditor.mProgressDialog != null && noteEditor.mProgressDialog.isShowing()) {
                     try {
                         noteEditor.mProgressDialog.dismiss();
@@ -945,7 +941,7 @@ public class NoteEditor extends AnkiActivity {
             getCol().getModels().current().put("tags", tags);
             getCol().getModels().setChanged();
             mReloadRequired = true;
-            TaskManager.launchCollectionTask(ADD_NOTE, saveNoteHandler(), new TaskData(mEditorNote));
+            TaskManager.launchCollectionTask(new CollectionTask.AddNote(mEditorNote), saveNoteHandler());
         } else {
             // Check whether note type has been changed
             final Model newModel = getCurrentlySelectedModel();

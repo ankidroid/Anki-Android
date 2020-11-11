@@ -74,7 +74,6 @@ import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
@@ -193,7 +192,7 @@ public class SchedV2 extends AbstractSched {
         }
         if (!mHaveCounts) {
             // Need to reset queues once counts are reset
-            TaskManager.launchCollectionTask(RESET);
+            TaskManager.launchCollectionTask(new CollectionTask.Reset());
         }
         return card;
     }

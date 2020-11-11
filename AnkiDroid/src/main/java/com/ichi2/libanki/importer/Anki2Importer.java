@@ -56,8 +56,6 @@ import java.util.regex.Pattern;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
-import com.ichi2.async.TaskData;
-
 import static com.ichi2.libanki.Consts.CARD_TYPE_LRN;
 import static com.ichi2.libanki.Consts.CARD_TYPE_NEW;
 import static com.ichi2.libanki.Consts.CARD_TYPE_REV;
@@ -875,8 +873,8 @@ public class Anki2Importer extends Importer {
      */
     protected void publishProgress(int notesDone, int cardsDone, int postProcess) {
         if (mProgress != null) {
-            mProgress.publishProgress(new TaskData(getRes().getString(R.string.import_progress,
-                    notesDone, cardsDone, postProcess)));
+            mProgress.publishProgress(getRes().getString(R.string.import_progress,
+                    notesDone, cardsDone, postProcess));
         }
     }
 

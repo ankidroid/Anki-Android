@@ -22,6 +22,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.ichi2.anki.CollectionHelper;
+import com.ichi2.async.CancelListener;
 import com.ichi2.utils.Assert;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
@@ -36,10 +38,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.CancellationException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import timber.log.Timber;
 
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
@@ -825,5 +829,21 @@ public class Card implements Cloneable {
         public void loadQA(boolean reload, boolean browser) {
             getCard()._getQA(reload, browser);
         }
+    }
+
+    public static @NonNull Card[] deepCopyCardArray(@NonNull Card[] originals, @NonNull CancelListener cancelListener) throws CancellationException {
+        Collection col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance());
+        Card[] copies = new Card[originals.length];
+        for (int i = 0; i < originals.length; i++) {
+            if (cancelListener.isCancelled()) {
+                Timber.i("Cancelled during deep copy, probably memory pressure?");
+                throw new CancellationException("Cancelled during deep copy");
+            }
+
+            // TODO: the performance-naive implementation loads from database instead of working in memory
+            // the high performance version would implement .clone() on Card and test it well
+            copies[i] = new Card(col, originals[i].getId());
+        }
+        return copies;
     }
 }

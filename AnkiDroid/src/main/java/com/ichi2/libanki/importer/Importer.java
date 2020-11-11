@@ -43,7 +43,7 @@ public abstract class Importer {
     protected Collection mSrc;
 
     protected final Context mContext;
-    protected TaskManager.ProgressCallback mProgress;
+    protected TaskManager.ProgressCallback<String> mProgress;
 
     public Importer(Collection col, String file) {
         mFile = file;
@@ -79,7 +79,7 @@ public abstract class Importer {
      * ***********************************************************
      */
 
-    public void setProgressCallback(TaskManager.ProgressCallback progressCallback) {
+    public void setProgressCallback(TaskManager.ProgressCallback<String> progressCallback) {
         mProgress = progressCallback;
     }
 
