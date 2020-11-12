@@ -168,6 +168,15 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
             String prevString = "";
             boolean caseVaries = false;
             List<String> names = new ArrayList<>();
+
+            if (duplicates.stream().allMatch(x -> {
+                Element el = (Element) x.getLocation().getClientData();
+                return el.hasAttribute("comment");
+            })) {
+                // skipping as all instances have a comment
+                continue;
+            }
+
             for (StringDeclaration duplicate : duplicates) {
                 names.add(duplicate.getName());
                 String string = duplicate.getText();

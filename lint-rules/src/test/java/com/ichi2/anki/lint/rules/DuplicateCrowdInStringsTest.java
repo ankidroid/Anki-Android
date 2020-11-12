@@ -31,6 +31,23 @@ public class DuplicateCrowdInStringsTest {
             "   <string name=\"hello2\">a</string>\n" +
             "</resources>";
 
+    @Language("XML")
+    private final String mFirstCommentButInvalid = "<resources>\n" +
+            "   <string name=\"hello\" comment=\"hello\">a</string>\n" +
+            "   <string name=\"hello2\">a</string>\n" +
+            "</resources>";
+
+    @Language("XML")
+    private final String mSecondCommentButInvalid = "<resources>\n" +
+            "   <string name=\"hello\">a</string>\n" +
+            "   <string name=\"hello2\" comment=\"hello\">a</string>\n" +
+            "</resources>";
+
+    @Language("XML")
+    private final String mDuplicateBothValid = "<resources>\n" +
+            "   <string name=\"hello\" comment=\"hello\">a</string>\n" +
+            "   <string name=\"hello2\" comment=\"hello\">a</string>\n" +
+            "</resources>";
 
     @Test
     public void duplicateStringsInSameFileDetected() {
@@ -52,6 +69,39 @@ public class DuplicateCrowdInStringsTest {
         .allowMissingSdk()
         .allowCompilationErrors()
         .files(xml("res/values-af/string.xml", mSelfInvalid))
+        .issues(DuplicateCrowdInStrings.ISSUE)
+        .run()
+        .expectErrorCount(0);
+    }
+
+    @Test
+    public void duplicateStringWithFirstCommentFails() {
+        lint()
+        .allowMissingSdk()
+        .allowCompilationErrors()
+        .files(xml("res/values/string.xml", mFirstCommentButInvalid))
+        .issues(DuplicateCrowdInStrings.ISSUE)
+        .run()
+        .expectErrorCount(1);
+    }
+
+    @Test
+    public void duplicateStringWithSecondCommentFails() {
+        lint()
+        .allowMissingSdk()
+        .allowCompilationErrors()
+        .files(xml("res/values/string.xml", mSecondCommentButInvalid))
+        .issues(DuplicateCrowdInStrings.ISSUE)
+        .run()
+        .expectErrorCount(1);
+    }
+
+    @Test
+    public void duplicateStringWithBothCommentsPasses() {
+        lint()
+        .allowMissingSdk()
+        .allowCompilationErrors()
+        .files(xml("res/values/string.xml", mDuplicateBothValid))
         .issues(DuplicateCrowdInStrings.ISSUE)
         .run()
         .expectErrorCount(0);
