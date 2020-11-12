@@ -104,7 +104,7 @@ public class Toolbar extends FrameLayout {
         setClick(R.id.note_editor_toolbar_button_underline, "<u>", "</u>");
 
         setClick(R.id.note_editor_toolbar_button_insert_mathjax, "\\(", "\\)");
-        setClick(R.id.note_editor_toolbar_button_horizontal_rule, "", "<hr>");
+        setClick(R.id.note_editor_toolbar_button_horizontal_rule, "<hr>", "");
         findViewById(R.id.note_editor_toolbar_button_font_size).setOnClickListener(l -> displayFontSizeDialog());
         findViewById(R.id.note_editor_toolbar_button_title).setOnClickListener(l -> displayInsertHeadingDialog());
         this.mClozeIcon = findViewById(R.id.note_editor_toolbar_button_cloze);
