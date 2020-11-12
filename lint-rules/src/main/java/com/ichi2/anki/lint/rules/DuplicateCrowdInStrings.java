@@ -160,53 +160,54 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
     @Override
     public void afterCheckRootProject(@NotNull Context context) {
         for (List<StringDeclaration> duplicates : allStrings.values()) {
-            if (duplicates.size() > 1) {
-                Location firstLocation = null;
-                Location prevLocation = null;
-                String prevString = "";
-                boolean caseVaries = false;
-                List<String> names = new ArrayList<>();
-                for (StringDeclaration duplicate : duplicates) {
-                    names.add(duplicate.getName());
-                    String string = duplicate.getText();
-                    Location location = duplicate.getLocation().resolve();
-                    if (prevLocation == null) {
-                        firstLocation = location;
-                    } else {
-                        prevLocation.setSecondary(location);
-                        location.setMessage(String.format("Duplicates value in `%s`", names.get(0)));
-                        location.setSelfExplanatory(false);
-                        if (!string.equals(prevString)) {
-                            caseVaries = true;
-                            location.setMessage(location.getMessage() + " (case varies, but you can use " +
-                                    "`android:inputType` or `android:capitalize` in the " +
-                                    "presentation)");
-                        }
+            if (duplicates.size() <= 1) {
+                continue;
+            }
+            Location firstLocation = null;
+            Location prevLocation = null;
+            String prevString = "";
+            boolean caseVaries = false;
+            List<String> names = new ArrayList<>();
+            for (StringDeclaration duplicate : duplicates) {
+                names.add(duplicate.getName());
+                String string = duplicate.getText();
+                Location location = duplicate.getLocation().resolve();
+                if (prevLocation == null) {
+                    firstLocation = location;
+                } else {
+                    prevLocation.setSecondary(location);
+                    location.setMessage(String.format("Duplicates value in `%s`", names.get(0)));
+                    location.setSelfExplanatory(false);
+                    if (!string.equals(prevString)) {
+                        caseVaries = true;
+                        location.setMessage(location.getMessage() + " (case varies, but you can use " +
+                                "`android:inputType` or `android:capitalize` in the " +
+                                "presentation)");
                     }
-                    prevLocation = location;
-                    prevString = string;
                 }
-                // Was in the Kotlin - but marked as unreachable - maybe a bug?
+                prevLocation = location;
+                prevString = string;
+            }
+            // Was in the Kotlin - but marked as unreachable - maybe a bug?
                 /*
                 if (firstLocation == null) {
                     continue;
                 }
                 */
 
-                List<String> nameValues = new ArrayList<>();
-                for (String name : names) {
-                    nameValues.add(String.format("`%s`", name));
-                }
-
-
-                String nameList = LintUtils.formatList(nameValues, nameValues.size(),true);
-                String message = String.format("Duplicate string value `%s`, used in %s", prevString, nameList);
-                if (caseVaries) {
-                    message += ". Use `android:inputType` or `android:capitalize` " +
-                            "to treat these as the same and avoid string duplication.";
-                }
-                context.report(ISSUE, firstLocation, message);
+            List<String> nameValues = new ArrayList<>();
+            for (String name : names) {
+                nameValues.add(String.format("`%s`", name));
             }
+
+
+            String nameList = LintUtils.formatList(nameValues, nameValues.size(),true);
+            String message = String.format("Duplicate string value `%s`, used in %s", prevString, nameList);
+            if (caseVaries) {
+                message += ". Use `android:inputType` or `android:capitalize` " +
+                        "to treat these as the same and avoid string duplication.";
+            }
+            context.report(ISSUE, firstLocation, message);
         }
     }
 }
