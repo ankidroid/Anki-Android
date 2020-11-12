@@ -109,6 +109,9 @@ public class FieldEditText extends FixedEditText {
     @Override
     public InputConnection onCreateInputConnection(EditorInfo editorInfo) {
         InputConnection inputConnection = super.onCreateInputConnection(editorInfo);
+        if (inputConnection == null) {
+            return null;
+        }
         androidx.core.view.inputmethod.EditorInfoCompat.setContentMimeTypes(editorInfo, IMAGE_MIME_TYPES);
         return androidx.core.view.inputmethod.InputConnectionCompat.createWrapper(inputConnection, editorInfo, (contentInfo, flags, opts) -> {
 
