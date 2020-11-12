@@ -112,6 +112,11 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
 
     @Override
     public void visitElement(@NotNull XmlContext context, @NotNull Element element) {
+        // Only check the golden copy - not the translated sources.
+        if (!"values".equals(context.file.getParentFile().getName())) {
+            return;
+        }
+
         NodeList childNodes = element.getChildNodes();
         if (childNodes.getLength() > 0) {
             if (childNodes.getLength() == 1) {
