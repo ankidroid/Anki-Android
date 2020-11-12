@@ -197,12 +197,6 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
                 prevLocation = location;
                 prevString = string;
             }
-            // Was in the Kotlin - but marked as unreachable - maybe a bug?
-                /*
-                if (firstLocation == null) {
-                    continue;
-                }
-                */
 
             List<String> nameValues = new ArrayList<>();
             for (String name : names) {
@@ -211,7 +205,8 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
 
 
             String nameList = LintUtils.formatList(nameValues, nameValues.size(),true);
-            String message = String.format("Duplicate string value `%s`, used in %s", prevString, nameList);
+            // we use both quotes and code styling here so it appears in the console quoted
+            String message = String.format("Duplicate string value \"`%s`\", used in %s", prevString, nameList);
             if (caseVaries) {
                 message += ". Use `android:inputType` or `android:capitalize` " +
                         "to treat these as the same and avoid string duplication.";
