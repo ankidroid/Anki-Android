@@ -26,7 +26,7 @@ public class DuplicateCrowdInStringsTest {
 
     /** Easiest test case: Two exact duplicates in the same file */
     @Language("XML")
-    private final String selfInvalid = "<resources>\n" +
+    private final String mSelfInvalid = "<resources>\n" +
             "   <string name=\"hello\">a</string>\n" +
             "   <string name=\"hello2\">a</string>\n" +
             "</resources>";
@@ -38,9 +38,22 @@ public class DuplicateCrowdInStringsTest {
         lint()
         .allowMissingSdk()
         .allowCompilationErrors()
-        .files(xml("res/values/string.xml", selfInvalid))
+        .files(xml("res/values/string.xml", mSelfInvalid))
         .issues(DuplicateCrowdInStrings.ISSUE)
         .run()
         .expectErrorCount(1);
+    }
+
+    @Test
+    public void invalidStringInNonEnglishPasses() {
+        // We only want to check the base resource files, not the translated ones -
+        // translators know if values are equivalent and do not require a comment explaining why.
+        lint()
+        .allowMissingSdk()
+        .allowCompilationErrors()
+        .files(xml("res/values-af/string.xml", mSelfInvalid))
+        .issues(DuplicateCrowdInStrings.ISSUE)
+        .run()
+        .expectErrorCount(0);
     }
 }
