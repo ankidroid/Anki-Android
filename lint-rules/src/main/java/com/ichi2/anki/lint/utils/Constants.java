@@ -25,4 +25,22 @@ public class Constants {
      * The severity for the Lint issues used by all rules related to the restrictions introduced by SystemTime.
      */
     public static final Severity ANKI_TIME_SEVERITY = Severity.FATAL;
+
+    /**
+     * The priority for the Lint issues used by all rules related to the restrictions introduced by SystemTime.
+     */
+    public static final int ANKI_CROWDIN_PRIORITY = 10;
+
+    /**
+     * A special {@link Category} which groups the Lint issues related to the usage of CrowdIn as a
+     * sub category for {@link Category#CORRECTNESS}.
+     */
+    public static final Category ANKI_CROWDIN_CATEGORY = create(Category.CORRECTNESS, "AnkiCrowdIn", ANKI_CROWDIN_PRIORITY);
+
+
+    /**
+     * The severity for the Lint issues used by all rules related to CrowdIn restrictions.
+     */
+    public static final Severity ANKI_CROWDIN_SEVERITY = Severity.FATAL;
+
 }
