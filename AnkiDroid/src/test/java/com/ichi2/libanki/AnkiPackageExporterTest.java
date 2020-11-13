@@ -18,6 +18,7 @@ package com.ichi2.libanki;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ImportExportException;
+import com.ichi2.libanki.exception.EmptyMediaException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -154,7 +155,7 @@ public class AnkiPackageExporterTest extends RobolectricTest {
         writer.println("unit test data");
         writer.close();
 
-        String s = getCol().getMedia().addFile(temp);
+        String s = addFile(temp);
         temp.delete();
 
         File newFile = new File(getCol().getMedia().dir(), s);
@@ -165,6 +166,15 @@ public class AnkiPackageExporterTest extends RobolectricTest {
         addNoteUsingBasicModel(String.format("<img src=\"%s\">", newFile.getName()), "Back");
 
         return newFile;
+    }
+
+
+    private String addFile(File temp) throws IOException {
+        try {
+            return getCol().getMedia().addFile(temp);
+        } catch (EmptyMediaException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
