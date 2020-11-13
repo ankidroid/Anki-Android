@@ -32,8 +32,6 @@
     <string name="multimedia_editor_trans_translating_online">Translating online</string>
     <!-- pick the right translation imperative -->
     <string name="multimedia_editor_trans_pick_translation">Pick translation</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_trans_translation_failed">Translation failed</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
     <string name="multimedia_editor_trans_pick_translation_source">Pick dictionary</string>
