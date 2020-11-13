@@ -1,10 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ankidroid_widget_small_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:clickable="true"
     android:focusable="false"
-    android:background="#00FFFFFF">
+    android:background="#00FFFFFF"
+    tools:layout_width="100dp"
+    tools:layout_height="100dp">
 
     <ImageButton
         android:id="@+id/ankidroid_widget_small_button"
@@ -41,7 +44,8 @@
             android:singleLine="true"
             android:textColor="#ffffff"
             android:textSize="18sp"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/widget_eta"
@@ -54,7 +58,8 @@
             android:singleLine="true"
             android:textColor="#ffffff"
             android:textSize="16sp"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            tools:visibility="visible"/>
     </RelativeLayout>
 
     <ImageButton
