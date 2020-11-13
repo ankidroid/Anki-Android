@@ -774,7 +774,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             openNoteEditorForCard(getSelectedCardIds()[0]);
         } catch (Exception e) {
             Timber.w(e, "Error Opening Note Editor");
-            UIUtils.showThemedToast(this, getString(R.string.card_browser_note_editor_error), false);
+            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false);
         }
     }
 
