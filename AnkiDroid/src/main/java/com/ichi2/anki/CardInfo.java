@@ -78,7 +78,7 @@ public class CardInfo extends AnkiActivity {
         mCardId = getCardId(savedInstanceState);
 
         if (!hasValidCardId()) {
-            UIUtils.showThemedToast(this, getString(R.string.card_info_cannot_load), false);
+            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false);
             finishWithoutAnimation();
             return;
         }
@@ -96,7 +96,7 @@ public class CardInfo extends AnkiActivity {
         Card c = getCard(col);
 
         if (c == null) {
-            UIUtils.showThemedToast(this, getString(R.string.card_info_cannot_load), false);
+            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false);
             finishWithoutAnimation();
             return;
         }
