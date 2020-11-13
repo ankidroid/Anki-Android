@@ -292,6 +292,20 @@ If you must use media references to fields, for example if you have a large numb
 
 Because, by default, Android does not have complete support of the full Unicode character set so it does not know how to display these characters. The part of Unicode that Android supports depends on the specific device and on where that device is distributed. If you would like to add support for some specific language, see the custom fonts section below.
 
+<!-- Do not modify this heading, linked from AnkiDroid -->
+### Why are my images loaded inefficiently
+
+Due to technical reasons, loading an image without specifying `https` means that image loading is significantly slower.
+
+Please edit the card and add `https`. For example, change:
+
+`<img src="//upload.wikimedia.org/wikipedia/commons/thumb/5/50/6.1_Russian_road_sign.svg/50px-6.1_Russian_road_sign.svg.png" />`
+
+to
+
+`<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/6.1_Russian_road_sign.svg/50px-6.1_Russian_road_sign.svg.png" />`
+
+
 ### Why don't I get notifications?
 
 In the 2.8 version of AnkiDroid the reminder notifications are connected to the widget. In order to receive notifications you have to place the widget in your launcher home screen somewhere. After installing the widget, if you configure reminders in the preferences, you should start receiving notifications.
