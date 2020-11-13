@@ -3177,20 +3177,40 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
 
 
+        @Nullable
+        @Override
+        @SuppressWarnings("deprecation") // required for lower APIs (I think)
+        public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+            // response is null if nothing required
+            if (isLoadedFromProtocolRelativeUrl(url)) {
+                mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayInefficientImageSnackbar);
+            }
+            return null;
+        }
+
+
         @Override
         @TargetApi(Build.VERSION_CODES.N)
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-            WebResourceResponse webResourceResponse = null;
             if (!AdaptionUtil.hasWebBrowser(getBaseContext())) {
                 String scheme = request.getUrl().getScheme().trim();
                 if ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme)) {
                     String response = getResources().getString(R.string.no_outgoing_link_in_cardbrowser);
-                    webResourceResponse = new WebResourceResponse("text/html", "utf-8", new ByteArrayInputStream(response.getBytes()));
+                    return new WebResourceResponse("text/html", "utf-8", new ByteArrayInputStream(response.getBytes()));
                 }
             }
-            return webResourceResponse;
+
+            if (isLoadedFromProtocolRelativeUrl(request.getUrl().toString())) {
+                mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayInefficientImageSnackbar);
+            }
+            return null;
         }
 
+        protected boolean isLoadedFromProtocolRelativeUrl(String url) {
+            // a URL provided as "//wikipedia.org" is currently transformed to file://wikipedia.org, we can catch this
+            // because <img src="x.png"> maps to file:///.../x.png
+            return url.startsWith("file://") && !url.startsWith("file:///");
+        }
 
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
@@ -3529,6 +3549,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private void displayCouldNotFindImageSnackbar(String filename) {
         OnClickListener onClickListener = (v) -> openUrl(Uri.parse(getString(R.string.link_faq_missing_media)));
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename), R.string.help, onClickListener);
+    }
+
+    private void displayInefficientImageSnackbar() {
+        OnClickListener onClickListener = (v) -> openUrl(Uri.parse(getString(R.string.link_faq_invalid_protocol_relative)));
+        showSnackbar(getString(R.string.card_viewer_media_relative_protocol), R.string.help, onClickListener);
     }
 
 

@@ -32,6 +32,7 @@ public class MissingImageHandler {
     public static final int MAX_DISPLAY_TIMES = 2;
 
     private int mNumberOfMissingImages = 0;
+    private boolean mHasShownInefficientImage = false;
     private boolean mHasExecuted = false;
 
 
@@ -76,5 +77,16 @@ public class MissingImageHandler {
 
     public void onCardSideChange() {
         mHasExecuted = false;
+    }
+
+
+    public void processInefficientImage(Runnable onFailure) {
+        if (mHasShownInefficientImage) {
+            return;
+        }
+
+        mHasShownInefficientImage = true;
+
+        onFailure.run();
     }
 }
