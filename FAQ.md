@@ -293,9 +293,9 @@ If you must use media references to fields, for example if you have a large numb
 Because, by default, Android does not have complete support of the full Unicode character set so it does not know how to display these characters. The part of Unicode that Android supports depends on the specific device and on where that device is distributed. If you would like to add support for some specific language, see the custom fonts section below.
 
 <!-- Do not modify this heading, linked from AnkiDroid -->
-### Why are my images loaded inefficiently
+### Why do my images need a protocol
 
-Due to technical reasons, loading an image without specifying `https` means that image loading is significantly slower.
+Due to technical reasons, loading an image using `src="//"` without specifying `https` is not supported on AnkiDroid. [#6102](https://github.com/ankidroid/Anki-Android/issues/6102)
 
 Please edit the card and add `https`. For example, change:
 
