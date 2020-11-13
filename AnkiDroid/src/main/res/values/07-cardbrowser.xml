@@ -105,5 +105,4 @@
     <string name="card_info_revlog_filtered">Filtered</string>
 
     <string name="card_info_ease_not_applicable">N/A</string>
-    <string name="card_info_cannot_load">An unexpected error occurred</string>
 </resources>
