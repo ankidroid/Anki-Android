@@ -266,7 +266,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 String translation = data.getExtras().get(TranslationActivity.EXTRA_TRANSLATION).toString();
                 mEditText.setText(translation);
             } catch (Exception e) {
-                showToast(gtxt(R.string.multimedia_editor_trans_translation_failed));
+                showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
         } else if (requestCode == REQUEST_CODE_PRONOUNCIATION && resultCode == Activity.RESULT_OK) {
             try {
