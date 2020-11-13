@@ -37,9 +37,6 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import android.os.CancellationSignal;
-import android.os.Parcel;
-import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
@@ -55,6 +52,7 @@ import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Media;
+import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
@@ -71,10 +69,7 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1118,7 +1113,7 @@ public class CardContentProvider extends ContentProvider {
             Timber.d("insert -> MEDIA: uriFromF = %s", uriFromF);
             return Uri.fromFile(new File(fname));
 
-        } catch (IOException e) {
+        } catch (IOException | EmptyMediaException e) {
             Timber.w(e, "insert failed from %s", fileUri);
             return null;
         }

@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.utils.Assert;
 
@@ -236,7 +237,10 @@ public class Media {
      * In AnkiDroid, adding a media file will not only copy it to the media directory, but will also insert an entry
      * into the media database marking it as a new addition.
      */
-    public String addFile(File ofile) throws IOException {
+    public String addFile(File ofile) throws IOException, EmptyMediaException {
+        if (ofile == null || ofile.length() == 0) {
+            throw new EmptyMediaException();
+        }
         String fname = writeData(ofile);
         markFileAdd(fname);
         return fname;

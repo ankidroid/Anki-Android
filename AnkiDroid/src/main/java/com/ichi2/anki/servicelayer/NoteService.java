@@ -19,6 +19,7 @@
 
 package com.ichi2.anki.servicelayer;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.fields.AudioClipField;
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
@@ -29,12 +30,15 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Note;
 
+import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+
+import timber.log.Timber;
 
 public class NoteService {
     /**
@@ -178,7 +182,7 @@ public class NoteService {
         if (tmpMediaPath != null) {
             try {
                 File inFile = new File(tmpMediaPath);
-                if (inFile.exists()) {
+                if (inFile.exists() && inFile.length() > 0) {
                     String fname = col.getMedia().addFile(inFile);
                     File outFile = new File(col.getMedia().dir(), fname);
                     if (field.hasTemporaryMedia() && !outFile.getAbsolutePath().equals(tmpMediaPath)) {
@@ -199,6 +203,10 @@ public class NoteService {
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            } catch (EmptyMediaException mediaException) {
+                // This shouldn't happen, but we're fine to ignore it if it does.
+                Timber.w(mediaException);
+                AnkiDroidApp.sendExceptionReport(mediaException, "noteService::importMediaToDirectory");
             }
         }
     }

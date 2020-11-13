@@ -23,6 +23,7 @@ import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.exception.EmptyMediaException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,6 +45,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 /**
@@ -70,7 +72,7 @@ public class MediaTest extends InstrumentedTest {
     }
 
     @Test
-    public void testAdd() throws IOException {
+    public void testAdd() throws IOException, EmptyMediaException {
         // open new empty collection
         File dir = getTestDir();
         BackupManager.removeDir(dir);
@@ -89,6 +91,24 @@ public class MediaTest extends InstrumentedTest {
         os.write("world".getBytes());
         os.close();
         assertEquals("foo (1).jpg", testCol.getMedia().addFile(path));
+    }
+
+    @Test
+    public void testAddEmptyFails() throws IOException {
+        // open new empty collection
+        File dir = getTestDir();
+        BackupManager.removeDir(dir);
+        assertTrue(dir.mkdirs());
+        File path = new File(dir, "foo.jpg");
+        assertTrue(path.createNewFile());
+
+        // new file, should preserve name
+        try {
+            testCol.getMedia().addFile(path);
+            fail("exception should be thrown");
+        } catch (EmptyMediaException mediaException) {
+            // all good
+        }
     }
 
 
@@ -145,12 +165,11 @@ public class MediaTest extends InstrumentedTest {
     }
 
     @Test
-    public void testDeckIntegration() throws IOException {
+    public void testDeckIntegration() throws IOException, EmptyMediaException {
         // create a media dir
         testCol.getMedia().dir();
         // Put a file into it
-        File file = new File(getTestDir(), "fake.png");
-        assertTrue(file.createNewFile());
+        File file = createNonEmptyFile("fake.png");
         testCol.getMedia().addFile(file);
         // add a note which references it
         Note f = testCol.newNote();
@@ -187,7 +206,7 @@ public class MediaTest extends InstrumentedTest {
     }
 
     @Test
-    public void testChanges() throws IOException {
+    public void testChanges() throws IOException, EmptyMediaException {
         assertNotNull(testCol.getMedia()._changed());
         assertEquals(0, added(testCol).size());
         assertEquals(0, removed(testCol).size());
@@ -238,5 +257,13 @@ public class MediaTest extends InstrumentedTest {
                 assertNotEquals(-1, good.indexOf(c));
             }
         }
+    }
+
+    protected File createNonEmptyFile(String fileName) throws IOException {
+        File file = new File(getTestDir(), fileName);
+        try (FileOutputStream os = new FileOutputStream(file, false)) {
+            os.write("a".getBytes());
+        }
+        return file;
     }
 }
