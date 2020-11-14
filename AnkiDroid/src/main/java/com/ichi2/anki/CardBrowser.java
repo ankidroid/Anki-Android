@@ -137,8 +137,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     * When the list is changed, the position member of its elements should get changed.*/
     @NonNull
     private CardCollection<CardCache> mCards = new CardCollection<>();
-    // The search query, and the index of the order of the search currently being executed or shown
-    private Pair<String, Integer> mCurrentSearch = null;
     private ArrayList<Deck> mDropDownDecks;
     private ListView mCardsListView;
     private SearchView mSearchView;
@@ -1415,13 +1413,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
         CollectionTask.cancelAllTasks(SEARCH_CARDS);
         CollectionTask.cancelAllTasks(RENDER_BROWSER_QA);
         CollectionTask.cancelAllTasks(CHECK_CARD_SELECTION);
-        mCurrentSearch = null;
         mCards.clear();
         mCheckedCards.clear();
     }
 
     private void searchCards() {
         // cancel the previous search & render tasks if still running
+        invalidate();
         String searchText;
         if (mSearchTerms == null) {
             mSearchTerms = "";
@@ -1435,14 +1433,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } else {
             searchText = mRestrictOnDeck + mSearchTerms;
         }
-        Pair<String, Integer> search = new Pair<>(searchText, mOrder);
-        if (search.equals(mCurrentSearch)) {
-            Timber.w("Search order \"%s\" with order %s cancelled because it already was searched", searchText, fSortTypes[mOrder]);
-            // We currently have exactly the same search
-            return;
-        }
-        invalidate();
-        mCurrentSearch = search;
         if (colIsOpen() && mCardsAdapter!= null) {
             // clear the existing card list
             mCards.reset();
