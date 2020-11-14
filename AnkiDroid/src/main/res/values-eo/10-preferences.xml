@@ -286,6 +286,4 @@
     <string name="analytics_dialog_title">Helpu, ke AnkiDroid fariĝos pli bona!</string>
     <string name="analytics_title">Kunhavigi uzadon de funkcioj</string>
     <string name="analytics_summ">Vi povas kontribui al AnkiDroid per helpi al la disvovla teamo scii kiujn funkciojn homoj uzas</string>
-    <string name="enable_miui_keyboard_hack">“Alglui” por enigi trutekstan malplenon</string>
-    <string name="enable_miui_keyboard_hack_summ">En kart-redaktilo, ordono “alglui” ŝanĝas la elektitan tekston al truteksta malpleno</string>
 </resources>

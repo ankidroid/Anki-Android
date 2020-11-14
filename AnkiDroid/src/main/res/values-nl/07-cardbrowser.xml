@@ -66,8 +66,6 @@
     <string name="card_browser_change_display_order">Weergavevolgorde wijzigen</string>
     <string name="card_browser_change_display_order_title">Kies weergavevolgorde</string>
     <string name="card_browser_change_display_order_reverse">Selecteer een veld tweemaal om de volgorde om te keren.</string>
-    <string name="card_details_question">Vraag</string>
-    <string name="card_details_answer">Antwoord</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Te doen</string>
     <string name="card_details_tags">Labels</string>
     <string-array name="card_browser_order_labels">
@@ -87,7 +85,6 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nieuw)</string>
     <string name="card_browser_due_filtered_card">(gefilterd)</string>
     <string name="card_browser_interval_learning_card">(leren)</string>
-    <string name="card_browser_note_editor_error">Fout bij het openen van de notitie-editor</string>
     <string name="card_browser_no_cards_in_deck">Geen kaarten gevonden in set ‘%s</string>
     <string name="card_browser_search_all_decks">Alle sets doorzoeken</string>
     <string name="card_browser_unknown_deck_name">Onbekend</string>
@@ -119,5 +116,4 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
     <string name="card_info_revlog_filtered">Filtered</string>
     <string name="card_info_ease_not_applicable">N/A</string>
-    <string name="card_info_cannot_load">An unexpected error occurred</string>
 </resources>

@@ -335,6 +335,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Ошибка при копировании отладочной информации в буфер обмена</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
     <string name="search_decks">Найти колоду</string>

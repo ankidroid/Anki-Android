@@ -284,6 +284,4 @@
     <string name="analytics_dialog_title">幫助 AnkiDroid 做得更好！</string>
     <string name="analytics_title">分享功能使用方式</string>
     <string name="analytics_summ">你可以通過幫助開發團隊看看人們在用什麼功能，來為 AnkiDroid 做出貢獻</string>
-    <string name="enable_miui_keyboard_hack">\'貼上\' 以插入克漏字測驗</string>
-    <string name="enable_miui_keyboard_hack_summ">在“筆記編輯器”中，“貼上”會將選定的文字轉換為克漏字</string>
 </resources>

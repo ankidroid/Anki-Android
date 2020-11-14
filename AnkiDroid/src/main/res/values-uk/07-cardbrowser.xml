@@ -68,8 +68,6 @@
     <string name="card_browser_change_display_order">Сортувати за</string>
     <string name="card_browser_change_display_order_title">Вибрати порядок відображення</string>
     <string name="card_browser_change_display_order_reverse">Для зворотнього сортування оберіть одне й те саме поле двічі</string>
-    <string name="card_details_question">Питання</string>
-    <string name="card_details_answer">Вілповідь</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">До повторення</string>
     <string name="card_details_tags">Позначки</string>
     <string-array name="card_browser_order_labels">
@@ -89,7 +87,6 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(нова)</string>
     <string name="card_browser_due_filtered_card">(фільтрована)</string>
     <string name="card_browser_interval_learning_card">(вивчається)</string>
-    <string name="card_browser_note_editor_error">Помилка при відкриті редактора записів</string>
     <string name="card_browser_no_cards_in_deck">Не знайдено жодної картки в колоді «%s»</string>
     <string name="card_browser_search_all_decks">Шукати у всіх колодах</string>
     <string name="card_browser_unknown_deck_name">Невідома</string>
@@ -123,5 +120,4 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Повторно вчена</string>
     <string name="card_info_revlog_filtered">Фільтрована</string>
     <string name="card_info_ease_not_applicable">Н/Д</string>
-    <string name="card_info_cannot_load">Сталася неочікувана помилка</string>
 </resources>

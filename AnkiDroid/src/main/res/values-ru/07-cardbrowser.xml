@@ -68,8 +68,6 @@
     <string name="card_browser_change_display_order">Изменить сортировку</string>
     <string name="card_browser_change_display_order_title">Выберите тип сортировки</string>
     <string name="card_browser_change_display_order_reverse">Коснитесь поля дважды, чтобы обратить порядок</string>
-    <string name="card_details_question">Вопрос</string>
-    <string name="card_details_answer">Ответ</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">К просмотру</string>
     <string name="card_details_tags">Метки</string>
     <string-array name="card_browser_order_labels">
@@ -89,7 +87,6 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(новые)</string>
     <string name="card_browser_due_filtered_card">(фильтрованные)</string>
     <string name="card_browser_interval_learning_card">(изучаемые)</string>
-    <string name="card_browser_note_editor_error">Ошибка при открытии редактора записей</string>
     <string name="card_browser_no_cards_in_deck">В колоде «%s» не найдено карточек</string>
     <string name="card_browser_search_all_decks">Искать во всех колодах</string>
     <string name="card_browser_unknown_deck_name">Неизвестно</string>
@@ -123,5 +120,4 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
     <string name="card_info_revlog_filtered">Filtered</string>
     <string name="card_info_ease_not_applicable">N/A</string>
-    <string name="card_info_cannot_load">An unexpected error occurred</string>
 </resources>

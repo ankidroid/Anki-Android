@@ -51,8 +51,6 @@
     <string name="multimedia_editor_trans_translating_online">ఆన్లైన్ అనువాదం</string>
     <!-- pick the right translation imperative -->
     <string name="multimedia_editor_trans_pick_translation">అనువాదం ఎంచుకోండి</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_trans_translation_failed">అనువాదం విఫలమైంది</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
     <string name="multimedia_editor_trans_pick_translation_source">నిఘంటువు ఎంచుకోండి</string>
@@ -106,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">వెచిఉన్దు</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">ఎక్కడో పొరపాటయింది</string>
-    <string name="multimedia_editor_attach_mm_content">%1$s క్షేత్రానికి మల్టీమీడియా విషయాన్ని అటాచ్ చేయండి</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s క్షేత్రానికి మల్టీమీడియా విషయాన్ని అటాచ్ చేయండి</string>
     <string name="multimedia_editor_attach_media">మీడియాను జోడించండి</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->

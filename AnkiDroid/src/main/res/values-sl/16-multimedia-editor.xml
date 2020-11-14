@@ -51,8 +51,6 @@
     <string name="multimedia_editor_trans_translating_online">Spletno prevajanje</string>
     <!-- pick the right translation imperative -->
     <string name="multimedia_editor_trans_pick_translation">Izberite prevod</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_trans_translation_failed">Prevod spodletel</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
     <string name="multimedia_editor_trans_pick_translation_source">Izberite slovar</string>
@@ -106,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Počakajte</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Nekaj je šlo narobe</string>
-    <string name="multimedia_editor_attach_mm_content">Pripni predstavnostno vsebino v polje %1$s</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Pripni predstavnostno vsebino v polje %1$s</string>
     <string name="multimedia_editor_attach_media">Priloži predstavnost</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->

@@ -310,6 +310,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Erreur lors de la copie des informations de débogage dans le presse-papiers</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Impossible de charger « %s »</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossible de charger le paquet « %s »</string>
     <string name="search_decks">Rechercher dans les paquets</string>
@@ -331,5 +332,5 @@
     <string name="toolbar_item_explain_remove">Entrez le code HTML à insérer avant et après le texte sélectionné\n\nAppuyez longuement sur un élément de la barre d\'outils pour le supprimer</string>
     <string name="remove_toolbar_item">Supprimer l\'élément de la barre d\'outils ?</string>
     <string name="note_editor_paste_too_large">L\'image est trop large pour être collée, veuillez insérer l\'image manuellement</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Sauvergarde Android en cours. Veuillez réessayer</string>
 </resources>

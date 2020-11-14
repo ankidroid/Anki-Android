@@ -68,8 +68,6 @@
     <string name="card_browser_change_display_order">Zmień kolejność wyświetlania</string>
     <string name="card_browser_change_display_order_title">Wybierz kolejność wyświetlania</string>
     <string name="card_browser_change_display_order_reverse">Zaznacz pole podwójnie aby odwrócić.</string>
-    <string name="card_details_question">Pytanie</string>
-    <string name="card_details_answer">Odpowiedź</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Do przejrzenia</string>
     <string name="card_details_tags">Etykiety</string>
     <string-array name="card_browser_order_labels">
@@ -89,7 +87,6 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nowa)</string>
     <string name="card_browser_due_filtered_card">(filtrowane)</string>
     <string name="card_browser_interval_learning_card">(uczona)</string>
-    <string name="card_browser_note_editor_error">Błąd otwierania edytora notatek</string>
     <string name="card_browser_no_cards_in_deck">Nie znaleziono kart w talii „%s”</string>
     <string name="card_browser_search_all_decks">Szukaj w wszystkich taliach</string>
     <string name="card_browser_unknown_deck_name">Nieznany</string>
@@ -123,5 +120,4 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
     <string name="card_info_revlog_filtered">Filtered</string>
     <string name="card_info_ease_not_applicable">N/A</string>
-    <string name="card_info_cannot_load">An unexpected error occurred</string>
 </resources>

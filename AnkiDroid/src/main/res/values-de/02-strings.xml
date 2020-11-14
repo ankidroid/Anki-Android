@@ -167,13 +167,13 @@
     <string name="import_log_file_cache_cleared">Fehler beim Importieren der Datei. Wahrscheinlich wird der Cache während der Verarbeitung gelöscht.\nBitte versuchen Sie es erneut</string>
     <string name="import_succeeded_but_check_database">Der Datenimport war erfolgreich, jedoch ist bei der anschließenden Bereinigung ein Fehler aufgetreten. Hauptursache: %s</string>
     <string name="import_error_unhandled_request">Importanfrage kann nicht verarbeitet werden</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_error_corrupt_zip">Die APKG-Datei ist beschädigt. Bitte löschen und erneut herunterladen.\n\nUrsache: %s</string>
     <string name="import_error_exception">Paket konnte nicht importiert werden\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dateiname »%s« muss auf .apkg oder .colpkg enden</string>
     <string name="import_error_load_imported_database">Anki-Datenbank-Platzhalter (.anki2) werden noch nicht unterstützt. Bitte lesen Sie das Handbuch für entsprechende Anweisungen.</string>
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() konnte nicht durchführt werden (evtl. mangelnder Speicherplatz)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_unhandled_scheme">Unbehandelter Import von: »%s«</string>
     <string name="import_replacing">Sammlung wird ersetzt &#8230;</string>
     <string name="import_interrupted">Import unterbrochen</string>
     <string name="export_include_schedule">Zeitabstände einbeziehen</string>
@@ -280,7 +280,7 @@
     <string name="note_importer_empty_cards_found"><![CDATA[Leere Karten gefunden. Bitte führen Sie Werkzeuge>Leere Karten aus.]]></string>
     <string name="note_importer_error_empty_first_field">Leeres erstes Feld: %s</string>
     <string name="note_importer_error_first_field_matched">Erstes Feld übereinstimmen: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Doppeltes mit dem ersten Feld hinzugefügt: %s</string>
     <string name="note_importer_error_appeared_twice">Erscheint zweimal in Datei: %s</string>
     <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
     <string name="csv_importer_error_invalid_field_count">»%1$s« hatte %2$d Felder, erwartet %3$d</string>
@@ -310,6 +310,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Fehler beim Kopieren der Debug-Informationen in die Zwischenablage</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Fehler im Karteninhalt: Laden von »%s« fehlgeschlagen</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Fehler beim Laden von Stapel »%s«</string>
     <string name="search_decks">Stapel durchsuchen</string>
