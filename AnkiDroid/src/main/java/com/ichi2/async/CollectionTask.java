@@ -622,7 +622,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     private TaskData doInBackgroundLoadDeck() {
         Timber.d("doInBackgroundLoadDeckCounts");
-        Collection col = CollectionHelper.getInstance().getCol(mContext);
+        Collection col = getCol();
         try {
             // Get due tree
             Object[] o = new Object[] {col.getSched().quickDeckDueTree()};
