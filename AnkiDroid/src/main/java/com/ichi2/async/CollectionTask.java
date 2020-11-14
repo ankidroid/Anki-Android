@@ -1364,12 +1364,16 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         publishProgress(new TaskData(res.getString(R.string.importing_collection)));
 
-        if (hasValidCol()) {
+
+        /** Whether col is readable */
+        try {
+            getCol();
             // unload collection and trigger a backup
             Time time = CollectionHelper.getInstance().getTimeSafe(mContext);
             CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
             CollectionHelper.getInstance().lockCollection();
             BackupManager.performBackupInBackground(colPath, true, time);
+        } catch (Exception e) {
         }
         // overwrite collection
         File f = new File(colFile);
