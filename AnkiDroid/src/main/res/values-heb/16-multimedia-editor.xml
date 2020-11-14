@@ -51,8 +51,6 @@
     <string name="multimedia_editor_trans_translating_online">תרגום מקוון</string>
     <!-- pick the right translation imperative -->
     <string name="multimedia_editor_trans_pick_translation">בחירת תרגום</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_trans_translation_failed">התרגום נכשל</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
     <string name="multimedia_editor_trans_pick_translation_source">בחירת מילון</string>
@@ -106,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">המתנה</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">משהו השתבש</string>
-    <string name="multimedia_editor_attach_mm_content">Attach multimedia content to the %1$s field</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
     <string name="multimedia_editor_attach_media">הוספת מדיה</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->

@@ -66,8 +66,6 @@
     <string name="card_browser_change_display_order">Changer l\'ordre d\'affichage</string>
     <string name="card_browser_change_display_order_title">Choisir l\'ordre d\'affichage</string>
     <string name="card_browser_change_display_order_reverse">Inversez l’ordre par double-sélection du champ.</string>
-    <string name="card_details_question">Question</string>
-    <string name="card_details_answer">Réponse</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Dû</string>
     <string name="card_details_tags">Étiquettes</string>
     <string-array name="card_browser_order_labels">
@@ -87,7 +85,6 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nouvelle)</string>
     <string name="card_browser_due_filtered_card">(filtré)</string>
     <string name="card_browser_interval_learning_card">(apprentissage)</string>
-    <string name="card_browser_note_editor_error">Erreur à l’ouverture de l’éditeur de notes</string>
     <string name="card_browser_no_cards_in_deck">Aucune carte trouvée dans le paquet « %s »</string>
     <string name="card_browser_search_all_decks">Rechercher dans tous les paquets</string>
     <string name="card_browser_unknown_deck_name">Inconnu</string>
@@ -119,5 +116,4 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Réapprendre</string>
     <string name="card_info_revlog_filtered">Filtrées</string>
     <string name="card_info_ease_not_applicable">N/D</string>
-    <string name="card_info_cannot_load">Une erreur inattendue est survenue</string>
 </resources>

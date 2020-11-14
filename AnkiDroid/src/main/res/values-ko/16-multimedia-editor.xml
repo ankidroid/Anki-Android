@@ -51,8 +51,6 @@
     <string name="multimedia_editor_trans_translating_online">온라인 번역</string>
     <!-- pick the right translation imperative -->
     <string name="multimedia_editor_trans_pick_translation">번역 선택</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_trans_translation_failed">번역 실패</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
     <string name="multimedia_editor_trans_pick_translation_source">사전 선택</string>
@@ -106,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">대기</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">무언가가 잘못되었습니다</string>
-    <string name="multimedia_editor_attach_mm_content">%1$s 영역에 멀티미디어 항목 첨부</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s 영역에 멀티미디어 항목 첨부</string>
     <string name="multimedia_editor_attach_media">미디어 첨부</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->

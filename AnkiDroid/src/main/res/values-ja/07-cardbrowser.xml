@@ -65,8 +65,6 @@
     <string name="card_browser_change_display_order">表示順を変更</string>
     <string name="card_browser_change_display_order_title">表示順の選択</string>
     <string name="card_browser_change_display_order_reverse">現在選択されている項目をタップすると、昇順 (▲)・降順 (▼) が切り替わります</string>
-    <string name="card_details_question">質問</string>
-    <string name="card_details_answer">解答</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">期日</string>
     <string name="card_details_tags">タグ</string>
     <string-array name="card_browser_order_labels">
@@ -86,7 +84,6 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(新規)</string>
     <string name="card_browser_due_filtered_card">(フィルター)</string>
     <string name="card_browser_interval_learning_card">(学習中)</string>
-    <string name="card_browser_note_editor_error">ノートエディタを開く際にエラーが発生しました</string>
     <string name="card_browser_no_cards_in_deck">%s のデッキにカードが見つかりませんでした</string>
     <string name="card_browser_search_all_decks">全デッキで検索</string>
     <string name="card_browser_unknown_deck_name">不明</string>
@@ -117,5 +114,4 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">再基本学習</string>
     <string name="card_info_revlog_filtered">フィルター</string>
     <string name="card_info_ease_not_applicable">未定</string>
-    <string name="card_info_cannot_load">予期しないエラーが発生しました</string>
 </resources>

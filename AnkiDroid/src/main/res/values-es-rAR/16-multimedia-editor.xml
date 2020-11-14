@@ -51,8 +51,6 @@
     <string name="multimedia_editor_trans_translating_online">Traducción en línea</string>
     <!-- pick the right translation imperative -->
     <string name="multimedia_editor_trans_pick_translation">Elegir traducción</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_trans_translation_failed">Traducción fallida</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
     <string name="multimedia_editor_trans_pick_translation_source">Seleccionar diccionario</string>
@@ -106,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Espera</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Algo salió mal</string>
-    <string name="multimedia_editor_attach_mm_content">Agregar contenido multimedia al campo %1$s</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Agregar contenido multimedia al campo %1$s</string>
     <string name="multimedia_editor_attach_media">Adjuntar media</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->

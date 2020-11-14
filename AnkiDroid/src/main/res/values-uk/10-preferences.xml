@@ -291,6 +291,4 @@
     <string name="analytics_dialog_title">Допоможіть зробити AnkiDroid кращим!</string>
     <string name="analytics_title">Поділитися інформацією про використання функцій</string>
     <string name="analytics_summ">Ви можете зробити свій внесок до AnkiDroid, допомагаючи команді розробників побачити, які функції використовують люди</string>
-    <string name="enable_miui_keyboard_hack">«Вставити» для завдання з пропусками</string>
-    <string name="enable_miui_keyboard_hack_summ">В редакторі записів «Вставити» перетворить виділений текст в завдання з пропусками</string>
 </resources>

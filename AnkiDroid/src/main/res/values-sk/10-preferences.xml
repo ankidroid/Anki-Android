@@ -291,6 +291,4 @@
     <string name="analytics_dialog_title">Pomôžte spraviť AnkiDroid lepším!</string>
     <string name="analytics_title">Zdieľať používanie prvkov</string>
     <string name="analytics_summ">Môžete prispieť pre AnkiDroid tak, že umožníte vývojovému tímu sledovať, ktoré prvky sa používajú</string>
-    <string name="enable_miui_keyboard_hack">\'Prilepiť\' do vložiť doplňovačku</string>
-    <string name="enable_miui_keyboard_hack_summ">V poznámkovom editore, \'Vložiť\' zmení zvolený text na doplňovačku</string>
 </resources>

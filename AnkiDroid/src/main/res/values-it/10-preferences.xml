@@ -286,6 +286,4 @@
     <string name="analytics_dialog_title">Aiuta a migliorare AnkiDroid!</string>
     <string name="analytics_title">Condividi l\'utilizzo delle funzionalità</string>
     <string name="analytics_summ">Puoi contribuire ad AnkiDroid aiutando il team di sviluppo a vedere quali funzioni usano le persone</string>
-    <string name="enable_miui_keyboard_hack">«Incolla» per inserire l\'eliminazione del cloze</string>
-    <string name="enable_miui_keyboard_hack_summ">Nell\'editore di note, «Incolla» trasformerà il testo selezionato in un cloze</string>
 </resources>

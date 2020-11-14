@@ -290,6 +290,4 @@
     <string name="analytics_dialog_title">Помогите сделать AnkiDroid лучше!</string>
     <string name="analytics_title">Делиться статистикой использования</string>
     <string name="analytics_summ">Отправляет информацию о функциях, которые предпочитают пользователи</string>
-    <string name="enable_miui_keyboard_hack">«Вставить» для заданий с пропусками</string>
-    <string name="enable_miui_keyboard_hack_summ">«Вставить» в редакторе превратит выделенный текст в задание с пропусками</string>
 </resources>
