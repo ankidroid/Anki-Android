@@ -468,6 +468,31 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
     @Test
+    @Ignore("Doesn't work - but should")
+    public void dataUpdatesAfterUndoReposition() {
+        CardBrowser b = getBrowserWithNotes(1);
+
+        b.checkCardsAtPositions(0);
+
+        CardBrowser.CardCache card = getCheckedCard(b);
+
+        assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
+
+        b.repositionCardsNoValidation(new long[] { card.getId() }, 2);
+
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Position of checked card after reposition", card.getColumnHeaderText(CardBrowser.Column.DUE), is("2"));
+
+        b.onUndo();
+
+        advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Position of checked card after undo should be reset", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
+    }
+
+    @Test
     @Ignore("FLAKY: Robolectric getOptionsMenu does not require supportInvalidateOptionsMenu - so would not fail")
     public void rescheduleUndoTest() {
         CardBrowser b = getBrowserWithNotes(1);
