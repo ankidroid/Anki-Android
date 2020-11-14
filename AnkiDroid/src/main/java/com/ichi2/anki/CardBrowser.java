@@ -2715,7 +2715,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    void checkedCardsAtPositions(int[] positions) {
+    void checkCardsAtPositions(int[] positions) {
         for (int position : positions) {
             if (position >= mCards.size()) {
                 throw new IllegalStateException(
@@ -2789,6 +2789,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting
     void replaceSelectionWith(int[] positions) {
         mCheckedCards.clear();
-        checkedCardsAtPositions(positions);
+        checkCardsAtPositions(positions);
     }
 }
