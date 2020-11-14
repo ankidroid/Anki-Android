@@ -27,11 +27,13 @@ import timber.log.Timber;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -436,10 +438,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
             Timber.i("Found deck: '%s'", customStudyDeck);
             if (cur.getInt("dyn") != 1) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck);
-                new MaterialDialog.Builder(getActivity())
-                    .content(R.string.custom_study_deck_exists)
-                    .negativeText(R.string.dialog_cancel)
-                    .build().show();
+                Toast toast = Toast.makeText(getActivity(), R.string.custom_study_deck_exists, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 50);
+                toast.show();
                 return;
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck);
