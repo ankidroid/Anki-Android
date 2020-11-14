@@ -141,7 +141,7 @@ public class CardBrowserTest extends RobolectricTest {
     @Ignore("Not yet implemented, feature has performance implications in large collections, instead we remove selections")
     public void selectionsAreCorrectWhenNonExistingCardIsRemoved() {
         CardBrowser browser = getBrowserWithNotes(7);
-        browser.checkedCardsAtPositions(new int[] {1, 3, 5, 6});
+        browser.checkCardsAtPositions(new int[] {1, 3, 5, 6});
         deleteCardAtPosition(browser, 2); //delete non-selected
         deleteCardAtPosition(browser, 3); //delete selected, ensure it's not still selected
 
@@ -212,7 +212,7 @@ public class CardBrowserTest extends RobolectricTest {
         addDeck("ZZ");
         selectDefaultDeck();
         CardBrowser b = getBrowserWithNotes(5);
-        b.checkedCardsAtPositions(new int[] {0, 2});
+        b.checkCardsAtPositions(new int[] {0, 2});
 
         advanceRobolectricLooperWithSleep();
 
@@ -239,7 +239,7 @@ public class CardBrowserTest extends RobolectricTest {
         long dynId = addDynamicDeck("World");
         selectDefaultDeck();
         CardBrowser b = getBrowserWithNotes(5);
-        b.checkedCardsAtPositions(new int[] {0, 2});
+        b.checkCardsAtPositions(new int[] {0, 2});
 
         List<Long> cardIds = b.getCheckedCardIds();
 
@@ -332,7 +332,7 @@ public class CardBrowserTest extends RobolectricTest {
         assertThat(b.getPropertiesForCardId(cid1).getPosition(), is(0));
         assertThat(b.getPropertiesForCardId(cid2).getPosition(), is(1));
 
-        b.checkedCardsAtPositions(new int[] { 0 });
+        b.checkCardsAtPositions(new int[] { 0 });
         Intent previewIntent = b.getPreviewIntent();
         assertThat("before: index", previewIntent.getIntExtra("index", -100), is(0));
         assertThat("before: cards", previewIntent.getLongArrayExtra("cardList"), is(new long[] { cid1, cid2 }));
