@@ -1267,7 +1267,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         long did = param.getLong();
         col.getDecks().rem(did, true);
         // TODO: if we had "undo delete note" like desktop client then we won't need this.
-        getCol().clearUndo();
+        col.clearUndo();
     }
 
 
@@ -1594,9 +1594,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
 
     private TaskData doInBackgroundDeleteMedia(TaskData param) {
+        Collection col = getCol();
         Object[] objects = param.getObjArray();
         List<String> unused = (List<String>)objects[0];
-        com.ichi2.libanki.Media m = getCol().getMedia();
+        com.ichi2.libanki.Media m = col.getMedia();
         for (String fname : unused) {
             m.removeFile(fname);
         }
@@ -1829,9 +1830,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
     public void doInBackgroundPreloadNextCard() {
+        Collection col = getCol();
+        AbstractSched sched = col.getSched();
         try {
-            getCol().getSched().counts(); // Ensure counts are recomputed if necessary, to know queue to look for
-            getCol().getSched().preloadNextCard();
+            sched.counts(); // Ensure counts are recomputed if necessary, to know queue to look for
+            sched.preloadNextCard();
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundPreloadNextCard - RuntimeException on preloading card");
         }
