@@ -160,12 +160,6 @@ public class Lookup {
     }
 
 
-    public static String getSearchStringTitle() {
-        return String.format(mContext.getString(R.string.menu_search),
-                mContext.getResources().getStringArray(R.array.dictionary_labels)[mDictionary]);
-    }
-
-
     public static boolean isAvailable() {
         return mIsDictionaryAvailable;
     }
