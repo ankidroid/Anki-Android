@@ -291,6 +291,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true);
             browser.reloadCards((Card[]) result.getObjArray());
+            browser.supportInvalidateOptionsMenu();
         }
     }
 
@@ -316,6 +317,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true);
             browser.reloadCards((Card[]) result.getObjArray());
+            browser.supportInvalidateOptionsMenu();
         }
     }
 
@@ -341,6 +343,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true);
             browser.reloadCards((Card[]) result.getObjArray());
+            browser.supportInvalidateOptionsMenu();
         }
     }
 
