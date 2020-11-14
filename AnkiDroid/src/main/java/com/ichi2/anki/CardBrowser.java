@@ -1167,10 +1167,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     getString(R.string.reposition_card_dialog_title),
                     getString(R.string.reposition_card_dialog_message),
                     5);
-            repositionDialog.setCallbackRunnable(days ->
-                    CollectionTask.launchCollectionTask(DISMISS_MULTI, repositionCardHandler(),
-                            new TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, days}))
-            );
+            repositionDialog.setCallbackRunnable(position -> repositionCardsNoValidation(cardIds, position));
             showDialogFragment(repositionDialog);
             return true;
         } else if (itemId == R.id.action_edit_note) {
@@ -1188,6 +1185,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @VisibleForTesting
+    void repositionCardsNoValidation(long[] cardIds, Integer position) {
+        CollectionTask.launchCollectionTask(DISMISS_MULTI, repositionCardHandler(),
+                new TaskData(new Object[] {cardIds, Collection.DismissType.REPOSITION_CARDS, position}));
     }
 
 
