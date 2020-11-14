@@ -1129,18 +1129,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return true;
         } else if (itemId == R.id.action_reset_cards_progress) {
             Timber.i("NoteEditor:: Reset progress button pressed");
-            // Show confirmation dialog before resetting card progress
-            ConfirmationDialog dialog = new ConfirmationDialog();
-            String title = getString(R.string.reset_card_dialog_title);
-            String message = getString(R.string.reset_card_dialog_message);
-            dialog.setArgs(title, message);
-            Runnable confirm = () -> {
-                Timber.i("CardBrowser:: ResetProgress button pressed");
-                CollectionTask.launchCollectionTask(DISMISS_MULTI, resetProgressCardHandler(),
-                        new TaskData(new Object[] {getSelectedCardIds(), Collection.DismissType.RESET_CARDS}));
-            };
-            dialog.setConfirm(confirm);
-            showDialogFragment(dialog);
+            onResetProgress();
             return true;
         } else if (itemId == R.id.action_reschedule_cards) {
             Timber.i("CardBrowser:: Reschedule button pressed");
@@ -1186,6 +1175,23 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    protected void onResetProgress() {
+        // Show confirmation dialog before resetting card progress
+        ConfirmationDialog dialog = new ConfirmationDialog();
+        String title = getString(R.string.reset_card_dialog_title);
+        String message = getString(R.string.reset_card_dialog_message);
+        dialog.setArgs(title, message);
+        Runnable confirm = () -> {
+            Timber.i("CardBrowser:: ResetProgress button pressed");
+            CollectionTask.launchCollectionTask(DISMISS_MULTI, resetProgressCardHandler(),
+                    new TaskData(new Object[] {getSelectedCardIds(), Collection.DismissType.RESET_CARDS}));
+        };
+        dialog.setConfirm(confirm);
+        showDialogFragment(dialog);
+    }
+
 
     @VisibleForTesting
     void repositionCardsNoValidation(long[] cardIds, Integer position) {
