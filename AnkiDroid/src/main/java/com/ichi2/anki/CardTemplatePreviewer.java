@@ -20,7 +20,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
@@ -87,7 +86,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting");
             mCurrentCard = getDummyCard(mEditedModel, mOrdinal);
             if (mCurrentCard == null) {
-                UIUtils.showSimpleSnackbar(this, R.string.invalid_template, false);
+                UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
                 closeCardTemplatePreviewer();
             }
         }
