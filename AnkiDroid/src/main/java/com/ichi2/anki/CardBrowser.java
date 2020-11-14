@@ -1225,10 +1225,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
 
         long[] selectedCardIds = getSelectedCardIds();
-        FunctionalInterfaces.Consumer<Integer> consumer = newDays ->
-            CollectionTask.launchCollectionTask(DISMISS_MULTI,
-                rescheduleCardHandler(),
-                new TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays}));
+        FunctionalInterfaces.Consumer<Integer> consumer = newDays -> rescheduleWithoutValidation(selectedCardIds, newDays);
 
         RescheduleDialog rescheduleDialog;
         if (selectedCardIds.length == 1) {
@@ -1241,6 +1238,14 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     selectedCardIds.length);
         }
         showDialogFragment(rescheduleDialog);
+    }
+
+
+    @VisibleForTesting
+    void rescheduleWithoutValidation(long[] selectedCardIds, Integer newDays) {
+        CollectionTask.launchCollectionTask(DISMISS_MULTI,
+            rescheduleCardHandler(),
+            new TaskData(new Object[]{selectedCardIds, Collection.DismissType.RESCHEDULE_CARDS, newDays}));
     }
 
 
