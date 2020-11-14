@@ -1383,7 +1383,7 @@ public class NoteEditor extends AnkiActivity {
                              * type was changed without moving this
                              * card to another type. */
                             Timber.d("onActivityResult() template edit return - current card is gone, close note editor");
-                            UIUtils.showSimpleSnackbar(this, R.string.template_for_current_card_deleted, false);
+                            UIUtils.showThemedToast(this, getString(R.string.template_for_current_card_deleted), false);
                             closeNoteEditor();
                         } else {
                             Timber.d("onActivityResult() template edit return, in add mode, just re-display");
