@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.ichi2.libanki.Card;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Deck;
 import com.ichi2.testutils.AnkiAssert;
@@ -20,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
+import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowApplication;
 
@@ -38,6 +40,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
@@ -400,6 +403,74 @@ public class CardBrowserTest extends RobolectricTest {
 
         IntentAssert.hasExtra(addIntent, NoteEditor.EXTRA_DID, initialDid);
     }
+
+
+    @Test
+    public void repositionDataTest() {
+        CardBrowser b = getBrowserWithNotes(1);
+
+        b.checkCardsAtPositions(0);
+
+        CardBrowser.CardCache card = getCheckedCard(b);
+
+        assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
+
+        b.repositionCardsNoValidation(new long[] { card.getId() }, 2);
+
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Position of checked card after reposition", card.getColumnHeaderText(CardBrowser.Column.DUE), is("2"));
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    public void resetDataTest() {
+        Card c = addNoteUsingBasicModel("Hello", "World").firstCard();
+        c.setDue(5);
+        c.setQueue(Consts.QUEUE_TYPE_REV);
+        c.setType(Consts.CARD_TYPE_REV);
+        c.flush();
+
+        CardBrowser b = getBrowserWithNoNewCards();
+
+        b.checkCardsAtPositions(0);
+
+        CardBrowser.CardCache card = getCheckedCard(b);
+
+        assertThat("Initial due of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("8/12/20"));
+
+        b.resetProgressNoConfirm(new long[] { card.getId() });
+
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Position of checked card after reset", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    public void rescheduleDataTest() {
+        CardBrowser b = getBrowserWithNotes(1);
+
+        b.checkCardsAtPositions(0);
+
+        CardBrowser.CardCache card = getCheckedCard(b);
+
+        assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), is("1"));
+
+        b.rescheduleWithoutValidation(new long[] { card.getId() }, 5);
+
+        advanceRobolectricLooperWithSleep();
+
+        assertThat("Due of checked card after reschedule", card.getColumnHeaderText(CardBrowser.Column.DUE), is("8/12/20"));
+    }
+
+
+    private CardBrowser.CardCache getCheckedCard(CardBrowser b) {
+        List<Long> ids = b.getCheckedCardIds();
+        assertThat("only one card expected to be checked", ids, hasSize(1));
+        return b.getPropertiesForCardId(ids.get(0));
+    }
+
 
     private void flagCardForNote(Note n, int flag) {
         Card c = n.firstCard();

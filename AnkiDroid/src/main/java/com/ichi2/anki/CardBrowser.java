@@ -290,6 +290,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true);
+            browser.reloadCards((Card[]) result.getObjArray());
         }
     }
 
@@ -314,6 +315,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true);
+            browser.reloadCards((Card[]) result.getObjArray());
         }
     }
 
@@ -338,6 +340,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             int cardCount = result.getObjArray().length;
             UIUtils.showThemedToast(browser,
                     browser.getResources().getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true);
+            browser.reloadCards((Card[]) result.getObjArray());
         }
     }
 
@@ -2341,6 +2344,28 @@ public class CardBrowser extends NavigationDrawerActivity implements
         } finally {
             mCardsAdapter.notifyDataSetChanged();
         }
+    }
+
+
+    /**
+     * Reloads the data of the cards, taking on their current values from the database.
+     */
+    protected void reloadCards(Card[] cards) {
+        if (cards == null || cards.length == 0) {
+            return;
+        }
+
+        Set<Long> cardIds = new HashSet<>();
+        for (Card c : cards) {
+            cardIds.add(c.getId());
+        }
+
+        for (CardCache props : mCards) {
+            if (cardIds.contains(props.getId())) {
+                props.reload();
+            }
+        }
+        mCardsAdapter.notifyDataSetChanged();
     }
 
     private CardCollection<CardCache> getCards() {
