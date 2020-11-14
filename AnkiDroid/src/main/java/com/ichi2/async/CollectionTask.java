@@ -1367,7 +1367,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         /** Whether col is readable */
         try {
-            getCol();
+            CollectionHelper.getInstance().getCol(mContext);
             // unload collection and trigger a backup
             Time time = CollectionHelper.getInstance().getTimeSafe(mContext);
             CollectionHelper.getInstance().closeCollection(true, "Importing new collection");
