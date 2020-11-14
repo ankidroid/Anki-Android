@@ -1120,9 +1120,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
             showChangeDeckDialog();
             return true;
         } else if (itemId == R.id.action_undo) {
-            if (getCol().undoAvailable()) {
-                CollectionTask.launchCollectionTask(UNDO, mUndoHandler);
-            }
+            Timber.w("CardBrowser:: Undo pressed");
+            onUndo();
             return true;
         } else if (itemId == R.id.action_select_none) {
             onSelectNone();
@@ -1180,6 +1179,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @VisibleForTesting
+    void onUndo() {
+        if (getCol().undoAvailable()) {
+            CollectionTask.launchCollectionTask(UNDO, mUndoHandler);
+        }
     }
 
 
@@ -1442,6 +1448,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
         mCards.clear();
         mCheckedCards.clear();
     }
+
+    /** Currently unused - to be used in #7676 */
+    private void forceRefreshSearch() {
+        searchCards();
+    }
+
 
     private void searchCards() {
         // cancel the previous search & render tasks if still running
@@ -1871,7 +1883,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             Timber.d("Card Browser - mUndoHandler.actualOnPostExecute(CardBrowser browser)");
             browser.hideProgressBar();
             // reload whole view
-            browser.searchCards();
+            browser.forceRefreshSearch();
             browser.endMultiSelectMode();
             browser.mCardsAdapter.notifyDataSetChanged();
             browser.updatePreviewMenuItem();
