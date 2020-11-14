@@ -605,24 +605,16 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Card oldCard = param.getCard();
         @Consts.BUTTON_TYPE int ease = param.getInt();
         Timber.i(oldCard != null ? "Answering card" : "Obtaining card");
-        try {
-            col.getDb().executeInTransaction(() -> {
-                if (oldCard != null) {
-                    Timber.i("Answering card %d", oldCard.getId());
-                    sched.answerCard(oldCard, ease);
-                }
-                Card newCard = sched.getCard();
-                if (newCard != null) {
-                    // render cards before locking database
-                    newCard._getQA(true);
-                }
-                publishProgress(new TaskData(newCard));
-            });
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundAnswerCard - RuntimeException on answering card");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard");
-            return new TaskData(false);
+        if (oldCard != null) {
+            Timber.i("Answering card %d", oldCard.getId());
+            sched.answerCard(oldCard, ease);
         }
+        Card newCard = sched.getCard();
+        if (newCard != null) {
+            // render cards before locking database
+            newCard._getQA(true);
+        }
+        publishProgress(new TaskData(newCard));
         return new TaskData(true);
     }
 
