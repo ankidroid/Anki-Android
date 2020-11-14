@@ -439,11 +439,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
             if (cur.getInt("dyn") != 1) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck);
                 UIUtils.showThemedToast(getActivity(), getString(R.string.custom_study_deck_exists), true);
-/*
-                Toast toast = Toast.makeText(getActivity(), R.string.custom_study_deck_exists, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 50);
-                toast.show();
-*/
                 return;
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck);
