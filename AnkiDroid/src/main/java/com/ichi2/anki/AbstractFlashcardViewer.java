@@ -1419,7 +1419,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         mSoundPlayer.stopSounds();
         mCurrentEase = ease;
 
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(true),
+        CollectionTask.launchCollectionTask(ANSWER_AND_GET_CARD, mAnswerCardHandler(true),
                 new TaskData(mCurrentCard, mCurrentEase));
     }
 
@@ -3722,8 +3722,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     @VisibleForTesting
     void loadInitialCard() {
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+        CollectionTask.launchCollectionTask(GET_CARD, mAnswerCardHandler(false));
     }
 
     public ReviewerUi.ControlBlock getControlBlocked() {
