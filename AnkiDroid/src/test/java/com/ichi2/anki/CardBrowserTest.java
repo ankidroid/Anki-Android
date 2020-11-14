@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -32,11 +33,13 @@ import java.util.Objects;
 
 import javax.annotation.CheckReturnValue;
 
+import androidx.annotation.StringRes;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import timber.log.Timber;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItem;
@@ -462,6 +465,36 @@ public class CardBrowserTest extends RobolectricTest {
         advanceRobolectricLooperWithSleep();
 
         assertThat("Due of checked card after reschedule", card.getColumnHeaderText(CardBrowser.Column.DUE), is("8/12/20"));
+    }
+
+    @Test
+    @Ignore("FLAKY: Robolectric getOptionsMenu does not require supportInvalidateOptionsMenu - so would not fail")
+    public void rescheduleUndoTest() {
+        CardBrowser b = getBrowserWithNotes(1);
+
+        assertUndoDoesNotContain(b, R.string.undo_action_reschedule_card);
+
+        b.checkCardsAtPositions(0);
+
+        b.rescheduleWithoutValidation(new long[] { getCheckedCard(b).getId() }, 2);
+
+        advanceRobolectricLooperWithSleep();
+
+        assertUndoContains(b, R.string.undo_action_reschedule_card);
+    }
+
+    protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
+        ShadowActivity shadowActivity = shadowOf(browser);
+        MenuItem item = shadowActivity.getOptionsMenu().findItem(R.id.action_undo);
+        String expected = browser.getString(resId);
+        assertThat(item.getTitle().toString(), not(containsString(expected)));
+    }
+
+    protected void assertUndoContains(CardBrowser browser, @StringRes int resId) {
+        ShadowActivity shadowActivity = shadowOf(browser);
+        MenuItem item = shadowActivity.getOptionsMenu().findItem(R.id.action_undo);
+        String expected = browser.getString(resId);
+        assertThat(item.getTitle().toString(), containsString(expected));
     }
 
 
