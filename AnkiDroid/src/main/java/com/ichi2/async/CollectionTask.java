@@ -94,7 +94,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
     public enum TASK_TYPE {
         SAVE_COLLECTION,
-        ANSWER_CARD,
+        ANSWER_AND_GET_CARD,
+        GET_CARD,
         ADD_NOTE,
         UPDATE_NOTE,
         UNDO,
@@ -381,8 +382,11 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 doInBackgroundSaveCollection(param);
                 break;
 
-            case ANSWER_CARD:
-                return doInBackgroundAnswerCard(param);
+            case ANSWER_AND_GET_CARD:
+                return doInBackgroundAnswerAndGetCard(param);
+
+            case GET_CARD:
+                return doInBackgroundGetCard();
 
             case ADD_NOTE:
                 return doInBackgroundAddNote(param);
@@ -599,16 +603,19 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
     }
 
 
-    private TaskData doInBackgroundAnswerCard(TaskData param) {
+    private TaskData doInBackgroundAnswerAndGetCard(TaskData param) {
+        Collection col = getCol();
+        @NonNull Card oldCard = param.getCard();
+        @Consts.BUTTON_TYPE int ease = param.getInt();
+        Timber.i("Answering card %d", oldCard.getId());
+        col.getSched().answerCard(oldCard, ease);
+        return doInBackgroundGetCard();
+    }
+
+    private TaskData doInBackgroundGetCard() {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
-        Card oldCard = param.getCard();
-        @Consts.BUTTON_TYPE int ease = param.getInt();
-        Timber.i(oldCard != null ? "Answering card" : "Obtaining card");
-        if (oldCard != null) {
-            Timber.i("Answering card %d", oldCard.getId());
-            sched.answerCard(oldCard, ease);
-        }
+        Timber.i("Obtaining card");
         Card newCard = sched.getCard();
         if (newCard != null) {
             // render cards before locking database

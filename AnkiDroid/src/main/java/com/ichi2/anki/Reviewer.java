@@ -286,8 +286,7 @@ public class Reviewer extends AbstractFlashcardViewer {
 
         col.getSched().deferReset();     // Reset schedule in case card was previously loaded
         getCol().startTimebox();
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+        CollectionTask.launchCollectionTask(GET_CARD, mAnswerCardHandler(false));
 
         disableDrawerSwipeOnConflicts();
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -808,8 +807,7 @@ public class Reviewer extends AbstractFlashcardViewer {
     @Override
     protected void performReload() {
         getCol().getSched().deferReset();
-        CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
-                new TaskData(null, 0));
+        CollectionTask.launchCollectionTask(GET_CARD, mAnswerCardHandler(false));
     }
 
 
