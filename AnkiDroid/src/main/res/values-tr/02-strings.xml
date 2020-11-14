@@ -309,6 +309,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>

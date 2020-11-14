@@ -336,6 +336,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Chyba při kopírování ladicích informací do schránky</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nepodařilo se načíst balíček „%s“</string>
     <string name="search_decks">Search decks</string>

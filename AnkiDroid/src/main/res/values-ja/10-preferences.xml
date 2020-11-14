@@ -284,6 +284,4 @@
     <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title">設定の情報提供を許可する</string>
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます。</string>
-    <string name="enable_miui_keyboard_hack">穴埋め部分に「貼り付け」</string>
-    <string name="enable_miui_keyboard_hack_summ">ノートエディタで、この「貼り付け」を選択するとテキストを穴埋め部分へ変更します。</string>
 </resources>

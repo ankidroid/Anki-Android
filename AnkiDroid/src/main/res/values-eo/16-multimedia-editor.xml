@@ -51,8 +51,6 @@
     <string name="multimedia_editor_trans_translating_online">Traduki enrete</string>
     <!-- pick the right translation imperative -->
     <string name="multimedia_editor_trans_pick_translation">Elektu tradukon</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_trans_translation_failed">Traduko fiaskis</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
     <string name="multimedia_editor_trans_pick_translation_source">Elektu vortaron</string>
@@ -106,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Atendi</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Io fiaskis</string>
-    <string name="multimedia_editor_attach_mm_content">Kunigi plurmedian enhavon al la kampo %1$s</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Kunigi plurmedian enhavon al la kampo %1$s</string>
     <string name="multimedia_editor_attach_media">Aldoni aŭdvidaĵon</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->

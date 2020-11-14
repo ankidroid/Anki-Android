@@ -70,8 +70,6 @@
     <string name="card_browser_change_display_order">تغيير ترتيب العرض</string>
     <string name="card_browser_change_display_order_title">اختر ترتيب العرض</string>
     <string name="card_browser_change_display_order_reverse">حدد حقل مرتين لتعكس</string>
-    <string name="card_details_question">السؤال</string>
-    <string name="card_details_answer">الإجابة</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">ينتظر المراجعة</string>
     <string name="card_details_tags">وسوم</string>
     <string-array name="card_browser_order_labels">
@@ -91,7 +89,6 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(جديدة)</string>
     <string name="card_browser_due_filtered_card">(مفلترة)</string>
     <string name="card_browser_interval_learning_card">(في طور التعلم)</string>
-    <string name="card_browser_note_editor_error">فشل فتح محرر الملحوظات</string>
     <string name="card_browser_no_cards_in_deck">لا توجد بطاقات في الرزمة ‘%s’</string>
     <string name="card_browser_search_all_decks">البحث في كل الرزم</string>
     <string name="card_browser_unknown_deck_name">غير معروف</string>
@@ -127,5 +124,4 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">تعلم مجددًا</string>
     <string name="card_info_revlog_filtered">مفلترة</string>
     <string name="card_info_ease_not_applicable">غير متوفر</string>
-    <string name="card_info_cannot_load">حدث خطأ غير متوقع</string>
 </resources>

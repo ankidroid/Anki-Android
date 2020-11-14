@@ -65,8 +65,6 @@
     <string name="card_browser_change_display_order">표시 순서 변경</string>
     <string name="card_browser_change_display_order_title">표시 순서를 선택하세요</string>
     <string name="card_browser_change_display_order_reverse">역순으로 정렬하려면 필드를 두번 선택하세요</string>
-    <string name="card_details_question">문제</string>
-    <string name="card_details_answer">정답</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">예정</string>
     <string name="card_details_tags">태그</string>
     <string-array name="card_browser_order_labels">
@@ -86,7 +84,6 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
@@ -117,5 +114,4 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
     <string name="card_info_revlog_filtered">Filtered</string>
     <string name="card_info_ease_not_applicable">N/A</string>
-    <string name="card_info_cannot_load">An unexpected error occurred</string>
 </resources>

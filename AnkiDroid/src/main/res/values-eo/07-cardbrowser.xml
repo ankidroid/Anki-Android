@@ -66,8 +66,6 @@
     <string name="card_browser_change_display_order">Ŝanĝi ordon de vidigo</string>
     <string name="card_browser_change_display_order_title">Elekti ordon de vidigo</string>
     <string name="card_browser_change_display_order_reverse">Elektu kampon dufoje por inversigi</string>
-    <string name="card_details_question">Demando</string>
-    <string name="card_details_answer">Respondo</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Lernendaj</string>
     <string name="card_details_tags">Etikedoj</string>
     <string-array name="card_browser_order_labels">
@@ -87,7 +85,6 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nova)</string>
     <string name="card_browser_due_filtered_card">(filtrita)</string>
     <string name="card_browser_interval_learning_card">(lernata)</string>
-    <string name="card_browser_note_editor_error">Eraro dum malfermi redaktilon de notoj</string>
     <string name="card_browser_no_cards_in_deck">Neniu karto trovita en la kartaro “%s”</string>
     <string name="card_browser_search_all_decks">Serĉi en ĉiuj kartaroj</string>
     <string name="card_browser_unknown_deck_name">Nekonata</string>
@@ -119,5 +116,4 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relernenda</string>
     <string name="card_info_revlog_filtered">Filtrita</string>
     <string name="card_info_ease_not_applicable">–</string>
-    <string name="card_info_cannot_load">Neatendita eraro okazis</string>
 </resources>

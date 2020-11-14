@@ -296,6 +296,7 @@
     <string name="about_ankidroid_error_copy_debug_info">デバッグ情報をクリップボードにコピー中にエラーが発生しました</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">カードのエラー: 読み込み失敗 ‘%s’</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\'デッキの読み込みに失敗しました</string>
     <string name="search_decks">デッキを検索</string>

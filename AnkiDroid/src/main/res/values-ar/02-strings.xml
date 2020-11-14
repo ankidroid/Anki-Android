@@ -362,6 +362,7 @@
     <string name="about_ankidroid_error_copy_debug_info">حدث خطأ عند نسخ معلومات التصحيح إلى الحافظة</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">فشل تحميل رزمة ‘%s’</string>
     <string name="search_decks">بحث في الرزم</string>

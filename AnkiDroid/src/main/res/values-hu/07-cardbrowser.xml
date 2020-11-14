@@ -66,8 +66,6 @@
     <string name="card_browser_change_display_order">Megjelenítési sorrend módosítása</string>
     <string name="card_browser_change_display_order_title">Válassz megjelenítési sorrendet</string>
     <string name="card_browser_change_display_order_reverse">Fordított sorrendhez válaszd ki a mezőt kétszer.</string>
-    <string name="card_details_question">Kérdés</string>
-    <string name="card_details_answer">Válasz</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Esedékes</string>
     <string name="card_details_tags">Címkék</string>
     <string-array name="card_browser_order_labels">
@@ -87,7 +85,6 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(új)</string>
     <string name="card_browser_due_filtered_card">(szűrt)</string>
     <string name="card_browser_interval_learning_card">(tanulás)</string>
-    <string name="card_browser_note_editor_error">Hiba a Jegyzetszerkesztő megnyitása során</string>
     <string name="card_browser_no_cards_in_deck">Nem található kártya a \'%s\' pakliban</string>
     <string name="card_browser_search_all_decks">Összes pakli keresése</string>
     <string name="card_browser_unknown_deck_name">Ismeretlen</string>
@@ -119,5 +116,4 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Újratanulás</string>
     <string name="card_info_revlog_filtered">Szűrt</string>
     <string name="card_info_ease_not_applicable">N/A</string>
-    <string name="card_info_cannot_load">Váratlan hiba történt</string>
 </resources>

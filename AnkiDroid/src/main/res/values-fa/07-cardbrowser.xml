@@ -66,8 +66,6 @@
     <string name="card_browser_change_display_order">تغییر تنظیم صفحه نمایش</string>
     <string name="card_browser_change_display_order_title">تغییر تنظیم صفحه نمایش</string>
     <string name="card_browser_change_display_order_reverse">انتخاب مجدد یک فیلد به صورت وارونه.</string>
-    <string name="card_details_question">سوال</string>
-    <string name="card_details_answer">پاسخ</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">موعد</string>
     <string name="card_details_tags">برچسب ها</string>
     <string-array name="card_browser_order_labels">
@@ -87,7 +85,6 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(جدید)</string>
     <string name="card_browser_due_filtered_card">(فیلتر شده)</string>
     <string name="card_browser_interval_learning_card">(یادگیری)</string>
-    <string name="card_browser_note_editor_error">خطا در اجرای ویرایشگر یادداشت</string>
     <string name="card_browser_no_cards_in_deck">در دستۀ «%s» هیچ کارتی یافت نشد</string>
     <string name="card_browser_search_all_decks">جستجو در تمام دسته‌ها</string>
     <string name="card_browser_unknown_deck_name">ناشناخته</string>
@@ -119,5 +116,4 @@
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
     <string name="card_info_revlog_filtered">Filtered</string>
     <string name="card_info_ease_not_applicable">N/A</string>
-    <string name="card_info_cannot_load">An unexpected error occurred</string>
 </resources>

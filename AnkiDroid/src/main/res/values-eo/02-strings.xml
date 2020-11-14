@@ -310,6 +310,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Eraro okazis dum kopii senerarigajn informojn al tondujo</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Eraro pri enhavo de karto, fiaskis enlegi “%s”</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Fiaskis enlegi la kartaron “%s”</string>
     <string name="search_decks">Serĉi en kartaroj</string>

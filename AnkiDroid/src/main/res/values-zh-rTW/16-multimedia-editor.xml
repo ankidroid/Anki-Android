@@ -51,8 +51,6 @@
     <string name="multimedia_editor_trans_translating_online">線上翻譯</string>
     <!-- pick the right translation imperative -->
     <string name="multimedia_editor_trans_pick_translation">選擇翻譯</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_trans_translation_failed">翻譯失敗</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
     <string name="multimedia_editor_trans_pick_translation_source">選擇字典</string>
@@ -106,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">等待</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">發生狀況</string>
-    <string name="multimedia_editor_attach_mm_content">將多媒體內容新增到 %1$s 字段</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">將多媒體內容新增到 %1$s 字段</string>
     <string name="multimedia_editor_attach_media">附上媒體檔</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->

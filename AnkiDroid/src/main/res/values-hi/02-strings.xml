@@ -310,6 +310,7 @@
     <string name="about_ankidroid_error_copy_debug_info">क्लिपबोर्ड पर डिबग जानकारी कॉपी करने में त्रुटि</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">कार्ड सामग्री त्रुटि: ‘%s’ लोड करने में विफल</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">डेक को लोड करने में विफल  ‘%s’</string>
     <string name="search_decks">खोज डेक</string>

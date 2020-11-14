@@ -51,8 +51,6 @@
     <string name="multimedia_editor_trans_translating_online">Onlayn tərcümə edilir</string>
     <!-- pick the right translation imperative -->
     <string name="multimedia_editor_trans_pick_translation">Tərcümə seç</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_trans_translation_failed">Tərcümə uğursuz oldu</string>
     <!-- from controller -->
     <!-- dialog title to ask for translation source -->
     <string name="multimedia_editor_trans_pick_translation_source">Lüğət seç</string>
@@ -106,7 +104,7 @@
     <string name="multimedia_editor_progress_wait_title">Gözləyin</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Nəsə səhv gedir</string>
-    <string name="multimedia_editor_attach_mm_content">%1$s sahəsinə multimedia məzmunu qoş</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s sahəsinə multimedia məzmunu qoş</string>
     <string name="multimedia_editor_attach_media">Media qoş</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
