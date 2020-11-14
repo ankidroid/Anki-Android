@@ -2735,7 +2735,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    void checkCardsAtPositions(int[] positions) {
+    void checkCardsAtPositions(int... positions) {
         for (int position : positions) {
             if (position >= mCards.size()) {
                 throw new IllegalStateException(
