@@ -1185,11 +1185,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
         dialog.setArgs(title, message);
         Runnable confirm = () -> {
             Timber.i("CardBrowser:: ResetProgress button pressed");
-            CollectionTask.launchCollectionTask(DISMISS_MULTI, resetProgressCardHandler(),
-                    new TaskData(new Object[] {getSelectedCardIds(), Collection.DismissType.RESET_CARDS}));
+            resetProgressNoConfirm(getSelectedCardIds());
         };
         dialog.setConfirm(confirm);
         showDialogFragment(dialog);
+    }
+
+
+    @VisibleForTesting
+    void resetProgressNoConfirm(long[] cardIds) {
+        CollectionTask.launchCollectionTask(DISMISS_MULTI, resetProgressCardHandler(),
+                new TaskData(new Object[] {cardIds, Collection.DismissType.RESET_CARDS}));
     }
 
 
