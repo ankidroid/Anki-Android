@@ -36,7 +36,7 @@ public class FieldEditLineTest extends NoteEditorTest {
     public void testSetters() {
         FieldEditLine line = getFieldEditLine();
 
-        line.setContent("Hello");
+        line.setContent("Hello", true);
         line.setName("Name");
         line.setOrd(5);
         FieldEditText text = line.getEditText();
@@ -50,7 +50,7 @@ public class FieldEditLineTest extends NoteEditorTest {
     public void testSaveRestore() {
         FieldEditLine toSave = getFieldEditLine();
 
-        toSave.setContent("Hello");
+        toSave.setContent("Hello", true);
         toSave.setName("Name");
         toSave.setOrd(5);
 

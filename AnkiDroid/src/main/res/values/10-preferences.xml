@@ -272,4 +272,8 @@
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+
+
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

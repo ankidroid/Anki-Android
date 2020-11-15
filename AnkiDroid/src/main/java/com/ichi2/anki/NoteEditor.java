@@ -283,7 +283,7 @@ public class NoteEditor extends AnkiActivity {
             if (count > 0) {
                 noteEditor.mChanged = true;
                 noteEditor.mSourceText = null;
-                noteEditor.refreshNoteData(FieldChangeType.refreshWithStickyFields());
+                noteEditor.refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()));
                 UIUtils.showThemedToast(noteEditor,
                         noteEditor.getResources().getQuantityString(R.plurals.factadder_cards_added, count, count), true);
             } else {
@@ -607,7 +607,7 @@ public class NoteEditor extends AnkiActivity {
 
         setDid(mEditorNote);
 
-        setNote(mEditorNote, FieldChangeType.onActivityCreation());
+        setNote(mEditorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()));
 
         if (mAddNote) {
             mNoteTypeSpinner.setOnItemSelectedListener(new SetNoteTypeListener());
@@ -1090,7 +1090,13 @@ public class NoteEditor extends AnkiActivity {
                 }
             }
         }
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    protected static boolean shouldReplaceNewlines() {
+        return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("noteEditorNewlineReplace", true);
     }
 
 
@@ -2057,6 +2063,9 @@ public class NoteEditor extends AnkiActivity {
 
 
     private String convertToHtmlNewline(@NonNull String fieldData) {
+        if (!shouldReplaceNewlines()) {
+            return fieldData;
+        }
         return fieldData.replace(FieldEditText.NEW_LINE, "<br>");
     }
 
@@ -2074,7 +2083,7 @@ public class NoteEditor extends AnkiActivity {
      * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
      */
     private void updateFieldsFromMap(Model newModel) {
-        FieldChangeType type = FieldChangeType.refreshWithMap(newModel, mModelChangeFieldMap);
+        FieldChangeType type = FieldChangeType.refreshWithMap(newModel, mModelChangeFieldMap, shouldReplaceNewlines());
         populateEditFields(type, true);
         updateCards(newModel);
     }
@@ -2122,7 +2131,7 @@ public class NoteEditor extends AnkiActivity {
                     updateDeckPosition();
                 }
 
-                refreshNoteData(FieldChangeType.changeFieldCount());
+                refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()));
                 setDuplicateFieldStyles();
             }
         }
@@ -2175,7 +2184,7 @@ public class NoteEditor extends AnkiActivity {
                     mNoteDeckSpinner.setSelection(position, false);
                 }
             } else {
-                populateEditFields(FieldChangeType.refresh(), false);
+                populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false);
                 updateCards(mCurrentEditedCard.model());
                 findViewById(R.id.CardEditorTagButton).setEnabled(true);
                 //((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
