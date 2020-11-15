@@ -68,6 +68,12 @@
                 android:key="disableExtendedTextUi"
                 android:summary="@string/disable_extended_text_ui_summ"
                 android:title="@string/disable_extended_text_ui" />
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="noteEditorNewlineReplace"
+                android:summary="@string/note_editor_replace_newlines_summ"
+                android:title="@string/note_editor_replace_newlines"
+                />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="category_plugins"

@@ -83,7 +83,7 @@ public class FieldState {
             JSONArray flds = mEditor.getCurrentFields();
             for (int fldIdx = 0; fldIdx < flds.length(); fldIdx++) {
                 if (flds.getJSONObject(fldIdx).getBoolean("sticky")) {
-                    fieldEditLines.get(fldIdx).setContent(currentFieldStrings[fldIdx]);
+                    fieldEditLines.get(fldIdx).setContent(currentFieldStrings[fldIdx], type.replaceNewlines);
                 }
             }
         }
@@ -92,7 +92,7 @@ public class FieldState {
             String[] currentFieldStrings = mEditor.getCurrentFieldStrings();
 
             for (int i = 0; i < Math.min(currentFieldStrings.length, fieldEditLines.size()); i++) {
-                fieldEditLines.get(i).setContent(currentFieldStrings[i]);
+                fieldEditLines.get(i).setContent(currentFieldStrings[i], type.replaceNewlines);
             }
         }
 
@@ -124,7 +124,7 @@ public class FieldState {
             FieldEditLine edit_line_view = new FieldEditLine(mEditor);
             editLines.add(edit_line_view);
             edit_line_view.setName(fields[i][0]);
-            edit_line_view.setContent(fields[i][1]);
+            edit_line_view.setContent(fields[i][1], type.replaceNewlines);
             edit_line_view.setOrd(i);
         }
         return editLines;
@@ -215,38 +215,40 @@ public class FieldState {
 
         private Map<Integer, Integer> modelChangeFieldMap;
         private Model newModel;
+        private final boolean replaceNewlines;
 
-        public FieldChangeType(Type type) {
+        public FieldChangeType(Type type, boolean replaceNewlines) {
             this.mType = type;
+            this.replaceNewlines = replaceNewlines;
         }
 
-        public static FieldChangeType refreshWithMap(Model newModel, Map<Integer, Integer> modelChangeFieldMap) {
-            FieldChangeType typeClass = new FieldChangeType(Type.REFRESH_WITH_MAP);
+        public static FieldChangeType refreshWithMap(Model newModel, Map<Integer, Integer> modelChangeFieldMap, boolean replaceNewlines) {
+            FieldChangeType typeClass = new FieldChangeType(Type.REFRESH_WITH_MAP, replaceNewlines);
             typeClass.newModel = newModel;
             typeClass.modelChangeFieldMap = modelChangeFieldMap;
             return typeClass;
         }
 
-        public static FieldChangeType refresh() {
-            return fromType(FieldState.Type.REFRESH);
+        public static FieldChangeType refresh(boolean replaceNewlines) {
+            return fromType(FieldState.Type.REFRESH, replaceNewlines);
         }
 
 
-        public static FieldChangeType refreshWithStickyFields() {
-            return fromType(Type.CLEAR_KEEP_STICKY);
+        public static FieldChangeType refreshWithStickyFields(boolean replaceNewlines) {
+            return fromType(Type.CLEAR_KEEP_STICKY, replaceNewlines);
         }
 
 
-        public static FieldChangeType changeFieldCount() {
-            return fromType(Type.CHANGE_FIELD_COUNT);
+        public static FieldChangeType changeFieldCount(boolean replaceNewlines) {
+            return fromType(Type.CHANGE_FIELD_COUNT, replaceNewlines);
         }
 
-        public static FieldChangeType onActivityCreation() {
-            return fromType(Type.INIT);
+        public static FieldChangeType onActivityCreation(boolean replaceNewlines) {
+            return fromType(Type.INIT, replaceNewlines);
         }
 
-        private static FieldChangeType fromType(Type type) {
-            return new FieldChangeType(type);
+        private static FieldChangeType fromType(Type type, boolean replaceNewlines) {
+            return new FieldChangeType(type, replaceNewlines);
         }
     }
 
