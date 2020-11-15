@@ -193,10 +193,10 @@ public class FieldEditText extends FixedEditText {
     }
 
 
-    public void setContent(String content) {
+    public void setContent(String content, boolean replaceNewLine) {
         if (content == null) {
             content = "";
-        } else {
+        } else if (replaceNewLine) {
             content = content.replaceAll("<br(\\s*/*)>", NEW_LINE);
         }
         setText(content);

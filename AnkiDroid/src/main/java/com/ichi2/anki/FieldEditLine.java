@@ -173,8 +173,8 @@ public class FieldEditLine extends FrameLayout {
         }
     }
 
-    public void setContent(String content) {
-        mEditText.setContent(content);
+    public void setContent(String content, boolean replaceNewline) {
+        mEditText.setContent(content, replaceNewline);
     }
 
 
