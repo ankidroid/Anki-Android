@@ -21,7 +21,7 @@
     <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">Decks</string>
-    <string name="card_browser">Card browser</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
     <string name="statistics">Statistics</string>
     <string name="settings">Settings</string>
     <string name="help">Help</string>
@@ -188,7 +188,7 @@
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
 
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>
