@@ -244,11 +244,11 @@ public class Sound {
         // If there are sounds to play for the current card, start with the first one
         if (mSoundPaths != null && mSoundPaths.containsKey(qa)) {
             Timber.d("playSounds %s", qa);
-            playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null, errorListener);
+            playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa, errorListener), null, errorListener);
         } else if (mSoundPaths != null && qa == SoundSide.QUESTION_AND_ANSWER) {
             if (makeQuestionAnswerList()) {
                 Timber.d("playSounds: playing both question and answer");
-                playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null, errorListener);
+                playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa, errorListener), null, errorListener);
             } else {
                 Timber.d("playSounds: No question answer list, not playing sound");
             }
@@ -274,13 +274,6 @@ public class Sound {
             }
         }
         return length;
-    }
-
-    /**
-     * Plays the given sound or video and sets playAllListener if available on media player to start next media
-     */
-    public void playSound(String soundPath, OnCompletionListener playAllListener) {
-        playSound(soundPath, playAllListener, null, null);
     }
 
     /**
@@ -429,6 +422,7 @@ public class Sound {
          * Question/Answer
          */
         private final SoundSide mQa;
+        private final OnErrorListener mErrorListener;
 
         /**
          * next sound to play (onCompletion() is first called after the first (0) has been played)
@@ -436,8 +430,9 @@ public class Sound {
         private int mNextToPlay = 1;
 
 
-        private PlayAllCompletionListener(SoundSide qa) {
+        private PlayAllCompletionListener(SoundSide qa, @Nullable OnErrorListener errorListener) {
             mQa = qa;
+            mErrorListener = errorListener;
         }
 
 
@@ -446,7 +441,7 @@ public class Sound {
             // If there is still more sounds to play for the current card, play the next one
             if (mSoundPaths.containsKey(mQa) && mNextToPlay < mSoundPaths.get(mQa).size()) {
                 Timber.i("Play all: Playing next sound");
-                playSound(mSoundPaths.get(mQa).get(mNextToPlay++), this);
+                playSound(mSoundPaths.get(mQa).get(mNextToPlay++), this, null, mErrorListener);
             } else {
                 Timber.i("Play all: Completed - releasing sound");
                 releaseSound();
