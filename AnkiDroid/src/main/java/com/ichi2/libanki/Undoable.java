@@ -21,7 +21,7 @@ public abstract class Undoable {
     }
 
     public String name(Resources res) {
-        return res.getString(mDt.undoNameId);
+        return mDt.getString(res);
     }
 
     public DismissType getDismissType() {

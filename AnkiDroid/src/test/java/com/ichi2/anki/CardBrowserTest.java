@@ -29,6 +29,7 @@ import org.robolectric.shadows.ShadowApplication;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.CheckReturnValue;
@@ -497,7 +498,7 @@ public class CardBrowserTest extends RobolectricTest {
     public void rescheduleUndoTest() {
         CardBrowser b = getBrowserWithNotes(1);
 
-        assertUndoDoesNotContain(b, R.string.undo_action_reschedule_card);
+        assertUndoDoesNotContain(b, R.string.deck_conf_cram_reschedule);
 
         b.checkCardsAtPositions(0);
 
@@ -505,21 +506,21 @@ public class CardBrowserTest extends RobolectricTest {
 
         advanceRobolectricLooperWithSleep();
 
-        assertUndoContains(b, R.string.undo_action_reschedule_card);
+        assertUndoContains(b, R.string.deck_conf_cram_reschedule);
     }
 
     protected void assertUndoDoesNotContain(CardBrowser browser, @StringRes int resId) {
         ShadowActivity shadowActivity = shadowOf(browser);
         MenuItem item = shadowActivity.getOptionsMenu().findItem(R.id.action_undo);
         String expected = browser.getString(resId);
-        assertThat(item.getTitle().toString(), not(containsString(expected)));
+        assertThat(item.getTitle().toString(), not(containsString(expected.toLowerCase(Locale.getDefault()))));
     }
 
     protected void assertUndoContains(CardBrowser browser, @StringRes int resId) {
         ShadowActivity shadowActivity = shadowOf(browser);
         MenuItem item = shadowActivity.getOptionsMenu().findItem(R.id.action_undo);
         String expected = browser.getString(resId);
-        assertThat(item.getTitle().toString(), containsString(expected));
+        assertThat(item.getTitle().toString(), containsString(expected.toLowerCase(Locale.getDefault())));
     }
 
 
