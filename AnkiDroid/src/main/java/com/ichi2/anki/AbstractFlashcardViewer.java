@@ -383,7 +383,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         public void handleMessage(Message msg) {
             mSoundPlayer.stopSounds();
-            mSoundPlayer.playSound((String) msg.obj, null);
+            mSoundPlayer.playSound((String) msg.obj, null, null, getSoundErrorListener());
         }
     };
 
@@ -2241,9 +2241,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         }
     }
 
-
     private void playSounds(SoundSide questionAndAnswer) {
-        mSoundPlayer.playSounds(questionAndAnswer, (mp, what, extra, path) -> {
+        mSoundPlayer.playSounds(questionAndAnswer, getSoundErrorListener());
+    }
+
+    private Sound.OnErrorListener getSoundErrorListener() {
+        return (mp, what, extra, path) -> {
             Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra);
             try {
                 File file = new File(path);
@@ -2255,7 +2258,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
 
             return false;
-        });
+        };
     }
 
 
