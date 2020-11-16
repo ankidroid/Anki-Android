@@ -271,7 +271,7 @@ public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDia
         mFieldNameInput.setText(mFieldLabels.get(mCurrentPos));
         mFieldNameInput.setSelection(mFieldNameInput.getText().length());
         new MaterialDialog.Builder(this)
-                .title(R.string.rename_model)
+                .title(R.string.model_field_editor_rename)
                 .positiveText(R.string.rename)
                 .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
