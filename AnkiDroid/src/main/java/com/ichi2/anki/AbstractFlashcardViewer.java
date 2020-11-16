@@ -3201,7 +3201,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
             // response is null if nothing required
             if (isLoadedFromProtocolRelativeUrl(url)) {
-                mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayInefficientImageSnackbar);
+                mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayMediaUpgradeRequiredSnackbar);
             }
             return null;
         }
@@ -3219,7 +3219,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
 
             if (isLoadedFromProtocolRelativeUrl(request.getUrl().toString())) {
-                mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayInefficientImageSnackbar);
+                mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayMediaUpgradeRequiredSnackbar);
             }
             return null;
         }
@@ -3569,7 +3569,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename), R.string.help, onClickListener);
     }
 
-    private void displayInefficientImageSnackbar() {
+    private void displayMediaUpgradeRequiredSnackbar() {
         OnClickListener onClickListener = (v) -> openUrl(Uri.parse(getString(R.string.link_faq_invalid_protocol_relative)));
         showSnackbar(getString(R.string.card_viewer_media_relative_protocol), R.string.help, onClickListener);
     }
