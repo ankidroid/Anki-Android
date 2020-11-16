@@ -2212,14 +2212,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (!useTTS) { // Text to speech not in effect here
                 if (doAudioReplay && replayQuestion && sDisplayAnswer) {
                     // only when all of the above are true will question be played with answer, to match desktop
-                    mSoundPlayer.playSounds(SoundSide.QUESTION_AND_ANSWER);
+                    playSounds(SoundSide.QUESTION_AND_ANSWER);
                 } else if (sDisplayAnswer) {
-                    mSoundPlayer.playSounds(SoundSide.ANSWER);
+                    playSounds(SoundSide.ANSWER);
                     if (mUseTimer) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.ANSWER);
                     }
                 } else { // question is displayed
-                    mSoundPlayer.playSounds(SoundSide.QUESTION);
+                    playSounds(SoundSide.QUESTION);
                     // If the user wants to show the answer automatically
                     if (mUseTimer) {
                         mUseTimerDynamicMS = mSoundPlayer.getSoundsLength(SoundSide.QUESTION_AND_ANSWER);
@@ -2240,6 +2240,24 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             }
         }
     }
+
+
+    private void playSounds(SoundSide questionAndAnswer) {
+        mSoundPlayer.playSounds(questionAndAnswer, (mp, what, extra, path) -> {
+            Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra);
+            try {
+                File file = new File(path);
+                if (!file.exists()) {
+                    mMissingImageHandler.processMissingSound(file, this::displayCouldNotFindMediaSnackbar);
+                }
+            } catch (Exception e) {
+                return false;
+            }
+
+            return false;
+        });
+    }
+
 
     /**
      * Reads the text (using TTS) for the given side of a card.
@@ -3215,14 +3233,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             super.onReceivedError(view, request, error);
-            mMissingImageHandler.processFailure(request, AbstractFlashcardViewer.this::displayCouldNotFindImageSnackbar);
+            mMissingImageHandler.processFailure(request, AbstractFlashcardViewer.this::displayCouldNotFindMediaSnackbar);
         }
 
 
         @Override
         public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
             super.onReceivedHttpError(view, request, errorResponse);
-            mMissingImageHandler.processFailure(request, AbstractFlashcardViewer.this::displayCouldNotFindImageSnackbar);
+            mMissingImageHandler.processFailure(request, AbstractFlashcardViewer.this::displayCouldNotFindMediaSnackbar);
         }
 
 
@@ -3546,7 +3564,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
-    private void displayCouldNotFindImageSnackbar(String filename) {
+    private void displayCouldNotFindMediaSnackbar(String filename) {
         OnClickListener onClickListener = (v) -> openUrl(Uri.parse(getString(R.string.link_faq_missing_media)));
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename), R.string.help, onClickListener);
     }

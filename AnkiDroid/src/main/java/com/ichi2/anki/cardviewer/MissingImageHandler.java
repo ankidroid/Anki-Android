@@ -22,6 +22,8 @@ import android.webkit.WebResourceRequest;
 
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
 
+import java.io.File;
+
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
@@ -31,7 +33,7 @@ public class MissingImageHandler {
     /** Specify a maximum number of times to display, as it's somewhat annoying */
     public static final int MAX_DISPLAY_TIMES = 2;
 
-    private int mNumberOfMissingImages = 0;
+    private int mMissingMediaCount = 0;
     private boolean mHasShownInefficientImage = false;
     private boolean mHasExecuted = false;
 
@@ -47,7 +49,7 @@ public class MissingImageHandler {
         }
 
         // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
-        if (mNumberOfMissingImages >= MAX_DISPLAY_TIMES) {
+        if (mMissingMediaCount >= MAX_DISPLAY_TIMES) {
             return;
         }
 
@@ -67,7 +69,33 @@ public class MissingImageHandler {
         try {
             String filename = URLUtil.guessFileName(url, null, null);
             onFailure.consume(filename);
-            mNumberOfMissingImages++;
+            mMissingMediaCount++;
+        } catch (Exception e) {
+            Timber.w(e, "Failed to notify UI of media failure");
+        } finally {
+            mHasExecuted = true;
+        }
+    }
+
+
+    public void processMissingSound(File file, @NonNull Consumer<String> onFailure) {
+        // We want this to trigger more than once on the same side - as the user is in control of pressing "play"
+        // and we want to provide feedback
+        if (file == null) {
+            return;
+        }
+
+        // The UX of the snackbar is annoying, as it obscures the content. Assume that if a user ignores it twice, they don't care.
+        if (mMissingMediaCount >= MAX_DISPLAY_TIMES) {
+            return;
+        }
+
+        try {
+            String fileName = file.getName();
+            onFailure.consume(fileName);
+            if (!mHasExecuted) {
+                mMissingMediaCount++;
+            }
         } catch (Exception e) {
             Timber.w(e, "Failed to notify UI of media failure");
         } finally {
