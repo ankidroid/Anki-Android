@@ -1260,7 +1260,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     new MaterialDialog.Builder(this)
                             .title(R.string.integrity_check_startup_title)
                             .content(R.string.integrity_check_startup_content)
-                            .positiveText(R.string.integrity_check_positive)
+                            .positiveText(R.string.check_db)
                             .negativeText(R.string.close)
                             .onPositive((materialDialog, dialogAction) -> integrityCheck())
                             .onNeutral((materialDialog, dialogAction) -> restartActivity())
