@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabaseLockedException;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Pair;
 
@@ -83,7 +84,6 @@ import com.ichi2.async.TaskData;
 
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
 import static com.ichi2.libanki.Collection.Previewing.*;
-import static com.ichi2.utils.CollectionUtils.addAll;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -150,26 +150,38 @@ public class Collection {
 
     public enum DismissType {
         REVIEW(R.string.undo_action_review),
-        BURY_CARD(R.string.undo_action_bury_card),
-        BURY_NOTE(R.string.undo_action_bury_note),
-        SUSPEND_CARD(R.string.undo_action_suspend_card),
-        SUSPEND_CARD_MULTI(R.string.card_browser_suspend_card),
+        BURY_CARD(R.string.menu_bury_card),
+        BURY_NOTE(R.string.menu_bury_note),
+        SUSPEND_CARD(R.string.menu_suspend_card),
+        SUSPEND_CARD_MULTI(R.string.menu_suspend_card),
         UNSUSPEND_CARD_MULTI(R.string.card_browser_unsuspend_card),
-        SUSPEND_NOTE(R.string.undo_action_suspend_note),
-        DELETE_NOTE(R.string.undo_action_delete),
-        DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
+        SUSPEND_NOTE(R.string.menu_suspend_note),
+        DELETE_NOTE(R.string.menu_delete_note),
+        DELETE_NOTE_MULTI(R.string.card_browser_delete_card),
         CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
         MARK_NOTE_MULTI(R.string.card_browser_mark_card),
         UNMARK_NOTE_MULTI(R.string.card_browser_unmark_card),
         FLAG(R.string.menu_flag),
-        REPOSITION_CARDS(R.string.undo_action_reposition_card),
-        RESCHEDULE_CARDS(R.string.undo_action_reschedule_card),
-        RESET_CARDS(R.string.undo_action_reset_card);
+        REPOSITION_CARDS(R.string.card_editor_reposition_card),
+        RESCHEDULE_CARDS(R.string.card_editor_reschedule_card),
+        RESET_CARDS(R.string.card_editor_reset_card);
 
-        public final int undoNameId;
+        private final int mUndoNameId;
 
         DismissType(int undoNameId) {
-            this.undoNameId = undoNameId;
+            this.mUndoNameId = undoNameId;
+        }
+
+        @SuppressWarnings("deprecation")
+        private Locale getLocale(Resources resources) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                return resources.getConfiguration().getLocales().get(0);
+            } else {
+                return resources.getConfiguration().locale;
+            }
+        }
+        public String getString(Resources res) {
+            return res.getString(mUndoNameId).toLowerCase(getLocale(res));
         }
     }
 
@@ -1343,7 +1355,7 @@ public class Collection {
     public String undoName(Resources res) {
         DismissType type = undoType();
         if (type != null) {
-            return res.getString(type.undoNameId);
+            return type.getString(res);
         }
         return "";
     }

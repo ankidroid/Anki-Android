@@ -75,16 +75,7 @@
     <string name="menu_import">Import</string>
     <string name="undo">Undo</string>
     <string name="undo_action_review">last review</string>
-    <string name="undo_action_bury_card">bury card</string>
-    <string name="undo_action_bury_note">bury note</string>
-    <string name="undo_action_suspend_card">suspend card</string>
-    <string name="undo_action_suspend_note">suspend note</string>
-    <string name="undo_action_delete">delete note</string>
-    <string name="undo_action_delete_multi">delete notes</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
