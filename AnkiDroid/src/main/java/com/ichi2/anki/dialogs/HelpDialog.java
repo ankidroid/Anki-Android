@@ -61,7 +61,7 @@ public class HelpDialog {
                 ),
                 new ItemHeader(R.string.help_title_support_ankidroid, R.drawable.ic_heart_black_24dp,
                         new LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, R.string.link_opencollective_donate),
-                        new LinkItem(R.string.help_item_support_translate_ankidroid, R.drawable.ic_language_black_24dp, R.string.link_translation),
+                        new LinkItem(R.string.multimedia_editor_trans_translate, R.drawable.ic_language_black_24dp, R.string.link_translation),
                         new LinkItem(R.string.help_item_support_develop_ankidroid, R.drawable.ic_build_black_24, R.string.link_ankidroid_development_guide),
                         rateAppItem,
                         new LinkItem(R.string.help_item_support_other_ankidroid, R.drawable.ic_help_black_24dp, R.string.link_contribution),
