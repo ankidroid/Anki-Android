@@ -240,15 +240,15 @@ public class Sound {
      * Plays the sounds for the indicated sides
      * @param qa -- One of SoundSide.SOUNDS_QUESTION, SoundSide.SOUNDS_ANSWER, or SoundSide.SOUNDS_QUESTION_AND_ANSWER
      */
-    public void playSounds(SoundSide qa) {
+    public void playSounds(SoundSide qa, @Nullable OnErrorListener errorListener) {
         // If there are sounds to play for the current card, start with the first one
         if (mSoundPaths != null && mSoundPaths.containsKey(qa)) {
             Timber.d("playSounds %s", qa);
-            playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null);
+            playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null, errorListener);
         } else if (mSoundPaths != null && qa == SoundSide.QUESTION_AND_ANSWER) {
             if (makeQuestionAnswerList()) {
                 Timber.d("playSounds: playing both question and answer");
-                playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null);
+                playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null, errorListener);
             } else {
                 Timber.d("playSounds: No question answer list, not playing sound");
             }
@@ -280,24 +280,31 @@ public class Sound {
      * Plays the given sound or video and sets playAllListener if available on media player to start next media
      */
     public void playSound(String soundPath, OnCompletionListener playAllListener) {
-        playSound(soundPath, playAllListener, null);
+        playSound(soundPath, playAllListener, null, null);
     }
 
     /**
      * Plays the given sound or video and sets playAllListener if available on media player to start next media.
      * If videoView is null and the media is a video, then a request is sent to start the VideoPlayer Activity
      */
-    public void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView) {
+    public void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView, @Nullable OnErrorListener errorListener) {
         Timber.d("Playing single sound");
         SingleSoundCompletionListener completionListener = new SingleSoundCompletionListener(playAllListener);
-        playSoundInternal(soundPath, completionListener, videoView);
+        playSoundInternal(soundPath, completionListener, videoView, errorListener);
     }
 
     /** Plays a sound without ensuring that the playAllListener will release the audio */
     @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements","deprecation"}) // audio API deprecation tracked on github as #5022
-    private void playSoundInternal(String soundPath, OnCompletionListener playAllListener, VideoView videoView) {
+    private void playSoundInternal(String soundPath, OnCompletionListener playAllListener, VideoView videoView, OnErrorListener errorListener) {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
         Uri soundUri = Uri.parse(soundPath);
+
+        final OnErrorListener errorHandler = errorListener == null ?
+                (mp, what, extra, path) -> {
+                    Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra);
+                    return false;
+                }
+            : errorListener;
 
         if ("tts".equals(soundPath.substring(0, 3))) {
             // TODO: give information about did
@@ -341,10 +348,7 @@ public class Sound {
                     mMediaPlayer.setDisplay(videoView.getHolder());
                     mMediaPlayer.setOnVideoSizeChangedListener((mp, width, height) -> configureVideo(videoView, width, height));
                 }
-                mMediaPlayer.setOnErrorListener((mp, what, extra) -> {
-                    Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra);
-                    return false;
-                });
+                mMediaPlayer.setOnErrorListener((mp, which, extra) -> errorHandler.onError(mp, which, extra, soundPath));
                 // Setup the MediaPlayer
                 mMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
                 mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -519,5 +523,9 @@ public class Sound {
     }
     public boolean hasAnswer() {
         return mSoundPaths.containsKey(SoundSide.ANSWER);
+    }
+
+    public interface OnErrorListener {
+        boolean onError(MediaPlayer mp, int which, int extra, String path);
     }
 }

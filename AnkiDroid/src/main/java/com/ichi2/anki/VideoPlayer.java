@@ -67,7 +67,7 @@ public class VideoPlayer extends Activity implements android.view.SurfaceHolder.
             if (originalListener != null) {
                 originalListener.onCompletion(mp);
             }
-        }, mVideoView);
+        }, mVideoView, null);
     }
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
