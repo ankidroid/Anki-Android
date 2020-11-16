@@ -2817,7 +2817,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             new MaterialDialog.Builder(deckPicker)
                     .content(R.string.confirm_cancel)
                     .positiveText(deckPicker.getResources().getString(R.string.yes))
-                    .negativeText(deckPicker.getResources().getString(R.string.no))
+                    .negativeText(deckPicker.getResources().getString(R.string.dialog_no))
                     .onNegative((x, y) -> actualOnPreExecute(deckPicker))
                     .onPositive((x, y) -> task.safeCancel()).show()
                     ;
