@@ -67,6 +67,7 @@ import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
+import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
@@ -476,7 +477,7 @@ public class SchedV2 extends AbstractSched {
         ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>();
         Decks.Node childMap = mCol.getDecks().childMap();
         for (Deck deck : decks) {
-            if (collectionTask != null && collectionTask.isCancelled()) {
+            if (isCancelled(collectionTask)) {
                 return null;
             }
             String deckName = deck.getString("name");
