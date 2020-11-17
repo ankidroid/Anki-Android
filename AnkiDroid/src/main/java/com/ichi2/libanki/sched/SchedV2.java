@@ -217,18 +217,42 @@ public class SchedV2 extends AbstractSched {
     }
 
     @Override
-    public void resetCounts() {
+    public void resetCounts(@NonNull CancelListener cancelListener) {
         resetCounts(true);
     }
 
+    public void resetCounts(boolean checkCutoff) {
+        resetCounts(null, checkCutoff);
+    }
+
+    public void resetCounts() {
+        resetCounts(null, true);
+    }
+
     /** @param checkCutoff whether we should check cutoff before resetting*/
-    private void resetCounts(boolean checkCutoff) {
+    private void resetCounts(@Nullable CancelListener cancelListener, boolean checkCutoff) {
         if (checkCutoff) {
             _updateCutoff();
         }
-        _resetLrnCount();
-        _resetRevCount();
-        _resetNewCount();
+
+        // Indicate that the counts can't be assumed to be correct since some are computed again and some not
+        // In theory it is useless, as anything that change counts should have set mHaveCounts to false
+        mHaveCounts = false;
+        _resetLrnCount(cancelListener);
+        if (isCancelled(cancelListener)) {
+            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString("name"));
+            return;
+        }
+        _resetRevCount(cancelListener);
+        if (isCancelled(cancelListener)) {
+            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString("name"));
+            return;
+        }
+        _resetNewCount(cancelListener);
+        if (isCancelled(cancelListener)) {
+            Timber.v("Cancel computing counts of deck %s", mCol.getDecks().current().getString("name"));
+            return;
+        }
         mHaveCounts = true;
     }
 
@@ -324,8 +348,11 @@ public class SchedV2 extends AbstractSched {
 
     /** new count, lrn count, rev count.  */
     public @NonNull Counts counts() {
+        return counts((CancelListener) null);
+    }
+    public @NonNull Counts counts(@Nullable CancelListener cancelListener) {
         if (!mHaveCounts) {
-            resetCounts();
+            resetCounts(cancelListener);
         }
         return new Counts (mNewCount, mLrnCount, mRevCount);
     }
@@ -427,10 +454,22 @@ public class SchedV2 extends AbstractSched {
 
 
     protected int _walkingCount(@NonNull LimitMethod limFn, @NonNull CountMethod cntFn) {
+        return _walkingCount(limFn, cntFn, null);
+    }
+
+
+    /**
+     * @param limFn Method sending a deck to the maximal number of card it can have. Normally into account both limits and cards seen today
+     * @param cntFn Method sending a deck to the number of card it has got to see today.
+     * @param cancelListener Whether the task is not useful anymore
+     * @return -1 if it's cancelled. Sum of the results of cntFn, limited by limFn,
+     */
+    protected int _walkingCount(@NonNull LimitMethod limFn, @NonNull CountMethod cntFn, @Nullable CancelListener cancelListener) {
         int tot = 0;
         HashMap<Long, Integer> pcounts = new HashMap<>();
         // for each of the active decks
         for (long did : mCol.getDecks().active()) {
+            if (isCancelled(cancelListener)) return -1;
             // get the individual deck's limit
             int lim = limFn.operation(mCol.getDecks().get(did));
             if (lim == 0) {
@@ -731,8 +770,11 @@ public class SchedV2 extends AbstractSched {
      */
 
     protected void _resetNewCount() {
+        _resetNewCount(null);
+    }
+    protected void _resetNewCount(@Nullable CancelListener cancelListener) {
         mNewCount = _walkingCount((Deck g) -> _deckNewLimitSingle(g, true),
-                                  this::_cntFnNew);
+                                  this::_cntFnNew, cancelListener);
     }
 
 
@@ -983,17 +1025,21 @@ public class SchedV2 extends AbstractSched {
 
     // Overridden: V1 has less queues
     protected void _resetLrnCount() {
+        _resetLrnCount(null);
+    }
+
+    protected void _resetLrnCount(@Nullable CancelListener cancelListener) {
         _updateLrnCutoff(true);
         // sub-day
         mLrnCount = mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit()
                 + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND id != ? AND due < ?", currentCardId(), mLrnCutoff);
-
+        if (isCancelled(cancelListener)) return;
         // day
         mLrnCount += mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? AND id != ?",
                 mToday, currentCardId());
-
+        if (isCancelled(cancelListener)) return;
         // previews
         mLrnCount += mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_PREVIEW + " AND id != ? ", currentCardId());
@@ -1510,7 +1556,11 @@ public class SchedV2 extends AbstractSched {
 
     // Overriden: V1 uses _walkingCount
     protected void _resetRevCount() {
+        _resetRevCount(null);
+    }
+    protected void _resetRevCount(@Nullable CancelListener cancelListener) {
         int lim = _currentRevLimit(true);
+        if (isCancelled(cancelListener)) return;
         mRevCount = mCol.getDb().queryScalar("SELECT count() FROM (SELECT id FROM cards WHERE did in " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? AND id != ? LIMIT ?)",
                                              mToday, currentCardId(), lim);
     }

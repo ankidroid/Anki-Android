@@ -325,12 +325,15 @@ public class Sched extends SchedV2 {
 
     @Override
     protected void _resetLrnCount() {
+        _resetLrnCount(null);
+    }
+    protected void _resetLrnCount(@Nullable CancelListener cancelListener) {
         // sub-day
         mLrnCount = mCol.getDb().queryScalar(
                 "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did IN " + _deckLimit()
                 + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? and id != ? LIMIT ?)",
                 mDayCutoff, currentCardId(), mReportLimit);
-
+        if (isCancelled(cancelListener)) return;
         // day
         mLrnCount += mCol.getDb().queryScalar(
                 "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? "+
@@ -646,8 +649,11 @@ public class Sched extends SchedV2 {
 
     @Override
     protected void _resetRevCount() {
+        _resetRevCount(null);
+    }
+    protected void _resetRevCount(@Nullable CancelListener cancelListener) {
         mRevCount = _walkingCount(d -> _deckRevLimitSingle(d, true),
-                                  this::_cntFnRev);
+                                  this::_cntFnRev, cancelListener);
     }
 
 
