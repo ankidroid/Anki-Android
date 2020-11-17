@@ -16,7 +16,17 @@
 
 package com.ichi2.async;
 
+import androidx.annotation.Nullable;
+
 @FunctionalInterface
 public interface CancelListener {
     boolean isCancelled();
+
+    /**
+     * @param cancelListener Either null or a cancel listener
+     * @return whether the listener exists and is cancelled
+     */
+    static boolean isCancelled(@Nullable CancelListener cancelListener) {
+        return cancelListener != null && cancelListener.isCancelled();
+    }
 }
