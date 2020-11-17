@@ -82,6 +82,7 @@ import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
 
+import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
 import static com.ichi2.libanki.Collection.Previewing.*;
 
@@ -790,7 +791,7 @@ public class Collection {
         HashMap<Long, Long> dues = new HashMap<>();
         try (Cursor cur = mDb.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids)) {
             while (cur.moveToNext()) {
-                if (task != null && task.isCancelled()) {
+                if (isCancelled(task)) {
                     Timber.v("Empty card cancelled");
                     return null;
                 }
@@ -829,7 +830,7 @@ public class Collection {
         int usn = usn();
         try (Cursor cur = mDb.query("SELECT id, flds FROM notes WHERE id IN " + snids)) {
             while (cur.moveToNext()) {
-                if (task != null && task.isCancelled()) {
+                if (isCancelled(task)) {
                     Timber.v("Empty card cancelled");
                     return null;
                 }

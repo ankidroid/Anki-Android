@@ -54,6 +54,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 
+import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
@@ -217,7 +218,7 @@ public class Sched extends SchedV2 {
         HashMap<String, Integer[]> lims = new HashMap<>();
         ArrayList<DeckDueTreeNode> deckNodes = new ArrayList<>();
         for (Deck deck : decks) {
-            if (cancelListener != null && cancelListener.isCancelled()) {
+            if (isCancelled(cancelListener)) {
                 return null;
             }
             String deckName = deck.getString("name");

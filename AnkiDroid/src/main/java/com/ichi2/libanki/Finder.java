@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import timber.log.Timber;
 
+import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
@@ -113,7 +114,7 @@ public class Finder {
         boolean sendProgress = task != null;
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
-                if (task != null && task.isCancelled()) {
+                if (isCancelled(task)) {
                     return new ArrayList<>();
                 }
                 res.add(cur.getLong(0));
