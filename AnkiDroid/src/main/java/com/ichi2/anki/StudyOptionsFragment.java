@@ -83,6 +83,10 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     /** Alerts to inform the user about different situations */
     private MaterialDialog mProgressDialog;
 
+    /** Whether we are closing in order to go to the reviewer. If it's the case, UPDATE_VALUES_FROM_DECK should not be
+     cancelled as the counts will be used in review. */
+    private boolean mToReviewer = false;
+
     /**
      * UI elements for "Study Options" view
      */
@@ -235,6 +239,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
     private void openReviewer() {
         Intent reviewer = new Intent(getActivity(), Reviewer.class);
         if (mFragmented) {
+            mToReviewer = true;
             getActivity().startActivityForResult(reviewer, AnkiActivity.REQUEST_REVIEW);
         } else {
             // Go to DeckPicker after studying when not tablet
@@ -508,6 +513,7 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
      */
     protected void refreshInterface(boolean resetSched, boolean resetDecklist) {
         Timber.d("Refreshing StudyOptionsFragment");
+        CollectionTask.cancelAllTasks(UPDATE_VALUES_FROM_DECK);
         // Load the deck counts for the deck from Collection asynchronously
         CollectionTask.launchCollectionTask(UPDATE_VALUES_FROM_DECK, getCollectionTaskListener(resetDecklist),
                 new TaskData(new Object[]{resetSched}));
@@ -697,5 +703,16 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
 
     private Collection getCol() {
         return CollectionHelper.getInstance().getCol(getContext());
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!mToReviewer) {
+            // In the reviewer, we need the count. So don't cancel it. Otherwise, (e.g. go to browser, selecting another
+            // deck) cancel counts.
+            CollectionTask.cancelAllTasks(UPDATE_VALUES_FROM_DECK);
+        }
     }
 }

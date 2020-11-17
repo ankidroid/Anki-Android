@@ -62,6 +62,7 @@ public abstract class AbstractSched {
 
     /** Recompute the counts of the currently selected deck. */
     public abstract void resetCounts();
+    public abstract void resetCounts(CancelListener cancelListener);
 
     /** Ensure that reset will be called before returning any card or count. */
     public abstract void deferReset();
@@ -127,6 +128,7 @@ public abstract class AbstractSched {
      * @param card A card that should be added to the count result.
      * @return same array as counts(), apart that Card is added*/
     public abstract @NonNull Counts counts(@NonNull Card card);
+    public abstract @NonNull Counts counts(@NonNull CancelListener cancelListener);
 
     /**
      * @param days A number of day

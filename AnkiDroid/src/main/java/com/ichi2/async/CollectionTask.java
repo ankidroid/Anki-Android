@@ -1364,11 +1364,15 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             boolean reset = (Boolean) obj[0];
             if (reset) {
                 // reset actually required because of counts, which is used in getCollectionTaskListener
-                sched.resetCounts();
+                sched.resetCounts(this);
             }
-            Counts counts = sched.counts();
+            Counts counts = sched.counts(this);
             int totalNewCount = sched.totalNewForCurrentDeck();
             int totalCount = sched.cardCount();
+            if (isCancelled()) {
+                Timber.d("Update values from deck is cancelled");
+                return null;
+            }
             return new TaskData(new Object[]{counts.getNew(), counts.getLrn(), counts.getRev(), totalNewCount,
                     totalCount, sched.eta(counts)});
         } catch (RuntimeException e) {
