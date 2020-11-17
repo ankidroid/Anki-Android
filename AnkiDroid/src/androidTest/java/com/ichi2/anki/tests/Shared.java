@@ -128,7 +128,16 @@ public class Shared {
         if (!dir.exists()) {
             assertTrue(dir.mkdir());
         }
-        for (File f : dir.listFiles()) {
+        File[] files = dir.listFiles();
+        if (files == null) {
+            // Had this problem on an API 16 emulator after a stress test - directory existed
+            // but listFiles() returned null due to EMFILE (Too many open files)
+            // Don't throw here - later file accesses will provide a better exception.
+            // and the directory exists, even if it's unusable.
+            return dir;
+        }
+
+        for (File f : files) {
             assertTrue(f.delete());
         }
         return dir;
