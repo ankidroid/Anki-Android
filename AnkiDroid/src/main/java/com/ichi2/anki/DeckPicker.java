@@ -307,7 +307,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-        private final ImportAddListener mImportAddListener = new ImportAddListener(this);
+    private final ImportAddListener mImportAddListener = new ImportAddListener(this);
     private static class ImportAddListener extends TaskListenerWithContext<DeckPicker> {
         public ImportAddListener(DeckPicker deckPicker) {
             super(deckPicker);
