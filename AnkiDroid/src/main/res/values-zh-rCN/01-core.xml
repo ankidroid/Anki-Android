@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">是</string>
-    <string name="no">否</string>
     <!-- Navigation drawer items-->
     <string name="decks">牌组</string>
-    <string name="card_browser">卡片浏览器</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">卡片浏览器</string>
     <string name="statistics">统计</string>
     <string name="settings">设置</string>
     <string name="help">帮助</string>
@@ -86,29 +85,20 @@
     <string name="menu_import">导入牌组</string>
     <string name="undo">撤销</string>
     <string name="undo_action_review">上次复习</string>
-    <string name="undo_action_bury_card">隐藏卡片</string>
-    <string name="undo_action_bury_note">隐藏笔记</string>
-    <string name="undo_action_suspend_card">暂停卡片</string>
-    <string name="undo_action_suspend_note">暂停笔记</string>
-    <string name="undo_action_delete">删除笔记</string>
-    <string name="undo_action_delete_multi">删除卡牌记录</string>
     <string name="undo_action_change_deck_multi">更换牌组</string>
-    <string name="undo_action_reschedule_card">重新安排学习进度</string>
-    <string name="undo_action_reset_card">重设学习进度</string>
-    <string name="undo_action_reposition_card">更改位置</string>
     <string name="move_all_to_deck">将所有移动至牌组</string>
-    <string name="unbury">取消隐藏</string>
+    <string name="unbury">取消搁置</string>
     <string name="rename_deck">重命名</string>
     <string name="create_shortcut">创建快捷方式</string>
-    <string name="menu_add">添加</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">添加</string>
     <string name="menu_add_note">添加笔记</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帐户</string>
     <string name="menu_dismiss_note">隐藏/删除</string>
     <string name="menu_bury_card">隐藏卡片</string>
-    <string name="menu_bury_note">隐藏笔记</string>
+    <string name="menu_bury_note">搁置笔记</string>
     <string name="menu_suspend_card">暂停卡片</string>
     <string name="menu_suspend_note">暂停笔记</string>
-    <string name="menu_bury">隐藏</string>
+    <string name="menu_bury">搁置</string>
     <string name="menu_suspend">暂停</string>
     <string name="menu_delete_note">删除笔记</string>
     <string name="menu_flag">标志</string>
@@ -202,6 +192,6 @@
     <string name="read_write_permission_label">读取并写入 AnkiDroid 数据库</string>
     <string name="read_write_permission_description">浏览现有的笔记、 卡片、 笔记类型和牌组，或者自己动手创建新的~</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">卡牌浏览器</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">卡牌浏览器</string>
     <string name="context_menu_anki_card_label">Anki 卡</string>
 </resources>

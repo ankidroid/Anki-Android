@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">так</string>
-    <string name="no">не</string>
     <!-- Navigation drawer items-->
     <string name="decks">Калоды</string>
-    <string name="card_browser">Браўзер картак</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Браўзер картак</string>
     <string name="statistics">Статыстыка</string>
     <string name="settings">Налады</string>
     <string name="help">Дапамога</string>
@@ -101,21 +100,12 @@
     <string name="menu_import">Імпарт</string>
     <string name="undo">Адмяніць</string>
     <string name="undo_action_review">апошняе паўтарэнне</string>
-    <string name="undo_action_bury_card">адкласці картку</string>
-    <string name="undo_action_bury_note">адкласці нататку</string>
-    <string name="undo_action_suspend_card">прыпыніць картку</string>
-    <string name="undo_action_suspend_note">прыпыніць нататку</string>
-    <string name="undo_action_delete">выдаліць нататку</string>
-    <string name="undo_action_delete_multi">выдаліць нататкі</string>
     <string name="undo_action_change_deck_multi">змяніць калоды</string>
-    <string name="undo_action_reschedule_card">змяніць расклад</string>
-    <string name="undo_action_reset_card">скінуць дасягненні</string>
-    <string name="undo_action_reposition_card">перамясціць</string>
     <string name="move_all_to_deck">Перамясціць усё ў калоду</string>
     <string name="unbury">Паказаць</string>
     <string name="rename_deck">Перайменаваць калоду</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Дадаць</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Дадаць</string>
     <string name="menu_add_note">Дадаць нататку</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Сінхранізаваць уліковы запіс</string>
     <string name="menu_dismiss_note">Схаваць / выдаліць</string>
@@ -220,6 +210,6 @@
     <string name="read_write_permission_label">Чытанне і запіс у базу даных AnkiDroid</string>
     <string name="read_write_permission_description">доступ да бягучых нататак, картак, тыпаў нататак і калод, а таксама стварэнне новых</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Агляднік карт</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Агляднік карт</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

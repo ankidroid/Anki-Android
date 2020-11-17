@@ -47,7 +47,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">حذف نوع الملحوظة</string>
-    <string name="model_browser_rename">إعادة التسمية</string>
+    <string name="model_browser_rename" comment="Rename a note type">إعادة التسمية</string>
     <string name="model_browser_template">تحرير البطاقات</string>
     <string name="model_browser_add">إضافة نوع ملحوظة</string>
     <!--Rename-->

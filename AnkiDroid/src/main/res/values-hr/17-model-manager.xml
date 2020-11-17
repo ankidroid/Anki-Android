@@ -41,7 +41,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Izbriši vrstu bilješki</string>
-    <string name="model_browser_rename">Preimenuj</string>
+    <string name="model_browser_rename" comment="Rename a note type">Preimenuj</string>
     <string name="model_browser_template">Uredi kartice</string>
     <string name="model_browser_add">Dodaj vrstu bilješki</string>
     <!--Rename-->

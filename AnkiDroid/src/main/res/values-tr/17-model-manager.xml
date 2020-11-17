@@ -39,7 +39,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Not türünü sil</string>
-    <string name="model_browser_rename">Adını değiştir</string>
+    <string name="model_browser_rename" comment="Rename a note type">Adını değiştir</string>
     <string name="model_browser_template">Kartları düzenle</string>
     <string name="model_browser_add">Not türü ekle</string>
     <!--Rename-->

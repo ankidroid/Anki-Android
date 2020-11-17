@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Leersets</string>
-    <string name="card_browser">Kaartenoverzicht</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kaartenoverzicht</string>
     <string name="statistics">Statistieken</string>
     <string name="settings">Instellingen</string>
     <string name="help">Help</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">Kaarten importeren</string>
     <string name="undo">Ongedaan maken</string>
     <string name="undo_action_review">laatste overhoring</string>
-    <string name="undo_action_bury_card">verberg kaart</string>
-    <string name="undo_action_bury_note">verberg memo</string>
-    <string name="undo_action_suspend_card">kaart opschorten</string>
-    <string name="undo_action_suspend_note">blokkeer memo</string>
-    <string name="undo_action_delete">memo verwijderen</string>
-    <string name="undo_action_delete_multi">notities verwijderen</string>
     <string name="undo_action_change_deck_multi">leersets wijzigen</string>
-    <string name="undo_action_reschedule_card">opnieuw inplannen</string>
-    <string name="undo_action_reset_card">leervoortgang herstellen</string>
-    <string name="undo_action_reposition_card">verplaatsen</string>
     <string name="move_all_to_deck">Alles verplaatsen naar leerset</string>
     <string name="unbury">Opgraven</string>
     <string name="rename_deck">Leerset hernoemen</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Toevoegen</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Toevoegen</string>
     <string name="menu_add_note">Memo toevoegen</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Account synchroniseren</string>
     <string name="menu_dismiss_note">Verbergen / Verwijderen</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">Lees en schrijf naar de AnkiDroid database</string>
     <string name="read_write_permission_description">toegang tot bestaande notities, kaarten, notitietypen en dekken (ook nieuwe maken)</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Kaartenbrowser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kaartenbrowser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

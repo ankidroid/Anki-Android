@@ -262,7 +262,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Alinomi</string>
     <string name="deck_conf_reset">Restarigi normojn</string>
     <string name="deck_conf_reset_message">Ĉu restarigi la nunan grupon de agordoj al implicitaj valoroj?</string>
-    <string name="deck_conf_add">Aldoni</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Aldoni</string>
     <string name="deck_conf_add_summ">Krei kopion de la nuna grupo de agordoj</string>
     <string name="deck_conf_remove_message">Ĉu forigi la nunan grupon de agordoj?</string>
     <string name="deck_conf_set_subdecks">Agordi por ĉiuj subkartaroj</string>
@@ -286,4 +286,6 @@
     <string name="analytics_dialog_title">Helpu, ke AnkiDroid fariĝos pli bona!</string>
     <string name="analytics_title">Kunhavigi uzadon de funkcioj</string>
     <string name="analytics_summ">Vi povas kontribui al AnkiDroid per helpi al la disvovla teamo scii kiujn funkciojn homoj uzas</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Verberg het schrijfbord</string>
     <string name="clear_whiteboard">Schrijfbord schoonvegen</string>
     <string name="replay_audio">Audio herhalen</string>
-    <string name="toggle_mic_tool_bar">Uitspraak controleren</string>
     <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
     <string name="leech_notification">Kaart gemarkeerd als moeilijk</string>
     <string name="corrupt_font">Beschadigd lettertypebestand %s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">Beoordeel AnkiDroid</string>
     <string name="import_title">Importeren</string>
     <string name="import_select_title">Kies een bestand om te importeren</string>
-    <string name="import_message_add">Toevoegen</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Toevoegen</string>
     <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
     <string name="import_message_add_confirm">“%s” aan de collectie toevoegen? Dit kan lang duren</string>
     <string name="import_log_no_apkg">Dit is geen geldig Anki-pakketbestand</string>

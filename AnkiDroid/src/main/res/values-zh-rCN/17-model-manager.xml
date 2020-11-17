@@ -37,7 +37,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">删除笔记类型</string>
-    <string name="model_browser_rename">重命名</string>
+    <string name="model_browser_rename" comment="Rename a note type">重命名</string>
     <string name="model_browser_template">编辑卡片</string>
     <string name="model_browser_add">添加笔记类型</string>
     <!--Rename-->

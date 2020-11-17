@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Палуби</string>
-    <string name="card_browser">Прелистувач на карти</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Прелистувач на карти</string>
     <string name="statistics">Статистики</string>
     <string name="settings">Поставки</string>
     <string name="help">Помош</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">Увези</string>
     <string name="undo">Врати</string>
     <string name="undo_action_review">последен преглед</string>
-    <string name="undo_action_bury_card">закопа картичка</string>
-    <string name="undo_action_bury_note">закопајте белешка</string>
-    <string name="undo_action_suspend_card">суспендирање на картичка</string>
-    <string name="undo_action_suspend_note">суспендирање на картичка</string>
-    <string name="undo_action_delete">бриши белешка</string>
-    <string name="undo_action_delete_multi">бриши белешка</string>
     <string name="undo_action_change_deck_multi">смени шпил</string>
-    <string name="undo_action_reschedule_card">презакажи</string>
-    <string name="undo_action_reset_card">Избриши го напредокот</string>
-    <string name="undo_action_reposition_card">премести</string>
     <string name="move_all_to_deck">Премести сите во шпил</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Преименувај палубата</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Додави</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Додави</string>
     <string name="menu_add_note">Додави забелешка</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Синхронизирајте сметка</string>
     <string name="menu_dismiss_note">Скриј / избриши</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">Читајте и пишувајте на базата на податоци на AnkiDroid</string>
     <string name="read_write_permission_description">да пристапите до постоечките белешки, картички, типови белешки и decks, како и креирање нови</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Пребарувач на карти</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Пребарувач на карти</string>
     <string name="context_menu_anki_card_label">Анки карта</string>
 </resources>

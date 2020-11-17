@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">כן</string>
-    <string name="no">לא</string>
     <!-- Navigation drawer items-->
     <string name="decks">חפיסות</string>
-    <string name="card_browser">דפדוף בכרטיסים</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">דפדוף בכרטיסים</string>
     <string name="statistics">סטטיסטיקה</string>
     <string name="settings">הגדרות</string>
     <string name="help">עזרה</string>
@@ -102,21 +101,12 @@
     <string name="menu_import">ייבוא</string>
     <string name="undo">ביטול</string>
     <string name="undo_action_review">שינון אחרון</string>
-    <string name="undo_action_bury_card">דילוג על כרטיס</string>
-    <string name="undo_action_bury_note">דילוג על רשומה</string>
-    <string name="undo_action_suspend_card">הקפאת כרטיס</string>
-    <string name="undo_action_suspend_note">הקפאת רשומה</string>
-    <string name="undo_action_delete">מחיקת רשומה</string>
-    <string name="undo_action_delete_multi">מחיקת רשומות</string>
     <string name="undo_action_change_deck_multi">החלפת חפיסות</string>
-    <string name="undo_action_reschedule_card">תזמן מחדש</string>
-    <string name="undo_action_reset_card">איפוס התקדמות</string>
-    <string name="undo_action_reposition_card">מיקום מחדש</string>
     <string name="move_all_to_deck">העברת הכול לחפיסה</string>
     <string name="unbury">ביטול דילוג</string>
     <string name="rename_deck">שינוי שם חפיסה</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">הוספה</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">הוספה</string>
     <string name="menu_add_note">הוספת רשומה</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">סנכרון חשבון</string>
     <string name="menu_dismiss_note">הסתרה / מחיקה</string>
@@ -221,6 +211,6 @@
     <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
     <string name="read_write_permission_description">תן לאפליקציה גישה להערות, כרטיסים, סוגי הערות, וחפיסות, וכן גישה ליצור חדשים</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">דפדפן הכרטיסים</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">דפדפן הכרטיסים</string>
     <string name="context_menu_anki_card_label">כרטיס Anki</string>
 </resources>

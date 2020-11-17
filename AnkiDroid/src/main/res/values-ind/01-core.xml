@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Dek</string>
-    <string name="card_browser">Peramban kartu</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Peramban kartu</string>
     <string name="statistics">Statistik</string>
     <string name="settings">Pengaturan</string>
     <string name="help">Bantuan</string>
@@ -86,21 +85,12 @@
     <string name="menu_import">Impor</string>
     <string name="undo">Urungkan</string>
     <string name="undo_action_review">ulasan terakhir</string>
-    <string name="undo_action_bury_card">pendam kartu</string>
-    <string name="undo_action_bury_note">pendam catatan</string>
-    <string name="undo_action_suspend_card">tangguhkan kartu</string>
-    <string name="undo_action_suspend_note">tangguhkan catatan</string>
-    <string name="undo_action_delete">hapus catatan</string>
-    <string name="undo_action_delete_multi">hapus catatan</string>
     <string name="undo_action_change_deck_multi">ganti dek</string>
-    <string name="undo_action_reschedule_card">jadwalkan ulang</string>
-    <string name="undo_action_reset_card">reset kemajuan</string>
-    <string name="undo_action_reposition_card">pindah posisi</string>
     <string name="move_all_to_deck">Pindahkan semua ke dek</string>
     <string name="unbury">Angkat</string>
     <string name="rename_deck">Ubah nama dek</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Tambah</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Tambah</string>
     <string name="menu_add_note">Tambah catatan</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinkronisasi akun</string>
     <string name="menu_dismiss_note">Sembunyikan / hapus</string>
@@ -202,6 +192,6 @@
     <string name="read_write_permission_label">Baca dan tulis ke basisdata AnkiDroid</string>
     <string name="read_write_permission_description">mengakses catatan yang ada, kartu, tipe catatan, dan dek, serta membuat yang baru</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Peramban Kartu</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Peramban Kartu</string>
     <string name="context_menu_anki_card_label">Kartu Anki</string>
 </resources>

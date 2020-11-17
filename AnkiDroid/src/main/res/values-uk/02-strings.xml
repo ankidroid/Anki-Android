@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Заховати дошку</string>
     <string name="clear_whiteboard">Очистити дошку</string>
     <string name="replay_audio">Повторити звук</string>
-    <string name="toggle_mic_tool_bar">Перевірити вимову</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
     <string name="leech_notification">Картку позначено як набридливу</string>
     <string name="corrupt_font">Пошкоджений файл шрифтів %s</string>
@@ -162,7 +161,7 @@
     <string name="info_rate">Оцініть AnkiDroid</string>
     <string name="import_title">Імпортування</string>
     <string name="import_select_title">Виберіть файл для імпорту</string>
-    <string name="import_message_add">Додати</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додати</string>
     <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
     <string name="import_message_add_confirm">Додати \"%s\" до колекції? Це може зайняти багато часу</string>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>

@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Rajztábla elrejtése</string>
     <string name="clear_whiteboard">Rajztábla törlése</string>
     <string name="replay_audio">Hang ismétlés</string>
-    <string name="toggle_mic_tool_bar">Kiejtés ellenőrzése</string>
     <string name="leech_suspend_notification">Kártya megjelölve piócaként és felfüggesztésre került</string>
     <string name="leech_notification">Kártya megjelölve piócaként</string>
     <string name="corrupt_font">Sérült font fájl %s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">AnkiDroid értékelése</string>
     <string name="import_title">Importálás</string>
     <string name="import_select_title">Válassz egy importálandó fájlt</string>
-    <string name="import_message_add">Hozzáadás</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hozzáadás</string>
     <string name="import_message_replace_confirm">Ez a művelet törölni fogja a már meglévő gyűjteményed és lecseréli a %s fájl tartalmával. Biztos vagy benne?</string>
     <string name="import_message_add_confirm">\"%s\"-t felvenni a gyűjteménybe hosszú ideig tarthat</string>
     <string name="import_log_no_apkg">Ez nem egy érvényes Anki csomag fájl</string>

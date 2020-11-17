@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Desteler</string>
-    <string name="card_browser">Kart Tarayıcısı</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kart Tarayıcısı</string>
     <string name="statistics">İstatistikler</string>
     <string name="settings">Ayarlar</string>
     <string name="help">Yardım</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">İçeri aktar</string>
     <string name="undo">Geri Al</string>
     <string name="undo_action_review">Son çalışmayı</string>
-    <string name="undo_action_bury_card">Kart gizlemeyi</string>
-    <string name="undo_action_bury_note">Not gizlemeyi</string>
-    <string name="undo_action_suspend_card">Kart askıya almayı</string>
-    <string name="undo_action_suspend_note">Not askıya almayı</string>
-    <string name="undo_action_delete">Not silmeyi</string>
-    <string name="undo_action_delete_multi">Not silmeyi</string>
     <string name="undo_action_change_deck_multi">Deste değiştirmeyi</string>
-    <string name="undo_action_reschedule_card">Zaman değiştirmeyi</string>
-    <string name="undo_action_reset_card">İlerleme sıfırlamayı</string>
-    <string name="undo_action_reposition_card">Yer değiştirmeyi</string>
     <string name="move_all_to_deck">Bir paket kartın hepsini taşı</string>
     <string name="unbury">Görünür Yap</string>
     <string name="rename_deck">Destenin adını değiştir</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Ekle</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Ekle</string>
     <string name="menu_add_note">Not ekle</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Senkronizasyon hesabı</string>
     <string name="menu_dismiss_note">Gizle / Sil</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">AnkiDroid veritabanını oku ve yaz</string>
     <string name="read_write_permission_description">varolan notlara, kartlara, not türlerine ve destelere erişmek, ve yenilerini oluşturmek</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

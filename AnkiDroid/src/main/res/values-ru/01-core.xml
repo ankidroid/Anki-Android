@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">Да</string>
-    <string name="no">Нет</string>
     <!-- Navigation drawer items-->
     <string name="decks">Колоды</string>
-    <string name="card_browser">Список карточек</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Список карточек</string>
     <string name="statistics">Статистика</string>
     <string name="settings">Настройки</string>
     <string name="help">Помощь</string>
@@ -101,21 +100,12 @@
     <string name="menu_import">Импортировать</string>
     <string name="undo">Отменить</string>
     <string name="undo_action_review">последнее повторение</string>
-    <string name="undo_action_bury_card">отложить карточку</string>
-    <string name="undo_action_bury_note">отложить запись</string>
-    <string name="undo_action_suspend_card">исключить карточку</string>
-    <string name="undo_action_suspend_note">исключить запись</string>
-    <string name="undo_action_delete">удалить запись</string>
-    <string name="undo_action_delete_multi">удалить записи</string>
     <string name="undo_action_change_deck_multi">сменить колоды</string>
-    <string name="undo_action_reschedule_card">перепланировать</string>
-    <string name="undo_action_reset_card">сбросить прогресс</string>
-    <string name="undo_action_reposition_card">переместить</string>
     <string name="move_all_to_deck">Переместить всё в колоду</string>
     <string name="unbury">Вернуть</string>
     <string name="rename_deck">Переименовать колоду</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Добавить</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Добавить</string>
     <string name="menu_add_note">Добавить запись</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Учётная запись синхронизации</string>
     <string name="menu_dismiss_note">Спрятать или удалить</string>
@@ -220,6 +210,6 @@
     <string name="read_write_permission_label">Чтение и запись в базу данных AnkiDroid</string>
     <string name="read_write_permission_description">доступ к колодам, карточкам, записям, их типам, а также создание новых</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Список карточек</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Список карточек</string>
     <string name="context_menu_anki_card_label">Карточка Anki</string>
 </resources>

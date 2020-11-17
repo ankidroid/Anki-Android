@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Скрий бялатадъска</string>
     <string name="clear_whiteboard">Изчисти бялатадъска</string>
     <string name="replay_audio">Аудиото отново</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Карта, маркирана като залепена и спряна</string>
     <string name="leech_notification">Карта, маркирана като залепена</string>
     <string name="corrupt_font">Повреден шрифт %s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">Оцени AnkiDroid</string>
     <string name="import_title">Внасяне</string>
     <string name="import_select_title">Изберете файл за импортиране</string>
-    <string name="import_message_add">Добави</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добави</string>
     <string name="import_message_replace_confirm">Това ще изтрие вашата съществуваща колекция и ще я замени с данните от файла %s</string>
     <string name="import_message_add_confirm">Добавяне на \"%s\" към колекцията? Това може да отнеме дълго време</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>

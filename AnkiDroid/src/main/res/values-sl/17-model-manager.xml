@@ -43,7 +43,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Izbriši vrsto zapiskov</string>
-    <string name="model_browser_rename">Preimenuj</string>
+    <string name="model_browser_rename" comment="Rename a note type">Preimenuj</string>
     <string name="model_browser_template">Uredi kartice</string>
     <string name="model_browser_add">Dodaj vrsto zapiskov</string>
     <!--Rename-->

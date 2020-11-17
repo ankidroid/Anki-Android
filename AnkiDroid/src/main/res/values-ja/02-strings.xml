@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">ホワイトボードを隠す</string>
     <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
     <string name="replay_audio">音声・動画を再生</string>
-    <string name="toggle_mic_tool_bar">発音を確認</string>
     <string name="leech_suspend_notification">このカードは \"leech\" （無駄） というタグが付けられ、保留されました</string>
     <string name="leech_notification">このカードに \"leech\" （無駄） というタグを付けました</string>
     <string name="corrupt_font">使用できないフォントファイル %s</string>
@@ -153,7 +152,7 @@
     <string name="info_rate">このアプリを評価</string>
     <string name="import_title">インポート</string>
     <string name="import_select_title">インポートするファイルを選択</string>
-    <string name="import_message_add">追加</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
     <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？　処理に時間がかかる可能性があります。</string>
     <string name="import_log_no_apkg">これは読み込み可能なAnkiパーッケージファイル（*.apkg）ではありません</string>

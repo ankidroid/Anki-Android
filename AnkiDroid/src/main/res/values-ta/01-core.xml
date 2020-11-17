@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">அடுக்குகள்</string>
-    <string name="card_browser">அட்டை உலாவி</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">அட்டை உலாவி</string>
     <string name="statistics">புள்ளிவிவரங்கள்</string>
     <string name="settings">அமைப்புகள்</string>
     <string name="help">உதவி</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">இறக்குமதி</string>
     <string name="undo">செயல்தவிர்ப்பது </string>
     <string name="undo_action_review">கடைசி மதிப்பாய்வு</string>
-    <string name="undo_action_bury_card">அட்டை அடங்கும்</string>
-    <string name="undo_action_bury_note">குறிப்பு அடங்கும்</string>
-    <string name="undo_action_suspend_card">கார்டை நிறுத்து</string>
-    <string name="undo_action_suspend_note">குறிப்பு நிறுத்து</string>
-    <string name="undo_action_delete">குறிப்பு நீக்கவும்</string>
-    <string name="undo_action_delete_multi">delete notes</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">புதைத்து வைக்காதே</string>
     <string name="rename_deck">மறுபெயரிடு</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">கூட்டு</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">கூட்டு</string>
     <string name="menu_add_note">குறிப்பு சேர்க்க</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ஒத்திசைக்க</string>
     <string name="menu_dismiss_note">மறைக்க/அழி</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">AnkiDroid டேட்டாபேஸ் எழுதப்</string>
     <string name="read_write_permission_description">தற்போதுள்ள குறிப்புகள், அட்டைகள், குறிப்பு வகைகள் மற்றும் அடுக்குகள் அணுக, அத்துடன் புதிய ஒன்றை உருவாக்க</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

@@ -39,7 +39,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
-    <string name="model_browser_rename">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
+    <string name="model_browser_rename" comment="Rename a note type">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
     <string name="model_browser_template">ᱠᱟᱰ ᱠᱚ ᱥᱟᱯᱰᱟᱣ</string>
     <string name="model_browser_add">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <!--Rename-->

@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">دسته ها</string>
-    <string name="card_browser">مرورگر کارت</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">مرورگر کارت</string>
     <string name="statistics">آمار</string>
     <string name="settings">تنظیمات</string>
     <string name="help">راهنما</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">وارد کردن</string>
     <string name="undo">بازگردانی</string>
     <string name="undo_action_review">آخرین بازنگری</string>
-    <string name="undo_action_bury_card">مخفی کردن کارت</string>
-    <string name="undo_action_bury_note">مخفی کردن یادداشت</string>
-    <string name="undo_action_suspend_card">تعلیق کارت</string>
-    <string name="undo_action_suspend_note">تعلیق یادداشت</string>
-    <string name="undo_action_delete">حذف یادداشت</string>
-    <string name="undo_action_delete_multi">حذف یادداشت‌ها</string>
     <string name="undo_action_change_deck_multi">تغییر دسته‌ها</string>
-    <string name="undo_action_reschedule_card">زمانبندی مجدد</string>
-    <string name="undo_action_reset_card">بازنشانی پیشرفت</string>
-    <string name="undo_action_reposition_card">تغییر مکان</string>
     <string name="move_all_to_deck">انتقال همه به دسته</string>
     <string name="unbury">خروج از حالت مخفی</string>
     <string name="rename_deck">تغییر نام دسته</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">افزودن</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">افزودن</string>
     <string name="menu_add_note">افزودن یادداشت</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">همگام سازی حساب</string>
     <string name="menu_dismiss_note">پنهان/حذف کردن</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">خواندن و نوشتن داده‌ها روی دیتابیس AnkiDroid</string>
     <string name="read_write_permission_description">قابلیت دسترسی و ویرایش یادداشت‌ها، کارت‌ها، نوع یادداشت‌ها، و دسته‌ها</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">مرورگر کارت</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">مرورگر کارت</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

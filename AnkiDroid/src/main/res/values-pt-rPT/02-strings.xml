@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Esconder quadro</string>
     <string name="clear_whiteboard">Limpar quadro</string>
     <string name="replay_audio">Repetir áudio</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Ficha marcada como sanguessuga e suspensa</string>
     <string name="leech_notification">Ficha marcada como sanguessuga</string>
     <string name="corrupt_font">Ficheiro de tipo de letra %s corrompido</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">Classificar AnkiDroid</string>
     <string name="import_title">A importar</string>
     <string name="import_select_title">Escolha um ficheiro para importar</string>
-    <string name="import_message_add">Adicionar</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adicionar</string>
     <string name="import_message_replace_confirm">Isto irá apagar a sua coleção existente substituindo-a pelos dados do ficheiro %s</string>
     <string name="import_message_add_confirm">Adicionar \"%s\" à coleção? Isto poderá demorar bastante tempo</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>

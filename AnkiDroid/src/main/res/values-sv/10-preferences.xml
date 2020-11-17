@@ -262,7 +262,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Byt namn</string>
     <string name="deck_conf_reset">Återställ standardinställningar</string>
     <string name="deck_conf_reset_message">Återställ nuvarande konfigurationsgrupp till standardinställningar?</string>
-    <string name="deck_conf_add">Lägg till konfiguration</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Lägg till konfiguration</string>
     <string name="deck_conf_add_summ">Skapa en kopia av den aktuella konfigurationsgruppen</string>
     <string name="deck_conf_remove_message">Radera aktuell konfigurationsgrupp?</string>
     <string name="deck_conf_set_subdecks">Ställ in för alla underkortlekar</string>
@@ -286,4 +286,6 @@
     <string name="analytics_dialog_title">Hjälp till att förbättra AnkiDroid!</string>
     <string name="analytics_title">Dela funktionsanvändning</string>
     <string name="analytics_summ">Du kan bidra till AnkiDroid genom att hjälpa utvecklingslaget se vilka funktioner som används</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

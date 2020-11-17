@@ -166,7 +166,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Diperbarui</string>
     <string name="integrity_check_startup_content">AnkiDroid Diperbarui. Pembaruan ini meliputi perbaikan masalah basisdata, dan kami sarankan untuk memeriksa basisdata sekarang</string>
-    <string name="integrity_check_positive">Periksa Basisdata</string>
     <string name="integrity_check_continue_anyway">Tetap lanjutkan</string>
     <string name="integrity_check_insufficient_space">Memeriksa Basisdata memerlukan jumlah penyimpanan sementara yang besar.\n\nSangat disarankan untuk memiliki setidaknya %s ruang kosong sebelum melanjutkan.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nKamu memiliki %s bebas saat ini.</string>
@@ -214,7 +213,6 @@
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">Support AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_translate_ankidroid">Translate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
     <string name="help_item_support_other_ankidroid">Other</string>

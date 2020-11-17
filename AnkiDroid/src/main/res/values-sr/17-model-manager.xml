@@ -41,7 +41,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Избриши тип белешке</string>
-    <string name="model_browser_rename">Преименуј</string>
+    <string name="model_browser_rename" comment="Rename a note type">Преименуј</string>
     <string name="model_browser_template">Уреди картице</string>
     <string name="model_browser_add">Додај тип белешке</string>
     <!--Rename-->

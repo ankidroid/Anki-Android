@@ -44,7 +44,7 @@
     </plurals>
     <string name="card_browser_all_decks">所有牌组</string>
     <string name="card_browser_delete_card">删除卡牌记录</string>
-    <string name="card_browser_suspend_card">搁置卡片</string>
+    <string name="card_browser_suspend_card">暂停卡片</string>
     <string name="card_browser_change_deck">更换牌组</string>
     <string name="card_browser_unsuspend_card">取消擱置卡片</string>
     <string name="card_browser_mark_card">标记笔记</string>
@@ -95,15 +95,15 @@
     <string name="card_info_first_review">首次复习</string>
     <string name="card_info_latest_review">最近复习</string>
     <string name="card_info_interval">间隔</string>
-    <string name="card_info_ease">缓慢</string>
+    <string name="card_info_ease">简易度</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">复习</string>
     <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">失误</string>
     <string name="card_info_average_time">平均时间</string>
     <string name="card_info_total_time">总时间</string>
-    <string name="card_info_card_type">卡牌类型</string>
+    <string name="card_info_card_type">卡片类型</string>
     <string name="card_info_note_type">注解类型</string>
     <string name="card_info_deck_name">牌组名称</string>
-    <string name="card_info_card_id">卡牌 ID</string>
+    <string name="card_info_card_id">卡片 ID</string>
     <string name="card_info_note_id">注解 ID</string>
     <string name="card_info_revlog_time">时间</string>
     <string name="card_info_revlog_date">日期</string>

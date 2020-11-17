@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Kortlekar</string>
-    <string name="card_browser">Kortbläddrare</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kortbläddrare</string>
     <string name="statistics">Statistik</string>
     <string name="settings">Inställningar</string>
     <string name="help">Hjälp</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">Importera</string>
     <string name="undo">Ångra</string>
     <string name="undo_action_review">senaste repetition</string>
-    <string name="undo_action_bury_card">dölj kort</string>
-    <string name="undo_action_bury_note">dölj not</string>
-    <string name="undo_action_suspend_card">lås kort</string>
-    <string name="undo_action_suspend_note">lås not</string>
-    <string name="undo_action_delete">ta bort not</string>
-    <string name="undo_action_delete_multi">ta bort anteckningar</string>
     <string name="undo_action_change_deck_multi">byt kortlekar</string>
-    <string name="undo_action_reschedule_card">schemalägg igen</string>
-    <string name="undo_action_reset_card">återställ framsteg</string>
-    <string name="undo_action_reposition_card">ompositionera</string>
     <string name="move_all_to_deck">Flytta alla till kortlek</string>
     <string name="unbury">Sluta dölja</string>
     <string name="rename_deck">Byt namn på lek</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Lägg till</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Lägg till</string>
     <string name="menu_add_note">Lägg till not</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkronisera konto</string>
     <string name="menu_dismiss_note">Dölj / ta bort</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">Läs och skriv till AnkiDroid-databasen</string>
     <string name="read_write_permission_description">åtkomst till befintliga noter, kort, nottyper och kortlekar, samt att skapa nya</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

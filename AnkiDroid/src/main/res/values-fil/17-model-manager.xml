@@ -39,7 +39,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Tanggalin ang uri ng tala</string>
-    <string name="model_browser_rename">Palitan ang pangalan</string>
+    <string name="model_browser_rename" comment="Rename a note type">Palitan ang pangalan</string>
     <string name="model_browser_template">I-edit ang mga card</string>
     <string name="model_browser_add">Magdagdag ng uri ng tala</string>
     <!--Rename-->

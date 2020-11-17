@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">شاردنەوەی تەختەسپی</string>
     <string name="clear_whiteboard">پاککردنەوەی تەختەسپی</string>
     <string name="replay_audio">Dengê dîsa lêxe</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="corrupt_font">Corrupt font file %s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">Rate AnkiDroid</string>
     <string name="import_title">Importing</string>
     <string name="import_select_title">Choose a file to import</string>
-    <string name="import_message_add">زیادکردن</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">زیادکردن</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
     <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>

@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">隱藏白板</string>
     <string name="clear_whiteboard">清除白板</string>
     <string name="replay_audio">重播聲音</string>
-    <string name="toggle_mic_tool_bar">檢查發音</string>
     <string name="leech_suspend_notification">卡片已擱置，同時標為榨時卡</string>
     <string name="leech_notification">卡片標為榨時卡</string>
     <string name="corrupt_font">損壞的字型檔案 %s</string>
@@ -153,7 +152,7 @@
     <string name="info_rate">評價 AnkiDroid</string>
     <string name="import_title">正在匯入……</string>
     <string name="import_select_title">選擇欲匯入的檔案</string>
-    <string name="import_message_add">新增</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">新增</string>
     <string name="import_message_replace_confirm">這將會刪除你現有的收藏並以%s的內容取代，你確定嗎？</string>
     <string name="import_message_add_confirm">新增「%s」到收藏嗎？這可能會花上好一段時間</string>
     <string name="import_log_no_apkg">這不是有效的 Anki 套件檔案</string>

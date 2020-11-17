@@ -43,7 +43,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Удалить тип записи</string>
-    <string name="model_browser_rename">Переименовать</string>
+    <string name="model_browser_rename" comment="Rename a note type">Переименовать</string>
     <string name="model_browser_template">Править карточки</string>
     <string name="model_browser_add">Добавить тип записи</string>
     <!--Rename-->

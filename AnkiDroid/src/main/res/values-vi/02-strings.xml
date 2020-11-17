@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Ẩn bảng viết</string>
     <string name="clear_whiteboard">Xoá bảng viết</string>
     <string name="replay_audio">Phát lại âm thanh</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Thẻ được đánh dấu là thẻ khó và đã tạm dừng</string>
     <string name="leech_notification">Thẻ được đánh dấu là thẻ khó</string>
     <string name="corrupt_font">Lỗi tệp phông chữ %s</string>
@@ -153,7 +152,7 @@
     <string name="info_rate">Đánh giá AnkiDroid</string>
     <string name="import_title">Đang nhập</string>
     <string name="import_select_title">Chọn một tệp để nhập</string>
-    <string name="import_message_add">Thêm</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Thêm</string>
     <string name="import_message_replace_confirm">Thao tác này sẽ xoá tất cả bộ sưu tập hiện hữu và thay nó bằng dữ liệu của tệp %s</string>
     <string name="import_message_add_confirm">Thêm \"%s\" vào bộ sưu tập? Có thể hơi lâu</string>
     <string name="import_log_no_apkg">Đây không phải là gói tệp tin Anki hợp lệ</string>

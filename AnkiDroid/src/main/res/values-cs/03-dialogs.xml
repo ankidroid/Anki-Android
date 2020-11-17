@@ -187,7 +187,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualizován</string>
     <string name="integrity_check_startup_content">AnkiDroid byl aktualizován. Tato aktualizace obsahuje opravy možných problémů databáze, a doporučuje se nyní spustit kontrolu databáze.</string>
-    <string name="integrity_check_positive">Zkontrolovat databázi</string>
     <string name="integrity_check_continue_anyway">Přesto pokračovat</string>
     <string name="integrity_check_insufficient_space">Kontrola databáze používá velké množství dočasného úložiště.\n\nDůrazně se doporučuje, abyste předtím, než budete pokračovat, měli v zařízení alespoň %s volného místa.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nMomentálně máte %s volného místa.</string>
@@ -235,7 +234,6 @@
     <string name="help_item_report_bug">Nahlásit chybu</string>
     <string name="help_title_support_ankidroid">Podpořit AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Přispět</string>
-    <string name="help_item_support_translate_ankidroid">Přeložit</string>
     <string name="help_item_support_develop_ankidroid">Vyvíjet</string>
     <string name="help_item_support_rate_ankidroid">Ohodnotit</string>
     <string name="help_item_support_other_ankidroid">Ostatní</string>

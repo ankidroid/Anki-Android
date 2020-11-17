@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Vhā\'iṭabōrḍa lapavā</string>
     <string name="clear_whiteboard">Vhā\'īṭabōrḍa sāpha karā</string>
     <string name="replay_audio">Ŏḍi\'ō punhā plē karā</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Kārḍa līka asē cinhāṅkita kēlē āhē āṇi nilambita kēlē āhē</string>
     <string name="leech_notification">Kārḍa jaḷū mhaṇūna cinhāṅkita</string>
     <string name="corrupt_font">Dūṣita phŏnṭa phā\'īla%s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">AnkiDroid rēṭa karā</string>
     <string name="import_title">Āyāta karīta āhē</string>
     <string name="import_select_title">Āyāta karaṇyāsāṭhī ēka phā\'ila nivaḍā</string>
-    <string name="import_message_add">Jōḍā</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Jōḍā</string>
     <string name="import_message_replace_confirm">Hē āpalē vidyamāna saṅkalana haṭavēla āṇi phā\'ilacyā ḍēṭāśī punarsthita karēla%s</string>
     <string name="import_message_add_confirm">\"%s\" saṅgrahāmadhyē jōḍāyacē? Yāsa barāca vēḷa lāgū śakatō</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
