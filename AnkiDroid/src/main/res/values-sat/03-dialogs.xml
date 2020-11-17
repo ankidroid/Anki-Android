@@ -173,7 +173,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid ᱦᱟᱹᱞᱤ ᱦᱚᱪᱚᱭᱮᱱᱟ</string>
     <string name="integrity_check_startup_content">AnkiDroid ᱦᱟᱹᱞᱤᱦᱚᱪᱚᱭᱮᱵᱟ ᱾ ᱱᱚᱶᱟ ᱦᱟᱹᱞᱤᱦᱚᱪᱚ ᱨᱮ  ᱰᱤᱜᱟᱹᱣ ᱠᱚ ᱨᱮᱭᱟᱜ ᱜᱚᱴᱟᱣ ᱢᱮᱱᱟᱜᱼᱟ , ᱟᱞᱮ ᱦᱤᱥᱟᱹᱵ ᱛᱮ ᱟᱢ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱢᱮ</string>
-    <string name="integrity_check_positive">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱪᱮᱠ ᱢᱮ</string>
     <string name="integrity_check_continue_anyway">ᱡᱟᱦᱟᱸ ᱞᱮᱠᱟᱛᱮ ᱞᱮᱛᱟᱲ ᱢᱮ</string>
     <string name="integrity_check_insufficient_space">ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱫᱚ ᱟᱰᱤᱜᱟᱱ ᱥᱩᱭᱫᱚᱢᱟᱠ ᱡᱟᱭᱜᱟ ᱤᱫᱤᱟᱭ ᱾\n\n ᱞᱮᱛᱟᱲ ᱢᱟᱲᱟᱝ ᱨᱮ ᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ ᱛᱟᱦᱮᱱ ᱠᱟᱛᱷᱟ ᱾</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱞᱤ ᱡᱟᱭᱜᱟ ᱢᱮᱱᱟᱜᱼᱟ.</string>
@@ -221,7 +220,6 @@
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">Support AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_translate_ankidroid">Translate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
     <string name="help_item_support_other_ankidroid">Other</string>

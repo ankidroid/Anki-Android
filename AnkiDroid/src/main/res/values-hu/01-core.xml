@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">igen</string>
-    <string name="no">nem</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paklik</string>
-    <string name="card_browser">Kártya böngésző</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kártya böngésző</string>
     <string name="statistics">Statisztika</string>
     <string name="settings">Beállítások</string>
     <string name="help">Segítség</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">Importálás</string>
     <string name="undo">Visszavonás</string>
     <string name="undo_action_review">Utoljára ismételt kártya</string>
-    <string name="undo_action_bury_card">kártya félretétele</string>
-    <string name="undo_action_bury_note">jegyzet félretétele</string>
-    <string name="undo_action_suspend_card">kártya felfüggesztése</string>
-    <string name="undo_action_suspend_note">jegyzet felfüggesztése</string>
-    <string name="undo_action_delete">jegyzet törlése</string>
-    <string name="undo_action_delete_multi">jegyzetek törlése</string>
     <string name="undo_action_change_deck_multi">pakli csere</string>
-    <string name="undo_action_reschedule_card">átütemezés</string>
-    <string name="undo_action_reset_card">Folyamat Visszaállítása</string>
-    <string name="undo_action_reposition_card">áthelyezés</string>
     <string name="move_all_to_deck">Összes pakli áthelyezése</string>
     <string name="unbury">Félretétel megszüntetése</string>
     <string name="rename_deck">Pakli átnevezése</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Hozzáadás</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Hozzáadás</string>
     <string name="menu_add_note">Megjegyzés hozzáadása</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Fiók szinkronizálása</string>
     <string name="menu_dismiss_note">Elrejtés / Törlés</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">AnkiDroid adatbázist olvasás/írás</string>
     <string name="read_write_permission_description">meglévő jegyzetek, kártyák, jegyzetfajták és paklik elérése, valamint újak létrehozása</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Kártya böngésző</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kártya böngésző</string>
     <string name="context_menu_anki_card_label">Anki Kártya</string>
 </resources>

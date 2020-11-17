@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">はい</string>
-    <string name="no">いいえ</string>
     <!-- Navigation drawer items-->
     <string name="decks">デッキ</string>
-    <string name="card_browser">カードブラウザ</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">カードブラウザ</string>
     <string name="statistics">統計情報</string>
     <string name="settings">設定</string>
     <string name="help">ヘルプ</string>
@@ -86,21 +85,12 @@
     <string name="menu_import">インポート</string>
     <string name="undo">元に戻す</string>
     <string name="undo_action_review">最後の復習</string>
-    <string name="undo_action_bury_card">カードを延期</string>
-    <string name="undo_action_bury_note">ノートを延期</string>
-    <string name="undo_action_suspend_card">カードを保留</string>
-    <string name="undo_action_suspend_note">ノートを保留</string>
-    <string name="undo_action_delete">ノートの削除</string>
-    <string name="undo_action_delete_multi">ノートを削除</string>
     <string name="undo_action_change_deck_multi">デッキを変更</string>
-    <string name="undo_action_reschedule_card">スケジュールを変更</string>
-    <string name="undo_action_reset_card">学習履歴をリセット</string>
-    <string name="undo_action_reposition_card">新規カードの表示順序を変更</string>
     <string name="move_all_to_deck">移動先デッキを選択</string>
     <string name="unbury">延期を解除</string>
     <string name="rename_deck">このデッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
-    <string name="menu_add">ノートを追加</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ノートを追加</string>
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
     <string name="menu_dismiss_note">延期、保留、削除</string>
@@ -202,6 +192,6 @@
     <string name="read_write_permission_label">AnkiDroid データベースの読み書き</string>
     <string name="read_write_permission_description">ノート、カード、ノートタイプ、デッキへのアクセスや、それらの新規作成を行います。</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">AnkiDroid検索</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">AnkiDroid検索</string>
     <string name="context_menu_anki_card_label">Ankiカード</string>
 </resources>

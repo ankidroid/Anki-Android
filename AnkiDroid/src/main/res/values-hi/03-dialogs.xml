@@ -173,7 +173,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid अपग्रेड किया गया</string>
     <string name="integrity_check_startup_content">AnkiDroid को अपग्रेड किया गया है। इस अपग्रेड में संभावित डेटाबेस समस्याओं के लिए फ़िक्सेस शामिल हैं, और हम आपको चेक डेटाबेस चलाने की सलाह देते हैं।</string>
-    <string name="integrity_check_positive">डेटाबेस चेक करें</string>
     <string name="integrity_check_continue_anyway">किसी तरह से जारी रखें</string>
     <string name="integrity_check_insufficient_space">चेक डेटाबेस बड़ी मात्रा में अस्थायी storage का उपयोग करता है। \n \n यह दृढ़ता से अनुशंसा की जाती है कि आपके डिवाइस पर कम से कम %s खाली स्थान हो।</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n आपके पास वर्तमान में %s खाली स्थान है।</string>
@@ -221,7 +220,6 @@
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">Support AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_translate_ankidroid">Translate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
     <string name="help_item_support_other_ankidroid">Other</string>

@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">화이트 보드 숨기기</string>
     <string name="clear_whiteboard">화이트 보드 지우기</string>
     <string name="replay_audio">오디오 다시 재생</string>
-    <string name="toggle_mic_tool_bar">발음 들어보기</string>
     <string name="leech_suspend_notification">카드가 거머리로 표시 및 비활성화됨</string>
     <string name="leech_notification">거머리로 표시된 카드</string>
     <string name="corrupt_font">손상된 글꼴 파일 %s</string>
@@ -154,7 +153,7 @@
     <string name="info_rate">AnkiDroid 평가하기</string>
     <string name="import_title">가져오는 중</string>
     <string name="import_select_title">가져올 파일 선택</string>
-    <string name="import_message_add">추가</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">추가</string>
     <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
     <string name="import_message_add_confirm">\"%s\"를 컬렉션에 추가하시겠습니까? 시간이 오래 걸릴 수 있습니다.</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>

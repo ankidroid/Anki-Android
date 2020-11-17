@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">sim</string>
-    <string name="no">não</string>
     <!-- Navigation drawer items-->
     <string name="decks">Baralhos</string>
-    <string name="card_browser">Navegador de cartões</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navegador de cartões</string>
     <string name="statistics">Estatísticas</string>
     <string name="settings">Configurações</string>
     <string name="help">Ajuda</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">Importar</string>
     <string name="undo">Desfazer</string>
     <string name="undo_action_review">última revisão</string>
-    <string name="undo_action_bury_card">ocultar cartão</string>
-    <string name="undo_action_bury_note">ocultar nota</string>
-    <string name="undo_action_suspend_card">suspender cartão</string>
-    <string name="undo_action_suspend_note">suspender nota</string>
-    <string name="undo_action_delete">excluir nota</string>
-    <string name="undo_action_delete_multi">excluir notas</string>
     <string name="undo_action_change_deck_multi">mudar baralhos</string>
-    <string name="undo_action_reschedule_card">reagendar</string>
-    <string name="undo_action_reset_card">redefinir o progresso</string>
-    <string name="undo_action_reposition_card">reposicionar</string>
     <string name="move_all_to_deck">Mover todos para o baralho</string>
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Renomear baralho</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Adicionar</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Adicionar</string>
     <string name="menu_add_note">Adicionar nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizar conta</string>
     <string name="menu_dismiss_note">Ocultar / excluir</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">Ler e escrever para o banco de dados do AnkiDroid</string>
     <string name="read_write_permission_description">acessar as notas, cartas, modelos e baralhos existentes, bem como criar novos</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Navegador de Baralhos</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de Baralhos</string>
     <string name="context_menu_anki_card_label">Cartão do Anki</string>
 </resources>

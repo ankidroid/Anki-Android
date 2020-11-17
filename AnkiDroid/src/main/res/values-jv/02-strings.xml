@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Sembunyikan papan tulis putih</string>
     <string name="clear_whiteboard">Kosongkan papan tulis</string>
     <string name="replay_audio">Putar ulang audio</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Kartu ditandai sebagai lintah dan ditangguhkan</string>
     <string name="leech_notification">Kartu ditandai sebagai lintah</string>
     <string name="corrupt_font">File font rusak %s</string>
@@ -153,7 +152,7 @@
     <string name="info_rate">Tingkat AnkiDroid</string>
     <string name="import_title">Pengimporan</string>
     <string name="import_select_title">Pilih file yang akan diimpor</string>
-    <string name="import_message_add">Menambahkan</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Menambahkan</string>
     <string name="import_message_replace_confirm">Ini akan menghapus koleksi yang ada dan menggantinya dengan data file %s</string>
     <string name="import_message_add_confirm">Tambahkan \"%s\" ke koleksi? Ini mungkin memakan waktu lama</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>

@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">پنهان کردن تخته سفید</string>
     <string name="clear_whiteboard">پاک کردن تخته سفید</string>
     <string name="replay_audio">بازپخش صوت</string>
-    <string name="toggle_mic_tool_bar">بررسی تلفظ</string>
     <string name="leech_suspend_notification">کارت به عنوان مزاحم مشخص و تعلیق شده است</string>
     <string name="leech_notification">کارت به عنوان مزاحم مشخص شده است</string>
     <string name="corrupt_font">فونت فایل خراب %s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">امتیازدهی به آنکی دروید</string>
     <string name="import_title">درحال وارد کردن</string>
     <string name="import_select_title">فایلی را برای وارد کردن انتخاب کنید</string>
-    <string name="import_message_add">اضافه کردن</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">اضافه کردن</string>
     <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد. آیا مطمئنید؟</string>
     <string name="import_message_add_confirm">آیا می خواهید \"%s\" را به مجموعه اضافه کنید ؟ ممکن است زمان زیادی طول بکشد</string>
     <string name="import_log_no_apkg">این یک فایل معتبر آنکی نیست</string>

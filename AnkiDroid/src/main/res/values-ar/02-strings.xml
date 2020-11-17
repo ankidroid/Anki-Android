@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">إخفاء السبورة</string>
     <string name="clear_whiteboard">مسح السبورة</string>
     <string name="replay_audio">إعادة تشغيل الصوت</string>
-    <string name="toggle_mic_tool_bar">تحقق من النطق</string>
     <string name="leech_suspend_notification">عُلِّمت البطاقة كمستعصية وعُلِّقت</string>
     <string name="leech_notification">عُلِّمت البطاقة كمستعصية</string>
     <string name="corrupt_font">ملف خط معطوب %s</string>
@@ -168,7 +167,7 @@
     <string name="info_rate">قيم أنكيدرويد</string>
     <string name="import_title">استيراد</string>
     <string name="import_select_title">اختر ملفًا لاستيراده</string>
-    <string name="import_message_add">إضافة</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
     <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
     <string name="import_message_add_confirm">هل تريد إضافة “%s” إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا</string>
     <string name="import_log_no_apkg">ليس هذا ملف حزمة أنكي صالحًا</string>

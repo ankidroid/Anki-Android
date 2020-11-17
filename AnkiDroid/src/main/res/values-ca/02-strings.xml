@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Amaga la pissarra</string>
     <string name="clear_whiteboard">Esborra la pissarra</string>
     <string name="replay_audio">Repetir àudio</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Fitxa marcada com a lapa i suspesa</string>
     <string name="leech_notification">Fitxa marcada com a lapa</string>
     <string name="corrupt_font">Fitxer de tipus de lletra incorrecte %s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">Valoreu l\'AnkiDroid</string>
     <string name="import_title">S\'està important</string>
     <string name="import_select_title">Escolliu el fitxer per importar</string>
-    <string name="import_message_add">Afegeix</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Afegeix</string>
     <string name="import_message_replace_confirm">Això suprimirà la vostra col·lecció actual i la reemplaçarà amb les dades del fitxer %s. Esteu segur que ho voleu?</string>
     <string name="import_message_add_confirm">Afegeix \"%s\" a la col·lecció? Això pot trigar molt de temps</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>

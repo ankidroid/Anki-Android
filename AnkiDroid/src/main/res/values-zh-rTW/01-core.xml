@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">是</string>
-    <string name="no">否</string>
     <!-- Navigation drawer items-->
     <string name="decks">牌組</string>
-    <string name="card_browser">卡片瀏覽器</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">卡片瀏覽器</string>
     <string name="statistics">統計資料</string>
     <string name="settings">設定</string>
     <string name="help">幫助</string>
@@ -87,21 +86,12 @@
     <string name="menu_import">匯入</string>
     <string name="undo">復原</string>
     <string name="undo_action_review">上次複習</string>
-    <string name="undo_action_bury_card">隱藏卡片</string>
-    <string name="undo_action_bury_note">掩埋註解</string>
-    <string name="undo_action_suspend_card">長久擱置卡片</string>
-    <string name="undo_action_suspend_note">長久擱置筆記</string>
-    <string name="undo_action_delete">刪除筆記</string>
-    <string name="undo_action_delete_multi">刪除筆記</string>
     <string name="undo_action_change_deck_multi">變更牌組</string>
-    <string name="undo_action_reschedule_card">重新排程</string>
-    <string name="undo_action_reset_card">重設進度</string>
-    <string name="undo_action_reposition_card">變更位置</string>
     <string name="move_all_to_deck">全部移動到牌組</string>
     <string name="unbury">取消暫時隱藏</string>
     <string name="rename_deck">重新命名牌組</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">新增</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">新增</string>
     <string name="menu_add_note">新增筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳號</string>
     <string name="menu_dismiss_note">隱藏/刪除</string>
@@ -203,6 +193,6 @@
     <string name="read_write_permission_label">讀寫 AnkiDroid 資料庫</string>
     <string name="read_write_permission_description">瀏覽現有的筆記、卡片、筆記類型和牌組，或者自己動手建立新的~</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">卡片瀏覽器</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">卡片瀏覽器</string>
     <string name="context_menu_anki_card_label">Anki卡</string>
 </resources>

@@ -263,7 +263,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">పేరుమార్చు</string>
     <string name="deck_conf_reset">నిర్ణీత విలువలకు మార్చు</string>
     <string name="deck_conf_reset_message">డిఫాల్ట్ విలువల కోసం ప్రస్తుత ఎంపికల సమూహాన్ని పునరుద్ధరించాలా?</string>
-    <string name="deck_conf_add">చేర్చు</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">చేర్చు</string>
     <string name="deck_conf_add_summ">ప్రస్తుత ఎంపికల సమూహపు నకలును సృష్టించండి</string>
     <string name="deck_conf_remove_message">ప్రస్తుత ఎంపికల సమూహాన్ని తీసివేయాలా?</string>
     <string name="deck_conf_set_subdecks">అన్ని subdecks కోసం సెట్</string>
@@ -287,4 +287,6 @@
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

@@ -175,7 +175,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">آنکی‌دروید به روز‌رسانی شد</string>
     <string name="integrity_check_startup_content">آنکی دروید به‌روزرسانی شده است. این نسخۀ شامل تعمیراتی برای مشکلات محتمل دیتابیس است، بنابراین ما به شما پیشنهاد می‌کنیم که اکنون از گزینۀ بررسی دیتابیس استفاده کنید.</string>
-    <string name="integrity_check_positive">بررسی دیتابیس</string>
     <string name="integrity_check_continue_anyway">ادامه بده</string>
     <string name="integrity_check_insufficient_space">بررسی دیتابیس حجم زیادی از حافظۀ موقت را اشغال خواهد کرد.\n\nبه شدت پیشنهاد می‌کنیم قبل از اجرای بررسی دیتابیس از خالی بودن حداقل %s از حافظۀ موقت دستگاهتان اطمینان حاصل کنید.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n%sاز حافظۀ موقت شما خالی است.</string>
@@ -223,7 +222,6 @@
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">Support AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_translate_ankidroid">Translate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
     <string name="help_item_support_other_ankidroid">Other</string>

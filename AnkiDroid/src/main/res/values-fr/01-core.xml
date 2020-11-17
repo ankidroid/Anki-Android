@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">oui</string>
-    <string name="no">non</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paquets</string>
-    <string name="card_browser">Navigateur de cartes</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navigateur de cartes</string>
     <string name="statistics">Statistiques</string>
     <string name="settings">Paramètres</string>
     <string name="help">Aide</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">Importer</string>
     <string name="undo">Annuler</string>
     <string name="undo_action_review">Dernière révision</string>
-    <string name="undo_action_bury_card">enterrer la carte</string>
-    <string name="undo_action_bury_note">enterrer la note</string>
-    <string name="undo_action_suspend_card">suspendre la carte</string>
-    <string name="undo_action_suspend_note">suspendre la note</string>
-    <string name="undo_action_delete">supprimer la note</string>
-    <string name="undo_action_delete_multi">supprimer les notes</string>
     <string name="undo_action_change_deck_multi">changer les paquets</string>
-    <string name="undo_action_reschedule_card">replanifier</string>
-    <string name="undo_action_reset_card">réinitialiser la progression</string>
-    <string name="undo_action_reposition_card">repositionner</string>
     <string name="move_all_to_deck">Tout déplacer dans le paquet</string>
     <string name="unbury">Déterrer</string>
     <string name="rename_deck">Renommer le paquet</string>
     <string name="create_shortcut">Créer un raccourci</string>
-    <string name="menu_add">Ajouter</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Ajouter</string>
     <string name="menu_add_note">Ajouter une note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de synchronisation</string>
     <string name="menu_dismiss_note">Masquer / Supprimer</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">Lire et écrire dans la base de données d\'AnkiDroid</string>
     <string name="read_write_permission_description">accéder aux notes, cartes, types de notes et paquets actuels, mais aussi en créer de nouveaux</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Navigateur de cartes</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navigateur de cartes</string>
     <string name="context_menu_anki_card_label">Carte Anki</string>
 </resources>

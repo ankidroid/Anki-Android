@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Dəstələr</string>
-    <string name="card_browser">Kart səyyahı</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kart səyyahı</string>
     <string name="statistics">Statistikalar</string>
     <string name="settings">Tənzimləmələr</string>
     <string name="help">Kömək</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">İdxal et</string>
     <string name="undo">Geri qaytar</string>
     <string name="undo_action_review">son nəzərdən keçirmə</string>
-    <string name="undo_action_bury_card">kartı gizlət</string>
-    <string name="undo_action_bury_note">notu gizlət</string>
-    <string name="undo_action_suspend_card">Kartı təxirə sal</string>
-    <string name="undo_action_suspend_note">Qeydi təxirə sal</string>
-    <string name="undo_action_delete">Qeydi sil</string>
-    <string name="undo_action_delete_multi">notları sil</string>
     <string name="undo_action_change_deck_multi">dəstələri dəyişdir</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Görünən et</string>
     <string name="rename_deck">Dəstəni yenidən adlandır</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Əlavə et</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Əlavə et</string>
     <string name="menu_add_note">Qeyd əlavə et</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Hesabı sinxron et</string>
     <string name="menu_dismiss_note">Gizlə / sil</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

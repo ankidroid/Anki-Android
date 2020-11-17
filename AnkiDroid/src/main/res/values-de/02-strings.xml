@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Whiteboard ausblenden</string>
     <string name="clear_whiteboard">Whiteboard säubern</string>
     <string name="replay_audio">Audio wiederholen</string>
-    <string name="toggle_mic_tool_bar">Aussprache prüfen</string>
     <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgeschlossen</string>
     <string name="leech_notification">Karte als Lernbremse markiert</string>
     <string name="corrupt_font">Fehlerhafte Schriftartdatei %s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">AnkiDroid bewerten</string>
     <string name="import_title">Importieren</string>
     <string name="import_select_title">Zu importierende Datei auswählen</string>
-    <string name="import_message_add">Hinzufügen</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hinzufügen</string>
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
     <string name="import_message_add_confirm">»%s« zu Ihrer Sammlung hinzufügen? Das kann lange dauern</string>
     <string name="import_log_no_apkg">Dies ist keine gültige Anki-Paketdatei</string>

@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Kortstokker</string>
-    <string name="card_browser">Kortoversikt</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kortoversikt</string>
     <string name="statistics">Statistikk</string>
     <string name="settings">Oppsett</string>
     <string name="help">Hjelp</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">Importer</string>
     <string name="undo">Angre</string>
     <string name="undo_action_review">siste gjennomgang</string>
-    <string name="undo_action_bury_card">begrav kort</string>
-    <string name="undo_action_bury_note">begrav notat</string>
-    <string name="undo_action_suspend_card">suspender kort</string>
-    <string name="undo_action_suspend_note">suspender notat</string>
-    <string name="undo_action_delete">slett notat</string>
-    <string name="undo_action_delete_multi">slett notater</string>
     <string name="undo_action_change_deck_multi">endre kortstokker</string>
-    <string name="undo_action_reschedule_card">endre plan</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">omplasser</string>
     <string name="move_all_to_deck">Flytt alle til kortstokk</string>
     <string name="unbury">Grav opp igjen</string>
     <string name="rename_deck">Gi kortstokk nytt navn</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Legg til</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Legg til</string>
     <string name="menu_add_note">Legg til notat</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkroniser konto</string>
     <string name="menu_dismiss_note">Gjem / slett</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

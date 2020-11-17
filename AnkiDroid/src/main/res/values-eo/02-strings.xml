@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Kaŝi skribtabulon</string>
     <string name="clear_whiteboard">Forviŝi skribtabulon</string>
     <string name="replay_audio">Reludi sonaĵon</string>
-    <string name="toggle_mic_tool_bar">Kontroli elparolon</string>
     <string name="leech_suspend_notification">Karto markita kiel forgesema kaj kaŝita</string>
     <string name="leech_notification">Karto markita kiel forgesema</string>
     <string name="corrupt_font">Difektita dosiero de tiparo %s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">Taksi AnkiDroid</string>
     <string name="import_title">Enporti</string>
     <string name="import_select_title">Elektu dosieron por enporti</string>
-    <string name="import_message_add">Aldoni</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aldoni</string>
     <string name="import_message_replace_confirm">Tio ĉi forigos vian ekzistan kolekton kaj anstataŭigos ĝin per datumoj de dosiero %s</string>
     <string name="import_message_add_confirm">Ĉu aldoni “%s” al kolekto? Tio ĉi povas okupi multan tempon</string>
     <string name="import_log_no_apkg">Tio ĉi ne estas valida dosiero Anki-pakaĵo</string>
@@ -310,7 +309,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Eraro okazis dum kopii senerarigajn informojn al tondujo</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Eraro pri enhavo de karto, fiaskis enlegi “%s”</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">Eraro pri enhavo de karto: necesas ĝisdatigi plurmedion</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Fiaskis enlegi la kartaron “%s”</string>
     <string name="search_decks">Serĉi en kartaroj</string>

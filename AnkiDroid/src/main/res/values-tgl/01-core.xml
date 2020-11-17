@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Mga deck</string>
-    <string name="card_browser">Browser ng baraha</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Browser ng baraha</string>
     <string name="statistics">Estadistika</string>
     <string name="settings">Mga setting</string>
     <string name="help">Tulong</string>
@@ -101,21 +100,12 @@ Pinagaralang %1$d mga baraha %2$s ngayong araw</item>
     <string name="menu_import">Mag-import</string>
     <string name="undo">Ibalik sa dati</string>
     <string name="undo_action_review">hiling balik-aral</string>
-    <string name="undo_action_bury_card">ibaon ang baraha</string>
-    <string name="undo_action_bury_note">ibaon ang paalala</string>
-    <string name="undo_action_suspend_card">suspendihin ang baraha</string>
-    <string name="undo_action_suspend_note">suspendihin ang paalala</string>
-    <string name="undo_action_delete">burahin ang paalala</string>
-    <string name="undo_action_delete_multi">delete notes</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Hukayin</string>
     <string name="rename_deck">Palitan ang pangalan ng deck</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Idagdag</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Idagdag</string>
     <string name="menu_add_note">Magdagdag ng paalala</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Isingkronisa ang account</string>
     <string name="menu_dismiss_note">Itago / burahin</string>
@@ -222,6 +212,6 @@ Burahin ang “%2$s” uri ng baraha, at ang %1$d mga baraha?</item>
     <string name="read_write_permission_label">Pagbasa at pagsulat sa database ng AnkiDroid</string>
     <string name="read_write_permission_description">i-access ang mga paalala, baraha, uri ng paalala, mga deck, at gumawa ng mga bago</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

@@ -264,7 +264,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Переименовать</string>
     <string name="deck_conf_reset">Сбросить настройки</string>
     <string name="deck_conf_reset_message">Сбросить эту конфигурацию?</string>
-    <string name="deck_conf_add">Добавить</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Добавить</string>
     <string name="deck_conf_add_summ">Создать копию этой конфигурации</string>
     <string name="deck_conf_remove_message">Удалить текущую конфигурацию?</string>
     <string name="deck_conf_set_subdecks">Установить для всех подколод</string>
@@ -290,4 +290,6 @@
     <string name="analytics_dialog_title">Помогите сделать AnkiDroid лучше!</string>
     <string name="analytics_title">Делиться статистикой использования</string>
     <string name="analytics_summ">Отправляет информацию о функциях, которые предпочитают пользователи</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

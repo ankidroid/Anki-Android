@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Pakat</string>
-    <string name="card_browser">Korttiselain</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Korttiselain</string>
     <string name="statistics">Tilastot</string>
     <string name="settings">Asetukset</string>
     <string name="help">Ohje</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">Tuo</string>
     <string name="undo">Kumoa</string>
     <string name="undo_action_review">edellinen kertaus</string>
-    <string name="undo_action_bury_card">piilota kortti</string>
-    <string name="undo_action_bury_note">piilota merkintä</string>
-    <string name="undo_action_suspend_card">jäädytä kortti</string>
-    <string name="undo_action_suspend_note">jäädytä merkintä</string>
-    <string name="undo_action_delete">poista merkintä</string>
-    <string name="undo_action_delete_multi">poista merkinnät</string>
     <string name="undo_action_change_deck_multi">vaihda pakkoja</string>
-    <string name="undo_action_reschedule_card">ajasta uudelleen</string>
-    <string name="undo_action_reset_card">nollaa edistyminen</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Siirrä kaikki pakkaan</string>
     <string name="unbury">Paljasta</string>
     <string name="rename_deck">Nimeä pakka uudelleen</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Lisää</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Lisää</string>
     <string name="menu_add_note">Lisää merkintä</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkronoi tili</string>
     <string name="menu_dismiss_note">Piilota / Poista</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">Lue ja kirjoita AnkiDroidi-tietokantaan</string>
     <string name="read_write_permission_description">lupa päästä olemassaoleviin merkintöihin, kortteihin, merkintätyyppeihin ja pakkoihin, sekä luoda uusia</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Korttiselain</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Korttiselain</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

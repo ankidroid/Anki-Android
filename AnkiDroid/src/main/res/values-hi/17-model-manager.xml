@@ -39,7 +39,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">नोट प्रकार मिटाएँ</string>
-    <string name="model_browser_rename">नाम बदलें</string>
+    <string name="model_browser_rename" comment="Rename a note type">नाम बदलें</string>
     <string name="model_browser_template">पत्ते संपादित करें</string>
     <string name="model_browser_add">नोट प्रकार जोड़ें</string>
     <!--Rename-->

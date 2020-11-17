@@ -263,7 +263,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Átnevezés</string>
     <string name="deck_conf_reset">Alapértelmezések visszaállítása</string>
     <string name="deck_conf_reset_message">Alaphelyzetbe állítod az aktuális opciócsoportot?</string>
-    <string name="deck_conf_add">Új beállítás</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Új beállítás</string>
     <string name="deck_conf_add_summ">Készítsen egy másolatot az aktuális opciócsoportról</string>
     <string name="deck_conf_remove_message">Törlöd az aktuális opciócsoportot?</string>
     <string name="deck_conf_set_subdecks">Alkalmazás minden alcsoportra</string>
@@ -287,4 +287,6 @@
     <string name="analytics_dialog_title">Segítsen az AnkiDroidot jobbá tenni!</string>
     <string name="analytics_title">Funkiók megosztása</string>
     <string name="analytics_summ">Hozzájárulhat az AnkiDroidhoz azáltal, hogy megmutatja a fejlesztői csapatnak, milyen funkciókat használnak az emberek</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

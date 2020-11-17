@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Itago ang whiteboard</string>
     <string name="clear_whiteboard">I-clear ang whiteboard</string>
     <string name="replay_audio">I-replay ang audio</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Ang kard ay namarkahan bilang linta at sinuspinde</string>
     <string name="leech_notification">Ang kard ay namarkahan bilang linta</string>
     <string name="corrupt_font">Sira ang file ng font %s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">I-rate ang AnkiDroid</string>
     <string name="import_title">Nag - iimport</string>
     <string name="import_select_title">Pumili ng isang file na i-import</string>
-    <string name="import_message_add">Magdagdag</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Magdagdag</string>
     <string name="import_message_replace_confirm">Buburahin nito ang iyong umiiral na koleksyon at papalitan nito ng data ng file %s</string>
     <string name="import_message_add_confirm">Magdagdag \"%s\" sa koleksyon? Ito ay tatagal ng mahabang oras</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>

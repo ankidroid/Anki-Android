@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">הסתר לוח ציור</string>
     <string name="clear_whiteboard">נקה לוח ציור</string>
     <string name="replay_audio">החזר שמע</string>
-    <string name="toggle_mic_tool_bar">בדוק הגיה</string>
     <string name="leech_suspend_notification">כרטיס מסומן כעלוקה ומושעה</string>
     <string name="leech_notification">כרטיס מסומן כעלוקה</string>
     <string name="corrupt_font">קובץ גופן %s פגום</string>
@@ -162,7 +161,7 @@
     <string name="info_rate">דירוג AnkiDroid</string>
     <string name="import_title">מתבצע ייבוא</string>
     <string name="import_select_title">נא לבחור קובץ לייבוא</string>
-    <string name="import_message_add">הוספה</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">הוספה</string>
     <string name="import_message_replace_confirm">אפשרות זאת תמחק את האוסף הנוכחי שלך ותחליפו במידע מקובץ %s</string>
     <string name="import_message_add_confirm">הוסף את \"%s\" לאוסף. פעולה זו עלולה להמשך זמן רב</string>
     <string name="import_log_no_apkg">קובץ זה אינו קובץ חבילה תקין</string>

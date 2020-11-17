@@ -262,7 +262,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Nimeä uudelleen</string>
     <string name="deck_conf_reset">Palauta oletusarvot</string>
     <string name="deck_conf_reset_message">Palauta nykyinen asetusryhmä oletusarvoihin?</string>
-    <string name="deck_conf_add">Lisää</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Lisää</string>
     <string name="deck_conf_add_summ">Luo kopio nykyisestä asetusryhmästä</string>
     <string name="deck_conf_remove_message">Poista nykyinen asetusryhmä?</string>
     <string name="deck_conf_set_subdecks">Aseta kaikille alipakoille</string>
@@ -286,4 +286,6 @@
     <string name="analytics_dialog_title">Auta parantamaan AnkiDroidia!</string>
     <string name="analytics_title">Jaa sovelluskäyttötietojasi</string>
     <string name="analytics_summ">Voit kehittää AnkiDroidia auttamalla kehitystiimiä näkemään mitä ominaisuuksia käytät</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

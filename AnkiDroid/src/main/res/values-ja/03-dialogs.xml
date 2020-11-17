@@ -166,7 +166,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroidをアップグレードしました</string>
     <string name="integrity_check_startup_content">AnkiDroidがアップグレードされました。このアップグレードには、データベースの問題の修正が含まれており、今すぐ「データベースをチェック」を実行することをお勧めします。</string>
-    <string name="integrity_check_positive">データベースをチェック</string>
     <string name="integrity_check_continue_anyway">続ける</string>
     <string name="integrity_check_insufficient_space">データベースのチェックには大量の一時ストレージを使用します。\n\n続行する前に、お使いのデバイスに少なくとも %s の空き領域が必要です。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n現在 %s は可能です。</string>
@@ -214,7 +213,6 @@
     <string name="help_item_report_bug">バグを報告</string>
     <string name="help_title_support_ankidroid">支援・応援</string>
     <string name="help_item_support_opencollective_donate">寄付</string>
-    <string name="help_item_support_translate_ankidroid">翻訳</string>
     <string name="help_item_support_develop_ankidroid">開発</string>
     <string name="help_item_support_rate_ankidroid">評価</string>
     <string name="help_item_support_other_ankidroid">その他</string>

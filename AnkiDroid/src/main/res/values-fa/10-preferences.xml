@@ -262,7 +262,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">تغییر نام</string>
     <string name="deck_conf_reset">بازیابی پیش فرضها</string>
     <string name="deck_conf_reset_message">تنظیمات فعلی گروه را به مقادیر پیش فرض بازمی گردانید؟</string>
-    <string name="deck_conf_add">پیکربندی را اضافه کن</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">پیکربندی را اضافه کن</string>
     <string name="deck_conf_add_summ">ایجاد یک کپی از تنظیمات گروه فعلی</string>
     <string name="deck_conf_remove_message">تنظیمات فعلی گروه حذف شود؟</string>
     <string name="deck_conf_set_subdecks">برای تمام دسته ها تنظیم شود</string>
@@ -286,4 +286,6 @@
     <string name="analytics_dialog_title">کمک به بهتر شدن AnkiDroid!</string>
     <string name="analytics_title">به اشتراک گذاشتن ویژگی‌های مورد استفاده</string>
     <string name="analytics_summ">شما می‌توانید با به اشتراک گذاشتن ویژگی‌هایی که استفاده می‌کنید می‌توانید به توسعۀ آنکی‌دروید کمک کنید</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

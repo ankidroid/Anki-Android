@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Skrij belo tablo</string>
     <string name="clear_whiteboard">Počisti belo tablo</string>
     <string name="replay_audio">Ponovno predvajaj zvok</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Kartica označena kot odvečna in je bila pridržana</string>
     <string name="leech_notification">Kartica označena kot odvečna</string>
     <string name="corrupt_font">Pokvarjena datoteka pisave %s</string>
@@ -162,7 +161,7 @@
     <string name="info_rate">Oceni AnkiDroid</string>
     <string name="import_title">Uvažanje</string>
     <string name="import_select_title">Izberite datoteko za uvoz</string>
-    <string name="import_message_add">Dodaj</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Dodaj</string>
     <string name="import_message_replace_confirm">To bo izbrisalo vašo obstoječo zbirko in jo nadomestilo s podatki datoteke %s</string>
     <string name="import_message_add_confirm">Dodaj \"%s\" v zbirko? To lahko traja dolgo časa</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>

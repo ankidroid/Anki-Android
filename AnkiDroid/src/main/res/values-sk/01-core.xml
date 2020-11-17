@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">áno</string>
-    <string name="no">nie</string>
     <!-- Navigation drawer items-->
     <string name="decks">Balíčky</string>
-    <string name="card_browser">Prehliadač kartičiek</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Prehliadač kartičiek</string>
     <string name="statistics">Štatistiky</string>
     <string name="settings">Nastavenia</string>
     <string name="help">Pomoc</string>
@@ -101,21 +100,12 @@
     <string name="menu_import">Import</string>
     <string name="undo">Späť</string>
     <string name="undo_action_review">posledné opakovanie</string>
-    <string name="undo_action_bury_card">skryť kartičku</string>
-    <string name="undo_action_bury_note">skryť poznámku</string>
-    <string name="undo_action_suspend_card">pozastaviť kartičku</string>
-    <string name="undo_action_suspend_note">pozastaviť poznámku</string>
-    <string name="undo_action_delete">vymazať poznámku</string>
-    <string name="undo_action_delete_multi">vymazať poznámky</string>
     <string name="undo_action_change_deck_multi">zmeniť balíčky</string>
-    <string name="undo_action_reschedule_card">preplánovať</string>
-    <string name="undo_action_reset_card">vynulovať progres</string>
-    <string name="undo_action_reposition_card">zmeniť pozíciu</string>
     <string name="move_all_to_deck">Premiestniť všetky do balíčka</string>
     <string name="unbury">Odkryť</string>
     <string name="rename_deck">Premenovať balíček</string>
     <string name="create_shortcut">Vytvoriť skratku</string>
-    <string name="menu_add">Pridať</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Pridať</string>
     <string name="menu_add_note">Pridať poznámku</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronizácia účtu</string>
     <string name="menu_dismiss_note">Skryt / vymazať</string>
@@ -220,6 +210,6 @@
     <string name="read_write_permission_label">Čítať a písať do databázy AnkiDroid</string>
     <string name="read_write_permission_description">prístup k existujúcim poznámkam, kartičkám, typom poznámok, balíčkom ako aj vytváranie nových</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Prehliadač kartičiek</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Prehliadač kartičiek</string>
     <string name="context_menu_anki_card_label">Anki kartička</string>
 </resources>

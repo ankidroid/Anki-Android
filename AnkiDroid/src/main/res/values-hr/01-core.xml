@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Špilovi</string>
-    <string name="card_browser">Preglednik karata</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Preglednik karata</string>
     <string name="statistics">Statistika</string>
     <string name="settings">Postavke</string>
     <string name="help">Pomoć</string>
@@ -96,21 +95,12 @@
     <string name="menu_import">Uvezi</string>
     <string name="undo">Poništi</string>
     <string name="undo_action_review">posljednji pregled</string>
-    <string name="undo_action_bury_card">zakopavanje kartice</string>
-    <string name="undo_action_bury_note">zakopavanje bilješke</string>
-    <string name="undo_action_suspend_card">obustavljanje kartice</string>
-    <string name="undo_action_suspend_note">obustavljanje bilješke</string>
-    <string name="undo_action_delete">brisanje bilješke</string>
-    <string name="undo_action_delete_multi">Izbriši bilješke</string>
     <string name="undo_action_change_deck_multi">Promjeni skupine</string>
-    <string name="undo_action_reschedule_card">Prerasporedi</string>
-    <string name="undo_action_reset_card">Resetiraj napredak</string>
-    <string name="undo_action_reposition_card">Repozicioniraj</string>
     <string name="move_all_to_deck">Premjesti sve u skupinu</string>
     <string name="unbury">Otkopaj</string>
     <string name="rename_deck">Preimenuj skupinu</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Dodaj</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Dodaj</string>
     <string name="menu_add_note">Dodaj bilješku</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinkroniziraj račun</string>
     <string name="menu_dismiss_note">Sakrij / izbriši</string>
@@ -214,6 +204,6 @@
     <string name="read_write_permission_label">Čitanje i pisanje u AnkiDroid bazu podataka</string>
     <string name="read_write_permission_description">Pristupi postojećim bilješkama, karticama, tipovima kartica i špilovima, te kreiranju novih</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Preglednik karata</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Preglednik karata</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

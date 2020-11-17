@@ -43,7 +43,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">מחיקת סוג רשומה</string>
-    <string name="model_browser_rename">שינוי שם</string>
+    <string name="model_browser_rename" comment="Rename a note type">שינוי שם</string>
     <string name="model_browser_template">עריכת קלפים</string>
     <string name="model_browser_add">הוספת סוג רשומה חדש</string>
     <!--Rename-->

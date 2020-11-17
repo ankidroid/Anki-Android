@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">نعم</string>
-    <string name="no">لا</string>
     <!-- Navigation drawer items-->
     <string name="decks">شَدّة أوراق</string>
-    <string name="card_browser">متصفح البطاقات</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">متصفح البطاقات</string>
     <string name="statistics">الإحصائيات</string>
     <string name="settings">الإعدادات</string>
     <string name="help">المساعدة</string>
@@ -111,21 +110,12 @@
     <string name="menu_import">استيراد</string>
     <string name="undo">تراجع</string>
     <string name="undo_action_review">آخر مراجعة</string>
-    <string name="undo_action_bury_card">دفن البطاقة</string>
-    <string name="undo_action_bury_note">دفن الملحوظة</string>
-    <string name="undo_action_suspend_card">تعليق البطاقة</string>
-    <string name="undo_action_suspend_note">تعليق الملحوظة</string>
-    <string name="undo_action_delete">حذف الملحوظة</string>
-    <string name="undo_action_delete_multi">حذف الملحوظات</string>
     <string name="undo_action_change_deck_multi">تغيير الرزم</string>
-    <string name="undo_action_reschedule_card">إعادة الجدولة</string>
-    <string name="undo_action_reset_card">إعادة تعيين التقدم</string>
-    <string name="undo_action_reposition_card">تغيير الموضع</string>
     <string name="move_all_to_deck">نقل الكل إلى الرزمة</string>
     <string name="unbury">نكش</string>
     <string name="rename_deck">تغيير اسم الرزمة</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">إضافة</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">إضافة</string>
     <string name="menu_add_note">إضافة ملحوظة</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">حساب المزامنة</string>
     <string name="menu_dismiss_note">إخفاء / حذف</string>
@@ -232,6 +222,6 @@
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة بيانات أنكيدرويد</string>
     <string name="read_write_permission_description">الوصول إلى الملحوظات الموجودة، والبطاقات، وأنواع الملحوظات، والرزم، بالإضافة إلى إنشاء أخرى</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">متصفح البطاقات</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">متصفح البطاقات</string>
     <string name="context_menu_anki_card_label">بطاقة أنكي</string>
 </resources>

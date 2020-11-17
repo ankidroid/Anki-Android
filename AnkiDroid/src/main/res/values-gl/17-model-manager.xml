@@ -39,7 +39,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Eliminar tipo de nota</string>
-    <string name="model_browser_rename">Renomear</string>
+    <string name="model_browser_rename" comment="Rename a note type">Renomear</string>
     <string name="model_browser_template">Editar cartóns</string>
     <string name="model_browser_add">Engadir tipo de nota</string>
     <!--Rename-->

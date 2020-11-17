@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">ja</string>
-    <string name="no">nein</string>
     <!-- Navigation drawer items-->
     <string name="decks">Stapel</string>
-    <string name="card_browser">Kartenübersicht</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kartenübersicht</string>
     <string name="statistics">Statistik</string>
     <string name="settings">Einstellungen</string>
     <string name="help">Hilfe</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">Importieren</string>
     <string name="undo">Rückgängig</string>
     <string name="undo_action_review">Letzte Wiederholung</string>
-    <string name="undo_action_bury_card">Karte aufschieben</string>
-    <string name="undo_action_bury_note">Notiz aufschieben</string>
-    <string name="undo_action_suspend_card">Karte ausschließen</string>
-    <string name="undo_action_suspend_note">Notiz ausschließen</string>
-    <string name="undo_action_delete">Notiz löschen</string>
-    <string name="undo_action_delete_multi">Notizen löschen</string>
     <string name="undo_action_change_deck_multi">Stapel wechseln</string>
-    <string name="undo_action_reschedule_card">Umplanen</string>
-    <string name="undo_action_reset_card">Fortschritt zurücksetzen</string>
-    <string name="undo_action_reposition_card">Position zurücksetzen</string>
     <string name="move_all_to_deck">Alle diesem Stapel hinzufügen</string>
     <string name="unbury">Nicht mehr aufschieben</string>
     <string name="rename_deck">Stapel umbenennen</string>
     <string name="create_shortcut">Verknüpfung erstellen</string>
-    <string name="menu_add">Hinzufügen</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Hinzufügen</string>
     <string name="menu_add_note">Notiz hinzufügen</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronisierungskonto</string>
     <string name="menu_dismiss_note">Aussetzen / Löschen</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">AnkiDroid-Datenbank lesen und schreiben</string>
     <string name="read_write_permission_description">Zugriff auf bereits vorhandene Notizen, Karten, Notiztypen und Stapel, sowie deren Neuerstellung</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Kartenübersicht</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kartenübersicht</string>
     <string name="context_menu_anki_card_label">Anki-Karte</string>
 </resources>
