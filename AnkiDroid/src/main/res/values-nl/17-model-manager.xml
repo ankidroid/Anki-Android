@@ -39,7 +39,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Notitietype verwijderen</string>
-    <string name="model_browser_rename">Naam wijzigen</string>
+    <string name="model_browser_rename" comment="Rename a note type">Naam wijzigen</string>
     <string name="model_browser_template">Bewerk kaarten</string>
     <string name="model_browser_add">Notitietype toevoegen</string>
     <!--Rename-->

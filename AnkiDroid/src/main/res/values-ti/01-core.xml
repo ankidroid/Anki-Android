@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">ባይታ</string>
-    <string name="card_browser">መስሓቢ ካርድ</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">መስሓቢ ካርድ</string>
     <string name="statistics">ምእካብን ምትትንታንን ጭብጥታት</string>
     <string name="settings">ምምዕርራይ</string>
     <string name="help">ሓገዝ</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">ኣምጽእ</string>
     <string name="undo">ንድሕሪት ተመለስ</string>
     <string name="undo_action_review">ናይ መጨረሽታ ዘጽናዕካዮ ርኣዮ</string>
-    <string name="undo_action_bury_card">ካርድ ሕባኣዮ</string>
-    <string name="undo_action_bury_note">ጽሑፍ ሕባእ</string>
-    <string name="undo_action_suspend_card">ካርድ ስሓብ</string>
-    <string name="undo_action_suspend_note">ጽሑፍ ሰሓብ</string>
-    <string name="undo_action_delete">ጽሑፍ ደምስስ</string>
-    <string name="undo_action_delete_multi">delete notes</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">ገንጽል</string>
     <string name="rename_deck">ባይታ ሰዪም</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">ደምር</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ደምር</string>
     <string name="menu_add_note">ጽሑፍ ወስኽ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ኣካውንት ኣወሃህድ</string>
     <string name="menu_dismiss_note">ሕባእ/ደምስስ</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">ምጽሓፍን ምንባብን ናብ AnkiDroid database</string>
     <string name="read_write_permission_description">ዝነበሩ ጽሑፋት፣ ካርድታት፣ ዓይነት ጽሑፋት፣ ባይታታት ከምኡ ውን ሓደሽቲ ከምዚኣቶም ዝኣመሰሉ ርከቦም።</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

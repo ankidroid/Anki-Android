@@ -262,7 +262,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Naam wijzigen</string>
     <string name="deck_conf_reset">Standaardinstellingen herstellen</string>
     <string name="deck_conf_reset_message">Standaardwaarden instellen voor de huidige set aan instellingen?</string>
-    <string name="deck_conf_add">Configuratie toevoegen</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Configuratie toevoegen</string>
     <string name="deck_conf_add_summ">Maak een kopie van de huidige groep instellingen</string>
     <string name="deck_conf_remove_message">Huidige set aan instellingen verwijderen?</string>
     <string name="deck_conf_set_subdecks">Instellen voor alle subsets</string>
@@ -286,4 +286,6 @@
     <string name="analytics_dialog_title">Help AnkiDroid te verbeteren!</string>
     <string name="analytics_title">Gebruik van functies delen</string>
     <string name="analytics_summ">Je kunt bijdragen aan AnkiDroid door het ontwikkelteam te laten zien welke functies mensen gebruiken</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

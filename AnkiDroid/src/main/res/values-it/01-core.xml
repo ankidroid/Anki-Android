@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">sì</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Mazzi</string>
-    <string name="card_browser">Browser delle carte</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Browser delle carte</string>
     <string name="statistics">Statistiche</string>
     <string name="settings">Impostazioni</string>
     <string name="help">Guida</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">Importa</string>
     <string name="undo">Annulla</string>
     <string name="undo_action_review">ultima ripetizione</string>
-    <string name="undo_action_bury_card">seppellisci carta</string>
-    <string name="undo_action_bury_note">seppellisci nota</string>
-    <string name="undo_action_suspend_card">sospendi carta</string>
-    <string name="undo_action_suspend_note">sospendi nota</string>
-    <string name="undo_action_delete">elimina nota</string>
-    <string name="undo_action_delete_multi">elimina note</string>
     <string name="undo_action_change_deck_multi">cambia mazzi</string>
-    <string name="undo_action_reschedule_card">ripianifica</string>
-    <string name="undo_action_reset_card">ripristinare i progressi</string>
-    <string name="undo_action_reposition_card">riposiziona</string>
     <string name="move_all_to_deck">Sposta tutto nel mazzo</string>
     <string name="unbury">Disseppellisci</string>
     <string name="rename_deck">Rinomina mazzo</string>
     <string name="create_shortcut">Crea scorciatoia</string>
-    <string name="menu_add">Aggiungi</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Aggiungi</string>
     <string name="menu_add_note">Aggiungi nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizza account</string>
     <string name="menu_dismiss_note">Nascondi / Cancella</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
     <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Browser delle carte</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Browser delle carte</string>
     <string name="context_menu_anki_card_label">Carta Anki</string>
 </resources>

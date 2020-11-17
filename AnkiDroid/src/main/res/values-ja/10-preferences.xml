@@ -261,7 +261,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">名前の変更</string>
     <string name="deck_conf_reset">標準の設定へ戻す</string>
     <string name="deck_conf_reset_message">このオプショングループを標準の設定に戻しますか？</string>
-    <string name="deck_conf_add">追加</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">追加</string>
     <string name="deck_conf_add_summ">このオプショングループのコピーを作成します</string>
     <string name="deck_conf_remove_message">このオプショングループを削除しますか？</string>
     <string name="deck_conf_set_subdecks">全てのサブデッキに適用</string>
@@ -284,4 +284,6 @@
     <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title">設定の情報提供を許可する</string>
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます。</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

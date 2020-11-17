@@ -265,7 +265,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Premenovať</string>
     <string name="deck_conf_reset">Obnoviť predvolené</string>
     <string name="deck_conf_reset_message">Obnoviť pôvodné hodnoty aktuálnej skupiny nastavení ?</string>
-    <string name="deck_conf_add">Pridať konfiguráciu</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Pridať konfiguráciu</string>
     <string name="deck_conf_add_summ">Vytvoriť kópiu aktuálnej skupiny nastavení</string>
     <string name="deck_conf_remove_message">Odstrániť aktuálnu skupinu nastavení?</string>
     <string name="deck_conf_set_subdecks">Nastaviť pre všetky podbalíčky</string>
@@ -291,4 +291,6 @@
     <string name="analytics_dialog_title">Pomôžte spraviť AnkiDroid lepším!</string>
     <string name="analytics_title">Zdieľať používanie prvkov</string>
     <string name="analytics_summ">Môžete prispieť pre AnkiDroid tak, že umožníte vývojovému tímu sledovať, ktoré prvky sa používajú</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

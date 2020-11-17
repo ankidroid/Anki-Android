@@ -39,7 +39,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Ta bort nottyp</string>
-    <string name="model_browser_rename">Byt namn</string>
+    <string name="model_browser_rename" comment="Rename a note type">Byt namn</string>
     <string name="model_browser_template">Redigera kort</string>
     <string name="model_browser_add">Lägg till nottyp</string>
     <!--Rename-->

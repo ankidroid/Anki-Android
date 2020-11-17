@@ -39,7 +39,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Forigi nototipon</string>
-    <string name="model_browser_rename">Alinomi</string>
+    <string name="model_browser_rename" comment="Rename a note type">Alinomi</string>
     <string name="model_browser_template">Redakti kartojn</string>
     <string name="model_browser_add">Aldoni nototipon</string>
     <!--Rename-->

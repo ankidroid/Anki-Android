@@ -39,7 +39,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Delete note type</string>
-    <string name="model_browser_rename">Μετονομασία</string>
+    <string name="model_browser_rename" comment="Rename a note type">Μετονομασία</string>
     <string name="model_browser_template">Επεξεργασία καρτών</string>
     <string name="model_browser_add">Add note type</string>
     <!--Rename-->

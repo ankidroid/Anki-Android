@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Nascondi lavagna</string>
     <string name="clear_whiteboard">Pulisci lavagna</string>
     <string name="replay_audio">Riproduci audio</string>
-    <string name="toggle_mic_tool_bar">Controlla la pronuncia</string>
     <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
     <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
     <string name="corrupt_font">File dei caratteri corrotto %s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">Valuta AnkiDroid</string>
     <string name="import_title">Importazione in corso</string>
     <string name="import_select_title">Scegli un file da importare</string>
-    <string name="import_message_add">Aggiungi</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aggiungi</string>
     <string name="import_message_replace_confirm">La tua collezione esistente verrà eliminata e sostituita con i dati del file %s. Sei sicuro?</string>
     <string name="import_message_add_confirm">Aggiungere \"%s\" alla collezione? Può richiedere molto tempo</string>
     <string name="import_log_no_apkg">Questo non è un file di pacchetto Anki valido</string>

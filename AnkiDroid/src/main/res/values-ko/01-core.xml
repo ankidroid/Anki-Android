@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">카드 묶음</string>
-    <string name="card_browser">카드 탐색기</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">카드 탐색기</string>
     <string name="statistics">통계</string>
     <string name="settings">설정</string>
     <string name="help">도움말</string>
@@ -86,21 +85,12 @@
     <string name="menu_import">가져오기</string>
     <string name="undo">실행 취소</string>
     <string name="undo_action_review">마지막 복습</string>
-    <string name="undo_action_bury_card">카드 나중에 보기</string>
-    <string name="undo_action_bury_note">노트 나중에 보기</string>
-    <string name="undo_action_suspend_card">카드 비활성화하기</string>
-    <string name="undo_action_suspend_note">노트 비활성화하기</string>
-    <string name="undo_action_delete">노트 삭제</string>
-    <string name="undo_action_delete_multi">노트 삭제하기</string>
     <string name="undo_action_change_deck_multi">카드묶음 변경</string>
-    <string name="undo_action_reschedule_card">예정일 변경</string>
-    <string name="undo_action_reset_card">학습 진도 재설정</string>
-    <string name="undo_action_reposition_card">순서 변경</string>
     <string name="move_all_to_deck">카드묶음으로 모두 이동</string>
     <string name="unbury">지금 보기</string>
     <string name="rename_deck">카드 묶음 이름 바꾸기</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">추가</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">추가</string>
     <string name="menu_add_note">노트 추가</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">계정 동기화</string>
     <string name="menu_dismiss_note">숨김 / 삭제</string>
@@ -202,6 +192,6 @@
     <string name="read_write_permission_label">AnkiDroid 데이터베이스에 읽고 쓰기</string>
     <string name="read_write_permission_description">기존의 노트, 카드, 노트 유형, 카드 묶음을 접근 및 생성</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

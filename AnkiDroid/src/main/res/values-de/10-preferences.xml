@@ -262,7 +262,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Umbenennen</string>
     <string name="deck_conf_reset">Standard wiederherstellen</string>
     <string name="deck_conf_reset_message">Die aktuelle Optionsgruppe auf Standardwerte zurücksetzen?</string>
-    <string name="deck_conf_add">Konfiguration hinzufügen</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Konfiguration hinzufügen</string>
     <string name="deck_conf_add_summ">Kopie der aktuellen Optionsgruppe erstellen</string>
     <string name="deck_conf_remove_message">Aktuelle Optionsgruppe löschen?</string>
     <string name="deck_conf_set_subdecks">Auf alle Unterstapel anwenden</string>
@@ -286,4 +286,6 @@
     <string name="analytics_dialog_title">Helfen Sie mit, AnkiDroid zu verbessern!</string>
     <string name="analytics_title">Funktionsnutzung teilen</string>
     <string name="analytics_summ">Sie können zu AnkiDroid beitragen, indem Sie dem Entwicklerteam Einblick gewähren, welche Funktionen Sie verwenden</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

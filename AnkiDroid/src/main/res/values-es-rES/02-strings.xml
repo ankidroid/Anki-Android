@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Ocultar pizarra</string>
     <string name="clear_whiteboard">Limpiar pizarra</string>
     <string name="replay_audio">Repetir audio</string>
-    <string name="toggle_mic_tool_bar">Comprobar Pronunciación</string>
     <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
     <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
     <string name="corrupt_font">Archivo de fuentes %s corrupto</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">Puntúa AnkiDroid</string>
     <string name="import_title">Importando</string>
     <string name="import_select_title">Elija un archivo para importar</string>
-    <string name="import_message_add">Añadir</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Añadir</string>
     <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s</string>
     <string name="import_message_add_confirm">¿Añadir \"%s\" a la colección? Esto puede tardar</string>
     <string name="import_log_no_apkg">Este no es un archivo de paquete Anki válido</string>

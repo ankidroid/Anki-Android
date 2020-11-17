@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">ᱦᱮᱸ</string>
-    <string name="no">ᱵᱟᱝ</string>
     <!-- Navigation drawer items-->
     <string name="decks">ᱰᱮᱠ ᱠᱚ</string>
-    <string name="card_browser">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
     <string name="statistics">ᱟᱸᱠᱰᱟ</string>
     <string name="settings">ᱥᱟᱡᱟᱣᱠᱚ</string>
     <string name="help">ᱜᱚᱸᱲᱚᱸ</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">ᱟᱭᱟᱛ</string>
     <string name="undo">ᱢᱟᱲᱟᱝᱟᱜ</string>
     <string name="undo_action_review">ᱢᱟᱲᱟᱝᱟᱜ ᱧᱮᱧᱮᱞᱠᱚᱜ</string>
-    <string name="undo_action_bury_card">ᱠᱟᱰ ᱛᱚᱯᱟᱭ ᱢᱮ</string>
-    <string name="undo_action_bury_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱛᱚᱯᱟᱭ ᱢᱮ</string>
-    <string name="undo_action_suspend_card">ᱠᱟᱰ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
-    <string name="undo_action_suspend_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
-    <string name="undo_action_delete">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
-    <string name="undo_action_delete_multi">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
     <string name="undo_action_change_deck_multi">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
-    <string name="undo_action_reschedule_card">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
-    <string name="undo_action_reset_card">ᱯᱨᱚᱜᱨᱮᱥ ᱨᱤᱥᱮᱴ ᱢᱮ</string>
-    <string name="undo_action_reposition_card">ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱢᱮ</string>
     <string name="move_all_to_deck">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱛᱮ ᱩᱪᱟ.ᱰ ᱡᱮ</string>
     <string name="unbury">ᱛᱚᱯᱟ ᱚᱰᱚᱠ ᱢᱮ</string>
     <string name="rename_deck">ᱰᱮᱠ ᱟ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ‌ ᱢᱮ</string>
     <string name="create_shortcut">ᱥᱚᱴᱠᱚᱴ ᱛᱮᱭᱟᱨ ᱢᱮᱸ</string>
-    <string name="menu_add">ᱥᱮᱞᱮᱫ </string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ᱥᱮᱞᱮᱫ </string>
     <string name="menu_add_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ᱠᱷᱟᱛᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱮ</string>
     <string name="menu_dismiss_note">ᱩᱠᱩᱭ ᱢᱮ/ᱜᱫ ᱜᱤᱰᱤ</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">AnkiDroid ᱥᱟᱫᱠᱷᱤᱭᱟᱽ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱟᱨ ᱚᱞ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="read_write_permission_description">ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ, ᱠᱟᱰ, ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱯᱨᱚᱠᱟᱨ ᱟᱨ ᱰᱮᱠ ᱚᱠ ᱦᱚᱠ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ ᱚᱱᱟ ᱥᱟᱞᱟᱜ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱦᱚᱸ ᱛᱮᱭᱟᱨ ᱫᱟᱲᱮᱭᱟᱼᱜᱢ</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
     <string name="context_menu_anki_card_label">Anki ᱠᱟᱰ</string>
 </resources>

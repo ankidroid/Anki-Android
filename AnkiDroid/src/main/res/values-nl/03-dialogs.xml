@@ -173,7 +173,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid geüpgraded</string>
     <string name="integrity_check_startup_content">AnkiDroid is geüpgraded. Deze upgrade bevat correcties voor mogelijke problemen in de database en we raden u aan om de database nu te controleren.</string>
-    <string name="integrity_check_positive">Database controleren</string>
     <string name="integrity_check_continue_anyway">Toch doorgaan</string>
     <string name="integrity_check_insufficient_space">Controle van de database gebruikt een grote hoeveelheid tijdelijke geheugen.\n\nHet wordt sterk aanbevolen dat u ten minste %s vrije ruimte op uw toestel hebt voordat u verder gaat.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nU hebt momenteel %s vrij.</string>
@@ -221,7 +220,6 @@
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">Support AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_translate_ankidroid">Translate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
     <string name="help_item_support_other_ankidroid">Other</string>

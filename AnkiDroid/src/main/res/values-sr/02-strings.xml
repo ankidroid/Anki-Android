@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Сакриј белу таблу</string>
     <string name="clear_whiteboard">Избриши белу таблу</string>
     <string name="replay_audio">Поново пусти аудио</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Карта је означена као пијавица и отказана</string>
     <string name="leech_notification">Картица је означена као пијавица</string>
     <string name="corrupt_font">Оштећена датотека фонта %s</string>
@@ -159,7 +158,7 @@
     <string name="info_rate">Оцени AnkiDroid</string>
     <string name="import_title">Importing</string>
     <string name="import_select_title">Изаберите датотеку за увоз</string>
-    <string name="import_message_add">Додај</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додај</string>
     <string name="import_message_replace_confirm">Избрисати вашу постојећу колекцију и заменити је подацима из датотеке %s. Да ли сте сигурни?</string>
     <string name="import_message_add_confirm">Додај „%s“ у колекцију. Ово може да протраје неко време.</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>

@@ -43,7 +43,7 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Vymazať typ poznámok</string>
-    <string name="model_browser_rename">Premenovať</string>
+    <string name="model_browser_rename" comment="Rename a note type">Premenovať</string>
     <string name="model_browser_template">Upraviť kartičky</string>
     <string name="model_browser_add">Pridať typ poznámok</string>
     <!--Rename-->

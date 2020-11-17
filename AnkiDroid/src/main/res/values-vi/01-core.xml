@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Các bộ thẻ</string>
-    <string name="card_browser">Trình duyệt thẻ</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Trình duyệt thẻ</string>
     <string name="statistics">Thống kê</string>
     <string name="settings">Cài đặt</string>
     <string name="help">Trợ giúp</string>
@@ -86,21 +85,12 @@
     <string name="menu_import">Nhập</string>
     <string name="undo">Hoàn tác</string>
     <string name="undo_action_review">lần ôn tập trước</string>
-    <string name="undo_action_bury_card">ẩn thẻ</string>
-    <string name="undo_action_bury_note">ẩn ghi chú</string>
-    <string name="undo_action_suspend_card">tạm dừng thẻ</string>
-    <string name="undo_action_suspend_note">tạm dừng ghi chú</string>
-    <string name="undo_action_delete">xoá ghi chú</string>
-    <string name="undo_action_delete_multi">xóa các ghi chú</string>
     <string name="undo_action_change_deck_multi">thay đổi các bộ thẻ</string>
-    <string name="undo_action_reschedule_card">lên lịch lại</string>
-    <string name="undo_action_reset_card">đặt lại tiến độ</string>
-    <string name="undo_action_reposition_card">đặt lại vị trí</string>
     <string name="move_all_to_deck">Di chuyển tất cả đến bộ thẻ</string>
     <string name="unbury">Bỏ tạm ẩn</string>
     <string name="rename_deck">Đổi tên bộ thẻ</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Thêm</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Thêm</string>
     <string name="menu_add_note">Thêm ghi chú</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Tài khoản đồng bộ</string>
     <string name="menu_dismiss_note">Ẩn / xoá</string>
@@ -202,6 +192,6 @@
     <string name="read_write_permission_label">Đọc và ghi vào cơ sở dữ liệu AnkiDroid</string>
     <string name="read_write_permission_description">truy cập các ghi chú, thẻ, loại ghi chú và các bộ thẻ đang tồn tại, cũng như tạo mới chúng</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

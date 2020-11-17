@@ -187,7 +187,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid оновлено</string>
     <string name="integrity_check_startup_content">AnkiDroid оновлено. Оновлення включає в себе виправлення можливих проблем з базою даних, і ми радимо Вам запустити перевірку бази даних.</string>
-    <string name="integrity_check_positive">Перевірити базу даних</string>
     <string name="integrity_check_continue_anyway">Все одно продовжити</string>
     <string name="integrity_check_insufficient_space">Перевірка бази даних використовує багато тимчасового сховища.\n\nНаполегливо рекомендується мати принаймні %s вільного місця на пристрої перед продовженням.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nЗараз %s вільного місця.</string>
@@ -235,7 +234,6 @@
     <string name="help_item_report_bug">Повідомити про помилку</string>
     <string name="help_title_support_ankidroid">Підтримати AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Пожертвувати</string>
-    <string name="help_item_support_translate_ankidroid">Перекласти</string>
     <string name="help_item_support_develop_ankidroid">Розробка</string>
     <string name="help_item_support_rate_ankidroid">Оцінити</string>
     <string name="help_item_support_other_ankidroid">Інше</string>

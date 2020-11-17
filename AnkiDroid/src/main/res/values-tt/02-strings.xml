@@ -42,74 +42,73 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Open drawer</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Close drawer</string>
-    <string name="CardEditorCardDeck">Card deck:</string>
-    <string name="CardEditorNoteDeck">Deck:</string>
-    <string name="CardEditorModel">Type:</string>
-    <string name="CardEditorTags">Tags: %1$s</string>
-    <string name="CardEditorCards">Cards: %1$s</string>
-    <string name="tag_name">Tag name</string>
-    <string name="add_new_filter_tags">Add/filter tags</string>
-    <string name="add_tag">Add tag</string>
-    <string name="check_all_tags">Check/uncheck all tags</string>
-    <string name="filter_tags">Filter tags</string>
-    <string name="no_tags">You haven’t added any tags yet</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Панельне ачу</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Панельне ябу</string>
+    <string name="CardEditorCardDeck">Кәрт колодасы:</string>
+    <string name="CardEditorNoteDeck">Колода:</string>
+    <string name="CardEditorModel">Төр:</string>
+    <string name="CardEditorTags">Тамгалар: %1$s</string>
+    <string name="CardEditorCards">Кәртләр: %1$s</string>
+    <string name="tag_name">Тамга исеме</string>
+    <string name="add_new_filter_tags">Тамгалар өстәү/фильтрлау</string>
+    <string name="add_tag">Тамга кушу</string>
+    <string name="check_all_tags">Бөтен тамгаларны сайлау/сайлауны бетерү</string>
+    <string name="filter_tags">Тамгаларны фильтрлау</string>
+    <string name="no_tags">Тамгаларны өстәмәдегез әле</string>
+    <string name="updated_version">%s версиясенә яңартылды</string>
     <!-- Reviewer.java -->
-    <string name="save_whiteboard">Save whiteboard</string>
-    <string name="enable_whiteboard">Enable whiteboard</string>
-    <string name="disable_whiteboard">Disable whiteboard</string>
-    <string name="show_whiteboard">Show whiteboard</string>
-    <string name="hide_whiteboard">Hide whiteboard</string>
-    <string name="clear_whiteboard">Clear whiteboard</string>
-    <string name="replay_audio">Replay audio</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
-    <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-    <string name="leech_notification">Card marked as leech</string>
-    <string name="corrupt_font">Corrupt font file %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="save_whiteboard">Язылганны сакларга</string>
+    <string name="enable_whiteboard">Тактаны кабызу</string>
+    <string name="disable_whiteboard">Тактаны сүндерү</string>
+    <string name="show_whiteboard">Тактаны күрсәтү</string>
+    <string name="hide_whiteboard">Тактаны качыру</string>
+    <string name="clear_whiteboard">Тактаны сөртү</string>
+    <string name="replay_audio">Аудионы кабатлау</string>
+    <string name="leech_suspend_notification">Кәрт бәйләнчек итеп куелган hәм искә алынмас</string>
+    <string name="leech_notification">Кәрт бәйләнчек итеп куелган</string>
+    <string name="corrupt_font">%s шрифт файлы бозылган</string>
+    <string name="webview_crash_unknown">Билгесез хата</string>
+    <string name="webview_crash_unknwon_detailed">Бу WebViewның эчке хатасы аркасында килеп чыкты</string>
+    <string name="webview_crash_oom">Хәтер җитми</string>
+    <string name="webview_crash_oom_details">WebView система тарафыннан ябылды. Бу гадәттә кушымтанын зур шрифтлар я медиафайллар аркасында хәтере бетүеннән килеп чыга.</string>
+    <string name="webview_crash_nonfatal">WebView хатасы. Сәбәбе: %s</string>
+    <string name="webview_crash_fatal">Критик хата: WebView ябылды. Сәбәбе: %s</string>
+    <string name="webview_crash_loop_dialog_title">Система WebViewының хатасы</string>
+    <string name="webview_crash_loop_dialog_content">Система WebViewы \'%1$s\' кәртен ача алмады.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
-        <item>Question</item>
-        <item>Sort field</item>
+        <item>Сорау</item>
+        <item>Сортлау аланы</item>
     </string-array>
     <string-array name="browser_column2_headings">
-        <item>Answer</item>
-        <item>Card</item>
-        <item>Deck</item>
-        <item>Note</item>
-        <item>Question</item>
-        <item>Tags</item>
-        <item>Lapses</item>
-        <item>Reviews</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>Җәвап</item>
+        <item>Кәрт</item>
+        <item>Колода</item>
+        <item>Язу</item>
+        <item>Сорау</item>
+        <item>Тамгалар</item>
+        <item>Ялгышлар</item>
+        <item>Кабатлаулар</item>
+        <item>Интервал</item>
+        <item>Авырлык</item>
+        <item>Вакыт</item>
+        <item>Кәрт үзгәртелеше</item>
+        <item>Ясалган</item>
+        <item>Язу үзгәртелеше</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Review forgotten cards</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">Preview new cards</string>
-    <string name="custom_study_limit_tags">Limit to particular tags</string>
+    <string name="custom_study_increase_new_limit">Бугенге кәрт лимитын үзгәртү</string>
+    <string name="custom_study_increase_review_limit">Бугенге кабатланган кәрт лимитын үзгәртү</string>
+    <string name="custom_study_review_forgotten">Онытылган кәртләрне кабатлау</string>
+    <string name="custom_study_review_ahead">Алдагын кабатлау</string>
+    <string name="custom_study_random_selection">Очраклы кәрт сайланышын өйрәнү</string>
+    <string name="custom_study_preview_new">Яңаларны карау</string>
+    <string name="custom_study_limit_tags">Кайбер тамгаларны гына</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Edit note</string>
-    <string name="discard_unsaved_changes">Close and lose current input?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="cardeditor_title_edit_card">Язуны үзгәртү</string>
+    <string name="discard_unsaved_changes">Ябу hәм үзгәртүләрне югалту?</string>
+    <string name="note_editor_no_cards_created">Кәртләр ясалмаган. Кубрәк юлларны тутырыгыз</string>
+    <string name="note_editor_no_first_field">Беренче юл буш</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_set_field_language">Set field language</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
@@ -153,15 +152,15 @@
     <string name="info_rate">Rate AnkiDroid</string>
     <string name="import_title">Importing</string>
     <string name="import_select_title">Choose a file to import</string>
-    <string name="import_message_add">Add</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
     <string name="import_message_add_confirm">Add “%s” to collection? This may take a long time</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space">There is not enough space to unzip the package. Needed %1$d, available %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
+    <string name="import_log_no_apkg">Бу эшли торган Anki файлы түгел</string>
+    <string name="import_log_failed_unzip">Бу apkgны ачып булмады: %s</string>
+    <string name="import_log_failed_copy_to">apkgны %sга копияләп булмады</string>
+    <string name="import_log_failed_validate">apkgны тикшереп булмады</string>
+    <string name="import_log_insufficient_space">Пакетны ачу өчен урын җитми. Кирәк: %1$d, бар: %2$d</string>
+    <string name="import_log_file_cache_cleared">Файлны импортланганда хата: бәлки, кэш чистартылган иде. Яңадан тырышып карагыз.</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
     <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>

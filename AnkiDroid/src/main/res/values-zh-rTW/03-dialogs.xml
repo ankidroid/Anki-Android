@@ -166,7 +166,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Ankidroid 已更新</string>
     <string name="integrity_check_startup_content">AnkiDroid 已更新，此更新包含修復潛在的資料庫問題，而我們建議您現在執行檢查資料庫。</string>
-    <string name="integrity_check_positive">檢查資料庫</string>
     <string name="integrity_check_continue_anyway">仍要繼續</string>
     <string name="integrity_check_insufficient_space">檢查資料庫將使用大量暫存。\n\n強烈推薦您在繼續前保證裝置上至少擁有 %s 閒置空間。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n你當前擁有 %s 空閒。</string>
@@ -214,7 +213,6 @@
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">Support AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_translate_ankidroid">Translate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
     <string name="help_item_support_other_ankidroid">Other</string>

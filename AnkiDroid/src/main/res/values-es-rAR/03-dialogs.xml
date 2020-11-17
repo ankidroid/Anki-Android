@@ -173,7 +173,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Ankidroid actualizado</string>
     <string name="integrity_check_startup_content">AnkiDroid ha sido actualizado. Esta actualización incluye correcciones para posibles problemas de base de datos, y le aconsejamos que comprueba la base de datos ahora.</string>
-    <string name="integrity_check_positive">Comprobar base de datos</string>
     <string name="integrity_check_continue_anyway">Continuar igualmente</string>
     <string name="integrity_check_insufficient_space">Compruebar de la base de datos utiliza una gran cantidad de almacenamiento temporal.\n\nEs altamente recomendable que tenga al menos %s espacio libre en su dispositivo antes de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nActualmente tienes %s libre.</string>
@@ -221,7 +220,6 @@
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">Support AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_translate_ankidroid">Translate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
     <string name="help_item_support_other_ankidroid">Other</string>

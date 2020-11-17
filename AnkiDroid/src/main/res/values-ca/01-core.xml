@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paquets</string>
-    <string name="card_browser">Navegador de cartes</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navegador de cartes</string>
     <string name="statistics">Estadístiques</string>
     <string name="settings">Configuració</string>
     <string name="help">Ajuda</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">Importar</string>
     <string name="undo">Desfés</string>
     <string name="undo_action_review">revisió final</string>
-    <string name="undo_action_bury_card">enterrar carta</string>
-    <string name="undo_action_bury_note">enterrar nota</string>
-    <string name="undo_action_suspend_card">Suspèn la fitxa</string>
-    <string name="undo_action_suspend_note">suspèn la nota</string>
-    <string name="undo_action_delete">Suprimeix la nota</string>
-    <string name="undo_action_delete_multi">esborrar nota</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">tornar a planificar</string>
-    <string name="undo_action_reset_card">restablir el progrés</string>
-    <string name="undo_action_reposition_card">canviar la posició</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Canvia el nom del paquet</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">Afegir</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Afegir</string>
     <string name="menu_add_note">Afegir nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de sincronització</string>
     <string name="menu_dismiss_note">Amagar / eliminar</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">Llegir i escriure a la base de dades d\'AnkiDroid</string>
     <string name="read_write_permission_description">accés a notes, targetes, tipus de nota i malls existents, així com crear-ne de nous</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

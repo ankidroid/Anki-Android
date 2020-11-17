@@ -64,7 +64,6 @@
     <string name="hide_whiteboard">Skjul tavle</string>
     <string name="clear_whiteboard">Rens tavle</string>
     <string name="replay_audio">Spill lydklipp på nytt</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Kort merket som igle og suspendert</string>
     <string name="leech_notification">Kort merket som igle</string>
     <string name="corrupt_font">Ugyldig font-fil %s</string>
@@ -156,7 +155,7 @@
     <string name="info_rate">Bedøm AnkiDroid</string>
     <string name="import_title">Importerer</string>
     <string name="import_select_title">Velg en fil å importere</string>
-    <string name="import_message_add">Legg til</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Legg til</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
     <string name="import_message_add_confirm">Legge til \"%s\" til samlingen? Det kan ta lang tid</string>
     <string name="import_log_no_apkg">Dette er ikke en gyldig Anki pakke fil</string>

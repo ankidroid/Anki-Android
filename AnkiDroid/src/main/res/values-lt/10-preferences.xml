@@ -265,7 +265,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Pervadinti</string>
     <string name="deck_conf_reset">Atkurti numatytuosius parametrus</string>
     <string name="deck_conf_reset_message">Ar norite atkurti esamos parinkčių grupės parametrus į numatytuosius?</string>
-    <string name="deck_conf_add">Pridėti</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Pridėti</string>
     <string name="deck_conf_add_summ">Kurti esamų parinkčių grupės kopiją</string>
     <string name="deck_conf_remove_message">Ar norite pašalinti esamą parinkčių grupę?</string>
     <string name="deck_conf_set_subdecks">Taikyti visiems poaplankiams</string>
@@ -291,4 +291,6 @@
     <string name="analytics_dialog_title">Padėkite tobulinti „AnkiDroid“!</string>
     <string name="analytics_title"> Dalintis funkcijų naudojimu</string>
     <string name="analytics_summ">Galite prisidėti prie „AnkiDroid“ tobulinimo, padėdami kūrėjų komandai suprasti, kokiomis funkcijomis žmonės naudojasi</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

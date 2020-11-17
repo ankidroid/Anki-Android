@@ -264,7 +264,7 @@
     <string name="deck_conf_rename" comment="Menu entry to rename a deck">Преименуј</string>
     <string name="deck_conf_reset">Врати подразумевана подешавања</string>
     <string name="deck_conf_reset_message">Да вратим тренутну групу опција на подразумевана подешавања?</string>
-    <string name="deck_conf_add">Додавање конфигурације</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Додавање конфигурације</string>
     <string name="deck_conf_add_summ">Направи копију текуће групе опција</string>
     <string name="deck_conf_remove_message">Да уклоним текућу групу опција?</string>
     <string name="deck_conf_set_subdecks">Задај за све групе подшпилова</string>
@@ -289,4 +289,6 @@
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

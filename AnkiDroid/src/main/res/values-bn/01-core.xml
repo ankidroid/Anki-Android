@@ -39,10 +39,9 @@
 -->
 <resources>
     <string name="yes">yes</string>
-    <string name="no">no</string>
     <!-- Navigation drawer items-->
     <string name="decks">ডেকসমূহ</string>
-    <string name="card_browser">কার্ড ব্রাউজার</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">কার্ড ব্রাউজার</string>
     <string name="statistics">পরিসংখ্যান</string>
     <string name="settings">সেটিংস</string>
     <string name="help">সাহায্য</string>
@@ -91,21 +90,12 @@
     <string name="menu_import">আমদানি করুন</string>
     <string name="undo">বাতিল করুন</string>
     <string name="undo_action_review">সর্বশেষ পর্যালোচনা</string>
-    <string name="undo_action_bury_card">কার্ড বাতিল</string>
-    <string name="undo_action_bury_note">নোট বাতিল</string>
-    <string name="undo_action_suspend_card">কার্ড স্থগিত</string>
-    <string name="undo_action_suspend_note">নোট স্থগিত</string>
-    <string name="undo_action_delete">নোট মুছে ফেলুন</string>
-    <string name="undo_action_delete_multi">delete notes</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">বাতিল স্থগিত করুন</string>
     <string name="rename_deck">ডেক পুনঃনামকরণ করুন</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="menu_add">যোগ করুন</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">যোগ করুন</string>
     <string name="menu_add_note">নোট যোগ করুন</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">হিসাব সিঙ্ক করুন</string>
     <string name="menu_dismiss_note">গোপন / মুছে ফেলুন</string>
@@ -208,6 +198,6 @@
     <string name="read_write_permission_label">AnkiDroid ডাটাবেস থেকে পড়ুন এবং লিখুন</string>
     <string name="read_write_permission_description">বিদ্যমান নোট, কার্ড, নোটের ধরন এবং ডেক এ প্রবেশের পাশাপাশি নতুন একটি তৈরি করুন</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>
