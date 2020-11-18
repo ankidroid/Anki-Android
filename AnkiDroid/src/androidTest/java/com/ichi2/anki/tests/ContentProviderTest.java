@@ -793,6 +793,7 @@ public class ContentProviderTest extends InstrumentedTest {
         for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
             col.reset();
             nextCard = sched.getCard();
+            CollectionTask.waitToFinish();
             if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
             CollectionTask.waitToFinish();
 
