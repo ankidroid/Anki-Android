@@ -149,7 +149,7 @@ public class FinderTest extends RobolectricTest {
         note.setItem("Back", "foo bar");
         col.addNote(note);
         col.save();
-        List<Long> latestCardIds = note.cids();
+        LongArrayList latestCardIds = note.cids();
         // tag searches
         assertEquals(5, col.findCards("tag:*").size());
         assertEquals(1, col.findCards("tag:\\*").size());

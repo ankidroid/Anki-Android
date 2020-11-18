@@ -43,6 +43,7 @@ import androidx.annotation.Nullable;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 /**
@@ -224,8 +225,8 @@ public class DB {
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
-    public ArrayList<Long> queryLongList(String query, Object... bindArgs) {
-        ArrayList<Long> results = new ArrayList<>();
+    public LongArrayList queryLongList(String query, Object... bindArgs) {
+        LongArrayList results = new LongArrayList();
 
         try (Cursor cursor = mDatabase.query(query, bindArgs)) {
             while (cursor.moveToNext()) {

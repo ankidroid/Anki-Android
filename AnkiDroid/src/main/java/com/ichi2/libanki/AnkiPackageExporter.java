@@ -42,6 +42,8 @@ import java.util.Set;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 import static com.ichi2.utils.CollectionUtils.addAll;
@@ -122,7 +124,7 @@ class AnkiExporter extends Exporter {
         Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
                 .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
-        List<Long> uniqueNids = mSrc.getDb().queryLongList(
+        LongArrayList uniqueNids = mSrc.getDb().queryLongList(
                 "select distinct nid from cards where id in " + Utils.ids2str(cids));
         // notes
         Timber.d("Copy notes");
@@ -137,14 +139,14 @@ class AnkiExporter extends Exporter {
             Object [] arg = new Object[2];
             for (int row = 0; row < srcTags.size(); row++) {
                 arg[0]=removeSystemTags(srcTags.get(row));
-                arg[1]=uniqueNids.get(row);
+                arg[1]=uniqueNids.getLong(row);
                 args.add(row, arg);
             }
             mSrc.getDb().executeMany("UPDATE DST_DB.notes set tags=? where id=?", args);
         }
         // models used by the notes
         Timber.d("Finding models used by notes");
-        ArrayList<Long> mids = mSrc.getDb().queryLongList(
+        LongArrayList mids = mSrc.getDb().queryLongList(
                 "select distinct mid from DST_DB.notes where id in " + strnids);
         // card history and revlog
         if (mIncludeSched) {
@@ -210,11 +212,11 @@ class AnkiExporter extends Exporter {
         JSONObject media = new JSONObject();
         mMediaDir = mSrc.getMedia().dir();
         if (mIncludeMedia) {
-            ArrayList<Long> mid = mSrc.getDb().queryLongList("select mid from notes where id in " + strnids);
+            LongArrayList mid = mSrc.getDb().queryLongList("select mid from notes where id in " + strnids);
             ArrayList<String> flds = mSrc.getDb().queryStringList(
                     "select flds from notes where id in " + strnids);
             for (int idx = 0; idx < mid.size(); idx++) {
-                for (String file : mSrc.getMedia().filesInStr(mid.get(idx), flds.get(idx))) {
+                for (String file : mSrc.getMedia().filesInStr(mid.getLong(idx), flds.get(idx))) {
                     // skip files in subdirs
                     if (file.contains(File.separator)) {
                         continue;

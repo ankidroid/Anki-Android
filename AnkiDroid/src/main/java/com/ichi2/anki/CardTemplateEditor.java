@@ -69,6 +69,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 import com.ichi2.async.TaskData;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
@@ -532,9 +533,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
             // If we have a card for this position, send it, otherwise an empty cardlist signals to show a blank
             if (noteId != -1L) {
-                List<Long> cids = col.getNote(noteId).cids();
+                LongArrayList cids = col.getNote(noteId).cids();
                 if (ordinal < cids.size()) {
-                    i.putExtra("cardList", new long[] { cids.get(ordinal) });
+                    i.putExtra("cardList", new long[] { cids.getLong(ordinal) });
                 }
             }
             // Save the model and pass the filename if updated
