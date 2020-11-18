@@ -413,8 +413,8 @@ public class FinderTest extends RobolectricTest {
         note4.setItem("Front", "quuux");
         note4.setItem("Back", "nope");
         col.addNote(note4);
-        List<Pair<String, List<Long>>> r = col.findDupes("Back");
-        Pair<String, List<Long>> r0 = r.get(0);
+        List<Pair<String, LongArrayList>> r = col.findDupes("Back");
+        Pair<String, LongArrayList> r0 = r.get(0);
         assertEquals("bar", r0.first);
         assertEquals(3, r0.second.size());
         // valid search

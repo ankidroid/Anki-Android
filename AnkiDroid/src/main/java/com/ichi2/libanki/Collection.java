@@ -1287,12 +1287,12 @@ public class Collection {
     }
 
 
-    public List<Pair<String, List<Long>>> findDupes(String fieldName) {
+    public List<Pair<String, LongArrayList>> findDupes(String fieldName) {
         return Finder.findDupes(this, fieldName, "");
     }
 
 
-    public List<Pair<String, List<Long>>> findDupes(String fieldName, String search) {
+    public List<Pair<String, LongArrayList>> findDupes(String fieldName, String search) {
         return Finder.findDupes(this, fieldName, search);
     }
 
