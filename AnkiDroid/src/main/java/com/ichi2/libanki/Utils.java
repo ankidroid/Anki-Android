@@ -70,6 +70,7 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.Nullable;
+import it.unimi.dsi.fastutil.longs.LongIterable;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
@@ -405,6 +406,22 @@ public class Utils {
     }
 
     /** Given a list of integers, return a string '(int1,int2,...)', in order given by the iterator. */
+    public static <T> String ids2str(LongIterable ids) {
+        StringBuilder sb = new StringBuilder(512);
+        sb.append("(");
+        boolean isNotFirst = false;
+        for (long id : ids) {
+            if (isNotFirst) {
+                sb.append(", ");
+            } else {
+                isNotFirst = true;
+            }
+            sb.append(id);
+        }
+        sb.append(")");
+        return sb.toString();
+    }
+
     public static <T> String ids2str(Iterable<T> ids) {
         StringBuilder sb = new StringBuilder(512);
         sb.append("(");
