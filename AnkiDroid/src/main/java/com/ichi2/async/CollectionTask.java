@@ -1278,7 +1278,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         int column1Index = (Integer) param.getObjArray()[3];
         int column2Index = (Integer) param.getObjArray()[4];
 
-        List<Long> invalidCardIds = new ArrayList<>();
+        LongArrayList invalidCardIds = new LongArrayList();
         // for each specified card in the browser list
         for (int i = startPos; i < startPos + n; i++) {
             // Stop if cancelled
