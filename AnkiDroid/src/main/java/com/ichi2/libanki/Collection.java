@@ -78,6 +78,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
@@ -1259,7 +1260,7 @@ public class Collection {
 
 
     /** Return a list of note ids */
-    public List<Long> findNotes(String query) {
+    public LongArrayList findNotes(String query) {
         return new Finder(this).findNotes(query);
     }
 

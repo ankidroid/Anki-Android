@@ -79,6 +79,8 @@ import java.util.Map;
 import java.util.Set;
 
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 import static com.ichi2.anki.FlashCardsContract.READ_WRITE_PERMISSION;
@@ -249,7 +251,7 @@ public class CardContentProvider extends ContentProvider {
                 /* Search for notes using the libanki browser syntax */
                 String[] proj = sanitizeNoteProjection(projection);
                 String query = (selection != null) ? selection : "";
-                List<Long> noteIds = col.findNotes(query);
+                LongArrayList noteIds = col.findNotes(query);
                 if ((noteIds != null) && (!noteIds.isEmpty())) {
                     String sel = String.format("id in (%s)", TextUtils.join(",", noteIds));
                     String sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, sel, null, null, order, null);
