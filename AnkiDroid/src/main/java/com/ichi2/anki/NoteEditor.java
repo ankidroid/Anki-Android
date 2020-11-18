@@ -131,6 +131,7 @@ import java.util.Set;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
@@ -222,7 +223,7 @@ public class NoteEditor extends AnkiActivity {
     private Card mCurrentEditedCard;
     private ArrayList<String> mSelectedTags;
     private long mCurrentDid;
-    private ArrayList<Long> mAllDeckIds;
+    private LongArrayList mAllDeckIds;
     private ArrayList<Long> mAllModelIds;
     private Map<Integer, Integer> mModelChangeFieldMap;
     private HashMap<Integer, Integer> mModelChangeCardMap;
@@ -572,7 +573,7 @@ public class NoteEditor extends AnkiActivity {
             deckTextView.setText(R.string.CardEditorCardDeck);
         }
         mNoteDeckSpinner = findViewById(R.id.note_deck_spinner);
-        mAllDeckIds = new ArrayList<>();
+        mAllDeckIds = new LongArrayList();
         final ArrayList<String> deckNames = new ArrayList<>();
 
         ArrayList<Deck> decks = getCol().getDecks().all();
@@ -593,7 +594,7 @@ public class NoteEditor extends AnkiActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // Timber.i("NoteEditor:: onItemSelected() fired on mNoteDeckSpinner with pos = %d", pos);
-                mCurrentDid = mAllDeckIds.get(pos);
+                mCurrentDid = mAllDeckIds.getLong(pos);
             }
 
             @Override
