@@ -743,27 +743,27 @@ public class Collection {
     /**
      * Generate cards for non-empty templates, return ids to remove.
      */
-	public ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model) {
+	public LongArrayList genCards(java.util.Collection<Long> nids, @NonNull Model model) {
 	    return genCards(Utils.collection2Array(nids), model);
 	}
 
-    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model, @Nullable T task) {
+    public <T extends ProgressSender<TaskData> & CancelListener> LongArrayList genCards(java.util.Collection<Long> nids, @NonNull Model model, @Nullable T task) {
        return genCards(Utils.collection2Array(nids), model, task);
     }
 
-    public ArrayList<Long> genCards(java.util.Collection<Long> nids, long mid) {
+    public LongArrayList genCards(java.util.Collection<Long> nids, long mid) {
         return genCards(nids, getModels().get(mid));
     }
 
-    public ArrayList<Long> genCards(long[] nids, @NonNull Model model) {
+    public LongArrayList genCards(long[] nids, @NonNull Model model) {
         return genCards(nids, model, null);
     }
 
-    public ArrayList<Long> genCards(long nid, @NonNull Model model) {
+    public LongArrayList genCards(long nid, @NonNull Model model) {
         return genCards(nid, model, null);
     }
 
-    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(long nid, @NonNull Model model, @Nullable T task) {
+    public <T extends ProgressSender<TaskData> & CancelListener> LongArrayList genCards(long nid, @NonNull Model model, @Nullable T task) {
         return genCards("(" + nid + ")", model, task);
     }
 
@@ -772,7 +772,7 @@ public class Collection {
      * @param task Task to check for cancellation and update number of card processed
      * @return Cards that should be removed because they should not be generated
      */
-    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(long[] nids, @NonNull Model model, @Nullable T task) {
+    public <T extends ProgressSender<TaskData> & CancelListener> LongArrayList genCards(long[] nids, @NonNull Model model, @Nullable T task) {
         // build map of (nid,ord) so we don't create dupes
         String snids = Utils.ids2str(nids);
         return genCards(snids, model, task);
@@ -785,7 +785,7 @@ public class Collection {
      * @return Cards that should be removed because they should not be generated
      * @param <T>
      */
-    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(String snids, @NonNull Model model, @Nullable T task) {
+    public <T extends ProgressSender<TaskData> & CancelListener> LongArrayList genCards(String snids, @NonNull Model model, @Nullable T task) {
         // For each note, indicates ords of cards it contains
         HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>();
         // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
@@ -829,7 +829,7 @@ public class Collection {
         ArrayList<Object[]> data = new ArrayList<>();
         long ts = getTime().maxID(mDb);
         long now = getTime().intTime();
-        ArrayList<Long> rem = new ArrayList<>();
+        LongArrayList rem = new LongArrayList();
         int usn = usn();
         try (Cursor cur = mDb.query("SELECT id, flds FROM notes WHERE id IN " + snids)) {
             while (cur.moveToNext()) {
@@ -883,7 +883,7 @@ public class Collection {
                 if (have.containsKey(nid)) {
                     for (Map.Entry<Integer, Long> n : have.get(nid).entrySet()) {
                         if (!avail.contains(n.getKey())) {
-                            rem.add(n.getValue());
+                            rem.add((long) n.getValue());
                         }
                     }
                 }

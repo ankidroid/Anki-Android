@@ -732,7 +732,7 @@ public class CardContentProvider extends ContentProvider {
                 if (model == null) {
                     return -1;
                 }
-                List<Long> cids = col.genCards(col.getModels().nids(model), model);
+                LongArrayList cids = col.genCards(col.getModels().nids(model), model);
                 col.remCards(cids);
                 return cids.size();
             default:
