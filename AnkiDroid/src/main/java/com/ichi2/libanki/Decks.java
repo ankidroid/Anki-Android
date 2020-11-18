@@ -1015,16 +1015,16 @@ public class Decks {
 
     public static class Node extends HashMap<Long, Node> {}
 
-    private void gather(Node node, List<Long> arr) {
+    private void gather(Node node, LongArrayList arr) {
         for (Map.Entry<Long, Node> entry : node.entrySet()) {
             Node child = entry.getValue();
-            arr.add(entry.getKey());
+            arr.add((long) entry.getKey());
             gather(child, arr);
         }
     }
 
-    public List<Long> childDids(long did, Node childMap) {
-        List<Long> arr = new ArrayList<>();
+    public LongArrayList childDids(long did, Node childMap) {
+        LongArrayList arr = new LongArrayList();
         gather(childMap.get(did), arr);
         return arr;
     }
