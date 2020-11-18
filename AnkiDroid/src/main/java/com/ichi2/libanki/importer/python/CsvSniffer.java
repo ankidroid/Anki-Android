@@ -106,7 +106,7 @@ public class CsvSniffer {
      *  If there is no quotechar the delimiter can't be determined
      *  this way.
      */
-    private GuessQuoteAndDelimiter _guess_quote_and_delimiter(String data, List<Character> delimiters) {
+    private GuessQuoteAndDelimiter _guess_quote_and_delimiter(String data, CharList delimiters) {
         ArrayList<String> regexes = new ArrayList<>();
         regexes.add("(?<delim>[^\\w\\n\"'])(?<space> ?)(?<quote>[\"']).*?\\k<quote>\\k<delim>"); // ,".*?",
         regexes.add("(?:^|\\n)(?<quote>[\"']).*?\\k<quote>(?<delim>[^\\w\\n\"'])(?<space> ?)");  //  ".*?",
@@ -210,7 +210,7 @@ public class CsvSniffer {
      * try and evaluate the smallest portion of the data possible, evaluating
      * additional chunks as necessary.
      */
-    private Guess _guess_delimiter(String input, List<Character> delimiters) {
+    private Guess _guess_delimiter(String input, CharList delimiters) {
 
         // remove falsey values
         String[] samples = input.split("\n");
@@ -286,7 +286,7 @@ public class CsvSniffer {
                 for (Map.Entry<Character, Tuple> entry : modeList) {
                     Tuple value = entry.getValue();
                     if (value.first > 0 && value.second > 0) {
-                        if (((double) value.second / total) >= consistency && (delimiters == null || delimiters.contains(entry.getKey()))) {
+                        if (((double) value.second / total) >= consistency && (delimiters == null || delimiters.contains((char)entry.getKey()))) {
                             delims.put(entry.getKey(), value);
                         }
                     }

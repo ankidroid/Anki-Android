@@ -38,6 +38,7 @@ import androidx.annotation.StringRes;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -571,10 +572,10 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
     //There has to be a better way :(
-    private long[] toLongArray(List<Long> list){
+    private long[] toLongArray(LongList list){
         long[] ret = new long[list.size()];
         for(int i = 0; i < ret.length; i++) {
-            ret[i] = list.get(i);
+            ret[i] = list.getLong(i);
         }
         return ret;
     }
@@ -599,7 +600,7 @@ public class CardBrowserTest extends RobolectricTest {
     }
 
     private void removeCardFromCollection(Long cardId) {
-        getCol().remCards(Collections.singletonList(cardId));
+        getCol().remCards(new LongArrayList(new long[]{cardId}));
     }
 
     @CheckReturnValue

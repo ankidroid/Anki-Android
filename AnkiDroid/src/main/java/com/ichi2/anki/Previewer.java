@@ -97,7 +97,7 @@ public class Previewer extends AbstractFlashcardViewer {
     /** Given a new collection of card Ids, find the 'best' valid card given the current collection
      * We define the best as searching to the left, then searching to the right of the current element
      * This occurs as many cards can be deleted when editing a note (from the Card Template Editor) */
-    private int getNextIndex(List<Long> newCardList) {
+    private int getNextIndex(LongList newCardList) {
         HashSet<Long> validIndices = new HashSet<>(newCardList);
 
         for (int i = mIndex; i >= 0; i--) {

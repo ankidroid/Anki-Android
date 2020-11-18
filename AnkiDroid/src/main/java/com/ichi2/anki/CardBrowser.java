@@ -101,6 +101,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
@@ -1777,7 +1778,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * Removes cards from view. Doesn't delete them in model (database).
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
-    private void removeNotesView(java.util.Collection<Long> cardsIds, boolean reorderCards) {
+    private void removeNotesView(LongCollection cardsIds, boolean reorderCards) {
         long reviewerCardId = getReviewerCardId();
         CardCollection<CardCache> oldMCards = getCards();
         Map<Long, Integer> idToPos = getPositionMap(oldMCards);

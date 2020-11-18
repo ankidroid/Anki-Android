@@ -12,6 +12,7 @@ import java.util.Collections;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static com.ichi2.utils.CollectionUtils.singleton;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
@@ -153,13 +154,13 @@ public class CollectionTest extends RobolectricTest {
         note2.setItem("Front", "2");
         col.addNote(note2);
         // adding for a given id
-        col.getTags().bulkAdd(Collections.singletonList(note.getId()), "foo");
+        col.getTags().bulkAdd(singleton(note.getId()), "foo");
         note.load();
         note2.load();
         assertTrue(note.getTags().contains("foo"));
         assertFalse(note2.getTags().contains("foo"));
         // should be canonified
-        col.getTags().bulkAdd(Collections.singletonList(note.getId()), "foo aaa");
+        col.getTags().bulkAdd(singleton(note.getId()), "foo aaa");
         note.load();
         assertEquals("aaa", note.getTags().get(0));
         assertEquals(2, note.getTags().size());
