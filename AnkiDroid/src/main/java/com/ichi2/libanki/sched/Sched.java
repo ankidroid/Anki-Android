@@ -52,6 +52,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongCollection;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 
@@ -942,13 +944,13 @@ public class Sched extends SchedV2 {
     }
 
 
-    private void _moveToDyn(long did, @NonNull List<Long> ids) {
+    private void _moveToDyn(long did, @NonNull LongList ids) {
         ArrayList<Object[]> data = new ArrayList<>();
         //long t = getTime().intTime(); // unused variable present (and unused) upstream
         int u = mCol.usn();
         for (long c = 0; c < ids.size(); c++) {
             // start at -100000 so that reviews are all due
-            data.add(new Object[] { did, -100000 + c, u, ids.get((int) c) });
+            data.add(new Object[] { did, -100000 + c, u, ids.getLong((int) c) });
         }
         // due reviews stay in the review queue. careful: can't use "odid or did", as sqlite converts to boolean
         String queue = "(CASE WHEN type = " + Consts.CARD_TYPE_REV + " AND (CASE WHEN odue THEN odue <= " + mToday +

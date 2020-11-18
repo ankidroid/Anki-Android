@@ -840,7 +840,7 @@ public class Finder {
      * @param dst The text to change to.
      * @return Number of notes with fields that were updated.
      */
-    public static int findReplace(Collection col, List<Long> nids, String src, String dst) {
+    public static int findReplace(Collection col, LongList nids, String src, String dst) {
         return findReplace(col, nids, src, dst, false, null, true);
     }
 
@@ -854,7 +854,7 @@ public class Finder {
      * @param regex If true, the src is treated as a regex. Default = false.
      * @return Number of notes with fields that were updated.
      */
-    public static int findReplace(Collection col, List<Long> nids, String src, String dst, boolean regex) {
+    public static int findReplace(Collection col, LongList nids, String src, String dst, boolean regex) {
         return findReplace(col, nids, src, dst, regex, null, true);
     }
 
@@ -868,7 +868,7 @@ public class Finder {
      * @param field Limit the search to specific field. If null, it searches all fields.
      * @return Number of notes with fields that were updated.
      */
-    public static int findReplace(Collection col, List<Long> nids, String src, String dst, String field) {
+    public static int findReplace(Collection col, LongList nids, String src, String dst, String field) {
         return findReplace(col, nids, src, dst, false, field, true);
     }
 
@@ -883,7 +883,7 @@ public class Finder {
      * @param field Limit the search to specific field. If null, it searches all fields.
      * @param fold If true the search is case-insensitive. Default = true.
      * @return Number of notes with fields that were updated. */
-    public static int findReplace(Collection col, List<Long> nids, String src, String dst, boolean isRegex,
+    public static int findReplace(Collection col, LongList nids, String src, String dst, boolean isRegex,
             String field, boolean fold) {
         Map<Long, Integer> mmap = new HashMap<>();
         if (field != null) {

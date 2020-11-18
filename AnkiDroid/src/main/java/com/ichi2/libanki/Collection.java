@@ -80,6 +80,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
@@ -606,7 +607,7 @@ public class Collection {
         }
     }
 
-    public void _logRem(java.util.Collection<Long> ids, @Consts.REM_TYPE int type) {
+    public void _logRem(LongCollection ids, @Consts.REM_TYPE int type) {
         for (long id : ids) {
             ContentValues values = new ContentValues();
             values.put("usn", usn());
@@ -686,7 +687,7 @@ public class Collection {
     /**
      * Bulk delete notes by ID. Don't call this directly.
      */
-    public void _remNotes(java.util.Collection<Long> ids) {
+    public void _remNotes(LongCollection ids) {
         if (ids.size() == 0) {
             return;
         }
@@ -743,15 +744,15 @@ public class Collection {
     /**
      * Generate cards for non-empty templates, return ids to remove.
      */
-	public LongArrayList genCards(java.util.Collection<Long> nids, @NonNull Model model) {
+	public LongArrayList genCards(LongCollection nids, @NonNull Model model) {
 	    return genCards(Utils.collection2Array(nids), model);
 	}
 
-    public <T extends ProgressSender<TaskData> & CancelListener> LongArrayList genCards(java.util.Collection<Long> nids, @NonNull Model model, @Nullable T task) {
+    public <T extends ProgressSender<TaskData> & CancelListener> LongArrayList genCards(LongCollection nids, @NonNull Model model, @Nullable T task) {
        return genCards(Utils.collection2Array(nids), model, task);
     }
 
-    public LongArrayList genCards(java.util.Collection<Long> nids, long mid) {
+    public LongArrayList genCards(LongCollection nids, long mid) {
         return genCards(nids, getModels().get(mid));
     }
 
@@ -1041,11 +1042,11 @@ public class Collection {
     /**
      * Bulk delete cards by ID.
      */
-    public void remCards(List<Long> ids) {
+    public void remCards(LongCollection ids) {
         remCards(ids, true);
     }
 
-    public void remCards(java.util.Collection<Long> ids, boolean notes) {
+    public void remCards(LongCollection ids, boolean notes) {
         if (ids.size() == 0) {
             return;
         }
@@ -1073,7 +1074,7 @@ public class Collection {
     }
 
 
-    public String emptyCardReport(List<Long> cids) {
+    public String emptyCardReport(LongList cids) {
         StringBuilder rep = new StringBuilder();
         try (Cursor cur = mDb.query("select group_concat(ord+1), count(), flds from cards c, notes n "
                                            + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid")) {
@@ -1105,7 +1106,7 @@ public class Collection {
 
     /** Update field checksums and sort cache, after find&replace, etc.
      * @param nids*/
-    public void updateFieldCache(java.util.Collection<Long> nids) {
+    public void updateFieldCache(LongCollection nids) {
         String snids = Utils.ids2str(nids);
         updateFieldCache(snids);
     }
@@ -1267,22 +1268,22 @@ public class Collection {
     }
 
 
-    public int findReplace(List<Long> nids, String src, String dst) {
+    public int findReplace(LongList nids, String src, String dst) {
         return Finder.findReplace(this, nids, src, dst);
     }
 
 
-    public int findReplace(List<Long> nids, String src, String dst, boolean regex) {
+    public int findReplace(LongList nids, String src, String dst, boolean regex) {
         return Finder.findReplace(this, nids, src, dst, regex);
     }
 
 
-    public int findReplace(List<Long> nids, String src, String dst, String field) {
+    public int findReplace(LongList nids, String src, String dst, String field) {
         return Finder.findReplace(this, nids, src, dst, field);
     }
 
 
-    public int findReplace(List<Long> nids, String src, String dst, boolean regex, String field, boolean fold) {
+    public int findReplace(LongList nids, String src, String dst, boolean regex, String field, boolean fold) {
         return Finder.findReplace(this, nids, src, dst, regex, field, fold);
     }
 

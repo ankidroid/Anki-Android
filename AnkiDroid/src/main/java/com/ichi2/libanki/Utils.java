@@ -70,7 +70,9 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import androidx.annotation.Nullable;
+import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongIterable;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
@@ -464,7 +466,7 @@ public class Utils {
 
     /** LIBANKI: not in libanki
      *  Transform a collection of Long into an array of Long */
-    public static long[] collection2Array(java.util.Collection<Long> list) {
+    public static long[] collection2Array(LongCollection list) {
         long[] ar = new long[list.size()];
         int i = 0;
         for (long l : list) {
@@ -473,7 +475,7 @@ public class Utils {
         return ar;
     }
 
-    public static Long[] list2ObjectArray(List<Long> list) {
+    public static Long[] list2ObjectArray(LongList list) {
         return list.toArray(new Long[0]);
     }
 
@@ -893,7 +895,7 @@ public class Utils {
      * @param array The input with type Long[]
      * @return The output with type long[]
      */
-    public static long[] toPrimitive(Collection<Long> array) {
+    public static long[] toPrimitive(LongCollection array) {
         if (array == null) {
             return null;
         }

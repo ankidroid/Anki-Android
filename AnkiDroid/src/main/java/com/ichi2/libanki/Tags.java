@@ -36,6 +36,8 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongCollection;
+import it.unimi.dsi.fastutil.longs.LongList;
 
 
 /**
@@ -129,7 +131,7 @@ public class Tags {
 
 
     /** Add any missing tags from notes to the tags list. */
-    public void registerNotes(java.util.Collection<Long> nids) {
+    public void registerNotes(LongCollection nids) {
         // when called with a null argument, the old list is cleared first.
         String lim;
         if (nids != null) {
@@ -198,7 +200,7 @@ public class Tags {
      * @param ids The cards to tag.
      * @param tags List of tags to add/remove. They are space-separated.
      */
-    public void bulkAdd(List<Long> ids, String tags) {
+    public void bulkAdd(LongList ids, String tags) {
         bulkAdd(ids, tags, true);
     }
 
@@ -211,7 +213,7 @@ public class Tags {
      * @param tags List of tags to add/remove. They are space-separated.
      * @param add True/False to add/remove.
      */
-    public void bulkAdd(List<Long> ids, String tags, boolean add) {
+    public void bulkAdd(LongList ids, String tags, boolean add) {
         List<String> newTags = split(tags);
         if (newTags == null || newTags.isEmpty()) {
             return;
@@ -256,7 +258,7 @@ public class Tags {
     }
 
 
-    public void bulkRem(List<Long> ids, String tags) {
+    public void bulkRem(LongList ids, String tags) {
         bulkAdd(ids, tags, false);
     }
 

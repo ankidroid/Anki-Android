@@ -1930,7 +1930,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    protected void _moveToDyn(long did, @NonNull List<Long> ids, int start) {
+    protected void _moveToDyn(long did, @NonNull LongList ids, int start) {
         Deck deck = mCol.getDecks().get(did);
         ArrayList<Object[]> data = new ArrayList<>();
         int u = mCol.usn();
@@ -2470,7 +2470,7 @@ public class SchedV2 extends AbstractSched {
         unburyCardsForDeck(type, null);
     }
 
-    public void unburyCardsForDeck(@NonNull UnburyType type, @Nullable List<Long> allDecks) {
+    public void unburyCardsForDeck(@NonNull UnburyType type, @Nullable LongList allDecks) {
         String queue;
         switch (type) {
             case ALL :

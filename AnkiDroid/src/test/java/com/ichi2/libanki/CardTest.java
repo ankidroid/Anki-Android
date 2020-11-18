@@ -15,6 +15,8 @@ import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongCollection;
+import it.unimi.dsi.fastutil.longs.LongCollections;
 
 import static com.ichi2.utils.JSONObject.NULL;
 import static org.hamcrest.Matchers.hasItemInArray;
@@ -37,7 +39,7 @@ public class CardTest extends RobolectricTest {
         long cid = note.cards().get(0).getId();
         col.reset();
         col.getSched().answerCard(col.getSched().getCard(), 2);
-        col.remCards(Collections.singletonList(cid));
+        col.remCards(new LongArrayList(new long[]{cid}));
         assertEquals(0, col.cardCount());
         assertEquals(0, col.noteCount());
         assertEquals(0, col.getDb().queryScalar("select count() from notes"));
