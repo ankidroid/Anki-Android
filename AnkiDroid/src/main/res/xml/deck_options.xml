@@ -122,8 +122,8 @@
                 android:summary="@string/deck_conf_percent"
                 android:title="@string/deck_conf_hard_factor"
                 android:enabled="false"
-                app:max="1000"
-                app:min="100" />
+                app:max="120"
+                app:min="5" />
             <com.ichi2.preferences.NumberRangePreference
                 android:key="revIvlFct"
                 android:summary="@string/deck_conf_percent"
