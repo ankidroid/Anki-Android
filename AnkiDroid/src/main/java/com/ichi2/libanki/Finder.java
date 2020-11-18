@@ -647,13 +647,13 @@ public class Finder {
     }
 
 
-    private List<Long> dids(Long did) {
+    private LongArrayList dids(Long did) {
         if (did == null) {
             return null;
         }
         TreeMap<String, Long> children = mCol.getDecks().children(did);
-        List<Long> res = new ArrayList<>();
-        res.add(did);
+        LongArrayList res = new LongArrayList();
+        res.add((long) did);
         res.addAll(children.values());
         return res;
     }
@@ -667,7 +667,7 @@ public class Finder {
         } else if ("filtered".equals(val)) {
             return "c.odid";
         }
-        List<Long> ids = null;
+        LongArrayList ids = null;
         // current deck?
         if ("current".equalsIgnoreCase(val)) {
             ids = dids(mCol.getDecks().selected());
@@ -678,7 +678,7 @@ public class Finder {
             // wildcard
             ids = dids(mCol.getDecks().id(val, false));
             if (ids == null) {
-                ids = new ArrayList<>();
+                ids = new LongArrayList();
                 val = val.replace("*", ".*");
                 val = val.replace("+", "\\+");
 
