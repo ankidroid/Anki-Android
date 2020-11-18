@@ -130,7 +130,7 @@ public class SchedV2 extends AbstractSched {
 
         Null iff mNextCard is null.*/
     @Nullable
-    protected List<Long> mCurrentCardParentsDid;
+    protected LongArrayList mCurrentCardParentsDid;
     /* The next card that will be sent to the reviewer. I.e. the result of a second call to getCard, which is not the
      * current card nor a sibling.
      */
@@ -3060,7 +3060,7 @@ public class SchedV2 extends AbstractSched {
         mCurrentCard = card;
         long did = card.getDid();
         List<Deck> parents = mCol.getDecks().parents(did);
-        List<Long> currentCardParentsDid = new ArrayList<>(parents.size() + 1);
+        LongArrayList currentCardParentsDid = new LongArrayList(parents.size() + 1);
         for (JSONObject parent : parents) {
             currentCardParentsDid.add(parent.getLong("id"));
         }
@@ -3077,7 +3077,7 @@ public class SchedV2 extends AbstractSched {
     protected boolean currentCardIsInQueueWithDeck(@Consts.CARD_QUEUE int queue, long did) {
         // mCurrentCard may be set to null when the reviewer gets closed. So we copy it to be sure to avoid NullPointerException
         Card currentCard = mCurrentCard;
-        List<Long> currentCardParentsDid = mCurrentCardParentsDid;
+        LongArrayList currentCardParentsDid = mCurrentCardParentsDid;
         return currentCard != null && currentCard.getQueue() == queue && currentCardParentsDid != null && currentCardParentsDid.contains(did);
     }
 
