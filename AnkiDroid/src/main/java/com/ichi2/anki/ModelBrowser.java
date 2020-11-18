@@ -51,6 +51,7 @@ import com.ichi2.widget.WidgetStatus;
 import java.util.ArrayList;
 import java.util.Random;
 
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
@@ -72,7 +73,7 @@ public class ModelBrowser extends AnkiActivity {
     //Used exclusively to display model name
     private ArrayList<Model> mModels;
     private ArrayList<Integer> mCardCounts;
-    private ArrayList<Long> mModelIds;
+    private LongArrayList mModelIds;
     private ArrayList<DisplayPair> mModelDisplayList;
 
     private Collection col;
@@ -258,7 +259,7 @@ public class ModelBrowser extends AnkiActivity {
     private void fillModelList() {
         //Anonymous class for handling list item clicks
         mModelDisplayList = new ArrayList<>();
-        mModelIds = new ArrayList<>();
+        mModelIds = new LongArrayList();
 
         for (int i = 0; i < mModels.size(); i++) {
             mModelIds.add(mModels.get(i).getLong("id"));
@@ -269,7 +270,7 @@ public class ModelBrowser extends AnkiActivity {
         mModelListView.setAdapter(mModelDisplayAdapter);
 
         mModelListView.setOnItemClickListener((parent, view, position, id) -> {
-            long noteTypeID = mModelIds.get(position);
+            long noteTypeID = mModelIds.getLong(position);
             mModelListPosition = position;
             Intent noteOpenIntent = new Intent(ModelBrowser.this, ModelFieldEditor.class);
             noteOpenIntent.putExtra("title", mModelDisplayList.get(position).getName());
@@ -279,7 +280,7 @@ public class ModelBrowser extends AnkiActivity {
 
         mModelListView.setOnItemLongClickListener((parent, view, position, id) -> {
             String cardName = mModelDisplayList.get(position).getName();
-            mCurrentID = mModelIds.get(position);
+            mCurrentID = mModelIds.getLong(position);
             mModelListPosition = position;
             mContextMenu = ModelBrowserContextMenu.newInstance(cardName, mContextMenuListener);
             showDialogFragment(mContextMenu);
@@ -512,7 +513,7 @@ public class ModelBrowser extends AnkiActivity {
         CollectionTask.launchCollectionTask(DELETE_MODEL, deleteModelHandler(),
                 new TaskData(mCurrentID));
         mModels.remove(mModelListPosition);
-        mModelIds.remove(mModelListPosition);
+        mModelIds.removeLong(mModelListPosition);
         mModelDisplayList.remove(mModelListPosition);
         mCardCounts.remove(mModelListPosition);
         refreshList();
