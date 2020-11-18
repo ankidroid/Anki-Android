@@ -137,7 +137,7 @@ public class Collection {
     private static final Pattern fClozeTagStart = Pattern.compile("<%cloze:");
 
     private static final int fDefaultSchedulerVersion = 1;
-    private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
+    private static final IntArrayList fSupportedSchedulerVersions = new IntArrayList(new int[] {1, 2});
 
     // Not in libAnki.
     private final Time mTime;
@@ -252,7 +252,7 @@ public class Collection {
         }
     }
 
-    public void changeSchedulerVer(Integer ver) throws ConfirmModSchemaException {
+    public void changeSchedulerVer(int ver) throws ConfirmModSchemaException {
         if (ver == schedVer()) {
             return;
         }
