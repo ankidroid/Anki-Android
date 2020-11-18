@@ -37,6 +37,8 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import it.unimi.dsi.fastutil.chars.CharArrayList;
+import it.unimi.dsi.fastutil.chars.CharList;
 
 @RequiresApi(Build.VERSION_CODES.O) // Regex group(str)
 public class CsvSniffer {
@@ -53,7 +55,7 @@ public class CsvSniffer {
 
     public CsvDialect sniff(String sample, char[] delimiters) {
 
-        List<Character> delimiterList = toList(delimiters);
+        CharList delimiterList = toList(delimiters);
         GuessQuoteAndDelimiter result = _guess_quote_and_delimiter(sample, delimiterList);
         char quotechar = result.quotechar;
         boolean doublequote = result.doublequote;
@@ -82,8 +84,8 @@ public class CsvSniffer {
     }
 
 
-    private List<Character> toList(@Nullable char[] delimiters) {
-        ArrayList<Character> ret = new ArrayList<>();
+    private CharArrayList toList(@Nullable char[] delimiters) {
+        CharArrayList ret = new CharArrayList();
         if (delimiters == null) {
             return ret;
         }
