@@ -224,7 +224,7 @@ public class NoteEditor extends AnkiActivity {
     private ArrayList<String> mSelectedTags;
     private long mCurrentDid;
     private LongArrayList mAllDeckIds;
-    private ArrayList<Long> mAllModelIds;
+    private LongArrayList mAllModelIds;
     private Map<Integer, Integer> mModelChangeFieldMap;
     private HashMap<Integer, Integer> mModelChangeCardMap;
 
@@ -552,7 +552,7 @@ public class NoteEditor extends AnkiActivity {
 
         // Note type Selector
         mNoteTypeSpinner = findViewById(R.id.note_type_spinner);
-        mAllModelIds = new ArrayList<>();
+        mAllModelIds = new LongArrayList();
         final ArrayList<String> modelNames = new ArrayList<>();
         ArrayList<Model> models = getCol().getModels().all();
         Collections.sort(models, NamedJSONComparator.instance);
@@ -2097,7 +2097,7 @@ public class NoteEditor extends AnkiActivity {
     }
 
     private Model getCurrentlySelectedModel() {
-        return getCol().getModels().get(mAllModelIds.get(mNoteTypeSpinner.getSelectedItemPosition()));
+        return getCol().getModels().get(mAllModelIds.getLong(mNoteTypeSpinner.getSelectedItemPosition()));
     }
 
 
@@ -2135,7 +2135,7 @@ public class NoteEditor extends AnkiActivity {
             // If a new column was selected then change the key used to map from mCards to the column TextView
             //Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
             long oldModelId = getCol().getModels().current().getLong("id");
-            @NonNull Long newId = mAllModelIds.get(pos);
+            @NonNull Long newId = mAllModelIds.getLong(pos);
             Timber.i("Changing note type to '%d", newId);
             if (oldModelId != newId) {
                 Model model = getCol().getModels().get(newId);
@@ -2172,13 +2172,13 @@ public class NoteEditor extends AnkiActivity {
             // Get the current model
             long noteModelId = mCurrentEditedCard.model().getLong("id");
             // Get new model
-            Model newModel = getCol().getModels().get(mAllModelIds.get(pos));
+            Model newModel = getCol().getModels().get(mAllModelIds.getLong(pos));
             if (newModel == null || newModel.getJSONArray("tmpls") == null) {
-                Timber.w("newModel %s not found", mAllModelIds.get(pos));
+                Timber.w("newModel %s not found", mAllModelIds.getLong(pos));
                 return;
             }
             // Configure the interface according to whether note type is getting changed or not
-            if (mAllModelIds.get(pos) != noteModelId) {
+            if (mAllModelIds.getLong(pos) != noteModelId) {
                 // Initialize mapping between fields of old model -> new model
                 mModelChangeFieldMap = new HashMap<>();
                 for (int i=0; i < mEditorNote.items().length; i++) {
