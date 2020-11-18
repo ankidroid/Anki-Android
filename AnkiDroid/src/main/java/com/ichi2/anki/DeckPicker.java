@@ -144,6 +144,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
 
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
@@ -2893,7 +2894,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (result == null) {
                 return;
             }
-            final List<Long> cids = (List<Long>) result.getObjArray()[0];
+            final LongArrayList cids = (LongArrayList) result.getObjArray()[0];
             if (cids.size() == 0) {
                 deckPicker.showSimpleMessageDialog(deckPicker.getResources().getString(R.string.empty_cards_none));
             } else {
