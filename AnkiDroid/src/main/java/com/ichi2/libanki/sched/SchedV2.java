@@ -2670,7 +2670,7 @@ public class SchedV2 extends AbstractSched {
 
 
     public void resortConf(@NonNull DeckConfig conf) {
-        List<Long> dids = mCol.getDecks().didsForConf(conf);
+        LongArrayList dids = mCol.getDecks().didsForConf(conf);
         for (long did : dids) {
             if (conf.getJSONObject("new").getLong("order") == 0) {
                 randomizeCards(did);
