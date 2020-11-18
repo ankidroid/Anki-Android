@@ -109,7 +109,6 @@
     <!-- For all other action bar popups like overflow menu (except spinner dropdown in Lollipop). -->
     <style name="ActionBar.Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <item name="android:drawSelectorOnTop">true</item>
-        <item name="android:background">?attr/actionBarPopupBackgroundColor</item>
         <item name="android:textColorPrimary">?attr/actionBarPopupTextColor</item>
         <item name="android:textColorSecondary">?attr/actionBarPopupTextColor</item>
     </style>
