@@ -708,7 +708,7 @@ public class Collection {
      */
     public ArrayList<JSONObject> findTemplates(Note note) {
         Model model = note.model();
-        ArrayList<Integer> avail = Models.availOrds(model, note.getFields());
+        IntArrayList avail = Models.availOrds(model, note.getFields());
         return _tmplsFromOrds(model, avail);
     }
 
@@ -719,7 +719,7 @@ public class Collection {
      * @return One template by element i of avail, for the i-th card. For standard template, avail should contains only existing ords.
      * for cloze, avail should contains only non-negative numbers, and the i-th card is a copy of the first card, with a different ord.
      */
-    private ArrayList<JSONObject> _tmplsFromOrds(Model model, ArrayList<Integer> avail) {
+    private ArrayList<JSONObject> _tmplsFromOrds(Model model, IntArrayList avail) {
         ArrayList<JSONObject> ok = new ArrayList<>();
         JSONArray tmpls;
         if (model.getInt("type") == Consts.MODEL_STD) {
@@ -839,7 +839,7 @@ public class Collection {
                 }
                 @NonNull Long nid = cur.getLong(0);
                 String flds = cur.getString(1);
-                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds));
+                IntArrayList avail = Models.availOrds(model, Utils.splitFields(flds));
                 if (task != null) {
                     task.doProgress(new TaskData(avail.size()));
                 }
@@ -882,7 +882,7 @@ public class Collection {
                 // note any cards that need removing
                 if (have.containsKey(nid)) {
                     for (Map.Entry<Integer, Long> n : have.get(nid).entrySet()) {
-                        if (!avail.contains(n.getKey())) {
+                        if (!avail.contains((int) n.getKey())) {
                             rem.add((long) n.getValue());
                         }
                     }

@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 
 import static com.ichi2.libanki.Consts.NEW_CARDS_RANDOM;
@@ -382,7 +383,7 @@ public class NoteImporter extends Importer {
             }
         }
         note.fieldsStr = joinFields(fields);
-        ArrayList<Integer> ords = Models.availOrds(mModel, fields);
+        IntArrayList ords = Models.availOrds(mModel, fields);
         if (ords.isEmpty()) {
             mEmptyNotes = true;
             return false;
