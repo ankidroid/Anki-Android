@@ -773,8 +773,8 @@ public class Decks {
     }
 
 
-    public List<Long> didsForConf(DeckConfig conf) {
-        List<Long> dids = new ArrayList<>();
+    public LongArrayList didsForConf(DeckConfig conf) {
+        LongArrayList dids = new LongArrayList();
         for(Deck deck : mDecks.values()) {
             if (deck.has("conf") && deck.getLong("conf") == conf.getLong("id")) {
                 dids.add(deck.getLong("id"));
