@@ -96,6 +96,7 @@ import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.reviewer.CardMarker;
+import com.ichi2.anki.cardviewer.CardTemplate;
 import com.ichi2.anki.reviewer.ReviewerCustomFonts;
 import com.ichi2.anki.reviewer.ReviewerUi;
 import com.ichi2.anki.cardviewer.TypedAnswer;
@@ -266,7 +267,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private boolean mInAnswer = false;
     private boolean mAnswerSoundsAdded = false;
 
-    private String mCardTemplate;
+    private CardTemplate mCardTemplate;
 
     /**
      * Variables to hold layout objects that we need to update or handle events for
@@ -922,7 +923,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // Load the template for the card
         try {
-            mCardTemplate = Utils.convertStreamToString(getAssets().open("card_template.html"));
+            String data = Utils.convertStreamToString(getAssets().open("card_template.html"));
+            mCardTemplate = new CardTemplate(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -2212,8 +2214,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
 
         content = CardAppearance.convertSmpToHtmlEntity(content);
-        mCardContent = mCardTemplate.replace("::content::", content)
-                .replace("::style::", style).replace("::class::", cardClass);
+        mCardContent = mCardTemplate.render(content, style, cardClass);
         Timber.d("base url = %s", mBaseUrl);
 
         if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
