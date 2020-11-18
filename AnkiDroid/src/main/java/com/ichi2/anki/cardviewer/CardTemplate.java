@@ -20,16 +20,35 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 
 public class CardTemplate {
-    @NonNull
-    private final String mContent;
+    private final String mPreStyle;
+    private final String mPreClass;
+    private final String mPreContent;
+    private final String mPostContent;
 
-    public CardTemplate(@NonNull String content) {
-        this.mContent = content;
+    public CardTemplate(@NonNull String template) {
+        // Note: This refactoring means the template must be in the specific order of style, class, content.
+        // Since this is a const loaded from an asset file, I'm fine with this.
+        String classDelim = "::class::";
+        String styleDelim = "::style::";
+        String contentDelim = "::content::";
+
+        int styleIndex = template.indexOf(styleDelim);
+        int classIndex = template.indexOf(classDelim);
+        int contentIndex = template.indexOf(contentDelim);
+
+        try {
+            this.mPreStyle = template.substring(0, styleIndex);
+            this.mPreClass = template.substring(styleIndex + styleDelim.length(), classIndex);
+            this.mPreContent = template.substring(classIndex + classDelim.length(), contentIndex);
+            this.mPostContent = template.substring(contentIndex + contentDelim.length());
+        } catch (StringIndexOutOfBoundsException ex) {
+            throw new IllegalStateException("The card template had replacement string order, or content changed", ex);
+        }
     }
 
     @CheckResult
     @NonNull
     public String render(String content, String style, String cardClass) {
-        return mContent.replace("::content::", content).replace("::style::", style).replace("::class::", cardClass);
+        return mPreStyle + style + mPreClass + cardClass + mPreContent + content + mPostContent;
     }
 }
