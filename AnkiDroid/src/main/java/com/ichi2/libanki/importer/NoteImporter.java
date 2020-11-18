@@ -65,7 +65,7 @@ public class NoteImporter extends Importer {
 
     /** _nextID in python */
     private long mNextId;
-    private ArrayList<Long> _ids;
+    private LongArrayList _ids;
     private boolean mEmptyNotes;
     private int mUpdateCount;
 
@@ -172,7 +172,7 @@ public class NoteImporter extends Importer {
         List<String> updateLog = new ArrayList<>();
         // PORT: Translations moved closer to their sources
         List<Object[]> _new = new ArrayList<>();
-        _ids = new ArrayList<>();
+        _ids = new LongArrayList();
         mEmptyNotes = false;
         int dupeCount = 0;
         List<String> dupes = new ArrayList<>();
