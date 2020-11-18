@@ -37,7 +37,6 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionBarTextColor">@color/white</item>
-        <item name="actionBarPopupBackgroundColor">@color/theme_dark_primary</item>
         <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
         <item name="actionModeBackground">@color/theme_dark_primary</item>
         <!-- Deck list colors and divider -->
