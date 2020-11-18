@@ -1064,8 +1064,8 @@ public class Collection {
     }
 
 
-    public <T extends ProgressSender<TaskData> & CancelListener> List<Long> emptyCids(@Nullable T task) {
-        List<Long> rem = new ArrayList<>();
+    public <T extends ProgressSender<TaskData> & CancelListener> LongArrayList emptyCids(@Nullable T task) {
+        LongArrayList rem = new LongArrayList();
         for (Model m : getModels().all()) {
             rem.addAll(genCards(getModels().nids(m), m, task));
         }

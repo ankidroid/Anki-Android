@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 
 import static com.ichi2.utils.JSONObject.NULL;
 import static org.hamcrest.Matchers.hasItemInArray;
@@ -79,7 +80,7 @@ public class CardTest extends RobolectricTest {
         t = m.getJSONArray("tmpls").getJSONObject(1);
         t.put("qfmt", "{{Back}}");
         mm.save(m, true);
-        List<Long> rep = col.emptyCids(null);
+        LongArrayList rep = col.emptyCids(null);
         col.remCards(rep);
         assertEquals(1, note.numberOfCards());
         // if we add to the note, a card should be automatically generated
