@@ -36,6 +36,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.CARD_TYPE_REV;
@@ -72,7 +73,7 @@ public class FinderTest extends RobolectricTest {
         Card manuallyBuriedCard = buryManually(sched, toAnswer.getId());
 
         //perform the search
-        List<Long> buriedCards = new Finder(getCol()).findCards(searchQuery, false);
+        LongArrayList buriedCards = new Finder(getCol()).findCards(searchQuery, false);
 
         //assert
         assertThat("A manually buried card should be returned", buriedCards, hasItem(manuallyBuriedCard.getId()));
@@ -220,15 +221,15 @@ public class FinderTest extends RobolectricTest {
 
         col.getConf().put("sortType", "noteFld");
         col.flush();
-        assertEquals(catCard.getId(), (long) col.findCards("", true).get(0));
+        assertEquals(catCard.getId(), col.findCards("", true).getLong(0));
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
         col.getConf().put("sortType", "cardMod");
         col.flush();
         assertTrue(latestCardIds.contains(getLastListElement(col.findCards("", true))));
-        assertEquals(firstCardId, (long) col.findCards("", true).get(0));
+        assertEquals(firstCardId, col.findCards("", true).getLong(0));
         col.getConf().put("sortBackwards", true);
         col.flush();
-        assertTrue(latestCardIds.contains(col.findCards("", true).get(0)));
+        assertTrue(latestCardIds.contains(col.findCards("", true).getLong(0)));
         /* TODO: Port BuiltinSortKind
            assertEquals(firstCardId,
            col.findCards("", BuiltinSortKind.CARD_DUE, reverse=false).get(0)
