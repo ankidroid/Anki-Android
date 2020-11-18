@@ -1240,21 +1240,21 @@ public class Collection {
      */
 
     /** Return a list of card ids */
-    public List<Long> findCards(String search) {
+    public LongArrayList findCards(String search) {
         return new Finder(this).findCards(search, null);
     }
 
 
     /** Return a list of card ids */
-    public List<Long> findCards(String search, String order) {
+    public LongArrayList findCards(String search, String order) {
         return new Finder(this).findCards(search, order);
     }
 
-    public List<Long> findCards(String search, boolean order) {
+    public LongArrayList findCards(String search, boolean order) {
         return findCards(search, order, null);
     }
 
-    public List<Long> findCards(String search, boolean order, CollectionTask.PartialSearch task) {
+    public LongArrayList findCards(String search, boolean order, CollectionTask.PartialSearch task) {
         return new Finder(this).findCards(search, order, task);
     }
 

@@ -63,6 +63,7 @@ import java.util.Random;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING;
@@ -1833,7 +1834,7 @@ public class SchedV2 extends AbstractSched {
     private int _fillDyn(Deck deck) {
         int start = -100000;
         int total = 0;
-        List<Long> ids;
+        LongArrayList ids;
         JSONArray terms = deck.getJSONArray("terms");
         for (JSONArray term: terms.jsonArrayIterable()) {
             String search = term.getString(0);

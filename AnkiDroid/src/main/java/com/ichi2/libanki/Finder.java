@@ -77,33 +77,33 @@ public class Finder {
 
     /** Return a list of card ids for QUERY */
     @CheckResult
-    public List<Long> findCards(String query, String _order) {
+    public LongArrayList findCards(String query, String _order) {
         return _findCards(query, _order);
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order) {
+    public LongArrayList findCards(String query, boolean _order) {
         return findCards(query, _order, null);
     }
 
     @CheckResult
-    public List<Long> findCards(String query, boolean _order, CollectionTask.PartialSearch task) {
+    public LongArrayList findCards(String query, boolean _order, CollectionTask.PartialSearch task) {
         return _findCards(query, _order, task);
     }
 
 
     @CheckResult
-    private List<Long> _findCards(String query, Object _order) {
+    private LongArrayList _findCards(String query, Object _order) {
         return _findCards(query, _order, null);
     }
 
     @CheckResult
-    private List<Long> _findCards(String query, Object _order, CollectionTask.PartialSearch task) {
+    private LongArrayList _findCards(String query, Object _order, CollectionTask.PartialSearch task) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
         String[] args = res1.second;
-        List<Long> res = new ArrayList<>();
+        LongArrayList res = new LongArrayList();
         if (preds == null) {
             return res;
         }
@@ -116,7 +116,7 @@ public class Finder {
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
                 if (isCancelled(task)) {
-                    return new ArrayList<>();
+                    return new LongArrayList();
                 }
                 res.add(cur.getLong(0));
                 if (sendProgress && res.size() > task.getNumCardsToRender()) {
@@ -126,7 +126,7 @@ public class Finder {
             }
         } catch (SQLException e) {
             // invalid grouping
-            return new ArrayList<>();
+            return new LongArrayList();
         }
         if (rev) {
             Collections.reverse(res);

@@ -80,6 +80,8 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
@@ -1253,7 +1255,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         int column2Index = (Integer) param.getObjArray()[4];
         final List<CardBrowser.CardCache> searchResult = new ArrayList<>();
         PartialSearch partialSearch = new PartialSearch(searchResult, column1Index, column2Index, numCardsToRender);
-        List<Long> searchResult_ = col.findCards(query, order, partialSearch);
+        LongList searchResult_ = col.findCards(query, order, partialSearch);
         partialSearch.add(searchResult_);
         int resultSize = searchResult_.size();
         Timber.d("The search found %d cards", resultSize);

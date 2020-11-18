@@ -51,6 +51,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 
@@ -896,7 +897,7 @@ public class Sched extends SchedV2 {
         }
         // move any existing cards back first, then fill
         emptyDyn(did);
-        List<Long> ids = _fillDyn(deck);
+        LongArrayList ids = _fillDyn(deck);
         if (ids.isEmpty()) {
             return;
         }
@@ -905,7 +906,7 @@ public class Sched extends SchedV2 {
     }
 
 
-    private List<Long> _fillDyn(@NonNull Deck deck) {
+    private LongArrayList _fillDyn(@NonNull Deck deck) {
         JSONArray terms = deck.getJSONArray("terms").getJSONArray(0);
         String search = terms.getString(0);
         int limit = terms.getInt(1);
@@ -915,7 +916,7 @@ public class Sched extends SchedV2 {
             search = String.format(Locale.US, "(%s)", search);
         }
         search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered -is:learn", search);
-        List<Long> ids = mCol.findCards(search, orderlimit);
+        LongArrayList ids = mCol.findCards(search, orderlimit);
         if (ids.isEmpty()) {
             return ids;
         }
