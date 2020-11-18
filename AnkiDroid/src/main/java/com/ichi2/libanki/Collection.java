@@ -78,6 +78,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
@@ -1588,7 +1589,7 @@ public class Collection {
         //get the deck Ids to query
         Long[] dynDeckIds = getDecks().allDynamicDeckIds();
         //make it mutable
-        List<Long> dynIdsAndZero = new ArrayList<>(Arrays.asList(dynDeckIds));
+        LongArrayList dynIdsAndZero = new LongArrayList(Arrays.asList(dynDeckIds));
         dynIdsAndZero.add(0L);
 
         LongArrayList cardIds = mDb.queryLongList("select id from cards where did in " +
@@ -1762,7 +1763,7 @@ public class Collection {
     private ArrayList<String> removeDynamicPropertyFromNonDynamicDecks(Runnable notifyProgress) {
         Timber.d("removeDynamicPropertyFromNonDynamicDecks()");
         ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> dids = new ArrayList<>();
+        LongArrayList dids = new LongArrayList();
         for (long id : mDecks.allIds()) {
             if (!mDecks.isDyn(id)) {
                 dids.add(id);
@@ -1833,7 +1834,7 @@ public class Collection {
         Timber.d("deleteNotesWithWrongFieldCounts");
         ArrayList<String> problems = new ArrayList<>();
         // notes with invalid field counts
-        ArrayList<Long> ids = new ArrayList<>();
+        LongArrayList ids = new LongArrayList();
         notifyProgress.run();
         try (Cursor cur = mDb.query("select id, flds from notes where mid = ?",  m.getLong("id"))) {
             Timber.i("cursor size: %d", cur.getCount());
@@ -1884,7 +1885,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         notifyProgress.run();
         if (m.getInt("type") == Consts.MODEL_STD) {
-            ArrayList<Integer> ords = new ArrayList<>();
+            IntArrayList ords = new IntArrayList();
             JSONArray tmpls = m.getJSONArray("tmpls");
             for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
                 ords.add(tmpl.getInt("ord"));

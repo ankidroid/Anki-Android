@@ -2510,7 +2510,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     protected void _burySiblings(@NonNull Card card) {
-        ArrayList<Long> toBury = new ArrayList<>();
+        LongArrayList toBury = new LongArrayList();
         JSONObject nconf = _newConf(card);
         boolean buryNew = nconf.optBoolean("bury", true);
         JSONObject rconf = _revConf(card);
@@ -2611,7 +2611,7 @@ public class SchedV2 extends AbstractSched {
     public void sortCards(@NonNull long[] cids, int start, int step, boolean shuffle, boolean shift) {
         String scids = Utils.ids2str(cids);
         long now = getTime().intTime();
-        ArrayList<Long> nids = new ArrayList<>();
+        LongArrayList nids = new LongArrayList();
         for (long id : cids) {
             long nid = mCol.getDb().queryLongScalar("SELECT nid FROM cards WHERE id = ?", id);
             if (!nids.contains(nid)) {
@@ -2628,7 +2628,7 @@ public class SchedV2 extends AbstractSched {
             Collections.shuffle(nids);
         }
         for (int c = 0; c < nids.size(); c++) {
-            due.put(nids.get(c), (long) (start + c * step));
+            due.put(nids.getLong(c), (long) (start + c * step));
         }
         int high = start + step * (nids.size() - 1);
         // shift?
@@ -2774,13 +2774,13 @@ public class SchedV2 extends AbstractSched {
      */
     // Overriden: In sched v1, a single type of burying exist
     public boolean haveBuried(long did) {
-        List<Long> all = new ArrayList<>(mCol.getDecks().children(did).values());
+        LongArrayList all = new LongArrayList(mCol.getDecks().children(did).values());
         all.add(did);
         return haveBuriedSiblings(all) || haveManuallyBuried(all);
     }
 
     public void unburyCardsForDeck(long did) {
-        List<Long> all = new ArrayList<>(mCol.getDecks().children(did).values());
+        LongArrayList all = new LongArrayList(mCol.getDecks().children(did).values());
         all.add(did);
         unburyCardsForDeck(ALL, all);
     }

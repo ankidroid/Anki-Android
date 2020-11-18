@@ -35,6 +35,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+
 
 /**
 Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -171,7 +173,7 @@ public class Tags {
     public ArrayList<String> byDeck(long did, boolean children) {
         List<String> tags;
         if (children) {
-            ArrayList<Long> dids = new ArrayList<>();
+            LongArrayList dids = new LongArrayList();
             dids.add(did);
             dids.addAll(mCol.getDecks().children(did).values());
             tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(dids));

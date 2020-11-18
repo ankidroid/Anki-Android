@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import timber.log.Timber;
 
 import com.ichi2.async.CollectionTask;
@@ -343,7 +344,7 @@ public class TemporaryModel {
         Timber.d("getDeleteDbOrds()");
 
         // array containing the original / db-relative ordinals for all pending deletes plus the proposed one
-        ArrayList<Integer> deletedDbOrds = new ArrayList<>();
+        IntArrayList deletedDbOrds = new IntArrayList();
 
         // For each entry in the changes list - and the proposed delete - scan for deletes to get original ordinal
         for (int i = 0; i <= mTemplateChanges.size(); i++) {
@@ -377,11 +378,7 @@ public class TemporaryModel {
             deletedDbOrds.add((int)currentChange[0] + ordinalAdjustment);
         }
 
-        int[] deletedDbOrdInts = new int[deletedDbOrds.size()];
-        for (int i = 0; i < deletedDbOrdInts.length; i++) {
-            deletedDbOrdInts[i] = (deletedDbOrds.get(i));
-        }
-        return deletedDbOrdInts;
+        return deletedDbOrds.toIntArray();
     }
 
 

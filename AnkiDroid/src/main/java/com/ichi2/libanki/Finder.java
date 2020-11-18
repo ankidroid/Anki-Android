@@ -49,6 +49,8 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongCollection;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
@@ -633,7 +635,7 @@ public class Finder {
 
 
     private String _findModel(String val) {
-        LinkedList<Long> ids = new LinkedList<>();
+        LongArrayList ids = new LongArrayList();
         for (JSONObject m : mCol.getModels().all()) {
             String modelName = m.getString("name");
             modelName = Normalizer.normalize(modelName, Normalizer.Form.NFC);
@@ -810,7 +812,7 @@ public class Finder {
         String mid = split[0];
         val = split[1];
         String csum = Long.toString(Utils.fieldChecksumWithoutHtmlMedia(val));
-        List<Long> nids = new ArrayList<>();
+        LongArrayList nids = new LongArrayList();
         try (Cursor cur = mCol.getDb().query(
                 "select id, flds from notes where mid=? and csum=?",
                 mid, csum)) {
@@ -909,7 +911,7 @@ public class Finder {
 
         ArrayList<Object[]> d = new ArrayList<>();
         String snids = Utils.ids2str(nids);
-        Map<Long, java.util.Collection<Long>> midToNid = new HashMap<>();
+        Map<Long, LongCollection> midToNid = new HashMap<>();
         try (Cursor cur = col.getDb().query(
                 "select id, mid, flds from notes where id in " + snids)) {
             while (cur.moveToNext()) {
@@ -934,7 +936,7 @@ public class Finder {
                 if (!flds.equals(origFlds)) {
                     long nid = cur.getLong(0);
                     if (!midToNid.containsKey(mid)) {
-                        midToNid.put(mid, new ArrayList<>());
+                        midToNid.put(mid, new LongArrayList());
                     }
                     midToNid.get(mid).add(nid);
                     d.add(new Object[] { flds, col.getTime().intTime(), col.usn(), nid }); // order based on query below
@@ -946,9 +948,9 @@ public class Finder {
         }
         // replace
         col.getDb().executeMany("update notes set flds=?,mod=?,usn=? where id=?", d);
-        for (Map.Entry<Long, java.util.Collection<Long>> entry : midToNid.entrySet()) {
+        for (Map.Entry<Long, LongCollection> entry : midToNid.entrySet()) {
             long mid = entry.getKey();
-            java.util.Collection<Long> nids_ = entry.getValue();
+            LongCollection nids_ = entry.getValue();
             col.updateFieldCache(nids_);
             col.genCards(nids_, mid);
         }

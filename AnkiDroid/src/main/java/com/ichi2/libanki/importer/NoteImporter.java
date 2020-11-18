@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 
 import static com.ichi2.libanki.Consts.NEW_CARDS_RANDOM;
 import static com.ichi2.libanki.Utils.collection2Array;
@@ -149,7 +150,7 @@ public class NoteImporter extends Importer {
             }
         }
         // gather checks for duplicate comparison
-        HashMap<Long, List<Long>> csums = new HashMap<>();
+        HashMap<Long, LongArrayList> csums = new HashMap<>();
         try (Cursor c = mCol.getDb().query("select csum, id from notes where mid = ?", mModel.getLong("id"))) {
             while (c.moveToNext()) {
                 long csum = c.getLong(0);
@@ -157,7 +158,7 @@ public class NoteImporter extends Importer {
                 if (csums.containsKey(csum)) {
                     csums.get(csum).add(id);
                 } else {
-                    csums.put(csum, new ArrayList<>(Collections.singletonList(id)));
+                    csums.put(csum, new LongArrayList(Collections.singletonList(id)));
                 }
             }
         }

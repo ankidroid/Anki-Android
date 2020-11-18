@@ -100,6 +100,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
@@ -1764,7 +1766,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
      * Removes cards from view. Doesn't delete them in model (database).
      */
     private void removeNotesView(Card[] cards, boolean reorderCards) {
-        List<Long> cardIds = new ArrayList<>(cards.length);
+        LongArrayList cardIds = new LongArrayList(cards.length);
         for (Card c : cards) {
             cardIds.add(c.getId());
         }

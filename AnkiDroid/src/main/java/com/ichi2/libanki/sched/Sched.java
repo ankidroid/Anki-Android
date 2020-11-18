@@ -1239,14 +1239,14 @@ public class Sched extends SchedV2 {
      */
     @Override
     public boolean haveBuried(long did) {
-        List<Long> all = new ArrayList<>(mCol.getDecks().children(did).values());
+        LongArrayList all = new LongArrayList(mCol.getDecks().children(did).values());
         all.add(did);
         return haveBuried(all);
     }
 
     @Override
     public void unburyCardsForDeck(long did) {
-        List<Long> all = new ArrayList<>(mCol.getDecks().children(did).values());
+        LongArrayList all = new LongArrayList(mCol.getDecks().children(did).values());
         all.add(did);
         unburyCardsForDeck(all);
     }

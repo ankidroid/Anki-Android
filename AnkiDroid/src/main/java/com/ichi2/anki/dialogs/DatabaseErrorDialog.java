@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import timber.log.Timber;
 
 public class DatabaseErrorDialog extends AsyncDialogFragment {
@@ -119,7 +120,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
                 ArrayList<String> options = new ArrayList<>();
-                ArrayList<Integer> values = new ArrayList<>();
+                IntArrayList values = new IntArrayList();
                 if (!((AnkiActivity) getActivity()).colIsOpen()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening));
@@ -148,7 +149,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 mRepairValues = new int[options.size()];
                 for (int i = 0; i < options.size(); i++) {
                     titles[i] = options.get(i);
-                    mRepairValues[i] = values.get(i);
+                    mRepairValues[i] = values.getInt(i);
                 }
 
                 return builder.iconAttr(R.attr.dialogErrorIcon)
@@ -303,7 +304,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         .show();
             }
             case INCOMPATIBLE_DB_VERSION: {
-                List<Integer> values = new ArrayList<>();
+                IntArrayList values = new IntArrayList();
                 CharSequence[] options = new CharSequence[] { UiUtil.makeBold(res.getString(R.string.backup_restore)), UiUtil.makeBold(res.getString(R.string.backup_full_sync_from_server)) };
                 values.add(0);
                 values.add(1);
@@ -316,7 +317,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         .items(options)
                        // .itemsColor(ContextCompat.getColor(requireContext(), R.color.material_grey_500))
                         .itemsCallback((dialog, itemView, position, text) -> {
-                            switch (values.get(position)) {
+                            switch (values.getInt(position)) {
                                 case 0:
                                     ((DeckPicker) getActivity()).showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP);
                                     break;

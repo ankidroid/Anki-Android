@@ -369,7 +369,7 @@ public class FinderTest extends RobolectricTest {
         note2.setItem("Front", "baz");
         note2.setItem("Back", "foo");
         col.addNote(note2);
-        List<Long> nids = Arrays.asList(note.getId(), note2.getId());
+        LongArrayList nids = new LongArrayList(new long[]{note.getId(), note2.getId()});
         // should do nothing
         assertEquals(0, col.findReplace(nids, "abc", "123"));
         // global replace
