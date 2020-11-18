@@ -1494,7 +1494,7 @@ public class SchedV2 extends AbstractSched {
 
 
     protected int _revForDeck(long did, int lim, @NonNull Decks.Node childMap) {
-        List<Long> dids = mCol.getDecks().childDids(did, childMap);
+        LongArrayList dids = mCol.getDecks().childDids(did, childMap);
         dids.add(0, did);
         lim = Math.min(lim, mReportLimit);
         return mCol.getDb().queryScalar("SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(dids) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
