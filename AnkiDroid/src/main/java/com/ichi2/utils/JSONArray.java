@@ -49,6 +49,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 
 public class JSONArray extends org.json.JSONArray {
     public JSONArray() {
@@ -395,9 +397,9 @@ public class JSONArray extends org.json.JSONArray {
         return l;
     }
 
-    public List<Long> toLongList() {
-        List<Long> l = new ArrayList<>(length());
-        for (Long object : longIterable()) {
+    public LongArrayList toLongList() {
+        LongArrayList l = new LongArrayList(length());
+        for (long object : longIterable()) {
             l.add(object);
         }
         return l;
