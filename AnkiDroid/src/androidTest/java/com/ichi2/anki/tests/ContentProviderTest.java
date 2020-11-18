@@ -124,7 +124,7 @@ public class ContentProviderTest extends InstrumentedTest {
     /* initialCapacity set to expected value when the test is written.
      * Should create no problem if we forget to change it when more tests are added.
      */
-    private final List<Long> mTestDeckIds = new ArrayList<>(TEST_DECKS.length + 1);
+    private final LongArrayList mTestDeckIds = new LongArrayList(TEST_DECKS.length + 1);
     private ArrayList<Uri> mCreatedNotes;
     private long mModelId = 0;
     private String[] mDummyFields = new String[1];
@@ -594,7 +594,7 @@ public class ContentProviderTest extends InstrumentedTest {
                 try {
                     assertThat("Check that there is at least one result for cards", cardsCursor.getCount(), is(greaterThan(0)));
                     while (cardsCursor.moveToNext()) {
-                        long targetDid = mTestDeckIds.get(0);
+                        long targetDid = mTestDeckIds.getLong(0);
                         // Move to test deck (to test NOTES_ID_CARDS_ORD Uri)
                         ContentValues values = new ContentValues();
                         values.put(FlashCardsContract.Card.DECK_ID, targetDid);
@@ -754,7 +754,7 @@ public class ContentProviderTest extends InstrumentedTest {
     public void testQueryCertainDeck() {
         Collection col = getCol();
 
-        long deckId = mTestDeckIds.get(0);
+        long deckId = mTestDeckIds.getLong(0);
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
         try (Cursor decksCursor = getContentResolver().query(deckUri, null, null, null, null)) {
             if (decksCursor == null || !decksCursor.moveToFirst()) {
@@ -805,7 +805,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testQueryCardFromCertainDeck(){
-        long deckToTest = mTestDeckIds.get(0);
+        long deckToTest = mTestDeckIds.getLong(0);
         String deckSelector = "deckID=?";
         String[] deckArguments = {Long.toString(deckToTest)};
         Collection col = getCol();
@@ -845,7 +845,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testSetSelectedDeck(){
-        long deckId = mTestDeckIds.get(0);
+        long deckId = mTestDeckIds.getLong(0);
         ContentResolver cr = getContentResolver();
         Uri selectDeckUri = FlashCardsContract.Deck.CONTENT_SELECTED_URI;
         ContentValues values = new ContentValues();
@@ -856,7 +856,7 @@ public class ContentProviderTest extends InstrumentedTest {
     }
 
     private Card getFirstCardFromScheduler(Collection col) {
-        long deckId = mTestDeckIds.get(0);
+        long deckId = mTestDeckIds.getLong(0);
         col.getDecks().select(deckId);
         col.reset();
         return col.getSched().getCard();
