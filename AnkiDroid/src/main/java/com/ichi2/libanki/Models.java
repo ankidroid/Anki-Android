@@ -855,7 +855,7 @@ public class Models {
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // unused upstream as well
     private void _syncTemplates(Model m) {
-        ArrayList<Long> rem = mCol.genCards(nids(m), m);
+        mCol.genCards(nids(m), m);
     }
 
 
