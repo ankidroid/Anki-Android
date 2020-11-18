@@ -48,6 +48,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
@@ -134,12 +135,12 @@ public class Finder {
     }
 
 
-    public List<Long> findNotes(String query) {
+    public LongArrayList findNotes(String query) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
         String[] args = res1.second;
-        List<Long> res = new ArrayList<>();
+        LongArrayList res = new LongArrayList();
         if (preds == null) {
             return res;
         }
@@ -155,7 +156,7 @@ public class Finder {
             }
         } catch (SQLException e) {
             // invalid grouping
-            return new ArrayList<>();
+            return new LongArrayList();
         }
         return res;
     }

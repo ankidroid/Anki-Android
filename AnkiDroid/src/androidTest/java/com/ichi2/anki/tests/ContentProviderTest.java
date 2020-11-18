@@ -26,6 +26,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import androidx.test.rule.GrantPermissionRule;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+
 import android.util.Log;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
@@ -209,9 +211,9 @@ public class ContentProviderTest extends InstrumentedTest {
         }
         final Collection col = getCol();
         // Delete all notes
-        List<Long> remnantNotes = col.findNotes("tag:" + TEST_TAG);
+        LongArrayList remnantNotes = col.findNotes("tag:" + TEST_TAG);
         if (remnantNotes.size() > 0) {
-            long[] noteIds = Utils.collection2Array(remnantNotes);
+            long[] noteIds = remnantNotes.toLongArray();
             col.remNotes(noteIds);
             col.save();
             assertEquals("Check that remnant notes have been deleted", 0, col.findNotes("tag:" + TEST_TAG).size());
