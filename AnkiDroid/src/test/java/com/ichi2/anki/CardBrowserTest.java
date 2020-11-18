@@ -37,6 +37,7 @@ import javax.annotation.CheckReturnValue;
 import androidx.annotation.StringRes;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -223,9 +224,9 @@ public class CardBrowserTest extends RobolectricTest {
 
         advanceRobolectricLooperWithSleep();
 
-        List<Long> cardIds = b.getCheckedCardIds();
+        LongArrayList cardIds = b.getCheckedCardIds();
 
-        for (Long cardId : cardIds) {
+        for (long cardId : cardIds) {
             assertThat("Deck should have been changed yet", getCol().getCard(cardId).getDid(), not(deckIdToChangeTo));
         }
 
@@ -236,7 +237,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         //assert
         advanceRobolectricLooperWithSleep();
-        for (Long cardId : cardIds) {
+        for (long cardId : cardIds) {
             assertThat("Deck should be changed", getCol().getCard(cardId).getDid(), is(deckIdToChangeTo));
         }
     }
@@ -248,11 +249,11 @@ public class CardBrowserTest extends RobolectricTest {
         CardBrowser b = getBrowserWithNotes(5);
         b.checkCardsAtPositions(0, 2);
 
-        List<Long> cardIds = b.getCheckedCardIds();
+        LongArrayList cardIds = b.getCheckedCardIds();
 
         b.executeChangeCollectionTask(toLongArray(cardIds), dynId);
 
-        for (Long cardId: cardIds) {
+        for (long cardId: cardIds) {
             assertThat("Deck should not be changed", getCol().getCard(cardId).getDid(), not(dynId));
         }
     }
@@ -525,9 +526,9 @@ public class CardBrowserTest extends RobolectricTest {
 
 
     private CardBrowser.CardCache getCheckedCard(CardBrowser b) {
-        List<Long> ids = b.getCheckedCardIds();
+        LongArrayList ids = b.getCheckedCardIds();
         assertThat("only one card expected to be checked", ids, hasSize(1));
-        return b.getPropertiesForCardId(ids.get(0));
+        return b.getPropertiesForCardId(ids.getLong(0));
     }
 
 
