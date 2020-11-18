@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.util.Pair;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
@@ -1100,7 +1101,7 @@ public class Models {
      * @param m A model
      * @param sfld Fields of a note
      * @return The index of the cards that are generated. For cloze cards, if no card is generated, then {0} */
-    public static ArrayList<Integer> availOrds(Model m, String[] sfld) {
+    public static IntArrayList availOrds(Model m, String[] sfld) {
         if (m.getInt("type") == Consts.MODEL_CLOZE) {
             return _availClozeOrds(m, sfld);
         }
@@ -1108,9 +1109,9 @@ public class Models {
     }
 
     /** Given a joined field string and a standard note type, return available template ordinals */
-    public static ArrayList<Integer> _availStandardOrds(Model m, String[] sfld) {
+    public static IntArrayList _availStandardOrds(Model m, String[] sfld) {
         String[] fields = trimArray(sfld);
-        ArrayList<Integer> avail = new ArrayList<>();
+        IntArrayList avail = new IntArrayList();
         JSONArray reqArray = m.getJSONArray("req");
         templates: for (int i = 0; i < reqArray.length(); i++) {
             JSONArray sr = reqArray.getJSONArray(i);
@@ -1131,7 +1132,7 @@ public class Models {
      * @param sflds The fields of a note of type m. (Assume the size of the array is the number of fields)
      * @return The indexes (in increasing order) of cards that should be generated according to req rules.
      */
-    public static ArrayList<Integer> _availClozeOrds(Model m, String[] sflds) {
+    public static IntArrayList _availClozeOrds(Model m, String[] sflds) {
         return _availClozeOrds(m, sflds, true);
     }
 
@@ -1165,7 +1166,7 @@ public class Models {
      * @param allowEmpty Whether we allow to generate at least one card even if they are all empty
      * @return The indexes (in increasing order) of cards that should be generated according to req rules.
      * If empty is not allowed, it will contains ord 1.*/
-    public static ArrayList<Integer> _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
+    public static IntArrayList _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
         String question = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
         Set<Integer> ords = new HashSet<>();
@@ -1183,9 +1184,9 @@ public class Models {
         ords.remove(-1);
         if (ords.isEmpty() && allowEmpty) {
             // empty clozes use first ord
-            return new ArrayList<>(Collections.singletonList(0));
+            return new IntArrayList(Collections.singletonList(0));
         }
-        return new ArrayList<>(ords);
+        return new IntArrayList(ords);
     }
 
 
