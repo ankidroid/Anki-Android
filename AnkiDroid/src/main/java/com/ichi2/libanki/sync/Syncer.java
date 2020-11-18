@@ -646,7 +646,7 @@ public class Syncer {
         mCol.remCards(graves.getJSONArray("cards").toLongList(), false);
         // and decks
         JSONArray decks = graves.getJSONArray("decks");
-        for (Long did: decks.longIterable()) {
+        for (long did: decks.longIterable()) {
             mCol.getDecks().rem(did, false, false);
         }
         mCol.setServer(wasServer);

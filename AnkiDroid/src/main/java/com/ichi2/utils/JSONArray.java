@@ -50,6 +50,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongIterable;
+import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongList;
 
 public class JSONArray extends org.json.JSONArray {
@@ -368,11 +370,11 @@ public class JSONArray extends org.json.JSONArray {
         };
     }
 
-    public Iterable<Long> longIterable() {
+    public LongIterable longIterable() {
         return this::longIterator;
     }
-    public Iterator<Long> longIterator() {
-        return new Iterator<Long>() {
+    public LongIterator longIterator() {
+        return new LongIterator() {
             private int index = 0;
             @Override
             public boolean hasNext() {
@@ -381,8 +383,8 @@ public class JSONArray extends org.json.JSONArray {
 
 
             @Override
-            public Long next() {
-                Long long_ = getLong(index);
+            public long nextLong() {
+                long long_ = getLong(index);
                 index++;
                 return long_;
             }
