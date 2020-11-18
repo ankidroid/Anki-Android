@@ -2842,8 +2842,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public List<Long> getCheckedCardIds() {
-        List<Long> cardIds = new ArrayList<>();
+    public LongArrayList getCheckedCardIds() {
+        LongArrayList cardIds = new LongArrayList();
         for (CardCache card : mCheckedCards) {
             long id = card.getId();
             cardIds.add(id);
