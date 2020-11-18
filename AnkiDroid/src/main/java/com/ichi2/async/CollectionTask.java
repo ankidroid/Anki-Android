@@ -80,6 +80,7 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
@@ -1793,7 +1794,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Collection col = getCol();
 
         ArrayList<Model> models = col.getModels().all();
-        ArrayList<Integer> cardCount = new ArrayList<>();
+        IntArrayList cardCount = new IntArrayList();
         Collections.sort(models, (Comparator<JSONObject>) (a, b) -> a.getString("name").compareTo(b.getString("name")));
 
         for (Model n : models) {

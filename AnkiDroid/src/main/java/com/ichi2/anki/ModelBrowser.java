@@ -51,6 +51,7 @@ import com.ichi2.widget.WidgetStatus;
 import java.util.ArrayList;
 import java.util.Random;
 
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
@@ -72,7 +73,7 @@ public class ModelBrowser extends AnkiActivity {
 
     //Used exclusively to display model name
     private ArrayList<Model> mModels;
-    private ArrayList<Integer> mCardCounts;
+    private IntArrayList mCardCounts;
     private LongArrayList mModelIds;
     private ArrayList<DisplayPair> mModelDisplayList;
 
@@ -121,7 +122,7 @@ public class ModelBrowser extends AnkiActivity {
             }
             browser.hideProgressBar();
             browser.mModels = (ArrayList<Model>) result.getObjArray()[0];
-            browser.mCardCounts = (ArrayList<Integer>) result.getObjArray()[1];
+            browser.mCardCounts = (IntArrayList) result.getObjArray()[1];
 
             browser.fillModelList();
         }
@@ -263,7 +264,7 @@ public class ModelBrowser extends AnkiActivity {
 
         for (int i = 0; i < mModels.size(); i++) {
             mModelIds.add(mModels.get(i).getLong("id"));
-            mModelDisplayList.add(new DisplayPair(mModels.get(i).getString("name"), mCardCounts.get(i)));
+            mModelDisplayList.add(new DisplayPair(mModels.get(i).getString("name"), mCardCounts.getInt(i)));
         }
 
         mModelDisplayAdapter = new DisplayPairAdapter(this, mModelDisplayList);
@@ -459,7 +460,7 @@ public class ModelBrowser extends AnkiActivity {
                                         mModels.get(mModelListPosition).put("name", deckName);
                                         mModelDisplayList.set(mModelListPosition,
                                                 new DisplayPair(mModels.get(mModelListPosition).getString("name"),
-                                                        mCardCounts.get(mModelListPosition)));
+                                                        mCardCounts.getInt(mModelListPosition)));
                                         refreshList();
                                     } else {
                                         showToast(getResources().getString(R.string.toast_empty_name));
@@ -515,7 +516,7 @@ public class ModelBrowser extends AnkiActivity {
         mModels.remove(mModelListPosition);
         mModelIds.removeLong(mModelListPosition);
         mModelDisplayList.remove(mModelListPosition);
-        mCardCounts.remove(mModelListPosition);
+        mCardCounts.removeInt(mModelListPosition);
         refreshList();
     }
 
