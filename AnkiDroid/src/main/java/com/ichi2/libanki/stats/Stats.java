@@ -40,6 +40,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 
@@ -1260,14 +1261,14 @@ public class Stats {
     public static String deckLimit(long deckId, Collection col) {
         if (deckId == ALL_DECKS_ID) {
             // All decks
-            ArrayList<Long> ids = new ArrayList<>();
+            LongArrayList ids = new LongArrayList();
             for (Deck d : col.getDecks().all()) {
                 ids.add(d.getLong("id"));
             }
             return Utils.ids2str(ids);
         } else {
             // The given deck id and its children
-            ArrayList<Long> ids = new ArrayList<>();
+            LongArrayList ids = new LongArrayList();
             ids.add(deckId);
             ids.addAll(col.getDecks().children(deckId).values());
             return Utils.ids2str(ids);

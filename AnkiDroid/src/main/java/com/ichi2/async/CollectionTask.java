@@ -703,7 +703,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Delete note");
-            ArrayList<Long> ids = new ArrayList<>();
+            LongArrayList ids = new LongArrayList();
             note.flush(note.getMod(), false);
             ids.add(note.getId());
             for (Card c : allCs) {
@@ -801,8 +801,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Suspend multiple cards");
-            List<Long> toSuspendIds = new ArrayList<>();
-            List<Long> toUnsuspendIds = new ArrayList<>();
+            LongArrayList toSuspendIds = new LongArrayList();
+            LongArrayList toUnsuspendIds = new LongArrayList();
             for (int i = 0; i < cards.length; i++) {
                 Card card = cards[i];
                 if (originalSuspended[i]) {
@@ -816,10 +816,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             long[] toSuspendIdsArray = new long[toSuspendIds.size()];
             long[] toUnsuspendIdsArray = new long[toUnsuspendIds.size()];
             for (int i = 0; i < toSuspendIds.size(); i++) {
-                toSuspendIdsArray[i] = toSuspendIds.get(i);
+                toSuspendIdsArray[i] = toSuspendIds.getLong(i);
             }
             for (int i = 0; i < toUnsuspendIds.size(); i++) {
-                toUnsuspendIdsArray[i] = toUnsuspendIds.get(i);
+                toUnsuspendIdsArray[i] = toUnsuspendIds.getLong(i);
             }
 
             col.getSched().suspendCards(toSuspendIdsArray);
@@ -846,7 +846,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         public @Nullable Card undo(@NonNull Collection col) {
             Timber.i("Undo: Delete notes");
             // undo all of these at once instead of one-by-one
-            ArrayList<Long> ids = new ArrayList<>();
+            LongArrayList ids = new LongArrayList();
             for (Note n : notesArr) {
                 n.flush(n.getMod(), false);
                 ids.add(n.getId());

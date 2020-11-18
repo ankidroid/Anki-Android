@@ -54,6 +54,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
@@ -225,7 +227,7 @@ public class Anki2Importer extends Importer {
         ArrayList<Object[]> update = new ArrayList<>();
         int totalUpdateCount = 0;
         final int thresExecUpdate = 1000;
-        ArrayList<Long> dirty = new ArrayList<>();
+        LongArrayList dirty = new LongArrayList();
         int totalDirtyCount = 0;
         final int thresExecDirty = 1000;
         int usn = mDst.usn();

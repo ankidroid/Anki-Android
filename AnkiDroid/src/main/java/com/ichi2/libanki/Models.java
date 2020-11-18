@@ -909,7 +909,7 @@ public class Models {
 
     private void _changeCards(long nid, Model oldModel, Model newModel, Map<Integer, Integer> map) {
         List<Object[]> d = new ArrayList<>();
-        List<Long> deleted = new ArrayList<>();
+        LongArrayList deleted = new LongArrayList();
         int omType = oldModel.getInt("type");
         int nmType = newModel.getInt("type");
         int nflds = newModel.getJSONArray("tmpls").length();

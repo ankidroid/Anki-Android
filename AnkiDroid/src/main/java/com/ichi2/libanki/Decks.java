@@ -849,7 +849,7 @@ public class Decks {
         if (!children) {
             return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did=?", did));
         }
-        List<Long> dids = new ArrayList<>();
+        LongArrayList dids = new LongArrayList();
         dids.add(did);
         dids.addAll(children(did).values());
         return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(dids)));
@@ -1179,8 +1179,8 @@ public class Decks {
     }
 
     public Long[] allDynamicDeckIds() {
-        ArrayList<Long> validValues = new ArrayList<>();
-        for (Long did : allIds()) {
+        LongArrayList validValues = new LongArrayList();
+        for (long did : allIds()) {
             if (isDyn(did)) {
                 validValues.add(did);
             }

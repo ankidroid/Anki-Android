@@ -35,6 +35,7 @@ import java.util.HashMap;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import timber.log.Timber;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
@@ -118,7 +119,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     int[] getListIds() {
         Collection col = CollectionHelper.getInstance().getCol(getContext());
         long did = getArguments().getLong("did");
-        ArrayList<Integer> itemIds = new ArrayList<>();
+        IntArrayList itemIds = new IntArrayList();
         if (col.getDecks().isDyn(did)) {
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_REBUILD);
             itemIds.add(CONTEXT_MENU_CUSTOM_STUDY_EMPTY);
@@ -136,7 +137,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         }
         itemIds.add(CONTEXT_MENU_CREATE_SHORTCUT);
 
-        return ContextMenuHelper.integerListToArray(itemIds);
+        return itemIds.toIntArray();
     }
 
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
