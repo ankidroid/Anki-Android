@@ -2073,7 +2073,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 if (result.getObjArray() != null && result.getObjArray().length > 1) {
                     try {
                         @SuppressWarnings("unchecked")
-                        List<Long> cardsIdsToHide = (List<Long>) result.getObjArray()[1];
+                        LongArrayList cardsIdsToHide = (LongArrayList) result.getObjArray()[1];
                         if (cardsIdsToHide.size() > 0) {
                             Timber.i("Removing %d invalid cards from view", cardsIdsToHide.size());
                             browser.removeNotesView(cardsIdsToHide, true);
