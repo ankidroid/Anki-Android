@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.util.Pair;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -384,7 +385,7 @@ public class Models {
      */
 
     /** Note ids for M */
-    public ArrayList<Long> nids(Model m) {
+    public LongArrayList nids(Model m) {
         return mCol.getDb().queryLongList("SELECT id FROM notes WHERE mid = ?", m.getLong("id"));
     }
 
@@ -741,7 +742,7 @@ public class Models {
             throw new IllegalArgumentException("Invalid template proposed for delete");
         }
         // the code in "isRemTemplateSafe" was in place here in libanki. It is extracted to a method for reuse
-        List<Long> cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
+        LongArrayList cids = getCardIdsForModel(m.getLong("id"), new int[]{ord});
         if (cids == null) {
             Timber.d("remTemplate getCardIdsForModel determined it was unsafe to delete the template");
             return false;
@@ -781,9 +782,9 @@ public class Models {
      * @param ords array of ints, each one is the ordinal a the card template in the given model
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
-    public @Nullable List<Long> getCardIdsForModel(long modelId, int[] ords) {
+    public @Nullable LongArrayList getCardIdsForModel(long modelId, int[] ords) {
         String cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords);
-        List<Long> cids = mCol.getDb().queryLongList(cardIdsToDeleteSql, modelId);
+        LongArrayList cids = mCol.getDb().queryLongList(cardIdsToDeleteSql, modelId);
         //Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
         Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size(), modelId, Utils.ids2str(ords));
 

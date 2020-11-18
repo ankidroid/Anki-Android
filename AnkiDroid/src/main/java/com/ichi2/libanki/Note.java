@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
 
@@ -157,7 +158,7 @@ public class Note implements Cloneable {
         return (int) mCol.getDb().queryLongScalar("SELECT count() FROM cards WHERE nid = ?", mId);
     }
 
-    public List<Long> cids() {
+    public LongArrayList cids() {
         return mCol.getDb().queryLongList("SELECT id FROM cards WHERE nid = ? ORDER BY ord", mId);
     }
 

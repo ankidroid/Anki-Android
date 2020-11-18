@@ -79,6 +79,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
@@ -675,7 +676,7 @@ public class Collection {
 
 
     public void remNotes(long[] ids) {
-        ArrayList<Long> list = mDb
+        LongArrayList list = mDb
                 .queryLongList("SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids));
         remCards(list);
     }
@@ -1048,7 +1049,7 @@ public class Collection {
             return;
         }
         String sids = Utils.ids2str(ids);
-        List<Long> nids = mDb.queryLongList("SELECT nid FROM cards WHERE id IN " + sids);
+        LongArrayList nids = mDb.queryLongList("SELECT nid FROM cards WHERE id IN " + sids);
         // remove cards
         _logRem(ids, Consts.REM_CARD);
         mDb.execute("DELETE FROM cards WHERE id IN " + sids);
@@ -1590,7 +1591,7 @@ public class Collection {
         List<Long> dynIdsAndZero = new ArrayList<>(Arrays.asList(dynDeckIds));
         dynIdsAndZero.add(0L);
 
-        ArrayList<Long> cardIds = mDb.queryLongList("select id from cards where did in " +
+        LongArrayList cardIds = mDb.queryLongList("select id from cards where did in " +
                 Utils.ids2str(dynDeckIds) +
                 "and odid in " +
                 Utils.ids2str(dynIdsAndZero));
@@ -1686,7 +1687,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         notifyProgress.run();
         // reviews should have a reasonable due #
-        ArrayList<Long> ids = mDb.queryLongList("SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000");
+        LongArrayList ids = mDb.queryLongList("SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000");
         notifyProgress.run();
         if (ids.size() > 0) {
             problems.add("Reviews had incorrect due date.");
@@ -1769,7 +1770,7 @@ public class Collection {
         }
         notifyProgress.run();
         // cards with odid set when not in a dyn deck
-        ArrayList<Long> ids = mDb.queryLongList(
+        LongArrayList ids = mDb.queryLongList(
                 "select id from cards where odid > 0 and did in " + Utils.ids2str(dids));
         notifyProgress.run();
         if (ids.size() != 0) {
@@ -1785,7 +1786,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         notifyProgress.run();
         // cards with odue set when it shouldn't be
-        ArrayList<Long> ids = mDb.queryLongList(
+        LongArrayList ids = mDb.queryLongList(
                 "select id from cards where odue > 0 and (type= " + Consts.CARD_TYPE_LRN + " or queue=" + Consts.QUEUE_TYPE_REV + ") and not odid");
         notifyProgress.run();
         if (ids.size() != 0) {
@@ -1801,7 +1802,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         notifyProgress.run();
         // cards with missing notes
-        ArrayList<Long> ids = mDb.queryLongList(
+        LongArrayList ids = mDb.queryLongList(
                 "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)");
         notifyProgress.run();
         if (ids.size() != 0) {
@@ -1817,7 +1818,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         notifyProgress.run();
         // delete any notes with missing cards
-        ArrayList<Long> ids = mDb.queryLongList(
+        LongArrayList ids = mDb.queryLongList(
                 "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)");
         notifyProgress.run();
         if (ids.size() != 0) {
@@ -1889,7 +1890,7 @@ public class Collection {
                 ords.add(tmpl.getInt("ord"));
             }
             // cards with invalid ordinal
-            ArrayList<Long> ids = mDb.queryLongList(
+            LongArrayList ids = mDb.queryLongList(
                     "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
                             "SELECT id FROM notes WHERE mid = ?)", m.getLong("id"));
             if (ids.size() > 0) {
@@ -1906,7 +1907,7 @@ public class Collection {
         ArrayList<String> problems = new ArrayList<>();
         // note types with a missing model
         notifyProgress.run();
-        ArrayList<Long> ids = mDb.queryLongList(
+        LongArrayList ids = mDb.queryLongList(
                 "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(getModels().ids()));
         notifyProgress.run();
         if (ids.size() != 0) {
@@ -2173,7 +2174,7 @@ public class Collection {
 
     /** Not in libAnki */
     @CheckResult
-    public List<Long> filterToValidCards(long[] cards) {
+    public LongArrayList filterToValidCards(long[] cards) {
         return getDb().queryLongList("select id from cards where id in " + Utils.ids2str(cards));
     }
 

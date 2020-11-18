@@ -33,6 +33,8 @@ import java.util.HashSet;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 /**
@@ -221,7 +223,7 @@ public class Previewer extends AbstractFlashcardViewer {
     @Override
     protected void performReload() {
         mReloadRequired = true;
-        List<Long> newCardList = getCol().filterToValidCards(mCardList);
+        LongArrayList newCardList = getCol().filterToValidCards(mCardList);
 
         if (newCardList.isEmpty()) {
             finishWithoutAnimation();

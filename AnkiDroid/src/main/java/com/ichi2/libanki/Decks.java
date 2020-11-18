@@ -53,6 +53,8 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 import static com.ichi2.utils.CollectionUtils.addAll;
@@ -388,7 +390,7 @@ public class Decks {
             // delete cards too?
             if (cardsToo) {
                 // don't use cids(), as we want cards in cram decks too
-                ArrayList<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? OR odid = ?", did, did);
+                LongArrayList cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? OR odid = ?", did, did);
                 mCol.remCards(cids);
             }
         }

@@ -262,7 +262,7 @@ public class CardBrowserTest extends RobolectricTest {
         Note n = addNoteUsingBasicModel("1", "back");
         flagCardForNote(n, 1);
 
-        long cardId = n.cids().get(0);
+        long cardId = n.cids().getLong(0);
 
         CardBrowser b = getBrowserWithNoNewCards();
         CardBrowser.CardCache cardProperties = b.getPropertiesForCardId(cardId);

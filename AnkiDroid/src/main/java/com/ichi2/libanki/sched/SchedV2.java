@@ -64,6 +64,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING;
@@ -2589,8 +2590,8 @@ public class SchedV2 extends AbstractSched {
      * Completely reset cards for export.
      */
     public void resetCards(@NonNull Long[] ids) {
-        long[] nonNew = Utils.collection2Array(mCol.getDb().queryLongList(
-                "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")"));
+        long[] nonNew = mCol.getDb().queryLongList(
+                "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")").toLongArray();
         mCol.getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
         forgetCards(nonNew);
         mCol.log((Object[]) ids);
@@ -2657,14 +2658,14 @@ public class SchedV2 extends AbstractSched {
 
 
     public void randomizeCards(long did) {
-        List<Long> cids = mCol.getDb().queryLongList("select id from cards where did = ?", did);
-        sortCards(Utils.toPrimitive(cids), 1, 1, true, false);
+        LongArrayList cids = mCol.getDb().queryLongList("select id from cards where did = ?", did);
+        sortCards(cids.toLongArray(), 1, 1, true, false);
     }
 
 
     public void orderCards(long did) {
-        List<Long> cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? ORDER BY nid", did);
-        sortCards(Utils.toPrimitive(cids), 1, 1, false, false);
+        LongArrayList cids = mCol.getDb().queryLongList("SELECT id FROM cards WHERE did = ? ORDER BY nid", did);
+        sortCards(cids.toLongArray(), 1, 1, false, false);
     }
 
 
@@ -2726,7 +2727,7 @@ public class SchedV2 extends AbstractSched {
 
 
         // remove new cards from learning
-        forgetCards(Utils.collection2Array(mCol.getDb().queryLongList("select id from cards where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")")));
+        forgetCards(mCol.getDb().queryLongList("select id from cards where queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")").toLongArray());
     }
 
 
