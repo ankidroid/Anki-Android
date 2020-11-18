@@ -985,7 +985,7 @@ public class Finder {
     }
 
 
-    public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName) {
+    public static List<Pair<String, LongArrayList>> findDupes(Collection col, String fieldName) {
         return findDupes(col, fieldName, "");
     }
 
@@ -996,15 +996,15 @@ public class Finder {
      * @param search A search query, as in the browser
      * @return List of Pair("dupestr", List[nids]), with nids note satisfying the search query, and having a field fieldName with value duepstr. Each list has at least two elements.
      */
-    public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName, String search) {
+    public static List<Pair<String, LongArrayList>> findDupes(Collection col, String fieldName, String search) {
         // limit search to notes with applicable field name
     	if (!TextUtils.isEmpty(search)) {
             search = "(" + search + ") ";
     	}
         search += "'" + fieldName + ":*'";
         // go through notes
-        Map<String, List<Long>> vals = new HashMap<>();
-        List<Pair<String, List<Long>>> dupes = new ArrayList<>();
+        Map<String, LongArrayList> vals = new HashMap<>();
+        List<Pair<String, LongArrayList>> dupes = new ArrayList<>();
         Map<Long, Integer> fields = new HashMap<>();
         try (Cursor cur = col.getDb().query(
                 "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)))) {
@@ -1023,7 +1023,7 @@ public class Finder {
                     continue;
                 }
                 if (!vals.containsKey(val)) {
-                    vals.put(val, new ArrayList<>());
+                    vals.put(val, new LongArrayList());
                 }
                 vals.get(val).add(nid);
                 if (vals.get(val).size() == 2) {
