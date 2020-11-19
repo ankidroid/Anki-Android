@@ -309,8 +309,8 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
             Timber.i("StudyOptionsFragment:: Undo button pressed");
             CollectionTask.launchCollectionTask(UNDO, undoListener);
             return true;
-        } else if (itemId == R.id.action_deck_options) {
-            Timber.i("StudyOptionsFragment:: Deck options button pressed");
+        } else if (itemId == R.id.action_deck_or_study_options) {
+            Timber.i("StudyOptionsFragment:: Deck or study options button pressed");
             if (getCol().getDecks().isDyn(getCol().getDecks().selected())) {
                 openFilteredDeckOptions();
             } else {
@@ -369,10 +369,12 @@ public class StudyOptionsFragment extends Fragment implements Toolbar.OnMenuItem
                 menu.findItem(R.id.action_rebuild).setVisible(true);
                 menu.findItem(R.id.action_empty).setVisible(true);
                 menu.findItem(R.id.action_custom_study).setVisible(false);
+                menu.findItem(R.id.action_deck_or_study_options).setTitle(R.string.menu__study_options);
             } else {
                 menu.findItem(R.id.action_rebuild).setVisible(false);
                 menu.findItem(R.id.action_empty).setVisible(false);
                 menu.findItem(R.id.action_custom_study).setVisible(true);
+                menu.findItem(R.id.action_deck_or_study_options).setTitle(R.string.menu__deck_options);
             }
             // Don't show custom study icon if congrats shown
             if (mCurrentContentView == CONTENT_CONGRATS) {
