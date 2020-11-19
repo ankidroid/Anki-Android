@@ -89,7 +89,7 @@ TODO: Add a unit test
             android:entries="@array/custom_button_labels_menu_and_disabled"
             android:entryValues="@array/custom_button_values_menu_and_disabled"
             android:key="customButtonDeckOptions"
-            android:title="@string/study_options" />
+            android:title="@string/menu__deck_options" />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/custom_button_labels"

@@ -302,7 +302,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         keyValueMap.put(CUSTOM_STUDY_RANDOM, res.getString(R.string.custom_study_random_selection));
         keyValueMap.put(CUSTOM_STUDY_PREVIEW, res.getString(R.string.custom_study_preview_new));
         keyValueMap.put(CUSTOM_STUDY_TAGS, res.getString(R.string.custom_study_limit_tags));
-        keyValueMap.put(DECK_OPTIONS, res.getString(R.string.study_options));
+        keyValueMap.put(DECK_OPTIONS, res.getString(R.string.menu__deck_options));
         keyValueMap.put(MORE_OPTIONS, res.getString(R.string.more_options));
         return keyValueMap;
     }
