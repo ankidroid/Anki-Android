@@ -165,13 +165,7 @@ public class MyAccount extends AnkiActivity {
 
 
     private void resetPassword() {
-        if (AdaptionUtil.hasWebBrowser(this)) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(getResources().getString(R.string.resetpw_url)));
-            startActivityWithoutAnimation(intent);
-        } else {
-            UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + getResources().getString(R.string.resetpw_url), false);
-        }
+        super.openUrl(Uri.parse(getResources().getString(R.string.resetpw_url)));
     }
 
 
