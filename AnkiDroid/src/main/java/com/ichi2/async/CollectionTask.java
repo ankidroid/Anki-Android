@@ -727,23 +727,20 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 switch (type) {
                     case BURY_CARD:
                         // collect undo information
-                        Undoable buryCard = revertToProvidedState(BURY_CARD, card);
-                        col.markUndo(buryCard);
+                        col.markUndo(revertToProvidedState(BURY_CARD, card));
                         // then bury
                         sched.buryCards(new long[] { card.getId() });
                         break;
                     case BURY_NOTE:
                         // collect undo information
-                        Undoable buryNote = revertToProvidedState(BURY_NOTE, card);
-                        col.markUndo(buryNote);
+                        col.markUndo(revertToProvidedState(BURY_NOTE, card));
                         // then bury
                         sched.buryNote(note.getId());
                         break;
                     case SUSPEND_CARD:
                         // collect undo information
                         Card suspendedCard = card.clone();
-                        Undoable suspendCard = new UndoSuspendCard(suspendedCard);
-                        col.markUndo(suspendCard);
+                        col.markUndo(new UndoSuspendCard(suspendedCard));
                         // suspend card
                         if (card.getQueue() == Consts.QUEUE_TYPE_SUSPENDED) {
                             sched.unsuspendCards(new long[] { card.getId() });
@@ -767,8 +764,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                     case DELETE_NOTE: {
                         // collect undo information
                         ArrayList<Card> allCs = note.cards();
-                        Undoable deleteNote = new UndoDeleteNote(note, allCs, card);
-                        col.markUndo(deleteNote);
+                        col.markUndo(new UndoDeleteNote(note, allCs, card));
                         // delete note
                         col.remNotes(new long[] { note.getId() });
                         break;
@@ -977,9 +973,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                             sched.unsuspendCards(cids);
                         }
 
-                        Undoable suspendCardMulti = new UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended);
                         // mark undo for all at once
-                        col.markUndo(suspendCardMulti);
+                        col.markUndo(new UndoSuspendCardMulti(cards, originalSuspended, hasUnsuspended));
 
                         // reload cards because they'll be passed back to caller
                         for (Card c : cards) {
@@ -1015,9 +1010,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         boolean hasUnmarked = !originalUnmarked.isEmpty();
                         CardUtils.markAll(new ArrayList<>(notes), hasUnmarked);
 
-                        Undoable markNoteMulti = new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked);
                         // mark undo for all at once
-                        col.markUndo(markNoteMulti);
+                        col.markUndo(new UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked));
 
                         // reload cards because they'll be passed back to caller
                         for (Card c : cards) {
@@ -1042,9 +1036,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         }
 
 
-                        Undoable deleteNoteMulti = new UndoDeleteNoteMulti(notesArr, allCards);
-
-                        col.markUndo(deleteNoteMulti);
+                        col.markUndo(new UndoDeleteNoteMulti(notesArr, allCards));
 
                         col.remNotes(uniqueNoteIds);
                         sched.deferReset();
@@ -1098,9 +1090,8 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                             card.flush();
                         }
 
-                        Undoable changeDeckMulti = new UndoChangeDeckMulti(cards, originalDids);
                         // mark undo for all at once
-                        col.markUndo(changeDeckMulti);
+                        col.markUndo(new UndoChangeDeckMulti(cards, originalDids));
                         break;
                     }
 
@@ -1111,8 +1102,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         try {
                             Timber.d("Saving undo information of type %s on %d cards", type, cards.length);
                             Card[] cards_copied = deepCopyCardArray(cards);
-                            Undoable repositionRescheduleResetCards = new UndoRepositionRescheduleResetCards(type, cards_copied);
-                            col.markUndo(repositionRescheduleResetCards);
+                            col.markUndo(new UndoRepositionRescheduleResetCards(type, cards_copied));
                         } catch (CancellationException ce) {
                             Timber.i(ce, "Cancelled while handling type %s, skipping undo", type);
                         }

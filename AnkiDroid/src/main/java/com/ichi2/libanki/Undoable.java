@@ -34,7 +34,7 @@ public abstract class Undoable {
      * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
     public abstract @Nullable Card undo(@NonNull Collection col);
 
-    public static Undoable revertToProvidedState (DismissType dt, Card card){
+    public static @NonNull Undoable revertToProvidedState (DismissType dt, Card card){
         Note note = card.note();
         List<Card> cards = note.cards();
         return new Undoable(dt) {

@@ -1346,7 +1346,7 @@ public class Collection {
 
     /** Undo menu item name, or "" if undo unavailable. */
     @VisibleForTesting
-    public DismissType undoType() {
+    public @Nullable DismissType undoType() {
         if (mUndo.size() > 0) {
             return mUndo.getLast().getDismissType();
         }
@@ -1371,7 +1371,7 @@ public class Collection {
         return lastUndo.undo(this);
     }
 
-    public void markUndo(Undoable undo) {
+    public void markUndo(@NonNull Undoable undo) {
         Timber.d("markUndo() of type %s", undo.getDismissType());
         mUndo.add(undo);
         while (mUndo.size() > UNDO_SIZE_MAX) {
