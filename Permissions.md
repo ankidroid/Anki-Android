@@ -35,13 +35,24 @@ This is an optional permission that we request, allowing images to be inserted i
 ## NETWORK COMMUNICATION
 
 
-### FULL INTERNET ACCESS
+### VIEW NETWORK STATE
+
+_Allows the app to view the state of all networks._
+
+**android.permission.ACCESS_NETWORK_STATE**
+
+AnkiDroid uses the network state to determine whether you are offline and cannot access the features that require internet access.
+
+### Full Network Access
 
 _Allows the app to create network sockets._
 
 **android.permission.INTERNET**
 
-AnkiDroid accesses the internet to download shared decks, synchronize your existing decks, upload errors, and check for notifications.
+AnkiDroid uses the internet to connect to AnkiWeb and synchronize.  
+Decks may reference images and media via the internet.  
+AnkiDroid's opt-in analytics use the internet.  
+AnkiDroid's opt-in crash reporting uses the internet.  
 
 ## SYSTEM TOOLS
 
@@ -55,27 +66,6 @@ _Allows the app to control the vibrator._
 **android.permission.VIBRATE**
 
 AnkiDroid makes your phone vibrate when you have cards due.
-
-
-## NETWORK COMMUNICATION
-
-
-### VIEW NETWORK STATE
-
-_Allows the app to view the state of all networks._
-
-**android.permission.ACCESS_NETWORK_STATE**
-
-AnkiDroid uses the network state to determine whether you are offline and cannot access the features that require internet access.
-
-### Full Network Access
-
-**android.permission.INTERNET**
-
-AnkiDroid uses the internet to connect to AnkiWeb.  
-Decks may reference images and media via the internet.  
-AnkiDroid's opt-in analytics use the internet.  
-AnkiDroid's opt-in crash reporting uses the internet.  
 
 ## SYSTEM TOOLS
 
