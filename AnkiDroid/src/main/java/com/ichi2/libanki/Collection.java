@@ -65,11 +65,11 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
@@ -121,7 +121,8 @@ public class Collection {
     private JSONObject mConf;
     // END: SQL table columns
 
-    private LinkedList<Undoable> mUndo;
+    // API 21: Use a ConcurrentLinkedDeque
+    private LinkedBlockingDeque<Undoable> mUndo;
 
     private final String mPath;
     private boolean mDebugLog;
@@ -1344,7 +1345,7 @@ public class Collection {
      * wasLeech should have been recorded for each card, not globally
      */
     public void clearUndo() {
-        mUndo = new LinkedList<>();
+        mUndo = new LinkedBlockingDeque<>();
     }
 
 
