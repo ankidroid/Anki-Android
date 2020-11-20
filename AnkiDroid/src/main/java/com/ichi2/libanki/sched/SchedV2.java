@@ -65,6 +65,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING;
+import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
 import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
@@ -1872,7 +1874,7 @@ public class SchedV2 extends AbstractSched {
         mCol.log(mCol.getDb().queryLongList("select id from cards where " + lim));
 
         mCol.getDb().execute(
-                "update cards set did = odid, " + _restoreQueueSnippet() +
+                "update cards set did = odid, " + _restoreQueueWhenEmptyingSnippet() +
                 ", due = (case when odue>0 then odue else due end), odue = 0, odid = 0, usn = ? where " + lim,
                 mCol.usn());
     }
@@ -2385,6 +2387,21 @@ public class SchedV2 extends AbstractSched {
                 "else\n" +
                 "  type\n" +
                 "end)  ";
+    }
+
+    /**
+     * ugly fix for suspended cards being unsuspended when filtered deck emptied
+     * https://github.com/ankitects/anki/commit/fe493e31c4d73ae2bbd0c4d8c6b835974c0e290c
+     */
+    @NonNull
+    protected String _restoreQueueWhenEmptyingSnippet() {
+        return "queue = (case when queue < 0 then queue" +
+                "    when type in (1," + CARD_TYPE_RELEARNING + ") then " +
+                "(case when (case when odue then odue else due end) > 1000000000 then 1 else " +
+                "    " + QUEUE_TYPE_DAY_LEARN_RELEARN + " end) " +
+                "else " +
+                "    type " +
+                "end)";
     }
 
     /**
