@@ -1024,8 +1024,12 @@ public class Collection {
 
 
     // NOT IN LIBANKI //
-    public int cardCount(Long[] ls) {
-        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(ls));
+    public int cardCount(Long... dids) {
+        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids));
+    }
+
+    public boolean isEmptyDeck(Long... dids) {
+        return cardCount(dids) == 0;
     }
 
 
