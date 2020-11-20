@@ -2608,10 +2608,26 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             case COMMAND_ABORT_AND_SYNC:
                 abortAndSync();
                 return true;
+            case COMMAND_RECORD_VOICE:
+                recordVoice();
+                return true;
+            case COMMAND_REPLAY_VOICE:
+                replayVoice();
+                return true;
             default:
                 Timber.w("Unknown command requested: %s", which);
                 return false;
         }
+    }
+
+
+    protected void replayVoice() {
+        // intentionally blank
+    }
+
+
+    protected void recordVoice() {
+        // intentionally blank
     }
 
 
