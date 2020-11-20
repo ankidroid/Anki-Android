@@ -116,6 +116,9 @@ public class PeripheralCommand {
         ret.add(PeripheralCommand.unicode('!', COMMAND_SUSPEND_NOTE, CardSide.BOTH));
         ret.add(PeripheralCommand.unicode('r', COMMAND_PLAY_MEDIA, CardSide.BOTH));
         ret.add(PeripheralCommand.keyCode(KeyEvent.KEYCODE_F5, COMMAND_PLAY_MEDIA, CardSide.BOTH));
+        ret.add(PeripheralCommand.unicode('v', COMMAND_REPLAY_VOICE, CardSide.BOTH));
+        // TODO: Rethink this - needed a capital V
+        ret.add(PeripheralCommand.unicode('V', COMMAND_RECORD_VOICE, CardSide.BOTH, ModifierKeys.shift()));
         ret.add(PeripheralCommand.unicode('z', COMMAND_UNDO, CardSide.BOTH));
 
         ret.add(PeripheralCommand.unicode('1', COMMAND_TOGGLE_FLAG_RED, CardSide.BOTH, ModifierKeys.ctrl()));
@@ -161,6 +164,9 @@ public class PeripheralCommand {
             return new ModifierKeys(false, true, false);
         }
 
+        public static ModifierKeys shift() {
+            return new ModifierKeys(true, false, false);
+        }
 
         public boolean matches(KeyEvent event) {
             // return false if Ctrl+1 is pressed and 1 is expected

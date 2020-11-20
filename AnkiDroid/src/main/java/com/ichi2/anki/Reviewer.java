@@ -20,7 +20,6 @@ package com.ichi2.anki;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -59,7 +58,6 @@ import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
@@ -328,12 +326,7 @@ public class Reviewer extends AbstractFlashcardViewer {
         } else if (itemId == R.id.action_toggle_mic_tool_bar) {
             Timber.i("Reviewer:: Record mic");
             // Check permission to record and request if not granted
-            if (!Permissions.canRecordAudio(this)) {
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.RECORD_AUDIO},
-                        REQUEST_AUDIO_PERMISSION);
-            } else {
-                toggleMicToolBar();
-            }
+            openOrToggleMicToolbar();
         } else if (itemId == R.id.action_tag) {
             Timber.i("Reviewer:: Tag button pressed");
             showTagsDialog();
@@ -433,6 +426,51 @@ public class Reviewer extends AbstractFlashcardViewer {
             colorPalette.setVisibility(View.GONE);
         }
         refreshActionBar();
+    }
+
+
+    @Override
+    protected void replayVoice() {
+        if (!openMicToolbar()) {
+            return;
+        }
+
+        // COULD_BE_BETTER: this shows "Failed" if nothing was recorded
+
+        mMicToolBar.togglePlay();
+    }
+
+
+    @Override
+    protected void recordVoice() {
+        if (!openMicToolbar()) {
+            return;
+        }
+
+        mMicToolBar.toggleRecord();
+    }
+
+
+    /**
+     *
+     * @return Whether the mic toolbar is usable
+     */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean openMicToolbar() {
+        if (mMicToolBar == null || mMicToolBar.getVisibility() != View.VISIBLE) {
+            openOrToggleMicToolbar();
+        }
+        return mMicToolBar != null;
+    }
+
+
+    protected void openOrToggleMicToolbar() {
+        if (!Permissions.canRecordAudio(this)) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.RECORD_AUDIO},
+                    REQUEST_AUDIO_PERMISSION);
+        } else {
+            toggleMicToolBar();
+        }
     }
 
 

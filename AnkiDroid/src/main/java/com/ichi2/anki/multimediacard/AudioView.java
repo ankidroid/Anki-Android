@@ -213,6 +213,18 @@ public class AudioView extends LinearLayout {
         }
     }
 
+    public void toggleRecord() {
+        if (mRecord != null) {
+            mRecord.callOnClick();
+        }
+    }
+
+    public void togglePlay() {
+        if (mPlayPause != null) {
+            mPlayPause.callOnClick();
+        }
+    }
+
     protected class PlayPauseButton extends AppCompatImageButton {
         private final OnClickListener onClickListener = new View.OnClickListener() {
             @Override
