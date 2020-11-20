@@ -30,6 +30,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.testutils.MockTime;
+import com.ichi2.testutils.libanki.FilteredDeckUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -59,30 +60,28 @@ import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED;
 import static com.ichi2.libanki.Consts.STARTING_FACTOR;
 import static com.ichi2.libanki.DecksTest.TEST_DECKS;
+import static com.ichi2.libanki.sched.Counts.Queue.LRN;
+import static com.ichi2.libanki.sched.Counts.Queue.NEW;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static com.ichi2.testutils.AnkiAssert.checkRevIvl;
 import static com.ichi2.testutils.AnkiAssert.without_unicode_isolation;
+import static com.ichi2.testutils.libanki.CollectionAssert.assertSuspended;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeThat;
-import static org.junit.Assume.assumeTrue;
 import static org.junit.platform.commons.util.CollectionUtils.getOnlyElement;
-import static com.ichi2.libanki.sched.Counts.Queue.*;
 
 @RunWith(AndroidJUnit4.class)
 public class SchedV2Test extends RobolectricTest {
@@ -202,6 +201,60 @@ public class SchedV2Test extends RobolectricTest {
         AbstractSched sched = getCol().getSched();
         List<DeckDueTreeNode> tree = sched.deckDueTree();
         Assert.assertEquals("Tree has not the expected structure", expectedTree(getCol(), true), tree);
+    }
+
+    @Test
+    public void emptyFilteredDeckSuspendHandling() throws ConfirmModSchemaException {
+        getCol().changeSchedulerVer(2);
+
+        long cardId = addNoteUsingBasicModel("Hello", "World").firstCard().getId();
+
+        long filteredDid = FilteredDeckUtil.createFilteredDeck(getCol(), "Filtered", "(is:new or is:due)");
+
+        assertThat("No cards in filtered deck before rebuild", getCol().cardCount(filteredDid), is(0));
+
+        getCol().getSched().rebuildDyn(filteredDid);
+
+        assertThat("Card is in filtered deck after rebuild", getCol().cardCount(filteredDid), is(1));
+
+        getCol().getSched().suspendCards(new long[] { cardId });
+
+        assertSuspended(getCol(), cardId);
+
+        getCol().getSched().rebuildDyn(filteredDid);
+
+        assertSuspended(getCol(), cardId);
+
+        assertThat("Card should be moved to the home deck", getCol().getCard(cardId).getDid(), is(1L));
+        assertThat("Card should not be in a filtered deck", getCol().getCard(cardId).getODid(), is(0L));
+    }
+
+
+
+    @Test
+    public void rebuildFilteredDeckSuspendHandling() throws ConfirmModSchemaException {
+        getCol().changeSchedulerVer(2);
+
+        long cardId = addNoteUsingBasicModel("Hello", "World").firstCard().getId();
+
+        long filteredDid = FilteredDeckUtil.createFilteredDeck(getCol(), "Filtered", "(is:new or is:due)");
+
+        assertThat("No cards in filtered deck before rebuild", getCol().cardCount(filteredDid), is(0));
+
+        getCol().getSched().rebuildDyn(filteredDid);
+
+        assertThat("Card is in filtered deck after rebuild", getCol().cardCount(filteredDid), is(1));
+
+        getCol().getSched().suspendCards(new long[] { cardId });
+
+        assertSuspended(getCol(), cardId);
+
+        getCol().getSched().emptyDyn(filteredDid);
+
+        assertSuspended(getCol(), cardId);
+
+        assertThat("Card should be moved to the home deck", getCol().getCard(cardId).getDid(), is(1L));
+        assertThat("Card should not be in a filtered deck", getCol().getCard(cardId).getODid(), is(0L));
     }
 
 
