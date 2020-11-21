@@ -2094,16 +2094,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
             }
             browser.hideProgressBar();
 
-            Object[] resultArr = result.getObjArray();
-            boolean hasUnsuspended = (boolean) resultArr[0];
-            boolean hasUnmarked = (boolean) resultArr[1];
-            Menu mActionBarMenu = browser.mActionBarMenu;
+            if (browser.mActionBarMenu != null) {
+                Object[] resultArr = result.getObjArray();
+                boolean hasUnsuspended = (boolean) resultArr[0];
+                boolean hasUnmarked = (boolean) resultArr[1];
 
-            setMenuIcons(browser, hasUnsuspended, hasUnmarked, mActionBarMenu);
+                setMenuIcons(browser, hasUnsuspended, hasUnmarked, browser.mActionBarMenu);
+            }
         }
 
 
-        protected void setMenuIcons(@NonNull Context browser, boolean hasUnsuspended, boolean hasUnmarked, Menu actionBarMenu) {
+        protected void setMenuIcons(@NonNull Context browser, boolean hasUnsuspended, boolean hasUnmarked, @NonNull Menu actionBarMenu) {
             int title;
             int icon;
             if (hasUnsuspended) {
