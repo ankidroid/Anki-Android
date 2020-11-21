@@ -128,6 +128,7 @@ import com.ichi2.libanki.utils.TimeUtils;
 import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.ui.FixedEditText;
+import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
@@ -2580,7 +2581,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         try {
             boolean success = shortcutManager.requestPinShortcut(info, null);
             if (!success) {
-                UIUtils.showThemedToast(this, getString(R.string.create_shortcut_failed), false);
+                if (AdaptionUtil.isVivo()) {
+                    UIUtils.showThemedToast(this, getString(R.string.create_shortcut_error_vivo), false);
+                } else {
+                    UIUtils.showThemedToast(this, getString(R.string.create_shortcut_failed), false);
+                }
             }
         } catch (Exception e) {
             UIUtils.showThemedToast(this, getString(R.string.create_shortcut_error, e.getLocalizedMessage()), false);
