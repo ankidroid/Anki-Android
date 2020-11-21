@@ -2578,7 +2578,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 .build();
 
         try {
-            shortcutManager.requestPinShortcut(info, null);
+            boolean success = shortcutManager.requestPinShortcut(info, null);
+            if (!success) {
+                UIUtils.showThemedToast(this, getString(R.string.create_shortcut_failed), false);
+            }
         } catch (Exception e) {
             UIUtils.showThemedToast(this, getString(R.string.create_shortcut_error, e.getLocalizedMessage()), false);
         }
