@@ -146,8 +146,6 @@ import java.util.TreeMap;
 
 import timber.log.Timber;
 
-import static com.ichi2.anki.services.ReminderService.EXTRA_DECK_OPTION_ID;
-import static com.ichi2.anki.services.ReminderService.getReviewDeckIntent;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import static com.ichi2.async.Connection.ConflictResolution.FULL_DOWNLOAD;
 
@@ -2578,7 +2576,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 .setLongLabel(getCol().getDecks().name(mContextMenuDid))
                 .setIcon(Icon.createWithResource(context, R.mipmap.ic_launcher))
                 .build();
-        shortcutManager.requestPinShortcut(info, null);
+
+        try {
+            shortcutManager.requestPinShortcut(info, null);
+        } catch (Exception e) {
+            UIUtils.showThemedToast(this, getString(R.string.create_shortcut_error, e.getLocalizedMessage()), false);
+        }
     }
 
     // Callback to show dialog to rename the current deck
