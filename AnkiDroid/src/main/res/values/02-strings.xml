@@ -353,4 +353,7 @@
         comment="After an Android backup is restored, AnkiDroid opens and shows this message.
         Opening AnkiDroid again will work correctly">
         Android backup in progress. Please try again</string>
+
+
+    <string name="create_shortcut_error">Error adding shortcut: %s</string>
 </resources>
