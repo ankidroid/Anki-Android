@@ -32,6 +32,7 @@ import android.provider.Settings;
 import com.ichi2.anki.AnkiDroidApp;
 
 import java.util.List;
+import java.util.Locale;
 
 public class AdaptionUtil {
     private static boolean sHasRunRestrictedLearningDeviceCheck = false;
@@ -162,5 +163,15 @@ public class AdaptionUtil {
     @SuppressWarnings( {"unused", "RedundantSuppression"})
     public static boolean shouldCurrentUserBuyDifferentPhone() {
         return isRunningMiui();
+    }
+
+
+    /** See: https://en.wikipedia.org/wiki/Vivo_(technology_company) */
+    public static boolean isVivo() {
+        String manufacturer = Build.MANUFACTURER;
+        if (manufacturer == null) {
+            return false;
+        }
+        return manufacturer.toLowerCase(Locale.ROOT).equals("vivo");
     }
 }
