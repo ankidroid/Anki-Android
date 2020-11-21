@@ -16,6 +16,9 @@
 
 package com.ichi2.utils;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+
 public class ExceptionUtil {
     public static boolean containsMessage(Throwable e, String needle) {
         if (e == null) {
@@ -28,5 +31,21 @@ public class ExceptionUtil {
 
         String message = e.getMessage();
         return message != null && message.contains(needle);
+    }
+
+    @NonNull
+    @CheckResult
+    public static String getExceptionMessage(Throwable e) {
+        StringBuilder ret = new StringBuilder();
+        Throwable cause = e;
+        while (cause != null) {
+            if (cause != e) {
+                ret.append("\n");
+            }
+            ret.append(cause.getLocalizedMessage());
+            cause = cause.getCause();
+        }
+
+        return ret.toString();
     }
 }

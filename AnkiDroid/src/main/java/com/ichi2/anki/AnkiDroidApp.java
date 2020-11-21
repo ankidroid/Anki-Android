@@ -47,6 +47,7 @@ import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
@@ -632,7 +633,7 @@ public class AnkiDroidApp extends MultiDexApplication {
             Timber.w("getWebViewExceptionMessage called without webViewFailedToLoad check");
             return null;
         }
-        return error.getLocalizedMessage();
+        return ExceptionUtil.getExceptionMessage(error);
     }
 
     /**
