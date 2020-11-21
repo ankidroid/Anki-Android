@@ -2097,7 +2097,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
             Object[] resultArr = result.getObjArray();
             boolean hasUnsuspended = (boolean) resultArr[0];
             boolean hasUnmarked = (boolean) resultArr[1];
+            Menu mActionBarMenu = browser.mActionBarMenu;
 
+            setMenuIcons(browser, hasUnsuspended, hasUnmarked, mActionBarMenu);
+        }
+
+
+        protected void setMenuIcons(@NonNull Context browser, boolean hasUnsuspended, boolean hasUnmarked, Menu actionBarMenu) {
             int title;
             int icon;
             if (hasUnsuspended) {
@@ -2107,7 +2113,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 title = R.string.card_browser_unsuspend_card;
                 icon = R.drawable.ic_action_unsuspend;
             }
-            MenuItem suspend_item = browser.mActionBarMenu.findItem(R.id.action_suspend_card);
+            MenuItem suspend_item = actionBarMenu.findItem(R.id.action_suspend_card);
             suspend_item.setTitle(browser.getString(title));
             suspend_item.setIcon(icon);
 
@@ -2118,7 +2124,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 title = R.string.card_browser_unmark_card;
                 icon = R.drawable.ic_star_white_24dp;
             }
-            MenuItem mark_item = browser.mActionBarMenu.findItem(R.id.action_mark_card);
+            MenuItem mark_item = actionBarMenu.findItem(R.id.action_mark_card);
             mark_item.setTitle(browser.getString(title));
             mark_item.setIcon(icon);
         }
