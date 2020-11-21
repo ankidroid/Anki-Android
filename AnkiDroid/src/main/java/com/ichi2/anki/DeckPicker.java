@@ -2579,7 +2579,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 .setLongLabel(getCol().getDecks().name(mContextMenuDid))
                 .setIcon(Icon.createWithResource(context, R.mipmap.ic_launcher))
                 .build();
-        shortcutManager.requestPinShortcut(info, null);
+
+        try {
+            shortcutManager.requestPinShortcut(info, null);
+        } catch (Exception e) {
+            UIUtils.showThemedToast(this, getString(R.string.create_shortcut_error, e.getLocalizedMessage()), false);
+        }
     }
 
     // Callback to show dialog to rename the current deck
