@@ -20,13 +20,66 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.webkit.MimeTypeMap;
+
+import java.io.File;
+import java.util.Locale;
 
 import androidx.annotation.CheckResult;
+import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 public class ContentResolverUtil {
+
+    /** Obtains the filename from the url. Throws if all methods return exception */
     @CheckResult
     public static String getFileName(ContentResolver contentResolver, Uri uri) {
+        try {
+             String filename = getFilenameViaDisplayName(contentResolver, uri);
+             if (filename != null) {
+                 return filename;
+             }
+        } catch (Exception e) {
+            Timber.w(e, "getFilenameViaDisplayName");
+        }
+
+        // let this one throw
+        String filename = getFilenameViaMimeType(contentResolver, uri);
+        if (filename != null) {
+            return filename;
+        }
+        throw new IllegalStateException(String.format("Unable to obtain valid filename from uri: %s", uri));
+    }
+
+    @CheckResult
+    @Nullable
+    private static String getFilenameViaMimeType(ContentResolver contentResolver, Uri uri) {
+        // value: "png" when testing
+        String extension;
+
+        //Check uri format to avoid null
+        if (uri.getScheme() != null && uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            //If scheme is a content
+            final MimeTypeMap mime = MimeTypeMap.getSingleton();
+            extension = mime.getExtensionFromMimeType(contentResolver.getType(uri));
+        } else {
+            // If scheme is a File
+            // This will replace white spaces with %20 and also other special characters. This will avoid returning null values on file name with spaces and special characters.
+            extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString().toLowerCase(Locale.ROOT));
+        }
+        if (extension == null) {
+            return null;
+        }
+
+        return "image" + "." + extension;
+    }
+
+
+    @CheckResult
+    @Nullable
+    private static String getFilenameViaDisplayName(ContentResolver contentResolver, Uri uri) {
         String filename;
+        // 7748: android.database.sqlite.SQLiteException: no such column: _display_name (code 1 SQLITE_ERROR[1]): ...
         try (Cursor c = contentResolver.query(uri, new String[] { MediaStore.MediaColumns.DISPLAY_NAME }, null, null, null)) {
             c.moveToNext();
             filename = c.getString(0);
