@@ -271,7 +271,7 @@
     <string name="deck_conf_set_subdecks_message">このオプショングループをこのデッキ内の全てのサブデッキにも適用しますか？</string>
     <string name="pref_browser_editor_font">ブラウザとノート編集のフォント</string>
     <string name="deck_conf_cram_filter">フィルター</string>
-    <string name="deck_conf_cram_search">フィルターの抽出条件</string>
+    <string name="deck_conf_cram_search">検索</string>
     <string name="deck_conf_cram_limit">抽出件数の上限</string>
     <string name="deck_conf_cram_order">抽出されたカードの並べ方</string>
     <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">スケジュールを変更</string>

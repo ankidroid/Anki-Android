@@ -113,7 +113,7 @@
     <string name="stats_overview">Огляд</string>
     <string name="stats_forecast">Прогноз</string>
     <string name="stats_review_count">Лічильник переглядів</string>
-    <string name="stats_review_time">Час огдляду</string>
+    <string name="stats_review_time">Час огляду</string>
     <string name="stats_added" comment="Label of the number of added card">Додано</string>
     <string name="stats_review_intervals">Інтервали</string>
     <string name="stats_breakdown">Годинний розподіл</string>

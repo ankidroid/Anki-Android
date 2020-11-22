@@ -249,6 +249,7 @@
     <string name="activity_start_failed">此系統不包含能執行此操作的應用程式。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相機圖像可能很龐大。你可能希望壓縮和重設媒體資料夾中的圖像大小]]></string>
     <string name="no_browser_notification">無瀏覽器已找到，請使用PC或行動裝置訪問網頁： </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">卡片中的外部頁面連結不受支援。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">已恢復卡片</string>

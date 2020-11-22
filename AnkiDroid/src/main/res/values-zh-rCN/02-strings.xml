@@ -249,6 +249,7 @@
     <string name="activity_start_failed">系统中没有安装可以执行此操作的应用程序。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相机图像可能偏大。您可能希望在媒体目录中压缩并调整图像大小]]></string>
     <string name="no_browser_notification">未找到浏览器，请通过 PC 或移动设备访问网页： </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">不支持卡片中的外部页面链接。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">已恢复的卡片</string>

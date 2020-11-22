@@ -109,10 +109,10 @@
     <string name="discard_unsaved_changes">Fechar e perder a entrada atual?</string>
     <string name="note_editor_no_cards_created">Nenhum cartão criado. Por favor, preencha mais campos</string>
     <string name="note_editor_no_first_field">O primeiro campo está vazio</string>
-    <string name="note_editor_no_cloze_delations">Este tipo de nota deve conter uma omissão de lacuna</string>
+    <string name="note_editor_no_cloze_delations">Este tipo de nota deve usar Ocultar em algum termo</string>
     <string name="note_editor_set_field_language">Definir idioma do campo.</string>
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota atual não produziu nenhum cartão.\nPor favor, escolha outro tipo de nota, ou clique em \'Cartas\' e adicione uma substituição de campo</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions somente funcionarão no cartão do tipo Cloze.</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Ocultar somente funcionará em notas do tipo Ocultar.</string>
     <string name="saving_facts">Salvando nota</string>
     <string name="saving_model">Saving note type</string>
     <string name="save">Salvar</string>
@@ -204,7 +204,7 @@
     <string name="steps_error">Número de passos deve ser maior do que 0</string>
     <string name="steps_min_error">Pelo menos um passo é necessário</string>
     <string name="sched_end">(fim)</string>
-    <string name="sched_unbury_action">Para vê-los agora, selecione o item \"Desenterrar\" no menu.</string>
+    <string name="sched_unbury_action">Para vê-los agora, toque em \"Arquivar\" no menu.</string>
     <string name="sched_has_buried">Alguns cartões relacionados ou enterrados foram adiados para uma sessão posterior.</string>
     <string name="tag_editor_add_feedback">Toque \"%2$s\" para confirmar a adição de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Tag existente \"%1$s\" selecionada</string>
@@ -259,6 +259,7 @@
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">Nenhum navegador encontrado, por favor visite a página através de um computador ou celular.</string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Link de página externa não é suportado no cartão.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Cartões recuperados</string>
@@ -324,12 +325,12 @@
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Alterar Tamanho da Fonte</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="insert_cloze">Ocultar</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
     <string name="toolbar_item_explain_remove">Digite o código HTML a ser inserido antes e após o texto selecionado. Mantenha o item pressionado para remove-lo</string>
     <string name="remove_toolbar_item">Remover item do menu?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="note_editor_paste_too_large">A imagem é muito grande para colar, por favor insira manualmente</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
 </resources>
