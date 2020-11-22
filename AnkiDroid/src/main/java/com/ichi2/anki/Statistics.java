@@ -155,31 +155,25 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         //System.err.println("in onCreateOptionsMenu");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.anki_stats, menu);
-        return true;
-    }
 
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
         // exit if mTaskHandler not initialized yet
-        if (mTaskHandler == null) {
-            return true;
+        if (mTaskHandler != null) {
+            switch (mTaskHandler.getStatType()) {
+                case TYPE_MONTH:
+                    MenuItem monthItem = menu.findItem(R.id.item_time_month);
+                    monthItem.setChecked(true);
+                    break;
+                case TYPE_YEAR:
+                    MenuItem yearItem = menu.findItem(R.id.item_time_year);
+                    yearItem.setChecked(true);
+                    break;
+                case TYPE_LIFE:
+                    MenuItem lifeItem = menu.findItem(R.id.item_time_all);
+                    lifeItem.setChecked(true);
+                    break;
+            }
         }
-        switch (mTaskHandler.getStatType()) {
-            case TYPE_MONTH:
-                MenuItem monthItem = menu.findItem(R.id.item_time_month);
-                monthItem.setChecked(true);
-                break;
-            case TYPE_YEAR:
-                MenuItem yearItem = menu.findItem(R.id.item_time_year);
-                yearItem.setChecked(true);
-                break;
-            case TYPE_LIFE:
-                MenuItem lifeItem = menu.findItem(R.id.item_time_all);
-                lifeItem.setChecked(true);
-                break;
-        }
-        return super.onPrepareOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
