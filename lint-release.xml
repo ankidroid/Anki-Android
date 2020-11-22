@@ -21,6 +21,7 @@
     -->
 <lint>
     <issue id="NewApi" severity="fatal" />
+    <issue id="HardcodedText" severity="fatal" />
     <issue id="InlinedApi" severity="fatal" />
     <issue id="StringFormatCount" severity="fatal" />
     <issue id="StringFormatMatches" severity="fatal" />
@@ -151,7 +152,6 @@
     <issue id="GridLayout" severity="ignore" />
     <issue id="HandlerLeak" severity="ignore" />
     <issue id="HardcodedDebugMode" severity="ignore" />
-    <issue id="HardcodedText" severity="ignore" />
     <issue id="HardwareIds" severity="ignore" />
     <issue id="IconDuplicatesConfig" severity="ignore" />
     <issue id="IconDuplicates" severity="ignore" />
