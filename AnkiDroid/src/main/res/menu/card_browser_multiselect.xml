@@ -16,7 +16,7 @@
     <item
         android:id="@+id/action_view_card_info"
         android:icon="@drawable/ic_dialog_info"
-        android:title="Card Info" />
+        android:title="@string/card_info_title" />
 
     <item
         ankidroid:showAsAction="ifRoom"
