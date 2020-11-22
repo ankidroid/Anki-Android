@@ -676,15 +676,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (CollectionHelper.getInstance().getColSafe(this) == null) {
             return false;
         }
-        // Show / hide undo
-        if (mFragmented || !getCol().undoAvailable()) {
-            menu.findItem(R.id.action_undo).setVisible(false);
-        } else {
-            Resources res = getResources();
-            menu.findItem(R.id.action_undo).setVisible(true);
-            String undo = res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res));
-            menu.findItem(R.id.action_undo).setTitle(undo);
-        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -724,6 +715,18 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 return true;
             }
         });
+
+        if (colIsOpen()) {
+            // Show / hide undo
+            if (mFragmented || !getCol().undoAvailable()) {
+                menu.findItem(R.id.action_undo).setVisible(false);
+            } else {
+                Resources res = getResources();
+                menu.findItem(R.id.action_undo).setVisible(true);
+                String undo = res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res));
+                menu.findItem(R.id.action_undo).setTitle(undo);
+            }
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
