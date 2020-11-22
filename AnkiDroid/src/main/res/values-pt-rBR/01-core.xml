@@ -103,7 +103,7 @@
     <string name="menu_bury_note">Enterrar nota</string>
     <string name="menu_suspend_card">Suspender cartão</string>
     <string name="menu_suspend_note">Suspender nota</string>
-    <string name="menu_bury">Ocultar</string>
+    <string name="menu_bury">Arquivar</string>
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Excluir nota</string>
     <string name="menu_flag">Sinalizar</string>
@@ -164,7 +164,7 @@
     <string name="studyoptions_congrats_custom">Para estudar fora do agendamento normal, toque no botão \"Estudo personalizado\".</string>
     <string name="studyoptions_no_cards_due">Nenhum cartão está programado por enquanto.</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
-    <string name="empty_cloze_warning">Editar esta nota e adicionar algumas exclusões cloze. (%1$s)</string>
+    <string name="empty_cloze_warning">Edite esta nota e use Ocultar em algum termo. (%1$s)</string>
     <string name="button_sync">Sincronizar</string>
     <string name="cancel_sync_confirm">Você quer cancelar a sincronização?</string>
     <string name="continue_sync">Continuar a sincronização</string>

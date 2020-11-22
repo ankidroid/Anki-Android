@@ -91,7 +91,7 @@
         <item>Dole</item>
     </string-array>
     <string name="gestures">Povolit gesta</string>
-    <string name="gestures_summ">Přiřazení gest jednotlivým akcím.</string>
+    <string name="gestures_summ">Přiřazení gest akcím, jako je odpovídání a úprava karet.</string>
     <string name="gestures_allow_links">Ignorovat dotyková gesta na odkazech</string>
     <string name="gestures_allow_links_summary">Dotyková gesta nebudou provedena, jestliže se stiskne odkaz/nápověda.</string>
     <string name="gestures_corner_touch">Devítibodový dotyk</string>
@@ -290,6 +290,6 @@
     <string name="analytics_dialog_title">Pomozte udělat AnkiDroid lepší!</string>
     <string name="analytics_title">Sdílet používání funkcí</string>
     <string name="analytics_summ">Můžete přispět do AnkiDroid tím, že pomůžete vývojovému týmu dozvědět se, které funkce lidé používají</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines">Nahradit nové řádky HTML</string>
+    <string name="note_editor_replace_newlines_summ">V editoru poznámek převede při úpravě karty každý výskyt &lt;br&gt; na nový řádek.</string>
 </resources>

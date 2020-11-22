@@ -89,7 +89,7 @@
         <item quantity="other">%d ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱮᱱᱟ</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">ᱱᱟᱶᱟ ᱠᱟᱰ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱠᱟᱱᱟ ᱾ ᱨᱤᱥᱮᱰᱭᱩᱞ ᱞᱮᱠᱷᱟᱱ ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ ‌ᱛᱮ‌ ᱵᱚᱫᱚᱞᱚᱜᱼᱟ ᱾ ᱱᱟᱶᱟ ᱫᱷᱟᱲᱤ ᱨᱮ ᱱᱟᱶᱟ ᱡᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱟᱭᱜᱟ ᱵᱚᱫᱚᱞ‌ ᱞᱟᱹᱜᱤᱫ ᱨᱤᱯᱚᱡᱤᱥᱚᱱ ᱠᱟᱰ ᱵᱮᱵᱷᱟᱨ ᱢᱮ‌ᱸ</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱫᱚ ᱵᱷᱚᱵᱤᱥᱭᱚᱛ ᱨᱮ ᱚᱠᱟᱞᱠᱟᱛᱮ ᱠᱟᱰ ᱠᱚ ᱥᱮᱰᱭᱩᱞ ᱟ ᱚᱱᱟ ᱦᱚᱸ ᱨᱤᱥᱚᱴ ᱟᱭ (ᱮᱡᱽ ᱫᱚ %d%% ᱛᱮ ᱥᱮᱴᱚᱜᱼᱟ)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ᱨᱮᱫ ᱢᱮᱱᱮᱡᱟᱨ ᱛᱮ ᱰᱮᱠ ᱠᱷᱚᱱ ᱠᱟᱰ ᱪᱚᱭᱚᱱ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ about:downloads ᱥᱟᱠᱟᱢ ᱠᱷᱟᱱ import ᱢᱮ</string>
     <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
     <string name="answering_error_message">ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱚᱞ ᱵᱷᱩᱞ ᱾ database ᱫᱚ ᱠᱦᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱰᱤᱥᱠ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱱᱩᱜᱟ ᱾ \n\nᱡᱚᱫᱤ ᱵᱟᱨᱚᱢᱵᱟᱨ ᱱᱚᱠᱟ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ, ᱮᱱᱰᱮᱠᱷᱟᱱ ᱟᱨ ᱢᱤᱫ ᱡᱮᱠᱷᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ backup ᱠᱷᱚᱱ ᱰᱟᱴᱟ restore ᱛᱟᱵᱚᱱ ᱯᱮ ᱾ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ \&quot;options\&quot; ᱨᱮ ᱚᱛᱟᱭ ᱯᱮ ᱾\n\ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱱᱚᱟ ᱫᱚ bug ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱟ; ᱫᱚᱭᱟᱠᱟᱛᱮ report ᱯᱮ ᱾ </string>
@@ -99,8 +99,8 @@
     <string name="intent_aedict_category">AnkiDroid ᱛᱮ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ Notepad ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱜᱟᱨ ᱠᱟᱜ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ “default” ᱧᱩᱛᱩᱢ ᱠᱟᱜ ᱢᱮ</string>
     <string name="custom_study_new_total_new">ᱰᱮᱠ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰᱺ%d</string>
     <string name="custom_study_rev_total_rev">ᱰᱮᱠ ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭᱺ%d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">ᱵᱚᱰᱷᱟᱣ/ᱠᱚᱢᱢᱮ (“-3”) ᱛᱮᱦᱚᱸᱧᱟᱜᱽ ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱤᱢᱟᱹ</string>
+    <string name="custom_study_rev_extend">ᱵᱚᱰᱷᱟᱣ/ᱠᱚᱢᱢᱮ (“-3”) ᱛᱮᱦᱚᱸᱧᱟᱜᱽ ᱨᱤᱵᱷᱤᱣ ᱞᱤᱢᱤᱴ</string>
     <string name="custom_study_forgotten">ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ x ᱫᱤᱱ ᱨᱮ ᱦᱤᱲᱤᱧᱟᱜ ᱠᱚᱺ</string>
     <string name="custom_study_ahead">᱑᱐ ᱫᱤᱱ ᱢᱟᱲᱟᱝ ᱥᱮᱱ ᱨᱤᱵᱷᱤᱣᱺ</string>
     <string name="custom_study_random">ᱴᱟᱴᱠᱟ ᱡᱟᱱᱟᱢ(ᱟᱛᱷᱟᱹᱲᱤ) x ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱪᱚᱭᱚᱱ ᱠᱚᱨᱟᱣ ᱢᱮ ᱰᱮᱠ ᱠᱷᱚᱱᱺ</string>
@@ -188,7 +188,7 @@
     <string name="database_locked_title">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱞᱚᱠ ᱮᱱᱟ</string>
     <string name="database_locked_summary">AnkiDroid ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱫᱚ ᱚᱞᱜᱟ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱠᱟᱢᱤ ᱨᱮ ᱟᱜᱩᱭᱮᱫᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ AnkiDroid ᱵᱚᱸᱫ ᱠᱟᱛᱮ ᱯᱦᱮᱨ ᱥᱮ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ ᱾</string>
     <string name="incompatible_database_version_title">ᱵᱟᱝ ᱴᱷᱤᱠ ᱵᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱨᱥᱟᱹᱱ</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_summary">ᱰᱟᱴᱟᱵᱮᱥ ᱫᱚ ᱱᱚᱶᱟ AnkiDroid ᱵᱷᱟᱹᱥᱚᱱ ᱠᱷᱚᱱ ᱡᱟᱹᱛᱤ ᱮᱰᱵᱷᱟᱱᱥ ᱜᱮᱭᱟ ᱾ ᱠᱷᱚᱞᱟ ᱞᱟᱹᱜᱤᱫᱽ ᱰᱟᱴᱟᱵᱮᱥ ᱟᱹᱯᱜᱮᱰ ᱟᱨ ᱵᱟᱝ ᱰᱟᱩᱱᱜᱨᱮᱰ ᱢᱮᱸ\n\n ᱥᱟᱹᱯᱚᱴ ᱵᱷᱟᱹᱨᱥᱚᱱᱺ %1$d\n ᱰᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱥᱚᱱᱺ %2$d\n\n ᱱᱚᱶᱟ ᱠᱚ ᱨᱤᱥᱴᱚᱨ ᱚᱯᱥᱚᱱ ᱠᱚ ᱟᱢᱟᱜᱽ ᱱᱤᱛᱚᱜᱼᱟᱜ ᱛᱩᱢᱟᱹ ᱥᱟᱞᱟᱜᱽ ᱫᱩᱦᱲᱟᱹ ᱚᱞᱚᱜᱚᱜ ᱠᱚᱢᱯᱟᱴᱤᱵᱟᱹᱞ ᱰᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱥᱚᱱ ᱥᱟᱞᱟᱜᱽ ᱛᱮᱺ</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">ᱚᱱᱚᱰ ᱪᱮᱛᱟᱨ ᱵᱟᱦᱟᱞᱮᱱᱟ</string>
     <string name="background_image_removed">ᱚᱱᱚᱰ ᱪᱤᱛᱟᱨ ᱦᱟᱴᱟᱣ ᱮᱱᱟ</string>
@@ -208,23 +208,23 @@
     <string name="boot_service_too_many_notifications">ᱟᱹᱰᱤᱜᱟᱱ ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱾ ᱛᱤᱱᱟᱹᱝᱜᱟᱱ ᱡᱤᱱᱥ ᱵᱟᱭ ᱫᱮᱠᱷᱟᱣᱟ</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">ᱠᱤᱵᱚᱰ ᱦᱤᱸᱴ ᱪᱚᱭᱚᱱ</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_summary">ᱠᱤᱪᱷᱤ ᱢᱟᱹᱞᱴᱤᱞᱤᱱᱜᱩᱟᱞ ᱠᱤᱭᱵᱚᱰ, ᱡᱮᱢᱚᱱ GBoard  ᱫᱚ ᱚᱞ ᱠᱚ ᱥᱟᱯᱲᱟᱣ ᱡᱷᱚᱜ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱜᱟᱱᱚᱜᱼᱟ \n\n ᱡᱩᱫᱤ ᱟᱢᱟᱜᱽ ᱠᱤᱭᱵᱚᱰ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱵᱟᱭ ᱜᱟᱱᱚᱜ ᱠᱟᱱ ᱠᱷᱟᱱ ᱫᱚᱭᱟ ᱠᱟᱛᱮ ᱠᱮᱭᱵᱚᱰ ᱢᱮᱱᱭᱩᱯᱷᱮᱠᱪᱚᱨᱟᱹᱨ ᱨᱮᱭᱟᱜ “setImeHintLocales” ᱱᱮᱦᱚᱨᱮᱢ ᱾</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_title_using_ankidroid">AnkiDroid ᱵᱮᱵᱷᱟᱨᱮᱫᱟᱹᱧ</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid ᱢᱮᱱᱩᱟᱞ</string>
+    <string name="help_item_anki_manual">Anki ᱢᱮᱱᱩᱟᱞ</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
     <string name="help_title_get_help">ᱜᱚᱲᱚ ᱧᱟᱢ ᱢᱮᱸ</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_mailing_list">ᱢᱮᱞᱤᱝ ᱞᱤᱥᱴ</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_report_bug">ᱵᱟᱹᱜ ᱨᱤᱯᱚᱴ</string>
+    <string name="help_title_support_ankidroid">AnkiDroid ᱥᱟᱹᱯᱚᱴ ᱠᱚᱢ</string>
+    <string name="help_item_support_opencollective_donate">ᱫᱟᱱ</string>
+    <string name="help_item_support_develop_ankidroid">ᱰᱮᱵᱷᱞᱚᱯ</string>
+    <string name="help_item_support_rate_ankidroid">ᱫᱚᱨ</string>
+    <string name="help_item_support_other_ankidroid">ᱚᱞᱜᱟ</string>
+    <string name="help_title_community">ᱡᱟᱹᱛ</string>
+    <string name="help_item_anki_forums">Anki ᱯᱷᱚᱨᱚᱱ</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>

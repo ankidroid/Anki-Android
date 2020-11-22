@@ -259,6 +259,7 @@
     <string name="activity_start_failed">Mankas instalita aplikaĵo por plenumi tiun ĉi agon.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Bildoj el la fotilo povas esti grandaj. Konsideru densigi bildojn kaj malpliigi iliajn dimensiojn]]></string>
     <string name="no_browser_notification">Ne trovis retumilon, vizitu la retpaĝon per via komputilo: </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Ekstera ligilo en karto ne estas subtenata.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Restarigitaj kartoj</string>

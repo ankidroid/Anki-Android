@@ -94,7 +94,7 @@
     <string name="move_all_to_deck">Összes pakli áthelyezése</string>
     <string name="unbury">Félretétel megszüntetése</string>
     <string name="rename_deck">Pakli átnevezése</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">Kezdőképernyőre</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Hozzáadás</string>
     <string name="menu_add_note">Megjegyzés hozzáadása</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Fiók szinkronizálása</string>

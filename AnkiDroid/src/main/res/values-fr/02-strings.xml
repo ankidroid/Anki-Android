@@ -259,6 +259,7 @@
     <string name="activity_start_failed">Le système ne dispose pas d\'une application qui peut effectuer cette action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Les photos d\'appareils sont potentiellement lourdes. Envisager les compresser et redimensionner dans le dossier "media"]]></string>
     <string name="no_browser_notification">Aucun navigateur internet trouvé, merci de visiter cette page sur un PC ou smartphone.</string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Le lien vers les pages externes n\'est pas autorisé dans les cartes.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Cartes récupérées</string>

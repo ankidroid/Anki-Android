@@ -178,7 +178,7 @@
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() selhalo (asi nedostatek místa v úložišti)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_unhandled_scheme">Nezpracovaný import z: „%s“</string>
     <string name="import_replacing">Nahrazuje se kolekce&#8230;</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_include_schedule">Zahrnout plánování</string>
@@ -279,6 +279,7 @@
     <string name="activity_start_failed">V systému není nainstalována aplikace, která může provést tuto akci.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky kamery mohou být velké. Můžete komprimovat a změnit velikost obrázků v adresáři media]]></string>
     <string name="no_browser_notification">Nebyl nalezen žádný prohlížeč, prosím navštivte webovou stránku pomocí pc nebo mobilu: </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Odkaz na externí stránku v kartě není podporován.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Obnovené karty</string>
@@ -335,7 +336,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Chyba při kopírování ladicích informací do schránky</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">Chyba obsahu karty: Je vyžadována aktualizace multimédií</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nepodařilo se načíst balíček „%s“</string>
     <string name="search_decks">Search decks</string>
@@ -357,5 +358,5 @@
     <string name="toolbar_item_explain_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ho odstranili</string>
     <string name="remove_toolbar_item">Odstranit položku nástrojové lišty?</string>
     <string name="note_editor_paste_too_large">Obrázek je příliš velký, nelze ho vložit; vložte prosím obrázek ručně</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Probíhá zálohování Androidu. Zkuste to prosím znovu</string>
 </resources>

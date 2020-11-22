@@ -254,7 +254,7 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s секунд</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -278,6 +278,7 @@
     <string name="activity_start_failed">В системе нет приложения, которое может выполнить это действие.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Фотографии могут быть большими. Возможно, вы захотите сжать или изменить размер изображений в папке медиаданных]]></string>
     <string name="no_browser_notification">Браузер не найден. Посетите сайт с компьютера или телефона: </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">В карточках не поддерживаются внешние ссылки</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Восстановленные карточки</string>
@@ -341,7 +342,7 @@
     <string name="ankidroid_init_failed_webview_title">Критическая ошибка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid использует системный WebView, который сейчас не доступен. Это может произойти, если система устанавливает обновления. Пожалуйста, повторите попытку через несколько минут.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font Size</string>
+    <string name="menu_font_size">Размер шрифта</string>
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>

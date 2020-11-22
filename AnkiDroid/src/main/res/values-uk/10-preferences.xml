@@ -291,6 +291,6 @@
     <string name="analytics_dialog_title">Допоможіть зробити AnkiDroid кращим!</string>
     <string name="analytics_title">Поділитися інформацією про використання функцій</string>
     <string name="analytics_summ">Ви можете зробити свій внесок до AnkiDroid, допомагаючи команді розробників побачити, які функції використовують люди</string>
-    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines">Замінити нові рядки на HTML</string>
+    <string name="note_editor_replace_newlines_summ">Замінювати у Редакторі нотаток будь-які випадки &lt;br&gt;  на нові рядки під час редагування картки.</string>
 </resources>

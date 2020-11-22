@@ -249,6 +249,7 @@
     <string name="activity_start_failed">Sistem tidak mempunyai aplikasi terinstal yang dapat melakukan aksi ini.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Gambar kamera mungkin terlalu besar. Diharap untuk memampatkan & merubah ukuran gambar di direktori media]]></string>
     <string name="no_browser_notification">Tidak ada peramban yang ditemukan, harap kunjungi halaman web lewat PC atau HP</string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">tautan halaman eksternal dalam kartu tidak didukung.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Kartu dipulihkan</string>
