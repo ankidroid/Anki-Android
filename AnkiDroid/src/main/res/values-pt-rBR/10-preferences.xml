@@ -94,8 +94,8 @@
     <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cartões.</string>
     <string name="gestures_allow_links">Ignorar gestos de toque nos links</string>
     <string name="gestures_allow_links_summary">Gestos de toque não serão processados se um link/dica for pressionado.</string>
-    <string name="gestures_corner_touch">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch">9 Ações de Toque </string>
+    <string name="gestures_corner_touch_summary">Permitir gestos de toque nos cantos da tela</string>
     <string name="gestures_swipe_up">Deslizar para cima</string>
     <string name="gestures_swipe_down">Deslizar para baixo</string>
     <string name="gestures_swipe_left">Deslizar à esquerda</string>
@@ -105,15 +105,15 @@
     <string name="gestures_tap_left">Toque à esquerda</string>
     <string name="gestures_tap_right">Toque à direita</string>
     <string name="gestures_tap_bottom">Toque abaixo</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
-    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
+    <string name="gestures_corner_tap_top_left">Toque Cima Esquerda</string>
+    <string name="gestures_corner_tap_top_center">Toque Cima Centro</string>
+    <string name="gestures_corner_tap_top_right">Toque Cima Direita</string>
+    <string name="gestures_corner_tap_middle_left">Toque Meio Esquerda</string>
+    <string name="gestures_corner_tap_middle_center">Toque Meio Centro</string>
+    <string name="gestures_corner_tap_middle_right">Toque Meio Direita</string>
+    <string name="gestures_corner_tap_bottom_left">Toque Baixo Esquerda</string>
+    <string name="gestures_corner_tap_bottom_center">Toque Baixo Centro</string>
+    <string name="gestures_corner_tap_bottom_right">Toque Baixo Direita</string>
     <string name="gestures_volume_up">Aumentar o volume</string>
     <string name="gestures_volume_down">Diminuir volume</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -157,7 +157,7 @@
     <string name="safe_display_summ">Desativar todas animações e utilizar método seguro para desenhar cartões. Dispositivos E-ink podem exigir isso.</string>
     <string name="disable_extended_text_ui">Desabilitar Modo de Edição de Campo Único</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Permitir \'Exclusão de Lacunas\' no menu de contexto quando em modo paisagem.</string>
+    <string name="disable_extended_text_ui_summ">Permitir \'Ocultar\' no menu de contexto quando em modo paisagem.</string>
     <string name="vertical_centering">Alinhar no centro</string>
     <string name="vertical_centering_summ">Centralizar o conteúdo das cartas verticalmente</string>
     <string name="pref_backup_max">Número máximo de backups</string>

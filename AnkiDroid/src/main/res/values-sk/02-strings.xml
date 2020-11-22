@@ -279,6 +279,7 @@
     <string name="activity_start_failed">Systém nemá nainštalovanú aplikáciu, ktorá by mohla uskutočniť túto operáciu.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky fotoaparáta môžu byť priveľké. Môžete skúsiť kompresiu a zmenu veľkosti obrázkov v mediálnom priečinku]]></string>
     <string name="no_browser_notification">Nenašiel sa žiaden prehliadač，navštívte prosím webovú stránku cez PC alebo mobil: </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Externý odkaz v kartičke nie je podporovaný.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Kartičky získané späť</string>

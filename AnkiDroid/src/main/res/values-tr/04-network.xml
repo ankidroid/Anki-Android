@@ -40,7 +40,7 @@
 -->
 <resources>
     <string name="youre_offline">Çevrimdışısınız</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">Yine de deneyin</string>
     <string name="sync_error">Senkronizasyon hatası</string>
     <string name="vague_error">Hata</string>
     <string name="retry">Yeniden Dene</string>
@@ -88,7 +88,7 @@
     <string name="sync_overwrite_error">Geçerli koleksiyonunuz indirilen dosya tarafından üzerine yazılamadı.</string>
     <string name="sync_connection_error">Bağlantı zaman aşımına uğradı. Internet bağlantı sorunları yaşıyorsunuz ya da medya klasörünüzde çok büyük bir dosya var .</string>
     <string name="sync_write_access_error">İndirilen dosya sd karta kaydedilemedi. Ya sd kartınız salt okunur takılmış ya da yeterli boşluk yok.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">Gelişmiş Ayarlar\'daki Özel Senkronizasyon Sunucusu geçersiz (%s). Lütfen geçerli bir sunucu girin veya ayarı devre dışı bırakın.</string>
     <string name="sync_deletions_message">Silinenler eşitleniyor...</string>
     <string name="sync_small_objects_message">Küçük nesneler eşitleniyor...</string>
     <string name="sync_finish_message">Eşitleme bitiriliyor...</string>
@@ -96,7 +96,7 @@
     <string name="sync_writing_db">Değişiklikler veritabanına yazılıyor...</string>
     <string name="sync_download_chunk">Değişiklikler indiriliyor...</string>
     <string name="sync_upload_chunk">Değişiklikler yükleniyor...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Aktarılan: %1$d KB, indirilen: %2$d KB</string>
     <string name="sync_generic_error">Bir hatâ meydana geldi. Lütfen sonra yeniden deneyin.</string>
     <string name="sync_check_upload_file">Yüklemeden önce dosya kontrol ediliyor...</string>
     <string name="sync_check_download_file">İndirilen dosya kontrol ediliyor...</string>
@@ -107,11 +107,11 @@
     <string name="sync_media_downloaded_count">%d ortam dosyası indirildi</string>
     <string name="sync_sanity_failed">Eşitlemeden sonra, koleksiyon tutarsız bir durumdaydı. Bu sorunu düzeltmek için, AnkiDroid bir tam eşitleme gerektirecek. Lütfen hangi tarafı korumak istediğinizi seçin, veya sonra eşitlemeyi tercih ediyorsanız iptâl edin.</string>
     <string name="sync_media_sanity_failed">Medya eşitlemesi tamamlandı, ama medya sayısı sunucuyla uyuşmuyor. Bir sonraki medya eşitlemesi hataları düzeltmek için tam yapılacak.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
+    <string name="sync_media_db_error">Mevcut veritabanı bozuk olduğundan medya senkronizasyonu başarısız oldu. Medya kontrolü yapılması önerilir. </string>
     <string name="sync_media_error">Medya veri senkronizasyonu hatası.</string>
     <string name="sync_media_error_check">Ortam eşitleme sırasında hata oluştu. Medyayı kontrol etmeniz tavsiye edilir.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
+    <string name="sync_basic_check_failed">\'%s\' senkronizasyondan önce çalıştırılmalı. </string>
     <string name="sync_sanity_local">Yerel</string>
     <string name="sync_sanity_remote">Sunucu</string>
     <string name="force_full_sync_title">Zorunlu tam senkronizasyon</string>
@@ -126,6 +126,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb şu an bakımda. Lütfen birkaç dakika sonra yeniden deneyin.</string>
     <string name="sync_error_504_gateway_timeout">504 ağ geçidi zamanaşımı hatası alındı.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_full_sync">Senkronizasyon (tam)</string>
+    <string name="sync_menu_title_no_account">Senkronizasyon (giriş yap)</string>
 </resources>

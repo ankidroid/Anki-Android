@@ -136,7 +136,7 @@
     <string name="time_quantity_minutes">%d分</string>
     <string name="time_quantity_hours_minutes">%1$d時間%2$d分</string>
     <string name="time_quantity_hours">%d時間</string>
-    <string name="time_quantity_days">%d日間</string>
+    <string name="time_quantity_days">%d日</string>
     <string name="time_quantity_days_hours">%1$d日と%2$d時間</string>
     <string name="time_quantity_months">%.1fヶ月</string>
     <string name="time_quantity_years">%.1f年</string>

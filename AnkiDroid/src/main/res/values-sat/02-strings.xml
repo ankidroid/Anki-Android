@@ -255,6 +255,7 @@
     <string name="activity_start_failed">ᱱᱚᱶᱟ ᱥᱮᱤᱴᱚᱢ ᱴᱷᱮᱱ ᱠᱟᱹᱢᱤ ᱠᱚᱨᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱮᱯᱯ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ᱠᱮᱢᱨᱟ ᱪᱤᱛᱟᱨ ᱢᱟᱨᱟᱝ ᱜᱮ ᱛᱟᱦᱮᱸ ᱫᱟᱲᱮᱟᱜᱼᱟ ᱾ ᱢᱮᱰᱤᱭᱟ ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱪᱤᱛᱟᱨ ᱠᱚᱥᱚᱴ ᱢᱮ]]></string>
     <string name="no_browser_notification">ᱵᱨᱚᱩᱡᱚᱨ ᱵᱟᱭ ᱧᱟᱢ ᱞᱮᱱᱟ，ᱣᱮᱵᱯᱮᱡ ᱥᱟᱦᱴᱟ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱚᱢᱯᱩᱴᱚᱨ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱢᱚᱵᱚᱤᱞ ᱛᱮ ᱪᱟᱞᱟᱜ ᱢᱮ:</string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">ᱵᱟᱦᱨᱮ ᱡᱟᱱᱟᱲ ᱠᱟᱰ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">ᱨᱤᱠᱚᱵᱷᱚᱨ ᱟᱠᱟᱱ ᱠᱟᱰ ᱠᱚ</string>
@@ -305,7 +306,7 @@
     <string name="about_ankidroid_error_copy_debug_info">ᱠᱞᱤᱯᱵᱚᱰ ᱛᱮ ᱰᱮᱵᱩᱜ ᱵᱤᱵᱨᱚᱬ ᱱᱚᱠᱟᱞ ᱵᱷᱩᱞ</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞ:  ‘%s’ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞᱺ ᱢᱮᱰᱤᱭᱟ ᱟᱹᱯᱰᱮᱴ ᱫᱚᱨᱠᱟᱨ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ᱰᱮᱠ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ ‘%s’</string>
     <string name="search_decks">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
@@ -316,7 +317,7 @@
     <string name="format_insert_bold">ᱵᱚᱞ-ᱰ ᱛᱮ ᱥᱮᱴ ᱢᱮᱸ</string>
     <string name="format_insert_italic">ᱤᱴᱟᱞᱤᱠ ᱛᱮ ᱥᱮᱴ ᱢᱮᱸ</string>
     <string name="format_insert_underline">ᱜᱟᱨᱞᱟᱭᱤᱱ ᱛᱮ ᱥᱮᱴ ᱢᱮᱸ</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_horizontal_line">ᱜᱤᱛᱤᱡᱽ ᱞᱟᱭᱤᱱ ᱠᱷᱟᱲ ᱢᱮᱸ</string>
     <string name="insert_heading">ᱦᱮᱰᱤᱝ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮᱸ</string>
     <string name="format_font_size">ᱯᱪᱤᱠᱤ ᱢᱟᱯ ᱵᱚᱫᱚᱞ ᱢᱮᱸ</string>
     <string name="insert_mathjax">MathJax ᱤᱠᱣᱨᱥᱚᱱ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮᱸ</string>

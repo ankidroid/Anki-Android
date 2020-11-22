@@ -259,6 +259,7 @@
     <string name="activity_start_failed">El sistema no tiene una aplicación instalada que pueda realizar esta acción.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Las imágenes de la cámara pueden ser grandes. Puede que desee comprimir y cambiar el tamaño de las imágenes en el directorio de medios]]></string>
     <string name="no_browser_notification">No hay ningún browser, por favor visite la página web por PC o móvil: </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Enlaces de páginas externas no son soportados en la tarjeta.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Tarjetas recuperadas</string>

@@ -29,7 +29,7 @@
     <string name="card_n_name">Cartão %d</string>
     <!--Note type-->
     <string name="basic_model_name">Básico</string>
-    <string name="cloze_model_name">Omissão de Lacunas</string>
+    <string name="cloze_model_name">Ocultar</string>
     <string name="basic_typing_model_name">Básico (digite a resposta)</string>
     <string name="forward_reverse_model_name">Básico (e cartão invertido)</string>
     <string name="forward_optional_reverse_model_name">Básico (cartão invertido opcional)</string>

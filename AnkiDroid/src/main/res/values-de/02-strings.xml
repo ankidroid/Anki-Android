@@ -259,6 +259,7 @@
     <string name="activity_start_failed">Auf dem System ist keine App installiert, die diese Aktion ausführen kann.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerabilder können groß sein. Im Medienverzeichnis können Sie Bilder komprimieren und deren Größe anpassen]]></string>
     <string name="no_browser_notification">Kein Browser gefunden. Bitte besuchen Sie die Webseite via PC oder Mobilgerät: </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Weblinks zu externen Seiten werden auf Karten nicht unterstützt.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Wiederhergestellte Karten</string>

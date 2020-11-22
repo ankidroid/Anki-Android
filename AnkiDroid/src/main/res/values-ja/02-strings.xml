@@ -92,9 +92,9 @@
         <item>間隔</item>
         <item>易しさ</item>
         <item>期日</item>
-        <item>カードが変更されました</item>
+        <item>カード編集日</item>
         <item>作成日</item>
-        <item>ノートが変更されました</item>
+        <item>ノート編集日</item>
     </string-array>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
@@ -248,6 +248,7 @@
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[画像が大きい可能性があります。メディアディレクトリ内の画像を圧縮してサイズを変更したほうがよいかもしれません。]]></string>
     <string name="no_browser_notification">ブラウザが見つかりません。PCまたはモバイルでWebページにアクセスしてください： </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">カード内の外部ページリンクはサポートされていません。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">回復されたカード</string>
