@@ -27,7 +27,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -42,7 +41,6 @@ import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.PopupMenu;
 
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -103,6 +101,7 @@ import com.ichi2.themes.StyledProgressDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.anki.widgets.PopupMenuWithIcons;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.ContentResolverUtil;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.FunctionalInterfaces.Consumer;
@@ -1541,11 +1540,7 @@ public class NoteEditor extends AnkiActivity {
     private String loadImageIntoCollection(Uri uri) throws IOException {
         //noinspection PointlessArithmeticExpression
         final int oneMegabyte = 1 * 1000 * 1000;
-        String filename;
-        try (Cursor c = getContentResolver().query(uri, new String[] { MediaStore.MediaColumns.DISPLAY_NAME }, null, null, null)) {
-            c.moveToNext();
-            filename = c.getString(0);
-        }
+        String filename = ContentResolverUtil.getFileName(getContentResolver(), uri);
         InputStream fd = getContentResolver().openInputStream(uri);
 
         Map.Entry<String, String> fileNameAndExtension = FileUtil.getFileNameAndExtension(filename);
