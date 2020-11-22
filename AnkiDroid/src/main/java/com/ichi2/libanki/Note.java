@@ -298,7 +298,7 @@ public class Note implements Cloneable {
         if (val.trim().length() == 0) {
             return DupeOrEmpty.EMPTY;
         }
-        Pair<String, Long> csumAndStrippedFieldField = Utils.sfieldAndCsum(mFields, getCol().getModels().sortIdx(mModel));
+        Pair<String, Long> csumAndStrippedFieldField = Utils.sfieldAndCsum(mFields, 0);
         long csum = csumAndStrippedFieldField.second;
         // find any matching csums and compare
         String strippedFirstField = csumAndStrippedFieldField.first;
