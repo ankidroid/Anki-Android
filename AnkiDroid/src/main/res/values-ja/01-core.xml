@@ -138,7 +138,7 @@
     <string name="time_quantity_hours">%d時間</string>
     <string name="time_quantity_days">%d日</string>
     <string name="time_quantity_days_hours">%1$d日と%2$d時間</string>
-    <string name="time_quantity_months">%.1fヶ月</string>
+    <string name="time_quantity_months">%.1fヵ月</string>
     <string name="time_quantity_years">%.1f年</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">フィルターデッキを再構築しています...</string>
