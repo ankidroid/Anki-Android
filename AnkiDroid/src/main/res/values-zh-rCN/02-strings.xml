@@ -249,7 +249,7 @@
     <string name="activity_start_failed">系统中没有安装可以执行此操作的应用程序。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相机图像可能偏大。您可能希望在媒体目录中压缩并调整图像大小]]></string>
     <string name="no_browser_notification">未找到浏览器，请通过 PC 或移动设备访问网页： </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">加载页面出错：%s</string>
     <string name="no_outgoing_link_in_cardbrowser">不支持卡片中的外部页面链接。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">已恢复的卡片</string>
@@ -320,4 +320,7 @@
     <string name="remove_toolbar_item">删除工具栏项目？</string>
     <string name="note_editor_paste_too_large">图片太大，无法粘贴，请手动插入图像</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        正在进行 Android 备份。请重试</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Please use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error">Error adding shortcut: %s</string>
 </resources>
