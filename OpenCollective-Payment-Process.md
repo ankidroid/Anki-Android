@@ -17,7 +17,7 @@ This means that we now have money available to pay for either one-off bug fixes 
 ## How to get paid
 
 1. At the end of the month, go to [our opencollective expense form](https://opencollective.com/ankidroid/expenses/new) and follow their process to file an expense
-1. For the first month, we have no information on how many people will submit expenses so we don't know what the total will be. As mentioned in "sustainable" above, we are trying to distribute about 10% of the total balance each month but we are just guessing right now. **Please limit your first expense to a maximum of 10 hours claimed working on AnkiDroid, and I believe we can support 10USD/hour for those hours, making a maximum expense claim 00**. Please **include your github or discord name in the notes** so we may verify your contribution
+1. For the first month, we have no information on how many people will submit expenses so we don't know what the total will be. As mentioned in "sustainable" above, we are trying to distribute about 10% of the total balance each month but we are just guessing right now. **Please limit your first expense to a maximum of 10 hours claimed working on AnkiDroid, and I believe we can support 10USD/hour for those hours, making a maximum expense claim of 100USD**. Please **include your github or discord name in the notes** so we may verify your contribution
 1. We will look at all the expenses and approve all the reasonable ones, at which point payments are processed twice a week.
 1. We *may* if the total looks much above or below our 10% of total balance goal, reject all of the expenses with specific instructions to raise or lower the amount of hours you may claim to better match our goal
 
