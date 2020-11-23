@@ -25,6 +25,12 @@
         android:title="@string/menu_font_size"
         ankidroid:showAsAction="never"/>
     <item
+        android:id="@+id/action_capitalize"
+        android:checkable="true"
+        android:checked="true"
+        android:title="@string/note_editor_capitalize"
+        ankidroid:showAsAction="never"/>
+    <item
         android:id="@+id/action_show_toolbar"
         android:title="@string/menu_show_toolbar"
         android:checkable="true"

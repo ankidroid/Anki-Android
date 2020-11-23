@@ -336,6 +336,14 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(editor.getFieldForTest(0).getText().toString(), is("12World45"));
     }
 
+    @Test
+    public void defaultsToCapitalized() {
+        // Requested in #3758, this seems like a sensible default
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        assertThat("Fields should have their first word capitalized by default", editor.getFieldForTest(0).isCapitalized(), is(true));
+    }
+
     private Intent getCopyNoteIntent(NoteEditor editor) {
         ShadowActivity editorShadow = Shadows.shadowOf(editor);
         editor.copyNote();

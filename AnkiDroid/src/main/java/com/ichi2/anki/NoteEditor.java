@@ -1091,6 +1091,7 @@ public class NoteEditor extends AnkiActivity {
         }
 
         menu.findItem(R.id.action_show_toolbar).setChecked(!shouldHideToolbar());
+        menu.findItem(R.id.action_capitalize).setChecked(AnkiDroidApp.getSharedPrefs(this).getBoolean("note_editor_capitalize", true));
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -1138,8 +1139,21 @@ public class NoteEditor extends AnkiActivity {
             item.setChecked(!item.isChecked());
             AnkiDroidApp.getSharedPrefs(this).edit().putBoolean("noteEditorShowToolbar", item.isChecked()).apply();
             updateToolbar();
+        } else if (itemId == R.id.action_capitalize) {
+            Timber.i("NoteEditor:: Capitalize button pressed. New State: %b", !item.isChecked());
+            item.setChecked(!item.isChecked()); // Needed for Android 9
+            toggleCapitalize(item.isChecked());
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void toggleCapitalize(boolean value) {
+        AnkiDroidApp.getSharedPrefs(this).edit().putBoolean("note_editor_capitalize", value).apply();
+        for (FieldEditText f : mEditFields) {
+            f.setCapitalize(value);
+        }
     }
 
 
@@ -1492,9 +1506,11 @@ public class NoteEditor extends AnkiActivity {
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
             initFieldEditText(newTextbox, i, !editModelMode, clipboard);
             mEditFields.add(newTextbox);
-            if (AnkiDroidApp.getSharedPrefs(this).getInt("note_editor_font_size", -1) > 0) {
-                newTextbox.setTextSize(AnkiDroidApp.getSharedPrefs(this).getInt("note_editor_font_size", -1));
+            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
+            if (prefs.getInt("note_editor_font_size", -1) > 0) {
+                newTextbox.setTextSize(prefs.getInt("note_editor_font_size", -1));
             }
+            newTextbox.setCapitalize(prefs.getBoolean("note_editor_capitalize", true));
 
             ImageButton mediaButton = edit_line_view.getMediaButton();
             // Load icons from attributes
