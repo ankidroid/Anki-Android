@@ -52,6 +52,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.net.ConnectivityManagerCompat;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.appcompat.app.ActionBar;
+import androidx.webkit.internal.AssetHelper;
+import androidx.webkit.WebViewAssetLoader;
 
 import android.text.TextUtils;
 import android.util.Pair;
@@ -133,6 +135,7 @@ import com.ichi2.utils.WebViewDebugging;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -341,6 +344,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private String mCardContent;
     private String mBaseUrl;
     private String mViewerUrl;
+    private WebViewAssetLoader mAssetLoader;
 
     private final int mFadeDuration = 300;
 
@@ -909,8 +913,35 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         mSched = col.getSched();
-        mBaseUrl = Utils.getBaseUrl(col.getMedia().dir());
+
+        String mediaDir = col.getMedia().dir();
+        mBaseUrl = Utils.getBaseUrl(mediaDir);
         mViewerUrl = mBaseUrl + "__viewer__.html";
+
+        mAssetLoader = new WebViewAssetLoader.Builder()
+            .addPathHandler("/", new WebViewAssetLoader.PathHandler() {
+                @Override
+                public WebResourceResponse handle(String path) {
+                    try {
+                        File file = new File(mediaDir, path);
+                        FileInputStream is = new FileInputStream(file);
+
+                        String mimeType = AssetHelper.guessMimeType(path);
+
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Access-Control-Allow-Origin", "*");
+
+                        WebResourceResponse response = new WebResourceResponse(mimeType, null, is);
+                        response.setResponseHeaders(headers);
+                        return response;
+                    } catch (Exception e) {
+                        Timber.e(e, "Error trying to open path in asset loader");
+                    }
+
+                    return null;
+                }
+            })
+            .build();
 
         registerExternalStorageListener();
 
@@ -1595,12 +1626,13 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         webView.setScrollbarFadingEnabled(true);
         Timber.d("Focusable = %s, Focusable in touch mode = %s", webView.isFocusable(), webView.isFocusableInTouchMode());
 
-        webView.setWebViewClient(new CardViewerWebClient());
+        webView.setWebViewClient(new CardViewerWebClient(mAssetLoader));
         // Set transparent color to prevent flashing white when night mode enabled
         webView.setBackgroundColor(Color.argb(1, 0, 0, 0));
 
         // Javascript interface for calling AnkiDroid functions in webview, see card.js
         webView.addJavascriptInterface(javaScriptFunction(), "AnkiDroidJS");
+
         return webView;
     }
 
@@ -3249,6 +3281,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     protected class CardViewerWebClient extends WebViewClient {
+        private WebViewAssetLoader mLoader;
+
+        CardViewerWebClient(WebViewAssetLoader loader) {
+            super();
+
+            mLoader = loader;
+        }
+
         @Override
         @TargetApi(Build.VERSION_CODES.N)
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -3273,6 +3313,12 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         @Override
         @TargetApi(Build.VERSION_CODES.N)
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            WebResourceResponse result = mLoader.shouldInterceptRequest(request.getUrl());
+
+            if (result != null) {
+                return result;
+            }
+
             if (!AdaptionUtil.hasWebBrowser(getBaseContext())) {
                 String scheme = request.getUrl().getScheme().trim();
                 if ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme)) {
@@ -3284,6 +3330,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
             if (isLoadedFromProtocolRelativeUrl(request.getUrl().toString())) {
                 mMissingImageHandler.processInefficientImage(AbstractFlashcardViewer.this::displayMediaUpgradeRequiredSnackbar);
             }
+
             return null;
         }
 
