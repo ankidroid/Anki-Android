@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
@@ -250,6 +251,22 @@ public class FieldEditText extends FixedEditText {
 
         mOrd = ss.mOrd;
     }
+
+
+    public void setCapitalize(boolean value) {
+        int inputType = this.getInputType();
+        if (value) {
+            this.setInputType(inputType | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        } else {
+            this.setInputType(inputType & ~InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        }
+    }
+
+
+    public boolean isCapitalized() {
+        return (this.getInputType() & InputType.TYPE_TEXT_FLAG_CAP_SENTENCES) == InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
+    }
+
 
     static class SavedState extends BaseSavedState {
         private int mOrd;
