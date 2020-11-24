@@ -629,7 +629,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 .content(content)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_no)
-                .onPositive((dialog, which) -> requestCrop(mViewModel));
+                .onPositive((dialog, which) -> mViewModel = requestCrop(mViewModel));
 
         if (negativeCallBack != null) {
             builder.onNegative(negativeCallBack);
