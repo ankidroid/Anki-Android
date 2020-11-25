@@ -755,8 +755,8 @@ public class NoteEditor extends AnkiActivity {
                     if (!isClozeType()) {
                         UIUtils.showSimpleSnackbar(this, R.string.note_editor_insert_cloze_no_cloze_note_type, false);
                     }
-
                 }
+                break;
             }
             case KeyEvent.KEYCODE_P: {
                 if (event.isCtrlPressed()) {
