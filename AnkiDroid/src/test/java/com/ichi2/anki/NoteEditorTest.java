@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
@@ -287,6 +288,21 @@ public class NoteEditorTest extends RobolectricTest {
         editor.clearField(1);
         assertThat(editor.getCurrentFieldStrings()[1], is(""));
 
+    }
+
+    @Test
+    public void insertIntoFocusedFieldStartsAtSelection() {
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        EditText field = editor.getFieldForTest(0);
+
+        editor.insertStringInField(field, "Hello");
+
+        field.setSelection(3);
+
+        editor.insertStringInField(field, "World");
+
+        assertThat(editor.getFieldForTest(0).getText().toString(), is("HelWorldlo"));
     }
 
     private Intent getCopyNoteIntent(NoteEditor editor) {
