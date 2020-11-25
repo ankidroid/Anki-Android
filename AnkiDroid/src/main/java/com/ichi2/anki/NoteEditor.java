@@ -1351,20 +1351,13 @@ public class NoteEditor extends AnkiActivity {
                     mNote.setField(index, field);
                     FieldEditText fieldEditText = mEditFields.get(index);
                     // Completely replace text for text fields (because current text was passed in)
+                    String formattedValue = field.getFormattedValue();
                     if (field.getType() == EFieldType.TEXT) {
-                        fieldEditText.setText(field.getFormattedValue());
+                        fieldEditText.setText(formattedValue);
                     }
                     // Insert text at cursor position if the field has focus
                     else if (fieldEditText.getText() != null) {
-                        if (fieldEditText.hasFocus()) {
-                            fieldEditText.getText().replace(fieldEditText.getSelectionStart(),
-                                    fieldEditText.getSelectionEnd(),
-                                    field.getFormattedValue());
-                        }
-                        // Append text if the field doesn't have focus
-                        else {
-                            fieldEditText.getText().append(field.getFormattedValue());
-                        }
+                        insertStringInField(fieldEditText, formattedValue);
                     }
                     //DA - I think we only want to save the field here, not the note.
                     NoteService.saveMedia(col, mNote);
@@ -1398,6 +1391,21 @@ public class NoteEditor extends AnkiActivity {
             }
         }
     }
+
+    /** Appends a string at the selection point, or appends to the end if not in focus */
+    @VisibleForTesting
+    void insertStringInField(EditText fieldEditText, String formattedValue) {
+        if (fieldEditText.hasFocus()) {
+            fieldEditText.getText().replace(fieldEditText.getSelectionStart(),
+                    fieldEditText.getSelectionEnd(),
+                    formattedValue);
+        }
+        // Append text if the field doesn't have focus
+        else {
+            fieldEditText.getText().append(formattedValue);
+        }
+    }
+
 
     /** @param col Readonly variable to get cache dir */
     private MultimediaEditableNote getCurrentMultimediaEditableNote(Collection col) {
@@ -1510,7 +1518,7 @@ public class NoteEditor extends AnkiActivity {
             if (imageTag == null) {
                 return false;
             }
-            editText.getText().append(imageTag);
+            insertStringInField(editText, imageTag);
             return true;
         } catch (SecurityException ex) {
             // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
@@ -2356,6 +2364,13 @@ public class NoteEditor extends AnkiActivity {
     @VisibleForTesting
     long getDeckId() {
         return mCurrentDid;
+    }
+
+
+    @SuppressWarnings("SameParameterValue")
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    FieldEditText getFieldForTest(int index) {
+        return mEditFields.get(index);
     }
 
 
