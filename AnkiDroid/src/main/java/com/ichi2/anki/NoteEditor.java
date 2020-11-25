@@ -1396,9 +1396,11 @@ public class NoteEditor extends AnkiActivity {
     @VisibleForTesting
     void insertStringInField(EditText fieldEditText, String formattedValue) {
         if (fieldEditText.hasFocus()) {
-            fieldEditText.getText().replace(fieldEditText.getSelectionStart(),
-                    fieldEditText.getSelectionEnd(),
-                    formattedValue);
+            // Crashes if start > end, although this is fine for a selection via keyboard.
+            int start = fieldEditText.getSelectionStart();
+            int end = fieldEditText.getSelectionEnd();
+
+            fieldEditText.getText().replace(Math.min(start, end), Math.max(start, end), formattedValue);
         }
         // Append text if the field doesn't have focus
         else {

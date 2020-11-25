@@ -305,6 +305,37 @@ public class NoteEditorTest extends RobolectricTest {
         assertThat(editor.getFieldForTest(0).getText().toString(), is("HelWorldlo"));
     }
 
+    @Test
+    public void insertIntoFocusedFieldReplacesSelection() {
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        EditText field = editor.getFieldForTest(0);
+
+        editor.insertStringInField(field, "12345");
+
+        field.setSelection(2, 3); //select "3"
+
+        editor.insertStringInField(field, "World");
+
+        assertThat(editor.getFieldForTest(0).getText().toString(), is("12World45"));
+    }
+
+    @Test
+    public void insertIntoFocusedFieldReplacesSelectionIfBackwards() {
+        // selections can be backwards if the user uses keyboards
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        EditText field = editor.getFieldForTest(0);
+
+        editor.insertStringInField(field, "12345");
+
+        field.setSelection(3, 2); //select "3" (right to left)
+
+        editor.insertStringInField(field, "World");
+
+        assertThat(editor.getFieldForTest(0).getText().toString(), is("12World45"));
+    }
+
     private Intent getCopyNoteIntent(NoteEditor editor) {
         ShadowActivity editorShadow = Shadows.shadowOf(editor);
         editor.copyNote();
