@@ -100,7 +100,7 @@ public class PeripheralKeymap {
             {
                 // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
                 // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
-                int unicodeChar = event.getUnicodeChar(event.getMetaState() & KeyEvent.META_SHIFT_ON);
+                int unicodeChar = event.getUnicodeChar(event.getMetaState() & (KeyEvent.META_SHIFT_ON | KeyEvent.META_NUM_LOCK_ON));
                 List<PeripheralCommand> unicodeLookup = mUnicodeToCommand.get(unicodeChar);
                 if (unicodeLookup != null) {
                     for (PeripheralCommand command : unicodeLookup) {
