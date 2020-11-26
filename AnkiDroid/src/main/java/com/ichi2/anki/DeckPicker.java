@@ -2583,12 +2583,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         try {
             boolean success = shortcutManager.requestPinShortcut(info, null);
+
+            // User report: "success" is true even if Vivo does not have permission
+            if (AdaptionUtil.isVivo()) {
+                UIUtils.showThemedToast(this, getString(R.string.create_shortcut_error_vivo), false);
+            }
+
             if (!success) {
-                if (AdaptionUtil.isVivo()) {
-                    UIUtils.showThemedToast(this, getString(R.string.create_shortcut_error_vivo), false);
-                } else {
-                    UIUtils.showThemedToast(this, getString(R.string.create_shortcut_failed), false);
-                }
+                UIUtils.showThemedToast(this, getString(R.string.create_shortcut_failed), false);
             }
         } catch (Exception e) {
             UIUtils.showThemedToast(this, getString(R.string.create_shortcut_error, e.getLocalizedMessage()), false);
