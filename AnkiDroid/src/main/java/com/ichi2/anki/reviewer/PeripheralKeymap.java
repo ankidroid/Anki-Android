@@ -57,7 +57,7 @@ public class PeripheralKeymap {
     }
 
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings( {"unused", "RedundantSuppression"})
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return false;
     }
