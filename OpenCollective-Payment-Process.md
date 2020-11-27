@@ -21,6 +21,11 @@ This means that we now have money available to pay for either one-off bug fixes 
 1. We will look at all the expenses and approve all the reasonable ones, at which point payments are processed twice a week.
 1. We *may* if the total looks much above or below our 10% of total balance goal, reject all of the expenses with specific instructions to raise or lower the amount of hours you may claim to better match our goal
 
+## Questions?
+
+- Come chat with us about it in Discord (link in the README)
+- Send me an email if it is an uncomfortable question, It is my job to answer *all* questions, and money questions do not make me uncomfortable so please ask away - my contact info is on my profile https://github.com/mikehardy
+
 ## What if this is not working, for the project or for you?
 
 As mentioned in "Peace", please please please **let us know**. Hop on our Discord channel or send mail to Mike Hardy (if it is sensitive), and I'm sure we can work it out. We are open to any ideas to make things better, and we won't hesitate to make changes. That said, please **be open to accepting changes as a contributor** as well. This is all new to us, but hopefully it will work well
