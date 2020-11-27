@@ -202,11 +202,12 @@ var onPageFinished = function() {
 
         if (card.classList.contains("mathjax-needs-to-render"))
         {
-            MathJax.Hub.Queue(['Typeset', MathJax.Hub, card]);
-            MathJax.Hub.Queue(function () {
-                card.classList.remove("mathjax-needs-to-render");
-                card.classList.add("mathjax-rendered");
-            });
+            MathJax.startup.promise
+                .then(() => MathJax.typesetPromise([card]))
+                .then(() => {
+                    card.classList.remove("mathjax-needs-to-render");
+                    card.classList.add("mathjax-rendered");
+                });
         }
     }
 }
