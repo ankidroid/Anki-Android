@@ -26,11 +26,11 @@
     <string name="extra_field_name">Zusätzlich</string>
     <string name="field_to_ask_front_name">Gegenrichtung hinzufügen</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">Karte %d</string>
     <!--Note type-->
     <string name="basic_model_name">Standard</string>
     <string name="cloze_model_name">Lückentext</string>
-    <string name="basic_typing_model_name">Standard (Eintippen der Antwort)</string>
+    <string name="basic_typing_model_name">Standard (geben Sie die Antwort ein)</string>
     <string name="forward_reverse_model_name">Standard (und umgekehrte Karte)</string>
     <string name="forward_optional_reverse_model_name">Standard (optionale umgekehrte Karte)</string>
 </resources>

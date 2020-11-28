@@ -67,7 +67,7 @@
     <string name="leech_suspend_notification">Kortti on merkitty vaikeaksi ja jäädytetty</string>
     <string name="leech_notification">Kortti on merkitty vaikeaksi</string>
     <string name="corrupt_font">Vioittunut kirjasintiedosto %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="webview_crash_unknown">Tuntematon virhe</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Out of Memory</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
@@ -110,7 +110,7 @@
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
     <string name="note_editor_no_first_field">The first field is empty</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_set_field_language">Set field language</string>
+    <string name="note_editor_set_field_language">Aseta kentän kieli</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Tallennetaan merkintää</string>
@@ -333,7 +333,7 @@
     <string name="remove_toolbar_item">Remove Toolbar Item?</string>
     <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Please use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
 </resources>

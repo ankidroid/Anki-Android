@@ -259,7 +259,7 @@
     <string name="activity_start_failed">Il sistema non ha un\'applicazione installata che può eseguire questa azione.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Le immagini della fotocamera possono essere grandi. Dovrai forse comprimere e ridimensionare le immagini nella directory multimediale]]></string>
     <string name="no_browser_notification">Nessun browser trovato, visita la pagina web tramite pc o cellulare: </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">Errore nel caricamento della pagina: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Collegamento di pagina esterna nella carta non è supportato.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Carte recuperate</string>
@@ -333,7 +333,7 @@
     <string name="remove_toolbar_item">Rimuovere l\'Elemento della Barra Strumenti?</string>
     <string name="note_editor_paste_too_large">L\'immagine è troppo grande da incollare, sei pregato di inserire manualmente l\'immagine</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Backup di Android in corso. Sei pregato di riprovare</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Please use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Utilizza iManager per consentire ad AnkiDroid di aggiungere scorciatoie</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">La tua schermata iniziale non consente ad AnkiDroid di aggiungere scorciatoie</string>
+    <string name="create_shortcut_error">Errore nell\'aggiunta della scorciatoia: %s</string>
 </resources>

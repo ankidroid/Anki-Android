@@ -58,7 +58,7 @@
         <item>カードの表示を中止</item>
         <item>音声・動画を再生</item>
         <item>学習を中断</item>
-        <item>ノートを延期</item>
+        <item>学習を中断</item>
         <item>ノートを保留</item>
         <item>赤フラグを付ける/取り外す</item>
         <item>橙フラグを付ける/取り外す</item>
@@ -68,7 +68,7 @@
         <item>１画面分上へスクロール</item>
         <item>１画面分下へスクロール</item>
         <item>１画面分下へスクロール</item>
-        <item>学習と同期を中止する</item>
+        <item>学習を中断して同期</item>
     </string-array>
     <string-array name="leech_action_labels">
         <item>タグを付けて保留</item>
