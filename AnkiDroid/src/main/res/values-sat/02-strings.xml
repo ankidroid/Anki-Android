@@ -255,7 +255,7 @@
     <string name="activity_start_failed">ᱱᱚᱶᱟ ᱥᱮᱤᱴᱚᱢ ᱴᱷᱮᱱ ᱠᱟᱹᱢᱤ ᱠᱚᱨᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱮᱯᱯ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ᱠᱮᱢᱨᱟ ᱪᱤᱛᱟᱨ ᱢᱟᱨᱟᱝ ᱜᱮ ᱛᱟᱦᱮᱸ ᱫᱟᱲᱮᱟᱜᱼᱟ ᱾ ᱢᱮᱰᱤᱭᱟ ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱪᱤᱛᱟᱨ ᱠᱚᱥᱚᱴ ᱢᱮ]]></string>
     <string name="no_browser_notification">ᱵᱨᱚᱩᱡᱚᱨ ᱵᱟᱭ ᱧᱟᱢ ᱞᱮᱱᱟ，ᱣᱮᱵᱯᱮᱡ ᱥᱟᱦᱴᱟ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱚᱢᱯᱩᱴᱚᱨ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱢᱚᱵᱚᱤᱞ ᱛᱮ ᱪᱟᱞᱟᱜ ᱢᱮ:</string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">ᱥᱟᱦᱴᱟ ᱞᱟᱫᱮ ᱵᱷᱩᱞ:%s</string>
     <string name="no_outgoing_link_in_cardbrowser">ᱵᱟᱦᱨᱮ ᱡᱟᱱᱟᱲ ᱠᱟᱰ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">ᱨᱤᱠᱚᱵᱷᱚᱨ ᱟᱠᱟᱱ ᱠᱟᱰ ᱠᱚ</string>
@@ -329,7 +329,7 @@
     <string name="remove_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱚᱪᱚᱜᱽ ᱟᱢ ᱥᱮ?</string>
     <string name="note_editor_paste_too_large">ᱪᱤᱛᱟᱹᱨ ᱞᱟᱴᱷᱟ ᱞᱟᱹᱜᱤᱫ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ, ᱫᱚᱭᱟᱠᱟᱛᱮ ᱪᱤᱛᱟᱹᱨ ᱛᱤ ᱛᱮ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮᱸ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">       ᱮᱱᱰᱨᱚᱭᱮᱰ ᱵᱮᱠᱟᱯ ᱪᱟᱞᱟᱜ ᱠᱟᱱᱟ, ᱫᱟᱭᱟ ᱠᱟᱛᱮᱡᱽ ᱟᱨᱦᱚᱸ ᱨᱤᱠᱟᱹᱭ ᱢᱮ</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Please use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
 </resources>

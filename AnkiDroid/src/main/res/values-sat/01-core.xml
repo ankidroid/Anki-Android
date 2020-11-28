@@ -42,9 +42,9 @@
     <!-- Navigation drawer items-->
     <string name="decks">ᱰᱮᱠ ᱠᱚ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
-    <string name="statistics">ᱟᱸᱠᱰᱟ</string>
+    <string name="statistics">ᱟᱸᱠᱲᱟ</string>
     <string name="settings">ᱥᱟᱡᱟᱣᱠᱚ</string>
-    <string name="help">ᱜᱚᱸᱲᱚᱸ</string>
+    <string name="help">ᱜᱚᱲᱚ</string>
     <string name="send_feedback">ᱞᱟᱹᱭ ᱯᱩᱥᱴᱟᱹᱣ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="studyoptions_due_today">ᱛᱮᱦᱮᱸᱧ-ᱟᱜ ᱥᱟᱨᱮᱡ</string>
     <string name="studyoptions_new_total">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚᱣᱟᱜ ᱜᱩᱴ:</string>
