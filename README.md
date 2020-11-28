@@ -22,9 +22,9 @@ A semi-official port of the open source [Anki](http://ankisrs.net/index.html) sp
 
 <div style="display:flex;">
  
-- night mode
-- whiteboard 
-- progress widget
+- Night mode
+- Whiteboard 
+- Progress widget
 - detailed statistics
 - syncing with AnkiWeb
 - write answers (optional)
