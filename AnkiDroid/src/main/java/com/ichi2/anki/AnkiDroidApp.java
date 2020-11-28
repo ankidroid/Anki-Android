@@ -203,6 +203,15 @@ public class AnkiDroidApp extends MultiDexApplication {
     }
 
 
+    public static boolean isAcraEnbled(Context context, boolean defaultValue) {
+        if (!getSharedPrefs(context).contains(ACRA.PREF_DISABLE_ACRA)) {
+            // we shouldn't use defaultValue below, as it would be inverted which complicated understanding.
+            return defaultValue;
+        }
+        return !getSharedPrefs(context).getBoolean(ACRA.PREF_DISABLE_ACRA, true);
+    }
+
+
     /**
      * Get the ACRA ConfigurationBuilder - use this followed by setting it to modify the config
      * @return ConfigurationBuilder for the current ACRA config
