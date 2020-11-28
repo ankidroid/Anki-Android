@@ -259,8 +259,8 @@
     <string name="activity_start_failed">Auf dem System ist keine App installiert, die diese Aktion ausführen kann.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerabilder können groß sein. Im Medienverzeichnis können Sie Bilder komprimieren und deren Größe anpassen]]></string>
     <string name="no_browser_notification">Kein Browser gefunden. Bitte besuchen Sie die Webseite via PC oder Mobilgerät: </string>
-    <string name="web_page_error">Error loading page: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Weblinks zu externen Seiten werden auf Karten nicht unterstützt.</string>
+    <string name="web_page_error">Fehler beim Laden der Seite: %s</string>
+    <string name="no_outgoing_link_in_cardbrowser">Externer Seitenlink in der Karte wird nicht unterstützt.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Wiederhergestellte Karten</string>
     <!-- Deckpicker Background -->
@@ -282,7 +282,7 @@
     <string name="note_importer_error_first_field_matched">Erstes Feld übereinstimmen: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">Doppeltes mit dem ersten Feld hinzugefügt: %s</string>
     <string name="note_importer_error_appeared_twice">Erscheint zweimal in Datei: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
+    <string name="note_importer_error_empty_notes">Eine oder mehrere Notizen wurden nicht importiert, da keine Karten generiert wurden. Dies kann passieren, wenn Sie leere Felder haben oder wenn Sie den Inhalt in der Textdatei nicht den korrekten Feldern zugeordnet haben</string>
     <string name="csv_importer_error_invalid_field_count">»%1$s« hatte %2$d Felder, erwartet %3$d</string>
     <string name="csv_importer_error_exception">Abgebrochen: %s</string>
     <string name="user_is_a_robot">Automatischer Test erkannt. Wenn Sie ein Mensch sind, wenden Sie sich an AnkiDroid-Support</string>
@@ -310,30 +310,30 @@
     <string name="about_ankidroid_error_copy_debug_info">Fehler beim Kopieren der Debug-Informationen in die Zwischenablage</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Fehler im Karteninhalt: Laden von »%s« fehlgeschlagen</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">Fehler beim Karteninhalt: Medienaktualisierung erforderlich</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Fehler beim Laden von Stapel »%s«</string>
     <string name="search_decks">Stapel durchsuchen</string>
     <string name="ankidroid_init_failed_webview_title">Schwerer Fehler</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid basiert auf dem System WebView, der nicht verfügbar ist. Dies kann passieren, wenn das System Updates installiert. Bitte versuchen Sie es in ein paar Minuten erneut.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Schriftgröße</string>
     <string name="format_insert_bold">Als Fett formatieren</string>
     <string name="format_insert_italic">Als Kursiv formatieren</string>
     <string name="format_insert_underline">Als Unterstrich formatieren</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
+    <string name="insert_horizontal_line">Horizontale Linie einfügen</string>
+    <string name="insert_heading">Überschrift einfügen</string>
     <string name="format_font_size">Schriftgröße ändern</string>
     <string name="insert_mathjax">MathJax-Gleichung einfügen</string>
     <string name="insert_cloze">Auslassung einfügen</string>
     <string name="before_text">HTML vor Auswahl</string>
     <string name="after_text">HTML nach Auswahl</string>
     <string name="add_toolbar_item">Werkzeugleiste-Element erstellen</string>
-    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="toolbar_item_explain_remove">Geben Sie den HTML-Code ein, der vor und nach dem ausgewählten Text eingefügt werden soll\n\nDrücken Sie lange auf ein Symbol in der Symbolleiste, um es zu entfernen</string>
     <string name="remove_toolbar_item">Element der Werkzeugleiste entfernen?</string>
     <string name="note_editor_paste_too_large">Das Bild ist zu groß zum Einfügen, bitte fügen Sie das Bild manuell ein</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Please use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android-Sicherung im Gange. Bitte versuchen Sie es erneut</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Bitte verwenden Sie iManager, um AnkiDroid das Hinzufügen von Verknüpfungen zu erlauben</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Ihr Startbildschirm erlaubt AnkiDroid keine Verknüpfungen hinzuzufügen</string>
+    <string name="create_shortcut_error">Fehler beim Hinzufügen der Verknüpfung: %s</string>
 </resources>

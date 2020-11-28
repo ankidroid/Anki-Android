@@ -38,7 +38,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">taip</string>
     <!-- Navigation drawer items-->
     <string name="decks">Rinkiniai</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kortelių naršyklė</string>
@@ -79,7 +79,7 @@
         <item quantity="many">%d days %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_title">Kolekcija tuščia</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -91,7 +91,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Įrašyti atsakymą</string>
     <string name="show_answer">Rodyti atsakymą</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Slėpti atsakymą</string>
     <string name="ease_button_again">Pakartoti</string>
     <string name="ease_button_hard">Sunku</string>
     <string name="ease_button_good">Lengva</string>
@@ -104,7 +104,7 @@
     <string name="move_all_to_deck">Viską perkelti į rinkinį</string>
     <string name="unbury">Ištraukti</string>
     <string name="rename_deck">Pervadinti malką</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">Sukurti trumpinį</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Pridėti</string>
     <string name="menu_add_note">Pridėti užrašą</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinchronizuoti paskyrą</string>
@@ -116,7 +116,7 @@
     <string name="menu_bury">Slėpti</string>
     <string name="menu_suspend">Atidėti</string>
     <string name="menu_delete_note">Ištrinti užrašą</string>
-    <string name="menu_flag">Flag</string>
+    <string name="menu_flag">Pažymėti</string>
     <string name="menu_flag_card">Flag card</string>
     <string name="menu_flag_card_zero">No flag</string>
     <string name="menu_flag_card_one">Red flag</string>
@@ -129,7 +129,7 @@
     <string name="menu_search">Ieškoti: %1$s</string>
     <string name="menu_mark_note">Žymėti užrašą</string>
     <string name="menu_unmark_note">Atžymėti užrašą</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Patikrinti tarimą</string>
     <string name="new_deck">Kurti rinkinį</string>
     <string name="create" comment="Button to create a filtered deck">Kurti</string>
     <string name="new_dynamic_deck">Kurti rinktinį rinkinį</string>
@@ -164,7 +164,7 @@
     <string name="custom_study_deck_name">Individualus mokymosi seansas</string>
     <string name="custom_study_deck_exists">Prašome pirmiausiai pervadinti esamą individualaus mokymosi rinkinį</string>
     <string name="empty_deck">Šis rinkinys yra tuščias</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="invalid_deck_name">Blogas rinkinio vardas</string>
     <string name="studyoptions_empty">Šis rinkinys yra tuščias. Norėdami pridėti naują turinį, spauskite +.</string>
     <string name="studyoptions_limit_reached">Pasiekta dienos mokymosi norma</string>
     <string name="studyoptions_empty_schedule">Kortelių mokytis nenumatyta</string>
@@ -210,6 +210,6 @@
     <string name="read_write_permission_label">Skaitykite ir rašykite į „AnkiDroid“ duomenų bazę</string>
     <string name="read_write_permission_description">prisijunkite prie turimų užrašų, kortelių, užrašų tipų ir rinkinių bei kurkite naujus</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kortelių naršyklė</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

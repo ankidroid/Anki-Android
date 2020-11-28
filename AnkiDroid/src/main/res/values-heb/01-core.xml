@@ -74,7 +74,7 @@
         <item quantity="other">%d שעות %d נותרו</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d יום ו %d שעות נותרו</item>
+        <item quantity="one">%d ימים ו %d שעות נותרו</item>
         <item quantity="two">%d days %d left</item>
         <item quantity="many">%d days %d left</item>
         <item quantity="other">%d ימים ו %d שעות נותרו</item>
@@ -105,7 +105,7 @@
     <string name="move_all_to_deck">העברת הכול לחפיסה</string>
     <string name="unbury">ביטול דילוג</string>
     <string name="rename_deck">שינוי שם חפיסה</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">צור קיצור דרך</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">הוספה</string>
     <string name="menu_add_note">הוספת רשומה</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">סנכרון חשבון</string>

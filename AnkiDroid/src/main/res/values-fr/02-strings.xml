@@ -259,7 +259,7 @@
     <string name="activity_start_failed">Le système ne dispose pas d\'une application qui peut effectuer cette action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Les photos d\'appareils sont potentiellement lourdes. Envisager les compresser et redimensionner dans le dossier "media"]]></string>
     <string name="no_browser_notification">Aucun navigateur internet trouvé, merci de visiter cette page sur un PC ou smartphone.</string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">Erreur lors du chargement de la page : %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Le lien vers les pages externes n\'est pas autorisé dans les cartes.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Cartes récupérées</string>
@@ -310,7 +310,7 @@
     <string name="about_ankidroid_error_copy_debug_info">Erreur lors de la copie des informations de débogage dans le presse-papiers</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Impossible de charger « %s »</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">Erreur de contenu de la carte : mise à jour du média requise</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossible de charger le paquet « %s »</string>
     <string name="search_decks">Rechercher dans les paquets</string>
@@ -333,7 +333,7 @@
     <string name="remove_toolbar_item">Supprimer l\'élément de la barre d\'outils ?</string>
     <string name="note_editor_paste_too_large">L\'image est trop large pour être collée, veuillez insérer l\'image manuellement</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Sauvergarde Android en cours. Veuillez réessayer</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Please use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Veuillez utiliser iManager pour autoriser AnkiDroid à ajouter des raccourcis</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Votre écran d\'accueil ne permet pas à AnkiDroid d\'ajouter des raccourcis</string>
+    <string name="create_shortcut_error">Erreur lors de l\'ajout du raccourci : %s</string>
 </resources>

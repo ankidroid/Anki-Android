@@ -38,13 +38,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Check database?</string>
-    <string name="check_db_warning">This may take a long time</string>
-    <string name="check_db_acknowledge">Database checked</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
+    <string name="check_db_title">Мәгълумәт базасын тикшерергәме?</string>
+    <string name="check_db_warning">Бу күп вакыт алырга мөмкин</string>
+    <string name="check_db_acknowledge">Мәгълүмәт базасы тикшерелгән</string>
+    <string name="check_db_acknowledge_shrunk">Мәгълүмәт базасы тикшерелгән, оптимизацияләнгән.\n%d МБка кечерәйгән.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Колоданы бетерү</string>
     <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
-    <string name="delete_deck_title">Delete deck?</string>
+    <string name="delete_deck_title">Колоданы бетерү?</string>
     <plurals name="delete_deck_message">
         <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
     </plurals>

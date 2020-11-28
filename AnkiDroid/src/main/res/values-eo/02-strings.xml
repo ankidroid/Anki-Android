@@ -259,7 +259,7 @@
     <string name="activity_start_failed">Mankas instalita aplikaĵo por plenumi tiun ĉi agon.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Bildoj el la fotilo povas esti grandaj. Konsideru densigi bildojn kaj malpliigi iliajn dimensiojn]]></string>
     <string name="no_browser_notification">Ne trovis retumilon, vizitu la retpaĝon per via komputilo: </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">Eraro dum enlegi paĝon: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Ekstera ligilo en karto ne estas subtenata.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Restarigitaj kartoj</string>
@@ -333,7 +333,7 @@
     <string name="remove_toolbar_item">Ĉu forigi elementon de ilarstrio?</string>
     <string name="note_editor_paste_too_large">La bildo estas tro granda por alglui, enmetu la bildon permane</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Restarigado de Android-sekurkopio. Reprovu</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Please use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Uzu iManager por permesi al AnkiDroid krei simbolajn ligilojn</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Via hejma ekrano ne permesas al AnkiDroid krei simbolajn ligilojn</string>
+    <string name="create_shortcut_error">Eraro dum krei simbolan ligilon: %s</string>
 </resources>

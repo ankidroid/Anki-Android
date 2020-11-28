@@ -65,7 +65,7 @@
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width">Pinselbreite</string>
     <string name="whiteboard_black">Schwarzer Pinsel</string>
-    <string name="whiteboard_black_summ">Spart Hauptspeicher, außer im Nachtmodus</string>
+    <string name="whiteboard_black_summ">Verwendet weniger Speicher, außer im Nachtmodus</string>
     <string name="use_input_tag">Antwort in Karte eintippen</string>
     <string name="use_input_tag_summ">Innerhalb der Karte ein Texteingabefeld verwenden, um die Antwort einzutippen</string>
     <string name="dictionary">Nachschlagen in Wörterbuch</string>
@@ -82,8 +82,8 @@
     <string name="col_path">AnkiDroid-Verzeichnis</string>
     <string name="fullscreen_review">Vollbildmodus</string>
     <string name="full_screen_off">Aus</string>
-    <string name="full_screen_system">Systemleisten ausblenden</string>
-    <string name="full_screen_complete">Systemleisten und Antwortschaltflächen ausblenden</string>
+    <string name="full_screen_system">Systemzeilen verbergen</string>
+    <string name="full_screen_complete">Systemleisten und Antwortschaltflächen verbergen</string>
     <string name="full_screen_error_gestures">Sie müssen Gesten aktivieren, um die Antwortschaltflächen auszublenden</string>
     <string name="answer_buttons_position">Position der Antwortschaltflächen</string>
     <string-array name="answer_buttons_position_labels">
@@ -95,7 +95,7 @@
     <string name="gestures_allow_links">Berührungsgesten auf Weblinks ignorieren</string>
     <string name="gestures_allow_links_summary">Berührungsgesten werden nicht verarbeitet, falls ein Weblink/Hinweis angetippt wird.</string>
     <string name="gestures_corner_touch">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch_summary">Berührungsgesten in Bildschirmecken erlauben</string>
     <string name="gestures_swipe_up">Nach oben wischen</string>
     <string name="gestures_swipe_down">Nach unten wischen</string>
     <string name="gestures_swipe_left">Nach links wischen</string>
@@ -105,17 +105,17 @@
     <string name="gestures_tap_left">Links antippen</string>
     <string name="gestures_tap_right">Rechts antippen</string>
     <string name="gestures_tap_bottom">Unten antippen</string>
-    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_left">Berührung links oben</string>
     <string name="gestures_corner_tap_top_center">Touch top center</string>
-    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_top_right">Berührung oben rechts</string>
     <string name="gestures_corner_tap_middle_left">Touch middle left</string>
     <string name="gestures_corner_tap_middle_center">Touch middle center</string>
     <string name="gestures_corner_tap_middle_right">Touch middle right</string>
-    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_left">Berührung unten links</string>
     <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
-    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
-    <string name="gestures_volume_up">Lautstärke aufdrehen</string>
-    <string name="gestures_volume_down">Lautstärke leiser stellen</string>
+    <string name="gestures_corner_tap_bottom_right">Berührung unten rechts</string>
+    <string name="gestures_volume_up">Lautstärke erhöhen</string>
+    <string name="gestures_volume_down">Lautstärke veringern</string>
     <string name="more_scrolling_buttons">eReader</string>
     <string name="more_scrolling_buttons_summ">Auch mit Kanji/Katakana-, Emoji/Kao-moji-Tasten scrollen</string>
     <string name="card_browser_enable_external_context_menu">»%s«-Menü</string>
@@ -132,10 +132,10 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Automatische Synchronisierung</string>
     <string name="automatic_sync_choice_summ">Bei Programmstart/-ende automatisch synchronisieren, falls die letzte Synchronisation mehr als 10 Minuten zurückliegt.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">Status der Synchronisation anzeigen</string>
+    <string name="sync_status_badge_summ">Synchronisationssymbol ändern, wenn Änderungen hochgeladen werden können</string>
     <string name="day_theme">Tag-Theme</string>
-    <string name="night_theme">Nacht-Theme</string>
+    <string name="night_theme">Nacht-Thema</string>
     <string name="default_font">Standardschrift</string>
     <string name="override_font">Anwendungsbereich der Standardschrift</string>
     <string name="language">Sprache</string>
@@ -181,7 +181,7 @@
     <string name="sched_ver_toggle_title">Bestätigen</string>
     <string name="sched_ver_2to1">Dies wird alle in der Lernphase befindlichen Karten zurücksetzen, gefilterte Stapel löschen und die Version des Zeitplaners ändern. Möchten Sie fortfahren?</string>
     <string name="sched_ver_1to2">Der experimentelle Zeitplaner könnte eine falsche Zeitplanung verursachen. Bitte lesen Sie zuerst die Dokumentation. Möchten Sie fortfahren?</string>
-    <string name="pref_keep_screen_on">Bildschirm nicht ausschalten</string>
+    <string name="pref_keep_screen_on">Bildschirm eingeschaltet lassen</string>
     <string name="pref_keep_screen_on_summ">Bildschirm-Timeout deaktivieren</string>
     <string name="convert_fen_text">Unterstützung für Schach-Notation</string>
     <string name="convert_fen_text_summ">Schachbrett aus Forsyth–Edwards-Notation erstellen. Die Position muss in  [fen][/fen]-Tags eingefasst sein.</string>

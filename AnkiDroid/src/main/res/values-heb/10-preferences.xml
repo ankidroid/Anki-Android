@@ -76,12 +76,12 @@
     <string name="card_zoom">הגדלת תצוגת הכרטיס</string>
     <string name="image_zoom">הגדלת תצוגת התמונות</string>
     <string name="button_size">גודל כפתורי התשובה</string>
-    <string name="card_browser_font_size">Card browser font scaling</string>
-    <string name="card_browser_hide_media">Display filenames in card browser</string>
+    <string name="card_browser_font_size">קנה מידה להגדלת גופן הכרטיסיות</string>
+    <string name="card_browser_hide_media">הצג את שמות הכרטיסיות בדפדפן הכרטיסיות</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path">ספריית AnkiDroid</string>
     <string name="fullscreen_review">מצב מסך מלא</string>
-    <string name="full_screen_off">Off</string>
+    <string name="full_screen_off">כבוי</string>
     <string name="full_screen_system">הסתרת שורות המערכת</string>
     <string name="full_screen_complete">הסתרת שורות המערכת וכפתורי התשובה</string>
     <string name="full_screen_error_gestures">כדי להסתיר את כפתורי התשובה יש לאפשר שימוש במחוות</string>
