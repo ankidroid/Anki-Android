@@ -192,7 +192,8 @@ public class Info extends AnkiActivity {
         String debugInfo = "AnkiDroid Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
                 "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
                 "ACRA UUID = " + Installation.id(this) + "\n\n" +
-                "Scheduler = " + schedName + "\n";
+                "Scheduler = " + schedName + "\n\n" +
+                "Crash Reports Enabled = " + isSendingCrashReports() + "\n";
 
         android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboardManager != null) {
@@ -202,5 +203,10 @@ public class Info extends AnkiActivity {
             UIUtils.showThemedToast(this, getString(R.string.about_ankidroid_error_copy_debug_info), false);
         }
         return debugInfo;
+    }
+
+
+    private boolean isSendingCrashReports() {
+        return AnkiDroidApp.isAcraEnbled(this, false);
     }
 }
