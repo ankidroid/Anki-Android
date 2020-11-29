@@ -51,6 +51,7 @@
         <item>Desfazer</item>
         <item>Editar nota</item>
         <item>Colocar tag no cartão</item>
+        <item>Card Info</item>
         <item>Marcar nota</item>
         <item>Procurar expressão</item>
         <item>Enterrar cartão</item>
@@ -67,7 +68,6 @@
         <item>Remover marca</item>
         <item>Subir página</item>
         <item>Descer página</item>
-        <item>Page Down</item>
         <item>Abortar Estudo e Sincronizar</item>
     </string-array>
     <string-array name="leech_action_labels">

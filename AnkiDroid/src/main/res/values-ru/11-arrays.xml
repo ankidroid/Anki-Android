@@ -50,6 +50,7 @@
         <item>Лучше рекомендованного ответа</item>
         <item>Отменить</item>
         <item>Править запись</item>
+        <item>Card Info</item>
         <item>Добавить метку</item>
         <item>Отметить запись</item>
         <item>Посмотреть в словаре</item>
@@ -67,7 +68,6 @@
         <item>Убрать флажок</item>
         <item>На страницу вверх</item>
         <item>На страницу вниз</item>
-        <item>Page Down</item>
         <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">

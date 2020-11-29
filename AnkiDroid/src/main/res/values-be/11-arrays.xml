@@ -50,6 +50,7 @@
         <item>Лепш, чым рэкамендаваны</item>
         <item>Адмяніць</item>
         <item>Рэдагаваць нататку</item>
+        <item>Card Info</item>
         <item>Пазначыць</item>
         <item>Пазначыць нататку</item>
         <item>Пошук выразу</item>
@@ -67,7 +68,6 @@
         <item>Прыбраць сцяжок</item>
         <item>Пракруціць уверх</item>
         <item>Пракруціць уніз</item>
-        <item>Page Down</item>
         <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">

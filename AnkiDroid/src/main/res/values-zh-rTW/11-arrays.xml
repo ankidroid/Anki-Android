@@ -50,6 +50,7 @@
         <item>優於建議的答案</item>
         <item>復原</item>
         <item>編輯筆記</item>
+        <item>Card Info</item>
         <item>標記筆記</item>
         <item>標記筆記</item>
         <item>查找運算式</item>
@@ -67,7 +68,6 @@
         <item>移除標記</item>
         <item>向上翻頁</item>
         <item>向下翻頁</item>
-        <item>Page Down</item>
         <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">

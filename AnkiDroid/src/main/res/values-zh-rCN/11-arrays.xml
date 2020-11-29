@@ -50,6 +50,7 @@
         <item>好于建议的回答</item>
         <item>撤销</item>
         <item>编辑笔记</item>
+        <item>Card Info</item>
         <item>标签笔记</item>
         <item>标记笔记</item>
         <item>查找表达式</item>
@@ -66,7 +67,6 @@
         <item>切换蓝色标识</item>
         <item>移除标识</item>
         <item>向上翻页</item>
-        <item>向下翻页</item>
         <item>向下翻页</item>
         <item>中止学习和同步</item>
     </string-array>

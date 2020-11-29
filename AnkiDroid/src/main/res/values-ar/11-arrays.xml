@@ -50,6 +50,7 @@
         <item>الإجابة بأفضل مما أوصي به</item>
         <item>تراجع</item>
         <item>تحرير الملحوظة</item>
+        <item>Card Info</item>
         <item>إضافة وسم إلى الملحوظة</item>
         <item>تعليم الملحوظة</item>
         <item>بحث عن التعبير</item>
@@ -67,7 +68,6 @@
         <item>إزالة المؤشر</item>
         <item>تمرير صفحة إلى الأعلى</item>
         <item>تمرير صفحة إلى الأسفل</item>
-        <item>Page Down</item>
         <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">

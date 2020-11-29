@@ -51,6 +51,7 @@
         <item>元に戻す</item>
         <item>ノートを編集</item>
         <item>カード情報</item>
+        <item>Card Info</item>
         <item>ノートにタグを付ける</item>
         <item>ノートにマークを付ける/取り外す</item>
         <item>カードを延期</item>
@@ -66,7 +67,6 @@
         <item>青フラグを付ける/取り外す</item>
         <item>フラグを取り外す</item>
         <item>１画面分上へスクロール</item>
-        <item>１画面分下へスクロール</item>
         <item>１画面分下へスクロール</item>
         <item>学習を中断して同期</item>
     </string-array>
