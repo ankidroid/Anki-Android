@@ -809,7 +809,7 @@ public class Collection {
                 have.get(nid).put(ord, id);
                 // and their dids
                 if (dids.containsKey(nid)) {
-                    if (dids.get(nid) != 0 && dids.get(nid) != did) {
+                    if (dids.get(nid) != 0 && !Utils.equals(dids.get(nid), did)) {
                         // cards are in two or more different decks; revert to model default
                         dids.put(nid, 0L);
                     }
