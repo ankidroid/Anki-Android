@@ -338,6 +338,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     private String mCardContent;
     private String mBaseUrl;
+    private String mViewerUrl;
 
     private final int mFadeDuration = 300;
 
@@ -904,6 +905,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         super.onCollectionLoaded(col);
         mSched = col.getSched();
         mBaseUrl = Utils.getBaseUrl(col.getMedia().dir());
+        mViewerUrl = mBaseUrl + "__viewer__.html";
 
         registerExternalStorageListener();
 
@@ -2348,7 +2350,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private void loadContentIntoCard(WebView card, String content) {
         if (card != null) {
             CompatHelper.getCompat().setHTML5MediaAutoPlay(card.getSettings(), getConfigForCurrentCard().optBoolean("autoplay"));
-            card.loadDataWithBaseURL(mBaseUrl + "__viewer__.html", content, "text/html", "utf-8", null);
+            card.loadDataWithBaseURL(mViewerUrl, content, "text/html", "utf-8", null);
         }
     }
 
@@ -3478,10 +3480,14 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // Run any post-load events in javascript that rely on the window being completely loaded.
         @Override
         public void onPageFinished(WebView view, String url) {
-            Timber.d("onPageFinished triggered");
-            drawFlag();
-            drawMark();
-            view.loadUrl("javascript:onPageFinished();");
+            Timber.d("onPageFinished triggered: %s", url);
+
+            // onPageFinished will be called multiple times if the WebView redirects by setting window.location.href
+            if (url.equals(mViewerUrl)) {
+                drawFlag();
+                drawMark();
+                view.loadUrl("javascript:onPageFinished();");
+            }
         }
 
 
