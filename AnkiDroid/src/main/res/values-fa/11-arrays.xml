@@ -123,23 +123,23 @@
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
      -->
-    <string name="gesture_no_action">No action</string>
-    <string name="gesture_answer_1">Answer button 1</string>
-    <string name="gesture_answer_2">Answer button 2</string>
-    <string name="gesture_answer_3">Answer button 3</string>
-    <string name="gesture_answer_4">Answer button 4</string>
-    <string name="gesture_answer_green">Answer recommended (green)</string>
-    <string name="gesture_answer_better_recommended">Answer better than recommended</string>
-    <string name="gesture_tag_note">Tag note</string>
-    <string name="gesture_lookup">Lookup expression</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
+    <string name="gesture_no_action">هیچ عملیاتی</string>
+    <string name="gesture_answer_1">دكمه پاسخ 1</string>
+    <string name="gesture_answer_2">دكمه پاسخ 2</string>
+    <string name="gesture_answer_3">دكمه پاسخ 3</string>
+    <string name="gesture_answer_4">دكمه پاسخ 4</string>
+    <string name="gesture_answer_green">پاسخ توصيه شده-سبز</string>
+    <string name="gesture_answer_better_recommended">پاسخ بهتر از توصيه شده</string>
+    <string name="gesture_tag_note">برچسب یادداشت</string>
+    <string name="gesture_lookup">جستجوی عبارت</string>
+    <string name="gesture_play">پخش رسانه</string>
+    <string name="gesture_abort_learning">لغو یادگیری</string>
+    <string name="gesture_flag_red">پرچم قرمز</string>
+    <string name="gesture_flag_orange">پرچم نارنجی</string>
+    <string name="gesture_flag_green">پرچم سبز</string>
+    <string name="gesture_flag_blue">پرچم آبی</string>
+    <string name="gesture_flag_remove">حذف پرچم</string>
+    <string name="gesture_page_up">بالا بردن صفحه</string>
+    <string name="gesture_page_down">پایین بردن صفحه</string>
     <string name="gesture_abort_sync">Abort Learning and Sync</string>
 </resources>
