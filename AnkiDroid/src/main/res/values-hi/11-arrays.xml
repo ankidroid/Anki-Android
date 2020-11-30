@@ -123,13 +123,13 @@
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
      -->
-    <string name="gesture_no_action">No action</string>
-    <string name="gesture_answer_1">Answer button 1</string>
-    <string name="gesture_answer_2">Answer button 2</string>
-    <string name="gesture_answer_3">Answer button 3</string>
-    <string name="gesture_answer_4">Answer button 4</string>
-    <string name="gesture_answer_green">Answer recommended (green)</string>
-    <string name="gesture_answer_better_recommended">Answer better than recommended</string>
+    <string name="gesture_no_action">कोई क्रिया नहीं</string>
+    <string name="gesture_answer_1">उत्तर बटन 1</string>
+    <string name="gesture_answer_2">उत्तर बटन 2</string>
+    <string name="gesture_answer_3">उत्तर बटन 3</string>
+    <string name="gesture_answer_4">उत्तर बटन 4</string>
+    <string name="gesture_answer_green">सुझाया गया उत्तर (हरा)</string>
+    <string name="gesture_answer_better_recommended">उत्तर सुझाव से बेहतर</string>
     <string name="gesture_tag_note">Tag note</string>
     <string name="gesture_lookup">Lookup expression</string>
     <string name="gesture_play">Play media</string>

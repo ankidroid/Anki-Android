@@ -123,13 +123,13 @@
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
      -->
-    <string name="gesture_no_action">No action</string>
-    <string name="gesture_answer_1">Answer button 1</string>
-    <string name="gesture_answer_2">Answer button 2</string>
-    <string name="gesture_answer_3">Answer button 3</string>
-    <string name="gesture_answer_4">Answer button 4</string>
-    <string name="gesture_answer_green">Answer recommended (green)</string>
-    <string name="gesture_answer_better_recommended">Answer better than recommended</string>
+    <string name="gesture_no_action">Walang aksyon</string>
+    <string name="gesture_answer_1">Sagot na pindutan 1</string>
+    <string name="gesture_answer_2">Sagot na pindutan 2</string>
+    <string name="gesture_answer_3">Sagot na pindutan 3</string>
+    <string name="gesture_answer_4">Sagot na pindutan 4</string>
+    <string name="gesture_answer_green">Sagot inirerekomenda (berde)</string>
+    <string name="gesture_answer_better_recommended">Sagutin nang mas mabuti kaysa sa inirekomenda</string>
     <string name="gesture_tag_note">Tag note</string>
     <string name="gesture_lookup">Lookup expression</string>
     <string name="gesture_play">Play media</string>
