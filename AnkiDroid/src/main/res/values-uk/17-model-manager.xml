@@ -74,7 +74,7 @@
     <string name="card_template_browser_appearance_question_format">Формат запитання</string>
     <string name="card_template_browser_appearance_answer_format">Формат відповіді</string>
     <string name="card_template_browser_appearance_restore_default_dialog">Відновити значення за замовчуванням?</string>
-    <string name="card_template_browser_appearance_saving_note">Ці зміни застосуються, коли шаблон карти збережеться</string>
+    <string name="card_template_browser_appearance_saving_note">Зміни застосуються після збереження шаблону картки</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Перевизначення колоди (увімк.)</string>
     <string name="card_template_editor_deck_override_off">Перевизначення колоди (вимк.)</string>

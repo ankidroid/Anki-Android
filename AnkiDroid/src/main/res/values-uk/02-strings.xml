@@ -200,7 +200,7 @@
         Спробуйте відкрити використовуючи одну з наявних <a href="http://ankisrs.net/#download">Anki дистрибутивів </a> і насолоджуйтесь легким і ефективним навчанням!
         ]]></string>
     <string name="export_unsuccessful">Помилка експорту apkg файлу</string>
-    <string name="import_hint">Щоб імпортувати карти, помістіть apkg файл в каталог %s і натисніть кнопку ok</string>
+    <string name="import_hint">Щоб імпортувати картки, помістіть apkg файл в папку %s і натисніть ОК</string>
     <string name="upgrade_import_no_file_found">Файл для імпорту %1$s не знайдено</string>
     <string name="study_options" comment="Menu entry to open an options menu">Налаштування</string>
     <string name="select_tts">Обрати TTS мову</string>
@@ -210,8 +210,8 @@
     <string name="steps_error">Кроки повинні бути числами, більшими ніж 0</string>
     <string name="steps_min_error">Принаймні один крок потрібний</string>
     <string name="sched_end">(кінець)</string>
-    <string name="sched_unbury_action">Щоб побачити їх знову, оберіть пункт в меню «Повернути»</string>
-    <string name="sched_has_buried">Деякі пов\'язані або приховані карти відкладені до завтра</string>
+    <string name="sched_unbury_action">Щоб побачити їх знову, натисніть «Повернути» в меню</string>
+    <string name="sched_has_buried">Деякі пов\'язані або відкладені картки були перенесені на завтра</string>
     <string name="tag_editor_add_feedback">Натисніть \"%2$s\", аби підтвердити додавання \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Обрано існуючу позначку \"%1$s\"</string>
     <string name="lookup_hint">Після копіювання тексту, торкніться будь-де на картці, аби показати піктограму пошуку</string>
@@ -297,7 +297,7 @@
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
     <string name="title_whiteboard_pen_color">Колір пензля</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Знайдено порожні картки. Будь ласка, натисніть Інструменти > Порожні картки.]]></string>
+    <string name="note_importer_empty_cards_found"><![CDATA[Знайдено порожні картки. Натисніть Інструменти > Порожні картки.]]></string>
     <string name="note_importer_error_empty_first_field">Порожнє перше поле: %s</string>
     <string name="note_importer_error_first_field_matched">Перше поле відповідне: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">Додано дублікат з першим полем: %s</string>
