@@ -3480,10 +3480,11 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         // Run any post-load events in javascript that rely on the window being completely loaded.
         @Override
         public void onPageFinished(WebView view, String url) {
-            Timber.d("onPageFinished triggered: %s", url);
+            Timber.d("Java onPageFinished triggered: %s", url);
 
             // onPageFinished will be called multiple times if the WebView redirects by setting window.location.href
             if (url.equals(mViewerUrl)) {
+                Timber.d("New URL, drawing flags, marks, and triggering JS onPageFinished: %s", url);
                 drawFlag();
                 drawMark();
                 view.loadUrl("javascript:onPageFinished();");
