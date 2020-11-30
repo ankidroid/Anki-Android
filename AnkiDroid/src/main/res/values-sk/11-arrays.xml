@@ -123,23 +123,23 @@
     #7794 - it\'s better to use @string references in non-translated arrays as this handles
     changes in the array ordering better
      -->
-    <string name="gesture_no_action">No action</string>
-    <string name="gesture_answer_1">Answer button 1</string>
-    <string name="gesture_answer_2">Answer button 2</string>
-    <string name="gesture_answer_3">Answer button 3</string>
-    <string name="gesture_answer_4">Answer button 4</string>
-    <string name="gesture_answer_green">Answer recommended (green)</string>
-    <string name="gesture_answer_better_recommended">Answer better than recommended</string>
-    <string name="gesture_tag_note">Tag note</string>
-    <string name="gesture_lookup">Lookup expression</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_no_action">Žiadna akcia</string>
+    <string name="gesture_answer_1">Tlačidlo odpovede 1</string>
+    <string name="gesture_answer_2">Tlačidlo odpovede 2</string>
+    <string name="gesture_answer_3">Tlačidlo odpovede 3</string>
+    <string name="gesture_answer_4">Tlačidlo odpovede 4</string>
+    <string name="gesture_answer_green">Odporúčaná odpoveď (zelená)</string>
+    <string name="gesture_answer_better_recommended">Odpoveď lepšia ako odporúčaná</string>
+    <string name="gesture_tag_note">Oštítkovať poznámku</string>
+    <string name="gesture_lookup">Vyhľadať výraz</string>
+    <string name="gesture_play">Prehrať médium</string>
+    <string name="gesture_abort_learning">Prerušiť učenie</string>
+    <string name="gesture_flag_red">Označiť červenou vlajkou</string>
+    <string name="gesture_flag_orange">Označiť oranžovou vlajkou</string>
+    <string name="gesture_flag_green">Označiť zelenou vlajkou</string>
+    <string name="gesture_flag_blue">Označiť modrou vlajkou</string>
+    <string name="gesture_flag_remove">Odstrániť vlajku</string>
+    <string name="gesture_page_up">Strana nahor</string>
+    <string name="gesture_page_down">Strana nadol</string>
+    <string name="gesture_abort_sync">Prerušiť učenie a synchronizáciu</string>
 </resources>
