@@ -51,7 +51,7 @@
         <item quantity="many">Видалити всі карти в %1$s? Вона містить %2$d карток.</item>
         <item quantity="other">Видалити всі картки в %1$s? Там міститься %2$d карток.</item>
     </plurals>
-    <string name="delete_cram_deck_message">Ви впевнені що хочете відправити всі карти з %s назад до їх початкових колод?</string>
+    <string name="delete_cram_deck_message">Відправити всі картки з %s назад до їх початкових колод?</string>
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
     <string name="initializing_tts">Ініціалізація TTS&#8230;</string>
     <string name="tts_no_tts">Не говорити</string>
@@ -100,7 +100,7 @@
         <item quantity="many">%d карток переплановано</item>
         <item quantity="other">%d картки переплановано</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Нова картка перепланована. Планування також перетворює нові картки на переглянуті. Використовуйте опцію «переставити картку», щоб змінити позицію нової карти в новій черзі</string>
+    <string name="reschedule_card_dialog_new_card_warning">Нова картка перепланувалася і стала переглянутою. Використовуйте опцію «перемістити картку», щоб змінити позицію карти в новій черзі</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Планування також скидає, як планувальник відноситься до карти в майбутньому (легкість картки буде встановлено на %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Виберіть колоду у вашому файловому менеджері або перейдіть на сторінку about:downloads (про:завантаження) для її імпорту</string>
     <string name="answering_error_title">Помилка бази даних</string>
@@ -113,10 +113,10 @@
     <string name="custom_study_rev_total_rev">Повторити сьогодні: %d</string>
     <string name="custom_study_new_extend">Збільшення/зменшення («-3») сьогоднішньої межі на нові картки</string>
     <string name="custom_study_rev_extend">Збільшення/зменшення («-3») сьогоднішньої межі на повторення</string>
-    <string name="custom_study_forgotten">Повторити карти забуті за останні x днів:</string>
+    <string name="custom_study_forgotten">Повторити картки забуті за останні x днів:</string>
     <string name="custom_study_ahead">Переглянути наперед за х днів:</string>
     <string name="custom_study_random">Вибрати х випадкових карт з колоди:</string>
-    <string name="custom_study_preview">Повторити нові карти додані за останні х днів:</string>
+    <string name="custom_study_preview">Повторити нові картки додані за останні х днів:</string>
     <string name="custom_study_rebuild_deck_corrupt">Не вдалося перебудувати колоду додаткового навчання</string>
     <string name="importing_collection">Завантаження колекції. \nБудь ласка, зачекайте&#8230;</string>
     <string name="import_media_count">Завантаження медіа файлів %1$d%%\nБудь ласка, зачекайте&#8230;</string>
