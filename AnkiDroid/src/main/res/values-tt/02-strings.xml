@@ -191,17 +191,17 @@
         Аны ачыр өчен,  <a href="http://ankisrs.net/#download">Anki кушымтасын</a> көйләгез һәм җиңел һәм уңышлы итеп өйрәнегез!
         ]]></string>
     <string name="export_unsuccessful">apkg файлын экспортлаганда хата</string>
-    <string name="import_hint">Place the apkg file in directory “%s” and touch “OK” to import cards</string>
+    <string name="import_hint">Импортлау өчен apkg файлын \"%s\" папкасына урнаштырып, ОК төймәсенә басыгыз</string>
     <string name="upgrade_import_no_file_found">No importable %1$s file found</string>
-    <string name="study_options" comment="Menu entry to open an options menu">Options</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Көйләүләр</string>
     <string name="select_tts">Set TTS language</string>
-    <string name="custom_study">Custom study</string>
-    <string name="more_options">More</string>
-    <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-    <string name="steps_error">Steps must be numbers greater than 0</string>
-    <string name="steps_min_error">At least one step is required</string>
-    <string name="sched_end">(end)</string>
-    <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
+    <string name="custom_study">Тагын өйрәнү</string>
+    <string name="more_options">Күбрәк</string>
+    <string name="dyn_deck_desc">Бу - гадәттәгедән тыш күбрәк уку өчен колода. Кәртләрне карап чыккач, алар үзенең колодаларына кире кайтачаклар. Бу колоданы бетерү аның эчендәге кәртләрнең үзенең колодаларына кайтуына китерер. </string>
+    <string name="steps_error">Адымнар 0дән күбрәк сан булырга тиеш</string>
+    <string name="steps_min_error">Бер булса да адым кирәк</string>
+    <string name="sched_end">(ахыр)</string>
+    <string name="sched_unbury_action">Аларны күрү өчен менюдагы \"Кайтару\" төймәсенә басыгыз</string>
     <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
