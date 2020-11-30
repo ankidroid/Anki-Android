@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 
 public class ClosableDrawerLayout extends DrawerLayout {
+    @SuppressWarnings( {"FieldCanBeLocal", "unused", "RedundantSuppression"})
     private boolean mAnimationEnabled = true;
 
     public ClosableDrawerLayout(@NonNull Context context) {
@@ -48,10 +49,13 @@ public class ClosableDrawerLayout extends DrawerLayout {
     // This is called internally (onTouchEvent outside the control will close it), so we need it here
     @Override
     void closeDrawers(boolean peekingOnly) {
-        if (mAnimationEnabled) {
-            super.closeDrawers(peekingOnly);
-        } else {
+        // TODO: This fails due to #7344 - tapping on the left side partially opens the menu and blocks the UI
+        // permanently. I didn't work too hard on resolving this, but it didn't seem like a simple fix.
+        /*
+        if (!mAnimationEnabled) {
             closeDrawer(GravityCompat.START, false);
         }
+        */
+        super.closeDrawers(peekingOnly);
     }
 }
