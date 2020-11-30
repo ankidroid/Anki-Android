@@ -50,6 +50,7 @@
         <item>Jawaban yang lebih baik dari yang disarankan</item>
         <item>Urungkan</item>
         <item>Edit catatan</item>
+        <item>Card Info</item>
         <item>Beri catatan tag</item>
         <item>Tandai catatan</item>
         <item>Ekspresi pencarian</item>
@@ -67,7 +68,6 @@
         <item>Hapus Panji</item>
         <item>Halaman Atas</item>
         <item>Halaman Bawah</item>
-        <item>Page Down</item>
         <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">

@@ -66,19 +66,19 @@
     <string name="whiteboard_stroke_width">Largura do traço</string>
     <string name="whiteboard_black">Traçados pretos</string>
     <string name="whiteboard_black_summ">Utilizar menos memória, exceto no modo noturno</string>
-    <string name="use_input_tag">Digite a resposta no cartão</string>
-    <string name="use_input_tag_summ">Digite o campo de entrada no cartão para digitar a resposta</string>
+    <string name="use_input_tag">Digite a resposta no card</string>
+    <string name="use_input_tag_summ">Use um espaço dentro do card para digitar a resposta</string>
     <string name="dictionary">Dicionário de busca</string>
     <string name="reset_languages">Redefinir línguas</string>
     <string name="reset_languages_summ">Redefinir as atribuições de linguagem (Texto para fala e dicionários) para todos os baralhos</string>
     <string name="reset_languages_question">Redefinir todas as atribuições de idioma?</string>
     <string name="reset_confirmation">Redefinir todos os estados</string>
-    <string name="card_zoom">Zoom do cartão</string>
+    <string name="card_zoom">Zoom do card</string>
     <string name="image_zoom">Zoom da imagem</string>
     <string name="button_size">Tamanho do botão de resposta</string>
-    <string name="card_browser_font_size">Dimensionamento de fonte do navegador de cartões</string>
-    <string name="card_browser_hide_media">Exibir nomes de arquivo no navegador de cartão</string>
-    <string name="card_browser_hide_media_summary">Exibir nomes de arquivo de mídia nos campos de pergunta/resposta do navegador do cartão.</string>
+    <string name="card_browser_font_size">Dimensionamento de fonte do navegador de cards</string>
+    <string name="card_browser_hide_media">Exibir nomes de arquivo no navegador de cards</string>
+    <string name="card_browser_hide_media_summary">Exibir nomes de arquivo de mídia nos campos de pergunta/resposta do navegador do cards.</string>
     <string name="col_path">Diretório do AnkiDroid</string>
     <string name="fullscreen_review">Modo tela cheia</string>
     <string name="full_screen_off">Desligar</string>
@@ -91,7 +91,7 @@
         <item>Final</item>
     </string-array>
     <string name="gestures">Habilitar gestos</string>
-    <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cartões.</string>
+    <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar cards.</string>
     <string name="gestures_allow_links">Ignorar gestos de toque nos links</string>
     <string name="gestures_allow_links_summary">Gestos de toque não serão processados se um link/dica for pressionado.</string>
     <string name="gestures_corner_touch">9 Ações de Toque </string>
@@ -144,7 +144,7 @@
     <string name="notification_pref_title">Notificar quando</string>
     <string name="never_notify">Nunca notificar</string>
     <string name="notify_when_pending">Houver mensagens pendentes</string>
-    <string name="notification_minimum_cards_due">Mais que %d fichas estiverem pendentes</string>
+    <string name="notification_minimum_cards_due">Mais que %d cards pendentes</string>
     <string name="notification_minimum_cards_due_vibrate">Vibrar</string>
     <string name="notification_minimum_cards_due_blink">Luz de piscamento</string>
     <string name="timeout_answer_text">Exibir resposta automaticamente</string>
@@ -154,23 +154,23 @@
     <string name="timeout_question_seconds">Tempo para mostrar próxima questão</string>
     <string name="select_locale_title">Selecionar Idioma</string>
     <string name="safe_display">Modo de exibição segura</string>
-    <string name="safe_display_summ">Desativar todas animações e utilizar método seguro para desenhar cartões. Dispositivos E-ink podem exigir isso.</string>
+    <string name="safe_display_summ">Desativar todas animações e utilizar método seguro para desenhar cards. Dispositivos E-ink podem exigir isso.</string>
     <string name="disable_extended_text_ui">Desabilitar Modo de Edição de Campo Único</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Permitir \'Ocultar\' no menu de contexto quando em modo paisagem.</string>
     <string name="vertical_centering">Alinhar no centro</string>
-    <string name="vertical_centering_summ">Centralizar o conteúdo das cartas verticalmente</string>
+    <string name="vertical_centering_summ">Centralizar o conteúdo dos cards verticalmente</string>
     <string name="pref_backup_max">Número máximo de backups</string>
     <string name="show_estimates">Mostrar o tempo no botão</string>
     <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
     <string name="show_top_bar">Mostrar barra superior</string>
-    <string name="show_top_bar_summ">Mostrar contagem de cartões, bandeira e marca na barra superior</string>
+    <string name="show_top_bar_summ">Mostrar contagem de cards, sinalizador e marca na barra superior</string>
     <string name="show_progress">Mostar restantes</string>
-    <string name="show_progress_summ">Mostrar contagem de cartões restantes</string>
+    <string name="show_progress_summ">Mostrar contagem de cards restantes</string>
     <string name="show_eta">Mostrar tempo restante estimado</string>
     <string name="show_eta_summ">Mostrar tempo restante</string>
-    <string name="use_current">Baralho para novos cartões</string>
-    <string name="new_spread">Posição do novo cartão</string>
+    <string name="use_current">Baralho para novos cards</string>
+    <string name="new_spread">Posição do novo card</string>
     <string name="learn_cutoff">Aprender antes do limite</string>
     <string name="time_limit">Limite de tempo de Timebox</string>
     <string name="time_limit_summ">XXX min</string>
@@ -196,7 +196,7 @@
     <string name="thirdparty_apps_title">Apps de terceiros</string>
     <string name="thirdparty_apps_summary">Veja uma lista de aplicativos que usam a API do AnkiDroid, como dicionários, ferramentas.</string>
     <string name="html_javascript_debugging">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Ativar conexões remotas WebView, salvar HTML do cartão para o diretório do AnkiDroid</string>
+    <string name="html_javascript_debugging_summ">Ativar conexões remotas WebView, salvar HTML do card para o diretório do AnkiDroid</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title">Estatísticas avançadas</string>
     <string name="enable_advanced_statistics_title">Habilitar estatísticas avançadas</string>
@@ -229,14 +229,14 @@
     <string name="deck_conf_reminders">Lembretes</string>
     <string name="deck_conf_steps">Passos (em minutos)</string>
     <string name="deck_conf_order">Ordem</string>
-    <string name="deck_conf_new_cards_day">Novos cartões/dia</string>
+    <string name="deck_conf_new_cards_day">Novos cards/dia</string>
     <string name="deck_conf_graduating_ivl">Intervalo de graduação</string>
     <string name="deck_conf_days">XXX dia(s)</string>
     <string name="deck_conf_easy_ivl">Intervalo fácil</string>
     <string name="deck_conf_start_ease">Dificuldade de início</string>
     <string name="deck_conf_max_rev">Máximo de revisões/dia</string>
-    <string name="deck_conf_new_bury">Ocultar cartões novos relacionados</string>
-    <string name="deck_conf_new_bury_summ">Cartões novos relacionados são ocultados até o dia seguinte</string>
+    <string name="deck_conf_new_bury">Ocultar cards novos relacionados</string>
+    <string name="deck_conf_new_bury_summ">Cards novos relacionados são ocultados até o dia seguinte</string>
     <string name="deck_conf_rev_bury">Ocultar revisões relacionadas</string>
     <string name="deck_conf_rev_bury_summ">Revisões relacionadas são ocultadas até o dia seguinte</string>
     <string name="deck_conf_use_general_timeout_settings">Usar configurações gerais</string>
@@ -275,9 +275,9 @@
     <string name="deck_conf_cram_filter">Filtro</string>
     <string name="deck_conf_cram_search">Pesquisa</string>
     <string name="deck_conf_cram_limit">Limitar para</string>
-    <string name="deck_conf_cram_order">cartões selecionados por</string>
+    <string name="deck_conf_cram_order">cards selecionados por</string>
     <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Remarcar</string>
-    <string name="deck_conf_cram_reschedule_summ">Reagendar cartões baseado nas minhas respostas deste deck</string>
+    <string name="deck_conf_cram_reschedule_summ">Reagendar cards baseado em minhas respostas no baralho</string>
     <string name="deck_conf_cram_steps">Passos personalizados (em minutos)</string>
     <string name="deck_conf_cram_steps_summ">Definir passos personalizados</string>
     <string name="deck_conf_reminders_enabled">Habilitar notificações de lembretes para os decks neste grupo</string>

@@ -50,6 +50,7 @@
         <item>Odpowiedź lepsza niż zalecana</item>
         <item>Cofnij</item>
         <item>Edytuj notatkę</item>
+        <item>Card Info</item>
         <item>Ustaw tagi</item>
         <item>Wyróżnij notatkę</item>
         <item>Wyszukaj wyrażenie</item>
@@ -67,7 +68,6 @@
         <item>Usuń flagę</item>
         <item>Przewiń w górę</item>
         <item>Przewiń w dół</item>
-        <item>Page Down</item>
         <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">

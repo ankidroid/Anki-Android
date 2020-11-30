@@ -40,7 +40,7 @@
     <!--Browser-->
     <string name="model_browser_delete">Excluir tipo de nota</string>
     <string name="model_browser_rename" comment="Rename a note type">Renomear</string>
-    <string name="model_browser_template">Editar cartas</string>
+    <string name="model_browser_template">Editar cards</string>
     <string name="model_browser_add">Adicionar tipo de nota</string>
     <!--Rename-->
     <string name="rename_model">Renomear modelos de nota</string>
@@ -66,16 +66,16 @@
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Clonar: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Digite o modelo que o navegador de cartões usará para exibir seus cartões. Use isto para exibir uma resposta mais concisa.\n\nUm modelo frontal de\n\"A capital do {{Country}} é:\"\npode ser comprimido no navegador de cartões como\n\"Capital: {{Country}}\"</string>
+    <string name="card_template_browser_appearance_summary">Digite o modelo que o navegador de cards usará para exibir seus cards. Use isto para exibir uma resposta mais concisa.\n\nUm modelo frontal de\n\"A capital do {{Country}} é:\"\npode ser comprimido para\n\"Capital: {{Country}}\"</string>
     <string name="card_template_browser_appearance_question_format">Formato da questão</string>
     <string name="card_template_browser_appearance_answer_format">Formato da resposta</string>
     <string name="card_template_browser_appearance_restore_default_dialog">Restaurar valores padrões?</string>
-    <string name="card_template_browser_appearance_saving_note">Estas alterações são aplicadas quando o modelo de cartão é salvo</string>
+    <string name="card_template_browser_appearance_saving_note">Estas alterações são aplicadas quando o modelo de card é salvo</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Sobreposição do baralho (ativada)</string>
     <string name="card_template_editor_deck_override_off">Sobreposição do baralho (desativada)</string>
     <string name="model_manager_deck_override_added_message">Definir \'%1$s\' do baralho padrão para \'%2$s\'</string>
     <string name="model_manager_deck_override_removed_message">Baralho padrão removido para \'%s\'</string>
-    <string name="deck_override_explanation">Selecione um baralho para colocar novos ‘%s\' cartões dentro.</string>
+    <string name="deck_override_explanation">Selecione um baralho para colocar novos ‘%s\' cards dentro.</string>
     <string name="deck_picker_dialog_filter_decks">Filtrar baralhos</string>
 </resources>

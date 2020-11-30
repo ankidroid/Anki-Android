@@ -50,6 +50,7 @@
         <item>Краще, ніж рекомендована відповідь</item>
         <item>Скасувати</item>
         <item>Редагувати запис</item>
+        <item>Card Info</item>
         <item>Примітка запису</item>
         <item>Позначити запис</item>
         <item>Пошук виразу</item>
@@ -67,7 +68,6 @@
         <item>Переключити синій прапорець</item>
         <item>Попередня сторінка</item>
         <item>Наступна сторінка</item>
-        <item>Сторінка вниз</item>
         <item>Перервати навчання та синхронізувати</item>
     </string-array>
     <string-array name="leech_action_labels">

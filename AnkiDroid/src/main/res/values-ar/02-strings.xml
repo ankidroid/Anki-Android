@@ -299,7 +299,7 @@
     <string name="activity_start_failed">ليس للنظام تطبيق منصب يمكنه إجراء هذا.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[قد تكون صور الكاميرا كبيرة. قد ترغب في ضغط الصور وتغيير حجمها في مجلد الوسائط]]></string>
     <string name="no_browser_notification">تعذر العثور على متصفح، الرجاء زيارة صفحة الويب بواسطة حاسوب شخصي أو هاتف محمول: </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">خطأ في تحميل الصفحة: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">روابط الصفحات الخارجية في البطاقات غير مدعومة.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">تم استرجاع البطاقات</string>
@@ -362,7 +362,7 @@
     <string name="about_ankidroid_error_copy_debug_info">حدث خطأ عند نسخ معلومات التصحيح إلى الحافظة</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_media_relative_protocol">خطأ في محتوى البطاقة: تحديث الوسائط مطلوب</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">فشل تحميل رزمة ‘%s’</string>
     <string name="search_decks">بحث في الرزم</string>
@@ -370,8 +370,8 @@
     <string name="ankidroid_init_failed_webview">يعتمد أنكيدرويد على عارض الويب الخاص بالنظام وهو غير متوفر. يمكن أن يحدث هذا إذا كان النظام ينصب تحديثات. الرجاء المحاولة مجددًا بعد بضع دقائق.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">حجم الخط</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_bold">تنسيق كعريض</string>
+    <string name="format_insert_italic">تنسيق كمائل</string>
     <string name="format_insert_underline">Format as Underline</string>
     <string name="insert_horizontal_line">Insert Horizontal Line</string>
     <string name="insert_heading">Insert Heading</string>

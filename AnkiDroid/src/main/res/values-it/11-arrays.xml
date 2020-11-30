@@ -50,6 +50,7 @@
         <item>Risposta migliore di quanto raccomandato</item>
         <item>Annulla</item>
         <item>Modifica nota</item>
+        <item>Card Info</item>
         <item>Nota di etichetta</item>
         <item>Contrassegna la nota</item>
         <item>Verifica l\'espressione</item>
@@ -67,7 +68,6 @@
         <item>Rimuovi il contrassegno</item>
         <item>Vai su</item>
         <item>Vai giù</item>
-        <item>Pagina Giù</item>
         <item>Interrompi Apprendimento e Sincronizzazione</item>
     </string-array>
     <string-array name="leech_action_labels">
