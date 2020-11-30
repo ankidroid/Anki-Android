@@ -50,6 +50,7 @@
         <item>Réponse meilleure que celle recommandée</item>
         <item>Annuler</item>
         <item>Modifier la note</item>
+        <item>Card Info</item>
         <item>Note d\'étiquette</item>
         <item>Marquer la note</item>
         <item>Vérifier l\'expression</item>
@@ -66,7 +67,6 @@
         <item>Activer/désactiver le marqueur bleu</item>
         <item>Retirer le marqueur</item>
         <item>Remonter</item>
-        <item>Descendre</item>
         <item>Descendre</item>
         <item>Abandonner l\'apprentissage et la synchronisation</item>
     </string-array>

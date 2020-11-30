@@ -50,6 +50,7 @@
         <item>Respuesta mejor que la recomendada</item>
         <item>Deshacer</item>
         <item>Editar nota</item>
+        <item>Card Info</item>
         <item>Etiquetar nota</item>
         <item>Marcar nota</item>
         <item>Buscar expresión</item>
@@ -67,7 +68,6 @@
         <item>Eliminar Bandera</item>
         <item>Página Arriba</item>
         <item>Página Abajo</item>
-        <item>Page Down</item>
         <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">

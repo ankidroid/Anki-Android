@@ -50,6 +50,7 @@
         <item>Antwoord beter dan aangeraden</item>
         <item>Ongedaan maken</item>
         <item>Memo bewerken</item>
+        <item>Card Info</item>
         <item>Tagnaam</item>
         <item>Markeermemo</item>
         <item>Uitdrukking opzoeken</item>
@@ -67,7 +68,6 @@
         <item>Vlag verwijderen</item>
         <item>Pagina omhoog</item>
         <item>Pagina omlaag</item>
-        <item>Page Down</item>
         <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">

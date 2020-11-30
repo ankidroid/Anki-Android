@@ -40,14 +40,14 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d cartão mostrado</item>
-        <item quantity="other">%d cartões exibidos</item>
+        <item quantity="one">%d card visível</item>
+        <item quantity="other">%d cards visíveis</item>
     </plurals>
     <string name="card_browser_all_decks">Todos os baralhos</string>
     <string name="card_browser_delete_card">Excluir notas</string>
-    <string name="card_browser_suspend_card">Suspender cartões</string>
+    <string name="card_browser_suspend_card">Suspender cards</string>
     <string name="card_browser_change_deck">Mudar Baralho</string>
-    <string name="card_browser_unsuspend_card">Cancelar suspensão dos cartões</string>
+    <string name="card_browser_unsuspend_card">Cancelar suspensão dos cards</string>
     <string name="card_browser_mark_card">Marcar notas</string>
     <string name="card_browser_unmark_card">Desmarcar notas</string>
     <string name="delete_card_title">Excluir nota?</string>
@@ -73,7 +73,7 @@
         <item>Pelo campo de ordenação</item>
         <item>Por ordem de criação</item>
         <item>Por data de modificação</item>
-        <item>Por data de modificação do cartão.</item>
+        <item>Por data de modificação do card.</item>
         <item>Por tempo programado</item>
         <item>Por intervalo</item>
         <item>Por facilidade</item>
@@ -85,12 +85,12 @@
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(novo)</string>
     <string name="card_browser_due_filtered_card">(filtrada)</string>
     <string name="card_browser_interval_learning_card">(aprendizado)</string>
-    <string name="card_browser_no_cards_in_deck">Nenhuma carta encontrada no deck ‘%s\'</string>
+    <string name="card_browser_no_cards_in_deck">Nenhum card encontrado no deck ‘%s\'</string>
     <string name="card_browser_search_all_decks">Pesquisar em todos os baralhos</string>
     <string name="card_browser_unknown_deck_name">Desconhecido</string>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d cartão deletado</item>
-        <item quantity="other">%d cartões deletados</item>
+        <item quantity="one">%d card deletado</item>
+        <item quantity="other">%d cards deletados</item>
     </plurals>
     <!-- Card Info subscreen -->
     <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Adicionado</string>
@@ -105,7 +105,7 @@
     <string name="card_info_card_type">Tipo de Card</string>
     <string name="card_info_note_type">Tipo de Nota</string>
     <string name="card_info_deck_name">Nome do Deck</string>
-    <string name="card_info_card_id">ID do Cartão</string>
+    <string name="card_info_card_id">ID do Card</string>
     <string name="card_info_note_id">ID da Nota</string>
     <string name="card_info_revlog_time">Tempo</string>
     <string name="card_info_revlog_date">Data</string>

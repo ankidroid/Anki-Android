@@ -114,7 +114,7 @@
     <string name="move_all_to_deck">نقل الكل إلى الرزمة</string>
     <string name="unbury">نكش</string>
     <string name="rename_deck">تغيير اسم الرزمة</string>
-    <string name="create_shortcut">Create shortcut</string>
+    <string name="create_shortcut">إنشاء اختصار</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">إضافة</string>
     <string name="menu_add_note">إضافة ملحوظة</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">حساب المزامنة</string>

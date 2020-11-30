@@ -50,6 +50,7 @@
         <item>Resposta melhor que recomendada</item>
         <item>Desfazer</item>
         <item>Editar nota</item>
+        <item>Card Info</item>
         <item>Colocar tag no cartão</item>
         <item>Marcar nota</item>
         <item>Procurar expressão</item>
@@ -67,16 +68,15 @@
         <item>Remover marca</item>
         <item>Subir página</item>
         <item>Descer página</item>
-        <item>Page Down</item>
         <item>Abortar Estudo e Sincronizar</item>
     </string-array>
     <string-array name="leech_action_labels">
-        <item>Suspender cartão</item>
+        <item>Suspender card</item>
         <item>Por Tag somente em</item>
     </string-array>
     <string-array name="new_order_labels">
-        <item>Novos cartões em ordem aleatória</item>
-        <item>Novos cartões na ordem adicionada</item>
+        <item>Novos cards em ordem aleatória</item>
+        <item>Novos cards na ordem adicionada</item>
     </string-array>
     <string-array name="cram_deck_conf_order_labels">
         <item>Mais antigos primeiro</item>
@@ -94,12 +94,12 @@
         <item>Decidir pelo tipo de nota</item>
     </string-array>
     <string-array name="new_spread_labels">
-        <item>Misturar novos cartões e revisões</item>
-        <item>Novos cartões após revisões</item>
+        <item>Misturar novos cards e revisões</item>
+        <item>Novos cards após revisões</item>
         <item>Novos cartões antes das revisões</item>
     </string-array>
     <string-array name="override_font_labels">
-        <item>Quando nenhuma fonte especificada nos cartões</item>
+        <item>Quando não há fonte especificada nos cards</item>
         <item>Sempre</item>
     </string-array>
     <string-array name="day_theme_labels">
