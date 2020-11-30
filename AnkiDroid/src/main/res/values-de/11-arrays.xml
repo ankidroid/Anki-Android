@@ -50,6 +50,7 @@
         <item>Antwort besser als empfohlen</item>
         <item>Rückgängig</item>
         <item>Notiz bearbeiten</item>
+        <item>Card Info</item>
         <item>Notiz verschlagworten</item>
         <item>Notiz markieren</item>
         <item>Ausdruck nachschlagen</item>
@@ -67,7 +68,6 @@
         <item>Flagge entfernen</item>
         <item>Seite hoch</item>
         <item>Seite runter</item>
-        <item>Page Down</item>
         <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">

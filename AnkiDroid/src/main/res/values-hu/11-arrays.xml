@@ -50,6 +50,7 @@
         <item>Jobb válasz, mint a javasolt</item>
         <item>Visszavonás</item>
         <item>Megjegyzés szerkesztése</item>
+        <item>Card Info</item>
         <item>Jegyzet címkézése</item>
         <item>Jegyzet megjelölése</item>
         <item>Kifejezés keresése</item>
@@ -67,7 +68,6 @@
         <item>Jelölő Törlése</item>
         <item>Felfele</item>
         <item>Lefele</item>
-        <item>Page Down</item>
         <item>Abort Learning and Sync</item>
     </string-array>
     <string-array name="leech_action_labels">
