@@ -83,6 +83,7 @@ import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
 import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
+import it.unimi.dsi.fastutil.objects.ObjectLongImmutablePair;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
@@ -1130,8 +1131,8 @@ public class Collection {
                 // note point to invalid model
                 continue;
             }
-            Pair<String, Long> csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, getModels().sortIdx(model));
-            r.add(new Object[] {csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o[0] });
+            ObjectLongImmutablePair<String> csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, getModels().sortIdx(model));
+            r.add(new Object[] {csumAndStrippedFieldField.first(), csumAndStrippedFieldField.secondLong(), o[0] });
         }
         // apply, relying on calling code to bump usn+mod
         mDb.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r);

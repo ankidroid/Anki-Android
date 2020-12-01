@@ -73,6 +73,7 @@ import androidx.annotation.Nullable;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongIterable;
 import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.objects.ObjectLongImmutablePair;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
@@ -604,10 +605,10 @@ public class Utils {
      * @param sortIdx An index of the field
      * @return The field at sortIdx, without html media, and the csum of the first field.
      */
-    public static Pair<String, Long> sfieldAndCsum(String[] fields, int sortIdx) {
+    public static ObjectLongImmutablePair<String> sfieldAndCsum(String[] fields, int sortIdx) {
         String firstStripped = stripHTMLMedia(fields[0]);
         String sortStripped = (sortIdx == 0) ?  firstStripped: stripHTMLMedia(fields[sortIdx]);
-        return new Pair<>(sortStripped, fieldChecksumWithoutHtmlMedia(firstStripped));
+        return new ObjectLongImmutablePair<>(sortStripped, fieldChecksumWithoutHtmlMedia(firstStripped));
     }
 
     /**
