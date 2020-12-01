@@ -78,6 +78,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
+import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
@@ -1322,14 +1323,14 @@ public class Collection {
 
 
     /* Return (elapsedTime, reps) if timebox reached, or null. */
-    public Pair<Integer, Integer> timeboxReached() {
+    public IntIntImmutablePair timeboxReached() {
         if (mConf.getLong("timeLim") == 0) {
             // timeboxing disabled
             return null;
         }
         long elapsed = getTime().intTime() - mStartTime;
         if (elapsed > mConf.getLong("timeLim")) {
-            return new Pair<>(mConf.getInt("timeLim"), mSched.getReps() - mStartReps);
+            return new IntIntImmutablePair(mConf.getInt("timeLim"), mSched.getReps() - mStartReps);
         }
         return null;
     }
