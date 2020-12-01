@@ -220,19 +220,10 @@ var onPageFinished = function() {
                 {
                     return MathJax.startup.promise
                         .then(() => MathJax.typesetPromise([card]))
-                        .then(() => {
-                            card.classList.remove("mathjax-needs-to-render");
-                            card.classList.add("mathjax-rendered");
-                        });
+                        .then(() => card.classList.remove("mathjax-needs-to-render"));
                 }
             }
         })
-        .then(() => {
-            /* Developers can use CSS ".anki-before-shown { visibility: hidden }" to hide the content
-               of the card regardless of whether MathJax executes or not.
-               This will mimic the behavior on AnkiDesktop more closely */
-            card.classList.remove("anki-before-shown");
-            card.classList.add("anki-after-shown");
-        })
+        .then(() => card.classList.add("mathjax-rendered"))
         .then(_runHook(onShownHook))
 }
