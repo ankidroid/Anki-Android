@@ -160,6 +160,20 @@ document.documentElement.classList.contains("android"); //AnkiDroid
 
 See: https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/assets/card_template.html#L2 or https://github.com/ankidroid/Anki-Android/issues/6886
 
+### Hide content during execution of `onUpdateHook`
+
+With version 2.15, AnkiDroid supports the `onUpdateHook`, to schedule JavaScript before MathJax renders.
+This is useful, if you want to make *text replacements* in the content of the card.
+
+But in this case, you will also want to hide the content of the card, before all text replacements finished.
+AnkiDesktop will hide it automatically, but AnkiDroid will only do so, if you also happen to use MathJax.
+If you want to hide the content of the card until after the `onUpdateHook` executes, regardless of whether MathJax executes, you can use the following:
+
+```javascript
+.anki-before-shown {
+    visibility: hidden;
+}
+```
 
 ### Designing custom cards layout for buttons
 See [AnkiDroid Javascript API](https://github.com/ankidroid/Anki-Android/wiki/AnkiDroid-Javascript-API)
