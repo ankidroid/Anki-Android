@@ -2164,6 +2164,8 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         // CSS class for card-specific styling
         String cardClass = mCardAppearance.getCardClass(mCurrentCard.getOrd() + 1, Themes.getCurrentTheme(this));
+        cardClass += " anki-before-shown";
+
         if (Template.textContainsMathjax(content)) {
             cardClass += " mathjax-needs-to-render";
         }
