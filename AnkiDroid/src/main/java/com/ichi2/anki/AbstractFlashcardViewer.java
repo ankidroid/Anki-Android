@@ -142,6 +142,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import it.unimi.dsi.fastutil.ints.IntIntPair;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
@@ -616,10 +617,10 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
         private void dealWithTimeBox() {
             Resources res = getResources();
-            Pair<Integer, Integer> elapsed = getCol().timeboxReached();
+            IntIntPair elapsed = getCol().timeboxReached();
             if (elapsed != null) {
-                int nCards = elapsed.second;
-                int nMins = elapsed.first / 60;
+                int nCards = elapsed.secondInt();
+                int nMins = elapsed.firstInt() / 60;
                 String mins = res.getQuantityString(R.plurals.in_minutes, nMins, nMins);
                 String timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins);
                 UIUtils.showThemedToast(AbstractFlashcardViewer.this, timeboxMessage, true);

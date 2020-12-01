@@ -82,6 +82,7 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
@@ -1326,14 +1327,14 @@ public class Collection {
 
 
     /* Return (elapsedTime, reps) if timebox reached, or null. */
-    public Pair<Integer, Integer> timeboxReached() {
+    public IntIntImmutablePair timeboxReached() {
         if (mConf.getLong("timeLim") == 0) {
             // timeboxing disabled
             return null;
         }
         long elapsed = getTime().intTime() - mStartTime;
         if (elapsed > mConf.getLong("timeLim")) {
-            return new Pair<>(mConf.getInt("timeLim"), mSched.getReps() - mStartReps);
+            return new IntIntImmutablePair(mConf.getInt("timeLim"), mSched.getReps() - mStartReps);
         }
         return null;
     }
