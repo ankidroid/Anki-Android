@@ -40,6 +40,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
+import it.unimi.dsi.fastutil.ints.IntDoubleImmutablePair;
 import timber.log.Timber;
 
 
@@ -187,7 +188,7 @@ public class Stats {
         }
     }
 
-    public Pair<Integer, Double> getNewCards(AxisType timespan) {
+    public IntDoubleImmutablePair getNewCards(AxisType timespan) {
         int chunk = getChunk(timespan);
         int num = getNum(timespan);
         List<String> lims = new ArrayList<>();
@@ -223,7 +224,7 @@ public class Stats {
             periodDays = 1;
         }
 
-        return new Pair<>(cardCount, (double)cardCount / (double) periodDays);
+        return new IntDoubleImmutablePair(cardCount, (double)cardCount / (double) periodDays);
     }
 
     private enum DeckAgeType { ADD, REVIEW }
@@ -316,9 +317,9 @@ public class Stats {
         oStats.timePerDayOnAll = oStats.totalTime / oStats.allDays;
         oStats.timePerDayOnStudyDays = oStats.daysStudied == 0 ? 0 : oStats.totalTime / oStats.daysStudied;
 
-        Pair<Integer, Double> newCardStats = getNewCards(timespan);
-        oStats.totalNewCards = newCardStats.first;
-        oStats.newCardsPerDay = newCardStats.second;
+        IntDoubleImmutablePair newCardStats = getNewCards(timespan);
+        oStats.totalNewCards = newCardStats.firstInt();
+        oStats.newCardsPerDay = newCardStats.secondDouble();
 
         ArrayList<double[]> list = eases(timespan);
         oStats.newCardsOverview = toOverview(0, list);
