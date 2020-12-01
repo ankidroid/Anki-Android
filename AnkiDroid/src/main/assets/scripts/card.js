@@ -227,5 +227,12 @@ var onPageFinished = function() {
                 }
             }
         })
+        .then(() => {
+            /* Developers can use CSS ".anki-before-shown { visibility: hidden }" to hide the content
+               of the card regardless of whether MathJax executes or not.
+               This will mimic the behavior on AnkiDesktop more closely */
+            card.classList.remove("anki-before-shown");
+            card.classList.add("anki-after-shown");
+        })
         .then(_runHook(onShownHook))
 }
