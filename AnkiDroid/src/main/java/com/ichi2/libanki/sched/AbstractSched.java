@@ -21,6 +21,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import timber.log.Timber;
 
 import androidx.annotation.NonNull;
@@ -197,7 +198,7 @@ public abstract class AbstractSched {
      * @return An interval around `ivl`, with a few less or more days for fuzzying.
      */
     // In this abstract class for testing purpose only
-    public abstract @NonNull Pair<Integer, Integer> _fuzzIvlRange(int ivl);
+    public abstract @NonNull IntIntImmutablePair _fuzzIvlRange(int ivl);
 
     // In this abstract class for testing purpose only
     /** Rebuild selected dynamic deck. */

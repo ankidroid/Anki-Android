@@ -63,6 +63,7 @@ import java.util.Random;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING;
@@ -1694,19 +1695,19 @@ public class SchedV2 extends AbstractSched {
     }
 
     public int _fuzzedIvl(int ivl) {
-        Pair<Integer, Integer> minMax = _fuzzIvlRange(ivl);
+        IntIntImmutablePair minMax = _fuzzIvlRange(ivl);
         // Anki's python uses random.randint(a, b) which returns x in [a, b] while the eq Random().nextInt(a, b)
         // returns x in [0, b-a), hence the +1 diff with libanki
-        return (new Random().nextInt(minMax.second - minMax.first + 1)) + minMax.first;
+        return (new Random().nextInt(minMax.secondInt() - minMax.firstInt() + 1)) + minMax.firstInt();
     }
 
 
-    public @NonNull Pair<Integer, Integer> _fuzzIvlRange(int ivl) {
+    public @NonNull IntIntImmutablePair _fuzzIvlRange(int ivl) {
         int fuzz;
         if (ivl < 2) {
-            return new Pair<>(1, 1);
+            return new IntIntImmutablePair(1, 1);
         } else if (ivl == 2) {
-            return new Pair<>(2, 3);
+            return new IntIntImmutablePair(2, 3);
         } else if (ivl < 7) {
             fuzz = (int)(ivl * 0.25);
         } else if (ivl < 30) {
@@ -1716,7 +1717,7 @@ public class SchedV2 extends AbstractSched {
         }
         // fuzz at least a day
         fuzz = Math.max(fuzz, 1);
-        return new Pair<>(ivl - fuzz, ivl + fuzz);
+        return new IntIntImmutablePair(ivl - fuzz, ivl + fuzz);
     }
 
 
