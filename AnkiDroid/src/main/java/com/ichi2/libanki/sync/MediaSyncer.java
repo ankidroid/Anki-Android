@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.zip.ZipFile;
 
+import it.unimi.dsi.fastutil.objects.ObjectIntImmutablePair;
 import timber.log.Timber;
 
 /**
@@ -133,9 +134,9 @@ public class MediaSyncer {
                         // return `"null"` as a string
                         rsum = data.getJSONArray(i).optString(2);
                     }
-                    Pair<String, Integer> info = mCol.getMedia().syncInfo(fname);
-                    String lsum = info.first;
-                    int ldirty = info.second;
+                    ObjectIntImmutablePair<String> info = mCol.getMedia().syncInfo(fname);
+                    String lsum = info.first();
+                    int ldirty = info.secondInt();
                     mCol.log(String.format(Locale.US,
                             "check: lsum=%s rsum=%s ldirty=%d rusn=%d fname=%s",
                             TextUtils.isEmpty(lsum) ? "" : lsum.subSequence(0, 4),
