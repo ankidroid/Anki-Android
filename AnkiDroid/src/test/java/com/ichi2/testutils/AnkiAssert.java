@@ -6,6 +6,7 @@ import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import timber.log.Timber;
 
 import org.junit.Assert;
@@ -37,8 +38,8 @@ public class AnkiAssert {
     }
 
     public static boolean checkRevIvl(Collection col, Card c, int targetIvl) {
-        Pair<Integer, Integer> min_max = col.getSched()._fuzzIvlRange(targetIvl);
-        return min_max.first <= c.getIvl() && c.getIvl() <= min_max.second;
+        IntIntImmutablePair min_max = col.getSched()._fuzzIvlRange(targetIvl);
+        return min_max.firstInt() <= c.getIvl() && c.getIvl() <= min_max.secondInt();
     }
 
 
