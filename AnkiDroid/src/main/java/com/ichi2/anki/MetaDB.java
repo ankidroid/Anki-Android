@@ -12,6 +12,7 @@ import com.ichi2.libanki.Sound;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import timber.log.Timber;
 
 /**
@@ -433,7 +434,7 @@ public class MetaDB {
     }
 
 
-    public static void storeSmallWidgetStatus(Context context, Pair<Integer, Integer> status) {
+    public static void storeSmallWidgetStatus(Context context, IntIntImmutablePair status) {
         openDBIfClosed(context);
         try {
             mMetaDb.beginTransaction();
@@ -441,7 +442,7 @@ public class MetaDB {
                 // First clear all the existing content.
                 mMetaDb.execSQL("DELETE FROM smallWidgetStatus");
                 mMetaDb.execSQL("INSERT INTO smallWidgetStatus(due, eta) VALUES (?, ?)",
-                        new Object[]{status.first, status.second});
+                        new Object[]{status.firstInt(), status.secondInt()});
                 mMetaDb.setTransactionSuccessful();
             } finally {
                 mMetaDb.endTransaction();
