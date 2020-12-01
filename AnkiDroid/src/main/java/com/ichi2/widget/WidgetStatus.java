@@ -33,6 +33,7 @@ import com.ichi2.libanki.sched.DeckDueTreeNode;
 
 import java.util.List;
 
+import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import timber.log.Timber;
 
 /**
@@ -84,7 +85,7 @@ public final class WidgetStatus {
     private static class UpdateDeckStatusAsyncTask extends BaseAsyncTask<Context, Void, Context> {
 
         // due, eta
-        private static Pair<Integer, Integer> sSmallWidgetStatus = new Pair<>(0, 0);
+        private static IntIntImmutablePair sSmallWidgetStatus = new IntIntImmutablePair(0, 0);
 
         @Override
         protected Context doInBackground(Context... params) {
@@ -131,7 +132,7 @@ public final class WidgetStatus {
                 total.addRev(node.getRevCount());
             }
             int eta = col.getSched().eta(total, false);
-            sSmallWidgetStatus = new Pair<>(total.count(), eta);
+            sSmallWidgetStatus = new IntIntImmutablePair(total.count(), eta);
         }
     }
 }
