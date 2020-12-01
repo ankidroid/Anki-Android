@@ -54,6 +54,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.booleans.BooleanLongImmutablePair;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
@@ -254,9 +255,9 @@ public class Anki2Importer extends Importer {
                 int flag = cur.getInt(8);
                 String data = cur.getString(9);
 
-                Pair<Boolean, Long> shouldAddAndNewMid = _uniquifyNote(guid, mid);
-                boolean shouldAdd = shouldAddAndNewMid.first;
-                mid = shouldAddAndNewMid.second;
+                BooleanLongImmutablePair shouldAddAndNewMid = _uniquifyNote(guid, mid);
+                boolean shouldAdd = shouldAddAndNewMid.firstBoolean();
+                mid = shouldAddAndNewMid.secondLong();
                 if (shouldAdd) {
                     // ensure nid is unique
                     while (existing.contains(nid)) {
@@ -371,19 +372,19 @@ public class Anki2Importer extends Importer {
 
     // determine if note is a duplicate, and adjust mid and/or guid as required
     // returns true if note should be added and its mid
-    private Pair<Boolean, Long> _uniquifyNote(@NonNull String origGuid, long srcMid) {
+    private BooleanLongImmutablePair _uniquifyNote(@NonNull String origGuid, long srcMid) {
         long dstMid = _mid(srcMid);
         // duplicate Schemas?
         if (srcMid == dstMid) {
-            return new Pair<>(!mNotes.containsKey(origGuid), srcMid);
+            return new BooleanLongImmutablePair(!mNotes.containsKey(origGuid), srcMid);
         }
         // differing schemas and note doesn't exist?
         if (!mNotes.containsKey(origGuid)) {
-            return new Pair<>(true, dstMid);
+            return new BooleanLongImmutablePair(true, dstMid);
         }
 		// schema changed; don't import
 		mIgnoredGuids.put(origGuid, true);
-		return new Pair<>(false, dstMid);
+		return new BooleanLongImmutablePair(false, dstMid);
     }
 
     /*
