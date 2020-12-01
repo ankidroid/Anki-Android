@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import it.unimi.dsi.fastutil.objects.ObjectLongImmutablePair;
 import timber.log.Timber;
 
 
@@ -130,8 +131,8 @@ public class Note implements Cloneable {
         if (changeUsn) {
             mUsn = mCol.usn();
         }
-        Pair<String, Long> csumAndStrippedFieldField = Utils.sfieldAndCsum(mFields, getCol().getModels().sortIdx(mModel));
-        String sfld = csumAndStrippedFieldField.first;
+        ObjectLongImmutablePair<String> csumAndStrippedFieldField = Utils.sfieldAndCsum(mFields, getCol().getModels().sortIdx(mModel));
+        String sfld = csumAndStrippedFieldField.first();
         String tags = stringTags();
         String fields = joinedFields();
         if (mod == null && mCol.getDb().queryScalar(
@@ -139,7 +140,7 @@ public class Note implements Cloneable {
                 Long.toString(mId), tags, fields) > 0) {
             return;
         }
-        long csum = csumAndStrippedFieldField.second;
+        long csum = csumAndStrippedFieldField.secondLong();
         mMod = mod != null ? mod : mCol.getTime().intTime();
         mCol.getDb().execute("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
                 mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData);
@@ -298,10 +299,10 @@ public class Note implements Cloneable {
         if (val.trim().length() == 0) {
             return DupeOrEmpty.EMPTY;
         }
-        Pair<String, Long> csumAndStrippedFieldField = Utils.sfieldAndCsum(mFields, 0);
-        long csum = csumAndStrippedFieldField.second;
+        ObjectLongImmutablePair<String> csumAndStrippedFieldField = Utils.sfieldAndCsum(mFields, 0);
+        long csum = csumAndStrippedFieldField.secondLong();
         // find any matching csums and compare
-        String strippedFirstField = csumAndStrippedFieldField.first;
+        String strippedFirstField = csumAndStrippedFieldField.first();
         for (String flds : mCol.getDb().queryStringList(
                 "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
                 csum, (mId), mMid)) {
