@@ -60,6 +60,7 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.objects.ObjectIntImmutablePair;
 import timber.log.Timber;
 
 import static java.lang.Math.min;
@@ -786,14 +787,14 @@ public class Media {
     }
 
 
-    public Pair<String, Integer> syncInfo(String fname) {
+    public ObjectIntImmutablePair<String> syncInfo(String fname) {
         try (Cursor cur = mDb.query("select csum, dirty from media where fname=?", fname)) {
             if (cur.moveToNext()) {
                 String csum = cur.getString(0);
                 int dirty = cur.getInt(1);
-                return new Pair<>(csum, dirty);
+                return new ObjectIntImmutablePair(csum, dirty);
             } else {
-                return new Pair<>(null, 0);
+                return new ObjectIntImmutablePair(null, 0);
             }
         }
     }
