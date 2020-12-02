@@ -134,9 +134,7 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
         if (col.getSched().haveBuried(did)) {
             itemIds.add(CONTEXT_MENU_UNBURY);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            itemIds.add(CONTEXT_MENU_CREATE_SHORTCUT);
-        }
+        itemIds.add(CONTEXT_MENU_CREATE_SHORTCUT);
 
         return ContextMenuHelper.integerListToArray(itemIds);
     }
@@ -164,13 +162,8 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
                 break;
             }
             case CONTEXT_MENU_CREATE_SHORTCUT:
-                // This condition is theoretically useless. CONTEXT_MENU_CREATE_SHORTCUT can't be selected
-                // before version O. But there is no way to tell it to the compiler, so this condition should be added
-                // To avoid warning
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    Timber.i("Create icon for a deck");
-                    ((DeckPicker) getActivity()).createIcon(getContext());
-                }
+                Timber.i("Create icon for a deck");
+                ((DeckPicker) getActivity()).createIcon(getContext());
                 break;
 
             case CONTEXT_MENU_RENAME_DECK:
