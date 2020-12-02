@@ -738,6 +738,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 }
                 break;
             }
+            case KeyEvent.KEYCODE_FORWARD_DEL: {
+                Timber.i("Delete pressed - Delete Selected Note");
+                deleteSelectedNote();
+                return true;
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
