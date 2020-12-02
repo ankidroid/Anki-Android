@@ -256,12 +256,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     };
 
-    private final OnClickListener mDeckClickListener = v -> onDeckClick(v, false);
+    private final OnClickListener mDeckClickListener = v -> onDeckClick(v, DeckSelectionType.DEFAULT);
 
-    private final OnClickListener mCountsClickListener = v -> onDeckClick(v, true);
+    private final OnClickListener mCountsClickListener = v -> onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS);
 
 
-    private void onDeckClick(View v, boolean dontSkipStudyOptions) {
+    private void onDeckClick(View v, DeckSelectionType selectionType) {
         long deckId = (long) v.getTag();
         Timber.i("DeckPicker:: Selected deck with id %d", deckId);
         if (mActionsMenu != null && mActionsMenu.isExpanded()) {
@@ -271,7 +271,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         boolean collectionIsOpen = false;
         try {
             collectionIsOpen = colIsOpen();
-            handleDeckSelection(deckId, dontSkipStudyOptions);
+            handleDeckSelection(deckId, selectionType);
             if (mFragmented || !CompatHelper.isLollipop()) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
                 // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
@@ -2263,17 +2263,24 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private void openReviewerOrStudyOptions(boolean dontSkipStudyOptions) {
-        if (mFragmented || dontSkipStudyOptions) {
-            // Go to StudyOptions screen when tablet or deck counts area was clicked
-            openStudyOptions(false);
-        } else {
-            // Otherwise jump straight to the reviewer
-            openReviewer();
+    private void openReviewerOrStudyOptions(DeckSelectionType selectionType) {
+        switch (selectionType) {
+            case DEFAULT:
+                if (mFragmented) {
+                    openStudyOptions(false);
+                } else {
+                    openReviewer();
+                }
+                return;
+            case SHOW_STUDY_OPTIONS:
+                openStudyOptions(false);
+                return;
+            default:
+                Timber.w("openReviewerOrStudyOptions: Unknown selection: %s", selectionType);
         }
     }
 
-    private void handleDeckSelection(long did, boolean dontSkipStudyOptions) {
+    private void handleDeckSelection(long did, DeckSelectionType selectionType) {
         // Clear the undo history when selecting a new deck
         if (getCol().getDecks().selected() != did) {
             getCol().clearUndo();
@@ -2289,7 +2296,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (!deckDueTreeNode.shouldDisplayCounts() || deckDueTreeNode.knownToHaveRep()) {
             // If we don't yet have numbers, we trust the user that they knows what they opens, tries to open it.
             // If there is nothing to review, it'll come back to deck picker.
-            openReviewerOrStudyOptions(dontSkipStudyOptions);
+            openReviewerOrStudyOptions(selectionType);
             return;
         }
         // There are numbers
@@ -3003,5 +3010,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void onProgressUpdate(TaskData value) {
             mProgressDialog.setContent(value.getString());
         }
+    }
+
+    private enum DeckSelectionType {
+        /** Show study options if fragmented, otherwise, review */
+        DEFAULT,
+        /** Always show study options (if the deck counts are clicked) */
+        SHOW_STUDY_OPTIONS
     }
 }
