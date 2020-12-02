@@ -55,6 +55,8 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
 import it.unimi.dsi.fastutil.booleans.BooleanLongImmutablePair;
+import it.unimi.dsi.fastutil.ints.Int2LongAVLTreeMap;
+import it.unimi.dsi.fastutil.ints.Int2LongMap;
 import it.unimi.dsi.fastutil.longs.Long2BooleanMap;
 import it.unimi.dsi.fastutil.longs.Long2BooleanOpenCustomHashMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
@@ -526,7 +528,7 @@ public class Anki2Importer extends Importer {
          * Python: (guid, ord) -> cid
          * Java: guid -> ord -> cid
          */
-        Map<String, Map<Integer, Long>> mCards = new HashMap<>();
+        Map<String, Int2LongMap> mCards = new HashMap<>();
         LongSet existing = new LongOpenCustomHashSet(LONG_HASH);
         try (Cursor cur = mDst.getDb().query(
                     "select f.guid, c.ord, c.id from cards c, notes f " +
@@ -539,7 +541,7 @@ public class Anki2Importer extends Importer {
                 if (mCards.containsKey(guid)) {
                     mCards.get(guid).put(ord, cid);
                 } else {
-                    Map<Integer, Long> map = new HashMap<>(); // The size is at most the number of card type in the note type.
+                    Int2LongMap map = new Int2LongAVLTreeMap(); // The size is at most the number of card type in the note type.
                     map.put(ord, cid);
                     mCards.put(guid, map);
                 }
