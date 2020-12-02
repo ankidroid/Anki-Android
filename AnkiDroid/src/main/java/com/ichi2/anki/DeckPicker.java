@@ -1088,6 +1088,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 sync();
                 break;
 
+            case KeyEvent.KEYCODE_SLASH:
+            case KeyEvent.KEYCODE_S:
+                Timber.i("Study from keypress");
+                handleDeckSelection(getCol().getDecks().selected(), DeckSelectionType.SKIP_STUDY_OPTIONS);
+                break;
             default:
                 break;
         }
@@ -2275,6 +2280,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             case SHOW_STUDY_OPTIONS:
                 openStudyOptions(false);
                 return;
+            case SKIP_STUDY_OPTIONS:
+                openReviewer();
+                return;
             default:
                 Timber.w("openReviewerOrStudyOptions: Unknown selection: %s", selectionType);
         }
@@ -3016,6 +3024,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         /** Show study options if fragmented, otherwise, review */
         DEFAULT,
         /** Always show study options (if the deck counts are clicked) */
-        SHOW_STUDY_OPTIONS
+        SHOW_STUDY_OPTIONS,
+        /** Always open reviewer (keyboard shortcut) */
+        SKIP_STUDY_OPTIONS
     }
 }
