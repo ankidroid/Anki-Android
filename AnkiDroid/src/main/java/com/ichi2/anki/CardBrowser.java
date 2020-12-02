@@ -104,6 +104,7 @@ import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
 import it.unimi.dsi.fastutil.longs.LongOpenCustomHashSet;
+import it.unimi.dsi.fastutil.longs.LongAVLTreeSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
@@ -1779,8 +1780,8 @@ public class CardBrowser extends NavigationDrawerActivity implements
         long reviewerCardId = getReviewerCardId();
         CardCollection<CardCache> oldMCards = getCards();
         Map<Long, Integer> idToPos = getPositionMap(oldMCards);
-        Set<Long> idToRemove = new HashSet<>();
-        for (Long cardId : cardsIds) {
+        LongSet idToRemove = new LongAVLTreeSet(); // Tree, because most of the time, only few cards are deleted, so hash is going to be more costly
+        for (long cardId : cardsIds) {
             if (cardId == reviewerCardId) {
                 mReloadRequired = true;
             }
