@@ -83,9 +83,11 @@ import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import it.unimi.dsi.fastutil.objects.ObjectLongImmutablePair;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.longs.LongAVLTreeSet;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
@@ -1544,7 +1546,7 @@ public class Collection {
 
         //obtain a list of all valid dconf IDs
         List<DeckConfig> allConf = getDecks().allConf();
-        HashSet<Long> configIds  = new HashSet<>();
+        LongSet configIds  = new LongAVLTreeSet(); // There is usually not enough deck option to justify the cost of hashing
 
         for (DeckConfig conf : allConf) {
             configIds.add(conf.getLong("id"));
