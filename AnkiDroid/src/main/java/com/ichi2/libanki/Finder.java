@@ -958,6 +958,11 @@ public class Finder {
     /**
      * Find duplicates
      * ***********************************************************
+     * @param col  The collection
+     * @param fields A map from some note type id to the ord of the field fieldName
+     * @param mid a note type id
+     * @param fieldName A name, assumed to be the name of a field of some note type
+     * @return The ord of the field fieldName in the note type whose id is mid. null if there is no such field. Save the information in fields
      */
 
     public static Integer ordForMid(Collection col, Map<Long, Integer> fields, long mid, String fieldName) {
@@ -968,9 +973,10 @@ public class Finder {
                 JSONObject f = flds.getJSONObject(c);
                 if (f.getString("name").equalsIgnoreCase(fieldName)) {
                     fields.put(mid, c);
-                    break;
+                    return c;
                 }
             }
+            fields.put(mid, null);
         }
         return fields.get(mid);
     }
@@ -982,7 +988,10 @@ public class Finder {
 
 
     /**
-     * @return List of Pair("dupestr", List[nids])
+     * @param col       the collection
+     * @param fieldName a name of a field of some note type(s)
+     * @param search A search query, as in the browser
+     * @return List of Pair("dupestr", List[nids]), with nids note satisfying the search query, and having a field fieldName with value duepstr. Each list has at least two elements.
      */
     public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName, String search) {
         // limit search to notes with applicable field name
@@ -1004,7 +1013,7 @@ public class Finder {
                 if (ord == null) {
                     continue;
                 }
-                String val = flds[fields.get(mid)];
+                String val = flds[ord];
                 val = Utils.stripHTMLMedia(val);
                 // empty does not count as duplicate
                 if (TextUtils.isEmpty(val)) {
