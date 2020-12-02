@@ -39,37 +39,6 @@
         <item>Älä raportoi koskaan</item>
         <item>Kysy</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Ei toimintoa</item>
-        <item>Näytä vastaus</item>
-        <item>Vastauspainike 1</item>
-        <item>Vastauspainike 2</item>
-        <item>Vastauspainike 3</item>
-        <item>Vastauspainike 4</item>
-        <item>Vastaa ehdotettu (vihreä)</item>
-        <item>Vastaa paremmin kuin ehdotettu</item>
-        <item>Kumoa</item>
-        <item>Muokkaa merkintää</item>
-        <item>Card Info</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Jäädytä kortti</item>
         <item>Vain tunniste</item>

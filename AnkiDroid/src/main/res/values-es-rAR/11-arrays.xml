@@ -39,37 +39,6 @@
         <item>No reportar nunca</item>
         <item>Pregúnteme</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Sin acción</item>
-        <item>Mostrar respuesta</item>
-        <item>Botón de respuesta 1</item>
-        <item>Botón de respuesta 2</item>
-        <item>Botón de respuesta 3</item>
-        <item>Botón de respuesta 4</item>
-        <item>Respuesta recomendada (verde)</item>
-        <item>Respuesta mejor que la recomendada</item>
-        <item>Deshacer</item>
-        <item>Editar nota</item>
-        <item>Card Info</item>
-        <item>Etiquetar nota</item>
-        <item>Marcar nota</item>
-        <item>Buscar expresión</item>
-        <item>Enterrar tarjeta</item>
-        <item>Suspender Tarjeta</item>
-        <item>Eliminar nota</item>
-        <item>Reproducir multimedia</item>
-        <item>Abandonar aprendizaje</item>
-        <item>Enterrar nota</item>
-        <item>Suspender Nota</item>
-        <item>Cambiar Bandera Roja</item>
-        <item>Cambiar Bandera Naranja</item>
-        <item>Cambiar Bandera verde</item>
-        <item>Cambiar Bandera Azul</item>
-        <item>Eliminar Bandera</item>
-        <item>Página Arriba</item>
-        <item>Página Abajo</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Suspender tarjeta</item>
         <item>Solamente etiqueta</item>

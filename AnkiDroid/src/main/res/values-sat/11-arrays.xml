@@ -39,37 +39,6 @@
         <item>ᱟᱞᱚ ᱨᱤᱯᱚᱴ ᱟᱢ</item>
         <item>ᱠᱩᱞᱤᱧ ᱢᱮ</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>ᱪᱮᱫ ᱟᱹᱞᱚ ᱪᱤᱠᱟᱹ</item>
-        <item>ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣᱢᱮ</item>
-        <item>ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱑</item>
-        <item>ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱒</item>
-        <item>ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱓</item>
-        <item>ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱔</item>
-        <item>ᱛᱮᱞᱟ ᱢᱚᱱᱡᱩᱨ (ᱦᱟᱹᱨᱤᱭᱟᱹᱲ)</item>
-        <item>ᱢᱚᱱᱡᱩᱨ ᱠᱷᱚᱱ ᱵᱮᱥ ᱛᱮᱞᱟ ᱮᱢᱚᱜ ᱢᱮ</item>
-        <item>ᱢᱟᱲᱟᱝᱟᱜ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ</item>
-        <item>Card Info</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱴᱮᱜ ᱢᱮ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</item>
-        <item>ᱪᱤᱱᱦᱟ ᱧᱮᱞᱢᱮ</item>
-        <item>ᱠᱟᱰ ᱛᱚᱯᱟᱭ ᱢᱮ</item>
-        <item>ᱠᱟᱰ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤ</item>
-        <item>ᱢᱮᱰᱤᱭᱟ ᱪᱟᱹᱞᱩᱭ ᱢᱮ</item>
-        <item>ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫ ᱛᱷᱟᱲ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱛᱚᱯᱟᱭ ᱢᱮ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</item>
-        <item>ᱟᱨᱟᱜ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟ.ᱞ</item>
-        <item>ᱜᱮᱨᱩᱟ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</item>
-        <item>ᱦᱟᱹᱨᱤᱭᱟᱲ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</item>
-        <item>ᱞᱤᱞ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</item>
-        <item>ᱯᱚᱛᱠᱟ ᱚᱪᱚᱜ ᱢᱮ</item>
-        <item>ᱥᱟᱠᱟᱢ ᱪᱮᱛᱟᱱ</item>
-        <item>ᱥᱟᱠᱟᱢ ᱞᱟᱛᱟᱨ</item>
-        <item>ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫᱚᱭ ᱢᱮ ᱟᱨ ᱥᱭᱸᱠ ᱢᱮ</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>ᱠᱟᱰ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</item>
         <item>ᱴᱮᱜ ᱜᱮ</item>

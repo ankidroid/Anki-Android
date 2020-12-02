@@ -39,37 +39,6 @@
         <item>Niekada nepranešti</item>
         <item>Paklausti</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Nieko nedaryti</item>
-        <item>Parodyti atsakymą</item>
-        <item>Atsakymo mygtukas 1</item>
-        <item>Atsakymo mygtukas 2</item>
-        <item>Atsakymo mygtukas 3</item>
-        <item>Atsakymo mygtukas 4</item>
-        <item>Atsakymas rekomenduojamas (žalias)</item>
-        <item>Atsakyti geriau nei rekomenduojama</item>
-        <item>Atšaukti</item>
-        <item>Redaguoti pastabą</item>
-        <item>Card Info</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Sustabdyti kortelę</item>
         <item>Tik žymos</item>

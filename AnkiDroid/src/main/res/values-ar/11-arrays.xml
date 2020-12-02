@@ -39,37 +39,6 @@
         <item>لا تبلغ أبدًا</item>
         <item>اسألني</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>بدون اجراء</item>
-        <item>أظهر الإجابة</item>
-        <item>زر الإجابة 1</item>
-        <item>زر الإجابة 2</item>
-        <item>زر الإجابة 3</item>
-        <item>زر الإجابة 4</item>
-        <item>الإجابة الموصى بها (أخضر)</item>
-        <item>الإجابة بأفضل مما أوصي به</item>
-        <item>تراجع</item>
-        <item>تحرير الملحوظة</item>
-        <item>Card Info</item>
-        <item>إضافة وسم إلى الملحوظة</item>
-        <item>تعليم الملحوظة</item>
-        <item>بحث عن التعبير</item>
-        <item>دفن البطاقة</item>
-        <item>تعليق البطاقة</item>
-        <item>حذف البطاقة</item>
-        <item>تشغيل الوسائط</item>
-        <item>توقف عن التعلم</item>
-        <item>دفن الملحوظة</item>
-        <item>تعليق الملحوظة</item>
-        <item>تفعيل المؤشر الأحمر</item>
-        <item>تفعيل المؤشر البرتقالي</item>
-        <item>تفعيل المؤشر الأخضر</item>
-        <item>تفعيل المؤشر الأزرق</item>
-        <item>إزالة المؤشر</item>
-        <item>تمرير صفحة إلى الأعلى</item>
-        <item>تمرير صفحة إلى الأسفل</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>علق البطاقة</item>
         <item>إضافة وسم فقط</item>

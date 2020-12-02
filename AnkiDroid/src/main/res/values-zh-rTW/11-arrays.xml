@@ -39,37 +39,6 @@
         <item>從不發送報告</item>
         <item>詢問我</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>沒有動作</item>
-        <item>顯示答案</item>
-        <item>答案按鈕 1</item>
-        <item>答案按鈕 2</item>
-        <item>答案按鈕 3</item>
-        <item>答案按鈕 4</item>
-        <item>建議的答案 (綠色)</item>
-        <item>優於建議的答案</item>
-        <item>復原</item>
-        <item>編輯筆記</item>
-        <item>Card Info</item>
-        <item>標記筆記</item>
-        <item>標記筆記</item>
-        <item>查找運算式</item>
-        <item>暫時隱藏卡片</item>
-        <item>擱置卡片</item>
-        <item>刪除筆記</item>
-        <item>播放媒體檔</item>
-        <item>中止學習</item>
-        <item>暫時隱藏筆記</item>
-        <item>擱置筆記</item>
-        <item>套用紅色標記</item>
-        <item>套用橙色標記</item>
-        <item>套用綠色標記</item>
-        <item>套用藍色標記</item>
-        <item>移除標記</item>
-        <item>向上翻頁</item>
-        <item>向下翻頁</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>長久擱置卡片</item>
         <item>僅標記</item>

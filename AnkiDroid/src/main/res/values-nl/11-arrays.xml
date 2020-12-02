@@ -39,37 +39,6 @@
         <item>Nooit rapporteren</item>
         <item>Mij vragen</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Geen actie</item>
-        <item>Toon Antwoord</item>
-        <item>Antwoordknop 1</item>
-        <item>Antwoordknop 2</item>
-        <item>Antwoordknop 3</item>
-        <item>Antwoordknop 4</item>
-        <item>Aanbevolen antwoord (groen)</item>
-        <item>Antwoord beter dan aangeraden</item>
-        <item>Ongedaan maken</item>
-        <item>Memo bewerken</item>
-        <item>Card Info</item>
-        <item>Tagnaam</item>
-        <item>Markeermemo</item>
-        <item>Uitdrukking opzoeken</item>
-        <item>Kaart verbergen</item>
-        <item>Kaart opschorten</item>
-        <item>Memo verwijderen</item>
-        <item>Media afspelen</item>
-        <item>Leren afbreken</item>
-        <item>Memo begraven</item>
-        <item>Memo opschorten</item>
-        <item>Rode vlag in-/uitschakelen</item>
-        <item>Oranje vlag in-/uitschakelen</item>
-        <item>Groene vlag in-/uitschakelen</item>
-        <item>Blauwe vlag in-/uitschakelen</item>
-        <item>Vlag verwijderen</item>
-        <item>Pagina omhoog</item>
-        <item>Pagina omlaag</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Kaart uitstellen</item>
         <item>Alleen label toevoegen</item>

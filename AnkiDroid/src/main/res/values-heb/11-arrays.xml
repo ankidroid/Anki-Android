@@ -39,37 +39,6 @@
         <item>לעולם לא לדווח</item>
         <item>לשאול אותי</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>ללא פעולה</item>
-        <item>הצגת תשובה</item>
-        <item>כפתור תשובה 1</item>
-        <item>כפתור תשובה 2</item>
-        <item>כפתור תשובה 3</item>
-        <item>כפתור תשובה 4</item>
-        <item>Answer recommended (green)</item>
-        <item>Answer better than recommended</item>
-        <item>ביטול</item>
-        <item>עריכת הערה</item>
-        <item>Card Info</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Suspend card</item>
         <item>Tag only</item>
