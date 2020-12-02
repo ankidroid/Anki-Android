@@ -57,6 +57,8 @@ import androidx.annotation.NonNull;
 import it.unimi.dsi.fastutil.booleans.BooleanLongImmutablePair;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.longs.LongLinkedOpenCustomHashSet;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
@@ -67,6 +69,7 @@ import static com.ichi2.libanki.Consts.CARD_TYPE_REV;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_NEW;
 import static com.ichi2.libanki.Consts.QUEUE_TYPE_REV;
+import static com.ichi2.utils.LongHash.LONG_HASH;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
@@ -207,7 +210,7 @@ public class Anki2Importer extends Importer {
         int noteCount = mDst.noteCount();
         // build guid -> (id,mod,mid) hash & map of existing note ids
         mNotes = new HashMap<>(noteCount);
-        Set<Long> existing = new HashSet<>(noteCount);
+        LongSet existing = new LongLinkedOpenCustomHashSet(noteCount, LONG_HASH);
         try (Cursor cur = mDst.getDb().query("select id, guid, mod, mid from notes")) {
             while (cur.moveToNext()) {
                 long id = cur.getLong(0);
