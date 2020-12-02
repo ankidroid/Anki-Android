@@ -39,37 +39,6 @@
         <item>Ніколі не паведамляць</item>
         <item>Спытаць мяне</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Няма дзеяння</item>
-        <item>Паказаць адказ</item>
-        <item>Кнопка адказу 1</item>
-        <item>Кнопка адказу 2</item>
-        <item>Кнопка адказу 3</item>
-        <item>Кнопка адказу 4</item>
-        <item>Рэкамендаваны адказ (зялёны)</item>
-        <item>Лепш, чым рэкамендаваны</item>
-        <item>Адмяніць</item>
-        <item>Рэдагаваць нататку</item>
-        <item>Card Info</item>
-        <item>Пазначыць</item>
-        <item>Пазначыць нататку</item>
-        <item>Пошук выразу</item>
-        <item>Схаваць картку</item>
-        <item>Прыпыніць картку</item>
-        <item>Выдаліць нататку</item>
-        <item>Прайграць медыа</item>
-        <item>Перапыніць навучанне</item>
-        <item>Схаваць нататку</item>
-        <item>Прыпыніць нататку</item>
-        <item>Чырвоны сцяжок</item>
-        <item>Аранжавы сцяжок</item>
-        <item>Зялёны сцяжок</item>
-        <item>Блакітны сцяжок</item>
-        <item>Прыбраць сцяжок</item>
-        <item>Пракруціць уверх</item>
-        <item>Пракруціць уніз</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Адкласці картку</item>
         <item>Толькі пазнака</item>

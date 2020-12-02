@@ -39,37 +39,6 @@
         <item>Никогда не сообщать</item>
         <item>Спрашивать меня</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Без действия</item>
-        <item>Показать ответ</item>
-        <item>Кнопка ответа 1</item>
-        <item>Кнопка ответа 2</item>
-        <item>Кнопка ответа 3</item>
-        <item>Кнопка ответа 4</item>
-        <item>Рекомендованный ответ (зелёный)</item>
-        <item>Лучше рекомендованного ответа</item>
-        <item>Отменить</item>
-        <item>Править запись</item>
-        <item>Добавить метку</item>
-        <item>Добавить метку</item>
-        <item>Отметить запись</item>
-        <item>Посмотреть в словаре</item>
-        <item>Отложить карточку</item>
-        <item>Исключить карточку</item>
-        <item>Удалить запись</item>
-        <item>Воспроизвести медиафайл</item>
-        <item>Прервать обучение</item>
-        <item>Отложить запись</item>
-        <item>Исключить запись</item>
-        <item>Красный флажок</item>
-        <item>Оранжевый флажок</item>
-        <item>Зелёный флажок</item>
-        <item>Синий флажок</item>
-        <item>Убрать флажок</item>
-        <item>На страницу вверх</item>
-        <item>На страницу вниз</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Исключить карточку</item>
         <item>Добавить метку</item>

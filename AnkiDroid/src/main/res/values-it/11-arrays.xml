@@ -39,37 +39,6 @@
         <item>Non segnalare mai</item>
         <item>Chiedimi</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Nessuna azione</item>
-        <item>Mostra la risposta</item>
-        <item>Pulsante risposta 1</item>
-        <item>Pulsante risposta 2</item>
-        <item>Pulsante risposta 3</item>
-        <item>Pulsante risposta 4</item>
-        <item>Risposta raccomandata (verde)</item>
-        <item>Risposta migliore di quanto raccomandato</item>
-        <item>Annulla</item>
-        <item>Modifica nota</item>
-        <item>Card Info</item>
-        <item>Nota di etichetta</item>
-        <item>Contrassegna la nota</item>
-        <item>Verifica l\'espressione</item>
-        <item>Seppellisci la carta</item>
-        <item>Sospendi la carta</item>
-        <item>Elimina la nota</item>
-        <item>Riproduci media</item>
-        <item>Interrompi l\'apprendimento</item>
-        <item>Seppellisci la nota</item>
-        <item>Sospendi la nota</item>
-        <item>Attiva/disattiva contrassegno rosso</item>
-        <item>Attiva/disattiva contrassegno aracione</item>
-        <item>Attiva/disattiva contrassegno verde</item>
-        <item>Attiva/disattiva contrassegno blu</item>
-        <item>Rimuovi il contrassegno</item>
-        <item>Vai su</item>
-        <item>Vai giù</item>
-        <item>Interrompi Apprendimento e Sincronizzazione</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Sospendi carta</item>
         <item>Etichetta soltanto</item>

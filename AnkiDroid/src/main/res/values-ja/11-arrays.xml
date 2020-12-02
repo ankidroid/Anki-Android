@@ -39,37 +39,6 @@
         <item>報告しない</item>
         <item>毎回確認する</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>何もしない</item>
-        <item>解答を表示</item>
-        <item>回答ボタン１</item>
-        <item>回答ボタン２</item>
-        <item>回答ボタン３</item>
-        <item>回答ボタン４</item>
-        <item>推奨される回答（緑色）</item>
-        <item>推奨される回答よりも良い回答</item>
-        <item>元に戻す</item>
-        <item>ノートを編集</item>
-        <item>カード情報</item>
-        <item>ノートにタグを付ける</item>
-        <item>ノートにマークを付ける/取り外す</item>
-        <item>検索式</item>
-        <item>カードを延期</item>
-        <item>カードを保留</item>
-        <item>ノートを削除</item>
-        <item>音声・動画を再生</item>
-        <item>学習を中断</item>
-        <item>ノートを延期</item>
-        <item>ノートを保留</item>
-        <item>赤フラグを付ける/取り外す</item>
-        <item>橙フラグを付ける/取り外す</item>
-        <item>緑フラグを付ける/取り外す</item>
-        <item>青フラグを付ける/取り外す</item>
-        <item>フラグを取り外す</item>
-        <item>１画面分上へスクロール</item>
-        <item>１画面分下へスクロール</item>
-        <item>学習を中断して同期</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>タグを付けて保留</item>
         <item>タグを付けるだけ</item>

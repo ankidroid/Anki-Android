@@ -39,37 +39,6 @@
         <item>Aldri rapporter</item>
         <item>Spør meg</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Ingen handling</item>
-        <item>Vis svar</item>
-        <item>Svar-knapp 1</item>
-        <item>Svar-knapp 2</item>
-        <item>Svar-knapp 3</item>
-        <item>Svar-knapp 4</item>
-        <item>Anbefalt svar (grønn)</item>
-        <item>Svaret bedre enn antatt</item>
-        <item>Angre</item>
-        <item>Rediger notat</item>
-        <item>Card Info</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Suspender kort</item>
         <item>Kun emneord</item>

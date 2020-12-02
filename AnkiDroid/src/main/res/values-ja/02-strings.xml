@@ -304,6 +304,7 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid は利用できないWebシステム を検出しました。システムのアップデート中などに発生する可能性があります。 数分後にもう一度お試しください。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">フォントサイズ</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
     <string name="format_insert_bold">太字</string>
     <string name="format_insert_italic">イタリック文字</string>
     <string name="format_insert_underline">下線文字</string>

@@ -39,37 +39,6 @@
         <item>Nunca reportar</item>
         <item>Pergunte-me</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Nenhuma ação</item>
-        <item>Mostrar resposta</item>
-        <item>Botão de resposta 1</item>
-        <item>Botão de resposta 2</item>
-        <item>Botão de resposta 3</item>
-        <item>Botão de resposta 4</item>
-        <item>Responder recomendada (verde)</item>
-        <item>Resposta melhor que recomendada</item>
-        <item>Desfazer</item>
-        <item>Editar nota</item>
-        <item>Card Info</item>
-        <item>Colocar tag no cartão</item>
-        <item>Marcar nota</item>
-        <item>Procurar expressão</item>
-        <item>Enterrar cartão</item>
-        <item>Arquivar cartão</item>
-        <item>Deletar nota</item>
-        <item>Reproduzir mídia</item>
-        <item>Interromper a aprendizagem</item>
-        <item>Enterrar nota</item>
-        <item>Arquivar nota</item>
-        <item>Alternar para marca vermelha</item>
-        <item>Alternar para marca laranja</item>
-        <item>Alternar para marca verde</item>
-        <item>Alternar para marca azul</item>
-        <item>Remover marca</item>
-        <item>Subir página</item>
-        <item>Descer página</item>
-        <item>Abortar Estudo e Sincronizar</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Suspender card</item>
         <item>Por Tag somente em</item>

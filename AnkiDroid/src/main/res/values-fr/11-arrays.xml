@@ -39,37 +39,6 @@
         <item>Ne jamais envoyer de rapport d’erreur</item>
         <item>Me demander</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Aucune action</item>
-        <item>Afficher la réponse</item>
-        <item>Bouton de réponse 1</item>
-        <item>Bouton de réponse 2</item>
-        <item>Bouton de réponse 3</item>
-        <item>Bouton de réponse 4</item>
-        <item>Réponse recommandée (vert)</item>
-        <item>Réponse meilleure que celle recommandée</item>
-        <item>Annuler</item>
-        <item>Modifier la note</item>
-        <item>Card Info</item>
-        <item>Note d\'étiquette</item>
-        <item>Marquer la note</item>
-        <item>Vérifier l\'expression</item>
-        <item>Enterrer la carte</item>
-        <item>Suspendre la carte</item>
-        <item>Supprimer la note</item>
-        <item>Lire le média</item>
-        <item>Abandonner l\'apprentissage</item>
-        <item>Enterrer la note</item>
-        <item>Suspendre la note</item>
-        <item>Activer/désactiver le marqueur rouge</item>
-        <item>Activer/désactiver le marqueur orange</item>
-        <item>Activer/désactiver le marqueur vert</item>
-        <item>Activer/désactiver le marqueur bleu</item>
-        <item>Retirer le marqueur</item>
-        <item>Remonter</item>
-        <item>Descendre</item>
-        <item>Abandonner l\'apprentissage et la synchronisation</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Suspendre la carte</item>
         <item>Étiqueter uniquement</item>

@@ -39,37 +39,6 @@
         <item>Soha ne jelentse</item>
         <item>Kérdezzen rá</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Nincs művelet</item>
-        <item>Válasz mutatása</item>
-        <item>Válasz gomb 1</item>
-        <item>Válasz gomb 2</item>
-        <item>Válasz gomb 3</item>
-        <item>Válasz gomb 4</item>
-        <item>Javasolt válasz (zöld)</item>
-        <item>Jobb válasz, mint a javasolt</item>
-        <item>Visszavonás</item>
-        <item>Megjegyzés szerkesztése</item>
-        <item>Card Info</item>
-        <item>Jegyzet címkézése</item>
-        <item>Jegyzet megjelölése</item>
-        <item>Kifejezés keresése</item>
-        <item>Kártya halasztása</item>
-        <item>Kártya felfüggesztése</item>
-        <item>Jegyzet törlése</item>
-        <item>Média lejátszása</item>
-        <item>Tanulás befejezése</item>
-        <item>Jegyzet halasztása</item>
-        <item>Jegyzet felfüggesztése</item>
-        <item>Piros jelölő bekapcsolása</item>
-        <item>Narancs Jelölő Bekapcsolása</item>
-        <item>Zöld Jelölő Bekapcsolása</item>
-        <item>Kék Jelölő Bekapcsolása</item>
-        <item>Jelölő Törlése</item>
-        <item>Felfele</item>
-        <item>Lefele</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Kártya felfüggesztése</item>
         <item>Csak címke</item>
