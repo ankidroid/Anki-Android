@@ -59,6 +59,9 @@ import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import it.unimi.dsi.fastutil.longs.LongLinkedOpenCustomHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
+import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import it.unimi.dsi.fastutil.objects.Object2BooleanOpenCustomHashMap;
+import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
@@ -96,7 +99,7 @@ public class Anki2Importer extends Importer {
 
     private Map<Long, Long> mDecks;
     private Map<Long, Long> mModelMap;
-    private Map<String, Boolean> mIgnoredGuids;
+    private Object2BooleanMap mIgnoredGuids;
 
     private int mDupes;
     private int mAdded;
@@ -223,7 +226,7 @@ public class Anki2Importer extends Importer {
         }
         // we ignore updates to changed schemas. we need to note the ignored
         // guids, so we avoid importing invalid cards
-        mIgnoredGuids = new HashMap<>();
+        mIgnoredGuids = new Object2BooleanOpenHashMap();
         // iterate over source collection
         ArrayList<Object[]> add = new ArrayList<>();
         int totalAddCount = 0;
