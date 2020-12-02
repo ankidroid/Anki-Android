@@ -48,6 +48,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
+import it.unimi.dsi.fastutil.longs.Long2IntAVLTreeMap;
+import it.unimi.dsi.fastutil.longs.Long2IntMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
@@ -962,13 +964,13 @@ public class Finder {
      * Find duplicates
      * ***********************************************************
      * @param col  The collection
-     * @param fields A map from some note type id to the ord of the field fieldName
+     * @param fields A map from some note type id to the ord of the field fieldName. Or -1 if its missing
      * @param mid a note type id
      * @param fieldName A name, assumed to be the name of a field of some note type
-     * @return The ord of the field fieldName in the note type whose id is mid. null if there is no such field. Save the information in fields
+     * @return The ord of the field fieldName in the note type whose id is mid. -1 if there is no such field. Save the information in fields
      */
 
-    public static Integer ordForMid(Collection col, Map<Long, Integer> fields, long mid, String fieldName) {
+    public static Integer ordForMid(Collection col, Long2IntMap fields, long mid, String fieldName) {
         if (!fields.containsKey(mid)) {
             JSONObject model = col.getModels().get(mid);
             JSONArray flds = model.getJSONArray("flds");
@@ -979,7 +981,7 @@ public class Finder {
                     return c;
                 }
             }
-            fields.put(mid, null);
+            fields.put(mid, -1);
         }
         return fields.get(mid);
     }
@@ -1005,15 +1007,15 @@ public class Finder {
         // go through notes
         Map<String, LongArrayList> vals = new HashMap<>();
         List<Pair<String, LongArrayList>> dupes = new ArrayList<>();
-        Map<Long, Integer> fields = new HashMap<>();
+        Long2IntMap fields = new Long2IntAVLTreeMap();
         try (Cursor cur = col.getDb().query(
                 "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)))) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
                 String[] flds = Utils.splitFields(cur.getString(2));
-                Integer ord = ordForMid(col, fields, mid, fieldName);
-                if (ord == null) {
+                int ord = ordForMid(col, fields, mid, fieldName);
+                if (ord == -1) {
                     continue;
                 }
                 String val = flds[ord];
