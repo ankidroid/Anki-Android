@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import it.unimi.dsi.fastutil.ints.Int2ObjectAVLTreeMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,7 +38,7 @@ public class DeckPickerTest extends RobolectricTest {
     @Test
     public void verifyCodeMessages() {
 
-        Map<Integer, String> mCodeResponsePairs = new HashMap<>();
+        Int2ObjectMap<String> mCodeResponsePairs = new Int2ObjectAVLTreeMap<>();
         final Context context = getTargetContext();
         mCodeResponsePairs.put(407, context.getString(R.string.sync_error_407_proxy_required));
         mCodeResponsePairs.put(409, context.getString(R.string.sync_error_409));
@@ -49,8 +51,8 @@ public class DeckPickerTest extends RobolectricTest {
 
         try (ActivityScenario<DeckPicker> scenario = ActivityScenario.launch(DeckPicker.class)) {
             scenario.onActivity(deckPicker -> {
-                for (Map.Entry<Integer, String> entry : mCodeResponsePairs.entrySet()) {
-                    assertEquals(deckPicker.rewriteError(entry.getKey()), entry.getValue());
+                for (Int2ObjectMap.Entry<String> entry : mCodeResponsePairs.int2ObjectEntrySet()) {
+                    assertEquals(deckPicker.rewriteError(entry.getIntKey()), entry.getValue());
                 }
             });
         }
