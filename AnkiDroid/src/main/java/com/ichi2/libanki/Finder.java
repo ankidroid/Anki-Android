@@ -51,6 +51,9 @@ import androidx.annotation.CheckResult;
 import it.unimi.dsi.fastutil.longs.Long2IntAVLTreeMap;
 import it.unimi.dsi.fastutil.longs.Long2IntMap;
 import it.unimi.dsi.fastutil.longs.Long2IntOpenCustomHashMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectAVLTreeMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
@@ -765,7 +768,7 @@ public class Finder {
         Pattern pattern = Pattern.compile("\\Q" + javaVal + "\\E", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
         // find models that have that field
-        Map<Long, Object[]> mods = new HashMap<>();
+        Long2ObjectMap<Object[]> mods = new Long2ObjectAVLTreeMap<>();
         for (JSONObject m : mCol.getModels().all()) {
             JSONArray flds = m.getJSONArray("flds");
             for (JSONObject f: flds.jsonObjectIterable()) {
