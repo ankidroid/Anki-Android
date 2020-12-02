@@ -114,6 +114,7 @@ public class CsvReaderIterator implements Iterator<List<String>> {
     }
 
     //noinspection ControlFlowStatementWithoutBraces
+    @SuppressWarnings( {"fallthrough", "RedundantSuppression"}) // Copied from C code
     private int parse_process_char(char c) {
         CsvDialect dialect = this.reader.dialect;
 
