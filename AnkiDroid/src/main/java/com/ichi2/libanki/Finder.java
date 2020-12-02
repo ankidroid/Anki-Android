@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
 import androidx.annotation.CheckResult;
 import it.unimi.dsi.fastutil.longs.Long2IntAVLTreeMap;
 import it.unimi.dsi.fastutil.longs.Long2IntMap;
+import it.unimi.dsi.fastutil.longs.Long2IntOpenCustomHashMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
@@ -57,6 +58,7 @@ import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+import static com.ichi2.utils.LongHash.LONG_HASH;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 public class Finder {
@@ -887,7 +889,7 @@ public class Finder {
      * @return Number of notes with fields that were updated. */
     public static int findReplace(Collection col, LongList nids, String src, String dst, boolean isRegex,
             String field, boolean fold) {
-        Map<Long, Integer> mmap = new HashMap<>();
+        Long2IntMap mmap = new Long2IntOpenCustomHashMap(LONG_HASH);
         if (field != null) {
             for (JSONObject m : col.getModels().all()) {
                 JSONArray flds = m.getJSONArray("flds");
