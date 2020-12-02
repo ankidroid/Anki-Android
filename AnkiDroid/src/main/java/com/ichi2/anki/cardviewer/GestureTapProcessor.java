@@ -139,6 +139,7 @@ public class GestureTapProcessor {
                         case HIGH:
                             return BOTTOM_LEFT;
                     }
+                    break;
                 case MID:
                     //center
                     switch (hSector) {
@@ -149,6 +150,7 @@ public class GestureTapProcessor {
                         case HIGH:
                             return BOTTOM_CENTER;
                     }
+                    break;
                 case HIGH:
                     //Right
                     switch (hSector) {
@@ -159,9 +161,11 @@ public class GestureTapProcessor {
                         case HIGH:
                             return BOTTOM_RIGHT;
                     }
+                    break;
                 default:
                     throw new IllegalArgumentException("illegal switch state");
             }
+            throw new IllegalArgumentException("illegal switch state");
         }
 
         // clamps the value from LOW-MID-HIGH

@@ -237,6 +237,8 @@ public class ChartBuilder {
                         color = new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[i - 1]), BAR_OPACITY);
                         break;
                     }
+                    color = new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[i - 1]));
+                    break;
                 default:
                     color = new ColorWrap(Themes.getColorFromAttr(mChartView.getContext(), mColors[i - 1]));
             }
