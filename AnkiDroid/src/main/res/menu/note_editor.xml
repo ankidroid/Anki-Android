@@ -24,4 +24,9 @@
         android:id="@+id/action_font_size"
         android:title="@string/menu_font_size"
         ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_show_toolbar"
+        android:title="@string/menu_show_toolbar"
+        android:checkable="true"
+        ankidroid:showAsAction="never"/>
 </menu>
