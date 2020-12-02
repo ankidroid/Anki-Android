@@ -39,37 +39,6 @@
         <item>Qet gilî neke</item>
         <item>Ji min re bipirse</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Tevger tune</item>
-        <item>Bersivê nîşan bide</item>
-        <item>Bişkoka bersivê 1</item>
-        <item>Bişkoka bersivê 2</item>
-        <item>Bişkoka tevgerê 3</item>
-        <item>Bişkoka tevgerê 4</item>
-        <item>(Pêşniyariya tevgerê (kesik</item>
-        <item>Ji pêşniyarkirî bêtir bersîv bide</item>
-        <item>Paşve bîne</item>
-        <item>Edit note</item>
-        <item>Card Info</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Suspend card</item>
         <item>Tag only</item>

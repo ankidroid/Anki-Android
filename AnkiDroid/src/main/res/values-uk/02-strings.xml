@@ -344,6 +344,7 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid використовує системний WebView, який недоступний. Це можливе, якщо система встановлює оновлення. Будь ласка, спробуйте знову за кілька хвилин.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Розмір шрифту</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
     <string name="format_insert_bold">Форматувати як жирний</string>
     <string name="format_insert_italic">Форматувати як курсив</string>
     <string name="format_insert_underline">Форматувати як підкреслений</string>

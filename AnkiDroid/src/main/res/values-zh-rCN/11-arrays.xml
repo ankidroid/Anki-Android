@@ -39,37 +39,6 @@
         <item>从不发送报告</item>
         <item>询问我</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>不采取行动</item>
-        <item>显示答案</item>
-        <item>回答按钮 1</item>
-        <item>回答按钮 2</item>
-        <item>回答按钮 3</item>
-        <item>回答按钮 4</item>
-        <item>建议的回答（绿色）</item>
-        <item>好于建议的回答</item>
-        <item>撤销</item>
-        <item>编辑笔记</item>
-        <item>卡片信息</item>
-        <item>标签笔记</item>
-        <item>标记笔记</item>
-        <item>查找表达式</item>
-        <item>隐藏卡牌</item>
-        <item>搁置卡片</item>
-        <item>删除笔记</item>
-        <item>播放媒体</item>
-        <item>终止学习</item>
-        <item>隐藏笔记</item>
-        <item>搁置笔记</item>
-        <item>切换红色标识</item>
-        <item>切换橙色标识</item>
-        <item>切换绿色标识</item>
-        <item>切换蓝色标识</item>
-        <item>移除标识</item>
-        <item>向上翻页</item>
-        <item>向下翻页</item>
-        <item>中止学习和同步</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>暂停卡片</item>
         <item>仅标签</item>

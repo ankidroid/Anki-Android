@@ -39,37 +39,6 @@
         <item>Neniam</item>
         <item>Demandi</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Neniu ago</item>
-        <item>Montri respondon</item>
-        <item>Responda butono 1</item>
-        <item>Responda butono 2</item>
-        <item>Responda butono 3</item>
-        <item>Responda butono 4</item>
-        <item>Konsilinda respondo (verde)</item>
-        <item>Respondo pli bona ol konsilinda</item>
-        <item>Malfari</item>
-        <item>Redakti noton</item>
-        <item>Informoj pri karto</item>
-        <item>Etikedi noton</item>
-        <item>Marki noton</item>
-        <item>Serĉi tekston</item>
-        <item>Kaŝi karton por tago</item>
-        <item>Kaŝi karton por daŭre</item>
-        <item>Forigi noton</item>
-        <item>Ludi aŭdvidaĵon</item>
-        <item>Ĉesi lernadon</item>
-        <item>Kaŝi noton por tago</item>
-        <item>Kaŝi noton por daŭre</item>
-        <item>Baskuli ruĝan flagon</item>
-        <item>Baskuli oranĝkoloran flagon</item>
-        <item>Baskuli verdan flagon</item>
-        <item>Baskuli bluan flagon</item>
-        <item>Forigi flagon</item>
-        <item>Paĝo supren</item>
-        <item>Paĝo suben</item>
-        <item>Pri lernado kaj samtempigo</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Kaŝi karton por daŭre</item>
         <item>Nur etikedi</item>

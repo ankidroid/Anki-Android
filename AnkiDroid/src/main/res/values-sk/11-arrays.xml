@@ -39,37 +39,6 @@
         <item>Nikdy nehlásiť</item>
         <item>Spýtať sa</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Žiadna akcia</item>
-        <item>Zobraziť odpoveď</item>
-        <item>Tlačidlo odpovede 1</item>
-        <item>Tlačidlo odpovede 2</item>
-        <item>Tlačidlo odpovede 3</item>
-        <item>Tlačidlo odpovede 4</item>
-        <item>Odporúčaná odpoveď (zelená)</item>
-        <item>Odpoveď lepšia ako odporúčaná</item>
-        <item>Späť</item>
-        <item>Upraviť poznámku</item>
-        <item>Info o kartičke</item>
-        <item>Oštítkovať poznámku</item>
-        <item>Označiť poznámku</item>
-        <item>Vyhľadať výraz</item>
-        <item>Zahrabať kartičku</item>
-        <item>Pozastaviť kartičku</item>
-        <item>Vymazať poznámku</item>
-        <item>Prehrať médium</item>
-        <item>Prerušiť učenie</item>
-        <item>Zahrabať poznámku</item>
-        <item>Pozastaviť poznámku</item>
-        <item>Označiť červenou vlajkou</item>
-        <item>Označiť oranžovou vlajkou</item>
-        <item>Označiť zelenou vlajkou</item>
-        <item>Označiť modrou vlajkou</item>
-        <item>Odstrániť vlajku</item>
-        <item>Strana nahor</item>
-        <item>Strana nadol</item>
-        <item>Prerušiť učenie a synchronizáciu</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Pozastaviť kartičku</item>
         <item>Iba oštítkovať</item>

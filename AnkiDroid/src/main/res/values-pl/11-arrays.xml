@@ -39,37 +39,6 @@
         <item>Nigdy</item>
         <item>Zapytaj mnie</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Nic nie rób</item>
-        <item>Pokaż odpowiedź</item>
-        <item>Przycisk odpowiedzi 1</item>
-        <item>Przycisk odpowiedzi 2</item>
-        <item>Przycisk odpowiedzi 3</item>
-        <item>Przycisk odpowiedzi 4</item>
-        <item>Zalecana odpowiedź (zielony)</item>
-        <item>Odpowiedź lepsza niż zalecana</item>
-        <item>Cofnij</item>
-        <item>Edytuj notatkę</item>
-        <item>Card Info</item>
-        <item>Ustaw tagi</item>
-        <item>Wyróżnij notatkę</item>
-        <item>Wyszukaj wyrażenie</item>
-        <item>Zakop kartę</item>
-        <item>Zawieś kartę</item>
-        <item>Usuń notatkę</item>
-        <item>Odtwarzaj</item>
-        <item>Przerwij naukę</item>
-        <item>Zakop notatkę</item>
-        <item>Zawieś notatkę</item>
-        <item>Włącz/wyłącz czerwoną flagę</item>
-        <item>Włącz/wyłącz pomarańczową flagę</item>
-        <item>Włącz/wyłącz zieloną flagę</item>
-        <item>Włącz/wyłącz niebieską flagę</item>
-        <item>Usuń flagę</item>
-        <item>Przewiń w górę</item>
-        <item>Przewiń w dół</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Zawieś kartę</item>
         <item>Tylko znaczniki</item>

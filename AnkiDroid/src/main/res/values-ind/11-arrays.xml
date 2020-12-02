@@ -39,37 +39,6 @@
         <item>Jangan lapor</item>
         <item>Tanya aku</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Tidak ada tindakan</item>
-        <item>Tampilkan jawaban</item>
-        <item>Tombol jawaban 1</item>
-        <item>Tombol jawaban 2</item>
-        <item>Tombol jawaban 3</item>
-        <item>Tombol jawaban 4</item>
-        <item>Jawaban yang disarankan (hijau)</item>
-        <item>Jawaban yang lebih baik dari yang disarankan</item>
-        <item>Urungkan</item>
-        <item>Edit catatan</item>
-        <item>Card Info</item>
-        <item>Beri catatan tag</item>
-        <item>Tandai catatan</item>
-        <item>Ekspresi pencarian</item>
-        <item>Pendam kartu</item>
-        <item>Tangguhkan kartu</item>
-        <item>Hapus catatan</item>
-        <item>Putar media</item>
-        <item>Batalkan belajar</item>
-        <item>Pendam catatan</item>
-        <item>Tangguhkan catatan</item>
-        <item>Setel Panji Merah</item>
-        <item>Setel Panji Jingga</item>
-        <item>Setel Panji Hijau</item>
-        <item>Setel Panji Biru</item>
-        <item>Hapus Panji</item>
-        <item>Halaman Atas</item>
-        <item>Halaman Bawah</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Tangguhkan kartu</item>
         <item>Hanya tag</item>

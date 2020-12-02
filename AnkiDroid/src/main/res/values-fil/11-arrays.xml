@@ -39,37 +39,6 @@
         <item>Huwag kailanman mag-ulat</item>
         <item>Tanungin mo ako</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Walang aksyon</item>
-        <item>Ipakita ang sagot</item>
-        <item>Sagot na pindutan 1</item>
-        <item>Sagot na pindutan 2</item>
-        <item>Sagot na pindutan 3</item>
-        <item>Sagot na pindutan 4</item>
-        <item>Sagot inirerekomenda (berde)</item>
-        <item>Sagutin nang mas mabuti kaysa sa inirekomenda</item>
-        <item>Pawalang-bisa</item>
-        <item>I-edit ang tala</item>
-        <item>Card Info</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Suspindihin ang card</item>
         <item>Tag lamang</item>

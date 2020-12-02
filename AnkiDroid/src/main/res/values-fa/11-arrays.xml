@@ -39,37 +39,6 @@
         <item>هرگز گزارش نده</item>
         <item>بپرس</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>هیچ عملیاتی</item>
-        <item>نمایش پاسخ</item>
-        <item>دكمه پاسخ 1</item>
-        <item>دكمه پاسخ 2</item>
-        <item>دكمه پاسخ 3</item>
-        <item>دكمه پاسخ 4</item>
-        <item>پاسخ توصيه شده-سبز</item>
-        <item>پاسخ بهتر از توصيه شده</item>
-        <item>بازگردانی</item>
-        <item>ويرايش يادداشت</item>
-        <item>Card Info</item>
-        <item>برچسب یادداشت</item>
-        <item>نشان کردن یادداشت</item>
-        <item>جستجوی عبارت</item>
-        <item>دفن کردن کارت</item>
-        <item>تعلیق کارت</item>
-        <item>حذف یادداشت</item>
-        <item>پخش رسانه</item>
-        <item>لغو یادگیری</item>
-        <item>دفن کردن یادداشت</item>
-        <item>تعلیق یادداشت</item>
-        <item>پرچم قرمز</item>
-        <item>پرچم نارنجی</item>
-        <item>پرچم سبز</item>
-        <item>پرچم آبی</item>
-        <item>حذف پرچم</item>
-        <item>بالا بردن صفحه</item>
-        <item>پایین بردن صفحه</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>تعلیق کارت</item>
         <item>تنها برچسب</item>

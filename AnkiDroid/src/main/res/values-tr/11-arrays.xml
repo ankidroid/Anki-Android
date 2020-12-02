@@ -39,37 +39,6 @@
         <item>Hiçbir zaman bildirme</item>
         <item>Bana sor</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Eylem yok</item>
-        <item>Cevabı göster</item>
-        <item>1. cevap düğmesi</item>
-        <item>2. cevap düğmesi</item>
-        <item>3. cevap düğmesi</item>
-        <item>4. cevap düğmesi</item>
-        <item>Önerilen cevabı (yeşil) ver</item>
-        <item>Önerilenden daha iyi cevap ver</item>
-        <item>Geri al</item>
-        <item>Notu düzenle</item>
-        <item>Card Info</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Kartı askıya al</item>
         <item>Yalnızca etiket</item>

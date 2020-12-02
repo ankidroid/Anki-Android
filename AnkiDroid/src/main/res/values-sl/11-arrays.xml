@@ -39,37 +39,6 @@
         <item>Nikoli ne prijavi</item>
         <item>Vprašaj me</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Brez dejanja</item>
-        <item>Prikaži odgovor</item>
-        <item>1. gumb za odgovor</item>
-        <item>2. gumb za odgovor</item>
-        <item>3. gumb za odgovor</item>
-        <item>4. gumb za odgovor</item>
-        <item>Priporočilo za odgovor (zeleno)</item>
-        <item>Odgovori bolje kot priporočeno</item>
-        <item>Razveljavi</item>
-        <item>Uredi zapisek</item>
-        <item>Card Info</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Pridrži kartico</item>
         <item>Samo oznako</item>

@@ -39,37 +39,6 @@
         <item>Niemals melden</item>
         <item>Nachfragen</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Keine Aktion</item>
-        <item>Antwort zeigen</item>
-        <item>Antwortschaltfläche 1</item>
-        <item>Antwortschaltfläche 2</item>
-        <item>Antwortschaltfläche 3</item>
-        <item>Antwortschaltfläche 4</item>
-        <item>Empfohlene Antwort (grün)</item>
-        <item>Antwort besser als empfohlen</item>
-        <item>Rückgängig</item>
-        <item>Notiz bearbeiten</item>
-        <item>Card Info</item>
-        <item>Notiz verschlagworten</item>
-        <item>Notiz markieren</item>
-        <item>Ausdruck nachschlagen</item>
-        <item>Karte aufschieben</item>
-        <item>Karte ausschließen</item>
-        <item>Notiz löschen</item>
-        <item>Medien abspielen</item>
-        <item>Lernen abbrechen</item>
-        <item>Notiz aufschieben</item>
-        <item>Notiz ausschließen</item>
-        <item>Rote Flagge umschalten</item>
-        <item>Orange Flagge umschalten</item>
-        <item>Grüne Flagge umschalten</item>
-        <item>Blaue Flagge umschalten</item>
-        <item>Flagge entfernen</item>
-        <item>Seite hoch</item>
-        <item>Seite runter</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Karte ausschließen</item>
         <item>Nur Schlagwort</item>

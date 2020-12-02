@@ -39,37 +39,6 @@
         <item>No ho enviïs mai</item>
         <item>Pregunta-ho</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Cap acció</item>
-        <item>Mostra la resposta</item>
-        <item>Botó de resposta 1</item>
-        <item>Botó de resposta 2</item>
-        <item>Botó de resposta 3</item>
-        <item>Botó de resposta 4</item>
-        <item>Resposta recomanada (verd)</item>
-        <item>Resposta millor que la recomanada</item>
-        <item>Desfés</item>
-        <item>Edita l\'anotació</item>
-        <item>Card Info</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-        <item>Abort Learning and Sync</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Suspèn la fitxa</item>
         <item>Només l\'etiqueta</item>
