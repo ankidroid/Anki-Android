@@ -24,7 +24,9 @@ import android.database.Cursor;
 import android.util.Pair;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
@@ -1169,7 +1171,7 @@ public class Models {
     public static IntArrayList _availClozeOrds(Model m, String[] sflds, boolean allowEmpty) {
         Map<String, Pair<Integer, JSONObject>> map = fieldMap(m);
         String question = m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt");
-        Set<Integer> ords = new HashSet<>();
+        IntSet ords = new IntAVLTreeSet(); // The number of cloze is not big enough to be worth doing any hashing
         List<String> matches = getNamesOfFieldsContainingCloze(question);
         for (String fname : matches) {
             if (!map.containsKey(fname)) {
