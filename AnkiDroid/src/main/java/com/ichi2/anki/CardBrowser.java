@@ -1101,15 +1101,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             selectionWithFlagTask(4);
             return true;
         } else if (itemId == R.id.action_delete_card) {
-            if (mInMultiSelectMode) {
-                CollectionTask.launchCollectionTask(DISMISS_MULTI,
-                        mDeleteNoteHandler,
-                        new TaskData(new Object[] {getSelectedCardIds(), Collection.DismissType.DELETE_NOTE_MULTI}));
-
-                mCheckedCards.clear();
-                endMultiSelectMode();
-                mCardsAdapter.notifyDataSetChanged();
-            }
+            deleteSelectedNote();
             return true;
         } else if (itemId == R.id.action_mark_card) {
             toggleMark();
@@ -1185,6 +1177,21 @@ public class CardBrowser extends NavigationDrawerActivity implements
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    protected void deleteSelectedNote() {
+        if (!mInMultiSelectMode) {
+            return;
+        }
+        CollectionTask.launchCollectionTask(DISMISS_MULTI,
+                mDeleteNoteHandler,
+                new TaskData(new Object[] {getSelectedCardIds(), Collection.DismissType.DELETE_NOTE_MULTI}));
+
+        mCheckedCards.clear();
+        endMultiSelectMode();
+        mCardsAdapter.notifyDataSetChanged();
+    }
+
 
     @VisibleForTesting
     void onUndo() {
