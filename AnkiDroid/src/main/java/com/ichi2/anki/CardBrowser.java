@@ -703,6 +703,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     onSelectAll();
                     return true;
                 }
+                break;
             }
             case KeyEvent.KEYCODE_E: {
                 // Ctrl+Shift+E: Export (TODO)
@@ -711,6 +712,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     addNoteFromCardBrowser();
                     return true;
                 }
+                break;
             }
             case KeyEvent.KEYCODE_D: {
                 if (event.isCtrlPressed()) {
@@ -718,6 +720,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     showChangeDeckDialog();
                     return true;
                 }
+                break;
             }
             case KeyEvent.KEYCODE_K: {
                 if (event.isCtrlPressed()) {
@@ -725,6 +728,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     toggleMark();
                     return true;
                 }
+                break;
             }
             case KeyEvent.KEYCODE_R: {
                 if (event.isCtrlPressed() && event.isAltPressed()) {
@@ -732,6 +736,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     rescheduleSelectedCards();
                     return true;
                 }
+                break;
             }
         }
         return super.onKeyDown(keyCode, event);
