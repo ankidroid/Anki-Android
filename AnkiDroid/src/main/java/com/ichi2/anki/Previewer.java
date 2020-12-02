@@ -35,7 +35,11 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.longs.LongOpenCustomHashSet;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import timber.log.Timber;
+
+import static com.ichi2.utils.LongHash.LONG_HASH;
 
 /**
  * The previewer intent must supply an array of cards to show and the index in the list from where
@@ -98,7 +102,7 @@ public class Previewer extends AbstractFlashcardViewer {
      * We define the best as searching to the left, then searching to the right of the current element
      * This occurs as many cards can be deleted when editing a note (from the Card Template Editor) */
     private int getNextIndex(LongList newCardList) {
-        HashSet<Long> validIndices = new HashSet<>(newCardList);
+        LongSet validIndices = new LongOpenCustomHashSet(newCardList, LONG_HASH);
 
         for (int i = mIndex; i >= 0; i--) {
             if (validIndices.contains(mCardList[i])) {
