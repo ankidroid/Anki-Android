@@ -100,6 +100,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import it.unimi.dsi.fastutil.longs.Long2IntMap;
+import it.unimi.dsi.fastutil.longs.Long2IntOpenCustomHashMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
@@ -1533,8 +1535,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
 
-    private static Map<Long, Integer> getPositionMap(CardCollection<CardCache> list) {
-        Map<Long, Integer> positions = new HashMap<>();
+    /**
+     * @param list
+     * @return A map from list[i]'s id to i, return -1 for missing values
+     */
+    private static Long2IntMap getPositionMap(CardCollection<CardCache> list) {
+        Long2IntMap positions = new Long2IntOpenCustomHashMap(list.size(), LONG_HASH);
+        positions.defaultReturnValue(-1);
         for (int i = 0; i < list.size(); i++) {
             positions.put(list.get(i).getId(), i);
         }
@@ -1668,11 +1675,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
      */
     private void updateCardsInList(List<Card> cards) {
         CardCollection<CardCache> cardList = getCards();
-        Map<Long, Integer> idToPos = getPositionMap(cardList);
+        // Positive value of the map are valid. -1 means missing value
+        Long2IntMap idToPos = getPositionMap(cardList);
         for (Card c : cards) {
             // get position in the mCards search results HashMap
-            Integer pos = idToPos.get(c.getId());
-            if (pos == null || pos >= getCardCount()) {
+            int pos = idToPos.get(c.getId());
+            if (pos == -1 || pos >= getCardCount()) {
                 continue;
             }
             // update Q & A etc
@@ -1779,7 +1787,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     private void removeNotesView(LongCollection cardsIds, boolean reorderCards) {
         long reviewerCardId = getReviewerCardId();
         CardCollection<CardCache> oldMCards = getCards();
-        Map<Long, Integer> idToPos = getPositionMap(oldMCards);
+        Long2IntMap idToPos = getPositionMap(oldMCards);
         LongSet idToRemove = new LongAVLTreeSet(); // Tree, because most of the time, only few cards are deleted, so hash is going to be more costly
         for (long cardId : cardsIds) {
             if (cardId == reviewerCardId) {
