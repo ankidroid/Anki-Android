@@ -143,6 +143,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import it.unimi.dsi.fastutil.ints.IntIntPair;
+import it.unimi.dsi.fastutil.objects.Object2BooleanAVLTreeMap;
+import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import timber.log.Timber;
 
 import static com.ichi2.anki.cardviewer.CardAppearance.calculateDynamicFontSize;
@@ -209,7 +211,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private static final int ankiJsErrorCodeFlagCard = 2;
 
     // JS api list enable/disable status
-    private final HashMap<String, Boolean> mJsApiListMap = new HashMap<>();
+    private final Object2BooleanMap<String> mJsApiListMap = new Object2BooleanAVLTreeMap<>();
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -3328,7 +3330,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 if (isAnkiApiNull("markCard")) {
                     showDeveloperContact(ankiJsErrorCodeDefault);
                     return true;
-                } else if (mJsApiListMap.get("markCard")) {
+                } else if (mJsApiListMap.getBoolean("markCard")) {
                     executeCommand(COMMAND_MARK);
                 } else {
                     // see 02-string.xml
@@ -3341,7 +3343,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 if (isAnkiApiNull("toggleFlag")) {
                     showDeveloperContact(ankiJsErrorCodeDefault);
                     return true;
-                } else if (!mJsApiListMap.get("toggleFlag")) {
+                } else if (!mJsApiListMap.getBoolean("toggleFlag")) {
                     // see 02-string.xml
                     showDeveloperContact(ankiJsErrorCodeFlagCard);
                     return true;
@@ -3622,7 +3624,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
 
     // Check if value null
     private boolean isAnkiApiNull(String api) {
-        return mJsApiListMap.get(api) == null;
+        return !mJsApiListMap.containsKey(api);
     }
 
     /*

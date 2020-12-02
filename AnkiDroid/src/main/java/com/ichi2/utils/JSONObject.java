@@ -54,6 +54,7 @@ import java.util.Map;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 
 public class JSONObject extends org.json.JSONObject implements Iterable<String> {
 
@@ -370,10 +371,10 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         return clone;
     }
 
-    public static JSONObject fromMap(Map<String, Boolean> map) {
+    public static JSONObject fromMap(Object2BooleanMap<String> map) {
         JSONObject ret = new JSONObject();
-        for (Map.Entry<String, Boolean> i : map.entrySet()) {
-            ret.put(i.getKey(), i.getValue());
+        for (Object2BooleanMap.Entry<String> i : map.object2BooleanEntrySet()) {
+            ret.put(i.getKey(), i.getBooleanValue());
         }
         return ret;
     }
