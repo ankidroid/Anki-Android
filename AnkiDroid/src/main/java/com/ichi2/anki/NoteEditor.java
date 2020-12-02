@@ -1090,6 +1090,8 @@ public class NoteEditor extends AnkiActivity {
             }
         }
 
+        menu.findItem(R.id.action_show_toolbar).setChecked(!shouldHideToolbar());
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -1098,6 +1100,9 @@ public class NoteEditor extends AnkiActivity {
         return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("noteEditorNewlineReplace", true);
     }
 
+    protected static boolean shouldHideToolbar() {
+        return !AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("noteEditorShowToolbar", true);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -1129,6 +1134,10 @@ public class NoteEditor extends AnkiActivity {
             repositionDialog.setCallbackRunnable(this::setFontSize);
             showDialogFragment(repositionDialog);
             return true;
+        } else if (itemId == R.id.action_show_toolbar) {
+            item.setChecked(!item.isChecked());
+            AnkiDroidApp.getSharedPrefs(this).edit().putBoolean("noteEditorShowToolbar", item.isChecked()).apply();
+            updateToolbar();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -1879,6 +1888,13 @@ public class NoteEditor extends AnkiActivity {
     private void updateToolbar() {
         if (mToolbar == null) {
             return;
+        }
+
+        if (shouldHideToolbar()) {
+            mToolbar.setVisibility(View.GONE);
+            return;
+        } else {
+            mToolbar.setVisibility(View.VISIBLE);
         }
 
         mToolbar.clearCustomItems();
