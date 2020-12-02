@@ -30,6 +30,8 @@ import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 
 import static com.ichi2.libanki.Consts.NEW_CARDS_RANDOM;
 import static com.ichi2.libanki.Utils.collection2Array;
@@ -164,7 +166,7 @@ public class NoteImporter extends Importer {
             }
         }
 
-        HashMap<String, Boolean> firsts = new HashMap<>();
+        Object2BooleanMap<String> firsts = new Object2BooleanOpenHashMap<>();
         int fld0index = mMapping.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
         mFMap = Models.fieldMap(mModel);
         mNextId = mCol.getTime().timestampID(mCol.getDb(), "notes");
