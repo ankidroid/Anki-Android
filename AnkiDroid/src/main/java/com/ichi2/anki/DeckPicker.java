@@ -31,14 +31,11 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
-import android.content.pm.ShortcutInfo;
-import android.content.pm.ShortcutManager;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.SQLException;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,13 +48,15 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.content.pm.ShortcutInfoCompat;
+import androidx.core.content.pm.ShortcutManagerCompat;
+import androidx.core.graphics.drawable.IconCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.app.ShareCompat;
@@ -2582,22 +2581,20 @@ public class DeckPicker extends NavigationDrawerActivity implements
         showDialogFragment(ExportDialog.newInstance(msg, did));
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     public void createIcon(Context context) {
         // This code should not be reachable with lower versions
-        ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
-        ShortcutInfo info = new ShortcutInfo.Builder(context, Long.toString(mContextMenuDid))
+        ShortcutInfoCompat shortcut = new ShortcutInfoCompat.Builder(this, Long.toString(mContextMenuDid))
                 .setIntent(new Intent(context, Reviewer.class)
                         .setAction(Intent.ACTION_VIEW)
                         .putExtra("deckId", mContextMenuDid)
                 )
+                .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
                 .setShortLabel(Decks.basename(getCol().getDecks().name(mContextMenuDid)))
                 .setLongLabel(getCol().getDecks().name(mContextMenuDid))
-                .setIcon(Icon.createWithResource(context, R.mipmap.ic_launcher))
                 .build();
 
         try {
-            boolean success = shortcutManager.requestPinShortcut(info, null);
+            boolean success = ShortcutManagerCompat.requestPinShortcut(this, shortcut, null);
 
             // User report: "success" is true even if Vivo does not have permission
             if (AdaptionUtil.isVivo()) {
