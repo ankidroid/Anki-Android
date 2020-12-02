@@ -103,6 +103,8 @@ import java.util.regex.Pattern;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.longs.LongOpenCustomHashSet;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import timber.log.Timber;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
@@ -110,6 +112,7 @@ import com.ichi2.async.TaskData;
 import static com.ichi2.anki.CardBrowser.Column.*;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.utils.LongHash.LONG_HASH;
 
 public class CardBrowser extends NavigationDrawerActivity implements
         DeckDropDownAdapter.SubtitleListener {
@@ -2401,7 +2404,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
             return;
         }
 
-        Set<Long> cardIds = new HashSet<>();
+        LongSet cardIds = new LongOpenCustomHashSet(LONG_HASH);
         for (Card c : cards) {
             cardIds.add(c.getId());
         }
