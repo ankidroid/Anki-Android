@@ -64,6 +64,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
+import it.unimi.dsi.fastutil.longs.Long2IntAVLTreeMap;
+import it.unimi.dsi.fastutil.longs.Long2IntMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
@@ -422,7 +424,7 @@ public class SchedV2 extends AbstractSched {
 
     protected int _walkingCount(@NonNull LimitMethod limFn, @NonNull CountMethod cntFn) {
         int tot = 0;
-        HashMap<Long, Integer> pcounts = new HashMap<>();
+        Long2IntMap pcounts = new Long2IntAVLTreeMap();
         // for each of the active decks
         for (long did : mCol.getDecks().active()) {
             // get the individual deck's limit
