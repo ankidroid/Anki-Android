@@ -66,6 +66,8 @@ import androidx.annotation.VisibleForTesting;
 import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import it.unimi.dsi.fastutil.longs.Long2IntAVLTreeMap;
 import it.unimi.dsi.fastutil.longs.Long2IntMap;
+import it.unimi.dsi.fastutil.longs.Long2LongMap;
+import it.unimi.dsi.fastutil.longs.Long2LongOpenCustomHashMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
@@ -77,6 +79,7 @@ import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
+import static com.ichi2.utils.LongHash.LONG_HASH;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
                     "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
@@ -2626,12 +2629,12 @@ public class SchedV2 extends AbstractSched {
             return;
         }
         // determine nid ordering
-        HashMap<Long, Long> due = new HashMap<>();
+        Long2LongMap due = new Long2LongOpenCustomHashMap(LONG_HASH);
         if (shuffle) {
             Collections.shuffle(nids);
         }
         for (int c = 0; c < nids.size(); c++) {
-            due.put(nids.getLong(c), (long) (start + c * step));
+            due.put(nids.getLong(c), (start + c * step));
         }
         int high = start + step * (nids.size() - 1);
         // shift?
