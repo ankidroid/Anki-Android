@@ -88,6 +88,7 @@ import it.unimi.dsi.fastutil.ints.Int2LongMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.Long2LongAVLTreeMap;
 import it.unimi.dsi.fastutil.longs.Long2LongMap;
+import it.unimi.dsi.fastutil.longs.Long2LongOpenCustomHashMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenCustomHashMap;
 import it.unimi.dsi.fastutil.longs.LongAVLTreeSet;
@@ -807,7 +808,7 @@ public class Collection {
         Long2LongMap dids = new Long2LongAVLTreeMap();
         dids.defaultReturnValue(Decks.NOT_FOUND_DECK_ID);
         // For each note, an arbitrary due of one of its due card processed, if any exists
-        HashMap<Long, Long> dues = new HashMap<>();
+        Long2LongMap dues = new Long2LongOpenCustomHashMap(LONG_HASH);
         try (Cursor cur = mDb.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids)) {
             while (cur.moveToNext()) {
                 if (isCancelled(task)) {
@@ -818,7 +819,7 @@ public class Collection {
                 long nid = cur.getLong(1);
                 int ord = cur.getInt(2);
                 long did = cur.getLong(3);
-                @NonNull Long due = cur.getLong(4);
+                long due = cur.getLong(4);
                 @Consts.CARD_TYPE int type = cur.getInt(5);
 
                 // existing cards
