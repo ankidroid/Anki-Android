@@ -59,6 +59,8 @@ import it.unimi.dsi.fastutil.ints.Int2LongAVLTreeMap;
 import it.unimi.dsi.fastutil.ints.Int2LongMap;
 import it.unimi.dsi.fastutil.longs.Long2BooleanMap;
 import it.unimi.dsi.fastutil.longs.Long2BooleanOpenCustomHashMap;
+import it.unimi.dsi.fastutil.longs.Long2LongAVLTreeMap;
+import it.unimi.dsi.fastutil.longs.Long2LongMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import it.unimi.dsi.fastutil.longs.LongLinkedOpenCustomHashSet;
@@ -103,7 +105,7 @@ public class Anki2Importer extends Importer {
     private Map<String, NoteTriple> mNotes;
 
     private Map<Long, Long> mDecks;
-    private Map<Long, Long> mModelMap;
+    private Long2LongMap mModelMap;
     private Object2BooleanMap mIgnoredGuids;
 
     private int mDupes;
@@ -409,7 +411,7 @@ public class Anki2Importer extends Importer {
 
     /** Prepare index of schema hashes. */
     private void _prepareModels() {
-        mModelMap = new HashMap<>();
+        mModelMap = new Long2LongAVLTreeMap();
     }
 
 
