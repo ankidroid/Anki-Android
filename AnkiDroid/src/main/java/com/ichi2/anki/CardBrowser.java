@@ -1546,14 +1546,10 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     // convenience method for updateCardsInList(...)
-    private void updateCardInList(Card card, String updatedCardTags){
+    private void updateCardInList(Card card, String updatedCardTags) {
         List<Card> cards = new ArrayList<>();
         cards.add(card);
-        if (updatedCardTags != null) {
-            updateCardsInList(cards);
-        } else {
-            updateCardsInList(cards);
-        }
+        updateCardsInList(cards);
     }
 
     /** Returns the decks which are valid targets for "Change Deck" */
