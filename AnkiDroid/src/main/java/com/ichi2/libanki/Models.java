@@ -379,7 +379,7 @@ public class Models {
     }
 
 
-    public boolean have(@NonNull Long id) {
+    public boolean have(long id) {
         return mModels.containsKey(id);
     }
 
