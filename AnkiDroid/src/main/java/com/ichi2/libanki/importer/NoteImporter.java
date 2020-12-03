@@ -29,6 +29,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
 import androidx.annotation.StringRes;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.longs.Long2ObjectArrayMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
@@ -153,7 +155,7 @@ public class NoteImporter extends Importer {
             }
         }
         // gather checks for duplicate comparison
-        HashMap<Long, LongArrayList> csums = new HashMap<>();
+        Long2ObjectMap<LongArrayList> csums = new Long2ObjectArrayMap<>(); // csum should probably not have duplicate value. So arraymap is sufficient
         try (Cursor c = mCol.getDb().query("select csum, id from notes where mid = ?", mModel.getLong("id"))) {
             while (c.moveToNext()) {
                 long csum = c.getLong(0);
