@@ -577,6 +577,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                         newCard.q(true);
                     } else {
                         newCard = sched.getCard();
+                        Timber.i("Obtained new card from scheduler: %d", newCard == null ? -1 : newCard.getId());
                     }
                     publishProgress(new TaskData(newCard));
                 } else {
