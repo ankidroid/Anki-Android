@@ -88,6 +88,8 @@ import it.unimi.dsi.fastutil.ints.Int2LongMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.Long2LongAVLTreeMap;
 import it.unimi.dsi.fastutil.longs.Long2LongMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenCustomHashMap;
 import it.unimi.dsi.fastutil.longs.LongAVLTreeSet;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
@@ -100,6 +102,7 @@ import com.ichi2.async.TaskData;
 import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
 import static com.ichi2.libanki.Collection.Previewing.*;
+import static com.ichi2.utils.LongHash.LONG_HASH;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -799,7 +802,7 @@ public class Collection {
      */
     public <T extends ProgressSender<TaskData> & CancelListener> LongArrayList genCards(String snids, @NonNull Model model, @Nullable T task) {
         // For each note, indicates ords of cards it contains
-        HashMap<Long, Int2LongAVLTreeMap> have = new HashMap<>();
+        Long2ObjectMap<Int2LongAVLTreeMap> have = new Long2ObjectOpenCustomHashMap<>(LONG_HASH);
         // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
         Long2LongMap dids = new Long2LongAVLTreeMap();
         dids.defaultReturnValue(Decks.NOT_FOUND_DECK_ID);
