@@ -31,6 +31,8 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntSet;
+import it.unimi.dsi.fastutil.longs.Long2ObjectAVLTreeMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import timber.log.Timber;
 
@@ -1218,8 +1220,8 @@ public class Models {
     }
 
 
-    public HashMap<Long, Int2ObjectMap<String>> getTemplateNames() {
-        HashMap<Long, Int2ObjectMap<String>> result = new HashMap<>();
+    public Long2ObjectMap<Int2ObjectMap<String>> getTemplateNames() {
+        Long2ObjectMap<Int2ObjectMap<String>> result = new Long2ObjectAVLTreeMap<>();
         for (Model m : mModels.values()) {
             JSONArray templates = m.getJSONArray("tmpls");
             Int2ObjectMap<String> names = new Int2ObjectAVLTreeMap<>();
