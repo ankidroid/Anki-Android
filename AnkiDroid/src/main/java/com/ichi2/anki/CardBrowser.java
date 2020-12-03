@@ -1244,18 +1244,21 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @NonNull
     @VisibleForTesting
     Intent getPreviewIntent() {
-        Intent previewer = new Intent(CardBrowser.this, Previewer.class);
         if (mInMultiSelectMode && checkedCardCount() > 1) {
             // Multiple cards have been explicitly selected, so preview only those cards
-            previewer.putExtra("index", 0);
-            previewer.putExtra("cardList", getSelectedCardIds());
+            int index = 0;
+            return getPreviewIntent(index, getSelectedCardIds());
         } else {
             // Preview all cards, starting from the one that is currently selected
             int startIndex = mCheckedCards.isEmpty() ? 0 : mCheckedCards.iterator().next().getPosition();
-            previewer.putExtra("index", startIndex);
-            previewer.putExtra("cardList", getAllCardIds());
+            return getPreviewIntent(startIndex, getAllCardIds());
         }
-        return previewer;
+    }
+
+
+    @NonNull
+    private Intent getPreviewIntent(int index, long[] selectedCardIds) {
+        return Previewer.getPreviewIntent(CardBrowser.this, index, selectedCardIds);
     }
 
 
