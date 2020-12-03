@@ -1134,7 +1134,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...");
                 CollectionTask.launchCollectionTask(UPDATE_NOTE, mUpdateCardHandler,
-                        new TaskData(sEditorCard, true));
+                        new TaskData(new Object[] { sEditorCard, true, canAccessScheduler() }));
                 onEditedNoteChanged();
             } else if (resultCode == RESULT_CANCELED && !(data!=null && data.hasExtra("reloadRequired"))) {
                 // nothing was changed by the note editor so just redraw the card
@@ -1146,6 +1146,19 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
         if (!mDisableClipboard) {
             clipboardSetText("");
         }
+    }
+
+    /**
+     * Whether the class should use collection.getSched() when performing tasks.
+     * The aim of this method is to completely distinguish FlashcardViewer from Reviewer
+     *
+     * This is partially implemented, the end goal is that the FlashcardViewer will not have any coupling to getSched
+     *
+     * Currently, this is used for note edits - in a reviewing context, this should show the next card.
+     * In a previewing context, the card should not change.
+     */
+    protected boolean canAccessScheduler() {
+        return false;
     }
 
 
