@@ -24,6 +24,8 @@ import android.database.Cursor;
 import android.util.Pair;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.ints.Int2IntAVLTreeMap;
+import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntSet;
@@ -823,7 +825,7 @@ public class Models {
         JSONArray tmpls = m.getJSONArray("tmpls");
         int oldidx = -1;
         ArrayList<JSONObject> l = new ArrayList<>();
-        HashMap<Integer, Integer> oldidxs = new HashMap<>();
+        Int2IntMap oldidxs = new Int2IntAVLTreeMap();
         for (int i = 0; i < tmpls.length(); ++i) {
             if (tmpls.getJSONObject(i).equals(template)) {
                 oldidx = i;
