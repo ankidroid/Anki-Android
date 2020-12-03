@@ -17,6 +17,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.browser.customtabs.CustomTabColorSchemeParams;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -387,7 +388,11 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
         CustomTabActivityHelper helper = getCustomTabActivityHelper();
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder(helper.getSession());
-        builder.setToolbarColor(ContextCompat.getColor(this, R.color.material_light_blue_500)).setShowTitle(true);
+        CustomTabColorSchemeParams colorScheme =
+                new CustomTabColorSchemeParams.Builder()
+                        .setToolbarColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
+                        .build();
+        builder.setDefaultColorSchemeParams(colorScheme).setShowTitle(true);
         builder.setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out);
         builder.setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out);
         builder.setCloseButtonIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_arrow_back_white_24dp));
