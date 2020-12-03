@@ -42,6 +42,8 @@ import java.util.Stack;
 
 import androidx.annotation.NonNull;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import it.unimi.dsi.fastutil.longs.Long2IntAVLTreeMap;
+import it.unimi.dsi.fastutil.longs.Long2IntMap;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
@@ -815,7 +817,7 @@ public class AdvancedStatistics {
 
     public static class TodayStats {
 
-        private final Map<Long, Integer> nLearnedPerDeckId = new HashMap<>();
+        private final Long2IntMap nLearnedPerDeckId = new Long2IntAVLTreeMap();
 
         public TodayStats(DB db, long dayStartCutoff) {
 
