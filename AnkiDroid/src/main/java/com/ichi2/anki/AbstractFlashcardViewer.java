@@ -1011,6 +1011,16 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
 
+    @Override
+    @Nullable
+    protected Long getCurrentCardId() {
+        if (mCurrentCard == null) {
+            return null;
+        }
+        return mCurrentCard.getId();
+    }
+
+
     private boolean processHardwareButtonScroll(int keyCode, WebView card) {
         if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
             card.pageUp(false);
