@@ -121,7 +121,7 @@ public class Models {
 
     private final Collection mCol;
     private boolean mChanged;
-    private HashMap<Long, Model> mModels;
+    private Long2ObjectMap<Model> mModels;
 
     // BEGIN SQL table entries
     private int mId;
@@ -173,7 +173,7 @@ public class Models {
      */
     public void load(String json) {
         mChanged = false;
-        mModels = new HashMap<>();
+        mModels = new Long2ObjectAVLTreeMap<>();
         JSONObject modelarray = new JSONObject(json);
         JSONArray ids = modelarray.names();
         if (ids != null) {
@@ -227,8 +227,8 @@ public class Models {
         if (mChanged) {
             ensureNotEmpty();
             JSONObject array = new JSONObject();
-            for (Map.Entry<Long, Model> o : mModels.entrySet()) {
-                array.put(Long.toString(o.getKey()), o.getValue());
+            for (Long2ObjectMap.Entry<Model> o : mModels.long2ObjectEntrySet()) {
+                array.put(Long.toString(o.getLongKey()), o.getValue());
             }
             ContentValues val = new ContentValues();
             val.put("models", Utils.jsonToString(array));
@@ -1242,7 +1242,7 @@ public class Models {
     }
 
 
-    public HashMap<Long, Model> getModels() {
+    public Long2ObjectMap<Model> getModels() {
         return mModels;
     }
 

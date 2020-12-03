@@ -288,7 +288,7 @@ public class CardContentProvider extends ContentProvider {
                 Models models = col.getModels();
                 String[] columns = ((projection != null) ? projection : FlashCardsContract.Model.DEFAULT_PROJECTION);
                 MatrixCursor rv = new MatrixCursor(columns, 1);
-                for (Long modelId : models.getModels().keySet()) {
+                for (long modelId : models.getModels().keySet()) {
                     addModelToCursor(modelId, models, rv, columns);
                 }
                 return rv;
