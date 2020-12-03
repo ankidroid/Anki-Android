@@ -50,10 +50,13 @@ import java.util.Locale;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.longs.Long2LongMap;
+import it.unimi.dsi.fastutil.longs.Long2LongOpenCustomHashMap;
 import okhttp3.Response;
 import timber.log.Timber;
 
 import static com.ichi2.utils.CollectionUtils.addAll;
+import static com.ichi2.utils.LongHash.LONG_HASH;
 
 @SuppressWarnings({"deprecation", // tracking HTTP transport change in github already
                     "PMD.ExcessiveClassLength","PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -820,7 +823,7 @@ public class Syncer {
         for (int i = 0; i < data.length(); i++) {
             ids[i] = data.getJSONArray(i).getLong(0);
         }
-        HashMap<Long, Long> lmods = new HashMap<>();
+        Long2LongMap lmods = new Long2LongOpenCustomHashMap(LONG_HASH);
         Pair<String, Object[]> limAndArg = usnLim();
         try (Cursor cur = mCol
                     .getDb()
