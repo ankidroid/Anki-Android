@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import com.ichi2.themes.Themes;
 import java.util.HashSet;
 import java.util.List;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
@@ -48,6 +50,16 @@ public class Previewer extends AbstractFlashcardViewer {
     /** Communication with Browser */
     private boolean mReloadRequired;
     private boolean mNoteChanged;
+
+
+    @CheckResult
+    @NonNull
+    public static Intent getPreviewIntent(Context context, int index, long[] cardList) {
+        Intent intent = new Intent(context, Previewer.class);
+        intent.putExtra("index", index);
+        intent.putExtra("cardList", cardList);
+        return intent;
+    }
 
 
     @Override
