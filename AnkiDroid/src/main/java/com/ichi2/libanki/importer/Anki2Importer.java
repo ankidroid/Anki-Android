@@ -104,7 +104,7 @@ public class Anki2Importer extends Importer {
     }
     private Map<String, NoteTriple> mNotes;
 
-    private Map<Long, Long> mDecks;
+    private Long2LongMap mDecks;
     private Long2LongMap mModelMap;
     private Object2BooleanMap mIgnoredGuids;
 
@@ -158,7 +158,7 @@ public class Anki2Importer extends Importer {
 
 
     private void _import() {
-        mDecks = new HashMap<>();
+        mDecks = new Long2LongAVLTreeMap();
         try {
             // Use transactions for performance and rollbacks in case of error
             mDst.getDb().getDatabase().beginTransaction();
