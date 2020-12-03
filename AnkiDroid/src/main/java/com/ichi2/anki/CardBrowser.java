@@ -1553,8 +1553,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
         List<Card> cards = new ArrayList<>();
         cards.add(card);
         if (updatedCardTags != null) {
-            Map<Long, String> updatedCardTagsMult = new HashMap<>();
-            updatedCardTagsMult.put(card.getNid(), updatedCardTags);
             updateCardsInList(cards);
         } else {
             updateCardsInList(cards);
