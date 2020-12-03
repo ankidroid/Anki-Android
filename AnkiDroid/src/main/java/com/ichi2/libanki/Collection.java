@@ -78,10 +78,12 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteStatement;
+import it.unimi.dsi.fastutil.ints.Int2LongMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import it.unimi.dsi.fastutil.objects.ObjectLongImmutablePair;
+import it.unimi.dsi.fastutil.ints.Int2LongAVLTreeMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongAVLTreeSet;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
@@ -794,7 +796,7 @@ public class Collection {
      */
     public <T extends ProgressSender<TaskData> & CancelListener> LongArrayList genCards(String snids, @NonNull Model model, @Nullable T task) {
         // For each note, indicates ords of cards it contains
-        HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>();
+        HashMap<Long, Int2LongAVLTreeMap> have = new HashMap<>();
         // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
         HashMap<Long, Long> dids = new HashMap<>();
         // For each note, an arbitrary due of one of its due card processed, if any exists
@@ -805,16 +807,16 @@ public class Collection {
                     Timber.v("Empty card cancelled");
                     return null;
                 }
-                @NonNull Long id = cur.getLong(0);
+                long id = cur.getLong(0);
                 @NonNull Long nid = cur.getLong(1);
-                @NonNull Integer ord = cur.getInt(2);
+                int ord = cur.getInt(2);
                 @NonNull Long did = cur.getLong(3);
                 @NonNull Long due = cur.getLong(4);
                 @Consts.CARD_TYPE int type = cur.getInt(5);
 
                 // existing cards
                 if (!have.containsKey(nid)) {
-                    have.put(nid, new HashMap<>());
+                    have.put(nid, new Int2LongAVLTreeMap()); // Map from note to its card. Hashing is useless here
                 }
                 have.get(nid).put(ord, id);
                 // and their dids
@@ -888,9 +890,9 @@ public class Collection {
                 }
                 // note any cards that need removing
                 if (have.containsKey(nid)) {
-                    for (Map.Entry<Integer, Long> n : have.get(nid).entrySet()) {
-                        if (!avail.contains((int) n.getKey())) {
-                            rem.add((long) n.getValue());
+                    for (Int2LongMap.Entry n : have.get(nid).int2LongEntrySet()) {
+                        if (!avail.contains(n.getIntKey())) {
+                            rem.add(n.getLongValue());
                         }
                     }
                 }
