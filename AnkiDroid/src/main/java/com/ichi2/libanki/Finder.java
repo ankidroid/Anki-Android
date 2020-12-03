@@ -918,7 +918,7 @@ public class Finder {
 
         ArrayList<Object[]> d = new ArrayList<>();
         String snids = Utils.ids2str(nids);
-        Map<Long, LongCollection> midToNid = new HashMap<>();
+        Long2ObjectMap<LongCollection> midToNid = new Long2ObjectAVLTreeMap<>();
         try (Cursor cur = col.getDb().query(
                 "select id, mid, flds from notes where id in " + snids)) {
             while (cur.moveToNext()) {
@@ -955,8 +955,8 @@ public class Finder {
         }
         // replace
         col.getDb().executeMany("update notes set flds=?,mod=?,usn=? where id=?", d);
-        for (Map.Entry<Long, LongCollection> entry : midToNid.entrySet()) {
-            long mid = entry.getKey();
+        for (Long2ObjectMap.Entry<LongCollection> entry : midToNid.long2ObjectEntrySet()) {
+            long mid = entry.getLongKey();
             LongCollection nids_ = entry.getValue();
             col.updateFieldCache(nids_);
             col.genCards(nids_, mid);
