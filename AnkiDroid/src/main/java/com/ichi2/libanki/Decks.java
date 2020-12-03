@@ -154,7 +154,7 @@ public class Decks {
 
     private final Collection mCol;
     private Long2ObjectMap<Deck> mDecks;
-    private HashMap<Long, DeckConfig> mDconf;
+    private Long2ObjectMap<DeckConfig> mDconf;
     // Never access mNameMap directly. Uses byName
     private NameMap mNameMap;
     private boolean mChanged;
@@ -234,7 +234,7 @@ public class Decks {
 
     public void load(String decks, String dconf) {
         mDecks = new Long2ObjectAVLTreeMap<>();
-        mDconf = new HashMap<>();
+        mDconf = new Long2ObjectAVLTreeMap<>();
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
         for (String id: ids.stringIterable()) {
@@ -280,8 +280,8 @@ public class Decks {
             }
             values.put("decks", Utils.jsonToString(decksarray));
             JSONObject confarray = new JSONObject();
-            for (Map.Entry<Long, DeckConfig> d : mDconf.entrySet()) {
-                confarray.put(Long.toString(d.getKey()), d.getValue());
+            for (Long2ObjectMap.Entry<DeckConfig> d : mDconf.long2ObjectEntrySet()) {
+                confarray.put(Long.toString(d.getLongKey()), d.getValue());
             }
             values.put("dconf", Utils.jsonToString(confarray));
             mCol.getDb().update("col", values);
