@@ -26,6 +26,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import it.unimi.dsi.fastutil.ints.Int2IntAVLTreeMap;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectAVLTreeMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntSet;
@@ -1216,11 +1218,11 @@ public class Models {
     }
 
 
-    public HashMap<Long, HashMap<Integer, String>> getTemplateNames() {
-        HashMap<Long, HashMap<Integer, String>> result = new HashMap<>();
+    public HashMap<Long, Int2ObjectMap<String>> getTemplateNames() {
+        HashMap<Long, Int2ObjectMap<String>> result = new HashMap<>();
         for (Model m : mModels.values()) {
             JSONArray templates = m.getJSONArray("tmpls");
-            HashMap<Integer, String> names = new HashMap<>();
+            Int2ObjectMap<String> names = new Int2ObjectAVLTreeMap<>();
             for (JSONObject t: templates.jsonObjectIterable()) {
                 names.put(t.getInt("ord"), t.getString("name"));
             }
