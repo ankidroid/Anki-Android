@@ -22,6 +22,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.ints.Int2ObjectAVLTreeMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import timber.log.Timber;
 
 import android.text.Editable;
@@ -291,9 +293,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         return dialog;
     }
 
-    private HashMap<Integer, String> getKeyValueMap() {
+    private Int2ObjectMap<String> getKeyValueMap() {
         Resources res = getResources();
-        HashMap<Integer, String> keyValueMap = new HashMap<>();
+        Int2ObjectMap<String> keyValueMap = new Int2ObjectAVLTreeMap<>();
         keyValueMap.put(CONTEXT_MENU_STANDARD, res.getString(R.string.custom_study));
         keyValueMap.put(CUSTOM_STUDY_NEW, res.getString(R.string.custom_study_increase_new_limit));
         keyValueMap.put(CUSTOM_STUDY_REV, res.getString(R.string.custom_study_increase_review_limit));

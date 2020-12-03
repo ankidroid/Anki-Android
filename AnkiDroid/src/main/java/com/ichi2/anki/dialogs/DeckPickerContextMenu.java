@@ -35,6 +35,8 @@ import java.util.HashMap;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.ints.Int2ObjectAVLTreeMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import timber.log.Timber;
 
@@ -95,9 +97,9 @@ public class DeckPickerContextMenu extends AnalyticsDialogFragment {
     }
 
 
-    private HashMap<Integer, String> getKeyValueMap() {
+    private Int2ObjectMap<String> getKeyValueMap() {
         Resources res = getResources();
-        HashMap<Integer, String> keyValueMap = new HashMap<>();
+        Int2ObjectMap<String> keyValueMap = new Int2ObjectAVLTreeMap<>();
         keyValueMap.put(CONTEXT_MENU_RENAME_DECK, res.getString(R.string.rename_deck));
         keyValueMap.put(CONTEXT_MENU_DECK_OPTIONS, res.getString(R.string.study_options));
         keyValueMap.put(CONTEXT_MENU_CUSTOM_STUDY, res.getString(R.string.custom_study));

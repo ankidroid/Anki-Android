@@ -18,8 +18,10 @@ package com.ichi2.anki.dialogs;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+
 public class ContextMenuHelper {
-    public static String[] getValuesFromKeys(HashMap<Integer, String> map, int[] keys) {
+    public static String[] getValuesFromKeys(Int2ObjectMap<String> map, int[] keys) {
         String[] values = new String[keys.length];
         for (int i = 0; i < keys.length; i++) {
             values[i] = map.get(keys[i]);
