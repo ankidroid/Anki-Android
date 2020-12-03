@@ -558,9 +558,10 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         // Save the note
         Collection col = getCol();
         AbstractSched sched = col.getSched();
-        Card editCard = param.getCard();
+        Card editCard = (Card) param.getObjArray()[0];
         Note editNote = editCard.note();
-        boolean fromReviewer = param.getBoolean();
+        boolean fromReviewer = (boolean) param.getObjArray()[1];
+        boolean canAccessScheduler = (boolean) param.getObjArray()[2];
 
         try {
             col.getDb().executeInTransaction(() -> {
@@ -570,7 +571,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
                 editCard.flush();
                 if (fromReviewer) {
                     Card newCard;
-                    if (col.getDecks().active().contains(editCard.getDid())) {
+                    if (col.getDecks().active().contains(editCard.getDid()) || !canAccessScheduler) {
                         newCard = editCard;
                         newCard.load();
                         // reload qa-cache
