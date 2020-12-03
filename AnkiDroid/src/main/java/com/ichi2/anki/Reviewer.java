@@ -798,6 +798,12 @@ public class Reviewer extends AbstractFlashcardViewer {
 
 
     @Override
+    protected boolean canAccessScheduler() {
+        return true;
+    }
+
+
+    @Override
     protected void performReload() {
         getCol().getSched().deferReset();
         CollectionTask.launchCollectionTask(ANSWER_CARD, mAnswerCardHandler(false),
