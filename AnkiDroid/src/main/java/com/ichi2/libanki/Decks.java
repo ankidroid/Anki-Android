@@ -1015,12 +1015,13 @@ public class Decks {
         return actv;
     }
 
-    public static class Node extends HashMap<Long, Node> {}
+    public static class Node extends Long2ObjectAVLTreeMap<Node> {}
+    // Keys are decks, with the same parent. So no need more than AVL
 
     private void gather(Node node, LongArrayList arr) {
-        for (Map.Entry<Long, Node> entry : node.entrySet()) {
+        for (Long2ObjectMap.Entry<Node> entry : node.long2ObjectEntrySet()) {
             Node child = entry.getValue();
-            arr.add((long) entry.getKey());
+            arr.add(entry.getLongKey());
             gather(child, arr);
         }
     }
