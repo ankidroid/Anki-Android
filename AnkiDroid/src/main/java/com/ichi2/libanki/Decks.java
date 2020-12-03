@@ -53,6 +53,8 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import it.unimi.dsi.fastutil.longs.Long2ObjectAVLTreeMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import timber.log.Timber;
@@ -149,7 +151,7 @@ public class Decks {
 
 
     private final Collection mCol;
-    private HashMap<Long, Deck> mDecks;
+    private Long2ObjectMap<Deck> mDecks;
     private HashMap<Long, DeckConfig> mDconf;
     // Never access mNameMap directly. Uses byName
     private NameMap mNameMap;
@@ -229,7 +231,7 @@ public class Decks {
 
 
     public void load(String decks, String dconf) {
-        mDecks = new HashMap<>();
+        mDecks = new Long2ObjectAVLTreeMap<>();
         mDconf = new HashMap<>();
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
@@ -271,8 +273,8 @@ public class Decks {
         ContentValues values = new ContentValues();
         if (mChanged) {
             JSONObject decksarray = new JSONObject();
-            for (Map.Entry<Long, Deck> d : mDecks.entrySet()) {
-                decksarray.put(Long.toString(d.getKey()), d.getValue());
+            for (Long2ObjectMap.Entry<Deck> d : mDecks.long2ObjectEntrySet()) {
+                decksarray.put(Long.toString(d.getLongKey()), d.getValue());
             }
             values.put("decks", Utils.jsonToString(decksarray));
             JSONObject confarray = new JSONObject();
@@ -399,7 +401,7 @@ public class Decks {
         mNameMap.remove(deck.getString("name"), deck);
         // ensure we have an active deck
         if (active().contains(did)) {
-            select(mDecks.keySet().iterator().next());
+            select(mDecks.keySet().iterator().nextLong());
         }
         save();
     }
@@ -1174,7 +1176,7 @@ public class Decks {
     }
 
 
-    public HashMap<Long, Deck> getDecks() {
+    public Long2ObjectMap<Deck> getDecks() {
         return mDecks;
     }
 
