@@ -1546,7 +1546,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
     }
 
     // convenience method for updateCardsInList(...)
-    private void updateCardInList(Card card, String updatedCardTags) {
+    private void updateCardInList(Card card) {
         List<Card> cards = new ArrayList<>();
         cards.add(card);
         updateCardsInList(cards);
@@ -1686,7 +1686,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
         @Override
         public void actualOnProgressUpdate(@NonNull CardBrowser browser, TaskData value) {
-            browser.updateCardInList(value.getCard(), value.getString());
+            browser.updateCardInList(value.getCard());
         }
 
         @Override
