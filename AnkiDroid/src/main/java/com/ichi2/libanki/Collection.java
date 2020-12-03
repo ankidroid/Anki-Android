@@ -84,7 +84,10 @@ import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import it.unimi.dsi.fastutil.objects.ObjectLongImmutablePair;
 import it.unimi.dsi.fastutil.ints.Int2LongAVLTreeMap;
+import it.unimi.dsi.fastutil.ints.Int2LongMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.longs.Long2LongAVLTreeMap;
+import it.unimi.dsi.fastutil.longs.Long2LongMap;
 import it.unimi.dsi.fastutil.longs.LongAVLTreeSet;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
@@ -798,7 +801,8 @@ public class Collection {
         // For each note, indicates ords of cards it contains
         HashMap<Long, Int2LongAVLTreeMap> have = new HashMap<>();
         // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
-        HashMap<Long, Long> dids = new HashMap<>();
+        Long2LongMap dids = new Long2LongAVLTreeMap();
+        dids.defaultReturnValue(Decks.NOT_FOUND_DECK_ID);
         // For each note, an arbitrary due of one of its due card processed, if any exists
         HashMap<Long, Long> dues = new HashMap<>();
         try (Cursor cur = mDb.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids)) {
@@ -808,9 +812,9 @@ public class Collection {
                     return null;
                 }
                 long id = cur.getLong(0);
-                @NonNull Long nid = cur.getLong(1);
+                long nid = cur.getLong(1);
                 int ord = cur.getInt(2);
-                @NonNull Long did = cur.getLong(3);
+                long did = cur.getLong(3);
                 @NonNull Long due = cur.getLong(4);
                 @Consts.CARD_TYPE int type = cur.getInt(5);
 
@@ -821,7 +825,7 @@ public class Collection {
                 have.get(nid).put(ord, id);
                 // and their dids
                 if (dids.containsKey(nid)) {
-                    if (dids.get(nid) != 0 && !Utils.equals(dids.get(nid), did)) {
+                    if (dids.get(nid) != 0 && dids.get(nid) != did) {
                         // cards are in two or more different decks; revert to model default
                         dids.put(nid, 0L);
                     }
@@ -846,13 +850,13 @@ public class Collection {
                     Timber.v("Empty card cancelled");
                     return null;
                 }
-                @NonNull Long nid = cur.getLong(0);
+                long nid = cur.getLong(0);
                 String flds = cur.getString(1);
                 IntArrayList avail = Models.availOrds(model, Utils.splitFields(flds));
                 if (task != null) {
                     task.doProgress(new TaskData(avail.size()));
                 }
-                Long did = dids.get(nid);
+                long did = dids.get(nid);
                 // use sibling due if there is one, else use a new id
                 @NonNull Long due;
                 if (dues.containsKey(nid)) {
@@ -860,7 +864,7 @@ public class Collection {
                 } else {
                     due = (long) nextID("pos");
                 }
-                if (did == null || did == 0L) {
+                if (did == Decks.NOT_FOUND_DECK_ID || did == 0L) {
                     did = model.getLong("did");
                 }
                 // add any missing cards
