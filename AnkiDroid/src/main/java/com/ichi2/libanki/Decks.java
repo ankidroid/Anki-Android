@@ -57,6 +57,8 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectAVLTreeMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.objects.Object2LongAVLTreeMap;
+import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import timber.log.Timber;
 
 import static com.ichi2.utils.CollectionUtils.addAll;
@@ -987,7 +989,7 @@ public class Decks {
         // current deck
         mCol.getConf().put("curDeck", Long.toString(did));
         // and active decks (current + all children)
-        TreeMap<String, Long> actv = children(did); // Note: TreeMap is already sorted
+        Object2LongMap<String> actv = children(did); // Note: TreeMap is already sorted
         actv.put(name, did);
         JSONArray activeDecks = new JSONArray();
         for (Long n : actv.values()) {
@@ -1004,9 +1006,9 @@ public class Decks {
      * TODO: There is likely no need for this collection to be a TreeMap. This method should not
      * need to sort on behalf of select().
      */
-    public TreeMap<String, Long> children(long did) {
+    public Object2LongMap<String> children(long did) {
         String name = get(did).getString("name");
-        TreeMap<String, Long> actv = new TreeMap<>();
+        Object2LongMap<String> actv = new Object2LongAVLTreeMap<>();
         for (Deck g : all()) {
             if (g.getString("name").startsWith(name + "::")) {
                 actv.put(g.getString("name"), g.getLong("id"));

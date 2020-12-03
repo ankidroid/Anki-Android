@@ -145,6 +145,7 @@ import java.util.Locale;
 import java.util.TreeMap;
 
 import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import timber.log.Timber;
 
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
@@ -2669,7 +2670,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return;
         }
         // Get the number of cards contained in this deck and its subdecks
-        TreeMap<String, Long> children = getCol().getDecks().children(did);
+        Object2LongMap<String> children = getCol().getDecks().children(did);
         long[] dids = new long[children.size() + 1];
         dids[0] = did;
         int i = 1;

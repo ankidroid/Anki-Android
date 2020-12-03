@@ -57,6 +57,7 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongCollection;
 import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
@@ -658,7 +659,7 @@ public class Finder {
         if (did == null) {
             return null;
         }
-        TreeMap<String, Long> children = mCol.getDecks().children(did);
+        Object2LongMap<String> children = mCol.getDecks().children(did);
         LongArrayList res = new LongArrayList();
         res.add((long) did);
         res.addAll(children.values());

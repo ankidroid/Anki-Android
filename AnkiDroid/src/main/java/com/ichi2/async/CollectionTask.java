@@ -83,6 +83,8 @@ import androidx.annotation.VisibleForTesting;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.objects.Object2LongAVLTreeMap;
+import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Collection.DismissType.BURY_CARD;
@@ -1670,7 +1672,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
         Deck deck = (Deck) data[0];
         DeckConfig conf = (DeckConfig) data[1];
         try {
-            TreeMap<String, Long> children = col.getDecks().children(deck.getLong("id"));
+            Object2LongMap<String> children = col.getDecks().children(deck.getLong("id"));
             for (long childDid : children.values()) {
                 Deck child = col.getDecks().get(childDid);
                 if (child.getInt("dyn") == 1) {

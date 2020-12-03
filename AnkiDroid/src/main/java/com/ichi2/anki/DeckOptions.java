@@ -71,6 +71,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import androidx.annotation.NonNull;
+import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import timber.log.Timber;
 
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
@@ -885,7 +886,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     private int getSubdeckCount() {
         int count = 0;
         long did = mDeck.getLong("id");
-        TreeMap<String, Long> children = mCol.getDecks().children(did);
+        Object2LongMap<String> children = mCol.getDecks().children(did);
         for (long childDid : children.values()) {
             Deck child = mCol.getDecks().get(childDid);
             if (child.getInt("dyn") == 1) {
