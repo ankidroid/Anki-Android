@@ -324,4 +324,52 @@
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+
+    <!-- Card Viewer -->
+    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
+    <string name="search_decks">Search decks</string>
+
+
+    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Font Size</string>
+
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
+
+    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again"
+        comment="After an Android backup is restored, AnkiDroid opens and shows this message.
+        Opening AnkiDroid again will work correctly">
+        Android backup in progress. Please try again</string>
+
+
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error">Error adding shortcut: %s</string>
+
+    <!--js api console log-->
+    <string name="js_api_console">Console</string>
+    <string name="js_api_debug_mode_enabled">Debug Mode Enabled</string>
+    <string name="js_api_console_action">View</string>
 </resources>
