@@ -368,8 +368,10 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
 
+    
     <!--js api console log-->
     <string name="js_api_console">Console</string>
     <string name="js_api_debug_mode_enabled">Debug Mode Enabled</string>
     <string name="js_api_console_action">View</string>
+
 </resources>
