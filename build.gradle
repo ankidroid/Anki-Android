@@ -17,6 +17,12 @@ buildscript {
             url "https://storage.googleapis.com/r8-releases/raw/master"
         }
         // End temporary #7558 work
+
+        allprojects {
+            repositories {
+                maven { url 'https://jitpack.io' }
+            }
+        }
     }
     dependencies {
         // Temporary, for #7558 where AGP4.0.x works, 4.1.x fails, from https://issuetracker.google.com/issues/169584856

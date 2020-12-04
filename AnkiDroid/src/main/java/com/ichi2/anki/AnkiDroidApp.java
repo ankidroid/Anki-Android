@@ -178,6 +178,9 @@ public class AnkiDroidApp extends MultiDexApplication {
      */
     public static final int CHECK_PREFERENCES_AT_VERSION = 20500225;
 
+    @VisibleForTesting
+    private static SharedPreferences sSharedPreferencesMock;
+
     /** Our ACRA configurations, initialized during onCreate() */
     private CoreConfigurationBuilder acraCoreConfigBuilder;
 
@@ -362,6 +365,10 @@ public class AnkiDroidApp extends MultiDexApplication {
      */
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public static SharedPreferences getSharedPrefs(Context context) {
+        if (sSharedPreferencesMock != null) {
+            return sSharedPreferencesMock;
+        }
+
         return android.preference.PreferenceManager.getDefaultSharedPreferences(context);
     }
 
@@ -643,6 +650,18 @@ public class AnkiDroidApp extends MultiDexApplication {
             return null;
         }
         return ExceptionUtil.getExceptionMessage(error);
+    }
+
+
+
+    @VisibleForTesting
+    public static void resetPreferenceMock() {
+        sSharedPreferencesMock = null;
+    }
+
+    @VisibleForTesting
+    public static void setPreferenceMock(SharedPreferences sharedPreferences) {
+        sSharedPreferencesMock = sharedPreferences;
     }
 
     /**

@@ -264,6 +264,7 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.4"
     testImplementation 'androidx.test:core:1.3.0'
     testImplementation 'androidx.test.ext:junit:1.1.2'
+    testImplementation 'com.github.IvanShafran:shared-preferences-mock:1.0'
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
     debugImplementation("androidx.fragment:fragment-testing:1.2.5") {
         // monitor dep constrained to 1.2 by fragment-testing, 1.3+ is needed: https://github.com/android/android-test/issues/481
