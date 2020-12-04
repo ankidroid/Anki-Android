@@ -889,7 +889,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     }
 
     @ Override
-    public void onConfigurationChanged(Configuration config) {
+    public void onConfigurationChanged(@NonNull Configuration config) {
         // called when screen rotated, etc, since recreating the Webview is too expensive
         super.onConfigurationChanged(config);
         refreshActionBar();
