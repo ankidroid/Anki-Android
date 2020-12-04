@@ -25,6 +25,8 @@ import androidx.core.content.ContextCompat;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.servicelayer.NightModeService;
+import com.ichi2.anki.servicelayer.NightModeService.NightMode;
 
 public class Themes {
     public final static int ALPHA_ICON_ENABLED_LIGHT = 255; // 100%
@@ -41,7 +43,7 @@ public class Themes {
 
     public static void setTheme(Context context) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
-        if (prefs.getBoolean("invertedColors", false)) {
+        if (isNightModeEnabled()) {
             int theme = Integer.parseInt(prefs.getString("nightTheme", "0"));
             switch (theme) {
                 case THEME_NIGHT_DARK:
@@ -66,7 +68,7 @@ public class Themes {
 
     public static void setThemeLegacy(Context context) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
-        if (prefs.getBoolean("invertedColors", false)) {
+        if (isNightModeEnabled()) {
             int theme = Integer.parseInt(prefs.getString("nightTheme", "0"));
             switch (theme) {
                 case THEME_NIGHT_DARK:
@@ -125,10 +127,16 @@ public class Themes {
      */
     public static int getCurrentTheme(Context context) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context);
-        if (prefs.getBoolean("invertedColors", false)) {
+        if (isNightModeEnabled()) {
             return Integer.parseInt(prefs.getString("nightTheme", "0"));
         } else {
             return Integer.parseInt(prefs.getString("dayTheme", "0"));
         }
+    }
+
+
+    protected static boolean isNightModeEnabled() {
+        NightMode nightMode = NightModeService.getNightMode();
+        return nightMode.isNightModeEnabled();
     }
 }

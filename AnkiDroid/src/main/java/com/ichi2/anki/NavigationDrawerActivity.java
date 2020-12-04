@@ -37,6 +37,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ichi2.anki.dialogs.HelpDialog;
+import com.ichi2.anki.servicelayer.NightModeService;
+import com.ichi2.anki.servicelayer.NightModeService.NightMode;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
 import androidx.drawerlayout.widget.ClosableDrawerLayout;
@@ -66,7 +68,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
     public static final int REQUEST_STATISTICS = 102;
-    private static final String NIGHT_MODE_PREFERENCE = "invertedColors";
 
     /**
      * runnable that will be executed after the drawer has been closed.
@@ -138,8 +139,8 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             mNightModeSwitch = actionLayout.findViewById(R.id.switch_compat);
         }
 
-        final SharedPreferences preferences = getPreferences();
-        mNightModeSwitch.setChecked(preferences.getBoolean(NIGHT_MODE_PREFERENCE, false));
+        NightMode nightMode = NightModeService.getNightMode();
+        mNightModeSwitch.setChecked(nightMode.isNightModeEnabled());
         mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> applyNightMode(isChecked));
     }
 
@@ -196,9 +197,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
     private void applyNightMode(boolean setToNightMode) {
-        final SharedPreferences preferences = getPreferences();
-        Timber.i("Night mode was %s", setToNightMode ? "enabled" : "disabled");
-        preferences.edit().putBoolean(NIGHT_MODE_PREFERENCE, setToNightMode).apply();
+        NightModeService.setManualNightModeMode(setToNightMode);
         restartActivityInvalidateBackstack(NavigationDrawerActivity.this);
     }
 
