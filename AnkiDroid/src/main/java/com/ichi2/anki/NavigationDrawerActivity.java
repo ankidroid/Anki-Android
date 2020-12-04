@@ -41,6 +41,7 @@ import com.ichi2.anki.servicelayer.NightModeService;
 import com.ichi2.anki.servicelayer.NightModeService.NightMode;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
+import com.ichi2.ui.MenuItemUtil;
 import androidx.drawerlayout.widget.ClosableDrawerLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -134,14 +135,57 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
 
 
     private void setupNightModeSwitch() {
+        MenuItem item = mNavigationView.getMenu().findItem(R.id.nav_night_mode);
         if (mNightModeSwitch == null) {
-            View actionLayout = mNavigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
+            View actionLayout = item.getActionView();
             mNightModeSwitch = actionLayout.findViewById(R.id.switch_compat);
         }
 
-        NightMode nightMode = NightModeService.getNightMode();
+        NightMode nightMode = NightModeService.setupNightMode(getResources().getConfiguration());
+
+        // The call can disable system night mode, inform the user if this happens.
+        if (nightMode.isUsingFallback()) {
+            UIUtils.showThemedToast(this, getString(R.string.night_mode_error_disable_follow), false);
+        }
+
+        // keep the switch consistent with the reality, whether in dark, or normal mode.
         mNightModeSwitch.setChecked(nightMode.isNightModeEnabled());
-        mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> applyNightMode(isChecked));
+
+        // We don't have the ability to cancel a click of the switch. A click when there is no listener will
+        // cause it to be out of sync, so if we're using system night mode, the switch should be disabled.
+        mNightModeSwitch.setEnabled(!nightMode.isFollowingSystem());
+
+        // Regardless of the status of using system night mode, allow a toggle
+        MenuItemUtil.setOnLongPressListener(this, item, view -> {
+            boolean newValue = NightModeService.toggleFollowingSystemNightMode();
+
+            // inform the user
+            String message = newValue ? getString(R.string.night_mode_follow_system) : getString(R.string.night_mode_set_manual);
+            UIUtils.showThemedToast(NavigationDrawerActivity.this, message, false);
+
+            // If we have a change of state - refresh the activity, otherwise update the UI state to match
+            NightMode newNightMode = NightModeService.setupNightMode(getResources().getConfiguration());
+            if (nightMode.isNightModeEnabled() != newNightMode.isNightModeEnabled()) {
+                restartActivityInvalidateBackstack(this);
+            } else {
+                setupNightModeSwitch();
+            }
+
+            return true;
+        });
+
+        if (nightMode.isFollowingSystem()) {
+            // We've disabled the switch, tell the user why.
+            // COULD_BE_BETTER: Clicking the switch does not show this message, as it is disabled.
+            item.setOnMenuItemClickListener(menuItem -> {
+                UIUtils.showThemedToast(this, getString(R.string.night_mode_explain_long_press), false);
+                return true;
+            });
+
+        } else {
+            // Note: Only works when Manual Mode is enabled
+            mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> applyNightMode(isChecked));
+        }
     }
 
 

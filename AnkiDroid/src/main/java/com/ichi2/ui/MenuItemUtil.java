@@ -14,34 +14,27 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.testutils;
+package com.ichi2.ui;
 
-import android.content.SharedPreferences;
+import android.app.Activity;
+import android.os.Handler;
+import android.view.MenuItem;
+import android.view.View;
 
-import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.NavigationDrawerActivity;
+import com.ichi2.anki.R;
+import com.ichi2.anki.UIUtils;
+import com.ichi2.anki.servicelayer.NightModeService;
 
-import org.junit.After;
-import org.junit.Before;
+public class MenuItemUtil {
 
-/** A test class which does not use Robolectric */
-public class FastTest {
+    public static void setOnLongPressListener(Activity activity, MenuItem item, View.OnLongClickListener listener) {
+        new Handler().post(() -> {
+            View view = activity.findViewById(item.getItemId());
 
-    private SharedPreferences mPreferences;
-
-
-    @Before
-    public void before() {
-        SharedPreferences preferences = PreferencesMock.getInstance();
-        AnkiDroidApp.setPreferenceMock(preferences);
-        this.mPreferences = preferences;
-    }
-
-    @After
-    public void after() {
-        AnkiDroidApp.resetPreferenceMock();
-    }
-
-    protected SharedPreferences getSharedPrefs() {
-        return mPreferences;
+            if (view != null) {
+                view.setOnLongClickListener(listener);
+            }
+        });
     }
 }

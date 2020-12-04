@@ -43,7 +43,7 @@ public class Themes {
 
     public static void setTheme(Context context) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
-        if (isNightModeEnabled()) {
+        if (isNightModeEnabled(context)) {
             int theme = Integer.parseInt(prefs.getString("nightTheme", "0"));
             switch (theme) {
                 case THEME_NIGHT_DARK:
@@ -68,7 +68,7 @@ public class Themes {
 
     public static void setThemeLegacy(Context context) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context.getApplicationContext());
-        if (isNightModeEnabled()) {
+        if (isNightModeEnabled(context)) {
             int theme = Integer.parseInt(prefs.getString("nightTheme", "0"));
             switch (theme) {
                 case THEME_NIGHT_DARK:
@@ -127,7 +127,7 @@ public class Themes {
      */
     public static int getCurrentTheme(Context context) {
         SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context);
-        if (isNightModeEnabled()) {
+        if (isNightModeEnabled(context)) {
             return Integer.parseInt(prefs.getString("nightTheme", "0"));
         } else {
             return Integer.parseInt(prefs.getString("dayTheme", "0"));
@@ -135,8 +135,8 @@ public class Themes {
     }
 
 
-    protected static boolean isNightModeEnabled() {
-        NightMode nightMode = NightModeService.getNightMode();
+    protected static boolean isNightModeEnabled(Context context) {
+        NightMode nightMode = NightModeService.setupNightMode(context.getResources().getConfiguration());
         return nightMode.isNightModeEnabled();
     }
 }

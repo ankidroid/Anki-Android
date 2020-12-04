@@ -17,25 +17,60 @@
 package com.ichi2.anki.servicelayer;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 
 import com.ichi2.anki.AnkiDroidApp;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class NightModeService {
 
     private static final String NIGHT_MODE_PREFERENCE = "invertedColors";
+    private static final String FOLLOW_SYSTEM_NIGHT_MODE_PREFERENCE = "followSystemNightMode";
 
-    public static NightMode getNightMode() {
+    @CheckResult
+    public static NightMode setupNightMode(Configuration configuration) {
         final SharedPreferences preferences = getPreferences();
 
-        return new NightMode(getManualNightMode(preferences));
+        if (!isFollowingSystemNightMode(preferences)) {
+            return NightMode.fromManualNightMode(getManualNightMode(preferences));
+        }
+
+        SystemNightMode systemNightMode = getSystemNightModeStatus(configuration);
+
+        if (systemNightMode == SystemNightMode.UNDEFINED) {
+            Timber.w("Disabling follow system night mode - could not get value");
+            setFollowingSystemNightMode(false);
+            return NightMode.fromManualFallback(getManualNightMode(preferences));
+        }
+
+        return NightMode.fromValidSystemNightMode(systemNightMode);
     }
 
-    public static void setManualNightModeMode(boolean isNightMode) {
+    public static void setManualNightModeMode(boolean value) {
         final SharedPreferences preferences = getPreferences();
-        Timber.i("Night mode was %s", isNightMode ? "enabled" : "disabled");
-        preferences.edit().putBoolean(NIGHT_MODE_PREFERENCE, isNightMode).apply();
+        Timber.i("Night mode was %s", value ? "enabled" : "disabled");
+        preferences.edit().putBoolean(NIGHT_MODE_PREFERENCE, value).apply();
+    }
+
+    /** @return the new value of "Following System Night Mode" */
+    public static boolean toggleFollowingSystemNightMode() {
+        Timber.i("Toggling 'following system night mode'");
+        boolean systemNightMode = isFollowingSystemNightMode(getPreferences());
+        setFollowingSystemNightMode(!systemNightMode);
+        return !systemNightMode;
+    }
+
+    public static void setFollowingSystemNightMode(boolean value) {
+        final SharedPreferences preferences = getPreferences();
+        Timber.i("Following system mode was %s", value ? "enabled" : "disabled");
+        preferences.edit().putBoolean(FOLLOW_SYSTEM_NIGHT_MODE_PREFERENCE, value).apply();
+    }
+
+    protected static boolean isFollowingSystemNightMode(SharedPreferences preferences) {
+        return preferences.getBoolean(FOLLOW_SYSTEM_NIGHT_MODE_PREFERENCE, true);
     }
 
     protected static boolean getManualNightMode(SharedPreferences preferences) {
@@ -46,15 +81,61 @@ public class NightModeService {
         return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
     }
 
+    private static SystemNightMode getSystemNightModeStatus(@NonNull Configuration configuration) {
+        switch (configuration.uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                return SystemNightMode.OFF;
+            case Configuration.UI_MODE_NIGHT_YES:
+                return SystemNightMode.ON;
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+            default:
+                return SystemNightMode.UNDEFINED;
+        }
+    }
+
+
     public static class NightMode {
         private final boolean mNightModeEnabled;
+        private final boolean mFollowingSystemNightMode;
+        private final boolean mErrorWithAutoNightMode;
 
-        public NightMode(boolean nightModeEnabled) {
+
+        public NightMode(boolean nightModeEnabled, boolean followingSystemNightMode, boolean errorWithAutoNightMode) {
             mNightModeEnabled = nightModeEnabled;
+            mErrorWithAutoNightMode = errorWithAutoNightMode;
+            mFollowingSystemNightMode = followingSystemNightMode;
+        }
+
+
+        public static NightMode fromValidSystemNightMode(SystemNightMode systemNightMode) {
+            return new NightMode(systemNightMode == SystemNightMode.ON, true, false);
+        }
+
+        public static NightMode fromManualNightMode(boolean nightModeEnabled) {
+            return new NightMode(nightModeEnabled, false, false);
+        }
+
+        public static NightMode fromManualFallback(boolean nightModeEnabled) {
+            return new NightMode(nightModeEnabled, false, true);
         }
 
         public boolean isNightModeEnabled() {
             return mNightModeEnabled;
         }
+
+        public boolean isFollowingSystem() {
+            return mFollowingSystemNightMode;
+        }
+
+        public boolean isUsingFallback() {
+            return mErrorWithAutoNightMode;
+        }
+    }
+
+
+    public enum SystemNightMode {
+        ON,
+        OFF,
+        UNDEFINED
     }
 }

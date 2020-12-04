@@ -39,6 +39,10 @@
             android:entryValues="@array/night_theme_values"
             android:key="nightTheme"
             android:title="@string/night_theme" />
+        <CheckBoxPreference
+            android:key="followSystemNightMode"
+            android:defaultValue="true"
+            android:title="@string/follow_system_night_mode" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/background_image_title" >
         <CheckBoxPreference
