@@ -306,11 +306,6 @@
         <item quantity="other">%d notes unchanged</item>
     </plurals>
 
-    <!--js api console log-->
-    <string name="js_api_console">Console</string>
-    <string name="js_api_debug_mode_enabled">Debug Mode Enabled</string>
-    <string name="js_api_console_action">View</string>
-
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
     <string name="invalid_json_data">Card provided invalid data. %s</string>
