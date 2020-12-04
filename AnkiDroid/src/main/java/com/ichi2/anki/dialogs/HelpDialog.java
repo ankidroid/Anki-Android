@@ -200,15 +200,15 @@ public class HelpDialog {
         }
 
         @SuppressWarnings("unused")
-        public static final Parcelable.Creator<LinkItem> CREATOR = new Parcelable.Creator<LinkItem>() {
+        public static final Parcelable.Creator<FunctionItem> CREATOR = new Parcelable.Creator<FunctionItem>() {
             @Override
-            public LinkItem createFromParcel(Parcel in) {
-                return new LinkItem(in);
+            public FunctionItem createFromParcel(Parcel in) {
+                return new FunctionItem(in);
             }
 
             @Override
-            public LinkItem[] newArray(int size) {
-                return new LinkItem[size];
+            public FunctionItem[] newArray(int size) {
+                return new FunctionItem[size];
             }
         };
 
