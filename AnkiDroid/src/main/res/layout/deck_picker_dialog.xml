@@ -32,7 +32,7 @@
         app:popupTheme="@style/ActionBar.Popup">
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView android:id="@+id/deck_picker_dialog_summary"
+    <com.ichi2.ui.FixedTextView android:id="@+id/deck_picker_dialog_summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

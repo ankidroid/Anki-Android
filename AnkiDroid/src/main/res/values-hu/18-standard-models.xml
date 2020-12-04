@@ -22,13 +22,11 @@
     <!--Fields-->
     <string name="front_field_name">Elülső</string>
     <string name="back_field_name">Hátsó</string>
-    <string name="text_field_name">Szöveg</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Szöveg</string>
     <string name="extra_field_name">Extra</string>
     <string name="field_to_ask_front_name">Fordított hozzáadása</string>
     <!--Card type-->
-    <string name="card_one_name">1. Kártya</string>
-    <string name="card_two_name">2. Kártya</string>
-    <string name="card_cloze_name">Kitöltés</string>
+    <string name="card_n_name">Kártya %d</string>
     <!--Note type-->
     <string name="basic_model_name">Általános</string>
     <string name="cloze_model_name">Kitöltés</string>

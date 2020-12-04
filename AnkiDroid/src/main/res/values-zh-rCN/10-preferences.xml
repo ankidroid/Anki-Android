@@ -42,14 +42,12 @@
     <string name="disabled">禁用</string>
     <string name="enabled">启用</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">常用设置</string>
     <string name="pref_cat_reviewing">复习</string>
     <string name="pref_cat_reviewing_summ">复习通用设置</string>
     <string name="pref_cat_reviewer_behaviour">行为</string>
     <string name="pref_cat_flashcard">显示</string>
     <string name="pref_cat_whiteboard">白板</string>
-    <string name="pref_cat_automatic_display">自动显示答案</string>
     <string name="pref_cat_appearance">外观</string>
     <string name="pref_cat_appearance_summ">更改主题和默认字体</string>
     <string name="pref_cat_themes">主题</string>
@@ -96,15 +94,26 @@
     <string name="gestures_summ">为回答或编辑卡片等动作指定手势。</string>
     <string name="gestures_allow_links">忽略链接上的触摸手势</string>
     <string name="gestures_allow_links_summary">如果按下链接/提示，触摸手势将不会被处理。</string>
+    <string name="gestures_corner_touch">9 点触摸</string>
+    <string name="gestures_corner_touch_summary">允许屏幕边缘的触摸手势</string>
     <string name="gestures_swipe_up">向上滑动</string>
     <string name="gestures_swipe_down">向下滑动</string>
     <string name="gestures_swipe_left">向左滑动</string>
     <string name="gestures_swipe_right">向右滑动</string>
     <string name="gestures_double_tap">双击</string>
     <string name="gestures_tap_top">点击顶部</string>
-    <string name="gestures_tap_bottom">点击底部</string>
     <string name="gestures_tap_left">点击左侧</string>
     <string name="gestures_tap_right">点击右侧</string>
+    <string name="gestures_tap_bottom">点击底部</string>
+    <string name="gestures_corner_tap_top_left">触摸左上方</string>
+    <string name="gestures_corner_tap_top_center">触摸顶部中心</string>
+    <string name="gestures_corner_tap_top_right">触摸右上方</string>
+    <string name="gestures_corner_tap_middle_left">触摸中部左侧</string>
+    <string name="gestures_corner_tap_middle_center">触摸正中处</string>
+    <string name="gestures_corner_tap_middle_right">触摸中部右侧</string>
+    <string name="gestures_corner_tap_bottom_left">触摸左下方</string>
+    <string name="gestures_corner_tap_bottom_center">触摸底部中心</string>
+    <string name="gestures_corner_tap_bottom_right">触摸右下方</string>
     <string name="gestures_volume_up">调高音量</string>
     <string name="gestures_volume_down">调低音量</string>
     <string name="more_scrolling_buttons">电子书阅读器</string>
@@ -123,8 +132,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">自动同步</string>
     <string name="automatic_sync_choice_summ">如果距离上次同步了超过10分钟，在应用程序启动/退出自动同步。</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">显示同步状态</string>
+    <string name="sync_status_badge_summ">当更改可被上传时改变同步图标</string>
     <string name="day_theme">白天主题</string>
     <string name="night_theme">夜间主题</string>
     <string name="default_font">默认字体</string>
@@ -141,9 +150,8 @@
     <string name="timeout_answer_text">自动显示答案</string>
     <string name="timeout_answer_summ">无需用户输入自动显示答案。延迟时间包括自动播放音频文件的时间。</string>
     <string name="timeout_answer_seconds">显示答案时间</string>
-    <string name="timeout_answer_seconds_summ">XXX 秒</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
     <string name="timeout_question_seconds">显示下一个问题时间</string>
-    <string name="timeout_question_seconds_summ">XXX 秒</string>
     <string name="select_locale_title">选择语言</string>
     <string name="safe_display">安全显示模式</string>
     <string name="safe_display_summ">禁用所有动画并使用更安全的方法绘制卡牌。使用墨水屏（E-ink）的设备可能需要此功能。</string>
@@ -164,7 +172,6 @@
     <string name="use_current">新牌组</string>
     <string name="new_spread">新卡片位置</string>
     <string name="learn_cutoff">提前学习的限制</string>
-    <string name="learn_cutoff_summ">XXX 分钟</string>
     <string name="time_limit">时间盒时间限制</string>
     <string name="time_limit_summ">XXX 分钟</string>
     <string name="day_offset">下一天开始的时间</string>
@@ -215,8 +222,8 @@
         <item quantity="other">%1$s\n%2$d 牌组使用此选项组</item>
     </plurals>
     <string name="deck_conf_new_cards">新卡片</string>
-    <string name="deck_conf_rev_cards">复习</string>
-    <string name="deck_conf_lps_cards">失误</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">复习</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">失误</string>
     <string name="deck_conf_general">常规</string>
     <string name="deck_conf_reminders">提醒</string>
     <string name="deck_conf_steps">间隔的步伐(以分钟计)</string>
@@ -225,7 +232,7 @@
     <string name="deck_conf_graduating_ivl">毕业时间间隔</string>
     <string name="deck_conf_days">XXX 天</string>
     <string name="deck_conf_easy_ivl">简单按钮对应的时间间隔</string>
-    <string name="deck_conf_start_ease">初始难度</string>
+    <string name="deck_conf_start_ease">初始简易度</string>
     <string name="deck_conf_max_rev">最大复习数量/天</string>
     <string name="deck_conf_new_bury">隐藏相关新卡片</string>
     <string name="deck_conf_new_bury_summ">相关新卡片隐藏至第二天显示</string>
@@ -234,6 +241,7 @@
     <string name="deck_conf_use_general_timeout_settings">使用常规设置</string>
     <string name="deck_conf_use_general_timeout_settings_summ">使用一般的 “自动显示答案” 设置，而不是使用此组的设置。</string>
     <string name="deck_conf_easy_bonus">回答简单的时间间隔增加比例</string>
+    <string name="deck_conf_hard_factor">困难按钮对应的时间间隔</string>
     <string name="deck_conf_ivl_fct">时间间隔因子</string>
     <string name="deck_conf_max_ivl">最大时间间隔</string>
     <string name="deck_conf_new_lps_ivl">新的时间间隔</string>
@@ -248,29 +256,25 @@
     <string name="deck_conf_replayq">重播问题</string>
     <string name="deck_conf_replayq_summ">显示答案时，同时播放问题和答案的音频。</string>
     <string name="deck_conf_manage">组管理</string>
+    <string name="deck_conf_manage_summ">添加和更改选项组</string>
     <string name="deck_conf_current_group">当前组</string>
-    <string name="deck_conf_rename">重命名</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">重命名</string>
     <string name="deck_conf_reset">恢复默认</string>
-    <string name="deck_conf_reset_title">恢复默认</string>
     <string name="deck_conf_reset_message">是否将当前选项组还原到默认值？</string>
-    <string name="deck_conf_add">添加选项组</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">添加选项组</string>
     <string name="deck_conf_add_summ">创建当前选项组的副本</string>
-    <string name="deck_conf_remove">删除</string>
-    <string name="deck_conf_remove_title">删除</string>
     <string name="deck_conf_remove_message">是否确认删除当前选项组？</string>
     <string name="deck_conf_set_subdecks">所有子牌组使用此选项组</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">%s 子牌组将使用此选项组</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">应用此选项组到所有子牌组</string>
     <string name="deck_conf_set_subdecks_message">为当前牌组的所有子牌组应用此选项组?</string>
     <string name="pref_browser_editor_font">浏览器和编辑器字体</string>
     <string name="deck_conf_cram_filter">筛选器</string>
-    <string name="deck_conf_cram_options">选项</string>
     <string name="deck_conf_cram_search">搜索</string>
     <string name="deck_conf_cram_limit">限制至</string>
     <string name="deck_conf_cram_order">卡片选择标准</string>
-    <string name="deck_conf_cram_reschedule">重新安排学习进度</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新安排学习进度</string>
     <string name="deck_conf_cram_reschedule_summ">按当前牌组的回答重排卡牌</string>
     <string name="deck_conf_cram_steps">自定义步伐(以分钟计)</string>
     <string name="deck_conf_cram_steps_summ">自定义步伐</string>
@@ -280,4 +284,6 @@
     <string name="analytics_dialog_title">帮助让 AnkiDroid 更好！</string>
     <string name="analytics_title">分享功能使用</string>
     <string name="analytics_summ">您可以通过帮助开发团队了解用户使用哪些功能来帮助 AnkiDroid</string>
+    <string name="note_editor_replace_newlines">用 HTML 替换换行</string>
+    <string name="note_editor_replace_newlines_summ">在笔记编辑器中，编辑卡片时将 &lt;br&gt; 的任何实例转换为换行。</string>
 </resources>

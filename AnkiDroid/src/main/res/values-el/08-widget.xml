@@ -44,26 +44,14 @@
         <item quantity="one">%d AnkiDroid card due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_no_cards_due">Δεν απομένουν επαναλήψεις</string>
-    <string name="widget_loading">Φόρτωση widget...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d card due in %2$s</item>
-        <item quantity="other">%1$d cards due in %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d deck</item>
-        <item quantity="other">%1$d decks</item>
-    </plurals>
-    <string name="widget_small">Ανκί-Ντρόιντ Μικρό</string>
-    <string name="widget_small_button">AnkiDroid</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">Ανκί-Ντρόιντ Μικρό</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d card due</item>
-        <item quantity="other">%d cards due</item>
+        <item quantity="one">%d κάρτα λήγει</item>
+        <item quantity="other">%d κάρτες λήγουν</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="other">%d minutes remaining</item>
+        <item quantity="one">Απομένει %d λεπτό</item>
+        <item quantity="other">Απομένουν %d λεπτά</item>
     </plurals>
-    <string name="widget_add_note">Add note</string>
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

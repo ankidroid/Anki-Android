@@ -39,35 +39,6 @@
         <item>Non segnalare mai</item>
         <item>Chiedimi</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Nessuna azione</item>
-        <item>Mostra la risposta</item>
-        <item>Pulsante risposta 1</item>
-        <item>Pulsante risposta 2</item>
-        <item>Pulsante risposta 3</item>
-        <item>Pulsante risposta 4</item>
-        <item>Risposta raccomandata (verde)</item>
-        <item>Risposta migliore di quanto raccomandato</item>
-        <item>Annulla</item>
-        <item>Modifica nota</item>
-        <item>Nota di etichetta</item>
-        <item>Contrassegna la nota</item>
-        <item>Verifica l\'espressione</item>
-        <item>Seppellisci la carta</item>
-        <item>Sospendi la carta</item>
-        <item>Elimina la nota</item>
-        <item>Riproduci media</item>
-        <item>Interrompi l\'apprendimento</item>
-        <item>Seppellisci la nota</item>
-        <item>Sospendi la nota</item>
-        <item>Attiva/disattiva contrassegno rosso</item>
-        <item>Attiva/disattiva contrassegno aracione</item>
-        <item>Attiva/disattiva contrassegno verde</item>
-        <item>Attiva/disattiva contrassegno blu</item>
-        <item>Rimuovi il contrassegno</item>
-        <item>Vai su</item>
-        <item>Vai giù</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Sospendi carta</item>
         <item>Etichetta soltanto</item>
@@ -108,4 +79,36 @@
         <item>Nero</item>
         <item>Scuro</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-piccolo</item>
+        <item>x-piccolo</item>
+        <item>piccolo</item>
+        <item>medio</item>
+        <item>grande</item>
+        <item>x-grande</item>
+        <item>xx-grande</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">Nessuna azione</string>
+    <string name="gesture_answer_1">Pulsante risposta 1</string>
+    <string name="gesture_answer_2">Pulsante risposta 2</string>
+    <string name="gesture_answer_3">Pulsante risposta 3</string>
+    <string name="gesture_answer_4">Pulsante risposta 4</string>
+    <string name="gesture_answer_green">Risposta raccomandata (verde)</string>
+    <string name="gesture_answer_better_recommended">Risposta migliore di quanto raccomandato</string>
+    <string name="gesture_tag_note">Nota di etichetta</string>
+    <string name="gesture_lookup">Verifica l\'espressione</string>
+    <string name="gesture_play">Riproduci media</string>
+    <string name="gesture_abort_learning">Interrompi l\'apprendimento</string>
+    <string name="gesture_flag_red">Attiva/disattiva contrassegno rosso</string>
+    <string name="gesture_flag_orange">Attiva/disattiva contrassegno aracione</string>
+    <string name="gesture_flag_green">Attiva/disattiva contrassegno verde</string>
+    <string name="gesture_flag_blue">Attiva/disattiva contrassegno blu</string>
+    <string name="gesture_flag_remove">Rimuovi il contrassegno</string>
+    <string name="gesture_page_up">Vai su</string>
+    <string name="gesture_page_down">Vai giù</string>
+    <string name="gesture_abort_sync">Interrompi Apprendimento e Sincronizzazione</string>
 </resources>

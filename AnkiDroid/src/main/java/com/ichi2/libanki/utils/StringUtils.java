@@ -24,7 +24,7 @@ import androidx.annotation.NonNull;
 
 public class StringUtils {
 
-    private static Pattern WHITESPACE_PATTERN = Pattern.compile("\\s+", Pattern.MULTILINE | Pattern.DOTALL);
+    private static final Pattern WHITESPACE_PATTERN = Pattern.compile("\\s+", Pattern.MULTILINE | Pattern.DOTALL);
 
     /** Equivalent to the python string.split() */
     @NonNull

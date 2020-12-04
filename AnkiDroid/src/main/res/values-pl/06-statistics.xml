@@ -42,9 +42,10 @@
     <string name="statistics_mature">Dojrzałe</string>
     <string name="statistics_young_and_learn">Młode+Uczone</string>
     <string name="statistics_unlearned">Niewidziane</string>
-    <string name="statistics_suspended_and_buried">Zawieszone+Zakopane</string>
-    <string name="statistics_relearn">Uczone ponownie</string>
-    <string name="statistics_learn">Uczone</string>
+    <string name="statistics_suspended">Zawieszone</string>
+    <string name="statistics_buried">Zakopane</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Uczone ponownie</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Uczone</string>
     <string name="statistics_cram">Zakuwane</string>
     <string name="stats_cards">Karty</string>
     <string name="stats_cards_intervals">Liczba kart według przerwy</string>
@@ -66,7 +67,7 @@
     <string name="stats_time_of_day">Godzina</string>
     <string name="stats_day_of_week">Dzień tygodnia</string>
     <string formatted="false" name="stats_percentage_correct">% poprawnych</string>
-    <string name="stats_reviews">Powtórki</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Powtórki</string>
     <string name="stats_answer_type">Typ odpowiedzi</string>
     <string name="stats_today_again_count">Liczba powtórek: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; dobrze)</string>
@@ -77,13 +78,12 @@
     <string name="stats_overview_forecast_average">Średnia: &lt;b&gt;%1$.1f&lt;/b&gt; powtórek/dzień</string>
     <string name="stats_overview_forecast_due_tomorrow">Na jutro: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Dni nauki: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d z %3$d)</string>
-    <string name="stats_overview_total_reviews">Razem powtórek: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_reviews_per_day_studydays">Średnia dla dni nauki: &lt;b&gt;%1$.1f&lt;/b&gt; powtórek/dzień</string>
     <string name="stats_overview_reviews_per_day_all">Przy codziennej nauce: &lt;b&gt;%1$.1f&lt;/b&gt; powtórek/dzień</string>
-    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
+    <string name="stats_overview_total_time_in_period">Łącznie: &lt;b&gt;%d&lt;/b&gt; minut</string>
     <string name="stats_overview_time_per_day_studydays">Średnia dla dni nauki: &lt;b&gt;%1$.1f&lt;/b&gt; min/dzień</string>
     <string name="stats_overview_time_per_day_all">Przy codziennej nauce: &lt;b&gt;%1$.1f&lt;/b&gt; min/dzień</string>
-    <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>
+    <string name="stats_overview_average_answer_time">Średni czas odpowiedzi: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; kart/minutę)</string>
     <string name="stats_overview_new_cards_per_day">Średnia: &lt;b&gt;%1$.1f&lt;/b&gt; kart/dzień</string>
     <string name="stats_overview_total_new_cards">Razem kart: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_average_interval">"Średni odstęp czasu: "</string>
@@ -92,15 +92,14 @@
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; miesięcy</string>
     <string name="stats_overview_days">&lt;b&gt;%1$.1f&lt;/b&gt; dni</string>
     <string name="stats_overview_hours">&lt;b&gt;%1$.1f&lt;/b&gt; godzin</string>
-    <string name="stats_overview_answer_buttons_learn">Learning: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_young">Young: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_answer_buttons_mature">Mature: &lt;b&gt;%1$.2f%%&lt;/b&gt; correct (%2$d of %3$d)</string>
-    <string name="stats_overview_card_types_total_cards">Total cards: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_total_notes">Total notes: &lt;b&gt;%d&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="deck_summary_all_decks">Wszystkie talie</string>
+    <string name="stats_overview_answer_buttons_learn">Uczone: &lt;b&gt;%1$.2f%%&lt;/b&gt; poprawnie (%2$d z %3$d)</string>
+    <string name="stats_overview_answer_buttons_young">Młode: &lt;b&gt;%1$.2f%%&lt;/b&gt; poprawnie (%2$d z %3$d)</string>
+    <string name="stats_overview_answer_buttons_mature">Dojrzałe: &lt;b&gt;%1$.2f%%&lt;/b&gt; poprawnie (%2$d z %3$d)</string>
+    <string name="stats_overview_card_types_total_cards">Ilość kart: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_total_notes">Ilość notatek: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_lowest_ease">Najniższa łatwość: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_average_ease">Średnia łatwość: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
+    <string name="stats_overview_card_types_highest_ease">Najwyższa łatwość: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_select_time_scale">Wybierz skalę czasową</string>
     <string-array name="due_x_axis_title">
         <item>Dni</item>
@@ -112,12 +111,11 @@
     <string name="stats_forecast">Prognoza</string>
     <string name="stats_review_count">Liczba powtórek</string>
     <string name="stats_review_time">Czas powtórek</string>
-    <string name="stats_added">Dodano</string>
+    <string name="stats_added" comment="Label of the number of added card">Dodano</string>
     <string name="stats_review_intervals">Przerwy</string>
     <string name="stats_breakdown">Rozkład godzinowy</string>
     <string name="stats_weekly_breakdown">Rozkład po dniach tygodnia</string>
     <string name="stats_answer_buttons">Przyciski odpowiedzi</string>
-    <string name="stats_cards_types">Typy kart</string>
     <string-array name="stats_day_time_strings">
         <item>04:00</item>
         <item>10:00</item>

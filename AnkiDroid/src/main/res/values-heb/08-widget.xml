@@ -46,22 +46,7 @@
         <item quantity="many">%d AnkiDroid cards due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_no_cards_due">No cards due</string>
-    <string name="widget_loading">הווידג׳ט בטעינה&#8230;</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d card due in %2$s</item>
-        <item quantity="two">%1$d cards due in %2$s</item>
-        <item quantity="many">%1$d cards due in %2$s</item>
-        <item quantity="other">%1$d cards due in %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d deck</item>
-        <item quantity="two">%1$d decks</item>
-        <item quantity="many">%1$d decks</item>
-        <item quantity="other">%1$d decks</item>
-    </plurals>
-    <string name="widget_small">AnkiDroid קטן</string>
-    <string name="widget_small_button">AnkiDroid</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid קטן</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d card due</item>
         <item quantity="two">%d cards due</item>
@@ -74,6 +59,5 @@
         <item quantity="many">נותרו %d דקות</item>
         <item quantity="other">נותרו %d דקות</item>
     </plurals>
-    <string name="widget_add_note">הוספת מושג</string>
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">Керування типами записів</string>
-    <string name="model_editor_label">Керувати полями</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Керування типами записів</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Керувати полями</string>
     <!--Toasts-->
     <string name="toast_last_model">Ви не можете видалити останній тип примітки</string>
     <string name="toast_last_field">Має бути принаймні одне поле в типі записів</string>
@@ -41,24 +41,23 @@
         <item quantity="many">%d записів</item>
         <item quantity="other">%d записи</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">Додати тип запису</string>
     <!--Browser-->
     <string name="model_browser_delete">Видалити тип запису</string>
-    <string name="model_browser_rename">Перейменувати</string>
-    <string name="model_browser_options">Налаштування</string>
+    <string name="model_browser_rename" comment="Rename a note type">Перейменувати</string>
     <string name="model_browser_template">Редагувати картки</string>
     <string name="model_browser_add">Додати тип запису</string>
     <!--Rename-->
     <string name="rename_model">Перейменувати тип запису</string>
+    <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_success_result">Встановити %s як мову підказок </string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Редагувати поля</string>
     <string name="model_field_editor_add">Додати поле</string>
     <string name="model_field_editor_delete">Видалити поле</string>
-    <string name="model_field_editor_options">Налаштування полів</string>
-    <string name="model_field_editor_rename">Перейменувати поля</string>
+    <string name="model_field_editor_rename">Перейменувати поле</string>
+    <string name="model_field_editor_language_hint">Встановлення мови підказок клавіатури</string>
     <string name="model_field_editor_reposition_menu">Перемістити поле</string>
-    <string name="model_field_editor_reposition">Перемістіть поле (введіть значення %1$d–%2$d)</string>
+    <string name="model_field_editor_reposition">Перемістити поле (введіть значення %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Запам\'ятовувати останні вхідні дані під час додавання</string>
     <string name="model_field_editor_changing">Оновлення полів</string>
     <string name="model_field_editor_sort_field">Сортувати за цим полем</string>
@@ -75,14 +74,12 @@
     <string name="card_template_browser_appearance_question_format">Формат запитання</string>
     <string name="card_template_browser_appearance_answer_format">Формат відповіді</string>
     <string name="card_template_browser_appearance_restore_default_dialog">Відновити значення за замовчуванням?</string>
-    <string name="card_template_browser_appearance_saving_note">Ці зміни застосуються, коли шаблон карти збережеться</string>
+    <string name="card_template_browser_appearance_saving_note">Зміни застосуються після збереження шаблону картки</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Перевизначення колоди (увімк.)</string>
     <string name="card_template_editor_deck_override_off">Перевизначення колоди (вимк.)</string>
-    <string name="model_manager_deck_override_added_message">Встановити типову колоду «%1$s» до «%2$s»</string>
-    <string name="model_manager_deck_override_removed_message">Переміщено колоду за замовчуванням для «%s»</string>
-    <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">Неможливо встановити перевизначення колоди до відфільтрованої колоди</string>
-    <string name="deck_override_explanation">Оберіть колоду для розміщення карток у нове місце «%s»</string>
-    <string name="deck_picker_dialog_filter_decks">Фільтровані колоди</string>
+    <string name="model_manager_deck_override_added_message">«%2$s» встановлена як колода за замовчуванням для «%1$s»</string>
+    <string name="model_manager_deck_override_removed_message">Видалено колоду за замовчуванням для «%s»</string>
+    <string name="deck_override_explanation">Оберіть колоду для розміщення нових «%s» карток</string>
+    <string name="deck_picker_dialog_filter_decks">Фільтрувати колоди</string>
 </resources>

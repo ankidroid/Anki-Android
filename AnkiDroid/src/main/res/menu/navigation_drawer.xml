@@ -29,9 +29,5 @@
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_help_black_24dp"
             android:title="@string/help"/>
-        <item
-            android:id="@+id/nav_feedback"
-            android:icon="@drawable/ic_feedback_black_24dp"
-            android:title="@string/send_feedback"/>
     </group>
 </menu>

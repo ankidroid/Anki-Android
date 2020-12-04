@@ -16,6 +16,8 @@
 package com.ichi2.anki.widgets;
 
 import android.content.Context;
+
+import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.view.ViewCompat;
@@ -45,11 +47,11 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu>
 
     private static float getFabTranslationYForSnackbar(CoordinatorLayout parent, FloatingActionsMenu fab) {
         float minOffset = 0.0F;
-        List dependencies = parent.getDependencies(fab);
+        List<View> dependencies = parent.getDependencies(fab);
         int i = 0;
 
         for (int z = dependencies.size(); i < z; ++i) {
-            View view = (View) dependencies.get(i);
+            View view = dependencies.get(i);
             if (view instanceof Snackbar.SnackbarLayout && parent.doViewsOverlap(fab, view)) {
                 minOffset = Math.min(minOffset, view.getTranslationY() - (float) view.getHeight());
             }
@@ -59,12 +61,12 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionsMenu>
     }
 
     @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent, FloatingActionsMenu child, View dependency) {
+    public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull FloatingActionsMenu child, @NonNull View dependency) {
         return dependency instanceof Snackbar.SnackbarLayout;
     }
 
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionsMenu fab, View dependency) {
+    public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull FloatingActionsMenu fab, @NonNull View dependency) {
         if (dependency instanceof Snackbar.SnackbarLayout && fab.getVisibility() == View.VISIBLE) {
             float translationY = getFabTranslationYForSnackbar(parent, fab);
             if (translationY != this.mTranslationY) {

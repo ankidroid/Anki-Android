@@ -41,20 +41,16 @@
 <resources>
     <string name="youre_offline">You are offline</string>
     <string name="sync_even_if_offline">Try Anyway</string>
-    <string name="sync_error">Sync error</string>
-    <string name="vague_error">Error</string>
+    <string name="sync_error">Σφάλμα συγχρονισμού</string>
+    <string name="vague_error">Σφάλμα</string>
     <string name="retry">Ξαναδοκίμασε</string>
-    <string name="cancel">Ακύρωση</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
     <string name="menu_get_shared_decks">Λήψη κοινόχρηστων τραπουλών</string>
     <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
+    <string name="not_logged_in_title">Σύνδεση στο AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.java -->
     <string name="username">Διεύθυνση email</string>
-    <string name="username_repeat">Επαναλάβετε τη διεύθυνση email</string>
     <string name="password">Κωδικός</string>
-    <string name="password_repeat">Επανάληψη κωδικού</string>
     <string name="log_in">Σύνδεση</string>
     <string name="sign_up_description">Δεν έχετε λογαριασμό στο AnkiWeb; Είναι δωρεάν!</string>
     <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
@@ -63,11 +59,10 @@
     <string name="log_out">Αποσύνδεση</string>
     <string name="alert_logging_message">Σύνδεση, παρακαλώ περιμένετε...</string>
     <string name="invalid_username_password">Μη έγκυρη διεύθυνση email ή κωδικός πρόσβασης.</string>
-    <string name="reset_password">Reset password</string>
+    <string name="reset_password">Επαναφορά κωδικού πρόσβασης</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Αναζήτηση</string>
     <string name="preferences_title">Προτιμήσεις</string>
-    <string name="deckpreferences_title">Options for XXX</string>
+    <string name="deckpreferences_title">Επιλογές για XXX</string>
     <string name="sync_conflict_message">Πρέπει είτε να ανεβάσετε αυτή τη συλλογή ή να την καταφορτώσετε από το AnkiWeb, καθώς δεν μπορούν να συγχωνευτούν. Μια απ\' τις δυο συλλογές θα αντικατασταθεί.</string>
     <string name="sync_conflict_local">Αποστολή</string>
     <string name="sync_conflict_remote">Λήψη</string>
@@ -80,13 +75,12 @@
     <string name="sync_title">Συγχρονισμός</string>
     <string name="sync_downloading_media">Λήψη πολυμέσων %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Πλήρης συγχρονισμός από το τοπικό</string>
-    <string name="sync_log_downloading_message">Πλήρης συγχρονισμός από το διακομιστή</string>
     <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, η χρονική ζώνη της συσκευής είναι πιθανόν λανθασμένη</string>
     <string name="sync_log_clocks_unsynchronized_date">, η ημερομηνία της συσκευής είναι πιθανώς λάθος</string>
     <string name="sync_conflict_title">Αντίφαση κατά το συγχρονισμό</string>
     <string name="sync_no_changes_message">Δε βρέθηκαν αλλαγές.</string>
-    <string name="sync_database_acknowledge">Collection synchronized</string>
+    <string name="sync_database_acknowledge">Η συλλογή συγχρονίστηκε</string>
     <string name="sync_log_error_specific">Σφάλμα συγχρονισμού, τύπος: %1$s, μύνημα: %2$s</string>
     <string name="sync_corrupt_database">Η βάση δεδομένων είναι κατεστραμμένη. Παρακαλούμε να τη διορθώσετε πριν ξαναδοκιμάσετε να την συγχρονίσετε.\n\nΔείτε  %s για πληροφορίες σχετικές με τη διόρθωση της βάσης δεδομένων σας.</string>
     <string name="sync_too_busy">Ο διακομιστής είναι απασχολημένος. Προσπαθήστε ξανά αργότερα.</string>
@@ -94,6 +88,7 @@
     <string name="sync_overwrite_error">Η παρούσα συλλογή σας δεν ήταν δυνατό να αντικατασταθεί με το αρχείο που λάβατε.</string>
     <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
     <string name="sync_write_access_error">Δεν ήταν δυνατή η αποθήκευση του αρχείου που λάβατε στην κάρτα sd. Είτε η κάρτα sd σας είναι φορτωμένη μόνο για ανάγνωση, ή δεν υπάρχει αρκετός χώρος.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Συγχρονισμός διαγραφών...</string>
     <string name="sync_small_objects_message">Συγχρονισμός μικρών στοιχείων...</string>
     <string name="sync_finish_message">Ολοκλήρωση συγχρονισμού...</string>
@@ -101,7 +96,7 @@
     <string name="sync_writing_db">Εγγραφή αλλαγών στη βάση δεδομένων...</string>
     <string name="sync_download_chunk">Λήψη αλλαγών...</string>
     <string name="sync_upload_chunk">Αποστολή αλλαγών...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Μεταφόρτωση: %1$d KB, λήψη: %2$d KB</string>
     <string name="sync_generic_error">Συνέβη σφάλμα. Παρακαλούμε ξαναπροσπαθήστε αργότερα.</string>
     <string name="sync_check_upload_file">Έλεγχος αρχείου πριν την αποστολή...</string>
     <string name="sync_check_download_file">Έλεγχος ληφθέντος αρχείου...</string>
@@ -115,6 +110,8 @@
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
     <string name="sync_media_error">Σφάλμα κατά το συγχρονισμό πολυμέσων.</string>
     <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remote</string>
     <string name="force_full_sync_title">Force full sync</string>
@@ -129,7 +126,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

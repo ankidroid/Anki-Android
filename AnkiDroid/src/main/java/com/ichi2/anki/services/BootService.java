@@ -6,15 +6,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.Preferences;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Permissions;
 
 import com.ichi2.utils.JSONObject;
@@ -23,6 +23,8 @@ import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
+
+import static com.ichi2.anki.DeckOptions.reminderToCalendar;
 
 public class BootService extends BroadcastReceiver {
 
@@ -53,7 +55,7 @@ public class BootService extends BroadcastReceiver {
 
         Timber.i("Executing Boot Service");
         catchAlarmManagerErrors(context, () -> scheduleDeckReminder(context));
-        catchAlarmManagerErrors(context, () -> scheduleNotification(context));
+        catchAlarmManagerErrors(context, () -> scheduleNotification(col.getTime(), context));
         mFailedToShowNotifications = false;
         sWasRun = true;
     }
@@ -105,11 +107,7 @@ public class BootService extends BroadcastReceiver {
                                                                                             deckConfiguration.getLong("id")),
                                                                                     0
                                                                                     );
-                    final Calendar calendar = Calendar.getInstance();
-
-                    calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
-                    calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
-                    calendar.set(Calendar.SECOND, 0);
+                    final Calendar calendar = reminderToCalendar(col.getTime(), reminder);
 
                     alarmManager.setRepeating(
                                               AlarmManager.RTC_WAKEUP,
@@ -122,15 +120,15 @@ public class BootService extends BroadcastReceiver {
         }
     }
 
-    public static void scheduleNotification(Context context) {
+    public static void scheduleNotification(Time time, Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sp = AnkiDroidApp.getSharedPrefs(context);
         // Don't schedule a notification if the due reminders setting is not enabled
         if (Integer.parseInt(sp.getString("minimumCardsDueForNotification", Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY))) >= Preferences.PENDING_NOTIFICATIONS_ONLY) {
             return;
         }
 
-        final Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = time.calendar();
         calendar.set(Calendar.HOUR_OF_DAY, sp.getInt("dayOffset", 0));
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);

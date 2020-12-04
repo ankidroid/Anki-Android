@@ -42,14 +42,12 @@
     <string name="disabled">Desactivado</string>
     <string name="enabled">Enabled</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Axustes xerais</string>
     <string name="pref_cat_reviewing">Avaliación</string>
     <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
     <string name="pref_cat_reviewer_behaviour">Comportamento</string>
     <string name="pref_cat_flashcard">Visualización</string>
     <string name="pref_cat_whiteboard">Encerado</string>
-    <string name="pref_cat_automatic_display">Amosar a resposta automaticamente</string>
     <string name="pref_cat_appearance">Appearance</string>
     <string name="pref_cat_appearance_summ">Change themes and default font</string>
     <string name="pref_cat_themes">Themes</string>
@@ -96,15 +94,26 @@
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Esvarar cara arriba</string>
     <string name="gestures_swipe_down">Evarar cara abaixo</string>
     <string name="gestures_swipe_left">Esvara á esquerda</string>
     <string name="gestures_swipe_right">Esvarar á dereita</string>
     <string name="gestures_double_tap">Duplo toque</string>
     <string name="gestures_tap_top">Tocar na parte superior</string>
-    <string name="gestures_tap_bottom">Tocar na parte inferior</string>
     <string name="gestures_tap_left">Tocar á esquerda</string>
     <string name="gestures_tap_right">Tocar á dereita</string>
+    <string name="gestures_tap_bottom">Tocar na parte inferior</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -142,9 +151,8 @@
     <string name="timeout_answer_text">Amosar a resposta automaticamente</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds">Tempo para amosar a resposta</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Tempo para amosar a seguinte pregunta</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Seleccionar idioma</string>
     <string name="safe_display">Safe display mode</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -165,7 +173,6 @@
     <string name="use_current">Baralla para os novos cartóns</string>
     <string name="new_spread">Posición do novo cartón</string>
     <string name="learn_cutoff">Learn ahead limit</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Timebox time limit</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Comezo do vindeiro día</string>
@@ -217,8 +224,8 @@
         <item quantity="other">%1$s\n%2$d barallas usan este grupo</item>
     </plurals>
     <string name="deck_conf_new_cards">Novos cartóns</string>
-    <string name="deck_conf_rev_cards">Reviews</string>
-    <string name="deck_conf_lps_cards">Lapses</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
     <string name="deck_conf_general">Xeral</string>
     <string name="deck_conf_reminders">Reminders</string>
     <string name="deck_conf_steps">Pasos (en minutos)</string>
@@ -236,6 +243,7 @@
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Easy bonus</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Interval modifier</string>
     <string name="deck_conf_max_ivl">Maximum interval</string>
     <string name="deck_conf_new_lps_ivl">Novo intervalo</string>
@@ -250,30 +258,26 @@
     <string name="deck_conf_replayq">Replay question</string>
     <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
     <string name="deck_conf_manage">Xestión de grupos</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Grupo actual</string>
-    <string name="deck_conf_rename">Renomear</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Renomear</string>
     <string name="deck_conf_reset">Restaurar valores predefinidos</string>
-    <string name="deck_conf_reset_title">Restaurar valores predefinidos</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
-    <string name="deck_conf_add">Engadir</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Engadir</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
-    <string name="deck_conf_remove">Eliminar</string>
-    <string name="deck_conf_remove_title">Eliminar</string>
     <string name="deck_conf_remove_message">Remove current options group?</string>
     <string name="deck_conf_set_subdecks">Set for all subdecks</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s subdeck will use this group</item>
         <item quantity="other">%s subdecks will use this group</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Set for all subdecks</string>
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font">Fonte do explorador e editor</string>
     <string name="deck_conf_cram_filter">Filtrar</string>
-    <string name="deck_conf_cram_options">Opcións</string>
     <string name="deck_conf_cram_search">Buscar</string>
     <string name="deck_conf_cram_limit">Limitar a</string>
     <string name="deck_conf_cram_order">cartóns seleccionados por</string>
-    <string name="deck_conf_cram_reschedule">Reschedule</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_steps">Custom steps (in minutes)</string>
     <string name="deck_conf_cram_steps_summ">Definir pasos personalizados</string>
@@ -283,4 +287,6 @@
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

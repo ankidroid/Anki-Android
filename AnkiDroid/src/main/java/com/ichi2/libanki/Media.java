@@ -24,9 +24,12 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
+import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.utils.Assert;
 
+import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -56,6 +59,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 import static java.lang.Math.min;
@@ -92,7 +96,7 @@ public class Media {
      * Group 1 = Contents of [sound:] tag <br>
      * Group 2 = "fname"
      */
-    private static final Pattern fSoundRegexps = Pattern.compile("(?i)(\\[sound:([^]]+)\\])");
+    private static final Pattern fSoundRegexps = Pattern.compile("(?i)(\\[sound:([^]]+)])");
 
     // src element quoted case
     /**
@@ -101,19 +105,19 @@ public class Media {
      * Group 3 = "fname" <br>
      * Group 4 = Backreference to "str" (i.e., same type of quote character)
      */
-    private static final Pattern fImgRegExpQ = Pattern.compile("(?i)(<img[^>]* src=([\\\"'])([^>]+?)(\\2)[^>]*>)");
+    private static final Pattern fImgRegExpQ = Pattern.compile("(?i)(<img[^>]* src=([\"'])([^>]+?)(\\2)[^>]*>)");
 
     // unquoted case
     /**
      * Group 1 = Contents of <img> tag <br>
      * Group 2 = "fname"
      */
-    private static final Pattern fImgRegExpU = Pattern.compile("(?i)(<img[^>]* src=(?!['\\\"])([^ >]+)[^>]*?>)");
+    private static final Pattern fImgRegExpU = Pattern.compile("(?i)(<img[^>]* src=(?!['\"])([^ >]+)[^>]*?>)");
 
-    public static List<Pattern> mRegexps =  Arrays.asList(fSoundRegexps, fImgRegExpQ, fImgRegExpU);
+    public static final List<Pattern> mRegexps =  Arrays.asList(fSoundRegexps, fImgRegExpQ, fImgRegExpU);
 
-    private Collection mCol;
-    private String mDir;
+    private final Collection mCol;
+    private final String mDir;
     private DB mDb;
 
 
@@ -124,15 +128,21 @@ public class Media {
             return;
         }
         // media directory
-        mDir = col.getPath().replaceFirst("\\.anki2$", ".media");
+        mDir = getCollectionMediaPath(col.getPath());
         File fd = new File(mDir);
         if (!fd.exists()) {
             if (!fd.mkdir()) {
-                Timber.e("Cannot create media directory: " + mDir);
+                Timber.e("Cannot create media directory: %s", mDir);
             }
         }
         // change database
         connect();
+    }
+
+
+    @NonNull
+    public static String getCollectionMediaPath(String collectionPath) {
+        return collectionPath.replaceFirst("\\.anki2$", ".media");
     }
 
 
@@ -218,16 +228,19 @@ public class Media {
     }
 
 
-    /**
-     * Adding media
-     * ***********************************************************
+    /*
+      Adding media
+      ***********************************************************
      */
 
     /**
      * In AnkiDroid, adding a media file will not only copy it to the media directory, but will also insert an entry
      * into the media database marking it as a new addition.
      */
-    public String addFile(File ofile) throws IOException {
+    public String addFile(File ofile) throws IOException, EmptyMediaException {
+        if (ofile == null || ofile.length() == 0) {
+            throw new EmptyMediaException();
+        }
         String fname = writeData(ofile);
         markFileAdd(fname);
         return fname;
@@ -296,7 +309,7 @@ public class Media {
      */
     public List<String> filesInStr(Long mid, String string, boolean includeRemote) {
         List<String> l = new ArrayList<>();
-        JSONObject model = mCol.getModels().get(mid);
+        Model model = mCol.getModels().get(mid);
         List<String> strings = new ArrayList<>();
         if (model.getInt("type") == Consts.MODEL_CLOZE && string.contains("{{c")) {
             // if the field has clozes in it, we'll need to expand the
@@ -318,7 +331,7 @@ public class Media {
                 m = p.matcher(s);
                 while (m.find()) {
                     String fname = m.group(fnameIdx);
-                    boolean isLocal = !fRemotePattern.matcher(fname.toLowerCase(Locale.US)).find();
+                    boolean isLocal = !fRemotePattern.matcher(fname.toLowerCase(Locale.getDefault())).find();
                     if (isLocal || includeRemote) {
                         l.add(fname);
                     }
@@ -331,6 +344,7 @@ public class Media {
 
     private List<String> _expandClozes(String string) {
         Set<String> ords = new TreeSet<>();
+        @SuppressWarnings("RegExpRedundantEscape") // In Android, } should be escaped
         Matcher m = Pattern.compile("\\{\\{c(\\d+)::.+?\\}\\}").matcher(string);
         while (m.find()) {
             ords.add(m.group(1));
@@ -405,9 +419,9 @@ public class Media {
     }
 
 
-    /**
-     * Rebuilding DB
-     * ***********************************************************
+    /*
+      Rebuilding DB
+      ***********************************************************
      */
 
     /**
@@ -424,7 +438,7 @@ public class Media {
         File mdir = new File(dir());
         // gather all media references in NFC form
         Set<String> allRefs = new HashSet<>();
-        try (Cursor cur = mCol.getDb().getDatabase().query("select id, mid, flds from notes", null)) {
+        try (Cursor cur = mCol.getDb().query("select id, mid, flds from notes")) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
                 long mid = cur.getLong(1);
@@ -567,7 +581,7 @@ public class Media {
     }
 
     private String _cleanLongFilename(String fname) {
-        /** a fairly safe limit that should work on typical windows
+        /* a fairly safe limit that should work on typical windows
          paths and on eCryptfs partitions, even with a duplicate
          suffix appended */
         int namemax = 136;
@@ -598,9 +612,9 @@ public class Media {
         return fname;
     }
 
-    /**
-     * Tracking changes
-     * ***********************************************************
+    /*
+      Tracking changes
+      ***********************************************************
      */
 
     /**
@@ -684,11 +698,11 @@ public class Media {
 
     private Pair<List<String>, List<String>> _changes() {
         Map<String, Object[]> cache = new HashMap<>();
-        try (Cursor cur = mDb.getDatabase().query("select fname, csum, mtime from media where csum is not null", null)) {
+        try (Cursor cur = mDb.query("select fname, csum, mtime from media where csum is not null")) {
             while (cur.moveToNext()) {
                 String name = cur.getString(0);
                 String csum = cur.getString(1);
-                Long mod = cur.getLong(2);
+                long mod = cur.getLong(2);
                 cache.put(name, new Object[] { csum, mod, false });
             }
         } catch (SQLException e) {
@@ -747,9 +761,9 @@ public class Media {
             }
         }
         // look for any entries in the cache that no longer exist on disk
-        for (String fname : cache.keySet()) {
-            if (!((Boolean)cache.get(fname)[2])) {
-                removed.add(fname);
+        for (Map.Entry<String, Object[]> entry : cache.entrySet()) {
+            if (!((Boolean) entry.getValue()[2])) {
+                removed.add(entry.getKey());
             }
         }
         return new Pair<>(added, removed);
@@ -773,7 +787,7 @@ public class Media {
 
 
     public Pair<String, Integer> syncInfo(String fname) {
-        try (Cursor cur = mDb.getDatabase().query("select csum, dirty from media where fname=?", new String[] {fname})) {
+        try (Cursor cur = mDb.query("select csum, dirty from media where fname=?", fname)) {
             if (cur.moveToNext()) {
                 String csum = cur.getString(0);
                 int dirty = cur.getInt(1);
@@ -820,7 +834,7 @@ public class Media {
     }
 
 
-    /**
+    /*
      * Media syncing: zips
      * ***********************************************************
      */
@@ -844,20 +858,21 @@ public class Media {
      */
     public Pair<File, List<String>> mediaChangesZip() {
         File f = new File(mCol.getPath().replaceFirst("collection\\.anki2$", "tmpSyncToServer.zip"));
-        Cursor cur = null;
-        try (ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)))) {
+        List<String> fnames = new ArrayList<>();
+        try (ZipOutputStream z = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+             Cursor cur = mDb.query(
+                "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT);
+        ) {
             z.setMethod(ZipOutputStream.DEFLATED);
 
-            List<String> fnames = new ArrayList<>();
             // meta is a list of (fname, zipname), where zipname of null is a deleted file
             // NOTE: In python, meta is a list of tuples that then gets serialized into json and added
             // to the zip as a string. In our version, we use JSON objects from the start to avoid the
             // serialization step. Instead of a list of tuples, we use JSONArrays of JSONArrays.
             JSONArray meta = new JSONArray();
             int sz = 0;
-            byte buffer[] = new byte[2048];
-            cur = mDb.getDatabase().query(
-                    "select fname, csum from media where dirty=1 limit " + Consts.SYNC_ZIP_COUNT, null);
+            byte[] buffer = new byte[2048];
+
 
             for (int c = 0; cur.moveToNext(); c++) {
                 String fname = cur.getString(0);
@@ -902,10 +917,6 @@ public class Media {
         } catch (IOException e) {
             Timber.e(e, "Failed to create media changes zip: ");
             throw new RuntimeException(e);
-        } finally {
-            if (cur != null) {
-                cur.close();
-            }
         }
     }
 
@@ -918,30 +929,30 @@ public class Media {
      * This method closes the file before it returns.
      */
     public int addFilesFromZip(ZipFile z) throws IOException {
-    try {
+        try {
             List<Object[]> media = new ArrayList<>();
             // get meta info first
             JSONObject meta = new JSONObject(Utils.convertStreamToString(z.getInputStream(z.getEntry("_meta"))));
             // then loop through all files
             int cnt = 0;
             for (ZipEntry i : Collections.list(z.entries())) {
-                if ("_meta".equals(i.getName())) {
-                    // ignore previously-retrieved meta
+                String fileName = i.getName();
+                if ("_meta".equals(fileName)) {
+                     // ignore previously-retrieved meta
                     continue;
-                } else {
-                    String name = meta.getString(i.getName());
-                    // normalize name for platform
-                    name = Utils.nfcNormalized(name);
-                    // save file
-                    String destPath = dir().concat(File.separator).concat(name);
-                    try (InputStream zipInputStream = z.getInputStream(i)) {
-                        Utils.writeToFile(zipInputStream, destPath);
-                    }
-                    String csum = Utils.fileChecksum(destPath);
-                    // update db
-                    media.add(new Object[] {name, csum, _mtime(destPath), 0});
-                    cnt += 1;
                 }
+                String name = meta.getString(fileName);
+                // normalize name for platform
+                name = Utils.nfcNormalized(name);
+                // save file
+                String destPath = (dir() + File.separator) + name;
+                try (InputStream zipInputStream = z.getInputStream(i)) {
+                    Utils.writeToFile(zipInputStream, destPath);
+                }
+                String csum = Utils.fileChecksum(destPath);
+                // update db
+                media.add(new Object[] {name, csum, _mtime(destPath), 0});
+                cnt += 1;
             }
             if (media.size() > 0) {
                 mDb.executeMany("insert or replace into media values (?,?,?,?)", media);
@@ -973,8 +984,7 @@ public class Media {
      * function and have delegated its job to the caller of this class.
      */
     public static int indexOfFname(Pattern p) {
-        int fnameIdx = p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
-        return fnameIdx;
+        return p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
     }
 
 
@@ -1009,10 +1019,37 @@ public class Media {
      */
     public boolean needScan() {
         long mod = mDb.queryLongScalar("select dirMod from meta");
-        if (mod == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return mod == 0;
     }
+
+
+    public void rebuildIfInvalid() throws IOException {
+        try {
+            _changed();
+            return;
+        } catch (Exception e) {
+            if (!ExceptionUtil.containsMessage(e, "no such table: meta")) {
+                throw e;
+            }
+            AnkiDroidApp.sendExceptionReport(e, "media::rebuildIfInvalid");
+
+            // TODO: We don't know the root cause of the missing meta table
+            Timber.w(e, "Error accessing media database. Rebuilding");
+            // continue below
+        }
+
+
+        // Delete and recreate the file
+        mDb.getDatabase().close();
+
+        String path = mDb.getPath();
+        Timber.i("Deleted %s", path);
+
+        new File(path).delete();
+
+        mDb = new DB(path);
+        _initDB();
+    }
+
+
 }

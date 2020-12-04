@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">Կապուկներ</string>
-    <string name="card_browser">Չննիչ</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Չննիչ</string>
     <string name="statistics">Վիճակագրություն</string>
     <string name="settings">Կարգավորումներ</string>
     <string name="help">Օգնություն</string>
     <string name="send_feedback">Կարծիք թողնել</string>
-    <string name="studyoptions_title">Կապուկի համատեսք</string>
     <string name="studyoptions_due_today">Այսօրվա կրկնելիք՝</string>
     <string name="studyoptions_new_total">Նոր քարտերի քանակը՝</string>
     <string name="studyoptions_total_cards">Քարտերի քանակը՝</string>
@@ -71,6 +71,8 @@
         <item quantity="one">%d day %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Այսօր սովորեցիք %1$d քարտ %2$s</item>
@@ -79,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Գրեք պատասխանը</string>
     <string name="show_answer">Ցուցադրել պատասխանը</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Չեմ հիշում</string>
     <string name="ease_button_hard">Դժվար է</string>
     <string name="ease_button_good">Լավ է</string>
@@ -87,22 +90,14 @@
     <string name="menu_import">Ներմուծել</string>
     <string name="undo">Հետարկել</string>
     <string name="undo_action_review">վերջին կրկնությունը</string>
-    <string name="undo_action_bury_card">առանձնացնել քարտը</string>
-    <string name="undo_action_bury_note">առանձնացնել գրառումը</string>
-    <string name="undo_action_suspend_card">հեռացնել քարտը</string>
-    <string name="undo_action_suspend_note">հեռացնել գրառումը</string>
-    <string name="undo_action_delete">ջնջել գրառումը</string>
-    <string name="undo_action_delete_multi">ջնջել գրառումները</string>
     <string name="undo_action_change_deck_multi">փոխել կապուկը</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Տեղափոխել բոլորը կապուկի մեջ</string>
     <string name="unbury">Վերադարձնել առանձնացվածները</string>
     <string name="rename_deck">Վերանվանել կապուկը</string>
-    <string name="menu_add">Ավելացնել</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Ավելացնել</string>
     <string name="menu_add_note">Ավելացնել գրառում</string>
-    <string name="menu_my_account">Համաժամեցնել հաշիվը</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Համաժամեցնել հաշիվը</string>
     <string name="menu_dismiss_note">Թաքցնել / ջնջել</string>
     <string name="menu_bury_card">Առանձնացնել քարտը</string>
     <string name="menu_bury_note">Առանձնացնել գրառումը</string>
@@ -126,7 +121,7 @@
     <string name="menu_unmark_note">Ապանշել գրառումը</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Ստեղծել կապուկ</string>
-    <string name="create">Ստեղծել</string>
+    <string name="create" comment="Button to create a filtered deck">Ստեղծել</string>
     <string name="new_dynamic_deck">Ստեղծել զտված կապուկ</string>
     <string name="night_mode">Գիշերային տեսք</string>
     <string name="directory_inaccessible">AnkiDroid-ի պանակը անհասանելի է</string>
@@ -151,11 +146,11 @@
     <string name="time_quantity_months">%.1f ամիս</string>
     <string name="time_quantity_years">%.1f տարի</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Վերակառուցվում է սովորելու կապուկը&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Վերակառուցել</string>
     <string name="empty_cram_label">Դատարկ</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Դատարկվում է սովորելու կապուկը&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Ուսուցման լրացուցիչ աշխատաշրջան</string>
     <string name="custom_study_deck_exists">Սկզբում վերանվանել լրացուցիչ ուսուցման առկա կապուկը</string>
     <string name="empty_deck">Այս կապուկը դատարկ է</string>
@@ -184,7 +179,6 @@
     <string name="card_template_editor_front">Հարցի կաղապար</string>
     <string name="card_template_editor_back">Պատասխանի կաղապար</string>
     <string name="card_template_editor_styling">Ոճավորում</string>
-    <string name="card_template_editor_menu_delete">Ջնջել</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Անհրաժեշտ է քարտի առնվազն մեկ տեսակ</string>
@@ -198,11 +192,12 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Կարդալ և գրել AnkiDroid-ի շտեմարանի մեջ</string>
     <string name="read_write_permission_description">մատչել առկա գրառումները, քարտերը, գրառումների տեսակները և կապուկները, ինչպես նաև նորերը ստեղծելը</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

@@ -17,11 +17,14 @@
 SUFFIX=""
 PUBLIC=$1
 
+# Make sure we can find our binaries
+export PATH="~/bin:$PATH"
+
 # Check basic expectations
 for UTILITY in sed gawk github-release asciidoctor; do
   if ! command -v "$UTILITY" >/dev/null 2>&1; then echo "$UTILITY" missing; exit 1; fi
 done
-if ! [ -f ../ankidroiddocs/changelog.asc ]; then
+if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/changelog.asc ]; then
   echo "Could not find ../ankidroiddocs/changelog.asc?"
   exit 1
 fi
@@ -86,18 +89,21 @@ if [ "$PUBLIC" != "public" ]; then
   sed -i -e s/versionCode="$PREVIOUS_CODE"/versionCode="$GUESSED_CODE"/g $GRADLEFILE
 fi
 
-# Read the key passwords
-read -rsp "Enter keystore password: " KSTOREPWD; echo
-read -rsp "Enter key password: " KEYPWD; echo
-export KSTOREPWD
-export KEYPWD
+# Read the key passwords if needed
+if [ "$KSTOREPWD" == "" ]; then
+  read -rsp "Enter keystore password: " KSTOREPWD; echo
+  read -rsp "Enter key password: " KEYPWD; echo
+  export KSTOREPWD
+  export KEYPWD
+fi
+
 # Build signed APK using Gradle and publish to Play
 # Configuration for pushing to Play specified in build.gradle 'play' task
 if ! ./gradlew publishReleaseApk
 then
   # APK contains problems, abort release
   git checkout -- $GRADLEFILE # Revert version change
-  exit
+  exit 1
 fi
 
 # Now build the universal release also
@@ -105,7 +111,7 @@ if ! ./gradlew assembleRelease -Duniversal-apk=true
 then
   # APK contains problems, abort release
   git checkout -- $GRADLEFILE # Revert version change
-  exit
+  exit 1
 fi
 
 # Copy universal APK to cwd

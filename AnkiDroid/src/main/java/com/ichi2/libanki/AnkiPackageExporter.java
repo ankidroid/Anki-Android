@@ -37,14 +37,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
 import timber.log.Timber;
 
+import static com.ichi2.utils.CollectionUtils.addAll;
+
 class Exporter {
-    protected Collection mCol;
+    protected final Collection mCol;
     protected Long mDid;
     protected int mCount;
 
@@ -82,7 +85,7 @@ class AnkiExporter extends Exporter {
     protected boolean mIncludeMedia;
     private Collection mSrc;
     String mMediaDir;
-    ArrayList<String> mMediaFiles = new ArrayList<>();
+    final ArrayList<String> mMediaFiles = new ArrayList<>();
     boolean _v2sched;
 
 
@@ -119,11 +122,10 @@ class AnkiExporter extends Exporter {
         Timber.d("Copy cards");
         mSrc.getDb().getDatabase()
                 .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
-        Set<Long> nids = new HashSet<>(mSrc.getDb().queryLongList(
-                "select nid from cards where id in " + Utils.ids2str(cids)));
+        List<Long> uniqueNids = mSrc.getDb().queryLongList(
+                "select distinct nid from cards where id in " + Utils.ids2str(cids));
         // notes
         Timber.d("Copy notes");
-        ArrayList<Long> uniqueNids = new ArrayList<>(nids);
         String strnids = Utils.ids2str(uniqueNids);
         mSrc.getDb().getDatabase().execSQL("INSERT INTO DST_DB.notes select * from notes where id in " + strnids);
         // remove system tags if not exporting scheduling info
@@ -170,19 +172,17 @@ class AnkiExporter extends Exporter {
         }
         // decks
         Timber.d("Copy decks");
-        ArrayList<Long> dids = new ArrayList<>();
+        java.util.Collection<Long> dids = null;
         if (mDid != null) {
+            dids = new HashSet<>(mSrc.getDecks().children(mDid).values());
             dids.add(mDid);
-            for (Long x : mSrc.getDecks().children(mDid).values()) {
-                dids.add(x);
-            }
         }
         JSONObject dconfs = new JSONObject();
         for (Deck d : mSrc.getDecks().all()) {
             if ("1".equals(d.getString("id"))) {
                 continue;
             }
-            if (mDid != null && !dids.contains(d.getLong("id"))) {
+            if (dids != null && !dids.contains(d.getLong("id"))) {
                 continue;
             }
             if (d.getInt("dyn") != 1 && d.getLong("conf") != 1L) {
@@ -242,9 +242,7 @@ class AnkiExporter extends Exporter {
         }
         JSONArray keys = media.names();
         if (keys != null) {
-            for (int i = 0; i < keys.length(); i++) {
-                mMediaFiles.add(keys.getString(i));
-            }
+            addAll(mMediaFiles, keys.stringIterable());
         }
         Timber.d("Cleanup");
         dst.setCrt(mSrc.getCrt());
@@ -276,8 +274,7 @@ class AnkiExporter extends Exporter {
         }
         // If not there then check the templates
         JSONArray tmpls = model.getJSONArray("tmpls");
-        for (int idx = 0; idx < tmpls.length(); idx++) {
-            JSONObject tmpl = tmpls.getJSONObject(idx);
+        for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
             if (tmpl.getString("qfmt").contains(fname) || tmpl.getString("afmt").contains(fname)) {
                 return true;
             }
@@ -364,7 +361,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
         File mdir = new File(mCol.getMedia().dir());
         if (mdir.exists() && mdir.isDirectory()) {
             File[] mediaFiles = mdir.listFiles();
-            return _exportMedia(z, mediaFiles);
+            return _exportMedia(z, mediaFiles, ValidateFiles.SKIP_VALIDATION);
         } else {
             return new JSONObject();
         }
@@ -377,14 +374,19 @@ public final class AnkiPackageExporter extends AnkiExporter {
         for (String fileName: fileNames){
             files[i++] = new File(mdir, fileName);
         }
-        return _exportMedia(z, files);
+        return _exportMedia(z, files, ValidateFiles.VALIDATE);
     }
 
-    private JSONObject _exportMedia(ZipFile z, File[] files) throws IOException {
+    private JSONObject _exportMedia(ZipFile z, File[] files, ValidateFiles validateFiles) throws IOException {
         int c = 0;
         JSONObject media = new JSONObject();
         for (File file : files) {
             // todo: deflate SVG files, as in dae/anki@a5b0852360b132c0d04094f5ca8f1933f64d7c7e
+            if (validateFiles == ValidateFiles.VALIDATE && !file.exists()) {
+                // Anki 2.1.30 does the same
+                Timber.d("Skipping missing file %s", file);
+                continue;
+            }
             z.write(file.getPath(), Integer.toString(c));
             try {
                 media.put(Integer.toString(c), file.getName());
@@ -416,7 +418,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
             Runtime runtime = Runtime.getRuntime();
             try {
                 runtime.exec(deleteCmd);
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
         }
         return media;
@@ -443,6 +445,13 @@ public final class AnkiPackageExporter extends AnkiExporter {
         c.save();
         c.close();
         zip.write(f.getAbsolutePath(), CollectionHelper.COLLECTION_FILENAME);
+    }
+
+
+    /** Whether media files should be validated before being added to the zip */
+    private enum ValidateFiles {
+        VALIDATE,
+        SKIP_VALIDATION
     }
 }
 

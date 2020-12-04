@@ -13,11 +13,17 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.libanki.Consts;
+import com.ichi2.async.Connection;
+import com.ichi2.libanki.utils.Time;
+import com.ichi2.utils.UiUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class DatabaseErrorDialog extends AsyncDialogFragment {
@@ -35,6 +41,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_FULL_SYNC_FROM_SERVER = 8;
     /** If the database is locked, all we can do is reset the app */
     public static final int DIALOG_DB_LOCKED = 9;
+    /** If the datbase is at a version higher than what we can currently handle */
+    public static final int INCOMPATIBLE_DB_VERSION = 10;
 
     // public flag which lets us distinguish between inaccessible and corrupt database
     public static boolean databaseCorruptFlag = false;
@@ -54,6 +62,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +86,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return builder.cancelable(false)
                         .content(getMessage())
                         .iconAttr(R.attr.dialogErrorIcon)
-                        .positiveText(res.getString(R.string.error_handling_options))
-                        .negativeText(res.getString(R.string.close))
+                        .positiveText(R.string.error_handling_options)
+                        .negativeText(R.string.close)
                         .onPositive((inner_dialog, which) -> ((DeckPicker) getActivity())
                                 .showDatabaseErrorDialog(DIALOG_ERROR_HANDLING))
                         .onNegative((inner_dialog, which) -> exit())
@@ -91,8 +100,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                         .cancelable(false)
                         .content(getMessage())
                         .iconAttr(R.attr.dialogErrorIcon)
-                        .positiveText(res.getString(R.string.error_handling_options))
-                        .negativeText(res.getString(R.string.answering_error_report))
+                        .positiveText(R.string.error_handling_options)
+                        .negativeText(R.string.answering_error_report)
                         .neutralText(res.getString(R.string.close))
                         .onPositive((inner_dialog, which) -> ((DeckPicker) getActivity())
                                 .showDatabaseErrorDialog(DIALOG_ERROR_HANDLING))
@@ -143,7 +152,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 }
 
                 return builder.iconAttr(R.attr.dialogErrorIcon)
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .negativeText(R.string.dialog_cancel)
                         .items(titles)
                         .itemsCallback((materialDialog, view, which, charSequence) -> {
                             switch (mRepairValues[which]) {
@@ -175,8 +184,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 // Allow user to run BackupManager.repairCollection()
                 return builder.content(getMessage())
                         .iconAttr(R.attr.dialogErrorIcon)
-                        .positiveText(res.getString(R.string.dialog_positive_repair))
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .positiveText(R.string.dialog_positive_repair)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((inner_dialog, which) -> {
                             ((DeckPicker) getActivity()).repairCollection();
                             dismissAllDialogFragments();
@@ -194,7 +203,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 if (mBackups.length == 0) {
                     builder.title(res.getString(R.string.backup_restore))
                             .content(getMessage())
-                            .positiveText(res.getString(R.string.dialog_ok))
+                            .positiveText(R.string.dialog_ok)
                             .onPositive((inner_dialog, which) -> ((DeckPicker) getActivity())
                                     .showDatabaseErrorDialog(DIALOG_ERROR_HANDLING));
                 } else {
@@ -204,8 +213,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                                 ".*-(\\d{4}-\\d{2}-\\d{2})-(\\d{2})-(\\d{2}).apkg", "$1 ($2:$3 h)");
                     }
                     builder.title(res.getString(R.string.backup_restore_select_title))
-                            .negativeText(res.getString(R.string.dialog_cancel))
-                            .onNegative((inner_dialog, which) -> dismissAllDialogFragments())
+                            .negativeText(R.string.dialog_cancel)
                             .items(dates)
                             .itemsCallbackSingleChoice(dates.length,
                                     (materialDialog, view, which, charSequence) -> {
@@ -218,7 +226,7 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                                         } else {
                                             // otherwise show an error dialog
                                             new MaterialDialog.Builder(getActivity())
-                                                    .title(R.string.backup_error)
+                                                    .title(R.string.vague_error)
                                                     .content(R.string.backup_invalid_file_error)
                                                     .positiveText(R.string.dialog_ok)
                                                     .build().show();
@@ -240,12 +248,14 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_NEW_COLLECTION: {
                 // Allow user to create a new empty collection
                 return builder.content(getMessage())
-                        .positiveText(res.getString(R.string.dialog_positive_create))
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .positiveText(R.string.dialog_positive_create)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((inner_dialog, which) -> {
-                            CollectionHelper.getInstance().closeCollection(false, "DatabaseErrorDialog: Before Create New Collection");
+                            CollectionHelper ch = CollectionHelper.getInstance();
+                            Time time = ch.getTimeSafe(getContext());
+                            ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection");
                             String path1 = CollectionHelper.getCollectionPath(getActivity());
-                            if (BackupManager.moveDatabaseToBrokenFolder(path1, false)) {
+                            if (BackupManager.moveDatabaseToBrokenFolder(path1, false, time)) {
                                 ((DeckPicker) getActivity()).restartActivity();
                             } else {
                                 ((DeckPicker) getActivity()).showDatabaseErrorDialog(DIALOG_LOAD_FAILED);
@@ -256,8 +266,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_CONFIRM_DATABASE_CHECK: {
                 // Confirmation dialog for database check
                 return builder.content(getMessage())
-                        .positiveText(res.getString(R.string.dialog_ok))
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .positiveText(R.string.dialog_ok)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((inner_dialog, which) -> {
                             ((DeckPicker) getActivity()).integrityCheck();
                             dismissAllDialogFragments();
@@ -267,8 +277,8 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_CONFIRM_RESTORE_BACKUP: {
                 // Confirmation dialog for backup restore
                 return builder.content(getMessage())
-                        .positiveText(res.getString(R.string.dialog_continue))
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .positiveText(R.string.dialog_continue)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((inner_dialog, which) -> ((DeckPicker) getActivity())
                                 .showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP))
                         .show();
@@ -276,10 +286,10 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_FULL_SYNC_FROM_SERVER: {
                 // Allow user to do a full-sync from the server
                 return builder.content(getMessage())
-                        .positiveText(res.getString(R.string.dialog_positive_overwrite))
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .positiveText(R.string.dialog_positive_overwrite)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((inner_dialog, which) -> {
-                            ((DeckPicker) getActivity()).sync("download");
+                            ((DeckPicker) getActivity()).sync(Connection.ConflictResolution.FULL_DOWNLOAD);
                             dismissAllDialogFragments();
                         })
                         .show();
@@ -287,9 +297,34 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
             case DIALOG_DB_LOCKED: {
                 //If the database is locked, all we can do is ask the user to exit.
                 return builder.content(getMessage())
-                        .positiveText(res.getString(R.string.close))
+                        .positiveText(R.string.close)
                         .cancelable(false)
                         .onPositive((inner_dialog, which) -> exit())
+                        .show();
+            }
+            case INCOMPATIBLE_DB_VERSION: {
+                List<Integer> values = new ArrayList<>();
+                CharSequence[] options = new CharSequence[] { UiUtil.makeBold(res.getString(R.string.backup_restore)), UiUtil.makeBold(res.getString(R.string.backup_full_sync_from_server)) };
+                values.add(0);
+                values.add(1);
+                return builder
+                        .cancelable(false)
+                        .content(getMessage())
+                        .iconAttr(R.attr.dialogErrorIcon)
+                        .positiveText(R.string.close)
+                        .onPositive((inner_dialog, which) -> exit())
+                        .items(options)
+                       // .itemsColor(ContextCompat.getColor(requireContext(), R.color.material_grey_500))
+                        .itemsCallback((dialog, itemView, position, text) -> {
+                            switch (values.get(position)) {
+                                case 0:
+                                    ((DeckPicker) getActivity()).showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP);
+                                    break;
+                                case 1:
+                                    ((DeckPicker) getActivity()).showDatabaseErrorDialog(DIALOG_FULL_SYNC_FROM_SERVER);
+                                    break;
+                            }
+                        })
                         .show();
             }
             default:
@@ -331,6 +366,14 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.backup_full_sync_from_server_question);
             case DIALOG_DB_LOCKED:
                 return res().getString(R.string.database_locked_summary);
+            case INCOMPATIBLE_DB_VERSION:
+                int databaseVersion = -1;
+                try {
+                    databaseVersion = CollectionHelper.getDatabaseVersion(requireContext());
+                } catch (Exception e) {
+                    Timber.w(e, "Failed to get database version, using -1");
+                }
+                return res().getString(R.string.incompatible_database_version_summary, Consts.SCHEMA_VERSION, databaseVersion);
             default:
                 return getArguments().getString("dialogMessage");
         }
@@ -340,12 +383,10 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_LOAD_FAILED:
                 return res().getString(R.string.open_collection_failed_title);
-            case DIALOG_DB_ERROR:
-                return res().getString(R.string.answering_error_title);
             case DIALOG_ERROR_HANDLING:
                 return res().getString(R.string.error_handling_title);
             case DIALOG_REPAIR_COLLECTION:
-                return res().getString(R.string.backup_repair_deck);
+                return res().getString(R.string.dialog_positive_repair);
             case DIALOG_RESTORE_BACKUP:
                 return res().getString(R.string.backup_restore);
             case DIALOG_NEW_COLLECTION:
@@ -358,6 +399,9 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
                 return res().getString(R.string.backup_full_sync_from_server);
             case DIALOG_DB_LOCKED:
                 return res().getString(R.string.database_locked_title);
+            case INCOMPATIBLE_DB_VERSION:
+                return res().getString(R.string.incompatible_database_version_title);
+            case DIALOG_DB_ERROR:
             default:
                 return res().getString(R.string.answering_error_title);
         }        
@@ -366,19 +410,13 @@ public class DatabaseErrorDialog extends AsyncDialogFragment {
 
     @Override
     public String getNotificationMessage() {
-        switch (getArguments().getInt("dialogType")) {
-            default:
-                return getMessage();
-        }
+        return getMessage();
     }
 
 
     @Override
     public String getNotificationTitle() {
-        switch (getArguments().getInt("dialogType")) {
-            default:
-                return res().getString(R.string.answering_error_title);
-        }
+        return res().getString(R.string.answering_error_title);
     }
 
 

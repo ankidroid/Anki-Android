@@ -42,14 +42,12 @@
     <string name="disabled">నిలిపివేయబడింది</string>
     <string name="enabled">ప్రారంభించబడింది</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">సాధారణ సెట్టింగులు</string>
     <string name="pref_cat_reviewing">సమీక్షిస్తోంది</string>
     <string name="pref_cat_reviewing_summ">నాన్-డెక్-నిర్దిష్ట సమీక్షకుడు సెట్టింగులు</string>
     <string name="pref_cat_reviewer_behaviour">ప్రవర్తన</string>
     <string name="pref_cat_flashcard">ప్రదర్శన</string>
     <string name="pref_cat_whiteboard">వైట్‌బోర్డ్</string>
-    <string name="pref_cat_automatic_display">స్వయంచాలక ప్రదర్శన సమాధానం</string>
     <string name="pref_cat_appearance">స్వరూపం</string>
     <string name="pref_cat_appearance_summ">థీమ్లను మరియు డిఫాల్ట్ ఫాంట్ను మార్చండి</string>
     <string name="pref_cat_themes">థీమ్లు</string>
@@ -96,15 +94,26 @@
     <string name="gestures_summ">కార్డులకు సమాధానం ఇవ్వడం మరియు సవరించడం వంటి చర్యలకు సంజ్ఞలను కేటాయించండి.</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">పైకి స్వైప్ చేయండి</string>
     <string name="gestures_swipe_down">క్రిందకి లాగండి</string>
     <string name="gestures_swipe_left">ఎడమకు స్వైప్ చేయండి</string>
     <string name="gestures_swipe_right">కుడికి స్వైప్ చేయండి</string>
     <string name="gestures_double_tap">రెండు సార్లు తాకండి</string>
     <string name="gestures_tap_top">పైన తాకండి</string>
-    <string name="gestures_tap_bottom">దిగువ తాకండి</string>
     <string name="gestures_tap_left">ఎడమవైపు తాకండి</string>
     <string name="gestures_tap_right">కుడివైపు తాకండి</string>
+    <string name="gestures_tap_bottom">దిగువ తాకండి</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -142,9 +151,8 @@
     <string name="timeout_answer_summ">వినియోగదారు ఇన్పుట్ లేకుండా స్వయంచాలకంగా సమాధానం చూపు. 
 ఆలస్యం స్వయంచాలకంగా ప్లే చేయబడిన ఆడియో ఫైల్లకు సమయాన్ని కలిగి ఉంటుంది.</string>
     <string name="timeout_answer_seconds">సమాధానం చూపించడానికి సమయం</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">తదుపరి ప్రశ్న చూపించడానికి సమయం</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">భాషను ఎంచుకోండి</string>
     <string name="safe_display">సురక్షిత ప్రదర్శన మోడ్</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
@@ -165,7 +173,6 @@
     <string name="use_current">కొత్త కార్డుల కోసం డెక్</string>
     <string name="new_spread">కొత్త కార్డ్ స్థానం</string>
     <string name="learn_cutoff">Learn ahead limit</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">టైమ్బాక్స్ సమయం పరిమితి</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">మరుసటి రోజు ప్రారంభించండి</string>
@@ -217,8 +224,8 @@
         <item quantity="other">%1$s\n%2$d డెక్స్ ఈ గుంపును ఉపయోగిస్తాయి</item>
     </plurals>
     <string name="deck_conf_new_cards">కొత్త కార్డులు</string>
-    <string name="deck_conf_rev_cards">సమీక్షలు</string>
-    <string name="deck_conf_lps_cards">లాప్సెస్</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">సమీక్షలు</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">లాప్సెస్</string>
     <string name="deck_conf_general">సాధారణం</string>
     <string name="deck_conf_reminders">జ్ఞాపికలు</string>
     <string name="deck_conf_steps">దశలు (నిమిషాల్లో)</string>
@@ -236,6 +243,7 @@
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">సులువు బోనస్</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">ఇంటర్వల్ మాడిఫైయర్</string>
     <string name="deck_conf_max_ivl">గరిష్ఠ విరామం</string>
     <string name="deck_conf_new_lps_ivl">క్రొత్త విరామం</string>
@@ -250,30 +258,26 @@
     <string name="deck_conf_replayq">ప్రశ్నని రీప్లే చేయండి</string>
     <string name="deck_conf_replayq_summ">జవాబుకు సమాధానమివ్వగానే ప్రశ్న మరియు సమాధానం ఆడియో రెండింటిని రీప్లే చేయండి</string>
     <string name="deck_conf_manage">గ్రూప్ మేనేజ్మెంట్</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">ప్రస్తుత సమూహం</string>
-    <string name="deck_conf_rename">పేరుమార్చు</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">పేరుమార్చు</string>
     <string name="deck_conf_reset">నిర్ణీత విలువలకు మార్చు</string>
-    <string name="deck_conf_reset_title">నిర్ణీత విలువలకు మార్చు</string>
     <string name="deck_conf_reset_message">డిఫాల్ట్ విలువల కోసం ప్రస్తుత ఎంపికల సమూహాన్ని పునరుద్ధరించాలా?</string>
-    <string name="deck_conf_add">చేర్చు</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">చేర్చు</string>
     <string name="deck_conf_add_summ">ప్రస్తుత ఎంపికల సమూహపు నకలును సృష్టించండి</string>
-    <string name="deck_conf_remove">తొలగించు</string>
-    <string name="deck_conf_remove_title">తొలగించు</string>
     <string name="deck_conf_remove_message">ప్రస్తుత ఎంపికల సమూహాన్ని తీసివేయాలా?</string>
     <string name="deck_conf_set_subdecks">అన్ని subdecks కోసం సెట్</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s subdeck ఈ గుంపును ఉపయోగిస్తుంది</item>
         <item quantity="other">%s subdecks ఈ గుంపును ఉపయోగిస్తుంది</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">అన్ని subdecks కోసం సెట్</string>
     <string name="deck_conf_set_subdecks_message">ఈ డెక్ యొక్క subdecks అన్ని ప్రస్తుత ఎంపికలు సమూహం సెట్?</string>
     <string name="pref_browser_editor_font">బ్రౌజర్ మరియు ఎడిటర్ ఫాంట్</string>
     <string name="deck_conf_cram_filter">వడపోత</string>
-    <string name="deck_conf_cram_options">ఎంపికలు</string>
     <string name="deck_conf_cram_search">శోధన</string>
     <string name="deck_conf_cram_limit">పరిమితి</string>
     <string name="deck_conf_cram_order">కార్డులు ఎంపిక చేశాయి</string>
-    <string name="deck_conf_cram_reschedule">వాయిదా</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">వాయిదా</string>
     <string name="deck_conf_cram_reschedule_summ">ఈ డెక్లో నా సమాధానాల ఆధారంగా కార్డులను రిచెస్ చేయండి</string>
     <string name="deck_conf_cram_steps">అనుకూల దశలు (నిమిషాల్లో)</string>
     <string name="deck_conf_cram_steps_summ">అనుకూల దశలను నిర్వచించండి</string>
@@ -283,4 +287,6 @@
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

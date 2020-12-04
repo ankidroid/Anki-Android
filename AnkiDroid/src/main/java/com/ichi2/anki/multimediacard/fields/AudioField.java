@@ -33,7 +33,7 @@ public abstract class AudioField extends FieldBase implements IField {
     protected String mName;
     protected boolean mHasTemporaryMedia = false;
 
-    protected static final String PATH_REGEX = "\\[sound:(.*)\\]";
+    protected static final String PATH_REGEX = "\\[sound:(.*)]";
 
 
     @Override

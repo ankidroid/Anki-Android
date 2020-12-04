@@ -21,7 +21,6 @@
      specifically for action bar text color isn't necessary, but it simplifies the color setting
      while making it accessible everywhere and eases the use of themes -->
     <attr name="actionBarTextColor" format="color"/> <!-- For title and subtitle, and any other text that may appear in action bar-->
-    <attr name="actionBarPopupBackgroundColor" format="color"/>
     <attr name="actionBarPopupTextColor" format="color"/>
 
     <!-- Custom preferences -->
@@ -34,7 +33,13 @@
     </declare-styleable>
     <!-- App buttons -->
     <attr name="largeButtonBackgroundColor" format="color"/>
+    <attr name="largeButtonBackgroundColorFocused" format="color"/>
+    <attr name="largeButtonBackgroundColorPressed" format="color"/>
     <attr name="largeButtonTextColor" format="color"/>
+    <attr name="largeButtonSecondaryBackgroundColor" format="color"/>
+    <attr name="largeButtonSecondaryBackgroundColorFocused" format="color"/>
+    <attr name="largeButtonSecondaryBackgroundColorPressed" format="color"/>
+    <attr name="largeButtonSecondaryTextColor" format="color"/>
     <!-- Deck list colors, divider, and expander -->
     <attr name="currentDeckBackground" format="reference"/>
     <attr name="currentDeckBackgroundColor" format="color"/>
@@ -50,11 +55,17 @@
     <attr name="learnCountColor" format="color"/>
     <attr name="reviewCountColor" format="color"/>
     <attr name="zeroCountColor" format="color"/>
-    <!-- Reviewer button colors -->
-    <attr name="againButtonRef" format= "reference"/>
-    <attr name="hardButtonRef" format= "reference"/>
-    <attr name="goodButtonRef" format= "reference"/>
-    <attr name="easyButtonRef" format= "reference"/>
+    <!-- Reviewer button backgrounds -->
+    <attr name="againButtonRef" format="reference"/>
+    <attr name="hardButtonRef" format="reference"/>
+    <attr name="goodButtonRef" format="reference"/>
+    <attr name="easyButtonRef" format="reference"/>
+    <!-- Same thing but with ripples -->
+    <attr name="againButtonRippleRef" format="reference"/>
+    <attr name="hardButtonRippleRef" format="reference"/>
+    <attr name="goodButtonRippleRef" format="reference"/>
+    <attr name="easyButtonRippleRef" format="reference"/>
+    <!-- Reviewer button text colors-->
     <attr name="answerButtonTextColor" format="color"/>
     <attr name="againButtonTextColor" format="color"/>
     <attr name="hardButtonTextColor" format="color"/>
@@ -72,7 +83,8 @@
     <attr name="stats_hours" format="color"/>
     <attr name="stats_counts" format="color"/>
     <attr name="stats_unseen" format="color"/>
-    <attr name="stats_suspended_and_buried" format="color"/>
+    <attr name="stats_suspended" format="color"/>
+    <attr name="stats_buried" format="color"/>
     <attr name="stats_cumulative" format="color"/>
     <!-- Reviewer other colors -->
     <attr name="topBarColor" format="color"/>

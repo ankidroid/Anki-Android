@@ -42,14 +42,12 @@
     <string name="disabled">Ei käytössä</string>
     <string name="enabled">Käytössä</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Yleiset asetukset</string>
     <string name="pref_cat_reviewing">Läpikäynti</string>
     <string name="pref_cat_reviewing_summ">Pakasta riippumattomat kertausasetukset</string>
     <string name="pref_cat_reviewer_behaviour">Toiminta</string>
     <string name="pref_cat_flashcard">Näyttö</string>
     <string name="pref_cat_whiteboard">Valkotaulu</string>
-    <string name="pref_cat_automatic_display">Näytä vastaukset automaattisesti</string>
     <string name="pref_cat_appearance">Ulkoasu</string>
     <string name="pref_cat_appearance_summ">Vaihda teemaa ja oletusfonttia</string>
     <string name="pref_cat_themes">Teemat</string>
@@ -96,15 +94,26 @@
     <string name="gestures_summ">Liitä eleitä toimintoihin, kuten vastaamiseen ja korttien muokkaamiseen.</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Pyyhkäisy ylös</string>
     <string name="gestures_swipe_down">Pyyhkäisy alas</string>
     <string name="gestures_swipe_left">Pyyhkäisy vasemmalle</string>
     <string name="gestures_swipe_right">Pyyhkäisy oikealle</string>
     <string name="gestures_double_tap">Kaksoiskosketus</string>
     <string name="gestures_tap_top">Kosketus ylös</string>
-    <string name="gestures_tap_bottom">Kosketus alas</string>
     <string name="gestures_tap_left">Kosketus vasemmalle</string>
     <string name="gestures_tap_right">Kosketus oikealle</string>
+    <string name="gestures_tap_bottom">Kosketus alas</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">sähkökirja</string>
@@ -141,9 +150,8 @@
     <string name="timeout_answer_text">Näytä vastaukset automaattisesti</string>
     <string name="timeout_answer_summ">Näytä vastaus automaattisesti ilman käyttäjän komentoa. Viive sisältää ajan automaattisesti toistetaville äänitiedostoille.</string>
     <string name="timeout_answer_seconds">Aika ennen vastauksen näyttämistä</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Aika ennen seuraavan kysymyksen näyttämistä</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Valitse kieli</string>
     <string name="safe_display">Turvallinen näyttötila</string>
     <string name="safe_display_summ">Poista kaikki animaatiot käytöstä ja käytä turvallisempaa menetelmää korttien piirtämiseen. E-muste laitteet voivat vaatia tätä.</string>
@@ -164,7 +172,6 @@
     <string name="use_current">Pakka uusille korteille</string>
     <string name="new_spread">Uuden kortin sijainti</string>
     <string name="learn_cutoff">Kertauksen etukäteisaikaraja</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Aikaraja</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Seuraava päivä alkaa</string>
@@ -216,8 +223,8 @@
         <item quantity="other">%1$s\n%2$d pakkaa käyttää tätä ryhmää</item>
     </plurals>
     <string name="deck_conf_new_cards">Uusia kortteja</string>
-    <string name="deck_conf_rev_cards">Kertauksia</string>
-    <string name="deck_conf_lps_cards">Vääriä vastauksia</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Kertauksia</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Vääriä vastauksia</string>
     <string name="deck_conf_general">Yleistä</string>
     <string name="deck_conf_reminders">Muistutukset</string>
     <string name="deck_conf_steps">Askelia (minuuteissa)</string>
@@ -235,6 +242,7 @@
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Bonus helppoudesta</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Aikavälin muokkaaja</string>
     <string name="deck_conf_max_ivl">Enimmäisaikaväli</string>
     <string name="deck_conf_new_lps_ivl">Uusi aikaväli</string>
@@ -249,30 +257,26 @@
     <string name="deck_conf_replayq">Toista kysymys</string>
     <string name="deck_conf_replayq_summ">Toista sekä kysymyksen, että vastauksen äänet, kun vastaus näytetään</string>
     <string name="deck_conf_manage">Ryhmien hallinta</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Nykyinen ryhmä</string>
-    <string name="deck_conf_rename">Nimeä uudelleen</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Nimeä uudelleen</string>
     <string name="deck_conf_reset">Palauta oletusarvot</string>
-    <string name="deck_conf_reset_title">Palauta oletusarvot</string>
     <string name="deck_conf_reset_message">Palauta nykyinen asetusryhmä oletusarvoihin?</string>
-    <string name="deck_conf_add">Lisää</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Lisää</string>
     <string name="deck_conf_add_summ">Luo kopio nykyisestä asetusryhmästä</string>
-    <string name="deck_conf_remove">Poista</string>
-    <string name="deck_conf_remove_title">Poista</string>
     <string name="deck_conf_remove_message">Poista nykyinen asetusryhmä?</string>
     <string name="deck_conf_set_subdecks">Aseta kaikille alipakoille</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s alapakka käyttää tätä ryhmää</item>
         <item quantity="other">%s alapakkaa käyttää tätä ryhmää</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Aseta kaikille alipakoille</string>
     <string name="deck_conf_set_subdecks_message">Aseta nykyinen asetusryhmä kaikille tämän pakan alipakoille?</string>
     <string name="pref_browser_editor_font">Selaimen ja editorin kirjasintyyppi</string>
     <string name="deck_conf_cram_filter">Suodatin</string>
-    <string name="deck_conf_cram_options">Asetukset</string>
     <string name="deck_conf_cram_search">Haku</string>
     <string name="deck_conf_cram_limit">Rajoita</string>
     <string name="deck_conf_cram_order">korttia valittu</string>
-    <string name="deck_conf_cram_reschedule">Ajoita uudelleen</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Ajoita uudelleen</string>
     <string name="deck_conf_cram_reschedule_summ">Ajoita kortit tämän pakan vastausten perusteella</string>
     <string name="deck_conf_cram_steps">Muokatut vaiheet (minuuteissa)</string>
     <string name="deck_conf_cram_steps_summ">Määritä muokatut vaiheet</string>
@@ -282,4 +286,6 @@
     <string name="analytics_dialog_title">Auta parantamaan AnkiDroidia!</string>
     <string name="analytics_title">Jaa sovelluskäyttötietojasi</string>
     <string name="analytics_summ">Voit kehittää AnkiDroidia auttamalla kehitystiimiä näkemään mitä ominaisuuksia käytät</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

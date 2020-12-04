@@ -40,7 +40,7 @@ public class UtilsTest {
         try {
             File file = new File(resource.toURI());
             ZipFile zipFile = new ZipFile(file);
-            Enumeration zipEntries = zipFile.getEntries();
+            Enumeration<ZipArchiveEntry> zipEntries = zipFile.getEntries();
             while (zipEntries.hasMoreElements()) {
                 ZipArchiveEntry ze2 = (ZipArchiveEntry) zipEntries.nextElement();
                 Utils.unzipFiles(zipFile, "/tmp", new String[]{ze2.getName()}, null);
@@ -83,5 +83,11 @@ public class UtilsTest {
         copy.deleteOnExit();
         Utils.copyFile(new File(resource.toURI()), copy);
         Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
+    }
+
+    @Test
+    public void testSplit() {
+        Assert.assertArrayEquals(new String[]{"foo", "bar"}, Utils.splitFields("foobar"));
+        Assert.assertArrayEquals(new String[]{"", "foo", "", "", ""}, Utils.splitFields("foo"));
     }
 }

@@ -44,17 +44,13 @@
     <string name="sync_error">Susinchronizuoti nepavyko</string>
     <string name="vague_error">Klaida</string>
     <string name="retry">Bandyti dar kartą</string>
-    <string name="cancel">Atšaukti</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Naudojimo sąlygos</a></string>
     <string name="menu_get_shared_decks">Gauti pasidalintų rinkinių</string>
     <string name="connection_error_message">Atsirado tinklo klaida</string>
     <string name="not_logged_in_title">Prisijunkite prie „AnkiWeb“</string>
     <string name="login_create_account_message">Norėdami naudoti debesijos sinchronizavimo paslaugą, privalote prisijungti prie trečiosios šalies paskyros. Ją galite susikurti sekančiame etape.</string>
     <!-- MyAccount.java -->
     <string name="username">El. pašto adresas</string>
-    <string name="username_repeat">Pakartokite el. pašto adresą</string>
     <string name="password">Slaptažodis</string>
-    <string name="password_repeat">Pakartokite slaptažodį</string>
     <string name="log_in">Prisijungti</string>
     <string name="sign_up_description">Nesate susikūrę „AnkiWeb“ paskyros? Tai padaryti galite nemokamai!</string>
     <string name="sign_up_not_affiliated">Pastaba: „AnkiWeb“ nėra susijusi su „AnkiDroid“</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">Neteisingas el. pašto adresas arba slaptažodis</string>
     <string name="reset_password">Atkurti slaptažodį</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Ieškoti</string>
     <string name="preferences_title">Nuostatos</string>
     <string name="deckpreferences_title">XXX parinktys</string>
     <string name="sync_conflict_message">Šią kolekciją galite įkelti arba parsisiųsti iš „Ankiweb“, kadangi kolekcijos negali dubliuotis. Sinchronizuojant kolekcija bus perrašyta.</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">Sinchronizavimas</string>
     <string name="sync_downloading_media">Laikmenos parsiunčiamos %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Išsamus sinchronizavimas iš įrenginio</string>
-    <string name="sync_log_downloading_message">Išsamus sinchronizavimas iš serverio</string>
     <string name="sync_log_clocks_unsynchronized">Jūsų laikrodis atsilieka %1$d sek.%2$s. Prašome įsitikinti, kad telefone laikas ir laiko juosta yra nustatyti teisingai ir bandyti sinchronizuoti iš naujo.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, gali būti, kad blogai nustatyta laiko juosta</string>
     <string name="sync_log_clocks_unsynchronized_date">, gali būti, kad blogai nustatyta data</string>
@@ -94,6 +88,7 @@
     <string name="sync_overwrite_error">Jūsų turima kolekcija negali būti pakeista parsisiųstu failu</string>
     <string name="sync_connection_error">Prisijungimui skirtas laikas baigėsi. Atsirado problemų su jūsų interneto ryšiu arba jūsų laikmenų aplanke yra pernelyg didelis failas.</string>
     <string name="sync_write_access_error">Parsisiųstas failas negali būti išsaugotas SD kortelėje. Naudojamą kortelę galima tik nuskaityti arba joje nėra pakankamai vietos.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Sinchronizuojami panaikinti įrašai&#8230;</string>
     <string name="sync_small_objects_message">Sinchronizuojami maži objektai&#8230;</string>
     <string name="sync_finish_message">Baigiama sinchronizuoti&#8230;</string>
@@ -115,6 +110,8 @@
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
     <string name="sync_media_error">Susinchronizuoti laikmenų nepavyko</string>
     <string name="sync_media_error_check">Susinchronizuoti laikmenų nepavyko. Rekomenduojame laikmenas patikrinti.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Įrenginio</string>
     <string name="sync_sanity_remote">Nuotolinis</string>
     <string name="force_full_sync_title">Atlikti išsamų sinchronizavimą</string>
@@ -129,7 +126,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

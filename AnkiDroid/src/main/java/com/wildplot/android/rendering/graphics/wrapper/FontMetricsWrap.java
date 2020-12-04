@@ -16,7 +16,7 @@
 package com.wildplot.android.rendering.graphics.wrapper;
 
 public class FontMetricsWrap {
-    private GraphicsWrap g;
+    private final GraphicsWrap g;
 
 
     public FontMetricsWrap(GraphicsWrap g) {

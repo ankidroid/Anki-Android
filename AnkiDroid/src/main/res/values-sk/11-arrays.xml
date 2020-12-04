@@ -39,35 +39,6 @@
         <item>Nikdy nehlásiť</item>
         <item>Spýtať sa</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Žiadna akcia</item>
-        <item>Zobraziť odpoveď</item>
-        <item>Tlačidlo odpovede 1</item>
-        <item>Tlačidlo odpovede 2</item>
-        <item>Tlačidlo odpovede 3</item>
-        <item>Tlačidlo odpovede 4</item>
-        <item>Odporúčaná odpoveď (zelená)</item>
-        <item>Odpoveď lepšia ako odporúčaná</item>
-        <item>Späť</item>
-        <item>Upraviť poznámku</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Pozastaviť kartičku</item>
         <item>Iba oštítkovať</item>
@@ -108,4 +79,36 @@
         <item>Čierny</item>
         <item>Tmavý</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-malý</item>
+        <item>x-malý</item>
+        <item>malý</item>
+        <item>stredný</item>
+        <item>veľký</item>
+        <item>x-veľký</item>
+        <item>xx-veľký</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">Žiadna akcia</string>
+    <string name="gesture_answer_1">Tlačidlo odpovede 1</string>
+    <string name="gesture_answer_2">Tlačidlo odpovede 2</string>
+    <string name="gesture_answer_3">Tlačidlo odpovede 3</string>
+    <string name="gesture_answer_4">Tlačidlo odpovede 4</string>
+    <string name="gesture_answer_green">Odporúčaná odpoveď (zelená)</string>
+    <string name="gesture_answer_better_recommended">Odpoveď lepšia ako odporúčaná</string>
+    <string name="gesture_tag_note">Oštítkovať poznámku</string>
+    <string name="gesture_lookup">Vyhľadať výraz</string>
+    <string name="gesture_play">Prehrať médium</string>
+    <string name="gesture_abort_learning">Prerušiť učenie</string>
+    <string name="gesture_flag_red">Označiť červenou vlajkou</string>
+    <string name="gesture_flag_orange">Označiť oranžovou vlajkou</string>
+    <string name="gesture_flag_green">Označiť zelenou vlajkou</string>
+    <string name="gesture_flag_blue">Označiť modrou vlajkou</string>
+    <string name="gesture_flag_remove">Odstrániť vlajku</string>
+    <string name="gesture_page_up">Strana nahor</string>
+    <string name="gesture_page_down">Strana nadol</string>
+    <string name="gesture_abort_sync">Prerušiť učenie a synchronizáciu</string>
 </resources>

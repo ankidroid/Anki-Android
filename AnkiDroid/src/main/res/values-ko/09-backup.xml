@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">SD카드에 %d MB 보다 적은 공간이 남았습니다. \n 데이터 손실을 방지하기 위해 저장 공간을 확보하세요.</string>
-    <string name="backup_delete">백업 삭제 중...</string>
     <string name="backup_restore">백업으로부터 복원</string>
     <string name="backup_new_collection">새 컬렉션</string>
     <string name="backup_del_collection">컬렉션 삭제 후 새 컬렉션 만들기</string>
@@ -48,13 +47,11 @@
     <string name="backup_full_sync_from_server">서버로부터 전체 동기화</string>
     <string name="backup_full_sync_from_server_question">정말로 AnkiWeb의 컬렉션으로 지금 컬렉션을 덮어쓸까요? 지난 동기화로부터의 모든 학습 진행 상황과 추가된 정보를 잃게 됩니다!</string>
     <string name="error_handling_title">오류 처리</string>
-    <string name="error_handling_options">옵션</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">옵션</string>
     <string name="backup_retry_opening">열기 재시도</string>
     <string name="backup_error_menu_repair">데이터베이스 복구</string>
-    <string name="backup_repair_deck">복구</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">데이터베이스 복구중. \ n 잠시 기다려 주세요...</string>
-    <string name="backup_error">오류</string>
     <string name="backup_invalid_file_error">선택한 백업 파일이 올바르지 않습니다.</string>
     <string name="backup_restore_select_title">복원할 백업 파일 선택</string>
     <string name="backup_restore_no_backups">이 장치에는 사용 가능한 백업 파일이 없습니다. 데스크탑 컴퓨터에 백업 파일이 있다면 수동으로 AnkiDroid 폴더로 복사하세요.</string>

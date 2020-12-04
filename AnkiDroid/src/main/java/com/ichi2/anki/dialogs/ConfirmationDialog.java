@@ -3,6 +3,8 @@ package com.ichi2.anki.dialogs;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -35,6 +37,7 @@ import com.ichi2.anki.R;
             mCancel = cancel;
         }
 
+        @NonNull
         @Override
         public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -43,8 +46,8 @@ import com.ichi2.anki.R;
             return new MaterialDialog.Builder(getActivity())
                 .title("".equals(title) ? res.getString(R.string.app_name) : title)
                     .content(getArguments().getString("message"))
-                    .positiveText(res.getString(R.string.dialog_ok))
-                    .negativeText(res.getString(R.string.dialog_cancel))
+                    .positiveText(R.string.dialog_ok)
+                    .negativeText(R.string.dialog_cancel)
                     .onPositive((dialog, which) -> mConfirm.run())
                     .onNegative((dialog, which) -> mCancel.run())
                     .show();

@@ -19,6 +19,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -45,10 +47,10 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.stats.Stats;
 import com.ichi2.libanki.Deck;
+import com.ichi2.ui.FixedTextView;
 import com.ichi2.ui.SlidingTabLayout;
 
 import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -79,6 +81,9 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         sIsSubtitle = true;
         super.onCreate(savedInstanceState);
@@ -92,12 +97,11 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
     protected void onCollectionLoaded(Collection col) {
         Timber.d("onCollectionLoaded()");
         super.onCollectionLoaded(col);
-        SlidingTabLayout slidingTabLayout;
         // Add drop-down menu to select deck to action bar.
         mDropDownDecks = getCol().getDecks().allSorted();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        mActionBarSpinner = (Spinner) findViewById(R.id.toolbar_spinner);
+        mActionBarSpinner = findViewById(R.id.toolbar_spinner);
         mActionBarSpinner.setAdapter(new DeckDropDownAdapter(this, mDropDownDecks));
         mActionBarSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -120,14 +124,14 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(8);
-        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        SlidingTabLayout slidingTabLayout = findViewById(R.id.sliding_tabs);
         slidingTabLayout.setViewPager(mViewPager);
 
         // Dirty way to get text size from a TextView with current style, change if possible
-        float size = new TextView(this).getTextSize();
+        float size = new FixedTextView(this).getTextSize();
         mTaskHandler.setmStandardTextSize(size);
         // Prepare options menu only after loading everything
         supportInvalidateOptionsMenu();
@@ -151,31 +155,25 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         //System.err.println("in onCreateOptionsMenu");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.anki_stats, menu);
-        return true;
-    }
 
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
         // exit if mTaskHandler not initialized yet
-        if (mTaskHandler == null) {
-            return true;
+        if (mTaskHandler != null) {
+            switch (mTaskHandler.getStatType()) {
+                case TYPE_MONTH:
+                    MenuItem monthItem = menu.findItem(R.id.item_time_month);
+                    monthItem.setChecked(true);
+                    break;
+                case TYPE_YEAR:
+                    MenuItem yearItem = menu.findItem(R.id.item_time_year);
+                    yearItem.setChecked(true);
+                    break;
+                case TYPE_LIFE:
+                    MenuItem lifeItem = menu.findItem(R.id.item_time_all);
+                    lifeItem.setChecked(true);
+                    break;
+            }
         }
-        switch (mTaskHandler.getStatType()) {
-            case TYPE_MONTH:
-                MenuItem monthItem = menu.findItem(R.id.item_time_month);
-                monthItem.setChecked(true);
-                break;
-            case TYPE_YEAR:
-                MenuItem yearItem = menu.findItem(R.id.item_time_year);
-                yearItem.setChecked(true);
-                break;
-            case TYPE_LIFE:
-                MenuItem lifeItem = menu.findItem(R.id.item_time_all);
-                lifeItem.setChecked(true);
-                break;
-        }
-        return super.onPrepareOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -184,34 +182,32 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             return true;
         }
         int itemId = item.getItemId();
-        switch (itemId) {
-            case R.id.item_time_month:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
-                if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_MONTH) {
-                    mTaskHandler.setStatType(Stats.AxisType.TYPE_MONTH);
-                    mSectionsPagerAdapter.notifyDataSetChanged();
-                }
-                return true;
-            case R.id.item_time_year:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
-                if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_YEAR) {
-                    mTaskHandler.setStatType(Stats.AxisType.TYPE_YEAR);
-                    mSectionsPagerAdapter.notifyDataSetChanged();
-                }
-                return true;
-            case R.id.item_time_all:
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);
-                if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_LIFE) {
-                    mTaskHandler.setStatType(Stats.AxisType.TYPE_LIFE);
-                    mSectionsPagerAdapter.notifyDataSetChanged();
-                }
-                return true;
-            case R.id.action_time_chooser:
-                //showTimeDialog();
-                return true;
+        if (itemId == R.id.item_time_month) {
+            if (item.isChecked()) item.setChecked(false);
+            else item.setChecked(true);
+            if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_MONTH) {
+                mTaskHandler.setStatType(Stats.AxisType.TYPE_MONTH);
+                mSectionsPagerAdapter.notifyDataSetChanged();
+            }
+            return true;
+        } else if (itemId == R.id.item_time_year) {
+            if (item.isChecked()) item.setChecked(false);
+            else item.setChecked(true);
+            if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_YEAR) {
+                mTaskHandler.setStatType(Stats.AxisType.TYPE_YEAR);
+                mSectionsPagerAdapter.notifyDataSetChanged();
+            }
+            return true;
+        } else if (itemId == R.id.item_time_all) {
+            if (item.isChecked()) item.setChecked(false);
+            else item.setChecked(true);
+            if (mTaskHandler.getStatType() != Stats.AxisType.TYPE_LIFE) {
+                mTaskHandler.setStatType(Stats.AxisType.TYPE_LIFE);
+                mSectionsPagerAdapter.notifyDataSetChanged();
+            }
+            return true;
+        } else if (itemId == R.id.action_time_chooser) {//showTimeDialog();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -282,7 +278,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
         //this is called when mSectionsPagerAdapter.notifyDataSetChanged() is called, so checkAndUpdate() here
         //works best for updating all tabs
         @Override
-        public int getItemPosition(Object object) {
+        public int getItemPosition(@NonNull Object object) {
             if (object instanceof StatisticFragment) {
                 ((StatisticFragment) object).checkAndUpdate();
             }
@@ -290,10 +286,11 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             return super.getItemPosition(object);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
-            Fragment item = StatisticFragment.newInstance(position);
-            ((StatisticFragment) item).checkAndUpdate();
+            StatisticFragment item = StatisticFragment.newInstance(position);
+            item.checkAndUpdate();
             return item;
         }
 
@@ -324,7 +321,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 case ANSWER_BUTTONS_TAB_POSITION:
                     return getString(R.string.stats_answer_buttons).toUpperCase(l);
                 case CARDS_TYPES_TAB_POSITION:
-                    return getString(R.string.stats_cards_types).toUpperCase(l);
+                    return getString(R.string.title_activity_template_editor).toUpperCase(l);
             }
             return null;
         }
@@ -415,7 +412,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
             //int sectionNumber = 0;
             //System.err.println("sectionNumber: " + mSectionNumber);
             View rootView = inflater.inflate(R.layout.fragment_anki_stats, container, false);
-            mChart = (ChartView) rootView.findViewById(R.id.image_view_chart);
+            mChart = rootView.findViewById(R.id.image_view_chart);
             if (mChart == null) {
                 Timber.d("mChart null!");
             } else {
@@ -424,7 +421,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
             //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-            mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_stats);
+            mProgressBar = rootView.findViewById(R.id.progress_bar_stats);
 
             mProgressBar.setVisibility(View.VISIBLE);
             //mChart.setVisibility(View.GONE);
@@ -582,7 +579,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 getActivity().finish();
                 return rootView;
             }
-            mWebView = (WebView) rootView.findViewById(R.id.web_view_stats);
+            mWebView = rootView.findViewById(R.id.web_view_stats);
             if (mWebView == null) {
                 Timber.d("mChart null!");
             } else {
@@ -593,7 +590,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
 
             //mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-            mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_stats_overview);
+            mProgressBar = rootView.findViewById(R.id.progress_bar_stats_overview);
 
             mProgressBar.setVisibility(View.VISIBLE);
             //mChart.setVisibility(View.GONE);
@@ -676,7 +673,7 @@ public class Statistics extends NavigationDrawerActivity implements DeckDropDown
                 data.putExtra("originalDeck", getIntent().getLongExtra("selectedDeck", 0L));
             }
             setResult(RESULT_CANCELED, data);
-            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+            finishWithAnimation(ActivityTransitionAnimation.Direction.RIGHT);
         }
     }
 }

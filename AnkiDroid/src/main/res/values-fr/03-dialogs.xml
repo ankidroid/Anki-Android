@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Vérifier la base de données ?</string>
     <string name="check_db_warning">Cela peut prendre du temps</string>
     <string name="check_db_acknowledge">Base de données vérifiée</string>
@@ -60,7 +60,7 @@
         <item><![CDATA[Les non-programmeurs peuvent aussi aider. Par exemple, vous pouvez aider à <a href=\"%1$s\">traduire</a> AnkiDroid, mettre à jour le wiki, envoyer des screenshots ou partager AnkiDroid sur votre blog.]]></item>
         <item><![CDATA[AnkiDroid est distribué sous la <a href=\"%1$s\">licence GNU-GPL v3</a> et le code source est disponible <a href=\"%2$s\">sur GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">Aperçu</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Aperçu</string>
     <string name="reposition_card_dialog_title">Repositionner la nouvelle carte</string>
     <string name="reposition_card_dialog_message">Position de départ:</string>
     <string name="reposition_card_not_new_error">Seules les nouvelles cartes peuvent être repositionnées</string>
@@ -75,7 +75,6 @@
         <item quantity="other">%d cartes réinitialisées</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Replanifier la carte</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Replanifier la carte</item>
         <item quantity="other">Replanifier les cartes</item>
@@ -89,27 +88,24 @@
         <item quantity="one">%d carte replanifiée</item>
         <item quantity="other">%d cartes replanifiées</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">Une nouvelle carte est en cours de replanification. La replanification transforme également les nouvelles cartes en cartes de révision. Utilisez l\'option « repositionner la carte » pour changer la position d\'une nouvelle carte dans la nouvelle file d\'attente</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">La replanification réinitialise également la façon dont le planificateur traite la carte dans le futur (la facilité sera réglée à %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Sélectionnez le paquet dans votre gestionnaire de fichiers ou visitez la page about:downloads pour l’importer</string>
     <string name="answering_error_title">Erreur de la base de données</string>
     <string name="answering_error_message">L\'écriture de la collection a échoué. La base de données pourrait être corrompue ou il se peut qu\'il n\'y ait pas assez d\'espace libre sur le disque.\n\nSi ceci se produit plus souvent, essayez de vérifier la base de données, de réparer la collection ou de la restaurer à partir d\'une sauvegarde. Touchez « options » pour cela.\n\Ou il pourrait s\'agir d\'une erreur AnkiDroid ; veuillez signaler l\'erreur pour que nous puissions vérifier ceci.</string>
     <string name="answering_error_report">Signaler les erreurs</string>
     <string name="repair_deck_dialog">Voulez-vous vraiment essayer de réparer la base de données ?\n\nAvant de commencer, une copie sera créée dans le sous-dossier « %s ».</string>
-    <string name="intent_add_saved_information">Données sauvegardées</string>
-    <string name="intent_add_clear_all">Effacer tout</string>
     <string name="intent_aedict_empty">La catégorie « default » est vide</string>
     <string name="intent_aedict_category">Pour ajouter des cartes à AnkiDroid, enlevez toutes les catégories du Bloc-notes, ou créez une catégorie « default »</string>
     <string name="custom_study_new_total_new">Nouvelles cartes dans le paquet: %d</string>
     <string name="custom_study_rev_total_rev">Révisions dues dans le paquet: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">Augmentation/diminution (« -3 ») de la limite actuelle de la nouvelle carte</string>
+    <string name="custom_study_rev_extend">Augmentation/diminution (« -3 ») de la limite de révision d\'aujourd\'hui de</string>
     <string name="custom_study_forgotten">Revoir les cartes oubliées dans les x derniers jours :</string>
     <string name="custom_study_ahead">Réviser à l\'avance de x jours :</string>
     <string name="custom_study_random">Sélectionner x cartes au hasard dans ce paquet :</string>
     <string name="custom_study_preview">Afficher les nouvelles cartes ajoutées dans les x derniers jours :</string>
     <string name="custom_study_rebuild_deck_corrupt">Le paquet d’étude personnalisée n’a pas pu être généré</string>
-    <string name="rebuild_custom_study_deck">Reconstruction du paquet d\'étude personnalisée.\nMerci de patienter&#8230;</string>
     <string name="importing_collection">Importation de la collection. \nVeuillez patienter&#8230;</string>
     <string name="import_media_count">Importation des fichiers médias %1$d%%\nVeuillez patienter&#8230;</string>
     <string name="import_progress">• Importation de notes : %1$d%%\n• importation de cartes : %2$d%%\n• post-traitement : %3$d%%</string>
@@ -124,9 +120,10 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Non</string>
     <string name="dialog_continue">Continuer</string>
-    <string name="dialog_positive_create">Créer</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Créer</string>
     <string name="dialog_positive_delete">Supprimer</string>
-    <string name="dialog_positive_disable">Désactiver</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Désactiver</string>
     <string name="dialog_positive_overwrite">Écraser</string>
     <string name="dialog_positive_remove">Supprimer</string>
     <string name="dialog_positive_repair">Réparer</string>
@@ -147,13 +144,19 @@
     <string name="check_media_no_unused_missing">Aucun fichier inutilisé ou manquant.</string>
     <string name="check_media_db_updated">Base de données de médias reconstruite.</string>
     <string name="check_media_delete_unused">Supprimer les médias inutiles</string>
-    <string name="check_media_deleted">Fichiers supprimés : %d</string>
+    <string name="delete_media_message">Suppression du média&#8230;</string>
+    <string name="delete_media_result_title">Résultat de la suppression</string>
+    <plurals name="delete_media_result_message">
+        <item quantity="one">%d fichier supprimé</item>
+        <item quantity="other">%d fichiers supprimés</item>
+    </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Toutes les cartes</string>
     <string name="tags_dialog_option_new_cards">Nouvelle</string>
-    <string name="tags_dialog_option_due_cards">À faire</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">À faire</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Recherche de cartes vides en cours&#8230;</string>
+    <string name="confirm_cancel">Voulez-vous annuler ?</string>
     <string name="empty_cards_none">Aucune carte vide</string>
     <string name="empty_cards_count">Cartes à supprimer : %d</string>
     <string name="empty_cards_deleted">Cartes supprimées : %d</string>
@@ -170,7 +173,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid mis à jour</string>
     <string name="integrity_check_startup_content">AnkiDroid a été mis à jour. Cette mise à jour inclut des corrections pour d\'éventuels problèmes de base de données, et nous vous conseillons d\'exécuter une vérification de la base de données immédiatement.</string>
-    <string name="integrity_check_positive">Vérifier la base de données</string>
     <string name="integrity_check_continue_anyway">Continuer quand même</string>
     <string name="integrity_check_insufficient_space">La vérification de la base de données exige beaucoup d’espace de stockage temporaire. \n\n Il est fortement recommandé d’avoir au moins %s d’espace libre sur votre appareil avant de continuer.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nVous avez actuellement %s libres.</string>
@@ -185,6 +187,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Base de données verrouillée</string>
     <string name="database_locked_summary">La base de données AnkiDroid est utilisée par une autre application. Veuillez fermer l\'autre application puis rouvrir AnkiDroid.</string>
+    <string name="incompatible_database_version_title">Version de la base de données incompatible</string>
+    <string name="incompatible_database_version_summary">La base de données est une version plus avancée que la version avec laquelle AnkiDroid peut fonctionner. Mettre à jour AnkiDroid ou rétrograder la base de données pour l\'ouvrir\n\nVersion prise en charge : %1$d\nVersion de la base de données : %2$d\n\nLes options de restauration suivantes écraseront votre collection actuelle, éventuellement avec une version compatible de la base de données :</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Image d\'arrière-plan appliquée</string>
     <string name="background_image_removed">Image d\'arrière-plan retirée</string>
@@ -202,9 +206,31 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Échec de la planification des rappels</string>
     <string name="boot_service_too_many_notifications">Trop de rappels planifiés. Certains n’apparaîtront pas</string>
+    <!-- Locale Selection Dialog -->
+    <string name="locale_selection_dialog_title">Sélection des indices clavier</string>
+    <string name="locale_selection_dialog_summary">Certains claviers multilingues, comme GBoard, prennent en charge le changement de langue lors de l\'édition du texte\n\nVeuillez demander la fonctionnalité « setImeHintLocales » du fabricant de votre clavier si votre clavier ne change pas de langue.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Utilisation d\'AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Manuel AnkiDroid</string>
+    <string name="help_item_anki_manual">Manuel Anki</string>
+    <string name="help_item_ankidroid_faq">FAQ AnkiDroid</string>
+    <string name="help_title_get_help">Obtenir de l\'aide</string>
+    <string name="help_item_mailing_list">Liste de diffusion</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Signaler une erreur</string>
+    <string name="help_title_support_ankidroid">Assistance AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Faire un don</string>
+    <string name="help_item_support_develop_ankidroid">Développer</string>
+    <string name="help_item_support_rate_ankidroid">Évaluer</string>
+    <string name="help_item_support_other_ankidroid">Autre</string>
+    <string name="help_title_community">Communauté</string>
+    <string name="help_item_anki_forums">Forums Anki</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">Une synchronisation automatique peut être déclenchée dans %d seconde</item>
+        <item quantity="other">Une synchronisation automatique peut être déclenchée dans %d secondes</item>
     </plurals>
 </resources>

@@ -1,0 +1,49 @@
+name: Sync Translations
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync_translations:
+    name: 'Sync Translations with Crowdin'
+    timeout-minutes: 20
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'master'
+          fetch-depth: 0
+
+      - name: Credential Prep
+        run: |
+          echo "CROWDIN_KEY=${{ secrets.CROWDIN_API_KEY }}" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: GIT Setup
+        run: |
+          git config --global user.name 'AnkiDroid Translations'
+          git config --global user.email 'ankidroid@ankidroid.org'
+          git checkout -b i18n_sync
+          git reset --hard origin/master
+        shell: bash
+
+      - name: Credential Prep
+        run: |
+          mkdir ~/src
+          echo "${{ secrets.CROWDIN_API_KEY }}" > ~/src/crowdin_key.txt
+        shell: bash
+
+      - name: Push translation sources to crowdin
+        run: ./tools/manage-crowdin.sh
+
+      - name: Pull translation updates from crowdin
+        run: |
+          ./tools/update-localizations.py
+          git push --set-upstream origin +i18n_sync
+          echo "The results of the sync are on the i18n_sync branch, PR them from there for merge."
+          echo "https://github.com/ankidroid/Anki-Android/compare/i18n_sync?expand=1"

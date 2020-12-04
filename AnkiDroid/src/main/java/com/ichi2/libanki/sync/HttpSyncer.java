@@ -53,11 +53,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.zip.GZIPOutputStream;
 
 import javax.net.ssl.SSLException;
 
 import androidx.annotation.Nullable;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -79,8 +81,8 @@ public class HttpSyncer {
 
     public static final String ANKIWEB_STATUS_OK = "OK";
 
-    public volatile long bytesSent = 0;
-    public volatile long bytesReceived = 0;
+    public final AtomicLong bytesSent = new AtomicLong();
+    public final AtomicLong bytesReceived = new AtomicLong();
     public volatile long mNextSendS = 1024;
     public volatile long mNextSendR = 1024;
 
@@ -88,9 +90,9 @@ public class HttpSyncer {
      * Synchronization.
      */
 
-    protected String mHKey;
+    protected final String mHKey;
     protected String mSKey;
-    protected Connection mCon;
+    protected final Connection mCon;
     protected Map<String, Object> mPostVars;
     private volatile OkHttpClient mHttpClient;
     private final HostNum mHostNum;
@@ -172,6 +174,7 @@ public class HttpSyncer {
     }
 
     /** Note: Return value must be closed */
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     private Response req(String method, InputStream fobj, int comp, JSONObject registerData) throws UnknownHttpResponseException {
         File tmpFileBuffer = null;
         try {
@@ -179,10 +182,10 @@ public class HttpSyncer {
             StringWriter buf = new StringWriter();
             // post vars
             mPostVars.put("c", comp != 0 ? 1 : 0);
-            for (String key : mPostVars.keySet()) {
+            for (Map.Entry<String, Object> entry : mPostVars.entrySet()) {
                 buf.write(bdry + "\r\n");
-                buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n", key,
-                        mPostVars.get(key)));
+                buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n", entry.getKey(),
+                        entry.getValue()));
             }
             tmpFileBuffer = File.createTempFile("syncer", ".tmp", new File(AnkiDroidApp.getCacheStorageDirectory()));
             FileOutputStream fos = new FileOutputStream(tmpFileBuffer);
@@ -224,10 +227,10 @@ public class HttpSyncer {
             String url = Uri.parse(syncURL()).buildUpon().appendPath(method).toString();
 
             Request.Builder requestBuilder = new Request.Builder();
-            requestBuilder.url(url);
+            requestBuilder.url(parseUrl(url));
 
             requestBuilder.post(new CountingFileRequestBody(tmpFileBuffer, ANKI_POST_TYPE.toString(), num -> {
-                bytesSent += num;
+                bytesSent.addAndGet(num);
                 publishProgress();
             }));
             Request httpPost = requestBuilder.build();
@@ -261,6 +264,20 @@ public class HttpSyncer {
     }
 
 
+    private HttpUrl parseUrl(String url) {
+        // #5843 - show better exception if the URL is invalid
+        try {
+            return HttpUrl.get(url);
+        } catch (IllegalArgumentException ex) {
+            if (isUsingCustomSyncServer(AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()))) {
+                throw new CustomSyncServerUrlException(url, ex);
+            } else {
+                throw ex;
+            }
+        }
+    }
+
+
     // Could be replaced by Compat copy method if that method took listener for bytesReceived/publishProgress()
     public void writeToFile(InputStream source, String destination) throws IOException {
         File file = new File(destination);
@@ -272,7 +289,7 @@ public class HttpSyncer {
             int len;
             while ((len = source.read(buf)) >= 0) {
                 output.write(buf, 0, len);
-                bytesReceived += len;
+                bytesReceived.addAndGet(len);
                 publishProgress();
             }
         } catch (IOException e) {
@@ -290,6 +307,7 @@ public class HttpSyncer {
     }
 
 
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     public String stream2String(InputStream stream, int maxSize) {
         BufferedReader rd;
         try {
@@ -299,7 +317,7 @@ public class HttpSyncer {
             StringBuilder sb = new StringBuilder();
             while ((line = rd.readLine()) != null && (maxSize == -1 || sb.length() < maxSize)) {
                 sb.append(line);
-                bytesReceived += line.length();
+                bytesReceived.addAndGet(line.length());
                 publishProgress();
             }
             rd.close();
@@ -312,10 +330,10 @@ public class HttpSyncer {
 
     private void publishProgress() {
         Timber.d("Publishing progress");
-        if (mCon != null && (mNextSendR <= bytesReceived || mNextSendS <= bytesSent)) {
-            long bR = bytesReceived;
-            long bS = bytesSent;
-            Timber.d("Current progress: %d, %d", bytesReceived, bytesSent);
+        if (mCon != null && (mNextSendR <= bytesReceived.get() || mNextSendS <= bytesSent.get())) {
+            long bR = bytesReceived.get();
+            long bS = bytesSent.get();
+            Timber.d("Current progress: %d, %d", bR, bS);
             mNextSendR = (bR / 1024 + 1) * 1024;
             mNextSendS = (bS / 1024 + 1) * 1024;
             mCon.publishProgress(0, bS, bR);
@@ -381,7 +399,7 @@ public class HttpSyncer {
     public class ProgressByteEntity extends AbstractHttpEntity {
 
         private InputStream mInputStream;
-        private long mLength;
+        private final long mLength;
 
 
         public ProgressByteEntity(File file) {
@@ -402,7 +420,7 @@ public class HttpSyncer {
                 int len;
                 while ((len = mInputStream.read(tmp)) != -1) {
                     outstream.write(tmp, 0, len);
-                    bytesSent += len;
+                    bytesSent.addAndGet(len);
                     publishProgress();
                 }
                 outstream.flush();
@@ -437,6 +455,7 @@ public class HttpSyncer {
     }
 
 
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     public static ByteArrayInputStream getInputStream(String string) {
         try {
             return new ByteArrayInputStream(string.getBytes("UTF-8"));

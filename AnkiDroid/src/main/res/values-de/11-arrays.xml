@@ -39,35 +39,6 @@
         <item>Niemals melden</item>
         <item>Nachfragen</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Keine Aktion</item>
-        <item>Antwort zeigen</item>
-        <item>Antwortschaltfläche 1</item>
-        <item>Antwortschaltfläche 2</item>
-        <item>Antwortschaltfläche 3</item>
-        <item>Antwortschaltfläche 4</item>
-        <item>Empfohlene Antwort (grün)</item>
-        <item>Antwort besser als empfohlen</item>
-        <item>Rückgängig</item>
-        <item>Notiz bearbeiten</item>
-        <item>Notiz verschlagworten</item>
-        <item>Notiz markieren</item>
-        <item>Ausdruck nachschlagen</item>
-        <item>Karte aufschieben</item>
-        <item>Karte ausschließen</item>
-        <item>Notiz löschen</item>
-        <item>Medien abspielen</item>
-        <item>Lernen abbrechen</item>
-        <item>Notiz aufschieben</item>
-        <item>Notiz ausschließen</item>
-        <item>Rote Flagge umschalten</item>
-        <item>Orange Flagge umschalten</item>
-        <item>Grüne Flagge umschalten</item>
-        <item>Blaue Flagge umschalten</item>
-        <item>Flagge entfernen</item>
-        <item>Seite hoch</item>
-        <item>Seite runter</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Karte ausschließen</item>
         <item>Nur Schlagwort</item>
@@ -108,4 +79,36 @@
         <item>Schwarz</item>
         <item>Dunkel</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>x-large</item>
+        <item>xx-large</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">Keine Aktion</string>
+    <string name="gesture_answer_1">Antwortschaltfläche 1</string>
+    <string name="gesture_answer_2">Antwortschaltfläche 2</string>
+    <string name="gesture_answer_3">Antwortschaltfläche 3</string>
+    <string name="gesture_answer_4">Antwortschaltfläche 4</string>
+    <string name="gesture_answer_green">Empfohlene Antwort (grün)</string>
+    <string name="gesture_answer_better_recommended">Antwort besser als empfohlen</string>
+    <string name="gesture_tag_note">Notiz verschlagworten</string>
+    <string name="gesture_lookup">Ausdruck nachschlagen</string>
+    <string name="gesture_play">Medien abspielen</string>
+    <string name="gesture_abort_learning">Lernen abbrechen</string>
+    <string name="gesture_flag_red">Rote Flagge umschalten</string>
+    <string name="gesture_flag_orange">Orange Flagge umschalten</string>
+    <string name="gesture_flag_green">Grüne Flagge umschalten</string>
+    <string name="gesture_flag_blue">Blaue Flagge umschalten</string>
+    <string name="gesture_flag_remove">Flagge entfernen</string>
+    <string name="gesture_page_up">Seite hoch</string>
+    <string name="gesture_page_down">Seite runter</string>
+    <string name="gesture_abort_sync">Abort Learning and Sync</string>
 </resources>

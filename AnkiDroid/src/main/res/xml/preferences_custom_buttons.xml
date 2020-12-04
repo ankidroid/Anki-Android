@@ -21,6 +21,9 @@ MenuItem.SHOW_AS_ACTION_NEVER = 0
 MenuItem.SHOW_AS_ACTION_IF_ROOM = 1
 MenuItem.SHOW_AS_ACTION_ALWAYS  = 2
 MENU_DISABLED = 3
+
+Ensure to add the custom icons to Preferences.java's reset functionality
+TODO: Add a unit test
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <Preference
@@ -69,6 +72,12 @@ MENU_DISABLED = 3
             android:entryValues="@array/custom_button_values"
             android:key="customButtonReplay"
             android:title="@string/replay_audio" />
+        <ListPreference
+            android:defaultValue="3"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="customButtonCardInfo"
+            android:title="@string/card_info_title" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels_menu_and_disabled"

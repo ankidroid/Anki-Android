@@ -18,53 +18,58 @@ package com.ichi2.testutils;
 
 import com.ichi2.libanki.utils.Time;
 
-import java.util.Date;
+public class MockTime extends Time {
 
-public class MockTime implements Time {
-
+    /** Number of miliseconds between each call. */
     private final int mStep;
+    /** Time since epoch in MS. */
     private long mTime;
 
-
+    /** A clock at time Time, only changed explicitly*/
     public MockTime(long time) {
         this(time, 0);
     }
 
-
+    /** A clock at time Time, each call advance by step ms.*/
     public MockTime(long time, int step) {
         this.mTime = time;
         this.mStep = step;
     }
 
-
+    /** Time in milisecond since epoch. */
     @Override
-    public long time() {
-        return getCurrentTime();
-    }
-
-
-    @Override
-    public Date getCurrentDate() {
-        return new Date(getCurrentTime());
-    }
-
-    /**These need confirmation */
-
-    @Override
-    public long intTime() {
-        return (long) now();
-    }
-
-
-    @Override
-    public double now() {
-        return (double) getCurrentTime() / 1000.0d;
-    }
-
-
-    private long getCurrentTime() {
+    public long intTimeMS() {
         long mTime = this.mTime;
         this.mTime += mStep;
         return mTime;
+    }
+
+    protected long getTime() {
+        return mTime;
+    }
+
+    /** Add ms milisecond*/
+    public void addMs(long ms) {
+        mTime += ms;
+    }
+
+    /** add s seconds */
+    public void addS(long s) {
+        addMs(s * 1000L);
+    }
+
+    /** add m minutes */
+    public void addM(long m) {
+        addS(m * 60);
+    }
+
+    /** add h hours*/
+    public void addH(long h) {
+        addM(h * 60);
+    }
+
+    /** add d days*/
+    public void addD(long d) {
+        addH(d * 24);
     }
 }

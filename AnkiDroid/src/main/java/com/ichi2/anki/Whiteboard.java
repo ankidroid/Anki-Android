@@ -18,6 +18,7 @@
 
 package com.ichi2.anki;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -37,7 +38,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
 
 import java.io.File;
@@ -49,17 +50,18 @@ import java.util.Stack;
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
  */
+@SuppressLint("ViewConstructor")
 public class Whiteboard extends View {
 
     private static final float TOUCH_TOLERANCE = 4;
 
-    private Paint mPaint;
-    private UndoStack mUndo = new UndoStack();
+    private final Paint mPaint;
+    private final UndoStack mUndo = new UndoStack();
     private Bitmap mBitmap;
     private Canvas mCanvas;
-    private Path mPath;
-    private Paint mBitmapPaint;
-    private WeakReference<AbstractFlashcardViewer> mCardViewer;
+    private final Path mPath;
+    private final Paint mBitmapPaint;
+    private final WeakReference<AbstractFlashcardViewer> mCardViewer;
 
     private float mX;
     private float mY;
@@ -72,28 +74,23 @@ public class Whiteboard extends View {
 
     private boolean mSecondFingerWithinTapTolerance;
     private boolean mCurrentlyDrawing = false;
-    private boolean mInvertedColors;
-    private boolean mMonochrome;
     private boolean mUndoModeActive = false;
     private final int foregroundColor;
     private final LinearLayout mColorPalette;
-    private SystemTime mTime = new SystemTime();
 
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
         mCardViewer = new WeakReference<>(cardViewer);
-        mInvertedColors = inverted;
-        mMonochrome = monochrome;
 
 
-        if (!mInvertedColors) {
-            if (mMonochrome) {
+        if (!inverted) {
+            if (monochrome) {
                 foregroundColor = Color.BLACK;
             } else {
                 foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color);
             }
         } else {
-            if (mMonochrome) {
+            if (monochrome) {
                 foregroundColor = Color.WHITE;
             } else {
                 foregroundColor = ContextCompat.getColor(cardViewer, R.color.wb_fg_color_inv);
@@ -114,14 +111,14 @@ public class Whiteboard extends View {
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
         // selecting pen color to draw
-        mColorPalette = (LinearLayout) cardViewer.findViewById(R.id.whiteboard_pen_color);
+        mColorPalette = cardViewer.findViewById(R.id.whiteboard_pen_color);
 
-        ((Button) cardViewer.findViewById(R.id.pen_color_white)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_black)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_red)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_green)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_blue)).setOnClickListener(this::onClick);
-        ((Button) cardViewer.findViewById(R.id.pen_color_yellow)).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_white).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_black).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_red).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_green).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_blue).setOnClickListener(this::onClick);
+        cardViewer.findViewById(R.id.pen_color_yellow).setOnClickListener(this::onClick);
     }
 
 
@@ -263,7 +260,7 @@ public class Whiteboard extends View {
         // To fix issue #1336, just make the whiteboard big and square.
         final Point p = getDisplayDimenions();
         int bitmapSize = Math.max(p.x, p.y);
-        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_4444);
+        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888);
     }
 
     private void drawStart(float x, float y) {
@@ -374,37 +371,29 @@ public class Whiteboard extends View {
 
     public void onClick(View view) {
 
-        switch (view.getId()) {
-            case R.id.pen_color_white:
-                mPaint.setColor(Color.WHITE);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_black:
-                mPaint.setColor(Color.BLACK);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_red:
-                int redPenColor = ContextCompat.getColor(getContext(), R.color.material_red_500);
-                mPaint.setColor(redPenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_green:
-                int greenPenColor = ContextCompat.getColor(getContext(), R.color.material_green_500);
-                mPaint.setColor(greenPenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_blue:
-                int bluePenColor = ContextCompat.getColor(getContext(), R.color.material_blue_500);
-                mPaint.setColor(bluePenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            case R.id.pen_color_yellow:
-                int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
-                mPaint.setColor(yellowPenColor);
-                mColorPalette.setVisibility(View.GONE);
-                break;
-            default:
-                break;
+        int id = view.getId();
+        if (id == R.id.pen_color_white) {
+            mPaint.setColor(Color.WHITE);
+            mColorPalette.setVisibility(View.GONE);
+        } else if (id == R.id.pen_color_black) {
+            mPaint.setColor(Color.BLACK);
+            mColorPalette.setVisibility(View.GONE);
+        } else if (id == R.id.pen_color_red) {
+            int redPenColor = ContextCompat.getColor(getContext(), R.color.material_red_500);
+            mPaint.setColor(redPenColor);
+            mColorPalette.setVisibility(View.GONE);
+        } else if (id == R.id.pen_color_green) {
+            int greenPenColor = ContextCompat.getColor(getContext(), R.color.material_green_500);
+            mPaint.setColor(greenPenColor);
+            mColorPalette.setVisibility(View.GONE);
+        } else if (id == R.id.pen_color_blue) {
+            int bluePenColor = ContextCompat.getColor(getContext(), R.color.material_blue_500);
+            mPaint.setColor(bluePenColor);
+            mColorPalette.setVisibility(View.GONE);
+        } else if (id == R.id.pen_color_yellow) {
+            int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
+            mPaint.setColor(yellowPenColor);
+            mColorPalette.setVisibility(View.GONE);
         }
     }
 
@@ -489,7 +478,8 @@ public class Whiteboard extends View {
         return mCurrentlyDrawing;
     }
 
-    protected String saveWhiteboard() throws FileNotFoundException {
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
+    protected String saveWhiteboard(Time time) throws FileNotFoundException {
 
         Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
@@ -502,7 +492,7 @@ public class Whiteboard extends View {
         }
 
         String baseFileName = "Whiteboard";
-        String timeStamp = TimeUtils.getTimestamp(mTime);
+        String timeStamp = TimeUtils.getTimestamp(time);
         String finalFileName = baseFileName + timeStamp + ".png";
 
         File saveWhiteboardImagFile = new File(ankiDroidFolder, finalFileName);

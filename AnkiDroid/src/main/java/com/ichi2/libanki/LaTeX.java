@@ -42,11 +42,11 @@ public class LaTeX {
     /**
      * Patterns used to identify LaTeX tags
      */
-    public static Pattern sStandardPattern = Pattern.compile("\\[latex\\](.+?)\\[/latex\\]",
+    public static final Pattern sStandardPattern = Pattern.compile("\\[latex](.+?)\\[/latex]",
             Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-    public static Pattern sExpressionPattern = Pattern.compile("\\[\\$\\](.+?)\\[/\\$\\]",
+    public static final Pattern sExpressionPattern = Pattern.compile("\\[\\$](.+?)\\[/\\$]",
             Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-    public static Pattern sMathPattern = Pattern.compile("\\[\\$\\$\\](.+?)\\[/\\$\\$\\]",
+    public static final Pattern sMathPattern = Pattern.compile("\\[\\$\\$](.+?)\\[/\\$\\$]",
             Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 
 
@@ -54,7 +54,7 @@ public class LaTeX {
      * Convert HTML with embedded latex tags to image links.
      * NOTE: _imgLink produces an alphanumeric filename so there is no need to escape the replacement string.
      */
-    public static String mungeQA(String html, Collection col, JSONObject model) {
+    public static String mungeQA(String html, Collection col, Model model) {
         StringBuffer sb = new StringBuffer();
         Matcher matcher = sStandardPattern.matcher(html);
         Media m = col.getMedia();
@@ -85,7 +85,7 @@ public class LaTeX {
     /**
      * Return an img link for LATEX.
      */
-    private static String _imgLink(String latex, JSONObject model, Media m) {
+    private static String _imgLink(String latex, Model model, Media m) {
         String txt = _latexFromHtml(latex);
 
         String ext = "png";

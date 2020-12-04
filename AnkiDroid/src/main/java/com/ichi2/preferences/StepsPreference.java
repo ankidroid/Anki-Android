@@ -17,7 +17,6 @@
 package com.ichi2.preferences;
 
 import android.content.Context;
-import android.preference.EditTextPreference;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -29,7 +28,8 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 
-public class StepsPreference extends EditTextPreference {
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+public class StepsPreference extends android.preference.EditTextPreference {
 
     private final boolean mAllowEmpty;
 
@@ -90,13 +90,13 @@ public class StepsPreference extends EditTextPreference {
      * @return The correctly formatted string or null if the input is not valid.
      */
     private String getValidatedStepsInput(String steps) {
-        JSONArray ja = convertToJSON(steps);
-        if (ja == null) {
+        JSONArray stepsAr = convertToJSON(steps);
+        if (stepsAr == null) {
             return null;
         } else {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < ja.length(); i++) {
-                sb.append(ja.getString(i)).append(" ");
+            for (String step: stepsAr.stringIterable()) {
+                sb.append(step).append(" ");
             }
             return sb.toString().trim();
         }
@@ -111,8 +111,8 @@ public class StepsPreference extends EditTextPreference {
      */
     public static String convertFromJSON(JSONArray a) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < a.length(); i++) {
-            sb.append(a.getString(i)).append(" ");
+        for (String s: a.stringIterable()) {
+            sb.append(s).append(" ");
         }
         return sb.toString().trim();
     }
@@ -126,10 +126,10 @@ public class StepsPreference extends EditTextPreference {
      * @return The steps as a JSONArray or null if the steps are not valid.
      */
     public static JSONArray convertToJSON(String steps) {
-        JSONArray ja = new JSONArray();
+        JSONArray stepsAr = new JSONArray();
         steps = steps.trim();
         if (TextUtils.isEmpty(steps)) {
-            return ja;
+            return stepsAr;
         }
         try {
             for (String s : steps.split("\\s+")) {
@@ -141,9 +141,9 @@ public class StepsPreference extends EditTextPreference {
                 // Use whole numbers if we can (but still allow decimals)
                 int i = (int) f;
                 if (i == f) {
-                    ja.put(i);
+                    stepsAr.put(i);
                 } else {
-                    ja.put(f);
+                    stepsAr.put(f);
                 }
             }
         } catch (NumberFormatException e) {
@@ -152,7 +152,7 @@ public class StepsPreference extends EditTextPreference {
             // Can't serialize float. Value likely too big/small.
             return null;
         }
-        return ja;
+        return stepsAr;
     }
 
 

@@ -9,10 +9,8 @@ public class NamedJSONComparator implements Comparator<JSONObject> {
 
     @Override
     public int compare(JSONObject lhs, JSONObject rhs) {
-        String o1;
-        String o2;
-        o1 = lhs.getString("name");
-        o2 = rhs.getString("name");
+        String o1 = lhs.getString("name");
+        String o2 = rhs.getString("name");
         return o1.compareToIgnoreCase(o2);
     }
 }

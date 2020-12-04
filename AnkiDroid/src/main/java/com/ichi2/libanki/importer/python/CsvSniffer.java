@@ -246,8 +246,9 @@ public class CsvSniffer {
                     charFrequency.put(c, metaFrequency);
                 }
             }
-            for (char c : charFrequency.keySet()) {
-                Set<Map.Entry<Integer, Integer>> bareList = charFrequency.get(c).entrySet();
+            for (Map.Entry<Character, Map<Integer, Integer>> e : charFrequency.entrySet()) {
+                char c = e.getKey();
+                Set<Map.Entry<Integer, Integer>> bareList = e.getValue().entrySet();
 
                 List<Tuple> items = new ArrayList<>();
 
@@ -281,9 +282,10 @@ public class CsvSniffer {
             double threshold = 0.9;
             while (delims.size() == 0 && consistency >= threshold) {
                 for (Map.Entry<Character, Tuple> entry : modeList) {
-                    if (entry.getValue().first > 0 && entry.getValue().second > 0) {
-                        if (((double) entry.getValue().second / total) >= consistency && (delimiters == null || delimiters.contains(entry.getKey()))) {
-                            delims.put(entry.getKey(), entry.getValue());
+                    Tuple value = entry.getValue();
+                    if (value.first > 0 && value.second > 0) {
+                        if (((double) value.second / total) >= consistency && (delimiters == null || delimiters.contains(entry.getKey()))) {
+                            delims.put(entry.getKey(), value);
                         }
                     }
                 }
@@ -375,8 +377,8 @@ public class CsvSniffer {
 
 
     private static class Tuple {
-        public int first;
-        public int second;
+        public final int first;
+        public final int second;
 
 
         public Tuple(Integer key, Integer value) {
@@ -415,8 +417,8 @@ public class CsvSniffer {
     }
 
     protected static class GuessQuoteAndDelimiter extends Guess {
-        public char quotechar;
-        public boolean doublequote;
+        public final char quotechar;
+        public final boolean doublequote;
 
 
         public GuessQuoteAndDelimiter(char quotechar, boolean doublequote, char delimiter, boolean skipinitialspace) {
@@ -433,8 +435,8 @@ public class CsvSniffer {
     }
 
     protected static class Guess {
-        public char delimiter;
-        public boolean skipinitialspace;
+        public final char delimiter;
+        public final boolean skipinitialspace;
 
 
         public Guess(char delimiter, boolean skipinitialspace) {

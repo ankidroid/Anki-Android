@@ -43,7 +43,7 @@ public abstract class MultimediaEditFieldActivityTestBase extends RobolectricTes
     }
 
     protected IFieldController getControllerForIntent(Intent intent) {
-        ActivityController multimediaController = Robolectric.buildActivity(MultimediaEditFieldActivity.class, intent)
+        ActivityController<?> multimediaController = Robolectric.buildActivity(MultimediaEditFieldActivity.class, intent)
                 .create().start().resume().visible();
         saveControllerForCleanup(multimediaController);
         MultimediaEditFieldActivity testCardTemplatePreviewer = (MultimediaEditFieldActivity) multimediaController.get();

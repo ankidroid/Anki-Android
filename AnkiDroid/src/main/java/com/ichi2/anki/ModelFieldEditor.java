@@ -16,6 +16,7 @@
  ****************************************************************************************/
 package com.ichi2.anki;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import android.text.InputType;
@@ -28,13 +29,15 @@ import android.widget.ListView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
+import com.ichi2.anki.dialogs.LocaleSelectionDialog;
 import com.ichi2.anki.dialogs.ModelEditorContextMenu;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.themes.StyledProgressDialog;
+import com.ichi2.ui.FixedEditText;
 import com.ichi2.widget.WidgetStatus;
 
 import com.ichi2.utils.JSONArray;
@@ -44,8 +47,15 @@ import com.ichi2.utils.JSONObject;
 import java.util.ArrayList;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
 import com.ichi2.async.TaskData;
+import java.util.Locale;
 
-public class ModelFieldEditor extends AnkiActivity {
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
+import timber.log.Timber;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+
+public class ModelFieldEditor extends AnkiActivity implements LocaleSelectionDialog.LocaleSelectionDialogHandler {
 
     private final static int NORMAL_EXIT = 100001;
 
@@ -63,7 +73,7 @@ public class ModelFieldEditor extends AnkiActivity {
     private ModelEditorContextMenu mContextMenu;
     private EditText mFieldNameInput;
 
-    private Runnable mConfirmDialogCancel = () -> dismissContextMenu();
+    private final Runnable mConfirmDialogCancel = this::dismissContextMenu;
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -72,6 +82,9 @@ public class ModelFieldEditor extends AnkiActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.model_field_editor);
 
@@ -147,8 +160,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
         mFieldLabels = new ArrayList<>();
         mNoteFields = mMod.getJSONArray("flds");
-        for (int i = 0; i < mNoteFields.length(); i++) {
-            JSONObject o = mNoteFields.getJSONObject(i);
+        for (JSONObject o: mNoteFields.jsonObjectIterable()) {
             mFieldLabels.add(o.getString("name"));
         }
     }
@@ -163,7 +175,7 @@ public class ModelFieldEditor extends AnkiActivity {
     * Creates a dialog to create a field
     */
     private void addFieldDialog() {
-        mFieldNameInput = new EditText(this);
+        mFieldNameInput = new FixedEditText(this);
         mFieldNameInput.setSingleLine(true);
 
         new MaterialDialog.Builder(this)
@@ -180,9 +192,10 @@ public class ModelFieldEditor extends AnkiActivity {
                         UIUtils.showThemedToast(this, getResources().getString(R.string.toast_duplicate_field), true);
                     } else {
                         //Name is valid, now field is added
+                        changeHandler listener = changeFieldHandler();
                         try {
                             mCol.modSchema();
-                            CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
+                            CollectionTask.launchCollectionTask(ADD_FIELD, listener,
                                     new TaskData(new Object[]{mMod, fieldName}));
                         } catch (ConfirmModSchemaException e) {
 
@@ -193,7 +206,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                 mCol.modSchemaNoCheck();
                                 String fieldName1 = mFieldNameInput.getText().toString()
                                         .replaceAll("[\\n\\r]", "");
-                                CollectionTask.launchCollectionTask(ADD_FIELD, mChangeFieldHandler,
+                                CollectionTask.launchCollectionTask(ADD_FIELD, listener,
                                         new TaskData(new Object[]{mMod, fieldName1}));
                                 dismissContextMenu();
                             };
@@ -243,7 +256,7 @@ public class ModelFieldEditor extends AnkiActivity {
     }
 
     private void deleteField() {
-        CollectionTask.launchCollectionTask(DELETE_FIELD, mChangeFieldHandler,
+        CollectionTask.launchCollectionTask(DELETE_FIELD, changeFieldHandler(),
                                 new TaskData(new Object[]{mMod, mNoteFields.getJSONObject(mCurrentPos)}));
     }
 
@@ -253,12 +266,12 @@ public class ModelFieldEditor extends AnkiActivity {
      * Processing time is constant
      */
     private void renameFieldDialog() {
-        mFieldNameInput = new EditText(this);
+        mFieldNameInput = new FixedEditText(this);
         mFieldNameInput.setSingleLine(true);
         mFieldNameInput.setText(mFieldLabels.get(mCurrentPos));
         mFieldNameInput.setSelection(mFieldNameInput.getText().length());
         new MaterialDialog.Builder(this)
-                .title(R.string.rename_model)
+                .title(R.string.model_field_editor_rename)
                 .positiveText(R.string.rename)
                 .customView(mFieldNameInput, true)
                 .onPositive((dialog, which) -> {
@@ -304,7 +317,7 @@ public class ModelFieldEditor extends AnkiActivity {
      * Processing time is scales with number of items
      */
     private void repositionFieldDialog() {
-        mFieldNameInput = new EditText(this);
+        mFieldNameInput = new FixedEditText(this);
         mFieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);
         new MaterialDialog.Builder(this)
                 .title(String.format(getResources().getString(R.string.model_field_editor_reposition), 1, mFieldLabels.size()))
@@ -323,10 +336,11 @@ public class ModelFieldEditor extends AnkiActivity {
                         if (pos < 1 || pos > mFieldLabels.size()) {
                             UIUtils.showThemedToast(this, getResources().getString(R.string.toast_out_of_range), true);
                         } else {
+                            changeHandler listener = changeFieldHandler();
                             // Input is valid, now attempt to modify
                             try {
                                 mCol.modSchema();
-                                CollectionTask.launchCollectionTask(REPOSITION_FIELD, mChangeFieldHandler,
+                                CollectionTask.launchCollectionTask(REPOSITION_FIELD, listener,
                                         new TaskData(new Object[]{mMod,
                                                 mNoteFields.getJSONObject(mCurrentPos), pos - 1}));
                             } catch (ConfirmModSchemaException e) {
@@ -340,7 +354,7 @@ public class ModelFieldEditor extends AnkiActivity {
                                         String newPosition1 = mFieldNameInput.getText().toString();
                                         int pos1 = Integer.parseInt(newPosition1);
                                         CollectionTask.launchCollectionTask(REPOSITION_FIELD,
-                                                mChangeFieldHandler, new TaskData(new Object[]{mMod,
+                                                listener, new TaskData(new Object[]{mMod,
                                                         mNoteFields.getJSONObject(mCurrentPos), pos1 - 1}));
                                         dismissContextMenu();
                                     } catch (JSONException e1) {
@@ -388,7 +402,7 @@ public class ModelFieldEditor extends AnkiActivity {
     private void renameField() throws ConfirmModSchemaException {
         String fieldLabel = mFieldNameInput.getText().toString()
                 .replaceAll("[\\n\\r]", "");
-        JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
+        JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
         mCol.getModels().renameField(mMod, field, fieldLabel);
         mCol.getModels().save();
         fullRefreshList();
@@ -399,9 +413,10 @@ public class ModelFieldEditor extends AnkiActivity {
      * Changes the sort field (that displays in card browser) to the current field
      */
     private void sortByField() {
+        changeHandler listener = changeFieldHandler();
         try {
             mCol.modSchema();
-            CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
+            CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, listener,
                     new TaskData(new Object[]{mMod, mCurrentPos}));
         } catch (ConfirmModSchemaException e) {
             // Handler mMod schema confirmation
@@ -409,7 +424,7 @@ public class ModelFieldEditor extends AnkiActivity {
             c.setArgs(getResources().getString(R.string.full_sync_confirmation));
             Runnable confirm = () -> {
                 mCol.modSchemaNoCheck();
-                CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, mChangeFieldHandler,
+                CollectionTask.launchCollectionTask(CHANGE_SORT_FIELD, listener,
                         new TaskData(new Object[]{mMod, mCurrentPos}));
                 dismissContextMenu();
             };
@@ -424,7 +439,7 @@ public class ModelFieldEditor extends AnkiActivity {
      */
     private void toggleStickyField() {
         // Get the current field
-        JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
+        JSONObject field = mNoteFields.getJSONObject(mCurrentPos);
         // If the sticky setting is enabled then disable it, otherwise enable it
         if (field.getBoolean("sticky")) {
             field.put("sticky", false);
@@ -464,40 +479,44 @@ public class ModelFieldEditor extends AnkiActivity {
     /*
      * Called during the desk task when any field is modified
      */
-    private TaskListener mChangeFieldHandler = new TaskListener() {
+    private changeHandler changeFieldHandler() {
+        return new changeHandler(this);
+    }
+    private static class changeHandler extends TaskListenerWithContext<ModelFieldEditor> {
+        public changeHandler(ModelFieldEditor modelFieldEditor) {
+            super(modelFieldEditor);
+        }
 
         @Override
-        public void onPreExecute() {
-            if (mProgressDialog == null) {
-                mProgressDialog = StyledProgressDialog.show(ModelFieldEditor.this, getIntent().getStringExtra("title"),
-                        getResources().getString(R.string.model_field_editor_changing), false);
+        public void actualOnPreExecute(@NonNull ModelFieldEditor modelFieldEditor) {
+            if (modelFieldEditor != null && modelFieldEditor.mProgressDialog == null) {
+                modelFieldEditor.mProgressDialog = StyledProgressDialog.show(modelFieldEditor, modelFieldEditor.getIntent().getStringExtra("title"),
+                        modelFieldEditor.getResources().getString(R.string.model_field_editor_changing), false);
             }
         }
 
         @Override
-        public void onPostExecute(TaskData result) {
+        public void actualOnPostExecute(@NonNull ModelFieldEditor modelFieldEditor, TaskData result) {
             if (!result.getBoolean()) {
-                closeActivity(DeckPicker.RESULT_DB_ERROR);
+                modelFieldEditor.closeActivity(DeckPicker.RESULT_DB_ERROR);
             }
 
-            dismissProgressBar();
-            fullRefreshList();
+            modelFieldEditor.dismissProgressBar();
+            modelFieldEditor.fullRefreshList();
         }
-    };
-
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.action_add_new_model:
-                addFieldDialog();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else if (itemId == R.id.action_add_new_model) {
+            addFieldDialog();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -507,14 +526,7 @@ public class ModelFieldEditor extends AnkiActivity {
 
 
     private void closeActivity(int reason) {
-        switch (reason) {
-            case NORMAL_EXIT:
-                finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                break;
-            default:
-                finishWithAnimation(ActivityTransitionAnimation.RIGHT);
-                break;
-        }
+        finishWithAnimation(RIGHT);
     }
 
 
@@ -524,7 +536,7 @@ public class ModelFieldEditor extends AnkiActivity {
     }
 
 
-    private MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, selection, charSequence) -> {
+    private final MaterialDialog.ListCallback mContextMenuListener = (materialDialog, view, selection, charSequence) -> {
         switch (selection) {
             case ModelEditorContextMenu.SORT_FIELD:
                 sortByField();
@@ -541,6 +553,54 @@ public class ModelFieldEditor extends AnkiActivity {
             case ModelEditorContextMenu.FIELD_TOGGLE_STICKY:
                 toggleStickyField();
                 break;
+            default: {
+                //need this as we can't switch on a @RequiresApi
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && selection == ModelEditorContextMenu.FIELD_ADD_LANGUAGE_HINT) {
+                    Timber.i("displaying locale hint dialog");
+                    localeHintDialog();
+                    break;
+                }
+            }
         }
     };
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void localeHintDialog() {
+        //We don't currently show the current value, but we may want to in the future
+        DialogFragment dialogFragment = LocaleSelectionDialog.newInstance(this);
+        showDialogFragment(dialogFragment);
+    }
+
+
+    /*
+     * Sets the Locale Hint of the field to the provided value.
+     * This allows some keyboard (GBoard) to change language
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void addFieldLocaleHint(@NonNull Locale selectedLocale) {
+        String input = selectedLocale.toLanguageTag();
+        JSONObject field = (JSONObject) mNoteFields.get(mCurrentPos);
+        field.put("ad-hint-locale", input);
+        mCol.getModels().save();
+        Timber.i("Set field locale to %s", selectedLocale);
+        String format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.getDisplayName());
+        UIUtils.showSimpleSnackbar(this, format, true);
+    }
+
+
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void onSelectedLocale(@NonNull Locale selectedLocale) {
+        addFieldLocaleHint(selectedLocale);
+        dismissAllDialogFragments();
+    }
+
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void onLocaleSelectionCancelled() {
+        dismissAllDialogFragments();
+    }
 }

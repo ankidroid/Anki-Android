@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 import timber.log.Timber;
 
 public class ChessFilter {
-    private static final Pattern fFenPattern = Pattern.compile("\\[fen ?([^\\]]*)\\]([^\\[]+)\\[/fen\\]");
+    private static final Pattern fFenPattern = Pattern.compile("\\[fen ?([^]]*)]([^\\[]+)\\[/fen]");
     private static final Pattern fFenOrientationPattern = Pattern.compile("orientation *= *\"?(black|white)\"?");
     private static final String fRenderFen =
     		"(function (fentxt, showBlack) {" +
@@ -66,7 +66,7 @@ public class ChessFilter {
         if (!AnkiDroidApp.getSharedPrefs(context).getBoolean("convertFenText", false)) {
             return text;
         }
-        Boolean showBlack = false;
+        boolean showBlack = false;
         Matcher mf = fFenPattern.matcher(text);
         StringBuffer sb = new StringBuffer();
         while (mf.find()) {

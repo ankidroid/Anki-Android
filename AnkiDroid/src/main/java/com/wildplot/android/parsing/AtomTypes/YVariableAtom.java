@@ -22,8 +22,8 @@ import com.wildplot.android.parsing.TreeElement;
 
 public class YVariableAtom implements TreeElement {
 
-    private Atom.AtomType atomType = Atom.AtomType.VARIABLE;
-    private TopLevelParser parser;
+    private final Atom.AtomType atomType = Atom.AtomType.VARIABLE;
+    private final TopLevelParser parser;
 
 
     public YVariableAtom(TopLevelParser parser) {

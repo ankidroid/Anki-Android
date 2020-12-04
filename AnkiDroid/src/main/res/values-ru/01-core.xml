@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">Да</string>
     <!-- Navigation drawer items-->
     <string name="decks">Колоды</string>
-    <string name="card_browser">Список карточек</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Список карточек</string>
     <string name="statistics">Статистика</string>
     <string name="settings">Настройки</string>
     <string name="help">Помощь</string>
     <string name="send_feedback">Отправить отзыв</string>
-    <string name="studyoptions_title">Обзор колоды</string>
     <string name="studyoptions_due_today">На сегодня:</string>
     <string name="studyoptions_new_total">Всего новых карточек:</string>
     <string name="studyoptions_total_cards">Всего карточек:</string>
@@ -79,6 +79,8 @@
         <item quantity="many">%d дней %d остались</item>
         <item quantity="other">%d дней %d осталось</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Коллекция пуста</string>
+    <string name="no_cards_placeholder_description">Добавляйте карточки\nс помощью значка «+».</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Сегодня изучена %1$d карточка за %2$s</item>
@@ -89,6 +91,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Введите ответ</string>
     <string name="show_answer">Показать ответ</string>
+    <string name="hide_answer">Скрыть ответ</string>
     <string name="ease_button_again">Снова</string>
     <string name="ease_button_hard">Трудно</string>
     <string name="ease_button_good">Хорошо</string>
@@ -97,22 +100,14 @@
     <string name="menu_import">Импортировать</string>
     <string name="undo">Отменить</string>
     <string name="undo_action_review">последнее повторение</string>
-    <string name="undo_action_bury_card">отложить карточку</string>
-    <string name="undo_action_bury_note">отложить запись</string>
-    <string name="undo_action_suspend_card">исключить карточку</string>
-    <string name="undo_action_suspend_note">исключить запись</string>
-    <string name="undo_action_delete">удалить запись</string>
-    <string name="undo_action_delete_multi">удалить записи</string>
     <string name="undo_action_change_deck_multi">сменить колоды</string>
-    <string name="undo_action_reschedule_card">перепланировать</string>
-    <string name="undo_action_reset_card">сбросить прогресс</string>
-    <string name="undo_action_reposition_card">переместить</string>
     <string name="move_all_to_deck">Переместить всё в колоду</string>
     <string name="unbury">Вернуть</string>
     <string name="rename_deck">Переименовать колоду</string>
-    <string name="menu_add">Добавить</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Добавить</string>
     <string name="menu_add_note">Добавить запись</string>
-    <string name="menu_my_account">Учётная запись синхронизации</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Учётная запись синхронизации</string>
     <string name="menu_dismiss_note">Спрятать или удалить</string>
     <string name="menu_bury_card">Отложить карточку</string>
     <string name="menu_bury_note">Отложить запись</string>
@@ -136,7 +131,7 @@
     <string name="menu_unmark_note">Снять отметку</string>
     <string name="menu_toggle_mic_tool_bar">Проверить произношение</string>
     <string name="new_deck">Создать колоду</string>
-    <string name="create">Создать</string>
+    <string name="create" comment="Button to create a filtered deck">Создать</string>
     <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
     <string name="night_mode">Ночной режим</string>
     <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>
@@ -161,11 +156,11 @@
     <string name="time_quantity_months">%.1f мес.</string>
     <string name="time_quantity_years">%.1f г.</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Колода для зубрёжки перестраивается...</string>
+    <string name="rebuild_filtered_deck">Фильтрованная колода перестраивается&#8230;</string>
     <string name="rebuild_cram_label">Перестроить</string>
     <string name="empty_cram_label">Очистить</string>
     <string name="create_subdeck">Создать подколоду</string>
-    <string name="empty_cram_deck">Колода для зубрёжки очищается...</string>
+    <string name="empty_filtered_deck">Фильтрованная колода очищается&#8230;</string>
     <string name="custom_study_deck_name">Дополнительная учебная сессия</string>
     <string name="custom_study_deck_exists">Сначала переименуйте существующую дополнительную колоду</string>
     <string name="empty_deck">Эта колода пуста</string>
@@ -194,7 +189,6 @@
     <string name="card_template_editor_front">Шаблон лица</string>
     <string name="card_template_editor_back">Шаблон оборота</string>
     <string name="card_template_editor_styling">Стилизация</string>
-    <string name="card_template_editor_menu_delete">Удалить</string>
     <string name="card_template_editor_menu_card_browser_appearance">Внешний вид списка карточек</string>
     <string name="card_template_editor_deck_override">Переопределение колоды</string>
     <string name="card_template_editor_cant_delete">Нужен хотя бы один тип карточек</string>
@@ -210,11 +204,12 @@
     <string name="template_for_current_card_deleted">Тип карточек текущей карточки был удалён.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Вид списка</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Чтение и запись в базу данных AnkiDroid</string>
     <string name="read_write_permission_description">доступ к колодам, карточкам, записям, их типам, а также создание новых</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Список карточек</string>
-    <string name="card_browser_context_menu">Список карточек</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Список карточек</string>
     <string name="context_menu_anki_card_label">Карточка Anki</string>
 </resources>

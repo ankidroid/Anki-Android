@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">sì</string>
     <!-- Navigation drawer items-->
     <string name="decks">Mazzi</string>
-    <string name="card_browser">Browser delle carte</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Browser delle carte</string>
     <string name="statistics">Statistiche</string>
     <string name="settings">Impostazioni</string>
     <string name="help">Guida</string>
     <string name="send_feedback">Invia commenti</string>
-    <string name="studyoptions_title">Panoramica del mazzo</string>
     <string name="studyoptions_due_today">Scadono oggi:</string>
     <string name="studyoptions_new_total">Totale carte nuove:</string>
     <string name="studyoptions_total_cards">Totale carte:</string>
@@ -71,6 +71,8 @@
         <item quantity="one">%d giorno %d rimanente</item>
         <item quantity="other">%d giorni %d rimanenti</item>
     </plurals>
+    <string name="no_cards_placeholder_title">La collezione è vuota</string>
+    <string name="no_cards_placeholder_description">Inizia ad aggiungere carte\nusando l\'icona +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Oggi hai studiato %1$d carta in %2$s</item>
@@ -79,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Digita la risposta</string>
     <string name="show_answer">Mostra la risposta</string>
+    <string name="hide_answer">Nascondi risposta</string>
     <string name="ease_button_again">Ripeti</string>
     <string name="ease_button_hard">Difficile</string>
     <string name="ease_button_good">Buono</string>
@@ -87,22 +90,14 @@
     <string name="menu_import">Importa</string>
     <string name="undo">Annulla</string>
     <string name="undo_action_review">ultima ripetizione</string>
-    <string name="undo_action_bury_card">seppellisci carta</string>
-    <string name="undo_action_bury_note">seppellisci nota</string>
-    <string name="undo_action_suspend_card">sospendi carta</string>
-    <string name="undo_action_suspend_note">sospendi nota</string>
-    <string name="undo_action_delete">elimina nota</string>
-    <string name="undo_action_delete_multi">elimina note</string>
     <string name="undo_action_change_deck_multi">cambia mazzi</string>
-    <string name="undo_action_reschedule_card">ripianifica</string>
-    <string name="undo_action_reset_card">ripristinare i progressi</string>
-    <string name="undo_action_reposition_card">riposiziona</string>
     <string name="move_all_to_deck">Sposta tutto nel mazzo</string>
     <string name="unbury">Disseppellisci</string>
     <string name="rename_deck">Rinomina mazzo</string>
-    <string name="menu_add">Aggiungi</string>
+    <string name="create_shortcut">Crea scorciatoia</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Aggiungi</string>
     <string name="menu_add_note">Aggiungi nota</string>
-    <string name="menu_my_account">Sincronizza account</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizza account</string>
     <string name="menu_dismiss_note">Nascondi / Cancella</string>
     <string name="menu_bury_card">Seppellisci carta</string>
     <string name="menu_bury_note">Seppellisci nota</string>
@@ -126,7 +121,7 @@
     <string name="menu_unmark_note">Rimuovi contrassegno nota</string>
     <string name="menu_toggle_mic_tool_bar">Controlla la pronuncia</string>
     <string name="new_deck">Crea mazzo</string>
-    <string name="create">Crea</string>
+    <string name="create" comment="Button to create a filtered deck">Crea</string>
     <string name="new_dynamic_deck">Crea mazzo filtrato</string>
     <string name="night_mode">Modalità notturna</string>
     <string name="directory_inaccessible">La directory AnkiDroid è inaccessibile</string>
@@ -151,11 +146,11 @@
     <string name="time_quantity_months">%.1f me</string>
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Ricreo mazzo per lo studio focalizzato.\nAttendi...</string>
+    <string name="rebuild_filtered_deck">Ricostruzione del mazzo filtrato&#8230;</string>
     <string name="rebuild_cram_label">Ricrea</string>
     <string name="empty_cram_label">Svuota</string>
     <string name="create_subdeck">Crea sottomazzo</string>
-    <string name="empty_cram_deck">Svuoto mazzo per lo studio focalizzato.\nAttendi...</string>
+    <string name="empty_filtered_deck">Svuotamento del mazzo filtrato&#8230;</string>
     <string name="custom_study_deck_name">Sessione di Studio Personalizzato</string>
     <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
     <string name="empty_deck">Questo mazzo è vuoto</string>
@@ -184,7 +179,6 @@
     <string name="card_template_editor_front">Modello del fronte</string>
     <string name="card_template_editor_back">Modello del retro</string>
     <string name="card_template_editor_styling">Stile</string>
-    <string name="card_template_editor_menu_delete">Elimina</string>
     <string name="card_template_editor_menu_card_browser_appearance">Aspetto del browser delle carte</string>
     <string name="card_template_editor_deck_override">Sovrascrittura Mazzo</string>
     <string name="card_template_editor_cant_delete">È necessario almeno un tipo di carta.</string>
@@ -198,11 +192,12 @@
     <string name="template_for_current_card_deleted">Il tipo di carta per la carta corrente è stato eliminato.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspetto del browser</string>
+    <!-- card Info -->
+    <string name="card_info_title">Info Scheda</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Leggere e scrivere nel database di AnkiDroid</string>
     <string name="read_write_permission_description">accedere a note esistenti, carte, modelli e mazzi, nonché crearne di nuovi</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Browser delle carte</string>
-    <string name="card_browser_context_menu">Browser delle carte</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Browser delle carte</string>
+    <string name="context_menu_anki_card_label">Carta Anki</string>
 </resources>

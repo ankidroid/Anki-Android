@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">Kortsæt</string>
-    <string name="card_browser">Kort browser</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kort browser</string>
     <string name="statistics">Statistik</string>
     <string name="settings">Indstillinger</string>
     <string name="help">Hjælp</string>
     <string name="send_feedback">Send feedback</string>
-    <string name="studyoptions_title">Overblik af dæk</string>
     <string name="studyoptions_due_today">Forfalder i dag:</string>
     <string name="studyoptions_new_total">Samlet antal nye kort:</string>
     <string name="studyoptions_total_cards">Samlet antal kort:</string>
@@ -71,6 +71,8 @@
         <item quantity="one">%d dag %d tilbage</item>
         <item quantity="other">%d dage %d tilbage</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Studerede %1$d kort på %2$s i dag</item>
@@ -79,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Skriv svar</string>
     <string name="show_answer">Vis svar</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Igen</string>
     <string name="ease_button_hard">Svær</string>
     <string name="ease_button_good">God</string>
@@ -87,22 +90,14 @@
     <string name="menu_import">Importer</string>
     <string name="undo">Fortryd</string>
     <string name="undo_action_review">sidste gennemgang</string>
-    <string name="undo_action_bury_card">begrav kort</string>
-    <string name="undo_action_bury_note">begrav note</string>
-    <string name="undo_action_suspend_card">suspendér kort</string>
-    <string name="undo_action_suspend_note">suspendér note</string>
-    <string name="undo_action_delete">slet note</string>
-    <string name="undo_action_delete_multi">slet note</string>
     <string name="undo_action_change_deck_multi">skift kortsæt</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Flyt alle til kortsæt</string>
     <string name="unbury">Grav op</string>
     <string name="rename_deck">Omdøb kortsæt</string>
-    <string name="menu_add">Tilføj</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Tilføj</string>
     <string name="menu_add_note">Tilføj note</string>
-    <string name="menu_my_account">Synkroniseringskonto</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkroniseringskonto</string>
     <string name="menu_dismiss_note">Skjul / slet</string>
     <string name="menu_bury_card">Begrav kort</string>
     <string name="menu_bury_note">Begrav note</string>
@@ -126,7 +121,7 @@
     <string name="menu_unmark_note">Fjern markering fra note</string>
     <string name="menu_toggle_mic_tool_bar">Tjek udtale</string>
     <string name="new_deck">Opret kortsæt</string>
-    <string name="create">Opret</string>
+    <string name="create" comment="Button to create a filtered deck">Opret</string>
     <string name="new_dynamic_deck">Opret filtreret dæk</string>
     <string name="night_mode">Nattetilstand</string>
     <string name="directory_inaccessible">AnkiDroid vejviser er utilgængelig</string>
@@ -151,11 +146,11 @@
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f år</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Genopbygger proppet dæk &#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Genopbyg</string>
     <string name="empty_cram_label">Tøm</string>
     <string name="create_subdeck">Opret underkortsæt</string>
-    <string name="empty_cram_deck">Tømmer terpekortsæt&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">Dette kortsæt er tomt</string>
@@ -184,7 +179,6 @@
     <string name="card_template_editor_front">Front template</string>
     <string name="card_template_editor_back">Back template</string>
     <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_delete">Slet</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">At least one card type is required</string>
@@ -198,11 +192,12 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

@@ -10,6 +10,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.utils.StringUtils;
 import com.ichi2.utils.Assert;
 import com.ichi2.utils.HtmlUtils;
@@ -32,10 +33,8 @@ import static com.ichi2.libanki.Consts.NEW_CARDS_RANDOM;
 import static com.ichi2.libanki.Utils.collection2Array;
 import static com.ichi2.libanki.Utils.fieldChecksum;
 import static com.ichi2.libanki.Utils.guid64;
-import static com.ichi2.libanki.Utils.intTime;
 import static com.ichi2.libanki.Utils.joinFields;
 import static com.ichi2.libanki.Utils.splitFields;
-import static com.ichi2.libanki.Utils.timestampID;
 import static com.ichi2.libanki.importer.NoteImporter.ImportMode.ADD_MODE;
 import static com.ichi2.libanki.importer.NoteImporter.ImportMode.IGNORE_MODE;
 import static com.ichi2.libanki.importer.NoteImporter.ImportMode.UPDATE_MODE;
@@ -52,7 +51,7 @@ public class NoteImporter extends Importer {
     @Nullable
     private List<String> mMapping;
     @Nullable
-    private String mTagModified ;
+    private final String mTagModified ;
 
 
     private final Model mModel;
@@ -66,7 +65,6 @@ public class NoteImporter extends Importer {
     /** _nextID in python */
     private long mNextId;
     private ArrayList<Long> _ids;
-    private List<Triple> _cards;
     private boolean mEmptyNotes;
     private int mUpdateCount;
 
@@ -99,8 +97,8 @@ public class NoteImporter extends Importer {
     public void initMapping() {
         List<String> flds = new ArrayList<>();
         JSONArray array = mModel.getJSONArray("flds");
-        for (int i = 0; i < array.length(); i++) {
-            flds.add(array.getJSONObject(i).getString("name"));
+        for (JSONObject fld: array.jsonObjectIterable()) {
+            flds.add(fld.getString("name"));
         }
         // truncate to provided count
         flds = flds.subList(0, Math.min(flds.size(), fields()));
@@ -166,15 +164,14 @@ public class NoteImporter extends Importer {
 
         HashMap<String, Boolean> firsts = new HashMap<>();
         int fld0index = mMapping.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"));
-        mFMap = mCol.getModels().fieldMap(mModel);
-        mNextId = timestampID(mCol.getDb(), "notes");
+        mFMap = Models.fieldMap(mModel);
+        mNextId = mCol.getTime().timestampID(mCol.getDb(), "notes");
         // loop through the notes
         List<Object[]> updates = new ArrayList<>();
         List<String> updateLog = new ArrayList<>();
         // PORT: Translations moved closer to their sources
         List<Object[]> _new = new ArrayList<>();
         _ids = new ArrayList<>();
-        _cards = new ArrayList<>();
         mEmptyNotes = false;
         int dupeCount = 0;
         List<String> dupes = new ArrayList<>();
@@ -248,15 +245,13 @@ public class NoteImporter extends Importer {
         addNew(_new);
         addUpdates(updates);
         // make sure to update sflds, etc
-        mCol.updateFieldCache(collection2Array(_ids));
+        mCol.updateFieldCache(_ids);
         // generate cards
-        if (!mCol.genCards(_ids).isEmpty()) {
+        if (!mCol.genCards(_ids, mModel).isEmpty()) {
             this.getLog().add(0, getString(R.string.note_importer_empty_cards_found));
         }
 
 
-        // apply scheduling updates
-        updateCards();
         // we randomize or order here, to ensure that siblings
         // have the same due#
         long did = mCol.getDecks().selected();
@@ -292,14 +287,11 @@ public class NoteImporter extends Importer {
         if (!processFields(n)) {
             return null;
         }
-        for (Map.Entry<Integer, ForeignCard> a : n.cards.entrySet()) {
-            _cards.add(new Triple(id, a.getKey(), a.getValue()));
-        }
         return new Object[] {
                 id,
                 guid64(),
                 mModel.getLong("id"),
-                intTime(),
+                mCol.getTime().intTime(),
                 mCol.usn(),
                 mCol.getTags().join(n.mTags),
                 n.fieldsStr,
@@ -323,16 +315,16 @@ public class NoteImporter extends Importer {
         String tags;
         if (mTagsMapped) {
             tags = mCol.getTags().join(n.mTags);
-            return new Object[] {intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr, tags };
+            return new Object[] {mCol.getTime().intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr, tags };
         } else if (mTagModified != null) {
             tags = mCol.getDb().queryString("select tags from notes where id = ?", id);
             List<String> tagList = mCol.getTags().split(tags);
             tagList.addAll(StringUtils.splitOnWhitespace(mTagModified));
             tags = mCol.getTags().join(tagList);
-            return new Object[] {intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr };
+            return new Object[] {mCol.getTime().intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr };
         } else {
             // This looks inconsistent but is fine, see: addUpdates
-            return new Object[] {intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr };
+            return new Object[] {mCol.getTime().intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr };
         }
     }
 
@@ -389,7 +381,7 @@ public class NoteImporter extends Importer {
             }
         }
         note.fieldsStr = joinFields(fields);
-        ArrayList<Integer> ords = mCol.getModels().availOrds(mModel, fields);
+        ArrayList<Integer> ords = Models.availOrds(mModel, fields);
         if (ords.isEmpty()) {
             mEmptyNotes = true;
             return false;
@@ -398,17 +390,6 @@ public class NoteImporter extends Importer {
     }
 
 
-    private void updateCards() {
-        ArrayList<Object[]> data = new ArrayList<>();
-        for (Triple t : _cards) {
-            ForeignCard c = t.mCard;
-            data.add(new Object[] { c.mIvl, c.mDue, c.mFactor, c.mReps, c.mLapses, t.mNid, t.mOrd});
-        }
-
-        // we assume any updated cards are reviews
-        mCol.getDb().executeMany("update cards set type = 2, queue = 2, ivl = ?, due = ?, " +
-                "factor = ?, reps = ?, lapses = ? where nid = ? and ord = ?", data);
-    }
 
     /** Not in libAnki */
 
@@ -465,19 +446,18 @@ public class NoteImporter extends Importer {
 
     /** A temporary object storing fields and attributes. */
     public static class ForeignNote {
-        public List<String> mFields = new ArrayList<>();
-        public List<String> mTags = new ArrayList<>();
+        public final List<String> mFields = new ArrayList<>();
+        public final List<String> mTags = new ArrayList<>();
         public Object deck = new Object();
-        public Map<Integer, ForeignCard> cards = new HashMap<>();
         public String fieldsStr = "";
     }
 
     public static class ForeignCard {
-        public long mDue = 0;
-        public int mIvl = 1;
-        public int mFactor = Consts.STARTING_FACTOR;
-        public int mReps = 0;
-        public int mLapses = 0;
+        public final long mDue = 0;
+        public final int mIvl = 1;
+        public final int mFactor = Consts.STARTING_FACTOR;
+        public final int mReps = 0;
+        public final int mLapses = 0;
     }
 
     private static class Triple {

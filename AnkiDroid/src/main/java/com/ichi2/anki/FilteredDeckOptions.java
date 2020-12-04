@@ -26,10 +26,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
@@ -55,6 +51,8 @@ import java.util.Set;
 
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
+
 /**
  * Preferences for the current deck.
  */
@@ -68,7 +66,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     private BroadcastReceiver mUnmountReceiver = null;
 
     // TODO: not anymore used in libanki?
-    private String[] dynExamples = new String[] { null,
+    private final String[] dynExamples = new String[] { null,
             "{'search'=\"is:new\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
             "{'search'=\"added:1\", 'resched'=False, 'steps'=\"1\", 'order'=5}",
             "{'search'=\"rated:1:1\", 'order'=4}",
@@ -79,8 +77,8 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
     public class DeckPreferenceHack implements SharedPreferences {
 
-        private Map<String, String> mValues = new HashMap<>();
-        private Map<String, String> mSummaries = new HashMap<>();
+        private final Map<String, String> mValues = new HashMap<>();
+        private final Map<String, String> mSummaries = new HashMap<>();
 
 
         public DeckPreferenceHack() {
@@ -124,7 +122,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                 Timber.d("commit() changes back to database");
 
                 for (Entry<String, Object> entry : mUpdate.valueSet()) {
-                    Timber.i("Change value for key '" + entry.getKey() + "': " + entry.getValue());
+                    Timber.i("Change value for key '%s': %s", entry.getKey(), entry.getValue());
                     if ("search".equals(entry.getKey())) {
                         JSONArray ar = mDeck.getJSONArray("terms");
                         ar.getJSONArray(0).put(0, entry.getValue());
@@ -153,8 +151,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                         if (i > 0) {
                             JSONObject presetValues = new JSONObject(dynExamples[i]);
                             JSONArray ar = presetValues.names();
-                            for (int j = 0; j < ar.length(); j++) {
-                                String name = ar.getString(j);
+                            for (String name: ar.stringIterable()) {
                                 if ("steps".equals(name)) {
                                     mUpdate.put("stepsOn", true);
                                 }
@@ -274,25 +271,25 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
         @Override
         public boolean getBoolean(String key, boolean defValue) {
-            return Boolean.valueOf(this.getString(key, Boolean.toString(defValue)));
+            return Boolean.parseBoolean(this.getString(key, Boolean.toString(defValue)));
         }
 
 
         @Override
         public float getFloat(String key, float defValue) {
-            return Float.valueOf(this.getString(key, Float.toString(defValue)));
+            return Float.parseFloat(this.getString(key, Float.toString(defValue)));
         }
 
 
         @Override
         public int getInt(String key, int defValue) {
-            return Integer.valueOf(this.getString(key, Integer.toString(defValue)));
+            return Integer.parseInt(this.getString(key, Integer.toString(defValue)));
         }
 
 
         @Override
         public long getLong(String key, long defValue) {
-            return Long.valueOf(this.getString(key, Long.toString(defValue)));
+            return Long.parseLong(this.getString(key, Long.toString(defValue)));
         }
 
 
@@ -305,7 +302,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             return mValues.get(key);
         }
 
-        public List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
+        public final List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
 
 
         @Override
@@ -389,11 +386,11 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
     }
 
     @Override
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                closeDeckOptions();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            closeDeckOptions();
+            return true;
         }
         return false;
     }
@@ -427,7 +424,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
             }
         }
         finish();
-        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+        ActivityTransitionAnimation.slide(this, FADE);
     }
 
 
@@ -445,14 +442,14 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
         mAllowCommit = false;
         // for all text preferences, set summary as current database value
         for (String key : mPref.mValues.keySet()) {
-            Preference pref = this.findPreference(key);
+            android.preference.Preference pref = this.findPreference(key);
             String value;
             if (pref == null) {
                 continue;
-            } else if (pref instanceof CheckBoxPreference) {
+            } else if (pref instanceof android.preference.CheckBoxPreference) {
                 continue;
-            } else if (pref instanceof ListPreference) {
-                ListPreference lp = (ListPreference) pref;
+            } else if (pref instanceof android.preference.ListPreference) {
+                android.preference.ListPreference lp = (android.preference.ListPreference) pref;
                 CharSequence entry = lp.getEntry();
                 if (entry != null) {
                     value = entry.toString();
@@ -463,8 +460,8 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
                 value = this.mPref.getString(key, "");
             }
             // update value for EditTexts
-            if (pref instanceof EditTextPreference) {
-                ((EditTextPreference) pref).setText(value);
+            if (pref instanceof android.preference.EditTextPreference) {
+                ((android.preference.EditTextPreference) pref).setText(value);
             }
             // update summary
             if (!mPref.mSummaries.containsKey(key)) {
@@ -484,7 +481,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
     @SuppressWarnings("deprecation") // Tracked as #5019 on github
     protected void buildLists() {
-        ListPreference newOrderPref = (ListPreference) findPreference("order");
+        android.preference.ListPreference newOrderPref = (android.preference.ListPreference) findPreference("order");
         newOrderPref.setEntries(R.array.cram_deck_conf_order_labels);
         newOrderPref.setEntryValues(R.array.cram_deck_conf_order_values);
         newOrderPref.setValue(mPref.getString("order", "0"));

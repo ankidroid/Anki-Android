@@ -19,7 +19,6 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.text.format.Formatter;
 
 import androidx.annotation.NonNull;
@@ -28,6 +27,9 @@ import androidx.annotation.Nullable;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
+import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
+import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.preferences.PreferenceExtensions;
 import com.ichi2.utils.FileUtil;
 
@@ -37,6 +39,8 @@ import java.io.IOException;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.libanki.Consts.SCHEMA_VERSION;
+
 /**
  * Singleton which opens, stores, and closes the reference to the Collection.
  */
@@ -44,8 +48,6 @@ public class CollectionHelper {
 
     // Collection instance belonging to sInstance
     private Collection mCollection;
-    // Path to collection, cached for the reopenCollection() method
-    private String mPath;
     // Name of anki2 file
     public static final String COLLECTION_FILENAME = "collection.anki2";
 
@@ -68,9 +70,11 @@ public class CollectionHelper {
     }
 
     public synchronized void lockCollection() {
+        Timber.i("Locked Collection - Collection Loading should fail");
         mCollectionLocked = true;
     }
     public synchronized void unlockCollection() {
+        Timber.i("Unlocked Collection");
         mCollectionLocked = false;
     }
     public synchronized boolean isCollectionLocked() {
@@ -101,23 +105,40 @@ public class CollectionHelper {
      * @return instance of the Collection
      */
     public synchronized Collection getCol(Context context) {
+        if (colIsOpen()) {
+            return mCollection;
+        }
+        return getCol(context, new SystemTime());
+    }
+
+    @VisibleForTesting
+    public synchronized Collection getCol(Context context, @NonNull Time time) {
         // Open collection
         if (!colIsOpen()) {
             String path = getCollectionPath(context);
             // Check that the directory has been created and initialized
             try {
                 initializeAnkiDroidDirectory(getParentDirectory(path));
-                mPath = path;
+                // Path to collection, cached for the reopenCollection() method
             } catch (StorageAccessException e) {
                 Timber.e(e, "Could not initialize AnkiDroid directory");
                 return null;
             }
             // Open the database
             Timber.i("Begin openCollection: %s", path);
-            mCollection = Storage.Collection(context, path, false, true);
+            mCollection = Storage.Collection(context, path, false, true, time);
             Timber.i("End openCollection: %s", path);
         }
         return mCollection;
+    }
+
+    /** Collection time if possible, otherwise real time.*/
+    public synchronized Time getTimeSafe(Context context) {
+        try {
+            return getCol(context).getTime();
+        } catch (Exception e) {
+            return new SystemTime();
+        }
     }
 
     /**
@@ -210,6 +231,7 @@ public class CollectionHelper {
      * external storage directory.
      * @return the folder path
      */
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     public static String getDefaultAnkiDroidDirectory() {
         return new File(Environment.getExternalStorageDirectory(), "AnkiDroid").getAbsolutePath();
     }
@@ -227,7 +249,7 @@ public class CollectionHelper {
      * @return the absolute path to the AnkiDroid directory.
      */
     public static String getCurrentAnkiDroidDirectory(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         return PreferenceExtensions.getOrSetString(
                 preferences,
                 "deckPath",
@@ -352,6 +374,22 @@ public class CollectionHelper {
      */
     public static void loadCollectionComplete(Collection col) {
         col.getModels();
+    }
+
+    public static boolean isFutureAnkiDroidVersion(Context context) throws UnknownDatabaseVersionException {
+        int databaseVersion = getDatabaseVersion(context);
+        return databaseVersion > SCHEMA_VERSION;
+    }
+
+
+    public static int getDatabaseVersion(Context context) throws UnknownDatabaseVersionException {
+        try {
+            Collection col = getInstance().mCollection;
+            return col.queryVer();
+        } catch (Exception e) {
+            Timber.w(e, "Failed to query version");
+            return Storage.getDatabaseVersion(getCollectionPath(context));
+        }
     }
 
 }

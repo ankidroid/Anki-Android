@@ -20,11 +20,11 @@
         <item name="android:textColor">?attr/fab_labelsTextColor</item>
     </style>
 
-    <style name="FooterButtonLayout" parent="FooterButtonLayoutBase">
+    <style name="FooterButton" parent="FooterButtonBase">
         <item name="android:fontFamily">@string/font_fontFamily_medium</item>
     </style>
 
-    <style name="FooterButtonEaseText" parent="FooterButtonNextTime">
+    <style name="FooterButtonEaseText" parent="FooterButtonEaseTextBase">
         <item name="android:fontFamily">@string/font_fontFamily_medium</item>
     </style>
 </resources>

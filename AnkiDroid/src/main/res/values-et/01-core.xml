@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">Kaardipakid</string>
-    <string name="card_browser">Kaardibrauser</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kaardibrauser</string>
     <string name="statistics">Statistika</string>
     <string name="settings">Seaded</string>
     <string name="help">Abi</string>
     <string name="send_feedback">Saada Tagasisidet</string>
-    <string name="studyoptions_title">Deck overview</string>
     <string name="studyoptions_due_today">Tänaseks:</string>
     <string name="studyoptions_new_total">Uusi kaarte kokku:</string>
     <string name="studyoptions_total_cards">Kokku kaarte:</string>
@@ -71,6 +71,8 @@
         <item quantity="one">%d day %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Studied %1$d card in %2$s today</item>
@@ -79,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Kirjuta vastus</string>
     <string name="show_answer">Kuva vastus</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Uuesti</string>
     <string name="ease_button_hard">Keeruline</string>
     <string name="ease_button_good">Hea</string>
@@ -87,22 +90,14 @@
     <string name="menu_import">Impordi</string>
     <string name="undo">Võta tagasi</string>
     <string name="undo_action_review">viimane arvustus</string>
-    <string name="undo_action_bury_card">bury card</string>
-    <string name="undo_action_bury_note">bury note</string>
-    <string name="undo_action_suspend_card">peata kaart</string>
-    <string name="undo_action_suspend_note">peata märkus</string>
-    <string name="undo_action_delete">kustuta märge</string>
-    <string name="undo_action_delete_multi">kustuta märkmed</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">lähtesta saavutused</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">Rename deck</string>
-    <string name="menu_add">Lisa</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Lisa</string>
     <string name="menu_add_note">Lisa märkus</string>
-    <string name="menu_my_account">Sünkrooni konto</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sünkrooni konto</string>
     <string name="menu_dismiss_note">Hide / delete</string>
     <string name="menu_bury_card">Bury card</string>
     <string name="menu_bury_note">Bury note</string>
@@ -126,7 +121,7 @@
     <string name="menu_unmark_note">Unmark note</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Loo kaardipakk</string>
-    <string name="create">Loo</string>
+    <string name="create" comment="Button to create a filtered deck">Loo</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="night_mode">Öörežiim</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
@@ -151,11 +146,11 @@
     <string name="time_quantity_months">%.1f k</string>
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Taasta</string>
     <string name="empty_cram_label">Tühi</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Kohandatud uuringu Session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">This deck is empty</string>
@@ -184,7 +179,6 @@
     <string name="card_template_editor_front">Front template</string>
     <string name="card_template_editor_back">Back template</string>
     <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_delete">Kustuta</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Vähemalt üks kaardi tüüp peab olema valitud</string>
@@ -198,11 +192,12 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

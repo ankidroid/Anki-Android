@@ -147,12 +147,12 @@ public class TemporaryModelTest extends RobolectricTest {
         if (!(actual instanceof ArrayList)) {
             Assert.fail("actual array null or not the correct type");
         }
-        Assert.assertEquals("arrays didn't have the same length?", expected.length, ((ArrayList) actual).size());
+        Assert.assertEquals("arrays didn't have the same length?", expected.length, ((ArrayList<Object[]>) actual).size());
         for (int i = 0; i < expected.length; i++) {
-            if (!(((ArrayList) actual).get(i) instanceof Object[])) {
+            if (!(((ArrayList<Object[]>) actual).get(i) instanceof Object[])) {
                 Assert.fail("actual array does not contain Object[] entries");
             }
-            Object[] actualChange = (Object[]) ((ArrayList) actual).get(i);
+            Object[] actualChange = ((ArrayList<Object[]>) actual).get(i);
             Assert.assertEquals("ordinal at " + i + " not correct?", expected[i][0], actualChange[0]);
             Assert.assertEquals("changeType at " + i + " not correct?", expected[i][1], actualChange[1]);
         }

@@ -1,5 +1,6 @@
 package com.ichi2.anki;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import com.ichi2.libanki.Note;
@@ -9,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
-import org.robolectric.annotation.LooperMode;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -23,20 +23,26 @@ import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SI
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS;
 import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl;
 
-import static android.os.Looper.getMainLooper;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
-import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(AndroidJUnit4.class)
-@LooperMode(LooperMode.Mode.PAUSED)
 public class AbstractFlashcardViewerTest extends RobolectricTest {
 
     public static class NonAbstractFlashcardViewer extends AbstractFlashcardViewer {
         @Override
         protected void setTitle() {
         }
+
+
+        @Override
+        protected void performReload() {
+            // intentionally blank
+        }
+
 
         public String getTypedInput() {
             return super.getTypedInputText();
@@ -313,6 +319,58 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
         assertThat(nafv.getTypedInput(), is("你好%"));
     }
 
+    @Test
+    public void testEditingCardChangesTypedAnswer() {
+        // 7363
+       addNoteUsingBasicTypedModel("Hello", "World");
+
+        NonAbstractFlashcardViewer nafv = getViewer();
+
+        assertThat(nafv.getCorrectTypedAnswer(), is("World"));
+
+        waitForAsyncTasksToComplete();
+
+        AbstractFlashcardViewer.setEditorCard(nafv.mCurrentCard);
+
+        Note note = nafv.mCurrentCard.note();
+        note.setField(1, "David");
+
+        nafv.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
+
+        waitForAsyncTasksToComplete();
+
+        assertThat(nafv.getCorrectTypedAnswer(), is("David"));
+    }
+
+    @Test
+    public void testEditingCardChangesTypedAnswerOnDisplayAnswer() {
+        // 7363
+        addNoteUsingBasicTypedModel("Hello", "World");
+
+        NonAbstractFlashcardViewer nafv = getViewer();
+
+        assertThat(nafv.getCorrectTypedAnswer(), is("World"));
+
+        nafv.displayCardAnswer();
+
+        assertThat(nafv.getCardContent(), containsString("World"));
+
+        waitForAsyncTasksToComplete();
+
+        AbstractFlashcardViewer.setEditorCard(nafv.mCurrentCard);
+
+        Note note = nafv.mCurrentCard.note();
+        note.setField(1, "David");
+
+        nafv.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
+
+        waitForAsyncTasksToComplete();
+
+        assertThat(nafv.getCorrectTypedAnswer(), is("David"));
+        assertThat(nafv.getCardContent(), not(containsString("World")));
+        assertThat(nafv.getCardContent(), containsString("David"));
+    }
+
 
     private NonAbstractFlashcardViewer getViewer() {
         Note n = getCol().newNote();
@@ -323,13 +381,13 @@ public class AbstractFlashcardViewerTest extends RobolectricTest {
                 .create().start().resume().visible();
         saveControllerForCleanup((multimediaController));
 
-        NonAbstractFlashcardViewer viewer = (NonAbstractFlashcardViewer) multimediaController.get();
+        NonAbstractFlashcardViewer viewer = multimediaController.get();
         viewer.onCollectionLoaded(getCol());
         viewer.loadInitialCard();
         // Without this, AbstractFlashcardViewer.mCard is still null, and RobolectricTest.tearDown executes before
         // AsyncTasks spawned by by loading the viewer finish. Is there a way to synchronize these things while under test?
-        try { Thread.sleep(2000); } catch (Throwable t) { /* nothing */ }
-        shadowOf(getMainLooper()).idle();
+        advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep();
         return viewer;
     }
 }

@@ -25,13 +25,18 @@
         <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_dark</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">@color/material_light_blue_700</item>
+        <item name="largeButtonBackgroundColorFocused">@color/material_light_blue_600</item>
+        <item name="largeButtonBackgroundColorPressed">@color/material_light_blue_900</item>
         <item name="largeButtonTextColor">@color/white</item>
+        <item name="largeButtonSecondaryBackgroundColor">@color/material_grey_800</item>
+        <item name="largeButtonSecondaryBackgroundColorFocused">@color/material_grey_700</item>
+        <item name="largeButtonSecondaryBackgroundColorPressed">@color/material_grey_600</item>
+        <item name="largeButtonSecondaryTextColor">@color/material_grey_500</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionBarTextColor">@color/white</item>
-        <item name="actionBarPopupBackgroundColor">@color/theme_dark_primary</item>
         <item name="actionBarPopupTextColor">@color/theme_dark_primary_text</item>
         <item name="actionModeBackground">@color/theme_dark_primary</item>
         <!-- Deck list colors and divider -->
@@ -59,6 +64,10 @@
         <item name="hardButtonRef">@drawable/footer_button_hard_dark</item>
         <item name="goodButtonRef">@drawable/footer_button_good_dark</item>
         <item name="easyButtonRef">@drawable/footer_button_easy_dark</item>
+        <item name="againButtonRippleRef">@drawable/footer_button_again_dark_ripple</item>
+        <item name="hardButtonRippleRef">@drawable/footer_button_hard_dark_ripple</item>
+        <item name="goodButtonRippleRef">@drawable/footer_button_good_dark_ripple</item>
+        <item name="easyButtonRippleRef">@drawable/footer_button_easy_dark_ripple</item>
         <!-- Card Browser Colors -->
         <item name="cardBrowserDivider">@color/white</item>
         <!-- Stats colors -->
@@ -71,7 +80,8 @@
         <item name="stats_hours">#ccc</item>
         <item name="stats_counts">#E6000000</item>
         <item name="stats_unseen">#000</item>
-        <item name="stats_suspended_and_buried">#ff0</item>
+        <item name="stats_suspended">#ff0</item>
+        <item name="stats_buried">#606264</item>
         <item name="stats_cumulative">@color/stats_cumulative</item>
         <!-- Browser colors -->
         <item name="suspendedColor">@color/material_grey_700</item>

@@ -34,6 +34,7 @@ import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_4;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -317,7 +318,8 @@ public class ReviewerKeyboardInputTest {
 
         public void handleUnicodeKeyPress(char unicodeChar) {
             KeyEvent key = mock(KeyEvent.class);
-            when(key.getUnicodeChar()).thenReturn((int)unicodeChar);
+            // COULD_BE_BETTER: We do not handle shift
+            when(key.getUnicodeChar(anyInt())).thenReturn((int)unicodeChar);
 
             try {
                 when(key.getAction()).thenReturn(KeyEvent.ACTION_DOWN);
@@ -333,10 +335,11 @@ public class ReviewerKeyboardInputTest {
             }
         }
         public void handleKeyPress(int keycode, char unicodeChar) {
-            //COULD_BE_BETTER: Saves 20 seconds on tests to remove AndroidJUnit4,
+            // COULD_BE_BETTER: Saves 20 seconds on tests to remove AndroidJUnit4,
             // but may let something slip through the cracks.
             KeyEvent e = mock(KeyEvent.class);
-            when(e.getUnicodeChar()).thenReturn((int)unicodeChar);
+            // COULD_BE_BETTER: We do not handle shift
+            when(e.getUnicodeChar(anyInt())).thenReturn((int)unicodeChar);
             when(e.getAction()).thenReturn(KeyEvent.ACTION_DOWN);
             when(e.getKeyCode()).thenReturn(keycode);
 
@@ -447,9 +450,8 @@ public class ReviewerKeyboardInputTest {
         }
 
         @Override
-        protected boolean editCard() {
+        protected void editCard() {
             mEditedCard = true;
-            return true;
         }
 
         @Override

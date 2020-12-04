@@ -39,35 +39,6 @@
         <item>هرگز گزارش نده</item>
         <item>بپرس</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>هیچ عملیاتی</item>
-        <item>نمایش پاسخ</item>
-        <item>دكمه پاسخ 1</item>
-        <item>دكمه پاسخ 2</item>
-        <item>دكمه پاسخ 3</item>
-        <item>دكمه پاسخ 4</item>
-        <item>پاسخ توصيه شده-سبز</item>
-        <item>پاسخ بهتر از توصيه شده</item>
-        <item>بازگردانی</item>
-        <item>ويرايش يادداشت</item>
-        <item>برچسب یادداشت</item>
-        <item>نشان کردن یادداشت</item>
-        <item>جستجوی عبارت</item>
-        <item>دفن کردن کارت</item>
-        <item>تعلیق کارت</item>
-        <item>حذف یادداشت</item>
-        <item>پخش رسانه</item>
-        <item>لغو یادگیری</item>
-        <item>دفن کردن یادداشت</item>
-        <item>تعلیق یادداشت</item>
-        <item>پرچم قرمز</item>
-        <item>پرچم نارنجی</item>
-        <item>پرچم سبز</item>
-        <item>پرچم آبی</item>
-        <item>حذف پرچم</item>
-        <item>بالا بردن صفحه</item>
-        <item>پایین بردن صفحه</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>تعلیق کارت</item>
         <item>تنها برچسب</item>
@@ -108,4 +79,36 @@
         <item>سیاه</item>
         <item>تیره</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>x-large</item>
+        <item>xx-large</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">هیچ عملیاتی</string>
+    <string name="gesture_answer_1">دكمه پاسخ 1</string>
+    <string name="gesture_answer_2">دكمه پاسخ 2</string>
+    <string name="gesture_answer_3">دكمه پاسخ 3</string>
+    <string name="gesture_answer_4">دكمه پاسخ 4</string>
+    <string name="gesture_answer_green">پاسخ توصيه شده-سبز</string>
+    <string name="gesture_answer_better_recommended">پاسخ بهتر از توصيه شده</string>
+    <string name="gesture_tag_note">برچسب یادداشت</string>
+    <string name="gesture_lookup">جستجوی عبارت</string>
+    <string name="gesture_play">پخش رسانه</string>
+    <string name="gesture_abort_learning">لغو یادگیری</string>
+    <string name="gesture_flag_red">پرچم قرمز</string>
+    <string name="gesture_flag_orange">پرچم نارنجی</string>
+    <string name="gesture_flag_green">پرچم سبز</string>
+    <string name="gesture_flag_blue">پرچم آبی</string>
+    <string name="gesture_flag_remove">حذف پرچم</string>
+    <string name="gesture_page_up">بالا بردن صفحه</string>
+    <string name="gesture_page_down">پایین بردن صفحه</string>
+    <string name="gesture_abort_sync">Abort Learning and Sync</string>
 </resources>

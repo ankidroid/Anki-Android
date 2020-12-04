@@ -1,6 +1,7 @@
 
 package com.ichi2.anki.dialogs;
 
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -8,7 +9,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Utils;
 import com.ichi2.utils.ImportUtils;
 
@@ -16,6 +16,7 @@ import java.io.File;
 import java.net.URLDecoder;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class ImportDialog extends AsyncDialogFragment {
@@ -51,6 +52,7 @@ public class ImportDialog extends AsyncDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +66,8 @@ public class ImportDialog extends AsyncDialogFragment {
                 // Instruct the user that they need to put their APKG files into the AnkiDroid directory
                 return builder.title(res.getString(R.string.import_title))
                         .content(res.getString(R.string.import_hint, CollectionHelper.getCurrentAnkiDroidDirectory(getActivity())))
-                        .positiveText(res.getString(R.string.dialog_ok))
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .positiveText(R.string.dialog_ok)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((dialog, which) -> ((ImportDialogListener) getActivity()).showImportDialog(DIALOG_IMPORT_SELECT))
                         .onNegative((dialog, which) -> dismissAllDialogFragments())
                         .show();
@@ -76,7 +78,7 @@ public class ImportDialog extends AsyncDialogFragment {
                 if (fileList.size() == 0) {
                     UIUtils.showThemedToast(getActivity(),
                             getResources().getString(R.string.upgrade_import_no_file_found, "'.apkg'"), false);
-                    return builder.showListener(dialog -> dialog.cancel()).show();
+                    return builder.showListener(DialogInterface::cancel).show();
                 } else {
                     String[] tts = new String[fileList.size()];
                     final String[] importValues = new String[fileList.size()];
@@ -103,8 +105,8 @@ public class ImportDialog extends AsyncDialogFragment {
                 String displayFileName = convertToDisplayName(getArguments().getString("dialogMessage"));
                 return builder.title(res.getString(R.string.import_title))
                         .content(res.getString(R.string.import_message_add_confirm, filenameFromPath(displayFileName)))
-                        .positiveText(res.getString(R.string.import_message_add))
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .positiveText(R.string.import_message_add)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((dialog, which) -> {
                             ((ImportDialogListener) getActivity()).importAdd(getArguments().getString("dialogMessage"));
                             dismissAllDialogFragments();
@@ -115,8 +117,8 @@ public class ImportDialog extends AsyncDialogFragment {
                 String displayFileName = convertToDisplayName(getArguments().getString("dialogMessage"));
                 return builder.title(res.getString(R.string.import_title))
                         .content(res.getString(R.string.import_message_replace_confirm, displayFileName))
-                        .positiveText(res.getString(R.string.dialog_positive_replace))
-                        .negativeText(res.getString(R.string.dialog_cancel))
+                        .positiveText(R.string.dialog_positive_replace)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((dialog, which) -> {
                             ((ImportDialogListener) getActivity()).importReplace(getArguments().getString("dialogMessage"));
                             dismissAllDialogFragments();

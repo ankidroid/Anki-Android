@@ -1,0 +1,74 @@
+/**
+ * Downloads all android-all dependencies and copies them to the mavenLocal() repository
+ *
+ * Once applied to your gradle project, can be executed with ./gradlew robolectricSdkDownload
+ */
+
+import java.nio.file.Files
+
+// The general idea of this was borrowed from https://gist.github.com/xian/05c4f27da6d4156b9827842217c2cd5c
+// I then modified it heavily to allow easier addition of new SDK versions
+// The full implementation is from https://gist.github.com/simtel12/13ff3e57c37e78e468502b51ebb0f4f2
+
+// List from: https://github.com/robolectric/robolectric/blob/master/robolectric/src/main/java/org/robolectric/internal/SdkConfig.java
+// This list will need to be updated for new Android SDK versions that come out.
+// Only the versions currently used in AnkiDroid Robolectric tests are active, the rest are commented out
+def robolectricAndroidSdkVersions = [
+        [androidVersion: "4.1.2_r1", frameworkSdkBuildVersion: "r1"],
+        [androidVersion: "4.2.2_r1.2", frameworkSdkBuildVersion: "r1"],
+//        [androidVersion: "4.3_r2", frameworkSdkBuildVersion: "r1"],
+//        [androidVersion: "4.4_r1", frameworkSdkBuildVersion: "r2"],
+//        [androidVersion: "5.0.2_r3", frameworkSdkBuildVersion: "r0"],
+//        [androidVersion: "5.1.1_r9", frameworkSdkBuildVersion: "r2"],
+//        [androidVersion: "6.0.1_r3", frameworkSdkBuildVersion: "r1"],
+        [androidVersion: "7.0.0_r1", frameworkSdkBuildVersion: "r1"],
+//        [androidVersion: "7.1.0_r7", frameworkSdkBuildVersion: "r1"],
+        [androidVersion: "8.0.0_r4", frameworkSdkBuildVersion: "r1"],
+//        [androidVersion: "8.1.0", frameworkSdkBuildVersion: "4611349"],
+        [androidVersion: "9", frameworkSdkBuildVersion: "4913185-2"],
+]
+
+// Base, public task - will be displayed in ./gradlew robolectricDownloader:tasks
+task robolectricSdkDownload {
+    group = "Dependencies"
+    description = "Downloads all robolectric SDK dependencies into mavenLocal, for use with offline robolectric"
+}
+
+// Generate the configuration and actual copy tasks.
+robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
+    def version = "${robolectricSdkVersion['androidVersion']}-robolectric-${robolectricSdkVersion['frameworkSdkBuildVersion']}"
+
+    // Creating a configuration with a dependency allows Gradle to manage the actual resolution of
+    // the jar file
+    def sdkConfig = configurations.create(version)
+    dependencies.add(version, "org.robolectric:android-all:${version}")
+
+    def mavenLocalFile = new File(this.repositories.mavenLocal().url)
+    def mavenRobolectric = new File(mavenLocalFile, "org/robolectric/android-all/${version}")
+    // Copying all files downloaded for the created configuration into maven local.
+    task "robolectricSdkDownload-${version}"(type: Copy) {
+        from sdkConfig
+        into mavenRobolectric
+
+        doLast {
+            ArtifactResolutionResult result = dependencies.createArtifactResolutionQuery()
+                .forModule("org.robolectric", "android-all", version)
+                .withArtifacts(MavenModule, MavenPomArtifact)
+                .execute()
+
+            for(component in result.resolvedComponents) {
+                def componentId = component.id
+
+                if(componentId instanceof ModuleComponentIdentifier) {
+                    File pomFile = component.getArtifacts(MavenPomArtifact)[0].file
+                    File dest = new File(mavenRobolectric, pomFile.name)
+                    if (!dest.exists()) {
+                        Files.copy(pomFile.toPath(), dest.toPath())
+                    }
+                }
+            }
+        }
+    }
+    robolectricSdkDownload.dependsOn "robolectricSdkDownload-${version}"
+}
+

@@ -46,24 +46,16 @@
     <string name="card_browser_all_decks">Tous les jeux de cartes</string>
     <string name="card_browser_delete_card">Supprimer les notes</string>
     <string name="card_browser_suspend_card">Suspendre des cartes</string>
-    <string name="card_browser_toggle_suspend_card">Suspendre/Rependre les cartes</string>
     <string name="card_browser_change_deck">Changer de paquet</string>
     <string name="card_browser_unsuspend_card">Reprendre les cartes</string>
     <string name="card_browser_mark_card">Marquer les notes</string>
-    <string name="card_browser_flag">Marquer la carte</string>
-    <string name="card_browser_toggle_mark_card">(dé)marquer les notes</string>
     <string name="card_browser_unmark_card">Démarquer les notes</string>
     <string name="delete_card_title">Supprimer la note ?</string>
-    <string name="delete_cards_title">Supprimer les notes?</string>
-    <string name="delete_card_message">Voulez vous vraiment supprimer toutes les cartes de cette note ?\nChamp de recherche : %s</string>
-    <string name="delete_card_mult_message">Supprimer toutes les cartes de toutes les notes sélectionnées? \n (pas seulement les cartes choisies)</string>
-    <string name="deleted_message">Notes supprimées</string>
     <string name="changed_deck_message">Déplacé vers %s</string>
-    <string name="card_browser_suspended_cards">Suspendre/Rependre les cartes</string>
     <string name="card_browser_show_marked">Filtrer les notes marquées</string>
     <string name="card_browser_show_suspended">Filtrer les cartes suspendues</string>
     <string name="card_browser_search_by_tag">Filtrer par étiquette</string>
-    <string name="card_browser_tags_shown">Étiquettes : %1$s</string>
+    <string name="card_browser_search_by_flag">Filtrer par marqueur</string>
     <string name="card_browser_list_my_searches">Mes recherches</string>
     <string name="card_browser_list_my_searches_save">Enregistrer la recherche</string>
     <string name="card_browser_list_my_searches_title">Choisissez une recherche enregistrée</string>
@@ -74,11 +66,8 @@
     <string name="card_browser_change_display_order">Changer l\'ordre d\'affichage</string>
     <string name="card_browser_change_display_order_title">Choisir l\'ordre d\'affichage</string>
     <string name="card_browser_change_display_order_reverse">Inversez l’ordre par double-sélection du champ.</string>
-    <string name="card_details_question">Question</string>
-    <string name="card_details_answer">Réponse</string>
-    <string name="card_details_due">Dû</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">Dû</string>
     <string name="card_details_tags">Étiquettes</string>
-    <string name="card_browser_filtering_cards">Filtrage des cartes en cours... \nAppuyez sur le bouton retour pour annuler</string>
     <string-array name="card_browser_order_labels">
         <item>Pas de tri (plus rapide)</item>
         <item>Par champ de tri</item>
@@ -93,13 +82,38 @@
     </string-array>
     <string name="card_browser_select_all">Tout sélectionner</string>
     <string name="card_browser_select_none">Ne rien sélectionner</string>
-    <string name="card_browser_edit_note">Modifier la note</string>
-    <string name="card_browser_interval_new_card">(nouvelle)</string>
-    <string name="card_browser_ease_new_card">(nouveau)</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nouvelle)</string>
     <string name="card_browser_due_filtered_card">(filtré)</string>
     <string name="card_browser_interval_learning_card">(apprentissage)</string>
-    <string name="card_browser_note_editor_error">Erreur à l’ouverture de l’éditeur de notes</string>
     <string name="card_browser_no_cards_in_deck">Aucune carte trouvée dans le paquet « %s »</string>
     <string name="card_browser_search_all_decks">Rechercher dans tous les paquets</string>
     <string name="card_browser_unknown_deck_name">Inconnu</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="one">%d carte supprimée</item>
+        <item quantity="other">%d cartes supprimées</item>
+    </plurals>
+    <!-- Card Info subscreen -->
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Ajoutée</string>
+    <string name="card_info_first_review">Première révision</string>
+    <string name="card_info_latest_review">Dernière révision</string>
+    <string name="card_info_interval">Intervalle</string>
+    <string name="card_info_ease">Facilité</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Révisions</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Laps</string>
+    <string name="card_info_average_time">Temps moyen</string>
+    <string name="card_info_total_time">Temps total</string>
+    <string name="card_info_card_type">Type de carte</string>
+    <string name="card_info_note_type">Type de note</string>
+    <string name="card_info_deck_name">Nom du paquet</string>
+    <string name="card_info_card_id">ID carte</string>
+    <string name="card_info_note_id">ID note</string>
+    <string name="card_info_revlog_time">Temps</string>
+    <string name="card_info_revlog_date">Date</string>
+    <string name="card_info_revlog_rating">Évalu.</string>
+    <string name="card_info_revlog_type">Type</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Apprendre</string>
+    <string name="card_info_revlog_review">Révision</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Réapprendre</string>
+    <string name="card_info_revlog_filtered">Filtrées</string>
+    <string name="card_info_ease_not_applicable">N/D</string>
 </resources>

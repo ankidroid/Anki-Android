@@ -44,17 +44,13 @@
     <string name="sync_error">సమకాలీకరణ లోపం</string>
     <string name="vague_error">తప్పు</string>
     <string name="retry">మళ్ళీ ప్రయత్నించండి</string>
-    <string name="cancel">రద్దు చేయు</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">నిబంధనలు మరియు షరతులు</a></string>
     <string name="menu_get_shared_decks">భాగస్వామ్య డెక్స్ పొందండి</string>
     <string name="connection_error_message">ఒక నెట్వర్క్ లోపం సంభవించింది</string>
     <string name="not_logged_in_title">AnkiWeb కు లాగిన్ అవ్వండి</string>
     <string name="login_create_account_message">క్లౌడ్ సమకాలీకరణ సేవను ఉపయోగించడానికి మీరు మూడవ పక్ష ఖాతాకు లాగిన్ చేయాలి. మీరు తదుపరి దశను సృష్టించవచ్చు.</string>
     <!-- MyAccount.java -->
     <string name="username">ఇమెయిల్</string>
-    <string name="username_repeat">ఇమెయిల్ను పునరావృతం చేయండి</string>
     <string name="password">పాస్వర్డ్</string>
-    <string name="password_repeat">మళ్ళీ పాస్వర్డ్ని నమోదు చేయండి</string>
     <string name="log_in">లాగ్ ఇన్</string>
     <string name="sign_up_description">AnkiWeb ఖాతాను కలిగిలేదా? ఇది ఉచితం!</string>
     <string name="sign_up_not_affiliated">గమనిక: AnkiDroid AnkiWeb అనుబంధంగా లేదు</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">చెల్లని ఇమెయిల్ చిరునామా లేదా పాస్వర్డ్</string>
     <string name="reset_password">పాస్వర్డ్ మార్చండి</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">శోధన</string>
     <string name="preferences_title">ప్రాధాన్యతలు</string>
     <string name="deckpreferences_title">XXX కోసం ఎంపికలు</string>
     <string name="sync_conflict_message">ఈ సేకరణను మీరు అప్లోడ్ చెయ్యాలి లేదా Ankiweb నుండి డౌన్లోడ్ చేసుకోవాలి, ఎందుకంటే అవి విలీనం చేయబడవు. ఒక వైపు సేకరణ భర్తీ చేయబడుతుంది.</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">సమకాలీకరణ</string>
     <string name="sync_downloading_media">మీడియాను డౌన్లోడ్ చేస్తోంది %1$d%2$d&#8230;</string>
     <string name="sync_log_uploading_message">స్థానికం నుండి పూర్తి సమకాలీకరణ</string>
-    <string name="sync_log_downloading_message">సర్వర్ నుండి పూర్తి సమకాలీకరణ</string>
     <string name="sync_log_clocks_unsynchronized">మీ గడియారం%1$d సెకన్లు%2$s ఆఫ్లో ఉంది. తేదీ, సమయం మరియు సమయ మండలి మీ ఫోన్లో సరిగ్గా సెట్ చేయబడి, మళ్లీ సమకాలీకరించినట్లు నిర్ధారించుకోండి.</string>
     <string name="sync_log_clocks_unsynchronized_tz">టైమ్ జోన్ బహుశా తప్పు</string>
     <string name="sync_log_clocks_unsynchronized_date">తేదీ బహుశా తప్పు</string>
@@ -94,6 +88,7 @@
     <string name="sync_overwrite_error">మీ ప్రస్తుత సేకరణ ఫైల్ డౌన్లోడ్ చేసిన ఫైల్ ద్వారా భర్తీ చేయబడలేదు</string>
     <string name="sync_connection_error">కనెక్షన్ సమయం ముగిసింది. మీ ఇంటర్నెట్ కనెక్షన్ సమస్యలను ఎదుర్కొంటోంది లేదా మీ మీడియా ఫోల్డర్లో చాలా పెద్ద ఫైల్ని కలిగి ఉంది.</string>
     <string name="sync_write_access_error">డౌన్లోడ్ చేసిన ఫైల్ SD కార్డుకు సేవ్ చేయబడలేదు. SD కార్డుకు తగినంత స్థలం లేద మోడ్లో మాత్రమే చదవబడుతుంది.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">తొలగింపులను సమకాలీకరిస్తోంది&#8230;</string>
     <string name="sync_small_objects_message">చిన్న అంశాలను సమకాలీకరిస్తోంది&#8230;</string>
     <string name="sync_finish_message">సమకాలీకరణను పూర్తి చెయ్యబడింది&#8230;</string>
@@ -115,6 +110,8 @@
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
     <string name="sync_media_error">మీడియా డేటాను సమకాలీకరించడంలో లోపం</string>
     <string name="sync_media_error_check">మీడియాని సమకాలీకరించడంలో లోపం. ఒక మీడియా చెక్ సిఫారసు చేయబడింది.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">స్థానిక</string>
     <string name="sync_sanity_remote">రిమోట్</string>
     <string name="force_full_sync_title">పూర్తి సమకాలీకరణను బలవంతం చేయండి</string>
@@ -129,7 +126,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

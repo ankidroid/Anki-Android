@@ -52,8 +52,8 @@ public class Tags {
 
     private static final Pattern sCanonify = Pattern.compile("[\"']");
 
-    private Collection mCol;
-    private TreeMap<String, Integer> mTags = new TreeMap<>();
+    private final Collection mCol;
+    private final TreeMap<String, Integer> mTags = new TreeMap<>();
     private boolean mChanged;
 
 
@@ -69,9 +69,7 @@ public class Tags {
 
     public void load(String json) {
         JSONObject tags = new JSONObject(json);
-        Iterator<?> i = tags.keys();
-        while (i.hasNext()) {
-            String t = (String) i.next();
+        for (String t : tags) {
             mTags.put(t, tags.getInt(t));
         }
         mChanged = false;
@@ -93,7 +91,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * Registering and fetching tags
      * ***********************************************************
      */
@@ -119,9 +117,7 @@ public class Tags {
 
 
     public List<String> all() {
-        List<String> list = new ArrayList<>();
-        list.addAll(mTags.keySet());
-        return list;
+        return new ArrayList<>(mTags.keySet());
     }
 
 
@@ -131,7 +127,7 @@ public class Tags {
 
 
     /** Add any missing tags from notes to the tags list. */
-    public void registerNotes(long[] nids) {
+    public void registerNotes(java.util.Collection<Long> nids) {
         // when called with a null argument, the old list is cleared first.
         String lim;
         if (nids != null) {
@@ -142,21 +138,22 @@ public class Tags {
             mChanged = true;
         }
         List<String> tags = new ArrayList<>();
-        try (Cursor cursor = mCol.getDb().getDatabase().query("SELECT DISTINCT tags FROM notes" + lim, null)) {
+        try (Cursor cursor = mCol.getDb().query("SELECT DISTINCT tags FROM notes" + lim)) {
             while (cursor.moveToNext()) {
                 tags.add(cursor.getString(0));
             }
         }
-        HashSet<String> tagSet = new HashSet<>();
-        for (String s : split(TextUtils.join(" ", tags))) {
-            tagSet.add(s);
-        }
+        HashSet<String> tagSet = new HashSet<>(split(TextUtils.join(" ", tags)));
         register(tagSet);
     }
 
 
     public Set<Map.Entry<String, Integer>> allItems() {
         return mTags.entrySet();
+    }
+
+    public boolean minusOneValue() {
+        return mTags.containsValue(-1);
     }
 
 
@@ -176,10 +173,8 @@ public class Tags {
         if (children) {
             ArrayList<Long> dids = new ArrayList<>();
             dids.add(did);
-            for (long id : mCol.getDecks().children(did).values()) {
-                dids.add(id);
-            }
-            tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(Utils.collection2Array(dids)));
+            dids.addAll(mCol.getDecks().children(did).values());
+            tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(dids));
         } else {
             tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = ?", did);
         }
@@ -189,7 +184,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * Bulk addition/removal from notes
      * ***********************************************************
      */
@@ -238,22 +233,18 @@ public class Tags {
             t = t.replace("*", "%");
             lim.append(l).append("like '% ").append(t).append(" %'");
         }
-        List<Long> nids = new ArrayList<>();
         ArrayList<Object[]> res = new ArrayList<>();
         try (Cursor cur = mCol
                 .getDb()
-                .getDatabase()
                 .query("select id, tags from notes where id in " + Utils.ids2str(ids) +
-                        " and (" + lim + ")", null)) {
+                        " and (" + lim + ")")) {
             if (add) {
                 while (cur.moveToNext()) {
-                    nids.add(cur.getLong(0));
-                    res.add(new Object[] { addToStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(), cur.getLong(0) });
+                    res.add(new Object[] { addToStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(), cur.getLong(0) });
                 }
             } else {
                 while (cur.moveToNext()) {
-                    nids.add(cur.getLong(0));
-                    res.add(new Object[] { remFromStr(tags, cur.getString(1)), Utils.intTime(), mCol.usn(),
+                    res.add(new Object[] { remFromStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(),
                             cur.getLong(0) });
                 }
             }
@@ -268,7 +259,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * String-based utilities
      * ***********************************************************
      */
@@ -332,7 +323,7 @@ public class Tags {
     }
 
 
-    /**
+    /*
      * List-based utilities
      * ***********************************************************
      */
@@ -373,9 +364,9 @@ public class Tags {
 
     public void beforeUpload() {
         boolean changed = false;
-        for (String k : mTags.keySet()) {
-            if (mTags.get(k) != 0) {
-                mTags.put(k, 0);
+        for (Map.Entry<String, Integer> entry : mTags.entrySet()) {
+            if (entry.getValue() != 0) {
+                mTags.put(entry.getKey(), 0);
                 changed = true;
             }
         }

@@ -19,8 +19,8 @@ package com.ichi2.ui;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -38,7 +38,8 @@ import com.ichi2.anki.AnkiDroidApp;
  * This technique can be used with an {@link android.app.Activity} class, not just
  * {@link android.preference.PreferenceActivity}.
  */
-public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+public abstract class AppCompatPreferenceActivity extends android.preference.PreferenceActivity {
 
     private AppCompatDelegate mDelegate;
 
@@ -69,7 +70,7 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
     }
 
     @Override
-    public MenuInflater getMenuInflater() {
+    public @NonNull MenuInflater getMenuInflater() {
         return getDelegate().getMenuInflater();
     }
 

@@ -100,7 +100,7 @@ public class DecksTest extends RobolectricTest {
         assertEqualsArrayList(new Long[] {parentId}, col.getDecks().active());
         // let's create a child
         long childId = col.getDecks().id("new deck::child");
-        col.getSched().reset();
+        col.reset();
         // it should have been added to the active list
         assertEquals(parentId, col.getDecks().selected());
         assertEqualsArrayList(new Long[] {parentId, childId}, col.getDecks().active());
@@ -175,7 +175,7 @@ public class DecksTest extends RobolectricTest {
         assertThrows(DeckRenameException.class, () -> col.getDecks().rename(child, "FILTERED::child"));
     }
 
-    /** TODO: maybe implement. We don't drag and drop here anyway, so buggy implementation is okay
+    /* TODO: maybe implement. We don't drag and drop here anyway, so buggy implementation is okay
      @Test public void test_renameForDragAndDrop() throws DeckRenameException {
      // TODO: upstream does not return "default", remove it
      Collection col = getCol();

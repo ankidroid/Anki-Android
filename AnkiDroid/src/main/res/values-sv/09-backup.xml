@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Mindre än %d mb utrymme kvar på ditt SD-kort.\nFrigör utrymme för att undvika dataförlust.</string>
-    <string name="backup_delete">Tar bort säkerhetskopior.\nVar god vänta...</string>
     <string name="backup_restore">Återställ från säkerhetskopia</string>
     <string name="backup_new_collection">Ny samling</string>
     <string name="backup_del_collection">Ta bort samling och skapa en ny</string>
@@ -48,13 +47,11 @@
     <string name="backup_full_sync_from_server">Fullständig synkronisering från servern</string>
     <string name="backup_full_sync_from_server_question">Är du säker att du vill skriva över din samling med den från AnkiWeb? Detta kommer ta bort alla inlärningsdata och ändrad information sedan din senaste synkning!</string>
     <string name="error_handling_title">Felhantering</string>
-    <string name="error_handling_options">Alternativ</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Alternativ</string>
     <string name="backup_retry_opening">Prova att öppna igen</string>
     <string name="backup_error_menu_repair">Reparera databas</string>
-    <string name="backup_repair_deck">Reparera</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Reparerar databas.\nVar vänlig vänta...</string>
-    <string name="backup_error">Fel</string>
     <string name="backup_invalid_file_error">Den valda återställningsfilen var ogiltig</string>
     <string name="backup_restore_select_title">Välj säkerhetskopia att återställa</string>
     <string name="backup_restore_no_backups">Inga säkerhetskopior för samlingen finns på den här enheten. Om du har säkerhetskopior på din stationära dator, kopiera dem manuellt till din AnkiDroid-mapp</string>

@@ -1,7 +1,6 @@
 package com.ichi2.preferences;
 
 import android.content.Context;
-import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
@@ -9,7 +8,8 @@ import android.widget.TimePicker;
 import com.ichi2.compat.CompatHelper;
 
 
-public class TimePreference extends DialogPreference {
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+public class TimePreference extends android.preference.DialogPreference {
     public static final String DEFAULT_VALUE = "00:00";
 
     private TimePicker timePicker;

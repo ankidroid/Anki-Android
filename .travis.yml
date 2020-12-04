@@ -1,4 +1,3 @@
-sudo: true
 language: bash
 # ignored on non-linux platforms, but bionic is required for nested virtualization
 dist: bionic
@@ -40,7 +39,7 @@ env:
    - API=24 LOCALE="zh_CN"
    - API=25 LOCALE="es_ES"
    #- API=26 # Fails with unrecognized tests? orchestrator change or something?
-   - API=27 LOCALE="fr_FR"
+   #- API=27 LOCALE="fr_FR" # API27 has become very flaky recently, disabling 2020/08/20
    - API=28 # API28 does not handle locale changes for some reason, so it is our default locale test
    - API=29 LOCALE="pt_BR"
    - API=30 EMU_FLAVOR=google_apis LOCALE="de_DE" # This will be API30 when released, until now it is R, with intermittent failure
@@ -52,27 +51,33 @@ jobs:
   include:
     # The "test" stage is implicit and gets the main matrix. This adds extra stages/jobs
     - stage: unit_test
+      name: "Unit Tests - Windows"
       env: UNIT_TEST=TRUE API=NONE
       install: skip
       os: windows
     - stage: unit_test
+      name: "Unit Tests - macOS"
       env: UNIT_TEST=TRUE API=NONE
       install: skip
       os: osx
     - stage: unit_test
+      name: "Unit Tests - Linux"
       env: UNIT_TEST=TRUE API=NONE
       install: skip
       os: linux
     - stage: unit_test
+      name: "Lint - Release"
       env: LINT=Release API=NONE
       install: skip
       os: linux
     - stage: unit_test
+      name: "Lint - Debug (expected to fail - all errors since last baseline)"
       env: LINT=Debug API=NONE
       install: skip
       os: linux
     - stage: finalize_coverage
       env: FINALIZE_COVERAGE=TRUE API=NONE
+      name: "Finalize Codacy Coverage Uploads"
       install: skip
       script: echo finalize codacy coverage uploads
   allow_failures:
@@ -89,7 +94,7 @@ before_install:
   # Set up JDK 8 for Android SDK - Java is universally needed: codacy, unit tests, emulators
   - travis_retry git clone --depth 1 $GRAVIS_REPO $GRAVIS
   - export TARGET_JDK="${JDK}"
-  - JDK="1.8"
+  - JDK="adopt@1.8"
   - source $GRAVIS/install-jdk
 
   # Set up Android SDK - this is needed everywhere but coverage finalization, so toggle on that
@@ -101,8 +106,8 @@ before_install:
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then yes | travis_retry sdkmanager --licenses >/dev/null; fi # accept all sdkmanager warnings
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "platform-tools" >/dev/null; fi
   - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "tools" >/dev/null; fi # A second time per Travis docs, gets latest versions
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "build-tools;28.0.3" >/dev/null; fi # Implicit gradle dependency - gradle drives changes
-  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "platforms;android-28" >/dev/null; fi # We need the API of the current compileSdkVersion from gradle.properties
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "build-tools;29.0.2" >/dev/null; fi # Implicit gradle dependency - gradle drives changes
+  - if [ "$FINALIZE_COVERAGE" = "FALSE" ]; then echo y | travis_retry sdkmanager --no_https "platforms;android-29" >/dev/null; fi # We need the API of the current compileSdkVersion from gradle.properties
 
 install:
   # In our setup, install only runs on matrix entries we want full emulator tests on
@@ -135,11 +140,12 @@ install:
   - if [ "$LOCALE" != "NONE" ]; then adb shell am broadcast -a com.android.intent.action.SET_LOCALE --es com.android.intent.extra.LOCALE "$LOCALE" com.android.customlocale2; fi
 
   # Switch back to our target JDK version to build and run tests
-  - JDK="${TARGET_JDK}"
+  - JDK="adopt@${TARGET_JDK}"
   - source $GRAVIS/install-jdk
 
 script:
-  - travis_retry ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint # warm gradle w/travis_retry to handle network blips
+  - if [ "$API" = "NONE" ]; then travis_retry ./gradlew :AnkiDroid:compileReleaseJavaWithJavac compileLint; fi # warm gradle w/travis_retry to handle network blips
+  - if [ "$UNIT_TEST" = "TRUE" ]; then travis_retry ./gradlew robolectricSdkDownload; fi # pre-download robolectric jars w/travis_retry to handle network blips
   - if [ "$UNIT_TEST" = "TRUE" ]; then ./gradlew jacocoUnitTestReport; fi
   - if [ "$LINT" != "FALSE" ]; then ./gradlew lint$LINT; fi
   - if [ "$API" != "NONE" ]; then ./gradlew jacocoAndroidTestReport; fi
@@ -147,14 +153,14 @@ script:
 after_success:
   - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then travis_retry bash tools/upload-codacy-report.sh; fi
 
-before_cache:
-  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-  - $GRAVIS/clean-gradle-cache
-
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+#before_cache:
+#  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+#  - $GRAVIS/clean-gradle-cache
+#
+#cache:
+#  directories:
+#    - $HOME/.gradle/caches/
+#    - $HOME/.gradle/wrapper/
 
 notifications:
   email:

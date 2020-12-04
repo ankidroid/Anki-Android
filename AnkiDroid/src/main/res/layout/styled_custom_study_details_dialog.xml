@@ -27,7 +27,7 @@
     android:gravity="start"
     android:orientation="vertical" >
 
-    <TextView
+    <com.ichi2.ui.FixedTextView
         android:id="@+id/custom_study_details_text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         android:text=""
         android:textSize="16sp" />
 
-    <TextView
+    <com.ichi2.ui.FixedTextView
         android:id="@+id/custom_study_details_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         android:text=""
         android:textSize="16sp" />
 
-    <EditText
+    <com.ichi2.ui.FixedEditText
         android:id="@+id/custom_study_details_edittext2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -37,6 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isOneOf;
 
 @RunWith(AndroidJUnit4.class)
 @Config(sdk = { Build.VERSION_CODES.JELLY_BEAN,
@@ -88,37 +89,38 @@ public class LanguageUtilsTest extends RobolectricTest {
     @Config(qualifiers = "en")
     public void localeTwoLetterCodeResolves() {
         assertThat("A locale with a 3-letter code resolves correctly",
-                "Afrikaans",
-                is(LanguageUtil.getLocale("af").getDisplayLanguage()));
+                LanguageUtil.getLocale("af").getDisplayLanguage(),
+                is("Afrikaans"));
     }
 
     @Test
     @Config(qualifiers = "en")
     public void localeThreeLetterCodeResolves() {
         assertThat("A locale with a 3-letter code resolves correctly",
-                "Filipino",
-                is(LanguageUtil.getLocale("fil").getDisplayLanguage()));
+                LanguageUtil.getLocale("fil").getDisplayLanguage(),
+                is("Filipino"));
     }
 
     @Test
     @Config(qualifiers = "en")
     public void localeTwoLetterRegionalVariantResolves() {
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                "Portuguese (Brazil)",
-                is(LanguageUtil.getLocale("pt-BR").getDisplayName()));
+                LanguageUtil.getLocale("pt-BR").getDisplayName(),
+                is("Portuguese (Brazil)"));
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                "Portuguese (Brazil)",
-                is(LanguageUtil.getLocale("pt_BR").getDisplayName()));
+                LanguageUtil.getLocale("pt_BR").getDisplayName(),
+                is("Portuguese (Brazil)"));
     }
 
     @Test
     @Config(qualifiers = "en")
     public void localeThreeLetterRegionalVariantResolves() {
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                "yue (Taiwan)",
-                is(LanguageUtil.getLocale("yue-TW").getDisplayName()));
+                LanguageUtil.getLocale("yue-TW").getDisplayName(),
+                isOneOf("yue (Taiwan)", "Cantonese (Taiwan)"));
+        
         assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                "yue (Taiwan)",
-                is(LanguageUtil.getLocale("yue_TW").getDisplayName()));
+                LanguageUtil.getLocale("yue_TW").getDisplayName(),
+                isOneOf("yue (Taiwan)", "Cantonese (Taiwan)"));
     }
 }

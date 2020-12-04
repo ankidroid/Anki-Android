@@ -19,6 +19,7 @@
 
 package com.ichi2.libanki;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import android.text.Spanned;
 
 import androidx.annotation.NonNull;
 import android.os.StatFs;
+import android.util.Pair;
 
 import com.ichi2.anki.AnkiFont;
 import com.ichi2.anki.CollectionHelper;
@@ -52,28 +54,26 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
 import java.text.Normalizer;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
+import androidx.annotation.Nullable;
 import timber.log.Timber;
+
+import static com.ichi2.libanki.Consts.FIELD_SEPARATOR;
+import static com.ichi2.utils.CollectionUtils.addAll;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
         "PMD.MethodNamingConventions","PMD.FieldDeclarationsShouldBeAtStartOfClass"})
@@ -87,14 +87,13 @@ public class Utils {
     private static final long TIME_HOUR_LONG = 60 * TIME_MINUTE_LONG;
     private static final long TIME_DAY_LONG = 24 * TIME_HOUR_LONG;
     // These are doubles on purpose because we want a rounded, not integer result later.
+    // Use values from Anki Desktop:
+    // https://github.com/ankitects/anki/blob/05cc47a5d3d48851267cda47f62af79f468eb028/rslib/src/sched/timespan.rs#L83
     private static final double TIME_MINUTE = 60.0;  // seconds
-    private static final double TIME_HOUR = 60 * TIME_MINUTE;
-    private static final double TIME_DAY = 24 * TIME_HOUR;
-    // How long is a year? This is a tropical year, according to NIST.
-    // http://www.physics.nist.gov/Pubs/SP811/appenB9.html
-    private static final double TIME_YEAR = 31556930.0;  // seconds
-    // Pretty much everybody agrees that one year is twelve months
-    private static final double TIME_MONTH = TIME_YEAR / 12.0;
+    private static final double TIME_HOUR = 60.0 * TIME_MINUTE;
+    private static final double TIME_DAY = 24.0 * TIME_HOUR;
+    private static final double TIME_MONTH = 30.0 * TIME_DAY;
+    private static final double TIME_YEAR = 12.0 * TIME_MONTH;
 
 
     // List of all extensions we accept as font files.
@@ -107,28 +106,14 @@ public class Utils {
     private static final Pattern stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>");
     private static final Pattern scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>");
     private static final Pattern tagPattern = Pattern.compile("<.*?>");
-    private static final Pattern imgPattern = Pattern.compile("(?i)<img[^>]+src=[\\\"']?([^\\\"'>]+)[\\\"']?[^>]*>");
-    private static final Pattern soundPattern = Pattern.compile("(?i)\\[sound:([^]]+)\\]");
+    private static final Pattern imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>");
+    private static final Pattern soundPattern = Pattern.compile("(?i)\\[sound:([^]]+)]");
     private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
 
     private static final String ALL_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String BASE91_EXTRA_CHARS = "!#$%&()*+,-./:;<=>?@[]^_`{|}~";
 
     private static final int FILE_COPY_BUFFER_SIZE = 1024 * 32;
-
-    /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
-    public static double now() {
-        return (System.currentTimeMillis() / 1000.0);
-    }
-
-
-    /**The time in integer seconds. Pass scale=1000 to get milliseconds. */
-    public static long intTime() {
-        return intTime(1);
-    }
-    public static long intTime(int scale) {
-        return (long) (now() * scale);
-    }
 
     /**
      * Return a string representing a time quantity
@@ -150,9 +135,9 @@ public class Utils {
         } else if (Math.abs(time_s) < TIME_HOUR) {
             return res.getString(R.string.time_quantity_minutes, (int) Math.round(time_s/TIME_MINUTE));
         } else if (Math.abs(time_s) < TIME_DAY) {
-            return res.getString(R.string.time_quantity_hours_minutes, (int) Math.round(time_s/TIME_HOUR), (int) Math.round((time_s % TIME_HOUR) / TIME_MINUTE));
+            return res.getString(R.string.time_quantity_hours_minutes, (int) Math.floor(time_s/TIME_HOUR), (int) Math.round((time_s % TIME_HOUR) / TIME_MINUTE));
         } else if (Math.abs(time_s) < TIME_MONTH) {
-            return res.getString(R.string.time_quantity_days_hours, (int) Math.round(time_s/TIME_DAY), (int) Math.round((time_s % TIME_DAY) / TIME_HOUR));
+            return res.getString(R.string.time_quantity_days_hours, (int) Math.floor(time_s/TIME_DAY), (int) Math.round((time_s % TIME_DAY) / TIME_HOUR));
         } else if (Math.abs(time_s) < TIME_YEAR) {
             return res.getString(R.string.time_quantity_months, time_s/TIME_MONTH);
         } else {
@@ -290,14 +275,14 @@ public class Utils {
         }
     }
 
-    /**
+    /*
      * Locale
      * ***********************************************************************************************
      */
 
 
-    /**
-     * HTML
+    /*
+    * HTML
      * ***********************************************************************************************
      */
 
@@ -377,7 +362,7 @@ public class Utils {
         return sb.toString();
     }
 
-    /**
+    /*
      * IDs
      * ***********************************************************************************************
      */
@@ -446,9 +431,9 @@ public class Utils {
             for (int i = 0; i < len; i++) {
                 try {
                     if (i == (len - 1)) {
-                        str.append(ids.get(i));
+                        str.append(ids.getLong(i));
                     } else {
-                        str.append(ids.get(i)).append(",");
+                        str.append(ids.getLong(i)).append(",");
                     }
                 } catch (JSONException e) {
                     Timber.e(e, "ids2str :: JSONException");
@@ -460,8 +445,8 @@ public class Utils {
     }
 
 
-    /** LIBANKI: not in libanki */
-    /** Transform a collection of Long into an array of Long */
+    /** LIBANKI: not in libanki
+     *  Transform a collection of Long into an array of Long */
     public static long[] collection2Array(java.util.Collection<Long> list) {
         long[] ar = new long[list.size()];
         int i = 0;
@@ -473,26 +458,6 @@ public class Utils {
 
     public static Long[] list2ObjectArray(List<Long> list) {
         return list.toArray(new Long[0]);
-    }
-
-    /** Return a non-conflicting timestamp for table. */
-    public static long timestampID(DB db, String table) {
-        // be careful not to create multiple objects without flushing them, or they
-        // may share an ID.
-        long t = intTime(1000);
-        while (db.queryScalar("SELECT id FROM " + table + " WHERE id = ?", t) != 0) {
-            t += 1;
-        }
-        return t;
-    }
-
-
-    /** Return the first safe ID to use. */
-    public static long maxID(DB db) {
-        long now = intTime(1000);
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"));
-        now = Math.max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"));
-        return now + 1;
     }
 
 
@@ -540,23 +505,6 @@ public class Utils {
     }
 
 
-    public static long[] jsonArrayToLongArray(JSONArray jsonArray) throws JSONException {
-        long[] ar = new long[jsonArray.length()];
-        for (int i = 0; i < jsonArray.length(); i++) {
-            ar[i] = jsonArray.getLong(i);
-        }
-        return ar;
-    }
-
-    public static List<Long> jsonArrayToLongList(JSONArray jsonArray) throws JSONException {
-        List<Long> ar = new ArrayList<>(jsonArray.length());
-        for (int i = 0; i < jsonArray.length(); i++) {
-            ar.add(jsonArray.getLong(i));
-        }
-        return ar;
-    }
-
-
     public static Object[] jsonArray2Objects(JSONArray array) {
         Object[] o = new Object[array.length()];
         for (int i = 0; i < array.length(); i++) {
@@ -584,10 +532,10 @@ public class Utils {
 
     public static String[] splitFields(String fields) {
         // -1 ensures that we don't drop empty fields at the ends
-        return fields.split("\\x1f", -1);
+        return fields.split(FIELD_SEPARATOR, -1);
     }
 
-    /**
+    /*
      * Checksums
      * ***********************************************************************************************
      */
@@ -599,6 +547,7 @@ public class Utils {
      * @param data the string to generate hash from
      * @return A string of length 40 containing the hexadecimal representation of the MD5 checksum of data.
      */
+    @SuppressWarnings("CharsetObjectCanBeUsed")
     public static String checksum(String data) {
         String result = "";
         if (data != null) {
@@ -631,11 +580,31 @@ public class Utils {
 
 
     /**
-     * @param data the string to generate hash from
+     * Optimized in case of sortIdx = 0
+     * @param fields Fields of a note
+     * @param sortIdx An index of the field
+     * @return The field at sortIdx, without html media, and the csum of the first field.
+     */
+    public static Pair<String, Long> sfieldAndCsum(String[] fields, int sortIdx) {
+        String firstStripped = stripHTMLMedia(fields[0]);
+        String sortStripped = (sortIdx == 0) ?  firstStripped: stripHTMLMedia(fields[sortIdx]);
+        return new Pair<>(sortStripped, fieldChecksumWithoutHtmlMedia(firstStripped));
+    }
+
+    /**
+     * @param data the string to generate hash from.
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
     public static long fieldChecksum(String data) {
-        return Long.valueOf(checksum(stripHTMLMedia(data)).substring(0, 8), 16);
+        return fieldChecksumWithoutHtmlMedia(stripHTMLMedia(data));
+    }
+
+    /**
+     * @param data the string to generate hash from. Html media should be removed
+     * @return 32 bit unsigned number from first 8 digits of sha1 hash
+     */
+    public static long fieldChecksumWithoutHtmlMedia(String data) {
+        return Long.valueOf(checksum(data).substring(0, 8), 16);
     }
 
     /**
@@ -680,7 +649,7 @@ public class Utils {
     }
 
 
-    /**
+    /*
      *  Tempo files
      * ***********************************************************************************************
      */
@@ -709,9 +678,28 @@ public class Utils {
         return contentOfMyInputStream;
     }
 
+    public static void unzipAllFiles(ZipFile zipFile, String targetDirectory) throws IOException {
+        List<String> entryNames = new ArrayList<>();
+        Enumeration<ZipArchiveEntry> i = zipFile.getEntries();
+        while (i.hasMoreElements()) {
+            ZipArchiveEntry e = i.nextElement();
+            entryNames.add(e.getName());
+        }
 
-    public static void unzipFiles(ZipFile zipFile, String targetDirectory, String[] zipEntries,
-                                  Map<String, String> zipEntryToFilenameMap) throws IOException {
+        unzipFiles(zipFile, targetDirectory, entryNames.toArray(new String[0]), null);
+
+    }
+
+
+    /**
+     * @param zipFile A zip file
+     * @param targetDirectory Directory in which to unzip some of the zipped field
+     * @param zipEntries files of the zip folder to unzip
+     * @param zipEntryToFilenameMap Renaming rules from name in zip file to name in the device
+     * @throws IOException if the directory can't be created
+     */
+    public static void unzipFiles(ZipFile zipFile, String targetDirectory, @NonNull String[] zipEntries,
+                                  @Nullable Map<String, String> zipEntryToFilenameMap) throws IOException {
         File dir = new File(targetDirectory);
         if (!dir.exists() && !dir.mkdirs()) {
             throw new IOException("Failed to create target directory: " + targetDirectory);
@@ -825,8 +813,10 @@ public class Utils {
             Timber.d("Creating new file... = %s", destination);
             f.createNewFile();
 
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
             long startTimeMillis = System.currentTimeMillis();
             long sizeBytes = CompatHelper.getCompat().copyFile(source, destination);
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
             long endTimeMillis = System.currentTimeMillis();
 
             Timber.d("Finished writeToFile!");
@@ -840,26 +830,6 @@ public class Utils {
         } catch (IOException e) {
             throw new IOException(f.getName() + ": " + e.getLocalizedMessage(), e);
         }
-    }
-
-
-    /**
-     *  Returns the effective date of the present moment.
-     *  If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
-     *  otherwise today
-     *  Note that the Date class is java.sql.Date whose constructor sets hours, minutes etc to zero
-     *
-     * @param utcOffset The UTC offset in seconds we are going to use to determine today or yesterday.
-     * @return The date (with time set to 00:00:00) that corresponds to today in Anki terms
-     */
-    public static Date genToday(double utcOffset) {
-        // The result is not adjusted for timezone anymore, following libanki model
-        // Timezone adjustment happens explicitly in Deck.updateCutoff(), but not in Deck.checkDailyStats()
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-        cal.setTimeInMillis(System.currentTimeMillis() - (long) utcOffset * 1000L);
-        return Date.valueOf(df.format(cal.getTime()));
     }
 
 
@@ -916,16 +886,6 @@ public class Utils {
             results[i++] = item;
         }
         return results;
-    }
-
-
-    /**
-     * Calculate the UTC offset
-     */
-    public static double utcOffset() {
-        Calendar cal = Calendar.getInstance();
-        // 4am
-        return 4 * 60 * 60 - (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) / 1000;
     }
 
     /**
@@ -1113,4 +1073,31 @@ public class Utils {
         }
         return changed;
     }
+
+
+    /**
+     * @param left An object of type T
+     * @param right An object of type T
+     * @param <T> A type on which equals can be called
+     * @return Whether both objects are equal.
+     */
+    // Similar as Objects.equals. So deprecated starting at API Level 19 where this methods exists.
+    public static <T> boolean equals(@Nullable T left, @Nullable T right) {
+        //noinspection EqualsReplaceableByObjectsCall
+        return left == right || (left != null && left.equals(right));
+    }
+
+    /**
+     * @param sflds Some fields
+     * @return Array with the same elements, trimmed
+     */
+    public static @NonNull String[] trimArray(@NonNull String[] sflds) {
+        int nbField = sflds.length;
+        String[] fields = new String[nbField];
+        for (int i = 0; i < nbField; i++) {
+            fields[i] = sflds[i].trim();
+        }
+        return fields;
+    }
+
 }

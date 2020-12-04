@@ -10,6 +10,8 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
+import androidx.annotation.NonNull;
+
 public class DeckPickerConfirmDeleteDeckDialog extends AnalyticsDialogFragment {
     public static DeckPickerConfirmDeleteDeckDialog newInstance(String dialogMessage) {
         DeckPickerConfirmDeleteDeckDialog f = new DeckPickerConfirmDeleteDeckDialog();
@@ -20,6 +22,7 @@ public class DeckPickerConfirmDeleteDeckDialog extends AnalyticsDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +31,8 @@ public class DeckPickerConfirmDeleteDeckDialog extends AnalyticsDialogFragment {
                 .title(res.getString(R.string.delete_deck_title))
                 .content(getArguments().getString("dialogMessage"))
                 .iconAttr(R.attr.dialogErrorIcon)
-                .positiveText(res.getString(R.string.dialog_positive_delete))
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .positiveText(R.string.dialog_positive_delete)
+                .negativeText(R.string.dialog_cancel)
                 .cancelable(true)
                 .onPositive((dialog, which) -> {
                     ((DeckPicker) getActivity()).deleteContextMenuDeck();

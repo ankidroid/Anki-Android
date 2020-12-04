@@ -2,7 +2,6 @@
 package com.ichi2.anki;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
@@ -26,6 +25,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -39,15 +40,18 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
 import com.ichi2.async.CollectionLoader;
-import com.ichi2.compat.CompatHelper;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
 import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
+import com.ichi2.utils.AndroidUiUtils;
 
 import timber.log.Timber;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
 
 public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener {
 
@@ -56,7 +60,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     /** The name of the parent class (Reviewer) */
     private final String mActivityName;
 
-    private DialogHandler mHandler = new DialogHandler(this);
+    private final DialogHandler mHandler = new DialogHandler(this);
 
     // custom tabs
     private CustomTabActivityHelper mCustomTabActivityHelper;
@@ -132,14 +136,12 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Timber.i("Home button pressed");
-                finishWithoutAnimation();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            Timber.i("Home button pressed");
+            finishWithoutAnimation();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -160,7 +162,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     public boolean animationDisabled() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-        return preferences.getBoolean("eInkDisplay", false);
+        return preferences.getBoolean("safeDisplay", false);
     }
 
 
@@ -176,6 +178,18 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
         super.setContentView(view);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // We can't access the icons yet on a TV, so show them all in the menu
+        if (AndroidUiUtils.isRunningOnTv(this)) {
+            for (int i = 0; i < menu.size(); i++) {
+                menu.getItem(i).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            }
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
 
 
     @Override
@@ -210,7 +224,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    public void startActivityWithAnimation(Intent intent, int animation) {
+    public void startActivityWithAnimation(Intent intent, Direction animation) {
         enableIntentAnimation(intent);
         super.startActivity(intent);
         enableActivityAnimation(animation);
@@ -235,7 +249,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    public void startActivityForResultWithAnimation(Intent intent, int requestCode, int animation) {
+    public void startActivityForResultWithAnimation(Intent intent, int requestCode, Direction animation) {
         enableIntentAnimation(intent);
         startActivityForResult(intent, requestCode);
         enableActivityAnimation(animation);
@@ -256,8 +270,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    public void finishWithAnimation(int animation) {
-        Timber.i("finishWithAnimation %d", animation);
+    public void finishWithAnimation(Direction animation) {
+        Timber.i("finishWithAnimation %s", animation);
         super.finish();
         enableActivityAnimation(animation);
     }
@@ -287,7 +301,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     /** Finish Activity using FADE animation **/
     public static void finishActivityWithFade(Activity activity) {
         activity.finish();
-        ActivityTransitionAnimation.slide(activity, ActivityTransitionAnimation.UP);
+        ActivityTransitionAnimation.slide(activity, UP);
     }
 
 
@@ -297,7 +311,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     private void disableActivityAnimation() {
-        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.NONE);
+        ActivityTransitionAnimation.slide(this, NONE);
     }
 
 
@@ -308,7 +322,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    private void enableActivityAnimation(int animation) {
+    private void enableActivityAnimation(Direction animation) {
         if (animationDisabled()) {
             disableActivityAnimation();
         } else {
@@ -335,13 +349,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
                 Intent deckPicker = new Intent(this, DeckPicker.class);
                 deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
                 deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.LEFT);
+                startActivityWithAnimation(deckPicker, LEFT);
             }
         });
     }
 
     public void showProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        ProgressBar progressBar = findViewById(R.id.progress_bar);
         if (progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
         }
@@ -349,7 +363,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     public void hideProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        ProgressBar progressBar = findViewById(R.id.progress_bar);
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }
@@ -363,7 +377,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         }
     }
 
-    protected void openUrl(Uri url) {
+    public void openUrl(Uri url) {
         //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
         //display the toast
         if (!AdaptionUtil.hasWebBrowser(this)) {
@@ -477,7 +491,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         showAsyncDialogFragment(newFragment);
     }
 
-    protected void showSimpleMessageDialog(String title, String message, boolean reload) {
+    protected void showSimpleMessageDialog(String title, @Nullable String message, boolean reload) {
         AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(title, message, reload);
         showAsyncDialogFragment(newFragment);
     }
@@ -569,6 +583,39 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
+    }
+
+    protected boolean showedActivityFailedScreen(Bundle savedInstanceState) {
+        if (!AnkiDroidApp.isInitialized()) {
+            return false;
+        }
+
+        // #7630: Can be triggered with `adb shell bmgr restore com.ichi2.anki` after AnkiDroid settings are changed.
+        // Application.onCreate() is not called if:
+        // * The App was open
+        // * A restore took place
+        // * The app is reopened (until it exits: finish() does not do this - and removes it from the app list)
+
+        Timber.w("Activity started with no application instance");
+        UIUtils.showThemedToast(this, getString(R.string.ankidroid_cannot_open_after_backup_try_again), false);
+
+        // Avoids a SuperNotCalledException
+        super.onCreate(savedInstanceState);
+        finishActivityWithFade(this);
+
+        // If we don't kill the process, the backup is not "done" and reopening the app show the same message.
+        new Thread(() -> {
+            // 3.5 seconds sleep, as the toast is killed on process death.
+            // Same as the default value of LENGTH_LONG
+            try {
+                Thread.sleep(3500);
+            } catch (InterruptedException e) {
+                Timber.w(e);
+            }
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }).start();
+
+        return true;
     }
 }
 

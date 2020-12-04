@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">Hantera nottyper</string>
-    <string name="model_editor_label">Hantera fält</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Hantera nottyper</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Hantera fält</string>
     <!--Toasts-->
     <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Nottyper måste ha åtminstone ett fält</string>
@@ -37,22 +37,21 @@
         <item quantity="one">%d not</item>
         <item quantity="other">%d noter</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">Lägg till nottyp</string>
     <!--Browser-->
     <string name="model_browser_delete">Ta bort nottyp</string>
-    <string name="model_browser_rename">Byt namn</string>
-    <string name="model_browser_options">Alternativ</string>
+    <string name="model_browser_rename" comment="Rename a note type">Byt namn</string>
     <string name="model_browser_template">Redigera kort</string>
     <string name="model_browser_add">Lägg till nottyp</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
+    <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Redigera fält</string>
     <string name="model_field_editor_add">Lägg till fält</string>
     <string name="model_field_editor_delete">Ta bort fält</string>
-    <string name="model_field_editor_options">Fältalternativ</string>
     <string name="model_field_editor_rename">Byt namn på fält</string>
+    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Flytta fält</string>
     <string name="model_field_editor_reposition">Flytta fält (ange ett värde %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
@@ -77,8 +76,6 @@
     <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
     <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">Cannot set Deck Override to a filtered deck</string>
     <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
     <string name="deck_picker_dialog_filter_decks">Filter decks</string>
 </resources>

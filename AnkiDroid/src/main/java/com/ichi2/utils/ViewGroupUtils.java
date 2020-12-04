@@ -33,4 +33,17 @@ public class ViewGroupUtils {
         }
         return views;
     }
+
+    @NonNull
+    public static List<View> getAllChildrenRecursive(@NonNull ViewGroup viewGroup) {
+        List<View> views = new ArrayList<>();
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            View child = viewGroup.getChildAt(i);
+            views.add(child);
+            if (child instanceof ViewGroup) {
+                views.addAll(getAllChildrenRecursive((ViewGroup) child));
+            }
+        }
+        return views;
+    }
 }

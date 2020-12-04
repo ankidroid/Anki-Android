@@ -37,6 +37,8 @@ import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.ui.FixedEditText;
+import com.ichi2.ui.FixedTextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -64,7 +66,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
 
     @Override
     public void createUI(Context context, LinearLayout layout) {
-        mEditText = new EditText(mActivity);
+        mEditText = new FixedEditText(mActivity);
         mEditText.setMinLines(3);
         mEditText.setText(mField.getText());
         layout.addView(mEditText, LayoutParams.MATCH_PARENT);
@@ -78,7 +80,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
         createCloneButton(layoutTools, p);
         createClearButton(layoutTools, p);
         // search label
-        TextView mSearchLabel = new TextView(mActivity);
+        TextView mSearchLabel = new FixedTextView(mActivity);
         mSearchLabel.setText(R.string.multimedia_editor_text_field_editing_search_label);
         layout.addView(mSearchLabel);
         // search buttons
@@ -264,7 +266,7 @@ public class BasicTextFieldController extends FieldControllerBase implements IFi
                 String translation = data.getExtras().get(TranslationActivity.EXTRA_TRANSLATION).toString();
                 mEditText.setText(translation);
             } catch (Exception e) {
-                showToast(gtxt(R.string.multimedia_editor_trans_translation_failed));
+                showToast(gtxt(R.string.multimedia_editor_something_wrong));
             }
         } else if (requestCode == REQUEST_CODE_PRONOUNCIATION && resultCode == Activity.RESULT_OK) {
             try {

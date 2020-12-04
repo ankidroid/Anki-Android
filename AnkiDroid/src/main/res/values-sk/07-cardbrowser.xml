@@ -48,24 +48,16 @@
     <string name="card_browser_all_decks">Všetky balíčky</string>
     <string name="card_browser_delete_card">Odstrániť poznámky</string>
     <string name="card_browser_suspend_card">Pozastaviť kartičku</string>
-    <string name="card_browser_toggle_suspend_card">(ne)pozastaviť kartičky</string>
     <string name="card_browser_change_deck">Zmeniť balíček</string>
     <string name="card_browser_unsuspend_card">Nepozastaviť kartičky</string>
     <string name="card_browser_mark_card">Označiť poznámky</string>
-    <string name="card_browser_flag">Vlajočka</string>
-    <string name="card_browser_toggle_mark_card">(od)značiť poznámky</string>
     <string name="card_browser_unmark_card">Odznačiť poznámky</string>
     <string name="delete_card_title">Vymazať poznámku?</string>
-    <string name="delete_cards_title">Vymazať poznámky?</string>
-    <string name="delete_card_message">Skutočne chcete vymazať všetky kartičky tejto poznámky?\nPole vyhľadávania: %s</string>
-    <string name="delete_card_mult_message">Vymazať všetky kartičky všetkých vybratých poznámok?\n(Nie iba vybraté kartičky)</string>
-    <string name="deleted_message">Poznámky vymazané</string>
     <string name="changed_deck_message">Premiestnené do %s</string>
-    <string name="card_browser_suspended_cards">(ne)pozastavené kartičky</string>
     <string name="card_browser_show_marked">Filtrovať označené</string>
     <string name="card_browser_show_suspended">Filtrovať pozastavené</string>
     <string name="card_browser_search_by_tag">Filtrovať podľa štítku</string>
-    <string name="card_browser_tags_shown">Štítky: %1$s</string>
+    <string name="card_browser_search_by_flag">Filtrovať podľa vlajky</string>
     <string name="card_browser_list_my_searches">Moje vyhľadávania</string>
     <string name="card_browser_list_my_searches_save">Uložiť vyhľadávanie</string>
     <string name="card_browser_list_my_searches_title">Vybrať uložené vyhľadávanie</string>
@@ -76,17 +68,14 @@
     <string name="card_browser_change_display_order">Zmeniť poradie zobrazenia</string>
     <string name="card_browser_change_display_order_title">Zvoliť poradie zobrazenia</string>
     <string name="card_browser_change_display_order_reverse">Pre prevrátenie vyberte pole dvakrát.</string>
-    <string name="card_details_question">Otázka</string>
-    <string name="card_details_answer">Odpoveď</string>
-    <string name="card_details_due">Na preskúšanie</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">Na preskúšanie</string>
     <string name="card_details_tags">Štítky</string>
-    <string name="card_browser_filtering_cards">Kartičky sa filtrujú&#8230;\nPre zrušenie stlačte tlačidlo Späť</string>
     <string-array name="card_browser_order_labels">
         <item>Bez triedenia (rýchlejšie)</item>
         <item>Podľa triediaceho poľa</item>
         <item>Podľa času vytvorenia</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Podľa času úpravy poznámky</item>
+        <item>Podľa času úpravy kartičky</item>
         <item>Podľa času preskúšania</item>
         <item>Podľa intervalu</item>
         <item>Podľa jednoduchosti</item>
@@ -95,13 +84,40 @@
     </string-array>
     <string name="card_browser_select_all">Vybrať všetko</string>
     <string name="card_browser_select_none">Nevybrať nič</string>
-    <string name="card_browser_edit_note">Edit note</string>
-    <string name="card_browser_interval_new_card">(nové)</string>
-    <string name="card_browser_ease_new_card">(nové)</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nové)</string>
     <string name="card_browser_due_filtered_card">(filtrované)</string>
     <string name="card_browser_interval_learning_card">(novonaučené)</string>
-    <string name="card_browser_note_editor_error">Error opening Note Editor</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_no_cards_in_deck">Nenašli sa žiadne kartičky v baličku ‘%s’</string>
+    <string name="card_browser_search_all_decks">Prehľadať všetky balíčky</string>
+    <string name="card_browser_unknown_deck_name">Neznámy</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="one">%d vymazaná kartička</item>
+        <item quantity="few">%d vymazané kartičky</item>
+        <item quantity="many">%d vymazaných kartičiek</item>
+        <item quantity="other">%d vymazaných kartičiek</item>
+    </plurals>
+    <!-- Card Info subscreen -->
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Pridaná</string>
+    <string name="card_info_first_review">Prvýkrát opakovaná</string>
+    <string name="card_info_latest_review">Posledné opakovanie</string>
+    <string name="card_info_interval">Interval</string>
+    <string name="card_info_ease">Ľahkosť</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Opakovania</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Zabudnutia</string>
+    <string name="card_info_average_time">Priemerný čas</string>
+    <string name="card_info_total_time">Celkový čas</string>
+    <string name="card_info_card_type">Typ kartičky</string>
+    <string name="card_info_note_type">Typ poznámky</string>
+    <string name="card_info_deck_name">Názov balíčka</string>
+    <string name="card_info_card_id">ID kartičky</string>
+    <string name="card_info_note_id">ID poznámky</string>
+    <string name="card_info_revlog_time">Čas</string>
+    <string name="card_info_revlog_date">Dátum</string>
+    <string name="card_info_revlog_rating">Hodnotenie</string>
+    <string name="card_info_revlog_type">Typ</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Naučená</string>
+    <string name="card_info_revlog_review">Opakovaná</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Znovunaučená</string>
+    <string name="card_info_revlog_filtered">Filtrovaná</string>
+    <string name="card_info_ease_not_applicable">N/A</string>
 </resources>

@@ -19,12 +19,15 @@ package com.ichi2.libanki.sync;
 
 import android.database.Cursor;
 import android.database.SQLException;
+import android.util.Pair;
 
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
+import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
 import com.ichi2.async.Connection;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.Collection;
@@ -46,8 +49,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import okhttp3.Response;
 import timber.log.Timber;
+
+import static com.ichi2.utils.CollectionUtils.addAll;
 
 @SuppressWarnings({"deprecation", // tracking HTTP transport change in github already
                     "PMD.ExcessiveClassLength","PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -64,18 +70,15 @@ public class Syncer {
     /** The libAnki value of `sched.mReportLimit` */
     private static final int SYNC_SCHEDULER_REPORT_LIMIT = 1000;
 
-    private Collection mCol;
-    private HttpSyncer mServer;
-    private long mRMod;
+    private final Collection mCol;
+    private final HttpSyncer mServer;
     //private long mRScm;
     private int mMaxUsn;
 
-    private HostNum mHostNum;
-    private long mLMod;
+    private final HostNum mHostNum;
     //private long mLScm;
     private int mMinUsn;
     private boolean mLNewer;
-    private JSONObject mRChg;
     private String mSyncMsg;
 
     private LinkedList<String> mTablesLeft;
@@ -98,6 +101,7 @@ public class Syncer {
     public Object[] sync(Connection con) throws UnknownHttpResponseException {
         mSyncMsg = "";
         // if the deck has any pending changes, flush them first and bump mod time
+        mCol.getSched()._updateCutoff();
         mCol.save();
         // step 1: login & metadata
         Response ret = mServer.meta();
@@ -125,14 +129,14 @@ public class Syncer {
                 throwExceptionIfCancelled(con);
                 long rscm = rMeta.getLong("scm");
                 int rts = rMeta.getInt("ts");
-                mRMod = rMeta.getLong("mod");
+                long rMod = rMeta.getLong("mod");
                 mMaxUsn = rMeta.getInt("usn");
                 // skip uname, AnkiDroid already stores and shows it
                 trySetHostNum(rMeta);
                 Timber.i("Sync: building local meta data");
                 JSONObject lMeta = meta();
                 mCol.log("lmeta", lMeta);
-                mLMod = lMeta.getLong("mod");
+                long lMod = lMeta.getLong("mod");
                 mMinUsn = lMeta.getInt("usn");
                 long lscm = lMeta.getLong("scm");
                 int lts = lMeta.getInt("ts");
@@ -142,7 +146,7 @@ public class Syncer {
                     mCol.log("clock off");
                     return new Object[] { "clockOff", diff };
                 }
-                if (mLMod == mRMod) {
+                if (lMod == rMod) {
                     Timber.i("Sync: no changes - returning");
                     mCol.log("no changes");
                     return new Object[] { "noChanges" };
@@ -151,7 +155,7 @@ public class Syncer {
                     mCol.log("schema diff");
                     return new Object[] { "fullSync" };
                 }
-                mLNewer = mLMod > mRMod;
+                mLNewer = lMod > rMod;
                 // step 1.5: check collection is valid
                 if (!mCol.basicCheck()) {
                     mCol.log("basic check");
@@ -223,8 +227,7 @@ public class Syncer {
                 JSONObject c = sanityCheck();
                 JSONObject sanity = mServer.sanityCheck2(c);
                 if (sanity == null || !"ok".equals(sanity.optString("status", "bad"))) {
-                    mCol.log("sanity check failed", c, sanity);
-                    return _forceFullSync();
+                    return sanityCheckError(c, sanity);
                 }
                 // finalize
                 publishProgress(con, R.string.sync_finish_message);
@@ -239,7 +242,7 @@ public class Syncer {
                 publishProgress(con, R.string.sync_writing_db);
                 mCol.getDb().getDatabase().setTransactionSuccessful();
             } finally {
-                mCol.getDb().getDatabase().endTransaction();
+                DB.safeEndInTransaction(mCol.getDb());
             }
         } catch (IllegalStateException e) {
             throw new RuntimeException(e);
@@ -266,12 +269,18 @@ public class Syncer {
         }
     }
 
+    @NonNull
+    protected Object[] sanityCheckError(JSONObject c, JSONObject sanity) {
+        mCol.log("sanity check failed", c, sanity);
+        UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.SYNC, "sanityCheckError");
+        _forceFullSync();
+        return new Object[] { "sanityCheckError", null };
+    }
 
-    private Object[] _forceFullSync() {
+    private void _forceFullSync() {
         // roll back and force full sync
         mCol.modSchemaNoCheck();
         mCol.save();
-        return new Object[] { "sanityCheckError", null };
     }
 
     private void publishProgress(Connection con, int id) {
@@ -286,7 +295,7 @@ public class Syncer {
         j.put("mod", mCol.getMod());
         j.put("scm", mCol.getScm());
         j.put("usn", mCol.getUsnForSync());
-        j.put("ts", Utils.intTime());
+        j.put("ts", mCol.getTime().intTime());
         j.put("musn", 0);
         j.put("msg", "");
         j.put("cont", true);
@@ -309,10 +318,9 @@ public class Syncer {
 
 
     public JSONObject applyChanges(JSONObject changes) throws UnexpectedSchemaChange {
-        mRChg = changes;
         JSONObject lchg = changes();
         // merge our side before returning
-        mergeChanges(lchg, mRChg);
+        mergeChanges(lchg, changes);
         return lchg;
     }
 
@@ -368,17 +376,15 @@ public class Syncer {
             }
             for (Deck g : mCol.getDecks().all()) {
                 if (g.getInt("usn") == -1) {
-                    Timber.e("Sync - SanityCheck: unsynced deck: " + g.getString("name"));
+                    Timber.e("Sync - SanityCheck: unsynced deck: %s", g.getString("name"));
                     result.put("client", "deck had usn = -1");
                     return result;
                 }
             }
-            for (Map.Entry<String, Integer> tag : mCol.getTags().allItems()) {
-                if (tag.getValue() == -1) {
-                    Timber.e("Sync - SanityCheck: there are unsynced tags");
-                    result.put("client", "tag had usn = -1");
-                    return result;
-                }
+            if (mCol.getTags().minusOneValue()) {
+                Timber.e("Sync - SanityCheck: there are unsynced tags");
+                result.put("client", "tag had usn = -1");
+                return result;
             }
             boolean found = false;
             for (JSONObject m : mCol.getModels().all()) {
@@ -390,7 +396,7 @@ public class Syncer {
                     }
                 } else {
                     if (m.getInt("usn") == -1) {
-                        Timber.e("Sync - SanityCheck: unsynced model: " + m.getString("name"));
+                        Timber.e("Sync - SanityCheck: unsynced model: %s", m.getString("name"));
                         result.put("client", "model had usn = -1");
                         return result;
                     }
@@ -402,24 +408,24 @@ public class Syncer {
             // check for missing parent decks
             mCol.getSched().deckDueList();
             // return summary of deck
-            JSONArray ja = new JSONArray();
-            JSONArray sa = new JSONArray();
+            JSONArray check = new JSONArray();
+            JSONArray counts = new JSONArray();
 
             //#5666 - not in libAnki
             //We modified mReportLimit inside the scheduler, and this causes issues syncing dynamic decks.
             AbstractSched syncScheduler = mCol.createScheduler(SYNC_SCHEDULER_REPORT_LIMIT);
             for (int c : syncScheduler.recalculateCounts()) {
-                sa.put(c);
+                counts.put(c);
             }
-            ja.put(sa);
-            ja.put(mCol.getDb().queryScalar("SELECT count() FROM cards"));
-            ja.put(mCol.getDb().queryScalar("SELECT count() FROM notes"));
-            ja.put(mCol.getDb().queryScalar("SELECT count() FROM revlog"));
-            ja.put(mCol.getDb().queryScalar("SELECT count() FROM graves"));
-            ja.put(mCol.getModels().all().size());
-            ja.put(mCol.getDecks().all().size());
-            ja.put(mCol.getDecks().allConf().size());
-            result.put("client", ja);
+            check.put(counts);
+            check.put(mCol.getDb().queryScalar("SELECT count() FROM cards"));
+            check.put(mCol.getDb().queryScalar("SELECT count() FROM notes"));
+            check.put(mCol.getDb().queryScalar("SELECT count() FROM revlog"));
+            check.put(mCol.getDb().queryScalar("SELECT count() FROM graves"));
+            check.put(mCol.getModels().all().size());
+            check.put(mCol.getDecks().all().size());
+            check.put(mCol.getDecks().allConf().size());
+            result.put("client", check);
             return result;
         } catch (JSONException e) {
             Timber.e(e, "Syncer.sanityCheck()");
@@ -441,11 +447,11 @@ public class Syncer {
     // return result;
     // }
 
-    private String usnLim() {
+    private Pair<String, Object[]> usnLim() {
         if (mCol.getServer()) {
-            return "usn >= " + mMinUsn;
+            return new Pair("usn >= ?", new Object[] {mMinUsn});
         } else {
-            return "usn = -1";
+            return new Pair("usn = -1", null);
         }
     }
 
@@ -458,7 +464,7 @@ public class Syncer {
     private long finish(long mod) {
         if (mod == 0) {
             // server side; we decide new mod time
-            mod = Utils.intTime(1000);
+            mod = mCol.getTime().intTimeMS();
         }
         mCol.setLs(mod);
         mCol.setUsnAfterSync(mMaxUsn + 1);
@@ -483,33 +489,19 @@ public class Syncer {
 
 
     private Cursor cursorForTable(String table) {
-        String lim = usnLim();
+        Pair<String, Object[]> limAndArg = usnLim();
         if ("revlog".equals(table)) {
             return mCol
                     .getDb()
-                    .getDatabase()
-                    .query(
-                            String.format(Locale.US,
-                                    "SELECT id, cid, %d, ease, ivl, lastIvl, factor, time, type FROM revlog WHERE %s",
-                                    mMaxUsn, lim), null);
+                    .query("SELECT id, cid, " + mMaxUsn + ", ease, ivl, lastIvl, factor, time, type FROM revlog WHERE " + limAndArg.first, limAndArg.second);
         } else if ("cards".equals(table)) {
             return mCol
                     .getDb()
-                    .getDatabase()
-                    .query(
-                            String.format(
-                                    Locale.US,
-                                    "SELECT id, nid, did, ord, mod, %d, type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE %s",
-                                    mMaxUsn, lim), null);
+                    .query("SELECT id, nid, did, ord, mod, " + mMaxUsn + ", type, queue, due, ivl, factor, reps, lapses, left, odue, odid, flags, data FROM cards WHERE " + limAndArg.first, limAndArg.second);
         } else {
             return mCol
                     .getDb()
-                    .getDatabase()
-                    .query(
-                            String.format(
-                                    Locale.US,
-                                    "SELECT id, guid, mid, mod, %d, tags, flds, '', '', flags, data FROM notes WHERE %s",
-                                    mMaxUsn, lim), null);
+                    .query("SELECT id, guid, mid, mod, " + mMaxUsn + ", tags, flds, '', '', flags, data FROM notes WHERE " + limAndArg.first, limAndArg.second);
         }
     }
 
@@ -570,7 +562,7 @@ public class Syncer {
                 mCursor = null;
                 // if we're the client, mark the objects as having been sent
                 if (!mCol.getServer()) {
-                    mCol.getDb().execute("UPDATE " + curTable + " SET usn=" + mMaxUsn + " WHERE usn=-1");
+                    mCol.getDb().execute("UPDATE " + curTable + " SET usn=? WHERE usn=-1", mMaxUsn);
                 }
             }
             buf.put(curTable, rows);
@@ -604,14 +596,10 @@ public class Syncer {
         JSONArray cards = new JSONArray();
         JSONArray notes = new JSONArray();
         JSONArray decks = new JSONArray();
-        Cursor cur = null;
-        try {
-            cur = mCol
+        Pair<String, Object[]> limAndArgs = usnLim();
+        try (Cursor cur = mCol
                     .getDb()
-                    .getDatabase()
-                    .query(
-                            "SELECT oid, type FROM graves WHERE usn"
-                                    + (mCol.getServer() ? (" >= " + mMinUsn) : (" = -1")), null);
+                    .query("SELECT oid, type FROM graves WHERE " + limAndArgs.first, limAndArgs.second)) {
             while (cur.moveToNext()) {
                 @Consts.REM_TYPE int type = cur.getInt(1);
                 switch (type) {
@@ -625,10 +613,6 @@ public class Syncer {
                         decks.put(cur.getLong(0));
                         break;
                 }
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         if (!mCol.getServer()) {
@@ -657,13 +641,13 @@ public class Syncer {
         boolean wasServer = mCol.getServer();
         mCol.setServer(true);
         // notes first, so we don't end up with duplicate graves
-        mCol._remNotes(Utils.jsonArrayToLongList(graves.getJSONArray("notes")));
+        mCol._remNotes(graves.getJSONArray("notes").toLongList());
         // then cards
-        mCol.remCards(Utils.jsonArrayToLongList(graves.getJSONArray("cards")), false);
+        mCol.remCards(graves.getJSONArray("cards").toLongList(), false);
         // and decks
         JSONArray decks = graves.getJSONArray("decks");
-        for (int i = 0; i < decks.length(); i++) {
-            mCol.getDecks().rem(decks.getLong(i), false, false);
+        for (Long did: decks.longIterable()) {
+            mCol.getDecks().rem(did, false, false);
         }
         mCol.setServer(wasServer);
     }
@@ -695,8 +679,8 @@ public class Syncer {
 
 
     private void mergeModels(JSONArray rchg) throws UnexpectedSchemaChange {
-        for (int i = 0; i < rchg.length(); i++) {
-            Model r = new Model(rchg.getJSONObject(i));
+        for (JSONObject model: rchg.jsonObjectIterable()) {
+            Model r = new Model(model);
             Model l = mCol.getModels().get(r.getLong("id"));
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
@@ -763,8 +747,8 @@ public class Syncer {
 
     private void mergeDecks(JSONArray rchg) {
         JSONArray decks = rchg.getJSONArray(0);
-        for (int i = 0; i < decks.length(); i++) {
-            Deck r = new Deck(decks.getJSONObject(i));
+        for (JSONObject deck: decks.jsonObjectIterable()) {
+            Deck r = new Deck(deck);
             Deck l = mCol.getDecks().get(r.getLong("id"), false);
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
@@ -772,8 +756,8 @@ public class Syncer {
             }
         }
         JSONArray confs = rchg.getJSONArray(1);
-        for (int i = 0; i < confs.length(); i++) {
-            DeckConfig r = new DeckConfig(confs.getJSONObject(i));
+        for (JSONObject deckConfig: confs.jsonObjectIterable()) {
+            DeckConfig r = new DeckConfig(deckConfig);
             DeckConfig l = mCol.getDecks().getConf(r.getLong("id"));
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
@@ -810,11 +794,7 @@ public class Syncer {
 
 
     private void mergeTags(JSONArray tags) {
-        ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i < tags.length(); i++) {
-            list.add(tags.getString(i));
-        }
-        mCol.getTags().register(list, mMaxUsn);
+        mCol.getTags().register(tags.toStringList(), mMaxUsn);
     }
 
 
@@ -823,10 +803,10 @@ public class Syncer {
      */
 
     private void mergeRevlog(JSONArray logs) {
-        for (int i = 0; i < logs.length(); i++) {
+        for (JSONArray log: logs.jsonArrayIterable()) {
             try {
                 mCol.getDb().execute("INSERT OR IGNORE INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
-                        Utils.jsonArray2Objects(logs.getJSONArray(i)));
+                        Utils.jsonArray2Objects(log));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -841,25 +821,18 @@ public class Syncer {
             ids[i] = data.getJSONArray(i).getLong(0);
         }
         HashMap<Long, Long> lmods = new HashMap<>();
-        Cursor cur = null;
-        try {
-            cur = mCol
+        Pair<String, Object[]> limAndArg = usnLim();
+        try (Cursor cur = mCol
                     .getDb()
-                    .getDatabase()
                     .query(
                             "SELECT id, mod FROM " + table + " WHERE id IN " + Utils.ids2str(ids) + " AND "
-                                    + usnLim(), null);
+                                    +  limAndArg.first, limAndArg.second)) {
             while (cur.moveToNext()) {
                 lmods.put(cur.getLong(0), cur.getLong(1));
             }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         ArrayList<Object[]> update = new ArrayList<>();
-        for (int i = 0; i < data.length(); i++) {
-            JSONArray r = data.getJSONArray(i);
+        for (JSONArray r: data.jsonArrayIterable()) {
             if (!lmods.containsKey(r.getLong(0)) || lmods.get(r.getLong(0)) < r.getLong(modIdx)) {
                 update.add(Utils.jsonArray2Objects(r));
             }
@@ -879,7 +852,7 @@ public class Syncer {
     private void mergeNotes(JSONArray notes) {
         for (Object[] n : newerRows(notes, "notes", 4)) {
             mCol.getDb().execute("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?,?)", n);
-            mCol.updateFieldCache(new long[]{Long.valueOf(((Number) n[0]).longValue())});
+            mCol.updateFieldCache(new long[]{((Number) n[0]).longValue()});
         }
     }
 
@@ -912,7 +885,7 @@ public class Syncer {
             publishProgress(con, R.string.sync_cancelled);
             try {
                 mServer.abort();
-            } catch (UnknownHttpResponseException e) {
+            } catch (UnknownHttpResponseException ignored) {
             }
             throw new RuntimeException("UserAbortedSync");
         }

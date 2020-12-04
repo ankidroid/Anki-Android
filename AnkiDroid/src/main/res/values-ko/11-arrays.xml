@@ -39,35 +39,6 @@
         <item>보고하지 않기</item>
         <item>오류 보고전 묻기</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>동작 없음</item>
-        <item>정답 보기</item>
-        <item>답변 버튼 1</item>
-        <item>답변 버튼 2</item>
-        <item>답변 버튼 3</item>
-        <item>답변 버튼 4</item>
-        <item>답변 추천 (녹색)</item>
-        <item>권장된 것 보다 더 나은 답변</item>
-        <item>실행 취소</item>
-        <item>노트 편집</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>카드 비활성화</item>
         <item>태그 전용</item>
@@ -93,8 +64,8 @@
     </string-array>
     <string-array name="new_spread_labels">
         <item>새 카드와 복습 섞기</item>
-        <item>새 카드 다음에 복습</item>
-        <item>새 카드에 앞서 복습</item>
+        <item>복습을 새 카드보다 먼저</item>
+        <item>새 카드를 복습보다 먼저</item>
     </string-array>
     <string-array name="override_font_labels">
         <item>플래시카드에 특정 글꼴이 지정되지 않은 경우</item>
@@ -108,4 +79,36 @@
         <item>블랙</item>
         <item>어두움</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>x-large</item>
+        <item>xx-large</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">동작 없음</string>
+    <string name="gesture_answer_1">답변 버튼 1</string>
+    <string name="gesture_answer_2">답변 버튼 2</string>
+    <string name="gesture_answer_3">답변 버튼 3</string>
+    <string name="gesture_answer_4">답변 버튼 4</string>
+    <string name="gesture_answer_green">답변 추천 (녹색)</string>
+    <string name="gesture_answer_better_recommended">권장된 것 보다 더 나은 답변</string>
+    <string name="gesture_tag_note">Tag note</string>
+    <string name="gesture_lookup">Lookup expression</string>
+    <string name="gesture_play">Play media</string>
+    <string name="gesture_abort_learning">Abort learning</string>
+    <string name="gesture_flag_red">Toggle Red Flag</string>
+    <string name="gesture_flag_orange">Toggle Orange Flag</string>
+    <string name="gesture_flag_green">Toggle Green Flag</string>
+    <string name="gesture_flag_blue">Toggle Blue Flag</string>
+    <string name="gesture_flag_remove">Remove Flag</string>
+    <string name="gesture_page_up">Page Up</string>
+    <string name="gesture_page_down">Page Down</string>
+    <string name="gesture_abort_sync">Abort Learning and Sync</string>
 </resources>

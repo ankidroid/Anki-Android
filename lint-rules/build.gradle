@@ -1,0 +1,20 @@
+apply plugin: "java-library"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    google()
+    jcenter()
+}
+
+dependencies {
+    compileOnly "com.android.tools.lint:lint-api:27.1.1"
+    compileOnly "com.android.tools.lint:lint:27.1.1"
+
+    testImplementation "junit:junit:4.13.1"
+    testImplementation "com.android.tools.lint:lint:27.1.1"
+    testImplementation "com.android.tools.lint:lint-tests:27.1.1"
+}

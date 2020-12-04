@@ -18,12 +18,21 @@
 
 package com.ichi2.anki;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Utils;
 import com.ichi2.themes.Themes;
 
+import java.util.HashSet;
+import java.util.List;
+
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 /**
@@ -36,8 +45,16 @@ public class Previewer extends AbstractFlashcardViewer {
     private int mIndex;
     private boolean mShowingAnswer;
 
+    /** Communication with Browser */
+    private boolean mReloadRequired;
+    private boolean mNoteChanged;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
@@ -47,6 +64,8 @@ public class Previewer extends AbstractFlashcardViewer {
         if (savedInstanceState != null){
             mIndex = savedInstanceState.getInt("index", mIndex);
             mShowingAnswer = savedInstanceState.getBoolean("showingAnswer", mShowingAnswer);
+            mReloadRequired = savedInstanceState.getBoolean("reloadRequired");
+            mNoteChanged = savedInstanceState.getBoolean("noteChanged");
         }
 
         if (mCardList.length == 0 || mIndex < 0 || mIndex > mCardList.length - 1) {
@@ -64,13 +83,34 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void onCollectionLoaded(Collection col) {
         super.onCollectionLoaded(col);
         mCurrentCard = col.getCard(mCardList[mIndex]);
-        if (mShowingAnswer){
-            displayCardQuestion();
+
+        displayCardQuestion();
+        if (mShowingAnswer) {
             displayCardAnswer();
-        } else {
-            displayCardQuestion();
         }
+
         showBackIcon();
+    }
+
+    /** Given a new collection of card Ids, find the 'best' valid card given the current collection
+     * We define the best as searching to the left, then searching to the right of the current element
+     * This occurs as many cards can be deleted when editing a note (from the Card Template Editor) */
+    private int getNextIndex(List<Long> newCardList) {
+        HashSet<Long> validIndices = new HashSet<>(newCardList);
+
+        for (int i = mIndex; i >= 0; i--) {
+            if (validIndices.contains(mCardList[i])) {
+                return newCardList.indexOf(mCardList[i]);
+            }
+        }
+
+        for (int i = mIndex + 1; i < validIndices.size(); i++) {
+            if (validIndices.contains(mCardList[i])) {
+                return newCardList.indexOf(mCardList[i]);
+            }
+        }
+
+        throw new IllegalStateException("newCardList was empty");
     }
 
 
@@ -84,14 +124,61 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void initLayout() {
         super.initLayout();
         mTopBarLayout.setVisibility(View.GONE);
+
+        findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
+
+        mPreviewButtonsLayout.setVisibility(View.VISIBLE);
+        mPreviewButtonsLayout.setOnClickListener(mToggleAnswerHandler);
+
+        mPreviewPrevCard.setOnClickListener(mSelectScrollHandler);
+        mPreviewNextCard.setOnClickListener(mSelectScrollHandler);
+
+        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+            int resId = Themes.getResFromAttr(this, R.attr.hardButtonRippleRef);
+            mPreviewButtonsLayout.setBackgroundResource(resId);
+            mPreviewPrevCard.setBackgroundResource(R.drawable.item_background_light_selectable_borderless);
+            mPreviewNextCard.setBackgroundResource(R.drawable.item_background_light_selectable_borderless);
+        }
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_edit) {
+            editCard();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK, getResultIntent());
+        super.onBackPressed();
+    }
+
+
+    @Override
+    protected void onNavigationPressed() {
+        setResult(RESULT_OK, getResultIntent());
+        super.onNavigationPressed();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.previewer, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putLongArray("cardList", mCardList);
         outState.putInt("index", mIndex);
         outState.putBoolean("showingAnswer", mShowingAnswer);
+        outState.putBoolean("reloadRequired", mReloadRequired);
+        outState.putBoolean("noteChanged", mNoteChanged);
         super.onSaveInstanceState(outState);
     }
 
@@ -100,7 +187,7 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void displayCardQuestion() {
         super.displayCardQuestion();
         mShowingAnswer = false;
-        updateButtonState();
+        updateButtonsState();
     }
 
 
@@ -109,13 +196,19 @@ public class Previewer extends AbstractFlashcardViewer {
     protected void displayCardAnswer() {
         super.displayCardAnswer();
         mShowingAnswer = true;
-        updateButtonState();
+        updateButtonsState();
     }
 
 
-    // we don't want the Activity title to be changed.
     @Override
-    protected void updateScreenCounts() { /* do nothing */ }
+    protected void hideEaseButtons() {
+        /* do nothing */
+    }
+
+    @Override
+    protected void displayAnswerBottomBar() {
+        /* do nothing */
+    }
 
 
     @Override
@@ -124,78 +217,82 @@ public class Previewer extends AbstractFlashcardViewer {
         return false;
     }
 
-    private View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
+
+    @Override
+    protected void performReload() {
+        mReloadRequired = true;
+        List<Long> newCardList = getCol().filterToValidCards(mCardList);
+
+        if (newCardList.isEmpty()) {
+            finishWithoutAnimation();
+            return;
+        }
+
+        mIndex = getNextIndex(newCardList);
+        mCardList = Utils.collection2Array(newCardList);
+        mCurrentCard = getCol().getCard(mCardList[mIndex]);
+        displayCardQuestion();
+    }
+
+
+    @Override
+    protected void onEditedNoteChanged() {
+        super.onEditedNoteChanged();
+        mNoteChanged = true;
+    }
+
+
+    private final View.OnClickListener mSelectScrollHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if (view.getId() == R.id.preview_previous_flashcard) {
+                mIndex--;
+            } else if (view.getId() == R.id.preview_next_flashcard) {
+                mIndex++;
+            }
+
+            mCurrentCard = getCol().getCard(mCardList[mIndex]);
+            displayCardQuestion();
+        }
+    };
+
+    private final View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
             if (mShowingAnswer) {
-                // If we are showing the answer, any click will show a question...
-                if (view.getId() == R.id.flashcard_layout_ease2) {
-                    // ...but if they clicked "forward" we need to move to the next card first
-                    mIndex++;
-                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
-                }
                 displayCardQuestion();
             } else {
-                // If we are showing the question, any click will show an answer...
-                if (view.getId() == R.id.flashcard_layout_ease1) {
-                    // ...but if they clicked "reverse" we need to go to the previous card first
-                    mIndex--;
-                    mCurrentCard = getCol().getCard(mCardList[mIndex]);
-                }
                 displayCardAnswer();
             }
         }
     };
 
-    private void updateButtonState() {
+    private void updateButtonsState() {
+        mPreviewToggleAnswerText.setText(mShowingAnswer ? R.string.hide_answer : R.string.show_answer);
+
         // If we are in single-card mode, we show the "Show Answer" button on the question side
-        // and hide all the buttons on the answer side.
+        // and hide navigation buttons.
         if (mCardList.length == 1) {
-            if (!mShowingAnswer) {
-                mFlipCardLayout.setVisibility(View.VISIBLE);
-            } else {
-                findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
-                mFlipCardLayout.setVisibility(View.GONE);
-                hideEaseButtons();
-            }
+            mPreviewPrevCard.setVisibility(View.GONE);
+            mPreviewNextCard.setVisibility(View.GONE);
             return;
         }
 
-        mFlipCardLayout.setVisibility(View.GONE);
-        mEase1Layout.setVisibility(View.VISIBLE);
-        mEase2Layout.setVisibility(View.VISIBLE);
-        mEase3Layout.setVisibility(View.GONE);
-        mEase4Layout.setVisibility(View.GONE);
+        boolean prevBtnDisabled = mIndex <= 0;
+        boolean nextBtnDisabled = mIndex >= mCardList.length - 1;
 
-        final int[] background = Themes.getResFromAttr(this, new int[]{R.attr.hardButtonRef});
-        final int[] textColor = Themes.getColorFromAttr(this, new int[]{R.attr.hardButtonTextColor});
+        mPreviewPrevCard.setEnabled(!prevBtnDisabled);
+        mPreviewNextCard.setEnabled(!nextBtnDisabled);
 
-        mNext1.setTextSize(30);
-        mEase1.setVisibility(View.GONE);
-        mNext1.setTextColor(textColor[0]);
-        mEase1Layout.setOnClickListener(mSelectScrollHandler);
-        mEase1Layout.setBackgroundResource(background[0]);
+        mPreviewPrevCard.setAlpha(prevBtnDisabled ? 0.38F : 1);
+        mPreviewNextCard.setAlpha(nextBtnDisabled ? 0.38F : 1);
+    }
 
-        mNext2.setTextSize(30);
-        mEase2.setVisibility(View.GONE);
-        mNext2.setTextColor(textColor[0]);
-        mEase2Layout.setOnClickListener(mSelectScrollHandler);
-        mEase2Layout.setBackgroundResource(background[0]);
-
-        if (mIndex == 0 && !mShowingAnswer) {
-            mEase1Layout.setEnabled(false);
-            mNext1.setText("-");
-        } else {
-            mEase1Layout.setEnabled(true);
-            mNext1.setText("<");
-        }
-
-        if (mIndex == mCardList.length - 1 && mShowingAnswer) {
-            mEase2Layout.setEnabled(false);
-            mNext2.setText("-");
-        } else {
-            mEase2Layout.setEnabled(true);
-            mNext2.setText(">");
-        }
+    @NonNull
+    private Intent getResultIntent() {
+        Intent intent = new Intent();
+        intent.putExtra("reloadRequired", mReloadRequired);
+        intent.putExtra("noteChanged", mNoteChanged);
+        return intent;
     }
 }

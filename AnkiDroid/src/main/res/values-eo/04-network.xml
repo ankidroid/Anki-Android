@@ -44,17 +44,13 @@
     <string name="sync_error">Eraro dum samtempigado</string>
     <string name="vague_error">Eraro</string>
     <string name="retry">Reprovi</string>
-    <string name="cancel">Nuligi</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Kondiĉoj de uzado</a></string>
     <string name="menu_get_shared_decks">Elŝuti publikajn kartarojn</string>
     <string name="connection_error_message">Reta eraro okazis</string>
     <string name="not_logged_in_title">Ensalutu en AnkiWeb</string>
     <string name="login_create_account_message">Vi devu ensaluti en ekstera liveranto-konto por uzi la samtempigan servon. Via povas krei konton je la venonta etapo.</string>
     <!-- MyAccount.java -->
     <string name="username">Retpoŝta adreso</string>
-    <string name="username_repeat">Ripeti retpoŝtan adreson</string>
     <string name="password">Pasvorto</string>
-    <string name="password_repeat">Ripeti pasvorton</string>
     <string name="log_in">Ensaluti</string>
     <string name="sign_up_description">Ĉu vi ne havas AnkiWeb-konton? Ĝi estas senkosta!</string>
     <string name="sign_up_not_affiliated">Atentigo: AnkiWeb ne estas rilata al AnkiDroid</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">Nevalida retpoŝta adreso aŭ pasvorto</string>
     <string name="reset_password">Restarigi pasvorton</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Serĉi</string>
     <string name="preferences_title">Agordoj</string>
     <string name="deckpreferences_title">Agordoj por XXX</string>
     <string name="sync_conflict_message">Vi devas aŭ alŝuti tiun ĉi kolekton aŭ elŝuti ĝin el AnkiWeb, ĉar ili tro malsamas por esti kunigitaj. Kelka kolekto estos anstataŭigita.</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">Samtempigo</string>
     <string name="sync_downloading_media">Elŝutado de aŭdvidaĵo %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Plena samtempigo al la servilo</string>
-    <string name="sync_log_downloading_message">Plena samtempigo el la servilo</string>
     <string name="sync_log_clocks_unsynchronized">Via horloĝo estas deŝovita je %1$d sekundoj, %2$s. Certiĝu, ke la dato, tempo kaj horzono ĉe via telefono estas ĝuste agorditaj kaj reprovu.</string>
     <string name="sync_log_clocks_unsynchronized_tz">la horzono probable estas misagordita</string>
     <string name="sync_log_clocks_unsynchronized_date">la dato estas probable misagordita</string>
@@ -94,6 +88,7 @@
     <string name="sync_overwrite_error">Via loka kolekto ne povas esti superskribita de la elŝutita dosiero</string>
     <string name="sync_connection_error">Tempolimo de konekto. Aŭ okazas problemo ĉe via interret-konekto aŭ vi havas tre grandan dosieron en via aŭdvidaĵa dosierujo.</string>
     <string name="sync_write_access_error">Ne povas konservi elŝutitan dosieron al la SD-karto. Aŭ la karto estas muntita nurlege aŭ libera spaco mankas.</string>
+    <string name="sync_error_invalid_sync_server">La propra samtempiga servilo difinita en altnivelaj agordoj estas malĝusta (%s). Enigu ĝustan servilon.</string>
     <string name="sync_deletions_message">Samtempigado de forigoj&#8230;</string>
     <string name="sync_small_objects_message">Samtempigado de etaj objektoj&#8230;</string>
     <string name="sync_finish_message">Finado de samtempigo&#8230;</string>
@@ -115,6 +110,8 @@
     <string name="sync_media_db_error">Fiaskis samtempigi aŭdvidaĵojn, ĉar la nuna datumbazo estas koruptita. Estas konsilinde kontroli aŭdvidaĵojn.</string>
     <string name="sync_media_error">Eraro dum samtempigado de aŭdvidaĵoj</string>
     <string name="sync_media_error_check">Eraro dum samtempigado de aŭdvidaĵoj. Kontrolo de aŭdvidaĵoj estas konsilinda.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Ekigu “%s” antaŭ samtempigo</string>
     <string name="sync_sanity_local">Loka</string>
     <string name="sync_sanity_remote">Fora</string>
     <string name="force_full_sync_title">Devigi plenan samtempigadon</string>
@@ -129,7 +126,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb estas vartata. Bonvolu reprovi ĝin en kelkaj minutoj.</string>
     <string name="sync_error_504_gateway_timeout">Okazis eraro 504: templimo de konekto atingita.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_full_sync">Samtempigo (plena)</string>
+    <string name="sync_menu_title_no_account">Samtempigo (ensaluto)</string>
 </resources>

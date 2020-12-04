@@ -1,12 +1,19 @@
 
 package com.ichi2.anki.dialogs;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ichi2.anki.AnkiActivity;
+import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
+import com.ichi2.async.Connection;
 import com.ichi2.libanki.Collection;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class SyncErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_USER_NOT_LOGGED_IN_SYNC = 0;
@@ -18,13 +25,14 @@ public class SyncErrorDialog extends AsyncDialogFragment {
     public static final int DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL = 7;
     public static final int DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE = 8;
     public static final int DIALOG_MEDIA_SYNC_ERROR = 9;
+    public static final int DIALOG_SYNC_CORRUPT_COLLECTION = 10;
 
     public interface SyncErrorDialogListener {
         void showSyncErrorDialog(int dialogType);
         void showSyncErrorDialog(int dialogType, String message);
         void loginToSyncServer();
         void sync();
-        void sync(String conflict);
+        void sync(Connection.ConflictResolution conflict);
         Collection getCol();
         void mediaCheck();
         void dismissAllDialogFragments();
@@ -47,6 +55,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +104,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
-                            activity.sync("upload");
+                            activity.sync(Connection.ConflictResolution.FULL_UPLOAD);
                             dismissAllDialogFragments();
                         })
                         .show();
@@ -106,7 +115,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
                             SyncErrorDialogListener activity = (SyncErrorDialogListener) getActivity();
-                            activity.sync("download");
+                            activity.sync(Connection.ConflictResolution.FULL_DOWNLOAD);
                             dismissAllDialogFragments();
                         })
                         .show();
@@ -127,7 +136,7 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                 return builder.positiveText(res().getString(R.string.dialog_positive_overwrite))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
-                            ((SyncErrorDialogListener) getActivity()).sync("upload");
+                            ((SyncErrorDialogListener) getActivity()).sync(Connection.ConflictResolution.FULL_UPLOAD);
                             dismissAllDialogFragments();
                         })
                         .show();
@@ -137,19 +146,28 @@ public class SyncErrorDialog extends AsyncDialogFragment {
                 return builder.positiveText(res().getString(R.string.dialog_positive_overwrite))
                         .negativeText(res().getString(R.string.dialog_cancel))
                         .onPositive((dialog, which) -> {
-                            ((SyncErrorDialogListener) getActivity()).sync("download");
+                            ((SyncErrorDialogListener) getActivity()).sync(Connection.ConflictResolution.FULL_DOWNLOAD);
                             dismissAllDialogFragments();
                         })
                         .show();
             }
             case DIALOG_MEDIA_SYNC_ERROR: {
                 return builder.positiveText(R.string.check_media)
-                        .negativeText(R.string.cancel)
+                        .negativeText(R.string.dialog_cancel)
                         .onPositive((dialog, which) -> {
                             ((SyncErrorDialogListener) getActivity()).mediaCheck();
                             dismissAllDialogFragments();
                         })
                         .show();
+            }
+            case DIALOG_SYNC_CORRUPT_COLLECTION: {
+                return
+                        builder.positiveText(R.string.dialog_ok)
+                        .neutralText(R.string.help)
+                        .onNeutral((dialog, which) -> ((AnkiActivity)(requireActivity())).openUrl(Uri.parse(getString(R.string.repair_deck))))
+                        .cancelable(false)
+                        .show();
+
             }
             default:
                 return null;
@@ -178,15 +196,13 @@ public class SyncErrorDialog extends AsyncDialogFragment {
      */
     @Override
     public String getNotificationTitle() {
-        switch (getArguments().getInt("dialogType")) {
-            case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-                return res().getString(R.string.sync_error);
-            default:
-                return getTitle();
+        if (getArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
+            return res().getString(R.string.sync_error);
         }
+        return getTitle();
     }
 
-
+    @Nullable
     private String getMessage() {
         switch (getArguments().getInt("dialogType")) {
             case DIALOG_USER_NOT_LOGGED_IN_SYNC:
@@ -196,13 +212,18 @@ public class SyncErrorDialog extends AsyncDialogFragment {
             case DIALOG_SYNC_CONFLICT_RESOLUTION:
                 return res().getString(R.string.sync_conflict_message);
             case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL:
-                return res().getString(R.string.sync_conflict_local_confirm);
-            case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE:
-                return res().getString(R.string.sync_conflict_remote_confirm);
             case DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL:
                 return res().getString(R.string.sync_conflict_local_confirm);
+            case DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE:
             case DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE:
                 return res().getString(R.string.sync_conflict_remote_confirm);
+            case DIALOG_SYNC_CORRUPT_COLLECTION: {
+                String syncMessage = getArguments().getString("dialogMessage");
+                String repairUrl = getString(R.string.repair_deck);
+                String dialogMessage = getString(R.string.sync_corrupt_database, repairUrl);
+                return DeckPicker.joinSyncMessages(dialogMessage, syncMessage);
+            }
+
             default:
                 return getArguments().getString("dialogMessage");
         }
@@ -216,12 +237,10 @@ public class SyncErrorDialog extends AsyncDialogFragment {
      */
     @Override
     public String getNotificationMessage() {
-        switch (getArguments().getInt("dialogType")) {
-            case DIALOG_USER_NOT_LOGGED_IN_SYNC:
-                return res().getString(R.string.not_logged_in_title);
-            default:
-                return getMessage();
+        if (getArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
+            return res().getString(R.string.not_logged_in_title);
         }
+        return getMessage();
     }
 
     @Override

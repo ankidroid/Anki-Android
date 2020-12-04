@@ -44,17 +44,13 @@
     <string name="sync_error">Sync error</string>
     <string name="vague_error">Error</string>
     <string name="retry">Prøv på nytt</string>
-    <string name="cancel">Avbryt</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Terms and conditions</a></string>
     <string name="menu_get_shared_decks">Få delte kortstokker</string>
     <string name="connection_error_message">Det oppstod en nettverksfeil.</string>
     <string name="not_logged_in_title">Log in to AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.java -->
     <string name="username">E-postadresse</string>
-    <string name="username_repeat">Gjenta e-postadresse</string>
     <string name="password">Passord</string>
-    <string name="password_repeat">Gjenta passord</string>
     <string name="log_in">Logg inn</string>
     <string name="sign_up_description">Har du ingen AnkiWeb-konto? Det er gratis!</string>
     <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">Invalid email address or password</string>
     <string name="reset_password">Reset password</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Søk</string>
     <string name="preferences_title">Innstillinger</string>
     <string name="deckpreferences_title">Options for XXX</string>
     <string name="sync_conflict_message">Kortstokkene dine her og på AnkiWeb er så ulike at de ikke kan slåes sammen, så kortstokkene på den ene siden må overskrives av kortstokkene fra den andre.\n\nVil du laste opp kortstokkene herfra, eller laste ned kortstokkene fra AnkiWeb?</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">Synkronisering</string>
     <string name="sync_downloading_media">Laster ned media %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Full synkronisering fra lokal</string>
-    <string name="sync_log_downloading_message">Full synkronisering fra serveren</string>
     <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, enhetens tidssone er muligens feil</string>
     <string name="sync_log_clocks_unsynchronized_date">, enhetens dato er muligens feil</string>
@@ -94,6 +88,7 @@
     <string name="sync_overwrite_error">Den valgte samlingen kunne ikke overskrives med den nedlastede filen.</string>
     <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
     <string name="sync_write_access_error">Den nedlastede filen kunne ikke lagres på SD-kortet. Enten er SD-kortet ditt skrivebeskyttet, eller så er det ikke nok plass.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Synkroniserer slettede...</string>
     <string name="sync_small_objects_message">Synkroniserer små objekter...</string>
     <string name="sync_finish_message">Avslutter synkronisering...</string>
@@ -115,6 +110,8 @@
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
     <string name="sync_media_error">Feil ved synkronisering av medie-data.</string>
     <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remote</string>
     <string name="force_full_sync_title">Force full sync</string>
@@ -129,7 +126,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

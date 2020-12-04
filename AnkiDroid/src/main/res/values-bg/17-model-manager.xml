@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">Управление на видове бележки</string>
-    <string name="model_editor_label">Управление на полета</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Управление на видове бележки</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Управление на полета</string>
     <!--Toasts-->
     <string name="toast_last_model">You cannot delete your last note type</string>
     <string name="toast_last_field">Типът на бележката трябва да има поне едно поле</string>
@@ -37,22 +37,21 @@
         <item quantity="one">%d бележка</item>
         <item quantity="other">%d бележки</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">Нов тип на бележка</string>
     <!--Browser-->
     <string name="model_browser_delete">Изтриване тип на бележка</string>
-    <string name="model_browser_rename">Преименуване</string>
-    <string name="model_browser_options">Настройки</string>
+    <string name="model_browser_rename" comment="Rename a note type">Преименуване</string>
     <string name="model_browser_template">Редактиране на карти</string>
     <string name="model_browser_add">Нов тип на бележка</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
+    <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Редактиране на полета</string>
     <string name="model_field_editor_add">Добавяне на поле</string>
     <string name="model_field_editor_delete">Изтриване на поле</string>
-    <string name="model_field_editor_options">Опции за поле</string>
     <string name="model_field_editor_rename">Преименуване на поле</string>
+    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Препозициониране на поле</string>
     <string name="model_field_editor_reposition">Препозициониране на поле (въведете стойност %1$d-%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
@@ -77,8 +76,6 @@
     <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
     <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">Cannot set Deck Override to a filtered deck</string>
     <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
     <string name="deck_picker_dialog_filter_decks">Filter decks</string>
 </resources>

@@ -19,12 +19,9 @@ package com.ichi2.anki.tests.libanki;
 import android.Manifest;
 import android.os.Build;
 
-import androidx.test.filters.SdkSuppress;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.GrantPermissionRule;
-
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.exception.ImportExportException;
+import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.anki.tests.Shared;
 import com.ichi2.anki.testutil.TestEnvironment;
 import com.ichi2.libanki.Collection;
@@ -34,7 +31,6 @@ import com.ichi2.libanki.Note;
 import com.ichi2.libanki.importer.Anki2Importer;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.importer.Importer;
-
 import com.ichi2.libanki.importer.NoteImporter;
 import com.ichi2.libanki.importer.TextImporter;
 import com.ichi2.utils.JSONException;
@@ -54,6 +50,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.test.filters.SdkSuppress;
+import androidx.test.rule.GrantPermissionRule;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
@@ -62,7 +61,7 @@ import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("deprecation")
 @RunWith(androidx.test.runner.AndroidJUnit4.class)
-public class ImportTest {
+public class ImportTest extends InstrumentedTest {
 
     private Collection testCol;
 
@@ -86,7 +85,7 @@ public class ImportTest {
 
     @Before
     public void setUp() throws IOException {
-        testCol = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        testCol = getEmptyCol();
     }
 
     @After
@@ -96,8 +95,6 @@ public class ImportTest {
 
     @Test
     public void testAnki2Mediadupes() throws IOException, JSONException, ImportExportException {
-        List<String> expected;
-        List<String> actual;
 
         // add a note that references a sound
         Note n = testCol.newNote();
@@ -105,17 +102,16 @@ public class ImportTest {
         long mid = n.model().getLong("id");
         testCol.addNote(n);
         // add that sound to the media folder
-        FileOutputStream os;
-        os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.mp3"), false);
+        FileOutputStream os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.mp3"), false);
         os.write("foo".getBytes());
         os.close();
         testCol.close();
         // it should be imported correctly into an empty deck
-        Collection empty = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        Collection empty = getEmptyCol();
         Importer imp = new Anki2Importer(empty, testCol.getPath());
         imp.run();
-        expected = Collections.singletonList("foo.mp3");
-        actual = Arrays.asList(new File(empty.getMedia().dir()).list());
+        List<String> expected = Collections.singletonList("foo.mp3");
+        List<String> actual = Arrays.asList(new File(empty.getMedia().dir()).list());
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
         // and importing again will not duplicate, as the file content matches
@@ -159,13 +155,11 @@ public class ImportTest {
 
     @Test
     public void testApkg() throws IOException, ImportExportException {
-        List<String> expected;
-        List<String> actual;
 
-        String apkg = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "media.apkg");
+        String apkg = Shared.getTestFilePath(getTestContext(), "media.apkg");
         Importer imp = new AnkiPackageImporter(testCol, apkg);
-        expected = Collections.emptyList();
-        actual = Arrays.asList(new File(testCol.getMedia().dir()).list());
+        List<String> expected = Collections.emptyList();
+        List<String> actual = Arrays.asList(new File(testCol.getMedia().dir()).list());
         actual.retainAll(expected);
         assertEquals(actual.size(), expected.size());
         imp.run();
@@ -183,8 +177,7 @@ public class ImportTest {
         assertEquals(expected.size(), actual.size());
         // but if the local file has different data, it will rename
         testCol.remCards(testCol.getDb().queryLongList("select id from cards"));
-        FileOutputStream os;
-        os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.wav"), false);
+        FileOutputStream os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.wav"), false);
         os.write("xyz".getBytes());
         os.close();
         imp = new AnkiPackageImporter(testCol, apkg);
@@ -197,12 +190,12 @@ public class ImportTest {
         // different from the above as this one tests only the template text being
         // changed, not the number of cards/fields
         // import the first version of the model
-        String tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "diffmodeltemplates-1.apkg");
+        String tmp = Shared.getTestFilePath(getTestContext(), "diffmodeltemplates-1.apkg");
         AnkiPackageImporter imp = new AnkiPackageImporter(testCol, tmp);
         imp.setDupeOnSchemaChange(true);
         imp.run();
         // then the version with updated template
-        tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "diffmodeltemplates-2.apkg");
+        tmp = Shared.getTestFilePath(getTestContext(), "diffmodeltemplates-2.apkg");
         imp = new AnkiPackageImporter(testCol, tmp);
         imp.setDupeOnSchemaChange(true);
         imp.run();
@@ -217,7 +210,7 @@ public class ImportTest {
     @Test
     public void testAnki2Updates() throws IOException, ImportExportException {
         // create a new empty deck
-        String tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "update1.apkg");
+        String tmp = Shared.getTestFilePath(getTestContext(), "update1.apkg");
         AnkiPackageImporter imp = new AnkiPackageImporter(testCol, tmp);
         imp.run();
         assertEquals(0, imp.getDupes());
@@ -232,7 +225,7 @@ public class ImportTest {
         // importing a newer note should update
         assertEquals(1, testCol.noteCount());
         assertTrue(testCol.getDb().queryString("select flds from notes").startsWith("hello"));
-        tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "update2.apkg");
+        tmp = Shared.getTestFilePath(getTestContext(), "update2.apkg");
         imp = new AnkiPackageImporter(testCol, tmp);
         imp.run();
         assertEquals(1, imp.getDupes());
@@ -244,7 +237,7 @@ public class ImportTest {
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void testCsv() throws IOException {
-        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-2fields.txt");
+        String file = Shared.getTestFilePath(getTestContext(), "text-2fields.txt");
         TextImporter i = new TextImporter(testCol, file);
         i.initMapping();
         i.run();
@@ -313,7 +306,7 @@ public class ImportTest {
         n.setField(2, "3");
         testCol.addNote(n);
         // an update with unmapped fields should not clobber those fields
-        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-update.txt");
+        String file = Shared.getTestFilePath(getTestContext(), "text-update.txt");
         TextImporter i = new TextImporter(testCol, file);
         i.initMapping();
         i.run();
@@ -325,7 +318,7 @@ public class ImportTest {
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void testCsvWithByteOrderMark() throws IOException {
-        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-utf8-bom.txt");
+        String file = Shared.getTestFilePath(getTestContext(), "text-utf8-bom.txt");
         TextImporter i = new TextImporter(testCol, file);
         i.initMapping();
         i.run();
@@ -338,7 +331,7 @@ public class ImportTest {
     @Ignore("Not yet handled")
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void testUcs2CsvWithByteOrderMark() throws IOException {
-        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-ucs2-be-bom.txt");
+        String file = Shared.getTestFilePath(getTestContext(), "text-ucs2-be-bom.txt");
         TextImporter i = new TextImporter(testCol, file);
         i.initMapping();
         i.run();
@@ -349,7 +342,7 @@ public class ImportTest {
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void csvManualBasicExample() throws IOException, ConfirmModSchemaException {
-        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-anki-manual-csv-single-line.txt");
+        String file = Shared.getTestFilePath(getTestContext(), "text-anki-manual-csv-single-line.txt");
         addFieldToCurrentModel("Third");
         TextImporter i = new TextImporter(testCol, file);
         i.setAllowHtml(true);
@@ -363,7 +356,7 @@ public class ImportTest {
     @Test
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
     public void csvManualLineBreakExample() throws IOException {
-        String file = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "text-anki-manual-csv-multi-line.txt");
+        String file = Shared.getTestFilePath(getTestContext(), "text-anki-manual-csv-multi-line.txt");
         TextImporter i = new TextImporter(testCol, file);
         i.setAllowHtml(true);
         i.initMapping();
@@ -379,10 +372,10 @@ public class ImportTest {
     @Test
     public void testDupeIgnore() throws IOException, ImportExportException {
         // create a new empty deck
-        String tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "update1.apkg");
+        String tmp = Shared.getTestFilePath(getTestContext(), "update1.apkg");
         AnkiPackageImporter imp = new AnkiPackageImporter(testCol, tmp);
         imp.run();
-        tmp = Shared.getTestFilePath(InstrumentationRegistry.getInstrumentation().getTargetContext(), "update3.apkg");
+        tmp = Shared.getTestFilePath(getTestContext(), "update3.apkg");
         imp = new AnkiPackageImporter(testCol, tmp);
         imp.run();
         // there is a dupe, but it was ignored

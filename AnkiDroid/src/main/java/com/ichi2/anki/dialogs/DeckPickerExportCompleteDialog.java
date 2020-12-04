@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.R;
-import com.ichi2.compat.CompatHelper;
 
 import java.io.File;
+
+import androidx.annotation.NonNull;
 
 public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
     
@@ -23,6 +23,7 @@ public class DeckPickerExportCompleteDialog extends AsyncDialogFragment {
     }
 
 
+    @NonNull
     @Override
     public MaterialDialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

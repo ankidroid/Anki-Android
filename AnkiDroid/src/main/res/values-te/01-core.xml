@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">డెక్స్</string>
-    <string name="card_browser">కార్డ్ బ్రౌజర్</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">కార్డ్ బ్రౌజర్</string>
     <string name="statistics">గణాంకాలు</string>
     <string name="settings">సెట్టింగులు</string>
     <string name="help">సహాయం</string>
     <string name="send_feedback">స్పందన పంపండి</string>
-    <string name="studyoptions_title">డెక్ అవలోకనం</string>
     <string name="studyoptions_due_today">నేడు గడువు:</string>
     <string name="studyoptions_new_total">అన్ని కొత్త కార్డులు:</string>
     <string name="studyoptions_total_cards">మొత్తం కార్డులు:</string>
@@ -71,6 +71,8 @@
         <item quantity="one">%d day %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">అధ్యయనం %1$d కార్డు లో %2$s నేడు</item>
@@ -79,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">సమాధానం టైప్</string>
     <string name="show_answer">సమాధానం చూపించు</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">మళ్ళీ</string>
     <string name="ease_button_hard">హార్డ్</string>
     <string name="ease_button_good">గుడ్</string>
@@ -87,22 +90,14 @@
     <string name="menu_import">దిగుమతి</string>
     <string name="undo">చెరచు</string>
     <string name="undo_action_review">చివరి సమీక్ష</string>
-    <string name="undo_action_bury_card">గమనిక బరీ</string>
-    <string name="undo_action_bury_note">బరీ గమనిక</string>
-    <string name="undo_action_suspend_card">కార్డ్ను ఆపివేయి</string>
-    <string name="undo_action_suspend_note">గమనికని ఆపివేయి</string>
-    <string name="undo_action_delete">గమనికను తొలగించండి</string>
-    <string name="undo_action_delete_multi">delete notes</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">త్రవ్వితీయు</string>
     <string name="rename_deck">పేరు మార్చండి</string>
-    <string name="menu_add">చేర్చు</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">చేర్చు</string>
     <string name="menu_add_note">గమనిక చేర్చు</string>
-    <string name="menu_my_account">ఖాతాను సమకాలీకరించండి</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ఖాతాను సమకాలీకరించండి</string>
     <string name="menu_dismiss_note">దాచు / తొలగించు</string>
     <string name="menu_bury_card">గమనిక బరీ</string>
     <string name="menu_bury_note">బరీ గమనిక</string>
@@ -126,7 +121,7 @@
     <string name="menu_unmark_note">గమనిక నుండి గుర్తు తీసివేయండి</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">ఒక డెక్ సృష్టించండి</string>
-    <string name="create">సృష్టించు</string>
+    <string name="create" comment="Button to create a filtered deck">సృష్టించు</string>
     <string name="new_dynamic_deck">ఫిల్టర్ డెక్ను సృష్టించండి</string>
     <string name="night_mode">రాత్రి మోడ్</string>
     <string name="directory_inaccessible">AnkiDroid డైరెక్టరీ అందుబాటులో లేదు</string>
@@ -151,11 +146,11 @@
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">క్రామ్ డెక్ పునర్నిర్మాణం&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">పునర్నిర్మాణం</string>
     <string name="empty_cram_label">ఖాళీ</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">ఖాళీ క్రామ్ డెక్&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">కస్టమ్ అధ్యయనం సెషన్</string>
     <string name="custom_study_deck_exists">మొదటి సానుకూల అధ్యయనం డెక్ యొక్క పేరు మార్చండి</string>
     <string name="empty_deck">ఈ డెక్ ఖాళీగా ఉంది</string>
@@ -184,7 +179,6 @@
     <string name="card_template_editor_front">ముందు టెంప్లేట్</string>
     <string name="card_template_editor_back">బ్యాక్ టెంప్లేట్</string>
     <string name="card_template_editor_styling">స్టైలింగ్</string>
-    <string name="card_template_editor_menu_delete">తొలగించు</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">కనీసం ఒక కార్డు రకం అవసరం</string>
@@ -198,11 +192,12 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid డేటాబేస్కు చదవండి మరియు వ్రాయండి</string>
     <string name="read_write_permission_description">పొందు ప్రస్తుతం ఉన్న గమనికలు, కార్డులు, నోట్ రకాలు మరియు డెక్స్, కొత్త వాటిని సృష్టించడం</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

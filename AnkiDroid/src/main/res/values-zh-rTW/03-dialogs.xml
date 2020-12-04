@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">檢查資料庫？</string>
     <string name="check_db_warning">這可能會花上好一段時間</string>
     <string name="check_db_acknowledge">資料庫已檢查</string>
@@ -59,7 +59,7 @@
         <item><![CDATA[非開發者亦可提供幫助。例如，你可以<a href=\"%1$s\">幫助翻譯</a>AnkiDroid、更新wiki、提供螢幕截圖，或撰寫關於 AnkiDroid 的博客。]]></item>
         <item><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GNU-GPL v3 授權</a> 下釋出，而且你可在 <a href=\"%2$s\">GitHub</a> 上取得其程式碼。]]></item>
     </string-array>
-    <string name="preview_title">預覽</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">預覽</string>
     <string name="reposition_card_dialog_title">變更新卡片位置</string>
     <string name="reposition_card_dialog_message">開始位置：</string>
     <string name="reposition_card_not_new_error">只有新卡片可以變更位置</string>
@@ -72,7 +72,6 @@
         <item quantity="other">%d 卡片已重設</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">重置卡片進度</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="other">重置卡片</item>
     </plurals>
@@ -83,30 +82,27 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d 卡片已重置</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">一張新卡片正在重新排程。重新排程也會將新卡片變為複習卡。使用選項「變更位置」來變更一張新卡片的新排序位置</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">重新排程也會重設排程對卡片未來的影響改變（間格倍數會被設為%d%%）</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">選擇你的檔案管理器中的牌組，或訪問 about:downloads 頁面以匯入</string>
     <string name="answering_error_title">資料庫錯誤</string>
     <string name="answering_error_message">寫入資料庫時發生錯誤。可能是資料庫毀損或是記憶卡空間不足。\n\n如果這經常發生的話，請嘗試檢查資料庫，修復你的收藏或從備份中還原。\n當然這也可能是 AnkiDroid 的程式錯誤，請回報錯誤讓我們知道。</string>
     <string name="answering_error_report">回報錯誤</string>
     <string name="repair_deck_dialog">你真的想要修復資料庫嗎？\n\n在開始修復之前，會先複製一份備份檔案放置於資料夾\'%s\'中。</string>
-    <string name="intent_add_saved_information">儲存的資料</string>
-    <string name="intent_add_clear_all">全部清除</string>
     <string name="intent_aedict_empty">\'default\'類別是空的</string>
     <string name="intent_aedict_category">若要增加新卡片至 AnkiDroid，刪除所有的記事本類別或新增一個 \'default\' 牌組</string>
     <string name="custom_study_new_total_new">牌組的新卡片：%d</string>
     <string name="custom_study_rev_total_rev">牌組中複習到期的卡片：%d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">將今天的新卡片上限新增/減少(“-3”)</string>
+    <string name="custom_study_rev_extend">將今天的複習卡片上限新增/減少(“-3”)</string>
     <string name="custom_study_forgotten">過去 x 天內忘記的複習卡:</string>
     <string name="custom_study_ahead">提早複習 x 天:</string>
     <string name="custom_study_random">隨機選擇 x 張卡片，從牌組:</string>
     <string name="custom_study_preview">預覽過去 x 天新增的卡片:</string>
     <string name="custom_study_rebuild_deck_corrupt">無法重構自訂學習牌組</string>
-    <string name="rebuild_custom_study_deck">重建自訂學習的牌組。\n請稍後...</string>
     <string name="importing_collection">匯入收藏中&#8230;</string>
     <string name="import_media_count">匯入媒體檔案 %1$d%%\n 請稍後......</string>
-    <string name="import_progress">正在匯入筆記: %1$d%%\n• 正在匯入卡片: %2$d%%\n• 正在後期處理: %3$d%%</string>
+    <string name="import_progress">• 正在匯入筆記: %1$d%%\n• 正在匯入卡片: %2$d%%\n• 正在後期處理: %3$d%%</string>
     <string name="import_update_details">現有筆記%2$d條，已更新%1$d條。</string>
     <string name="import_update_ignored">忽略了某些更新，因為這些筆記的類型已改變</string>
     <string name="import_complete_count">卡片已匯入：%d</string>
@@ -118,9 +114,10 @@
     <string name="dialog_ok">確定</string>
     <string name="dialog_no">否</string>
     <string name="dialog_continue">繼續</string>
-    <string name="dialog_positive_create">新增</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">新增</string>
     <string name="dialog_positive_delete">刪除</string>
-    <string name="dialog_positive_disable">關閉</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">關閉</string>
     <string name="dialog_positive_overwrite">覆蓋</string>
     <string name="dialog_positive_remove">移除</string>
     <string name="dialog_positive_repair">修復</string>
@@ -141,13 +138,18 @@
     <string name="check_media_no_unused_missing">沒有發現任何未使用或是遺失的檔案</string>
     <string name="check_media_db_updated">重建媒體資料庫</string>
     <string name="check_media_delete_unused">刪除未使用的</string>
-    <string name="check_media_deleted">已刪除的檔案：%d</string>
+    <string name="delete_media_message">刪除媒體中&#8230;</string>
+    <string name="delete_media_result_title">克漏字結果</string>
+    <plurals name="delete_media_result_message">
+        <item quantity="other">%d 檔案已刪除</item>
+    </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">所有卡片</string>
     <string name="tags_dialog_option_new_cards">新增</string>
-    <string name="tags_dialog_option_due_cards">到期</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">到期</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">正在搜尋空白卡片&#8230;&#8230;</string>
+    <string name="confirm_cancel">是否取消？</string>
     <string name="empty_cards_none">沒有空白卡片</string>
     <string name="empty_cards_count">將要刪除卡片：%d</string>
     <string name="empty_cards_deleted">已刪除卡片：%d</string>
@@ -164,7 +166,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Ankidroid 已更新</string>
     <string name="integrity_check_startup_content">AnkiDroid 已更新，此更新包含修復潛在的資料庫問題，而我們建議您現在執行檢查資料庫。</string>
-    <string name="integrity_check_positive">檢查資料庫</string>
     <string name="integrity_check_continue_anyway">仍要繼續</string>
     <string name="integrity_check_insufficient_space">檢查資料庫將使用大量暫存。\n\n強烈推薦您在繼續前保證裝置上至少擁有 %s 閒置空間。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n你當前擁有 %s 空閒。</string>
@@ -179,6 +180,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">資料庫已鎖定</string>
     <string name="database_locked_summary">AnkiDroid 的資料庫正在被其他應用程式使用中。請關閉其他程式再重新開啟 AnkiDroid。</string>
+    <string name="incompatible_database_version_title">不相容的資料庫版本</string>
+    <string name="incompatible_database_version_summary">該資料庫比此版本的 AnkiDroid 可以使用的更高。升級 AnkiDroid 或降級資料庫以開啟它\n\n支援的版本：%1$d\n資料庫版本：%2$d\n\n以下還原選項將覆蓋您當前的收藏，通過使用可能相容的資料庫版本：</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">背景圖像已套用</string>
     <string name="background_image_removed">背景圖像已移除</string>
@@ -196,8 +199,30 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">排定提醒失敗</string>
     <string name="boot_service_too_many_notifications">已設定太多提醒。部分將不會出現</string>
+    <!-- Locale Selection Dialog -->
+    <string name="locale_selection_dialog_title">鍵盤提示選擇</string>
+    <string name="locale_selection_dialog_summary">有些多國語言鍵盤，想是GBoard支援編輯文字時切換語言。\n\n如果您的鍵盤不會切換語言，句請請求您的鍵盤開發人員提供「setImeHintLocales」功能。</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other">%d秒後可執行自動同步</item>
     </plurals>
 </resources>

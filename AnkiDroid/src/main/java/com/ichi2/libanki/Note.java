@@ -23,6 +23,7 @@ import android.util.Pair;
 
 import com.ichi2.utils.JSONObject;
 
+import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -71,7 +72,7 @@ public class Note implements Cloneable {
             mId = id;
             load();
         } else {
-            mId = Utils.timestampID(mCol.getDb(), "notes");
+            mId = mCol.getTime().timestampID(mCol.getDb(), "notes");
             mGuId = Utils.guid64();
             mModel = model;
             mMid = model.getLong("id");
@@ -80,7 +81,7 @@ public class Note implements Cloneable {
             Arrays.fill(mFields, "");
             mFlags = 0;
             mData = "";
-            mFMap = mCol.getModels().fieldMap(mModel);
+            mFMap = Models.fieldMap(mModel);
             mScm = mCol.getScm();
         }
     }
@@ -88,8 +89,8 @@ public class Note implements Cloneable {
 
     public void load() {
         Timber.d("load()");
-        try (Cursor cursor = mCol.getDb().getDatabase()
-                .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = " + mId, null)) {
+        try (Cursor cursor = mCol.getDb()
+                .query("SELECT guid, mid, mod, usn, tags, flds, flags, data FROM notes WHERE id = ?", mId)) {
             if (!cursor.moveToFirst()) {
                 throw new WrongId(mId, "note");
             }
@@ -102,7 +103,7 @@ public class Note implements Cloneable {
             mFlags = cursor.getInt(6);
             mData = cursor.getString(7);
             mModel = mCol.getModels().get(mMid);
-            mFMap = mCol.getModels().fieldMap(mModel);
+            mFMap = Models.fieldMap(mModel);
             mScm = mCol.getScm();
         }
     }
@@ -129,7 +130,8 @@ public class Note implements Cloneable {
         if (changeUsn) {
             mUsn = mCol.usn();
         }
-        String sfld = Utils.stripHTMLMedia(mFields[mCol.getModels().sortIdx(mModel)]);
+        Pair<String, Long> csumAndStrippedFieldField = Utils.sfieldAndCsum(mFields, getCol().getModels().sortIdx(mModel));
+        String sfld = csumAndStrippedFieldField.first;
         String tags = stringTags();
         String fields = joinedFields();
         if (mod == null && mCol.getDb().queryScalar(
@@ -137,8 +139,8 @@ public class Note implements Cloneable {
                 Long.toString(mId), tags, fields) > 0) {
             return;
         }
-        long csum = Utils.fieldChecksum(mFields[0]);
-        mMod = mod != null ? mod : Utils.intTime();
+        long csum = csumAndStrippedFieldField.second;
+        mMod = mod != null ? mod : mCol.getTime().intTime();
         mCol.getDb().execute("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
                 mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData);
         mCol.getTags().register(mTags);
@@ -272,6 +274,10 @@ public class Note implements Cloneable {
         mTags.add(tag);
     }
 
+    public void addTags(AbstractSet<String> tags) {
+        mTags.addAll(tags);
+    }
+
 
     /**
      * Unique/duplicate check
@@ -292,13 +298,15 @@ public class Note implements Cloneable {
         if (val.trim().length() == 0) {
             return DupeOrEmpty.EMPTY;
         }
-        long csum = Utils.fieldChecksum(val);
+        Pair<String, Long> csumAndStrippedFieldField = Utils.sfieldAndCsum(mFields, 0);
+        long csum = csumAndStrippedFieldField.second;
         // find any matching csums and compare
+        String strippedFirstField = csumAndStrippedFieldField.first;
         for (String flds : mCol.getDb().queryStringList(
                 "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
-                csum, (mId != 0 ? mId : 0), mMid)) {
+                csum, (mId), mMid)) {
             if (Utils.stripHTMLMedia(
-                    Utils.splitFields(flds)[0]).equals(Utils.stripHTMLMedia(mFields[0]))) {
+                    Utils.splitFields(flds)[0]).equals(strippedFirstField)) {
                 return DupeOrEmpty.DUPE;
             }
         }
@@ -324,7 +332,7 @@ public class Note implements Cloneable {
      */
     private void _postFlush() {
         if (!mNewlyAdded) {
-            mCol.genCards(new long[] { mId });
+            mCol.genCards(mId, mModel);
         }
     }
 

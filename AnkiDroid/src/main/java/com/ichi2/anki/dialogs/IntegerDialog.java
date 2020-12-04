@@ -39,7 +39,7 @@ public class IntegerDialog extends AnalyticsDialogFragment {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
                 .title(getArguments().getString("title"))
                 .positiveText(getResources().getString(R.string.dialog_ok))
-                .negativeText(R.string.cancel)
+                .negativeText(R.string.dialog_cancel)
                 .inputType(InputType.TYPE_CLASS_NUMBER)
                 .inputRange(1, getArguments().getInt("digits"))
                 .input(getArguments().getString("prompt"), "",

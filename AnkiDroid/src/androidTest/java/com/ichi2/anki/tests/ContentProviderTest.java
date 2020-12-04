@@ -25,7 +25,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 import android.util.Log;
 
@@ -50,7 +49,6 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,6 +59,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -121,14 +122,11 @@ public class ContentProviderTest extends InstrumentedTest {
     /* initialCapacity set to expected value when the test is written.
      * Should create no problem if we forget to change it when more tests are added.
      */
-    private List<Long> mTestDeckIds = new ArrayList<>(TEST_DECKS.length + 1);
+    private final List<Long> mTestDeckIds = new ArrayList<>(TEST_DECKS.length + 1);
     private ArrayList<Uri> mCreatedNotes;
     private long mModelId = 0;
     private String[] mDummyFields = new String[1];
 
-    private Collection getCol() {
-        return CollectionHelper.getInstance().getCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
-    }
     /**
      * Initially create one note for each model.
      */
@@ -192,7 +190,7 @@ public class ContentProviderTest extends InstrumentedTest {
             newNote.setField(idx, fields[idx]);
         }
         newNote.addTag(tag);
-        assertTrue("At least one card added for note", col.addNote(newNote) >= 1);
+        assertThat("At least one card added for note", col.addNote(newNote), is(greaterThanOrEqualTo(1)));
         for (Card c: newNote.cards()) {
             c.setDid(did);
             c.flush();
@@ -247,7 +245,7 @@ public class ContentProviderTest extends InstrumentedTest {
     @Test
     public void testInsertAndRemoveNote() {
         // Get required objects for test
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         // Add the note
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Note.MID, mModelId);
@@ -282,7 +280,7 @@ public class ContentProviderTest extends InstrumentedTest {
     @Test
     public void testInsertTemplate() throws Exception {
         // Get required objects for test
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         Collection col = getCol();
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
@@ -320,7 +318,7 @@ public class ContentProviderTest extends InstrumentedTest {
     @Test
     public void testInsertField() throws Exception {
         // Get required objects for test
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         Collection col = getCol();
         Model model = StdModels.basicModel.add(col, BASIC_MODEL_NAME);
         long modelId = model.getLong("id");
@@ -350,7 +348,7 @@ public class ContentProviderTest extends InstrumentedTest {
     @Test
     public void testQueryDirectSqlQuery() {
         // search for correct mid
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         Cursor cursor = cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, String.format("mid=%d", mModelId), null, null);
         assertNotNull(cursor);
         try {
@@ -376,7 +374,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testQueryNoteIds() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         // Query all available notes
         final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null);
         assertNotNull(allNotesCursor);
@@ -413,7 +411,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testQueryNotesProjection() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         // Query all available notes
         for (int i = 0; i < FlashCardsContract.Note.DEFAULT_PROJECTION.length; i++) {
             String[] projection = removeFromProjection(FlashCardsContract.Note.DEFAULT_PROJECTION, i);
@@ -450,7 +448,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testUpdateNoteFields() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         ContentValues cv = new ContentValues();
         // Change the fields so that the first field is now "newTestValue"
         String[] dummyFields2 = mDummyFields.clone();
@@ -477,7 +475,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testInsertAndUpdateModel() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         ContentValues cv = new ContentValues();
         // Insert a new model
         cv.put(FlashCardsContract.Model.NAME, TEST_MODEL_NAME);
@@ -501,7 +499,7 @@ public class ContentProviderTest extends InstrumentedTest {
             // Test updating the model CSS (to test updating MODELS_ID Uri)
             cv = new ContentValues();
             cv.put(FlashCardsContract.Model.CSS, TEST_MODEL_CSS);
-            assertTrue(cr.update(modelUri, cv, null, null) > 0);
+            assertThat(cr.update(modelUri, cv, null, null), is(greaterThan(0)));
             col = reopenCol();
             model = col.getModels().get(mid);
             assertNotNull("Check model", model);
@@ -515,7 +513,7 @@ public class ContentProviderTest extends InstrumentedTest {
                 cv.put(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT, TEST_MODEL_QFMT[i]);
                 cv.put(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT, TEST_MODEL_AFMT[i]);
                 Uri tmplUri = Uri.withAppendedPath(Uri.withAppendedPath(modelUri, "templates"), Integer.toString(i));
-                assertTrue("Update rows", cr.update(tmplUri, cv, null, null) > 0);
+                assertThat("Update rows", cr.update(tmplUri, cv, null, null), is(greaterThan(0)));
                 col = reopenCol();
                 model = col.getModels().get(mid);
                 assertNotNull("Check model", model);
@@ -544,12 +542,12 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testQueryAllModels() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         // Query all available models
         final Cursor allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
         assertNotNull(allModels);
         try {
-            assertTrue("Check that there is at least one result", allModels.getCount() > 0);
+            assertThat("Check that there is at least one result", allModels.getCount(), is(greaterThan(0)));
             while (allModels.moveToNext()) {
                 long modelId = allModels.getLong(allModels.getColumnIndex(FlashCardsContract.Model._ID));
                 Uri modelUri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, Long.toString(modelId));
@@ -562,9 +560,9 @@ public class ContentProviderTest extends InstrumentedTest {
                     String nameFromModel = singleModel.getString(allModels.getColumnIndex(FlashCardsContract.Model.NAME));
                     assertEquals("Check that model names are the same", nameFromModel, nameFromModels);
                     String flds = allModels.getString(allModels.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES));
-                    assertTrue("Check that valid number of fields", Utils.splitFields(flds).length >= 1);
+                    assertThat("Check that valid number of fields", Utils.splitFields(flds).length, is(greaterThanOrEqualTo(1)));
                     int numCards = allModels.getInt(allModels.getColumnIndex(FlashCardsContract.Model.NUM_CARDS));
-                    assertTrue("Check that valid number of cards", numCards >= 1);
+                    assertThat("Check that valid number of cards", numCards, is(greaterThanOrEqualTo(1)));
                 } finally {
                     singleModel.close();
                 }
@@ -579,7 +577,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testMoveCardsToOtherDeck() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         // Query all available notes
         final Cursor allNotesCursor = cr.query(FlashCardsContract.Note.CONTENT_URI, null, "tag:" + TEST_TAG, null, null);
         assertNotNull(allNotesCursor);
@@ -592,7 +590,7 @@ public class ContentProviderTest extends InstrumentedTest {
                 final Cursor cardsCursor = cr.query(cardsUri, null, null, null, null);
                 assertNotNull("Check that there is a valid cursor after query for cards", cardsCursor);
                 try {
-                    assertTrue("Check that there is at least one result for cards", cardsCursor.getCount() > 0);
+                    assertThat("Check that there is at least one result for cards", cardsCursor.getCount(), is(greaterThan(0)));
                     while (cardsCursor.moveToNext()) {
                         long targetDid = mTestDeckIds.get(0);
                         // Move to test deck (to test NOTES_ID_CARDS_ORD Uri)
@@ -622,7 +620,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testQueryCurrentModel() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         Uri uri = Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, FlashCardsContract.Model.CURRENT_MODEL_ID);
         final Cursor modelCursor = cr.query(uri, null, null, null, null);
         assertNotNull(modelCursor);
@@ -643,7 +641,7 @@ public class ContentProviderTest extends InstrumentedTest {
      */
     @Test
     public void testUnsupportedOperations() {
-        final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        final ContentResolver cr = getContentResolver();
         ContentValues dummyValues = new ContentValues();
         Uri[] updateUris = {
                 // Can't update most tables in bulk -- only via ID
@@ -728,7 +726,7 @@ public class ContentProviderTest extends InstrumentedTest {
         Collection col = getCol();
         Decks decks = col.getDecks();
 
-        Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver()
+        Cursor decksCursor = getContentResolver()
                 .query(FlashCardsContract.Deck.CONTENT_ALL_URI, FlashCardsContract.Deck.DEFAULT_PROJECTION, null, null, null);
 
         assertNotNull(decksCursor);
@@ -756,7 +754,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
         long deckId = mTestDeckIds.get(0);
         Uri deckUri = Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, Long.toString(deckId));
-        try (Cursor decksCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(deckUri, null, null, null, null)) {
+        try (Cursor decksCursor = getContentResolver().query(deckUri, null, null, null, null)) {
             if (decksCursor == null || !decksCursor.moveToFirst()) {
                 fail("No deck received. Should have delivered deck with id " + deckId);
             } else {
@@ -778,7 +776,7 @@ public class ContentProviderTest extends InstrumentedTest {
         Collection col = getCol();
         AbstractSched sched = col.getSched();
 
-        Cursor reviewInfoCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(
+        Cursor reviewInfoCursor = getContentResolver().query(
                 FlashCardsContract.ReviewInfo.CONTENT_URI, null, null, null, null);
         assertNotNull(reviewInfoCursor);
         assertEquals("Check that we actually received one card", 1, reviewInfoCursor.getCount());
@@ -790,7 +788,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
         Card nextCard = null;
         for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
-            sched.reset();
+            col.reset();
             nextCard = sched.getCard();
             if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
         }
@@ -813,7 +811,7 @@ public class ContentProviderTest extends InstrumentedTest {
         long selectedDeckBeforeTest = col.getDecks().selected();
         col.getDecks().select(1); //select Default deck
 
-        Cursor reviewInfoCursor = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver().query(
+        Cursor reviewInfoCursor = getContentResolver().query(
                 FlashCardsContract.ReviewInfo.CONTENT_URI, null, deckSelector, deckArguments, null);
         assertNotNull(reviewInfoCursor);
         assertEquals("Check that we actually received one card", 1, reviewInfoCursor.getCount());
@@ -826,7 +824,7 @@ public class ContentProviderTest extends InstrumentedTest {
             col.getDecks().select(deckToTest);
             Card nextCard = null;
             for(int i = 0; i < 10; i++) {//minimizing fails, when sched.reset() randomly chooses between multiple cards
-                sched.reset();
+                col.reset();
                 nextCard = sched.getCard();
                 if(nextCard.note().getId() == noteID && nextCard.getOrd() == cardOrd)break;
             }
@@ -846,7 +844,7 @@ public class ContentProviderTest extends InstrumentedTest {
     @Test
     public void testSetSelectedDeck(){
         long deckId = mTestDeckIds.get(0);
-        ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        ContentResolver cr = getContentResolver();
         Uri selectDeckUri = FlashCardsContract.Deck.CONTENT_SELECTED_URI;
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Deck.DECK_ID, deckId);
@@ -858,7 +856,7 @@ public class ContentProviderTest extends InstrumentedTest {
     private Card getFirstCardFromScheduler(Collection col) {
         long deckId = mTestDeckIds.get(0);
         col.getDecks().select(deckId);
-        col.getSched().reset();
+        col.reset();
         return col.getSched().getCard();
     }
     /**
@@ -873,7 +871,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // the card starts out being new
         assertEquals("card is initial new", Consts.CARD_TYPE_NEW, card.getQueue());
 
-        ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        ContentResolver cr = getContentResolver();
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
@@ -888,7 +886,7 @@ public class ContentProviderTest extends InstrumentedTest {
         int updateCount = cr.update(reviewInfoUri, values, null, null);
         assertEquals("Check if update returns 1", 1, updateCount);
         try { Thread.currentThread().wait(500); } catch (Exception e) {/* do nothing */}
-        col.getSched().reset();
+        col.reset();
         Card newCard = col.getSched().getCard();
         if(newCard != null){
             if(newCard.note().getId() == card.note().getId() && newCard.getOrd() == card.getOrd()){
@@ -921,7 +919,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
         // bury it through the API
         // -----------------------
-        ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        ContentResolver cr = getContentResolver();
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
@@ -967,7 +965,7 @@ public class ContentProviderTest extends InstrumentedTest {
 
         // suspend it through the API
         // --------------------------
-        ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        ContentResolver cr = getContentResolver();
         Uri reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI;
         ContentValues values = new ContentValues();
         long noteId = card.note().getId();
@@ -991,7 +989,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // --------------------------------------
 
         col.getSched().unsuspendCards(new long[]{cardId});
-        col.getSched().reset();
+        col.reset();
     }
 
 
@@ -1018,7 +1016,7 @@ public class ContentProviderTest extends InstrumentedTest {
         // -----------
         String tag2 = "mynewtag";
 
-        ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+        ContentResolver cr = getContentResolver();
         Uri updateNoteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, Long.toString(noteId));
         ContentValues values = new ContentValues();
         values.put(FlashCardsContract.Note.TAGS, TEST_TAG + " " + tag2);
@@ -1046,7 +1044,7 @@ public class ContentProviderTest extends InstrumentedTest {
          col.getModels().all().get(0).put("did", JSONObject.NULL);
          col.save();
 
-         final ContentResolver cr = InstrumentationRegistry.getInstrumentation().getTargetContext().getContentResolver();
+         final ContentResolver cr = getContentResolver();
          // Query all available models
          final Cursor allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null);
          assertNotNull(allModels);
@@ -1056,4 +1054,8 @@ public class ContentProviderTest extends InstrumentedTest {
          CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol");
          return getCol();
      }
+
+    protected ContentResolver getContentResolver() {
+        return getTestContext().getContentResolver();
+    }
 }

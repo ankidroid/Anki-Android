@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">नोटों के प्रकार प्रबंधित करें</string>
-    <string name="model_editor_label">फ़ील्ड प्रबंधित करें</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">नोटों के प्रकार प्रबंधित करें</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">फ़ील्ड प्रबंधित करें</string>
     <!--Toasts-->
     <string name="toast_last_model">आप अपने अंतिम मॉडल को मिटा नहीं सकते</string>
     <string name="toast_last_field">नोट प्रकार में कम से कम एक फ़ील्ड होना चाहिए।</string>
@@ -37,22 +37,21 @@
         <item quantity="one">%d नोट</item>
         <item quantity="other">%d नोट</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">नोट प्रकार जोड़ें</string>
     <!--Browser-->
     <string name="model_browser_delete">नोट प्रकार मिटाएँ</string>
-    <string name="model_browser_rename">नाम बदलें</string>
-    <string name="model_browser_options">विकल्प</string>
+    <string name="model_browser_rename" comment="Rename a note type">नाम बदलें</string>
     <string name="model_browser_template">पत्ते संपादित करें</string>
     <string name="model_browser_add">नोट प्रकार जोड़ें</string>
     <!--Rename-->
     <string name="rename_model">नोट प्रकार का नाम बदलें</string>
+    <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">फ़ील्ड संपादित करें</string>
     <string name="model_field_editor_add">फ़ील्ड जोड़ें</string>
     <string name="model_field_editor_delete">फ़ील्ड मिटाएँ</string>
-    <string name="model_field_editor_options">फ़ील्ड विकल्प</string>
     <string name="model_field_editor_rename">फ़ील्ड का नाम बदलें</string>
+    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">फ़ील्ड का स्थान बदलें</string>
     <string name="model_field_editor_reposition">फ़ील्ड का स्थान बदलें (%1$d-%2$d के बीच का मूल्य दर्ज करें)</string>
     <string name="model_field_editor_toggle_sticky">जोड़ते समय अंतिम इनपुट याद रखें</string>
@@ -77,8 +76,6 @@
     <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
     <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">Cannot set Deck Override to a filtered deck</string>
     <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
     <string name="deck_picker_dialog_filter_decks">Filter decks</string>
 </resources>

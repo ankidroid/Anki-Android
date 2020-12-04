@@ -42,14 +42,12 @@
     <string name="disabled">Kikapcsolva</string>
     <string name="enabled">Engedélyezve</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Általános beállítások</string>
     <string name="pref_cat_reviewing">Ismétlés</string>
     <string name="pref_cat_reviewing_summ">Paklifüggetlen beállítások</string>
     <string name="pref_cat_reviewer_behaviour">Viselkedés</string>
     <string name="pref_cat_flashcard">Kijelző</string>
     <string name="pref_cat_whiteboard">Tábla</string>
-    <string name="pref_cat_automatic_display">Válasz automatikus mutatása</string>
     <string name="pref_cat_appearance">Kinézet</string>
     <string name="pref_cat_appearance_summ">Témák és az alapértelmezett betűtípus módosítása</string>
     <string name="pref_cat_themes">Témák</string>
@@ -96,15 +94,26 @@
     <string name="gestures_summ">Gesztusok hozzárendelése olyan műveletekhez, mint a kártyák megválaszolása és szerkesztése.</string>
     <string name="gestures_allow_links">Érintő gesztusok figyelmen kívül hagyása a linkeken</string>
     <string name="gestures_allow_links_summary">Az érintő gesztusok nem lesznek feldolgozva ha egy link/segítség le van nyomva.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Felfelé csúsztatás</string>
     <string name="gestures_swipe_down">Lefelé csúsztatás</string>
     <string name="gestures_swipe_left">Balra csúsztatás</string>
     <string name="gestures_swipe_right">Jobbra csúsztatás</string>
     <string name="gestures_double_tap">Dupla érintés</string>
     <string name="gestures_tap_top">Felső rész érintése</string>
-    <string name="gestures_tap_bottom">Alsó rész érintése</string>
     <string name="gestures_tap_left">Baloldali rész érintése</string>
     <string name="gestures_tap_right">Jobboldali rész érintése</string>
+    <string name="gestures_tap_bottom">Alsó rész érintése</string>
+    <string name="gestures_corner_tap_top_left">Érintés bal felül</string>
+    <string name="gestures_corner_tap_top_center">Érintés középen</string>
+    <string name="gestures_corner_tap_top_right">Érintés jobb felül</string>
+    <string name="gestures_corner_tap_middle_left">Érintés bal középen</string>
+    <string name="gestures_corner_tap_middle_center">Érintés a közepén</string>
+    <string name="gestures_corner_tap_middle_right">Érintés jobb középen</string>
+    <string name="gestures_corner_tap_bottom_left">Érintés bal alul</string>
+    <string name="gestures_corner_tap_bottom_center">Érintés alul középen</string>
+    <string name="gestures_corner_tap_bottom_right">Érintés jobb alul</string>
     <string name="gestures_volume_up">Hangerő fel</string>
     <string name="gestures_volume_down">Hangerő le</string>
     <string name="more_scrolling_buttons">e-Olvasó</string>
@@ -124,8 +133,8 @@
     <string name="automatic_sync_choice">Automatikus szinkronizálás</string>
     <string name="automatic_sync_choice_summ">Automatikus szinkronizálás az applikáció indításakor/kilépéskor, ha az utolsó több mint 10
         perce volt.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">Szinkronizálás állapotának megjelenítése</string>
+    <string name="sync_status_badge_summ">A szinkronizálás ikonjának módosítása, amikor a változások feltölthetők</string>
     <string name="day_theme">Nappali téma</string>
     <string name="night_theme">Éjszakai téma</string>
     <string name="default_font">Alapértelmezett betűtípus</string>
@@ -142,9 +151,8 @@
     <string name="timeout_answer_text">Automatikusan mutassa a választ</string>
     <string name="timeout_answer_summ">Válasz automatikus megjelenítése, felhasználói beavatkozása nélkül. A késleltetés magában foglalja az automatikusan lejátszott audió fájlok idejét.</string>
     <string name="timeout_answer_seconds">Válasz mutatása ennyi idő elteltével</string>
-    <string name="timeout_answer_seconds_summ">XXX másodperc</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX másodperc</string>
     <string name="timeout_question_seconds">A következő kérdés megjelenítése ennyi idő után</string>
-    <string name="timeout_question_seconds_summ">XXX másodperc</string>
     <string name="select_locale_title">Nyelv kiválasztása</string>
     <string name="safe_display">Biztonságos megjelenítési mód</string>
     <string name="safe_display_summ">Kapcsolja ki az összes animációt, és biztonságosabb módszereket használjon a kártya rajzok számára. Az e-tintaeszközök igényelhetik ezt.</string>
@@ -165,7 +173,6 @@
     <string name="use_current">Új kártyák paklija</string>
     <string name="new_spread">Új kártyák beszúrása</string>
     <string name="learn_cutoff">Korai tanulás korlátai</string>
-    <string name="learn_cutoff_summ">XXX perc</string>
     <string name="time_limit">Időkorlát érték</string>
     <string name="time_limit_summ">XXX perc</string>
     <string name="day_offset">Következő nap kezdete</string>
@@ -217,8 +224,8 @@
         <item quantity="other">%1$s\n%2$d pakli használata ebben a csoportban</item>
     </plurals>
     <string name="deck_conf_new_cards">Új kártyák</string>
-    <string name="deck_conf_rev_cards">Ismétlések</string>
-    <string name="deck_conf_lps_cards">Körök</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Ismétlések</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Körök</string>
     <string name="deck_conf_general">Általános</string>
     <string name="deck_conf_reminders">Emlékeztetők</string>
     <string name="deck_conf_steps">Lépések (percben)</string>
@@ -236,6 +243,7 @@
     <string name="deck_conf_use_general_timeout_settings">Általános beállítások használata</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Az általános \'Automatikus válaszmegjelenítő\' beállítás használata, a jelenlegi csoporthoz használt beállítások helyett.</string>
     <string name="deck_conf_easy_bonus">Bónusz az \"egyszerű\"</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Időtartam változtatása</string>
     <string name="deck_conf_max_ivl">Maximális időtartam</string>
     <string name="deck_conf_new_lps_ivl">Új időtartam</string>
@@ -250,30 +258,26 @@
     <string name="deck_conf_replayq">Ismételje meg a kérdést</string>
     <string name="deck_conf_replayq_summ">Ismételje meg a kérdést és a választ hanggal együtt, amikor a válasz megjelenik</string>
     <string name="deck_conf_manage">Konfigurációkezelés</string>
+    <string name="deck_conf_manage_summ">Opciócsoportok hozzáadása és változtatása</string>
     <string name="deck_conf_current_group">Aktuális csoport</string>
-    <string name="deck_conf_rename">Átnevezés</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Átnevezés</string>
     <string name="deck_conf_reset">Alapértelmezések visszaállítása</string>
-    <string name="deck_conf_reset_title">Alapértelmezések visszaállítása</string>
     <string name="deck_conf_reset_message">Alaphelyzetbe állítod az aktuális opciócsoportot?</string>
-    <string name="deck_conf_add">Új beállítás</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Új beállítás</string>
     <string name="deck_conf_add_summ">Készítsen egy másolatot az aktuális opciócsoportról</string>
-    <string name="deck_conf_remove">Eltávolít</string>
-    <string name="deck_conf_remove_title">Eltávolít</string>
     <string name="deck_conf_remove_message">Törlöd az aktuális opciócsoportot?</string>
     <string name="deck_conf_set_subdecks">Alkalmazás minden alcsoportra</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s pakli használata ebben a csoportban</item>
         <item quantity="other">%s alpakli használata ebben a csoportban</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Alkalmazás minden alcsoportra</string>
     <string name="deck_conf_set_subdecks_message">Állítsa be az aktuális opciócsoportot a pakli minden alcsoportjában?</string>
     <string name="pref_browser_editor_font">Böngésző és szerkesztő betűtípus</string>
     <string name="deck_conf_cram_filter">Szűrő</string>
-    <string name="deck_conf_cram_options">Beállítások</string>
     <string name="deck_conf_cram_search">Keresés</string>
     <string name="deck_conf_cram_limit">Határ</string>
     <string name="deck_conf_cram_order">kártyák kiválasztása után</string>
-    <string name="deck_conf_cram_reschedule">Átütemezés</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Átütemezés</string>
     <string name="deck_conf_cram_reschedule_summ">A telepített kártyák átütemezése adott válaszaim alapján</string>
     <string name="deck_conf_cram_steps">Egyéni lépések (percben)</string>
     <string name="deck_conf_cram_steps_summ">Add meg az egyéni lépéseket</string>
@@ -283,4 +287,6 @@
     <string name="analytics_dialog_title">Segítsen az AnkiDroidot jobbá tenni!</string>
     <string name="analytics_title">Funkiók megosztása</string>
     <string name="analytics_summ">Hozzájárulhat az AnkiDroidhoz azáltal, hogy megmutatja a fejlesztői csapatnak, milyen funkciókat használnak az emberek</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

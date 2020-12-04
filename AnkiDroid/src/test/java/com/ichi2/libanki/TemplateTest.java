@@ -20,7 +20,7 @@ public class TemplateTest extends RobolectricTest {
      *****************/
 
     @Test
-    public void test_deferred_frontside() throws Exception {
+    public void test_deferred_frontside() {
         Collection col = getCol();
         Model m = col.getModels().current();
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{custom:Front}}");

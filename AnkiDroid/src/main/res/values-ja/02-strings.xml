@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">引き出しメニューを開く</string>
-    <string name="drawer_close">引き出しメニューを閉じる</string>
-    <string name="CardEditorLaterMessage">後日閲覧用情報</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">引き出しメニューを開く</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">引き出しメニューを閉じる</string>
     <string name="CardEditorCardDeck">デッキ:</string>
     <string name="CardEditorNoteDeck">デッキ:</string>
     <string name="CardEditorModel">ノートタイプ:</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">全て選択/全て解除</string>
     <string name="filter_tags">フィルター (前方一致検索)</string>
     <string name="no_tags">まだタグが一つも作成されていません</string>
-    <string name="sdcard_missing_message">USBストレージとして使用されているので、SDカードは使用できません。デッキにアクセスするには、USBを切断してください。</string>
     <string name="updated_version">バージョン%sへアップデートしました</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">ホワイトボードの内容を保存</string>
@@ -65,7 +64,6 @@
     <string name="hide_whiteboard">ホワイトボードを隠す</string>
     <string name="clear_whiteboard">ホワイトボードの内容を全て消去</string>
     <string name="replay_audio">音声・動画を再生</string>
-    <string name="toggle_mic_tool_bar">発音を確認</string>
     <string name="leech_suspend_notification">このカードは \"leech\" （無駄） というタグが付けられ、保留されました</string>
     <string name="leech_notification">このカードに \"leech\" （無駄） というタグを付けました</string>
     <string name="corrupt_font">使用できないフォントファイル %s</string>
@@ -94,30 +92,29 @@
         <item>間隔</item>
         <item>易しさ</item>
         <item>期日</item>
-        <item>Card Modified</item>
+        <item>カード編集日</item>
         <item>作成日</item>
-        <item>Note Modified</item>
+        <item>ノート編集日</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
+    <string name="custom_study_increase_review_limit">今日の復習カード上限を変更</string>
     <string name="custom_study_review_forgotten">忘却したカードを復習する</string>
     <string name="custom_study_review_ahead">予定を先取りして復習する</string>
     <string name="custom_study_random_selection">カードをランダムに学習する</string>
     <string name="custom_study_preview_new">新規カードをプレビューする</string>
     <string name="custom_study_limit_tags">特定のタグで選ぶ</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">ノートを追加</string>
     <string name="cardeditor_title_edit_card">ノートの編集</string>
     <string name="discard_unsaved_changes">閉じて現在の入力を破棄しますか？</string>
     <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
     <string name="note_editor_no_first_field">最初のフィールドが空です</string>
     <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め問題が含まれている必要があります</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_set_field_language">フィールドの言語を設定</string>
+    <string name="note_editor_no_cards_created_all_fields">現在のノートタイプではカードは生成できませんでした。\n別のノートタイプを選択するか、「カード」をクリックしてフィールドの置き換えをしてください。</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">穴埋め部分の挿入は、穴埋めタイプのノートで機能します</string>
     <string name="saving_facts">カードの保存</string>
     <string name="saving_model">ノートタイプを保存しています</string>
-    <string name="add">追加</string>
     <string name="save">保存</string>
     <string name="close">閉じる</string>
     <string name="select">選択</string>
@@ -132,22 +129,18 @@
     <plurals name="in_minutes">
         <item quantity="other">%1$d分</item>
     </plurals>
-    <string name="studyoptions_welcome_title">AnkiDroidへようこそ</string>
-    <string name="fact_adder_intent_title">AnkiDroid カード</string>
-    <string name="note_editor_add_note">ノートを追加</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid カード</string>
     <string name="note_editor_copy_note">ノートをコピー</string>
-    <string name="card_editor_copy_card">カードをコピー</string>
     <string name="card_editor_reposition_card">新規カードの表示順序を変更</string>
     <string name="card_editor_reset_card">学習履歴をリセット</string>
-    <string name="card_editor_reschedule_card">スケジュールを変更</string>
-    <string name="card_editor_preview_card">プレビュー</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">スケジュールを変更</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">プレビュー</string>
     <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
-    <string name="rename">名前の変更</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">名前の変更</string>
     <string name="default_conf_delete_error">デフォルトのオプショングループを削除することはできません</string>
     <plurals name="factadder_cards_added">
         <item quantity="other">%d枚のカードを追加しました</item>
     </plurals>
-    <string name="help_title">ヘルプ</string>
     <string name="check_db">データベースをチェック</string>
     <string name="check_media">メディアをチェック</string>
     <string name="empty_cards">白紙カードをチェック</string>
@@ -157,10 +150,9 @@
     <string name="delete_deck">デッキを削除しています...</string>
     <string name="show_hint">%s を表示</string>
     <string name="info_rate">このアプリを評価</string>
-    <string name="col_load_failed">コレクションの読み込みに失敗しました\n Backボタンを押して AnkiDroid を終了してください</string>
     <string name="import_title">インポート</string>
     <string name="import_select_title">インポートするファイルを選択</string>
-    <string name="import_message_add">追加</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
     <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？　処理に時間がかかる可能性があります。</string>
     <string name="import_log_no_apkg">これは読み込み可能なAnkiパーッケージファイル（*.apkg）ではありません</string>
@@ -168,14 +160,16 @@
     <string name="import_log_failed_copy_to">apkgファイルを %sにコピーできませんでした</string>
     <string name="import_log_failed_validate">apkgファイルの検証に失敗しました</string>
     <string name="import_log_insufficient_space">パッケージを解凍するのに十分な容量がありません。 \n必要な空き容量: %1$d \n現在の空き容量: %2$d</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
+    <string name="import_log_file_cache_cleared">ファイルのインポート中にエラーが発生しました。キャッシュ処理の問題など。\nもう一度やり直してください</string>
+    <string name="import_succeeded_but_check_database">データのインポートに成功しましたが、インポート後のクリーンアップに失敗しました。データベースを確認してください。原因: %s</string>
     <string name="import_error_unhandled_request">インポートリクエストを処理できません</string>
+    <string name="import_error_corrupt_zip">apkgファイルが壊れています。削除して再ダウンロードしてください。\n\n原因ファイル: %s</string>
     <string name="import_error_exception">パッケージのインポートに失敗しました\n\n%s</string>
     <string name="import_error_not_apkg_extension">ファイル名 \"%s\" は拡張子が .apkg か .colpkgではありません。</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) の置換はまだサポートされていません。マニュアルを参照してください。</string>
     <string name="import_error_content_provider">選択されたファイルをAnkiDroidによって自動的にインポートできませんでした。ankiのファイルを手動でインポートする方法については、マニュアルをご覧ください: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() に失敗しました (おそらくストレージスペース外です)</string>
+    <string name="import_error_unhandled_scheme">未処理のインポート: “%s”</string>
     <string name="import_replacing">コレクションを置き換えています...</string>
     <string name="import_interrupted">インポートが中断されました</string>
     <string name="export_include_schedule">スケジュール情報を含める</string>
@@ -198,7 +192,7 @@
     <string name="export_unsuccessful">Ankiファイルのエクスポートエラー</string>
     <string name="import_hint">取り込みたいデッキまたはコレクション（全デッキ）のファイル（*. apkg）をあらかじめ \"%s\" に保存した後、この画面で「OK」ボタンをタップしてください。</string>
     <string name="upgrade_import_no_file_found">読み込み可能な %1$s のファイルが見つかりません</string>
-    <string name="study_options">オプション</string>
+    <string name="study_options" comment="Menu entry to open an options menu">オプション</string>
     <string name="select_tts">テキスト読み上げ機能の言語設定</string>
     <string name="custom_study">カスタム学習</string>
     <string name="more_options">その他</string>
@@ -225,11 +219,15 @@
         <item quantity="other">%s日間</item>
     </plurals>
     <plurals name="time_span_months">
-        <item quantity="other">%sヶ月</item>
+        <item quantity="other">%sヵ月</item>
     </plurals>
     <plurals name="time_span_years">
         <item quantity="other">%s年</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s秒</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -244,14 +242,13 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Anki用ファイル（*.apkg）の送信がキャンセルされました</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">このファイルをインポートするにはV2スケジューラを有効にする必要があります。</string>
-    <string name="import_cannot_with_v2">V2スケジューラは、スケジュール情報付きのV1デッキはインポートできません。</string>
     <string name="export_v2_dummy_note">このファイルはAnkiの新しいバーショーンが必要です。</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">\'%s\' の読み込みに失敗しました。</string>
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[画像が大きい可能性があります。メディアディレクトリ内の画像を圧縮してサイズを変更したほうがよいかもしれません。]]></string>
     <string name="no_browser_notification">ブラウザが見つかりません。PCまたはモバイルでWebページにアクセスしてください： </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">カード内の外部ページリンクはサポートされていません。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">回復されたカード</string>
@@ -260,7 +257,7 @@
     <string name="choose_an_image">画像を選択</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">デフォルトに戻す</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">JavaScriptを使用してナビゲーションドロワーを使用するには、フルスクリーンをオンにしてください。</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">JavaScriptを使用してオプションメニューを表示するには、フルスクリーンをオンにしてください。</string>
@@ -269,32 +266,61 @@
     <string name="white_board_image_saved">ホワイトボードの画像を %s に保存しました</string>
     <string name="title_whiteboard_pen_color">ホワイトボードペンの色を選択</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[空のカードが見つかりました。ツール>空のカードを実行してください。]]></string>
+    <string name="note_importer_error_empty_first_field">最初のフィールドが空: %s</string>
+    <string name="note_importer_error_first_field_matched">最初のフィールドが一致しました: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">最初のフィールドに重複を追加: %s</string>
+    <string name="note_importer_error_appeared_twice">重複するデータがあります: %s</string>
+    <string name="note_importer_error_empty_notes">カードが生成できなかったため、1 つ以上のノートはインポートされませんでした。 空のフィールドがある場合や、テキストファイル内のコンテンツを間違ったフィールドに入れようとした場合に発生する可能性があります。</string>
+    <string name="csv_importer_error_invalid_field_count">\'%1$s\'は %2$d のフィールドがあります。予測値は %3$d</string>
+    <string name="csv_importer_error_exception">中止: %s</string>
+    <string name="user_is_a_robot">自動テストが検出されました。AnkiDroidサポートにお問い合わせください。</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="other">%d notes added</item>
+        <item quantity="other">%d枚のカードを追加しました</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="other">%d notes updated</item>
+        <item quantity="other">%d枚のカードを更新しました</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="other">%d枚のカードは更新されませんでした</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">このカードはサポートされない機能を使用しています。開発者 %1$sに連絡するか、Wikiで確認してください。 %2$s</string>
+    <string name="invalid_json_data">カードに無効なデータがあります; %s</string>
+    <string name="valid_js_api_version">AnkiDroid JS API のバージョンが無効です。開発者の %sに連絡するか、Wikiで確認してみてください。</string>
+    <string name="update_js_api_version">AnkiDroid JS API が更新されました。開発者の %sに連絡するか、wiki を表示してください</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">ビュー</string>
+    <string name="anki_js_error_code">(エラーコード: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">デバッグ情報をクリップボードにコピーしました</string>
+    <string name="about_ankidroid_error_copy_debug_info">デバッグ情報をクリップボードにコピー中にエラーが発生しました</string>
+    <!-- Card Viewer -->
+    <string name="card_viewer_could_not_find_image">カードのエラー: 読み込み失敗 ‘%s’</string>
+    <string name="card_viewer_media_relative_protocol">カードコンテンツエラー: メディアの更新が必要です</string>
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">\'%s\'デッキの読み込みに失敗しました</string>
+    <string name="search_decks">デッキを検索</string>
+    <string name="ankidroid_init_failed_webview_title">致命的なエラー</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid は利用できないWebシステム を検出しました。システムのアップデート中などに発生する可能性があります。 数分後にもう一度お試しください。\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">フォントサイズ</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="format_insert_bold">太字</string>
+    <string name="format_insert_italic">イタリック文字</string>
+    <string name="format_insert_underline">下線文字</string>
+    <string name="insert_horizontal_line">ラインを挿入</string>
+    <string name="insert_heading">テキスト挿入</string>
+    <string name="format_font_size">フォントサイズ変更</string>
+    <string name="insert_mathjax">MathJax 式を挿入</string>
+    <string name="insert_cloze">穴埋め部分の挿入</string>
+    <string name="before_text">選択部分の前のHTML</string>
+    <string name="after_text">選択部分の後ろのHTML</string>
+    <string name="add_toolbar_item">ツールバーアイテムを作成</string>
+    <string name="toolbar_item_explain_remove">選択したテキストの前後に挿入する HTML を入力してください\n\nツールバーアイテムを長押しすれば削除します</string>
+    <string name="remove_toolbar_item">ツールバーのアイテムを削除しますか？</string>
+    <string name="note_editor_paste_too_large">画像が大きすぎるため、手動で画像を挿入してください</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Androidのバックアップが進行中です。もう一度やり直してください</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error">Error adding shortcut: %s</string>
 </resources>

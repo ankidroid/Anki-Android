@@ -40,7 +40,7 @@
             app:min="0" />
         <com.ichi2.preferences.NumberRangePreference
             android:key="learnCutoff"
-            android:summary="@string/learn_cutoff_summ"
+            android:summary="@string/time_limit_summ"
             android:title="@string/learn_cutoff"
             app:max="999"
             app:min="0" />
@@ -138,7 +138,7 @@
             android:summary="@string/whiteboard_black_summ"
             android:title="@string/whiteboard_black" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_cat_automatic_display" >
+    <PreferenceCategory android:title="@string/timeout_answer_text" >
         <CheckBoxPreference
             android:defaultValue="false"
             android:disableDependentsState="false"
@@ -157,7 +157,7 @@
             android:dependency="timeoutAnswer"
             android:key="timeoutQuestionSeconds"
             android:max="60"
-            android:summary="@string/timeout_question_seconds_summ"
+            android:summary="@string/timeout_answer_seconds_summ"
             android:title="@string/timeout_question_seconds" />
     </PreferenceCategory>
 </PreferenceScreen>

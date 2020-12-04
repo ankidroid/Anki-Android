@@ -41,20 +41,16 @@
 <resources>
     <string name="youre_offline">Jste v režimu offline</string>
     <string name="sync_even_if_offline">Přesto zkusit</string>
-    <string name="sync_error">Chyby synchronizace</string>
+    <string name="sync_error">Chyba synchronizace</string>
     <string name="vague_error">Chyba</string>
     <string name="retry">Opakovat</string>
-    <string name="cancel">Zrušit</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Obchodní podmínky</a></string>
     <string name="menu_get_shared_decks">Získat sdílené balíčky</string>
     <string name="connection_error_message">Došlo k síťové chybě.</string>
     <string name="not_logged_in_title">Přihlasit se k AnkiWeb</string>
     <string name="login_create_account_message">Musíte se přihlásit ke svému účtu AnkiWeb, abyste mohli sychronizovat svá data v cloudu. Účet můžete vytvořit v dalším kroku.</string>
     <!-- MyAccount.java -->
     <string name="username">Emailová adresa</string>
-    <string name="username_repeat">Zopakujte e-mailovou adresu</string>
     <string name="password">Heslo</string>
-    <string name="password_repeat">Opakujte heslo</string>
     <string name="log_in">Přihlášení</string>
     <string name="sign_up_description">Nemáte ještě účet AnkiWeb? Je zdarma.</string>
     <string name="sign_up_not_affiliated">Poznámka: Služba AnkiWeb není součástí AnkiDroid a naopak. Jedná se o dvě samostatné služby</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">Neplatná e-mailová adresa nebo heslo.</string>
     <string name="reset_password">Obnovit heslo</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Hledat</string>
     <string name="preferences_title">Nastavení</string>
     <string name="deckpreferences_title">Možnosti pro XXX</string>
     <string name="sync_conflict_message">Vaše balíčky zde a na AnkiWeb se liší natolik, že nemohou být sloučeny dohromady, takže je nutné přepsat balíčky jedné strany druhou.\n\nChcete použít balíčky odtud nebo balíčky z AnkiWeb?</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">Synchronizace</string>
     <string name="sync_downloading_media">Stahování multimédií %1$d/%2$d...</string>
     <string name="sync_log_uploading_message">Úplná synchronizace z místního úložiště</string>
-    <string name="sync_log_downloading_message">Plná synchronizace ze serveru</string>
     <string name="sync_log_clocks_unsynchronized">Čas na vašem zařízení je rozdílný o %1$d sekund %2$s; Synchronizace vyžaduje nastavení času i časového pásma, aby nedocházelo k chybám. Prosím zkontrolujte, zda je správně nastaven datum, čas a časové pásmo na telefonu, pak znovu synchronizujte.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo přístroje je pravděpodobně špatné</string>
     <string name="sync_log_clocks_unsynchronized_date">, datum na přístroji je pravděpodobně chybné</string>
@@ -94,6 +88,7 @@
     <string name="sync_overwrite_error">Vaši aktuální kolekci nelze přepsat staženým souborem.</string>
     <string name="sync_connection_error">Vypršel časový limit připojení. Při připojení k Internetu se vyskytují problémy, nebo máte velmi velký soubor ve složce s multimédii.</string>
     <string name="sync_write_access_error">Stažený soubor nelze uložit na SD kartu. Buď je vaše SD karta nastavena pouze pro čtení nebo na ní není dostatek místa.</string>
+    <string name="sync_error_invalid_sync_server">Vlastní synchronizační server v pokročilém nastavení je neplatný (%s). Prosím zadejte platný server, nebo zrušte dané nastavení.</string>
     <string name="sync_deletions_message">Synchronizace odstraněných...</string>
     <string name="sync_small_objects_message">Synchronizace malých objektů...</string>
     <string name="sync_finish_message">Dokončení synchronizace...</string>
@@ -115,6 +110,8 @@
     <string name="sync_media_db_error">Synchronizace multimédií se nezdařila, protože je poškozena současná databáze. Doporučuje se zkontrolovat multimédia.</string>
     <string name="sync_media_error">Chyba synchronizace multimediálních dat.</string>
     <string name="sync_media_error_check">Chyba během synchronizace souborů médií. Doporučujeme provést kontrolu médií.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Před synchronizací prosím spusťte „%s“</string>
     <string name="sync_sanity_local">Místní</string>
     <string name="sync_sanity_remote">Vzdálený</string>
     <string name="force_full_sync_title">Vynutit úplnou synchronizaci</string>
@@ -127,9 +124,8 @@
     <string name="sync_error_500_unknown">AnkiWeb zaznamenal chybu. Zkuste to prosím znovu za pár minut a pokud problém přetrvá, vyplňte prosím chybové hlášení.</string>
     <string name="sync_error_501_upgrade_required">Proveďte upgrade na nejnovější verzi AnkiDroid</string>
     <string name="sync_error_502_maintenance">Provádí se údržba AnkiWeb. Zkuste to prosím znovu za pár minut.</string>
-    <string name="sync_error_504_gateway_timeout">504 Byla přijata chyba časového limitu brány.</string>
+    <string name="sync_error_504_gateway_timeout">Vyskytla se chyba 504 časového limitu brány.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_full_sync">Synchronizace (úplná)</string>
+    <string name="sync_menu_title_no_account">Synchronizovat (přihlásit se)</string>
 </resources>

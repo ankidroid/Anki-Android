@@ -10,14 +10,14 @@
         android:paddingBottom="3dp"
         android:gravity="center_vertical"
         android:background="?attr/topBarColor">
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/new_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="?attr/newCountColor"
             android:textSize="14sp" />
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/learn_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:textColor="?attr/learnCountColor"
             android:textSize="14sp" />
 
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/review_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:textColor="?attr/reviewCountColor"
             android:textSize="14sp" />
 
-        <TextView
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/choosen_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

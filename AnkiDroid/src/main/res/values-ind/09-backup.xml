@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Cadangan tidak tersimpan. Tidak cukup ruang tersisa di kartu SD. Turunkan besar cadangan atau hapus beberapa berkas lain.</string>
     <string name="sd_space_warning">Kurang dari %d MB tersisa di kartu SDmu.\nKosongkan sebagian untuk menghindari kehilangan data</string>
-    <string name="backup_delete">Menghapus cadangan&#8230;</string>
     <string name="backup_restore">Pulihkan dari cadangan</string>
     <string name="backup_new_collection">Koleksi baru</string>
     <string name="backup_del_collection">Hapus koleksi dan buat baru</string>
@@ -48,13 +47,11 @@
     <string name="backup_full_sync_from_server">Sinkronisasi penuh dari server</string>
     <string name="backup_full_sync_from_server_question">Timpa koleksimu dengan yang dari AnkiWeb? Ini akan menghapus semua kemajuan pembelajaranmu dan menambahkan informasi sejak sinkronisasi terakhir.</string>
     <string name="error_handling_title">Penanganan galat</string>
-    <string name="error_handling_options">Pilihan</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Pilihan</string>
     <string name="backup_retry_opening">Coba buka lagi</string>
     <string name="backup_error_menu_repair">Perbaiki basisdata</string>
-    <string name="backup_repair_deck">Perbaiki</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Memperbaiki basisdata&#8230;</string>
-    <string name="backup_error">Galat</string>
     <string name="backup_invalid_file_error">Berkas cadangan yang dipilih tidak valid</string>
     <string name="backup_restore_select_title">Pilih cadangan untuk dipulihkan</string>
     <string name="backup_restore_no_backups">Tidak ada cadangan pada perangkat ini. Jika kamu memiliki cadangan di komputer desktop, salin secara manual ke dalam folder AnkiDroidmu.</string>

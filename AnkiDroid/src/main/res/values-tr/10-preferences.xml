@@ -42,14 +42,12 @@
     <string name="disabled">Devredışı</string>
     <string name="enabled">Etkin</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Genel ayarlar</string>
     <string name="pref_cat_reviewing">Çalışma</string>
     <string name="pref_cat_reviewing_summ">Desteye özel olmayan çalışma ayarları</string>
     <string name="pref_cat_reviewer_behaviour">Davranış</string>
     <string name="pref_cat_flashcard">Ekran</string>
     <string name="pref_cat_whiteboard">Yazı tahtası</string>
-    <string name="pref_cat_automatic_display">Cevabı otomatik göster</string>
     <string name="pref_cat_appearance">Görünüş</string>
     <string name="pref_cat_appearance_summ">Temaları ve varsayılan fontu değiştir</string>
     <string name="pref_cat_themes">Temalar</string>
@@ -96,15 +94,26 @@
     <string name="gestures_summ">Cevap verme ve kart düzenleme gibi eylemlere el hareketleri ata.</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Yukarı sürükleme</string>
     <string name="gestures_swipe_down">Aşağı sürükleme</string>
     <string name="gestures_swipe_left">Sola sürükleme</string>
     <string name="gestures_swipe_right">Sağa sürükleme</string>
     <string name="gestures_double_tap">Çift dokunma</string>
     <string name="gestures_tap_top">Yukarıya dokunma</string>
-    <string name="gestures_tap_bottom">Aşağıya dokunma</string>
     <string name="gestures_tap_left">Sola dokunma</string>
     <string name="gestures_tap_right">Sağa dokunma</string>
+    <string name="gestures_tap_bottom">Aşağıya dokunma</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">eOkuyucu</string>
@@ -141,9 +150,8 @@
     <string name="timeout_answer_text">Cevabı otomatik göster</string>
     <string name="timeout_answer_summ">Cevabı kullanıcı girişi yapılmadan otomatik olarak göster. Ses dosyasını otomatik oynatmak için gecikme zamanı içerir.</string>
     <string name="timeout_answer_seconds">Cevabı gösterme zamanı</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Sonraki soruyu gösterme zamanı</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Dil Seç</string>
     <string name="safe_display">Güvenli görüntü modu</string>
     <string name="safe_display_summ">Bütün animasyonları devredışı bırak ve kartları çizmek için daha güvenli yöntem kullan. Bu e-mürekkepli cihazlar için gerekebilir.</string>
@@ -164,7 +172,6 @@
     <string name="use_current">Yeni kartlar için deste</string>
     <string name="new_spread">Yeni kart pozisyonu</string>
     <string name="learn_cutoff">Önceden öğrenme sınırı</string>
-    <string name="learn_cutoff_summ">XXX dk</string>
     <string name="time_limit">Timebox zaman sınırı</string>
     <string name="time_limit_summ">XXX dk</string>
     <string name="day_offset">Sonraki günün başlangıcı</string>
@@ -216,8 +223,8 @@
         <item quantity="other">%1$s\n%2$d deste bu grubu kullanıyor</item>
     </plurals>
     <string name="deck_conf_new_cards">Yeni kartlar</string>
-    <string name="deck_conf_rev_cards">Çalışma</string>
-    <string name="deck_conf_lps_cards">Hatâlar</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Çalışma</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Hatâlar</string>
     <string name="deck_conf_general">Genel</string>
     <string name="deck_conf_reminders">Hatırlatmalar</string>
     <string name="deck_conf_steps">Adımlar (dakika)</string>
@@ -235,6 +242,7 @@
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Kolay bonusu</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Aralık düzenleyicisi</string>
     <string name="deck_conf_max_ivl">Maksimum aralık</string>
     <string name="deck_conf_new_lps_ivl">Yeni aralık</string>
@@ -249,30 +257,26 @@
     <string name="deck_conf_replayq">Tekrar Sor</string>
     <string name="deck_conf_replayq_summ">Cevap gösterildiği zaman, hem sesi hem de soru ve cevabı tekrarla</string>
     <string name="deck_conf_manage">Grup yönetimi</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Şu anki grup</string>
-    <string name="deck_conf_rename">Adını değiştir</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Adını değiştir</string>
     <string name="deck_conf_reset">Varsayılanlara geri dön</string>
-    <string name="deck_conf_reset_title">Varsayılanlara geri dön</string>
     <string name="deck_conf_reset_message">Şu anki seçenek grubu varsayılan değerlerine döndürülsün mü?</string>
-    <string name="deck_conf_add">Yapılandırma ekle</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Yapılandırma ekle</string>
     <string name="deck_conf_add_summ">Şu anki seçenek grubunun kopyasını oluştur</string>
-    <string name="deck_conf_remove">Kaldır</string>
-    <string name="deck_conf_remove_title">Kaldır</string>
     <string name="deck_conf_remove_message">Şu anki seçenek grubu kaldırılsın mı?</string>
     <string name="deck_conf_set_subdecks">Bütün altdesteler için ayarla</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s altdeste bu grubu kullanacak</item>
         <item quantity="other">%s altdeste bu grubu kullanacak</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Bütün altdesteler için ayarla</string>
     <string name="deck_conf_set_subdecks_message">Şu anki seçenek grubu bu destenin bütün altdesteleri için ayarlansın mı?</string>
     <string name="pref_browser_editor_font">Tarayıcı ve düzenleyici fontu</string>
     <string name="deck_conf_cram_filter">Filtre</string>
-    <string name="deck_conf_cram_options">Seçenekler</string>
     <string name="deck_conf_cram_search">Arama</string>
     <string name="deck_conf_cram_limit">Sınırla:</string>
     <string name="deck_conf_cram_order">kart seçme ölçütü:</string>
-    <string name="deck_conf_cram_reschedule">Zamanını değiştir</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Zamanını değiştir</string>
     <string name="deck_conf_cram_reschedule_summ">Bu destede cevaplarıma göre kartların zamanını değiştir</string>
     <string name="deck_conf_cram_steps">Özel adımlar (dakika cinsinden)</string>
     <string name="deck_conf_cram_steps_summ">Kendi adımlarınızı tanımlayın</string>
@@ -282,4 +286,6 @@
     <string name="analytics_dialog_title">AnkiDroid\'in iyileştirilmesine yardım et!</string>
     <string name="analytics_title">Özellik kullanımını paylaş</string>
     <string name="analytics_summ">Geliştirme ekibinin insanların hangi özellikleri kullandığını görmesine yardım ederek AnkiDroid\'e katkıda bulunabilirsiniz.</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

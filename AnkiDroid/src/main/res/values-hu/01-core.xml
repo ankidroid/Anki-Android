@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">igen</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paklik</string>
-    <string name="card_browser">Kártya böngésző</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kártya böngésző</string>
     <string name="statistics">Statisztika</string>
     <string name="settings">Beállítások</string>
     <string name="help">Segítség</string>
     <string name="send_feedback">Visszajelzés küldése</string>
-    <string name="studyoptions_title">Pakli áttekintő</string>
     <string name="studyoptions_due_today">Ma esedékes:</string>
     <string name="studyoptions_new_total">Összes új kártya:</string>
     <string name="studyoptions_total_cards">Összes kártya:</string>
@@ -71,6 +71,8 @@
         <item quantity="one">%d nap %d van hátra</item>
         <item quantity="other">%d napok %d vannak hátra</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Üres gyűjtemény</string>
+    <string name="no_cards_placeholder_description">Adj hozzá kártyákat\na + ikon használatával</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Ma %1$d kártyát tanultál %2$s alatt</item>
@@ -79,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Válasz begépelése</string>
     <string name="show_answer">Válasz mutatása</string>
+    <string name="hide_answer">Válasz elrejtése</string>
     <string name="ease_button_again">Újra</string>
     <string name="ease_button_hard">Nehéz</string>
     <string name="ease_button_good">Jó</string>
@@ -87,22 +90,14 @@
     <string name="menu_import">Importálás</string>
     <string name="undo">Visszavonás</string>
     <string name="undo_action_review">Utoljára ismételt kártya</string>
-    <string name="undo_action_bury_card">kártya félretétele</string>
-    <string name="undo_action_bury_note">jegyzet félretétele</string>
-    <string name="undo_action_suspend_card">kártya felfüggesztése</string>
-    <string name="undo_action_suspend_note">jegyzet felfüggesztése</string>
-    <string name="undo_action_delete">jegyzet törlése</string>
-    <string name="undo_action_delete_multi">jegyzetek törlése</string>
     <string name="undo_action_change_deck_multi">pakli csere</string>
-    <string name="undo_action_reschedule_card">átütemezés</string>
-    <string name="undo_action_reset_card">Folyamat Visszaállítása</string>
-    <string name="undo_action_reposition_card">áthelyezés</string>
     <string name="move_all_to_deck">Összes pakli áthelyezése</string>
     <string name="unbury">Félretétel megszüntetése</string>
     <string name="rename_deck">Pakli átnevezése</string>
-    <string name="menu_add">Hozzáadás</string>
+    <string name="create_shortcut">Kezdőképernyőre</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Hozzáadás</string>
     <string name="menu_add_note">Megjegyzés hozzáadása</string>
-    <string name="menu_my_account">Fiók szinkronizálása</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Fiók szinkronizálása</string>
     <string name="menu_dismiss_note">Elrejtés / Törlés</string>
     <string name="menu_bury_card">Kártya holnapra halasztása</string>
     <string name="menu_bury_note">Jegyzet holnapra halasztása</string>
@@ -126,7 +121,7 @@
     <string name="menu_unmark_note">Jegyzet megjelölés megszüntetése</string>
     <string name="menu_toggle_mic_tool_bar">Kiejtés ellenőrzése</string>
     <string name="new_deck">Pakli létrehozása</string>
-    <string name="create">Létrehozás</string>
+    <string name="create" comment="Button to create a filtered deck">Létrehozás</string>
     <string name="new_dynamic_deck">Szűrt pakli létrehozása</string>
     <string name="night_mode">Éjszakai mód</string>
     <string name="directory_inaccessible">Nem érhető el az AnkiDroid könyvtár</string>
@@ -151,11 +146,11 @@
     <string name="time_quantity_months">%.1f hónap</string>
     <string name="time_quantity_years">%.1f év</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Magolós pakli újraépítése.\nKérlek, várj&#8230;</string>
+    <string name="rebuild_filtered_deck">Szűrt pakli újraépítése</string>
     <string name="rebuild_cram_label">Újraépítés</string>
     <string name="empty_cram_label">Kiürítés</string>
     <string name="create_subdeck">Alcsoportok létrehozása</string>
-    <string name="empty_cram_deck">Magolós pakli ürítése.\nKérlek, várj&#8230;</string>
+    <string name="empty_filtered_deck">Szűrt pakli kiürítése</string>
     <string name="custom_study_deck_name">Egyéni tanulás pakli</string>
     <string name="custom_study_deck_exists">Kérlek, előbb nevezd át a meglévő, Egyéni tanulás paklit</string>
     <string name="empty_deck">Ez a pakli üres</string>
@@ -184,9 +179,8 @@
     <string name="card_template_editor_front">Sablon az első oldalhoz</string>
     <string name="card_template_editor_back">Sablon vissza</string>
     <string name="card_template_editor_styling">Stílus</string>
-    <string name="card_template_editor_menu_delete">Törlés</string>
     <string name="card_template_editor_menu_card_browser_appearance">A kártya böngésző kinézete</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">Kártyacsomag felülírása</string>
     <string name="card_template_editor_cant_delete">Legalább egy kártya típus szükséges</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Törlöd a “%2$s” és a %1$d kártya típusát?</item>
@@ -198,11 +192,12 @@
     <string name="template_for_current_card_deleted">A kártya típusa törölve lett.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Böngésző kinézete</string>
+    <!-- card Info -->
+    <string name="card_info_title">Kártya információ</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid adatbázist olvasás/írás</string>
     <string name="read_write_permission_description">meglévő jegyzetek, kártyák, jegyzetfajták és paklik elérése, valamint újak létrehozása</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Kártya böngésző</string>
-    <string name="card_browser_context_menu">Kártya böngésző</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kártya böngésző</string>
+    <string name="context_menu_anki_card_label">Anki Kártya</string>
 </resources>

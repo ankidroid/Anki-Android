@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.view.Display;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
@@ -39,6 +38,7 @@ import org.acra.ACRA;
 import org.acra.util.Installation;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 public class UsageAnalytics {
@@ -84,7 +84,7 @@ public class UsageAnalytics {
 
         installDefaultExceptionHandler();
 
-        SharedPreferences userPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences userPrefs = AnkiDroidApp.getSharedPrefs(context);
         setOptIn(userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false));
         userPrefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
             if (key.equals(ANALYTICS_OPTIN_KEY)) {
@@ -159,6 +159,7 @@ public class UsageAnalytics {
     /**
      * Determine whether we are disabled or not
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private static boolean getOptIn() {
         Timber.d("getOptIn() status: %s", sOptIn);
         return sOptIn;
@@ -347,5 +348,21 @@ public class UsageAnalytics {
 
             return this;
         }
+    }
+
+    public static boolean isEnabled() {
+        SharedPreferences userPrefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        return userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false);
+    }
+
+
+
+    public static class Category {
+        public static final String SYNC = "Sync";
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE) // TOOD: Make this package-protected
+    public static void resetForTests() {
+        sAnalytics = null;
     }
 }

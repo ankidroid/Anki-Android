@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">כן</string>
     <!-- Navigation drawer items-->
     <string name="decks">חפיסות</string>
-    <string name="card_browser">דפדוף בכרטיסים</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">דפדוף בכרטיסים</string>
     <string name="statistics">סטטיסטיקה</string>
     <string name="settings">הגדרות</string>
     <string name="help">עזרה</string>
     <string name="send_feedback">שליחת משוב</string>
-    <string name="studyoptions_title">סקירת חפיסה</string>
     <string name="studyoptions_due_today">להיום:</string>
     <string name="studyoptions_new_total">סך כל הכרטיסים החדשים:</string>
     <string name="studyoptions_total_cards">סך כל הכרטיסים:</string>
@@ -74,11 +74,14 @@
         <item quantity="other">%d שעות %d נותרו</item>
     </plurals>
     <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
+        <item quantity="one">%d ימים ו %d שעות נותרו</item>
         <item quantity="two">%d days %d left</item>
         <item quantity="many">%d days %d left</item>
         <item quantity="other">%d ימים ו %d שעות נותרו</item>
     </plurals>
+    <string name="no_cards_placeholder_title">האוסף ריק</string>
+    <string name="no_cards_placeholder_description">התחל להוסיף כרטיסים \n
+באמצעות האייקון +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">למדת היום כרטיס %1$d במשך %2$s</item>
@@ -89,6 +92,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">הקלדת תשובה</string>
     <string name="show_answer">הצגת תשובה</string>
+    <string name="hide_answer">הסתר תשובה</string>
     <string name="ease_button_again">שוב</string>
     <string name="ease_button_hard">קשה</string>
     <string name="ease_button_good">טוב</string>
@@ -97,22 +101,14 @@
     <string name="menu_import">ייבוא</string>
     <string name="undo">ביטול</string>
     <string name="undo_action_review">שינון אחרון</string>
-    <string name="undo_action_bury_card">דילוג על כרטיס</string>
-    <string name="undo_action_bury_note">דילוג על רשומה</string>
-    <string name="undo_action_suspend_card">הקפאת כרטיס</string>
-    <string name="undo_action_suspend_note">הקפאת רשומה</string>
-    <string name="undo_action_delete">מחיקת רשומה</string>
-    <string name="undo_action_delete_multi">מחיקת רשומות</string>
     <string name="undo_action_change_deck_multi">החלפת חפיסות</string>
-    <string name="undo_action_reschedule_card">תזמן מחדש</string>
-    <string name="undo_action_reset_card">איפוס התקדמות</string>
-    <string name="undo_action_reposition_card">מיקום מחדש</string>
     <string name="move_all_to_deck">העברת הכול לחפיסה</string>
     <string name="unbury">ביטול דילוג</string>
     <string name="rename_deck">שינוי שם חפיסה</string>
-    <string name="menu_add">הוספה</string>
+    <string name="create_shortcut">צור קיצור דרך</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">הוספה</string>
     <string name="menu_add_note">הוספת רשומה</string>
-    <string name="menu_my_account">סנכרון חשבון</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">סנכרון חשבון</string>
     <string name="menu_dismiss_note">הסתרה / מחיקה</string>
     <string name="menu_bury_card">דילוג על כרטיס</string>
     <string name="menu_bury_note">דילוג על רשומה</string>
@@ -136,7 +132,7 @@
     <string name="menu_unmark_note">הסר סימון הערה</string>
     <string name="menu_toggle_mic_tool_bar">בדוק הגיה</string>
     <string name="new_deck">יצירת חפיסה</string>
-    <string name="create">יצירה</string>
+    <string name="create" comment="Button to create a filtered deck">יצירה</string>
     <string name="new_dynamic_deck">יצירת חפיסה מסוננת</string>
     <string name="night_mode">מצב לילה</string>
     <string name="directory_inaccessible">הספרייה של AnkiDroid אינה נגישה</string>
@@ -161,11 +157,11 @@
     <string name="time_quantity_months">%.1f חודשים</string>
     <string name="time_quantity_years">%.1f שנים</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">השיקום cram הסיפון. \nPlease רגע...</string>
+    <string name="rebuild_filtered_deck">בונה מחדש חפיסה מסוננת...</string>
     <string name="rebuild_cram_label">בניה מחדש</string>
     <string name="empty_cram_label">ריקון</string>
     <string name="create_subdeck">צור חפיסת משנה</string>
-    <string name="empty_cram_deck">מרקן את חפיסת הדחיסה.‏\nנא להמתין...‏</string>
+    <string name="empty_filtered_deck">מרוקן חפיסה מסוננת...</string>
     <string name="custom_study_deck_name">שיעור למידה מותאם</string>
     <string name="custom_study_deck_exists">ראשית, ערוך שם חפיסה חדשה</string>
     <string name="empty_deck">החפיסה ריקה</string>
@@ -194,9 +190,8 @@
     <string name="card_template_editor_front">תבנית קדמית</string>
     <string name="card_template_editor_back">תבנית אחורית</string>
     <string name="card_template_editor_styling">סגנון</string>
-    <string name="card_template_editor_menu_delete">מחיקה</string>
     <string name="card_template_editor_menu_card_browser_appearance">מראה דפדפן הכרטיסים</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">שכתוב חפיסה</string>
     <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
@@ -210,11 +205,12 @@
     <string name="template_for_current_card_deleted">סוג הכרטיס של הכרטיס הנוכחי נמחק.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">מראה הדפדפן</string>
+    <!-- card Info -->
+    <string name="card_info_title">מידע על הכרטיס</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
     <string name="read_write_permission_description">תן לאפליקציה גישה להערות, כרטיסים, סוגי הערות, וחפיסות, וכן גישה ליצור חדשים</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">דפדפן הכרטיסים</string>
-    <string name="card_browser_context_menu">דפדפן הכרטיסים</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">דפדפן הכרטיסים</string>
+    <string name="context_menu_anki_card_label">כרטיס Anki</string>
 </resources>

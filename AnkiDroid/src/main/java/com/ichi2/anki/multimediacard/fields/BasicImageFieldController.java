@@ -20,6 +20,7 @@
 
 package com.ichi2.anki.multimediacard.fields;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ContentUris;
@@ -58,10 +59,12 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.compat.CompatHelper;
-import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeUtils;
+import com.ichi2.ui.FixedEditText;
 import com.ichi2.utils.BitmapUtil;
 import com.ichi2.utils.ExifUtil;
+import com.ichi2.utils.FileUtil;
 import com.ichi2.utils.Permissions;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -88,14 +91,12 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     private TextView mImageFileSize;
     private TextView mImageFileSizeWarning;
 
-    private @Nullable String mImagePath;
-    private @Nullable Uri mImageUri;
+    private ImageViewModel mViewModel = new ImageViewModel(null, null);
     private @Nullable String mPreviousImagePath; // save the latest path to prevent from cropping or taking photo action canceled
     private @Nullable Uri mPreviousImageUri;
     private @Nullable String mAnkiCacheDirectory; // system provided 'External Cache Dir' with "temp-photos" on it
                                                   // e.g.  '/self/primary/Android/data/com.ichi2.anki.AnkiDroid/cache/temp-photos'
     private DisplayMetrics mMetrics = null;
-    private SystemTime mTime = new SystemTime();
 
     private Button mCropButton = null;
 
@@ -115,17 +116,16 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
 
         Timber.i("loadInstanceState loading saved state...");
-        mImagePath = savedInstanceState.getString("mImagePath");
-        mImageUri = savedInstanceState.getParcelable("mImageUri");
+        mViewModel = ImageViewModel.fromBundle(savedInstanceState);
         mPreviousImagePath = savedInstanceState.getString("mPreviousImagePath");
         mPreviousImageUri = savedInstanceState.getParcelable("mPreviousImageUri");
     }
 
+    @Override
     public Bundle saveInstanceState() {
         Timber.d("saveInstanceState");
         Bundle savedInstanceState = new Bundle();
-        savedInstanceState.putString("mImagePath", mImagePath);
-        savedInstanceState.putParcelable("mImageUri", mImageUri);
+        mViewModel.enrich(savedInstanceState);
         savedInstanceState.putString("mPreviousImagePath", mPreviousImagePath);
         savedInstanceState.putParcelable("mPreviousImageUri", mPreviousImageUri);
         return savedInstanceState;
@@ -134,12 +134,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     @Override
     public void createUI(Context context, LinearLayout layout) {
         Timber.d("createUI()");
-        if (mImagePath == null) {
-            mImagePath = mField.getImagePath();
-        }
-        if (mImageUri == null && mImagePath != null) {
-            mImageUri = getUriForFile(new File(mImagePath));
-        }
+        mViewModel = mViewModel.replaceNullValues(mField, mActivity);
 
         mImagePreview = new ImageView(mActivity);
         File externalCacheDirRoot = context.getExternalCacheDir();
@@ -163,7 +158,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         mCropButton = new Button(mActivity);
         mCropButton.setText(gtxt(R.string.crop_button));
-        mCropButton.setOnClickListener(v -> requestCrop());
+        mCropButton.setOnClickListener(v -> mViewModel = requestCrop(mViewModel));
         mCropButton.setVisibility(View.INVISIBLE);
 
         Button mBtnGallery = new Button(mActivity);
@@ -176,56 +171,13 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         Button mBtnCamera = new Button(mActivity);
         mBtnCamera.setText(gtxt(R.string.multimedia_editor_image_field_editing_photo));
-        mBtnCamera.setOnClickListener(v -> {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File image;
-            try {
-                saveImageForRevert();
+        mBtnCamera.setOnClickListener(v -> mViewModel = captureImage(context));
 
-                // Create a new image for the camera result to land in, clear the URI
-                image = createNewCacheFile();
-                mImagePath = image.getPath();
-                mImageUri = getUriForFile(image);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
-
-                // Until Android API21 (maybe 22) you must manually handle permissions for image capture w/FileProvider
-                // This can be removed once minSDK is >= 22
-                // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
-                if (CompatHelper.getSdkVersion() <= Build.VERSION_CODES.LOLLIPOP) {
-                    cameraIntent.setClipData(ClipData.newRawUri("", mImageUri));
-                    cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                }
-
-                if (cameraIntent.resolveActivity(context.getPackageManager()) == null) {
-                    Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent");
-                    showSomethingWentWrong();
-                    onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null);
-                    return;
-                }
-                try {
-                    mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
-                } catch (Exception e) {
-                    Timber.w(e, "Unable to take picture");
-                    showSomethingWentWrong();
-                    onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null);
-                }
-            } catch (IOException e) {
-                Timber.w(e, "mBtnCamera::onClickListener() unable to prepare file and launch camera");
-            }
-        });
-
-        if (!Permissions.canUseCamera(context)) {
+        if (!canUseCamera(context)) {
             mBtnCamera.setVisibility(View.INVISIBLE);
         }
 
-        // Some hardware has no camera or reports yes but has zero (e.g., cheap devices, and Chromebook emulator)
-        if ((!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA) &&
-                !context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) ||
-                (CompatHelper.getCompat().getCameraCount() < 1)) {
-            mBtnCamera.setVisibility(View.INVISIBLE);
-        }
-
-        setPreviewImage(mImagePath, getMaxImageSize());
+        setPreviewImage(mViewModel.mImagePath, getMaxImageSize());
 
         layout.addView(mImagePreview, ViewGroup.LayoutParams.MATCH_PARENT, p);
         layout.addView(mImageFileSize, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -236,10 +188,76 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
+    @SuppressLint("UnsupportedChromeOsCameraSystemFeature")
+    private boolean canUseCamera(Context context) {
+        if (!Permissions.canUseCamera(context)) {
+            return false;
+        }
+
+        PackageManager pm = context.getPackageManager();
+
+        if ((!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) && !pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT))) {
+            return false;
+        }
+
+        // Some hardware has no camera or reports yes but has zero (e.g., cheap devices, and Chromebook emulator)
+        //noinspection RedundantIfStatement
+        if (CompatHelper.getCompat().getCameraCount() < 1) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private ImageViewModel captureImage(Context context) {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File image;
+        ImageViewModel toReturn = mViewModel;
+        try {
+            saveImageForRevert();
+
+            // Create a new image for the camera result to land in, clear the URI
+            image = createNewCacheImageFile();
+            Uri imageUri = getUriForFile(image);
+            toReturn = new ImageViewModel(image.getPath(), imageUri);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
+            // Until Android API21 (maybe 22) you must manually handle permissions for image capture w/FileProvider
+            // This can be removed once minSDK is >= 22
+            // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
+            if (CompatHelper.getSdkVersion() <= Build.VERSION_CODES.LOLLIPOP) {
+                cameraIntent.setClipData(ClipData.newRawUri("", imageUri));
+                cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+
+            if (cameraIntent.resolveActivity(context.getPackageManager()) == null) {
+                Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent");
+                showSomethingWentWrong();
+                onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null);
+                return toReturn;
+            }
+            try {
+                mActivity.startActivityForResultWithoutAnimation(cameraIntent, ACTIVITY_TAKE_PICTURE);
+            } catch (Exception e) {
+                Timber.w(e, "Unable to take picture");
+                showSomethingWentWrong();
+                onActivityResult(ACTIVITY_TAKE_PICTURE, Activity.RESULT_CANCELED, null);
+            }
+        } catch (IOException e) {
+            Timber.w(e, "mBtnCamera::onClickListener() unable to prepare file and launch camera");
+        }
+        return toReturn;
+
+    }
+
+
     private void saveImageForRevert() {
-        deletePreviousImage();
-        mPreviousImagePath = mImagePath;
-        mPreviousImageUri = mImageUri;
+        if (!mViewModel.isPreExistingImage) {
+            deletePreviousImage();
+            mPreviousImagePath = mViewModel.mImagePath;
+            mPreviousImageUri = mViewModel.mImageUri;
+        }
     }
 
 
@@ -251,33 +269,31 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private File createNewCacheFile() throws IOException {
-        return createNewCacheFile("jpg");
+    private File createNewCacheImageFile() throws IOException {
+        return createNewCacheImageFile("jpg");
     }
 
-    private File createNewCacheFile(@NonNull String extension) throws IOException {
-        String timeStamp = TimeUtils.getTimestamp(mTime);
+    private File createNewCacheImageFile(@NonNull String extension) throws IOException {
         File storageDir = new File(mAnkiCacheDirectory);
-        return File.createTempFile("img_" + timeStamp, "." + extension, storageDir);
+        return File.createTempFile("img", "." + extension, storageDir);
     }
 
 
     private void drawUIComponents(Context context) {
-        mImagePreview = new ImageView(mActivity);
-
         DisplayMetrics metrics = getDisplayMetrics();
 
         int height = metrics.heightPixels;
         int width = metrics.widthPixels;
 
 
+        mImagePreview = new ImageView(mActivity);
         mImagePreview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         mImagePreview.setAdjustViewBounds(true);
 
         mImagePreview.setMaxHeight((int) Math.round(height * 0.4));
         mImagePreview.setMaxWidth((int) Math.round(width * 0.6));
 
-        mImageFileSize = new EditText(context);
+        mImageFileSize = new FixedEditText(context);
         mImageFileSize.setMaxWidth((int) Math.round(width * 0.6));
         mImageFileSize.setEnabled(false);
         mImageFileSize.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -286,7 +302,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         //#5513 - Image compression failed, but we'll confuse most users if we tell them that. Instead, just imply that
         //there's an action that they can take.
-        mImageFileSizeWarning = new EditText(context);
+        mImageFileSizeWarning = new FixedEditText(context);
         mImageFileSizeWarning.setMaxWidth((int) Math.round(width * 0.6));
         mImageFileSizeWarning.setEnabled(false);
         mImageFileSizeWarning.setTextColor(Color.parseColor("#FF4500")); //Orange-Red
@@ -312,7 +328,9 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // All image modification methods come through here - this ensures that the state is consistent
+
         Timber.d("onActivityResult()");
         if (resultCode != Activity.RESULT_OK) {
             Timber.d("Activity was not successful");
@@ -354,19 +372,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             Timber.w("Unhandled request code: %d", requestCode);
             return;
         }
-        setPreviewImage(mImagePath, getMaxImageSize());
+        setPreviewImage(mViewModel.mImagePath, getMaxImageSize());
     }
 
 
     private void revertToPreviousImage() {
-        if (mImagePath != null && new File(mImagePath).exists()) {
-            if (!new File(mImagePath).delete()) {
-                Timber.i("revertToPreviousImage() had existing image, but delete failed");
-            }
-        }
-        mImagePath = mPreviousImagePath;
-        mField.setImagePath(mImagePath);
-        mImageUri = mPreviousImageUri;
+        mViewModel.deleteImagePath();
+        mViewModel = new ImageViewModel(mPreviousImagePath, mPreviousImageUri);
+        mField.setImagePath(mPreviousImagePath);
         mPreviousImagePath = null;
         mPreviousImageUri = null;
     }
@@ -394,22 +407,27 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
         File internalizedPick = internalizeUri(selectedImage);
         if (internalizedPick == null) {
+            String urlImagePath = getImageInfoFromUri(mActivity, selectedImage).first;
+            mViewModel = new ImageViewModel(urlImagePath, selectedImage);
+            mField.setImagePath(urlImagePath);
+            mField.setHasTemporaryMedia(false);
             Timber.w("handleSelectImageIntent() unable to internalize image from Uri %s", selectedImage);
             showSomethingWentWrong();
             return;
         }
 
-        mImagePath = internalizedPick.getAbsolutePath();
-        mImageUri = getUriForFile(internalizedPick);
-        mField.setHasTemporaryMedia(true);
+        String imagePath = internalizedPick.getAbsolutePath();
+        mViewModel = new ImageViewModel(imagePath, getUriForFile(internalizedPick));
+        setTemporaryMedia(imagePath);
 
-        Timber.i("handleSelectImageIntent() Decoded image: '%s'", mImagePath);
-        mField.setImagePath(mImagePath);
+        Timber.i("handleSelectImageIntent() Decoded image: '%s'", imagePath);
     }
 
     private @Nullable File internalizeUri(Uri uri) {
         File internalFile;
         Pair<String, String> uriFileInfo = getImageInfoFromUri(mActivity, uri);
+        String filePath = uriFileInfo.first;
+        String displayName = uriFileInfo.second;
 
         // Use the display name from the image info to create a new file with correct extension
         if (uriFileInfo.second == null) {
@@ -419,42 +437,20 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
         String uriFileExtension = uriFileInfo.second.substring(uriFileInfo.second.lastIndexOf('.') + 1);
         try {
-            internalFile = createNewCacheFile(uriFileExtension);
+            internalFile = createNewCacheImageFile(uriFileExtension);
         } catch (IOException e) {
             Timber.w(e, "internalizeUri() failed to create new file with extension %s", uriFileExtension);
             showSomethingWentWrong();
             return null;
         }
-
-        // If we got a real file name, do a copy from it
-        InputStream inputStream;
-        if (uriFileInfo.first != null) {
-            Timber.d("internalizeUri() got file path for direct copy from Uri %s", uri);
-            try {
-                inputStream = new FileInputStream(new File(uriFileInfo.first));
-            } catch (FileNotFoundException e) {
-                Timber.w(e, "internalizeUri() unable to open input stream on file %s", uriFileInfo.first);
-                showSomethingWentWrong();
-                return null;
-            }
-        } else {
-            try {
-                inputStream = mActivity.getContentResolver().openInputStream(uri);
-            } catch (Exception e) {
-                Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri);
-                showSomethingWentWrong();
-                return null;
-            }
-        }
-
         try {
-            CompatHelper.getCompat().copyFile(inputStream, internalFile.getAbsolutePath());
+            File returnFile = FileUtil.internalizeUri(uri, filePath, internalFile, mActivity.getContentResolver());
+            Timber.d("internalizeUri successful. Returning internalFile.");
+            return returnFile;
         } catch (Exception e) {
-            Timber.w(e, "internalizeUri() unable to internalize file from Uri %s to File %s", uri, internalFile.getAbsolutePath());
             showSomethingWentWrong();
             return null;
         }
-        return internalFile;
     }
 
 
@@ -476,10 +472,11 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      *
      * @return true if successful, false indicates the current image is likely not usable, revert if possible
      */
-    private boolean rotateAndCompress() {
-        Timber.d("rotateAndCompress() on %s", mImagePath);
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean rotateAndCompress(String imagePath, ImageViewModel imageViewModel) {
+        Timber.d("rotateAndCompress() on %s", imagePath);
         // Set the rotation of the camera image and save as png
-        File f = new File(mImagePath);
+        File f = new File(imagePath);
         Timber.d("rotateAndCompress in path %s has size %d", f.getAbsolutePath(), f.length());
         // use same filename but with png extension for output file
         // Load into a bitmap with max size of 1920 pixels and rotate if necessary
@@ -487,28 +484,27 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         if (b == null) {
             //#5513 - if we can't decode a bitmap, leave the image alone
             //And display a warning to push users to compress manually.
-            Timber.w("rotateAndCompress() unable to decode file %s", mImagePath);
-            mImageFileSizeWarning.setVisibility(View.VISIBLE);
+            Timber.w("rotateAndCompress() unable to decode file %s", imagePath);
             return false;
         }
 
         FileOutputStream out = null;
         try {
-            File outFile = createNewCacheFile();
+            File outFile = createNewCacheImageFile();
             out = new FileOutputStream(outFile);
             b = ExifUtil.rotateFromCamera(f, b);
             b.compress(Bitmap.CompressFormat.JPEG, 90, out);
             if (!f.delete()) {
-                Timber.w("rotateAndCompress() delete of pre-compressed image failed %s", mImagePath);
+                Timber.w("rotateAndCompress() delete of pre-compressed image failed %s", imagePath);
             }
-            mImagePath = outFile.getAbsolutePath();
-            mImageUri = getUriForFile(outFile);
-            mField.setImagePath(mImagePath);
-            Timber.d("rotateAndCompress out path %s has size %d", mImagePath, outFile.length());
+            imagePath = outFile.getAbsolutePath();
+            mViewModel = imageViewModel.rotateAndCompressTo(imagePath, getUriForFile(outFile));
+            mField.setImagePath(imagePath);
+            Timber.d("rotateAndCompress out path %s has size %d", imagePath, outFile.length());
         } catch (FileNotFoundException e) {
-            Timber.w(e, "rotateAndCompress() File not found for image compression %s", mImagePath);
+            Timber.w(e, "rotateAndCompress() File not found for image compression %s", imagePath);
         } catch (IOException e) {
-            Timber.w(e, "rotateAndCompress() create file failed for file %s", mImagePath);
+            Timber.w(e, "rotateAndCompress() create file failed for file %s", imagePath);
         } finally {
             try {
                 if (out != null) {
@@ -522,7 +518,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     }
 
 
-    private void setPreviewImage(String imagePath, int maxsize) {
+    private void setPreviewImage(@Nullable String imagePath, int maxsize) {
         if (imagePath != null && !"".equals(imagePath)) {
             File f = new File(imagePath);
             setImagePreview(f, maxsize);
@@ -538,9 +534,14 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         }
         Timber.d("setPreviewImage path %s has size %d", f.getAbsolutePath(), f.length());
         b = ExifUtil.rotateFromCamera(f, b);
+        onValidImage(b, Formatter.formatFileSize(mActivity, f.length()));
+    }
+
+
+    private void onValidImage(Bitmap b, String fileSize) {
         mImagePreview.setImageBitmap(b);
         mImageFileSize.setVisibility(View.VISIBLE);
-        mImageFileSize.setText(Formatter.formatFileSize(mActivity, f.length()));
+        mImageFileSize.setText(fileSize);
         mCropButton.setVisibility(View.VISIBLE);
     }
 
@@ -557,11 +558,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         Timber.d("handleTakePictureResult");
         if (!rotateAndCompress()) {
             Timber.i("handleTakePictureResult appears to have an invalid picture");
-            revertToPreviousImage();
-            showSomethingWentWrong();
             return;
-        };
-        mField.setHasTemporaryMedia(true);
+        }
         showCropDialog(mActivity.getString(R.string.crop_image), null);
     }
 
@@ -569,30 +567,31 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
     /**
      * Invoke system crop function
      */
-    private void requestCrop() {
-
-        if (mImagePath == null || mImageUri == null) {
+    private ImageViewModel requestCrop(ImageViewModel viewModel) {
+        ImageViewModel ret = viewModel;
+        if (!ret.isValid()) {
             Timber.w("requestCrop() but mImagePath or mImageUri is null");
-            return;
+            return ret;
         }
-        Timber.d("photoCrop() with path/uri %s/%s", mImagePath, mImageUri);
+        Timber.d("photoCrop() with path/uri %s/%s", ret.mImagePath, ret.mImageUri);
 
         // Pre-create a file in our cache for the cropping application to put results in
         File image;
         try {
-            image = createNewCacheFile();
+            image = createNewCacheImageFile();
         } catch (IOException e) {
             Timber.w(e, "requestCrop() unable to create new file to drop crop results into");
             showSomethingWentWrong();
-            return;
+            return ret;
         }
 
         saveImageForRevert();
-        mImagePath = image.getPath();
-        mImageUri = Uri.fromFile(image); // This must be the file URL it will not work with a content URI
-        mField.setImagePath(mImagePath);
-        mField.setHasTemporaryMedia(true);
-        Timber.d("requestCrop()  destination image has path/uri %s/%s", mImagePath, mImageUri);
+        // This must be the file URL it will not work with a content URI
+        String imagePath = image.getPath();
+        Uri imageUri = Uri.fromFile(image);
+        ret = viewModel.beforeCrop(imagePath, imageUri);
+        setTemporaryMedia(imagePath);
+        Timber.d("requestCrop()  destination image has path/uri %s/%s", ret.mImagePath, ret.mImageUri);
 
         // This is basically a "magic" recipe to get the system to crop, gleaned from StackOverflow etc
         // Intent intent = new Intent(Intent.ACTION_EDIT);  // edit (vs crop) would be even better, but it fails differently and needs lots of testing
@@ -600,7 +599,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intent.setDataAndType(mPreviousImageUri, "image/*");
         intent.putExtra("return-data", false);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString()); // worked w/crop but not edit
         intent.putExtra("noFaceDetection", true); // no face detection
         try {
@@ -610,11 +609,18 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
             showSomethingWentWrong();
             onActivityResult(ACTIVITY_CROP_PICTURE, Activity.RESULT_CANCELED, null);
         }
+        return ret;
+    }
+
+
+    private void setTemporaryMedia(String imagePath) {
+        mField.setImagePath(imagePath);
+        mField.setHasTemporaryMedia(true);
     }
 
 
     public void showCropDialog(String content, @Nullable MaterialDialog.SingleButtonCallback negativeCallBack) {
-        if (mImagePath == null || mImageUri == null) {
+        if (!mViewModel.isValid()) {
             Timber.w("showCropDialog called with null URI or Path");
             return;
         }
@@ -623,7 +629,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 .content(content)
                 .positiveText(R.string.dialog_ok)
                 .negativeText(R.string.dialog_no)
-                .onPositive((dialog, which) -> requestCrop());
+                .onPositive((dialog, which) -> mViewModel = requestCrop(mViewModel));
 
         if (negativeCallBack != null) {
             builder.onNegative(negativeCallBack);
@@ -637,14 +643,28 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         Timber.d("handleCropResult");
         if (!rotateAndCompress()) {
             Timber.i("handleCropResult() appears to have an invalid file, reverting");
-            revertToPreviousImage();
-            showSomethingWentWrong();
             return;
         }
         Timber.d("handleCropResult() = image path now %s", mField.getImagePath());
-        mField.setHasTemporaryMedia(true);
     }
 
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean rotateAndCompress() {
+        if (!rotateAndCompress(mViewModel.mImagePath, mViewModel)) {
+            mImageFileSizeWarning.setVisibility(View.VISIBLE);
+            revertToPreviousImage();
+            showSomethingWentWrong();
+            return false;
+        }
+        mField.setHasTemporaryMedia(true);
+        return true;
+    }
+
+
+    private Uri getUriForFile(File file) {
+        return getUriForFile(file, mActivity);
+    }
 
     /**
      * Get Uri based on current image path
@@ -652,7 +672,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      * @param file the file to get URI for
      * @return current image path's uri
      */
-    private Uri getUriForFile(File file) {
+    private static Uri getUriForFile(File file, Context mActivity) {
         Timber.d("getUriForFile() %s", file);
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -678,13 +698,8 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         Uri uri = data.getData();
         if (uri == null) {
             UIUtils.showThemedToast(context, context.getString(R.string.select_image_failed), false);
-            return null;
         }
-        mImageUri = uri;
-        mImagePath = getImageInfoFromUri(context, uri).first;
-        mField.setImagePath(mImagePath);
-        mField.setHasTemporaryMedia(false);
-        return mImageUri;
+        return uri;
     }
 
 
@@ -726,6 +741,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
      *
      * @return string[] 0: file path (null if does not exist), 1: display name (null if does not exist)
      */
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/7014
     private @NonNull Pair<String, String> getImageInfoFromContentResolver(Context context, Uri uri, String selection) {
         Timber.d("getImagePathFromContentResolver() %s", uri);
         String[] filePathColumns = {
@@ -759,5 +775,67 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
 
     public boolean isShowingPreview() {
         return mImageFileSize.getVisibility() == View.VISIBLE;
+    }
+
+    private static class ImageViewModel {
+        public final @Nullable String mImagePath;
+        public final @Nullable Uri mImageUri;
+        public boolean isPreExistingImage = false;
+
+        private ImageViewModel(@Nullable String mImagePath, @Nullable Uri mImageUri) {
+            this.mImagePath = mImagePath;
+            this.mImageUri = mImageUri;
+        }
+
+
+        public static ImageViewModel fromBundle(Bundle savedInstanceState) {
+            String mImagePath = savedInstanceState.getString("mImagePath");
+            Uri mImageUri = savedInstanceState.getParcelable("mImageUri");
+            return new ImageViewModel(mImagePath, mImageUri);
+        }
+
+        public void enrich(Bundle savedInstanceState) {
+            savedInstanceState.putString("mImagePath", mImagePath);
+            savedInstanceState.putParcelable("mImageUri", mImageUri);
+        }
+
+        @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+        public boolean isValid() {
+            return mImagePath != null && mImageUri != null;
+        }
+
+
+        public ImageViewModel replaceNullValues(IField mField, Context context) {
+            String newImagePath = mImagePath;
+            Uri newImageUri = mImageUri;
+            if (newImagePath == null) {
+                newImagePath = mField.getImagePath();
+            }
+            if (newImageUri == null && newImagePath != null) {
+                newImageUri = getUriForFile(new File(newImagePath), context);
+            }
+            ImageViewModel ivm = new ImageViewModel(newImagePath, newImageUri);
+            ivm.isPreExistingImage = true;
+            return ivm;
+        }
+
+
+        public void deleteImagePath() {
+            if (mImagePath != null && new File(mImagePath).exists()) {
+                if (!new File(mImagePath).delete()) {
+                    Timber.i("revertToPreviousImage() had existing image, but delete failed");
+                }
+            }
+        }
+
+
+        public ImageViewModel beforeCrop(String imagePath, Uri imageUri) {
+            return new ImageViewModel(imagePath, imageUri);
+        }
+
+
+        public ImageViewModel rotateAndCompressTo(String imagePath, Uri uri) {
+            return new ImageViewModel(imagePath, uri);
+        }
     }
 }

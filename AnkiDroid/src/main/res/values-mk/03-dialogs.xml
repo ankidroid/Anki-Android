@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Ја проверивте базата на податоци?</string>
     <string name="check_db_warning">Ова може да трае долго време</string>
     <string name="check_db_acknowledge">Базата на податоци се проверува</string>
@@ -60,7 +60,7 @@
         <item><![CDATA[Не-програмери исто така можат да помогнат. На пример, може да <a href=\"%1$s\">помогнат да се преведе</a> AnkiDroid, да се ажурира вики, да се обезбедат слики од екранот или блог за AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid се издава под лиценцата<a href=\"%1$s\">GNU-GPL v3 license</a> и изворниот код е достапен на<a href=\"%2$s\">на GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">Преглед</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Преглед</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
@@ -75,7 +75,6 @@
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">Презакажување на картичка</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">Reschedule card</item>
         <item quantity="other">Reschedule cards</item>
@@ -96,8 +95,6 @@
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Пријавете грешка</string>
     <string name="repair_deck_dialog">Дали навистина сакате да се обидете да ја поправите базата на податоци?\n\nПред да го започнете обидот, копијата ќе биде креирана во подпапката \"%s\".</string>
-    <string name="intent_add_saved_information">Зачувани податоци</string>
-    <string name="intent_add_clear_all">Исчистете се</string>
     <string name="intent_aedict_empty">Категоријата \"default\" е празна</string>
     <string name="intent_aedict_category">За да додадете картички на AnkiDroid, отстранете ги сите обележени категории или додадете еден по име \"default\"</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
@@ -109,10 +106,9 @@
     <string name="custom_study_random">Изберете x картички по случаен избор од deck:</string>
     <string name="custom_study_preview">Преглед на нови картички додадени во последните x дена:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="rebuild_custom_study_deck">Обнова на прилагодената студија на deck&#8230;</string>
     <string name="importing_collection">Внесување колекција&#8230;</string>
     <string name="import_media_count">Внесување на медиумски датотеки %1$d%%&#8230;</string>
-    <string name="import_progress">Внесување на белешки: %1$d%%\n• Внесување картички: %2$d%%\n• Пост-обработка: %3$d%%</string>
+    <string name="import_progress">• Внесување на белешки: %1$d%%\n• Внесување картички: %2$d%%\n• Пост-обработка: %3$d%%</string>
     <string name="import_update_details">Ажурирани %1$d од %2$d постоечки белешки.</string>
     <string name="import_update_ignored">Некои ажурирања беа игнорирани бидејќи типот на белешка се променил</string>
     <string name="import_complete_count">Увезени картички: %d</string>
@@ -124,9 +120,10 @@
     <string name="dialog_ok">ОК</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">Продолжи</string>
-    <string name="dialog_positive_create">Креирај</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Креирај</string>
     <string name="dialog_positive_delete">Избриши</string>
-    <string name="dialog_positive_disable">Оневозможено</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Оневозможено</string>
     <string name="dialog_positive_overwrite">Пребриши</string>
     <string name="dialog_positive_remove">Отстрани</string>
     <string name="dialog_positive_repair">Поправка</string>
@@ -147,13 +144,19 @@
     <string name="check_media_no_unused_missing">Не се пронајдени неискористени или исчезнати датотеки</string>
     <string name="check_media_db_updated">Медиумската база на податоци е повторно изградена</string>
     <string name="check_media_delete_unused">Избришете го неискористеното</string>
-    <string name="check_media_deleted">Избришани датотеки: %d</string>
+    <string name="delete_media_message">Deleting media&#8230;</string>
+    <string name="delete_media_result_title">Deletion result</string>
+    <plurals name="delete_media_result_message">
+        <item quantity="one">%d file deleted</item>
+        <item quantity="other">%d files deleted</item>
+    </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Сие картички</string>
     <string name="tags_dialog_option_new_cards">Ново</string>
-    <string name="tags_dialog_option_due_cards">Доспеано</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Доспеано</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Наоѓање празни картички&#8230;</string>
+    <string name="confirm_cancel">Do you want to cancel?</string>
     <string name="empty_cards_none">Нема празни картички</string>
     <string name="empty_cards_count">Картички за бришење: %d</string>
     <string name="empty_cards_deleted">Избришани картички: %d</string>
@@ -170,7 +173,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_positive">Check Database</string>
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
@@ -185,6 +187,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Background image applied</string>
     <string name="background_image_removed">Background image removed</string>
@@ -202,6 +206,28 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <!-- Locale Selection Dialog -->
+    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
+    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>

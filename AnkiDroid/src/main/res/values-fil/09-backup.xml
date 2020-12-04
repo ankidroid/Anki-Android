@@ -40,7 +40,6 @@
 <resources>
     <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
     <string name="sd_space_warning">Mas mababa sa %d MB na espasyo sa iyong SD card na natitira. \n Linisin ang ilang espasyo upang maiwasan ang pagkawala ng data.</string>
-    <string name="backup_delete">Binubura ang mga backup&#8230;</string>
     <string name="backup_restore">Ibalik mula sa backup</string>
     <string name="backup_new_collection">Bagong koleksyon</string>
     <string name="backup_del_collection">Burahin ang koleksyon at gumawa ng bago</string>
@@ -48,13 +47,11 @@
     <string name="backup_full_sync_from_server">Buong pag-sync mula sa server</string>
     <string name="backup_full_sync_from_server_question">I-overwrite ang iyong koleksyon sa isa mula sa AnkiWeb? Ibababa nito ang lahat ng iyong progreso sa pag-aaral at idinagdag ang impormasyon mula noong huling pag-sync mo.</string>
     <string name="error_handling_title">Error handling</string>
-    <string name="error_handling_options">Mga opsyon</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Mga opsyon</string>
     <string name="backup_retry_opening">Muling buksan</string>
     <string name="backup_error_menu_repair">Ayosin ang database</string>
-    <string name="backup_repair_deck">Ayosin</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Inaayos ang database&#8230;</string>
-    <string name="backup_error">Error</string>
     <string name="backup_invalid_file_error">Ang napiling file ay invalid</string>
     <string name="backup_restore_select_title">Mamili ng back up na i-rerestore</string>
     <string name="backup_restore_no_backups">Walang available na backup sa device na ito. Kung mayroon kang mga pag-backup sa iyong desktop computer, kopyahin ang mga ito nang manu-mano sa iyong folder na AnkiDroid.</string>

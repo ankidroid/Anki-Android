@@ -29,10 +29,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
 import android.view.KeyEvent;
@@ -44,11 +40,13 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.anki.receiver.SdCardReceiver;
 import com.ichi2.anki.services.ReminderService;
 import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.utils.Time;
+import com.ichi2.preferences.NumberRangePreference;
 import com.ichi2.preferences.StepsPreference;
 import com.ichi2.preferences.TimePreference;
 import com.ichi2.themes.StyledProgressDialog;
@@ -66,13 +64,18 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE;
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+
 import com.ichi2.async.TaskData;
 
 /**
@@ -89,16 +92,19 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     public class DeckPreferenceHack implements SharedPreferences {
 
-        private Map<String, String> mValues = new HashMap<>();
-        private Map<String, String> mSummaries = new HashMap<>();
+        private final Map<String, String> mValues = new HashMap<>();
+        private final Map<String, String> mSummaries = new HashMap<>();
         private MaterialDialog mProgressDialog;
-        private List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
+        private final List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();
 
 
         private DeckPreferenceHack() {
             this.cacheValues();
         }
 
+        public DeckOptions getDeckOptions() {
+            return DeckOptions.this;
+        }
 
         private void cacheValues() {
             Timber.i("DeckOptions - CacheValues");
@@ -126,8 +132,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 // rev
                 JSONObject revOptions = mOptions.getJSONObject("rev");
                 mValues.put("revPerDay", revOptions.getString("perDay"));
-                mValues.put("easyBonus", Integer.toString((int) (revOptions.getDouble("ease4") * 100)));
-                mValues.put("revIvlFct", Integer.toString((int) (revOptions.getDouble("ivlFct") * 100)));
+                mValues.put("easyBonus", String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ease4") * 100));
+                mValues.put("hardFactor", String.format(Locale.ROOT, "%.0f", revOptions.optDouble("hardFactor", 1.2) * 100));
+                mValues.put("revIvlFct", String.format(Locale.ROOT, "%.0f", revOptions.getDouble("ivlFct") * 100));
                 mValues.put("revMaxIvl", revOptions.getString("maxIvl"));
                 mValues.put("revBury", Boolean.toString(revOptions.optBoolean("bury", true)));
 
@@ -139,7 +146,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 // lapse
                 JSONObject lapOptions = mOptions.getJSONObject("lapse");
                 mValues.put("lapSteps", StepsPreference.convertFromJSON(lapOptions.getJSONArray("delays")));
-                mValues.put("lapNewIvl", Integer.toString((int) (lapOptions.getDouble("mult") * 100)));
+                mValues.put("lapNewIvl", String.format(Locale.ROOT, "%.0f", lapOptions.getDouble("mult") * 100));
                 mValues.put("lapMinIvl", lapOptions.getString("minInt"));
                 mValues.put("lapLeechThres", lapOptions.getString("leechFails"));
                 mValues.put("lapLeechAct", lapOptions.getString("leechAction"));
@@ -151,7 +158,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     final JSONArray reminderTime = reminder.getJSONArray("time");
 
                     mValues.put("reminderEnabled", Boolean.toString(reminder.getBoolean("enabled")));
-                    mValues.put("reminderTime", String.format("%1$02d:%2$02d", reminderTime.get(0), reminderTime.get(1)));
+                    mValues.put("reminderTime", String.format("%1$02d:%2$02d", reminderTime.getLong(0), reminderTime.getLong(1)));
                 } else {
                     mValues.put("reminderEnabled", "false");
                     mValues.put("reminderTime", TimePreference.DEFAULT_VALUE);
@@ -192,7 +199,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     for (Entry<String, Object> entry : mUpdate.valueSet()) {
                         String key = entry.getKey();
                         Object value = entry.getValue();
-                        Timber.i("Change value for key '" + key + "': " + value);
+                        Timber.i("Change value for key '%s': %s", key, value);
 
                         switch (key) {
                             case "maxAnswerTime":
@@ -207,7 +214,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 int oldValue = mOptions.getJSONObject("new").getInt("order");
                                 if (oldValue != newValue) {
                                     mOptions.getJSONObject("new").put("order", newValue);
-                                    CollectionTask.launchCollectionTask(REORDER, mConfChangeHandler,
+                                    CollectionTask.launchCollectionTask(REORDER, confChangeHandler(),
                                             new TaskData(new Object[] {mOptions}));
                                 }
                                 mOptions.getJSONObject("new").put("order", Integer.parseInt((String) value));
@@ -217,19 +224,19 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 mOptions.getJSONObject("new").put("perDay", value);
                                 break;
                             case "newGradIvl": {
-                                JSONArray ja = new JSONArray(); // [graduating, easy]
+                                JSONArray newInts = new JSONArray(); // [graduating, easy]
 
-                                ja.put(value);
-                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(1));
-                                mOptions.getJSONObject("new").put("ints", ja);
+                                newInts.put(value);
+                                newInts.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(1));
+                                mOptions.getJSONObject("new").put("ints", newInts);
                                 break;
                             }
                             case "newEasy": {
-                                JSONArray ja = new JSONArray(); // [graduating, easy]
+                                JSONArray newInts = new JSONArray(); // [graduating, easy]
 
-                                ja.put(mOptions.getJSONObject("new").getJSONArray("ints").get(0));
-                                ja.put(value);
-                                mOptions.getJSONObject("new").put("ints", ja);
+                                newInts.put(mOptions.getJSONObject("new").getJSONArray("ints").getInt(0));
+                                newInts.put(value);
+                                mOptions.getJSONObject("new").put("ints", newInts);
                                 break;
                             }
                             case "newBury":
@@ -240,6 +247,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "easyBonus":
                                 mOptions.getJSONObject("rev").put("ease4", (Integer) value / 100.0f);
+                                break;
+                            case "hardFactor":
+                                mOptions.getJSONObject("rev").put("hardFactor", (Integer) value / 100.0f);
                                 break;
                             case "revIvlFct":
                                 mOptions.getJSONObject("rev").put("ivlFct", (Integer) value / 100.0f);
@@ -297,7 +307,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             case "deckConf": {
                                 long newConfId = Long.parseLong((String) value);
                                 mOptions = mCol.getDecks().getConf(newConfId);
-                                CollectionTask.launchCollectionTask(CONF_CHANGE, mConfChangeHandler,
+                                CollectionTask.launchCollectionTask(CONF_CHANGE, confChangeHandler(),
                                         new TaskData(new Object[] {mDeck, mOptions}));
                                 break;
                             }
@@ -310,7 +320,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                             }
                             case "confReset":
                                 if ((Boolean) value) {
-                                    CollectionTask.launchCollectionTask(CONF_RESET, mConfChangeHandler,
+                                    CollectionTask.launchCollectionTask(CONF_RESET, confChangeHandler(),
                                             new TaskData(new Object[] {mOptions}));
                                 }
                                 break;
@@ -356,7 +366,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                                 break;
                             case "confSetSubdecks":
                                 if ((Boolean) value) {
-                                    CollectionTask.launchCollectionTask(CONF_SET_SUBDECKS, mConfChangeHandler,
+                                    CollectionTask.launchCollectionTask(CONF_SET_SUBDECKS, confChangeHandler(),
                                             new TaskData(new Object[] {mDeck, mOptions}));
                                 }
                                 break;
@@ -385,11 +395,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                                 alarmManager.cancel(reminderIntent);
                                 if ((Boolean) value) {
-                                    final Calendar calendar = Calendar.getInstance();
-
-                                    calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
-                                    calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
-                                    calendar.set(Calendar.SECOND, 0);
+                                    final Calendar calendar = reminderToCalendar(mCol.getTime(), reminder);
 
                                     alarmManager.setRepeating(
                                             AlarmManager.RTC_WAKEUP,
@@ -420,11 +426,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
                                 alarmManager.cancel(reminderIntent);
 
-                                final Calendar calendar = Calendar.getInstance();
-
-                                calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
-                                calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
-                                calendar.set(Calendar.SECOND, 0);
+                                final Calendar calendar = reminderToCalendar(mCol.getTime(), reminder);
 
                                 alarmManager.setRepeating(
                                         AlarmManager.RTC_WAKEUP,
@@ -521,25 +523,13 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 return null;
             }
 
-            private TaskListener mConfChangeHandler = new TaskListener() {
-                @Override
-                public void onPreExecute() {
-                    Resources res = getResources();
-                    mProgressDialog = StyledProgressDialog.show(DeckOptions.this, "",
-                            res.getString(R.string.reordering_cards), false);
-                }
+            public DeckPreferenceHack getDeckPreferenceHack() {
+                return DeckPreferenceHack.this;
+            }
 
-
-                @Override
-                public void onPostExecute(TaskData result) {
-                    cacheValues();
-                    buildLists();
-                    updateSummaries();
-                    mProgressDialog.dismiss();
-                    // Restart to reflect the new preference values
-                    restartActivity();
-                }
-            };
+            public ConfChangeHandler confChangeHandler() {
+                return new ConfChangeHandler(DeckPreferenceHack.this);
+            }
 
             /**
              * Remove the currently selected options group
@@ -548,12 +538,11 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 // Remove options group, asking user to confirm full sync if necessary
                 mCol.getDecks().remConf(mOptions.getLong("id"));
                 // Run the CPU intensive re-sort operation in a background thread
-                CollectionTask.launchCollectionTask(CONF_REMOVE, mConfChangeHandler,
+                CollectionTask.launchCollectionTask(CONF_REMOVE, confChangeHandler(),
                                         new TaskData(new Object[] { mOptions }));
                 mDeck.put("conf", 1);
             }
         }
-
 
         @Override
         public boolean contains(String key) {
@@ -575,25 +564,25 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
         @Override
         public boolean getBoolean(String key, boolean defValue) {
-            return Boolean.valueOf(this.getString(key, Boolean.toString(defValue)));
+            return Boolean.parseBoolean(this.getString(key, Boolean.toString(defValue)));
         }
 
 
         @Override
         public float getFloat(String key, float defValue) {
-            return Float.valueOf(this.getString(key, Float.toString(defValue)));
+            return Float.parseFloat(this.getString(key, Float.toString(defValue)));
         }
 
 
         @Override
         public int getInt(String key, int defValue) {
-            return Integer.valueOf(this.getString(key, Integer.toString(defValue)));
+            return Integer.parseInt(this.getString(key, Integer.toString(defValue)));
         }
 
 
         @Override
         public long getLong(String key, long defValue) {
-            return Long.valueOf(this.getString(key, Long.toString(defValue)));
+            return Long.parseLong(this.getString(key, Long.toString(defValue)));
         }
 
 
@@ -626,6 +615,29 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     }
 
+    private static class ConfChangeHandler extends TaskListenerWithContext<DeckPreferenceHack> {
+        public ConfChangeHandler(DeckPreferenceHack deckPreferenceHack) {
+            super(deckPreferenceHack);
+        }
+
+        @Override
+        public void actualOnPreExecute(@NonNull DeckPreferenceHack deckPreferenceHack) {
+            Resources res = deckPreferenceHack.getDeckOptions().getResources();
+            deckPreferenceHack.mProgressDialog = StyledProgressDialog.show(deckPreferenceHack.getDeckOptions(), "",
+                    res.getString(R.string.reordering_cards), false);
+        }
+
+
+        @Override
+        public void actualOnPostExecute(@NonNull DeckPreferenceHack deckPreferenceHack, TaskData result) {
+            deckPreferenceHack.cacheValues();
+            deckPreferenceHack.getDeckOptions().buildLists();
+            deckPreferenceHack.getDeckOptions().updateSummaries();
+            deckPreferenceHack.mProgressDialog.dismiss();
+            // Restart to reflect the new preference values
+            deckPreferenceHack.getDeckOptions().restartActivity();
+        }
+    }
 
     @Override
     public SharedPreferences getSharedPreferences(String name, int mode) {
@@ -665,6 +677,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             mPref.registerOnSharedPreferenceChangeListener(this);
 
             this.addPreferencesFromResource(R.xml.deck_options);
+            if (this.isSchedV2()) {
+                this.enableSchedV2Preferences();
+            }
             this.buildLists();
             this.updateSummaries();
             // Set the activity title to include the name of the deck
@@ -686,6 +701,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     }
 
     @Override
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             closeWithResult();
@@ -703,14 +719,14 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     }
 
     // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference)
+    public boolean onPreferenceTreeClick(android.preference.PreferenceScreen preferenceScreen, android.preference.Preference preference)
     {
         super.onPreferenceTreeClick(preferenceScreen, preference);
-        if (preference instanceof PreferenceScreen &&
-                ((PreferenceScreen) preference).getDialog() != null) {
-                    ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(
+        if (preference instanceof android.preference.PreferenceScreen &&
+                ((android.preference.PreferenceScreen) preference).getDialog() != null) {
+                    ((android.preference.PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(
                             this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
         }
 
@@ -735,7 +751,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             setResult(RESULT_CANCELED);
         }
         finish();
-        ActivityTransitionAnimation.slide(this, ActivityTransitionAnimation.FADE);
+        ActivityTransitionAnimation.slide(this, FADE);
     }
 
 
@@ -748,12 +764,12 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     }
 
 
-    @SuppressWarnings("deprecation") // Tracked as #5019 on github
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     protected void updateSummaries() {
         Resources res = getResources();
         // for all text preferences, set summary as current database value
         for (String key : mPref.mValues.keySet()) {
-            Preference pref = this.findPreference(key);
+            android.preference.Preference pref = this.findPreference(key);
             if ("deckConf".equals(key)) {
                 String groupName = getOptionsGroupName();
                 int count = getOptionsGroupCount();
@@ -766,10 +782,10 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
             String value = null;
             if (pref == null) {
                 continue;
-            } else if (pref instanceof CheckBoxPreference) {
+            } else if (pref instanceof android.preference.CheckBoxPreference) {
                 continue;
-            } else if (pref instanceof ListPreference) {
-                ListPreference lp = (ListPreference) pref;
+            } else if (pref instanceof android.preference.ListPreference) {
+                android.preference.ListPreference lp = (android.preference.ListPreference) pref;
                 value = lp.getEntry() != null ? lp.getEntry().toString() : "";
             } else {
                 value = this.mPref.getString(key, "");
@@ -793,9 +809,9 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     }
 
 
-    @SuppressWarnings("deprecation") // Tracked as #5019 on github
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     protected void buildLists() {
-        ListPreference deckConfPref = (ListPreference) findPreference("deckConf");
+        android.preference.ListPreference deckConfPref = (android.preference.ListPreference) findPreference("deckConf");
         ArrayList<DeckConfig> confs = mCol.getDecks().allConf();
         Collections.sort(confs, NamedJSONComparator.instance);
         String[] confValues = new String[confs.size()];
@@ -809,15 +825,30 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         deckConfPref.setEntryValues(confValues);
         deckConfPref.setValue(mPref.getString("deckConf", "0"));
 
-        ListPreference newOrderPref = (ListPreference) findPreference("newOrder");
+        android.preference.ListPreference newOrderPref = (android.preference.ListPreference) findPreference("newOrder");
         newOrderPref.setEntries(R.array.new_order_labels);
         newOrderPref.setEntryValues(R.array.new_order_values);
         newOrderPref.setValue(mPref.getString("newOrder", "0"));
 
-        ListPreference leechActPref = (ListPreference) findPreference("lapLeechAct");
+        android.preference.ListPreference leechActPref = (android.preference.ListPreference) findPreference("lapLeechAct");
         leechActPref.setEntries(R.array.leech_action_labels);
         leechActPref.setEntryValues(R.array.leech_action_values);
-        leechActPref.setValue(mPref.getString("lapLeechAct", new Integer(Consts.LEECH_SUSPEND).toString()));
+        leechActPref.setValue(mPref.getString("lapLeechAct", Integer.toString(Consts.LEECH_SUSPEND)));
+    }
+
+
+    private boolean isSchedV2() {
+        return mCol.schedVer() == 2;
+    }
+
+
+    /**
+     * Enable deck preferences that are only available with Scheduler V2.
+     */
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+    protected void enableSchedV2Preferences() {
+            NumberRangePreference hardFactorPreference = (NumberRangePreference) findPreference("hardFactor");
+            hardFactorPreference.setEnabled(true);
     }
 
 
@@ -855,8 +886,8 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
         int count = 0;
         long did = mDeck.getLong("id");
         TreeMap<String, Long> children = mCol.getDecks().children(did);
-        for (Map.Entry<String, Long> entry : children.entrySet()) {
-            Deck child = mCol.getDecks().get(entry.getValue());
+        for (long childDid : children.values()) {
+            Deck child = mCol.getDecks().get(childDid);
             if (child.getInt("dyn") == 1) {
                 continue;
             }
@@ -888,5 +919,15 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     private void restartActivity() {
         recreate();
+    }
+
+    public static Calendar reminderToCalendar(Time time, JSONObject reminder) {
+
+        final Calendar calendar = time.calendar();
+
+        calendar.set(Calendar.HOUR_OF_DAY, reminder.getJSONArray("time").getInt(0));
+        calendar.set(Calendar.MINUTE, reminder.getJSONArray("time").getInt(1));
+        calendar.set(Calendar.SECOND, 0);
+        return calendar;
     }
 }

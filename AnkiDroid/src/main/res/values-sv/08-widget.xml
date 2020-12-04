@@ -44,18 +44,7 @@
         <item quantity="one">%d AnkiDroid-kort i kö</item>
         <item quantity="other">%d AnkiDroid-kort i kö</item>
     </plurals>
-    <string name="widget_no_cards_due">Inga kort i kö</string>
-    <string name="widget_loading">Widget laddas...</string>
-    <plurals name="widget_cards_in_decks_due">
-        <item quantity="one">%1$d kort i kö i %2$s</item>
-        <item quantity="other">%1$d kort i kö i %2$s</item>
-    </plurals>
-    <plurals name="widget_decks">
-        <item quantity="one">%1$d Kortlek</item>
-        <item quantity="other">%1$d Kortlekar</item>
-    </plurals>
-    <string name="widget_small">AnkiDroid Liten</string>
-    <string name="widget_small_button">AnkiDroid</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid Liten</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d kort i kö</item>
         <item quantity="other">%d kort i kö</item>
@@ -64,6 +53,5 @@
         <item quantity="one">%d minuter kvar</item>
         <item quantity="other">%d minuter kvar</item>
     </plurals>
-    <string name="widget_add_note">Lägg till not</string>
     <string name="widget_add_note_button">Lägg till ny AnkiDroid not</string>
 </resources>

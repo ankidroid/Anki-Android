@@ -22,22 +22,28 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
+import com.ichi2.anki.dialogs.HelpDialog;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
+import androidx.drawerlayout.widget.ClosableDrawerLayout;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import timber.log.Timber;
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
 public abstract class NavigationDrawerActivity extends AnkiActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -94,7 +100,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         View actionLayout = mNavigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
         mNightModeSwitch = actionLayout.findViewById(R.id.switch_compat);
         mNightModeSwitch.setChecked(preferences.getBoolean(NIGHT_MODE_PREFERENCE, false));
-        mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> { applyNightMode(isChecked); });
+        mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> applyNightMode(isChecked));
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0) {
@@ -103,10 +109,15 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 super.onDrawerClosed(drawerView);
                 supportInvalidateOptionsMenu();
 
-                if (pendingRunnable != null) {
-                    new Handler().post(pendingRunnable);
-                    pendingRunnable = null;
-                }
+                // If animations are disabled, this is executed before onNavigationItemSelected is called
+                // PERF: May be able to reduce this delay
+                new Handler().postDelayed(() -> {
+                    if (pendingRunnable != null) {
+                        new Handler().post(pendingRunnable);
+                        pendingRunnable = null;
+                    }
+                }, 100);
+
             }
 
 
@@ -116,7 +127,12 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 supportInvalidateOptionsMenu();
             }
         };
-
+        if (mDrawerLayout instanceof ClosableDrawerLayout) {
+            ((ClosableDrawerLayout) mDrawerLayout).setAnimationEnabled(animationEnabled());
+        } else {
+            Timber.w("Unexpected Drawer layout - could not modify navigation animation");
+        }
+        mDrawerToggle.setDrawerSlideAnimationEnabled(animationEnabled());
         mDrawerLayout.addDrawerListener(mDrawerToggle);
     }
 
@@ -180,7 +196,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         if (mDrawerToggle != null) {
@@ -249,7 +265,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public void onBackPressed() {
         if (isDrawerOpen()) {
             Timber.i("Back key pressed");
-            mDrawerLayout.closeDrawers();
+            closeDrawer();
         } else {
             super.onBackPressed();
         }
@@ -261,9 +277,9 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
      */
     protected void onNavigationPressed() {
         if (mNavButtonGoesBack) {
-            finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+            finishWithAnimation(RIGHT);
         } else {
-            mDrawerLayout.openDrawer(GravityCompat.START);
+            openDrawer();
         }
     }
 
@@ -280,49 +296,35 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
          */
         pendingRunnable = () -> {
             // Take action if a different item selected
-            switch (item.getItemId()) {
-                case R.id.nav_decks: {
-                    Timber.i("Navigating to decks");
-                    Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
-                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
-                    startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.RIGHT);
-                    break;
-                }
-                case R.id.nav_browser:
-                    Timber.i("Navigating to card browser");
-                    openCardBrowser();
-                    break;
-                case R.id.nav_stats: {
-                    Timber.i("Navigating to stats");
-                    Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
-                    startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, ActivityTransitionAnimation.LEFT);
-                    break;
-                }
-                case R.id.nav_night_mode:
-                    Timber.i("Toggling Night Mode");
-                    mNightModeSwitch.performClick();
-                    break;
-                case R.id.nav_settings:
-                    Timber.i("Navigating to settings");
-                    mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
-                    // Remember the theme we started with so we can restart the Activity if it changes
-                    mOldTheme = Themes.getCurrentTheme(getApplicationContext());
-                    startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, ActivityTransitionAnimation.FADE);
-                    break;
-                case R.id.nav_help:
-                    Timber.i("Navigating to help");
-                    openUrl(Uri.parse(AnkiDroidApp.getManualUrl()));
-                    break;
-                case R.id.nav_feedback:
-                    Timber.i("Navigating to feedback");
-                    openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()));
-                    break;
-                default:
-                    break;
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_decks) {
+                Timber.i("Navigating to decks");
+                Intent deckPicker = new Intent(NavigationDrawerActivity.this, DeckPicker.class);
+                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);    // opening DeckPicker should clear back history
+                startActivityWithAnimation(deckPicker, RIGHT);
+            } else if (itemId == R.id.nav_browser) {
+                Timber.i("Navigating to card browser");
+                openCardBrowser();
+            } else if (itemId == R.id.nav_stats) {
+                Timber.i("Navigating to stats");
+                Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
+                startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, LEFT);
+            } else if (itemId == R.id.nav_night_mode) {
+                Timber.i("Toggling Night Mode");
+                mNightModeSwitch.performClick();
+            } else if (itemId == R.id.nav_settings) {
+                Timber.i("Navigating to settings");
+                mOldColPath = CollectionHelper.getCurrentAnkiDroidDirectory(NavigationDrawerActivity.this);
+                // Remember the theme we started with so we can restart the Activity if it changes
+                mOldTheme = Themes.getCurrentTheme(getApplicationContext());
+                startActivityForResultWithAnimation(new Intent(NavigationDrawerActivity.this, Preferences.class), REQUEST_PREFERENCES_UPDATE, FADE);
+            } else if (itemId == R.id.nav_help) {
+                Timber.i("Navigating to help");
+                showDialogFragment(HelpDialog.createInstance(this));
             }
         };
 
-        mDrawerLayout.closeDrawers();
+        closeDrawer();
         return true;
     }
 
@@ -332,7 +334,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         if (currentCardId != null) {
             intent.putExtra("currentCard", currentCardId);
         }
-        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.LEFT);
+        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, LEFT);
     }
 
     // Override this to specify a specific card id
@@ -372,5 +374,45 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         stackBuilder.addNextIntentWithParentStack(intent);
         stackBuilder.startActivities(new Bundle());
         activity.finishWithoutAnimation();
+    }
+
+
+    public void toggleDrawer() {
+        if (!isDrawerOpen()) {
+            openDrawer();
+        } else {
+            closeDrawer();
+        }
+    }
+
+
+    private void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START, animationEnabled());
+    }
+
+    private void closeDrawer() {
+        mDrawerLayout.closeDrawer(GravityCompat.START, animationEnabled());
+    }
+
+
+    public void focusNavigation() {
+        // mNavigationView.getMenu().getItem(0).setChecked(true);
+        selectNavigationItem(R.id.nav_decks);
+        mNavigationView.requestFocus();
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (!isDrawerOpen()) {
+            return super.onKeyDown(keyCode, event);
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+            closeDrawer();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -39,6 +39,7 @@ import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus;
 import com.ichi2.anki.runtimetools.TaskOperations;
 import com.ichi2.anki.web.HttpFetcher;
 import com.ichi2.async.Connection;
+import com.ichi2.utils.AdaptionUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -56,9 +57,9 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
     private static final String BUNDLE_KEY_SHUT_OFF = "key.multimedia.shut.off";
     // Must be passed in
-    public static String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
+    public static final String EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source";
     // Passed out as a result
-    public static String EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path";
+    public static final String EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path";
 
     String mSource;
 
@@ -86,6 +87,11 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (AdaptionUtil.isUserATestClient()) {
+            finishCancel();
+            return;
+        }
+
         if (savedInstanceState != null) {
             boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
             if (b) {
@@ -111,7 +117,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
         Button buttonLoadPronunciation = new Button(this);
         buttonLoadPronunciation.setText(gtxt(R.string.multimedia_editor_pron_load));
         linearLayout.addView(buttonLoadPronunciation);
-        buttonLoadPronunciation.setOnClickListener(v -> onLoadPronunciation(v));
+        buttonLoadPronunciation.setOnClickListener(this::onLoadPronunciation);
         Button mSaveButton = new Button(this);
         mSaveButton.setText("Save");
         mSaveButton.setOnClickListener(v -> { });
@@ -427,8 +433,7 @@ public class LoadPronounciationActivity extends Activity implements OnCancelList
 
 
     private void stopAllTasks() {
-        AsyncTask<?, ?, ?> t;
-        t = mPostTranslation;
+        AsyncTask<?, ?, ?> t = mPostTranslation;
         TaskOperations.stopTaskGracefully(t);
         t = mPostPronunciation;
         TaskOperations.stopTaskGracefully(t);

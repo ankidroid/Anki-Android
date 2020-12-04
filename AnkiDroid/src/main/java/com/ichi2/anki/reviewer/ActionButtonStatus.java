@@ -22,7 +22,7 @@ public class ActionButtonStatus {
      * Custom button allocation
      */
     @NonNull
-    protected Map<Integer, Integer> mCustomButtons = new HashMap<>();
+    protected final Map<Integer, Integer> mCustomButtons = new HashMap<>();
     private final ReviewerUi mReviewerUi;
 
     public static final int SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER;
@@ -52,6 +52,7 @@ public class ActionButtonStatus {
         setupButton(preferences, R.id.action_edit, "customButtonEditCard", SHOW_AS_ACTION_IF_ROOM);
         setupButton(preferences, R.id.action_add_note_reviewer, "customButtonAddCard", MENU_DISABLED);
         setupButton(preferences, R.id.action_replay, "customButtonReplay", SHOW_AS_ACTION_IF_ROOM);
+        setupButton(preferences, R.id.action_card_info, "customButtonCardInfo", MENU_DISABLED);
         setupButton(preferences, R.id.action_clear_whiteboard, "customButtonClearWhiteboard", SHOW_AS_ACTION_IF_ROOM);
         setupButton(preferences, R.id.action_hide_whiteboard, "customButtonShowHideWhiteboard", SHOW_AS_ACTION_ALWAYS);
         setupButton(preferences, R.id.action_select_tts, "customButtonSelectTts", SHOW_AS_ACTION_NEVER);
@@ -73,10 +74,17 @@ public class ActionButtonStatus {
 
 
     public void setCustomButtons(Menu menu) {
-        for(int itemId : mCustomButtons.keySet()) {
-            if (mCustomButtons.get(itemId) != MENU_DISABLED) {
+        for(Map.Entry<Integer, Integer> entry : mCustomButtons.entrySet()) {
+            int itemId = entry.getKey();
+            if (entry.getValue() != MENU_DISABLED) {
                 MenuItem item = menu.findItem(itemId);
-                item.setShowAsAction(mCustomButtons.get(itemId));
+                if (item == null) {
+                    // Happens with TV - removing flag icon
+                    Timber.w("Could not find Menu Item %d", itemId);
+                    continue;
+                }
+
+                item.setShowAsAction(entry.getValue());
                 Drawable icon = item.getIcon();
                 item.setEnabled(!mReviewerUi.isControlBlocked());
                 if (icon != null) {

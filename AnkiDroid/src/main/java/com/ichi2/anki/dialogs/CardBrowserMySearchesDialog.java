@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -19,8 +21,8 @@ import timber.log.Timber;
 
 public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
 
-    public static int CARD_BROWSER_MY_SEARCHES_TYPE_LIST = 0; //list searches dialog
-    public static int CARD_BROWSER_MY_SEARCHES_TYPE_SAVE = 1; //save searches dialog
+    public static final int CARD_BROWSER_MY_SEARCHES_TYPE_LIST = 0; //list searches dialog
+    public static final int CARD_BROWSER_MY_SEARCHES_TYPE_SAVE = 1; //save searches dialog
 
     private static MySearchesDialogListener mMySearchesDialogListener;
 
@@ -48,6 +50,7 @@ public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
         return m;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +83,7 @@ public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
             mCurrentSearchTerms = getArguments().getString("currentSearchTerms");
             builder.title(getString(R.string.card_browser_list_my_searches_save))
                    .positiveText(getString(android.R.string.ok))
-                   .negativeText(getString(R.string.cancel))
+                   .negativeText(getString(R.string.dialog_cancel))
                    .input(R.string.card_browser_list_my_searches_new_name, R.string.empty_string, (dialog, text) -> {
                        Timber.d("Saving search with title/terms: %s/%s", text, mCurrentSearchTerms);
                        mMySearchesDialogListener.onSaveSearch(text.toString(), mCurrentSearchTerms);
@@ -105,8 +108,8 @@ public class CardBrowserMySearchesDialog extends AnalyticsDialogFragment {
         Resources res = getResources();
         new MaterialDialog.Builder(getActivity())
                 .content(res.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
-                .positiveText(res.getString(android.R.string.ok))
-                .negativeText(res.getString(R.string.cancel))
+                .positiveText(android.R.string.ok)
+                .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
                     mMySearchesDialogListener.onRemoveSearch(searchName);
                     mSavedFilters.remove(searchName);

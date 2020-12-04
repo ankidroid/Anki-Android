@@ -44,7 +44,7 @@ import timber.log.Timber;
 public class FullSyncer extends HttpSyncer {
 
     private Collection mCol;
-    private Connection mCon;
+    private final Connection mCon;
 
 
     public FullSyncer(Collection col, String hkey, Connection con, HostNum hostNum) {

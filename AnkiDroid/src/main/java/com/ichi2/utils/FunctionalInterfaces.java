@@ -28,6 +28,7 @@ public final class FunctionalInterfaces {
 
     @FunctionalInterface
     public interface Filter<TIn> {
+        @SuppressWarnings("BooleanMethodIsAlwaysInverted")
         boolean shouldInclude(TIn item);
     }
 

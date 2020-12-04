@@ -44,17 +44,13 @@
     <string name="sync_error">Galat mensinkronisasi</string>
     <string name="vague_error">Galat</string>
     <string name="retry">Coba Lagi</string>
-    <string name="cancel">Batal</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/ account /terms"> Syarat dan ketentuan </a></string>
     <string name="menu_get_shared_decks">Cari dek dibagi bersama</string>
     <string name="connection_error_message">Telah terjadi galat jaringan.</string>
     <string name="not_logged_in_title">Masuk ke AnkiWeb</string>
     <string name="login_create_account_message">Kamu harus masuk ke akun pihak ketiga untuk menggunakan layanan sinkronisasi awan. Kamu bisa membuatnya di langkah berikutnya.</string>
     <!-- MyAccount.java -->
     <string name="username">Alamat surel</string>
-    <string name="username_repeat">Ulangi alamat surel</string>
     <string name="password">Kata Sandi</string>
-    <string name="password_repeat">Ulangi kata sandi</string>
     <string name="log_in">Masuk</string>
     <string name="sign_up_description">Belum punya akun AnkiWeb? Gratis!</string>
     <string name="sign_up_not_affiliated">Catatan: AnkiWeb tidak berafiliasi dengan AnkiDroid</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">Alamat surel atau kata sandi tidak valid.</string>
     <string name="reset_password">Reset kata sandi</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Cari</string>
     <string name="preferences_title">Preferensi</string>
     <string name="deckpreferences_title">Opsi untuk XXX</string>
     <string name="sync_conflict_message">Kamu harus mengunggah koleksi ini atau menngunduhnya dari Ankiweb, karena tidak dapat digabung. Salah satu koleksi akan ditimpa.</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">Sinkronisasi</string>
     <string name="sync_downloading_media">Mengunduh media %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Sinkronisasi penuh dari lokal</string>
-    <string name="sync_log_downloading_message">Sinkronisasi penuh dari server</string>
     <string name="sync_log_clocks_unsynchronized">Jam perangkatmu meleset sebesar %1$d detik %2$s. Pastikan tanggal, waktu, dan zona waktu pada teleponmu sudah benar, lalu sinkronkan lagi.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, zona waktunya mungkin salah</string>
     <string name="sync_log_clocks_unsynchronized_date">, tanggalnya mungkin salah</string>
@@ -94,6 +88,7 @@
     <string name="sync_overwrite_error">Koleksimu saat ini tidak dapat ditimpa oleh berkas yang diunduh</string>
     <string name="sync_connection_error">Koneksi gagal. Antara koneksi internetmu bermasalah, atau kamu memiliki berkas yang sangat besar di folder mediamu.</string>
     <string name="sync_write_access_error">Berkas yang diunduh tidak dapat disimpan ke kartu SD. Mungkin kartu memori terpasang hanya bisa dibaca atau ruang tidak cukup.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Sinkronisasi deletasi kloza(titik-titik)&#8230;</string>
     <string name="sync_small_objects_message">Menyinkronkan objek kecil&#8230;</string>
     <string name="sync_finish_message">Menyelesaikan sinkronisasi&#8230;</string>
@@ -115,6 +110,8 @@
     <string name="sync_media_db_error">Sinkronisasi media gagal karena basisdata sekarang korup. Disarankan memeriksa media.</string>
     <string name="sync_media_error">Galat menyinkronkan data media</string>
     <string name="sync_media_error_check">Galat saat menyinkronkan media. Pemeriksaan media disarankan.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Jarak jauh</string>
     <string name="force_full_sync_title">Paksa sinkronisasi penuh</string>
@@ -129,7 +126,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb sedang dalam pemeliharaan. Harap coba lagi dalam beberapa menit.</string>
     <string name="sync_error_504_gateway_timeout">error 504 gateway timeout terjadi.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_full_sync">Sinkronisasi (penuh)</string>
+    <string name="sync_menu_title_no_account">Sinkronisasi (masuk)</string>
 </resources>

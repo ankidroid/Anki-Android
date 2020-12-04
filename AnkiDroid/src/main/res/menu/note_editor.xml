@@ -14,10 +14,19 @@
         android:visible="true"/>
     <item
         android:id="@+id/action_add_note_from_note_editor"
-        android:title="@string/note_editor_add_note"
+        android:title="@string/menu_add_note"
         android:visible="false"/>
     <item
         android:id="@+id/action_copy_note"
         android:enabled="false"
         android:title="@string/note_editor_copy_note"/>
+    <item
+        android:id="@+id/action_font_size"
+        android:title="@string/menu_font_size"
+        ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_show_toolbar"
+        android:title="@string/menu_show_toolbar"
+        android:checkable="true"
+        ankidroid:showAsAction="never"/>
 </menu>

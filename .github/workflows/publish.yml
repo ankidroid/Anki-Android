@@ -1,0 +1,63 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release_app:
+    name: 'Release App'
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        name: Gradle Cache
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ hashFiles('**/*.gradle*') }}-v1
+
+      - name: Verify JDK 1.8
+        # OpenJDK1.8 is the default in GitHub macOS 10.15 runner, setup is not required
+        # Run a check that exits with error unless it is 1.8 version to future-proof against unexpected upgrades
+        run: java -fullversion 2>&1 | grep '1.8'
+        shell: bash
+
+      - name: Install Release Utilities
+        run: |
+          mkdir ~/bin/
+          curl -L -o ~/bin/github-release.bz2 https://github.com/github-release/github-release/releases/download/v0.8.1/linux-amd64-github-release.bz2
+          cd ~/bin
+          bunzip2 github-release.bz2
+          chmod 755 ~/bin/github-release
+          sudo chown -R $USER /var/lib/gems/
+          sudo chown -R $USER /usr/local/bin
+          gem install asciidoctor
+        shell: bash
+
+      - name: GIT Setup
+        run: |
+          git config --global user.name 'Mike Hardy'
+          git config --global user.email 'github@mikehardy.net'
+          git remote set-url origin git@github.com:$GITHUB_REPOSITORY
+        shell: bash
+
+      - uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Credential Prep
+        run: |
+          echo "KSTOREPWD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
+          echo "KEYPWD=${{ secrets.KEYSTORE_KEY_PASSWORD }}" >> $GITHUB_ENV
+          mkdir ~/src
+          echo "${{ secrets.AMAZON_PUBLISH_CREDENTIALS }}" | base64 -d > ~/src/AnkiDroid-Amazon-Publish-Security-Profile.json.gz
+          echo "${{ secrets.GOOGLE_PUBLISH_CREDENTIALS }}" | base64 -d > ~/src/AnkiDroid-GCP-Publish-Credentials.json.gz
+          echo "${{ secrets.RELEASES_PUBLISH_TOKEN }}" | base64 -d > ~/src/my-github-personal-access-token.gz
+          echo "${{ secrets.KEYSTORE }}" | base64 -d > ~/src/android-keystore.gz
+          cd ~/src
+          gunzip *gz
+        shell: bash
+
+      - name: Build and Release
+        run: ./tools/release.sh

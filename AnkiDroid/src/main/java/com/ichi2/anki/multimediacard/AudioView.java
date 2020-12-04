@@ -33,10 +33,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.R;
-import com.ichi2.anki.Reviewer;
-import com.ichi2.libanki.Collection;
 import com.ichi2.anki.UIUtils;
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +44,7 @@ import timber.log.Timber;
 // Not designed for visual editing
 @SuppressLint("ViewConstructor")
 public class AudioView extends LinearLayout {
-    protected String mAudioPath;
+    protected final String mAudioPath;
 
     protected PlayPauseButton mPlayPause = null;
     protected StopButton mStop = null;
@@ -60,13 +57,13 @@ public class AudioView extends LinearLayout {
 
     private Status mStatus = Status.IDLE;
 
-    private int mResPlayImage;
-    private int mResPauseImage;
-    private int mResStopImage;
+    private final int mResPlayImage;
+    private final int mResPauseImage;
+    private final int mResStopImage;
     private int mResRecordImage;
     private int mResRecordStopImage;
 
-    private Context mContext;
+    private final Context mContext;
 
     enum Status {
         IDLE, // Default initial state
@@ -216,8 +213,20 @@ public class AudioView extends LinearLayout {
         }
     }
 
+    public void toggleRecord() {
+        if (mRecord != null) {
+            mRecord.callOnClick();
+        }
+    }
+
+    public void togglePlay() {
+        if (mPlayPause != null) {
+            mPlayPause.callOnClick();
+        }
+    }
+
     protected class PlayPauseButton extends AppCompatImageButton {
-        private OnClickListener onClickListener = new View.OnClickListener() {
+        private final OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mAudioPath == null) {
@@ -314,7 +323,7 @@ public class AudioView extends LinearLayout {
     }
 
     protected class StopButton extends AppCompatImageButton {
-        private OnClickListener onClickListener = v -> {
+        private final OnClickListener onClickListener = v -> {
             switch (mStatus) {
                 case PAUSED:
                 case PLAYING:
@@ -342,14 +351,10 @@ public class AudioView extends LinearLayout {
 
 
         public void update() {
-            switch (mStatus) {
-                case RECORDING:
-                    setEnabled(false);
-                    break;
-
-                default:
-                    setEnabled(true);
-                    break;
+            if (mStatus == Status.RECORDING) {
+                setEnabled(false);
+            } else {
+                setEnabled(true);
             }
             // It doesn't need to update itself on any other state changes
         }
@@ -357,7 +362,7 @@ public class AudioView extends LinearLayout {
     }
 
     protected class RecordButton extends AppCompatImageButton {
-        private OnClickListener onClickListener = new View.OnClickListener() {
+        private final OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Since mAudioPath is not compulsory, we check if it exists
@@ -406,7 +411,7 @@ public class AudioView extends LinearLayout {
 
                             } catch (Exception e) {
                                 // either output file failed or codec didn't work, in any case fail out
-                                Timber.e("RecordButton.onClick() :: error recording to " + mAudioPath + "\n" +e.getMessage());
+                                Timber.e("RecordButton.onClick() :: error recording to %s\n%s", mAudioPath, e.getMessage());
                                 UIUtils.showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true);
                                 mStatus = Status.STOPPED;
                                 break;

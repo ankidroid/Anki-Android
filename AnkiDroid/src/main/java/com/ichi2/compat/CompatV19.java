@@ -1,3 +1,18 @@
+/***************************************************************************************
+ * Copyright (c) 2015 Houssam Salem <houssam.salem.au@gmail.com>                        *
+ *                                                                                      *
+ * This program is free software; you can redistribute it and/or modify it under        *
+ * the terms of the GNU General Public License as published by the Free Software        *
+ * Foundation; either version 3 of the License, or (at your option) any later           *
+ * version.                                                                             *
+ *                                                                                      *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
+ *                                                                                      *
+ * You should have received a copy of the GNU General Public License along with         *
+ * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
+ ****************************************************************************************/
 
 package com.ichi2.compat;
 
@@ -5,12 +20,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.SharedPreferences;
-import androidx.appcompat.widget.Toolbar;
+
 import timber.log.Timber;
 
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.ichi2.anki.AbstractFlashcardViewer;
 import com.ichi2.anki.AnkiActivity;
@@ -42,31 +55,28 @@ public class CompatV19 extends CompatV18 implements Compat {
         CompatHelper.getCompat().setStatusBarColor(a.getWindow(), Themes.getColorFromAttr(a, R.attr.colorPrimaryDark));
         View decorView = a.getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener
-                (new View.OnSystemUiVisibilityChangeListener() {
-                    @Override
-                    public void onSystemUiVisibilityChange(int flags) {
-                        final Toolbar toolbar = (Toolbar) a.findViewById(R.id.toolbar);
-                        final LinearLayout answerButtons = (LinearLayout) a.findViewById(R.id.answer_options_layout);
-                        final RelativeLayout topbar = (RelativeLayout) a.findViewById(R.id.top_bar);
-                        if (toolbar == null || topbar == null || answerButtons == null) {
-                            return;
+                (flags -> {
+                    final View toolbar = a.findViewById(R.id.toolbar);
+                    final View answerButtons = a.findViewById(R.id.answer_options_layout);
+                    final View topbar = a.findViewById(R.id.top_bar);
+                    if (toolbar == null || topbar == null || answerButtons == null) {
+                        return;
+                    }
+                    // Note that system bars will only be "visible" if none of the
+                    // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                    boolean visible = (flags & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+                    Timber.d("System UI visibility change. Visible: %b", visible);
+                    if (visible) {
+                        showViewWithAnimation(toolbar);
+                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                            showViewWithAnimation(topbar);
+                            showViewWithAnimation(answerButtons);
                         }
-                        // Note that system bars will only be "visible" if none of the
-                        // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-                        boolean visible = (flags & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
-                        Timber.d("System UI visibility change. Visible: %b", visible);
-                        if (visible) {
-                            showViewWithAnimation(toolbar);
-                            if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
-                                showViewWithAnimation(topbar);
-                                showViewWithAnimation(answerButtons);
-                            }
-                        } else {
-                            hideViewWithAnimation(toolbar);
-                            if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
-                                hideViewWithAnimation(topbar);
-                                hideViewWithAnimation(answerButtons);
-                            }
+                    } else {
+                        hideViewWithAnimation(toolbar);
+                        if (fullscreenMode >= FULLSCREEN_ALL_GONE) {
+                            hideViewWithAnimation(topbar);
+                            hideViewWithAnimation(answerButtons);
                         }
                     }
                 });

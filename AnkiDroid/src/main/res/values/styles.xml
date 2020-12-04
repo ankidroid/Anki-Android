@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
 
     <!-- App themes
         These compat themes are just copies of the parent themes here, but some attributes are
@@ -34,7 +34,7 @@
     </style>
 
     <!--  Material Design-style persistent footer button -->
-    <style name="FooterButtonLayoutBase">
+    <style name="FooterButtonBase">
         <item name="android:layout_height">48dp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">14sp</item>
@@ -43,7 +43,8 @@
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:singleLine">true</item>
     </style>
-    <style name="FooterButtonLayout" parent="FooterButtonLayoutBase"/>
+    <style name="FooterButton" parent="FooterButtonBase"/>
+
     <style name="FooterButtonNextTime">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -51,13 +52,15 @@
         <item name="android:ellipsize">marquee</item>
         <item name="android:gravity">bottom|center_horizontal</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textSize">12.5sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
-    <style name="FooterButtonEaseText" parent="FooterButtonNextTime">
+
+    <style name="FooterButtonEaseTextBase" parent="FooterButtonNextTime">
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:typeface">sans</item>
     </style>
+    <style name="FooterButtonEaseText" parent="FooterButtonEaseTextBase" />
 
     <!-- Styles for each of the 4 answer buttons -->
     <!-- Ease text -->
@@ -106,7 +109,6 @@
     <!-- For all other action bar popups like overflow menu (except spinner dropdown in Lollipop). -->
     <style name="ActionBar.Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <item name="android:drawSelectorOnTop">true</item>
-        <item name="android:background">?attr/actionBarPopupBackgroundColor</item>
         <item name="android:textColorPrimary">?attr/actionBarPopupTextColor</item>
         <item name="android:textColorSecondary">?attr/actionBarPopupTextColor</item>
     </style>
@@ -114,5 +116,22 @@
     <style name="LargeButtonStyle">
         <item name="colorButtonNormal">?attr/largeButtonBackgroundColor</item>
         <item name="android:textColor">?attr/largeButtonTextColor</item>
+    </style>
+
+    <style name="card_info_data">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+
+    <!-- padding is hardcoded in Toolbar.java (32) to allow for fixing the scrollview -->
+    <style name="note_editor_toolbar_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:tint">@color/black</item>
     </style>
 </resources>

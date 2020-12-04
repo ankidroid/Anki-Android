@@ -34,10 +34,12 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Deck;
 import com.ichi2.utils.FunctionalInterfaces;
+import com.ichi2.utils.FilterResultsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -177,7 +179,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
     public class DecksArrayAdapter extends RecyclerView.Adapter<DecksArrayAdapter.ViewHolder> implements Filterable {
         public class ViewHolder extends RecyclerView.ViewHolder {
-            private TextView mDeckTextView;
+            private final TextView mDeckTextView;
             public ViewHolder(@NonNull TextView ctv) {
                 super(ctv);
                 mDeckTextView = ctv;
@@ -241,7 +243,7 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
 
         /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
         private class DecksFilter extends Filter {
-            private ArrayList<SelectableDeck> mFilteredDecks;
+            private final ArrayList<SelectableDeck> mFilteredDecks;
             protected DecksFilter() {
                 super();
                 mFilteredDecks = new ArrayList<>();
@@ -251,21 +253,18 @@ public class DeckSelectionDialog extends AnalyticsDialogFragment {
             protected FilterResults performFiltering(CharSequence constraint) {
                 mFilteredDecks.clear();
                 ArrayList<SelectableDeck> allDecks = DecksArrayAdapter.this.mAllDecksList;
-                final FilterResults filterResults = new FilterResults();
                 if (constraint.length() == 0) {
                     mFilteredDecks.addAll(allDecks);
                 } else {
-                    final String filterPattern = constraint.toString().toLowerCase().trim();
+                    final String filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim();
                     for (SelectableDeck deck : allDecks) {
-                        if (deck.getName().toLowerCase().contains(filterPattern)) {
+                        if (deck.getName().toLowerCase(Locale.getDefault()).contains(filterPattern)) {
                             mFilteredDecks.add(deck);
                         }
                     }
                 }
 
-                filterResults.values = mFilteredDecks;
-                filterResults.count = mFilteredDecks.size();
-                return filterResults;
+                return FilterResultsUtils.fromCollection(mFilteredDecks);
             }
 
             @Override

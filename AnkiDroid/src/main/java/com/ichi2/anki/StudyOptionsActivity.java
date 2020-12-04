@@ -28,12 +28,17 @@ import com.ichi2.widget.WidgetStatus;
 
 import timber.log.Timber;
 
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
+
 public class StudyOptionsActivity extends NavigationDrawerActivity implements StudyOptionsListener,
         CustomStudyDialog.CustomStudyListener {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
         // The empty frame layout is a workaround for fragments not showing when they are added
         // to android.R.id.content when an action bar is used in Android 2.1 (and potentially
@@ -67,15 +72,11 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
         if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
         }
-        switch (item.getItemId()) {
-
-            case android.R.id.home:
-                closeStudyOptions();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            closeStudyOptions();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -94,7 +95,7 @@ public class StudyOptionsActivity extends NavigationDrawerActivity implements St
     private void closeStudyOptions(int result) {
         // mCompat.invalidateOptionsMenu(this);
         setResult(result);
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(RIGHT);
     }
 
 

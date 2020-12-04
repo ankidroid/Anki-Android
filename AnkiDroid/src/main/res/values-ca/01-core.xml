@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paquets</string>
-    <string name="card_browser">Navegador de cartes</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navegador de cartes</string>
     <string name="statistics">Estadístiques</string>
     <string name="settings">Configuració</string>
     <string name="help">Ajuda</string>
     <string name="send_feedback">Enviar comentaris</string>
-    <string name="studyoptions_title">Visió de conjunt dels paquets</string>
     <string name="studyoptions_due_today">Venç avui:</string>
     <string name="studyoptions_new_total">Total de noves fitxes:</string>
     <string name="studyoptions_total_cards">Total de fitxes:</string>
@@ -71,6 +71,8 @@
         <item quantity="one">%d day %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">%1$d carta estudiada en %2$s avui</item>
@@ -79,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Entrar resposta</string>
     <string name="show_answer">Mostra la resposta</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">De nou</string>
     <string name="ease_button_hard">Difícil</string>
     <string name="ease_button_good">Correcte</string>
@@ -87,22 +90,14 @@
     <string name="menu_import">Importar</string>
     <string name="undo">Desfés</string>
     <string name="undo_action_review">revisió final</string>
-    <string name="undo_action_bury_card">enterrar carta</string>
-    <string name="undo_action_bury_note">enterrar nota</string>
-    <string name="undo_action_suspend_card">Suspèn la fitxa</string>
-    <string name="undo_action_suspend_note">suspèn la nota</string>
-    <string name="undo_action_delete">Suprimeix la nota</string>
-    <string name="undo_action_delete_multi">esborrar nota</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">tornar a planificar</string>
-    <string name="undo_action_reset_card">restablir el progrés</string>
-    <string name="undo_action_reposition_card">canviar la posició</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Canvia el nom del paquet</string>
-    <string name="menu_add">Afegir</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Afegir</string>
     <string name="menu_add_note">Afegir nota</string>
-    <string name="menu_my_account">Compte de sincronització</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de sincronització</string>
     <string name="menu_dismiss_note">Amagar / eliminar</string>
     <string name="menu_bury_card">Enterrar carta</string>
     <string name="menu_bury_note">Enterra la nota</string>
@@ -126,7 +121,7 @@
     <string name="menu_unmark_note">Desmarcar</string>
     <string name="menu_toggle_mic_tool_bar">Comprova pronunciació</string>
     <string name="new_deck">Crea un paquet</string>
-    <string name="create">Genera</string>
+    <string name="create" comment="Button to create a filtered deck">Genera</string>
     <string name="new_dynamic_deck">Crear un paquet filtrat</string>
     <string name="night_mode">Mode nocturn</string>
     <string name="directory_inaccessible">El directori d\'AnkiDroid és inaccessible</string>
@@ -151,11 +146,11 @@
     <string name="time_quantity_months">%.1f mes</string>
     <string name="time_quantity_years">%.1f any</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">S\'està reconstruïnt el paquet cram \nEspereu...</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Reconstrueix</string>
     <string name="empty_cram_label">Buit</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">S\'està buidant el paquet cram. \nEspereu...</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Sessió d\'estudi personalitzat</string>
     <string name="custom_study_deck_exists">Si us plau, primer canvieu de nom el paquet d\'estudi a mida</string>
     <string name="empty_deck">Aquest paquet és buit</string>
@@ -184,7 +179,6 @@
     <string name="card_template_editor_front">Plantilla frontal</string>
     <string name="card_template_editor_back">Plantilla del darrere</string>
     <string name="card_template_editor_styling">Estilitzar</string>
-    <string name="card_template_editor_menu_delete">Eliminar</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Com a mínim un tipus de carta és necessari.</string>
@@ -198,11 +192,12 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Llegir i escriure a la base de dades d\'AnkiDroid</string>
     <string name="read_write_permission_description">accés a notes, targetes, tipus de nota i malls existents, així com crear-ne de nous</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

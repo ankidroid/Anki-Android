@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Atidaryti meniu</string>
-    <string name="drawer_close">Uždaryti meniu</string>
-    <string name="CardEditorLaterMessage">Vėlesniam naudojimui išsaugota informacija</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Atidaryti meniu</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Uždaryti meniu</string>
     <string name="CardEditorCardDeck">Kortelių rinkinys:</string>
     <string name="CardEditorNoteDeck">Rinkinys:</string>
     <string name="CardEditorModel">Tipas:</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">Pažymėti/atžymėti visas žymes</string>
     <string name="filter_tags">Filtruoti žymes</string>
     <string name="no_tags">Dar nepridėjote jokių žymių</string>
-    <string name="sdcard_missing_message">Atjungti USB jungtį, siekiant prisijungti prie savo rinkinių</string>
     <string name="updated_version">Atnaujinta versija %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -65,13 +64,12 @@
     <string name="hide_whiteboard">Slėpti rašymo lentą</string>
     <string name="clear_whiteboard">Išvalyti lentą</string>
     <string name="replay_audio">Pagroti dar kartą</string>
-    <string name="toggle_mic_tool_bar">Check Pronunciation</string>
     <string name="leech_suspend_notification">Kortelė pažymėta kaip sunkiai įsimenama, todėl buvo atidėta</string>
     <string name="leech_notification">Kortelė buvo pažymėta kaip sunkiai įsimenama</string>
     <string name="corrupt_font">Sugadintas šriftų failas %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="webview_crash_unknown">Nežinoma klaida</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom">Nepakanka atminties</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
@@ -94,8 +92,8 @@
         <item>Intervalas</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
+        <item>Kortelė pakeista</item>
+        <item>Sukurta</item>
         <item>Note Modified</item>
     </string-array>
     <!-- Custom study options -->
@@ -107,17 +105,16 @@
     <string name="custom_study_preview_new">Peržiūrėti naujas korteles</string>
     <string name="custom_study_limit_tags">Apriboti iki tam tikrų žymių</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Pridėti užrašą</string>
     <string name="cardeditor_title_edit_card">Keisti užrašą</string>
     <string name="discard_unsaved_changes">Uždaryti ir panaikinti įvestą tekstą?</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
     <string name="note_editor_no_first_field">The first field is empty</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="note_editor_set_field_language">Set field language</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Užrašas įrašomas</string>
     <string name="saving_model">Saving note type</string>
-    <string name="add">Pridėti</string>
     <string name="save">Išsaugoti</string>
     <string name="close">Uždaryti</string>
     <string name="select">Pažymėti</string>
@@ -138,17 +135,14 @@
         <item quantity="many">%1$d minučių</item>
         <item quantity="other">%1$d min.</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Sveiki apsilankę „AnkiDroid“ programoje</string>
-    <string name="fact_adder_intent_title">„AnkiDroid“ kortelė</string>
-    <string name="note_editor_add_note">Add note</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">„AnkiDroid“ kortelė</string>
     <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_copy_card">Kopijuoti kortelę</string>
     <string name="card_editor_reposition_card">Keisti išdėstymą</string>
     <string name="card_editor_reset_card">Atkurti pažangą</string>
-    <string name="card_editor_reschedule_card">Atidėti</string>
-    <string name="card_editor_preview_card">Peržiūra</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Atidėti</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Peržiūra</string>
     <string name="error_insufficient_memory">Veiksmo atlikti neįmanoma, nes jūsų įrenginyje neužtenka atminties</string>
-    <string name="rename">Pervadinti</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Pervadinti</string>
     <string name="default_conf_delete_error">Numatytųjų parinkčių grupė negali būti pašalinta</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">Pridėta %d kortelė</item>
@@ -156,7 +150,6 @@
         <item quantity="many">Pridėta %d kortelių</item>
         <item quantity="other">Pridėta %d kort.</item>
     </plurals>
-    <string name="help_title">Pagalba</string>
     <string name="check_db">Tikrinti duomenų bazę</string>
     <string name="check_media">Tikrinti laikmenas</string>
     <string name="empty_cards">Tuščios kortelės</string>
@@ -166,10 +159,9 @@
     <string name="delete_deck">Rinkinys trinamas&#8230;</string>
     <string name="show_hint">Rodyti %s</string>
     <string name="info_rate">Įvertinkite „AnkiDroid“</string>
-    <string name="col_load_failed">Įkelti kolekcijos nepavyko.\nNorėdami „AnkiDroid“ uždaryti, grįžkite atgal.</string>
     <string name="import_title">Importuojama</string>
     <string name="import_select_title">Pasirinkite įkeliamą failą</string>
-    <string name="import_message_add">Pridėti</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Pridėti</string>
     <string name="import_message_replace_confirm">Jūsų turima kolekcija bus ištrinta ir pakeista %s failo duomenimis</string>
     <string name="import_message_add_confirm">Ar norite į kolekciją įtraukti „%s“? Tai gali ilgai užtrukti</string>
     <string name="import_log_no_apkg">Tai negaliojantis „Anki“ paketo failas</string>
@@ -180,13 +172,15 @@
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Failas „%s“ neturi .apkg arba .colpkg plėtinio</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Pažymėto failo „AnkiDroid“ automatiškai įkelti negali. Norėdami sužinoti, kaip „anki“ failus galėtumėte įkelti rankiniu būdu, prašome perskaityti vartotojo vadovą: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
+    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_replacing">Pakeičiama kolekcija&#8230;</string>
-    <string name="import_interrupted">Import interrupted</string>
+    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Įtraukti mokymosi laiko planavimą</string>
     <string name="export_include_media">Įtraukti laikmenas</string>
     <string name="confirm_apkg_export">Eksportuoti rinkinį kaip „Anki“ paketą?</string>
@@ -209,7 +203,7 @@
     <string name="export_unsuccessful">Eksportuoti apkg failo nepavyko</string>
     <string name="import_hint">Norėdami įkelti korteles, į „%s“ katalogą įkelkite apkg failą ir paspauskite „OK“</string>
     <string name="upgrade_import_no_file_found">Įkėlimui numatytas %1$s failas nerastas</string>
-    <string name="study_options">Parinktys</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Parinktys</string>
     <string name="select_tts">Nustatyti skaitymo balsu kalbą</string>
     <string name="custom_study">Individualus mokymasis</string>
     <string name="more_options">Daugiau</string>
@@ -259,6 +253,10 @@
         <item quantity="many">%s metų</item>
         <item quantity="other">%s m.</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s sekundės</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -276,23 +274,22 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Pasidalinti apkg failo nepavyko</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Norint importuoti šį failą privalo būti įjungta V2 planuoklė.</string>
-    <string name="import_cannot_with_v2">V2 planuoklė negali importuoti V1 katalogų, įtraukdama planavimo duomenis.</string>
     <string name="export_v2_dummy_note">Šiam failui reikia naujesnės „Anki“ versijos.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
+    <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Choose an Image</string>
+    <string name="background_image_title">Fonas</string>
+    <string name="choose_an_image">Pasirinkite paveikslėlį</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Tuščias</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
@@ -329,7 +326,7 @@
         <item quantity="other">%d notes unchanged</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
+    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
     <string name="invalid_json_data">Card provided invalid data. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
@@ -338,4 +335,33 @@
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <!-- Card Viewer -->
+    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
+    <string name="search_decks">Search decks</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Font Size</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="format_insert_bold">Format as Bold</string>
+    <string name="format_insert_italic">Format as Italic</string>
+    <string name="format_insert_underline">Format as Underline</string>
+    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_heading">Insert Heading</string>
+    <string name="format_font_size">Change Font Size</string>
+    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="before_text">HTML Before Selection</string>
+    <string name="after_text">HTML After Selection</string>
+    <string name="add_toolbar_item">Create Toolbar Item</string>
+    <string name="toolbar_item_explain_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to remove it</string>
+    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
+    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error">Error adding shortcut: %s</string>
 </resources>

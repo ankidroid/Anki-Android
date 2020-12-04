@@ -22,13 +22,11 @@
     <!--Fields-->
     <string name="front_field_name">Predná strana</string>
     <string name="back_field_name">Zadná strana</string>
-    <string name="text_field_name">Text</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
     <string name="extra_field_name">Extra</string>
     <string name="field_to_ask_front_name">Pridať obrátenú stranu kartičky</string>
     <!--Card type-->
-    <string name="card_one_name">Kartička 1</string>
-    <string name="card_two_name">Kartička 2</string>
-    <string name="card_cloze_name">Doplňovačka</string>
+    <string name="card_n_name">Kartička %d</string>
     <!--Note type-->
     <string name="basic_model_name">Základná</string>
     <string name="cloze_model_name">Doplňovačka</string>

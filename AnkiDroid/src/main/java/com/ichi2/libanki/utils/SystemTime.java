@@ -16,29 +16,14 @@
 
 package com.ichi2.libanki.utils;
 
-import com.ichi2.libanki.Utils;
+public class SystemTime extends Time {
 
-import java.util.Date;
-
-public class SystemTime implements Time {
-    @Override
-    public long time() {
-        return new Date().getTime();
+    public SystemTime() {
     }
 
 
     @Override
-    public Date getCurrentDate() {
-        return new Date();
-    }
-
-    @Override
-    public long intTime() {
-        return Utils.intTime();
-    }
-
-    @Override
-    public double now() {
-        return Utils.now();
+    public long intTimeMS() {
+        return System.currentTimeMillis();
     }
 }

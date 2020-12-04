@@ -45,6 +45,7 @@ import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskListener;
+import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 
@@ -127,46 +128,42 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                 .cancelable(true)
                 .itemsIds(listIds)
                 .items(ContextMenuHelper.getValuesFromKeys(getKeyValueMap(), listIds))
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog materialDialog, View view, int which,
-                                            CharSequence charSequence) {
-                        AnkiActivity activity = getAnkiActivity();
-                        switch (view.getId()) {
-                            case DECK_OPTIONS: {
-                                // User asked to permanently change the deck options
-                                Intent i = new Intent(activity, DeckOptions.class);
-                                i.putExtra("did", getArguments().getLong("did"));
-                                getActivity().startActivity(i);
-                                break;
-                            }
-                            case MORE_OPTIONS: {
-                                // User asked to see all custom study options
-                                CustomStudyDialog d = CustomStudyDialog.newInstance(CONTEXT_MENU_STANDARD,
-                                        getArguments().getLong("did"), jumpToReviewer);
-                                activity.showDialogFragment(d);
-                                break;
-                            }
-                            case CUSTOM_STUDY_TAGS: {
-                                /*
-                                 * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
-                                 * number, it is necessary to collect a list of tags. This case handles the creation
-                                 * of that Dialog.
-                                 */
-                                long currentDeck = getArguments().getLong("did");
-                                TagsDialog dialogFragment = TagsDialog.newInstance(
-                                        TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<String>(),
-                                        new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
-                                dialogFragment.setTagsDialogListener(CustomStudyDialog.this::customStudyFromTags);
-                                activity.showDialogFragment(dialogFragment);
-                                break;
-                            }
-                            default: {
-                                // User asked for a standard custom study option
-                                CustomStudyDialog d = CustomStudyDialog.newInstance(view.getId(),
-                                        getArguments().getLong("did"), jumpToReviewer);
-                                getAnkiActivity().showDialogFragment(d);
-                            }
+                .itemsCallback((materialDialog, view, which, charSequence) -> {
+                    AnkiActivity activity = getAnkiActivity();
+                    switch (view.getId()) {
+                        case DECK_OPTIONS: {
+                            // User asked to permanently change the deck options
+                            Intent i = new Intent(activity, DeckOptions.class);
+                            i.putExtra("did", getArguments().getLong("did"));
+                            getActivity().startActivity(i);
+                            break;
+                        }
+                        case MORE_OPTIONS: {
+                            // User asked to see all custom study options
+                            CustomStudyDialog d = CustomStudyDialog.newInstance(CONTEXT_MENU_STANDARD,
+                                    getArguments().getLong("did"), jumpToReviewer);
+                            activity.showDialogFragment(d);
+                            break;
+                        }
+                        case CUSTOM_STUDY_TAGS: {
+                            /*
+                             * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
+                             * number, it is necessary to collect a list of tags. This case handles the creation
+                             * of that Dialog.
+                             */
+                            long currentDeck = getArguments().getLong("did");
+                            TagsDialog dialogFragment = TagsDialog.newInstance(
+                                    TagsDialog.TYPE_CUSTOM_STUDY_TAGS, new ArrayList<>(),
+                                    new ArrayList<>(activity.getCol().getTags().byDeck(currentDeck, true)));
+                            dialogFragment.setTagsDialogListener(CustomStudyDialog.this::customStudyFromTags);
+                            activity.showDialogFragment(dialogFragment);
+                            break;
+                        }
+                        default: {
+                            // User asked for a standard custom study option
+                            CustomStudyDialog d = CustomStudyDialog.newInstance(view.getId(),
+                                    getArguments().getLong("did"), jumpToReviewer);
+                            getAnkiActivity().showDialogFragment(d);
                         }
                     }
                 }).build();
@@ -186,9 +183,9 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         Resources res = getActivity().getResources();
         // Show input dialog for an individual custom study dialog
         View v = getActivity().getLayoutInflater().inflate(R.layout.styled_custom_study_details_dialog, null);
-        TextView textView1 = (TextView) v.findViewById(R.id.custom_study_details_text1);
-        TextView textView2 = (TextView) v.findViewById(R.id.custom_study_details_text2);
-        final EditText mEditText = (EditText) v.findViewById(R.id.custom_study_details_edittext2);
+        TextView textView1 = v.findViewById(R.id.custom_study_details_text1);
+        TextView textView2 = v.findViewById(R.id.custom_study_details_text2);
+        final EditText mEditText = v.findViewById(R.id.custom_study_details_edittext2);
         // Set the text
         textView1.setText(getText1());
         textView2.setText(getText2());
@@ -206,8 +203,8 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         // Set builder parameters
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
                 .customView(v, true)
-                .positiveText(res.getString(R.string.dialog_ok))
-                .negativeText(res.getString(R.string.dialog_cancel))
+                .positiveText(R.string.dialog_ok)
+                .negativeText(R.string.dialog_cancel)
                 .onPositive((dialog, which) -> {
                     Collection col = CollectionHelper.getInstance().getCol(getActivity());
                     // Get the value selected by user
@@ -258,7 +255,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
                         }
                         case CUSTOM_STUDY_PREVIEW: {
                             createCustomStudySession(new JSONArray(), new Object[] {"is:new added:" +
-                                    Integer.toString(n), Consts.DYN_MAX_SIZE, Consts.DYN_OLDEST}, false);
+                                    n, Consts.DYN_MAX_SIZE, Consts.DYN_OLDEST}, false);
                             break;
                         }
                         default:
@@ -439,10 +436,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
             Timber.i("Found deck: '%s'", customStudyDeck);
             if (cur.getInt("dyn") != 1) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck);
-                new MaterialDialog.Builder(getActivity())
-                    .content(R.string.custom_study_deck_exists)
-                    .negativeText(R.string.dialog_cancel)
-                    .build().show();
+                UIUtils.showThemedToast(getActivity(), getString(R.string.custom_study_deck_exists), true);
                 return;
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck);
@@ -480,18 +474,7 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         dyn.put("resched", resched);
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck");
-        TaskListener listener = new TaskListener() {
-            @Override
-            public void onPreExecute() {
-                activity.showProgressBar();
-            }
-
-            @Override
-            public void onPostExecute(TaskData result) {
-                activity.hideProgressBar();
-                ((CustomStudyListener) activity).onCreateCustomStudySession();
-            }
-        };
+        TaskListener listener = createCustomStudySessionListener();
         CollectionTask.launchCollectionTask(REBUILD_CRAM, listener);
 
         // Hide the dialogs
@@ -502,7 +485,6 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
         AnkiActivity activity = getAnkiActivity();
         if (jumpToReviewer) {
             activity.startActivityForResultWithoutAnimation(new Intent(activity, Reviewer.class), AnkiActivity.REQUEST_REVIEW);
-            CollectionHelper.getInstance().getCol(activity).startTimebox();
         } else {
             ((CustomStudyListener) activity).onExtendStudyLimits();
         }
@@ -511,5 +493,28 @@ public class CustomStudyDialog extends AnalyticsDialogFragment {
 
     protected AnkiActivity getAnkiActivity() {
         return (AnkiActivity) getActivity();
+    }
+
+
+    private CreateCustomStudySessionListener createCustomStudySessionListener(){
+        return new CreateCustomStudySessionListener(getAnkiActivity());
+    }
+    private static class CreateCustomStudySessionListener extends TaskListenerWithContext<AnkiActivity> {
+        public CreateCustomStudySessionListener(AnkiActivity activity) {
+            super(activity);
+        }
+
+
+        @Override
+        public void actualOnPreExecute(@NonNull AnkiActivity activity) {
+            activity.showProgressBar();
+        }
+
+
+        @Override
+        public void actualOnPostExecute(@NonNull AnkiActivity activity, TaskData result) {
+            activity.hideProgressBar();
+            ((CustomStudyListener) activity).onCreateCustomStudySession();
+        }
     }
 }

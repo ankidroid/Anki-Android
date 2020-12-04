@@ -13,7 +13,7 @@ import com.ichi2.anki.DeckPicker;
 import com.ichi2.anki.NotificationChannels;
 import com.ichi2.anki.R;
 import com.ichi2.async.Connection;
-import com.ichi2.libanki.Utils;
+import com.ichi2.libanki.Collection;
 import com.ichi2.anki.analytics.UsageAnalytics;
 
 import java.lang.ref.WeakReference;
@@ -59,7 +59,7 @@ public class DialogHandler extends Handler {
     };
 
 
-    WeakReference<AnkiActivity> mActivity;
+    final WeakReference<AnkiActivity> mActivity;
     private static Message sStoredMessage;
     
     public DialogHandler(AnkiActivity activity) {
@@ -106,12 +106,9 @@ public class DialogHandler extends Handler {
         } else if (msg.what == MSG_SHOW_FORCE_FULL_SYNC_DIALOG) {
             // Confirmation dialog for forcing full sync
             ConfirmationDialog dialog = new ConfirmationDialog ();
-            Runnable confirm = new Runnable() {
-                @Override
-                public void run() {
-                    // Bypass the check once the user confirms
-                    CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance()).modSchemaNoCheck();
-                }
+            Runnable confirm = () -> {
+                // Bypass the check once the user confirms
+                CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance()).modSchemaNoCheck();
             };
             dialog.setConfirm(confirm);
             dialog.setArgs(msgData.getString("message"));
@@ -119,8 +116,9 @@ public class DialogHandler extends Handler {
         } else if (msg.what == MSG_DO_SYNC) {
             SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(mActivity.get());
             Resources res = mActivity.get().getResources();
+            Collection col = mActivity.get().getCol();
             String hkey = preferences.getString("hkey", "");
-            long millisecondsSinceLastSync = Utils.intTime(1000) - preferences.getLong("lastSyncTime", 0);
+            long millisecondsSinceLastSync = col.getTime().intTimeMS() - preferences.getLong("lastSyncTime", 0);
             boolean limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL;
             if (!limited && hkey.length() > 0 && Connection.isOnline()) {
                 ((DeckPicker) mActivity.get()).sync();

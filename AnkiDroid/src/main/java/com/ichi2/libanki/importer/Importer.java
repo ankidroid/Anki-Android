@@ -23,7 +23,6 @@ import android.content.res.Resources;
 import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +34,14 @@ public abstract class Importer {
     protected boolean mNeedDelimiter = false;
     protected String mFile;
     protected List<String> mLog;
-    protected Collection mCol;
+    protected final Collection mCol;
     protected int mTotal;
 
     private long mTs;
     protected Collection mDst;
     protected Collection mSrc;
 
-    protected Context mContext;
+    protected final Context mContext;
     protected CollectionTask.ProgressCallback mProgress;
 
     public Importer(Collection col, String file) {
@@ -64,7 +63,7 @@ public abstract class Importer {
      */
 
     protected void _prepareTS() {
-        mTs = Utils.maxID(mDst.getDb());
+        mTs = mCol.getTime().maxID(mDst.getDb());
     }
 
 

@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">ডেকসমূহ</string>
-    <string name="card_browser">কার্ড ব্রাউজার</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">কার্ড ব্রাউজার</string>
     <string name="statistics">পরিসংখ্যান</string>
     <string name="settings">সেটিংস</string>
     <string name="help">সাহায্য</string>
     <string name="send_feedback">মতামত পাঠান</string>
-    <string name="studyoptions_title">ডেকের বিবরণ</string>
     <string name="studyoptions_due_today">আজ বাকি:</string>
     <string name="studyoptions_new_total">মোট নতুন কার্ড:</string>
     <string name="studyoptions_total_cards">মোট কার্ড:</string>
@@ -71,6 +71,8 @@
         <item quantity="one">%d day %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">%2$s আজ পঠিত %1$d কার্ড</item>
@@ -79,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">উত্তর লিখুন</string>
     <string name="show_answer">উত্তর দেখান</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">আবার</string>
     <string name="ease_button_hard">কঠিন</string>
     <string name="ease_button_good">ভালো</string>
@@ -87,22 +90,14 @@
     <string name="menu_import">আমদানি করুন</string>
     <string name="undo">বাতিল করুন</string>
     <string name="undo_action_review">সর্বশেষ পর্যালোচনা</string>
-    <string name="undo_action_bury_card">কার্ড বাতিল</string>
-    <string name="undo_action_bury_note">নোট বাতিল</string>
-    <string name="undo_action_suspend_card">কার্ড স্থগিত</string>
-    <string name="undo_action_suspend_note">নোট স্থগিত</string>
-    <string name="undo_action_delete">নোট মুছে ফেলুন</string>
-    <string name="undo_action_delete_multi">delete notes</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">বাতিল স্থগিত করুন</string>
     <string name="rename_deck">ডেক পুনঃনামকরণ করুন</string>
-    <string name="menu_add">যোগ করুন</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">যোগ করুন</string>
     <string name="menu_add_note">নোট যোগ করুন</string>
-    <string name="menu_my_account">হিসাব সিঙ্ক করুন</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">হিসাব সিঙ্ক করুন</string>
     <string name="menu_dismiss_note">গোপন / মুছে ফেলুন</string>
     <string name="menu_bury_card">কার্ড বাতিল</string>
     <string name="menu_bury_note">নোট বাতিল</string>
@@ -126,7 +121,7 @@
     <string name="menu_unmark_note">নোটের টীকা চিহ্ন মুছুন</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">ডেক তৈরি করুন</string>
-    <string name="create">তৈরি করুন</string>
+    <string name="create" comment="Button to create a filtered deck">তৈরি করুন</string>
     <string name="new_dynamic_deck">ফিল্টার করা ডেক তৈরি করুন</string>
     <string name="night_mode">নাইট মোড</string>
     <string name="directory_inaccessible">আনকিড্রইড ডাইরেক্টরি অপ্রবেশ্য।</string>
@@ -151,11 +146,11 @@
     <string name="time_quantity_months">%.1f মাস</string>
     <string name="time_quantity_years">%.1f বছর</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">ক্রাম ডেক পুনঃতৈরি করা হচ্ছে&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">নতুন করে তৈরি করো</string>
     <string name="empty_cram_label">খালি</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">ক্রাম ডেক ফাঁকা করা হচ্ছে&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">নিজস্ব গবেষণা অধিবেশন</string>
     <string name="custom_study_deck_exists">বর্তমান স্বনির্ধারিত গবেষণা ডেক প্রথম পুনঃনামকরণ করুন</string>
     <string name="empty_deck">এই ডেক ফাঁকা।</string>
@@ -184,7 +179,6 @@
     <string name="card_template_editor_front">সম্মুখ খসড়া</string>
     <string name="card_template_editor_back">পশ্চাৎ খসড়া</string>
     <string name="card_template_editor_styling">স্টাইলিং</string>
-    <string name="card_template_editor_menu_delete">মুছুন</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">কমপক্ষে একটি কার্ড টাইপ প্রয়োজন</string>
@@ -198,11 +192,12 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ডাটাবেস থেকে পড়ুন এবং লিখুন</string>
     <string name="read_write_permission_description">বিদ্যমান নোট, কার্ড, নোটের ধরন এবং ডেক এ প্রবেশের পাশাপাশি নতুন একটি তৈরি করুন</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

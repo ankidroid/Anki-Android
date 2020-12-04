@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">oui</string>
     <!-- Navigation drawer items-->
     <string name="decks">Paquets</string>
-    <string name="card_browser">Navigateur de cartes</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navigateur de cartes</string>
     <string name="statistics">Statistiques</string>
     <string name="settings">Paramètres</string>
     <string name="help">Aide</string>
     <string name="send_feedback">Envoyer un commentaire</string>
-    <string name="studyoptions_title">Aperçu du paquet</string>
     <string name="studyoptions_due_today">Prévues aujourd’hui :</string>
     <string name="studyoptions_new_total">Cartes inédites :</string>
     <string name="studyoptions_total_cards">Total cartes :</string>
@@ -71,6 +71,8 @@
         <item quantity="one">%d jour %d restant</item>
         <item quantity="other">%d jours %d restants</item>
     </plurals>
+    <string name="no_cards_placeholder_title">La collection est vide</string>
+    <string name="no_cards_placeholder_description">Commencez à ajouter des cartes\nen utilisant l\'icône +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Aujourd’hui, %1$d carte a été étudiée en %2$s</item>
@@ -79,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Taper la réponse</string>
     <string name="show_answer">Afficher la réponse</string>
+    <string name="hide_answer">Cacher la réponse</string>
     <string name="ease_button_again">Encore</string>
     <string name="ease_button_hard">Difficile</string>
     <string name="ease_button_good">Bon</string>
@@ -87,22 +90,14 @@
     <string name="menu_import">Importer</string>
     <string name="undo">Annuler</string>
     <string name="undo_action_review">Dernière révision</string>
-    <string name="undo_action_bury_card">enterrer la carte</string>
-    <string name="undo_action_bury_note">enterrer la note</string>
-    <string name="undo_action_suspend_card">suspendre la carte</string>
-    <string name="undo_action_suspend_note">suspendre la note</string>
-    <string name="undo_action_delete">supprimer la note</string>
-    <string name="undo_action_delete_multi">supprimer les notes</string>
     <string name="undo_action_change_deck_multi">changer les paquets</string>
-    <string name="undo_action_reschedule_card">replanifier</string>
-    <string name="undo_action_reset_card">réinitialiser la progression</string>
-    <string name="undo_action_reposition_card">repositionner</string>
     <string name="move_all_to_deck">Tout déplacer dans le paquet</string>
     <string name="unbury">Déterrer</string>
     <string name="rename_deck">Renommer le paquet</string>
-    <string name="menu_add">Ajouter</string>
+    <string name="create_shortcut">Créer un raccourci</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Ajouter</string>
     <string name="menu_add_note">Ajouter une note</string>
-    <string name="menu_my_account">Compte de synchronisation</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de synchronisation</string>
     <string name="menu_dismiss_note">Masquer / Supprimer</string>
     <string name="menu_bury_card">Enterrer la carte</string>
     <string name="menu_bury_note">Enterrer la note</string>
@@ -126,7 +121,7 @@
     <string name="menu_unmark_note">Démarquer la note</string>
     <string name="menu_toggle_mic_tool_bar">Vérifier la prononciation</string>
     <string name="new_deck">Créer un jeu de cartes</string>
-    <string name="create">Créer</string>
+    <string name="create" comment="Button to create a filtered deck">Créer</string>
     <string name="new_dynamic_deck">Créer un paquet filtré</string>
     <string name="night_mode">Mode nuit</string>
     <string name="directory_inaccessible">Le répertoire d\'AnkiDroid est inaccessible</string>
@@ -151,11 +146,11 @@
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Reconstruction du paquet de bachotage&#8230;</string>
+    <string name="rebuild_filtered_deck">Reconstruction du paquet filtré&#8230;</string>
     <string name="rebuild_cram_label">Réparer</string>
     <string name="empty_cram_label">Vide</string>
     <string name="create_subdeck">Créer un sous-paquet</string>
-    <string name="empty_cram_deck">Paquet de bachotage en cours de vidage&#8230;</string>
+    <string name="empty_filtered_deck">Vidage du paquet filtré&#8230;</string>
     <string name="custom_study_deck_name">Session d\'étude personnalisée</string>
     <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
     <string name="empty_deck">Le paquet est vide</string>
@@ -184,9 +179,8 @@
     <string name="card_template_editor_front">Modèle du recto</string>
     <string name="card_template_editor_back">Modèle verso</string>
     <string name="card_template_editor_styling">Style</string>
-    <string name="card_template_editor_menu_delete">Supprimer</string>
     <string name="card_template_editor_menu_card_browser_appearance">Apparence du navigateur de cartes</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_deck_override">Forcer le paquet</string>
     <string name="card_template_editor_cant_delete">Il faut au moins un type de carte.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Supprimer le type de carte “%2$s” et sa %1$d carte ?</item>
@@ -198,11 +192,12 @@
     <string name="template_for_current_card_deleted">Le type de carte pour la carte actuelle a été supprimé.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Apparence du navigateur</string>
+    <!-- card Info -->
+    <string name="card_info_title">Infos de la carte</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lire et écrire dans la base de données d\'AnkiDroid</string>
     <string name="read_write_permission_description">accéder aux notes, cartes, types de notes et paquets actuels, mais aussi en créer de nouveaux</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Navigateur de cartes</string>
-    <string name="card_browser_context_menu">Navigateur de cartes</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navigateur de cartes</string>
+    <string name="context_menu_anki_card_label">Carte Anki</string>
 </resources>

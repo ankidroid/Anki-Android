@@ -42,14 +42,12 @@
     <string name="disabled">Išjungta</string>
     <string name="enabled">Įjungta</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">„AnkiDroid“</string>
     <string name="pref_cat_general_summ">Bendrieji nustatymai</string>
     <string name="pref_cat_reviewing">Peržiūra</string>
     <string name="pref_cat_reviewing_summ">Su konkrečiu rinkiniu nesusiję peržiūros nustatymai</string>
     <string name="pref_cat_reviewer_behaviour">Elgesys</string>
     <string name="pref_cat_flashcard">Rodymas</string>
     <string name="pref_cat_whiteboard">Lenta</string>
-    <string name="pref_cat_automatic_display">Automatinis atsakymo rodymas</string>
     <string name="pref_cat_appearance">Išvaizda</string>
     <string name="pref_cat_appearance_summ">Keisti apipavidalinimą ir numatytąjį šriftą</string>
     <string name="pref_cat_themes">Apipavidalinimas</string>
@@ -96,15 +94,26 @@
     <string name="gestures_summ">Nustatykite kokiais gestais atsakinėsite į klausimus ir redaguosite korteles.</string>
     <string name="gestures_allow_links">Ignore touch gestures on links</string>
     <string name="gestures_allow_links_summary">Touch gestures will not be processed if a link/hint is pressed.</string>
+    <string name="gestures_corner_touch">9-point touch</string>
+    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
     <string name="gestures_swipe_up">Braukiant aukštyn</string>
     <string name="gestures_swipe_down">Braukiant žemyn</string>
     <string name="gestures_swipe_left">Braukiant į kairę</string>
     <string name="gestures_swipe_right">Braukiant į dešinę</string>
     <string name="gestures_double_tap">Dvigubas palietimas</string>
     <string name="gestures_tap_top">Liesti viršuje</string>
-    <string name="gestures_tap_bottom">Liesti apačioje</string>
     <string name="gestures_tap_left">Liesti kairėje</string>
     <string name="gestures_tap_right">Liesti dešinėje</string>
+    <string name="gestures_tap_bottom">Liesti apačioje</string>
+    <string name="gestures_corner_tap_top_left">Touch top left</string>
+    <string name="gestures_corner_tap_top_center">Touch top center</string>
+    <string name="gestures_corner_tap_top_right">Touch top right</string>
+    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
+    <string name="gestures_corner_tap_middle_center">Touch middle center</string>
+    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
+    <string name="gestures_corner_tap_bottom_left">Touch bottom left</string>
+    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
+    <string name="gestures_corner_tap_bottom_right">Touch bottom right</string>
     <string name="gestures_volume_up">Volume up</string>
     <string name="gestures_volume_down">Volume down</string>
     <string name="more_scrolling_buttons">el. skaityklė</string>
@@ -142,9 +151,8 @@
     <string name="timeout_answer_text">Automatinis atsakymo rodymas</string>
     <string name="timeout_answer_summ">Atsakymą rodyti automatiškai, vartotojui neprašant. Uždelsimas apims laiką per kurį bus grojami garso failai.</string>
     <string name="timeout_answer_seconds">Laikas, po kurio bus rodomas atsakymas</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Laikas, po kurio bus rodomas sekantis klausimas</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Pasirinkite kalbą</string>
     <string name="safe_display">Ribotoji ekrano veiksena</string>
     <string name="safe_display_summ">Išjungti visą animaciją ir naudoti saugesnį kortelių piešimo būdą. To gali reikėti įrenginiams, kurių veikimas paremtas „E-ink“ technologija.</string>
@@ -165,7 +173,6 @@
     <string name="use_current">Rinkinys naujoms kortelėms</string>
     <string name="new_spread">Naujų kortelių vieta</string>
     <string name="learn_cutoff">Mokymosi į priekį apribojimas</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Mokymuisi numatyto laiko apribojimas</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Sekančios dienos pradžia</string>
@@ -219,8 +226,8 @@
         <item quantity="other">Šią grupę naudoja %1$s\n%2$d rink.</item>
     </plurals>
     <string name="deck_conf_new_cards">Naujos kortelės</string>
-    <string name="deck_conf_rev_cards">Peržiūros</string>
-    <string name="deck_conf_lps_cards">Dažnai užmirštamos</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Peržiūros</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Dažnai užmirštamos</string>
     <string name="deck_conf_general">Bendra</string>
     <string name="deck_conf_reminders">Priminimai</string>
     <string name="deck_conf_steps">Veiksmai (minutėmis)</string>
@@ -238,6 +245,7 @@
     <string name="deck_conf_use_general_timeout_settings">Use general settings</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
     <string name="deck_conf_easy_bonus">Lengvumo premija</string>
+    <string name="deck_conf_hard_factor">Hard interval</string>
     <string name="deck_conf_ivl_fct">Intervalo keitiklis</string>
     <string name="deck_conf_max_ivl">Didžiausias intervalas</string>
     <string name="deck_conf_new_lps_ivl">Naujas intervalas</string>
@@ -252,15 +260,13 @@
     <string name="deck_conf_replayq">Pakartoti klausimą</string>
     <string name="deck_conf_replayq_summ">Parodžius atsakymą, pakartotinai pagroti klausimo ir atsakymo garso įrašus</string>
     <string name="deck_conf_manage">Grupės valdymas</string>
+    <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group">Esama grupė</string>
-    <string name="deck_conf_rename">Pervadinti</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Pervadinti</string>
     <string name="deck_conf_reset">Atkurti numatytuosius parametrus</string>
-    <string name="deck_conf_reset_title">Atkurti numatytuosius parametrus</string>
     <string name="deck_conf_reset_message">Ar norite atkurti esamos parinkčių grupės parametrus į numatytuosius?</string>
-    <string name="deck_conf_add">Pridėti</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Pridėti</string>
     <string name="deck_conf_add_summ">Kurti esamų parinkčių grupės kopiją</string>
-    <string name="deck_conf_remove">Pašalinti</string>
-    <string name="deck_conf_remove_title">Pašalinti</string>
     <string name="deck_conf_remove_message">Ar norite pašalinti esamą parinkčių grupę?</string>
     <string name="deck_conf_set_subdecks">Taikyti visiems poaplankiams</string>
     <plurals name="deck_conf_set_subdecks_summ">
@@ -269,15 +275,13 @@
         <item quantity="many">Šią grupę naudos %s poaplankių</item>
         <item quantity="other">Šią grupę naudos %s poaplank.</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Taikyti visiems poaplankiams</string>
     <string name="deck_conf_set_subdecks_message">Ar norite esamą parinkčių grupę taikyti visiems šio rinkinio poaplankiams?</string>
     <string name="pref_browser_editor_font">Naršyklės ir tekstų rengyklės šriftas</string>
     <string name="deck_conf_cram_filter">Filtras</string>
-    <string name="deck_conf_cram_options">Parinktys</string>
     <string name="deck_conf_cram_search">Ieškoti</string>
     <string name="deck_conf_cram_limit">Apriboti iki</string>
     <string name="deck_conf_cram_order">Kortelių atrinkimo tvarka</string>
-    <string name="deck_conf_cram_reschedule">Keisti mokymosi dieną</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Keisti mokymosi dieną</string>
     <string name="deck_conf_cram_reschedule_summ">Keisti kortelių mokymosi dieną, remiantis mano atsakymais šiame rinkinyje</string>
     <string name="deck_conf_cram_steps">Individualūs veiksmai (minutėmis)</string>
     <string name="deck_conf_cram_steps_summ">Apibrėžti individualius veiksmus</string>
@@ -287,4 +291,6 @@
     <string name="analytics_dialog_title">Padėkite tobulinti „AnkiDroid“!</string>
     <string name="analytics_title"> Dalintis funkcijų naudojimu</string>
     <string name="analytics_summ">Galite prisidėti prie „AnkiDroid“ tobulinimo, padėdami kūrėjų komandai suprasti, kokiomis funkcijomis žmonės naudojasi</string>
+    <string name="note_editor_replace_newlines">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
 </resources>

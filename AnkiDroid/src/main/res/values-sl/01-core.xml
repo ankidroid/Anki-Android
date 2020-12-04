@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">Kompleti</string>
-    <string name="card_browser">Brskalnik kartic</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Brskalnik kartic</string>
     <string name="statistics">Statistika</string>
     <string name="settings">Nastavitve</string>
     <string name="help">Pomoč</string>
     <string name="send_feedback">Pošlji povratne informacije</string>
-    <string name="studyoptions_title">Pregled kompleta</string>
     <string name="studyoptions_due_today">Zapade danes:</string>
     <string name="studyoptions_new_total">Skupaj novih kartic:</string>
     <string name="studyoptions_total_cards">Skupaj kartic:</string>
@@ -79,6 +79,8 @@
         <item quantity="few">%d days %d left</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Danes preučena %1$d kartica v %2$s</item>
@@ -89,6 +91,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Vnos odgovora</string>
     <string name="show_answer">Prikaži odgovor</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">Ponovno</string>
     <string name="ease_button_hard">Težko</string>
     <string name="ease_button_good">Dobro</string>
@@ -97,22 +100,14 @@
     <string name="menu_import">Uvozi</string>
     <string name="undo">Razveljavi</string>
     <string name="undo_action_review">zadnji pregled</string>
-    <string name="undo_action_bury_card">prikrij kartico</string>
-    <string name="undo_action_bury_note">prikrij zapisek</string>
-    <string name="undo_action_suspend_card">pridrži kartico</string>
-    <string name="undo_action_suspend_note">pridrži zapisek</string>
-    <string name="undo_action_delete">izbriši zapisek</string>
-    <string name="undo_action_delete_multi">delete notes</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">Move all to deck</string>
     <string name="unbury">Odkrij</string>
     <string name="rename_deck">Preimenuj komplet</string>
-    <string name="menu_add">Dodaj</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Dodaj</string>
     <string name="menu_add_note">Dodaj zapisek</string>
-    <string name="menu_my_account">Sinhroniziraj račun</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinhroniziraj račun</string>
     <string name="menu_dismiss_note">Skrij/Izbriši</string>
     <string name="menu_bury_card">Prikrij kartico</string>
     <string name="menu_bury_note">Prikrij zapisek</string>
@@ -136,7 +131,7 @@
     <string name="menu_unmark_note">Odznači zapisek</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Ustvari komplet</string>
-    <string name="create">Ustvari</string>
+    <string name="create" comment="Button to create a filtered deck">Ustvari</string>
     <string name="new_dynamic_deck">Ustvari filtriran komplet</string>
     <string name="night_mode">Nočni način</string>
     <string name="directory_inaccessible">Slovar AnkiDroid ni na voljo</string>
@@ -161,11 +156,11 @@
     <string name="time_quantity_months">%.1f mes.</string>
     <string name="time_quantity_years">%.1f let</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Izgrajevanje intenzivnega kompleta &#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Izgradi</string>
     <string name="empty_cram_label">Prazen</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Praznjenje intenzivnega kompleta &#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Seja učenja po meri</string>
     <string name="custom_study_deck_exists">Najprej preimenujte obstoječi komplet za učenje po meri.</string>
     <string name="empty_deck">Ta komplet je prazen</string>
@@ -194,7 +189,6 @@
     <string name="card_template_editor_front">Sprednja predloga</string>
     <string name="card_template_editor_back">Zadnja predloga</string>
     <string name="card_template_editor_styling">Slog</string>
-    <string name="card_template_editor_menu_delete">Izbriši</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">Zahtevana je vsaj ena vrsta kartice</string>
@@ -210,11 +204,12 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Branje in pisanje v podatkovno zbirko AnkiDroid</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

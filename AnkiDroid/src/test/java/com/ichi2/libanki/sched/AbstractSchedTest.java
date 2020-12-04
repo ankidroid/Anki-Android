@@ -18,15 +18,16 @@ package com.ichi2.libanki.sched;
 
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskData;
-import com.ichi2.async.TaskListener;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.Decks;
+import com.ichi2.libanki.Model;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONArray;
 
 import org.junit.Before;
@@ -39,11 +40,15 @@ import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 import java.util.Arrays;
 
 import static com.ichi2.anki.AbstractFlashcardViewer.EASE_3;
-import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
+import static com.ichi2.async.CollectionTask.TASK_TYPE.UNDO;
+import static com.ichi2.async.CollectionTask.nonTaskUndo;
+import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 // Note: These tests can't be run individually but can from the class-level
 // gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.sched.AbstractSchedTest.*"
@@ -75,20 +80,21 @@ public class AbstractSchedTest extends RobolectricTest {
         // #6587
         addNoteUsingBasicModel("Hello", "World");
 
-        AbstractSched sched = getCol().getSched();
-        sched.reset();
+        Collection col = getCol();
+        AbstractSched sched = col.getSched();
+        col.reset();
 
         Card cardBeforeUndo = sched.getCard();
-        int[] countsBeforeUndo = sched.counts();
+        Counts countsBeforeUndo = sched.counts();
         // Not shown in the UI, but there is a state where the card has been removed from the queue, but not answered
         // where the counts are decremented.
-        assertThat(countsBeforeUndo, is(new int[] { 0, 0, 0 }));
+        assertThat(countsBeforeUndo, is(new Counts(0, 0, 0)));
 
         sched.answerCard(cardBeforeUndo, EASE_3);
 
         waitForTask(UNDO, 5000);
 
-        int[] countsAfterUndo = sched.counts();
+        Counts countsAfterUndo = sched.counts();
 
         assertThat("Counts after an undo should be the same as before an undo", countsAfterUndo, is(countsBeforeUndo));
     }
@@ -106,37 +112,290 @@ public class AbstractSchedTest extends RobolectricTest {
             note.setField(0, "a");
             col.addNote(note);
         }
-        sched.reset();
+        col.reset();
         assertThat(col.cardCount(), is(20));
-        assertThat(sched.counts()[0], is(10));
+        assertThat(sched.newCount(), is(10));
         Card card = sched.getCard();
-        assertThat(sched.counts()[0], is(9));
-        assertThat(sched.counts(card)[0], is(10));
-        sched.answerCard(card, 3);
+        assertThat(sched.newCount(), is(9));
+        assertThat(sched.counts(card).getNew(), is(10));
+        sched.answerCard(card, sched.getGoodNewButton());
         sched.getCard();
-        final boolean[] executed = {false};
-        CollectionTask.launchCollectionTask(UNDO,
-                new TaskListener() {
-                    Card card;
-                    @Override
-                    public void onPreExecute() {
+        nonTaskUndo(col);
+        card.load();
+        assertThat(sched.newCount(), is(9));
+        assertThat(sched.counts(card).getNew(), is(10));
+    }
 
-                    }
+    @Test
+    public void testCardQueue() {
+        Collection col = getCol();
+        SchedV2 sched = (SchedV2) col.getSched();
+        SimpleCardQueue queue = new SimpleCardQueue(sched);
+        assertThat(queue.size(), is(0));
+        final int nbCard = 6;
+        long[] cids = new long[nbCard];
+        for (int i = 0; i < nbCard; i++) {
+            Note note = addNoteUsingBasicModel("foo", "bar");
+            Card card = note.firstCard();
+            long cid = card.getId();
+            cids[i] = cid;
+            queue.add(cid);
+        }
+        assertThat(queue.size(), is(nbCard));
+        assertEquals(cids[0], queue.removeFirstCard().getId());
+        assertThat(queue.size(), is(nbCard - 1));
+        queue.remove(cids[1]);
+        assertThat(queue.size(), is(nbCard - 2));
+        queue.remove(cids[3]);
+        assertThat(queue.size(), is(nbCard - 3));
+        assertEquals(cids[2], queue.removeFirstCard().getId());
+        assertThat(queue.size(), is(nbCard - 4));
+        assertEquals(cids[4], queue.removeFirstCard().getId());
+        assertThat(queue.size(), is(nbCard - 5));
+    }
 
-                    @Override
-                    public void onProgressUpdate(TaskData data) {
-                        card = data.getCard();
-                    }
+    @Test
+    public void siblingCorrectlyBuried() {
+        // #6903
+        Collection col = getCol();
+        AbstractSched sched = col.getSched();
+        Models models = col.getModels();
+        DeckConfig dconf = col.getDecks().getConf(1);
+        dconf.getJSONObject("new").put("bury", true);
+        final int nbNote = 2;
+        Note[] notes = new Note[nbNote];
+        for (int i = 0; i < nbNote; i++) {
+            Note note  = addNoteUsingBasicAndReversedModel("front", "back");
+            notes[i] = note;
+        }
+        col.reset();
+
+        for (int i = 0; i < nbNote; i++) {
+            Card card = sched.getCard();
+            assertEquals(new Counts(nbNote * 2 - i, 0, 0), sched.counts(card));
+            assertEquals(notes[i].firstCard().getId(), card.getId());
+            assertEquals(Consts.QUEUE_TYPE_NEW, card.getQueue());
+            sched.answerCard(card, sched.answerButtons(card));
+        }
+
+        Card card = sched.getCard();
+        assertNull(card);
+    }
+
+    @Test
+    public void deckDueTreeInconsistentDecksPasses() {
+        // https://github.com/ankidroid/Anki-Android/issues/6383#issuecomment-686266966
+        // The bad data came from AnkiWeb, this passes using "addDeck" but we can't assume this is always called.
+
+        String parent = "DANNY SULLIVAN MCM DECK";
+        String child = "Danny Sullivan MCM Deck::*MCM_UNTAGGED_CARDS";
+
+        addDeckWithExactName(parent);
+        addDeckWithExactName(child);
+
+        getCol().getDecks().checkIntegrity();
+        assertDoesNotThrow(() -> getCol().getSched().deckDueList());
+    }
 
 
-                    @Override
-                    public void onPostExecute(TaskData result) {
-                        assertThat(sched.counts()[0], is(9));
-                        assertThat(sched.counts(card)[0], is(10));
-                        executed[0] = true;
-                    }
-                });
-        waitForAsyncTasksToComplete();
-        assertTrue(executed[0]);
+    private class IncreaseToday {
+        private final long aId, bId, cId, dId;
+        private final Decks decks;
+        private final AbstractSched sched;
+
+        public IncreaseToday() {
+            decks = getCol().getDecks();
+            sched = getCol().getSched();
+            aId = decks.id("A");
+            bId = decks.id("A::B");
+            cId = decks.id("A::B::C");
+            dId = decks.id("A::B::D");
+        }
+
+        private void assertNewCountIs(String explanation, long did, int expected) {
+            decks.select(did);
+            sched.resetCounts();
+            assertThat(explanation, sched.newCount(), is(expected));
+        }
+
+        private void increaseAndAssertNewCountsIs(String explanation, long did, int a, int b, int c, int d) {
+            extendNew(did);
+            assertNewCountsIs(explanation, a, b, c, d);
+        }
+
+        private void assertNewCountsIs(String explanation, int a, int b, int c, int d) {
+            assertNewCountIs(explanation, aId, a);
+            assertNewCountIs(explanation, bId, b);
+            assertNewCountIs(explanation, cId, c);
+            assertNewCountIs(explanation, dId, d);
+        }
+
+        private void extendNew(long did) {
+            decks.select(did);
+            sched.extendLimits(1, 0);
+        }
+
+        public void test() {
+            Collection col = getCol();
+            Models models = col.getModels();
+
+            DeckConfig dconf = decks.getConf(1);
+            dconf.getJSONObject("new").put("perDay", 0);
+
+
+            Model model = models.byName("Basic");
+            for (long did : new long[]{cId, dId}) {
+                // The note is added in model's did. So change model's did.
+                model.put("did", did);
+                for (int i = 0; i < 4; i++) {
+                    addNoteUsingBasicModel("foo", "bar");
+                }
+            }
+
+            assertNewCountsIs("All daily limits are 0", 0, 0, 0, 0);
+            increaseAndAssertNewCountsIs("Adding a review in C add it in its parents too", cId, 1, 1, 1, 0);
+            increaseAndAssertNewCountsIs("Adding a review in A add it in its children too", aId, 2, 2, 2, 1);
+            increaseAndAssertNewCountsIs("Adding a review in B add it in its parents and children too", bId,3, 3, 3, 2);
+            increaseAndAssertNewCountsIs("Adding a review in D add it in its parents too", dId, 4, 4, 3, 3);
+            increaseAndAssertNewCountsIs("Adding a review in D add it in its parents too", dId, 5, 5, 3, 4);
+
+            decks.select(cId);
+            col.reset();
+            for (int i = 0; i < 3; i++) {
+                Card card = sched.getCard();
+                sched.answerCard(card, sched.answerButtons(card));
+            }
+            assertNewCountsIs("All cards from C are reviewed. Still 4 cards to review in D, but only two available because of A's limit.", 2, 2, 0, 2);
+
+            increaseAndAssertNewCountsIs("Increasing the number of card in C increase it in its parents too. This allow for more review in any children, and in particular in D.", cId, 3, 3, 1, 3);
+            // D increase because A's limit changed.
+            // This means that increasing C, which is not related to D, can increase D
+            // This follows upstream but is really counter-intuitive.
+
+
+            increaseAndAssertNewCountsIs("Adding a review in C add it in its parents too, even if c has no more card. This allow one more card in d.", cId, 4, 4, 1, 4);
+            /* I would have expected :
+             increaseAndAssertNewCountsIs("", cId, 3, 3, 1, 3);
+             But it seems that applying "increase c", while not actually increasing c (because there are no more new card)
+             still increases A.
+
+             Upstream, the number of new card to add is limited to the number of cards in the deck not already planned for today.
+             So, to reproduce it, you either need to temporary add a card in A::B::C, increase today limit and delete the card
+             or to do
+```python
+from aqt import mw
+c = mw.col.decks.byName("A::B::C")
+mw.col.sched.extendLimits(1, 0)
+```
+             */
+        }
+    }
+
+    /** Those test may be unintuitive, but they follow upstream as close as possible. */
+    @Test
+    public void increaseToday() {
+        new IncreaseToday().test();
+    }
+
+
+    protected void undoAndRedo(boolean preload) {
+        Collection col = getCol();
+        DeckConfig conf = col.getDecks().confForDid(1);
+        conf.getJSONObject("new").put("delays", new JSONArray(new double[] {1, 3, 5, 10}));
+        col.getConf().put("collapseTime", 20 * 60);
+        AbstractSched sched = col.getSched();
+
+        Note note = addNoteUsingBasicModel("foo", "bar");
+
+        col.reset();
+
+        Card card = sched.getCard();
+        assertNotNull(card);
+        assertEquals(new Counts(1, 0, 0), sched.counts(card));
+        if (preload) {
+            sched.preloadNextCard();
+        }
+
+        sched.answerCard(card, sched.getGoodNewButton());
+
+        card = sched.getCard();
+        assertNotNull(card);
+        assertEquals(new Counts(0, (schedVersion == 1) ? 3 : 1, 0), sched.counts(card));
+        if (preload) {
+            sched.preloadNextCard();
+        }
+
+
+        sched.answerCard(card, sched.getGoodNewButton());
+
+        card = sched.getCard();
+        assertNotNull(card);
+        assertEquals(new Counts(0, (schedVersion == 1) ? 2 : 1, 0), sched.counts(card));
+        if (preload) {
+            sched.preloadNextCard();
+        }
+
+        assertNotNull(card);
+
+        card = nonTaskUndo(col);
+        assertNotNull(card);
+        assertEquals(new Counts(0, (schedVersion == 1) ? 3 : 1, 0), sched.counts(card));
+        sched.count();
+        if (preload) {
+            sched.preloadNextCard();
+        }
+
+
+        sched.answerCard(card, sched.getGoodNewButton());
+        card = sched.getCard();
+        assertNotNull(card);
+        if (preload) {
+            sched.preloadNextCard();
+        }
+        assertEquals(new Counts(0, (schedVersion == 1) ? 2 : 1, 0), sched.counts(card));
+
+        assertNotNull(card);
+    }
+
+    @Test
+    public void undoAndRedoPreload() {
+        undoAndRedo(true);
+    }
+
+    @Test
+    public void undoAndRedoNoPreload() {
+        undoAndRedo(false);
+    }
+
+    private void addDeckWithExactName(String name) {
+        Decks decks = getCol().getDecks();
+
+        long did = addDeck(name);
+        Deck d = decks.get(did);
+        d.put("name", name);
+        decks.update(d);
+
+        boolean hasMatch = decks.all().stream().anyMatch(x -> name.equals(x.getString("name")));
+        assertThat(String.format("Deck %s should exist", name), hasMatch, is(true));
+    }
+
+
+
+    @Test
+    public void regression_7066() {
+        Collection col = getCol();
+        DeckConfig dconf = col.getDecks().getConf(1);
+        dconf.getJSONObject("new").put("bury", true);
+        AbstractSched sched = col.getSched();
+        addNoteUsingBasicAndReversedModel("foo", "bar");
+        addNoteUsingBasicModel("plop", "foo");
+        col.reset();
+        Card card = sched.getCard();
+        sched.setCurrentCard(card);
+        sched.preloadNextCard();
+        sched.answerCard(card, Consts.BUTTON_THREE);
+        card = sched.getCard();
+        sched.setCurrentCard(card);
+        AnkiAssert.assertDoesNotThrow(sched::preloadNextCard);
     }
 }

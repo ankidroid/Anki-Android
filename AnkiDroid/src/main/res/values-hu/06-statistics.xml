@@ -42,9 +42,10 @@
     <string name="statistics_mature">Érett</string>
     <string name="statistics_young_and_learn">Legfrissebb+Tanulás</string>
     <string name="statistics_unlearned">Eddig még nem látott</string>
-    <string name="statistics_suspended_and_buried">Felfüggesztett+Elásott</string>
-    <string name="statistics_relearn">Újra tanul</string>
-    <string name="statistics_learn">Tanulás</string>
+    <string name="statistics_suspended">Felfüggesztve</string>
+    <string name="statistics_buried">Buried</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Újra tanul</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Tanulás</string>
     <string name="statistics_cram">Magolás</string>
     <string name="stats_cards">Kártyák</string>
     <string name="stats_cards_intervals">Kártyák megadott időtartammal</string>
@@ -66,7 +67,7 @@
     <string name="stats_time_of_day">Napszak</string>
     <string name="stats_day_of_week">A hét napja</string>
     <string formatted="false" name="stats_percentage_correct">% helyes</string>
-    <string name="stats_reviews">Vélemények</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Vélemények</string>
     <string name="stats_answer_type">Válasz típusa</string>
     <string name="stats_today_again_count">\"Újra\" válaszok száma &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(az összes kártya &lt;b&gt;%.1f%%&lt;/b&gt;-ára \"Jó\" választ adtál)</string>
@@ -77,7 +78,6 @@
     <string name="stats_overview_forecast_average">Ez átlagosan &lt;b&gt;%1$.1f&lt;/b&gt; ismétlés naponta</string>
     <string name="stats_overview_forecast_due_tomorrow">Holnap &lt;b&gt;%1$d&lt;/b&gt; kártya esedékes</string>
     <string name="stats_overview_days_studied">%3$d napból %2$d napot tanultál (ez &lt;b&gt;%1$d%%&lt;/b&gt;)</string>
-    <string name="stats_overview_total_reviews">Összesen &lt;b&gt;%1$d&lt;/b&gt; kártyát ismételtél</string>
     <string name="stats_overview_reviews_per_day_studydays">A tanulással töltött napokon napi &lt;b&gt;%1$.1f&lt;/b&gt; kártyát tanultál</string>
     <string name="stats_overview_reviews_per_day_all">Naponkénti tanulással &lt;b&gt;%1$.1f&lt;/b&gt; kártya jutott volna 1 napra</string>
     <string name="stats_overview_total_time_in_period">Összes: &lt;b&gt;%d&lt;/b&gt; perc</string>
@@ -100,7 +100,6 @@
     <string name="stats_overview_card_types_lowest_ease">Legalacsonyabb nehézség: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Átlagos nehézség: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Legmagasabb nehézség: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="deck_summary_all_decks">Összes pakli</string>
     <string name="stats_select_time_scale">Időlépték kiválasztása</string>
     <string-array name="due_x_axis_title">
         <item>Nap</item>
@@ -112,12 +111,11 @@
     <string name="stats_forecast">Előrejelzés</string>
     <string name="stats_review_count">Ismétlések száma</string>
     <string name="stats_review_time">Tanulással töltött idő</string>
-    <string name="stats_added">Hozzáadott új kártyák</string>
+    <string name="stats_added" comment="Label of the number of added card">Hozzáadott új kártyák</string>
     <string name="stats_review_intervals">Időtartamok</string>
     <string name="stats_breakdown">Óránkénti lebontás</string>
     <string name="stats_weekly_breakdown">Heti bontásban</string>
     <string name="stats_answer_buttons">Válasz gombok</string>
-    <string name="stats_cards_types">Kártyatípusok</string>
     <string-array name="stats_day_time_strings">
         <item>4.00</item>
         <item>10.00</item>

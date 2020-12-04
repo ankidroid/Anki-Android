@@ -20,8 +20,8 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label">Administri nototipojn</string>
-    <string name="model_editor_label">Administri kampojn</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Administri nototipojn</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Administri kampojn</string>
     <!--Toasts-->
     <string name="toast_last_model">Vi ne povas forigi vian lastan nototipon</string>
     <string name="toast_last_field">Nototipoj devas havi almenaŭ unu kampon</string>
@@ -37,22 +37,21 @@
         <item quantity="one">%d noto</item>
         <item quantity="other">%d notoj</item>
     </plurals>
-    <!--Button Values-->
-    <string name="model_editor_action_add_model">Aldoni nototipon</string>
     <!--Browser-->
     <string name="model_browser_delete">Forigi nototipon</string>
-    <string name="model_browser_rename">Alinomi</string>
-    <string name="model_browser_options">Opcioj</string>
+    <string name="model_browser_rename" comment="Rename a note type">Alinomi</string>
     <string name="model_browser_template">Redakti kartojn</string>
     <string name="model_browser_add">Aldoni nototipon</string>
     <!--Rename-->
     <string name="rename_model">Alinomi nototipon</string>
+    <!--Language Hint-->
+    <string name="model_field_editor_language_hint_dialog_success_result">Agordi lingvon de sugestoj al %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Redakti kampojn</string>
     <string name="model_field_editor_add">Aldoni kampon</string>
     <string name="model_field_editor_delete">Forigi kampon</string>
-    <string name="model_field_editor_options">Kampoopcioj</string>
     <string name="model_field_editor_rename">Alinomi kampon</string>
+    <string name="model_field_editor_language_hint">Agordi lingvon de klavaraj sugestoj</string>
     <string name="model_field_editor_reposition_menu">Repozicii kampon</string>
     <string name="model_field_editor_reposition">Repozicii kampon (enigi valoron de %1$d ĝis %2$d)</string>
     <string name="model_field_editor_toggle_sticky">Memori la antaŭan enigon je aldoni</string>
@@ -73,12 +72,10 @@
     <string name="card_template_browser_appearance_restore_default_dialog">Ĉu restarigi implicitajn valorojn?</string>
     <string name="card_template_browser_appearance_saving_note">Tiu ĉi ŝanĝoj aplikos kiam la ŝablono de karto estos konservita</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck Override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck Override (off)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="model_manager_deck_override_cloze_error">Cannot set Deck Override for Cloze notes</string>
-    <string name="model_manager_deck_override_dynamic_deck_error">Cannot set Deck Override to a filtered deck</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="card_template_editor_deck_override_on">Superskribi kartaron (ŝaltita)</string>
+    <string name="card_template_editor_deck_override_off">Superskribi kartaron (malŝaltita)</string>
+    <string name="model_manager_deck_override_added_message">Agordi “%1$s” kiel implicitan kartaron por “%2$s”</string>
+    <string name="model_manager_deck_override_removed_message">Forigis implicitan kartaron por “%s”</string>
+    <string name="deck_override_explanation">Elektu kartaron por enmeti novajn kartojn “%s”</string>
+    <string name="deck_picker_dialog_filter_decks">Filtri kartarojn</string>
 </resources>

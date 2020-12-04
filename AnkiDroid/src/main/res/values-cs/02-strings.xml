@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Otevřít zásuvku</string>
-    <string name="drawer_close">Zavřít zásuvku</string>
-    <string name="CardEditorLaterMessage">Uložené informace na později</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Otevřít zásuvku</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Zavřít zásuvku</string>
     <string name="CardEditorCardDeck">Balíček karet:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
     <string name="CardEditorModel">Typ poznámky:</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">Označit/odznačit všechny štítky</string>
     <string name="filter_tags">Filtrovat štítky</string>
     <string name="no_tags">Ještě jste nepřidali žádné štítky</string>
-    <string name="sdcard_missing_message">SD karta je nedostupná, protože se používá jako úložiště USB. Odpojte USB pro přístup ke svým balíkům.</string>
     <string name="updated_version">Aktualizováno na verzi %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Uložit tabuli</string>
@@ -65,7 +64,6 @@
     <string name="hide_whiteboard">Skrýt tabuli</string>
     <string name="clear_whiteboard">Smazat tabuli</string>
     <string name="replay_audio">Přehrát audio</string>
-    <string name="toggle_mic_tool_bar">Zkontrolovat výslovnost</string>
     <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
     <string name="leech_notification">Karta byla označena jako pijavice</string>
     <string name="corrupt_font">Poškozený soubor písma %s</string>
@@ -107,17 +105,16 @@
     <string name="custom_study_preview_new">Náhled nových karet</string>
     <string name="custom_study_limit_tags">Omezit podle štítků</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Přidat poznámku</string>
     <string name="cardeditor_title_edit_card">Upravit poznámku</string>
     <string name="discard_unsaved_changes">Zavřít a ztratit stávající vstup?</string>
     <string name="note_editor_no_cards_created">Nebyly vytvořeny žádné karty. Vyplňte prosím další pole</string>
     <string name="note_editor_no_first_field">První pole je prázdné</string>
     <string name="note_editor_no_cloze_delations">Tento typ poznámky musí obsahovat doplňovačky</string>
+    <string name="note_editor_set_field_language">Nastavit jazyk pole</string>
     <string name="note_editor_no_cards_created_all_fields">Současný typ poznámky nevytvořil žádné karty.\nVyberte prosím jiný typ poznámky nebo klikněte na „Karty“ a přidejte zástupce pole</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Doplňovačky budou fungovat pouze na typu poznámky Doplňovačka</string>
     <string name="saving_facts">Ukládání poznámky</string>
     <string name="saving_model">Ukládání typu poznámky</string>
-    <string name="add">Přidat</string>
     <string name="save">Uložit</string>
     <string name="close">Zavřít</string>
     <string name="select">Vybrat</string>
@@ -138,17 +135,14 @@
         <item quantity="many">%1$d minuty</item>
         <item quantity="other">%1$d minut</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Vítejte v AnkiDroid</string>
-    <string name="fact_adder_intent_title">AnkiDroid karta</string>
-    <string name="note_editor_add_note">Přidat poznámku</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid karta</string>
     <string name="note_editor_copy_note">Kopírovat poznámku</string>
-    <string name="card_editor_copy_card">Kopírovat kartu</string>
     <string name="card_editor_reposition_card">Změnit pořadí</string>
     <string name="card_editor_reset_card">Obnovit proces učení</string>
-    <string name="card_editor_reschedule_card">Přeplánovat</string>
-    <string name="card_editor_preview_card">Náhled</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Přeplánovat</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Náhled</string>
     <string name="error_insufficient_memory">Operace není možná z důvodu nedostatku paměti na zařízení</string>
-    <string name="rename">Přejmenovat</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Přejmenovat</string>
     <string name="default_conf_delete_error">Nelze odstranit výchozí skupinu</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">přidána %d karta</item>
@@ -156,7 +150,6 @@
         <item quantity="many">přidáno %d karty</item>
         <item quantity="other">přidáno %d karet</item>
     </plurals>
-    <string name="help_title">Nápověda</string>
     <string name="check_db">Zkontrolovat databázi</string>
     <string name="check_media">Zkontrolovat multimédia</string>
     <string name="empty_cards">Prázdné karty</string>
@@ -166,10 +159,9 @@
     <string name="delete_deck">Odstraňování balíčku...\nProsím čekejte.</string>
     <string name="show_hint">Zobrazit %s</string>
     <string name="info_rate">Ohodnotit AnkiDroid</string>
-    <string name="col_load_failed">Načítání kolekce se nezdařilo.\nStiskněte zpět pro zavření AnkiDroid.</string>
     <string name="import_title">Importuje se</string>
     <string name="import_select_title">Vyberte soubor k importu</string>
-    <string name="import_message_add">Přidat</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Přidat</string>
     <string name="import_message_replace_confirm">Tímto vymažete vaši stávající kolekci a nahradíte jí daty ze souboru %s. Jste si jistý?</string>
     <string name="import_message_add_confirm">Přidat \"%s\" do kolekce? To může trvat dlouhou dobu</string>
     <string name="import_log_no_apkg">Toto není platný Anki balíček</string>
@@ -178,19 +170,21 @@
     <string name="import_log_failed_validate">Selhalo ověření apkg </string>
     <string name="import_log_insufficient_space">Není dostatek místa pro rozbalení balíčku. Potřeba %1$d, k dispozici %2$d</string>
     <string name="import_log_file_cache_cleared">Chyba při importu souboru, pravděpodobně se během zpracování vyčistila mezipaměť.\nZkuste to prosím znovu</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
+    <string name="import_succeeded_but_check_database">Import dat se zdařil, ale čištění po importu selhalo. Spusťte kontrolu databáze. Příčina: %s</string>
     <string name="import_error_unhandled_request">Nelze zpracovat žádost o import</string>
+    <string name="import_error_corrupt_zip">Soubor apkg je poškozen. Prosím odstraňte ho a stáhněte ho znovu.\n\nPříčina: %s</string>
     <string name="import_error_exception">Nepodařilo se importovat balíček\n\n%s</string>
     <string name="import_error_not_apkg_extension">Název souboru „%s“ nemá příponu .apkg nebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
-    <string name="import_replacing">Nahrazuji kolekci&#8230;</string>
-    <string name="import_interrupted">Import přerušen</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() selhalo (asi nedostatek místa v úložišti)</string>
+    <string name="import_error_unhandled_scheme">Nezpracovaný import z: „%s“</string>
+    <string name="import_replacing">Nahrazuje se kolekce&#8230;</string>
+    <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_include_schedule">Zahrnout plánování</string>
     <string name="export_include_media">Zahrnout multimédia</string>
     <string name="confirm_apkg_export">Exportovat kolekci jako Anki balíček?</string>
-    <string name="confirm_apkg_export_deck">Export \"%s\" jako apkg soubor?</string>
+    <string name="confirm_apkg_export_deck">Exportovat „%s“ jako apkg soubor?</string>
     <string name="export_in_progress">Exportuje se Anki balíček&#8230;</string>
     <string name="export_successful_title">Odeslat Anki balíček?</string>
     <string name="export_send_button">Odeslat</string>
@@ -208,8 +202,8 @@
     <string name="export_unsuccessful">Chyba při exportu apkg souboru</string>
     <string name="import_hint">Pro import karet umístěte soubor apkg do adresáře %s a stiskněte ok</string>
     <string name="upgrade_import_no_file_found">Iportvatelný soubor %1$s nebyl nenalezen</string>
-    <string name="study_options">Možnosti</string>
-    <string name="select_tts">Výběr hlasu pro převod textu na hlas</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Možnosti</string>
+    <string name="select_tts">Nastavit jazyk pro převod textu na řeč</string>
     <string name="custom_study">Vlastní učení</string>
     <string name="more_options">Více</string>
     <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se automaticky po opakování vrátí do svého původního balíčku. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí to jejich původního balíčku.</string>
@@ -258,6 +252,10 @@
         <item quantity="many">%s roku</item>
         <item quantity="other">%s let</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s sekundy</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -275,14 +273,13 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba sdílení souboru apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Abyste mohli importovat tento soubor, musí být povolen V2 plánovač.</string>
-    <string name="import_cannot_with_v2">V2 plánovač nemůže importovat V1 balíčky, které obsahují plánování.</string>
     <string name="export_v2_dummy_note">Tento soubor vyžaduje novější verzi Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Načítání \'%s\' selhalo.</string>
     <string name="activity_start_failed">V systému není nainstalována aplikace, která může provést tuto akci.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky kamery mohou být velké. Můžete komprimovat a změnit velikost obrázků v adresáři media]]></string>
     <string name="no_browser_notification">Nebyl nalezen žádný prohlížeč, prosím navštivte webovou stránku pomocí pc nebo mobilu: </string>
+    <string name="web_page_error">Chyba při načítání stránky: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Odkaz na externí stránku v kartě není podporován.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Obnovené karty</string>
@@ -301,14 +298,14 @@
     <string name="title_whiteboard_pen_color">Barva pera tabule</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Nalezeny prázdné karty. Spusťte prosím Nástroje>Prázdné karty.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
+    <string name="note_importer_error_empty_first_field">Prázdné první pole: %s</string>
+    <string name="note_importer_error_first_field_matched">První pole se shoduje: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Přidána duplicita s prvním polem: %s</string>
+    <string name="note_importer_error_appeared_twice">Objevilo se dvakrát v souboru: %s</string>
     <string name="note_importer_error_empty_notes">Jedna nebo více poznámek nebyla importována, protože nevytvořila žádné karty. To se může stát, pokud máte prázdná pole nebo pokud jste nepřiřadili obsah textového souboru ke správným polím</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="csv_importer_error_invalid_field_count">‘%1$s’ měl %2$d polí, očekáváno %3$d</string>
+    <string name="csv_importer_error_exception">Přerušeno: %s</string>
+    <string name="user_is_a_robot">Zjištěn automatizovaný test. Pokud jste člověk, kontaktujte podporu AnkiDroid</string>
     <plurals name="note_importer_notes_added">
         <item quantity="one">%d poznámka přidána</item>
         <item quantity="few">%d poznámky přidány</item>
@@ -328,13 +325,42 @@
         <item quantity="other">%d poznámek nezměněno</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">Tato karta používá nepodporované funkce AnkiDroid. Kontaktujte vývojáře %1$s nebo si prohlédněte wiki. %2$s</string>
+    <string name="invalid_json_data">Karta poskytla neplatná data. %s</string>
+    <string name="valid_js_api_version">Neplatná verze AnkiDroid JS API. Kontaktujte vývojáře %s, nebo se podívejte na wiki</string>
+    <string name="update_js_api_version">Je dostupná aktualizace AnkiDroid JS API. Kontaktujte vývojáře %s, nebo se podívejte na wiki</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Zobrazit</string>
+    <string name="anki_js_error_code">(Kód chyby: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">Ladicí informace zkopírovány do schránky</string>
+    <string name="about_ankidroid_error_copy_debug_info">Chyba při kopírování ladicích informací do schránky</string>
+    <!-- Card Viewer -->
+    <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
+    <string name="card_viewer_media_relative_protocol">Chyba obsahu karty: Je vyžadována aktualizace multimédií</string>
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">Nepodařilo se načíst balíček „%s“</string>
+    <string name="search_decks">Hledat balíčky</string>
+    <string name="ankidroid_init_failed_webview_title">Kritická chyba</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid spoléhá na systémový WebView, který je nedostupný. K tomu může dojít, jestliže systém instaluje aktualizace. Zkuste to prosím znovu za pár minut.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Velikost písma</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="format_insert_bold">Formátovat jako tučné</string>
+    <string name="format_insert_italic">Formát jako kurzíva</string>
+    <string name="format_insert_underline">Formát jako podtržené</string>
+    <string name="insert_horizontal_line">Vložit vodorovnou čáru</string>
+    <string name="insert_heading">Vložit nadpis</string>
+    <string name="format_font_size">Změnit velikost písma</string>
+    <string name="insert_mathjax">Vložit rovnici MathJax</string>
+    <string name="insert_cloze">Vložit doplňovačku</string>
+    <string name="before_text">HTML před výběrem</string>
+    <string name="after_text">HTML za výběrem</string>
+    <string name="add_toolbar_item">Vytvořit položku nástrojové lišty</string>
+    <string name="toolbar_item_explain_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ho odstranili</string>
+    <string name="remove_toolbar_item">Odstranit položku nástrojové lišty?</string>
+    <string name="note_editor_paste_too_large">Obrázek je příliš velký, nelze ho vložit; vložte prosím obrázek ručně</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Probíhá zálohování Androidu. Zkuste to prosím znovu</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Prosím použijte iManager, abyste povolili přidávání zástupců AnkiDroid</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Vaše domovská obrazovka neumožňuje AnkiDroidu přidávat zástupce</string>
+    <string name="create_shortcut_error">Chyba při přidávání zástupce: %s</string>
 </resources>

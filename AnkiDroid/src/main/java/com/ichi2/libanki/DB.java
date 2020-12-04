@@ -27,15 +27,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.BuildConfig;
 import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.utils.DatabaseChangeDecorator;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
@@ -56,7 +59,7 @@ public class DB {
     /**
      * The collection, which is actually an SQLite database.
      */
-    private SupportSQLiteDatabase mDatabase;
+    private final SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
 
     /**
@@ -110,8 +113,8 @@ public class DB {
     public static class SupportSQLiteOpenHelperCallback extends SupportSQLiteOpenHelper.Callback {
 
         protected SupportSQLiteOpenHelperCallback(int version) { super(version); }
-        public void onCreate(SupportSQLiteDatabase db) {/* do nothing */ }
-        public void onUpgrade(SupportSQLiteDatabase db, int oldVersion, int newVersion) { /* do nothing */ }
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {/* do nothing */ }
+        public void onUpgrade(@NonNull SupportSQLiteDatabase db, int oldVersion, int newVersion) { /* do nothing */ }
 
 
         /** Send error message, but do not call super() which would delete the database */
@@ -216,70 +219,21 @@ public class DB {
 
 
     /**
-     * Convenience method for querying the database for an entire column. The column will be returned as an ArrayList of
-     * the specified class.
-     *
-     * @param type The class of the column's data type. Example: int.class, String.class.
-     * @param query The SQL query statement.
-     * @return An ArrayList with the contents of the specified column.
-     */
-    public <T> ArrayList<T> list(Class<T> type, String query, Object... bindArgs) {
-        int nullExceptionCount = 0;
-        InvocationTargetException nullException = null; // to catch the null exception for reporting
-        ArrayList<T> results = new ArrayList<>();
-
-        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
-            String methodName = getCursorMethodName(type.getSimpleName());
-            while (cursor.moveToNext()) {
-                try {
-                    // The magical line. Almost as illegible as python code ;)
-                    results.add(type.cast(Cursor.class.getMethod(methodName, int.class).invoke(cursor, 0)));
-                } catch (InvocationTargetException e) {
-                    if (cursor.isNull(0)) { // null value encountered
-                        nullExceptionCount++;
-                        if (nullExceptionCount == 1) { // Toast and error report first time only
-                            nullException = e;
-                            Toast.makeText(AnkiDroidApp.getInstance().getBaseContext(),
-                                    "Error report pending: unexpected null in database.", Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException e) {
-            // This is really coding error, so it should be revealed if it ever happens
-            throw new RuntimeException(e);
-        } finally {
-            if (nullExceptionCount > 0) {
-                if (nullException != null) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("DB.queryColumn (column ").append(0).append("): ");
-                    sb.append("Exception due to null. Query: ").append(query);
-                    sb.append(" Null occurrences during this query: ").append(nullExceptionCount);
-                    AnkiDroidApp.sendExceptionReport(nullException, "queryColumn_encounteredNull", sb.toString());
-                    Timber.w(sb.toString());
-                } else { // nullException not properly initialized
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("DB.queryColumn(): Critical error -- ");
-                    sb.append("unable to pass in the actual exception to error reporting.");
-                    AnkiDroidApp.sendExceptionReport(new RuntimeException("queryColumn null"), "queryColumn_encounteredNull", sb.toString());
-                    Timber.e(sb.toString());
-                }
-            }
-        }
-
-        return results;
-    }
-
-    /**
-     * Convenience method for querying the database for an entire column of long. 
+     * Convenience method for querying the database for an entire column of long.
      *
      * @param query The SQL query statement.
      * @return An ArrayList with the contents of the specified column.
      */
     public ArrayList<Long> queryLongList(String query, Object... bindArgs) {
-        return list(Long.class, query, bindArgs);
+        ArrayList<Long> results = new ArrayList<>();
+
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
+            while (cursor.moveToNext()) {
+                results.add(cursor.getLong(0));
+            }
+        }
+
+        return results;
     }
 
     /**
@@ -289,34 +243,20 @@ public class DB {
      * @return An ArrayList with the contents of the specified column.
      */
     public ArrayList<String> queryStringList(String query, Object... bindArgs) {
-        return list(String.class, query, bindArgs);
-    }
+        ArrayList<String> results = new ArrayList<>();
 
-    /**
-     * Mapping of Java type names to the corresponding Cursor.get method.
-     *
-     * @param typeName The simple name of the type's class. Example: String.class.getSimpleName().
-     * @return The name of the Cursor method to be called.
-     */
-    private static String getCursorMethodName(String typeName) {
-        if ("String".equals(typeName)) {
-            return "getString";
-        } else if ("Long".equals(typeName)) {
-            return "getLong";
-        } else if ("Integer".equals(typeName)) {
-            return "getInt";
-        } else if ("Float".equals(typeName)) {
-            return "getFloat";
-        } else if ("Double".equals(typeName)) {
-            return "getDouble";
-        } else {
-            return null;
+        try (Cursor cursor = mDatabase.query(query, bindArgs)) {
+            while (cursor.moveToNext()) {
+                results.add(cursor.getString(0));
+            }
         }
+
+        return results;
     }
 
 
     public void execute(String sql, Object... object) {
-        String s = sql.trim().toLowerCase(Locale.US);
+        String s = sql.trim().toLowerCase(Locale.ROOT);
         // mark modified?
         for (String mo : MOD_SQLS) {
             if (s.startsWith(mo)) {
@@ -367,13 +307,12 @@ public class DB {
 
     public void executeMany(String sql, List<Object[]> list) {
         mMod = true;
-        mDatabase.beginTransaction();
-        try {
-            executeManyNoTransaction(sql, list);
-            mDatabase.setTransactionSuccessful();
-        } finally {
-            mDatabase.endTransaction();
+        if (BuildConfig.DEBUG) {
+            if (list.size() <= 1) {
+                Timber.w("Query %s called with a list of at most one element. Usually that's not expected.", sql);
+            }
         }
+        executeInTransaction(() -> executeManyNoTransaction(sql, list));
     }
 
     /** Use this executeMany version with external transaction management */
@@ -389,5 +328,43 @@ public class DB {
      */
     public String getPath() {
         return mDatabase.getPath();
+    }
+
+
+    public void executeInTransaction(Runnable r) {
+        // Ported from code which started the transaction outside the try..finally
+        getDatabase().beginTransaction();
+        try {
+            r.run();
+            if (getDatabase().inTransaction()) {
+                try {
+                    getDatabase().setTransactionSuccessful();
+                } catch (Exception e) {
+                    // Unsure if this can happen - copied the structure from endTransaction()
+                    Timber.w(e);
+                }
+            } else {
+                Timber.w("Not in a transaction. Cannot mark transaction successful.");
+            }
+        } finally {
+            safeEndInTransaction(getDatabase());
+        }
+    }
+
+    public static void safeEndInTransaction(DB database) {
+        safeEndInTransaction(database.getDatabase());
+    }
+
+    public static void safeEndInTransaction(SupportSQLiteDatabase database) {
+        if (database.inTransaction()) {
+            try {
+                database.endTransaction();
+            } catch (Exception e) {
+                // endTransaction throws about invalid transaction even when you check first!
+                Timber.w(e);
+            }
+        } else {
+            Timber.w("Not in a transaction. Cannot end transaction.");
+        }
     }
 }

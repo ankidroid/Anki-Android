@@ -44,17 +44,13 @@
     <string name="sync_error">Грешка во синхорнизација</string>
     <string name="vague_error">Грешка</string>
     <string name="retry">Обидете се повторно</string>
-    <string name="cancel">Откажи</string>
-    <string name="terms_and_conditions"><a href="https://ankiweb.net/account/terms">Услови и правила</a></string>
     <string name="menu_get_shared_decks">Добијте заеднички decks</string>
     <string name="connection_error_message">Се случи грешка во мрежата</string>
     <string name="not_logged_in_title">Логирај се на AnkiWeb</string>
     <string name="login_create_account_message">Мора да се најавите на сметка на трета страна за да ја користите услугата за синхронизација на облак. Можете да го креирате во следниов чекор.</string>
     <!-- MyAccount.java -->
     <string name="username">Имејл адреса</string>
-    <string name="username_repeat">Повтори имејл адреса</string>
     <string name="password">Лозинка</string>
-    <string name="password_repeat">Повторете ја лозинката</string>
     <string name="log_in">Логирај се</string>
     <string name="sign_up_description">Немате профил на AnkiWeb? Бесплатно е!</string>
     <string name="sign_up_not_affiliated">Забелешка: AnkiWeb не е поврзан со AnkiDroid</string>
@@ -65,7 +61,6 @@
     <string name="invalid_username_password">Неважечка имејл адреса или лозинка</string>
     <string name="reset_password">Ресетирај лозинка</string>
     <!-- AndroidManifest.xml -->
-    <string name="downloaddeck_search">Пребарување</string>
     <string name="preferences_title">Преференции</string>
     <string name="deckpreferences_title">Опции за XXX</string>
     <string name="sync_conflict_message">Мора да ја поставите оваа колекција или да ја преземете од Ankiweb, бидејќи тие не можат да се спојат. Колекција од една страна ќе биде препишана.</string>
@@ -80,7 +75,6 @@
     <string name="sync_title">Синхронизација</string>
     <string name="sync_downloading_media">Преземање на медиуми %1$d/%2$d&#8230;</string>
     <string name="sync_log_uploading_message">Целосна синхронизација од локално</string>
-    <string name="sync_log_downloading_message">Целосна синхронизација од серверот</string>
     <string name="sync_log_clocks_unsynchronized">Вашиот часовник е исклучен за %1$d секунди%2$s. Осигурајте се дека датумот, времето и временската зона на вашиот телефон се поставени правилно, а потоа повторно синхронизирајте.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, временската зона е веројатно погрешна</string>
     <string name="sync_log_clocks_unsynchronized_date">, можеби е погрешен датумот</string>
@@ -94,6 +88,7 @@
     <string name="sync_overwrite_error">Вашата тековна колекција не можеше да биде препишана од преземената датотека</string>
     <string name="sync_connection_error">Врската е завршена. Или вашата интернет конекција се соочува со проблеми, или имате многу голема датотека во вашата медиумска фолдер.</string>
     <string name="sync_write_access_error">Преземената датотека не можеше да се зачува на SD картичката. Или картичката е монтирана само за читање или нема доволно простор.</string>
+    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
     <string name="sync_deletions_message">Синхронизирање на бришењата&#8230;</string>
     <string name="sync_small_objects_message">Синхронизирање на мали објекти&#8230;</string>
     <string name="sync_finish_message">Завршено синхронизирање&#8230;</string>
@@ -115,6 +110,8 @@
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
     <string name="sync_media_error">Грешка во синхронизирањето на медиумските податоци</string>
     <string name="sync_media_error_check">Грешка при синхронизирање на медиумот. Се препорачува проверка на медиумите.</string>
+    <!-- Please run ‘Check database’ before syncing -->
+    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Локален</string>
     <string name="sync_sanity_remote">Оддалечено</string>
     <string name="force_full_sync_title">Присилена целосна синхронизација</string>
@@ -129,7 +126,6 @@
     <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
     <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title">Sync</string>
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

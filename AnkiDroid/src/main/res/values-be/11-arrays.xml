@@ -39,35 +39,6 @@
         <item>Ніколі не паведамляць</item>
         <item>Спытаць мяне</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Няма дзеяння</item>
-        <item>Паказаць адказ</item>
-        <item>Кнопка адказу 1</item>
-        <item>Кнопка адказу 2</item>
-        <item>Кнопка адказу 3</item>
-        <item>Кнопка адказу 4</item>
-        <item>Рэкамендаваны адказ (зялёны)</item>
-        <item>Лепш, чым рэкамендаваны</item>
-        <item>Адмяніць</item>
-        <item>Рэдагаваць нататку</item>
-        <item>Пазначыць</item>
-        <item>Пазначыць нататку</item>
-        <item>Пошук выразу</item>
-        <item>Схаваць картку</item>
-        <item>Прыпыніць картку</item>
-        <item>Выдаліць нататку</item>
-        <item>Прайграць медыа</item>
-        <item>Перапыніць навучанне</item>
-        <item>Схаваць нататку</item>
-        <item>Прыпыніць нататку</item>
-        <item>Чырвоны сцяжок</item>
-        <item>Аранжавы сцяжок</item>
-        <item>Зялёны сцяжок</item>
-        <item>Блакітны сцяжок</item>
-        <item>Прыбраць сцяжок</item>
-        <item>Пракруціць уверх</item>
-        <item>Пракруціць уніз</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Адкласці картку</item>
         <item>Толькі пазнака</item>
@@ -108,4 +79,36 @@
         <item>Чорны</item>
         <item>Цёмны</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>x-large</item>
+        <item>xx-large</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">Няма дзеяння</string>
+    <string name="gesture_answer_1">Кнопка адказу 1</string>
+    <string name="gesture_answer_2">Кнопка адказу 2</string>
+    <string name="gesture_answer_3">Кнопка адказу 3</string>
+    <string name="gesture_answer_4">Кнопка адказу 4</string>
+    <string name="gesture_answer_green">Рэкамендаваны адказ (зялёны)</string>
+    <string name="gesture_answer_better_recommended">Лепш, чым рэкамендаваны</string>
+    <string name="gesture_tag_note">Пазначыць</string>
+    <string name="gesture_lookup">Пошук выразу</string>
+    <string name="gesture_play">Прайграць медыа</string>
+    <string name="gesture_abort_learning">Перапыніць навучанне</string>
+    <string name="gesture_flag_red">Чырвоны сцяжок</string>
+    <string name="gesture_flag_orange">Аранжавы сцяжок</string>
+    <string name="gesture_flag_green">Зялёны сцяжок</string>
+    <string name="gesture_flag_blue">Блакітны сцяжок</string>
+    <string name="gesture_flag_remove">Прыбраць сцяжок</string>
+    <string name="gesture_page_up">Пракруціць уверх</string>
+    <string name="gesture_page_down">Пракруціць уніз</string>
+    <string name="gesture_abort_sync">Abort Learning and Sync</string>
 </resources>

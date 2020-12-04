@@ -19,6 +19,7 @@ package com.ichi2.async;
 import com.ichi2.libanki.Collection;
 import com.ichi2.testutils.CollectionUtils;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.ichi2.async.CollectionTask.TASK_TYPE.*;
@@ -31,6 +32,7 @@ public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest 
     public void checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase();
 
+        advanceRobolectricLooper();
         TaskData result = super.execute(CHECK_DATABASE);
 
         assertThat("The result should specify a failure", result.getBoolean(), is(false));

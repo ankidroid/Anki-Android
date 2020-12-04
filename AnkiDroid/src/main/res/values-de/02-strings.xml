@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX %</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Navigationsleiste öffnen</string>
-    <string name="drawer_close">Navigationsleiste schließen</string>
-    <string name="CardEditorLaterMessage">Information für später gespeichert</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Navigationsleiste öffnen</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Navigationsleiste schließen</string>
     <string name="CardEditorCardDeck">Kartenstapel:</string>
     <string name="CardEditorNoteDeck">Stapel:</string>
     <string name="CardEditorModel">Typ:</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">Alle Schlagwörter markieren/nicht markieren</string>
     <string name="filter_tags">Schlagwörter filtern</string>
     <string name="no_tags">Sie haben noch keine Schlagwörter hinzugefügt.</string>
-    <string name="sdcard_missing_message">Deaktivieren Sie den  USB-Speicher um auf Ihre Stapel zuzugreifen</string>
     <string name="updated_version">Aktualisiert auf Version %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Whiteboard speichern</string>
@@ -65,7 +64,6 @@
     <string name="hide_whiteboard">Whiteboard ausblenden</string>
     <string name="clear_whiteboard">Whiteboard säubern</string>
     <string name="replay_audio">Audio wiederholen</string>
-    <string name="toggle_mic_tool_bar">Aussprache prüfen</string>
     <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgeschlossen</string>
     <string name="leech_notification">Karte als Lernbremse markiert</string>
     <string name="corrupt_font">Fehlerhafte Schriftartdatei %s</string>
@@ -99,25 +97,24 @@
         <item>Notiz geändert</item>
     </string-array>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Heutige Kartenlimit ändern</string>
+    <string name="custom_study_increase_review_limit">Limit der heutigen Rezensionskarte ändern</string>
     <string name="custom_study_review_forgotten">Vergessene Karten nochmal lernen</string>
     <string name="custom_study_review_ahead">Im Voraus lernen</string>
     <string name="custom_study_random_selection">Zufällige Kartenauswahl lernen</string>
     <string name="custom_study_preview_new">Zeige Vorschau von neuen Karten</string>
     <string name="custom_study_limit_tags">Auf bestimmte Schlagwörter beschränken</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Notiz hinzufügen</string>
     <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
     <string name="discard_unsaved_changes">Schließen und Eingaben verwerfen?</string>
     <string name="note_editor_no_cards_created">Keine Karten erstellt. Bitte füllen Sie weitere Felder aus</string>
     <string name="note_editor_no_first_field">Das erste Feld ist leer</string>
     <string name="note_editor_no_cloze_delations">Dieser Notiztyp muss Auslassungen enthalten</string>
+    <string name="note_editor_set_field_language">Feldsprache festlegen</string>
     <string name="note_editor_no_cards_created_all_fields">Der aktuelle Notiztyp hat keine Karten erzeugt.\nBitte wählen Sie einen anderen Notiztyp oder tippen Sie auf »Karten« und fügen Sie eine Feldersetzung hinzu.</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Auslassungen funktionieren nur bei Auslassung-Notiztyp</string>
     <string name="saving_facts">Notiz speichern</string>
     <string name="saving_model">Notiztyp wird gespeichert</string>
-    <string name="add">Hinzufügen</string>
     <string name="save">Speichern</string>
     <string name="close">Schließen</string>
     <string name="select">Auswählen</string>
@@ -134,23 +131,19 @@
         <item quantity="one">%1$d Minute</item>
         <item quantity="other">%1$d Minuten</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Willkommen bei AnkiDroid</string>
-    <string name="fact_adder_intent_title">AnkiDroid Karte</string>
-    <string name="note_editor_add_note">Notiz hinzufügen</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid Karte</string>
     <string name="note_editor_copy_note">Notiz kopieren</string>
-    <string name="card_editor_copy_card">Karte kopieren</string>
     <string name="card_editor_reposition_card">Position ändern</string>
     <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
-    <string name="card_editor_reschedule_card">Umplanen</string>
-    <string name="card_editor_preview_card">Vorschau</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Umplanen</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Vorschau</string>
     <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
-    <string name="rename">Umbenennen</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Umbenennen</string>
     <string name="default_conf_delete_error">Die Standard-Optionengruppe kann nicht gelöscht werden</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d Karte hinzugefügt</item>
         <item quantity="other">%d Karten hinzugefügt</item>
     </plurals>
-    <string name="help_title">Hilfe</string>
     <string name="check_db">Datenbank überprüfen</string>
     <string name="check_media">Medien überprüfen</string>
     <string name="empty_cards">Leere Karten</string>
@@ -160,10 +153,9 @@
     <string name="delete_deck">Lösche Stapel&#8230;</string>
     <string name="show_hint">%s anzeigen</string>
     <string name="info_rate">AnkiDroid bewerten</string>
-    <string name="col_load_failed">Laden der Sammlung fehlgeschlagen.\nDrücken Sie \"zurück\", um AnkiDroid zu schließen.</string>
     <string name="import_title">Importieren</string>
     <string name="import_select_title">Zu importierende Datei auswählen</string>
-    <string name="import_message_add">Hinzufügen</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hinzufügen</string>
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
     <string name="import_message_add_confirm">»%s« zu Ihrer Sammlung hinzufügen? Das kann lange dauern</string>
     <string name="import_log_no_apkg">Dies ist keine gültige Anki-Paketdatei</string>
@@ -174,11 +166,13 @@
     <string name="import_log_file_cache_cleared">Fehler beim Importieren der Datei. Wahrscheinlich wird der Cache während der Verarbeitung gelöscht.\nBitte versuchen Sie es erneut</string>
     <string name="import_succeeded_but_check_database">Der Datenimport war erfolgreich, jedoch ist bei der anschließenden Bereinigung ein Fehler aufgetreten. Hauptursache: %s</string>
     <string name="import_error_unhandled_request">Importanfrage kann nicht verarbeitet werden</string>
+    <string name="import_error_corrupt_zip">Die APKG-Datei ist beschädigt. Bitte löschen und erneut herunterladen.\n\nUrsache: %s</string>
     <string name="import_error_exception">Paket konnte nicht importiert werden\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dateiname »%s« muss auf .apkg oder .colpkg enden</string>
     <string name="import_error_load_imported_database">Anki-Datenbank-Platzhalter (.anki2) werden noch nicht unterstützt. Bitte lesen Sie das Handbuch für entsprechende Anweisungen.</string>
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() konnte nicht durchführt werden (evtl. mangelnder Speicherplatz)</string>
+    <string name="import_error_unhandled_scheme">Unbehandelter Import von: »%s«</string>
     <string name="import_replacing">Sammlung wird ersetzt &#8230;</string>
     <string name="import_interrupted">Import unterbrochen</string>
     <string name="export_include_schedule">Zeitabstände einbeziehen</string>
@@ -202,7 +196,7 @@
     <string name="export_unsuccessful">Fehler beim Exportieren der APKG-Datei</string>
     <string name="import_hint">Speichern Sie die APKG-Datei ins Verzeichnis »%s« und tippen Sie dann auf »OK« zum Importieren der Karten</string>
     <string name="upgrade_import_no_file_found">Keine importierbare Datei %1$s gefunden</string>
-    <string name="study_options">Optionen</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Optionen</string>
     <string name="select_tts">Vorlesesprache festlegen</string>
     <string name="custom_study">Benutzer&#173;de&#173;fi&#173;nier&#173;tes Lernen</string>
     <string name="more_options">Mehr</string>
@@ -240,6 +234,10 @@
         <item quantity="one">%s Jahr</item>
         <item quantity="other">%s Jahre</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s Sekunden</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -255,15 +253,14 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fehler beim Teilen der APKG-Datei</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Zeitplaner V2 muss aktiviert sein, um diese Datei zu importieren.</string>
-    <string name="import_cannot_with_v2">Zeitplaner V2 kann keine V1-Stapel mit enthaltener Zeitplanung importieren.</string>
     <string name="export_v2_dummy_note">Diese Datei benötigt eine neuere Version von Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">»%s« konnte nicht geladen werden.</string>
     <string name="activity_start_failed">Auf dem System ist keine App installiert, die diese Aktion ausführen kann.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerabilder können groß sein. Im Medienverzeichnis können Sie Bilder komprimieren und deren Größe anpassen]]></string>
     <string name="no_browser_notification">Kein Browser gefunden. Bitte besuchen Sie die Webseite via PC oder Mobilgerät: </string>
-    <string name="no_outgoing_link_in_cardbrowser">Weblinks zu externen Seiten werden auf Karten nicht unterstützt.</string>
+    <string name="web_page_error">Fehler beim Laden der Seite: %s</string>
+    <string name="no_outgoing_link_in_cardbrowser">Externer Seitenlink in der Karte wird nicht unterstützt.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Wiederhergestellte Karten</string>
     <!-- Deckpicker Background -->
@@ -280,35 +277,64 @@
     <string name="white_board_image_saved">Whiteboardbild in %s gespeichert</string>
     <string name="title_whiteboard_pen_color">Stiftfarbe des Whiteboards</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">Empty first field: %s</string>
-    <string name="note_importer_error_first_field_matched">First field matched: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_empty_cards_found"><![CDATA[Leere Karten gefunden. Bitte führen Sie Werkzeuge>Leere Karten aus.]]></string>
+    <string name="note_importer_error_empty_first_field">Leeres erstes Feld: %s</string>
+    <string name="note_importer_error_first_field_matched">Erstes Feld übereinstimmen: %s</string>
+    <string name="note_importer_error_added_duplicate_first_field">Doppeltes mit dem ersten Feld hinzugefügt: %s</string>
+    <string name="note_importer_error_appeared_twice">Erscheint zweimal in Datei: %s</string>
+    <string name="note_importer_error_empty_notes">Eine oder mehrere Notizen wurden nicht importiert, da keine Karten generiert wurden. Dies kann passieren, wenn Sie leere Felder haben oder wenn Sie den Inhalt in der Textdatei nicht den korrekten Feldern zugeordnet haben</string>
+    <string name="csv_importer_error_invalid_field_count">»%1$s« hatte %2$d Felder, erwartet %3$d</string>
+    <string name="csv_importer_error_exception">Abgebrochen: %s</string>
+    <string name="user_is_a_robot">Automatischer Test erkannt. Wenn Sie ein Mensch sind, wenden Sie sich an AnkiDroid-Support</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="one">%d Notiz hinzugefügt</item>
+        <item quantity="other">%d Notizen hinzugefügt</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d Notiz aktualisiert</item>
+        <item quantity="other">%d Notizen aktualisiert</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d Notiz unverändert</item>
+        <item quantity="other">%d Notizen unverändert</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %s, or view the wiki. %s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">Diese Karte verwendet AnkiDroid-Funktionen, die nicht  nicht unterstützt sind. Kontaktieren Sie den Entwickler %1$s oder sehen Sie sich das Wiki an. %2$s</string>
+    <string name="invalid_json_data">Karte hat ungültige Daten angegeben. %s</string>
+    <string name="valid_js_api_version">Ungültige AnkiDroid-JS-API-Version. Kontaktieren Sie den Entwickler %s, oder sehen Sie sich das Wiki an</string>
+    <string name="update_js_api_version">AnkiDroid-JS-API-Aktualisierung verfügbar. Kontaktieren Sie den Entwickler %s oder sehen Sie sich das Wiki an</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Ansicht</string>
+    <string name="anki_js_error_code">(Fehlercode: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">Debug-Informationen in die Zwischenablage kopiert</string>
+    <string name="about_ankidroid_error_copy_debug_info">Fehler beim Kopieren der Debug-Informationen in die Zwischenablage</string>
+    <!-- Card Viewer -->
+    <string name="card_viewer_could_not_find_image">Fehler im Karteninhalt: Laden von »%s« fehlgeschlagen</string>
+    <string name="card_viewer_media_relative_protocol">Fehler beim Karteninhalt: Medienaktualisierung erforderlich</string>
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">Fehler beim Laden von Stapel »%s«</string>
+    <string name="search_decks">Stapel durchsuchen</string>
+    <string name="ankidroid_init_failed_webview_title">Schwerer Fehler</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid basiert auf dem System WebView, der nicht verfügbar ist. Dies kann passieren, wenn das System Updates installiert. Bitte versuchen Sie es in ein paar Minuten erneut.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Schriftgröße</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="format_insert_bold">Als Fett formatieren</string>
+    <string name="format_insert_italic">Als Kursiv formatieren</string>
+    <string name="format_insert_underline">Als Unterstrich formatieren</string>
+    <string name="insert_horizontal_line">Horizontale Linie einfügen</string>
+    <string name="insert_heading">Überschrift einfügen</string>
+    <string name="format_font_size">Schriftgröße ändern</string>
+    <string name="insert_mathjax">MathJax-Gleichung einfügen</string>
+    <string name="insert_cloze">Auslassung einfügen</string>
+    <string name="before_text">HTML vor Auswahl</string>
+    <string name="after_text">HTML nach Auswahl</string>
+    <string name="add_toolbar_item">Werkzeugleiste-Element erstellen</string>
+    <string name="toolbar_item_explain_remove">Geben Sie den HTML-Code ein, der vor und nach dem ausgewählten Text eingefügt werden soll\n\nDrücken Sie lange auf ein Symbol in der Symbolleiste, um es zu entfernen</string>
+    <string name="remove_toolbar_item">Element der Werkzeugleiste entfernen?</string>
+    <string name="note_editor_paste_too_large">Das Bild ist zu groß zum Einfügen, bitte fügen Sie das Bild manuell ein</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android-Sicherung im Gange. Bitte versuchen Sie es erneut</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Bitte verwenden Sie iManager, um AnkiDroid das Hinzufügen von Verknüpfungen zu erlauben</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Ihr Startbildschirm erlaubt AnkiDroid keine Verknüpfungen hinzuzufügen</string>
+    <string name="create_shortcut_error">Fehler beim Hinzufügen der Verknüpfung: %s</string>
 </resources>

@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabaseLockedException;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Pair;
 
@@ -31,8 +32,11 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
+import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
+import com.ichi2.async.ProgressSender;
 import com.ichi2.libanki.exception.NoSuchDeckException;
+import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.hooks.ChessFilter;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.libanki.sched.Sched;
@@ -40,6 +44,7 @@ import com.ichi2.libanki.sched.SchedV2;
 import com.ichi2.libanki.template.Template;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.upgrade.Upgrade;
+import com.ichi2.utils.DatabaseChangeDecorator;
 import com.ichi2.utils.FunctionalInterfaces;
 import com.ichi2.utils.VersionUtils;
 
@@ -52,18 +57,23 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.regex.Pattern;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -72,7 +82,9 @@ import timber.log.Timber;
 
 import com.ichi2.async.TaskData;
 
+import static com.ichi2.async.CancelListener.isCancelled;
 import static com.ichi2.libanki.Collection.DismissType.REVIEW;
+import static com.ichi2.libanki.Collection.Previewing.*;
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -85,19 +97,19 @@ import static com.ichi2.libanki.Collection.DismissType.REVIEW;
         "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt","PMD.ExcessiveMethodLength"})
 public class Collection {
 
-    private Context mContext;
+    private final Context mContext;
 
     private DB mDb;
     private boolean mServer;
     //private double mLastSave;
-    private Media mMedia;
-    private Decks mDecks;
+    private final Media mMedia;
+    private final Decks mDecks;
     private Models mModels;
-    private Tags mTags;
+    private final Tags mTags;
 
     private AbstractSched mSched;
 
-    private double mStartTime;
+    private long mStartTime;
     private int mStartReps;
 
     // BEGIN: SQL table columns
@@ -110,9 +122,10 @@ public class Collection {
     private JSONObject mConf;
     // END: SQL table columns
 
-    private LinkedList<Undoable> mUndo;
+    // API 21: Use a ConcurrentLinkedDeque
+    private LinkedBlockingDeque<Undoable> mUndo;
 
-    private String mPath;
+    private final String mPath;
     private boolean mDebugLog;
     private PrintWriter mLogHnd;
 
@@ -122,6 +135,9 @@ public class Collection {
 
     private static final int fDefaultSchedulerVersion = 1;
     private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
+
+    // Not in libAnki.
+    private final Time mTime;
 
     // other options
     public static final String defaultConf = "{"
@@ -136,45 +152,61 @@ public class Collection {
 
     public enum DismissType {
         REVIEW(R.string.undo_action_review),
-        BURY_CARD(R.string.undo_action_bury_card),
-        BURY_NOTE(R.string.undo_action_bury_note),
-        SUSPEND_CARD(R.string.undo_action_suspend_card),
-        SUSPEND_CARD_MULTI(R.string.card_browser_toggle_suspend_card),
-        SUSPEND_NOTE(R.string.undo_action_suspend_note),
-        DELETE_NOTE(R.string.undo_action_delete),
-        DELETE_NOTE_MULTI(R.string.undo_action_delete_multi),
+        BURY_CARD(R.string.menu_bury_card),
+        BURY_NOTE(R.string.menu_bury_note),
+        SUSPEND_CARD(R.string.menu_suspend_card),
+        SUSPEND_CARD_MULTI(R.string.menu_suspend_card),
+        UNSUSPEND_CARD_MULTI(R.string.card_browser_unsuspend_card),
+        SUSPEND_NOTE(R.string.menu_suspend_note),
+        DELETE_NOTE(R.string.menu_delete_note),
+        DELETE_NOTE_MULTI(R.string.card_browser_delete_card),
         CHANGE_DECK_MULTI(R.string.undo_action_change_deck_multi),
-        MARK_NOTE_MULTI(R.string.card_browser_toggle_mark_card),
-        FLAG(R.string.card_browser_flag),
-        REPOSITION_CARDS(R.string.undo_action_reposition_card),
-        RESCHEDULE_CARDS(R.string.undo_action_reschedule_card),
-        RESET_CARDS(R.string.undo_action_reset_card);
+        MARK_NOTE_MULTI(R.string.card_browser_mark_card),
+        UNMARK_NOTE_MULTI(R.string.card_browser_unmark_card),
+        FLAG(R.string.menu_flag),
+        REPOSITION_CARDS(R.string.card_editor_reposition_card),
+        RESCHEDULE_CARDS(R.string.card_editor_reschedule_card),
+        RESET_CARDS(R.string.card_editor_reset_card);
 
-        public int undoNameId;
+        private final int mUndoNameId;
 
         DismissType(int undoNameId) {
-            this.undoNameId = undoNameId;
+            this.mUndoNameId = undoNameId;
+        }
+
+        @SuppressWarnings("deprecation")
+        private Locale getLocale(Resources resources) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                return resources.getConfiguration().getLocales().get(0);
+            } else {
+                return resources.getConfiguration().locale;
+            }
+        }
+        public String getString(Resources res) {
+            return res.getString(mUndoNameId).toLowerCase(getLocale(res));
         }
     }
 
     private static final int UNDO_SIZE_MAX = 20;
 
-    public Collection(Context context, DB db, String path, boolean server, boolean log) {
+    @VisibleForTesting
+    public Collection(Context context, DB db, String path, boolean server, boolean log, @NonNull Time time) {
         mContext = context;
         mDebugLog = log;
         mDb = db;
         mPath = path;
+        mTime = time;
         _openLog();
         log(path, VersionUtils.getPkgVersionName());
         mServer = server;
-        //mLastSave = Utils.now(); // assigned but never accessed - only leaving in for upstream comparison
+        //mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
         clearUndo();
         mMedia = new Media(this, server);
         mDecks = new Decks(this);
         mTags = new Tags(this);
         load();
         if (mCrt == 0) {
-            mCrt = UIUtils.getDayStart() / 1000;
+            mCrt = UIUtils.getDayStart(getTime()) / 1000;
         }
         mStartReps = 0;
         mStartTime = 0;
@@ -187,9 +219,8 @@ public class Collection {
 
 
     public String name() {
-        String n = (new File(mPath)).getName().replace(".anki2", "");
         // TODO:
-        return n;
+        return (new File(mPath)).getName().replace(".anki2", "");
     }
 
 
@@ -227,7 +258,7 @@ public class Collection {
         }
         modSchema();
         @SuppressLint("VisibleForTests")
-        SchedV2 v2Sched = new SchedV2(this, mSched.getTime());
+        SchedV2 v2Sched = new SchedV2(this);
         clearUndo();
         if (ver == 1) {
             v2Sched.moveToV1();
@@ -249,9 +280,9 @@ public class Collection {
         String deckConf = "";
         try {
             // Read in deck table columns
-            cursor = mDb.getDatabase().query(
+            cursor = mDb.query(
                     "SELECT crt, mod, scm, dty, usn, ls, " +
-                    "conf, dconf, tags FROM col", null);
+                    "conf, dconf, tags FROM col");
             if (!cursor.moveToFirst()) {
                 return;
             }
@@ -277,14 +308,53 @@ public class Collection {
         mDecks.load(loadColumn("decks"), deckConf);
     }
 
+    private static int sChunk = 0;
+
+    private int getChunk() {
+        if (sChunk != 0) {
+            return sChunk;
+        }
+        // the window size is saved in
+        // io.requery.android.database.CursorWindow.sCursorWindowSize.
+        // Values are copied here. Ideally, a getter would allow to access it.
+        final int WINDOW_SIZE_KB = 2048;
+        int sCursorWindowSize = WINDOW_SIZE_KB * 1024;
+
+        // We have the ability to look into our sqlite implementation on Android and use it's value
+        // as a ceiling. Try it, with a reasonable fallback in case of failure
+        SupportSQLiteDatabase db = mDb.getDatabase();
+        if (! (db instanceof DatabaseChangeDecorator)) {
+            return sChunk;
+        }
+        String db_name = ((DatabaseChangeDecorator) db).getWrapped().getClass().getName();
+        if ("io.requery.android.database.sqlite.SQLiteDatabase".equals(db_name)) {
+            try {
+                Field cursorWindowSize = io.requery.android.database.CursorWindow.class.getDeclaredField("sDefaultCursorWindowSize");
+                cursorWindowSize.setAccessible(true);
+                int possibleCursorWindowSize = cursorWindowSize.getInt(null);
+                Timber.d("Reflectively discovered database default cursor window size %d", possibleCursorWindowSize);
+                if (possibleCursorWindowSize > 0) {
+                    sCursorWindowSize = possibleCursorWindowSize;
+                } else {
+                    Timber.w("Obtained unusable cursor window size: %d. Using default %d", possibleCursorWindowSize, sCursorWindowSize);
+                }
+            } catch (Exception e) {
+                Timber.w(e, "Unable to get window size from requery cursor.");
+            }
+        }
+
+        // reduce the actual size a little bit.
+        sChunk = (int) (sCursorWindowSize * 15. / 16.);
+        return sChunk;
+    }
+
     public String loadColumn(String columnName) {
         int pos = 1;
-        int chunk = 1024*1024; // 1 mb, a little less than what a cursor line may contain
-        StringBuffer buf = new StringBuffer("");
+        StringBuilder buf = new StringBuilder();
 
         while (true) {
-            try (Cursor cursor = mDb.getDatabase().query("SELECT substr(" + columnName + ", ?, ?) FROM col",
-                    new String[] {Integer.toString(pos), Integer.toString(chunk)})) {
+            try (Cursor cursor = mDb.query("SELECT substr(" + columnName + ", ?, ?) FROM col",
+                    Integer.toString(pos), Integer.toString(getChunk()))) {
                 if (!cursor.moveToFirst()) {
                     return buf.toString();
                 }
@@ -293,10 +363,10 @@ public class Collection {
                       break;
                 }
                 buf.append(res);
-                if (res.length() < chunk) {
+                if (res.length() < getChunk()) {
                     break;
                 }
-                pos += chunk;
+                pos += getChunk();
             }
         }
         return buf.toString();
@@ -321,7 +391,7 @@ public class Collection {
      */
     public void flush(long mod) {
         Timber.i("flush - Saving information to DB...");
-        mMod = (mod == 0 ? Utils.intTime(1000) : mod);
+        mMod = (mod == 0 ? getTime().intTimeMS() : mod);
         ContentValues values = new ContentValues();
         values.put("crt", mCrt);
         values.put("mod", mMod);
@@ -364,7 +434,7 @@ public class Collection {
         }
         // undoing non review operation is handled differently in ankidroid
 //        _markOp(name);
-        //mLastSave = Utils.now(); // assigned but never accessed - only leaving in for upstream comparison
+        //mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
     }
 
     /**
@@ -380,17 +450,9 @@ public class Collection {
             try {
                 SupportSQLiteDatabase db = mDb.getDatabase();
                 if (save) {
-                    db.beginTransaction();
-                    try {
-                        save();
-                        db.setTransactionSuccessful();
-                    } finally {
-                        db.endTransaction();
-                    }
+                    mDb.executeInTransaction(this::save);
                 } else {
-                    if (db.inTransaction()) {
-                        db.endTransaction();
-                    }
+                    DB.safeEndInTransaction(db);
                 }
             } catch (RuntimeException e) {
                 AnkiDroidApp.sendExceptionReport(e, "closeDB");
@@ -424,7 +486,7 @@ public class Collection {
      * thrown when in fact it is never thrown.
      */
     public void modSchemaNoCheck() {
-        mScm = Utils.intTime(1000);
+        mScm = getTime().intTimeMS();
         setMod();
     }
 
@@ -490,6 +552,10 @@ public class Collection {
 
     public Card getCard(long id) {
         return new Card(this, id);
+    }
+
+    public Card.Cache getCardCache(long id) {
+        return new Card.Cache(this, id);
     }
 
 
@@ -590,6 +656,7 @@ public class Collection {
     public int addNote(Note note) {
         // check we have card models available, then save
         ArrayList<JSONObject> cms = findTemplates(note);
+        // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
         if (cms.size() == 0) {
             return 0;
         }
@@ -628,35 +695,40 @@ public class Collection {
     }
 
 
-    /**
-     * Card creation ************************************************************ ***********************************
+    /*
+      Card creation ************************************************************ ***********************************
      */
 
     /**
+     * @param note A note
      * @return (active), non-empty templates.
      */
     public ArrayList<JSONObject> findTemplates(Note note) {
         Model model = note.model();
-        ArrayList<Integer> avail = getModels().availOrds(model, note.getFields());
+        ArrayList<Integer> avail = Models.availOrds(model, note.getFields());
         return _tmplsFromOrds(model, avail);
     }
 
 
-    private ArrayList<JSONObject> _tmplsFromOrds(JSONObject model, ArrayList<Integer> avail) {
+    /**
+     * @param model A note type
+     * @param avail Ords of cards from this note type.
+     * @return One template by element i of avail, for the i-th card. For standard template, avail should contains only existing ords.
+     * for cloze, avail should contains only non-negative numbers, and the i-th card is a copy of the first card, with a different ord.
+     */
+    private ArrayList<JSONObject> _tmplsFromOrds(Model model, ArrayList<Integer> avail) {
         ArrayList<JSONObject> ok = new ArrayList<>();
         JSONArray tmpls;
         if (model.getInt("type") == Consts.MODEL_STD) {
             tmpls = model.getJSONArray("tmpls");
-            for (int i = 0; i < tmpls.length(); i++) {
-                JSONObject t = tmpls.getJSONObject(i);
-                if (avail.contains(t.getInt("ord"))) {
-                    ok.add(t);
-                }
+            for (Integer ord : avail) {
+                ok.add(tmpls.getJSONObject(ord));
             }
         } else {
             // cloze - generate temporary templates from first
+            JSONObject template0 = model.getJSONArray("tmpls").getJSONObject(0);
             for (int ord : avail) {
-                JSONObject t = new JSONObject(model.getJSONArray("tmpls").getString(0));
+                JSONObject t = template0.deepClone();
                 t.put("ord", ord);
                 ok.add(t);
             }
@@ -668,40 +740,76 @@ public class Collection {
     /**
      * Generate cards for non-empty templates, return ids to remove.
      */
-	public ArrayList<Long> genCards(List<Long> nids) {
-	    return genCards(Utils.collection2Array(nids));
+	public ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model) {
+	    return genCards(Utils.collection2Array(nids), model);
 	}
-    public ArrayList<Long> genCards(long[] nids) {
+
+    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model, @Nullable T task) {
+       return genCards(Utils.collection2Array(nids), model, task);
+    }
+
+    public ArrayList<Long> genCards(java.util.Collection<Long> nids, long mid) {
+        return genCards(nids, getModels().get(mid));
+    }
+
+    public ArrayList<Long> genCards(long[] nids, @NonNull Model model) {
+        return genCards(nids, model, null);
+    }
+
+    public ArrayList<Long> genCards(long nid, @NonNull Model model) {
+        return genCards(nid, model, null);
+    }
+
+    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(long nid, @NonNull Model model, @Nullable T task) {
+        return genCards("(" + nid + ")", model, task);
+    }
+
+    /**
+     * @param nids All ids of nodes of a note type
+     * @param task Task to check for cancellation and update number of card processed
+     * @return Cards that should be removed because they should not be generated
+     */
+    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(long[] nids, @NonNull Model model, @Nullable T task) {
         // build map of (nid,ord) so we don't create dupes
         String snids = Utils.ids2str(nids);
+        return genCards(snids, model, task);
+    }
+
+    /**
+     * @param snids All ids of nodes of a note type, separated by comma
+     * @param model
+     * @param task Task to check for cancellation and update number of card processed
+     * @return Cards that should be removed because they should not be generated
+     * @param <T>
+     */
+    public <T extends ProgressSender<TaskData> & CancelListener> ArrayList<Long> genCards(String snids, @NonNull Model model, @Nullable T task) {
+        // For each note, indicates ords of cards it contains
         HashMap<Long, HashMap<Integer, Long>> have = new HashMap<>();
+        // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
         HashMap<Long, Long> dids = new HashMap<>();
+        // For each note, an arbitrary due of one of its due card processed, if any exists
         HashMap<Long, Long> dues = new HashMap<>();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("select id, nid, ord, did, due, odue, odid, type from cards where nid in " + snids, null);
+        try (Cursor cur = mDb.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids)) {
             while (cur.moveToNext()) {
-                long id = cur.getLong(0);
-                long nid = cur.getLong(1);
-                int ord = cur.getInt(2);
-                long did = cur.getLong(3);
-                long due = cur.getLong(4);
-                long odue = cur.getLong(5);
-                long odid = cur.getLong(6);
-                @Consts.CARD_TYPE int type = cur.getInt(7);
+                if (isCancelled(task)) {
+                    Timber.v("Empty card cancelled");
+                    return null;
+                }
+                @NonNull Long id = cur.getLong(0);
+                @NonNull Long nid = cur.getLong(1);
+                @NonNull Integer ord = cur.getInt(2);
+                @NonNull Long did = cur.getLong(3);
+                @NonNull Long due = cur.getLong(4);
+                @Consts.CARD_TYPE int type = cur.getInt(5);
 
                 // existing cards
                 if (!have.containsKey(nid)) {
-                    have.put(nid, new HashMap<Integer, Long>());
+                    have.put(nid, new HashMap<>());
                 }
                 have.get(nid).put(ord, id);
-                // if in a filtered deck, add new cards to original deck
-                if (odid != 0) {
-                    did = odid;
-                }
                 // and their dids
                 if (dids.containsKey(nid)) {
-                    if (dids.get(nid) != 0 && dids.get(nid) != did) {
+                    if (dids.get(nid) != 0 && !Utils.equals(dids.get(nid), did)) {
                         // cards are in two or more different decks; revert to model default
                         dids.put(nid, 0L);
                     }
@@ -709,41 +817,36 @@ public class Collection {
                     // first card or multiple cards in same deck
                     dids.put(nid, did);
                 }
-                // save due
-                if (odid != 0) {
-                    due = odue;
-                }
                 if (!dues.containsKey(nid) && type == Consts.CARD_TYPE_NEW) {
                     dues.put(nid, due);
                 }
             }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         // build cards for each note
         ArrayList<Object[]> data = new ArrayList<>();
-        long ts = Utils.maxID(mDb);
-        long now = Utils.intTime();
+        long ts = getTime().maxID(mDb);
+        long now = getTime().intTime();
         ArrayList<Long> rem = new ArrayList<>();
         int usn = usn();
-        cur = null;
-        try {
-            cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
+        try (Cursor cur = mDb.query("SELECT id, flds FROM notes WHERE id IN " + snids)) {
             while (cur.moveToNext()) {
-                long nid = cur.getLong(0);
-                long mid = cur.getLong(1);
-                String flds = cur.getString(2);
-                Model model = getModels().get(mid);
-                ArrayList<Integer> avail = getModels().availOrds(model, Utils.splitFields(flds));
+                if (isCancelled(task)) {
+                    Timber.v("Empty card cancelled");
+                    return null;
+                }
+                @NonNull Long nid = cur.getLong(0);
+                String flds = cur.getString(1);
+                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds));
+                if (task != null) {
+                    task.doProgress(new TaskData(avail.size()));
+                }
                 Long did = dids.get(nid);
                 // use sibling due if there is one, else use a new id
-                long due;
+                @NonNull Long due;
                 if (dues.containsKey(nid)) {
                     due = dues.get(nid);
                 } else {
-                    due = nextID("pos");
+                    due = (long) nextID("pos");
                 }
                 if (did == null || did == 0L) {
                     did = model.getLong("did");
@@ -782,16 +885,17 @@ public class Collection {
                     }
                 }
             }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         // bulk update
         mDb.executeMany("INSERT INTO cards VALUES (?,?,?,?,?,?,0,0,?,0,0,0,0,0,0,0,0,\"\")", data);
         return rem;
     }
 
+    public enum Previewing {
+        ADD,
+        EDIT,
+        MODELS
+    }
 
 	/**
 	 * Return cards of a note, without saving them
@@ -801,29 +905,26 @@ public class Collection {
      *             2 - when previewing in models dialog, all templates
      * @return list of cards
 	 */
-	public List<Card> previewCards(Note note, @Consts.CARD_TYPE int type) {
+	public List<Card> previewCards(Note note, Previewing type) {
         int did = 0;
         return previewCards(note, type, did);
     }
 
-    public List<Card> previewCards(Note note, @Consts.CARD_TYPE int type, int did) {
-	    ArrayList<JSONObject> cms = null;
-	    if (type == Consts.CARD_TYPE_NEW) {
-	        cms = findTemplates(note);
-	    } else if (type == Consts.CARD_TYPE_LRN) {
-	        cms = new ArrayList<>();
-	        for (Card c : note.cards()) {
-	            cms.add(c.template());
-	        }
-	    } else {
-	        cms = new ArrayList<>();
-            JSONArray ja = note.model().getJSONArray("tmpls");
-            for (int i = 0; i < ja.length(); ++i) {
-                cms.add(ja.getJSONObject(i));
-            }
-	    }
-	    if (cms.isEmpty()) {
-	        return new ArrayList<>();
+    public List<Card> previewCards(Note note, Previewing type, int did) {
+	    List<JSONObject> cms;
+	    switch (type) {
+            case ADD:
+    	        cms = findTemplates(note);
+    	        break;
+            case EDIT:
+    	        cms = new ArrayList<>();
+	            for (Card c : note.cards()) {
+	                cms.add(c.template());
+	            }
+	            break;
+            default: // MODELS
+                JSONArray tmpls = note.model().getJSONArray("tmpls");
+                cms = tmpls.toJSONObjectList();
 	    }
 	    List<Card> cards = new ArrayList<>();
 	    for (JSONObject template : cms) {
@@ -832,7 +933,7 @@ public class Collection {
 	    return cards;
 	}
     public List<Card> previewCards(Note note) {
-        return previewCards(note, Consts.CARD_TYPE_NEW);
+        return previewCards(note, ADD);
     }
 
     /**
@@ -864,12 +965,10 @@ public class Collection {
     // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
     public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, int parameterDid, boolean flush) {
         long nid = note.getId();
-        int ord = -1;
-        long did;
         card.setNid(nid);
-        ord = template.getInt("ord");
+        int ord = template.getInt("ord");
         card.setOrd(ord);
-        did = mDb.queryScalar("select did from cards where nid = ? and ord = ?", nid, ord);
+        long did = mDb.queryScalar("select did from cards where nid = ? and ord = ?", nid, ord);
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
             did = template.optLong("did", 0);
@@ -927,8 +1026,12 @@ public class Collection {
 
 
     // NOT IN LIBANKI //
-    public int cardCount(Long[] ls) {
-        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(ls));
+    public int cardCount(Long... dids) {
+        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids));
+    }
+
+    public boolean isEmptyDeck(Long... dids) {
+        return cardCount(dids) == 0;
     }
 
 
@@ -958,10 +1061,10 @@ public class Collection {
     }
 
 
-    public List<Long> emptyCids() {
+    public <T extends ProgressSender<TaskData> & CancelListener> List<Long> emptyCids(@Nullable T task) {
         List<Long> rem = new ArrayList<>();
         for (Model m : getModels().all()) {
-            rem.addAll(genCards(getModels().nids(m)));
+            rem.addAll(genCards(getModels().nids(m), m, task));
         }
         return rem;
     }
@@ -969,19 +1072,13 @@ public class Collection {
 
     public String emptyCardReport(List<Long> cids) {
         StringBuilder rep = new StringBuilder();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("select group_concat(ord+1), count(), flds from cards c, notes n "
-                                           + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid", null);
+        try (Cursor cur = mDb.query("select group_concat(ord+1), count(), flds from cards c, notes n "
+                                           + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid")) {
             while (cur.moveToNext()) {
                 String ords = cur.getString(0);
                 //int cnt = cur.getInt(1);  // present but unused upstream as well
                 String flds = cur.getString(2);
                 rep.append(String.format("Empty card numbers: %s\nFields: %s\n\n", ords, flds.replace("\u001F", " / ")));
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return rep.toString();
@@ -994,24 +1091,32 @@ public class Collection {
 
     private ArrayList<Object[]> _fieldData(String snids) {
         ArrayList<Object[]> result = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query("SELECT id, mid, flds FROM notes WHERE id IN " + snids, null);
+        try (Cursor cur = mDb.query("SELECT id, mid, flds FROM notes WHERE id IN " + snids)) {
             while (cur.moveToNext()) {
                 result.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getString(2) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return result;
     }
 
 
-    /** Update field checksums and sort cache, after find&replace, etc. */
+    /** Update field checksums and sort cache, after find&replace, etc.
+     * @param nids*/
+    public void updateFieldCache(java.util.Collection<Long> nids) {
+        String snids = Utils.ids2str(nids);
+        updateFieldCache(snids);
+    }
+
+    /** Update field checksums and sort cache, after find&replace, etc.
+     * @param nids*/
     public void updateFieldCache(long[] nids) {
         String snids = Utils.ids2str(nids);
+        updateFieldCache(snids);
+    }
+
+    /** Update field checksums and sort cache, after find&replace, etc.
+     * @param snids comma separated nids*/
+    public void updateFieldCache(String snids) {
         ArrayList<Object[]> r = new ArrayList<>();
         for (Object[] o : _fieldData(snids)) {
             String[] fields = Utils.splitFields((String) o[2]);
@@ -1020,15 +1125,16 @@ public class Collection {
                 // note point to invalid model
                 continue;
             }
-            r.add(new Object[] { Utils.stripHTMLMedia(fields[getModels().sortIdx(model)]), Utils.fieldChecksum(fields[0]), o[0] });
+            Pair<String, Long> csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, getModels().sortIdx(model));
+            r.add(new Object[] {csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o[0] });
         }
         // apply, relying on calling code to bump usn+mod
         mDb.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r);
     }
 
 
-    /**
-     * Q/A generation *********************************************************** ************************************
+    /*
+      Q/A generation *********************************************************** ************************************
      */
 
     /**
@@ -1043,13 +1149,13 @@ public class Collection {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
         Map<String, String> fields = new HashMap<>();
-        Map<String, Pair<Integer, JSONObject>> fmap = getModels().fieldMap(model);
-        for (String name : fmap.keySet()) {
-            fields.put(name, flist[fmap.get(name).first]);
+        Map<String, Pair<Integer, JSONObject>> fmap = Models.fieldMap(model);
+        for (Map.Entry<String, Pair<Integer, JSONObject>> entry : fmap.entrySet()) {
+            fields.put(entry.getKey(), flist[entry.getValue().first]);
         }
         int cardNum = ord + 1;
         fields.put("Tags", tags.trim());
-        fields.put("Type", (String) model.get("name"));
+        fields.put("Type", model.getString("name"));
         fields.put("Deck", mDecks.name(did));
         String baseName = Decks.basename(fields.get("Deck"));
         fields.put("Subdeck", baseName);
@@ -1088,7 +1194,7 @@ public class Collection {
             d.put(type, html);
             // empty cloze?
             if ("q".equals(type) && model.getInt("type") == Consts.MODEL_CLOZE) {
-                if (getModels()._availClozeOrds(model, flist, false).size() == 0) {
+                if (Models._availClozeOrds(model, flist, false).size() == 0) {
                     String link = String.format("<a href=%s#cloze>%s</a>", Consts.HELP_SITE, "help");
                     d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
                 }
@@ -1108,19 +1214,13 @@ public class Collection {
 
     public ArrayList<Object[]> _qaData(String where) {
         ArrayList<Object[]> data = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mDb.getDatabase().query(
+        try (Cursor cur = mDb.query(
                     "SELECT c.id, n.id, n.mid, c.did, c.ord, "
-                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where, null);
+                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where)) {
             while (cur.moveToNext()) {
                 data.add(new Object[] { cur.getLong(0), cur.getLong(1),
                         getModels().get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
                         cur.getString(5), cur.getString(6), cur.getInt(7)});
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return data;
@@ -1134,8 +1234,8 @@ public class Collection {
 		return "flag"+flag;
 	}
 
-    /**
-     * Finding cards ************************************************************ ***********************************
+    /*
+      Finding cards ************************************************************ ***********************************
      */
 
     /** Return a list of card ids */
@@ -1153,7 +1253,7 @@ public class Collection {
         return findCards(search, order, null);
     }
 
-    public List<Long> findCards(String search, boolean order, CollectionTask task) {
+    public List<Long> findCards(String search, boolean order, CollectionTask.PartialSearch task) {
         return new Finder(this).findCards(search, order, task);
     }
 
@@ -1194,8 +1294,8 @@ public class Collection {
     }
 
 
-    /**
-     * Stats ******************************************************************** ***************************
+    /*
+      Stats ******************************************************************** ***************************
      */
 
     // cardstats
@@ -1211,27 +1311,25 @@ public class Collection {
 
 
     public long getTimeLimit() {
-        long timebox = 0;
-        timebox = mConf.getLong("timeLim");
-        return timebox;
+        return mConf.getLong("timeLim");
     }
 
 
     public void startTimebox() {
-        mStartTime = Utils.now();
+        mStartTime = getTime().intTime();
         mStartReps = mSched.getReps();
     }
 
 
     /* Return (elapsedTime, reps) if timebox reached, or null. */
-    public Long[] timeboxReached() {
+    public Pair<Integer, Integer> timeboxReached() {
         if (mConf.getLong("timeLim") == 0) {
             // timeboxing disabled
             return null;
         }
-        double elapsed = Utils.now() - mStartTime;
+        long elapsed = getTime().intTime() - mStartTime;
         if (elapsed > mConf.getLong("timeLim")) {
-            return new Long[] { mConf.getLong("timeLim"), (long) (mSched.getReps() - mStartReps) };
+            return new Pair<>(mConf.getInt("timeLim"), mSched.getReps() - mStartReps);
         }
         return null;
     }
@@ -1241,17 +1339,20 @@ public class Collection {
      * Undo ********************************************************************* **************************
      */
 
-    /**
-     * [type, undoName, data] type 1 = review; type 2 =
+    /* Note from upstream:
+     * this data structure is a mess, and will be updated soon
+     * in the review case, [1, "Review", [firstReviewedCard, secondReviewedCard, ...], wasLeech]
+     * in the checkpoint case, [2, "action name"]
+     * wasLeech should have been recorded for each card, not globally
      */
     public void clearUndo() {
-        mUndo = new LinkedList<>();
+        mUndo = new LinkedBlockingDeque<>();
     }
 
 
     /** Undo menu item name, or "" if undo unavailable. */
     @VisibleForTesting
-    public DismissType undoType() {
+    public @Nullable DismissType undoType() {
         if (mUndo.size() > 0) {
             return mUndo.getLast().getDismissType();
         }
@@ -1260,7 +1361,7 @@ public class Collection {
     public String undoName(Resources res) {
         DismissType type = undoType();
         if (type != null) {
-            return res.getString(type.undoNameId);
+            return type.getString(res);
         }
         return "";
     }
@@ -1270,13 +1371,13 @@ public class Collection {
         return mUndo.size() > 0;
     }
 
-    public long undo() {
+    public @Nullable Card undo() {
         Undoable lastUndo = mUndo.removeLast();
         Timber.d("undo() of type %s", lastUndo.getDismissType());
         return lastUndo.undo(this);
     }
 
-    public void markUndo(Undoable undo) {
+    public void markUndo(@NonNull Undoable undo) {
         Timber.d("markUndo() of type %s", undo.getDismissType());
         mUndo.add(undo);
         while (mUndo.size() > UNDO_SIZE_MAX) {
@@ -1288,9 +1389,9 @@ public class Collection {
         boolean wasLeech = card.note().hasTag("leech");
         Card clonedCard = card.clone();
         Undoable undoableReview = new Undoable(REVIEW) {
-            public long undo(Collection col) {
+            public @Nullable Card undo(@NonNull Collection col) {
                 col.getSched().undoReview(clonedCard, wasLeech);
-                return clonedCard.getId();
+                return clonedCard;
             }
         };
         markUndo(undoableReview);
@@ -1304,6 +1405,7 @@ public class Collection {
     /*
      * Basic integrity check for syncing. True if ok.
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean basicCheck() {
         // cards without notes
         if (mDb.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1") > 0) {
@@ -1509,14 +1611,14 @@ public class Collection {
         getDecks().flush();
 
         mDb.execute("update cards " +
-                        "set did = " + nextDeckId + ", " +
+                        "set did = ?, " +
                         "odid = 0," +
-                        "mod = " +  Utils.intTime() + ", " +
-                        "usn = " + usn() + " " +
+                        "mod = ?, " +
+                        "usn = ? " +
                         "where did in " +
                         Utils.ids2str(dynDeckIds) +
                         "and odid in " +
-                        Utils.ids2str(dynIdsAndZero));
+                        Utils.ids2str(dynIdsAndZero), nextDeckId, getTime().intTime(), usn());
 
 
         result.setCardsWithFixedHomeDeckCount(cardIds.size());
@@ -1587,8 +1689,7 @@ public class Collection {
         notifyProgress.run();
         if (ids.size() > 0) {
             problems.add("Reviews had incorrect due date.");
-            mDb.execute("UPDATE cards SET due = " + mSched.getToday() + ", ivl = 1, mod = " +  Utils.intTime() +
-                    ", usn = " + usn() + " WHERE id IN " + Utils.ids2str(Utils.collection2Array(ids)));
+            mDb.execute("UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(ids), mSched.getToday(), getTime().intTime(), usn());
         }
         return problems;
     }
@@ -1607,8 +1708,7 @@ public class Collection {
         Timber.d("fixNewCardDuePositionOverflow");
         // new cards can't have a due position > 32 bits
         notifyProgress.run();
-        mDb.execute("UPDATE cards SET due = 1000000, mod = " + Utils.intTime() + ", usn = " + usn()
-                + " WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW);
+        mDb.execute("UPDATE cards SET due = 1000000, mod = ?, usn = ? WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW, getTime().intTime(), usn());
         return Collections.emptyList();
     }
 
@@ -1618,7 +1718,7 @@ public class Collection {
         // field cache
         for (Model m : getModels().all()) {
             notifyProgress.run();
-            updateFieldCache(Utils.collection2Array(getModels().nids(m)));
+            updateFieldCache(getModels().nids(m));
         }
         return Collections.emptyList();
     }
@@ -1698,9 +1798,9 @@ public class Collection {
     private ArrayList<String> deleteCardsWithMissingNotes(Runnable notifyProgress) {
         Timber.d("deleteCardsWithMissingNotes()");
         ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> ids;// cards with missing notes
         notifyProgress.run();
-        ids = mDb.queryLongList(
+        // cards with missing notes
+        ArrayList<Long> ids = mDb.queryLongList(
                 "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)");
         notifyProgress.run();
         if (ids.size() != 0) {
@@ -1714,10 +1814,9 @@ public class Collection {
     private ArrayList<String> deleteNotesWithMissingCards(Runnable notifyProgress) {
         Timber.d("deleteNotesWithMissingCards()");
         ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> ids;
         notifyProgress.run();
         // delete any notes with missing cards
-        ids = mDb.queryLongList(
+        ArrayList<Long> ids = mDb.queryLongList(
                 "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)");
         notifyProgress.run();
         if (ids.size() != 0) {
@@ -1731,12 +1830,10 @@ public class Collection {
     private ArrayList<String> deleteNotesWithWrongFieldCounts(Runnable notifyProgress, JSONObject m) throws JSONException {
         Timber.d("deleteNotesWithWrongFieldCounts");
         ArrayList<String> problems = new ArrayList<>();
-        ArrayList<Long> ids;// notes with invalid field counts
-        ids = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            notifyProgress.run();
-            cur = mDb.getDatabase().query("select id, flds from notes where mid = " + m.getLong("id"), null);
+        // notes with invalid field counts
+        ArrayList<Long> ids = new ArrayList<>();
+        notifyProgress.run();
+        try (Cursor cur = mDb.query("select id, flds from notes where mid = ?",  m.getLong("id"))) {
             Timber.i("cursor size: %d", cur.getCount());
             int currentRow = 0;
 
@@ -1775,10 +1872,6 @@ public class Collection {
                 problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
                 _remNotes(ids);
             }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         return problems;
     }
@@ -1791,8 +1884,8 @@ public class Collection {
         if (m.getInt("type") == Consts.MODEL_STD) {
             ArrayList<Integer> ords = new ArrayList<>();
             JSONArray tmpls = m.getJSONArray("tmpls");
-            for (int t = 0; t < tmpls.length(); t++) {
-                ords.add(tmpls.getJSONObject(t).getInt("ord"));
+            for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
+                ords.add(tmpl.getInt("ord"));
             }
             // cards with invalid ordinal
             ArrayList<Long> ids = mDb.queryLongList(
@@ -1839,9 +1932,9 @@ public class Collection {
     }
 
 
-    /**
-     * Logging
-     * ***********************************************************
+    /*
+      Logging
+      ***********************************************************
      */
 
     /**
@@ -1875,7 +1968,7 @@ public class Collection {
                 args[i] = Arrays.toString((long []) args[i]);
             }
         }
-        String s = String.format("[%s] %s:%s(): %s", Utils.intTime(), trace.getFileName(), trace.getMethodName(),
+        String s = String.format("[%s] %s:%s(): %s", getTime().intTime(), trace.getFileName(), trace.getMethodName(),
                 TextUtils.join(",  ", args));
         writeLog(s);
     }
@@ -1930,7 +2023,7 @@ public class Collection {
     public void setUserFlag(int flag, long[] cids)  {
         assert (0<= flag && flag <= 7);
         mDb.execute("update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(cids),
-                    0b111, flag, usn(), Utils.intTime());
+                    0b111, flag, usn(), getTime().intTime());
     }
 
     /**
@@ -1974,6 +2067,7 @@ public class Collection {
     }
 
     /** Check if this collection is valid. */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean validCollection() {
     	//TODO: more validation code
     	return getModels().validateModel();
@@ -2037,6 +2131,14 @@ public class Collection {
         return mCrt;
     }
 
+    public Calendar crtCalendar() {
+        return Time.calendar(getCrt() * 1000);
+    }
+
+    public GregorianCalendar crtGregorianCalendar() {
+        return Time.gregorianCalendar(getCrt() * 1000);
+    }
+
 
     public void setCrt(long crt) {
         mCrt = crt;
@@ -2069,6 +2171,18 @@ public class Collection {
     }
 
     /** Not in libAnki */
+    @CheckResult
+    public List<Long> filterToValidCards(long[] cards) {
+        return getDb().queryLongList("select id from cards where id in " + Utils.ids2str(cards));
+    }
+
+    public int queryVer() throws UnknownDatabaseVersionException {
+        try {
+            return getDb().queryScalar("select ver from col");
+        } catch (Exception e) {
+            throw new UnknownDatabaseVersionException(e);
+        }
+    }
 
     //This duplicates _loadScheduler (but returns the value and sets the report limit).
     public AbstractSched createScheduler(int reportLimit) {
@@ -2082,18 +2196,6 @@ public class Collection {
         return mSched;
     }
 
-
-    //This duplicates _loadScheduler (but returns the value and sets the report limit).
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public void replaceSchedulerForTests(Time time) {
-        int ver = schedVer();
-        if (ver == 1) {
-            mSched = new Sched(this, time);
-        } else if (ver == 2) {
-            mSched = new SchedV2(this, time);
-        }
-    }
-
     /** Allows a mock db to be inserted for testing */
     @VisibleForTesting
     public void setDb(DB database) {
@@ -2102,7 +2204,7 @@ public class Collection {
 
     public static class CheckDatabaseResult {
         private final List<String> mProblems = new ArrayList<>();
-        private long mOldSize;
+        private final long mOldSize;
         private int mFixedCardsWithNoHomeDeckCount;
         private long mNewSize;
         /** When the database was locked */
@@ -2172,5 +2274,10 @@ public class Collection {
         public boolean getFailed() {
             return mFailed;
         }
+    }
+
+    @NonNull
+    public Time getTime() {
+        return mTime;
     }
 }

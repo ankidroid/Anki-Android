@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.ichi2.anki.R;
 
 import com.ichi2.libanki.Deck;
-import com.ichi2.utils.JSONObject;
 
 import java.util.ArrayList;
 
@@ -19,11 +18,11 @@ import java.util.ArrayList;
 public final class DeckDropDownAdapter extends BaseAdapter {
 
     public interface SubtitleListener {
-        public String getSubtitleText();
+        String getSubtitleText();
     }
 
-    private Context context;
-    private ArrayList<Deck> decks;
+    private final Context context;
+    private final ArrayList<Deck> decks;
 
     public DeckDropDownAdapter(Context context, ArrayList<Deck> decks) {
         this.context = context;
@@ -65,8 +64,8 @@ public final class DeckDropDownAdapter extends BaseAdapter {
         TextView deckCountsView;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_selected_item, parent, false);
-            deckNameView = (TextView) convertView.findViewById(R.id.dropdown_deck_name);
-            deckCountsView = (TextView) convertView.findViewById(R.id.dropdown_deck_counts);
+            deckNameView = convertView.findViewById(R.id.dropdown_deck_name);
+            deckCountsView = convertView.findViewById(R.id.dropdown_deck_counts);
             viewHolder = new DeckDropDownViewHolder();
             viewHolder.deckNameView = deckNameView;
             viewHolder.deckCountsView = deckCountsView;
@@ -77,7 +76,7 @@ public final class DeckDropDownAdapter extends BaseAdapter {
             deckCountsView = viewHolder.deckCountsView;
         }
         if (position == 0) {
-            deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
+            deckNameView.setText(context.getResources().getString(R.string.card_browser_all_decks));
         } else {
             Deck deck = decks.get(position - 1);
             String deckName = deck.getString("name");
@@ -93,13 +92,13 @@ public final class DeckDropDownAdapter extends BaseAdapter {
         TextView deckNameView;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.dropdown_deck_item, parent, false);
-            deckNameView = (TextView) convertView.findViewById(R.id.dropdown_deck_name);
+            deckNameView = convertView.findViewById(R.id.dropdown_deck_name);
             convertView.setTag(deckNameView);
         } else {
             deckNameView = (TextView) convertView.getTag();
         }
         if (position == 0) {
-            deckNameView.setText(context.getResources().getString(R.string.deck_summary_all_decks));
+            deckNameView.setText(context.getResources().getString(R.string.card_browser_all_decks));
         } else {
             Deck deck = decks.get(position - 1);
             String deckName = deck.getString("name");

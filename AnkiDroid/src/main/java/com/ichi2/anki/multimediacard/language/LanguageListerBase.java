@@ -31,7 +31,7 @@ import java.util.HashMap;
  */
 public class LanguageListerBase {
 
-    private HashMap<String, String> mLanguageMap;
+    private final HashMap<String, String> mLanguageMap;
 
 
     public LanguageListerBase() {

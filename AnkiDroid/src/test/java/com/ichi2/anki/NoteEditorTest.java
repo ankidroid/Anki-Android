@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
@@ -27,7 +28,6 @@ import com.ichi2.anki.multimediacard.fields.IField;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Note;
-import com.ichi2.utils.JSONObject;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -40,11 +40,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT;
+import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -65,8 +65,7 @@ public class NoteEditorTest extends RobolectricTest {
     @Test
     public void verifyPreviewAddingNote() {
         NoteEditor n = getNoteEditorAdding(NoteType.BASIC).withFirstField("Preview Test").build();
-        ActionMenuItemView previewButton = n.findViewById(R.id.action_preview);
-        previewButton.performClick();
+        n.performPreview();
         ShadowActivity.IntentForResult intent = shadowOf(n).getNextStartedActivityForResult();
         Bundle noteEditorBundle = intent.intent.getBundleExtra("noteEditorBundle");
         assertThat("Bundle set to add note style", noteEditorBundle.getBoolean("addNote"), is(true));
@@ -170,7 +169,7 @@ public class NoteEditorTest extends RobolectricTest {
                 .withFirstField("no cloze deletions")
                 .build();
 
-        editor.saveNote();
+        saveNote(editor);
 
         assertThat(getCardCount(), is(initialCards));
     }
@@ -181,8 +180,7 @@ public class NoteEditorTest extends RobolectricTest {
         NoteEditor editor = getNoteEditorAdding(NoteType.CLOZE)
                 .withFirstField("{{c1::AnkiDroid}} is fantastic")
                 .build();
-
-        editor.saveNote();
+        saveNote(editor);
 
         assertThat(getCardCount(), is(initialCards + 1));
     }
@@ -196,7 +194,7 @@ public class NoteEditorTest extends RobolectricTest {
                 .withSecondField("{{c1::AnkiDroid}} is fantastic")
                 .build();
 
-        editor.saveNote();
+        saveNote(editor);
 
         assertThat(getCardCount(), is(initialCards));
     }
@@ -257,7 +255,7 @@ public class NoteEditorTest extends RobolectricTest {
         editor.setFieldValueFromUi(0, newFirstField);
         assertThat(Arrays.asList(editor.getCurrentFieldStrings()), contains(newFirstField, initSecondField));
 
-        editor.saveNote();
+        saveNote(editor);
         this.waitForAsyncTasksToComplete();
 
         List<String> actual = Arrays.asList(editor.getCurrentFieldStrings());
@@ -266,10 +264,76 @@ public class NoteEditorTest extends RobolectricTest {
 
     @Test
     public void processTextIntentShouldCopyFirstField() {
+        ensureCollectionLoadIsSynchronous();
         Intent i = new Intent(Intent.ACTION_PROCESS_TEXT);
         i.putExtra(EXTRA_PROCESS_TEXT, "hello\nworld");
         NoteEditor editor = startActivityNormallyOpenCollectionWithIntent(NoteEditor.class, i);
-        assertThat(Arrays.asList(editor.getCurrentFieldStrings()), contains("hello\nworld", ""));
+        List<String> actual = Arrays.asList(editor.getCurrentFieldStrings());
+        assertThat(actual, contains("hello\nworld", ""));
+    }
+
+    @Test
+    public void previewWorksWithNoError() {
+        // #6923 regression test - Low value - Could not make this fail as onSaveInstanceState did not crash under Robolectric.
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+        assertDoesNotThrow(editor::performPreview);
+    }
+
+    @Test
+    public void clearFieldWorks() {
+        // #7522
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+        editor.setFieldValueFromUi(1, "Hello");
+        assertThat(editor.getCurrentFieldStrings()[1], is("Hello"));
+        editor.clearField(1);
+        assertThat(editor.getCurrentFieldStrings()[1], is(""));
+
+    }
+
+    @Test
+    public void insertIntoFocusedFieldStartsAtSelection() {
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        EditText field = editor.getFieldForTest(0);
+
+        editor.insertStringInField(field, "Hello");
+
+        field.setSelection(3);
+
+        editor.insertStringInField(field, "World");
+
+        assertThat(editor.getFieldForTest(0).getText().toString(), is("HelWorldlo"));
+    }
+
+    @Test
+    public void insertIntoFocusedFieldReplacesSelection() {
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        EditText field = editor.getFieldForTest(0);
+
+        editor.insertStringInField(field, "12345");
+
+        field.setSelection(2, 3); //select "3"
+
+        editor.insertStringInField(field, "World");
+
+        assertThat(editor.getFieldForTest(0).getText().toString(), is("12World45"));
+    }
+
+    @Test
+    public void insertIntoFocusedFieldReplacesSelectionIfBackwards() {
+        // selections can be backwards if the user uses keyboards
+        NoteEditor editor = getNoteEditorAddingNote(FromScreen.DECK_LIST, NoteEditor.class);
+
+        EditText field = editor.getFieldForTest(0);
+
+        editor.insertStringInField(field, "12345");
+
+        field.setSelection(3, 2); //select "3" (right to left)
+
+        editor.insertStringInField(field, "World");
+
+        assertThat(editor.getFieldForTest(0).getText().toString(), is("12World45"));
     }
 
     private Intent getCopyNoteIntent(NoteEditor editor) {
@@ -316,6 +380,7 @@ public class NoteEditorTest extends RobolectricTest {
     }
 
     private <T extends NoteEditor> T getNoteEditorAddingNote(FromScreen from, Class<T> clazz) {
+        ensureCollectionLoadIsSynchronous();
         Intent i = new Intent();
         switch (from) {
             case REVIEWER:
@@ -354,6 +419,12 @@ public class NoteEditorTest extends RobolectricTest {
         return super.startActivityNormallyOpenCollectionWithIntent(clazz, i);
     }
 
+
+    private void saveNote(NoteEditor editor) {
+        editor.saveNote();
+        advanceRobolectricLooperWithSleep();
+    }
+
     private enum FromScreen {
         DECK_LIST,
         REVIEWER
@@ -385,12 +456,22 @@ public class NoteEditorTest extends RobolectricTest {
         }
 
         public NoteEditor build() {
-            return build(NoteEditor.class);
+            NoteEditor editor = build(NoteEditor.class);
+            advanceRobolectricLooper();
+            advanceRobolectricLooper();
+            advanceRobolectricLooper();
+            advanceRobolectricLooper();
+            // 4 is insufficient
+            advanceRobolectricLooper();
+            advanceRobolectricLooper();
+
+            return editor;
         }
 
         public <T extends NoteEditor> T build(Class<T> clazz) {
             getCol().getModels().setCurrent(mModel);
             T noteEditor = getNoteEditorAddingNote(FromScreen.REVIEWER, clazz);
+            advanceRobolectricLooper();
             noteEditor.setFieldValueFromUi(0, mFirstField);
             if (mSecondField != null) {
                 noteEditor.setFieldValueFromUi(1, mSecondField);

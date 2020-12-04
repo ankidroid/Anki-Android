@@ -37,13 +37,13 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
+    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Apri barra di navigazione</string>
-    <string name="drawer_close">Chiudi barra di navigazione</string>
-    <string name="CardEditorLaterMessage">Informazione salvata per più tardi</string>
+    <string tools:ignore="UnusedResources" name="drawer_open">Apri barra di navigazione</string>
+    <string tools:ignore="UnusedResources" name="drawer_close">Chiudi barra di navigazione</string>
     <string name="CardEditorCardDeck">Mazzo:</string>
     <string name="CardEditorNoteDeck">Mazzo:</string>
     <string name="CardEditorModel">Tipo:</string>
@@ -55,7 +55,6 @@
     <string name="check_all_tags">Seleziona/deseleziona tutte le etichette</string>
     <string name="filter_tags">Filtra etichette</string>
     <string name="no_tags">Non hai ancora aggiunto nessuna etichetta.</string>
-    <string name="sdcard_missing_message">La scheda SD non è disponibile, perché è usata come unità USB. Scollegare l\'USB per accedere ai mazzi.</string>
     <string name="updated_version">Aggiornato alla versione %s</string>
     <!-- Reviewer.java -->
     <string name="save_whiteboard">Salva lavagna</string>
@@ -65,7 +64,6 @@
     <string name="hide_whiteboard">Nascondi lavagna</string>
     <string name="clear_whiteboard">Pulisci lavagna</string>
     <string name="replay_audio">Riproduci audio</string>
-    <string name="toggle_mic_tool_bar">Controlla la pronuncia</string>
     <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
     <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
     <string name="corrupt_font">File dei caratteri corrotto %s</string>
@@ -107,17 +105,16 @@
     <string name="custom_study_preview_new">Anteprima carte nuove</string>
     <string name="custom_study_limit_tags">Limita ad etichette particolari</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_add_note">Aggiungi nota</string>
     <string name="cardeditor_title_edit_card">Modifica nota</string>
     <string name="discard_unsaved_changes">Chiudere senza salvare i dati inseriti?</string>
     <string name="note_editor_no_cards_created">Nessuna carta creata. Si prega di compilare altri campi</string>
     <string name="note_editor_no_first_field">Il primo campo è vuoto</string>
     <string name="note_editor_no_cloze_delations">Questo tipo di nota deve contenere cloze</string>
+    <string name="note_editor_set_field_language">Imposta lingua del campo</string>
     <string name="note_editor_no_cards_created_all_fields">Il tipo di nota attuale non ha prodotto nessuna carta.\nScegli un altro tipo di nota, o fai clic su «Carte» e aggiungi una sostituzione del campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">I cloze deletions funzionano solo sui tipi di nota Cloze</string>
     <string name="saving_facts">Salvataggio nota</string>
     <string name="saving_model">Salvataggio tipo di nota</string>
-    <string name="add">Aggiungi</string>
     <string name="save">Salva</string>
     <string name="close">Chiudi</string>
     <string name="select">Seleziona</string>
@@ -134,23 +131,19 @@
         <item quantity="one">%1$d minuto</item>
         <item quantity="other">%1$d minuti</item>
     </plurals>
-    <string name="studyoptions_welcome_title">Benvenuto in AnkiDroid</string>
-    <string name="fact_adder_intent_title">Carta AnkiDroid</string>
-    <string name="note_editor_add_note">Aggiungi nota</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Carta AnkiDroid</string>
     <string name="note_editor_copy_note">Copia nota</string>
-    <string name="card_editor_copy_card">Copia carta</string>
     <string name="card_editor_reposition_card">Riposiziona</string>
     <string name="card_editor_reset_card">Reimposta progresso</string>
-    <string name="card_editor_reschedule_card">Ripianifica</string>
-    <string name="card_editor_preview_card">Anteprima</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Ripianifica</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Anteprima</string>
     <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo dispositivo</string>
-    <string name="rename">Rinomina</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Rinomina</string>
     <string name="default_conf_delete_error">Il gruppo di opzioni predefinito non può essere rimosso</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d carta aggiunta</item>
         <item quantity="other">%d carte aggiunte</item>
     </plurals>
-    <string name="help_title">Aiuto</string>
     <string name="check_db">Controlla database</string>
     <string name="check_media">Controlla file multimediali</string>
     <string name="empty_cards">Carte vuote</string>
@@ -160,10 +153,9 @@
     <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
     <string name="show_hint">Mostra %s</string>
     <string name="info_rate">Valuta AnkiDroid</string>
-    <string name="col_load_failed">Caricamento della collezione fallito.\nPremi indietro per chiudere AnkiDroid.</string>
     <string name="import_title">Importazione in corso</string>
     <string name="import_select_title">Scegli un file da importare</string>
-    <string name="import_message_add">Aggiungi</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aggiungi</string>
     <string name="import_message_replace_confirm">La tua collezione esistente verrà eliminata e sostituita con i dati del file %s. Sei sicuro?</string>
     <string name="import_message_add_confirm">Aggiungere \"%s\" alla collezione? Può richiedere molto tempo</string>
     <string name="import_log_no_apkg">Questo non è un file di pacchetto Anki valido</string>
@@ -174,11 +166,13 @@
     <string name="import_log_file_cache_cleared">Errore nell\'importazione del file, probabilmente una cache pulita durante l\'elaborazione.\nSi prega di riprovare</string>
     <string name="import_succeeded_but_check_database">L\'importazione dei dati ha riuscito ma la pulizia postimportazione no. Esegui il controllo di banca dati più tardi. Causa: %s</string>
     <string name="import_error_unhandled_request">Impossibile elaborare la richiesta di importazione</string>
+    <string name="import_error_corrupt_zip">Il file apkg è corrotto. Si prega di eliminare e ri-scaricarlo.\n\nCausa root: %s</string>
     <string name="import_error_exception">Impossibile importare il pacchetto\n\n%s</string>
     <string name="import_error_not_apkg_extension">Il file \"%s\" non ha estensione .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Le sostituzioni di Anki Database (.anki2) non sono ancora supportate. Consultare il manuale per le istruzioni di sostituzione.</string>
     <string name="import_error_content_provider">Il file selezionato non ha potuto essere importato automaticamente da AnkiDroid. Consulta il manuale utente per importare manualmente i file anki: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() fallito (possibilmente una mancanza di spazio di archiviazione)</string>
+    <string name="import_error_unhandled_scheme">Importazione non gestita da: «%s»</string>
     <string name="import_replacing">Sostituzione collezione&#8230;</string>
     <string name="import_interrupted">Importazione interrotta</string>
     <string name="export_include_schedule">Includi schedulazione</string>
@@ -202,7 +196,7 @@
     <string name="export_unsuccessful">Errore nell\'esportazione del file apkg</string>
     <string name="import_hint">Per importare carte, inserisci il file apkg nella cartella %s e premi ok</string>
     <string name="upgrade_import_no_file_found">Nessun file importabile %1$s trovato</string>
-    <string name="study_options">Opzioni</string>
+    <string name="study_options" comment="Menu entry to open an options menu">Opzioni</string>
     <string name="select_tts">Imposta lingua TTS</string>
     <string name="custom_study">Studio personalizzato</string>
     <string name="more_options">Più</string>
@@ -240,6 +234,10 @@
         <item quantity="one">%s anno</item>
         <item quantity="other">%s anni</item>
     </plurals>
+    <!-- A decimal number of seconds.
+    Please give this a best-effort translation and explain the requirements for
+    formatting decimals in your language in the CrowdIn comments -->
+    <string name="time_span_decimal_seconds">%s secondi</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -255,14 +253,13 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Errore nella condivisione del file apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="import_needs_v2">Il pianificatore V2 deve essere abilitato per importare questo file.</string>
-    <string name="import_cannot_with_v2">Il pianificatore V2 non può importare i mazzi V1 con la pianificazione inclusa.</string>
     <string name="export_v2_dummy_note">Questo file richiede una versione più recente di Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Caricamento di %s fallito.</string>
     <string name="activity_start_failed">Il sistema non ha un\'applicazione installata che può eseguire questa azione.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Le immagini della fotocamera possono essere grandi. Dovrai forse comprimere e ridimensionare le immagini nella directory multimediale]]></string>
     <string name="no_browser_notification">Nessun browser trovato, visita la pagina web tramite pc o cellulare: </string>
+    <string name="web_page_error">Errore nel caricamento della pagina: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Collegamento di pagina esterna nella carta non è supportato.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Carte recuperate</string>
@@ -302,13 +299,42 @@
         <item quantity="other">%d note invariate</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">Questa scheda utilizza funzioni AnkiDroid non supportate. Contatta lo sviluppatore %s, o visualizza la wiki. %s</string>
+    <string name="api_version_developer_contact">Questa carta utilizza funzioni AnkiDroid non supportate. Contatta lo sviluppatore %1$s, o visualizza la wiki. %2$s</string>
     <string name="invalid_json_data">La scheda fornisce dati non validi. %s</string>
     <string name="valid_js_api_version">Versione API JS AnkiDroid non valida. Contatta lo sviluppatore %s, o visualizza la wiki</string>
     <string name="update_js_api_version">Aggiornamento disponibile per API JS AnkiDroid. Contatta lo sviluppatore %s, o visualizza wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Visualizza</string>
     <string name="anki_js_error_code">(Codice errore: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">Informazioni di debug copiate negli appunti</string>
+    <string name="about_ankidroid_error_copy_debug_info">Errore nella copia delle informazioni di debug negli appunti</string>
+    <!-- Card Viewer -->
+    <string name="card_viewer_could_not_find_image">Errore nel contenuto della carta: impossibile caricare «%s»</string>
+    <string name="card_viewer_media_relative_protocol">Errore del Contenuto della Carta: Richiesto aggiornamento multimediale</string>
+    <!-- Deck Picker -->
+    <string name="deck_picker_failed_deck_load">Impossibile caricare il mazzo «%s»</string>
+    <string name="search_decks">Cerca mazzi</string>
+    <string name="ankidroid_init_failed_webview_title">Errore Fatale</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid si basa sulla WebView di Sistema che non è disponibile. Questo può verificarsi se il sistema sta installando aggiornamenti. Sei pregato di riprovare tra qualche minuto.\n\n%s</string>
+    <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
+    <string name="menu_font_size">Dimensione Carattere</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show Toolbar</string>
+    <string name="format_insert_bold">Formatta in Grassetto</string>
+    <string name="format_insert_italic">Formata in Corsivo</string>
+    <string name="format_insert_underline">Formatta come Sottolineato</string>
+    <string name="insert_horizontal_line">Inserisci Riga Orizzontale</string>
+    <string name="insert_heading">Inserisci Intestazione</string>
+    <string name="format_font_size">Cambia Dimensione Carattere</string>
+    <string name="insert_mathjax">Inserisci l\'Equazione MathJax</string>
+    <string name="insert_cloze">Inserisci Eliminazione di Cloze</string>
+    <string name="before_text">HTML Prima della Selezione</string>
+    <string name="after_text">HTML Dopo la Selezione</string>
+    <string name="add_toolbar_item">Crea Elemento Barra degli Strumenti</string>
+    <string name="toolbar_item_explain_remove">Inserisci l\'HTML da inserire prima e dopo il testo selezionato\n\nPremi a lungo su un elemento della barra degli strumenti per rimuoverlo</string>
+    <string name="remove_toolbar_item">Rimuovere l\'Elemento della Barra Strumenti?</string>
+    <string name="note_editor_paste_too_large">L\'immagine è troppo grande da incollare, sei pregato di inserire manualmente l\'immagine</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Backup di Android in corso. Sei pregato di riprovare</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Utilizza iManager per consentire ad AnkiDroid di aggiungere scorciatoie</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">La tua schermata iniziale non consente ad AnkiDroid di aggiungere scorciatoie</string>
+    <string name="create_shortcut_error">Errore nell\'aggiunta della scorciatoia: %s</string>
 </resources>

@@ -42,9 +42,10 @@
     <string name="statistics_mature">Madures</string>
     <string name="statistics_young_and_learn">Joves+Aprenent</string>
     <string name="statistics_unlearned">No vistes</string>
-    <string name="statistics_suspended_and_buried">Suspeses+Enterrades</string>
-    <string name="statistics_relearn">Aprendre de nou</string>
-    <string name="statistics_learn">Aprendre</string>
+    <string name="statistics_suspended">Suspended</string>
+    <string name="statistics_buried">Buried</string>
+    <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Aprendre de nou</string>
+    <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Aprendre</string>
     <string name="statistics_cram">Repàs</string>
     <string name="stats_cards">Fitxes</string>
     <string name="stats_cards_intervals">Cartes amb un interval establert</string>
@@ -66,7 +67,7 @@
     <string name="stats_time_of_day">Hora del dia</string>
     <string name="stats_day_of_week">Dia de la setmana</string>
     <string formatted="false" name="stats_percentage_correct">% correcte</string>
-    <string name="stats_reviews">Revisions</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Revisions</string>
     <string name="stats_answer_type">Tipus de resposta</string>
     <string name="stats_today_again_count">Compte de \"tornar\": &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correcte)</string>
@@ -77,7 +78,6 @@
     <string name="stats_overview_forecast_average">Mitjana: &lt;b&gt;%1$.1f&lt;/b&gt; revisions/dia</string>
     <string name="stats_overview_forecast_due_tomorrow">Pila per demà: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">Dies estudiats: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d de %3$d)</string>
-    <string name="stats_overview_total_reviews">Total: &lt;b&gt;%1$d&lt;/b&gt; revisions</string>
     <string name="stats_overview_reviews_per_day_studydays">Mitjana de dies estudiats: &lt;b&gt;%1$.1f&lt;/b&gt; revisions/dia</string>
     <string name="stats_overview_reviews_per_day_all">Si haguessis estudiat cada dia: &lt;b&gt;%1$.1f&lt;/b&gt; revisions/dia</string>
     <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
@@ -100,7 +100,6 @@
     <string name="stats_overview_card_types_lowest_ease">Lowest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_average_ease">Average ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
     <string name="stats_overview_card_types_highest_ease">Highest ease: &lt;b&gt;%.0f%%&lt;/b&gt;</string>
-    <string name="deck_summary_all_decks">Tots els paquets</string>
     <string name="stats_select_time_scale">Seleccioneu el cronograma</string>
     <string-array name="due_x_axis_title">
         <item>Dies</item>
@@ -112,12 +111,11 @@
     <string name="stats_forecast">Previsió</string>
     <string name="stats_review_count">Compte de revisions</string>
     <string name="stats_review_time">Temps de revisió</string>
-    <string name="stats_added">Afegides</string>
+    <string name="stats_added" comment="Label of the number of added card">Afegides</string>
     <string name="stats_review_intervals">Intervals</string>
     <string name="stats_breakdown">Desglossament per hora</string>
     <string name="stats_weekly_breakdown">Desglossament per setmana</string>
     <string name="stats_answer_buttons">Botons de resposta</string>
-    <string name="stats_cards_types">Tipus de cartes</string>
     <string-array name="stats_day_time_strings">
         <item>4:00</item>
         <item>10:00</item>

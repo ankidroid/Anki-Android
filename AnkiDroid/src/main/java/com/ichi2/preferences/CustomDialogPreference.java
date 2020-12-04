@@ -19,7 +19,6 @@ package com.ichi2.preferences;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences.Editor;
-import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.widget.Toast;
 
@@ -27,8 +26,9 @@ import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.MetaDB;
 import com.ichi2.anki.R;
 
-public class CustomDialogPreference extends DialogPreference implements DialogInterface.OnClickListener {
-    private Context mContext;
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+public class CustomDialogPreference extends android.preference.DialogPreference implements DialogInterface.OnClickListener {
+    private final Context mContext;
 
 
     public CustomDialogPreference(Context context, AttributeSet attrs) {
@@ -44,7 +44,7 @@ public class CustomDialogPreference extends DialogPreference implements DialogIn
                 Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confReset", true);
                 editor.commit();
-            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.deck_conf_remove))) {
+            } else if (this.getTitle().equals(mContext.getResources().getString(R.string.dialog_positive_remove))) {
                 // Deck Options :: Remove Options Group
                 Editor editor = AnkiDroidApp.getSharedPrefs(mContext).edit();
                 editor.putBoolean("confRemove", true);

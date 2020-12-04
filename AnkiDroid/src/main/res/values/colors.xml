@@ -12,7 +12,7 @@
 		License along with ~ this program. If not, see
 		<http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
 
     <color name="wb_fg_color">#B00000FF</color>
     <color name="wb_fg_color_inv">#0099FF</color>
@@ -25,11 +25,14 @@
     <color name="stats_hours">#ccc</color>
     <color name="stats_counts">#E6000000</color>
     <color name="stats_unseen">#000</color>
-    <color name="stats_suspended_and_buried">#ff0</color>
+    <color name="stats_suspended">#ff0</color>
+    <color name="stats_buried">#606264</color>
     <color name="stats_cumulative">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+
+    <color name="answer_buttons_highlight_color">#66FFFFFF</color>
 
 
     <!-- Material Design: http://www.google.com/design/spec/style/color.html#color-color-palette -->

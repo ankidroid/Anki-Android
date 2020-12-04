@@ -22,7 +22,7 @@ import android.view.KeyCharacterMap;
 
 public class CompatHelper {
     private static CompatHelper sInstance;
-    private Compat mCompat;
+    private final Compat mCompat;
 
 
     private CompatHelper() {
@@ -85,6 +85,7 @@ public class CompatHelper {
         return "amazon".equalsIgnoreCase(Build.BRAND) || "amazon".equalsIgnoreCase(Build.MANUFACTURER);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean hasKanaAndEmojiKeys() {
         return KeyCharacterMap.deviceHasKey(94) && KeyCharacterMap.deviceHasKey(95);
     }

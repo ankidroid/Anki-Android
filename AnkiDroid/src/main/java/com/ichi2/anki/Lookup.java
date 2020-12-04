@@ -42,9 +42,6 @@ public class Lookup {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().getBaseContext());
         mDictionary = Integer.parseInt(preferences.getString("dictionary", Integer.toString(DICTIONARY_NONE)));
         switch (mDictionary) {
-            case DICTIONARY_NONE:
-                mIsDictionaryAvailable = false;
-                break;
             case DICTIONARY_AEDICT:
                 mDictionaryAction = "sk.baka.aedict.action.ACTION_SEARCH_EDICT";
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
@@ -68,6 +65,7 @@ public class Lookup {
                 mDictionaryAction = "com.ngc.fora.action.LOOKUP";
                 mIsDictionaryAvailable = Utils.isIntentAvailable(mContext, mDictionaryAction);
                 break;
+            case DICTIONARY_NONE:
             default:
                 mIsDictionaryAvailable = false;
                 break;
@@ -82,7 +80,7 @@ public class Lookup {
             return false;
         }
         // clear text from leading and closing dots, commas, brackets etc.
-        text = text.trim().replaceAll("[,;:\\s\\(\\[\\)\\]\\.]*$", "").replaceAll("^[,;:\\s\\(\\[\\)\\]\\.]*", "");
+        text = text.trim().replaceAll("[,;:\\s(\\[)\\].]*$", "").replaceAll("^[,;:\\s(\\[)\\].]*", "");
         switch (mDictionary) {
             case DICTIONARY_NONE:
                 return false;
@@ -99,7 +97,7 @@ public class Lookup {
                 String language = getLanguage(MetaDB.LANGUAGES_QA_UNDEFINED);
                 if (language.length() > 0) {
                     for (CharSequence itemValue : itemValues) {
-                        if (language.equals(itemValue)) {
+                        if (language.contentEquals(itemValue)) {
                             lookupLeo(language, mLookupText);
                             mLookupText = "";
                             return true;
@@ -110,15 +108,11 @@ public class Lookup {
                 new MaterialDialog.Builder(mContext)
                         .title("\"" + mLookupText + "\" nachschlagen")
                         .items(items)
-                        .itemsCallback(new MaterialDialog.ListCallback() {
-                            @Override
-                            public void onSelection(MaterialDialog materialDialog, View view,
-                                    int item, CharSequence charSequence) {
-                                String language = itemValues[item].toString();
-                                storeLanguage(language, MetaDB.LANGUAGES_QA_UNDEFINED);
-                                lookupLeo(language, mLookupText);
-                                mLookupText = "";
-                            }
+                        .itemsCallback((materialDialog, view, item, charSequence) -> {
+                            String language1 = itemValues[item].toString();
+                            storeLanguage(language1, MetaDB.LANGUAGES_QA_UNDEFINED);
+                            lookupLeo(language1, mLookupText);
+                            mLookupText = "";
                         })
                         .build().show();
                 return true;

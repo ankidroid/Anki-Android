@@ -39,35 +39,6 @@
         <item>Никога не докладвай</item>
         <item>Попитай ме</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>Няма действие</item>
-        <item>Показване на отговора</item>
-        <item>Бутон отговор 1</item>
-        <item>Бутон отговор 2</item>
-        <item>Бутон отговор 3</item>
-        <item>Бутон отговор 4</item>
-        <item>Препоръчителен отговор (зелен)</item>
-        <item>Отговаря се по-добре, отколкото се препоръчва</item>
-        <item>Отмяна</item>
-        <item>Промяна на бележка</item>
-        <item>Tag note</item>
-        <item>Mark note</item>
-        <item>Lookup expression</item>
-        <item>Bury card</item>
-        <item>Suspend card</item>
-        <item>Delete note</item>
-        <item>Play media</item>
-        <item>Abort learning</item>
-        <item>Bury note</item>
-        <item>Suspend note</item>
-        <item>Toggle Red Flag</item>
-        <item>Toggle Orange Flag</item>
-        <item>Toggle Green Flag</item>
-        <item>Toggle Blue Flag</item>
-        <item>Remove Flag</item>
-        <item>Page Up</item>
-        <item>Page Down</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>Отлагане на карта</item>
         <item>Само етикети</item>
@@ -108,4 +79,36 @@
         <item>Черна</item>
         <item>Тъмна</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-small</item>
+        <item>x-small</item>
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+        <item>x-large</item>
+        <item>xx-large</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">Няма действие</string>
+    <string name="gesture_answer_1">Бутон отговор 1</string>
+    <string name="gesture_answer_2">Бутон отговор 2</string>
+    <string name="gesture_answer_3">Бутон отговор 3</string>
+    <string name="gesture_answer_4">Бутон отговор 4</string>
+    <string name="gesture_answer_green">Препоръчителен отговор (зелен)</string>
+    <string name="gesture_answer_better_recommended">Отговаря се по-добре, отколкото се препоръчва</string>
+    <string name="gesture_tag_note">Tag note</string>
+    <string name="gesture_lookup">Lookup expression</string>
+    <string name="gesture_play">Play media</string>
+    <string name="gesture_abort_learning">Abort learning</string>
+    <string name="gesture_flag_red">Toggle Red Flag</string>
+    <string name="gesture_flag_orange">Toggle Orange Flag</string>
+    <string name="gesture_flag_green">Toggle Green Flag</string>
+    <string name="gesture_flag_blue">Toggle Blue Flag</string>
+    <string name="gesture_flag_remove">Remove Flag</string>
+    <string name="gesture_page_up">Page Up</string>
+    <string name="gesture_page_down">Page Down</string>
+    <string name="gesture_abort_sync">Abort Learning and Sync</string>
 </resources>

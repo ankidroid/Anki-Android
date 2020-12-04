@@ -57,7 +57,7 @@ public class PeripheralKeymap {
     }
 
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings( {"unused", "RedundantSuppression"})
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return false;
     }
@@ -74,8 +74,8 @@ public class PeripheralKeymap {
     }
 
     private static class KeyMap {
-        public HashMap<Integer, List<Integer>> mKeyCodeToCommand = new HashMap<>();
-        public HashMap<Integer, List<Integer>> mUnicodeToCommand = new HashMap<>();
+        public final HashMap<Integer, List<PeripheralCommand>> mKeyCodeToCommand = new HashMap<>();
+        public final HashMap<Integer, List<PeripheralCommand>> mUnicodeToCommand = new HashMap<>();
         private final CommandProcessor mProcessor;
 
         private KeyMap(CommandProcessor commandProcessor) {
@@ -86,18 +86,29 @@ public class PeripheralKeymap {
             boolean ret = false;
 
             {
-                List<Integer> a = mKeyCodeToCommand.get(keyCode);
+                List<PeripheralCommand> a = mKeyCodeToCommand.get(keyCode);
                 if (a != null) {
-                    for (Integer command : a) {
-                        ret |= mProcessor.executeCommand(command);
+                    for (PeripheralCommand command : a) {
+                        if (!command.matchesModifier(event)) {
+                            continue;
+                        }
+
+                        ret |= mProcessor.executeCommand(command.getCommand());
                     }
                 }
             }
             {
-                List<Integer> unicodeLookup = mUnicodeToCommand.get(event.getUnicodeChar());
+                // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
+                // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
+                int unicodeChar = event.getUnicodeChar(event.getMetaState() & (KeyEvent.META_SHIFT_ON | KeyEvent.META_NUM_LOCK_ON));
+                List<PeripheralCommand> unicodeLookup = mUnicodeToCommand.get(unicodeChar);
                 if (unicodeLookup != null) {
-                    for (Integer command : unicodeLookup) {
-                        ret |= mProcessor.executeCommand(command);
+                    for (PeripheralCommand command : unicodeLookup) {
+                        if (!command.matchesModifier(event)) {
+                            continue;
+                        }
+
+                        ret |= mProcessor.executeCommand(command.getCommand());
                     }
                 }
             }
@@ -115,7 +126,7 @@ public class PeripheralKeymap {
                     mUnicodeToCommand.put(unicodeChar, new ArrayList<>());
                 }
                 //noinspection ConstantConditions
-                mUnicodeToCommand.get(unicodeChar).add(command.getCommand());
+                mUnicodeToCommand.get(unicodeChar).add(command);
             }
 
             if (command.getKeycode() != null) {
@@ -124,7 +135,7 @@ public class PeripheralKeymap {
                     mKeyCodeToCommand.put(c, new ArrayList<>());
                 }
                 //noinspection ConstantConditions
-                mKeyCodeToCommand.get(c).add(command.getCommand());
+                mKeyCodeToCommand.get(c).add(command);
             }
         }
     }

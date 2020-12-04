@@ -31,12 +31,12 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.utils.Time;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Vector;
 
@@ -53,8 +53,8 @@ public class Stats {
         TYPE_YEAR(365, R.string.stats_period_year),
         TYPE_LIFE(-1, R.string.stats_period_lifetime);
 
-        public int days;
-        public int descriptionId;
+        public final int days;
+        public final int descriptionId;
         AxisType(int dayss, int descriptionId) {
             this.days = dayss;
             this.descriptionId = descriptionId;
@@ -64,9 +64,9 @@ public class Stats {
     public enum ChartType {FORECAST, REVIEW_COUNT, REVIEW_TIME,
         INTERVALS, HOURLY_BREAKDOWN, WEEKLY_BREAKDOWN, ANSWER_BUTTONS, CARDS_TYPES, OTHER}
 
-    private Collection mCol;
-    private boolean mWholeCollection;
-    private long mDeckId;
+    private final Collection mCol;
+    private final boolean mWholeCollection;
+    private final long mDeckId;
     private boolean mDynamicAxis = false;
     private double[][] mSeriesList;
 
@@ -91,7 +91,7 @@ public class Stats {
     private double mPeak;
     private double mMcount;
 
-    public static final double SECONDS_PER_DAY = 86400.0;
+    public static final long SECONDS_PER_DAY = 86400L;
     public static final long ALL_DECKS_ID = 0L;
 
     public Stats(Collection col, long did) {
@@ -131,21 +131,18 @@ public class Stats {
             lim = " and " + lim;
         }
 
-        Cursor cur = null;
         String query = "select count(), sum(time)/1000, "+
                 "sum(case when ease = 1 then 1 else 0 end), "+ /* failed */
                 "sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end), "+ /* learning */
                 "sum(case when type = " + Consts.CARD_TYPE_LRN + " then 1 else 0 end), "+ /* review */
                 "sum(case when type = " + Consts.CARD_TYPE_REV + " then 1 else 0 end), "+ /* relearn */
                 "sum(case when type = " + Consts.CARD_TYPE_RELEARNING + " then 1 else 0 end) "+ /* filter */
-                "from revlog where id > " + ((mCol.getSched().getDayCutoff()-(long)SECONDS_PER_DAY)*1000) + " " +  lim;
+                "from revlog where id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query: %s", query);
 
         int cards, thetime, failed, lrn, rev, relrn, filt;
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
 
             cur.moveToFirst();
             cards = cur.getInt(0);
@@ -158,28 +155,18 @@ public class Stats {
 
 
 
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         query = "select count(), sum(case when ease = 1 then 0 else 1 end) from revlog " +
-        "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-(long)SECONDS_PER_DAY)*1000) + " " +  lim;
+        "where lastIvl >= 21 and id > " + ((mCol.getSched().getDayCutoff()-SECONDS_PER_DAY)*1000) + " " +  lim;
         Timber.d("todays statistics query 2: %s", query);
 
         int mcnt, msum;
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
 
             cur.moveToFirst();
             mcnt = cur.getInt(0);
             msum = cur.getInt(1);
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
 
         return new int[]{cards, thetime, failed, lrn, rev, relrn, filt, mcnt, msum};
@@ -196,7 +183,7 @@ public class Stats {
             } else {
                 operator = "> ";
             }
-            return "id "+ operator + ((mCol.getSched().getDayCutoff() - (timespan.days * (long) SECONDS_PER_DAY)) * 1000);
+            return "id "+ operator + ((mCol.getSched().getDayCutoff() - (timespan.days * SECONDS_PER_DAY)) * 1000);
         }
     }
 
@@ -205,7 +192,7 @@ public class Stats {
         int num = getNum(timespan);
         List<String> lims = new ArrayList<>();
         if (timespan != AxisType.TYPE_LIFE) {
-            lims.add("id > " + (mCol.getSched().getDayCutoff() - (num * chunk * (long) SECONDS_PER_DAY)) * 1000);
+            lims.add("id > " + (mCol.getSched().getDayCutoff() - (num * chunk * SECONDS_PER_DAY)) * 1000);
         }
         lims.add("did in " + _limit());
         String lim;
@@ -224,19 +211,7 @@ public class Stats {
 
 
         long cut = mCol.getSched().getDayCutoff();
-        int cardCount = 0;
-        String query = "select " +
-                "(cast((id/1000.0 - ?) / 86400.0 as int))/? as day," +
-                " count(id) " +
-                " from cards " + lim +
-                " group by day order by day";
-
-        try (Cursor c = mCol.getDb().getDatabase().query(query,
-                new Object[] {cut, chunk })) {
-            while (c.moveToNext()) {
-                cardCount += c.getLong(1);
-            }
-        }
+        int cardCount= mCol.getDb().queryScalar("select count(id) from cards " + lim);
 
         long periodDays = _periodDays(timespan); // 30|365|-1
         if (periodDays == -1) {
@@ -251,7 +226,8 @@ public class Stats {
         return new Pair<>(cardCount, (double)cardCount / (double) periodDays);
     }
 
-    private enum DeckAgeType { ADD, REVIEW };
+    private enum DeckAgeType { ADD, REVIEW }
+
 
     private long _deckAge(DeckAgeType by) {
         String lim = _revlogLimit();
@@ -270,7 +246,7 @@ public class Stats {
         if (t == 0) {
             period = 1;
         } else {
-            period = Math.max(1, (int)(1+((mCol.getSched().getDayCutoff() - (t/1000)) / 86400)));
+            period = Math.max(1, (int)(1+((mCol.getSched().getDayCutoff() - (t/1000)) / SECONDS_PER_DAY)));
         }
         return period;
     }
@@ -307,16 +283,10 @@ public class Stats {
     public void calculateOverviewStatistics(AxisType timespan, OverviewStatsBuilder.OverviewStats oStats) {
         oStats.allDays = timespan.days;
         String lim = getRevlogFilter(timespan,false);
-        Cursor cur = null;
-        try {
-            cur = mCol.getDb().getDatabase().query(
-                    "SELECT COUNT(*) as num_reviews, sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end) as new_cards FROM revlog " + lim, null);
+        try (Cursor cur = mCol.getDb().query(
+                    "SELECT COUNT(*) as num_reviews, sum(case when type = " + Consts.CARD_TYPE_NEW + " then 1 else 0 end) as new_cards FROM revlog " + lim)) {
             while (cur.moveToNext()) {
                 oStats.totalReviews = cur.getInt(0);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
 
@@ -324,8 +294,7 @@ public class Stats {
                 " SELECT (cast((id/1000 - " + mCol.getSched().getDayCutoff() + ") / "+SECONDS_PER_DAY+" AS INT)) AS day,  sum(time/1000.0/60.0) AS time_per_day"
                 + " FROM revlog " + lim + " GROUP BY day ORDER BY day)";
         Timber.d("Count cntquery: %s", cntquery);
-        try {
-            cur = mCol.getDb().getDatabase().query(cntquery, null);
+        try (Cursor cur = mCol.getDb().query(cntquery)) {
             while (cur.moveToNext()) {
                 oStats.daysStudied = cur.getInt(0);
                 oStats.totalTime = cur.getDouble(2);
@@ -333,22 +302,13 @@ public class Stats {
                     oStats.allDays = Math.abs(cur.getInt(1)) + 1; // +1 for today
                 }
             }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
 
-        try {
-            cur = mCol.getDb().getDatabase().query(
-                    "select avg(ivl), max(ivl) from cards where did in " +_limit() + " and queue = " + Consts.QUEUE_TYPE_REV + "", null);
+        try (Cursor cur = mCol.getDb().query(
+                    "select avg(ivl), max(ivl) from cards where did in " +_limit() + " and queue = " + Consts.QUEUE_TYPE_REV + "")) {
             cur.moveToFirst();
             oStats.averageInterval = cur.getDouble(0);
             oStats.longestInterval = cur.getDouble(1);
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
         oStats.reviewsPerDayOnAll = (double) oStats.totalReviews / oStats.allDays;
         oStats.reviewsPerDayOnStudyDays = oStats.daysStudied == 0 ? 0 : (double) oStats.totalReviews / oStats.daysStudied;
@@ -366,15 +326,10 @@ public class Stats {
         oStats.matureCardsOverview = toOverview(2, list);
 
         String totalCountQuery = "select count(id), count(distinct nid) from cards where did in " + this._limit();
-        try {
-            cur = mCol.getDb().getDatabase().query(totalCountQuery, null);
+        try (Cursor cur = mCol.getDb().query(totalCountQuery)) {
             if (cur.moveToFirst()) {
                 oStats.totalCards = cur.getLong(0);
                 oStats.totalNotes = cur.getLong(1);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
 
@@ -383,16 +338,11 @@ public class Stats {
                 "avg(factor) / 10.0,\n" +
                 "max(factor) / 10.0\n" +
                 "from cards where did in " + _limit() + " and queue = " + Consts.QUEUE_TYPE_REV;
-        try {
-            cur = mCol.getDb().getDatabase().query(factorQuery, null);
+        try (Cursor cur = mCol.getDb().query(factorQuery)) {
             if (cur.moveToFirst()) {
                 oStats.lowestEase = cur.getLong(0);
                 oStats.averageEase = cur.getLong(1);
                 oStats.highestEase = cur.getLong(2);
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
     }
@@ -488,26 +438,17 @@ public class Stats {
         }
 
         ArrayList<int[]> dues = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            String query;
-            query = "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk
-                    + " AS day, " // day
-                    + "count(), " // all cards
-                    + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
-                    + "FROM cards WHERE did IN " + _limit() + " AND queue IN (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")" + lim
-                    + " GROUP BY day ORDER BY day";
-            Timber.d("Forecast query: %s", query);
-            cur = mCol
-                    .getDb()
-                    .getDatabase()
-                    .query(query, null);
+        String query = "SELECT (due - " + mCol.getSched().getToday() + ")/" + chunk
+                + " AS day, " // day
+                + "count(), " // all cards
+                + "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " // mature cards
+                + "FROM cards WHERE did IN " + _limit() + " AND queue IN (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")" + lim
+                + " GROUP BY day ORDER BY day";
+        Timber.d("Forecast query: %s", query);
+        try (Cursor cur = mCol
+                    .getDb().query(query)) {
             while (cur.moveToNext()) {
                 dues.add(new int[] { cur.getInt(0), cur.getInt(1), cur.getInt(2) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         // small adjustment for a proper chartbuilding with achartengine
@@ -620,7 +561,7 @@ public class Stats {
         }
         ArrayList<String> lims = new ArrayList<>();
         if (num != -1) {
-            lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * (long) SECONDS_PER_DAY)) * 1000));
+            lims.add("id > " + ((mCol.getSched().getDayCutoff() - ((num + 1) * chunk * SECONDS_PER_DAY)) * 1000));
         }
         String lim = _getDeckFilter().replaceAll("[\\[\\]]", "");
         if (lim.length() > 0) {
@@ -651,7 +592,6 @@ public class Stats {
             tf = "";
         }
         ArrayList<double[]> list = new ArrayList<>();
-        Cursor cur = null;
         String query = "SELECT (cast((id/1000 - " + mCol.getSched().getDayCutoff() + ") / "+SECONDS_PER_DAY+" AS INT))/"
                 + chunk + " AS day, " + "sum(CASE WHEN type = " + Consts.CARD_TYPE_NEW + " THEN " + ti + " ELSE 0 END)"
                 + tf
@@ -666,19 +606,12 @@ public class Stats {
 
         Timber.d("ReviewCount query: %s", query);
 
-        try {
-            cur = mCol
+        try (Cursor cur = mCol
                     .getDb()
-                    .getDatabase()
-                    .query(
-                            query, null);
+                    .query(query)) {
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(5), cur.getDouble(1), cur.getDouble(4),
                         cur.getDouble(2), cur.getDouble(3)});
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
 
@@ -829,34 +762,26 @@ public class Stats {
         }
 
         ArrayList<double[]> list = new ArrayList<>();
-        Cursor cur = null;
-        try {
-            cur = mCol
+        try (Cursor cur = mCol
                     .getDb()
-                    .getDatabase()
                     .query(
                             "select ivl / " + chunk + " as grp, count() from cards " +
                                     "where did in "+ _limit() +" and queue = " + Consts.QUEUE_TYPE_REV + " " + lim + " " +
                                     "group by grp " +
-                                    "order by grp", null);
+                                    "order by grp")) {
             while (cur.moveToNext()) {
-                list.add(new double[] { cur.getDouble(0), cur.getDouble(1) });
+                list.add(new double[] {cur.getDouble(0), cur.getDouble(1)});
             }
-            cur.close();
-            cur = mCol
+        }
+        try (Cursor cur = mCol
                     .getDb()
-                    .getDatabase()
                     .query(
                             "select count(), avg(ivl), max(ivl) from cards where did in " +_limit() +
-                                    " and queue = " + Consts.QUEUE_TYPE_REV + "", null);
+                                    " and queue = " + Consts.QUEUE_TYPE_REV + "")) {
             cur.moveToFirst();
             all = cur.getDouble(0);
             avg = cur.getDouble(1);
             max_ = cur.getDouble(2);
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
         }
 
         // small adjustment for a proper chartbuilding with achartengine
@@ -901,8 +826,8 @@ public class Stats {
         }
         mFirstElement = 0;
         mMaxElements = list.size() - 1;
-        mAverage = Utils.timeSpan(context, (long) Math.round(avg * SECONDS_PER_DAY));
-        mLongest = Utils.timeSpan(context, (long) Math.round(max_ * SECONDS_PER_DAY));
+        mAverage = Utils.timeSpan(context, Math.round(avg * SECONDS_PER_DAY));
+        mLongest = Utils.timeSpan(context, Math.round(max_ * SECONDS_PER_DAY));
 
         //some adjustments to not crash the chartbuilding with emtpy data
         if (mMaxElements == 0) {
@@ -938,21 +863,19 @@ public class Stats {
         }
         int rolloverHour;
         if (mCol.schedVer() == 1) {
-            Calendar sd = GregorianCalendar.getInstance();
-            sd.setTimeInMillis(mCol.getCrt() * 1000);
+            Calendar sd = mCol.crtGregorianCalendar();
             rolloverHour = sd.get(Calendar.HOUR_OF_DAY);
         } else {
             rolloverHour = mCol.getConf().optInt("rollover", 4);
         }
         int pd = _periodDays();
         if (pd > 0) {
-            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (long) (SECONDS_PER_DAY * pd)) * 1000);
+            lim += " and id > " + ((mCol.getSched().getDayCutoff() -  (SECONDS_PER_DAY * pd)) * 1000);
         }
         long cutoff = mCol.getSched().getDayCutoff();
         long cut = cutoff - rolloverHour * 3600;
 
         ArrayList<double[]> list = new ArrayList<>();
-        Cursor cur = null;
         String query = "select " +
                 "23 - ((cast((" + cut + " - id/1000) / 3600.0 as int)) % 24) as hour, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
@@ -960,17 +883,11 @@ public class Stats {
                 "count() " +
                 "from revlog where type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_LRN + "," + Consts.CARD_TYPE_REV + ") " + lim +" " +
                 "group by hour having count() > 30 order by hour";
-        Timber.d(rolloverHour + " : " +cutoff + " breakdown query: %s", query);
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        Timber.d("%d : %d breakdown query: %s", rolloverHour, cutoff, query);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
 
@@ -990,14 +907,7 @@ public class Stats {
             data[0] = hour;
             list.set(i, data);
         }
-        Collections.sort(list, new Comparator<double[]>() {
-            @Override
-            public int compare(double[] s1, double[] s2) {
-                if (s1[0] < s2[0]) return -1;
-                if (s1[0] > s2[0]) return 1;
-                return 0;
-            }
-        });
+        Collections.sort(list, (s1, s2) -> Double.compare(s1[0], s2[0]));
 
         mSeriesList = new double[4][list.size()];
         mPeak = 0.0;
@@ -1076,18 +986,16 @@ public class Stats {
             lim = " and " + lim;
         }
 
-        Calendar sd = GregorianCalendar.getInstance();
-        sd.setTimeInMillis(mCol.getSched().getDayCutoff() * 1000);
+        Calendar sd = Time.gregorianCalendar(mCol.getSched().getDayCutoff() * 1000);
 
         int pd = _periodDays();
         if (pd > 0) {
             pd = Math.round( pd / 7 ) * 7;
-            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (long) (SECONDS_PER_DAY * pd)) * 1000);
+            lim += " and id > " + ((mCol.getSched().getDayCutoff() - (SECONDS_PER_DAY * pd)) * 1000);
         }
 
         long cutoff = mCol.getSched().getDayCutoff();
         ArrayList<double[]> list = new ArrayList<>();
-        Cursor cur = null;
         String query = "SELECT strftime('%w',datetime( cast(id/ 1000  -" + sd.get(Calendar.HOUR_OF_DAY) * 3600 +
                 " as int), 'unixepoch')) as wd, " +
                 "sum(case when ease = 1 then 0 else 1 end) / " +
@@ -1098,16 +1006,10 @@ public class Stats {
                 "group by wd " +
                 "order by wd";
         Timber.d(sd.get(Calendar.HOUR_OF_DAY) + " : " +cutoff + " weekly breakdown query: %s", query);
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
             while (cur.moveToNext()) {
                 list.add(new double[] { cur.getDouble(0), cur.getDouble(1), cur.getDouble(2) });
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
 
@@ -1250,7 +1152,7 @@ public class Stats {
         }
 
         if (days > 0) {
-            lims.add("id > " + ((mCol.getSched().getDayCutoff() - (long) (days * SECONDS_PER_DAY)) * 1000));
+            lims.add("id > " + ((mCol.getSched().getDayCutoff() - (days * SECONDS_PER_DAY)) * 1000));
         }
         if (lims.size() > 0) {
             lim = "where " + lims.get(0);
@@ -1268,7 +1170,6 @@ public class Stats {
             ease4repl = "ease";
         }
         ArrayList<double[]> list = new ArrayList<>();
-        Cursor cur = null;
         String query = "select (case " +
                 "                when type in (" + Consts.CARD_TYPE_NEW + "," + Consts.CARD_TYPE_REV + ") then 0 " +
                 "        when lastIvl < 21 then 1 " +
@@ -1278,16 +1179,10 @@ public class Stats {
                 "        order by thetype, ease";
         Timber.d("AnswerButtons query: %s", query);
 
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
             while (cur.moveToNext()) {
                 list.add(new double[]{cur.getDouble(0), cur.getDouble(1), cur.getDouble(2)});
-            }
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
             }
         }
         return list;
@@ -1297,35 +1192,28 @@ public class Stats {
     /**
      * Card Types
      */
-    public boolean calculateCardTypes(AxisType type) {
-        mTitle = R.string.stats_cards_types;
+    public void calculateCardTypes(AxisType type) {
+        mTitle = R.string.title_activity_template_editor;
         mBackwards = false;
         mAxisTitles = new int[] { R.string.stats_answer_type, R.string.stats_answers, R.string.stats_cumulative_correct_percentage };
-        mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended_and_buried};
-        mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended_and_buried };
+        mValueLabels = new int[] {R.string.statistics_mature, R.string.statistics_young_and_learn, R.string.statistics_unlearned, R.string.statistics_suspended, R.string.statistics_buried};
+        mColors = new int[] { R.attr.stats_mature, R.attr.stats_young, R.attr.stats_unseen, R.attr.stats_suspended, R.attr.stats_buried };
         mType = type;
-        ArrayList<double[]> list = new ArrayList<>();
         double[] pieData;
-        Cursor cur = null;
         String query = "select " +
                 "sum(case when queue=" + Consts.QUEUE_TYPE_REV + " and ivl >= 21 then 1 else 0 end), -- mtr\n" +
                 "sum(case when queue in (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") or (queue=" + Consts.QUEUE_TYPE_REV + " and ivl < 21) then 1 else 0 end), -- yng/lrn\n" +
                 "sum(case when queue=" + Consts.QUEUE_TYPE_NEW + " then 1 else 0 end), -- new\n" +
-                "sum(case when queue<0 then 1 else 0 end) -- susp\n" +
+                "sum(case when queue=" + Consts.QUEUE_TYPE_SUSPENDED + " then 1 else 0 end), -- susp\n" +
+                "sum(case when queue in (" + Consts.QUEUE_TYPE_MANUALLY_BURIED + "," + Consts.QUEUE_TYPE_SIBLING_BURIED + ") then 1 else 0 end) -- buried\n" +
                 "from cards where did in " + _limit();
         Timber.d("CardsTypes query: %s", query);
 
-        try {
-            cur = mCol.getDb()
-                    .getDatabase()
-                    .query(query, null);
+        try (Cursor cur = mCol.getDb()
+                    .query(query)) {
 
             cur.moveToFirst();
-            pieData = new double[]{ cur.getDouble(0), cur.getDouble(1), cur.getDouble(2), cur.getDouble(3) };
-        } finally {
-            if (cur != null && !cur.isClosed()) {
-                cur.close();
-            }
+            pieData = new double[]{ cur.getDouble(0), cur.getDouble(1), cur.getDouble(2), cur.getDouble(3), cur.getDouble(4) };
         }
 
         //TODO adjust for CardsTypes, for now only copied from intervals
@@ -1342,7 +1230,7 @@ public class Stats {
 //            list.add(new double[] { Math.max(12, list.get(list.size() - 1)[0] + 1), 0, 0 });
 //        }
 
-        mSeriesList = new double[1][4];
+        mSeriesList = new double[1][5];
         mSeriesList[0] = pieData;
         mFirstElement = 0.5;
         mLastElement = 9.5;
@@ -1351,7 +1239,6 @@ public class Stats {
         if (mMaxCards == 0) {
             mMaxCards = 10;
         }
-        return list.size() > 0;
     }
 
     /**
@@ -1370,14 +1257,14 @@ public class Stats {
      * @param col collection
      * @return
      */
-    public static String deckLimit(Long deckId, Collection col) {
+    public static String deckLimit(long deckId, Collection col) {
         if (deckId == ALL_DECKS_ID) {
             // All decks
             ArrayList<Long> ids = new ArrayList<>();
             for (Deck d : col.getDecks().all()) {
                 ids.add(d.getLong("id"));
             }
-            return Utils.ids2str(Utils.collection2Array(ids));
+            return Utils.ids2str(ids);
         } else {
             // The given deck id and its children
             ArrayList<Long> ids = new ArrayList<>();

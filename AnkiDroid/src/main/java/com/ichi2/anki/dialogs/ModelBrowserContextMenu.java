@@ -7,6 +7,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.AnalyticsDialogFragment;
 
+import androidx.annotation.NonNull;
+
 public class ModelBrowserContextMenu extends AnalyticsDialogFragment {
 
     public final static int MODEL_TEMPLATE = 0;
@@ -24,6 +26,7 @@ public class ModelBrowserContextMenu extends AnalyticsDialogFragment {
         return n;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

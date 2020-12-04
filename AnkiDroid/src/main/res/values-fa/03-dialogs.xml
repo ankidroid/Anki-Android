@@ -37,7 +37,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">بررسی پایگاه داده</string>
     <string name="check_db_warning">این عملیات ممکن است مدت زیادی طول بکشد</string>
     <string name="check_db_acknowledge">بانک اطلاعاتی بررسی شد</string>
@@ -60,7 +60,7 @@
         <item><![CDATA[غیر برنامه نویسان نیز می توانند کمک کنند. برای مثال، شما می توانید <a href=\"%1$s\">به ترجمه این برنامه </a> کمک کنید، یا ویکی را به روز کنید، عکس صفحه تهیه کنید، يا درباره این برنامه وبلاگ بزنید.]]></item>
         <item><![CDATA[این برنامه تحت مجوز <a href=\"%1$s\">GNU-GPL v3</a>منتشر شده است و منبع کدها قابل دسترسی است <a href=\"%2$s\">در GitHub</a>.]]></item>
     </string-array>
-    <string name="preview_title">پیش نمایش</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">پیش نمایش</string>
     <string name="reposition_card_dialog_title">تغییر مکان کارت جدید</string>
     <string name="reposition_card_dialog_message">موقعیت شروع:</string>
     <string name="reposition_card_not_new_error">فقط کارت‌های جدید می‌توانند جابه‌جا شوند</string>
@@ -75,7 +75,6 @@
         <item quantity="other">%d کارت تنظیم مجدد شدند</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
-    <string name="reschedule_card_dialog_title">زمانبندی دوباره کارت</string>
     <plurals name="reschedule_cards_dialog_title">
         <item quantity="one">زمانبندی مجدد کارت</item>
         <item quantity="other">زمان‌بندی مجدد کارت</item>
@@ -96,8 +95,6 @@
     <string name="answering_error_message">ذخیرۀ مجموعه انجام نشد. دیتابیس ممکن است خراب باشد یا ممکن است فضای کافی نداشته باشید.\n\nاگر این اتفاق غالباً رخ می‌دهد، بررسی دیتابیس، تعمیر مجموعه یا بازنشانی مجموعه از یک فایل پشتیبان قبلی را برای حل کردن مشکل امتحان کنید. برای این کار به \"گزینه‌ها\" مراجعه کنید.\nاین خطا همچنین ممکن است به دلیل مشکل در آنکی‌دروید باشد؛ اگر هیچ یک از موارد بالا مشکل شما را حل نکرد، لطفاً خطا را به ما گزارش دهید تا ما بتوانیم به بررسی آن بپردازیم.</string>
     <string name="answering_error_report">گزارش خطا</string>
     <string name="repair_deck_dialog">آیا شما واقعا می خواهید پایگاه داده را تعمیر کنید؟\n\nقبل از شروع , یک کپی در پوشه فرعی \'%s\' به وجود خواهد آمد .</string>
-    <string name="intent_add_saved_information">اطلاعات ذخیره شد</string>
-    <string name="intent_add_clear_all">پاک کردن همه</string>
     <string name="intent_aedict_empty">مجموعه \'پیش فرض\' خالی است</string>
     <string name="intent_aedict_category">اضافه کردن کارت به آنکی دروید سبب حذف همه یادداشت های مجموعه ها یا اضافه کردن یک نام پیش فرض به آنها می شود</string>
     <string name="custom_study_new_total_new">کارت‌های جدید در دسته کارت: %d</string>
@@ -109,12 +106,11 @@
     <string name="custom_study_random">انتخاب x کارت تصادفی از دسته:</string>
     <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
     <string name="custom_study_rebuild_deck_corrupt">بازسازی دستۀ مطالعۀ سفارشی انجام نشد</string>
-    <string name="rebuild_custom_study_deck">ساخت مجدد دسته مطالعه سفارشی.\nلطفا صبر کنید...</string>
     <string name="importing_collection">در حال ورود مجموعه.\nلطفا صبر کنید&#8230;</string>
     <string name="import_media_count">در حال وارد کردن فایلهای رسانه %1$d%%&#8230;</string>
-    <string name="import_progress">* در حال وارد کردن یادداشتها: %1$d%%\n
-* در حال وارد کردن کارت ها: %2$d%%\n
-* پردازش انجام شده: %3$d%%\n</string>
+    <string name="import_progress">• در حال وارد کردن یادداشتها: %1$d%%\n
+• در حال وارد کردن کارت ها: %2$d%%\n
+• پردازش انجام شده: %3$d%%\n</string>
     <string name="import_update_details">%1$d از %2$d یادداشت موجود به روزرسانی شده است.</string>
     <string name="import_update_ignored">بعضی از به روزرسانی ها نادیده گرفته شدند زیرا نوع یادداشت تغییر کرده است</string>
     <string name="import_complete_count">کارت های وارد شده: %d</string>
@@ -126,9 +122,10 @@
     <string name="dialog_ok">تایید</string>
     <string name="dialog_no">خیر</string>
     <string name="dialog_continue">ادامه</string>
-    <string name="dialog_positive_create">ایجاد</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ایجاد</string>
     <string name="dialog_positive_delete">حذف</string>
-    <string name="dialog_positive_disable">غیر فعال کردن</string>
+    <!-- Currently unsued, should be useful in the future -->
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">غیر فعال کردن</string>
     <string name="dialog_positive_overwrite">رونويسي</string>
     <string name="dialog_positive_remove">حذف</string>
     <string name="dialog_positive_repair">اصلاح</string>
@@ -149,13 +146,19 @@
     <string name="check_media_no_unused_missing">هیچ فایل مفقود شده یا بلا استفاده یافت نشد</string>
     <string name="check_media_db_updated">پایگاه داده رسانه بازسازی شد</string>
     <string name="check_media_delete_unused">حذف استفاده نشده ها</string>
-    <string name="check_media_deleted">فایل های حذف شده: %d</string>
+    <string name="delete_media_message">Deleting media&#8230;</string>
+    <string name="delete_media_result_title">Deletion result</string>
+    <plurals name="delete_media_result_message">
+        <item quantity="one">%d file deleted</item>
+        <item quantity="other">%d files deleted</item>
+    </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">همه کارتها</string>
     <string name="tags_dialog_option_new_cards">جدید</string>
-    <string name="tags_dialog_option_due_cards">موعد</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">موعد</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">در حال پیدا کردن کارت های خالی&#8230;</string>
+    <string name="confirm_cancel">Do you want to cancel?</string>
     <string name="empty_cards_none">کارت خالی یافت نشد</string>
     <string name="empty_cards_count">کارتها برای اینکه حذف شوند: %d</string>
     <string name="empty_cards_deleted">کارتهای حذف شده: %d</string>
@@ -172,7 +175,6 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">آنکی‌دروید به روز‌رسانی شد</string>
     <string name="integrity_check_startup_content">آنکی دروید به‌روزرسانی شده است. این نسخۀ شامل تعمیراتی برای مشکلات محتمل دیتابیس است، بنابراین ما به شما پیشنهاد می‌کنیم که اکنون از گزینۀ بررسی دیتابیس استفاده کنید.</string>
-    <string name="integrity_check_positive">بررسی دیتابیس</string>
     <string name="integrity_check_continue_anyway">ادامه بده</string>
     <string name="integrity_check_insufficient_space">بررسی دیتابیس حجم زیادی از حافظۀ موقت را اشغال خواهد کرد.\n\nبه شدت پیشنهاد می‌کنیم قبل از اجرای بررسی دیتابیس از خالی بودن حداقل %s از حافظۀ موقت دستگاهتان اطمینان حاصل کنید.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n%sاز حافظۀ موقت شما خالی است.</string>
@@ -187,6 +189,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">دیتابیس قفل است</string>
     <string name="database_locked_summary">نرم‌افزاری دیگر در حال استفاده از دیتابیس آنکی‌دروید است. لطفاً نرم افزار دیگر را ببندید سپس آنکی‌دروید را باز کنید.</string>
+    <string name="incompatible_database_version_title">Incompatible Database Version</string>
+    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">تصویر پس‌زمینه اعمال شد</string>
     <string name="background_image_removed">تصویر پس‌زمینه حذف شد</string>
@@ -204,6 +208,28 @@
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">تنظیم یادآور انجام نشد</string>
     <string name="boot_service_too_many_notifications">یادآورهای زیادی تنظیم شده‌اند. بعضی از آنها نمایش داده نخواهند شد</string>
+    <!-- Locale Selection Dialog -->
+    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
+    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <!-- Help Dialog -->
+    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
+    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_title_get_help">Get Help</string>
+    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_reddit">Reddit</string>
+    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_develop_ankidroid">Develop</string>
+    <string name="help_item_support_rate_ankidroid">Rate</string>
+    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_title_community">Community</string>
+    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_discord">Discord</string>
+    <string name="help_item_facebook">Facebook</string>
+    <string name="help_item_twitter">Twitter</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>

@@ -16,14 +16,14 @@
 package com.ichi2.anki.tests.libanki;
 
 import android.Manifest;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
 import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.tests.Shared;
+import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.exception.EmptyMediaException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -38,10 +38,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
 /**
@@ -49,7 +53,7 @@ import static org.junit.Assert.assertTrue;
  */
 @SuppressWarnings("deprecation")
 @RunWith(androidx.test.runner.AndroidJUnit4.class)
-public class MediaTest {
+public class MediaTest extends InstrumentedTest {
 
     private Collection testCol;
 
@@ -59,7 +63,7 @@ public class MediaTest {
 
     @Before
     public void setUp() throws IOException {
-        testCol = Shared.getEmptyCol(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        testCol = getEmptyCol();
     }
 
     @After
@@ -68,14 +72,13 @@ public class MediaTest {
     }
 
     @Test
-    public void testAdd() throws IOException {
+    public void testAdd() throws IOException, EmptyMediaException {
         // open new empty collection
-        File dir = Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        File dir = getTestDir();
         BackupManager.removeDir(dir);
         assertTrue(dir.mkdirs());
         File path = new File(dir, "foo.jpg");
-        FileOutputStream os;
-        os = new FileOutputStream(path, false);
+        FileOutputStream os = new FileOutputStream(path, false);
         os.write("hello".getBytes());
         os.close();
         // new file, should preserve name
@@ -90,15 +93,31 @@ public class MediaTest {
         assertEquals("foo (1).jpg", testCol.getMedia().addFile(path));
     }
 
+    @Test
+    public void testAddEmptyFails() throws IOException {
+        // open new empty collection
+        File dir = getTestDir();
+        BackupManager.removeDir(dir);
+        assertTrue(dir.mkdirs());
+        File path = new File(dir, "foo.jpg");
+        assertTrue(path.createNewFile());
+
+        // new file, should preserve name
+        try {
+            testCol.getMedia().addFile(path);
+            fail("exception should be thrown");
+        } catch (EmptyMediaException mediaException) {
+            // all good
+        }
+    }
+
 
     @Test
     public void testStrings() {
         Long mid = testCol.getModels().getModels().entrySet().iterator().next().getKey();
-        List<String> expected;
-        List<String> actual;
 
-        expected = Collections.emptyList();
-        actual = testCol.getMedia().filesInStr(mid, "aoeu");
+        List<String> expected = Collections.emptyList();
+        List<String> actual = testCol.getMedia().filesInStr(mid, "aoeu");
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
 
@@ -146,12 +165,11 @@ public class MediaTest {
     }
 
     @Test
-    public void testDeckIntegration() throws IOException {
+    public void testDeckIntegration() throws IOException, EmptyMediaException {
         // create a media dir
         testCol.getMedia().dir();
         // Put a file into it
-        File file = new File(Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext()), "fake.png");
-        assertTrue(file.createNewFile());
+        File file = createNonEmptyFile("fake.png");
         testCol.getMedia().addFile(file);
         // add a note which references it
         Note f = testCol.newNote();
@@ -164,16 +182,13 @@ public class MediaTest {
         f.setField(1, "<img src='fake2.png'>");
         testCol.addNote(f);
         // and add another file which isn't used
-        FileOutputStream os;
-        os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.jpg"), false);
+        FileOutputStream os = new FileOutputStream(new File(testCol.getMedia().dir(), "foo.jpg"), false);
         os.write("test".getBytes());
         os.close();
         // check media
         List<List<String>> ret = testCol.getMedia().check();
-        List<String> expected;
-        List<String> actual;
-        expected = Collections.singletonList("fake2.png");
-        actual = ret.get(0);
+        List<String> expected = Collections.singletonList("fake2.png");
+        List<String> actual = ret.get(0);
         actual.retainAll(expected);
         assertEquals(expected.size(), actual.size());
         expected = Collections.singletonList("foo.jpg");
@@ -191,21 +206,20 @@ public class MediaTest {
     }
 
     @Test
-    public void testChanges() throws IOException {
+    public void testChanges() throws IOException, EmptyMediaException {
         assertNotNull(testCol.getMedia()._changed());
         assertEquals(0, added(testCol).size());
         assertEquals(0, removed(testCol).size());
         // add a file
-        File dir = Shared.getTestDir(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        File dir = getTestDir();
         File path = new File(dir, "foo.jpg");
-        FileOutputStream os;
-        os = new FileOutputStream(path, false);
+        FileOutputStream os = new FileOutputStream(path, false);
         os.write("hello".getBytes());
         os.close();
         path = new File(testCol.getMedia().dir(), testCol.getMedia().addFile(path));
         // should have been logged
         testCol.getMedia().findChanges();
-        assertTrue(added(testCol).size() > 0);
+        assertThat(added(testCol).size(), is(greaterThan(0)));
         assertEquals(0, removed(testCol).size());
         // if we modify it, the cache won't notice
         os = new FileOutputStream(path, true);
@@ -243,5 +257,13 @@ public class MediaTest {
                 assertNotEquals(-1, good.indexOf(c));
             }
         }
+    }
+
+    protected File createNonEmptyFile(String fileName) throws IOException {
+        File file = new File(getTestDir(), fileName);
+        try (FileOutputStream os = new FileOutputStream(file, false)) {
+            os.write("a".getBytes());
+        }
+        return file;
     }
 }

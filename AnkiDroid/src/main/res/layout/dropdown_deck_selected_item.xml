@@ -8,7 +8,7 @@
     tools:background="@android:color/holo_orange_light"
     tools:layout_height="wrap_content">
 
-    <TextView
+    <com.ichi2.ui.FixedTextView
         android:id="@+id/dropdown_deck_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,9 +17,9 @@
         android:drawableRight="@drawable/spinner_triangle"
         android:textColor="?attr/actionBarTextColor"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-        tools:text="@string/deck_summary_all_decks" />
+        tools:text="@string/card_browser_all_decks" />
 
-    <TextView
+    <com.ichi2.ui.FixedTextView
         android:id="@+id/dropdown_deck_counts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

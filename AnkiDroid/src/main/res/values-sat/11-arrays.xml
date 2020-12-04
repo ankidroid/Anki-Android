@@ -39,35 +39,6 @@
         <item>ᱟᱞᱚ ᱨᱤᱯᱚᱴ ᱟᱢ</item>
         <item>ᱠᱩᱞᱤᱧ ᱢᱮ</item>
     </string-array>
-    <string-array name="gestures_labels">
-        <item>ᱪᱮᱫ ᱟᱹᱞᱚ ᱪᱤᱠᱟᱹ</item>
-        <item>ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣᱢᱮ</item>
-        <item>ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱑</item>
-        <item>ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱒</item>
-        <item>ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱓</item>
-        <item>ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱔</item>
-        <item>ᱛᱮᱞᱟ ᱢᱚᱱᱡᱩᱨ (ᱦᱟᱹᱨᱤᱭᱟᱹᱲ)</item>
-        <item>ᱢᱚᱱᱡᱩᱨ ᱠᱷᱚᱱ ᱵᱮᱥ ᱛᱮᱞᱟ ᱮᱢᱚᱜ ᱢᱮ</item>
-        <item>ᱢᱟᱲᱟᱝᱟᱜ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱴᱮᱜ ᱢᱮ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</item>
-        <item>ᱪᱤᱱᱦᱟ ᱧᱮᱞᱢᱮ</item>
-        <item>ᱠᱟᱰ ᱛᱚᱯᱟᱭ ᱢᱮ</item>
-        <item>ᱠᱟᱰ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤ</item>
-        <item>ᱢᱮᱰᱤᱭᱟ ᱪᱟᱹᱞᱩᱭ ᱢᱮ</item>
-        <item>ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫ ᱛᱷᱟᱲ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱛᱚᱯᱟᱭ ᱢᱮ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</item>
-        <item>ᱟᱨᱟᱜ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟ.ᱞ</item>
-        <item>ᱜᱮᱨᱩᱟ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</item>
-        <item>ᱦᱟᱹᱨᱤᱭᱟᱲ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</item>
-        <item>ᱞᱤᱞ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</item>
-        <item>ᱯᱚᱛᱠᱟ ᱚᱪᱚᱜ ᱢᱮ</item>
-        <item>ᱥᱟᱠᱟᱢ ᱪᱮᱛᱟᱱ</item>
-        <item>ᱥᱟᱠᱟᱢ ᱞᱟᱛᱟᱨ</item>
-    </string-array>
     <string-array name="leech_action_labels">
         <item>ᱠᱟᱰ ᱵᱚᱸᱫᱚᱭ ᱢᱮ</item>
         <item>ᱴᱮᱜ ᱜᱮ</item>
@@ -108,4 +79,36 @@
         <item>ᱦᱮᱸᱫᱮ</item>
         <item>ᱧᱩᱛ</item>
     </string-array>
+    <string-array name="html_size_code_labels">
+        <item>xx-ᱦᱚᱯᱚᱱ</item>
+        <item>x-ᱦᱚᱯᱚᱱ</item>
+        <item>ᱦᱚᱯᱚᱱ</item>
+        <item>ᱢᱮᱰᱤᱭᱚᱢ</item>
+        <item>ᱢᱟᱨᱟᱝ</item>
+        <item>x-ᱢᱟᱨᱟᱝ</item>
+        <item>xx-ᱢᱟᱨᱟᱝ</item>
+    </string-array>
+    <!--
+    #7794 - it\'s better to use @string references in non-translated arrays as this handles
+    changes in the array ordering better
+     -->
+    <string name="gesture_no_action">ᱪᱮᱫ ᱟᱹᱞᱚ ᱪᱤᱠᱟᱹ</string>
+    <string name="gesture_answer_1">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱑</string>
+    <string name="gesture_answer_2">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱒</string>
+    <string name="gesture_answer_3">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱓</string>
+    <string name="gesture_answer_4">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱔</string>
+    <string name="gesture_answer_green">ᱛᱮᱞᱟ ᱢᱚᱱᱡᱩᱨ (ᱦᱟᱹᱨᱤᱭᱟᱹᱲ)</string>
+    <string name="gesture_answer_better_recommended">ᱢᱚᱱᱡᱩᱨ ᱠᱷᱚᱱ ᱵᱮᱥ ᱛᱮᱞᱟ ᱮᱢᱚᱜ ᱢᱮ</string>
+    <string name="gesture_tag_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱴᱮᱜ ᱢᱮ</string>
+    <string name="gesture_lookup">ᱪᱤᱱᱦᱟ ᱧᱮᱞᱢᱮ</string>
+    <string name="gesture_play">ᱢᱮᱰᱤᱭᱟ ᱪᱟᱹᱞᱩᱭ ᱢᱮ</string>
+    <string name="gesture_abort_learning">ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫ ᱛᱷᱟᱲ</string>
+    <string name="gesture_flag_red">ᱟᱨᱟᱜ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟ.ᱞ</string>
+    <string name="gesture_flag_orange">ᱜᱮᱨᱩᱟ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
+    <string name="gesture_flag_green">ᱦᱟᱹᱨᱤᱭᱟᱲ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
+    <string name="gesture_flag_blue">ᱞᱤᱞ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
+    <string name="gesture_flag_remove">ᱯᱚᱛᱠᱟ ᱚᱪᱚᱜ ᱢᱮ</string>
+    <string name="gesture_page_up">ᱥᱟᱠᱟᱢ ᱪᱮᱛᱟᱱ</string>
+    <string name="gesture_page_down">ᱥᱟᱠᱟᱢ ᱞᱟᱛᱟᱨ</string>
+    <string name="gesture_abort_sync">ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫᱚᱭ ᱢᱮ ᱟᱨ ᱥᱭᱸᱠ ᱢᱮ</string>
 </resources>

@@ -22,11 +22,11 @@ import static org.junit.Assert.assertNull;
 @RunWith(RobolectricTestRunner.class)
 public class ApiUtilsTest {
 
-    private static String delimiter = "\u001F";
+    private static final String delimiter = "\u001F";
 
     @Test
     public void joinFieldsShouldJoinWhenListIsValid() {
-        String fieldList[] = {"A", "B", "C"};
+        String[] fieldList = {"A", "B", "C"};
         assertEquals("A" + delimiter + "B" + delimiter + "C", Utils.joinFields(fieldList));
     }
 
@@ -38,7 +38,7 @@ public class ApiUtilsTest {
     @Test
     public void splitFieldsShouldSplitRightWhenStringIsValid() {
         String fieldList = "A" + delimiter + "B" + delimiter + "C";
-        String output[] = Utils.splitFields(fieldList);
+        String[] output = Utils.splitFields(fieldList);
         assertEquals("A", output[0]);
         assertEquals("B", output[1]);
         assertEquals("C", output[2]);
@@ -65,7 +65,7 @@ public class ApiUtilsTest {
 
     @Test
     public void joinTagsShouldReturnEmptyStringWhenSetIsEmpty() {
-        assertEquals("", Utils.joinTags(new HashSet<String>()));
+        assertEquals("", Utils.joinTags(new HashSet<>()));
     }
 
     @Test

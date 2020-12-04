@@ -19,7 +19,6 @@ package com.ichi2.anki;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.preference.PreferenceManager;
 
 import com.brsanthu.googleanalytics.GoogleAnalytics;
 import com.brsanthu.googleanalytics.GoogleAnalyticsBuilder;
@@ -59,6 +58,8 @@ public class AnalyticsTest {
 
     @Before
     public void setUp() {
+        UsageAnalytics.resetForTests();
+
         MockitoAnnotations.openMocks(this);
 
         when(mMockResources.getBoolean(R.bool.ga_anonymizeIp))
@@ -104,13 +105,14 @@ public class AnalyticsTest {
 
 
     @Test
+    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     public void testSendException() {
 
         try (
-                MockedStatic<PreferenceManager> ignored = mockStatic(PreferenceManager.class);
+                MockedStatic<android.preference.PreferenceManager> ignored = mockStatic(android.preference.PreferenceManager.class);
                 MockedStatic<GoogleAnalytics> ignored1 = mockStatic(GoogleAnalytics.class)) {
 
-            when(PreferenceManager.getDefaultSharedPreferences(ArgumentMatchers.any()))
+            when(android.preference.PreferenceManager.getDefaultSharedPreferences(ArgumentMatchers.any()))
                     .thenReturn(mMockSharedPreferences);
 
             when(GoogleAnalytics.builder())

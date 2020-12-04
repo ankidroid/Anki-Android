@@ -10,7 +10,6 @@ package com.ichi2.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -20,15 +19,20 @@ import android.widget.TextView;
 
 import com.ichi2.anki.AnkiDroidApp;
 
-public class SeekBarPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
+@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+public class SeekBarPreference extends android.preference.DialogPreference implements SeekBar.OnSeekBarChangeListener {
     private static final String androidns = "http://schemas.android.com/apk/res/android";
 
     private SeekBar mSeekBar;
     private TextView mValueText;
-    private Context mContext;
+    private final Context mContext;
 
-    private String mSuffix;
-    private int mDefault, mMax, mMin, mInterval, mValue = 0;
+    private final String mSuffix;
+    private final int mDefault;
+    private final int mMax;
+    private final int mMin;
+    private final int mInterval;
+    private int mValue = 0;
 
 
     public SeekBarPreference(Context context, AttributeSet attrs) {
@@ -45,15 +49,14 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 
     @Override
     protected View onCreateDialogView() {
-        LinearLayout.LayoutParams params;
         LinearLayout layout = new LinearLayout(mContext);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(6, 6, 6, 6);
 
-        mValueText = new TextView(mContext);
+        mValueText = new FixedTextView(mContext);
         mValueText.setGravity(Gravity.CENTER_HORIZONTAL);
         mValueText.setTextSize(32);
-        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         layout.addView(mValueText, params);
 
@@ -71,7 +74,7 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
         mSeekBar.setProgress((mValue - mMin) / mInterval);
 
         String t = String.valueOf(mValue);
-        mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));
+        mValueText.setText(mSuffix == null ? t : t + mSuffix);
         return layout;
     }
 
@@ -100,7 +103,7 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
         if (fromTouch) {
             mValue = (value * mInterval) + mMin;
             String t = String.valueOf(mValue);
-            mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));
+            mValueText.setText(mSuffix == null ? t : t + mSuffix);
         }
     }
 

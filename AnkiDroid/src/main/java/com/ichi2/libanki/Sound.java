@@ -42,6 +42,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,12 +60,12 @@ public class Sound {
     /**
      * Pattern used to identify the markers for sound files
      */
-    public static Pattern sSoundPattern = Pattern.compile("\\[sound\\:([^\\[\\]]*)\\]");
+    public static final Pattern sSoundPattern = Pattern.compile("\\[sound:([^\\[\\]]*)]");
 
     /**
      * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)
      */
-    private static Pattern sUriPattern = Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$");
+    private static final Pattern sUriPattern = Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$");
 
     /**
      * Media player used to play the sounds
@@ -89,14 +90,26 @@ public class Sound {
     /**
      * Subset Flags: Flags that indicate the subset of sounds to involve
      */
-    public static final int  SOUNDS_QUESTION = 0;
-    public static final int  SOUNDS_ANSWER = 1;
-    public static final int  SOUNDS_QUESTION_AND_ANSWER = 2;
+    public enum SoundSide {
+        QUESTION(0),
+        ANSWER(1),
+        QUESTION_AND_ANSWER(2);
+
+        private final int mInt;
+        SoundSide(int i) {
+            mInt = i;
+        }
+        public int getInt() {
+            return mInt;
+        }
+    }
+
+
 
     /**
      * Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true.
      */
-    private HashMap<Integer, ArrayList<String>> mSoundPaths = new HashMap<>();
+    private final HashMap<SoundSide, ArrayList<String>> mSoundPaths = new HashMap<>();
 
 
     /**
@@ -107,7 +120,7 @@ public class Sound {
     /**
      * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
      */
-    private static AudioManager.OnAudioFocusChangeListener afChangeListener = focusChange -> {
+    private static final AudioManager.OnAudioFocusChangeListener afChangeListener = focusChange -> {
     };
 
 
@@ -124,9 +137,9 @@ public class Sound {
      * sorted by the order of appearance on the card.
      * @param soundDir -- base path to the media files
      * @param content -- parsed for sound entries, the entries expected in display order
-     * @param qa -- the base categorization of the sounds in the content, Sound.SOUNDS_QUESTION or Sound.SOUNDS_ANSWER
+     * @param qa -- the base categorization of the sounds in the content, SoundSide.SOUNDS_QUESTION or SoundSide.SOUNDS_ANSWER
      */
-    public void addSounds(String soundDir, String content, int qa) {
+    public void addSounds(String soundDir, String content, SoundSide qa) {
         Matcher matcher = sSoundPattern.matcher(content);
         // While there is matches of the pattern for sound markers
         while (matcher.find()) {
@@ -139,7 +152,7 @@ public class Sound {
             String sound = matcher.group(1);
 
             // Construct the sound path and store it
-            Timber.d("Adding Sound to side: %d", qa);
+            Timber.d("Adding Sound to side: %s", qa);
             mSoundPaths.get(qa).add(getSoundPath(soundDir, sound));
         }
     }
@@ -152,25 +165,25 @@ public class Sound {
      */
     private Boolean makeQuestionAnswerList() {
         // if combined list already exists, don't recreate
-        if (mSoundPaths.containsKey(Sound.SOUNDS_QUESTION_AND_ANSWER)) {
+        if (mSoundPaths.containsKey(SoundSide.QUESTION_AND_ANSWER)) {
             return false; // combined list already exists
         }
 
         // make combined list only if necessary to avoid an empty combined list
-        if (mSoundPaths.containsKey(Sound.SOUNDS_QUESTION) || mSoundPaths.containsKey(Sound.SOUNDS_ANSWER)) {
+        if (mSoundPaths.containsKey(SoundSide.QUESTION) || mSoundPaths.containsKey(SoundSide.ANSWER)) {
             // some list exists to place into combined list
-            mSoundPaths.put(Sound.SOUNDS_QUESTION_AND_ANSWER, new ArrayList<>());
+            mSoundPaths.put(SoundSide.QUESTION_AND_ANSWER, new ArrayList<>());
         } else { // no need to make list
             return false;
         }
 
-        ArrayList<String> combinedSounds = mSoundPaths.get(Sound.SOUNDS_QUESTION_AND_ANSWER);
+        ArrayList<String> combinedSounds = mSoundPaths.get(SoundSide.QUESTION_AND_ANSWER);
 
-        if (mSoundPaths.containsKey(Sound.SOUNDS_QUESTION)) {
-            combinedSounds.addAll(mSoundPaths.get(Sound.SOUNDS_QUESTION));
+        if (mSoundPaths.containsKey(SoundSide.QUESTION)) {
+            combinedSounds.addAll(mSoundPaths.get(SoundSide.QUESTION));
         }
-        if (mSoundPaths.containsKey(Sound.SOUNDS_ANSWER)) {
-            combinedSounds.addAll(mSoundPaths.get(Sound.SOUNDS_ANSWER));
+        if (mSoundPaths.containsKey(SoundSide.ANSWER)) {
+            combinedSounds.addAll(mSoundPaths.get(SoundSide.ANSWER));
         }
 
         return true;
@@ -225,17 +238,17 @@ public class Sound {
 
     /**
      * Plays the sounds for the indicated sides
-     * @param qa -- One of Sound.SOUNDS_QUESTION, Sound.SOUNDS_ANSWER, or Sound.SOUNDS_QUESTION_AND_ANSWER
+     * @param qa -- One of SoundSide.SOUNDS_QUESTION, SoundSide.SOUNDS_ANSWER, or SoundSide.SOUNDS_QUESTION_AND_ANSWER
      */
-    public void playSounds(int qa) {
+    public void playSounds(SoundSide qa, @Nullable OnErrorListener errorListener) {
         // If there are sounds to play for the current card, start with the first one
         if (mSoundPaths != null && mSoundPaths.containsKey(qa)) {
-            Timber.d("playSounds %d", qa);
-            playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null);
-        } else if (mSoundPaths != null && qa == Sound.SOUNDS_QUESTION_AND_ANSWER) {
+            Timber.d("playSounds %s", qa);
+            playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa, errorListener), null, errorListener);
+        } else if (mSoundPaths != null && qa == SoundSide.QUESTION_AND_ANSWER) {
             if (makeQuestionAnswerList()) {
                 Timber.d("playSounds: playing both question and answer");
-                playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa), null);
+                playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa, errorListener), null, errorListener);
             } else {
                 Timber.d("playSounds: No question answer list, not playing sound");
             }
@@ -244,11 +257,11 @@ public class Sound {
 
     /**
      * Returns length in milliseconds.
-     * @param qa -- One of Sound.SOUNDS_QUESTION, Sound.SOUNDS_ANSWER, or Sound.SOUNDS_QUESTION_AND_ANSWER
+     * @param qa -- One of SoundSide.SOUNDS_QUESTION, SoundSide.SOUNDS_ANSWER, or SoundSide.SOUNDS_QUESTION_AND_ANSWER
      */
-    public long getSoundsLength(int qa) {
+    public long getSoundsLength(SoundSide qa) {
         long length = 0;
-        if (mSoundPaths != null && (qa == Sound.SOUNDS_QUESTION_AND_ANSWER && makeQuestionAnswerList() || mSoundPaths.containsKey(qa))) {
+        if (mSoundPaths != null && (qa == SoundSide.QUESTION_AND_ANSWER && makeQuestionAnswerList() || mSoundPaths.containsKey(qa))) {
             MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
             for (String uri_string : mSoundPaths.get(qa)) {
                 Uri soundUri = Uri.parse(uri_string);
@@ -264,27 +277,27 @@ public class Sound {
     }
 
     /**
-     * Plays the given sound or video and sets playAllListener if available on media player to start next media
-     */
-    public void playSound(String soundPath, OnCompletionListener playAllListener) {
-        playSound(soundPath, playAllListener, null);
-    }
-
-    /**
      * Plays the given sound or video and sets playAllListener if available on media player to start next media.
      * If videoView is null and the media is a video, then a request is sent to start the VideoPlayer Activity
      */
-    public void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView) {
+    public void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView, @Nullable OnErrorListener errorListener) {
         Timber.d("Playing single sound");
         SingleSoundCompletionListener completionListener = new SingleSoundCompletionListener(playAllListener);
-        playSoundInternal(soundPath, completionListener, videoView);
+        playSoundInternal(soundPath, completionListener, videoView, errorListener);
     }
 
     /** Plays a sound without ensuring that the playAllListener will release the audio */
     @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements","deprecation"}) // audio API deprecation tracked on github as #5022
-    private void playSoundInternal(String soundPath, OnCompletionListener playAllListener, VideoView videoView) {
+    private void playSoundInternal(String soundPath, OnCompletionListener playAllListener, VideoView videoView, OnErrorListener errorListener) {
         Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
         Uri soundUri = Uri.parse(soundPath);
+
+        final OnErrorListener errorHandler = errorListener == null ?
+                (mp, what, extra, path) -> {
+                    Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra);
+                    return false;
+                }
+            : errorListener;
 
         if ("tts".equals(soundPath.substring(0, 3))) {
             // TODO: give information about did
@@ -292,7 +305,7 @@ public class Sound {
 //                    Integer.parseInt(soundPath.substring(3, 4)));
         } else {
             // Check if the file extension is that of a known video format
-            final String extension = soundPath.substring(soundPath.lastIndexOf(".") + 1).toLowerCase();
+            final String extension = soundPath.substring(soundPath.lastIndexOf(".") + 1).toLowerCase(Locale.getDefault());
             boolean isVideo = Arrays.asList(VIDEO_WHITELIST).contains(extension);
             if (!isVideo) {
                 final String guessedType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
@@ -328,10 +341,7 @@ public class Sound {
                     mMediaPlayer.setDisplay(videoView.getHolder());
                     mMediaPlayer.setOnVideoSizeChangedListener((mp, width, height) -> configureVideo(videoView, width, height));
                 }
-                mMediaPlayer.setOnErrorListener((mp, what, extra) -> {
-                    Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra);
-                    return false;
-                });
+                mMediaPlayer.setOnErrorListener((mp, which, extra) -> errorHandler.onError(mp, which, extra, soundPath));
                 // Setup the MediaPlayer
                 mMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
                 mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -411,7 +421,8 @@ public class Sound {
         /**
          * Question/Answer
          */
-        private final int mQa;
+        private final SoundSide mQa;
+        private final OnErrorListener mErrorListener;
 
         /**
          * next sound to play (onCompletion() is first called after the first (0) has been played)
@@ -419,8 +430,9 @@ public class Sound {
         private int mNextToPlay = 1;
 
 
-        private PlayAllCompletionListener(int qa) {
+        private PlayAllCompletionListener(SoundSide qa, @Nullable OnErrorListener errorListener) {
             mQa = qa;
+            mErrorListener = errorListener;
         }
 
 
@@ -429,7 +441,7 @@ public class Sound {
             // If there is still more sounds to play for the current card, play the next one
             if (mSoundPaths.containsKey(mQa) && mNextToPlay < mSoundPaths.get(mQa).size()) {
                 Timber.i("Play all: Playing next sound");
-                playSound(mSoundPaths.get(mQa).get(mNextToPlay++), this);
+                playSound(mSoundPaths.get(mQa).get(mNextToPlay++), this, null, mErrorListener);
             } else {
                 Timber.i("Play all: Completed - releasing sound");
                 releaseSound();
@@ -502,9 +514,13 @@ public class Sound {
     }
 
     public boolean hasQuestion() {
-        return mSoundPaths.containsKey(Sound.SOUNDS_QUESTION);
+        return mSoundPaths.containsKey(SoundSide.QUESTION);
     }
     public boolean hasAnswer() {
-        return mSoundPaths.containsKey(Sound.SOUNDS_ANSWER);
+        return mSoundPaths.containsKey(SoundSide.ANSWER);
+    }
+
+    public interface OnErrorListener {
+        boolean onError(MediaPlayer mp, int which, int extra, String path);
     }
 }

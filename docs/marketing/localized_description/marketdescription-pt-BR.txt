@@ -1,15 +1,15 @@
 Memorize qualquer coisa com AnkiDroid!
 
-AnkiDroid permite que você aprenda com cartões de estudo de forma muito eficiente, mostrando-os antes que você os esqueça. Ele é totalmente compatível com o software de repetição espaçada Anki (incluindo a sincronização), que está disponível para Windows, Linux e MacOS.
+AnkiDroid te ajuda a aprender flashcards da maneira eficiente, mostrando-os antes que você os esqueça. Ele é totalmente compatível com o software de repetição espaçada Anki (incluindo a sincronização), que está disponível para Windows, Linux e MacOS.
 
 Estude qualquer tipo de coisa, onde e quando quiser. Faça bom uso do tempo livre em viagens de ônibus, em filas de supermercado ou em qualquer outra situação de espera!
 
-Crie seus próprios baralhos com cartões de estudo ou baixe baralhos prontos para vários idiomas e tópicos (mais de 6000 disponíveis).
+Crie seus próprios baralhos com flashcards ou baixe baralhos prontos para vários idiomas e assuntos (mais de 6000 disponíveis).
 
 Adicione material através da aplicação de desktop do Anki ou diretamente pelo AnkiDroid. O aplicativo ainda suporta adicionar material automaticamente a partir de um dicionário!
 
 ★ Principais características:
-• conteúdos suportados dos cartões de estudo: texto, imagens, sons, LaTeX
+• conteúdos suportados nos flashcards: texto, imagens, sons, LaTeX
 • repetição espaçada (algoritmo do supermemo 2)
 • integração de texto-para-voz
 • mais de 6000 decks pré-prontos
@@ -21,12 +21,12 @@ Adicione material através da aplicação de desktop do Anki ou diretamente pelo
 ★ Características adicionais:
 • escreva as respostas (opcional)
 • quadro branco
-• editor/criador de cartões
-• navegador de cartões
+• editor/criador de cards
+• navegador de cards
 • layout para tablet
 • importa arquivos de coleções existentes (via Anki Desktop)
 • integração com dicionários (ColorDict, GoldenDict, Leo.org, Aedict, diversos dicionários on-line)
-• adiciona cartões pela interação com outros aplicativos, como dicionários
+• adiciona cards pela interação com outros aplicativos, como dicionários
 • suporte a fonte personalizada
 • sistema de backup completo
 • navegação por deslize, toque

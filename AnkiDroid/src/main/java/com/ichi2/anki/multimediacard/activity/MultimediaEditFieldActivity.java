@@ -83,6 +83,9 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         super.onCreate(savedInstanceState);
 
         Bundle controllerBundle = null;
@@ -218,35 +221,29 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.multimedia_edit_field_to_text:
-                Timber.i("To text field button pressed");
-                toTextField();
-                return true;
-
-            case R.id.multimedia_edit_field_to_image:
-                Timber.i("To image button pressed");
-                toImageField();
-                return true;
-
-            case R.id.multimedia_edit_field_to_audio:
-                Timber.i("To audio recording button pressed");
-                toAudioRecordingField();
-                return true;
-
-            case R.id.multimedia_edit_field_to_audio_clip:
-                Timber.i("To audio clip button pressed");
-                toAudioClipField();
-                return true;
-
-            case R.id.multimedia_edit_field_done:
-                Timber.i("Save button pressed");
-                done();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.multimedia_edit_field_to_text) {
+            Timber.i("To text field button pressed");
+            toTextField();
+            return true;
+        } else if (itemId == R.id.multimedia_edit_field_to_image) {
+            Timber.i("To image button pressed");
+            toImageField();
+            return true;
+        } else if (itemId == R.id.multimedia_edit_field_to_audio) {
+            Timber.i("To audio recording button pressed");
+            toAudioRecordingField();
+            return true;
+        } else if (itemId == R.id.multimedia_edit_field_to_audio_clip) {
+            Timber.i("To audio clip button pressed");
+            toAudioClipField();
+            return true;
+        } else if (itemId == R.id.multimedia_edit_field_done) {
+            Timber.i("Save button pressed");
+            done();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 

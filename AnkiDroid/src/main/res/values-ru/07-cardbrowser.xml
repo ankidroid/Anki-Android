@@ -48,24 +48,16 @@
     <string name="card_browser_all_decks">Все колоды</string>
     <string name="card_browser_delete_card">Удалить записи</string>
     <string name="card_browser_suspend_card">Исключить карточки</string>
-    <string name="card_browser_toggle_suspend_card">исключение карточек</string>
     <string name="card_browser_change_deck">Сменить колоду</string>
     <string name="card_browser_unsuspend_card">Включить карточки</string>
     <string name="card_browser_mark_card">Отметить записи</string>
-    <string name="card_browser_flag">Флажок</string>
-    <string name="card_browser_toggle_mark_card">отметить записи</string>
     <string name="card_browser_unmark_card">Снять отметку</string>
     <string name="delete_card_title">Удалить запись?</string>
-    <string name="delete_cards_title">Удалить записи?</string>
-    <string name="delete_card_message">Удалить все карты этой записи?\nПоле поиска: %s</string>
-    <string name="delete_card_mult_message">Удалить все карточки всех выбранных записей?\n(Не только выбранных карточек)</string>
-    <string name="deleted_message">Записи удалены</string>
     <string name="changed_deck_message">Перемещено в %s</string>
-    <string name="card_browser_suspended_cards">исключённые карточки</string>
     <string name="card_browser_show_marked">Отфильтровать отмеченные</string>
     <string name="card_browser_show_suspended">Отфильтровать исключённые</string>
     <string name="card_browser_search_by_tag">Отфильтровать по меткам</string>
-    <string name="card_browser_tags_shown">Метки: %1$s</string>
+    <string name="card_browser_search_by_flag">Отфильтровать по флагам</string>
     <string name="card_browser_list_my_searches">Мои поисковые запросы</string>
     <string name="card_browser_list_my_searches_save">Сохранить поисковый запрос</string>
     <string name="card_browser_list_my_searches_title">Выберите сохраненный запрос</string>
@@ -76,11 +68,8 @@
     <string name="card_browser_change_display_order">Изменить сортировку</string>
     <string name="card_browser_change_display_order_title">Выберите тип сортировки</string>
     <string name="card_browser_change_display_order_reverse">Коснитесь поля дважды, чтобы обратить порядок</string>
-    <string name="card_details_question">Вопрос</string>
-    <string name="card_details_answer">Ответ</string>
-    <string name="card_details_due">К просмотру</string>
+    <string name="card_details_due" comment="Date at which a card will be due to review again.">К просмотру</string>
     <string name="card_details_tags">Метки</string>
-    <string name="card_browser_filtering_cards">Карты фильтруются&#8230;\nНажмите кнопку \"Назад\", чтобы отменить</string>
     <string-array name="card_browser_order_labels">
         <item>Без сортировки (быстро)</item>
         <item>По полю сортировки</item>
@@ -95,13 +84,40 @@
     </string-array>
     <string name="card_browser_select_all">Выбрать все</string>
     <string name="card_browser_select_none">Снять выделение</string>
-    <string name="card_browser_edit_note">Править запись</string>
-    <string name="card_browser_interval_new_card">(новые)</string>
-    <string name="card_browser_ease_new_card">(новые)</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(новые)</string>
     <string name="card_browser_due_filtered_card">(фильтрованные)</string>
     <string name="card_browser_interval_learning_card">(изучаемые)</string>
-    <string name="card_browser_note_editor_error">Ошибка при открытии редактора записей</string>
     <string name="card_browser_no_cards_in_deck">В колоде «%s» не найдено карточек</string>
     <string name="card_browser_search_all_decks">Искать во всех колодах</string>
     <string name="card_browser_unknown_deck_name">Неизвестно</string>
+    <plurals name="card_browser_cards_deleted">
+        <item quantity="one">%d карточка удалена</item>
+        <item quantity="few">%d cards deleted</item>
+        <item quantity="many">%d cards deleted</item>
+        <item quantity="other">%d карточек удалено</item>
+    </plurals>
+    <!-- Card Info subscreen -->
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
+    <string name="card_info_first_review">First Review</string>
+    <string name="card_info_latest_review">Latest Review</string>
+    <string name="card_info_interval">Interval</string>
+    <string name="card_info_ease">Ease</string>
+    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
+    <string name="card_info_average_time">Average Time</string>
+    <string name="card_info_total_time">Total Time</string>
+    <string name="card_info_card_type">Card Type</string>
+    <string name="card_info_note_type">Note Type</string>
+    <string name="card_info_deck_name">Deck Name</string>
+    <string name="card_info_card_id">Card Id</string>
+    <string name="card_info_note_id">Note Id</string>
+    <string name="card_info_revlog_time">Time</string>
+    <string name="card_info_revlog_date">Date</string>
+    <string name="card_info_revlog_rating">Rating</string>
+    <string name="card_info_revlog_type">Type</string>
+    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
+    <string name="card_info_revlog_review">Review</string>
+    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
+    <string name="card_info_revlog_filtered">Filtered</string>
+    <string name="card_info_ease_not_applicable">N/A</string>
 </resources>

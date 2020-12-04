@@ -20,8 +20,6 @@ package com.ichi2.anki;
 
 import android.content.ClipData;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
@@ -33,13 +31,14 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.compat.CompatHelper;
+import com.ichi2.utils.IntentUtil;
 import com.ichi2.utils.VersionUtils;
 
 import org.acra.util.Installation;
 
 import timber.log.Timber;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.LEFT;
 
 /**
  * Shows an about box, which is a small HTML page.
@@ -52,24 +51,31 @@ public class Info extends AnkiActivity {
     public static final int TYPE_ABOUT = 0;
     public static final int TYPE_NEW_VERSION = 2;
 
-    private int mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
         Resources res = getResources();
-        WebView webView;
 
-        mType = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
+        int mType = getIntent().getIntExtra(TYPE_EXTRA, TYPE_ABOUT);
+        // If the page crashes, we do not want to display it again (#7135 maybe)
+        if (mType == TYPE_NEW_VERSION) {
+            AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
+                    .putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
+        }
 
         setContentView(R.layout.info);
         final View mainView = findViewById(android.R.id.content);
         enableToolbar(mainView);
+        findViewById(R.id.info_donate).setOnClickListener((v) -> openUrl(Uri.parse(getString(R.string.link_opencollective_donate))));
 
         setTitle(String.format("%s v%s", VersionUtils.getAppName(), VersionUtils.getPkgVersionName()));
-        webView = findViewById(R.id.info);
+        WebView webView = findViewById(R.id.info);
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 // Hide the progress indicator when the page has finished loaded
@@ -79,34 +85,17 @@ public class Info extends AnkiActivity {
             }
         });
 
-        Button marketButton = findViewById(R.id.market);
-        marketButton.setOnClickListener(arg0 -> {
-            if (mType == TYPE_ABOUT) {
-                final String intentUri = getString(
-                        CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
-                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(intentUri));
-                final PackageManager packageManager = getPackageManager();
-                if (intent.resolveActivity(packageManager) != null) {
-                    startActivityWithoutAnimation(intent);
-                } else {
-                    final String errorMsg = getString(R.string.feedback_no_suitable_app_found);
-                    UIUtils.showThemedToast(Info.this, errorMsg, true);
-                }
-                return;
-            }
-            setResult(RESULT_OK);
-            switch (mType) {
-                case TYPE_NEW_VERSION:
-                    AnkiDroidApp.getSharedPrefs(Info.this.getBaseContext()).edit()
-                            .putString("lastVersion", VersionUtils.getPkgVersionName()).apply();
-                    break;
-            }
-            finishWithAnimation();
-        });
+        Button marketButton = findViewById(R.id.left_button);
+        if (canOpenMarketUri()) {
+            marketButton.setText(R.string.info_rate);
+            marketButton.setOnClickListener(arg0 -> IntentUtil.tryOpenIntent(this, AnkiDroidApp.getMarketIntent(this)));
+        } else {
+            marketButton.setVisibility(View.GONE);
+        }
 
         StringBuilder sb = new StringBuilder();
         switch (mType) {
-            case TYPE_ABOUT:
+            case TYPE_ABOUT: {
                 String[] content = res.getStringArray(R.array.about_content);
 
                 // Apply theme colours.
@@ -136,21 +125,37 @@ public class Info extends AnkiActivity {
                                 res.getString(R.string.link_source))).append("<br/><br/>");
                 sb.append("</body></html>");
                 webView.loadDataWithBaseURL("", sb.toString(), "text/html", "utf-8", null);
-                ((Button) findViewById(R.id.market)).setText(res.getString(R.string.info_rate));
-                Button debugCopy = (findViewById(R.id.debug_info));
+                Button debugCopy = (findViewById(R.id.right_button));
                 debugCopy.setText(res.getString(R.string.feedback_copy_debug));
-                debugCopy.setVisibility(View.VISIBLE);
                 debugCopy.setOnClickListener(v -> copyDebugInfo());
                 break;
-
-            case TYPE_NEW_VERSION:
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            }
+            case TYPE_NEW_VERSION: {
+                Button continueButton = (findViewById(R.id.right_button));
+                continueButton.setText(res.getString(R.string.dialog_continue));
+                continueButton.setOnClickListener((arg) -> close());
                 webView.loadUrl("file:///android_asset/changelog.html");
                 break;
-
+            }
             default:
                 finishWithoutAnimation();
                 break;
+        }
+    }
+
+
+    private void close() {
+        setResult(RESULT_OK);
+        finishWithAnimation();
+    }
+
+
+    private boolean canOpenMarketUri() {
+        try {
+            return IntentUtil.canOpenIntent(this, AnkiDroidApp.getMarketIntent(this));
+        } catch (Exception e) {
+            Timber.w(e);
+            return false;
         }
     }
 
@@ -168,7 +173,7 @@ public class Info extends AnkiActivity {
 
 
     private void finishWithAnimation() {
-        finishWithAnimation(ActivityTransitionAnimation.LEFT);
+        finishWithAnimation(LEFT);
     }
 
 
@@ -177,9 +182,18 @@ public class Info extends AnkiActivity {
      * @return debugInfo
      */
     public String copyDebugInfo() {
+        String schedName = "Not found";
+        try {
+            schedName = getCol().getSched().getName();
+        } catch (Throwable e) {
+            Timber.e(e, "Sched name not found");
+        }
+
         String debugInfo = "AnkiDroid Version = " + VersionUtils.getPkgVersionName() + "\n\n" +
                 "Android Version = " + Build.VERSION.RELEASE + "\n\n" +
-                "ACRA UUID = " + Installation.id(this) + "\n";
+                "ACRA UUID = " + Installation.id(this) + "\n\n" +
+                "Scheduler = " + schedName + "\n\n" +
+                "Crash Reports Enabled = " + isSendingCrashReports() + "\n";
 
         android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboardManager != null) {
@@ -189,5 +203,10 @@ public class Info extends AnkiActivity {
             UIUtils.showThemedToast(this, getString(R.string.about_ankidroid_error_copy_debug_info), false);
         }
         return debugInfo;
+    }
+
+
+    private boolean isSendingCrashReports() {
+        return AnkiDroidApp.isAcraEnbled(this, false);
     }
 }

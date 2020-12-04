@@ -10,11 +10,11 @@ public class StdModels {
     /** Essentially, the default name. As a resource, so that it can
      * be localized later. */
     @StringRes
-    private int defaultName;
+    private final int defaultName;
     /**
      * Funtion creating the standard model. Needs to be a funtion to take the local language into account.
      */
-    private CreateStdModels fun;
+    private final CreateStdModels fun;
 
     interface CreateStdModels {
         Model create(Models mm, String name);
@@ -64,8 +64,8 @@ public class StdModels {
                 String backName = AnkiDroidApp.getAppResources().getString(R.string.back_field_name);
                 fm = mm.newField(backName);
                 mm.addFieldInNewModel(m, fm);
-                String cardOneName = AnkiDroidApp.getAppResources().getString(R.string.card_one_name);
-                JSONObject t = mm.newTemplate(cardOneName);
+                String cardOneName = AnkiDroidApp.getAppResources().getString(R.string.card_n_name, 1);
+                JSONObject t = Models.newTemplate(cardOneName);
                 t.put("qfmt", "{{" + frontName + "}}");
                 t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{" + backName + "}}");
                 mm.addTemplateInNewModel(m, t);
@@ -90,8 +90,8 @@ public class StdModels {
         Model m = basicModel._new(mm, name);
         String frontName = m.getJSONArray("flds").getJSONObject(0).getString("name");
         String backName = m.getJSONArray("flds").getJSONObject(1).getString("name");
-        String cardTwoName = AnkiDroidApp.getAppResources().getString(R.string.card_two_name);
-        JSONObject t = mm.newTemplate(cardTwoName);
+        String cardTwoName = AnkiDroidApp.getAppResources().getString(R.string.card_n_name, 2);
+        JSONObject t = Models.newTemplate(cardTwoName);
         t.put("qfmt", "{{" + backName + "}}");
         t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{"+frontName+"}}");
         mm.addTemplateInNewModel(m, t);
@@ -106,7 +106,7 @@ public class StdModels {
         JSONObject fm = mm.newField(av);
         mm.addFieldInNewModel(m, fm);
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(1);
-        t.put("qfmt", "{{#" + av +"}}" + t.get("qfmt") + "{{/" + av +"}}");
+        t.put("qfmt", "{{#" + av +"}}" + t.getString("qfmt") + "{{/" + av +"}}");
         return m;
     },
         R.string.forward_optional_reverse_model_name);
@@ -121,8 +121,8 @@ public class StdModels {
         String fieldExtraName = AnkiDroidApp.getAppResources().getString(R.string.extra_field_name);
         fm = mm.newField(fieldExtraName);
         mm.addFieldInNewModel(m, fm);
-        String cardTypeClozeName = AnkiDroidApp.getAppResources().getString(R.string.card_cloze_name);
-        JSONObject t = mm.newTemplate(cardTypeClozeName);
+        String cardTypeClozeName = AnkiDroidApp.getAppResources().getString(R.string.cloze_model_name);
+        JSONObject t = Models.newTemplate(cardTypeClozeName);
         String fmt = "{{cloze:" + txt + "}}";
         m.put("css", m.getString("css") + ".cloze {" + "font-weight: bold;" + "color: blue;" + "}");
         t.put("qfmt", fmt);
@@ -132,7 +132,7 @@ public class StdModels {
     },
         R.string.cloze_model_name);
 
-    public static StdModels[] stdModels =
+    public static final StdModels[] stdModels =
     {
         basicModel,
         basicTypingModel,

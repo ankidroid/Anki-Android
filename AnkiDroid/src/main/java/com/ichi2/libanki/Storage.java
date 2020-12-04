@@ -21,6 +21,9 @@ import android.content.Context;
 
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 
+import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
+import com.ichi2.libanki.utils.SystemTime;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
@@ -29,6 +32,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -41,8 +45,21 @@ public class Storage {
         return Collection(context, path, false, false);
     }
 
+    /** Helper method for when the collection can't be opened */
+    public static int getDatabaseVersion(String path) throws UnknownDatabaseVersionException {
+        try {
+            DB db = new DB(path);
+            return db.queryScalar("SELECT ver FROM col");
+        } catch (Exception e) {
+            Timber.w(e, "Can't open database");
+            throw new UnknownDatabaseVersionException(e);
+        }
+    }
 
     public static Collection Collection(Context context, String path, boolean server, boolean log) {
+        return Collection(context, path, server, log, new SystemTime());
+    }
+    public static Collection Collection(Context context, String path, boolean server, boolean log, @NonNull Time time) {
         assert path.endsWith(".anki2");
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
@@ -52,13 +69,13 @@ public class Storage {
             // initialize
             int ver;
             if (create) {
-                ver = _createDB(db);
+                ver = _createDB(db, time);
             } else {
-                ver = _upgradeSchema(db);
+                ver = _upgradeSchema(db, time);
             }
             db.execute("PRAGMA temp_store = memory");
             // add db to col and do any remaining upgrades
-            Collection col = new Collection(context, db, path, server, log);
+            Collection col = new Collection(context, db, path, server, log, time);
             if (ver < Consts.SCHEMA_VERSION) {
                 _upgrade(col, ver);
             } else if (ver > Consts.SCHEMA_VERSION) {
@@ -79,7 +96,7 @@ public class Storage {
     }
 
 
-    private static int _upgradeSchema(DB db) {
+    private static int _upgradeSchema(DB db, @NonNull Time time) {
         int ver = db.queryScalar("SELECT ver FROM col");
         if (ver == Consts.SCHEMA_VERSION) {
             return ver;
@@ -87,7 +104,7 @@ public class Storage {
         // add odid to cards, edue->odue
         if (db.queryScalar("SELECT ver FROM col") == 1) {
             db.execute("ALTER TABLE cards RENAME TO cards2");
-            _addSchema(db, false);
+            _addSchema(db, false, time);
             db.execute("insert into cards select id, nid, did, ord, mod, usn, type, queue, due, ivl, factor, reps, lapses, left, edue, 0, flags, data from cards2");
             db.execute("DROP TABLE cards2");
             db.execute("UPDATE col SET ver = 2");
@@ -96,7 +113,7 @@ public class Storage {
         // remove did from notes
         if (db.queryScalar("SELECT ver FROM col") == 2) {
             db.execute("ALTER TABLE notes RENAME TO notes2");
-            _addSchema(db, false);
+            _addSchema(db, time);
             db.execute("insert into notes select id, guid, mid, mod, usn, tags, flds, sfld, csum, flags, data from notes2");
             db.execute("DROP TABLE notes2");
             db.execute("UPDATE col SET ver = 3");
@@ -145,8 +162,7 @@ public class Storage {
                 for (Model m : col.getModels().all()) {
                     m.put("css", new JSONObject(Models.defaultModel).getString("css"));
                     JSONArray ar = m.getJSONArray("tmpls");
-                    for (int i = 0; i < ar.length(); i++) {
-                        JSONObject t = ar.getJSONObject(i);
+                    for (JSONObject t: ar.jsonObjectIterable()) {
                         if (!t.has("css")) {
                             continue;
                         }
@@ -185,10 +201,10 @@ public class Storage {
                         if (order >= 5) {
                             order -= 1;
                         }
-                        JSONArray ja = new JSONArray(Arrays.asList(new Object[] { d.getString("search"),
-                                d.getInt("limit"), order }));
+                        JSONArray terms = new JSONArray(Arrays.asList(d.getString("search"),
+                                d.getInt("limit"), order));
                         d.put("terms", new JSONArray());
-                        d.getJSONArray("terms").put(0, ja);
+                        d.getJSONArray("terms").put(0, terms);
                         d.remove("search");
                         d.remove("limit");
                         d.remove("order");
@@ -213,8 +229,7 @@ public class Storage {
                 }
                 for (Model m : col.getModels().all()) {
                     JSONArray tmpls = m.getJSONArray("tmpls");
-                    for (int ti = 0; ti < tmpls.length(); ++ti) {
-                        JSONObject t = tmpls.getJSONObject(ti);
+                    for (JSONObject t: tmpls.jsonObjectIterable()) {
                         t.put("bqfmt", "");
                         t.put("bafmt", "");
                     }
@@ -233,14 +248,14 @@ public class Storage {
         // convert first template
         JSONObject t = m.getJSONArray("tmpls").getJSONObject(0);
         for (String type : new String[] { "qfmt", "afmt" }) {
+            //noinspection RegExpRedundantEscape            // In Android, } should be escaped
             t.put(type, t.getString(type).replaceAll("\\{\\{cloze:1:(.+?)\\}\\}", "{{cloze:$1}}"));
         }
         t.put("name", "Cloze");
         // delete non-cloze cards for the model
-        JSONArray ja = m.getJSONArray("tmpls");
+        JSONArray tmpls = m.getJSONArray("tmpls");
         ArrayList<JSONObject> rem = new ArrayList<>();
-        for (int i = 1; i < ja.length(); i++) {
-            JSONObject ta = ja.getJSONObject(i);
+        for (JSONObject ta: tmpls.jsonObjectIterable()) {
             if (!ta.getString("afmt").contains("{{cloze:")) {
                 rem.add(ta);
             }
@@ -248,32 +263,32 @@ public class Storage {
         for (JSONObject r : rem) {
             col.getModels().remTemplate(m, r);
         }
-        JSONArray newArray = new JSONArray();
-        newArray.put(ja.get(0));
-        m.put("tmpls", newArray);
-        col.getModels()._updateTemplOrds(m);
+        JSONArray newTmpls = new JSONArray();
+        newTmpls.put(tmpls.getJSONObject(0));
+        m.put("tmpls", newTmpls);
+        Models._updateTemplOrds(m);
         col.getModels().save(m);
 
     }
 
 
-    private static int _createDB(DB db) {
+    private static int _createDB(DB db, @NonNull Time time) {
         db.execute("PRAGMA page_size = 4096");
         db.execute("PRAGMA legacy_file_format = 0");
         db.execute("VACUUM");
-        _addSchema(db);
+        _addSchema(db, time);
         _updateIndices(db);
         db.execute("ANALYZE");
         return Consts.SCHEMA_VERSION;
     }
 
 
-    private static void _addSchema(DB db) {
-        _addSchema(db, true);
+    private static void _addSchema(DB db, @NonNull Time time) {
+        _addSchema(db, true, time);
     }
 
 
-    private static void _addSchema(DB db, boolean setColConf) {
+    private static void _addSchema(DB db, boolean setColConf, @NonNull Time time) {
         db.execute("create table if not exists col ( " + "id              integer primary key, "
                 + "crt             integer not null," + "mod             integer not null,"
                 + "scm             integer not null," + "ver             integer not null,"
@@ -305,20 +320,20 @@ public class Storage {
         db.execute("create table if not exists graves (" + "    usn             integer not null,"
                 + "    oid             integer not null," + "    type            integer not null" + ")");
         db.execute("INSERT OR IGNORE INTO col VALUES(1,0,0," +
-                Utils.intTime(1000) + "," + Consts.SCHEMA_VERSION +
+                time.intTimeMS() + "," + Consts.SCHEMA_VERSION +
                 ",0,0,0,'','{}','','','{}')");
         if (setColConf) {
-            _setColVars(db);
+            _setColVars(db, time);
         }
     }
 
 
-    private static void _setColVars(DB db) {
+    private static void _setColVars(DB db, @NonNull Time time) {
         JSONObject g = new JSONObject(Decks.defaultDeck);
         g.put("id", 1);
         g.put("name", "Default");
         g.put("conf", 1);
-        g.put("mod", Utils.intTime());
+        g.put("mod", time.intTime());
         JSONObject gc = new JSONObject(Decks.defaultConf);
         gc.put("id", 1);
         JSONObject ag = new JSONObject();

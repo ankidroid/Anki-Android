@@ -18,7 +18,7 @@ package com.ichi2.anki;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.LinearLayout;
+import android.view.View;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Model;
@@ -39,12 +39,12 @@ import java.util.ArrayList;
 public class CardTemplatePreviewerTest extends RobolectricTest {
 
     @Test
-    public void testPreviewUnsavedTemplate() throws Exception {
+    public void testPreviewUnsavedTemplate() {
 
         String modelName = "Basic";
         Model collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName);
-        JSONObject template = (JSONObject)collectionBasicModelOriginal.getJSONArray("tmpls").get(0);
-        template.put("qfmt", template.getString("qfmt").concat("PREVIEWER_TEST"));
+        JSONObject template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0);
+        template.put("qfmt", template.getString("qfmt") + "PREVIEWER_TEST");
         String tempModelPath = TemporaryModel.saveTempModel(getTargetContext(), collectionBasicModelOriginal);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath);
@@ -52,7 +52,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
 
         ActivityController<TestCardTemplatePreviewer> previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class, intent).create().start().resume().visible();
         saveControllerForCleanup((previewerController));
-        TestCardTemplatePreviewer testCardTemplatePreviewer = (TestCardTemplatePreviewer) previewerController.get();
+        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
         Assert.assertTrue("model change did not show up?",
                 testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).q().contains("PREVIEWER_TEST") &&
                         testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).a().contains("PREVIEWER_TEST"));
@@ -63,7 +63,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         previewerController.pause().stop().destroy();
         previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class).create(outBundle).start().resume().visible();
         saveControllerForCleanup(previewerController);
-        testCardTemplatePreviewer = (TestCardTemplatePreviewer) previewerController.get();
+        testCardTemplatePreviewer = previewerController.get();
         Assert.assertTrue("model change not preserved in lifecycle??",
                 testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).q().contains("PREVIEWER_TEST") &&
                         testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0).a().contains("PREVIEWER_TEST"));
@@ -72,7 +72,7 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         // Make sure we can click
         Assert.assertFalse("Showing the answer already?", testCardTemplatePreviewer.getShowingAnswer());
         testCardTemplatePreviewer.disableDoubleClickPrevention();
-        LinearLayout showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.flashcard_layout_flip);
+        View showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.preview_buttons_layout);
         showAnswerButton.performClick();
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }
@@ -99,23 +99,23 @@ public class CardTemplatePreviewerTest extends RobolectricTest {
         previewerController.pause().stop().destroy();
         previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer.class).create(outBundle).start().resume().visible();
         saveControllerForCleanup((previewerController));
-        TestCardTemplatePreviewer testCardTemplatePreviewer = (TestCardTemplatePreviewer) previewerController.get();
+        TestCardTemplatePreviewer testCardTemplatePreviewer = previewerController.get();
 
         // Make sure we can click
         Assert.assertFalse("Showing the answer already?", testCardTemplatePreviewer.getShowingAnswer());
         testCardTemplatePreviewer.disableDoubleClickPrevention();
-        LinearLayout showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.flashcard_layout_flip);
+        View showAnswerButton = testCardTemplatePreviewer.findViewById(R.id.preview_buttons_layout);
         showAnswerButton.performClick();
         Assert.assertTrue("Not showing the answer?", testCardTemplatePreviewer.getShowingAnswer());
     }
 
-    private Card getSavedCard(Model model, int ordinal) throws Exception {
+    private Card getSavedCard(Model model, int ordinal) {
         Note n = getCol().newNote(model);
         ArrayList<String> fieldNames = Models.fieldNames(model);
         for (int i = 0; i < fieldNames.size(); i++) {
             n.setField(i, fieldNames.get(i));
         }
         n.flush();
-        return getCol().getNewLinkedCard(new Card(getCol()), n, (JSONObject)model.getJSONArray("tmpls").get(ordinal), 1, 1, true);
+        return getCol().getNewLinkedCard(new Card(getCol()), n, model.getJSONArray("tmpls").getJSONObject(ordinal), 1, 1, true);
     }
 }

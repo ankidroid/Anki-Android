@@ -16,16 +16,17 @@
 
 package com.ichi2.anki;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import com.ichi2.anim.ActivityTransitionAnimation;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.NoteUtils;
+import com.ichi2.themes.Themes;
 import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
@@ -33,6 +34,8 @@ import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 import timber.log.Timber;
+
+import static com.ichi2.anim.ActivityTransitionAnimation.Direction.RIGHT;
 
 /**
  * The card template previewer intent must supply one or more cards to show and the index in the list from where
@@ -47,8 +50,13 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     private long[] mCardList;
     private Bundle mNoteEditorBundle = null;
 
+    private boolean mShowingAnswer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return;
+        }
         Timber.d("onCreate()");
         super.onCreate(savedInstanceState);
 
@@ -61,6 +69,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             mEditedModelFileName = parameters.getString(TemporaryModel.INTENT_MODEL_FILENAME);
             mCardList = parameters.getLongArray("cardList");
             mOrdinal = parameters.getInt("ordinal");
+            mShowingAnswer = parameters.getBoolean("showingAnswer", mShowingAnswer);
         }
 
         if (mEditedModelFileName != null) {
@@ -77,7 +86,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting");
             mCurrentCard = getDummyCard(mEditedModel, mOrdinal);
             if (mCurrentCard == null) {
-                UIUtils.showSimpleSnackbar(this, R.string.invalid_template, false);
+                UIUtils.showThemedToast(getApplicationContext(), getString(R.string.invalid_template), false);
                 closeCardTemplatePreviewer();
             }
         }
@@ -102,7 +111,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         Timber.d("CardTemplatePreviewer:: closeCardTemplatePreviewer()");
         setResult(RESULT_OK);
         TemporaryModel.clearTempModelFiles();
-        finishWithAnimation(ActivityTransitionAnimation.RIGHT);
+        finishWithAnimation(RIGHT);
     }
 
 
@@ -110,6 +119,13 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     public void onBackPressed() {
         Timber.i("CardTemplatePreviewer:: onBackPressed()");
         closeCardTemplatePreviewer();
+    }
+
+
+    @Override
+    protected void performReload() {
+        // This should not happen.
+        finishWithAnimation(RIGHT);
     }
 
 
@@ -131,23 +147,68 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
     protected void initLayout() {
         super.initLayout();
         mTopBarLayout.setVisibility(View.GONE);
+
+        findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
+        mPreviewButtonsLayout.setVisibility(View.VISIBLE);
+
+        mPreviewButtonsLayout.setOnClickListener(mToggleAnswerHandler);
+
+        mPreviewPrevCard.setVisibility(View.GONE);
+        mPreviewNextCard.setVisibility(View.GONE);
+
+        if (Build.VERSION.SDK_INT >= 21 && animationEnabled()) {
+            int resId = Themes.getResFromAttr(this, R.attr.hardButtonRippleRef);
+            mPreviewButtonsLayout.setBackgroundResource(resId);
+            mPreviewPrevCard.setBackgroundResource(resId);
+            mPreviewNextCard.setBackgroundResource(resId);
+        }
     }
+
 
     @Override
     protected void displayCardQuestion() {
         super.displayCardQuestion();
-        mFlipCardLayout.setVisibility(View.VISIBLE);
+        mShowingAnswer = false;
+        updateButtonsState();
     }
 
 
-    // Called via mFlipCardListener in parent class when answer button pressed
     @Override
     protected void displayCardAnswer() {
         super.displayCardAnswer();
-        findViewById(R.id.answer_options_layout).setVisibility(View.GONE);
-        mFlipCardLayout.setVisibility(View.GONE);
-        hideEaseButtons();
+        mShowingAnswer = true;
+        updateButtonsState();
     }
+
+
+    @Override
+    protected void hideEaseButtons() {
+        /* do nothing */
+    }
+
+
+    @Override
+    protected void displayAnswerBottomBar() {
+        /* do nothing */
+    }
+
+
+    private final View.OnClickListener mToggleAnswerHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (mShowingAnswer) {
+                displayCardQuestion();
+            } else {
+                displayCardAnswer();
+            }
+        }
+    };
+
+
+    private void updateButtonsState() {
+        mPreviewToggleAnswerText.setText(mShowingAnswer ? R.string.hide_answer : R.string.show_answer);
+    }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -155,6 +216,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         outState.putLongArray("cardList", mCardList);
         outState.putInt("ordinal", mOrdinal);
         outState.putBundle("noteEditorBundle", mNoteEditorBundle);
+        outState.putBoolean("showingAnswer", mShowingAnswer);
         super.onSaveInstanceState(outState);
     }
 
@@ -195,6 +257,10 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
         displayCardQuestion();
+        if (mShowingAnswer) {
+            displayCardAnswer();
+        }
+
         showBackIcon();
     }
 
@@ -214,7 +280,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
             n.setField(i, fieldNames.get(i));
         }
         try {
-            JSONObject template = (JSONObject)model.getJSONArray("tmpls").get(ordinal);
+            JSONObject template = model.getJSONArray("tmpls").getJSONObject(ordinal);
             PreviewerCard card = (PreviewerCard)getCol().getNewLinkedCard(new PreviewerCard(getCol()), n, template, 1, 0, false);
             card.setNote(n);
             return card;
@@ -242,7 +308,7 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
 
 
         @Override
-        /** if we have an unsaved note saved, use it instead of a collection lookup */
+        /* if we have an unsaved note saved, use it instead of a collection lookup */
         public Note note(boolean reload) {
             if (mNote != null) {
                 return mNote;
@@ -251,8 +317,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
 
-        @Override
         /** if we have an unsaved note saved, use it instead of a collection lookup */
+        @Override
         public Note note() {
             if (mNote != null) {
                 return mNote;
@@ -267,8 +333,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
 
-        @Override
         /** if we have an unsaved note, never return empty */
+        @Override
         public boolean isEmpty() {
             if (mNote != null) {
                 return false;
@@ -277,8 +343,8 @@ public class CardTemplatePreviewer extends AbstractFlashcardViewer {
         }
 
 
-        @Override
         /** Override the method that fetches the model so we can render unsaved models */
+        @Override
         public Model model() {
             if (mEditedModel != null) {
                 return mEditedModel;

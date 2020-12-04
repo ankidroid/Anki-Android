@@ -42,7 +42,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -52,12 +55,18 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
+import static com.ichi2.utils.CollectionUtils.addAll;
+
 // fixmes:
 // - make sure users can't set grad interval < 1
 
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes",
         "PMD.MethodNamingConventions","PMD.AvoidReassigningParameters","PMD.SimplifyBooleanReturns"})
 public class Decks {
+
+    // Invalid id, represents an id on an unfound deck
+    public static final long NOT_FOUND_DECK_ID = -1L;
+    
 
     //not in libAnki
     @SuppressWarnings("WeakerAccess")
@@ -137,7 +146,7 @@ public class Decks {
             +"}";
 
 
-    private Collection mCol;
+    private final Collection mCol;
     private HashMap<Long, Deck> mDecks;
     private HashMap<Long, DeckConfig> mDconf;
     // Never access mNameMap directly. Uses byName
@@ -222,8 +231,7 @@ public class Decks {
         mDconf = new HashMap<>();
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
-        for (int i = 0; i < ids.length(); i++) {
-            String id = ids.getString(i);
+        for (String id: ids.stringIterable()) {
             Deck o = new Deck(decksarray.getJSONObject(id));
             long longId = Long.parseLong(id);
             mDecks.put(longId, o);
@@ -231,9 +239,10 @@ public class Decks {
         mNameMap = NameMap.constructor(mDecks.values());
         JSONObject confarray = new JSONObject(dconf);
         ids = confarray.names();
-        for (int i = 0; ids != null && i < ids.length(); i++) {
-            String id = ids.getString(i);
-            mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id)));
+        if (ids != null) {
+            for (String id : ids.stringIterable()) {
+                mDconf.put(Long.parseLong(id), new DeckConfig(confarray.getJSONObject(id)));
+            }
         }
         mChanged = false;
     }
@@ -249,7 +258,7 @@ public class Decks {
      */
     public void save(JSONObject g) {
         if (g != null) {
-            g.put("mod", Utils.intTime());
+            g.put("mod", mCol.getTime().intTime());
             g.put("usn", mCol.usn());
         }
         mChanged = true;
@@ -316,12 +325,9 @@ public class Decks {
         long id;
         Deck g = new Deck(type);
         g.put("name", name);
-        while (true) {
-            id = Utils.intTime(1000);
-            if (!mDecks.containsKey(id)) {
-                break;
-            }
-        }
+        do {
+            id = mCol.getTime().intTimeMS();
+        } while (mDecks.containsKey(id));
         g.put("id", id);
         mDecks.put(id, g);
         save(g);
@@ -451,12 +457,12 @@ public class Decks {
     }
 
 
-    public Long[] allIds() {
-        return mDecks.keySet().toArray(new Long[mDecks.keySet().size()]);
+    public Set<Long> allIds() {
+        return mDecks.keySet();
     }
 
 
-    public void collpase(long did) {
+    public void collapse(long did) {
         Deck deck = get(did);
         deck.put("collapsed", !deck.getBoolean("collapsed"));
         save(deck);
@@ -630,7 +636,7 @@ public class Decks {
         }
 
         for (int i = 0; i < ancestorDeckPath.length; i++) {
-            if (ancestorDeckPath[i] != descendantDeckPath[i]) {
+            if (! Utils.equals(ancestorDeckPath[i], descendantDeckPath[i])) {
                 return false;
             }
         }
@@ -638,7 +644,7 @@ public class Decks {
     }
 
 
-    private static HashMap<String, String[]> pathCache = new HashMap();
+    private static final HashMap<String, String[]> pathCache = new HashMap<>();
     public static String[] path(String name) {
         if (!pathCache.containsKey(name)) {
             pathCache.put(name, name.split("::", -1));
@@ -678,9 +684,9 @@ public class Decks {
     }
 
 
-    /**
-     * Deck configurations
-     * ***********************************************************
+    /*
+      Deck configurations
+      ***********************************************************
      */
 
 
@@ -725,15 +731,11 @@ public class Decks {
      * Create a new configuration and return id.
      */
     public long confId(String name, String cloneFrom) {
-        DeckConfig c;
         long id;
-        c = new DeckConfig(cloneFrom);
-        while (true) {
-            id = Utils.intTime(1000);
-            if (!mDconf.containsKey(id)) {
-                break;
-            }
-        }
+        DeckConfig c = new DeckConfig(cloneFrom);
+        do {
+            id = mCol.getTime().intTimeMS();
+        } while (mDconf.containsKey(id));
         c.put("id", id);
         c.put("name", name);
         mDconf.put(id, c);
@@ -825,7 +827,7 @@ public class Decks {
 
     public void setDeck(long[] cids, long did) {
         mCol.getDb().execute("update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-                did, mCol.usn(), Utils.intTime());
+                did, mCol.usn(), mCol.getTime().intTime());
     }
 
 
@@ -847,10 +849,8 @@ public class Decks {
         }
         List<Long> dids = new ArrayList<>();
         dids.add(did);
-        for(Map.Entry<String, Long> entry : children(did).entrySet()) {
-            dids.add(entry.getValue());
-        }
-        return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(Utils.collection2Array(dids))));
+        dids.addAll(children(did).values());
+        return Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards where did in " + Utils.ids2str(dids)));
     }
 
 
@@ -866,9 +866,8 @@ public class Decks {
     }
 
     private void _recoverOrphans() {
-        Long[] dids = allIds();
         boolean mod = mCol.getDb().getMod();
-        SyncStatus.ignoreDatabaseModification(() -> mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(dids)));
+        SyncStatus.ignoreDatabaseModification(() -> mCol.getDb().execute("update cards set did = 1 where did not in " + Utils.ids2str(allIds())));
         mCol.getDb().setMod(mod);
     }
 
@@ -879,10 +878,10 @@ public class Decks {
         for (Deck deck: decks) {
             String deckName = deck.getString("name");
 
-            /** With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for
-             * compatibility while we wait for rust.  It should be executed before other changes, because both "FOO "
-             * and "FOO" will be renamed to the same name, and so this will need to be renamed again in case of
-             * duplicate.*/
+            /* With 2.1.28, anki started strips whitespace of deck name.  This method paragraph is here for
+              compatibility while we wait for rust.  It should be executed before other changes, because both "FOO "
+              and "FOO" will be renamed to the same name, and so this will need to be renamed again in case of
+              duplicate.*/
             String strippedName = strip(deckName);
             if (!deckName.equals(strippedName)) {
                 mNameMap.remove(deckName, deck);
@@ -902,13 +901,13 @@ public class Decks {
                 save(deck);
             }
 
-            if (deckName.indexOf("::::") != -1) {
+            if (deckName.contains("::::")) {
                 Timber.i("fix deck with missing sections %s", deck.getString("name"));
                 mNameMap.remove(deckName, deck);
                 do {
                     deckName = deck.getString("name").replace("::::", "::blank::");
                     // We may need to iterate, in order to replace "::::::" and adding to "blank" in it.
-                } while (deckName.indexOf("::::") != -1);
+                } while (deckName.contains("::::"));
                 deck.put("name", deckName);
                 mNameMap.add(deck);
                 save(deck);
@@ -945,9 +944,9 @@ public class Decks {
     }
 
 
-    /**
-     * Deck selection
-     * ***********************************************************
+    /*
+      Deck selection
+      ***********************************************************
      */
 
 
@@ -955,11 +954,9 @@ public class Decks {
      * The currently active dids. Make sure to copy before modifying.
      */
     public LinkedList<Long> active() {
-        JSONArray ja = mCol.getConf().getJSONArray("activeDecks");
+        JSONArray activeDecks = mCol.getConf().getJSONArray("activeDecks");
         LinkedList<Long> result = new LinkedList<>();
-        for (int i = 0; i < ja.length(); i++) {
-            result.add(ja.getLong(i));
-        }
+        addAll(result, activeDecks.longIterable());
         return result;
     }
 
@@ -988,11 +985,11 @@ public class Decks {
         // and active decks (current + all children)
         TreeMap<String, Long> actv = children(did); // Note: TreeMap is already sorted
         actv.put(name, did);
-        JSONArray ja = new JSONArray();
+        JSONArray activeDecks = new JSONArray();
         for (Long n : actv.values()) {
-            ja.put(n);
+            activeDecks.put(n);
         }
-        mCol.getConf().put("activeDecks", ja);
+        mCol.getConf().put("activeDecks", activeDecks);
         mCol.setMod();
     }
 
@@ -1004,8 +1001,7 @@ public class Decks {
      * need to sort on behalf of select().
      */
     public TreeMap<String, Long> children(long did) {
-        String name;
-        name = get(did).getString("name");
+        String name = get(did).getString("name");
         TreeMap<String, Long> actv = new TreeMap<>();
         for (Deck g : all()) {
             if (g.getString("name").startsWith(name + "::")) {
@@ -1015,26 +1011,26 @@ public class Decks {
         return actv;
     }
 
+    public static class Node extends HashMap<Long, Node> {}
 
-
-    private void gather(HashMap<Long, HashMap> node, List<Long> arr) {
-        for (Long did : node.keySet()) {
-            HashMap child = node.get(did);
-            arr.add(did);
+    private void gather(Node node, List<Long> arr) {
+        for (Map.Entry<Long, Node> entry : node.entrySet()) {
+            Node child = entry.getValue();
+            arr.add(entry.getKey());
             gather(child, arr);
         }
     }
 
-    public List<Long> childDids(Long did, HashMap<Long, HashMap> childMap) {
+    public List<Long> childDids(long did, Node childMap) {
         List<Long> arr = new ArrayList<>();
         gather(childMap.get(did), arr);
         return arr;
     }
 
 
-    public HashMap<Long, HashMap> childMap() {
+    public Node childMap() {
 
-        HashMap<Long, HashMap> childMap = new HashMap<>();
+        Node childMap = new Node();
 
         // Go through all decks, sorted by name
         ArrayList<Deck> decks = all();
@@ -1042,7 +1038,7 @@ public class Decks {
         Collections.sort(decks, DeckComparator.instance);
 
         for (Deck deck : decks) {
-            HashMap node = new HashMap();
+            Node node = new Node();
             childMap.put(deck.getLong("id"), node);
 
             List<String> parts = Arrays.asList(path(deck.getString("name")));
@@ -1108,9 +1104,9 @@ public class Decks {
     }
 
 
-    /**
-     * Dynamic decks
-     ***************************************************************/
+    /*
+      Dynamic decks
+     */
 
 
     /**
@@ -1132,10 +1128,10 @@ public class Decks {
      * utils methods
      * **************************************
      */
-    private static HashMap<String, String> normalized = new HashMap<String, String>();
+    private static final HashMap<String, String> normalized = new HashMap<>();
     public static String normalizeName(String name) {
         if (!normalized.containsKey(name)) {
-            normalized.put(name, Normalizer.normalize(name, Normalizer.Form.NFC).toLowerCase());
+            normalized.put(name, Normalizer.normalize(name, Normalizer.Form.NFC).toLowerCase(Locale.ROOT));
         }
         return normalized.get(name);
     }
@@ -1155,7 +1151,7 @@ public class Decks {
     }
 
 
-    private static HashMap<String, String> sParentCache = new HashMap();
+    private static final HashMap<String, String> sParentCache = new HashMap<>();
     public static String parent(String deckName) {
         // method parent, from sched's method deckDueList in python
         if (!sParentCache.containsKey(deckName)) {
@@ -1229,6 +1225,6 @@ public class Decks {
         if (deck == null) {
             return null;
         }
-        return deck.get("name") + DECK_SEPARATOR + subdeckName;
+        return deck.getString("name") + DECK_SEPARATOR + subdeckName;
     }
 }

@@ -42,14 +42,12 @@
     <string name="disabled">Disabilitato</string>
     <string name="enabled">Abilitato</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general">AnkiDroid</string>
     <string name="pref_cat_general_summ">Impostazioni generali</string>
     <string name="pref_cat_reviewing">Ripetizioni</string>
     <string name="pref_cat_reviewing_summ">Impostazioni di ripetizione non specifiche per il mazzo</string>
     <string name="pref_cat_reviewer_behaviour">Comportamento</string>
     <string name="pref_cat_flashcard">Visualizzazione</string>
     <string name="pref_cat_whiteboard">Lavagna</string>
-    <string name="pref_cat_automatic_display">Visualizzazione automatica risposta</string>
     <string name="pref_cat_appearance">Aspetto</string>
     <string name="pref_cat_appearance_summ">Cambia temi e tipo di carattere predefinito</string>
     <string name="pref_cat_themes">Temi</string>
@@ -96,15 +94,26 @@
     <string name="gestures_summ">Assegna gesti alle azioni come rispondere e modificare carte.</string>
     <string name="gestures_allow_links">Ignora i gesti sui collegamenti</string>
     <string name="gestures_allow_links_summary">I gesti non verranno elaborati se viene premuto un collegamento/suggerimento.</string>
+    <string name="gestures_corner_touch">tocco a 9 punti</string>
+    <string name="gestures_corner_touch_summary">Consenti i gesti touch negli angoli dello schermo</string>
     <string name="gestures_swipe_up">Scorri su</string>
     <string name="gestures_swipe_down">Scorri giù</string>
     <string name="gestures_swipe_left">Scorri a sinistra</string>
     <string name="gestures_swipe_right">Scorri a destra</string>
     <string name="gestures_double_tap">Premi due volte</string>
     <string name="gestures_tap_top">Premi su</string>
-    <string name="gestures_tap_bottom">Premi giù</string>
     <string name="gestures_tap_left">Premi a sinistra</string>
     <string name="gestures_tap_right">Premi a destra</string>
+    <string name="gestures_tap_bottom">Premi giù</string>
+    <string name="gestures_corner_tap_top_left">Tocca in alto a sinistra</string>
+    <string name="gestures_corner_tap_top_center">Tocca in alto al centro</string>
+    <string name="gestures_corner_tap_top_right">Tocca in alto a destra</string>
+    <string name="gestures_corner_tap_middle_left">Tocca al centro a sinistra</string>
+    <string name="gestures_corner_tap_middle_center">Tocca al centro</string>
+    <string name="gestures_corner_tap_middle_right">Tocca al centro a destra</string>
+    <string name="gestures_corner_tap_bottom_left">Tocca in basso a sinistra</string>
+    <string name="gestures_corner_tap_bottom_center">Tocca in centro in basso</string>
+    <string name="gestures_corner_tap_bottom_right">Tocca in basso a destra</string>
     <string name="gestures_volume_up">Alza il volume</string>
     <string name="gestures_volume_down">Abbassa il volume</string>
     <string name="more_scrolling_buttons">eReader</string>
@@ -123,8 +132,8 @@
     <string name="sync_account_summ_logged_in">%s</string>
     <string name="automatic_sync_choice">Sincronizzazione automatica</string>
     <string name="automatic_sync_choice_summ">Sincronizza automaticamente all\'avvio/uscita se l\'ultima sincronizzazione è stata più di 10 minuti fa.</string>
-    <string name="sync_status_badge">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
+    <string name="sync_status_badge">Visualizza stato di sincronizzazione</string>
+    <string name="sync_status_badge_summ">Cambia l\'icona di sincronizzazione quando le modifiche possono essere caricate</string>
     <string name="day_theme">Tema di giorno</string>
     <string name="night_theme">Tema notturno</string>
     <string name="default_font">Carattere predefinito</string>
@@ -141,9 +150,8 @@
     <string name="timeout_answer_text">Mostra automaticamente la risposta</string>
     <string name="timeout_answer_summ">Visualizza la risposta automaticamente senza input dell\'utente. Il ritardo include il tempo per i file audio riprodotti automaticamente.</string>
     <string name="timeout_answer_seconds">Tempo prima di mostrare la risposta</string>
-    <string name="timeout_answer_seconds_summ">XXX s</string>
+    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds">Tempo prima di mostrare la prossima domanda</string>
-    <string name="timeout_question_seconds_summ">XXX s</string>
     <string name="select_locale_title">Scegli la lingua</string>
     <string name="safe_display">Modalità visualizzazione sicura</string>
     <string name="safe_display_summ">Disattiva tutte le animazioni e utilizza il metodo più sicuro per disegnare le carte. Dispositivi e-ink possono richiedere questo.</string>
@@ -164,7 +172,6 @@
     <string name="use_current">Mazzo per carte nuove</string>
     <string name="new_spread">Posizione carte nuove</string>
     <string name="learn_cutoff">Impara oltre il limite</string>
-    <string name="learn_cutoff_summ">XXX min</string>
     <string name="time_limit">Limite di tempo per sessione</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="day_offset">Inizio del giorno successivo</string>
@@ -216,8 +223,8 @@
         <item quantity="other">%1$s\n%2$d mazzi utilizzano questo gruppo</item>
     </plurals>
     <string name="deck_conf_new_cards">Carte nuove</string>
-    <string name="deck_conf_rev_cards">Ripetizioni</string>
-    <string name="deck_conf_lps_cards">Errori</string>
+    <string name="deck_conf_rev_cards" comment="Name of the deck options submenu for configuring reviews of due cards.">Ripetizioni</string>
+    <string name="deck_conf_lps_cards" comment="Label of the submenu stating how lapses cards are treated.">Errori</string>
     <string name="deck_conf_general">Generale</string>
     <string name="deck_conf_reminders">Promemoria</string>
     <string name="deck_conf_steps">Passi (in minuti)</string>
@@ -235,6 +242,7 @@
     <string name="deck_conf_use_general_timeout_settings">Usa impostazioni generali</string>
     <string name="deck_conf_use_general_timeout_settings_summ">Usa le impostazioni generali di «Risposta di visualizzazione automatica» invece di usare le impostazioni per questo gruppo.</string>
     <string name="deck_conf_easy_bonus">Bonus facile</string>
+    <string name="deck_conf_hard_factor">Intervallo Difficile</string>
     <string name="deck_conf_ivl_fct">Modificatore intervallo</string>
     <string name="deck_conf_max_ivl">Intervallo massimo</string>
     <string name="deck_conf_new_lps_ivl">Nuovo intervallo</string>
@@ -249,30 +257,26 @@
     <string name="deck_conf_replayq">Riproduci la domanda</string>
     <string name="deck_conf_replayq_summ">Quando viene mostrata la risposta, riproduci l\'audio sia della domanda che della risposta</string>
     <string name="deck_conf_manage">Gestione gruppi</string>
+    <string name="deck_conf_manage_summ">Aggiungi e cambia gruppi di opzioni</string>
     <string name="deck_conf_current_group">Gruppo corrente</string>
-    <string name="deck_conf_rename">Rinomina</string>
+    <string name="deck_conf_rename" comment="Menu entry to rename a deck">Rinomina</string>
     <string name="deck_conf_reset">Ripristina le impostazioni predefinite</string>
-    <string name="deck_conf_reset_title">Ripristina le impostazioni predefinite</string>
     <string name="deck_conf_reset_message">Ripristinare il gruppo attuale di opzioni ai valori predefiniti?</string>
-    <string name="deck_conf_add">Aggiungi configurazione</string>
+    <string name="deck_conf_add" comment="Adding a new deck option group">Aggiungi configurazione</string>
     <string name="deck_conf_add_summ">Crea una copia del gruppo di opzioni attuale</string>
-    <string name="deck_conf_remove">Rimuovi</string>
-    <string name="deck_conf_remove_title">Rimuovi</string>
     <string name="deck_conf_remove_message">Rimuovere il gruppo di opzioni attuale?</string>
     <string name="deck_conf_set_subdecks">Imposta per tutti i sottomazzi</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="one">%s sottomazzo utilizzerà questo gruppo</item>
         <item quantity="other">%s sottomazzi utilizzeranno questo gruppo</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_title">Imposta per tutti i sottomazzi</string>
     <string name="deck_conf_set_subdecks_message">Impostare il gruppo di opzioni attuale per tutti i sottomazzi di questo mazzo?</string>
     <string name="pref_browser_editor_font">Carattere di browser ed editor</string>
     <string name="deck_conf_cram_filter">Filtro</string>
-    <string name="deck_conf_cram_options">Opzioni</string>
     <string name="deck_conf_cram_search">Cerca</string>
     <string name="deck_conf_cram_limit">Limita a</string>
     <string name="deck_conf_cram_order">carte selezionate per</string>
-    <string name="deck_conf_cram_reschedule">Ripianifica</string>
+    <string name="deck_conf_cram_reschedule" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Ripianifica</string>
     <string name="deck_conf_cram_reschedule_summ">Ripianifica le carte considerando le mie risposte in questo mazzo</string>
     <string name="deck_conf_cram_steps">Passi personalizzati (in minuti)</string>
     <string name="deck_conf_cram_steps_summ">Definisci passi personalizzati</string>
@@ -282,4 +286,6 @@
     <string name="analytics_dialog_title">Aiuta a migliorare AnkiDroid!</string>
     <string name="analytics_title">Condividi l\'utilizzo delle funzionalità</string>
     <string name="analytics_summ">Puoi contribuire ad AnkiDroid aiutando il team di sviluppo a vedere quali funzioni usano le persone</string>
+    <string name="note_editor_replace_newlines">Sostituisci le nuove righe con HTML</string>
+    <string name="note_editor_replace_newlines_summ">Nell\'Editor delle Note, converti ogni istanza di &lt;br&gt; in newline quando modifichi una carta.</string>
 </resources>

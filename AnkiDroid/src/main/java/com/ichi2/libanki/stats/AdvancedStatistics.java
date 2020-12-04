@@ -20,7 +20,6 @@ package com.ichi2.libanki.stats;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.preference.PreferenceManager;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
@@ -28,8 +27,10 @@ import com.ichi2.anki.R;
 import com.ichi2.anki.stats.StatsMetaInfo;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.DB;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.DeckConfig;
+import com.ichi2.libanki.utils.Time;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,8 +40,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
 
+import androidx.annotation.NonNull;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
+
+import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 /**
  * Display forecast statistics based on a simulation of future reviews.
@@ -168,35 +172,26 @@ public class AdvancedStatistics {
 
         Collection mCol = CollectionHelper.getInstance().getCol(context);
 
-        double[][] mSeriesList;
-
-        int[] mValueLabels;
-        int[] mColors;
-        int[] mAxisTitles;
         int mMaxCards = 0;
-        int mMaxElements;
-        double mFirstElement;
         double mLastElement = 0;
         int mZeroIndex = 0;
-        double[][] mCumulative;
-        double mMcount;
 
-        mValueLabels = new int[] { R.string.statistics_relearn,
+        int[] mValueLabels = {     R.string.statistics_relearn,
                                    R.string.statistics_mature,
                                    R.string.statistics_young,
                                    R.string.statistics_learn};
-        mColors = new int[] {      R.attr.stats_relearn,
+        int[] mColors = {          R.attr.stats_relearn,
                                    R.attr.stats_mature,
                                    R.attr.stats_young,
                                    R.attr.stats_learn};
 
-        mAxisTitles = new int[] { type.ordinal(), R.string.stats_cards, R.string.stats_cumulative_cards };
+        int[] mAxisTitles = { type.ordinal(), R.string.stats_cards, R.string.stats_cumulative_cards };
 
         PlottableSimulationResult simuationResult = calculateDueAsPlottableSimulationResult(type, mCol, dids);
 
         ArrayList<int[]> dues = simuationResult.getNReviews();
 
-        mSeriesList = new double[REVIEW_TYPE_COUNT_PLUS_1][dues.size()];
+        double[][] mSeriesList = new double[REVIEW_TYPE_COUNT_PLUS_1][dues.size()];
 
         for (int t = 0;t < dues.size(); t++) {
             int[] data = dues.get(t);
@@ -229,7 +224,7 @@ public class AdvancedStatistics {
                 mZeroIndex = t;                     //Because we retrieve dues in the past and we should not cumulate them
             }
         }
-        mMaxElements = dues.size()-1;           //# X values
+        int mMaxElements = dues.size()-1;           //# X values
         switch (type) {
             case TYPE_MONTH:
                 mLastElement = 31;              //X-Axis: Max. value
@@ -239,11 +234,11 @@ public class AdvancedStatistics {
                 break;
             default:
         }
-        mFirstElement = 0;                      //X-Axis: Min. value
+        double mFirstElement = 0;                      //X-Axis: Min. value
 
-        mCumulative = simuationResult.getNInState();                                                          //Day starting at mZeroIndex, Cumulative # cards
+        double[][] mCumulative = simuationResult.getNInState();                                                          //Day starting at mZeroIndex, Cumulative # cards
 
-        mMcount = mCumulative[CARD_TYPE_NEW_PLUS_1][mCumulative[CARD_TYPE_NEW_PLUS_1].length-1] +             //Y-Axis: Max. cumulative value
+        double mMcount = mCumulative[CARD_TYPE_NEW_PLUS_1][mCumulative[CARD_TYPE_NEW_PLUS_1].length-1] +             //Y-Axis: Max. cumulative value
                   mCumulative[CARD_TYPE_YOUNG_PLUS_1][mCumulative[CARD_TYPE_YOUNG_PLUS_1].length-1] +
                   mCumulative[CARD_TYPE_MATURE_PLUS_1][mCumulative[CARD_TYPE_MATURE_PLUS_1].length-1];
 
@@ -313,15 +308,15 @@ public class AdvancedStatistics {
 
         ArrayList<int[]> dues = new ArrayList<>();
 
-        EaseClassifier classifier = new EaseClassifier(mCol.getDb().getDatabase());
-        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb().getDatabase(), classifier, end, chunk);
-        TodayStats todayStats = new TodayStats(mCol.getDb().getDatabase(), Settings.getDayStartCutoff((int) mCol.getCrt()));
+        EaseClassifier classifier = new EaseClassifier(mCol.getTime(), mCol.getDb());
+        ReviewSimulator reviewSimulator = new ReviewSimulator(mCol.getDb(), classifier, end, chunk);
+        TodayStats todayStats = new TodayStats(mCol.getDb(), Settings.getDayStartCutoff(mCol.getCrt()));
 
-        long t0 = System.currentTimeMillis();
+        long t0 = mCol.getTime().intTimeMS();
         SimulationResult simulationResult = reviewSimulator.simNreviews(Settings.getToday((int)mCol.getCrt()), mCol.getDecks(), dids, todayStats);
-        long t1 = System.currentTimeMillis();
+        long t1 = mCol.getTime().intTimeMS();
 
-        Timber.d("Simulation of all decks took: " + (t1 - t0) + " ms");
+        Timber.d("Simulation of all decks took: %d ms", t1 - t0);
 
         int[][] nReviews = ArrayUtils.transposeMatrix(simulationResult.getNReviews());
         int[][] nInState = ArrayUtils.transposeMatrix(simulationResult.getNInState());
@@ -398,7 +393,7 @@ public class AdvancedStatistics {
         private long id;
 
         @Override
-        public String toString() {
+        public @NonNull String toString() {
             return "Card [ivl=" + ivl + ", factor=" + factor + ", due=" + due + ", correct=" + correct + ", id="
                     + id + "]";
         }
@@ -507,11 +502,11 @@ public class AdvancedStatistics {
                 newPerDay = conf.getJSONObject("new").getInt("perDay");
                 initialFactor = conf.getJSONObject("new").getInt("initialFactor");
 
-                Timber.d("rev.perDay=" + revPerDay);
-                Timber.d("new.perDay=" + newPerDay);
-                Timber.d("new.initialFactor=" + initialFactor);
+                Timber.d("rev.perDay=%d", revPerDay);
+                Timber.d("new.perDay=%d", newPerDay);
+                Timber.d("new.initialFactor=%d", initialFactor);
             } else {
-                Timber.d("dyn=" + conf.getInt("dyn"));
+                Timber.d("dyn=%d", conf.getInt("dyn"));
             }
 
             return new Deck(did, newPerDay, revPerDay, initialFactor);
@@ -523,11 +518,11 @@ public class AdvancedStatistics {
      */
     private static class Deck {
 
-        private long did;
+        private final long did;
 
-        private int newPerDay;
-        private int revPerDay;
-        private int initialFactor;
+        private final int newPerDay;
+        private final int revPerDay;
+        private final int initialFactor;
 
         public Deck(long did, int newPerDay, int revPerDay, int initialFactor) {
             this.did = did;
@@ -554,28 +549,27 @@ public class AdvancedStatistics {
 
     }
 
-    private class CardIterator {
+    private static class CardIterator {
 
-        private Cursor cur;
+        private final Cursor cur;
 
         private final int today;
-        private Deck deck;
+        private final Deck deck;
 
-        public CardIterator(SupportSQLiteDatabase db, int today, Deck deck) {
+        public CardIterator(DB db, int today, Deck deck) {
 
             this.today = today;
             this.deck = deck;
 
             long did = deck.getDid();
 
-            String query;
-            query = "SELECT id, due, ivl, factor, type, reps " +
+            String query = "SELECT id, due, ivl, factor, type, reps " +
                     "FROM cards " +
                     "WHERE did IN (" + did + ") " +
                     "AND queue != " + Consts.QUEUE_TYPE_SUSPENDED + " " +   // ignore suspended cards
                     "order by id;";
             Timber.d("Forecast query: %s", query);
-            cur = db.query(query, null);
+            cur = db.query(query);
 
         }
 
@@ -610,11 +604,11 @@ public class AdvancedStatistics {
      * If the review outcome is not specified by the caller, the review outcome will be sampled randomly from the probability distribution
      * and the probability will be 1.
      */
-    private class EaseClassifier {
+    private static class EaseClassifier {
 
         private final Random random;
 
-        private final SupportSQLiteDatabase db;
+        private final DB db;
         private double[][] probabilities;
         private double[][] probabilitiesCumulative;
 
@@ -627,7 +621,7 @@ public class AdvancedStatistics {
         //TODO: should we determine these per deck or over decks?
         //Per deck means less data, but tuned to deck.
         //Over decks means more data, but not tuned to deck.
-        private final String queryBaseNew =
+        private static final String queryBaseNew =
                 "select "
                         +   "count() as N, "
                         +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
@@ -636,7 +630,7 @@ public class AdvancedStatistics {
                         +	  "sum(case when ease=3 then 1 else 0 end) as easy "
                         + "from revlog ";
 
-        private final String queryBaseYoungMature =
+        private static final String queryBaseYoungMature =
                 "select "
                         +   "count() as N, "
                         +   "sum(case when ease=1 then 1 else 0 end) as repeat, "
@@ -645,36 +639,36 @@ public class AdvancedStatistics {
                         +	  "sum(case when ease=4 then 1 else 0 end) as easy "
                         + "from revlog ";
 
-        private final String queryNew =
+        private static final String queryNew =
                 queryBaseNew
                         + "where type=" + CARD_TYPE_NEW + ";";
 
-        private final String queryYoung =
+        private static final String queryYoung =
                 queryBaseYoungMature
                         + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl < 21;";
 
-        private final String queryMature =
+        private static final String queryMature =
                 queryBaseYoungMature
                         + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl >= 21;";
 
-        public EaseClassifier(SupportSQLiteDatabase db) {
+        public EaseClassifier(Time time, DB db) {
             this.db = db;
 
             singleReviewOutcome = new ReviewOutcome(null, 0);
 
-            long t0 = System.currentTimeMillis();
+            long t0 = time.intTimeMS();
             calculateCumProbabilitiesForNewEasePerCurrentEase();
-            long t1 = System.currentTimeMillis();
+            long t1 = time.intTimeMS();
 
-            Timber.d("Calculating probability distributions took: " + (t1 - t0) + " ms");
+            Timber.d("Calculating probability distributions took: %d ms", t1 - t0);
 
-            Timber.d("new\t\t" + Arrays.toString(this.probabilities[0]));
-            Timber.d("young\t\t" + Arrays.toString(this.probabilities[1]));
-            Timber.d("mature\t" + Arrays.toString(this.probabilities[2]));
+            Timber.d("new\t\t%s", Arrays.toString(this.probabilities[0]));
+            Timber.d("young\t\t%s", Arrays.toString(this.probabilities[1]));
+            Timber.d("mature\t%s", Arrays.toString(this.probabilities[2]));
 
-            Timber.d("Cumulative new\t\t" + Arrays.toString(this.probabilitiesCumulative[0]));
-            Timber.d("Cumulative young\t\t" + Arrays.toString(this.probabilitiesCumulative[1]));
-            Timber.d("Cumulative mature\t" + Arrays.toString(this.probabilitiesCumulative[2]));
+            Timber.d("Cumulative new\t\t%s", Arrays.toString(this.probabilitiesCumulative[0]));
+            Timber.d("Cumulative young\t\t%s", Arrays.toString(this.probabilitiesCumulative[1]));
+            Timber.d("Cumulative mature\t%s", Arrays.toString(this.probabilitiesCumulative[2]));
 
             random = new Random();
         }
@@ -714,8 +708,6 @@ public class AdvancedStatistics {
          */
         private double[] calculateProbabilitiesForNewEaseForCurrentEase(String queryNewEaseCountForCurrentEase, int[] prior) {
 
-            Cursor cur = null;
-
             int[] freqs = new int[] {
                     prior[REVIEW_OUTCOME_REPEAT],
                     prior[REVIEW_OUTCOME_HARD],
@@ -725,8 +717,7 @@ public class AdvancedStatistics {
 
             int n = prior[REVIEW_OUTCOME_REPEAT] + prior[REVIEW_OUTCOME_HARD] + prior[REVIEW_OUTCOME_GOOD] + prior[REVIEW_OUTCOME_EASY];
 
-            try {
-                cur = db.query(queryNewEaseCountForCurrentEase, null);
+            try (Cursor cur = db.query(queryNewEaseCountForCurrentEase)) {
                 cur.moveToNext();
 
                 freqs[REVIEW_OUTCOME_REPEAT]    += cur.getInt(REVIEW_OUTCOME_REPEAT_PLUS_1);        //Repeat
@@ -738,10 +729,6 @@ public class AdvancedStatistics {
 
                 n += nQuery;
 
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
-                }
             }
 
             return new double[] {
@@ -763,7 +750,7 @@ public class AdvancedStatistics {
             return 3;
         }
 
-        private ReviewOutcome singleReviewOutcome;
+        private final ReviewOutcome singleReviewOutcome;
         public ReviewOutcome simSingleReview(Card c){
 
             @Consts.CARD_TYPE int type = c.getType();
@@ -828,26 +815,20 @@ public class AdvancedStatistics {
 
     public static class TodayStats {
 
-        private Map<Long, Integer> nLearnedPerDeckId = new HashMap<Long, Integer>();
+        private final Map<Long, Integer> nLearnedPerDeckId = new HashMap<>();
 
-        public TodayStats(SupportSQLiteDatabase db, long dayStartCutoff) {
+        public TodayStats(DB db, long dayStartCutoff) {
 
-            Cursor cur = null;
             String query = "select cards.did, "+
                     "sum(case when revlog.type = " + CARD_TYPE_NEW + " then 1 else 0 end)"+ /* learning */
                     " from revlog, cards where revlog.cid = cards.id and revlog.id > " + dayStartCutoff +
                     " group by cards.did";
             Timber.d("AdvancedStatistics.TodayStats query: %s", query);
 
-            try {
-                cur = db.query(query, null);
+            try (Cursor cur = db.query(query)) {
 
                 while(cur.moveToNext()) {
                     nLearnedPerDeckId.put(cur.getLong(0), cur.getInt(1));
-                }
-            } finally {
-                if (cur != null && !cur.isClosed()) {
-                    cur.close();
                 }
             }
         }
@@ -862,7 +843,7 @@ public class AdvancedStatistics {
         }
     }
 
-    public class NewCardSimulator {
+    public static class NewCardSimulator {
 
         private int nAddedToday;
         private int tAdd;
@@ -899,7 +880,7 @@ public class AdvancedStatistics {
      */
     private class ReviewSimulator {
 
-        private final SupportSQLiteDatabase db;
+        private final DB db;
         private final EaseClassifier classifier;
 
         //TODO: also exists in Review
@@ -910,7 +891,7 @@ public class AdvancedStatistics {
 
         private final NewCardSimulator newCardSimulator = new NewCardSimulator();
 
-        public ReviewSimulator(SupportSQLiteDatabase db, EaseClassifier classifier, int nTimeBins, int timeBinLength) {
+        public ReviewSimulator(DB db, EaseClassifier classifier, int nTimeBins, int timeBinLength) {
             this.db = db;
             this.classifier = classifier;
 
@@ -959,7 +940,7 @@ public class AdvancedStatistics {
             //Forecasted final state of deck
             //finalIvl = np.empty((nSmooth, nCards), dtype='f8')
 
-            Timber.d("today: " + today);
+            Timber.d("today: %d", today);
 
             Stack<Review> reviews = new Stack<>();
             ArrayList<Review> reviewList = new ArrayList<>();
@@ -994,13 +975,13 @@ public class AdvancedStatistics {
                     if (review.getT() < tMax)
                         reviews.push(review);
 
-                    //Timber.d("Card started: " + cardN);
+                    //Timber.d("Card started: %d", cardN);
 
                     while (!reviews.isEmpty()) {
                         reviews.pop().simulateReview();
                     }
 
-                    //Timber.d("Card done: " + cardN++);
+                    //Timber.d("Card done: %d", cardN++);
 
                 }
             }
@@ -1023,9 +1004,11 @@ public class AdvancedStatistics {
         private final int computeNDays;
         private final double computeMaxError;
         private final int simulateNIterations;
+        private final Collection mCol;
 
         public Settings(Context context) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+            SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(context);
+            mCol = CollectionHelper.getInstance().getCol(context);
 
             computeNDays = prefs.getInt("advanced_forecast_stats_compute_n_days", 0);
             int computePrecision = prefs.getInt("advanced_forecast_stats_compute_precision", 90);
@@ -1033,9 +1016,9 @@ public class AdvancedStatistics {
 
             simulateNIterations = prefs.getInt("advanced_forecast_stats_mc_n_iterations", 1);
 
-            Timber.d("computeNDays: " + computeNDays);
-            Timber.d("computeMaxError: " + computeMaxError);
-            Timber.d("simulateNIterations: " + simulateNIterations);
+            Timber.d("computeNDays: %s", computeNDays);
+            Timber.d("computeMaxError: %s", computeMaxError);
+            Timber.d("simulateNIterations: %s", simulateNIterations);
         }
 
         public int getComputeNDays() {
@@ -1072,22 +1055,17 @@ public class AdvancedStatistics {
             return Consts.STARTING_FACTOR;
         }
 
-        public long getNow() {
-            //return 1451223980146L;
-            return System.currentTimeMillis();
-        }
-
         /**
          * Today.
          * @param collectionCreatedTime The difference, measured in seconds, between midnight, January 1, 1970 UTC and the time at which the collection was created.
          * @return Today in days counted from the time at which the collection was created
          */
-        public int getToday(int collectionCreatedTime) {
-            Timber.d("Collection creation timestamp: " + collectionCreatedTime);
+        public int getToday(long collectionCreatedTime) {
+            Timber.d("Collection creation timestamp: %d", collectionCreatedTime);
 
-            int currentTime = (int) (getNow() / 1000);
-            Timber.d("Now: " + currentTime);
-            return (currentTime - collectionCreatedTime) / getNSecsPerDay();
+            long currentTime = mCol.getTime().intTime();
+            Timber.d("Now: %d", currentTime);
+            return (int) ((currentTime - collectionCreatedTime) / SECONDS_PER_DAY);
         }
 
         /**
@@ -1095,13 +1073,9 @@ public class AdvancedStatistics {
          * @param collectionCreatedTime The difference, measured in seconds, between midnight, January 1, 1970 UTC and the time at which the collection was created.
          * @return The beginning of today in milliseconds counted from the time at which the collection was created
          */
-        public long getDayStartCutoff (int collectionCreatedTime) {
+        public long getDayStartCutoff (long collectionCreatedTime) {
             long today = getToday(collectionCreatedTime);
-            return (collectionCreatedTime + (today * getNSecsPerDay())) * 1000;
-        }
-
-        public int getNSecsPerDay() {
-            return 86400;
+            return (collectionCreatedTime + (today * SECONDS_PER_DAY)) * 1000;
         }
     }
 
@@ -1185,7 +1159,7 @@ public class AdvancedStatistics {
             int m = matrix.length;
             int n = matrix[0].length;
 
-            int transpose[][] = new int[n][m];
+            int[][] transpose = new int[n][m];
 
             int c, d;
             for ( c = 0 ; c < m ; c++ )
@@ -1205,7 +1179,7 @@ public class AdvancedStatistics {
             int m = matrix.length;
             int n = matrix[0].length;
 
-            double transpose[][] = new double[n][m];
+            double[][] transpose = new double[n][m];
 
             int c, d;
             for ( c = 0 ; c < m ; c++ )
@@ -1225,8 +1199,8 @@ public class AdvancedStatistics {
             s.append(System.getProperty("line.separator"));
 
             for (int[] aMatrix : matrix) {
-                for (int j = 0; j < aMatrix.length; j++) {
-                    s.append(String.format(format, aMatrix[j]));
+                for (int i : aMatrix) {
+                    s.append(String.format(format, i));
                 }
                 s.append(System.getProperty("line.separator"));
             }
@@ -1460,7 +1434,7 @@ public class AdvancedStatistics {
      * A review results in the state of the card (card interval) being changed.
      * A ReviewOutcome bundles the probability of the outcome and the card with changed state.
      */
-    private class ReviewOutcome {
+    private static class ReviewOutcome {
         private Card card;
         private double prob;
 
@@ -1483,7 +1457,7 @@ public class AdvancedStatistics {
         }
 
         @Override
-        public String toString() {
+        public @NonNull String toString() {
             return "ReviewOutcome{" +
                     "card=" + card +
                     ", prob=" + prob +
@@ -1528,14 +1502,14 @@ public class AdvancedStatistics {
         /**
          * Deck-specific settings
          */
-        private Deck deck;
+        private final Deck deck;
 
         /**
          * State of the card before current review.
          * Needed to schedule current review but with different outcome and to update statistics.
          */
         private Card card = new Card(0, 0, 0, 0, 0, 0);
-        private Card prevCard = new Card(0, 0, 0, 0, 0, 0);
+        private final Card prevCard = new Card(0, 0, 0, 0, 0, 0);
 
         /**
          * State of the card after current review.
@@ -1700,9 +1674,9 @@ public class AdvancedStatistics {
             String tabs = "";
             for(int d = 0; d<nPrevRevs; d++)
                 tabs += "\t";
-            Timber.d(tabs + "t=" + tElapsed + " p=" + prob + " * " + outcomeProb);
-            Timber.d(tabs + prevCard);
-            Timber.d(tabs + newCard);
+            Timber.d("%st=%d p=%f * %s", tabs, tElapsed, prob, outcomeProb);
+            Timber.d("%s%s",tabs , prevCard);
+            Timber.d("%s%s", tabs, newCard);
         }
 
         /**

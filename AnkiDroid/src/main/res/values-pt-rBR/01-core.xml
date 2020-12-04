@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">sim</string>
     <!-- Navigation drawer items-->
     <string name="decks">Baralhos</string>
-    <string name="card_browser">Navegador de cartões</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navegador de cartões</string>
     <string name="statistics">Estatísticas</string>
     <string name="settings">Configurações</string>
     <string name="help">Ajuda</string>
     <string name="send_feedback">Enviar comentários</string>
-    <string name="studyoptions_title">Resumo do baralho</string>
     <string name="studyoptions_due_today">Programados para hoje:</string>
     <string name="studyoptions_new_total">Total de cartões novos:</string>
     <string name="studyoptions_total_cards">Total de cartões:</string>
@@ -71,6 +71,8 @@
         <item quantity="one">%d dia %d restante</item>
         <item quantity="other">%d dias %d restantes</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Coleção vazia.</string>
+    <string name="no_cards_placeholder_description">Comece adicionando cards\ntocando no ícone +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">%1$d cartão estudado em %2$s hoje</item>
@@ -79,6 +81,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Digite a resposta</string>
     <string name="show_answer">Mostrar resposta</string>
+    <string name="hide_answer">Esconder respostas.</string>
     <string name="ease_button_again">Novamente</string>
     <string name="ease_button_hard">Difícil</string>
     <string name="ease_button_good">Bom</string>
@@ -87,24 +90,16 @@
     <string name="menu_import">Importar</string>
     <string name="undo">Desfazer</string>
     <string name="undo_action_review">última revisão</string>
-    <string name="undo_action_bury_card">ocultar cartão</string>
-    <string name="undo_action_bury_note">ocultar nota</string>
-    <string name="undo_action_suspend_card">suspender cartão</string>
-    <string name="undo_action_suspend_note">suspender nota</string>
-    <string name="undo_action_delete">excluir nota</string>
-    <string name="undo_action_delete_multi">excluir notas</string>
     <string name="undo_action_change_deck_multi">mudar baralhos</string>
-    <string name="undo_action_reschedule_card">reagendar</string>
-    <string name="undo_action_reset_card">redefinir o progresso</string>
-    <string name="undo_action_reposition_card">reposicionar</string>
     <string name="move_all_to_deck">Mover todos para o baralho</string>
     <string name="unbury">Desenterrar</string>
     <string name="rename_deck">Renomear baralho</string>
-    <string name="menu_add">Adicionar</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Adicionar</string>
     <string name="menu_add_note">Adicionar nota</string>
-    <string name="menu_my_account">Sincronizar conta</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincronizar conta</string>
     <string name="menu_dismiss_note">Ocultar / excluir</string>
-    <string name="menu_bury_card">Ocultar cartão</string>
+    <string name="menu_bury_card">Ocultar card</string>
     <string name="menu_bury_note">Enterrar nota</string>
     <string name="menu_suspend_card">Suspender cartão</string>
     <string name="menu_suspend_note">Suspender nota</string>
@@ -112,7 +107,7 @@
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Excluir nota</string>
     <string name="menu_flag">Sinalizar</string>
-    <string name="menu_flag_card">Sinalizar cartão</string>
+    <string name="menu_flag_card">Sinalizar card</string>
     <string name="menu_flag_card_zero">Sem sinalização</string>
     <string name="menu_flag_card_one">Sinalização vermelha</string>
     <string name="menu_flag_card_two">Sinalização laranja</string>
@@ -124,9 +119,9 @@
     <string name="menu_search">Pesquisar em %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Verificar pronúncia</string>
     <string name="new_deck">Criar baralho</string>
-    <string name="create">Criar</string>
+    <string name="create" comment="Button to create a filtered deck">Criar</string>
     <string name="new_dynamic_deck">Criar baralho com filtros</string>
     <string name="night_mode">Modo noturno</string>
     <string name="directory_inaccessible">Diretório do AnkiDroid está inacessível</string>
@@ -151,25 +146,25 @@
     <string name="time_quantity_months">%.1f mês</string>
     <string name="time_quantity_years">%.1f ano</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Reconstruindo baralho de estudo intensivo&#8230;</string>
+    <string name="rebuild_filtered_deck">Recriando baralho filtrado&#8230;</string>
     <string name="rebuild_cram_label">Reconstruir</string>
     <string name="empty_cram_label">Esvaziar</string>
     <string name="create_subdeck">Criar sub-baralho</string>
-    <string name="empty_cram_deck">Esvaziando baralho de estudo intensivo&#8230;</string>
+    <string name="empty_filtered_deck">Esvaziando baralho filtrado&#8230;</string>
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
     <string name="custom_study_deck_exists">Por favor renomeie o baralho de estudo personalizado existente primeiro</string>
     <string name="empty_deck">Este baralho está vazio</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="invalid_deck_name">Nome do baralho inválido</string>
     <string name="studyoptions_empty">Este baralho está vazio. Pressione o botão + para adicionar novos conteúdos.</string>
     <string name="studyoptions_limit_reached">Limite diário de estudo atingido</string>
     <string name="studyoptions_empty_schedule">Sem cartões programados para estudar</string>
     <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
     <string name="studyoptions_congrats_more_rev">O limite de hoje foi atingido, mas ainda existem cartões para serem revistos. Você pode aumentar o limite nas opções.</string>
-    <string name="studyoptions_congrats_more_new">O limite de hoje foi atingido. Ainda existem novos cartões; você pode aumentar o limite nas opções, mas isso irá aumentar a sua carga de revisões a curto prazo.</string>
+    <string name="studyoptions_congrats_more_new">O limite foi atingido. Ainda existem novos cards. Você pode aumentar o limite diário nas opções, mas isso irá aumentar a sua carga de revisões a curto prazo.</string>
     <string name="studyoptions_congrats_custom">Para estudar fora do agendamento normal, toque no botão \"Estudo personalizado\".</string>
-    <string name="studyoptions_no_cards_due">Nenhum cartão está programado por enquanto.</string>
+    <string name="studyoptions_no_cards_due">Sem cards programados por enquanto.</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
-    <string name="empty_cloze_warning">Editar esta nota e adicionar algumas exclusões cloze. (%1$s)</string>
+    <string name="empty_cloze_warning">Edite esta nota e use Ocultar em algum termo. (%1$s)</string>
     <string name="button_sync">Sincronizar</string>
     <string name="cancel_sync_confirm">Você quer cancelar a sincronização?</string>
     <string name="continue_sync">Continuar a sincronização</string>
@@ -184,25 +179,25 @@
     <string name="card_template_editor_front">Modelo da frente</string>
     <string name="card_template_editor_back">Modelo de trás</string>
     <string name="card_template_editor_styling">Estilo</string>
-    <string name="card_template_editor_menu_delete">Excluir</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Aparência do Navegador de Cartões</string>
-    <string name="card_template_editor_deck_override">Deck Override</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Aparência do Navegador de Cards</string>
+    <string name="card_template_editor_deck_override">Sobreposição do baralho</string>
     <string name="card_template_editor_cant_delete">Ao menos um tipo de cartão é necessário.</string>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Excluir o tipo de cartão %2$s e seu %1$d cartão?</item>
         <item quantity="other">Excluir o tipo de cartão %2$s e seus %1$d cartões?</item>
     </plurals>
     <string name="invalid_template">Não foi possível gerar um cartão</string>
-    <string name="card_template_editor_would_delete_note">Excluir este tipo de cartão resultará na remoção de uma ou mais notas. Por favor, primeiro crie um novo tipo de cartão.</string>
-    <string name="card_template_editor_save_error">Não é possível salvar as alterações no modelo de cartão: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="card_template_editor_would_delete_note">Excluir este tipo de card resultará na remoção de uma ou mais notas. Por favor, primeiro crie um novo tipo de card.</string>
+    <string name="card_template_editor_save_error">Não é possível salvar as alterações no modelo de card: %s</string>
+    <string name="template_for_current_card_deleted">O tipo de card para o card atual foi excluído.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aparência do navegador</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever para o banco de dados do AnkiDroid</string>
-    <string name="read_write_permission_description">acessar as notas, cartas, modelos e baralhos existentes, bem como criar novos</string>
+    <string name="read_write_permission_description">acessar notas, cards, tipos de nota e baralhos existentes, bem como criar novos</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Navegador de Baralhos</string>
-    <string name="card_browser_context_menu">Navegador de Baralhos</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de Card</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>

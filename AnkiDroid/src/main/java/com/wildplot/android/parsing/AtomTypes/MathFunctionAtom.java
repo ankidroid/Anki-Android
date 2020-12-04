@@ -23,7 +23,7 @@ import com.wildplot.android.parsing.TreeElement;
 
 public class MathFunctionAtom implements TreeElement {
 
-    private TopLevelParser parser;
+    private final TopLevelParser parser;
 
     public enum MathType {SIN, COS, TAN, SQRT, ACOS, ASIN, ATAN, SINH, COSH, LOG, LN, INVALID}
 

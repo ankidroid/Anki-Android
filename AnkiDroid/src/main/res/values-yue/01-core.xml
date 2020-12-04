@@ -38,14 +38,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">卡組</string>
-    <string name="card_browser">瀏覽卡</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">瀏覽卡</string>
     <string name="statistics">統計數字</string>
     <string name="settings">設定</string>
     <string name="help">求助</string>
     <string name="send_feedback">畀意見</string>
-    <string name="studyoptions_title">卡組概覽</string>
     <string name="studyoptions_due_today">今日到期:</string>
     <string name="studyoptions_new_total">新卡總數:</string>
     <string name="studyoptions_total_cards">卡總數:</string>
@@ -67,6 +67,8 @@
     <plurals name="reviewer_window_title_days">
         <item quantity="other">%d days %d left</item>
     </plurals>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">今日用咗 %2$s 學習 %1$d 卡</item>
@@ -74,6 +76,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">輸入答案</string>
     <string name="show_answer">顯示答案</string>
+    <string name="hide_answer">Hide answer</string>
     <string name="ease_button_again">由頭嚟過</string>
     <string name="ease_button_hard">深</string>
     <string name="ease_button_good">中</string>
@@ -82,22 +85,14 @@
     <string name="menu_import">導入</string>
     <string name="undo">還原</string>
     <string name="undo_action_review">上次複習</string>
-    <string name="undo_action_bury_card">收埋卡</string>
-    <string name="undo_action_bury_note">收埋註解</string>
-    <string name="undo_action_suspend_card">擱置卡</string>
-    <string name="undo_action_suspend_note">擱置筆記</string>
-    <string name="undo_action_delete">刪除筆記</string>
-    <string name="undo_action_delete_multi">刪除筆記</string>
     <string name="undo_action_change_deck_multi">轉換卡組</string>
-    <string name="undo_action_reschedule_card">reschedule</string>
-    <string name="undo_action_reset_card">reset progress</string>
-    <string name="undo_action_reposition_card">reposition</string>
     <string name="move_all_to_deck">移動所有卡牌到卡組</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">重新命名卡組</string>
-    <string name="menu_add">加入</string>
+    <string name="create_shortcut">Create shortcut</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">加入</string>
     <string name="menu_add_note">加入筆記</string>
-    <string name="menu_my_account">同步帳號</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳號</string>
     <string name="menu_dismiss_note">Hide / delete</string>
     <string name="menu_bury_card">Bury card</string>
     <string name="menu_bury_note">Bury note</string>
@@ -121,7 +116,7 @@
     <string name="menu_unmark_note">Unmark note</string>
     <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
     <string name="new_deck">Create deck</string>
-    <string name="create">Create</string>
+    <string name="create" comment="Button to create a filtered deck">Create</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
     <string name="night_mode">Night mode</string>
     <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
@@ -146,11 +141,11 @@
     <string name="time_quantity_months">%.1f mo</string>
     <string name="time_quantity_years">%.1f yr</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_cram_deck">Rebuilding cram deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Rebuild</string>
     <string name="empty_cram_label">Empty</string>
     <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_cram_deck">Emptying cram deck&#8230;</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">This deck is empty</string>
@@ -179,7 +174,6 @@
     <string name="card_template_editor_front">Front template</string>
     <string name="card_template_editor_back">Back template</string>
     <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_delete">Delete</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck Override</string>
     <string name="card_template_editor_cant_delete">At least one card type is required</string>
@@ -192,11 +186,12 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <!-- card Info -->
+    <string name="card_info_title">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
-    <string name="card_browser_label">Card Browser</string>
-    <string name="card_browser_context_menu">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
 </resources>
