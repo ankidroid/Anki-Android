@@ -95,12 +95,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             // Decide which action to take when the navigation button is tapped.
             toolbar.setNavigationOnClickListener(v -> onNavigationPressed());
         }
-        // Configure night-mode switch
-        final SharedPreferences preferences = getPreferences();
-        View actionLayout = mNavigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
-        mNightModeSwitch = actionLayout.findViewById(R.id.switch_compat);
-        mNightModeSwitch.setChecked(preferences.getBoolean(NIGHT_MODE_PREFERENCE, false));
-        mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> applyNightMode(isChecked));
+        setupNightModeSwitch();
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0) {
@@ -134,6 +129,18 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         }
         mDrawerToggle.setDrawerSlideAnimationEnabled(animationEnabled());
         mDrawerLayout.addDrawerListener(mDrawerToggle);
+    }
+
+
+    private void setupNightModeSwitch() {
+        if (mNightModeSwitch == null) {
+            View actionLayout = mNavigationView.getMenu().findItem(R.id.nav_night_mode).getActionView();
+            mNightModeSwitch = actionLayout.findViewById(R.id.switch_compat);
+        }
+
+        final SharedPreferences preferences = getPreferences();
+        mNightModeSwitch.setChecked(preferences.getBoolean(NIGHT_MODE_PREFERENCE, false));
+        mNightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> applyNightMode(isChecked));
     }
 
 
