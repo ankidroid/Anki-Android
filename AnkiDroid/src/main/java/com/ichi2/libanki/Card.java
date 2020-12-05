@@ -286,7 +286,7 @@ public class Card implements Cloneable {
             Note f = note(reload);
             Model m = model();
             JSONObject t = template();
-            long did = mODid != 0L ? mODid : mDid;
+            long did = isInDynamicDeck() ? mODid : mDid;
             if (browser) {
                 String bqfmt = t.getString("bqfmt");
                 String bafmt = t.getString("bafmt");
@@ -337,7 +337,7 @@ public class Card implements Cloneable {
      * Time limit for answering in milliseconds.
      */
     public int timeLimit() {
-        DeckConfig conf = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
+        DeckConfig conf = mCol.getDecks().confForDid(!isInDynamicDeck() ? mDid : mODid);
         return conf.getInt("maxTaken") * 1000;
     }
 
@@ -605,7 +605,7 @@ public class Card implements Cloneable {
 
 
     public boolean showTimer() {
-        DeckConfig options = mCol.getDecks().confForDid(mODid == 0 ? mDid : mODid);
+        DeckConfig options = mCol.getDecks().confForDid(!isInDynamicDeck() ? mDid : mODid);
         return DeckConfig.parseTimerOpt(options, true);
     }
 
@@ -694,7 +694,7 @@ public class Card implements Cloneable {
     private String nextDue() {
         long date;
         long due = getDue();
-        if (getODid() != 0) {
+        if (isInDynamicDeck()) {
             return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card);
         } else if (getQueue() == Consts.QUEUE_TYPE_LRN) {
             date = due;
@@ -711,7 +711,7 @@ public class Card implements Cloneable {
     }
 
     /** Non libAnki */
-    public boolean isDynamic() {
+    public boolean isInDynamicDeck() {
         // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
         return this.getODid() != 0;
     }
