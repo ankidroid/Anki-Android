@@ -29,6 +29,7 @@ import com.ichi2.libanki.importer.CsvException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -133,8 +134,8 @@ public class CsvSniffer {
         }
 
 
-        Map<Character, Integer> quotes = new HashMap<>();
-        Map<Character, Integer> delims = new HashMap<>();
+        Map<Character, Integer> quotes = new LinkedHashMap<>();
+        Map<Character, Integer> delims = new LinkedHashMap<>();
         int spaces = 0;
         for (Group m : matches) {
             char key = m.quote;
@@ -228,9 +229,9 @@ public class CsvSniffer {
         // build frequency tables
         int chunkLength = Math.min(10, data.size());
         int iteration = 0;
-        Map<Character, Map<Integer, Integer>> charFrequency = new HashMap<>();
-        Map<Character, Tuple> modes = new HashMap<>();
-        Map<Character, Tuple> delims = new HashMap<>();
+        Map<Character, Map<Integer, Integer>> charFrequency = new LinkedHashMap<>();
+        Map<Character, Tuple> modes = new LinkedHashMap<>();
+        Map<Character, Tuple> delims = new LinkedHashMap<>();
         int start = 0;
         int end = chunkLength;
 
@@ -238,7 +239,7 @@ public class CsvSniffer {
             iteration++;
             for (String line : data.subList(start, end)) {
                 for (char c : ascii) {
-                    Map<Integer, Integer> metaFrequency = charFrequency.getOrDefault(c, new HashMap<>());
+                    Map<Integer, Integer> metaFrequency = charFrequency.getOrDefault(c, new LinkedHashMap<>());
                     // must count even if frequency is 0
                     int freq = countInString(line, c);
                     // value is the mode

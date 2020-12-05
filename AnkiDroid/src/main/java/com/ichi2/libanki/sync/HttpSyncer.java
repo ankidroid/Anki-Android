@@ -49,6 +49,7 @@ import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
@@ -101,7 +102,7 @@ public class HttpSyncer {
         mHKey = hkey;
         mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
         mCon = con;
-        mPostVars = new HashMap<>();
+        mPostVars = new LinkedHashMap<>();
         mHostNum = hostNum;
     }
 

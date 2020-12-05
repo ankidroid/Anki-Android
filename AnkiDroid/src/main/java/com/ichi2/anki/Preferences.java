@@ -74,6 +74,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -107,7 +108,7 @@ public class Preferences extends AppCompatPreferenceActivity implements Preferen
     public static final int PENDING_NOTIFICATIONS_ONLY = 1000000;
 
     // Other variables
-    private final HashMap<String, String> mOriginalSumarries = new HashMap<>();
+    private final HashMap<String, String> mOriginalSumarries = new LinkedHashMap<>();
     private static final String [] sCollectionPreferences = {"showEstimates", "showProgress",
             "learnCutoff", "timeLimit", "useCurrent", "newSpread", "dayOffset", "schedVer"};
 

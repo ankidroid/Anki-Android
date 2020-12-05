@@ -28,6 +28,7 @@ import com.ichi2.utils.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 
 import okhttp3.Response;
@@ -44,7 +45,7 @@ public class RemoteServer extends HttpSyncer {
     @Override
     public Response hostKey(String user, String pw) throws UnknownHttpResponseException {
         try {
-            mPostVars = new HashMap<>();
+            mPostVars = new LinkedHashMap<>();
             JSONObject credentials = new JSONObject();
             credentials.put("u", user);
             credentials.put("p", pw);
@@ -57,7 +58,7 @@ public class RemoteServer extends HttpSyncer {
 
     @Override
     public Response meta() throws UnknownHttpResponseException {
-        mPostVars = new HashMap<>();
+        mPostVars = new LinkedHashMap<>();
         mPostVars.put("k", mHKey);
         mPostVars.put("s", mSKey);
         JSONObject meta = new JSONObject();

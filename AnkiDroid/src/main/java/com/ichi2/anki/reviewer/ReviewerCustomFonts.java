@@ -25,6 +25,7 @@ import com.ichi2.anki.AnkiFont;
 import com.ichi2.libanki.Utils;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -152,7 +153,7 @@ public class ReviewerCustomFonts {
      */
     private static Map<String, AnkiFont> getCustomFontsMap(Context context) {
         List<AnkiFont> fonts = Utils.getCustomFonts(context);
-        Map<String, AnkiFont> customFontsMap = new HashMap<>();
+        Map<String, AnkiFont> customFontsMap = new LinkedHashMap<>();
         for (AnkiFont f : fonts) {
             customFontsMap.put(f.getName(), f);
         }

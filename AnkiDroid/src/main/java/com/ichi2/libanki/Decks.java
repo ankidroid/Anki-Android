@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -147,8 +148,8 @@ public class Decks {
 
 
     private final Collection mCol;
-    private HashMap<Long, Deck> mDecks;
-    private HashMap<Long, DeckConfig> mDconf;
+    private LinkedHashMap<Long, Deck> mDecks;
+    private LinkedHashMap<Long, DeckConfig> mDconf;
     // Never access mNameMap directly. Uses byName
     private NameMap mNameMap;
     private boolean mChanged;
@@ -227,8 +228,8 @@ public class Decks {
 
 
     public void load(String decks, String dconf) {
-        mDecks = new HashMap<>();
-        mDconf = new HashMap<>();
+        mDecks = new LinkedHashMap<>();
+        mDconf = new LinkedHashMap<>();
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
         for (String id: ids.stringIterable()) {
@@ -1011,7 +1012,7 @@ public class Decks {
         return actv;
     }
 
-    public static class Node extends HashMap<Long, Node> {}
+    public static class Node extends LinkedHashMap<Long, Node> {}
 
     private void gather(Node node, List<Long> arr) {
         for (Map.Entry<Long, Node> entry : node.entrySet()) {

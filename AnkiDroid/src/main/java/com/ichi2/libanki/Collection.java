@@ -65,6 +65,7 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -804,7 +805,7 @@ public class Collection {
 
                 // existing cards
                 if (!have.containsKey(nid)) {
-                    have.put(nid, new HashMap<>());
+                    have.put(nid, new LinkedHashMap<>());
                 }
                 have.get(nid).put(ord, id);
                 // and their dids

@@ -123,6 +123,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -2179,7 +2180,7 @@ public class NoteEditor extends AnkiActivity {
             // Configure the interface according to whether note type is getting changed or not
             if (mAllModelIds.get(pos) != noteModelId) {
                 // Initialize mapping between fields of old model -> new model
-                mModelChangeFieldMap = new HashMap<>();
+                mModelChangeFieldMap = new LinkedHashMap<>();
                 for (int i=0; i < mEditorNote.items().length; i++) {
                     mModelChangeFieldMap.put(i, i);
                 }

@@ -134,6 +134,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -208,7 +209,7 @@ public abstract class AbstractFlashcardViewer extends NavigationDrawerActivity i
     private static final int ankiJsErrorCodeFlagCard = 2;
 
     // JS api list enable/disable status
-    private final HashMap<String, Boolean> mJsApiListMap = new HashMap<>();
+    private final HashMap<String, Boolean> mJsApiListMap = new LinkedHashMap<>();
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted

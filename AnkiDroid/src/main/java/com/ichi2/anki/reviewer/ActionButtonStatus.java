@@ -9,6 +9,7 @@ import com.ichi2.anki.R;
 import com.ichi2.themes.Themes;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import androidx.annotation.IdRes;
@@ -22,7 +23,7 @@ public class ActionButtonStatus {
      * Custom button allocation
      */
     @NonNull
-    protected final Map<Integer, Integer> mCustomButtons = new HashMap<>();
+    protected final Map<Integer, Integer> mCustomButtons = new LinkedHashMap<>();
     private final ReviewerUi mReviewerUi;
 
     public static final int SHOW_AS_ACTION_NEVER = MenuItem.SHOW_AS_ACTION_NEVER;

@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -766,7 +767,7 @@ public final class AddContentApi {
         @Override
         public SparseArray<List<NoteInfo>> findDuplicateNotes(long modelId, List<String> keys) {
             // Build set of checksums and a HashMap from the key (first field) back to the original index in fieldsArray
-            Set<Long> csums = new HashSet<>(keys.size());
+            Set<Long> csums = new LinkedHashSet<>(keys.size());
             Map<String, List<Integer>> keyToIndexesMap = new HashMap<>(keys.size());
             for (int i = 0; i < keys.size(); i++) {
                 String key = keys.get(i);

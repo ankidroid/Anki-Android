@@ -62,6 +62,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -92,7 +93,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
 
     public class DeckPreferenceHack implements SharedPreferences {
 
-        private final Map<String, String> mValues = new HashMap<>();
+        private final Map<String, String> mValues = new LinkedHashMap<>();
         private final Map<String, String> mSummaries = new HashMap<>();
         private MaterialDialog mProgressDialog;
         private final List<OnSharedPreferenceChangeListener> listeners = new LinkedList<>();

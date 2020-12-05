@@ -67,6 +67,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -1502,7 +1503,7 @@ public class CollectionTask extends BaseAsyncTask<TaskData, TaskData, TaskData> 
             // data and rely on them running a media db check to get rid of any
             // unwanted media. in the future we might also want to duplicate this step
             // import media
-            HashMap<String, String> nameToNum = new HashMap<>();
+            HashMap<String, String> nameToNum = new LinkedHashMap<>();
             HashMap<String, String> numToName = new HashMap<>();
             File mediaMapFile = new File(dir.getAbsolutePath(), "media");
             if (mediaMapFile.exists()) {

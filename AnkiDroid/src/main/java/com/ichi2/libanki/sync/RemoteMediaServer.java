@@ -36,6 +36,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.zip.ZipFile;
@@ -75,7 +76,7 @@ public class RemoteMediaServer extends HttpSyncer {
 
     public JSONObject begin() throws UnknownHttpResponseException, MediaSyncException {
         try {
-            mPostVars = new HashMap<>();
+            mPostVars = new LinkedHashMap<>();
             mPostVars.put("k", mHKey);
             mPostVars.put("v",
                     String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
@@ -94,7 +95,7 @@ public class RemoteMediaServer extends HttpSyncer {
     // args: lastUsn
     public JSONArray mediaChanges(int lastUsn) throws UnknownHttpResponseException, MediaSyncException {
         try {
-            mPostVars = new HashMap<>();
+            mPostVars = new LinkedHashMap<>();
             mPostVars.put("sk", mSKey);
 
             Response resp = super.req("mediaChanges",

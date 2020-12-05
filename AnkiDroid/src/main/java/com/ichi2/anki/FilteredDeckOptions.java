@@ -43,6 +43,7 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,7 @@ public class FilteredDeckOptions extends AppCompatPreferenceActivity implements 
 
     public class DeckPreferenceHack implements SharedPreferences {
 
-        private final Map<String, String> mValues = new HashMap<>();
+        private final Map<String, String> mValues = new LinkedHashMap<>();
         private final Map<String, String> mSummaries = new HashMap<>();
 
 

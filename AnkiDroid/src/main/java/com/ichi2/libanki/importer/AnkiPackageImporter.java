@@ -33,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
@@ -118,7 +119,7 @@ public class AnkiPackageImporter extends Anki2Importer {
             // we need the media dict in advance, and we'll need a map of fname ->
             // number to use during the import
             File mediaMapFile = new File(tempDir, "media");
-            mNameToNum = new HashMap<>();
+            mNameToNum = new LinkedHashMap<>();
             String dirPath = tmpCol.getMedia().dir();
             File dir = new File(dirPath);
             // We need the opposite mapping in AnkiDroid since our extraction method requires it.

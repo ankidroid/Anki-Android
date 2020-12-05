@@ -27,6 +27,7 @@ import com.ichi2.utils.JSONObject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -180,7 +181,7 @@ public class Tags {
         }
         // Cast to set to remove duplicates
         // Use methods used to get all tags to parse tags here as well.
-        return new ArrayList<>(new HashSet<>(split(TextUtils.join(" ", tags))));
+        return new ArrayList<>(new LinkedHashSet<>(split(TextUtils.join(" ", tags))));
     }
 
 

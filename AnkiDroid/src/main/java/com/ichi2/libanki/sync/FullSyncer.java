@@ -34,6 +34,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 
 import okhttp3.Response;
@@ -49,7 +50,7 @@ public class FullSyncer extends HttpSyncer {
 
     public FullSyncer(Collection col, String hkey, Connection con, HostNum hostNum) {
         super(hkey, con, hostNum);
-        mPostVars = new HashMap<>();
+        mPostVars = new LinkedHashMap<>();
         mPostVars.put("k", hkey);
         mPostVars.put("v",
                 String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));

@@ -22,6 +22,7 @@ package com.ichi2.anki.multimediacard.language;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * This is some sort of tool, which translates from languages in a user readable form to a code, used to invoke some
@@ -35,7 +36,7 @@ public class LanguageListerBase {
 
 
     public LanguageListerBase() {
-        mLanguageMap = new HashMap<>();
+        mLanguageMap = new LinkedHashMap<>();
     }
 
 

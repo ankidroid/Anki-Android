@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -758,7 +759,7 @@ public class Finder {
         Pattern pattern = Pattern.compile("\\Q" + javaVal + "\\E", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
         // find models that have that field
-        Map<Long, Object[]> mods = new HashMap<>();
+        Map<Long, Object[]> mods = new LinkedHashMap<>();
         for (JSONObject m : mCol.getModels().all()) {
             JSONArray flds = m.getJSONArray("flds");
             for (JSONObject f: flds.jsonObjectIterable()) {
@@ -908,7 +909,7 @@ public class Finder {
 
         ArrayList<Object[]> d = new ArrayList<>();
         String snids = Utils.ids2str(nids);
-        Map<Long, java.util.Collection<Long>> midToNid = new HashMap<>();
+        Map<Long, java.util.Collection<Long>> midToNid = new LinkedHashMap<>();
         try (Cursor cur = col.getDb().query(
                 "select id, mid, flds from notes where id in " + snids)) {
             while (cur.moveToNext()) {

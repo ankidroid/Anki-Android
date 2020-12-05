@@ -37,6 +37,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -111,7 +112,7 @@ public class Models {
 
     private final Collection mCol;
     private boolean mChanged;
-    private HashMap<Long, Model> mModels;
+    private LinkedHashMap<Long, Model> mModels;
 
     // BEGIN SQL table entries
     private int mId;
@@ -163,7 +164,7 @@ public class Models {
      */
     public void load(String json) {
         mChanged = false;
-        mModels = new HashMap<>();
+        mModels = new LinkedHashMap<>();
         JSONObject modelarray = new JSONObject(json);
         JSONArray ids = modelarray.names();
         if (ids != null) {
@@ -436,7 +437,7 @@ public class Models {
     public static Map<String, Pair<Integer, JSONObject>> fieldMap(@NonNull Model m) {
         JSONArray flds = m.getJSONArray("flds");
         // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-        Map<String, Pair<Integer, JSONObject>> result = new HashMap<>();
+        Map<String, Pair<Integer, JSONObject>> result = new LinkedHashMap<>();
         for (JSONObject f: flds.jsonObjectIterable()) {
             result.put(f.getString("name"), new Pair<>(f.getInt("ord"), f));
         }

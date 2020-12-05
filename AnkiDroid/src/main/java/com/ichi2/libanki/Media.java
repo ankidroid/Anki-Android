@@ -48,6 +48,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -437,7 +439,7 @@ public class Media {
     private List<List<String>> check(File[] local) {
         File mdir = new File(dir());
         // gather all media references in NFC form
-        Set<String> allRefs = new HashSet<>();
+        Set<String> allRefs = new LinkedHashSet<>();
         try (Cursor cur = mCol.getDb().query("select id, mid, flds from notes")) {
             while (cur.moveToNext()) {
                 long nid = cur.getLong(0);
@@ -697,7 +699,7 @@ public class Media {
 
 
     private Pair<List<String>, List<String>> _changes() {
-        Map<String, Object[]> cache = new HashMap<>();
+        Map<String, Object[]> cache = new LinkedHashMap<>();
         try (Cursor cur = mDb.query("select fname, csum, mtime from media where csum is not null")) {
             while (cur.moveToNext()) {
                 String name = cur.getString(0);
