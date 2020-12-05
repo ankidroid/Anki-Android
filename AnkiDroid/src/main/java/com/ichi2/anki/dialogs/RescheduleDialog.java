@@ -85,7 +85,7 @@ public class RescheduleDialog extends IntegerDialog {
         }
 
         String message = resources.getString(R.string.reschedule_card_dialog_warning_ease_reset, SchedV2.RESCHEDULE_FACTOR / 10);
-        if (currentCard.isDynamic()) {
+        if (currentCard.isInDynamicDeck()) {
             return message;
         }
 

@@ -50,7 +50,6 @@ import java.util.Random;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 
@@ -102,7 +101,7 @@ public class Sched extends SchedV2 {
             // init reps to graduation
             card.setLeft(_startingLeft(card));
             // dynamic?
-            if (card.getODid() != 0 && card.getType() == Consts.CARD_TYPE_REV) {
+            if (card.isInDynamicDeck() && card.getType() == Consts.CARD_TYPE_REV) {
                 if (_resched(card)) {
                     // reviews get their ivl boosted on first sight
                     card.setIvl(_dynIvlBoost(card));
@@ -162,7 +161,7 @@ public class Sched extends SchedV2 {
     public int answerButtons(@NonNull Card card) {
         if (card.getODue() != 0) {
             // normal review in dyn deck?
-            if (card.getODid() != 0 && card.getQueue() == Consts.QUEUE_TYPE_REV) {
+            if (card.isInDynamicDeck() && card.getQueue() == Consts.QUEUE_TYPE_REV) {
                 return 4;
             }
             JSONObject conf = _lrnConf(card);
@@ -403,7 +402,7 @@ public class Sched extends SchedV2 {
     protected void _answerLrnCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         JSONObject conf = _lrnConf(card);
         @Consts.CARD_TYPE int type;
-        if (card.getODid() != 0 && !card.getWasNew()) {
+        if (card.isInDynamicDeck() && !card.getWasNew()) {
             type = Consts.CARD_TYPE_RELEARNING;
         } else if (card.getType() == Consts.CARD_TYPE_REV) {
             type = Consts.CARD_TYPE_REV;
@@ -438,7 +437,7 @@ public class Sched extends SchedV2 {
                     // new card; no ivl adjustment
                     // pass
                 }
-                if (resched && card.getODid() != 0) {
+                if (resched && card.isInDynamicDeck()) {
                     card.setODue(mToday + 1);
                 }
             }
@@ -499,7 +498,7 @@ public class Sched extends SchedV2 {
         card.setType(Consts.CARD_TYPE_REV);
         // if we were dynamic, graduating means moving back to the old deck
         boolean resched = _resched(card);
-        if (card.getODid() != 0) {
+        if (card.isInDynamicDeck()) {
             card.setDid(card.getODid());
             card.setODue(0);
             card.setODid(0);
@@ -530,7 +529,7 @@ public class Sched extends SchedV2 {
     private int _graduatingIvl(@NonNull Card card, @NonNull JSONObject conf, boolean early, boolean adj) {
         if (card.getType() == Consts.CARD_TYPE_REV) {
             // lapsed card being relearnt
-            if (card.getODid() != 0) {
+            if (card.isInDynamicDeck()) {
                 if (conf.getBoolean("resched")) {
                     return _dynIvlBoost(card);
                 }
@@ -765,7 +764,7 @@ public class Sched extends SchedV2 {
             card.setFactor(Math.max(1300, card.getFactor() - 200));
             card.setDue(mToday + card.getIvl());
             // if it's a filtered deck, update odue as well
-            if (card.getODid() != 0) {
+            if (card.isInDynamicDeck()) {
                 card.setODue(card.getDue());
             }
         }
@@ -816,7 +815,7 @@ public class Sched extends SchedV2 {
         } else {
             card.setDue(card.getODue());
         }
-        if (card.getODid() != 0) {
+        if (card.isInDynamicDeck()) {
             card.setDid(card.getODid());
             card.setODid(0);
             card.setODue(0);
@@ -969,7 +968,7 @@ public class Sched extends SchedV2 {
 
 
     private int _dynIvlBoost(@NonNull Card card) {
-        if (card.getODid() == 0 || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
+        if (!card.isInDynamicDeck() || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
             Timber.e("error: deck is not a filtered deck");
             return 0;
         }
@@ -1004,7 +1003,7 @@ public class Sched extends SchedV2 {
                 if (card.getODue() != 0) {
                     card.setDue(card.getODue());
                 }
-                if (card.getODid() != 0) {
+                if (card.isInDynamicDeck()) {
                     card.setDid(card.getODid());
                 }
                 card.setODue(0);
@@ -1029,8 +1028,7 @@ public class Sched extends SchedV2 {
     @Override
     protected @NonNull JSONObject _newConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
-        // normal deck
-        if (card.getODid() == 0) {
+        if (!card.isInDynamicDeck()) {
             return conf.getJSONObject("new");
         }
         // dynamic deck; override some attributes, use original deck for others
@@ -1056,8 +1054,7 @@ public class Sched extends SchedV2 {
     @Override
     protected @NonNull JSONObject _lapseConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
-        // normal deck
-        if (card.getODid() == 0) {
+        if (!card.isInDynamicDeck()) {
             return conf.getJSONObject("lapse");
         }
         // dynamic deck; override some attributes, use original deck for others

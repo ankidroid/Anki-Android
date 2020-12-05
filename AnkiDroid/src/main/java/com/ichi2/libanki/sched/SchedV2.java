@@ -404,7 +404,7 @@ public class SchedV2 extends AbstractSched {
      * Overridden */
     public int answerButtons(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
-        if (card.getODid() != 0 && !conf.getBoolean("resched")) {
+        if (card.isInDynamicDeck() && !conf.getBoolean("resched")) {
             return 2;
         }
         return 4;
@@ -1342,7 +1342,7 @@ public class SchedV2 extends AbstractSched {
             _rescheduleNew(card, conf, early);
         }
         // if we were dynamic, graduating means moving back to the old deck
-        if (card.getODid() != 0) {
+        if (card.isInDynamicDeck()) {
             _removeFromFiltered(card);
         }
     }
@@ -1656,7 +1656,7 @@ public class SchedV2 extends AbstractSched {
     // Overridden: v1 does not deal with early
     protected void _answerRevCard(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         int delay = 0;
-        boolean early = card.getODid() != 0 && (card.getODue() > mToday);
+        boolean early = card.isInDynamicDeck() && (card.getODue() > mToday);
         int type = early ? 3 : 1;
         if (ease == Consts.BUTTON_ONE) {
             delay = _rescheduleLapse(card);
@@ -1799,7 +1799,7 @@ public class SchedV2 extends AbstractSched {
      * Number of days later than scheduled.
      */
     protected long _daysLate(Card card) {
-        long due = card.getODid() != 0 ? card.getODue() : card.getDue();
+        long due = card.isInDynamicDeck() ? card.getODue() : card.getDue();
         return Math.max(0, mToday - due);
     }
 
@@ -1817,7 +1817,7 @@ public class SchedV2 extends AbstractSched {
 
     /** next interval for card when answered early+correctly */
     private int _earlyReviewIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
-        if (card.getODid() == 0 || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
+        if (!card.isInDynamicDeck() || card.getType() != Consts.CARD_TYPE_REV || card.getFactor() == 0) {
             throw new RuntimeException("Unexpected card parameters");
         }
         if (ease <= 1) {
@@ -2013,7 +2013,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private void _removeFromFiltered(@NonNull Card card) {
-        if (card.getODid() != 0) {
+        if (card.isInDynamicDeck()) {
             card.setDid(card.getODid());
             card.setODue(0);
             card.setODid(0);
@@ -2022,7 +2022,7 @@ public class SchedV2 extends AbstractSched {
 
 
     private void _restorePreviewCard(@NonNull Card card) {
-        if (card.getODid() == 0) {
+        if (!card.isInDynamicDeck()) {
             throw new RuntimeException("ODid wasn't set");
         }
 
@@ -2087,8 +2087,7 @@ public class SchedV2 extends AbstractSched {
     // Overridden: different delays for filtered cards.
     protected @NonNull JSONObject _newConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
-        // normal deck
-        if (card.getODid() == 0) {
+        if (!card.isInDynamicDeck()) {
             return conf.getJSONObject("new");
         }
         // dynamic deck; override some attributes, use original deck for others
@@ -2110,8 +2109,7 @@ public class SchedV2 extends AbstractSched {
     // Overridden: different delays for filtered cards.
     protected @NonNull JSONObject _lapseConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
-        // normal deck
-        if (card.getODid() == 0) {
+        if (!card.isInDynamicDeck()) {
             return conf.getJSONObject("lapse");
         }
         // dynamic deck; override some attributes, use original deck for others
@@ -2131,11 +2129,9 @@ public class SchedV2 extends AbstractSched {
 
     protected @NonNull JSONObject _revConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
-        // normal deck
-        if (card.getODid() == 0) {
+        if (!card.isInDynamicDeck()) {
             return conf.getJSONObject("rev");
         }
-        // dynamic deck
         return mCol.getDecks().confForDid(card.getODid()).getJSONObject("rev");
     }
 
@@ -2393,7 +2389,7 @@ public class SchedV2 extends AbstractSched {
             return _lapseIvl(card, conf) * SECONDS_PER_DAY;
         } else {
             // review
-            boolean early = card.getODid() != 0 && (card.getODue() > mToday);
+            boolean early = card.isInDynamicDeck() && (card.getODue() > mToday);
             if (early) {
                 return _earlyReviewIvl(card, ease) * SECONDS_PER_DAY;
             } else {
