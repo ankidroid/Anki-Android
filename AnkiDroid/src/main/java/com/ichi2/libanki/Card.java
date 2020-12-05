@@ -712,8 +712,7 @@ public class Card implements Cloneable {
 
     /** Non libAnki */
     public boolean isDynamic() {
-        //I have cards in my collection with oDue <> 0 and oDid = 0.
-        //These are not marked as dynamic.
+        // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
         return this.getODid() != 0;
     }
 
