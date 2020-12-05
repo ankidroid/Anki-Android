@@ -579,7 +579,7 @@ public class SchedV2 extends AbstractSched {
              * from this descendant.  This is our version of python's
              * itertools.groupby. */
             if (!checkDone && child.getDepth() != depth) {
-                JSONObject deck = mCol.getDecks().get(child.getDid());
+                Deck deck = mCol.getDecks().get(child.getDid());
                 Timber.d("Deck %s (%d)'s parent is missing. Ignoring for quick display.", deck.getString("name"), child.getDid());
                 continue;
             }
@@ -588,7 +588,7 @@ public class SchedV2 extends AbstractSched {
                 if (head.equals(descendantOfChild.getDeckNameComponent(depth))) {
                     // Same head - add to tail of current head.
                     if (!checkDone && descendantOfChild.getDepth() == depth) {
-                        JSONObject deck = mCol.getDecks().get(descendantOfChild.getDid());
+                        Deck deck = mCol.getDecks().get(descendantOfChild.getDid());
                         Timber.d("Deck %s (%d)'s is a duplicate name. Ignoring for quick display.", deck.getString("name"), descendantOfChild.getDid());
                         continue;
                     }
