@@ -910,7 +910,7 @@ public class Collection {
         return previewCards(note, type, did);
     }
 
-    public List<Card> previewCards(Note note, Previewing type, int did) {
+    public List<Card> previewCards(Note note, Previewing type, long did) {
 	    List<JSONObject> cms;
 	    switch (type) {
             case ADD:
@@ -944,17 +944,17 @@ public class Collection {
         return _newCard(note, template, due, flush);
     }
 
-    private Card _newCard(Note note, JSONObject template, int due, int did) {
+    private Card _newCard(Note note, JSONObject template, int due, long did) {
         boolean flush = true;
         return _newCard(note, template, due, did, flush);
     }
 
     private Card _newCard(Note note, JSONObject template, int due, boolean flush) {
-        int did = 0;
+        long did = 0L;
         return _newCard(note, template, due, did, flush);
     }
 
-    private Card _newCard(Note note, JSONObject template, int due, int parameterDid, boolean flush) {
+    private Card _newCard(Note note, JSONObject template, int due, long parameterDid, boolean flush) {
         Card card = new Card(this);
         return getNewLinkedCard(card, note, template, due, parameterDid, flush);
     }
@@ -963,12 +963,12 @@ public class Collection {
     // you pass the Card object in. This allows you to work on 'Card' subclasses that may not have
     // actual backing store (for instance, if you are previewing unsaved changes on templates)
     // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
-    public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, int parameterDid, boolean flush) {
+    public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, long parameterDid, boolean flush) {
         long nid = note.getId();
         card.setNid(nid);
         int ord = template.getInt("ord");
         card.setOrd(ord);
-        long did = mDb.queryScalar("select did from cards where nid = ? and ord = ?", nid, ord);
+        long did = mDb.queryLongScalar("select did from cards where nid = ? and ord = ?", nid, ord);
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0) {
             did = template.optLong("did", 0);
