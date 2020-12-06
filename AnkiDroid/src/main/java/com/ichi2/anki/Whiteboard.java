@@ -27,7 +27,10 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.Point;
+
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 
 import android.os.Environment;
@@ -506,5 +509,11 @@ public class Whiteboard extends View {
         this.draw(canvas);
         bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveWhiteboardImagFile));
         return saveWhiteboardImagFile.getAbsolutePath();
+    }
+
+    @VisibleForTesting
+    @CheckResult
+    protected int getForegroundColor() {
+        return foregroundColor;
     }
 }
