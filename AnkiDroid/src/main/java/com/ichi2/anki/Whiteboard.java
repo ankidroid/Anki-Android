@@ -32,6 +32,7 @@ import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
+import timber.log.Timber;
 
 import android.os.Environment;
 import android.view.Display;
@@ -369,29 +370,31 @@ public class Whiteboard extends View {
 
         int id = view.getId();
         if (id == R.id.pen_color_white) {
-            mPaint.setColor(Color.WHITE);
-            mColorPalette.setVisibility(View.GONE);
+            setPenColor(Color.WHITE);
         } else if (id == R.id.pen_color_black) {
-            mPaint.setColor(Color.BLACK);
-            mColorPalette.setVisibility(View.GONE);
+            setPenColor(Color.BLACK);
         } else if (id == R.id.pen_color_red) {
             int redPenColor = ContextCompat.getColor(getContext(), R.color.material_red_500);
-            mPaint.setColor(redPenColor);
-            mColorPalette.setVisibility(View.GONE);
+            setPenColor(redPenColor);
         } else if (id == R.id.pen_color_green) {
             int greenPenColor = ContextCompat.getColor(getContext(), R.color.material_green_500);
-            mPaint.setColor(greenPenColor);
-            mColorPalette.setVisibility(View.GONE);
+            setPenColor(greenPenColor);
         } else if (id == R.id.pen_color_blue) {
             int bluePenColor = ContextCompat.getColor(getContext(), R.color.material_blue_500);
-            mPaint.setColor(bluePenColor);
-            mColorPalette.setVisibility(View.GONE);
+            setPenColor(bluePenColor);
         } else if (id == R.id.pen_color_yellow) {
             int yellowPenColor = ContextCompat.getColor(getContext(), R.color.material_yellow_500);
-            mPaint.setColor(yellowPenColor);
-            mColorPalette.setVisibility(View.GONE);
+            setPenColor(yellowPenColor);
         }
     }
+
+
+    protected void setPenColor(int color) {
+        Timber.d("Setting pen color to %d", color);
+        mPaint.setColor(color);
+        mColorPalette.setVisibility(View.GONE);
+    }
+
 
     /**
      * Keep a stack of all points and paths so that the last stroke can be undone
