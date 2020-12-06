@@ -1,20 +1,20 @@
-/****************************************************************************************
- * Copyright (c) 2009 Andrew <andrewdubya@gmail.com>                                    *
- * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
- * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2009 Andrew <andrewdubya@gmail.com>
+ * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package com.ichi2.anki;
 
@@ -38,7 +38,6 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.ichi2.libanki.utils.Time;
@@ -233,12 +232,6 @@ public class Whiteboard extends View {
         }
     }
 
-    /**
-     * @return the number of strokes currently on the undo queue
-     */
-    public int undoSize() {
-        return mUndo.size();
-    }
 
     /** @return Whether there are strokes to undo */
     public boolean undoEmpty() {
@@ -252,8 +245,8 @@ public class Whiteboard extends View {
         return mUndoModeActive;
     }
 
-    private void createBitmap(int w, int h, Bitmap.Config conf) {
-        mBitmap = Bitmap.createBitmap(w, h, conf);
+    private void createBitmap(int w, int h) {
+        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
         clear();
     }
@@ -263,7 +256,7 @@ public class Whiteboard extends View {
         // To fix issue #1336, just make the whiteboard big and square.
         final Point p = getDisplayDimenions();
         int bitmapSize = Math.max(p.x, p.y);
-        createBitmap(bitmapSize, bitmapSize, Bitmap.Config.ARGB_8888);
+        createBitmap(bitmapSize, bitmapSize);
     }
 
     private void drawStart(float x, float y) {
@@ -481,7 +474,7 @@ public class Whiteboard extends View {
         return mCurrentlyDrawing;
     }
 
-    @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"}) // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     protected String saveWhiteboard(Time time) throws FileNotFoundException {
 
         Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
@@ -491,6 +484,7 @@ public class Whiteboard extends View {
         File ankiDroidFolder = new File(pictures, "AnkiDroid");
 
         if (!ankiDroidFolder.exists()) {
+            //noinspection ResultOfMethodCallIgnored
             ankiDroidFolder.mkdirs();
         }
 
@@ -498,7 +492,7 @@ public class Whiteboard extends View {
         String timeStamp = TimeUtils.getTimestamp(time);
         String finalFileName = baseFileName + timeStamp + ".png";
 
-        File saveWhiteboardImagFile = new File(ankiDroidFolder, finalFileName);
+        File saveWhiteboardImageFile = new File(ankiDroidFolder, finalFileName);
 
         if (foregroundColor != Color.BLACK) {
             canvas.drawColor(Color.BLACK);
@@ -507,8 +501,8 @@ public class Whiteboard extends View {
         }
 
         this.draw(canvas);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveWhiteboardImagFile));
-        return saveWhiteboardImagFile.getAbsolutePath();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(saveWhiteboardImageFile));
+        return saveWhiteboardImageFile.getAbsolutePath();
     }
 
     @VisibleForTesting
