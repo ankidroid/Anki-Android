@@ -181,7 +181,7 @@ public class RobolectricTest {
     }
 
     /** This can probably be implemented in a better manner */
-    protected void waitForAsyncTasksToComplete() {
+    protected static void waitForAsyncTasksToComplete() {
         advanceRobolectricLooperWithSleep();
     }
 
@@ -233,13 +233,17 @@ public class RobolectricTest {
         return new Model(collectionModels.byName(modelName).toString().trim());
     }
 
-    protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
+    protected static <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(RobolectricTest testClass, Class<T> clazz, Intent i) {
         ActivityController<T> controller = Robolectric.buildActivity(clazz, i)
                 .create().start().resume().visible();
         advanceRobolectricLooperWithSleep();
         advanceRobolectricLooperWithSleep();
-        saveControllerForCleanup(controller);
+        testClass.saveControllerForCleanup(controller);
         return controller.get();
+    }
+
+    protected <T extends AnkiActivity> T startActivityNormallyOpenCollectionWithIntent(Class<T> clazz, Intent i) {
+        return startActivityNormallyOpenCollectionWithIntent(this, clazz, i);
     }
 
     protected Note addNoteUsingBasicModel(String front, String back) {
