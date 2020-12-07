@@ -341,11 +341,19 @@ public class ReviewerTest extends RobolectricTest {
     }
 
     private Reviewer startReviewer() {
-        return startReviewer(Reviewer.class);
+        return startReviewer(this);
+    }
+
+    static Reviewer startReviewer(RobolectricTest testClass) {
+        return startReviewer(testClass, Reviewer.class);
     }
 
     private <T extends Reviewer> T startReviewer(Class<T> clazz) {
-        T reviewer = super.startActivityNormallyOpenCollectionWithIntent(clazz, new Intent());
+        return startReviewer(this, clazz);
+    }
+
+    private static <T extends Reviewer> T startReviewer(RobolectricTest testClass, Class<T> clazz) {
+        T reviewer = startActivityNormallyOpenCollectionWithIntent(testClass, clazz, new Intent());
         waitForAsyncTasksToComplete();
         return reviewer;
     }
