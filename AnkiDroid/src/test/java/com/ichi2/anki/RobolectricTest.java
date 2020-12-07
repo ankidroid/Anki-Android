@@ -96,6 +96,9 @@ public class RobolectricTest {
 
         //See: #6140 - This global ideally shouldn't exist, but it will cause crashes if set.
         DialogHandler.discardMessage();
+
+        // BUG: We do not reset the MetaDB
+        MetaDB.closeDB();
     }
 
 
