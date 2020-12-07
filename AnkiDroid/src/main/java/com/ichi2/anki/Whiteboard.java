@@ -30,6 +30,7 @@ import android.graphics.Point;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
@@ -80,6 +81,9 @@ public class Whiteboard extends View {
     private boolean mUndoModeActive = false;
     private final int foregroundColor;
     private final LinearLayout mColorPalette;
+
+    @Nullable
+    private OnPaintColorChangeListener mOnPaintColorChangeListener;
 
     public Whiteboard(AbstractFlashcardViewer cardViewer, boolean inverted, boolean monochrome) {
         super(cardViewer, null);
@@ -389,10 +393,23 @@ public class Whiteboard extends View {
     }
 
 
-    protected void setPenColor(int color) {
+    public void setPenColor(int color) {
         Timber.d("Setting pen color to %d", color);
         mPaint.setColor(color);
         mColorPalette.setVisibility(View.GONE);
+        if (mOnPaintColorChangeListener != null) {
+            mOnPaintColorChangeListener.onPaintColorChange(color);
+        }
+    }
+
+    @VisibleForTesting
+    public int getPenColor() {
+        return mPaint.getColor();
+    }
+
+
+    public void setOnPaintColorChangeListener(@Nullable OnPaintColorChangeListener mOnPaintColorChangeListener) {
+        this.mOnPaintColorChangeListener = mOnPaintColorChangeListener;
     }
 
 
@@ -512,5 +529,9 @@ public class Whiteboard extends View {
     @CheckResult
     protected int getForegroundColor() {
         return foregroundColor;
+    }
+
+    public interface OnPaintColorChangeListener {
+        void onPaintColorChange(@Nullable Integer color);
     }
 }

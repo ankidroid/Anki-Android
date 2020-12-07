@@ -44,6 +44,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.MenuRes;
@@ -58,6 +59,7 @@ import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
+import com.ichi2.anki.cardviewer.CardAppearance;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.multimediacard.AudioView;
 import com.ichi2.anki.dialogs.RescheduleDialog;
@@ -1081,12 +1083,22 @@ public class Reviewer extends AbstractFlashcardViewer {
 
     // Create the whiteboard
     private void createWhiteboard() {
+        SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(this);
         mWhiteboard = new Whiteboard(this, isInNightMode(), mBlackWhiteboard);
         FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWhiteboard.setLayoutParams(lp2);
         FrameLayout fl = findViewById(R.id.whiteboard);
         fl.addView(mWhiteboard);
+
+        // We use the pen color of the selected deck at the time the whiteboard is enabled.
+        // This is how all other whiteboard settings are
+        Integer whiteboardPenColor = MetaDB.getWhiteboardPenColor(this, getParentDid()).fromPreferences(sharedPrefs);
+        if (whiteboardPenColor != null) {
+            mWhiteboard.setPenColor((int) whiteboardPenColor);
+        }
+
+        mWhiteboard.setOnPaintColorChangeListener(color -> MetaDB.storeWhiteboardPenColor(this, getParentDid(), !CardAppearance.isInNightMode(sharedPrefs), color));
 
         mWhiteboard.setOnTouchListener((v, event) -> {
             //If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
@@ -1173,6 +1185,14 @@ public class Reviewer extends AbstractFlashcardViewer {
         return getCol().getDb().queryScalar("select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
                 mCurrentCard.getNid(), mCurrentCard.getId()) == 1;
     }
+
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    @CheckResult
+    Whiteboard getWhiteboard() {
+        return mWhiteboard;
+    }
+
 
     /**
      * Inner class which implements the submenu for the Suspend button

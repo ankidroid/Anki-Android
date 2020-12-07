@@ -58,9 +58,13 @@ public class CardAppearance {
     public static CardAppearance create(ReviewerCustomFonts customFonts, SharedPreferences preferences) {
         int cardZoom = preferences.getInt("cardZoom", 100);
         int imageZoom = preferences.getInt("imageZoom", 100);
-        boolean nightMode = preferences.getBoolean("invertedColors", false);
+        boolean nightMode = isInNightMode(preferences);
         boolean centerVertically = preferences.getBoolean("centerVertically", false);
         return new CardAppearance(customFonts, cardZoom, imageZoom, nightMode, centerVertically);
+    }
+
+    public static boolean isInNightMode(SharedPreferences sharedPrefs) {
+        return sharedPrefs.getBoolean("invertedColors", false);
     }
 
 

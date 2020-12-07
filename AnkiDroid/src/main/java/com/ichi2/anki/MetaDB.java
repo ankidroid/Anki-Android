@@ -7,11 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Pair;
 
+import com.ichi2.anki.model.WhiteboardPenColor;
 import com.ichi2.libanki.Sound;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /**
@@ -29,7 +32,7 @@ public class MetaDB {
     private static final String DATABASE_NAME = "ankidroid.db";
 
     /** The Database Version, increase if you want updates to happen on next upgrade. */
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     // Possible values for the qa column of the languages table.
     /** The language refers to the question. */
@@ -100,7 +103,7 @@ public class MetaDB {
 
         if (columnCount <= 0) {
             mMetaDb.execSQL("CREATE TABLE IF NOT EXISTS whiteboardState (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "did INTEGER NOT NULL, state INTEGER, visible INTEGER)");
+                    + "did INTEGER NOT NULL, state INTEGER, visible INTEGER, lightpencolor INTEGER, darkpencolor INTEGER)");
             return;
         }
 
@@ -108,6 +111,13 @@ public class MetaDB {
             //Default to 1
             mMetaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN visible INTEGER NOT NULL DEFAULT '1'");
             Timber.i("Added 'visible' column to whiteboardState");
+        }
+
+        if (columnCount < 5) {
+            mMetaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN lightpencolor INTEGER DEFAULT NULL");
+            Timber.i("Added 'lightpencolor' column to whiteboardState");
+            mMetaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN darkpencolor INTEGER DEFAULT NULL");
+            Timber.i("Added 'darkpencolor' column to whiteboardState");
         }
     }
 
@@ -347,6 +357,47 @@ public class MetaDB {
     }
 
     /**
+     * Returns the pen color of the whiteboard for the given deck.
+     */
+    public static WhiteboardPenColor getWhiteboardPenColor(Context context, long did) {
+        openDBIfClosed(context);
+        try (Cursor cur = mMetaDb.rawQuery("SELECT lightpencolor, darkpencolor FROM whiteboardState WHERE did = ?", new String[] {Long.toString(did)})) {
+            cur.moveToFirst();
+            Integer light = DatabaseUtil.getInteger(cur, 0);
+            Integer dark = DatabaseUtil.getInteger(cur, 1);
+            return new WhiteboardPenColor(light, dark);
+        } catch (Exception e) {
+            Timber.e(e, "Error retrieving whiteboard pen color from MetaDB ");
+            return WhiteboardPenColor.getDefault();
+        }
+    }
+
+    /**
+     * Stores the pen color of the whiteboard for a given deck.
+     *
+     * @param did deck id to store whiteboard state for
+     * @param isLight if dark mode is disabled
+     * @param value The new color code to store
+     */
+    public static void storeWhiteboardPenColor(Context context, long did, boolean isLight, Integer value) {
+        openDBIfClosed(context);
+        String columnName = isLight ? "lightpencolor" : "darkpencolor";
+        try (Cursor cur = mMetaDb.rawQuery("SELECT _id FROM whiteboardState WHERE did  = ?", new String[]{Long.toString(did)})) {
+            if (cur.moveToNext()) {
+                mMetaDb.execSQL("UPDATE whiteboardState SET did = ?, "
+                        + columnName + "= ? " +
+                        " WHERE _id=?;", new Object[] {did, value, cur.getString(0)});
+            } else {
+                String sql = "INSERT INTO whiteboardState (did, " + columnName + ") VALUES (?, ?)";
+                mMetaDb.execSQL(sql, new Object[] { did, value });
+            }
+            Timber.d("Store whiteboard %s (%d) for deck %d", columnName, value, did);
+        } catch (Exception e) {
+            Timber.w(e, "Error storing whiteboard color in MetaDB");
+        }
+    }
+
+    /**
      * Returns a custom dictionary associated to a deck
      * 
      * @return integer number of dictionary, -1 if not set (standard dictionary will be used)
@@ -486,6 +537,11 @@ public class MetaDB {
                     c.close();
                 }
             }
+        }
+
+        @Nullable
+        public static Integer getInteger(@NonNull Cursor cur, int columnIndex) {
+            return cur.isNull(columnIndex) ? null : cur.getInt(columnIndex);
         }
     }
 }
