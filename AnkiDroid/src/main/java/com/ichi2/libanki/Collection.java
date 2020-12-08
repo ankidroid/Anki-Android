@@ -903,30 +903,6 @@ public class Collection {
         MODELS
     }
 
-    public List<Card> previewCards(Note note, Previewing type, long did) {
-	    List<JSONObject> cms;
-	    switch (type) {
-            case ADD:
-    	        cms = findTemplates(note);
-    	        break;
-            case EDIT:
-                ArrayList<Card> cards = note.cards();
-    	        cms = new ArrayList<>(cards.size());
-	            for (Card c : cards) {
-	                cms.add(c.template());
-	            }
-	            break;
-            default: // MODELS
-                JSONArray tmpls = note.model().getJSONArray("tmpls");
-                cms = tmpls.toJSONObjectList();
-	    }
-	    List<Card> cards = new ArrayList<>(cms.size());
-	    for (JSONObject template : cms) {
-	        cards.add(_newCard(note, template, 1, did, false));
-	    }
-	    return cards;
-	}
-
     /**
      * Create a new card.
      */
